@@ -111,7 +111,7 @@ public:
 		, m_imgIndex(imgIndex)
 	{
 	}
-	virtual wxString OnNeedText(long index) const
+	virtual std::wstring OnNeedText(long index) const
 	{
 		return m_Data->OnNeedText(index);
 	}
@@ -221,14 +221,14 @@ bool CAgilityBookPointsView::IsFiltered() const
 }
 
 
-bool CAgilityBookPointsView::GetMessage(wxString& msg) const
+bool CAgilityBookPointsView::GetMessage(std::wstring& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
 }
 
 
-bool CAgilityBookPointsView::GetMessage2(wxString& msg) const
+bool CAgilityBookPointsView::GetMessage2(std::wstring& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
@@ -237,7 +237,7 @@ bool CAgilityBookPointsView::GetMessage2(wxString& msg) const
 	}
 	else
 	{
-		msg.Empty();
+		msg.clear();
 		return false;
 	}
 }
@@ -295,7 +295,7 @@ void CAgilityBookPointsView::OnUpdate(
 
 void CAgilityBookPointsView::GetPrintLine(
 		long item,
-		std::vector<wxString>& line) const
+		std::vector<std::wstring>& line) const
 {
 	if (m_Ctrl)
 		m_Ctrl->GetPrintLine(item, line);
@@ -467,15 +467,15 @@ bool CAgilityBookPointsView::OnCmd(int id)
 			if (!clpData.isOkay())
 				return true;
 
-			wxString data;
-			wxString html;
+			std::wstring data;
+			std::wstring html;
 			CClipboardDataTable table(data, html);
 
 			// Take care of the header, but only if more than one line is selected.
 			if (1 < indices.size()
 			|| indices.size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
 			{
-				std::vector<wxString> line;
+				std::vector<std::wstring> line;
 				m_Ctrl->GetPrintLine(-1, line);
 				table.StartLine();
 				for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -488,7 +488,7 @@ bool CAgilityBookPointsView::OnCmd(int id)
 			// Now all the data.
 			for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 			{
-				std::vector<wxString> line;
+				std::vector<std::wstring> line;
 				m_Ctrl->GetPrintLine((*iter), line);
 				table.StartLine();
 				for (int i = 0; i < static_cast<int>(line.size()); ++i)

@@ -27,6 +27,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBDogReferenceRun.h"
+#include "ARBString.h"
 #include "ARBTypes.h"
 #include "ComboBoxes.h"
 #include "Validators.h"
@@ -46,9 +47,9 @@ END_EVENT_TABLE()
 CDlgReferenceRun::CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr inRun,
-		std::set<wxString> const& inHeights,
-		std::set<wxString> const& inNames,
-		std::set<wxString> const& inBreeds,
+		std::set<std::wstring> const& inHeights,
+		std::set<std::wstring> const& inNames,
+		std::set<std::wstring> const& inBreeds,
 		ARBDogReferenceRunPtr ref,
 		wxWindow* pParent)
 	: wxDialog()
@@ -75,7 +76,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	if (m_Height.empty())
 		m_Height = CAgilityBookOptions::GetLastEnteredRefHeight();
 
-	wxString strYPS;
+	std::wstring strYPS;
 	double yps;
 	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
 	{
@@ -143,7 +144,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textHt->Wrap(-1);
 
 	wxArrayString choices;
-	std::set<wxString>::const_iterator iter;
+	std::set<std::wstring>::const_iterator iter;
 	for (iter = inHeights.begin(); iter != inHeights.end(); ++iter)
 	{
 		choices.Add((*iter));
@@ -263,7 +264,7 @@ DEFINE_ON_INIT(CDlgReferenceRun)
 void CDlgReferenceRun::OnKillfocusRefRunTime(wxFocusEvent& evt)
 {
 	TransferDataFromWindow();
-	wxString strYPS;
+	std::wstring strYPS;
 	double yps;
 	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
 	{
@@ -271,7 +272,7 @@ void CDlgReferenceRun::OnKillfocusRefRunTime(wxFocusEvent& evt)
 	}
 	else
 	{
-		strYPS.Empty();
+		strYPS.clear();
 	}
 	m_ctrlYPS->SetLabel(strYPS);
 	evt.Skip();
@@ -287,12 +288,12 @@ void CDlgReferenceRun::OnOk(wxCommandEvent& evt)
 
 	m_Ref->SetQ(m_Q);
 	m_Ref->SetPlace(m_Place);
-	m_Ref->SetScore(m_Points);
+	m_Ref->SetScore(StringUtil::stringW(m_Points));
 	m_Ref->SetTime(m_Time); // Letting the prec default to 2 is fine.
-	m_Ref->SetName(m_Name);
-	m_Ref->SetHeight(m_Height);
-	m_Ref->SetBreed(m_Breed);
-	m_Ref->SetNote(m_Notes);
+	m_Ref->SetName(StringUtil::stringW(m_Name));
+	m_Ref->SetHeight(StringUtil::stringW(m_Height));
+	m_Ref->SetBreed(StringUtil::stringW(m_Breed));
+	m_Ref->SetNote(StringUtil::stringW(m_Notes));
 
 	EndDialog(wxID_OK);
 }

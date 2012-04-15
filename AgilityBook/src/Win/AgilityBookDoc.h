@@ -90,8 +90,8 @@ class CErrorCallback : public ARBErrorCallback
 {
 public:
 	CErrorCallback();
-	virtual bool OnError(wxChar const* const pMsg);
-	wxString m_ErrMsg;
+	virtual bool OnError(wchar_t const* const pMsg);
+	std::wostringstream m_ErrMsg;
 };
 
 
@@ -104,7 +104,7 @@ public:
 
 	bool StatusBarContextMenu(wxWindow* parent, int id, wxPoint const& point);
 
-	wxString AddDogToCaption(wxString const& caption) const;
+	std::wstring AddDogToCaption(std::wstring const& caption) const;
 
 	// Data
 	ARBDogPtr GetCurrentDog() const;
@@ -151,7 +151,7 @@ public:
 			std::vector<CVenueFilter>& venues,
 			ARBDogTitlePtr pTitle);
 	bool ResetVisibility(
-			std::set<wxString>& names,
+			std::set<std::wstring>& names,
 			ARBTrainingPtr pTraining);
 
 	bool ShowPointsAsHtml(bool bHtml);
@@ -162,7 +162,7 @@ public:
 	CAgilityBookCalendarView* GetCalendarView() const;
 	CAgilityBookTrainingView* GetTrainingView() const;
 
-	void BackupFile(wxString lpszPathName);
+	void BackupFile(wxString const& lpszPathName);
 
 private:
 	ARBAgilityRecordBook m_Records; ///< The real records.

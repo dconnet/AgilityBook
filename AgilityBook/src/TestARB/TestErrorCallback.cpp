@@ -27,13 +27,13 @@
 class ErrorCallback : public ARBErrorCallback
 {
 public:
-	wxString m_Msg;
+	std::wstring m_Msg;
 
-	ErrorCallback(wxString& inMsg) : ARBErrorCallback(inMsg)
+	ErrorCallback(std::wostringstream& inMsg) : ARBErrorCallback(inMsg)
 	{
 	}
 
-	virtual void LogMessage(wxString const& inMsg)
+	virtual void LogMessage(std::wstring const& inMsg)
 	{
 		ARBErrorCallback::LogMessage(inMsg);
 		m_Msg += inMsg;
@@ -47,10 +47,10 @@ SUITE(TestErrorCallback)
 	{
 		if (!g_bMicroTest)
 		{
-			wxString msg;
+			std::wostringstream msg;
 			ARBErrorCallback err(msg);
-			err.LogMessage(wxT("Testing1"));
-			CHECK(msg == wxT("Testing1"));
+			err.LogMessage(L"Testing1");
+			CHECK(msg.str() == L"Testing1");
 		}
 	}
 
@@ -59,11 +59,12 @@ SUITE(TestErrorCallback)
 	{
 		if (!g_bMicroTest)
 		{
-			wxString msg;
-			ErrorCallback err(msg);
-			err.LogMessage(wxT("Testing1"));
+			std::wostringstream emsg;
+			ErrorCallback err(emsg);
+			err.LogMessage(L"Testing1");
+			std::wstring msg = emsg.str();
 			CHECK(msg == err.m_Msg);
-			CHECK(msg == wxT("Testing1"));
+			CHECK(msg == L"Testing1");
 		}
 	}
 }

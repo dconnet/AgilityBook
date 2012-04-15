@@ -127,7 +127,7 @@ public:
 	bool SetLang(int langId);
 
 	CLocalization& m_Localization;
-	wxString m_dirLang;
+	std::wstring m_dirLang;
 	int m_CurLang;
 	wxLocale* m_locale;
 };
@@ -201,7 +201,7 @@ int main(int argc, char** argv)
 	wxStandardPaths::Get().DontIgnoreAppSubDir();
 #endif
 
-	wxString errs;
+	std::wstring errs;
 	if (!Element::Initialize(errs))
 	{
 		return 1;
@@ -230,17 +230,17 @@ int main(int argc, char** argv)
 
 ElementNodePtr LoadXMLData(size_t id)
 {
-	wxString errMsg;
+	std::wostringstream errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
 #ifdef __WXMAC__
 	// Command line programs on Mac are acting like unix. GetResourcesDir
 	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	wxString datafile = wxT("./testarb.dat");
+	std::wstring datafile = wxT("./testarb.dat");
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
+	std::wstring datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
 #endif
 	assert(id < gc_NumConfigs);
 	std::string data;
@@ -248,7 +248,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	assert(bOk);
 	if (!bOk || !tree->LoadXML(data.c_str(), data.length(), errMsg))
 	{
-		wxLogError(wxT("%s"), errMsg.c_str());
+		wxLogError(wxT("%s"), errMsg.str().c_str());
 		tree.reset();
 	}
 	return tree;
@@ -267,7 +267,7 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 	int idx = tree->FindElement(TREE_CONFIG);
 	assert(0 <= idx);
-	wxString errMsg;
+	std::wostringstream errMsg;
 	ARBErrorCallback err(errMsg);
 	return config.Load(tree->GetElementNode(idx), version, err);
 }
@@ -360,11 +360,11 @@ ElementNodePtr CreateActionList()
 </RootNode>";
 
 	ElementNodePtr actions = ElementNode::New();
-	wxString errmsg;
+	std::wostringstream errmsg;
 	bool bParse = actions->LoadXML(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
-		wxLogError(wxT("%s"), errmsg.c_str());
+		wxLogError(wxT("%s"), errmsg.str().c_str());
 	}
 	assert(bParse);
 	return actions;

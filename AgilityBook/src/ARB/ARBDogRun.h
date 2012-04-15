@@ -57,14 +57,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const;
+	virtual std::wstring GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const;
 
 	/**
 	 * Load a run.
@@ -97,7 +97,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(wxString const& inOther) const;
+	int NumOtherPointsInUse(std::wstring const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -106,15 +106,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inName OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(wxString const& inName);
+	int DeleteOtherPoints(std::wstring const& inName);
 
 	/**
 	 * Get the number of Speed points earned in this run.
@@ -158,67 +158,67 @@ public:
 	{
 		m_Date = inDate;
 	}
-	wxString const& GetDivision() const
+	std::wstring const& GetDivision() const
 	{
 		return m_Division;
 	}
-	void SetDivision(wxString const& inDiv)
+	void SetDivision(std::wstring const& inDiv)
 	{
 		m_Division = inDiv;
 	}
-	wxString const& GetLevel() const
+	std::wstring const& GetLevel() const
 	{
 		return m_Level;
 	}
-	void SetLevel(wxString const& inLevel)
+	void SetLevel(std::wstring const& inLevel)
 	{
 		m_Level = inLevel;
 	}
-	wxString const& GetEvent() const
+	std::wstring const& GetEvent() const
 	{
 		return m_Event;
 	}
-	void SetEvent(wxString const& inEvent)
+	void SetEvent(std::wstring const& inEvent)
 	{
 		m_Event = inEvent;
 	}
-	wxString const& GetSubName() const
+	std::wstring const& GetSubName() const
 	{
 		return m_SubName;
 	}
-	void SetSubName(wxString const& inSubName)
+	void SetSubName(std::wstring const& inSubName)
 	{
 		m_SubName = inSubName;
 	}
-	wxString const& GetHeight() const
+	std::wstring const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(wxString const& inHeight)
+	void SetHeight(std::wstring const& inHeight)
 	{
 		m_Height = inHeight;
 	}
-	wxString const& GetConditions() const
+	std::wstring const& GetConditions() const
 	{
 		return m_Conditions;
 	}
-	void SetConditions(wxString const& inConditions)
+	void SetConditions(std::wstring const& inConditions)
 	{
 		m_Conditions = inConditions;
 	}
-	wxString const& GetJudge() const
+	std::wstring const& GetJudge() const
 	{
 		return m_Judge;
 	}
-	void SetJudge(wxString const& inJudge)
+	void SetJudge(std::wstring const& inJudge)
 	{
 		m_Judge = inJudge;
 	}
-	wxString const& GetHandler() const
+	std::wstring const& GetHandler() const
 	{
 		return m_Handler;
 	}
-	void SetHandler(wxString const& inHandler)
+	void SetHandler(std::wstring const& inHandler)
 	{
 		m_Handler = inHandler;
 	}
@@ -278,15 +278,15 @@ public:
 	{
 		return m_Notes.GetFaults();
 	}
-	wxString const& GetCRCD() const
+	std::wstring const& GetCRCD() const
 	{
 		return m_Notes.GetCRCD();
 	}
-	void SetCRCD(wxString const& inCRCD)
+	void SetCRCD(std::wstring const& inCRCD)
 	{
 		m_Notes.SetCRCD(inCRCD);
 	}
-	wxString const& GetCRCDRawMetaData() const
+	std::wstring const& GetCRCDRawMetaData() const
 	{
 		return m_Notes.GetCRCDRawMetaData();
 	}
@@ -298,11 +298,11 @@ public:
 	{
 		m_Notes.SetCRCDMetaData(inCRCDMeta, inBytes);
 	}
-	wxString const& GetNote() const
+	std::wstring const& GetNote() const
 	{
 		return m_Notes.GetNote();
 	}
-	void SetNote(wxString const& inNote)
+	void SetNote(std::wstring const& inNote)
 	{
 		m_Notes.SetNote(inNote);
 	}
@@ -326,22 +326,22 @@ public:
 	{
 		return m_Links.size();
 	}
-	size_t GetLinks(std::set<wxString>& outLinks) const;
-	bool HasLink(wxString const& inLink) const;
-	void AddLink(wxString const& inLink);
-	void RemoveLink(wxString const& inLink);
+	size_t GetLinks(std::set<std::wstring>& outLinks) const;
+	bool HasLink(std::wstring const& inLink) const;
+	void AddLink(std::wstring const& inLink);
+	void RemoveLink(std::wstring const& inLink);
 
 private:
 	std::set<ARBConfigMultiQPtr> m_pMultiQs; //< Not persisted.
 	ARBDate m_Date;
-	wxString m_Division;
-	wxString m_Level;
-	wxString m_Height;
-	wxString m_Event;
-	wxString m_SubName; //< Only used if the config supports it.
-	wxString m_Conditions;
-	wxString m_Judge;
-	wxString m_Handler;
+	std::wstring m_Division;
+	std::wstring m_Level;
+	std::wstring m_Height;
+	std::wstring m_Event;
+	std::wstring m_SubName; //< Only used if the config supports it.
+	std::wstring m_Conditions;
+	std::wstring m_Judge;
+	std::wstring m_Handler;
 	ARBDogRunPartnerList m_Partners;
 	ARBDogRunScoring m_Scoring;
 	ARB_Q m_Q;
@@ -351,7 +351,7 @@ private:
 	ARBDogRunOtherPointsList m_OtherPoints;
 	ARBDogNotes m_Notes;
 	ARBDogReferenceRunList m_RefRuns;
-	typedef std::set<wxString> ARBDogRunLinks;
+	typedef std::set<std::wstring> ARBDogRunLinks;
 	ARBDogRunLinks m_Links;
 };
 

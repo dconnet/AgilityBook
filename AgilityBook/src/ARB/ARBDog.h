@@ -58,7 +58,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
 		return m_CallName;
 	}
@@ -68,7 +68,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const;
 
 	/**
 	 * Load a dog.
@@ -100,15 +100,15 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameVenue(
-			wxString const& inOldVenue,
-			wxString const& inNewVenue);
+			std::wstring const& inOldVenue,
+			std::wstring const& inNewVenue);
 
 	/**
 	 * Delete a venue.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(wxString const& inVenue);
+	int DeleteVenue(std::wstring const& inVenue);
 
 	/**
 	 * Rename a division.
@@ -119,8 +119,8 @@ public:
 	 */
 	int RenameDivision(
 			ARBConfigVenuePtr inVenue,
-			wxString const& inOldDiv,
-			wxString const& inNewDiv);
+			std::wstring const& inOldDiv,
+			std::wstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
@@ -131,17 +131,17 @@ public:
 	 */
 	int DeleteDivision(
 			ARBConfig const& inConfig,
-			wxString const& inVenue,
-			wxString const& inDiv);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv);
 
 	/*
 	 * Getters/setters.
 	 */
-	wxString const& GetCallName() const
+	std::wstring const& GetCallName() const
 	{
 		return m_CallName;
 	}
-	void SetCallName(wxString const& inName)
+	void SetCallName(std::wstring const& inName)
 	{
 		m_CallName = inName;
 	}
@@ -161,27 +161,27 @@ public:
 	{
 		m_Deceased = inDeceased;
 	}
-	wxString const& GetRegisteredName() const
+	std::wstring const& GetRegisteredName() const
 	{
 		return m_RegName;
 	}
-	void SetRegisteredName(wxString const& inName)
+	void SetRegisteredName(std::wstring const& inName)
 	{
 		m_RegName = inName;
 	}
-	wxString const& GetBreed() const
+	std::wstring const& GetBreed() const
 	{
 		return m_Breed;
 	}
-	void SetBreed(wxString const& inBreed)
+	void SetBreed(std::wstring const& inBreed)
 	{
 		m_Breed = inBreed;
 	}
-	wxString const& GetNote() const
+	std::wstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(wxString const& inNote)
+	void SetNote(std::wstring const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -219,12 +219,12 @@ public:
 	}
 
 private:
-	wxString m_CallName;
+	std::wstring m_CallName;
 	ARBDate m_DOB;
 	ARBDate m_Deceased;
-	wxString m_RegName;
-	wxString m_Breed;
-	wxString m_Note;
+	std::wstring m_RegName;
+	std::wstring m_Breed;
+	std::wstring m_Note;
 	ARBDogExistingPointsList m_ExistingPoints;
 	ARBDogRegNumList m_RegNums;
 	ARBDogTitleList m_Titles;
@@ -267,7 +267,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects, not points.
 	 */
-	int NumExistingPointsInVenue(wxString const& inVenue) const;
+	int NumExistingPointsInVenue(std::wstring const& inVenue) const;
 
 	/**
 	 * Get the number of registration numbers in a venue.
@@ -275,7 +275,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumRegNumsInVenue(wxString const& inVenue) const;
+	int NumRegNumsInVenue(std::wstring const& inVenue) const;
 
 	/**
 	 * Get the number of titles in a venue.
@@ -283,7 +283,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumTitlesInVenue(wxString const& inVenue) const;
+	int NumTitlesInVenue(std::wstring const& inVenue) const;
 
 	/**
 	 * Get the number of trials in a venue.
@@ -291,7 +291,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumTrialsInVenue(wxString const& inVenue) const;
+	int NumTrialsInVenue(std::wstring const& inVenue) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -300,15 +300,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-			wxString const& inOldVenue,
-			wxString const& inNewVenue);
+			std::wstring const& inOldVenue,
+			std::wstring const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(wxString const& inVenue);
+	int DeleteVenue(std::wstring const& inVenue);
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -316,7 +316,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(wxString const& inOther) const;
+	int NumOtherPointsInUse(std::wstring const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -325,15 +325,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-			wxString const& inOldOther,
-			wxString const& inNewOther);
+			std::wstring const& inOldOther,
+			std::wstring const& inNewOther);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inOther OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(wxString const& inOther);
+	int DeleteOtherPoints(std::wstring const& inOther);
 
 	/**
 	 * Number of MultiQ objects in use.
@@ -343,8 +343,8 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumMultiQsInUse(
-			wxString const& inVenue,
-			wxString const& inMultiQ) const;
+			std::wstring const& inVenue,
+			std::wstring const& inMultiQ) const;
 
 	/**
 	 * Rename a MultiQ, rename any dependent objects.
@@ -354,9 +354,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameMultiQs(
-			wxString const& inVenue,
-			wxString const& inOldMultiQ,
-			wxString const& inNewMultiQ);
+			std::wstring const& inVenue,
+			std::wstring const& inOldMultiQ,
+			std::wstring const& inNewMultiQ);
 
 	/**
 	 * Delete any MultiQs no longer in venue.
@@ -366,7 +366,7 @@ public:
 	 */
 	int DeleteMultiQs(
 			ARBConfig const& inConfig,
-			wxString const& inVenue);
+			std::wstring const& inVenue);
 
 	/**
 	 * Number of multiple hosted trials in a division.
@@ -378,8 +378,8 @@ public:
 	 */
 	int NumMultiHostedTrialsInDivision(
 			ARBConfig const& inConfig,
-			wxString const& inVenue,
-			wxString const& inDiv) const;
+			std::wstring const& inVenue,
+			std::wstring const& inDiv) const;
 
 	/**
 	 * Get the number of existing point entries in a division.
@@ -390,7 +390,7 @@ public:
 	 */
 	int NumExistingPointsInDivision(
 			ARBConfigVenuePtr inVenue,
-			wxString const& inDiv) const;
+			std::wstring const& inDiv) const;
 
 	/**
 	 * Get the number of runs in a division.
@@ -401,7 +401,7 @@ public:
 	 */
 	int NumRunsInDivision(
 			ARBConfigVenuePtr inVenue,
-			wxString const& inDiv) const;
+			std::wstring const& inDiv) const;
 
 	/**
 	 * Rename a division, rename any dependent objects.
@@ -412,8 +412,8 @@ public:
 	 */
 	int RenameDivision(
 			ARBConfigVenuePtr inVenue,
-			wxString const& inOldDiv,
-			wxString const& inNewDiv);
+			std::wstring const& inOldDiv,
+			std::wstring const& inNewDiv);
 
 	/**
 	 * Delete a division, remove any dependent objects.
@@ -424,8 +424,8 @@ public:
 	 */
 	int DeleteDivision(
 			ARBConfig const& inConfig,
-			wxString const& inVenue,
-			wxString const& inDiv);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv);
 
 	/**
 	 * Number of levels in use.
@@ -436,9 +436,9 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumLevelsInUse(
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inLevel) const;
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inLevel) const;
 
 	/**
 	 * Rename a level, rename any dependent objects.
@@ -449,10 +449,10 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameLevel(
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inOldLevel,
-			wxString const& inNewLevel);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inOldLevel,
+			std::wstring const& inNewLevel);
 
 	/**
 	 * Delete a level, remove any dependent objects.
@@ -462,9 +462,9 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteLevel(
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inLevel);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inLevel);
 
 	/**
 	 * Number of titles in use.
@@ -474,8 +474,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumTitlesInUse(
-			wxString const& inVenue,
-			wxString const& inTitle) const;
+			std::wstring const& inVenue,
+			std::wstring const& inTitle) const;
 
 	/**
 	 * Rename a title, rename any dependent objects.
@@ -485,9 +485,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameTitle(
-			wxString const& inVenue,
-			wxString const& inOldTitle,
-			wxString const& inNewTitle);
+			std::wstring const& inVenue,
+			std::wstring const& inOldTitle,
+			std::wstring const& inNewTitle);
 
 	/**
 	 * Delete a title, remove any dependent objects.
@@ -496,8 +496,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteTitle(
-			wxString const& inVenue,
-			wxString const& inTitle);
+			std::wstring const& inVenue,
+			std::wstring const& inTitle);
 
 	/**
 	 * Number of events in use.
@@ -507,8 +507,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumEventsInUse(
-			wxString const& inVenue,
-			wxString const& inEvent) const;
+			std::wstring const& inVenue,
+			std::wstring const& inEvent) const;
 
 	/**
 	 * Rename an event, rename any dependent objects.
@@ -518,9 +518,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameEvent(
-			wxString const& inVenue,
-			wxString const& inOldEvent,
-			wxString const& inNewEvent);
+			std::wstring const& inVenue,
+			std::wstring const& inOldEvent,
+			std::wstring const& inNewEvent);
 
 	/**
 	 * Delete an event, remove any dependent objects.
@@ -529,8 +529,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteEvent(
-			wxString const& inVenue,
-			wxString const& inEvent);
+			std::wstring const& inVenue,
+			std::wstring const& inEvent);
 
 	/**
 	 * Add a dog.

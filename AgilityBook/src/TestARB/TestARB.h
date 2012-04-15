@@ -26,7 +26,7 @@
 
 #define IDR_DTD_AGILITYRECORDBOOK	1
 
-extern const wxChar* const gc_Configs[];
+extern const wchar_t* const gc_Configs[];
 extern size_t gc_NumConfigs;
 
 

@@ -31,8 +31,8 @@ public:
 	 * @return Success
 	 */
 	static bool LoadWxFile(
-			wxString const& zipFile,
-			wxString const& archiveFile,
+			std::wstring const& zipFile,
+			std::wstring const& archiveFile,
 			std::string& outData);
 
 	CConfigHandler();

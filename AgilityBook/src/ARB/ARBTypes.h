@@ -25,6 +25,7 @@
  */
 
 #include <set>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -88,8 +89,6 @@ ARB_TYPEDEF_LIST(ARBInfoItem)
 ARB_TYPEDEF_LIST(ARBTraining)
 ARB_TYPEDEF2(ElementNode)
 ARB_TYPEDEF2(ElementText)
-
-#include "ARBString.h"
 
 
 /**
@@ -161,7 +160,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<wxString>& ioStrings) const
+	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		size_t nItems = 0;
 		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin();
@@ -238,7 +237,7 @@ public:
 class ARBErrorCallback
 {
 public:
-	ARBErrorCallback(wxString& ioErrMsg)
+	ARBErrorCallback(std::wostringstream& ioErrMsg)
 		: m_ErrMsg(ioErrMsg)
 	{
 	}
@@ -249,21 +248,25 @@ public:
 	 * @param pMsg Message to display to user.
 	 * @return True to continue, false to abort.
 	 */
-	virtual bool OnError(wxChar const* const pMsg)
+	virtual bool OnError(wchar_t const* const pMsg)
 	{
 		return false;
+	}
+	virtual bool OnError(std::wstring const& msg)
+	{
+		return OnError(msg.c_str());
 	}
 
 	/**
 	 * Log an error message.
 	 */
-	virtual void LogMessage(wxString const& inMsg)
+	virtual void LogMessage(std::wstring const& inMsg)
 	{
-		m_ErrMsg += inMsg;
+		m_ErrMsg << inMsg;
 	}
 
 protected:
-	wxString& m_ErrMsg;
+	std::wostringstream& m_ErrMsg;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -367,12 +370,12 @@ public:
 	/**
 	 * Get a single string listing all valid types.
 	 */
-	static wxString GetValidTypes();
+	static std::wstring GetValidTypes();
 
 	/**
 	 * Get a list of all valid types.
 	 */
-	static void GetValidTypes(std::vector<wxString>& outTypes);
+	static void GetValidTypes(std::vector<std::wstring>& outTypes);
 
 	/**
 	 * Get the number of valid types.
@@ -466,7 +469,7 @@ public:
 	/**
 	 * Translate the enum value to a string
 	 */
-	wxString str() const;
+	std::wstring str() const;
 
 	/**
 	 * Load a Q
@@ -476,7 +479,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			wxString const& inAttrib,
+			std::wstring const& inAttrib,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -489,7 +492,7 @@ public:
 	 */
 	bool Save(
 			ElementNodePtr ioTree,
-			wxChar const* const inAttribName) const;
+			wchar_t const* const inAttribName) const;
 
 private:
 	eQ m_Q;

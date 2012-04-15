@@ -34,7 +34,7 @@
 #include <wx/datetime.h>
 #include <wx/intl.h>
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
@@ -427,7 +427,7 @@ std::wstring ARBDate::GetString(
 	case eVerbose:
 		{
 			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
-			date = dt.Format(wxT("%A, %B %d, %Y")).wx_str();
+			date = StringUtil::stringW(dt.Format(wxT("%A, %B %d, %Y")));
 		}
 		break;
 	default:				///< YYYY-MM-DD or MM/DD/YYYY
@@ -586,7 +586,7 @@ time_t ARBDate::GetDate() const
 }
 
 
-#ifdef _WIN32
+#if defined(_WIN32)
 bool ARBDate::GetDate(SYSTEMTIME& outTime) const
 {
 	if (0 < m_Julian)

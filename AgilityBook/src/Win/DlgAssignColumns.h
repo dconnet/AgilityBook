@@ -176,7 +176,7 @@ class CDlgAssignColumns : public wxDialog
 {
 public:
 	static int GetFormatFromColumnID(long column);
-	static wxString GetNameFromColumnID(long column);
+	static std::wstring GetNameFromColumnID(long column);
 	static bool GetColumnOrder(
 			CAgilityBookOptions::ColumnOrder eOrder,
 			size_t idxColumn,
@@ -185,13 +185,13 @@ public:
 	static bool GetColumnOrder(
 			CAgilityBookOptions::ColumnOrder eOrder,
 			size_t idxColumn,
-			wxString const& namedColumn,
+			std::wstring const& namedColumn,
 			std::vector<long>& values,
 			bool bDefaultValues = false);
 	static bool SetColumnOrder(
 			CAgilityBookOptions::ColumnOrder eOrder,
 			size_t idxColumn,
-			wxString const& namedColumn,
+			std::wstring const& namedColumn,
 			std::vector<long> const& values);
 
 public:

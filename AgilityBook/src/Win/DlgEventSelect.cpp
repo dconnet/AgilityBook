@@ -27,6 +27,7 @@
 #include "ARBConfigLevel.h"
 #include "ARBConfigSubLevel.h"
 #include "ARBConfigVenue.h"
+#include "ARBString.h"
 #include "Globals.h"
 #include <wx/valgen.h>
 
@@ -77,9 +78,9 @@ END_EVENT_TABLE()
 CDlgEventSelect::CDlgEventSelect(
 		ARBConfigVenuePtr inVenue,
 		ARBDate const& inDate,
-		wxString const& inDivision,
-		wxString const& inLevel,
-		wxString const& inEvent,
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		std::wstring const& inEvent,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlDivisions(NULL)
@@ -192,6 +193,24 @@ CDlgEventSelect::CDlgEventSelect(
 }
 
 
+std::wstring CDlgEventSelect::GetDivision() const
+{
+	return StringUtil::stringW(m_Division);
+}
+
+
+std::wstring CDlgEventSelect::GetLevel() const
+{
+	return StringUtil::stringW(m_Level);
+}
+
+
+std::wstring CDlgEventSelect::GetEvent() const
+{
+	return StringUtil::stringW(m_Event);
+}
+
+
 void CDlgEventSelect::UpdateControls()
 {
 	if (m_ctrlOk)
@@ -210,7 +229,7 @@ void CDlgEventSelect::UpdateControls()
 
 void CDlgEventSelect::FillLevels()
 {
-	wxString level;
+	std::wstring level;
 	int index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
@@ -262,7 +281,7 @@ void CDlgEventSelect::FillLevels()
 
 void CDlgEventSelect::FillEvents()
 {
-	wxString evt;
+	std::wstring evt;
 	int index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND != index)
 	{

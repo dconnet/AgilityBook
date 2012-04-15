@@ -42,6 +42,7 @@
 #include "AgilityBookOptions.h"
 #include "AgilityBookPanels.h"
 #include "ARBCalendar.h"
+#include "ARBString.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgCalendar.h"
@@ -607,7 +608,7 @@ void CAgilityBookCalendar::OnCopy()
 	if (!clpData.isOkay())
 		return;
 
-	static const wxChar* scColumns[] =
+	static const wchar_t* scColumns[] =
 	{
 		arbT("IDS_COL_START_DATE"),
 		arbT("IDS_COL_END_DATE"),
@@ -667,7 +668,7 @@ void CAgilityBookCalendar::OnCopy()
 			maxLen[COL_NOTES] = len;
 	}
 	// The header
-	wxString data = wxString::Format(wxT(" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s"),
+	std::wstring data = wxString::Format(wxT(" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s"),
 		maxLen[COL_START_DATE], columns[COL_START_DATE].c_str(),
 		maxLen[COL_END_DATE], columns[COL_END_DATE].c_str(),
 		maxLen[COL_VENUE], columns[COL_VENUE].c_str(),
@@ -676,7 +677,7 @@ void CAgilityBookCalendar::OnCopy()
 		maxLen[COL_OPENS], columns[COL_OPENS].c_str(),
 		maxLen[COL_CLOSES], columns[COL_CLOSES].c_str(),
 		maxLen[COL_NOTES], columns[COL_NOTES].c_str());
-	data.Trim();
+	data = StringUtil::Trim(data);
 	data += wxT("\n");
 
 	// The data
@@ -1262,7 +1263,7 @@ bool CAgilityBookCalendarView::IsFiltered() const
 }
 
 
-bool CAgilityBookCalendarView::GetMessage(wxString& msg) const
+bool CAgilityBookCalendarView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
@@ -1271,7 +1272,7 @@ bool CAgilityBookCalendarView::GetMessage(wxString& msg) const
 }
 
 
-bool CAgilityBookCalendarView::GetMessage2(wxString& msg) const
+bool CAgilityBookCalendarView::GetMessage2(std::wstring& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;

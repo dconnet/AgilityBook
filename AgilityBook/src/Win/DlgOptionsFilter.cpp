@@ -33,6 +33,7 @@
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBConfigVenue.h"
+#include "ARBString.h"
 #include "CheckTreeCtrl.h"
 #include "Validators.h"
 #include "Widgets.h"
@@ -85,9 +86,9 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	BIND_OR_CONNECT_CTRL(m_ctrlFilters, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnSelchangeFilterNames);
 	m_ctrlFilters->SetHelpText(_("HIDC_OPT_FILTER_NAMES"));
 	m_ctrlFilters->SetToolTip(_("HIDC_OPT_FILTER_NAMES"));
-	std::vector<wxString> filterNames;
+	std::vector<std::wstring> filterNames;
 	m_FilterOptions.GetAllFilterNames(filterNames, true);
-	for (std::vector<wxString>::iterator iterName = filterNames.begin();
+	for (std::vector<std::wstring>::iterator iterName = filterNames.begin();
 		iterName != filterNames.end();
 		++iterName)
 	{
@@ -376,12 +377,12 @@ void CDlgOptionsFilter::FillControls()
 
 	// This is reset everytime just to make checking items easier
 	m_ctrlNames->Clear();
-	std::set<wxString> allLogNames;
+	std::set<std::wstring> allLogNames;
 	m_pDoc->Book().GetTraining().GetAllNames(allLogNames);
-	std::set<wxString> names;
+	std::set<std::wstring> names;
 	m_FilterOptions.GetTrainingFilterNames(names);
 	bool bFix = false;
-	for (std::set<wxString>::iterator iter = names.begin();
+	for (std::set<std::wstring>::iterator iter = names.begin();
 		iter != names.end();
 		)
 	{
@@ -399,7 +400,7 @@ void CDlgOptionsFilter::FillControls()
 	}
 	if (bFix)
 		m_FilterOptions.SetTrainingFilterNames(names);
-	for (std::set<wxString>::iterator iterLog = allLogNames.begin();
+	for (std::set<std::wstring>::iterator iterLog = allLogNames.begin();
 		iterLog != allLogNames.end();
 		++iterLog)
 	{
@@ -521,7 +522,7 @@ void CDlgOptionsFilter::FillControls()
 
 void CDlgOptionsFilter::FillFilter(
 		wxTreeItemId hItem,
-		wxString path,
+		std::wstring path,
 		std::vector<CVenueFilter>& outVenues)
 {
 	if (hItem.IsOk() && hItem != m_ctrlVenue->GetRootItem())
@@ -533,7 +534,7 @@ void CDlgOptionsFilter::FillFilter(
 		{
 			if (!m_ctrlVenue->GetChecked(hItem))
 				return;
-			if (!path.IsEmpty())
+			if (!path.empty())
 				path += wxT("/");
 			path += m_ctrlVenue->GetItemText(hItem);
 		}
@@ -543,12 +544,12 @@ void CDlgOptionsFilter::FillFilter(
 	if (!hChildItem.IsOk())
 	{
 		// We're at a leaf...
-		std::vector<wxString> rawFilter;
-		int pos;
-		while (0 <= (pos = path.Find('/')))
+		std::vector<std::wstring> rawFilter;
+		std::wstring::size_type pos;
+		while (std::wstring::npos != (pos = path.find('/')))
 		{
-			rawFilter.push_back(path.Left(pos));
-			path = path.Mid(pos+1);
+			rawFilter.push_back(path.substr(0, pos));
+			path = path.substr(pos+1);
 		}
 		rawFilter.push_back(path);
 		if (0 < rawFilter.size())
@@ -598,7 +599,7 @@ void CDlgOptionsFilter::OnSelchangeFilterNames(wxCommandEvent& evt)
 	int idx = m_ctrlFilters->GetSelection();
 	if (0 <= idx)
 	{
-		m_FilterOptions.SetCurrentFilter(m_ctrlFilters->GetString(idx));
+		m_FilterOptions.SetCurrentFilter(StringUtil::stringW(m_ctrlFilters->GetString(idx)));
 		FillControls();
 		TransferDataToWindow();
 	}
@@ -614,7 +615,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesSave(wxCommandEvent& evt)
 	CommitChanges();
 	if (!m_FilterName.empty())
 	{
-		if (m_FilterOptions.AddFilter(m_FilterName))
+		if (m_FilterOptions.AddFilter(StringUtil::stringW(m_FilterName)))
 			m_ctrlFilters->Append(m_FilterName);
 		// After saving, reset in case anything was changed.
 		FillControls();
@@ -634,7 +635,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesDelete(wxCommandEvent& evt)
 		int idx = m_ctrlFilters->FindString(m_FilterName, true);
 		if (0 <= idx)
 		{
-			wxString name = m_FilterName;
+			std::wstring name = m_FilterName;
 			m_FilterOptions.DeleteFilter(name);
 			m_ctrlFilters->Delete(idx);
 			m_FilterName.clear();
@@ -674,7 +675,7 @@ void CDlgOptionsFilter::OnFilterLog(wxCommandEvent& evt)
 void CDlgOptionsFilter::OnFilterLogNames(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	std::set<wxString> names;
+	std::set<std::wstring> names;
 	for (unsigned int item = 0; item < m_ctrlNames->GetCount(); ++item)
 	{
 		if (m_ctrlNames->IsChecked(item))

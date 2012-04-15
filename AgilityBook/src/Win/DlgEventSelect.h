@@ -27,14 +27,14 @@ public:
 	CDlgEventSelect(
 			ARBConfigVenuePtr inVenue,
 			ARBDate const& inDate,
-			wxString const& inDivision,
-			wxString const& inLevel,
-			wxString const& inEvent,
+			std::wstring const& inDivision,
+			std::wstring const& inLevel,
+			std::wstring const& inEvent,
 			wxWindow* pParent = NULL);
 
-	wxString GetDivision() const	{return m_Division;}
-	wxString GetLevel() const		{return m_Level;}
-	wxString GetEvent() const		{return m_Event;}
+	std::wstring GetDivision() const;
+	std::wstring GetLevel() const;
+	std::wstring GetEvent() const;
 
 private:
 	void UpdateControls();

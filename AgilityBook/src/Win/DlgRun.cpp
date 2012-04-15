@@ -101,6 +101,7 @@
 #include "ARBDogClub.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "ARBString.h"
 #include "CheckLink.h"
 #include "ClipBoard.h"
 #include "ComboBoxes.h"
@@ -164,8 +165,8 @@ bool CLinkDropTarget::OnDropFiles(
 {
 	for (size_t n = 0; n < filenames.size(); ++n)
 	{
-		m_dlg->m_Run->AddLink(filenames[n]);
-		m_dlg->ListLinkFiles(filenames[n]);
+		m_dlg->m_Run->AddLink(StringUtil::stringW(filenames[n]));
+		m_dlg->ListLinkFiles(StringUtil::stringW(filenames[n]).c_str());
 	}
 	return true;
 }
@@ -175,7 +176,7 @@ bool CLinkDropTarget::OnDropFiles(
 static struct
 {
 	int fmt;
-	wxChar const* idText;
+	wchar_t const* idText;
 } const scRefRunColumns[] = {
 	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_Q")},
 	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_PLACE")},
@@ -235,7 +236,7 @@ public:
 		: m_RefRun(refRun)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	ARBDogReferenceRunPtr GetData() const		{return m_RefRun;}
 	void SetData(ARBDogReferenceRunPtr data)	{m_RefRun = data;}
 private:
@@ -243,40 +244,39 @@ private:
 };
 
 
-wxString CDlgDogRefRunData::OnNeedText(long iCol) const
+std::wstring CDlgDogRefRunData::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wostringstream str;
 	switch (iCol)
 	{
 	default:
 		break;
 	case 0: // Q
-		str = m_RefRun->GetQ().str();
+		str << m_RefRun->GetQ();
 		break;
 	case 1: // Place
 		str << m_RefRun->GetPlace();
 		break;
 	case 2: // Score
-		str = m_RefRun->GetScore();
+		str << m_RefRun->GetScore();
 		break;
 	case 3: // Time
-		str = ARBDouble::ToString(m_RefRun->GetTime());
+		str << ARBDouble::ToString(m_RefRun->GetTime());
 		break;
 	case 4: // Name
-		str = m_RefRun->GetName();
+		str << m_RefRun->GetName();
 		break;
 	case 5: // Height
-		str = m_RefRun->GetHeight();
+		str << m_RefRun->GetHeight();
 		break;
 	case 6: // Breed
-		str = m_RefRun->GetBreed();
+		str << m_RefRun->GetBreed();
 		break;
 	case 7: // Note
-		str = m_RefRun->GetNote();
-		str.Replace(wxT("\n"), wxT(" "));
+		str << StringUtil::Replace(m_RefRun->GetNote(), wxT("\n"), wxT(" "));
 		break;
 	}
-	return str;
+	return str.str();
 }
 
 
@@ -519,13 +519,12 @@ void CMetaDataDisplay::OnCopy()
 				if (bText)
 				{
 					m_ViewText = true;
-					wxString str;
+					std::wstring str;
 					clpData.GetData(str);
-					str.Trim(true);
-					str.Trim(false);
+					str = StringUtil::Trim(str);
 					// We do the replace since CRCD3 has "\n\nhdrs\r\netc"
 					// Standardize to \n.
-					str.Replace(wxT("\r\n"), wxT("\n"));
+					str = StringUtil::Replace(str, wxT("\r\n"), wxT("\n"));
 					m_Run->SetCRCD(str);
 					SetLabel(str);
 					if (0 < str.length())
@@ -634,9 +633,9 @@ void CMetaDataDisplay::OnPaint(wxPaintEvent& evt)
 /////////////////////////////////////////////////////////////////////////////
 
 // This is just to get the text in a sunken static control to look better
-static wxString Pad(wxString const& val)
+static std::wstring Pad(std::wstring const& val)
 {
-	wxString padded(wxT(" "));
+	std::wstring padded(wxT(" "));
 	padded += val;
 	padded += wxT(" ");
 	return padded;
@@ -752,7 +751,8 @@ CDlgRun::CDlgRun(
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, pDoc->AddDogToCaption(_("IDS_RUN_PROPERTIES")),
+	Create(pParent, wxID_ANY,
+			pDoc->AddDogToCaption(StringUtil::stringW(_("IDS_RUN_PROPERTIES"))),
 			wxDefaultPosition, wxDefaultSize,
 			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
@@ -769,19 +769,19 @@ CDlgRun::CDlgRun(
 		m_Date.SetToday();
 	if (m_Height.empty())
 	{
-		wxString last = CAgilityBookOptions::GetLastEnteredHeight();
+		std::wstring last = CAgilityBookOptions::GetLastEnteredHeight();
 		if (!last.empty())
 			m_Height = last;
 	}
 	if (m_Judge.empty())
 	{
-		wxString last = CAgilityBookOptions::GetLastEnteredJudge();
+		std::wstring last = CAgilityBookOptions::GetLastEnteredJudge();
 		if (!last.empty())
 			m_Judge = last;
 	}
 	if (m_Handler.empty())
 	{
-		wxString last = CAgilityBookOptions::GetLastEnteredHandler();
+		std::wstring last = CAgilityBookOptions::GetLastEnteredHandler();
 		if (!last.empty())
 			m_Handler = last;
 	}
@@ -926,9 +926,9 @@ CDlgRun::CDlgRun(
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlHeight->SetHelpText(_("HIDC_RUNSCORE_HEIGHT"));
 	m_ctrlHeight->SetToolTip(_("HIDC_RUNSCORE_HEIGHT"));
-	std::set<wxString> names;
+	std::set<std::wstring> names;
 	m_pDoc->Book().GetAllHeights(names);
-	std::set<wxString>::const_iterator iter;
+	std::set<std::wstring>::const_iterator iter;
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
 		m_ctrlHeight->Append((*iter));
@@ -1697,7 +1697,7 @@ bool CDlgRun::GetEvent(ARBConfigEventPtr* outEvent) const
 	int index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND == index)
 		return false;
-	wxString str = m_ctrlEvents->GetString(index);
+	std::wstring str = m_ctrlEvents->GetString(index);
 	if (str.empty())
 		return false;
 	return m_pVenue->GetEvents().FindEvent(str, outEvent);
@@ -1709,7 +1709,7 @@ bool CDlgRun::GetScoring(ARBConfigScoringPtr* outScoring) const
 	bool bFound = false;
 	if (outScoring)
 		outScoring->reset();
-	wxString div, level;
+	std::wstring div, level;
 	int index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
@@ -1774,7 +1774,7 @@ void CDlgRun::FillDivisions(bool bOnEventChange)
 	// Then try to find the last entered
 	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection())
 	{
-		wxString last = CAgilityBookOptions::GetLastEnteredDivision();
+		std::wstring last = CAgilityBookOptions::GetLastEnteredDivision();
 		if (0 < last.length())
 		{
 			index = m_ctrlDivisions->FindString(last, true);
@@ -1790,7 +1790,7 @@ void CDlgRun::FillDivisions(bool bOnEventChange)
 	// Force the division into the run. SetSelection will not cause an update.
 	int idxDiv = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != idxDiv)
-		m_Run->SetDivision(m_ctrlDivisions->GetString(idxDiv));
+		m_Run->SetDivision(StringUtil::stringW(m_ctrlDivisions->GetString(idxDiv)));
 	FillLevels(bOnEventChange);
 }
 
@@ -1848,7 +1848,7 @@ void CDlgRun::FillLevels(bool bOnEventChange)
 		}
 		if (wxNOT_FOUND == m_ctrlLevels->GetSelection())
 		{
-			wxString last = CAgilityBookOptions::GetLastEnteredLevel();
+			std::wstring last = CAgilityBookOptions::GetLastEnteredLevel();
 			if (0 < last.length())
 			{
 				int idx = m_ctrlLevels->FindString(last, true);
@@ -1864,7 +1864,7 @@ void CDlgRun::FillLevels(bool bOnEventChange)
 	}
 	int idxLvl = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != idxLvl)
-		m_Run->SetLevel(m_ctrlLevels->GetString(idxLvl));
+		m_Run->SetLevel(StringUtil::stringW(m_ctrlLevels->GetString(idxLvl)));
 	FillEvents(bOnEventChange);
 	SetTitlePoints();
 }
@@ -1918,10 +1918,10 @@ void CDlgRun::FillSubNames()
 	{
 		if (pEvent->HasSubNames())
 		{
-			std::set<wxString> names;
+			std::set<std::wstring> names;
 			m_pDoc->Book().GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
 			m_ctrlSubNames->Clear();
-			for (std::set<wxString>::const_iterator iter = names.begin();
+			for (std::set<std::wstring>::const_iterator iter = names.begin();
 				iter != names.end();
 				++iter)
 			{
@@ -1946,12 +1946,12 @@ void CDlgRun::FillSubNames()
 
 void CDlgRun::FillJudges()
 {
-	std::set<wxString> names;
+	std::set<std::wstring> names;
 	m_pDoc->Book().GetAllJudges(names, true, true);
 	if (!m_Run->GetJudge().empty())
 		names.insert(m_Run->GetJudge());
 	m_ctrlJudge->Clear();
-	for (std::set<wxString>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
+	for (std::set<std::wstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
 		m_ctrlJudge->Append(*iter);
 	}
@@ -1961,13 +1961,13 @@ void CDlgRun::FillJudges()
 
 void CDlgRun::SetEventDesc(ARBConfigEventPtr inEvent)
 {
-	wxString desc;
+	std::wstring desc;
 	if (inEvent)
 		desc += inEvent->GetDesc();
 	ARBConfigScoringPtr pScoring;
 	if (GetScoring(&pScoring))
 	{
-		wxString const& note = pScoring->GetNote();
+		std::wstring const& note = pScoring->GetNote();
 		if (!desc.empty() && 0 < note.length())
 			desc += wxT("\n==========\n");
 		desc += note;
@@ -2534,7 +2534,7 @@ void CDlgRun::ListRefRuns()
 }
 
 
-void CDlgRun::GetAllHeights(std::set<wxString>& outNames)
+void CDlgRun::GetAllHeights(std::set<std::wstring>& outNames)
 {
 	m_pDoc->Book().GetAllHeights(outNames);
 	for (long index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
@@ -2542,7 +2542,7 @@ void CDlgRun::GetAllHeights(std::set<wxString>& outNames)
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
 		if (pRefRun)
 		{
-			wxString const& ht = pRefRun->GetHeight();
+			std::wstring const& ht = pRefRun->GetHeight();
 			if (0 < ht.length())
 				outNames.insert(ht);
 		}
@@ -2550,7 +2550,7 @@ void CDlgRun::GetAllHeights(std::set<wxString>& outNames)
 }
 
 
-void CDlgRun::GetAllCallNames(std::set<wxString>& outNames)
+void CDlgRun::GetAllCallNames(std::set<std::wstring>& outNames)
 {
 	m_pDoc->Book().GetAllCallNames(outNames);
 	for (int index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
@@ -2558,7 +2558,7 @@ void CDlgRun::GetAllCallNames(std::set<wxString>& outNames)
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
 		if (pRefRun)
 		{
-			wxString const& ht = pRefRun->GetName();
+			std::wstring const& ht = pRefRun->GetName();
 			if (0 < ht.length())
 				outNames.insert(ht);
 		}
@@ -2566,7 +2566,7 @@ void CDlgRun::GetAllCallNames(std::set<wxString>& outNames)
 }
 
 
-void CDlgRun::GetAllBreeds(std::set<wxString>& outNames)
+void CDlgRun::GetAllBreeds(std::set<std::wstring>& outNames)
 {
 	m_pDoc->Book().GetAllBreeds(outNames);
 	for (int index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
@@ -2574,7 +2574,7 @@ void CDlgRun::GetAllBreeds(std::set<wxString>& outNames)
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
 		if (pRefRun)
 		{
-			wxString const& ht = pRefRun->GetBreed();
+			std::wstring const& ht = pRefRun->GetBreed();
 			if (0 < ht.length())
 				outNames.insert(ht);
 		}
@@ -2587,7 +2587,7 @@ void CDlgRun::EditRefRun()
 	long nItem = m_ctrlRefRuns->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		std::set<wxString> heights, names, breeds;
+		std::set<std::wstring> heights, names, breeds;
 		GetAllHeights(heights);
 		GetAllCallNames(names);
 		GetAllBreeds(breeds);
@@ -2629,14 +2629,14 @@ void CDlgRun::UpdateLinksButtons()
 }
 
 
-void CDlgRun::ListLinkFiles(wxChar const* pItem)
+void CDlgRun::ListLinkFiles(wchar_t const* pItem)
 {
 	wxBusyCursor wait;
 	m_ctrlLinks->DeleteAllItems();
-	std::set<wxString> links;
+	std::set<std::wstring> links;
 	m_Run->GetLinks(links);
 	long i = 0;
-	for (std::set<wxString>::iterator iter = links.begin();
+	for (std::set<std::wstring>::iterator iter = links.begin();
 		iter != links.end();
 		++iter)
 	{
@@ -2649,7 +2649,7 @@ void CDlgRun::ListLinkFiles(wxChar const* pItem)
 }
 
 
-int CDlgRun::GetImageIndex(wxString const& inLink)
+int CDlgRun::GetImageIndex(std::wstring const& inLink)
 {
 	wxBusyCursor wait;
 	int img = m_imgEmpty;
@@ -2669,17 +2669,17 @@ void CDlgRun::EditLink()
 	int nItem = m_ctrlLinks->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
+		std::wstring name = GetListColumnText(m_ctrlLinks, nItem, 0);
 		CDlgSelectURL dlg(name, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			wxString newName = dlg.Name();
+			std::wstring newName = dlg.Name();
 			if (name != newName)
 			{
 				m_Run->RemoveLink(name);
 				if (0 < newName.length())
 					m_Run->AddLink(newName);
-				ListLinkFiles(newName);
+				ListLinkFiles(newName.c_str());
 			}
 		}
 	}
@@ -2697,7 +2697,7 @@ void CDlgRun::OnSelchangeDivision(wxCommandEvent& evt)
 {
 	int index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != index)
-		m_Run->SetDivision(m_ctrlDivisions->GetString(index));
+		m_Run->SetDivision(StringUtil::stringW(m_ctrlDivisions->GetString(index)));
 	FillLevels(true);
 }
 
@@ -2706,7 +2706,7 @@ void CDlgRun::OnSelchangeLevel(wxCommandEvent& evt)
 {
 	int index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != index)
-		m_Run->SetLevel(m_ctrlLevels->GetString(index));
+		m_Run->SetLevel(StringUtil::stringW(m_ctrlLevels->GetString(index)));
 	FillEvents(true);
 }
 
@@ -2715,7 +2715,7 @@ void CDlgRun::OnSelchangeEvent(wxCommandEvent& evt)
 {
 	int index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND != index)
-		m_Run->SetEvent(m_ctrlEvents->GetString(index));
+		m_Run->SetEvent(StringUtil::stringW(m_ctrlEvents->GetString(index)));
 	FillSubNames();
 	UpdateControls(true);
 	ARBConfigEventPtr pEvent;
@@ -2727,7 +2727,7 @@ void CDlgRun::OnSelchangeEvent(wxCommandEvent& evt)
 void CDlgRun::OnJudgeNotes(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	CDlgInfoNote dlg(m_pDoc, ARBInfo::eJudgeInfo, m_Judge, this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfo::eJudgeInfo, StringUtil::stringW(m_Judge), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_Judge = dlg.CurrentSelection();
@@ -2777,7 +2777,7 @@ void CDlgRun::OnSelchangeQ(wxCommandEvent& evt)
 void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 {
 	// See DlgCalendar.cpp on why TransferDataFromWindow is bad here!
-	StringUtil::ToDouble(m_ctrlSCT->GetValue(), m_SCT);
+	StringUtil::ToDouble(StringUtil::stringW(m_ctrlSCT->GetValue()), m_SCT);
 	m_Run->GetScoring().SetSCT(m_SCT);
 	SetMinYPS();
 	SetObstacles();
@@ -2788,7 +2788,7 @@ void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 
 void CDlgRun::OnClosingTimeChange(wxCommandEvent& evt)
 {
-	StringUtil::ToDouble(m_ctrlMinYPSClosingTime->GetValue(), m_SCT2);
+	StringUtil::ToDouble(StringUtil::stringW(m_ctrlMinYPSClosingTime->GetValue()), m_SCT2);
 	m_Run->GetScoring().SetSCT2(m_SCT2);
 	SetObstacles();
 }
@@ -2838,7 +2838,7 @@ void CDlgRun::OnReqClosingChange(wxCommandEvent& evt)
 
 void CDlgRun::OnTimeChange(wxCommandEvent& evt)
 {
-	StringUtil::ToDouble(m_ctrlTime->GetValue(), m_Time);
+	StringUtil::ToDouble(StringUtil::stringW(m_ctrlTime->GetValue()), m_Time);
 	m_Run->GetScoring().SetTime(m_Time);
 	SetYPS();
 	SetObstacles();
@@ -2949,7 +2949,7 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 			NULL,
 			&pScoring))
 		{
-			wxString nScore;
+			std::wstring nScore;
 			switch (pScoring->GetScoringStyle())
 			{
 			default:
@@ -2966,7 +2966,7 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 		}
 	}
 	ref->SetQ(ARB_Q::eQ_Q);
-	std::set<wxString> heights, names, breeds;
+	std::set<std::wstring> heights, names, breeds;
 	GetAllHeights(heights);
 	GetAllCallNames(names);
 	GetAllBreeds(breeds);
@@ -3086,11 +3086,11 @@ void CDlgRun::OnLinksNew(wxCommandEvent& evt)
 	CDlgSelectURL dlg(wxT(""), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		wxString newName = dlg.Name();
+		std::wstring newName = dlg.Name();
 		if (0 < newName.length())
 		{
 			m_Run->AddLink(newName);
-			ListLinkFiles(newName);
+			ListLinkFiles(newName.c_str());
 		}
 	}
 }
@@ -3107,7 +3107,7 @@ void CDlgRun::OnLinksDelete(wxCommandEvent& evt)
 	long nItem = m_ctrlLinks->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
+		std::wstring name = GetListColumnText(m_ctrlLinks, nItem, 0);
 		m_Run->RemoveLink(name);
 		ListLinkFiles(NULL);
 	}
@@ -3119,7 +3119,7 @@ void CDlgRun::OnLinksOpen(wxCommandEvent& evt)
 	int nItem = m_ctrlLinks->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
+		std::wstring name = GetListColumnText(m_ctrlLinks, nItem, 0);
 		wxLaunchDefaultBrowser(name);
 	}
 }
@@ -3166,7 +3166,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 		m_ctrlDivisions->SetFocus();
 		return;
 	}
-	wxString curDiv = m_ctrlDivisions->GetString(index);
+	std::wstring curDiv = m_ctrlDivisions->GetString(index);
 
 	index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND == index)
@@ -3185,7 +3185,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 		m_ctrlEvents->SetFocus();
 		return;
 	}
-	wxString curEvent = m_ctrlEvents->GetString(index);
+	std::wstring curEvent = m_ctrlEvents->GetString(index);
 
 	ARBConfigEventPtr pEvent;
 	m_pVenue->GetEvents().FindEvent(curEvent, &pEvent);
@@ -3213,12 +3213,12 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	//@todo: Add integrity checks - things like snooker score >=37? is Q set?
 
 	m_Run->SetDate(m_Date);
-	m_Run->SetSubName(m_SubName);
-	m_Run->SetHeight(m_Height);
-	m_Run->SetJudge(m_Judge);
-	m_Run->SetHandler(m_Handler);
-	m_Run->SetConditions(m_Conditions);
-	m_Run->SetNote(m_Comments);
+	m_Run->SetSubName(StringUtil::stringW(m_SubName));
+	m_Run->SetHeight(StringUtil::stringW(m_Height));
+	m_Run->SetJudge(StringUtil::stringW(m_Judge));
+	m_Run->SetHandler(StringUtil::stringW(m_Handler));
+	m_Run->SetConditions(StringUtil::stringW(m_Conditions));
+	m_Run->SetNote(StringUtil::stringW(m_Comments));
 	m_Run->SetInClass(m_InClass);
 	m_Run->SetDogsQd(m_DogsQd);
 
@@ -3237,10 +3237,10 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 
 	*m_pRealRun = *m_Run;
 	m_pTrial->SetMultiQs(m_pDoc->Book().GetConfig()); // Note, when adding a new run, this is actually too soon to call - the run isn't in the trial yet
-	CAgilityBookOptions::SetLastEnteredDivision(m_Run->GetDivision());
-	CAgilityBookOptions::SetLastEnteredLevel(m_Run->GetLevel());
-	CAgilityBookOptions::SetLastEnteredHeight(m_Run->GetHeight());
-	CAgilityBookOptions::SetLastEnteredJudge(m_Run->GetJudge());
-	CAgilityBookOptions::SetLastEnteredHandler(m_Run->GetHandler());
+	CAgilityBookOptions::SetLastEnteredDivision(m_Run->GetDivision().c_str());
+	CAgilityBookOptions::SetLastEnteredLevel(m_Run->GetLevel().c_str());
+	CAgilityBookOptions::SetLastEnteredHeight(m_Run->GetHeight().c_str());
+	CAgilityBookOptions::SetLastEnteredJudge(m_Run->GetJudge().c_str());
+	CAgilityBookOptions::SetLastEnteredHandler(m_Run->GetHandler().c_str());
 	EndDialog(wxID_OK);
 }

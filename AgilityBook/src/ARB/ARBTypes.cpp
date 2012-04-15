@@ -25,18 +25,22 @@
 
 #include "stdafx.h"
 #include "ARBTypes.h"
-#include <iostream>
-#include <sstream>
-#include <math.h>
-#include <time.h>
-#include <wx/log.h>
 
 #include "ARBLocalization.h"
 #include "ARBString.h"
 #include "ARBStructure.h"
 #include "Element.h"
+#include <iostream>
+#include <math.h>
+#include <sstream>
+#include <time.h>
+#include <wx/string.h>
 
-#ifdef __WXMSW__
+#if defined(__WXWINDOWS__)
+#include <wx/string.h>
+#endif
+
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
@@ -103,9 +107,9 @@ std::wstring ARBVersion::str() const
 
 static struct Q2Enum
 {
-	wxChar const* pQ;		///< Actual text in file
+	wchar_t const* pQ;		///< Actual text in file
 	ARB_Q::eQ q;			///< Enum type
-	wxChar const* trans;	///< Translation
+	wchar_t const* trans;	///< Translation
 } const sc_Qs[] =
 {
 	{ATTRIB_QTYPE_NA,  ARB_Q::eQ_NA,     arbT("IDS_QTYPE_NA")},
@@ -118,25 +122,25 @@ static struct Q2Enum
 static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 
 
-wxString ARB_Q::GetValidTypes()
+std::wstring ARB_Q::GetValidTypes()
 {
-	wxString types;
+	std::wostringstream types;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (0 < i)
-			types += wxT(", ");
-		types += wxGetTranslation(sc_Qs[i].trans);
+			types << L", ";
+		types << wxGetTranslation(sc_Qs[i].trans).wx_str();
 	}
-	return types;
+	return types.str();
 }
 
 
-void ARB_Q::GetValidTypes(std::vector<wxString>& outTypes)
+void ARB_Q::GetValidTypes(std::vector<std::wstring>& outTypes)
 {
 	outTypes.clear();
 	for (int i = 0; i < sc_nQs; ++i)
 	{
-		outTypes.push_back(wxGetTranslation(sc_Qs[i].trans));
+		outTypes.push_back(wxGetTranslation(sc_Qs[i].trans).wx_str());
 	}
 }
 
@@ -158,9 +162,9 @@ ARB_Q ARB_Q::GetValidType(int inIndex)
 }
 
 
-wxString ARB_Q::str() const
+std::wstring ARB_Q::str() const
 {
-	wxString s(wxT("?"));
+	std::wstring s(L"?");
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (sc_Qs[i].q == m_Q)
@@ -174,7 +178,7 @@ wxString ARB_Q::str() const
 
 
 bool ARB_Q::Load(
-		wxString const& inAttrib,
+		std::wstring const& inAttrib,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -194,13 +198,13 @@ bool ARB_Q::Load(
 
 bool ARB_Q::Save(
 		ElementNodePtr ioTree,
-		wxChar const* const inAttribName) const
+		wchar_t const* const inAttribName) const
 {
 	// If, somehow, m_Q is set to a value we don't understand,
 	// it will be written as "NA".
 	assert(inAttribName != NULL);
 	bool bOk = false;
-	wxString q(wxT("NA"));
+	std::wstring q(L"NA");
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (m_Q == sc_Qs[i].q)
@@ -222,6 +226,9 @@ std::wstring ARBDouble::ToString(
 		int inPrec,
 		LocaleType eUseDefaultLocale)
 {
+#if !defined(__WXWINDOWS__)
+	eUseDefaultLocale = eNone;
+#endif
 	std::wstring retVal;
 	wchar_t pt = '.';
 	if (eNone == eUseDefaultLocale)
@@ -233,6 +240,7 @@ std::wstring ARBDouble::ToString(
 		str << std::fixed << inValue;
 		retVal = str.str();
 	}
+#if defined(__WXWINDOWS__)
 	else
 	{
 		wxLocale* locale = NULL;
@@ -246,9 +254,10 @@ std::wstring ARBDouble::ToString(
 			tmp = wxString::Format(wxT("%.*f"), inPrec, inValue);
 		else
 			tmp = wxString::Format(wxT("%g"), inValue);
-		retVal = tmp.wx_str();
+		retVal = StringUtil::stringW(tmp);
 		delete locale;
 	}
+#endif
 	std::wstring::size_type pos = retVal.find(pt);
 	if (std::wstring::npos != pos)
 	{
@@ -298,7 +307,7 @@ bool ARBDouble::equal(
 		return false;
 
 	double epsilon = ldexp(inPrec, mag1);
-#ifdef __WXMAC__
+#if defined(__WXMAC__)
 	// On Mac, I'm getting 'int abs(int)'. Doesn't seem to be a double version.
 	double diff = inVal1 - inVal2;
 	if (0.0 > diff)

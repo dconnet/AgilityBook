@@ -19,27 +19,31 @@
 #include "stdafx.h"
 #include "DlgAuthenticate.h"
 
+#include "ARBString.h"
 #include "Widgets.h"
 #include <wx/sizer.h>
 #include <wx/statbox.h>
 #include <wx/valgen.h>
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
 
 CDlgAuthenticate::CDlgAuthenticate(
-		wxString const& userName,
+		std::wstring const& userName,
 		wxWindow* parent,
-		wxString const& caption,
-		wxString const& message)
-	: wxDialog(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize)
+		std::wstring caption,
+		std::wstring message)
+	: wxDialog()
 {
+	if (caption.empty())
+		caption = StringUtil::stringW(_("IDD_AUTHENTICATE"));
+	Create(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize);
 	// Controls (these are done first to control tab order)
 
 	wxStaticText* textMsg = NULL;
-	if (!message.IsEmpty())
+	if (!message.empty())
 	{
 		textMsg = new wxStaticText(this, wxID_ANY, message, wxDefaultPosition, wxDefaultSize, 0);
 		textMsg->Wrap(-1);
@@ -105,3 +109,15 @@ CDlgAuthenticate::CDlgAuthenticate(
 
 
 DEFINE_ON_INIT(CDlgAuthenticate)
+
+
+std::wstring CDlgAuthenticate::GetUserName() const
+{
+	return StringUtil::stringW(m_Name);
+}
+
+
+std::wstring CDlgAuthenticate::GetPassword() const
+{
+	return StringUtil::stringW(m_Password);
+}

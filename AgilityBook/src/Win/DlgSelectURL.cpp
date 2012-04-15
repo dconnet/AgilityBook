@@ -21,6 +21,7 @@
 #include "DlgSelectURL.h"
 
 #include "AgilityBook.h"
+#include "ARBString.h"
 #include "Validators.h"
 #include "Widgets.h"
 
@@ -30,7 +31,7 @@
 
 
 CDlgSelectURL::CDlgSelectURL(
-		wxString const& name,
+		std::wstring const& name,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Name(name)
@@ -80,6 +81,12 @@ CDlgSelectURL::CDlgSelectURL(
 
 
 DEFINE_ON_INIT(CDlgSelectURL)
+
+
+std::wstring CDlgSelectURL::Name() const
+{
+	return StringUtil::stringW(m_Name);
+}
 
 
 void CDlgSelectURL::OnFilename(wxCommandEvent& evt)

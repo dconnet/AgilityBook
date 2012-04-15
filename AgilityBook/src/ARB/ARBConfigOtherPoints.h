@@ -40,7 +40,7 @@ public:
 		eTallyLevelByEvent	///< Separate runs by event and level.
 	} eOtherPointsTally;
 
-	static void GetTallyValidValues(std::vector<wxString>& outValues);
+	static void GetTallyValidValues(std::vector<std::wstring>& outValues);
 
 protected:
 	ARBConfigOtherPoints();
@@ -68,7 +68,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
 		return GetName();
 	}
@@ -78,7 +78,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -107,19 +107,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	wxString const& GetName() const
+	std::wstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(wxString const& inName)
+	void SetName(std::wstring const& inName)
 	{
 		m_Name = inName;
 	}
-	wxString const& GetDescription() const
+	std::wstring const& GetDescription() const
 	{
 		return m_Desc;
 	}
-	void SetDescription(wxString const& inDesc)
+	void SetDescription(std::wstring const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
@@ -141,9 +141,9 @@ public:
 	}
 
 private:
-	wxString m_Name;
+	std::wstring m_Name;
 	eOtherPointsTally m_Tally;
-	wxString m_Desc;
+	std::wstring m_Desc;
 	double m_Default;
 };
 
@@ -173,7 +173,7 @@ public:
 	 * @param inName Name to verify.
 	 * @return Whether the OtherPoints exists.
 	 */
-	bool VerifyOtherPoints(wxString const& inName) const;
+	bool VerifyOtherPoints(std::wstring const& inName) const;
 
 	/**
 	 * Find an otherpoints object.
@@ -182,7 +182,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindOtherPoints(
-			wxString const& inName,
+			std::wstring const& inName,
 			ARBConfigOtherPointsPtr* outPoints = NULL) const;
 
 	/**
@@ -197,5 +197,5 @@ public:
 	 * @param inName Name of object to delete.
 	 * @return Whether the object was deleted or not.
 	 */
-	bool DeleteOtherPoints(wxString const& inName);
+	bool DeleteOtherPoints(std::wstring const& inName);
 };

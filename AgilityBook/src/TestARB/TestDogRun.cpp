@@ -74,7 +74,7 @@ SUITE(TestDogRun)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual wxString GetGenericName() const;
+		//	virtual std::wstring GetGenericName() const;
 		}
 	}
 
@@ -109,7 +109,7 @@ SUITE(TestDogRun)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumOtherPointsInUse(wxString const& inOther) const;
+		//	int NumOtherPointsInUse(std::wstring const& inOther) const;
 		}
 	}
 
@@ -120,8 +120,8 @@ SUITE(TestDogRun)
 		{
 			TODO_TEST
 		//	int RenameOtherPoints(
-		//			wxString const& inOldName,
-		//			wxString const& inNewName);
+		//			std::wstring const& inOldName,
+		//			std::wstring const& inNewName);
 		}
 	}
 
@@ -131,7 +131,7 @@ SUITE(TestDogRun)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteOtherPoints(wxString const& inName);
+		//	int DeleteOtherPoints(std::wstring const& inName);
 		}
 	}
 

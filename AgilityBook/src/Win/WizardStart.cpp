@@ -39,6 +39,7 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "ARBString.h"
 #include "ConfigHandler.h"
 #include "DlgMessage.h"
 #include "Element.h"
@@ -67,7 +68,7 @@
 static struct
 {
 	long regValue;
-	wxChar const* id;
+	wchar_t const* id;
 } s_ImportExportChoices[] =
 {
 	{WIZARD_RADIO_EXCEL, wxT("IDC_WIZARD_START_EXCEL")},
@@ -227,9 +228,9 @@ static struct
 	{
 		ePage nextPage;
 		// Listing (NULL denotes no entry)
-		wxChar const* item;
+		wchar_t const* item;
 		// Description shown when listing is selected.
-		wxChar const* desc;
+		wchar_t const* desc;
 	} data[4]; // Data must agree with radio buttons. [WIZARD_RADIO_*]
 	// excel, spread, arb, calc
 } const sc_Items[] =
@@ -515,15 +516,14 @@ bool CWizardStart::DoWizardFinish()
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					wxString errMsg;
+					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					if (!tree->LoadXML(file.GetPath(), errMsg))
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.length())
+						if (0 < errMsg.str().length())
 						{
-							msg += wxT("\n\n");
-							msg += errMsg;
+							msg << wxT("\n\n") << errMsg.str().c_str();
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -544,15 +544,14 @@ bool CWizardStart::DoWizardFinish()
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					wxString errMsg;
+					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					if (!tree->LoadXML(file.GetPath(), errMsg))
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.length())
+						if (0 < errMsg.str().length())
 						{
-							msg += wxT("\n\n");
-							msg += errMsg;
+							msg << wxT("\n\n") << errMsg.str().c_str();
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -574,11 +573,11 @@ bool CWizardStart::DoWizardFinish()
 				{
 					wxBusyCursor wait;
 					CVersionNum ver(true);
-					wxString verstr = ver.GetVersionString();
+					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, true, false, false, false, false))
 					{
-						tree->SaveXML(file.GetPath());
+						tree->SaveXML(StringUtil::stringW(file.GetPath()));
 					}
 					bOk = true;
 				}
@@ -648,15 +647,14 @@ bool CWizardStart::DoWizardFinish()
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					wxString errMsg;
+					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					if (!tree->LoadXML(file.GetPath(), errMsg))
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.length())
+						if (0 < errMsg.str().length())
 						{
-							msg += wxT("\n\n");
-							msg += errMsg;
+							msg << wxT("\n\n") << errMsg.str().c_str();
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -678,11 +676,11 @@ bool CWizardStart::DoWizardFinish()
 				{
 					wxBusyCursor wait;
 					CVersionNum ver(true);
-					wxString verstr = ver.GetVersionString();
+					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, false, true, false, false, false))
 					{
-						tree->SaveXML(file.GetPath());
+						tree->SaveXML(StringUtil::stringW(file.GetPath()));
 					}
 					bOk = true;
 				}
@@ -707,11 +705,11 @@ bool CWizardStart::DoWizardFinish()
 				{
 					wxBusyCursor wait;
 					CVersionNum ver(true);
-					wxString verstr = ver.GetVersionString();
+					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, false, false, true, false, false))
 					{
-						tree->SaveXML(file.GetPath());
+						tree->SaveXML(StringUtil::stringW(file.GetPath()));
 					}
 					bOk = true;
 				}
@@ -771,12 +769,12 @@ bool CWizardStart::DoWizardFinish()
 				{
 					wxBusyCursor wait;
 					CVersionNum ver(true);
-					wxString verstr = ver.GetVersionString();
+					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
 					{
 						CConfigHandler handler;
-						tree->SaveXML(file.GetPath(), ARBConfig::GetDTD(&handler));
+						tree->SaveXML(StringUtil::stringW(file.GetPath()), ARBConfig::GetDTD(&handler));
 					}
 					bOk = true;
 				}
@@ -796,7 +794,7 @@ bool CWizardStart::DoWizardFinish()
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					wxString errMsg;
+					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					if (tree->LoadXML(file.GetPath(), errMsg)
 					&& CAgilityBookOptions::ImportSettings(tree))
@@ -806,10 +804,9 @@ bool CWizardStart::DoWizardFinish()
 					else
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.length())
+						if (0 < errMsg.str().length())
 						{
-							msg += wxT("\n\n");
-							msg += errMsg;
+							msg << wxT("\n\n") << errMsg.str().c_str();
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -835,7 +832,7 @@ bool CWizardStart::DoWizardFinish()
 					ElementNodePtr settings = CAgilityBookOptions::ExportSettings();
 					if (settings)
 					{
-						settings->SaveXML(file.GetPath());
+						settings->SaveXML(StringUtil::stringW(file.GetPath()));
 						bOk = true;
 					}
 				}

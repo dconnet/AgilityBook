@@ -28,7 +28,7 @@ public:
 			ARBConfigOtherPointsPtr pOther,
 			wxWindow* pParent = NULL);
 
-	bool IsNameOkay(wxString const& name) const;
+	bool IsNameOkay(std::wstring const& name) const;
 
 private:
 	ARBConfig& m_Config;

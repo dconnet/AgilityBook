@@ -140,9 +140,9 @@ public:
 	 * @param inTitle Name of title.
 	 * @return Nice name (longname) of a title.
 	 */
-	wxString GetTitleNiceName(
-			wxString const& inVenue,
-			wxString const& inTitle) const;
+	std::wstring GetTitleNiceName(
+			std::wstring const& inVenue,
+			std::wstring const& inTitle) const;
 
 	/**
 	 * Convenience function to get the complete name of a title.
@@ -150,7 +150,7 @@ public:
 	 * @param bAbbrevFirst List Name before or after Longname.
 	 * @return Complete name of title (name + longname).
 	 */
-	wxString GetTitleCompleteName(
+	std::wstring GetTitleCompleteName(
 			ARBDogTitlePtr inTitle,
 			bool bAbbrevFirst = true) const;
 
@@ -164,7 +164,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfig const& inConfigNew,
-			wxString& ioInfo);
+			std::wostringstream& ioInfo);
 
 	/*
 	 * Getters.

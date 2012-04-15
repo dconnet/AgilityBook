@@ -97,7 +97,7 @@ public:
 	ARBDogPtr GetDog() const			{return m_pDog;}
 	ARBDogTrialPtr GetTrial() const		{return m_pTrial;}
 	ARBDogRunPtr GetRun() const			{return m_pRun;}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 protected:
 	CAgilityBookRunsView* m_pView;
@@ -107,10 +107,10 @@ protected:
 };
 
 
-wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
+std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 {
 	short val;
-	wxString str;
+	std::wostringstream str;
 	if (0 < iCol && m_pRun)
 	{
 		// Col 0 is special: it has the icons. Instead of saving it,
@@ -434,7 +434,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			break;
 		}
 	}
-	return str;
+	return str.str();
 }
 
 
@@ -1151,12 +1151,12 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 		index = 0;
 	else if (index >= m_pView->m_Ctrl->GetItemCount() && !SearchDown())
 		index = m_pView->m_Ctrl->GetItemCount() - 1;
-	wxString search = Text();
+	std::wstring search = Text();
 	if (!MatchCase())
-		search.MakeLower();
+		search = StringUtil::ToLower(search);
 	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
 	{
-		std::set<wxString> strings;
+		std::set<std::wstring> strings;
 		if (SearchAll())
 		{
 			CAgilityBookRunsViewDataPtr pData = m_pView->GetItemRunData(index);
@@ -1176,12 +1176,12 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 				strings.insert(info.GetText());
 			}
 		}
-		for (std::set<wxString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<std::wstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
-			wxString str((*iter));
+			std::wstring str((*iter));
 			if (!MatchCase())
-				str.MakeLower();
-			if (0 <= str.Find(search))
+				str = StringUtil::ToLower(str);
+			if (std::wstring::npos != str.find(search))
 			{
 				m_pView->m_Ctrl->SetSelection(index, true);
 				bFound = true;
@@ -1329,7 +1329,7 @@ bool CAgilityBookRunsView::IsFiltered() const
 }
 
 
-bool CAgilityBookRunsView::GetMessage(wxString& msg) const
+bool CAgilityBookRunsView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
@@ -1345,7 +1345,7 @@ bool CAgilityBookRunsView::GetMessage(wxString& msg) const
 }
 
 
-bool CAgilityBookRunsView::GetMessage2(wxString& msg) const
+bool CAgilityBookRunsView::GetMessage2(std::wstring& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
@@ -1354,7 +1354,7 @@ bool CAgilityBookRunsView::GetMessage2(wxString& msg) const
 	}
 	else
 	{
-		msg.Empty();
+		msg.clear();
 		return false;
 	}
 }
@@ -1464,7 +1464,7 @@ bool CAgilityBookRunsView::IsTrial(ARBDogTrialPtr pTrial) const
 
 void CAgilityBookRunsView::GetPrintLine(
 		long item,
-		std::vector<wxString>& line) const
+		std::vector<std::wstring>& line) const
 {
 	if (m_Ctrl)
 		m_Ctrl->GetPrintLine(item, line);
@@ -1785,15 +1785,15 @@ bool CAgilityBookRunsView::OnCmd(int id)
 				if (!clpData.isOkay())
 					return true;
 
-				wxString data;
-				wxString html;
+				std::wstring data;
+				std::wstring html;
 				CClipboardDataTable table(data, html);
 
 				// Take care of the header, but only if more than one line is selected.
 				if (1 < indices.size()
 				|| indices.size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
 				{
-					std::vector<wxString> line;
+					std::vector<std::wstring> line;
 					m_Ctrl->GetPrintLine(-1, line);
 					table.StartLine();
 					for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -1811,7 +1811,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 					CAgilityBookRunsViewDataPtr pData = GetItemRunData(*iter);
 					if (pData)
 						pData->GetRun()->Save(tree);
-					std::vector<wxString> line;
+					std::vector<std::wstring> line;
 					m_Ctrl->GetPrintLine((*iter), line);
 					table.StartLine();
 					for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -1857,7 +1857,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 	case ID_EDIT_FIND_NEXT:
 		{
 			m_Callback.SearchDown(true);
-			if (m_Callback.Text().IsEmpty())
+			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
 				m_Callback.Search(NULL);
@@ -1867,7 +1867,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 	case ID_EDIT_FIND_PREVIOUS:
 		{
 			m_Callback.SearchDown(false);
-			if (m_Callback.Text().IsEmpty())
+			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
 				m_Callback.Search(NULL);

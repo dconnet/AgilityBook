@@ -21,5 +21,5 @@
 #include "ARBTypes.h"
 
 extern bool CheckLink(
-		wxString const& inLink,
+		std::wstring const& inLink,
 		wxWindow* parent = NULL);

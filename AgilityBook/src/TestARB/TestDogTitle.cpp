@@ -74,7 +74,7 @@ SUITE(TestDogTitle)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual wxString GetGenericName() const;
+		//	virtual std::wstring GetGenericName() const;
 		}
 	}
 
@@ -144,7 +144,7 @@ SUITE(TestDogTitleList)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumTitlesInVenue(wxString const& inVenue) const;
+		//	int NumTitlesInVenue(std::wstring const& inVenue) const;
 		}
 	}
 
@@ -155,8 +155,8 @@ SUITE(TestDogTitleList)
 		{
 			TODO_TEST
 		//	bool FindTitle(
-		//			wxString const& inVenue,
-		//			wxString const& inTitle,
+		//			std::wstring const& inVenue,
+		//			std::wstring const& inTitle,
 		//			ARBDogTitlePtr* outTitle = NULL) const;
 		}
 	}
@@ -168,8 +168,8 @@ SUITE(TestDogTitleList)
 		{
 			TODO_TEST
 		//	short FindMaxInstance(
-		//			wxString const& inVenue,
-		//			wxString const& inTitle) const;
+		//			std::wstring const& inVenue,
+		//			std::wstring const& inTitle) const;
 		}
 	}
 
@@ -180,8 +180,8 @@ SUITE(TestDogTitleList)
 		{
 			TODO_TEST
 		//	int RenameVenue(
-		//			wxString const& inOldVenue,
-		//			wxString const& inNewVenue);
+		//			std::wstring const& inOldVenue,
+		//			std::wstring const& inNewVenue);
 		}
 	}
 
@@ -191,7 +191,7 @@ SUITE(TestDogTitleList)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteVenue(wxString const& inVenue);
+		//	int DeleteVenue(std::wstring const& inVenue);
 		}
 	}
 
@@ -202,8 +202,8 @@ SUITE(TestDogTitleList)
 		{
 			TODO_TEST
 		//	int NumTitlesInUse(
-		//			wxString const& inVenue,
-		//			wxString const& inTitle) const;
+		//			std::wstring const& inVenue,
+		//			std::wstring const& inTitle) const;
 		}
 	}
 
@@ -214,9 +214,9 @@ SUITE(TestDogTitleList)
 		{
 			TODO_TEST
 		//	int RenameTitle(
-		//			wxString const& inVenue,
-		//			wxString const& inOldTitle,
-		//			wxString const& inNewTitle);
+		//			std::wstring const& inVenue,
+		//			std::wstring const& inOldTitle,
+		//			std::wstring const& inNewTitle);
 		}
 	}
 

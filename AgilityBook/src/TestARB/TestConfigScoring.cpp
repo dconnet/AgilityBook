@@ -33,7 +33,7 @@ SUITE(TestConfigScoring)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static wxString GetScoringStyleStr(ScoringStyle inStyle);
+		//	static std::wstring GetScoringStyleStr(ScoringStyle inStyle);
 		}
 	}
 
@@ -84,7 +84,7 @@ SUITE(TestConfigScoring)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual wxString GetGenericName() const
+		//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -146,8 +146,8 @@ SUITE(TestConfigScoringList)
 		{
 			TODO_TEST
 		//	size_t FindAllEvents(
-		//			wxString const& inDivision,
-		//			wxString const& inLevel,
+		//			std::wstring const& inDivision,
+		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
 		//			bool inTitlePoints,
 		//			ARBVector<ARBConfigScoringPtr>& outList) const;
@@ -161,8 +161,8 @@ SUITE(TestConfigScoringList)
 		{
 			TODO_TEST
 		//	bool FindEvent(
-		//			wxString const& inDivision,
-		//			wxString const& inLevel,
+		//			std::wstring const& inDivision,
+		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
 		//			ARBConfigScoringPtr* outEvent = NULL) const;
 		}
@@ -175,8 +175,8 @@ SUITE(TestConfigScoringList)
 		{
 			TODO_TEST
 		//	bool VerifyEvent(
-		//			wxString const& inDivision,
-		//			wxString const& inLevel,
+		//			std::wstring const& inDivision,
+		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate) const;
 		}
 	}

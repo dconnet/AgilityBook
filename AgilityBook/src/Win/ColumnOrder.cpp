@@ -19,11 +19,12 @@
 #include "AgilityBook.h"
 #include "ColumnOrder.h"
 
+#include "ARBString.h"
 #include "ARBTypes.h"
 #include "RegItems.h"
 #include <wx/config.h>
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
@@ -33,7 +34,7 @@
 //  m_bDescending indicates the sort order
 //   - this not ordered like m_order is, it is column specific.
 
-CColumnOrder::CColumnOrder(wxString const& pItem)
+CColumnOrder::CColumnOrder(std::wstring const& pItem)
 	: m_Item(pItem)
 	, m_nColumns(0)
 	, m_bDefaultDescending(false)
@@ -70,23 +71,23 @@ bool CColumnOrder::Initialize(int nColumns)
 	}
 	bool rc = false;
 	// Load last settings.
-	wxString str = wxConfig::Get()->Read(CFG_SORTING_ORDER(m_Item), wxT(""));
+	wxString str = wxConfig::Get()->Read(CFG_SORTING_ORDER(m_Item), L"");
 	int i;
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
-		m_order[i] = StringUtil::ToCLong(str);
+		m_order[i] = StringUtil::ToCLong(StringUtil::stringW(str));
 		int n = str.Find(',');
 		if (n > 0)
 			str = str.Mid(n+1);
 		else
 			str.Empty();
 	}
-	str = wxConfig::Get()->Read(CFG_SORTING_SORT(m_Item), wxT(""));
+	str = wxConfig::Get()->Read(CFG_SORTING_SORT(m_Item), L"");
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
-		m_bDescending[i] = StringUtil::ToCLong(str) == 0 ? false : true;
+		m_bDescending[i] = StringUtil::ToCLong(StringUtil::stringW(str)) == 0 ? false : true;
 		int n = str.Find(',');
 		if (n > 0)
 			str = str.Mid(n+1);
@@ -104,7 +105,7 @@ void CColumnOrder::Save()
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)
-				str << wxT(",");
+				str << L",";
 			str << m_order[i];
 		}
 		wxConfig::Get()->Write(CFG_SORTING_ORDER(m_Item), str);
@@ -114,7 +115,7 @@ void CColumnOrder::Save()
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)
-				str << wxT(",");
+				str << L",";
 			str << static_cast<int>(m_bDescending[i]);
 		}
 		wxConfig::Get()->Write(CFG_SORTING_SORT(m_Item), str);

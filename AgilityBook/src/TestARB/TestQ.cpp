@@ -55,7 +55,7 @@ SUITE(TestARBQ)
 			CHECK(ARB_Q(ARB_Q::eQ_DNR) == ARB_Q::GetValidType(4));
 			CHECK(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(5));
 
-			std::vector<wxString> types;
+			std::vector<std::wstring> types;
 			ARB_Q::GetValidTypes(types);
 			CHECK_EQUAL(6u, types.size());
 		}
@@ -122,7 +122,7 @@ SUITE(TestARBQ)
 		if (!g_bMicroTest)
 		{
 			ARB_Q q;
-			wxString errmsg;
+			std::wostringstream errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			CHECK(q.Load(wxT("SQ"), ver, callback));
@@ -136,7 +136,7 @@ SUITE(TestARBQ)
 		if (!g_bMicroTest)
 		{
 			ARB_Q q(ARB_Q::eQ_Q);
-			wxString errmsg;
+			std::wostringstream errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			CHECK(!q.Load(wxT("attrib"), ver, callback));
@@ -152,7 +152,7 @@ SUITE(TestARBQ)
 			ARB_Q q;
 			ElementNodePtr ele = ElementNode::New(wxT("test"));
 			CHECK(q.Save(ele, wxT("attrib")));
-			wxString str;
+			std::wstring str;
 			CHECK(ElementNode::eFound == ele->GetAttrib(wxT("attrib"), str));
 			CHECK(wxT("NA") == str);
 		}

@@ -64,11 +64,11 @@ ICalendarSite::~ICalendarSite()
 /////////////////////////////////////////////////////////////////////////////
 
 static size_t TranslateCodeMap(
-		std::map<wxString, wxString> const& inMap,
-		std::vector<wxString>& outKeys)
+		std::map<std::wstring, std::wstring> const& inMap,
+		std::vector<std::wstring>& outKeys)
 {
 	outKeys.clear();
-	for (std::map<wxString, wxString>::const_iterator iMap = inMap.begin();
+	for (std::map<std::wstring, std::wstring>::const_iterator iMap = inMap.begin();
 		iMap != inMap.end();
 		++iMap)
 	{
@@ -89,7 +89,7 @@ public:
 	void Dismiss();
 	void StepMe();
 
-	virtual void SetMessage(char const* pMessage);
+	virtual void SetMessage(wchar_t const* pMessage);
 	virtual void SetRange(int inRange);
 	virtual void SetStep(int inStep);
 	virtual void StepIt();
@@ -116,26 +116,26 @@ public:
 
 	void Connect();
 
-	bool isValid() const							{return NULL != m_pSite;}
+	bool isValid() const					{return NULL != m_pSite;}
 	void Unload(bool bPermanently = false);
 
-	wxString GetID() const							{return m_pSite->GetID();}
-	wxString GetName() const						{return m_pSite->GetName();}
-	wxString GetDescription() const					{return m_pSite->GetDescription();}
-	std::map<wxString, wxString> const& QueryLocationCodes() const
+	std::wstring GetID() const				{return m_pSite->GetID();}
+	std::wstring GetName() const			{return m_pSite->GetName();}
+	std::wstring GetDescription() const		{return m_pSite->GetDescription();}
+	std::map<std::wstring, std::wstring> const& QueryLocationCodes() const
 		{return m_LocCodes;}
-	std::map<wxString, wxString> const& QueryVenueCodes() const
+	std::map<std::wstring, std::wstring> const& QueryVenueCodes() const
 		{return m_VenueCodes;}
 	std::string Process(IProgressMeter *progress,
-			std::vector<wxString> const& inLocationCodes,
-			std::vector<wxString> const& inVenueCodes);
+			std::vector<std::wstring> const& inLocationCodes,
+			std::vector<std::wstring> const& inVenueCodes);
 
 private:
 	ICalendarSite* m_pSite;
-	wxString m_id;
+	std::wstring m_id;
 	CVersionNum m_Version;
-	std::map<wxString, wxString> m_LocCodes;
-	std::map<wxString, wxString> m_VenueCodes;
+	std::map<std::wstring, std::wstring> m_LocCodes;
+	std::map<std::wstring, std::wstring> m_VenueCodes;
 };
 
 typedef std::tr1::shared_ptr<CalSiteData> CalSiteDataPtr;
@@ -224,13 +224,13 @@ void CProgressMeter::StepMe()
 }
 
 
-void CProgressMeter::SetMessage(char const* pMessage)
+void CProgressMeter::SetMessage(wchar_t const* pMessage)
 {
 	if (m_pProgress)
 	{
-		wxString msg;
+		std::wstring msg;
 		if (pMessage)
-			msg = StringUtil::stringWX(pMessage, strlen(pMessage));
+			msg = pMessage;
 		m_pProgress->SetMessage(msg);
 	}
 }
@@ -347,8 +347,8 @@ void CalSiteData::Unload(bool bPermanently)
 
 
 std::string CalSiteData::Process(IProgressMeter *progress,
-		std::vector<wxString> const& inLocationCodes,
-		std::vector<wxString> const& inVenueCodes)
+		std::vector<std::wstring> const& inLocationCodes,
+		std::vector<std::wstring> const& inVenueCodes)
 {
 	return m_pSite->Process(inLocationCodes, inVenueCodes, progress);
 }
@@ -397,7 +397,7 @@ public:
 	CPluginBase() {}
 	virtual ~CPluginBase() {}
 
-	virtual wxString GetDesc() const = 0;
+	virtual std::wstring GetDesc() const = 0;
 };
 
 
@@ -405,28 +405,28 @@ class CPluginData : public CPluginBase
 {
 public:
 	CPluginData() {}
-	virtual wxString GetSortName() const = 0;
-	virtual wxString OnNeedText() const					{return m_Name;}
-	virtual wxString GetDesc() const					{return m_Desc;}
+	virtual std::wstring GetSortName() const = 0;
+	virtual std::wstring OnNeedText() const			{return m_Name;}
+	virtual std::wstring GetDesc() const			{return m_Desc;}
 	virtual std::string Process(IProgressMeter *progress) = 0;
 	virtual bool HasQueryDetails() const = 0;
 	virtual bool CanEdit() const					{return false;}
 	virtual bool Edit(wxWindow* pParent)			{return false;}
 	virtual bool CanDelete() const					{return false;}
 	virtual bool Delete()							{return false;}
-	virtual std::map<wxString, wxString> const& QueryLocationCodes() const = 0;
-	virtual std::map<wxString, wxString> const& QueryVenueCodes() const = 0;
-	virtual std::vector<wxString>& LocationCodes()	{return m_LocationCodes;}
-	virtual std::vector<wxString>& VenueCodes()		{return m_VenueCodes;}
+	virtual std::map<std::wstring, std::wstring> const& QueryLocationCodes() const = 0;
+	virtual std::map<std::wstring, std::wstring> const& QueryVenueCodes() const = 0;
+	virtual std::vector<std::wstring>& LocationCodes()	{return m_LocationCodes;}
+	virtual std::vector<std::wstring>& VenueCodes()		{return m_VenueCodes;}
 	virtual bool isValid() const = 0;
 	virtual bool Enable() = 0;
 	virtual bool CanDisable() const = 0;
 	virtual void Disable() = 0;
 protected:
-	wxString m_Name;
-	wxString m_Desc;
-	std::vector<wxString> m_LocationCodes;
-	std::vector<wxString> m_VenueCodes;
+	std::wstring m_Name;
+	std::wstring m_Desc;
+	std::vector<std::wstring> m_LocationCodes;
+	std::vector<std::wstring> m_VenueCodes;
 };
 
 
@@ -445,7 +445,7 @@ public:
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
 
-	virtual wxString GetSortName() const			{return wxT("C") + m_Name;}
+	virtual std::wstring GetSortName() const		{return L"C" + m_Name;}
 
 	virtual std::string Process(IProgressMeter *progress);
 
@@ -459,12 +459,12 @@ public:
 	virtual bool CanDelete() const		{return true;}
 	virtual bool Delete();
 
-	virtual std::map<wxString, wxString> const& QueryLocationCodes() const
+	virtual std::map<std::wstring, std::wstring> const& QueryLocationCodes() const
 	{
 		return m_Site->LocationCodes();
 	}
 
-	virtual std::map<wxString, wxString> const& QueryVenueCodes() const
+	virtual std::map<std::wstring, std::wstring> const& QueryVenueCodes() const
 	{
 		return m_Site->VenueCodes();
 	}
@@ -501,12 +501,11 @@ private:
 std::string CPluginConfigData::Process(IProgressMeter *progress)
 {
 	wxBusyCursor wait;
-	wxString url = m_Site->GetFormattedURL(m_LocationCodes, m_VenueCodes);
-	std::string data(url.ToUTF8());
-	progress->SetMessage(data.c_str());
-	data.erase();
+	std::wstring url = m_Site->GetFormattedURL(m_LocationCodes, m_VenueCodes);
+	progress->SetMessage(url.c_str());
+	std::string data;
 	CReadHttp http(url, &data);
-	wxString username, errMsg;
+	std::wstring username, errMsg;
 	if (!http.ReadHttpFile(username, errMsg, wxGetApp().GetTopWindow()))
 		data.erase();
 	return data;
@@ -555,7 +554,7 @@ public:
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
 
-	virtual wxString GetSortName() const			{return wxT("D") + m_Name;}
+	virtual std::wstring GetSortName() const	{return L"D" + m_Name;}
 
 	virtual std::string Process(IProgressMeter *progress)
 	{
@@ -567,12 +566,12 @@ public:
 		return 1 < m_CalData->QueryLocationCodes().size() || 1 < m_CalData->QueryVenueCodes().size();
 	}
 
-	virtual std::map<wxString, wxString> const& QueryLocationCodes() const
+	virtual std::map<std::wstring, std::wstring> const& QueryLocationCodes() const
 	{
 		return m_CalData->QueryLocationCodes();
 	}
 
-	virtual std::map<wxString, wxString> const& QueryVenueCodes() const
+	virtual std::map<std::wstring, std::wstring> const& QueryVenueCodes() const
 	{
 		return m_CalData->QueryVenueCodes();
 	}
@@ -623,7 +622,7 @@ private:
 		}
 	}
 
-	wxString m_Filename;
+	std::wstring m_Filename;
 	CalSiteDataPtr m_CalData;
 };
 
@@ -634,20 +633,24 @@ public:
 	CPluginCalData(ARBCalendarPtr cal)
 		: m_Cal(cal)
 	{
-		m_Name << m_Cal->GetStartDate().GetString()
-			<< wxT(" ")
-			<< m_Cal->GetEndDate().GetString()
-			<< wxT(": ")
-			<< m_Cal->GetVenue()
-			<< wxT(" ")
-			<< m_Cal->GetLocation()
-			<< wxT(" ")
-			<< m_Cal->GetClub();
-		wxString desc;
+		{
+			std::wostringstream str;
+			str << m_Cal->GetStartDate().GetString()
+				<< wxT(" ")
+				<< m_Cal->GetEndDate().GetString()
+				<< wxT(": ")
+				<< m_Cal->GetVenue()
+				<< wxT(" ")
+				<< m_Cal->GetLocation()
+				<< wxT(" ")
+				<< m_Cal->GetClub();
+			m_Name = str.str();
+		}
+		std::wostringstream desc;
 		desc << m_Cal->GetSecEmail() << wxT("\n");
 		if (m_Cal->GetOpeningDate().IsValid())
 		{
-			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_OPENS);
+			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_OPENS);
 			desc << str
 				<< wxT(" ")
 				<< m_Cal->GetOpeningDate().GetString()
@@ -655,7 +658,7 @@ public:
 		}
 		if (m_Cal->GetDrawDate().IsValid())
 		{
-			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_DRAWS);
+			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_DRAWS);
 			desc << str
 				<< wxT(" ")
 				<< m_Cal->GetDrawDate().GetString()
@@ -663,23 +666,23 @@ public:
 		}
 		if (m_Cal->GetClosingDate().IsValid())
 		{
-			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_CLOSES);
+			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_CLOSES);
 			desc << str
 				<< wxT(" ")
 				<< m_Cal->GetClosingDate().GetString()
 				<< wxT("\n");
 		}
-		m_Desc = desc;
+		m_Desc = desc.str();
 	}
 
-	virtual wxString OnNeedText() const	{return m_Name;}
-	virtual wxString GetDesc() const	{return m_Desc;}
-	ARBCalendarPtr CalEntry() const		{return m_Cal;}
+	virtual std::wstring OnNeedText() const	{return m_Name;}
+	virtual std::wstring GetDesc() const	{return m_Desc;}
+	ARBCalendarPtr CalEntry() const			{return m_Cal;}
 
 private:
 	ARBCalendarPtr m_Cal;
-	wxString m_Name;
-	wxString m_Desc;
+	std::wstring m_Name;
+	std::wstring m_Desc;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -710,7 +713,7 @@ int CSortCheckTreeCtrl::OnCompareItems(
 	assert(pData1 && pData2);
 	if (!pData1 || !pData2)
 		return 0;
-	return pData1->GetSortName().CmpNoCase(pData2->GetSortName());
+	return _wcsicmp(pData1->GetSortName().c_str(), pData2->GetSortName().c_str());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -913,7 +916,7 @@ void CDlgCalendarPlugins::EditPlugin()
 		if (pData && pData->Edit(this))
 		{
 			RefreshTreeItem(m_ctrlPlugins, hItem);
-			wxString desc;
+			std::wstring desc;
 			if (pData)
 				desc = pData->GetDesc();
 			m_ctrlDetails->SetValue(desc);
@@ -929,7 +932,7 @@ void CDlgCalendarPlugins::OnSelectionChanged(wxTreeEvent& evt)
 	CPluginBase* pData = NULL;
 	if (evt.GetItem().IsOk())
 		pData = dynamic_cast<CPluginBase*>(m_ctrlPlugins->GetItemData(evt.GetItem()));
-	wxString desc;
+	std::wstring desc;
 	if (pData)
 		desc = pData->GetDesc();
 	m_ctrlDetails->SetValue(desc);
@@ -982,7 +985,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 				{
 					progress.SetForegroundWindow();
 					ElementNodePtr tree(ElementNode::New());
-					wxString errMsg;
+					std::wostringstream errMsg;
 					bool bOk = false;
 					if (!data.empty())
 					{
@@ -997,9 +1000,9 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 						tree.reset();
 						if (bOk)
 						{
-							if (0 < err.m_ErrMsg.length())
+							if (0 < err.m_ErrMsg.str().length())
 							{
-								wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+								wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 								progress.SetForegroundWindow();
 							}
 							for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
@@ -1014,12 +1017,11 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 					}
 					else
 					{
-						wxString str(pData->OnNeedText());
+						std::wstring str(pData->OnNeedText());
 						wxString err = wxString::Format(_("IDS_ERR_PARSING_DATA"), str.c_str());
-						if (!errMsg.empty())
+						if (!errMsg.str().empty())
 						{
-							err += wxT(":\n\t");
-							err += errMsg;
+							err << L":\n\t" << errMsg.str();
 						}
 						int flags = wxCENTRE | wxICON_WARNING;
 						if (pData->CanDisable())
@@ -1115,7 +1117,7 @@ void CDlgCalendarPlugins::OnPluginEnable(wxCommandEvent& evt)
 			{
 				RefreshTreeItem(m_ctrlPlugins, pData->GetId());
 				m_ctrlPlugins->ShowCheckbox(pData->GetId(), true);
-				wxString desc(pData->GetDesc());
+				std::wstring desc(pData->GetDesc());
 				m_ctrlDetails->SetValue(desc);
 				UpdateControls();
 			}

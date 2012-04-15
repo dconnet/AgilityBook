@@ -11,8 +11,11 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-15 DRC Missed upper casing the Validate() method.
+ * @li 2012-03-01 DRC Change time to upper case before parsing.
  * @li 2012-01-02 DRC Change validator to support default value on empty field.
  * @li 2011-12-30 DRC Use ChangeValue on textctrl to prevent change message.
+ * @li 2010-12-07 DRC Added wxDateTime support.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-15 DRC Created
  */
@@ -21,11 +24,12 @@
 #include "Validators.h"
 
 #include "ARBDate.h"
+#include "ARBString.h"
 #include "ARBTypes.h"
 #include "ComboBoxes.h"
 #include <wx/datectrl.h>
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
@@ -37,19 +41,66 @@ IMPLEMENT_CLASS(CQualifyingValidator, wxValidator)
 /////////////////////////////////////////////////////////////////////////////
 
 CGenericValidator::CGenericValidator(
-		short* val,
-		short defVal,
+		unsigned short* val,
+		unsigned short defVal,
 		bool bUseDefOnEmpty,
 		wxChar const* errMsg)
-	: m_pShort(val)
+	: m_pUShort(val)
+	, m_pShort(NULL)
+	, m_pLong(NULL)
 	, m_pDouble(NULL)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
 	, m_pDate(NULL)
+	, m_pTime(NULL)
+	, m_ErrMsg()
+{
+	m_Default.us = defVal;
+	if (errMsg)
+		m_ErrMsg = errMsg;
+}
+
+
+CGenericValidator::CGenericValidator(
+		short* val,
+		short defVal,
+		bool bUseDefOnEmpty,
+		wxChar const* errMsg)
+	: m_pUShort(NULL)
+	, m_pShort(val)
+	, m_pLong(NULL)
+	, m_pDouble(NULL)
+	, m_Prec(0)
+	, m_Default()
+	, m_bUseDefOnEmpty(bUseDefOnEmpty)
+	, m_pDate(NULL)
+	, m_pTime(NULL)
 	, m_ErrMsg()
 {
 	m_Default.s = defVal;
+	if (errMsg)
+		m_ErrMsg = errMsg;
+}
+
+
+CGenericValidator::CGenericValidator(
+		long* val,
+		long defVal,
+		bool bUseDefOnEmpty,
+		wxChar const* errMsg)
+	: m_pUShort(NULL)
+	, m_pShort(NULL)
+	, m_pLong(val)
+	, m_pDouble(NULL)
+	, m_Prec(0)
+	, m_Default()
+	, m_bUseDefOnEmpty(bUseDefOnEmpty)
+	, m_pDate(NULL)
+	, m_pTime(NULL)
+	, m_ErrMsg()
+{
+	m_Default.l = defVal;
 	if (errMsg)
 		m_ErrMsg = errMsg;
 }
@@ -61,12 +112,15 @@ CGenericValidator::CGenericValidator(
 		double defVal,
 		bool bUseDefOnEmpty,
 		wxChar const* errMsg)
-	: m_pShort(NULL)
+	: m_pUShort(NULL)
+	, m_pShort(NULL)
+	, m_pLong(NULL)
 	, m_pDouble(val)
 	, m_Prec(inPrec)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
 	, m_pDate(NULL)
+	, m_pTime(NULL)
 	, m_ErrMsg()
 {
 	m_Default.dbl = defVal;
@@ -78,12 +132,34 @@ CGenericValidator::CGenericValidator(
 CGenericValidator::CGenericValidator(
 		ARBDate* val,
 		wxChar const* errMsg)
-	: m_pShort(NULL)
+	: m_pUShort(NULL)
+	, m_pShort(NULL)
+	, m_pLong(NULL)
 	, m_pDouble(NULL)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(false)
 	, m_pDate(val)
+	, m_pTime(NULL)
+	, m_ErrMsg()
+{
+	if (errMsg)
+		m_ErrMsg = errMsg;
+}
+
+
+CGenericValidator::CGenericValidator(
+		wxDateTime* val,
+		wxChar const* errMsg)
+	: m_pUShort(NULL)
+	, m_pShort(NULL)
+	, m_pLong(NULL)
+	, m_pDouble(NULL)
+	, m_Prec(0)
+	, m_Default()
+	, m_bUseDefOnEmpty(false)
+	, m_pDate(NULL)
+	, m_pTime(val)
 	, m_ErrMsg()
 {
 	if (errMsg)
@@ -92,12 +168,15 @@ CGenericValidator::CGenericValidator(
 
 
 CGenericValidator::CGenericValidator(CGenericValidator const& rhs)
-	: m_pShort(rhs.m_pShort)
+	: m_pUShort(rhs.m_pUShort)
+	, m_pShort(rhs.m_pShort)
+	, m_pLong(rhs.m_pLong)
 	, m_pDouble(rhs.m_pDouble)
 	, m_Prec(rhs.m_Prec)
 	, m_Default(rhs.m_Default)
 	, m_bUseDefOnEmpty(rhs.m_bUseDefOnEmpty)
 	, m_pDate(rhs.m_pDate)
+	, m_pTime(rhs.m_pTime)
 	, m_ErrMsg(rhs.m_ErrMsg)
 {
 	Copy(rhs);
@@ -107,16 +186,20 @@ CGenericValidator::CGenericValidator(CGenericValidator const& rhs)
 bool CGenericValidator::Copy(CGenericValidator const& val)
 {
 	wxValidator::Copy(val);
+	m_pUShort = val.m_pUShort;
 	m_pShort = val.m_pShort;
+	m_pLong = val.m_pLong;
 	m_pDouble = val.m_pDouble;
 	m_Prec = val.m_Prec;
 	m_Default = val.m_Default;
-	m_bUseDefOnEmpty= val.m_bUseDefOnEmpty;
+	m_bUseDefOnEmpty = val.m_bUseDefOnEmpty;
 	m_pDate = val.m_pDate;
+	m_pTime = val.m_pTime;
 	m_ErrMsg = val.m_ErrMsg;
 	return true;
 }
 
+static const wxChar* s_TimeFormat = wxT("%I:%M:%S %p");
 
 bool CGenericValidator::TransferFromWindow()
 {
@@ -125,7 +208,23 @@ bool CGenericValidator::TransferFromWindow()
 	{
 		wxTextCtrl* pTextControl = (wxTextCtrl*)m_validatorWindow;
 		wxString textVal = pTextControl->GetValue();
-		if (m_pShort)
+		if (m_pUShort)
+		{
+			if (textVal.empty() && m_bUseDefOnEmpty)
+			{
+				*m_pUShort = m_Default.us;
+				return true;
+			}
+			else
+			{
+				long val;
+				if (!StringUtil::ToLong(StringUtil::stringW(textVal), val))
+					return false;
+				*m_pUShort = static_cast<unsigned short>(val);
+				return true;
+			}
+		}
+		else if (m_pShort)
 		{
 			if (textVal.empty() && m_bUseDefOnEmpty)
 			{
@@ -134,12 +233,22 @@ bool CGenericValidator::TransferFromWindow()
 			}
 			else
 			{
-				long val = 0;
-				if (!StringUtil::ToLong(textVal, val))
+				long val;
+				if (!StringUtil::ToLong(StringUtil::stringW(textVal), val))
 					return false;
 				*m_pShort = static_cast<short>(val);
 				return true;
 			}
+		}
+		else if (m_pLong)
+		{
+			if (textVal.empty() && m_bUseDefOnEmpty)
+			{
+				*m_pLong = m_Default.l;
+				return true;
+			}
+			else
+				return StringUtil::ToLong(StringUtil::stringW(textVal), *m_pLong);
 		}
 		else if (m_pDouble)
 		{
@@ -149,7 +258,12 @@ bool CGenericValidator::TransferFromWindow()
 				return true;
 			}
 			else
-				return StringUtil::ToDouble(textVal, *m_pDouble);
+				return StringUtil::ToDouble(StringUtil::stringW(textVal), *m_pDouble);
+		}
+		else if (m_pTime)
+		{
+			textVal.MakeUpper();
+			return NULL != m_pTime->ParseFormat(textVal, s_TimeFormat);
 		}
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
@@ -164,6 +278,11 @@ bool CGenericValidator::TransferFromWindow()
 				m_pDate->clear();
 			return true;
 		}
+		else if (m_pTime)
+		{
+			*m_pTime = pControl->GetValue();
+			return true;
+		}
 	}
 	return false;
 }
@@ -174,16 +293,35 @@ bool CGenericValidator::TransferToWindow()
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
 		wxTextCtrl* pTextControl = (wxTextCtrl*)m_validatorWindow;
-		if (m_pShort)
+		if (m_pUShort)
+		{
+			wxString str;
+			str.Printf(wxT("%hu"), *m_pUShort);
+			pTextControl->ChangeValue(str);
+			return true;
+		}
+		else if (m_pShort)
 		{
 			wxString str;
 			str.Printf(wxT("%hd"), *m_pShort);
 			pTextControl->ChangeValue(str);
 			return true;
 		}
+		else if (m_pLong)
+		{
+			wxString str;
+			str.Printf(wxT("%ld"), *m_pLong);
+			pTextControl->ChangeValue(str);
+			return true;
+		}
 		else if (m_pDouble)
 		{
 			pTextControl->ChangeValue(ARBDouble::ToString(*m_pDouble, m_Prec));
+			return true;
+		}
+		else if (m_pTime)
+		{
+			pTextControl->ChangeValue(m_pTime->Format(s_TimeFormat));
 			return true;
 		}
 	}
@@ -212,6 +350,11 @@ bool CGenericValidator::TransferToWindow()
 				}
 			}
 		}
+		else if (m_pTime)
+		{
+			pControl->SetValue(*m_pTime);
+			return true;
+		}
 	}
 	return false;
 }
@@ -231,16 +374,35 @@ bool CGenericValidator::Validate(wxWindow* parent)
 		if (pTextControl->IsEditable())
 		{
 			wxString textVal = pTextControl->GetValue();
-			if (m_pShort)
+			if (m_pUShort)
 			{
 				long val;
 				if (textVal.empty() && m_bUseDefOnEmpty)
 				{
 					wxString str;
-					str.Printf(wxT("%hd"), m_Default.s);
+					str.Printf(wxT("%hu"), m_Default.us);
 					pTextControl->ChangeValue(str);
 				}
-				else if (!StringUtil::ToLong(textVal, val))
+				else if (!StringUtil::ToLong(StringUtil::stringW(textVal), val))
+				{
+					ok = false;
+					if (errormsg.empty())
+						errormsg = _("IDS_NEED_NUMBER");
+				}
+			}
+			if (m_pShort || m_pLong)
+			{
+				long val;
+				if (textVal.empty() && m_bUseDefOnEmpty)
+				{
+					wxString str;
+					if (m_pShort)
+						str.Printf(wxT("%hd"), m_Default.s);
+					else
+						str.Printf(wxT("%ld"), m_Default.l);
+					pTextControl->ChangeValue(str);
+				}
+				else if (!StringUtil::ToLong(StringUtil::stringW(textVal), val))
 				{
 					ok = false;
 					if (errormsg.empty())
@@ -254,7 +416,18 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				{
 					pTextControl->ChangeValue(ARBDouble::ToString(m_Default.dbl, m_Prec));
 				}
-				else if (!StringUtil::ToDouble(textVal, dbl))
+				else if (!StringUtil::ToDouble(StringUtil::stringW(textVal), dbl))
+				{
+					ok = false;
+					if (errormsg.empty())
+						errormsg = _("IDS_NEED_NUMBER");
+				}
+			}
+			else if (m_pTime)
+			{
+				textVal.MakeUpper();
+				wxDateTime date(*m_pTime);
+				if (!date.ParseFormat(textVal, s_TimeFormat))
 				{
 					ok = false;
 					if (errormsg.empty())
@@ -289,7 +462,7 @@ CTrimValidator::CTrimValidator(
 	, m_ErrMsg()
 {
 	if (errMsg)
-		m_ErrMsg = errMsg;
+		m_ErrMsg = *errMsg;
 }
 
 

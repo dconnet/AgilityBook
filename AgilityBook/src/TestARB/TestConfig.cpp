@@ -35,31 +35,31 @@
 //  - Add entry here. That's it.
 // RunARBTests.py will automatically pick up all XML files in ./res/
 // Also, update "Default" test if venues/actions/etc changed.
-const wxChar* const gc_Configs[] =
+const wchar_t* const gc_Configs[] =
 {
-	wxT("DefaultConfig.xml"),
-	wxT("Config08_v10_2.xml"),
-	wxT("Config09_v11_0.xml"),
-	wxT("Config12_v12_1.xml"),
-	wxT("Config14_v12_2.xml"),
-	wxT("Config19_v12_5.xml"),
-	wxT("Config20_v12_6.xml"),
-	wxT("Config21_v12_7.xml"),
-	wxT("Config22_v12_7.xml"),
-	wxT("Config23_v12_8.xml"),
-	wxT("Config24_v12_8.xml"),
-	wxT("Config25_v12_9.xml"),
-	wxT("Config26_v12_9.xml"),
-	wxT("Config27_v12_10.xml"),
-	wxT("Config28_v12_11.xml"),
-	wxT("Config29_v12_11.xml"),
-	wxT("Config30_v12_11.xml"),
-	wxT("Config31_v12_11.xml"),
-	wxT("Config32_v12_11.xml"),
-	wxT("Config33_v13_1.xml"),
-	wxT("Config34_v13_1.xml"),
-	wxT("Config35_v13_1.xml"),
-	wxT("Config36_v13_1.xml"),
+	L"DefaultConfig.xml",
+	L"Config08_v10_2.xml",
+	L"Config09_v11_0.xml",
+	L"Config12_v12_1.xml",
+	L"Config14_v12_2.xml",
+	L"Config19_v12_5.xml",
+	L"Config20_v12_6.xml",
+	L"Config21_v12_7.xml",
+	L"Config22_v12_7.xml",
+	L"Config23_v12_8.xml",
+	L"Config24_v12_8.xml",
+	L"Config25_v12_9.xml",
+	L"Config26_v12_9.xml",
+	L"Config27_v12_10.xml",
+	L"Config28_v12_11.xml",
+	L"Config29_v12_11.xml",
+	L"Config30_v12_11.xml",
+	L"Config31_v12_11.xml",
+	L"Config32_v12_11.xml",
+	L"Config33_v13_1.xml",
+	L"Config34_v13_1.xml",
+	L"Config35_v13_1.xml",
+	L"Config36_v13_1.xml",
 };
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
@@ -101,7 +101,7 @@ SUITE(TestConfig)
 		{
 			ElementNodePtr data = ElementNode::New();
 			ARBConfig config;
-			wxString err;
+			std::wostringstream err;
 			ARBErrorCallback callback(err);
 			CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(1,0), callback));
 			CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(2,0), callback));
@@ -123,7 +123,7 @@ SUITE(TestConfig)
 		{
 			ElementNodePtr data = ElementNode::New();
 			ARBConfig config;
-			wxString err;
+			std::wostringstream err;
 			ARBErrorCallback callback(err);
 			CHECK(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1,0), callback));
 			CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
@@ -236,7 +236,7 @@ SUITE(TestConfig)
 			ARBConfig config;
 			CConfigHandler handler;
 			config.Default(&handler);
-			wxString nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
+			std::wstring nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
 			CHECK(0 != nice.length());
 		}
 	}
@@ -252,12 +252,12 @@ SUITE(TestConfig)
 			ARBDogTitlePtr title = ARBDogTitle::New();
 			title->SetVenue(wxT("AKC"));
 			title->SetName(wxT("MX"), 1, false, eTitleNumber);
-			wxString name1 = config.GetTitleCompleteName(title);
+			std::wstring name1 = config.GetTitleCompleteName(title);
 			CHECK(0 != name1.length());
-			wxString name2 = config.GetTitleCompleteName(title, false);
+			std::wstring name2 = config.GetTitleCompleteName(title, false);
 			CHECK(0 != name2.length());
 			CHECK(name1 != name2);
-			wxString nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
+			std::wstring nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
 			nice += wxT(" [MX]");
 			CHECK(nice == name2);
 		}
@@ -272,7 +272,7 @@ SUITE(TestConfig)
 			//bool Update(
 			//		int indent,
 			//		ARBConfig const& inConfigNew,
-			//		wxString& ioInfo);
+			//		std::wstring& ioInfo);
 		}
 	}
 }

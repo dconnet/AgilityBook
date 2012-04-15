@@ -26,7 +26,7 @@
 #include <sstream>
 #include <wx/file.h> 
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 

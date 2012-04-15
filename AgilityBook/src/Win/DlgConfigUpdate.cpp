@@ -116,7 +116,7 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 }
 
 
-bool CDlgConfigUpdate::LoadConfig(wxChar const* pFile)
+bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 {
 	wxBusyCursor wait;
 	if (!pFile)
@@ -126,16 +126,15 @@ bool CDlgConfigUpdate::LoadConfig(wxChar const* pFile)
 	}
 	else
 	{
-		wxString errMsg;
+		std::wostringstream errMsg;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
 		if (!tree->LoadXML(pFile, errMsg))
 		{
 			wxString msg = _("AFX_IDP_FAILED_TO_OPEN_DOC");
-			if (0 < errMsg.length())
+			if (0 < errMsg.str().length())
 			{
-				msg += wxT("\n\n");
-				msg += errMsg;
+				msg << L"\n\n" << errMsg.str();
 			}
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
@@ -143,12 +142,12 @@ bool CDlgConfigUpdate::LoadConfig(wxChar const* pFile)
 		CErrorCallback err;
 		if (!m_Book.Load(tree, false, false, true, false, false, err))
 		{
-			if (0 < err.m_ErrMsg.length())
-				wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			if (0 < err.m_ErrMsg.str().length())
+				wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
-		else if (0 < err.m_ErrMsg.length())
-			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		else if (0 < err.m_ErrMsg.str().length())
+			wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return true;
 }
@@ -200,7 +199,7 @@ void CDlgConfigUpdate::OnOk(wxCommandEvent& evt)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
-		wxChar const* pFile = NULL;
+		wchar_t const* pFile = NULL;
 		wxString source(m_FileName->GetValue());
 		if (m_radioExisting->GetValue())
 			pFile = source;

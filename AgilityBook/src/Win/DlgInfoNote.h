@@ -35,10 +35,10 @@ public:
 	CDlgInfoNote(
 			CAgilityBookDoc* pDoc,
 			ARBInfo::eInfoType inType,
-			wxString const& inSelect,
+			std::wstring const& inSelect,
 			wxWindow* pParent = NULL);
 
-	wxString CurrentSelection() const	{return m_CurSel;}
+	std::wstring CurrentSelection() const;
 
 private:
 	void UpdateImage(int index);
@@ -47,7 +47,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARBInfo::eInfoType m_Type;
 	wxString m_Select;
-	std::set<wxString> m_NamesInUse;
+	std::set<std::wstring> m_NamesInUse;
 	ARBInfoItemList const& m_InfoOrig;
 	ARBInfoItemList m_Info;
 	class NameInfo
@@ -60,10 +60,10 @@ private:
 			eDeleted
 		} eUsage;
 		NameInfo();
-		NameInfo(wxString const& inName);
+		NameInfo(std::wstring const& inName);
 		NameInfo(NameInfo const& rhs);
 		bool operator==(NameInfo const& rhs);
-		wxString m_Name;
+		std::wstring m_Name;
 		eUsage m_eInUse;
 		bool m_bHasData;
 	};

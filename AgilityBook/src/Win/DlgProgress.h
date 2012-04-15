@@ -28,9 +28,9 @@ public:
 
 	// Setup dialog.
 	/// Set the caption of the dialog.
-	virtual void SetCaption(wxString const& inCaption) = 0;
+	virtual void SetCaption(std::wstring const& inCaption) = 0;
 	/// Set a visible message.
-	virtual void SetMessage(wxString const& inMessage) = 0;
+	virtual void SetMessage(std::wstring const& inMessage) = 0;
 
 	// Progress bar interface (these are thin wrappers on the progress bar)
 	virtual void SetRange(

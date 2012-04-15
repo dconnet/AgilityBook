@@ -160,7 +160,7 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerDataPtr pRow2,
@@ -172,37 +172,37 @@ private:
 typedef std::tr1::shared_ptr<CDlgListViewerDataExisting> CDlgListViewerDataExistingPtr;
 
 
-wxString CDlgListViewerDataExisting::OnNeedText(long iCol) const
+std::wstring CDlgListViewerDataExisting::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wostringstream str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
-		str = m_Existing->GetDate().GetString();
+		str << m_Existing->GetDate().GetString();
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
 		str << m_Existing->GetPoints();
 		break;
 	case COL_RUN_MQ_VENUE:
-		str = m_Existing->GetVenue();
+		str << m_Existing->GetVenue();
 		break;
 	case COL_RUN_MQ_DIV:
-		str = m_Existing->GetDivision();
+		str << m_Existing->GetDivision();
 		break;
 	case COL_RUN_MQ_LEVEL:
-		str = m_Existing->GetLevel();
+		str << m_Existing->GetLevel();
 		break;
 	case COL_RUN_MQ_EVENT:
-		str = m_Existing->GetEvent();
+		str << m_Existing->GetEvent();
 		break;
 	case COL_RUN_MQ_SUBNAME:
-		str = m_Existing->GetSubName();
+		str << m_Existing->GetSubName();
 		break;
 	case COL_RUN_MQ_LOCATION:
-		str = _("IDS_EXISTING_POINTS");
+		str << StringUtil::stringW(_("IDS_EXISTING_POINTS"));
 		break;
 	}
-	return str;
+	return str.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -231,7 +231,7 @@ public:
 		// all hell will break loose. Don't bother asserting here...
 		//assert(inScoring);
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerDataPtr pRow2,
@@ -247,9 +247,9 @@ private:
 typedef std::tr1::shared_ptr<CDlgListViewerDataRun> CDlgListViewerDataRunPtr;
 
 
-wxString CDlgListViewerDataRun::OnNeedText(long iCol) const
+std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wostringstream str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -332,7 +332,7 @@ wxString CDlgListViewerDataRun::OnNeedText(long iCol) const
 		}
 		break;
 	}
-	return str;
+	return str.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -351,7 +351,7 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerDataPtr pRow2,
@@ -364,9 +364,9 @@ private:
 typedef std::tr1::shared_ptr<CDlgListViewerDataMultiQ> CDlgListViewerDataMultiQPtr;
 
 
-wxString CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
+std::wstring CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -397,7 +397,7 @@ int CDlgListViewerDataExisting::Compare(
 	CDlgListViewerDataMultiQPtr pDataMultiQ = std::tr1::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
 	if (!pDataExisting && !pDataRun && !pDataMultiQ)
 		return 0;
-	wxString str1, str2;
+	std::wstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -481,7 +481,7 @@ int CDlgListViewerDataRun::Compare(
 	CDlgListViewerDataRunPtr pDataRun = std::tr1::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
 	if (!pDataExisting && !pDataRun)
 		return 0;
-	wxString str1, str2;
+	std::wstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -626,7 +626,7 @@ int CDlgListViewerDataMultiQ::Compare(
 	CDlgListViewerDataMultiQPtr pData = std::tr1::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
 	if (!pDataExisting && !pData)
 		return 0;
-	wxString str1, str2;
+	std::wstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -673,7 +673,7 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerDataPtr pRow2,
@@ -685,9 +685,9 @@ private:
 typedef std::tr1::shared_ptr<CDlgListViewerDataLifetime> CDlgListViewerDataLifetimePtr;
 
 
-wxString CDlgListViewerDataLifetime::OnNeedText(long iCol) const
+std::wstring CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wostringstream str;
 	if (m_info)
 	{
 		switch (m_ColData->GetIndex(iCol))
@@ -706,7 +706,7 @@ wxString CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 			break;
 		}
 	}
-	return str;
+	return str.str();
 }
 
 
@@ -717,7 +717,7 @@ int CDlgListViewerDataLifetime::Compare(
 	CDlgListViewerDataLifetimePtr pData = std::tr1::dynamic_pointer_cast<CDlgListViewerDataLifetime, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
-	wxString str1, str2;
+	std::wstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -758,7 +758,7 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerDataPtr pRow2,
@@ -770,9 +770,9 @@ private:
 typedef std::tr1::shared_ptr<CDlgListViewerDataOther> CDlgListViewerDataOtherPtr;
 
 
-wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
+std::wstring CDlgListViewerDataOther::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wostringstream str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_OTHER_DATE:
@@ -813,7 +813,7 @@ wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
 			str << m_info.m_Score;
 		break;
 	}
-	return str;
+	return str.str();
 }
 
 
@@ -824,7 +824,7 @@ int CDlgListViewerDataOther::Compare(
 	CDlgListViewerDataOtherPtr pData = std::tr1::dynamic_pointer_cast<CDlgListViewerDataOther, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
-	wxString str1, str2;
+	std::wstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -923,7 +923,7 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerDataPtr pRow2,
@@ -935,9 +935,9 @@ private:
 typedef std::tr1::shared_ptr<CDlgListViewerDataItem> CDlgListViewerDataItemPtr;
 
 
-wxString CDlgListViewerDataItem::OnNeedText(long iCol) const
+std::wstring CDlgListViewerDataItem::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_ITEM_TYPE:
@@ -977,7 +977,7 @@ int CDlgListViewerDataItem::Compare(
 	CDlgListViewerDataItemPtr pData = std::tr1::dynamic_pointer_cast<CDlgListViewerDataItem, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
-	wxString str1, str2;
+	std::wstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -1094,7 +1094,7 @@ static void InsertRun(
 
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
-		wxString const& inCaption,
+		std::wstring const& inCaption,
 		RunInfoData const* inData,
 		std::list<RunInfo> const& inRuns,
 		wxWindow* pParent)
@@ -1105,7 +1105,7 @@ CDlgListViewer::CDlgListViewer(
 {
 	Create(inCaption, pParent);
 
-	std::set<wxString> subNames;
+	std::set<std::wstring> subNames;
 	std::vector<ARBDogExistingPointsPtr> existingRuns;
 
 	std::list<RunInfo>::const_iterator iterRuns;
@@ -1183,7 +1183,7 @@ CDlgListViewer::CDlgListViewer(
 // Viewing runs affected by configuration changes
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
-		wxString const& inCaption,
+		std::wstring const& inCaption,
 		std::list<ScoringRunInfo> const& inScoringRuns,
 		wxWindow* pParent)
 	: wxDialog()
@@ -1193,7 +1193,7 @@ CDlgListViewer::CDlgListViewer(
 {
 	Create(inCaption, pParent);
 
-	std::set<wxString> subNames;
+	std::set<std::wstring> subNames;
 	std::list<ScoringRunInfo>::const_iterator iter;
 	for (iter = inScoringRuns.begin(); iter != inScoringRuns.end(); ++iter)
 	{
@@ -1235,7 +1235,7 @@ CDlgListViewer::CDlgListViewer(
 // Viewing multi-Qs
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
-		wxString const& inCaption,
+		std::wstring const& inCaption,
 		MultiQInfoData const* inData,
 		std::set<MultiQdata> const& inMQs,
 		wxWindow* pParent)
@@ -1295,7 +1295,7 @@ CDlgListViewer::CDlgListViewer(
 // Viewing lifetime data
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
-		wxString const& inCaption,
+		std::wstring const& inCaption,
 		std::list<LifeTimePointInfoPtr> const& inLifetime,
 		wxWindow* pParent)
 	: wxDialog()
@@ -1332,7 +1332,7 @@ CDlgListViewer::CDlgListViewer(
 // Viewing other points
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
-		wxString const& inCaption,
+		std::wstring const& inCaption,
 		std::list<OtherPtInfo> const& inRunList,
 		wxWindow* pParent)
 	: wxDialog()
@@ -1368,7 +1368,7 @@ CDlgListViewer::CDlgListViewer(
 
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
-		wxString const& inCaption,
+		std::wstring const& inCaption,
 		std::vector<CFindItemInfo> const& inItems,
 		wxWindow* pParent)
 	: wxDialog()
@@ -1403,7 +1403,7 @@ CDlgListViewerDataPtr CDlgListViewer::GetDataByData(long data) const
 
 
 bool CDlgListViewer::Create(
-		wxString const& inCaption,
+		std::wstring const& inCaption,
 		wxWindow* pParent)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
@@ -1500,14 +1500,14 @@ void CDlgListViewer::OnCopy(wxCommandEvent& evt)
 		if (!clpData.isOkay())
 			return;
 
-		wxString data;
-		wxString html;
+		std::wstring data;
+		std::wstring html;
 		CClipboardDataTable table(data, html);
 
 		if (1 < indices.size()
 		|| indices.size() == static_cast<size_t>(m_ctrlList->GetItemCount()))
 		{
-			std::vector<wxString> line;
+			std::vector<std::wstring> line;
 			m_ctrlList->GetPrintLine(-1, line);
 			table.StartLine();
 			for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -1520,7 +1520,7 @@ void CDlgListViewer::OnCopy(wxCommandEvent& evt)
 		// Now all the data.
 		for (size_t idx = 0; idx < indices.size(); ++idx)
 		{
-			std::vector<wxString> line;
+			std::vector<std::wstring> line;
 			m_ctrlList->GetPrintLine(indices[idx], line);
 			table.StartLine();
 			for (int i = 0; i < static_cast<int>(line.size()); ++i)

@@ -24,6 +24,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBDogClub.h"
+#include "ARBString.h"
 #include "ComboBoxes.h"
 #include "Validators.h"
 #include <set>
@@ -62,7 +63,7 @@ CDlgClub::CDlgClub(
 		m_Club = m_pClub->GetName();
 		m_Venue = m_pClub->GetVenue();
 	}
-	std::set<wxString> clubnames;
+	std::set<std::wstring> clubnames;
 	for (ARBDogClubList::const_iterator iClub = inClubs.begin(); iClub != inClubs.end(); ++iClub)
 		clubnames.insert((*iClub)->GetName());
 	m_pDoc->Book().GetAllClubNames(clubnames, true, true);
@@ -70,7 +71,7 @@ CDlgClub::CDlgClub(
 		clubnames.insert(m_pClub->GetName());
 
 	wxArrayString clubs;
-	for (std::set<wxString>::const_iterator iter = clubnames.begin(); iter != clubnames.end(); ++iter)
+	for (std::set<std::wstring>::const_iterator iter = clubnames.begin(); iter != clubnames.end(); ++iter)
 	{
 		clubs.Add((*iter));
 	}
@@ -134,14 +135,26 @@ CDlgClub::CDlgClub(
 DEFINE_ON_INIT(CDlgClub)
 
 
+std::wstring CDlgClub::Club() const
+{
+	return StringUtil::stringW(m_Club);
+}
+
+
+std::wstring CDlgClub::Venue() const
+{
+	return StringUtil::stringW(m_Venue);
+}
+
+
 void CDlgClub::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 	if (m_pClub)
 	{
-		m_pClub->SetName(m_Club);
-		m_pClub->SetVenue(m_Venue);
+		m_pClub->SetName(StringUtil::stringW(m_Club));
+		m_pClub->SetVenue(StringUtil::stringW(m_Venue));
 	}
 	EndDialog(wxID_OK);
 }

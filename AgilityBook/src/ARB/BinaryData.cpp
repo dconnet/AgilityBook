@@ -20,6 +20,7 @@
 #include "BinaryData.h"
 
 #include "ARBBase64.h"
+#include "ARBString.h"
 #include <wx/mstream.h>
 #include <wx/wfstream.h>
 #include <wx/zstream.h>
@@ -36,7 +37,7 @@ BinaryData::BinaryData()
 
 
 bool BinaryData::Decode(
-		wxString const& inBase64,
+		std::wstring const& inBase64,
 		unsigned char*& outBinData,
 		size_t& outBytes)
 {
@@ -47,7 +48,7 @@ bool BinaryData::Decode(
 
 	unsigned char* pData;
 	size_t len;
-	if (!ARBBase64::Decode(inBase64.wx_str(), pData, len))
+	if (!ARBBase64::Decode(inBase64, pData, len))
 		return false;
 
 	wxMemoryOutputStream output;
@@ -75,7 +76,7 @@ void BinaryData::Release(unsigned char* inBinData)
 bool BinaryData::Encode(
 		unsigned char const* inBinData,
 		size_t inBytes,
-		wxString& outBase64)
+		std::wstring& outBase64)
 {
 	outBase64.erase();
 	if (0 == inBytes)
@@ -105,7 +106,7 @@ bool BinaryData::Encode(
 
 bool BinaryData::Encode(
 		wxFFile& inData,
-		wxString& outBase64)
+		std::wstring& outBase64)
 {
 	outBase64.erase();
 
@@ -136,8 +137,8 @@ bool BinaryData::Encode(
 
 
 bool BinaryData::DecodeString(
-		wxString const& inBase64,
-		wxString& outData)
+		std::wstring const& inBase64,
+		std::wstring& outData)
 {
 	if (inBase64.empty())
 	{
@@ -157,8 +158,8 @@ bool BinaryData::DecodeString(
 
 
 bool BinaryData::EncodeString(
-		wxString const& inData,
-		wxString& outBase64)
+		std::wstring const& inData,
+		std::wstring& outBase64)
 {
 	outBase64.erase();
 	if (inData.empty())
@@ -167,6 +168,6 @@ bool BinaryData::EncodeString(
 	// the output string - which when streamed, then includes the null. Which
 	// in an ostringstream, terminates the string on output of the stream.
 	// TODO: Better conversion
-	std::string tmp(inData.ToUTF8());
+	std::string tmp(StringUtil::stringA(inData));
 	return BinaryData::Encode(reinterpret_cast<unsigned char const*>(tmp.c_str()), tmp.length(), outBase64);
 }

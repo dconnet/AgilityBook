@@ -37,6 +37,7 @@
 #include "ARBDogRun.h"
 #include "ARBDogRunOtherPoints.h"
 #include "ARBDogRunPartner.h"
+#include "ARBString.h"
 #include "DlgCalendar.h"
 #include "DlgFault.h"
 #include "DlgOtherPoint.h"
@@ -102,7 +103,7 @@ public:
 	}
 	virtual bool HasIcon() const				{return true;}
 	virtual int OnNeedIcon() const;
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual bool OnEdit();
 	virtual void Apply();
 	virtual ARBCalendarPtr GetCalendar() const	{return m_pCal;}
@@ -129,9 +130,9 @@ int CDlgListCtrlDataCalendar::OnNeedIcon() const
 }
 
 
-wxString CDlgListCtrlDataCalendar::OnNeedText(long iCol) const
+std::wstring CDlgListCtrlDataCalendar::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wstring str;
 	switch (iCol)
 	{
 	case 1: // Start Date
@@ -150,8 +151,7 @@ wxString CDlgListCtrlDataCalendar::OnNeedText(long iCol) const
 		str = m_pCal->GetVenue();
 		break;
 	case 6: // Notes
-		str = m_pCal->GetNote();
-		str.Replace(wxT("\n"), wxT(" "));
+		str = StringUtil::Replace(m_pCal->GetNote(), wxT("\n"), wxT(" "));
 		break;
 	}
 	return str;
@@ -184,25 +184,25 @@ public:
 			CReportListCtrl* ctrl,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
-			std::set<wxString>& faults);
+			std::set<std::wstring>& faults);
 	CDlgListCtrlDataFaults(
 			CReportListCtrl* list,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
-			wxString fault)
+			std::wstring fault)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
 		, m_pRun(pRun)
 		, m_Fault(fault)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const	{return m_Fault;}
+	virtual std::wstring OnNeedText(long iCol) const	{return m_Fault;}
 	virtual bool OnEdit();
 	virtual void Apply();
 private:
 	CAgilityBookDoc* m_pDoc;
 	ARBDogRunPtr m_pRun;
-	wxString m_Fault;
+	std::wstring m_Fault;
 };
 typedef std::tr1::shared_ptr<CDlgListCtrlDataFaults> CDlgListCtrlDataFaultsPtr;
 
@@ -211,7 +211,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 		CReportListCtrl* ctrl,
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr pRun,
-		std::set<wxString>& faults)
+		std::set<std::wstring>& faults)
 {
 	faults.clear();
 	pDoc->Book().GetAllFaultTypes(faults);
@@ -236,14 +236,12 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 
 bool CDlgListCtrlDataFaults::OnEdit()
 {
-	std::set<wxString> faults;
+	std::set<std::wstring> faults;
 	CDlgListCtrlDataFaults::GetAllFaults(m_List, m_pDoc, m_pRun, faults);
 	CDlgFault dlg(faults, m_Fault);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		wxString fault = dlg.GetFault();
-		fault.Trim(true);
-		fault.Trim(false);
+		std::wstring fault = StringUtil::Trim(dlg.GetFault());
 		m_Fault = fault;
 		return true;
 	}
@@ -274,7 +272,7 @@ public:
 		, m_Other(pOther)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual bool OnEdit();
 	virtual void Apply();
 private:
@@ -285,20 +283,20 @@ private:
 typedef std::tr1::shared_ptr<CDlgListCtrlDataOtherPoints> CDlgListCtrlDataOtherPointsPtr;
 
 
-wxString CDlgListCtrlDataOtherPoints::OnNeedText(long iCol) const
+std::wstring CDlgListCtrlDataOtherPoints::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wostringstream str;
 	switch (iCol)
 	{
 	default:
 	case 0:
-		str = m_Other->GetName();
+		str << m_Other->GetName();
 		break;
 	case 1:
 		str << ARBDouble::ToString(m_Other->GetPoints(), -1);
 		break;
 	}
-	return str;
+	return str.str();
 }
 
 
@@ -333,7 +331,7 @@ public:
 		, m_Partner(pPartner)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual bool OnEdit();
 	virtual void Apply();
 private:
@@ -344,9 +342,9 @@ private:
 typedef std::tr1::shared_ptr<CDlgListCtrlDataPartners> CDlgListCtrlDataPartnersPtr;
 
 
-wxString CDlgListCtrlDataPartners::OnNeedText(long iCol) const
+std::wstring CDlgListCtrlDataPartners::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wstring str;
 	switch (iCol)
 	{
 	default:
@@ -366,7 +364,7 @@ wxString CDlgListCtrlDataPartners::OnNeedText(long iCol) const
 
 bool CDlgListCtrlDataPartners::OnEdit()
 {
-	std::set<wxString> handlers, dogs;
+	std::set<std::wstring> handlers, dogs;
 	m_pDlg->GetAllPartners(handlers, dogs);
 	CDlgPartner dlg(m_Partner, handlers, dogs);
 	if (wxID_OK == dlg.ShowModal())
@@ -413,7 +411,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_pConfig(NULL)
 	, m_pRun()
 {
-	Create(_("IDS_CALENDAR"), pParent, true);
+	Create(StringUtil::stringW(_("IDS_CALENDAR")), pParent, true);
 	m_ctrlCreateTrial->Show();
 
 	int nCols = 0;
@@ -461,7 +459,7 @@ CDlgListCtrl::CDlgListCtrl(
 
 	if (eFaults == m_What)
 	{
-		Create(_("IDS_FAULT_TYPES"), pParent, false);
+		Create(StringUtil::stringW(_("IDS_FAULT_TYPES")), pParent, false);
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_FAULT"));
 		for (ARBDogFaultList::const_iterator iter = m_pRun->GetFaults().begin(); iter != m_pRun->GetFaults().end(); ++iter)
 		{
@@ -472,7 +470,7 @@ CDlgListCtrl::CDlgListCtrl(
 
 	else if (ePartners == m_What)
 	{
-		Create(_("IDS_PARTNERS"), pParent, false);
+		Create(StringUtil::stringW(_("IDS_PARTNERS")), pParent, false);
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_DOG"));
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_NUMBER"));
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_HANDLER"));
@@ -511,7 +509,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_pConfig(&pConfig)
 	, m_pRun(run)
 {
-	Create(_("IDS_OTHERPOINTS"), pParent, false);
+	Create(StringUtil::stringW(_("IDS_OTHERPOINTS")), pParent, false);
 
 	int nCols = 0;
 	m_ctrlList->InsertColumn(nCols++, _("IDS_COL_NAME"));
@@ -527,7 +525,7 @@ CDlgListCtrl::CDlgListCtrl(
 
 
 bool CDlgListCtrl::Create(
-		wxString const& inCaption,
+		std::wstring const& inCaption,
 		wxWindow* pParent,
 		bool bHasImageList)
 {
@@ -739,8 +737,8 @@ void CDlgListCtrl::DoEdit()
 
 
 void CDlgListCtrl::GetAllPartners(
-		std::set<wxString>& ioPartners,
-		std::set<wxString>& ioDogs) const
+		std::set<std::wstring>& ioPartners,
+		std::set<std::wstring>& ioDogs) const
 {
 	if (m_pDoc)
 	{
@@ -813,7 +811,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 
 	case eFaults:
 		{
-			std::set<wxString> faults;
+			std::set<std::wstring> faults;
 			CDlgListCtrlDataFaults::GetAllFaults(m_ctrlList, m_pDoc, m_pRun, faults);
 			CDlgFault dlg(faults, wxEmptyString, this);
 			if (wxID_OK == dlg.ShowModal())
@@ -841,7 +839,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 	case ePartners:
 		{
 			ARBDogRunPartnerPtr partner(ARBDogRunPartner::New());
-			std::set<wxString> handlers, dogs;
+			std::set<std::wstring> handlers, dogs;
 			GetAllPartners(handlers, dogs);
 			CDlgPartner dlg(partner, handlers, dogs);
 			if (wxID_OK == dlg.ShowModal())

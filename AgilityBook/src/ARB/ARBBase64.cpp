@@ -27,6 +27,8 @@
 #include "stdafx.h"
 #include "ARBBase64.h"
 
+#include "ARBString.h"
+
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
@@ -308,7 +310,8 @@ bool ARBBase64::Encode(
 	if (encoded)
 	{
 		bOk = true;
-		outData = StringUtil::stringW(reinterpret_cast<char*>(encoded));
+		char const* signedChar = reinterpret_cast<char*>(encoded);
+		outData = StringUtil::stringW(signedChar, strlen(signedChar));
 		delete [] encoded;
 	}
 	return bOk;

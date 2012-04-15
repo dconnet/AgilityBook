@@ -32,7 +32,7 @@ public:
 	void Save();
 
 private:
-	wxString GetCalText(
+	std::wstring GetCalText(
 			CAgilityBookOptions::CalendarColorItem type,
 			bool bForDisplay) const;
 	void UpdateControls();

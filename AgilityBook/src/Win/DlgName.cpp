@@ -19,6 +19,7 @@
 #include "DlgName.h"
 
 #include "AgilityBook.h"
+#include "ARBString.h"
 #include "Validators.h"
 #include "Widgets.h"
 
@@ -27,8 +28,27 @@
 #endif
 
 
+CDlgName::CDlgName(
+		std::wstring const& name,
+		wxWindow* pParent)
+	: m_Name(StringUtil::stringWX(name))
+{
+	Create(StringUtil::stringW(_("IDD_NAME")), pParent);
+}
+
+
+CDlgName::CDlgName(
+		std::wstring const& name,
+		std::wstring const& caption,
+		wxWindow* pParent)
+	: m_Name(name)
+{
+	Create(caption, pParent);
+}
+
+
 bool CDlgName::Create(
-		wxString const& caption,
+		std::wstring const& caption,
 		wxWindow* pParent)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
@@ -67,3 +87,9 @@ bool CDlgName::Create(
 
 
 DEFINE_ON_INIT(CDlgName)
+
+
+std::wstring CDlgName::Name() const
+{
+	return StringUtil::stringW(m_Name);
+}

@@ -70,7 +70,7 @@ public:
 			eClipFormat clpFmt,
 			ElementNodePtr outTree);
 
-	bool GetData(wxString& outData);
+	bool GetData(std::wstring& outData);
 };
 
 
@@ -82,16 +82,16 @@ class CClipboardDataWriter;
 class CClipboardDataTable
 {
 public:
-	CClipboardDataTable(wxString& ioText, wxString& ioHtml);
+	CClipboardDataTable(std::wstring& ioText, std::wstring& ioHtml);
 	void Reset();
 	void StartLine();
 	void EndLine();
-	void Cell(int nCol, wxString const& inData);
+	void Cell(int nCol, std::wstring const& inData);
 	bool Write(CClipboardDataWriter& writer, bool bCommit);
 private:
 	bool m_Closed;
-	wxString& m_ioText;
-	wxString& m_ioHtml;
+	std::wstring& m_ioText;
+	std::wstring& m_ioHtml;
 };
 
 /**
@@ -110,9 +110,9 @@ public:
 	// Used to write special data.
 	bool AddData(
 			eClipFormat clpFmt,
-			wxString const& inData);
+			std::wstring const& inData);
 
-	bool AddData(wxString const& inData);
+	bool AddData(std::wstring const& inData);
 
 	bool AddData(CClipboardDataTable& inData);
 

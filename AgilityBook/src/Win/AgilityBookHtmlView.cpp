@@ -24,6 +24,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
+#include "ARBString.h"
 #include "ClipBoard.h"
 #include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
@@ -105,14 +106,14 @@ bool CAgilityBookHtmlView::IsFiltered() const
 }
 
 
-bool CAgilityBookHtmlView::GetMessage(wxString& msg) const
+bool CAgilityBookHtmlView::GetMessage(std::wstring& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
 }
 
 
-bool CAgilityBookHtmlView::GetMessage2(wxString& msg) const
+bool CAgilityBookHtmlView::GetMessage2(std::wstring& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
@@ -121,7 +122,7 @@ bool CAgilityBookHtmlView::GetMessage2(wxString& msg) const
 	}
 	else
 	{
-		msg.Empty();
+		msg.clear();
 		return false;
 	}
 }
@@ -174,14 +175,14 @@ void CAgilityBookHtmlView::OnUpdate(
 }
 
 
-wxString CAgilityBookHtmlView::RawHtml(
+std::wstring CAgilityBookHtmlView::RawHtml(
 		bool bFragment,
 		bool bNoInternalLinks) const
 {
 	ARBDate today(ARBDate::Today());
-	wxString data;
+	std::wostringstream data;
 
-	wxString title = _("IDS_TITLING_POINTS");
+	std::wstring title = _("IDS_TITLING_POINTS");
 
 	data << wxT("<html>\n");
 	if (!bFragment)
@@ -205,7 +206,7 @@ wxString CAgilityBookHtmlView::RawHtml(
 		data << wxT("</body></html>");
 	data << wxT("\n");
 
-	return data;
+	return data.str();
 }
 
 
@@ -246,7 +247,7 @@ void CAgilityBookHtmlView::OnCtrlLinkClicked(wxHtmlLinkEvent& evt)
 		// Remember, spaces are now %20. Other special chars may
 		// need fixing too. Just don't use those in our links.
 		bool bDidIt = false;
-		wxString index(url.substr(ProtocolARB.length()));
+		std::wstring index(url.substr(ProtocolARB.length()));
 		if (!index.empty())
 		{
 			long nItem;
@@ -313,9 +314,9 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 			CClipboardDataWriter clpData;
 			if (clpData.isOkay())
 			{
-				wxString data = RawHtml(true, true);
+				std::wstring data = RawHtml(true, true);
 				clpData.AddData(eFormatHtml, data);
-				clpData.AddData(m_Ctrl->ToText());
+				clpData.AddData(StringUtil::stringW(m_Ctrl->ToText()));
 				clpData.CommitData();
 			}
 		}

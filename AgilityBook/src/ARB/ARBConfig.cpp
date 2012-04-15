@@ -159,7 +159,7 @@ bool ARBConfig::Load(
 		return false;
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
@@ -168,7 +168,7 @@ bool ARBConfig::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		wxString const& name = element->GetName();
+		std::wstring const& name = element->GetName();
 		if (name == TREE_ACTION)
 		{
 			// Ignore any errors...
@@ -239,7 +239,7 @@ void ARBConfig::Default(IARBConfigHandler* inHandler)
 			int config = tree->FindElement(TREE_CONFIG);
 			if (0 <= config)
 			{
-				wxString errMsg;
+				std::wostringstream errMsg;
 				ARBErrorCallback err(errMsg);
 				Load(tree->GetElementNode(config), version, err);
 			}
@@ -259,14 +259,14 @@ std::string ARBConfig::GetDTD(
 }
 
 
-wxString ARBConfig::GetTitleNiceName(
-		wxString const& inVenue,
-		wxString const& inTitle) const
+std::wstring ARBConfig::GetTitleNiceName(
+		std::wstring const& inVenue,
+		std::wstring const& inTitle) const
 {
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inVenue, inTitle, &pTitle))
 	{
-		wxString name = pTitle->GetNiceName();
+		std::wstring name = pTitle->GetNiceName();
 		return name;
 	}
 	else
@@ -274,7 +274,7 @@ wxString ARBConfig::GetTitleNiceName(
 }
 
 
-wxString ARBConfig::GetTitleCompleteName(
+std::wstring ARBConfig::GetTitleCompleteName(
 		ARBDogTitlePtr inTitle,
 		bool bAbbrevFirst) const
 {
@@ -291,7 +291,7 @@ wxString ARBConfig::GetTitleCompleteName(
 bool ARBConfig::Update(
 		int indent,
 		ARBConfig const& inConfigNew,
-		wxString& ioInfo)
+		std::wostringstream& ioInfo)
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
 	// Update CalSites. (existing ones are never removed except by an action)
@@ -391,7 +391,7 @@ bool ARBConfig::Update(
 	nNew = 0;
 	nUpdated = 0;
 	nSkipped = 0;
-	wxString venueInfo;
+	std::wstring venueInfo;
 	for (ARBConfigVenueList::const_iterator iterVenue = inConfigNew.GetVenues().begin();
 	iterVenue != inConfigNew.GetVenues().end();
 	++iterVenue)

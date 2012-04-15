@@ -28,17 +28,17 @@ class CDlgARBHelp : public wxWizard
 public:
 	CDlgARBHelp();
 
-	void AddSysInfo(wxString const& inData);
-	void AddRegistryInfo(wxChar const* inData);
-	void SetARBFileStatus(wxString const& inFileName, bool bInclude = true);
+	void AddSysInfo(std::wstring const& inData);
+	void AddRegistryInfo(wchar_t const* inData);
+	void SetARBFileStatus(std::wstring const& inFileName, bool bInclude = true);
 
-	typedef std::map<wxString, bool> FileMap;
+	typedef std::map<std::wstring, bool> FileMap;
 	FileMap const& GetARBFiles() const			{return m_IncFile;}
 
-	wxString GetEncodedData();
+	std::wstring GetEncodedData();
 
 protected:
-	wxString m_SysInfo;
-	wxString m_RegInfo;
+	std::wstring m_SysInfo;
+	std::wstring m_RegInfo;
 	FileMap m_IncFile;
 };

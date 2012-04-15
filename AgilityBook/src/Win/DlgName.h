@@ -22,26 +22,18 @@ class CDlgName : public wxDialog
 {
 public:
 	CDlgName(
-			wxString const& name,
-			wxWindow* pParent = NULL)
-		: m_Name(name)
-	{
-		Create(_("IDD_NAME"), pParent);
-	}
+			std::wstring const& name,
+			wxWindow* pParent = NULL);
 	CDlgName(
-			wxString const& name,
-			wxString const& caption,
-			wxWindow* pParent = NULL)
-		: m_Name(name)
-	{
-		Create(caption, pParent);
-	}
-
-	bool Create(
-			wxString const& caption,
+			std::wstring const& name,
+			std::wstring const& caption,
 			wxWindow* pParent = NULL);
 
-	wxString Name() const	{return m_Name;}
+	bool Create(
+			std::wstring const& caption,
+			wxWindow* pParent = NULL);
+
+	std::wstring Name() const;
 
 private:
 	wxString m_Name;

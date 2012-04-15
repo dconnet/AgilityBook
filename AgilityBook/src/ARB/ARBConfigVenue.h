@@ -63,7 +63,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -73,7 +73,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -111,40 +111,40 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigVenuePtr inVenueNew,
-			wxString& ioInfo);
+			std::wstring& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	wxString const& GetName() const
+	std::wstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(wxString const& inName)
+	void SetName(std::wstring const& inName)
 	{
 		m_Name = inName;
 	}
-	wxString const& GetLongName() const
+	std::wstring const& GetLongName() const
 	{
 		return m_LongName;
 	}
-	void SetLongName(wxString const& inName)
+	void SetLongName(std::wstring const& inName)
 	{
 		m_LongName = inName;
 	}
-	wxString const& GetURL() const
+	std::wstring const& GetURL() const
 	{
 		return m_URL;
 	}
-	void SetURL(wxString const& inURL)
+	void SetURL(std::wstring const& inURL)
 	{
 		m_URL = inURL;
 	}
-	wxString const& GetDesc() const
+	std::wstring const& GetDesc() const
 	{
 		return m_Desc;
 	}
-	void SetDesc(wxString const& inDesc)
+	void SetDesc(std::wstring const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
@@ -152,11 +152,11 @@ public:
 	{
 		return !m_LifetimeName.empty();
 	}
-	wxString GetLifetimeName() const
+	std::wstring GetLifetimeName() const
 	{
 		return m_LifetimeName;
 	}
-	void SetLifetimeName(wxString const& name)
+	void SetLifetimeName(std::wstring const& name)
 	{
 		m_LifetimeName = name;
 	}
@@ -202,11 +202,11 @@ public:
 	}
 
 private:
-	wxString m_Name;
-	wxString m_LongName;
-	wxString m_URL;
-	wxString m_Desc;
-	wxString m_LifetimeName;
+	std::wstring m_Name;
+	std::wstring m_LongName;
+	std::wstring m_URL;
+	std::wstring m_Desc;
+	std::wstring m_LifetimeName;
 	short m_idxIcon;
 	ARBConfigTitleList m_Titles;
 	ARBConfigDivisionList m_Divisions;
@@ -247,7 +247,7 @@ public:
 	 * @param inVenue Venue to verify.
 	 * @return Venue exists.
 	 */
-	bool VerifyVenue(wxString const& inVenue) const
+	bool VerifyVenue(std::wstring const& inVenue) const
 	{
 		return FindVenue(inVenue);
 	}
@@ -260,8 +260,8 @@ public:
 	 * @return MultiQ exists.
 	 */
 	bool VerifyMultiQ(
-			wxString const& inVenue,
-			wxString const& inMultiQ,
+			std::wstring const& inVenue,
+			std::wstring const& inMultiQ,
 			bool inUseShortName = false) const;
 
 	/**
@@ -272,9 +272,9 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-			wxString const& inVenue,
-			wxString const& inDivision,
-			wxString const& inLevel) const;
+			std::wstring const& inVenue,
+			std::wstring const& inDivision,
+			std::wstring const& inLevel) const;
 
 	/**
 	 * Verify an event exists.
@@ -286,10 +286,10 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-			wxString const& inVenue,
-			wxString const& inDivision,
-			wxString const& inLevel,
-			wxString const& inEvent,
+			std::wstring const& inVenue,
+			std::wstring const& inDivision,
+			std::wstring const& inLevel,
+			std::wstring const& inEvent,
 			ARBDate const& inDate) const;
 
 	/**
@@ -303,8 +303,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-			wxString const& inVenue,
-			wxString const& inName,
+			std::wstring const& inVenue,
+			std::wstring const& inName,
 			bool bShowInstance,
 			bool bAbbrevFirst = true,
 			ARBConfigTitlePtr* outTitle = NULL) const;
@@ -317,8 +317,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-			wxString const& inVenue,
-			wxString const& inTitle,
+			std::wstring const& inVenue,
+			std::wstring const& inTitle,
 			ARBConfigTitlePtr* outTitle = NULL) const;
 
 	/**
@@ -326,7 +326,7 @@ public:
 	 * @param inTitle Name of title to delete.
 	 * @return Whether title was deleted.
 	 */
-	bool DeleteTitle(wxString const& inTitle);
+	bool DeleteTitle(std::wstring const& inTitle);
 
 	/**
 	 * Find the named venue.
@@ -335,7 +335,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindVenue(
-			wxString const& inVenue,
+			std::wstring const& inVenue,
 			ARBConfigVenuePtr* outVenue = NULL) const;
 
 	/**
@@ -345,7 +345,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddVenue(
-			wxString const& inVenue,
+			std::wstring const& inVenue,
 			ARBConfigVenuePtr* outVenue = NULL);
 
 	/**
@@ -360,7 +360,7 @@ public:
 	 * @param inVenue Name of venue to delete.
 	 * @return Number of venues deleted (0 or 1).
 	 */
-	int DeleteVenue(wxString const& inVenue);
+	int DeleteVenue(std::wstring const& inVenue);
 
 	/**
 	 * Find an event.
@@ -374,10 +374,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			wxString const& inVenue,
-			wxString const& inEvent,
-			wxString const& inDivision,
-			wxString const& inLevel,
+			std::wstring const& inVenue,
+			std::wstring const& inEvent,
+			std::wstring const& inDivision,
+			std::wstring const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigEventPtr* outEvent = NULL,
 			ARBConfigScoringPtr* outScoring = NULL) const;

@@ -101,10 +101,10 @@ SUITE(TestConfigFault)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(fault1->Load(ConfigFault1, ARBVersion(1, 0), callback));
-			wxString name = fault1->GetGenericName();
+			std::wstring name = fault1->GetGenericName();
 			CHECK(!name.empty());
 		}
 	}
@@ -115,10 +115,10 @@ SUITE(TestConfigFault)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(fault1->Load(ConfigFault2, ARBVersion(2, 0), callback));
-			wxString name = fault1->GetGenericName();
+			std::wstring name = fault1->GetGenericName();
 			CHECK(!name.empty());
 		}
 	}
@@ -129,10 +129,10 @@ SUITE(TestConfigFault)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(!fault1->Load(ConfigFault2, ARBVersion(1, 0), callback));
-			wxString name = fault1->GetGenericName();
+			std::wstring name = fault1->GetGenericName();
 			CHECK(name.empty());
 		}
 	}
@@ -143,7 +143,7 @@ SUITE(TestConfigFault)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			fault1->Load(ConfigFault2, ARBVersion(2, 0), callback);
 			ElementNodePtr ele = ElementNode::New();
@@ -160,7 +160,7 @@ SUITE(TestConfigFaultList)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultList faultlist;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
 			CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
@@ -177,7 +177,7 @@ SUITE(TestConfigFaultList)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultList faultlist;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
 			CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
@@ -192,7 +192,7 @@ SUITE(TestConfigFaultList)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultList faultlist;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(faultlist.AddFault(wxT("fault")));
 			CHECK_EQUAL(1u, faultlist.size());

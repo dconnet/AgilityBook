@@ -22,6 +22,7 @@
 
 #include "AgilityBook.h"
 #include "ARBDogRunPartner.h"
+#include "ARBString.h"
 #include "Validators.h"
 #include "Widgets.h"
 
@@ -37,8 +38,8 @@ END_EVENT_TABLE()
 
 CDlgPartner::CDlgPartner(
 		ARBDogRunPartnerPtr partner,
-		std::set<wxString> const& inHandlers,
-		std::set<wxString> const& inDogs,
+		std::set<std::wstring> const& inHandlers,
+		std::set<std::wstring> const& inDogs,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Handler(partner->GetHandler())
@@ -52,7 +53,7 @@ CDlgPartner::CDlgPartner(
 	Create(pParent, wxID_ANY, _("IDD_PARTNER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	wxArrayString handlers;
-	std::set<wxString>::const_iterator iter;
+	std::set<std::wstring>::const_iterator iter;
 	for (iter = inHandlers.begin(); iter != inHandlers.end(); ++iter)
 	{
 		handlers.Add((*iter));
@@ -147,8 +148,8 @@ void CDlgPartner::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_Partner->SetHandler(m_Handler);
-	m_Partner->SetDog(m_Dog);
-	m_Partner->SetRegNum(m_RegNum);
+	m_Partner->SetHandler(StringUtil::stringW(m_Handler));
+	m_Partner->SetDog(StringUtil::stringW(m_Dog));
+	m_Partner->SetRegNum(StringUtil::stringW(m_RegNum));
 	EndDialog(wxID_OK);
 }

@@ -44,7 +44,7 @@ public:
 
 private:
 	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
-	wxChar GetDelim() const;
+	wchar_t GetDelim() const;
 	void UpdateButtons();
 	void UpdatePreview();
 	bool DoImportFile();
@@ -52,13 +52,13 @@ private:
 
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
-	wxString m_FileName;
-	std::vector<wxString> m_FileData; ///< For reading generic text files.
-	std::vector< std::vector<wxString> > m_ExcelData; ///< For reading excel directly.
+	std::wstring m_FileName;
+	std::vector<std::wstring> m_FileData; ///< For reading generic text files.
+	std::vector< std::vector<std::wstring> > m_ExcelData; ///< For reading excel directly.
 	long m_Row;
 	wxSpinCtrl* m_ctrlRow;
 	long m_Delim;
-	wxString m_Delimiter;
+	std::wstring m_Delimiter;
 	wxStaticBox* m_boxDelimiters;
 	wxRadioButton* m_ctrlTab;
 	wxRadioButton* m_ctrlColon;

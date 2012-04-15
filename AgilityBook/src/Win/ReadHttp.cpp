@@ -31,13 +31,13 @@
 #include <wx/url.h>
 #include <wx/wfstream.h>
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
 
 CReadHttp::CReadHttp(
-		wxString const& inURL,
+		std::wstring const& inURL,
 		std::string* outData)
 	: m_address(inURL)
 	, m_URL(NULL)
@@ -48,7 +48,7 @@ CReadHttp::CReadHttp(
 	// 2.8.10 has a memory leak if you use the static proxy method
 	//TODO: verify that 2.9 is ok
 #if !wxCHECK_VERSION(2, 9, 3)
-	wxString proxy = CAgilityBookOptions::GetProxy();
+	std::wstring proxy = CAgilityBookOptions::GetProxy();
 	if (!proxy.empty())
 		wxURL::SetDefaultProxy(wxEmptyString);
 #endif
@@ -61,7 +61,7 @@ CReadHttp::CReadHttp(
 
 
 CReadHttp::CReadHttp(
-		wxString const& inURL,
+		std::wstring const& inURL,
 		wxOutputStream& outStream,
 		IDlgProgress* pProgress)
 	: m_address(inURL)
@@ -71,7 +71,7 @@ CReadHttp::CReadHttp(
 	, m_pProgress(pProgress)
 {
 #if !wxCHECK_VERSION(2, 9, 3)
-	wxString proxy = CAgilityBookOptions::GetProxy();
+	std::wstring proxy = CAgilityBookOptions::GetProxy();
 	if (!proxy.empty())
 		wxURL::SetDefaultProxy(wxEmptyString);
 #endif
@@ -90,8 +90,8 @@ CReadHttp::~CReadHttp()
 
 
 bool CReadHttp::ReadHttpFile(
-		wxString& userName,
-		wxString& outErrMsg,
+		std::wstring& userName,
+		std::wstring& outErrMsg,
 		wxWindow* pParent,
 		bool bCheckOnly)
 {
@@ -104,7 +104,7 @@ bool CReadHttp::ReadHttpFile(
 		outErrMsg += m_address;
 		return false;
 	}
-	outErrMsg.Empty();
+	outErrMsg.clear();
 	wxBusyCursor wait;
 
 	wxInputStream* stream = m_URL->GetInputStream();
@@ -163,17 +163,17 @@ bool CReadHttp::ReadHttpFile(
 
 
 bool CReadHttp::ReadHttpFile(
-		wxString& outErrMsg,
+		std::wstring& outErrMsg,
 		wxWindow* pParent,
 		bool bCheckOnly)
 {
-	wxString username;
+	std::wstring username;
 	return ReadHttpFile(username, outErrMsg, pParent, bCheckOnly);
 }
 
 
 bool CReadHttp::CheckHttpFile(wxWindow* pParent)
 {
-	wxString userName, outErrMsg;
+	std::wstring userName, outErrMsg;
 	return ReadHttpFile(userName, outErrMsg, pParent, true);
 }

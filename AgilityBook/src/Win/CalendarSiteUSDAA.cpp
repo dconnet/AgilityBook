@@ -45,7 +45,7 @@
 
 #define GENERATE_TESTDATA	0
 #define USE_TESTDATA 		0
-#define TESTDATANAME		"c:\\AgilityBook\\testdata\\usdaa-raw"
+#define TESTDATANAME		L"c:\\AgilityBook\\testdata\\usdaa-raw"
 #if GENERATE_TESTDATA && USE_TESTDATA
 #error "Choose one!"
 #endif
@@ -73,16 +73,12 @@ static wxString mdy2ymd(wxString const& inDate)
 }
 
 
-static void StripNewlines(wxString& inStr)
+static void StripNewlines(std::wstring& inStr)
 {
-	wxString::size_type pos = inStr.find_first_of(wxT("\n"));
-	while (wxString::npos != pos)
+	std::wstring::size_type pos = inStr.find_first_of(wxT("\n"));
+	while (std::wstring::npos != pos)
 	{
-#if wxCHECK_VERSION(2, 9, 3)
-		inStr.replace(pos, 1, 1, wxUniChar(' '));
-#else
-		inStr.replace(pos, 1, 1, ' ');
-#endif
+		inStr.replace(pos, 1, 1, L' ');
 		pos = inStr.find_first_of(wxT("\n"));
 	}
 }
@@ -105,9 +101,9 @@ void CCalendarSiteUSDAA::Release()
 }
 
 
-wxString CCalendarSiteUSDAA::GetID() const
+std::wstring CCalendarSiteUSDAA::GetID() const
 {
-	return wxT("cal_usdaa.dll"); // Backwards compatibility
+	return L"cal_usdaa.dll"; // Backwards compatibility
 }
 
 
@@ -118,20 +114,20 @@ bool CCalendarSiteUSDAA::GetVersion(CVersionNum& outVer) const
 }
 
 
-wxString CCalendarSiteUSDAA::GetName() const
+std::wstring CCalendarSiteUSDAA::GetName() const
 {
-	return wxT("USDAA");
+	return L"USDAA";
 }
 
 
-wxString CCalendarSiteUSDAA::GetDescription() const
+std::wstring CCalendarSiteUSDAA::GetDescription() const
 {
-	return _("Get all the events from USDAA. This will parse the HTML returned from http://www.usdaa.com/events.cfm.");
+	return StringUtil::stringW(_("Get all the events from USDAA. This will parse the HTML returned from http://www.usdaa.com/events.cfm."));
 }
 
 
 size_t CCalendarSiteUSDAA::GetLocationCodes(
-			std::map<wxString, wxString>& locCodes) const
+			std::map<std::wstring, std::wstring>& locCodes) const
 {
 	locCodes.clear();
 	return locCodes.size();
@@ -139,18 +135,18 @@ size_t CCalendarSiteUSDAA::GetLocationCodes(
 
 
 size_t CCalendarSiteUSDAA::GetVenueCodes(
-			std::map<wxString, wxString>& venueCodes) const
+			std::map<std::wstring, std::wstring>& venueCodes) const
 {
 	venueCodes.clear();
-	venueCodes[wxT("USDAA")] = wxT("USDAA");
+	venueCodes[L"USDAA"] = L"USDAA";
 	return venueCodes.size();
 }
 
 
 static ElementNodePtr ReadData(
-		std::string const& inAddress
+		std::wstring const& inAddress
 #if GENERATE_TESTDATA
-		, std::string const& outTestData
+		, std::wstring const& outTestData
 #endif
 		)
 {
@@ -158,7 +154,7 @@ static ElementNodePtr ReadData(
 
 	std::string data;
 #if USE_TESTDATA
-	FILE* fp = fopen(inAddress.c_str(), "r");
+	FILE* fp = fopen(StringUtil::stringA(inAddress).c_str(), "r");
 	if (fp)
 	{
 		char buffer[1001];
@@ -171,11 +167,10 @@ static ElementNodePtr ReadData(
 		fclose(fp);
 	}
 #else
-	wxString url(StringUtil::stringWX(inAddress));
-	CReadHttp http(url, &data);
+	CReadHttp http(inAddress, &data);
 #endif
 
-	wxString username, errMsg;
+	std::wstring username, errMsg;
 #if !USE_TESTDATA
 	if (!http.ReadHttpFile(username, errMsg))
 	{
@@ -187,7 +182,7 @@ static ElementNodePtr ReadData(
 	{
 #if GENERATE_TESTDATA
 {
-wxFFile raw(StringUtil::stringWX(outTestData), wxT("wb"));
+wxFFile raw(outTestData.c_str(), wxT("wb"));
 raw.Write(data.c_str(), data.length());
 }
 #endif
@@ -232,12 +227,12 @@ raw.Write(data.c_str(), data.length());
 //raw.Write(pData, strlen(pData));
 //}
 #endif
-		wxString err;
+		std::wostringstream err;
 		tree = ElementNode::New();
 		if (!tree->LoadXML(pData, len, err))
 		{
 			tree.reset();
-			wxMessageBox(err, wxMessageBoxCaptionStr, wxOK | wxCENTRE);
+			wxMessageBox(err.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 		}
 		else
 		{
@@ -261,23 +256,23 @@ raw.Write(data.c_str(), data.length());
 // The only filtering of calendar events the website has is by type
 // (titling/tourny/etc). So just ignore any supplied codes.
 std::string CCalendarSiteUSDAA::Process(
-		std::vector<wxString> const& /*inLocCodes*/,
-		std::vector<wxString> const& /*inVenueCodes*/,
+		std::vector<std::wstring> const& /*inLocCodes*/,
+		std::vector<std::wstring> const& /*inVenueCodes*/,
 		IProgressMeter* progress) const
 {
 	if (progress)
-		progress->SetMessage("Reading http://www.usdaa.com/events.cfm");
+		progress->SetMessage(L"Reading http://www.usdaa.com/events.cfm");
 
 #if USE_TESTDATA || GENERATE_TESTDATA
-	std::string testData(TESTDATANAME);
-	testData += ".xml";
+	std::wstring testData(TESTDATANAME);
+	testData += L".xml";
 #if USE_TESTDATA
 	ElementNodePtr tree = ReadData(testData);
 #else
-	ElementNodePtr tree = ReadData("http://www.usdaa.com/events.cfm", testData);
+	ElementNodePtr tree = ReadData(L"http://www.usdaa.com/events.cfm", testData);
 #endif
 #else
-	ElementNodePtr tree = ReadData("http://www.usdaa.com/events.cfm");
+	ElementNodePtr tree = ReadData(L"http://www.usdaa.com/events.cfm");
 #endif
 	if (!tree)
 		return std::string();
@@ -286,8 +281,7 @@ std::string CCalendarSiteUSDAA::Process(
 	{
 		if (progress->HasCanceled())
 			return std::string();
-		std::string msg("Finding entries...");
-		progress->SetMessage(msg.c_str());
+		progress->SetMessage(L"Finding entries...");
 	}
 
 	bool bOk = false;
@@ -300,8 +294,8 @@ std::string CCalendarSiteUSDAA::Process(
 	int nEntries = 0;
 	ElementNodePtr parentElement;
 	int idxEventCalH4tag = -1;
-	static const wxString tag(wxT("h4"));
-	static const wxString name(wxT("Event Calendar"));
+	static const std::wstring tag(wxT("h4"));
+	static const std::wstring name(wxT("Event Calendar"));
 	if (tree->FindElementDeep(parentElement, idxEventCalH4tag, tag, &name))
 	{
 		int idxTable = parentElement->FindElement(wxT("table"), idxEventCalH4tag+1);
@@ -319,7 +313,7 @@ std::string CCalendarSiteUSDAA::Process(
 					continue;
 				if (4 <= tr->GetNodeCount(Element::Element_Node))
 				{
-					wxString dates, club, detail, location;
+					std::wstring dates, club, detail, location;
 					int idx = 0;
 					for (int td = 0; td < tr->GetElementCount(); ++td)
 					{
@@ -349,15 +343,15 @@ std::string CCalendarSiteUSDAA::Process(
 							// Cleanup location
 							{
 								std::vector<std::wstring> fields;
-								size_t n = BreakLine(wxT(','), location.wx_str(), fields);
+								size_t n = BreakLine(wxT(','), location, fields);
 								if (0 < n)
 								{
 									location.clear();
 									for (size_t iFld = 0; iFld < n; ++iFld)
 									{
 										if (0 < iFld)
-											location << wxT(", ");
-										location << StringUtil::Trim(fields[iFld]);
+											location += wxT(", ");
+										location += StringUtil::Trim(fields[iFld]);
 									}
 								}
 							}
@@ -403,17 +397,17 @@ std::string CCalendarSiteUSDAA::Process(
 			progress->StepIt();
 		}
 		ElementNodePtr cal = calTree->GetElementNode(idxCal);
-		wxString detail = cal->GetValue();
+		std::wstring detail = cal->GetValue();
 		if (detail.empty())
 			continue;
 		cal->SetValue(wxT(""));
-		std::string address("http://www.usdaa.com/");
-		address += detail.ToUTF8();
+		std::wstring address(L"http://www.usdaa.com/");
+		address += detail;
 		if (progress)
 		{
 			if (progress->HasCanceled())
 				return std::string();
-			std::string msg("Getting detail from ");
+			std::wstring msg(L"Getting detail from ");
 			msg += address;
 			progress->SetMessage(msg.c_str());
 		}
@@ -421,7 +415,7 @@ std::string CCalendarSiteUSDAA::Process(
 		testData = TESTDATANAME;
 		int idxAddr = address.find('=');
 		testData += address.substr(idxAddr+1);
-		testData += ".xml";
+		testData += L".xml";
 #if USE_TESTDATA
 		ElementNodePtr treeDetail = ReadData(testData);
 #else
@@ -432,8 +426,8 @@ std::string CCalendarSiteUSDAA::Process(
 #endif
 		if (treeDetail)
 		{
-			static const wxString tag2(wxT("h3"));
-			static const wxString name2(wxT("General Event Information"));
+			static const std::wstring tag2(wxT("h3"));
+			static const std::wstring name2(wxT("General Event Information"));
 			ElementNodePtr parent;
 			int idxEventCalH3tag = -1;
 			if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
@@ -488,7 +482,7 @@ std::string CCalendarSiteUSDAA::Process(
 									if (div->FindElementDeep(parentTagA, idxHref, wxT("a")))
 									{
 										ElementNodePtr tagA = parentTagA->GetElementNode(idxHref);
-										wxString email;
+										std::wstring email;
 										tagA->GetAttrib(wxT("href"), email);
 										cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
 									}

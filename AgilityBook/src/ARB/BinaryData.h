@@ -11,7 +11,7 @@
  * @brief Base64/zlib encoding/decoding class.
  * @author David Connet
  *
- * Note, we are using wxString's mainly for consistency.
+ * Note, we are using std::wstring's mainly for consistency.
  * The actual contained data is still 8bit chars.
  *
  * Revision History
@@ -35,7 +35,7 @@ public:
 	 * @post outBinData must be deallocated using Release()
 	 */
 	static bool Decode(
-			wxString const& inBase64,
+			std::wstring const& inBase64,
 			unsigned char*& outBinData,
 			size_t& outBytes);
 
@@ -54,15 +54,15 @@ public:
 	static bool Encode(
 			unsigned char const* inBinData,
 			size_t inBytes,
-			wxString& outBase64);
+			std::wstring& outBase64);
 	static bool Encode(
 			wxFFile& inData,
-			wxString& outBase64);
+			std::wstring& outBase64);
 
 	static bool DecodeString(
-			wxString const& inBase64,
-			wxString& outData);
+			std::wstring const& inBase64,
+			std::wstring& outData);
 	static bool EncodeString(
-			wxString const& inData,
-			wxString& outBase64);
+			std::wstring const& inData,
+			std::wstring& outBase64);
 };

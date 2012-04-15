@@ -23,6 +23,7 @@
 
 #include "../ARB/VersionNum.h"
 #include "ARBHelp.h"
+#include "ARBString.h"
 #include "ARBTypes.h"
 #include "DlgARBHelp.h"
 #include <set>
@@ -88,7 +89,7 @@ static void SearchFor(
 	{
 		wxDir::GetAllFiles(inFullPath, &files, wxT("*.arb*"), wxDIR_DIRS|wxDIR_FILES);
 		for (size_t n = 0; n < files.GetCount(); ++n)
-			pParent->SetARBFileStatus(files[n]);
+			pParent->SetARBFileStatus(StringUtil::stringW(files[n]));
 	}
 }
 
@@ -235,7 +236,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		// wxWidgets
 		str << wxVERSION_STRING << wxT("\n");
 
-		m_Parent->AddSysInfo(str);
+		m_Parent->AddSysInfo(StringUtil::stringW(str));
 	}
 
 	wxString data;

@@ -29,13 +29,13 @@ class CDlgQueryDetail : public wxDialog
 public:
 	CDlgQueryDetail(
 			bool bReadOnly,
-			wxChar const* inCode,
-			wxChar const* inName,
+			wchar_t const* inCode,
+			wchar_t const* inName,
 			wxWindow* pParent = NULL,
 			ARBConfig const* inConfig = NULL); // Only set when using venues
 
-	wxString const& GetDetailCode() const		{return m_Code;}
-	wxString const& GetDetailName() const		{return m_Name;}
+	std::wstring GetDetailCode() const;
+	std::wstring GetDetailName() const;
 
 private:
 	bool m_ReadOnly;

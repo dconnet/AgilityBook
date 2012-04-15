@@ -20,6 +20,7 @@
 #include "stdafx.h"
 #include "ConfigHandler.h"
 
+#include "ARBString.h"
 #include "Element.h"
 #include <wx/filesys.h>
 #include <wx/mstream.h>
@@ -31,12 +32,12 @@
 
 
 bool CConfigHandler::LoadWxFile(
-		wxString const& zipFile,
-		wxString const& archiveFile,
+		std::wstring const& zipFile,
+		std::wstring const& archiveFile,
 		std::string& outData)
 {
 	outData.erase();
-	wxString zipfile = wxFileSystem::FileNameToURL(zipFile);
+	wxString zipfile = wxFileSystem::FileNameToURL(wxString(zipFile.c_str()));
 	zipfile += wxT("#zip:") + archiveFile;
 	wxFileSystem filesys;
 	wxFSFile* file = filesys.OpenFile(zipfile);
@@ -67,14 +68,14 @@ CConfigHandler::CConfigHandler()
 ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 {
 	bool bOk = false;
-	wxString errMsg;
+	std::wostringstream errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
 	std::string data;
-	if (LoadWxFile(datafile, wxT("DefaultConfig.xml"), data))
+	if (LoadWxFile(StringUtil::stringW(datafile), wxT("DefaultConfig.xml"), data))
 		bOk = tree->LoadXML(data.c_str(), data.length(), errMsg);
 
 	return bOk ? tree : ElementNodePtr();
@@ -87,7 +88,7 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
 
 	std::string dtd;
-	LoadWxFile(datafile, wxT("AgilityRecordBook.dtd"), dtd);
+	LoadWxFile(StringUtil::stringW(datafile), wxT("AgilityRecordBook.dtd"), dtd);
 
 	if (bNormalizeCRNL)
 		dtd = StringUtil::Replace(dtd, "\r\n", "\n");

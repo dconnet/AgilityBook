@@ -16,7 +16,7 @@
  * @li 2010-10-30 DRC Moved BreakLine from Globals.h, added CSV routines.
  */
 
-#include "ARBString.h"
+#include <string>
 #include <vector>
 
 

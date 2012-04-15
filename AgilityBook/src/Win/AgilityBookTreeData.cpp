@@ -50,13 +50,14 @@
 #include "AgilityBookTreeData.h"
 
 #include "AgilityBook.h"
-#include "AgilityBookMenu.h"
 #include "AgilityBookDoc.h"
+#include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeView.h"
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "ARBString.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
@@ -455,8 +456,8 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					}
 				}
 			}
-			if (!bLoaded && 0 < err.m_ErrMsg.length())
-				wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			if (!bLoaded && 0 < err.m_ErrMsg.str().length())
+				wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 		}
 	}
 	else if (pDog
@@ -506,8 +507,8 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						}
 					}
 				}
-				else if (0 < err.m_ErrMsg.length())
-					wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+				else if (0 < err.m_ErrMsg.str().length())
+					wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
 	}
@@ -728,27 +729,27 @@ bool CAgilityBookTreeDataDog::OnCmd(
 }
 
 
-wxString CAgilityBookTreeDataDog::OnNeedText() const
+std::wstring CAgilityBookTreeDataDog::OnNeedText() const
 {
-	wxString str;
+	std::wostringstream str;
 	for (size_t idx = 0; idx < GetDogColumns().size(); ++idx)
 	{
 		if (0 < idx)
-			str += wxT(" ");
+			str << wxT(" ");
 		switch (GetDogColumns()[idx])
 		{
 		case IO_TREE_DOG_REGNAME:
-			str += m_pDog->GetRegisteredName();
+			str << m_pDog->GetRegisteredName();
 			break;
 		case IO_TREE_DOG_CALLNAME:
-			str += m_pDog->GetCallName();
+			str << m_pDog->GetCallName();
 			break;
 		case IO_TREE_DOG_BREED:
-			str += m_pDog->GetBreed();
+			str << m_pDog->GetBreed();
 			break;
 		case IO_TREE_DOG_DOB:
 			if (m_pDog->GetDOB().IsValid())
-				str += m_pDog->GetDOB().GetString();
+				str << m_pDog->GetDOB().GetString();
 			break;
 		case IO_TREE_DOG_AGE:
 			if (m_pDog->GetDOB().IsValid())
@@ -758,12 +759,12 @@ wxString CAgilityBookTreeDataDog::OnNeedText() const
 				if (m_pDog->GetDeceased().IsValid())
 					current = wxDateTime(m_pDog->GetDeceased().GetDate());
 				wxTimeSpan age = current - dob;
-				str += wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays()/365.0, 1).c_str());
+				str << wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays()/365.0, 1).c_str());
 			}
 			break;
 		}
 	}
-	return str;
+	return str.str();
 }
 
 
@@ -1009,9 +1010,9 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 }
 
 
-wxString CAgilityBookTreeDataTrial::OnNeedText() const
+std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 {
-	wxString str;
+	std::wostringstream str;
 	bool bNeedSpace = false;
 	for (size_t idx = 0; idx < GetTrialColumns().size(); ++idx)
 	{
@@ -1023,11 +1024,11 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 				if (bNeedSpace)
 				{
 					if (IO_TREE_TRIAL_END == GetTrialColumns()[idx-1])
-						str += wxT("-");
+						str << wxT("-");
 					else
-						str += wxT(" ");
+						str << wxT(" ");
 				}
-				str += m_pTrial->GetRuns().GetStartDate().GetString();
+				str << m_pTrial->GetRuns().GetStartDate().GetString();
 				bNeedSpace = true;
 			}
 			break;
@@ -1037,35 +1038,35 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 				if (bNeedSpace)
 				{
 					if (IO_TREE_TRIAL_START == GetTrialColumns()[idx-1])
-						str += wxT("-");
+						str << wxT("-");
 					else
-						str += wxT(" ");
+						str << wxT(" ");
 				}
-				str += m_pTrial->GetRuns().GetEndDate().GetString();
+				str << m_pTrial->GetRuns().GetEndDate().GetString();
 				bNeedSpace = true;
 			}
 			break;
 		case IO_TREE_TRIAL_VERIFIED:
 			if (bNeedSpace)
-				str += wxT(" ");
+				str << wxT(" ");
 			if (m_pTrial->IsVerified())
-				str += wxT("*");
+				str << wxT("*");
 			else
-				str += wxT("  "); // 2 spaces due to font (variable spacing)
+				str << wxT("  "); // 2 spaces due to font (variable spacing)
 			bNeedSpace = true;
 			break;
 		case IO_TREE_TRIAL_CLUB:
 			{
 				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					str += wxT(" ");
+					str << wxT(" ");
 				int i = 0;
 				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 					iter != m_pTrial->GetClubs().end();
 					++iter, ++i)
 				{
 					if (0 < i)
-						str += wxT("/");
-					str += (*iter)->GetName();
+						str << wxT("/");
+					str << (*iter)->GetName();
 					bNeedSpace = true;
 				}
 			}
@@ -1073,15 +1074,15 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 		case IO_TREE_TRIAL_VENUE:
 			{
 				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					str += wxT(" ");
+					str << wxT(" ");
 				int i = 0;
 				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 					iter != m_pTrial->GetClubs().end();
 					++iter, ++i)
 				{
 					if (0 < i)
-						str += wxT("/");
-					str += (*iter)->GetVenue();
+						str << wxT("/");
+					str << (*iter)->GetVenue();
 					bNeedSpace = true;
 				}
 			}
@@ -1090,8 +1091,8 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 			if (!m_pTrial->GetLocation().empty())
 			{
 				if (bNeedSpace)
-					str += wxT(" ");
-				str += m_pTrial->GetLocation();
+					str << wxT(" ");
+				str << m_pTrial->GetLocation();
 				bNeedSpace = true;
 			}
 			break;
@@ -1099,15 +1100,14 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 			if (!m_pTrial->GetNote().empty())
 			{
 				if (bNeedSpace)
-					str += wxT(" ");
-				str += m_pTrial->GetNote();
-				str.Replace(wxT("\n"), wxT(" "));
+					str << wxT(" ");
+				str << StringUtil::Replace(m_pTrial->GetNote(), L"\n", L" ");
 				bNeedSpace = true;
 			}
 			break;
 		}
 	}
-	return str;
+	return str.str();
 }
 
 
@@ -1378,17 +1378,17 @@ bool CAgilityBookTreeDataRun::OnCmd(
 }
 
 
-wxString CAgilityBookTreeDataRun::OnNeedText() const
+std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 {
-	wxString str;
+	std::wostringstream str;
 	for (size_t idx = 0; idx < GetRunColumns().size(); ++idx)
 	{
 		if (0 < idx)
-			str += wxT(" ");
+			str << wxT(" ");
 		switch (GetRunColumns()[idx])
 		{
 		case IO_TREE_RUN_DATE:
-			str += m_pRun->GetDate().GetString();
+			str << m_pRun->GetDate().GetString();
 			break;
 		case IO_TREE_RUN_Q:
 			{
@@ -1415,24 +1415,24 @@ wxString CAgilityBookTreeDataRun::OnNeedText() const
 				}
 				if (q.empty())
 					q = m_pRun->GetQ().str();
-				str += q;
+				str << q;
 			}
 			break;
 		case IO_TREE_RUN_EVENT:
-			str += m_pRun->GetEvent();
+			str << m_pRun->GetEvent();
 			break;
 		case IO_TREE_RUN_DIVISION:
-			str += m_pRun->GetDivision();
+			str << m_pRun->GetDivision();
 			break;
 		case IO_TREE_RUN_LEVEL:
-			str += m_pRun->GetLevel();
+			str << m_pRun->GetLevel();
 			break;
 		case IO_TREE_RUN_HEIGHT:
-			str += m_pRun->GetHeight();
+			str << m_pRun->GetHeight();
 			break;
 		}
 	}
-	return str;
+	return str.str();
 }
 
 

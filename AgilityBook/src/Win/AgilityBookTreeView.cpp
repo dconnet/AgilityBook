@@ -142,12 +142,12 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 		}
 		hItem = GetNextItem();
 	}
-	wxString search = Text();
+	std::wstring search = Text();
 	if (!MatchCase())
-		search.MakeLower();
+		search = StringUtil::ToLower(search);
 	while (!bFound && hItem.IsOk())
 	{
-		std::set<wxString> strings;
+		std::set<std::wstring> strings;
 		if (SearchAll())
 		{
 			CAgilityBookTreeData* pData = m_pView->GetTreeItem(hItem);
@@ -158,12 +158,12 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 		{
 			strings.insert(m_pView->m_Ctrl->GetItemText(hItem));
 		}
-		for (std::set<wxString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<std::wstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
-			wxString str((*iter));
+			std::wstring str((*iter));
 			if (!MatchCase())
-				str.MakeLower();
-			if (0 <= str.Find(search))
+				str = StringUtil::ToLower(str);
+			if (std::wstring::npos != str.find(search))
 			{
 				m_pView->ChangeSelection(hItem);
 				bFound = true;
@@ -411,17 +411,17 @@ bool CAgilityBookTreeView::IsFiltered() const
 }
 
 
-bool CAgilityBookTreeView::GetMessage(wxString& msg) const
+bool CAgilityBookTreeView::GetMessage(std::wstring& msg) const
 {
 	CAgilityBookRunsView* pView = GetDocument()->GetRunsView();
 	if (pView)
 		return pView->GetMessage(msg);
-	msg.Empty();
+	msg.clear();
 	return false;
 }
 
 
-bool CAgilityBookTreeView::GetMessage2(wxString& msg) const
+bool CAgilityBookTreeView::GetMessage2(std::wstring& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
@@ -430,7 +430,7 @@ bool CAgilityBookTreeView::GetMessage2(wxString& msg) const
 	}
 	else
 	{
-		msg.Empty();
+		msg.clear();
 		return false;
 	}
 }
@@ -708,8 +708,8 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 						GetDocument()->UpdateAllViews(NULL, &hint);
 					}
 				}
-				else if (0 < err.m_ErrMsg.length())
-					wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+				else if (0 < err.m_ErrMsg.str().length())
+					wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
 		return true;
@@ -718,11 +718,11 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 }
 
 
-wxString CAgilityBookTreeView::GetPrintLine(wxTreeItemId hItem) const
+std::wstring CAgilityBookTreeView::GetPrintLine(wxTreeItemId hItem) const
 {
 	if (hItem.IsOk() && m_Ctrl)
-		return m_Ctrl->GetItemText(hItem);
-	return wxT("");
+		return StringUtil::stringW(m_Ctrl->GetItemText(hItem));
+	return std::wstring();
 }
 
 
@@ -815,7 +815,7 @@ void CAgilityBookTreeView::LoadData()
 
 	wxBusyCursor wait;
 	// Remember the currently selected item.
-	wxString strCallName;
+	std::wstring strCallName;
 	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
 	if (!pData)
 	{
@@ -879,11 +879,11 @@ void CAgilityBookTreeView::LoadData()
 
 
 void CAgilityBookTreeView::PrintLine(
-		wxString& data,
+		std::wostringstream& data,
 		wxTreeItemId id,
 		int indent) const
 {
-	static wxString const spaces(wxT("&nbsp;&nbsp;&nbsp;"));
+	static std::wstring const spaces(wxT("&nbsp;&nbsp;&nbsp;"));
 	if (id.IsOk() && id != m_Ctrl->GetRootItem())
 	{
 		for (int idx = 0; idx < indent; ++idx)
@@ -900,13 +900,13 @@ void CAgilityBookTreeView::PrintLine(
 }
 
 
-wxString CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
+std::wstring CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
 {
-	wxString data;
+	std::wostringstream data;
 	data << wxT("<html><body><p>\n");
 	PrintLine(data, m_Ctrl->GetRootItem(), -1);
 	data << wxT("</p></body></html>\n");
-	return data;
+	return data.str();
 }
 
 
@@ -1195,7 +1195,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		bHandled = true;
 		{
 			m_Callback.SearchDown(true);
-			if (m_Callback.Text().IsEmpty())
+			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
 				m_Callback.Search(NULL);
@@ -1206,7 +1206,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		bHandled = true;
 		{
 			m_Callback.SearchDown(false);
-			if (m_Callback.Text().IsEmpty())
+			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
 				m_Callback.Search(NULL);
@@ -1305,11 +1305,11 @@ void CAgilityBookTreeView::OnViewCmd(wxCommandEvent& evt)
 
 void CAgilityBookTreeView::OnPrint(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PrintText(GetPrintDataAsHtmlTable());
+	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(GetPrintDataAsHtmlTable()));
 }
 
 
 void CAgilityBookTreeView::OnPreview(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PreviewText(GetPrintDataAsHtmlTable());
+	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(GetPrintDataAsHtmlTable()));
 }

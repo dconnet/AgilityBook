@@ -26,221 +26,221 @@ public:
 	CLocalization();
 	void Load();
 
-	wxString UnknownVersion() const				{return m_UnknownVersion;}
-	wxString WarningNewerDoc() const			{return m_WarningNewerDoc;}
-	wxString InvalidDocStructure() const		{return m_InvalidDocStructure;}
-	wxString InvalidFileFormat() const			{return m_InvalidFileFormat;}
-	wxString InvalidFileMissingAttrib() const	{return m_InvalidFileMissingAttrib;}
-	wxString InvalidFileBadAttrib() const		{return m_InvalidFileBadAttrib;}
-	wxString InvalidDate() const				{return m_InvalidDate;}
-	wxString InvalidDivLevel() const			{return m_InvalidDivLevel;}
-	wxString InvalidEventName() const			{return m_InvalidEventName;}
-	wxString InvalidRoot() const				{return m_InvalidRoot;}
-	wxString MissingConfig() const				{return m_MissingConfig;}
-	wxString InvalidConfig() const				{return m_InvalidConfig;}
-	wxString InvalidVenueConfig() const			{return m_InvalidVenueConfig;}
-	wxString InvalidDivName() const				{return m_InvalidDivName;}
-	wxString InvalidVenueName() const			{return m_InvalidVenueName;}
-	wxString InvalidOtherPtsName() const		{return m_InvalidOtherPtsName;}
-	wxString InvalidMultiqName() const			{return m_InvalidMultiqName;}
-	wxString InvalidMultiqConversion() const	{return m_InvalidMultiqConversion;}
-	wxString InvalidEvent() const				{return m_InvalidEvent;}
-	wxString InvalidTitle() const				{return m_InvalidTitle;}
-	wxString ValidValues() const				{return m_ValidValues;}
-	wxString ValidValuesBool() const			{return m_ValidValuesBool;}
-	wxString CalendarTentative() const			{return m_CalendarTentative;}
-	wxString CalendarNotEntered() const			{return m_CalendarNotEntered;}
-	wxString CalendarEntered() const			{return m_CalendarEntered;}
-	wxString CalendarPending() const			{return m_CalendarPending;}
-	wxString CalendarPlanning() const			{return m_CalendarPlanning;}
-	wxString CalendarStatusN() const			{return m_CalendarStatusN;}
-	wxString CalendarStatusE() const			{return m_CalendarStatusE;}
-	wxString CalendarStatusO() const			{return m_CalendarStatusO;}
-	wxString CalendarStatusP() const			{return m_CalendarStatusP;}
-	wxString CalendarOpens() const				{return m_CalendarOpens;}
-	wxString CalendarDraw() const				{return m_CalendarDraw;}
-	wxString CalendarCloses() const				{return m_CalendarCloses;}
+	std::wstring UnknownVersion() const				{return m_UnknownVersion;}
+	std::wstring WarningNewerDoc() const			{return m_WarningNewerDoc;}
+	std::wstring InvalidDocStructure() const		{return m_InvalidDocStructure;}
+	std::wstring InvalidFileFormat() const			{return m_InvalidFileFormat;}
+	std::wstring InvalidFileMissingAttrib() const	{return m_InvalidFileMissingAttrib;}
+	std::wstring InvalidFileBadAttrib() const		{return m_InvalidFileBadAttrib;}
+	std::wstring InvalidDate() const				{return m_InvalidDate;}
+	std::wstring InvalidDivLevel() const			{return m_InvalidDivLevel;}
+	std::wstring InvalidEventName() const			{return m_InvalidEventName;}
+	std::wstring InvalidRoot() const				{return m_InvalidRoot;}
+	std::wstring MissingConfig() const				{return m_MissingConfig;}
+	std::wstring InvalidConfig() const				{return m_InvalidConfig;}
+	std::wstring InvalidVenueConfig() const			{return m_InvalidVenueConfig;}
+	std::wstring InvalidDivName() const				{return m_InvalidDivName;}
+	std::wstring InvalidVenueName() const			{return m_InvalidVenueName;}
+	std::wstring InvalidOtherPtsName() const		{return m_InvalidOtherPtsName;}
+	std::wstring InvalidMultiqName() const			{return m_InvalidMultiqName;}
+	std::wstring InvalidMultiqConversion() const	{return m_InvalidMultiqConversion;}
+	std::wstring InvalidEvent() const				{return m_InvalidEvent;}
+	std::wstring InvalidTitle() const				{return m_InvalidTitle;}
+	std::wstring ValidValues() const				{return m_ValidValues;}
+	std::wstring ValidValuesBool() const			{return m_ValidValuesBool;}
+	std::wstring CalendarTentative() const			{return m_CalendarTentative;}
+	std::wstring CalendarNotEntered() const			{return m_CalendarNotEntered;}
+	std::wstring CalendarEntered() const			{return m_CalendarEntered;}
+	std::wstring CalendarPending() const			{return m_CalendarPending;}
+	std::wstring CalendarPlanning() const			{return m_CalendarPlanning;}
+	std::wstring CalendarStatusN() const			{return m_CalendarStatusN;}
+	std::wstring CalendarStatusE() const			{return m_CalendarStatusE;}
+	std::wstring CalendarStatusO() const			{return m_CalendarStatusO;}
+	std::wstring CalendarStatusP() const			{return m_CalendarStatusP;}
+	std::wstring CalendarOpens() const				{return m_CalendarOpens;}
+	std::wstring CalendarDraw() const				{return m_CalendarDraw;}
+	std::wstring CalendarCloses() const				{return m_CalendarCloses;}
 
-	wxString UpdateCalSites(int nNew, int nUpdated, int nSkipped) const;
-	wxString UpdateFaults(int nNew, int nSkipped) const;
-	wxString UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const;
-	wxString UpdateVenues(int nNew, int nUpdated, int nSkipped) const;
-	wxString UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const;
-	wxString UpdateDivisionsReordered() const;
-	wxString UpdateEvents(int nAdded, int nUpdated, int nSkipped) const;
-	wxString UpdateEventsReordered() const;
-	wxString UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const;
-	wxString UpdateMultiqsReordered() const;
-	wxString UpdateLevels(int nAdded, int nUpdated, int nSkipped) const;
-	wxString UpdateLevelsReordered() const;
-	wxString UpdateTitles(int nAdded, int nUpdated, int nSkipped) const;
-	wxString UpdateTitlesReordered() const;
-	wxString UpdateSubLevels(int nAdded) const;
-	wxString UpdateSubLevelsReordered() const;
-	wxString UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const;
-	wxString WarnDeletedRuns(int nRuns, wxString const& inRunsMsg) const;
-	wxString UpdateTeamRuns(int nRuns, wxString const& inRunsMsg) const;
-	wxString UpdateTableRuns(int nRuns) const;
+	std::wstring UpdateCalSites(int nNew, int nUpdated, int nSkipped) const;
+	std::wstring UpdateFaults(int nNew, int nSkipped) const;
+	std::wstring UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const;
+	std::wstring UpdateVenues(int nNew, int nUpdated, int nSkipped) const;
+	std::wstring UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const;
+	std::wstring UpdateDivisionsReordered() const;
+	std::wstring UpdateEvents(int nAdded, int nUpdated, int nSkipped) const;
+	std::wstring UpdateEventsReordered() const;
+	std::wstring UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const;
+	std::wstring UpdateMultiqsReordered() const;
+	std::wstring UpdateLevels(int nAdded, int nUpdated, int nSkipped) const;
+	std::wstring UpdateLevelsReordered() const;
+	std::wstring UpdateTitles(int nAdded, int nUpdated, int nSkipped) const;
+	std::wstring UpdateTitlesReordered() const;
+	std::wstring UpdateSubLevels(int nAdded) const;
+	std::wstring UpdateSubLevelsReordered() const;
+	std::wstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const;
+	std::wstring WarnDeletedRuns(int nRuns, std::wstring const& inRunsMsg) const;
+	std::wstring UpdateTeamRuns(int nRuns, std::wstring const& inRunsMsg) const;
+	std::wstring UpdateTableRuns(int nRuns) const;
 
-	wxString ActionDeleteCalPlugin(wxString const& name) const;
-	wxString ActionRenameOtherPoints(
-			wxString const& oldName,
-			wxString const& newName,
+	std::wstring ActionDeleteCalPlugin(std::wstring const& name) const;
+	std::wstring ActionRenameOtherPoints(
+			std::wstring const& oldName,
+			std::wstring const& newName,
 			int nChanges) const;
-	wxString ActionPreDeleteOtherPoints(
-			wxString const& name,
+	std::wstring ActionPreDeleteOtherPoints(
+			std::wstring const& name,
 			int nChanges) const;
-	wxString ActionDeleteOtherPoints(wxString const& name) const;
-	wxString ActionRenameVenue(
-			wxString const& oldName,
-			wxString const& newName,
+	std::wstring ActionDeleteOtherPoints(std::wstring const& name) const;
+	std::wstring ActionRenameVenue(
+			std::wstring const& oldName,
+			std::wstring const& newName,
 			int nChanges) const;
-	wxString ActionPreDeleteVenue(
-			wxString const& name,
+	std::wstring ActionPreDeleteVenue(
+			std::wstring const& name,
 			int nChanges) const;
-	wxString ActionDeleteVenue(wxString const& name) const;
-	wxString ActionRenameMultiQ(
-			wxString const& venue,
-			wxString const& oldName,
-			wxString const& newName,
+	std::wstring ActionDeleteVenue(std::wstring const& name) const;
+	std::wstring ActionRenameMultiQ(
+			std::wstring const& venue,
+			std::wstring const& oldName,
+			std::wstring const& newName,
 			int nChanges) const;
-	wxString ActionPreDeleteMultiQ(
-			wxString const& venue,
-			wxString const& name,
+	std::wstring ActionPreDeleteMultiQ(
+			std::wstring const& venue,
+			std::wstring const& name,
 			int nChanges) const;
-	wxString ActionDeleteMultiQ(
-			wxString const& venue,
-			wxString const& name) const;
-	wxString ActionRenameDivision(
-			wxString const& venue,
-			wxString const& oldName,
-			wxString const& newName,
+	std::wstring ActionDeleteMultiQ(
+			std::wstring const& venue,
+			std::wstring const& name) const;
+	std::wstring ActionRenameDivision(
+			std::wstring const& venue,
+			std::wstring const& oldName,
+			std::wstring const& newName,
 			int nChanges) const;
-	wxString ActionPreDeleteDivision(
-			wxString const& venue,
-			wxString const& name,
+	std::wstring ActionPreDeleteDivision(
+			std::wstring const& venue,
+			std::wstring const& name,
 			int nChanges) const;
-	wxString ActionDeleteDivision(
-			wxString const& venue,
-			wxString const& name) const;
-	wxString ActionRenameLevel(
-			wxString const& venue,
-			wxString const& oldName,
-			wxString const& newName,
+	std::wstring ActionDeleteDivision(
+			std::wstring const& venue,
+			std::wstring const& name) const;
+	std::wstring ActionRenameLevel(
+			std::wstring const& venue,
+			std::wstring const& oldName,
+			std::wstring const& newName,
 			int nChanges) const;
-	wxString ActionPreDeleteLevel(
-			wxString const& venue,
-			wxString const& name,
+	std::wstring ActionPreDeleteLevel(
+			std::wstring const& venue,
+			std::wstring const& name,
 			int nChanges) const;
-	wxString ActionDeleteLevel(
-			wxString const& venue,
-			wxString const& name) const;
-	wxString ActionRenameTitle(
-			wxString const& venue,
-			wxString const& oldName,
-			wxString const& newName,
+	std::wstring ActionDeleteLevel(
+			std::wstring const& venue,
+			std::wstring const& name) const;
+	std::wstring ActionRenameTitle(
+			std::wstring const& venue,
+			std::wstring const& oldName,
+			std::wstring const& newName,
 			int nChanges) const;
-	wxString ActionPreDeleteTitle(
-			wxString const& venue,
-			wxString const& name,
+	std::wstring ActionPreDeleteTitle(
+			std::wstring const& venue,
+			std::wstring const& name,
 			int nChanges) const;
-	wxString ActionDeleteTitle(
-			wxString const& venue,
-			wxString const& name) const;
-	wxString ActionRenameEvent(
-			wxString const& venue,
-			wxString const& oldName,
-			wxString const& newName,
+	std::wstring ActionDeleteTitle(
+			std::wstring const& venue,
+			std::wstring const& name) const;
+	std::wstring ActionRenameEvent(
+			std::wstring const& venue,
+			std::wstring const& oldName,
+			std::wstring const& newName,
 			int nChanges) const;
-	wxString ActionPreDeleteEvent(
-			wxString const& venue,
-			wxString const& name,
+	std::wstring ActionPreDeleteEvent(
+			std::wstring const& venue,
+			std::wstring const& name,
 			int nChanges) const;
-	wxString ActionDeleteEvent(
-			wxString const& venue,
-			wxString const& name) const;
+	std::wstring ActionDeleteEvent(
+			std::wstring const& venue,
+			std::wstring const& name) const;
 
-	wxString TitlePointsNameFormat(double points, double faults) const;
-	wxString LifetimePointsNameFormat(double points, double faults) const;
-	wxString PlacementPointsNameFormat(double points, short place) const;
+	std::wstring TitlePointsNameFormat(double points, double faults) const;
+	std::wstring LifetimePointsNameFormat(double points, double faults) const;
+	std::wstring PlacementPointsNameFormat(double points, short place) const;
 
-	wxString ScoreStyleUnknown() const			{return m_ScoreStyleUnknown;}
-	wxString ScoreStyleFaultsTime() const		{return m_ScoreStyleFaultsTime;}
-	wxString ScoreStyleFaults100Time() const	{return m_ScoreStyleFaults100Time;}
-	wxString ScoreStyleFaults200Time() const	{return m_ScoreStyleFaults200Time;}
-	wxString ScoreStyleOCScoreTime() const		{return m_ScoreStyleOCScoreTime;}
-	wxString ScoreStyleScoreTime() const		{return m_ScoreStyleScoreTime;}
-	wxString ScoreStyleTimePlusFaults() const	{return m_ScoreStyleTimePlusFaults;}
+	std::wstring ScoreStyleUnknown() const			{return m_ScoreStyleUnknown;}
+	std::wstring ScoreStyleFaultsTime() const		{return m_ScoreStyleFaultsTime;}
+	std::wstring ScoreStyleFaults100Time() const	{return m_ScoreStyleFaults100Time;}
+	std::wstring ScoreStyleFaults200Time() const	{return m_ScoreStyleFaults200Time;}
+	std::wstring ScoreStyleOCScoreTime() const		{return m_ScoreStyleOCScoreTime;}
+	std::wstring ScoreStyleScoreTime() const		{return m_ScoreStyleScoreTime;}
+	std::wstring ScoreStyleTimePlusFaults() const	{return m_ScoreStyleTimePlusFaults;}
 
-	wxString ExistingPointsOther() const		{return m_ExistingPointsOther;}
-	wxString ExistingPointsRun() const			{return m_ExistingPointsRun;}
-	wxString ExistingPointsSpeed() const		{return m_ExistingPointsSpeed;}
-	wxString ExistingPointsMQ() const			{return m_ExistingPointsMQ;}
-	wxString ExistingPointsSQ() const			{return m_ExistingPointsSQ;}
+	std::wstring ExistingPointsOther() const		{return m_ExistingPointsOther;}
+	std::wstring ExistingPointsRun() const			{return m_ExistingPointsRun;}
+	std::wstring ExistingPointsSpeed() const		{return m_ExistingPointsSpeed;}
+	std::wstring ExistingPointsMQ() const			{return m_ExistingPointsMQ;}
+	std::wstring ExistingPointsSQ() const			{return m_ExistingPointsSQ;}
 
-	wxString ErrorInvalidDocStructure(wxChar const* const inMsg) const;
-	wxString ErrorMissingAttribute(
-			wxChar const* const inElement,
-			wxChar const* const inAttrib,
-			wxChar const* const inMsg = NULL) const;
-	wxString ErrorInvalidAttributeValue(
-			wxChar const* const inElement,
-			wxChar const* const inAttrib,
-			wxChar const* const inMsg = NULL) const;
+	std::wstring ErrorInvalidDocStructure(wchar_t const* const inMsg) const;
+	std::wstring ErrorMissingAttribute(
+			wchar_t const* const inElement,
+			wchar_t const* const inAttrib,
+			wchar_t const* const inMsg = NULL) const;
+	std::wstring ErrorInvalidAttributeValue(
+			wchar_t const* const inElement,
+			wchar_t const* const inAttrib,
+			wchar_t const* const inMsg = NULL) const;
 
 private:
-	wxString m_UnknownVersion;
-	wxString m_WarningNewerDoc;
-	wxString m_InvalidDocStructure;
-	wxString m_InvalidFileFormat;
-	wxString m_InvalidFileMissingAttrib;
-	wxString m_InvalidFileBadAttrib;
-	wxString m_InvalidDate;
-	wxString m_InvalidDivLevel;
-	wxString m_InvalidEventName;
-	wxString m_InvalidRoot;
-	wxString m_MissingConfig;
-	wxString m_InvalidConfig;
-	wxString m_InvalidVenueConfig;
-	wxString m_InvalidDivName;
-	wxString m_InvalidVenueName;
-	wxString m_InvalidOtherPtsName;
-	wxString m_InvalidMultiqName;
-	wxString m_InvalidMultiqConversion;
-	wxString m_InvalidEvent;
-	wxString m_InvalidTitle;
-	wxString m_ValidValues;
-	wxString m_ValidValuesBool;
-	wxString m_CalendarTentative;
-	wxString m_CalendarNotEntered;
-	wxString m_CalendarEntered;
-	wxString m_CalendarPending;
-	wxString m_CalendarPlanning;
-	wxString m_CalendarStatusN;
-	wxString m_CalendarStatusE;
-	wxString m_CalendarStatusO;
-	wxString m_CalendarStatusP;
-	wxString m_CalendarOpens;
-	wxString m_CalendarDraw;
-	wxString m_CalendarCloses;
+	std::wstring m_UnknownVersion;
+	std::wstring m_WarningNewerDoc;
+	std::wstring m_InvalidDocStructure;
+	std::wstring m_InvalidFileFormat;
+	std::wstring m_InvalidFileMissingAttrib;
+	std::wstring m_InvalidFileBadAttrib;
+	std::wstring m_InvalidDate;
+	std::wstring m_InvalidDivLevel;
+	std::wstring m_InvalidEventName;
+	std::wstring m_InvalidRoot;
+	std::wstring m_MissingConfig;
+	std::wstring m_InvalidConfig;
+	std::wstring m_InvalidVenueConfig;
+	std::wstring m_InvalidDivName;
+	std::wstring m_InvalidVenueName;
+	std::wstring m_InvalidOtherPtsName;
+	std::wstring m_InvalidMultiqName;
+	std::wstring m_InvalidMultiqConversion;
+	std::wstring m_InvalidEvent;
+	std::wstring m_InvalidTitle;
+	std::wstring m_ValidValues;
+	std::wstring m_ValidValuesBool;
+	std::wstring m_CalendarTentative;
+	std::wstring m_CalendarNotEntered;
+	std::wstring m_CalendarEntered;
+	std::wstring m_CalendarPending;
+	std::wstring m_CalendarPlanning;
+	std::wstring m_CalendarStatusN;
+	std::wstring m_CalendarStatusE;
+	std::wstring m_CalendarStatusO;
+	std::wstring m_CalendarStatusP;
+	std::wstring m_CalendarOpens;
+	std::wstring m_CalendarDraw;
+	std::wstring m_CalendarCloses;
 
-	wxString m_ScoreStyleUnknown;
-	wxString m_ScoreStyleFaultsTime;
-	wxString m_ScoreStyleFaults100Time;
-	wxString m_ScoreStyleFaults200Time;
-	wxString m_ScoreStyleOCScoreTime;
-	wxString m_ScoreStyleScoreTime;
-	wxString m_ScoreStyleTimePlusFaults;
+	std::wstring m_ScoreStyleUnknown;
+	std::wstring m_ScoreStyleFaultsTime;
+	std::wstring m_ScoreStyleFaults100Time;
+	std::wstring m_ScoreStyleFaults200Time;
+	std::wstring m_ScoreStyleOCScoreTime;
+	std::wstring m_ScoreStyleScoreTime;
+	std::wstring m_ScoreStyleTimePlusFaults;
 
-	wxString m_QTypeNA;
-	wxString m_QTypeQ;
-	wxString m_QTypeNQ;
-	wxString m_QTypeE;
-	wxString m_QTypeSQ;
+	std::wstring m_QTypeNA;
+	std::wstring m_QTypeQ;
+	std::wstring m_QTypeNQ;
+	std::wstring m_QTypeE;
+	std::wstring m_QTypeSQ;
 
-	wxString m_ExistingPointsOther;
-	wxString m_ExistingPointsRun;
-	wxString m_ExistingPointsSpeed;
-	wxString m_ExistingPointsMQ;
-	wxString m_ExistingPointsSQ;
+	std::wstring m_ExistingPointsOther;
+	std::wstring m_ExistingPointsRun;
+	std::wstring m_ExistingPointsSpeed;
+	std::wstring m_ExistingPointsMQ;
+	std::wstring m_ExistingPointsSQ;
 };

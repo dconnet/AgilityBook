@@ -172,9 +172,9 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 }
 
 
-wxString ARBDogRun::GetGenericName() const
+std::wstring ARBDogRun::GetGenericName() const
 {
-	wxString name = m_Date.GetString(ARBDate::eDashYMD) + wxT(" ");
+	std::wstring name = m_Date.GetString(ARBDate::eDashYMD) + wxT(" ");
 	name += m_Division + wxT(" ") + m_Level + wxT(" ") + m_Event;
 	if (0 < m_SubName.length())
 	{
@@ -184,7 +184,7 @@ wxString ARBDogRun::GetGenericName() const
 }
 
 
-size_t ARBDogRun::GetSearchStrings(std::set<wxString>& ioStrings) const
+size_t ARBDogRun::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -268,11 +268,11 @@ bool ARBDogRun::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			wxString attrib;
+			std::wstring attrib;
 			inTree->GetAttrib(ATTRIB_RUN_DATE, attrib);
-			wxString msg(Localization()->InvalidDate());
+			std::wstring msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
 			return false;
 		}
 	}
@@ -315,7 +315,7 @@ bool ARBDogRun::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		wxString const& name = element->GetName();
+		std::wstring const& name = element->GetName();
 		if (name == TREE_CONDITIONS)
 		{
 			m_Conditions = element->GetValue();
@@ -342,7 +342,7 @@ bool ARBDogRun::Load(
 		}
 		else if (name == TREE_PLACEMENT)
 		{
-			wxString attrib;
+			std::wstring attrib;
 			if (ElementNode::eFound != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
 			|| 0 == attrib.length())
 			{
@@ -351,9 +351,9 @@ bool ARBDogRun::Load(
 			}
 			if (!m_Q.Load(attrib, inVersion, ioCallback))
 			{
-				wxString msg(Localization()->ValidValues());
+				std::wstring msg(Localization()->ValidValues());
 				msg += ARB_Q::GetValidTypes();
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
 				return false;
 			}
 			element->GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
@@ -445,7 +445,7 @@ bool ARBDogRun::Save(ElementNodePtr ioTree) const
 }
 
 
-int ARBDogRun::NumOtherPointsInUse(wxString const& inOther) const
+int ARBDogRun::NumOtherPointsInUse(std::wstring const& inOther) const
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::const_iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -458,8 +458,8 @@ int ARBDogRun::NumOtherPointsInUse(wxString const& inOther) const
 
 
 int ARBDogRun::RenameOtherPoints(
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -474,9 +474,9 @@ int ARBDogRun::RenameOtherPoints(
 }
 
 
-int ARBDogRun::DeleteOtherPoints(wxString const& inName)
+int ARBDogRun::DeleteOtherPoints(std::wstring const& inName)
 {
-	wxString name(inName);
+	std::wstring name(inName);
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); )
 	{
@@ -700,7 +700,7 @@ void ARBDogRun::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
 }
 
 
-size_t ARBDogRun::GetLinks(std::set<wxString>& outLinks) const
+size_t ARBDogRun::GetLinks(std::set<std::wstring>& outLinks) const
 {
 	outLinks.clear();
 	outLinks = m_Links;
@@ -708,19 +708,19 @@ size_t ARBDogRun::GetLinks(std::set<wxString>& outLinks) const
 }
 
 
-bool ARBDogRun::HasLink(wxString const& inLink) const
+bool ARBDogRun::HasLink(std::wstring const& inLink) const
 {
 	return m_Links.find(inLink) != m_Links.end();
 }
 
 
-void ARBDogRun::AddLink(wxString const& inLink)
+void ARBDogRun::AddLink(std::wstring const& inLink)
 {
 	m_Links.insert(inLink);
 }
 
 
-void ARBDogRun::RemoveLink(wxString const& inLink)
+void ARBDogRun::RemoveLink(std::wstring const& inLink)
 {
 	ARBDogRunLinks::iterator iter = m_Links.find(inLink);
 	if (iter != m_Links.end())

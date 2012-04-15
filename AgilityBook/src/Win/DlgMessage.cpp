@@ -17,6 +17,7 @@
 #include "stdafx.h"
 #include "DlgMessage.h"
 
+#include "ARBString.h"
 #include "Widgets.h"
 
 #ifdef __WXMSW__
@@ -25,11 +26,14 @@
 
 
 CDlgMessage::CDlgMessage(
-		wxString const& msg,
+		std::wstring const& msg,
 		wxWindow* pParent,
-		wxString const& caption)
-	: wxDialog(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+		std::wstring caption)
+	: wxDialog()
 {
+	if (caption.empty())
+		caption = StringUtil::stringW(_("IDD_MESSAGE"));
+	Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 	// Controls (these are done first to control tab order)
 
 	CTextCtrl* textCtrl = new CTextCtrl(this, wxID_ANY, msg,

@@ -40,7 +40,7 @@ typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
 typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
 
 // Special HTML tag for href's
-#define ARB_PROTOCOL	wxT("arb:")
+#define ARB_PROTOCOL	L"arb:"
 
 /**
  * Used to accumulate lifetime info. Also for Placement totals.
@@ -51,18 +51,18 @@ class LifeTimePointInfo
 {
 private:
 	LifeTimePointInfo(
-			wxString const& inSort1,
-			wxString const& inSort2,
+			std::wstring const& inSort1,
+			std::wstring const& inSort2,
 			double inPoints,
 			double inFiltered);
 public:
 	static LifeTimePointInfoPtr New(
-			wxString const& inSort1, // Division or event
-			wxString const& inSort2, // Level or empty
+			std::wstring const& inSort1, // Division or event
+			std::wstring const& inSort2, // Level or empty
 			double inPoints,
 			double inFiltered);
-	wxString sort1;
-	wxString sort2;
+	std::wstring sort1;
+	std::wstring sort2;
 	double points;
 	double filtered;
 };
@@ -88,10 +88,10 @@ public:
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
 	ARBDogExistingPointsPtr m_pExisting;
-	wxString m_Venue;
-	wxString m_Div;
-	wxString m_Level;
-	wxString m_Event;
+	std::wstring m_Venue;
+	std::wstring m_Div;
+	std::wstring m_Level;
+	std::wstring m_Event;
 	double m_Points;
 	bool m_bScore;
 	double m_Score;
@@ -108,9 +108,9 @@ public:
 	virtual ~CPointsDataBase();
 
 	/// Get a particular column of text (used for listctrl)
-	virtual wxString OnNeedText(int inCol) const = 0;
+	virtual std::wstring OnNeedText(int inCol) const = 0;
 	/// Get html for a line
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const = 0;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const = 0;
 	/// Is this entry visible? (used for special html processing)
 	virtual bool IsVisible() const	{return true;}
 	/// This entry has details (dbl-click works)
@@ -130,10 +130,10 @@ class CPointsDataSeparator : public CPointsDataBase
 public:
 	CPointsDataSeparator(
 			CAgilityBookDoc* pDoc,
-			wxString const& inHtml);
+			std::wstring const& inHtml);
 
-	virtual wxString OnNeedText(int inCol) const	{return wxT("");}
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const
+	virtual std::wstring OnNeedText(int inCol) const	{return wxT("");}
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const
 	{
 		return m_Html;
 	}
@@ -141,7 +141,7 @@ public:
 	virtual bool IsEqual(CPointsDataBasePtr /*inData*/)	{return false;}
 
 protected:
-	wxString m_Html;
+	std::wstring m_Html;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -152,17 +152,17 @@ public:
 	CPointsDataText(
 			CAgilityBookDoc* pDoc,
 			bool bUseInHtml,
-			wxChar const* inCol1 = wxT(""),
-			wxChar const* inCol2 = wxT(""));
+			wchar_t const* inCol1 = L"",
+			wchar_t const* inCol2 = L"");
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 private:
 	bool m_UseInHtml;
-	wxString m_Col1;
-	wxString m_Col2;
+	std::wstring m_Col1;
+	std::wstring m_Col2;
 };
 typedef std::tr1::shared_ptr<CPointsDataText> CPointsDataTextPtr;
 
@@ -178,8 +178,8 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -202,8 +202,8 @@ public:
 			ARBDogPtr pDog,
 			ARBConfigVenuePtr pVenue);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -227,8 +227,8 @@ public:
 			ARBDogPtr pDog,
 			ARBDogTitlePtr pTitle);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -259,14 +259,14 @@ public:
 			int inLevelIdx,
 			ARBConfigEventPtr inEvent,
 			int inEventIdx,
-			wxString const& inRunCount,
-			wxString const& inQcount,
-			wxString const& inPts,
-			wxString const& inSuperQ,
-			wxString const& inSpeed);
+			std::wstring const& inRunCount,
+			std::wstring const& inQcount,
+			std::wstring const& inPts,
+			std::wstring const& inSuperQ,
+			std::wstring const& inSpeed);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -281,11 +281,11 @@ protected:
 	int m_LevelIdx;
 	ARBConfigEventPtr m_Event;
 	int m_EventIdx;
-	wxString m_RunCount;
-	wxString m_Qcount;
-	wxString m_Pts;
-	wxString m_SuperQ;
-	wxString m_Speed;
+	std::wstring m_RunCount;
+	std::wstring m_Qcount;
+	std::wstring m_Pts;
+	std::wstring m_SuperQ;
+	std::wstring m_Speed;
 };
 typedef std::tr1::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
 
@@ -307,13 +307,13 @@ public:
 			bool bLifetime,
 			ARBConfigVenuePtr inVenue);
 	void AddLifetimeInfo(
-			wxString const& inDiv,
-			wxString const& inLevel,
+			std::wstring const& inDiv,
+			std::wstring const& inLevel,
 			double inLifetime,
 			double inFiltered);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -337,21 +337,21 @@ public:
 			CAgilityBookDoc* pDoc,
 			bool bLifetime,
 			ARBConfigVenuePtr inVenue,
-			wxString const& inName);
+			std::wstring const& inName);
 
 	// Adds are limited by inSort1 == m_Name
 	void AddLifetimeInfo(
-			wxString const& inSort1,
-			wxString const& inSort2,
+			std::wstring const& inSort1,
+			std::wstring const& inSort2,
 			double inLifetime,
 			double inFiltered);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	wxString m_Name;
+	std::wstring m_Name;
 };
 typedef std::tr1::shared_ptr<CPointsDataLifetimeByName> CPointsDataLifetimeByNamePtr;
 
@@ -370,8 +370,8 @@ public:
 			ARBConfigMultiQPtr inMultiQ,
 			std::set<MultiQdata> const& inMQs);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -399,8 +399,8 @@ public:
 			ARBConfigDivisionPtr inDiv,
 			int inPts);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
@@ -433,17 +433,17 @@ class CPointsDataOtherPointsTallyAll : public CPointsDataOtherPoints
 public:
 	CPointsDataOtherPointsTallyAll(
 			CAgilityBookDoc* pDoc,
-			wxString const& inName,
+			std::wstring const& inName,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	wxString m_Name;
+	std::wstring m_Name;
 };
 typedef std::tr1::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
 
@@ -452,17 +452,17 @@ class CPointsDataOtherPointsTallyAllByEvent : public CPointsDataOtherPoints
 public:
 	CPointsDataOtherPointsTallyAllByEvent(
 			CAgilityBookDoc* pDoc,
-			wxString const& inEvent,
+			std::wstring const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	wxString m_Event;
+	std::wstring m_Event;
 };
 typedef std::tr1::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
 
@@ -471,17 +471,17 @@ class CPointsDataOtherPointsTallyLevel : public CPointsDataOtherPoints
 public:
 	CPointsDataOtherPointsTallyLevel(
 			CAgilityBookDoc* pDoc,
-			wxString const& inLevel,
+			std::wstring const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	wxString m_Level;
+	std::wstring m_Level;
 };
 typedef std::tr1::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
 
@@ -490,19 +490,19 @@ class CPointsDataOtherPointsTallyLevelByEvent : public CPointsDataOtherPoints
 public:
 	CPointsDataOtherPointsTallyLevelByEvent(
 			CAgilityBookDoc* pDoc,
-			wxString const& inLevel,
-			wxString const& inEvent,
+			std::wstring const& inLevel,
+			std::wstring const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	wxString m_Level;
-	wxString m_Event;
+	std::wstring m_Level;
+	std::wstring m_Event;
 };
 typedef std::tr1::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
 
@@ -525,7 +525,7 @@ public:
 private:
 	struct LifeTimePoint
 	{
-		wxString eventName;
+		std::wstring eventName;
 		double points;
 		bool bFiltered;
 		LifeTimePoint()
@@ -535,7 +535,7 @@ private:
 		{
 		}
 		LifeTimePoint(
-				const wxString inEvent,
+				const std::wstring inEvent,
 				double inPoints,
 				bool inFiltered)
 			: eventName(inEvent)

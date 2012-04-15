@@ -22,6 +22,7 @@
 #include "DlgARBHelp.h"
 
 #include "ARBHelp.h"
+#include "ARBString.h"
 #include "BinaryData.h"
 #include "DlgPageEncode.h"
 #include "DlgPageEncodeFiles.h"
@@ -65,7 +66,7 @@ CDlgARBHelp::CDlgARBHelp()
 }
 
 
-void CDlgARBHelp::AddSysInfo(wxString const& inData)
+void CDlgARBHelp::AddSysInfo(std::wstring const& inData)
 {
 	m_SysInfo.clear();
 	if (!inData.empty())
@@ -73,7 +74,7 @@ void CDlgARBHelp::AddSysInfo(wxString const& inData)
 }
 
 
-void CDlgARBHelp::AddRegistryInfo(wxChar const* inData)
+void CDlgARBHelp::AddRegistryInfo(wchar_t const* inData)
 {
 	m_RegInfo.clear();
 	if (inData)
@@ -81,7 +82,7 @@ void CDlgARBHelp::AddRegistryInfo(wxChar const* inData)
 }
 
 
-void CDlgARBHelp::SetARBFileStatus(wxString const& inFileName, bool bInclude)
+void CDlgARBHelp::SetARBFileStatus(std::wstring const& inFileName, bool bInclude)
 {
 	m_IncFile[inFileName] = bInclude;
 }
@@ -89,69 +90,69 @@ void CDlgARBHelp::SetARBFileStatus(wxString const& inFileName, bool bInclude)
 
 // Make sure this is synchronized (order of encoding) with
 // DlgPageDecode (decoder)
-wxString CDlgARBHelp::GetEncodedData()
+std::wstring CDlgARBHelp::GetEncodedData()
 {
-	wxString rawdata;
+	std::wostringstream rawdata;
 	wxLogNull logSuppressor;
 
 	// System information.
 	{
-		wxString data;
+		std::wstring data;
 		BinaryData::EncodeString(m_SysInfo, data);
-		rawdata << wxT("\n") << STREAM_SYSTEM_BEGIN << wxT("\n")
+		rawdata << L"\n" << STREAM_SYSTEM_BEGIN << L"\n"
 			<< data
-			<< wxT("\n") << STREAM_SYSTEM_END << wxT("\n");
+			<< L"\n" << STREAM_SYSTEM_END << L"\n";
 	}
 
 	// Registry information.
 	{
-		wxString data;
+		std::wstring data;
 		BinaryData::EncodeString(m_RegInfo, data);
-		rawdata << wxT("\n") << STREAM_REGISTRY_BEGIN << wxT("\n")
+		rawdata << L"\n" << STREAM_REGISTRY_BEGIN << L"\n"
 			<< data
-			<< wxT("\n") << STREAM_REGISTRY_END << wxT("\n");
+			<< L"\n" << STREAM_REGISTRY_END << L"\n";
 	}
 
 	// Data files.
 	for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
 	{
-		rawdata << wxT("\n") << (*iFile).first;
+		rawdata << L"\n" << (*iFile).first;
 		wxFileName fileName((*iFile).first);
 		wxDateTime dtMod, dtCreate;
 		if (!(*iFile).second)
-			rawdata << wxT(": Skipped");
-		rawdata << wxT("\n");
+			rawdata << L": Skipped";
+		rawdata << L"\n";
 		if (fileName.GetTimes(NULL, &dtMod, &dtCreate))
 		{
-			rawdata << wxT("Created: ") << dtCreate.Format() << wxT("\n")
-				<< wxT("Modified: ") << dtMod.Format() << wxT("\n");
+			rawdata << L"Created: " << dtCreate.Format() << L"\n"
+				<< L"Modified: " << dtMod.Format() << L"\n";
 		}
 		wxULongLong size = fileName.GetSize();
 		if (wxInvalidSize != size)
-			rawdata << wxT("Size: ") << size << wxT("\n");
+			rawdata << L"Size: " << StringUtil::stringW(size.ToString()) << L"\n";
 		if ((*iFile).second)
 		{
 			wxFFile file;
 			if (file.Open((*iFile).first, wxT("rb")))
 			{
-				wxString data;
+				std::wstring data;
 				BinaryData::Encode(file, data);
-				rawdata << STREAM_FILE_BEGIN << wxT("\n")
+				rawdata << STREAM_FILE_BEGIN << L"\n"
 					<< data
-					<< wxT("\n") << STREAM_FILE_END << wxT("\n");
+					<< L"\n" << STREAM_FILE_END << L"\n";
 			}
 			else
-				rawdata << wxT("Error: Cannot read file\n");
+				rawdata << L"Error: Cannot read file\n";
 		}
 	}
 
-	wxString data;
-	BinaryData::EncodeString(rawdata, data);
-	rawdata.clear();
+	std::wstring data;
+	BinaryData::EncodeString(rawdata.str(), data);
 
-	rawdata << wxT("\n") << STREAM_DATA_BEGIN << wxT("\n")
+	std::wostringstream finalData;
+	finalData << L"\n" << STREAM_DATA_BEGIN << L"\n"
 		<< data
-		<< wxT("\n") << STREAM_DATA_END << wxT("\n");
+		<< L"\n" << STREAM_DATA_END << L"\n";
 
-	return rawdata;
+	return finalData.str();
 }

@@ -55,14 +55,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const;
+	virtual std::wstring GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const;
 
 	/**
 	 * Load a title.
@@ -104,15 +104,15 @@ public:
 		if (!m_Date.IsValid())
 			m_bHidden = true;
 	}
-	wxString const& GetVenue() const
+	std::wstring const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(wxString const& inVenue)
+	void SetVenue(std::wstring const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
-	wxString const& GetRawName() const
+	std::wstring const& GetRawName() const
 	{
 		return m_Name;
 	}
@@ -129,7 +129,7 @@ public:
 		return m_MultipleStyle;
 	}
 	void SetName(
-			wxString const& inName,
+			std::wstring const& inName,
 			short inInstance,
 			bool bShowInstance,
 			ARBTitleStyle style)
@@ -163,8 +163,8 @@ public:
 
 private:
 	ARBDate m_Date;
-	wxString m_Venue;
-	wxString m_Name;
+	std::wstring m_Venue;
+	std::wstring m_Name;
 	bool m_bShowInstanceOne;
 	short m_Instance;
 	ARBTitleStyle m_MultipleStyle;
@@ -206,7 +206,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumTitlesInVenue(wxString const& inVenue) const;
+	int NumTitlesInVenue(std::wstring const& inVenue) const;
 
 	/**
 	 * Find a title
@@ -215,8 +215,8 @@ public:
 	 * @param outTitle Pointer to found title.
 	 */
 	bool FindTitle(
-			wxString const& inVenue,
-			wxString const& inTitle,
+			std::wstring const& inVenue,
+			std::wstring const& inTitle,
 			ARBDogTitlePtr* outTitle = NULL) const;
 
 	/**
@@ -225,8 +225,8 @@ public:
 	 * @param inTitle Name of title.
 	 */
 	short FindMaxInstance(
-			wxString const& inVenue,
-			wxString const& inTitle) const;
+			std::wstring const& inVenue,
+			std::wstring const& inTitle) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -235,15 +235,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-			wxString const& inOldVenue,
-			wxString const& inNewVenue);
+			std::wstring const& inOldVenue,
+			std::wstring const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(wxString const& inVenue);
+	int DeleteVenue(std::wstring const& inVenue);
 
 	/**
 	 * Number of titles in use.
@@ -253,8 +253,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumTitlesInUse(
-			wxString const& inVenue,
-			wxString const& inTitle) const;
+			std::wstring const& inVenue,
+			std::wstring const& inTitle) const;
 
 	/**
 	 * Rename a title, rename any dependent objects.
@@ -264,9 +264,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameTitle(
-			wxString const& inVenue,
-			wxString const& inOldTitle,
-			wxString const& inNewTitle);
+			std::wstring const& inVenue,
+			std::wstring const& inOldTitle,
+			std::wstring const& inNewTitle);
 
 	/**
 	 * Add a title.

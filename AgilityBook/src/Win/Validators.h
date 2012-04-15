@@ -21,6 +21,7 @@
 #include <wx/valgen.h>
 #include <wx/valtext.h>
 class ARBDate;
+class wxDateTime;
 
 
 /// wxGenericValidator doesn't do shorts and doubles
@@ -31,19 +32,32 @@ class CGenericValidator : public wxValidator
 DECLARE_CLASS(CGenericValidator)
 public:
 	CGenericValidator(
+			unsigned short* val,
+			unsigned short defVal = 0,
+			bool bUseDefOnEmpty = true,
+			wxChar const* errMsg = NULL);
+	CGenericValidator(
 			short* val,
 			short defVal = 0,
-			bool bUseDefOnEmpty = true, // If field is empty, use default
-			wxChar const* errMsg = NULL); // Message to use when validation fails
+			bool bUseDefOnEmpty = true,
+			wxChar const* errMsg = NULL);
+	CGenericValidator(
+			long* val,
+			long defVal = 0,
+			bool bUseDefOnEmpty = true,
+			wxChar const* errMsg = NULL);
 	CGenericValidator(
 			double* val,
 			int inPrec = 2,
 			double defVal = 0.0,
-			bool bUseDefOnEmpty = true, // If field is empty, use default
-			wxChar const* errMsg = NULL); // Message to use when validation fails
+			bool bUseDefOnEmpty = true,
+			wxChar const* errMsg = NULL);
 	CGenericValidator(
 			ARBDate* val,
-			wxChar const* errMsg = NULL); // Message to use when validation fails
+			wxChar const* errMsg = NULL);
+	CGenericValidator(
+			wxDateTime* val,
+			wxChar const* errMsg = NULL);
 	CGenericValidator(CGenericValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CGenericValidator(*this);}
@@ -54,16 +68,21 @@ public:
 	virtual bool Validate(wxWindow* parent);
 
 private:
+	unsigned short* m_pUShort;
 	short* m_pShort;
+	long* m_pLong;
 	double* m_pDouble;
 	int m_Prec;
 	union
 	{
+		unsigned short us;
 		short s;
+		long l;
 		double dbl;
 	} m_Default;
 	bool m_bUseDefOnEmpty;
 	ARBDate* m_pDate;
+	wxDateTime* m_pTime;
 	wxString m_ErrMsg;
 };
 

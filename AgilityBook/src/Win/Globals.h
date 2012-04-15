@@ -20,9 +20,25 @@
 
 #include "ARBTypes.h"
 #include "PointsData.h"
-#include <vector>
+#include <wx/treectrl.h>
 class CListCtrl;
-class CTreeCtrl;
+class wxDateTime;
+class wxFileName;
+class wxTreeCtrl;
+
+
+/**
+ * Using wx to get the times on network files is really slow.
+ * I suspect it's the win32 CreateFile/GetFileTime apis.
+ * @param inPassword Password to decode
+ * @param outBuffer Decoded password
+ * @return Success
+ */
+bool GetFileTimes(
+		wxFileName const& filename,
+		wxDateTime* dtAccess,
+		wxDateTime* dtMod,
+		wxDateTime* dtCreate);
 
 
 /**
@@ -41,7 +57,7 @@ extern wxWindow* FindWindowInSizer(
  * This is just a simple wrapper around wxListItem/GetItem
  * @note index = -1 implies getting the column header text
  */
-extern wxString GetListColumnText(
+extern std::wstring GetListColumnText(
 		CListCtrl const* list,
 		long index,
 		long col);
@@ -55,7 +71,7 @@ extern bool SetListColumnText(
 		CListCtrl* list,
 		long index,
 		long col,
-		wxString const& text);
+		std::wstring const& text);
 
 
 /**
@@ -63,7 +79,7 @@ extern bool SetListColumnText(
  * work. So the old code that simply invalidated the window no longer works.
  */
 extern void RefreshTreeItem(
-		CTreeCtrl* tree,
+		wxTreeCtrl* tree,
 		wxTreeItemId item,
 		bool bRecurse = false);
 

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2010-12-30 DRC Fix a memory leak when transforming a stream.
  * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -27,7 +28,7 @@
 #include <wx/mstream.h>
 #include <wx/strconv.h>
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
@@ -60,6 +61,16 @@ wxString stringWX(std::string const& inStr)
 }
 
 
+std::wstring stringW(wxString const& inStr)
+{
+#if wxCHECK_VERSION(2, 9, 3)
+	return inStr.ToStdWstring();
+#else
+	return std::wstring(inStr.wx_str());
+#endif
+}
+
+
 std::string stringA(wxMemoryOutputStream const& inStr)
 {
 	std::string str;
@@ -73,12 +84,6 @@ std::string stringA(wxMemoryOutputStream const& inStr)
 		delete [] buffer;
 	}
 	return str;
-}
-
-
-std::string stringA(wxString const& inStr)
-{
-	return std::string(inStr.ToUTF8());
 }
 
 // Note, if not on Windows (HAS_WIDECHARTOMULTIBYTE not set) and not using
@@ -161,7 +166,7 @@ std::string stringA(std::wstring const& inStr)
 std::wstring stringW(char const* const inStr, size_t inLen)
 {
 #if defined(__WXWINDOWS__)
-	return std::wstring(stringWX(inStr, inLen).wx_str());
+	return StringUtil::stringW(stringWX(inStr, inLen));
 #else // __WXWINDOWS__
 	std::wstring str;
 	if (inStr && *inStr)
@@ -195,7 +200,7 @@ std::wstring stringW(char const* const inStr, size_t inLen)
 std::wstring stringW(std::string const& inStr)
 {
 #if defined(__WXWINDOWS__)
-	return std::wstring(stringWX(inStr).wx_str());
+	return StringUtil::stringW(stringWX(inStr));
 #else // __WXWINDOWS__
 	std::wstring str;
 	if (!inStr.empty())
@@ -233,13 +238,14 @@ std::wstring stringW(std::string const& inStr)
 }
 
 
-bool ToLong(wxString const& inStr, long& outValue)
+bool ToLong(std::wstring const& inStr, long& outValue)
 {
-	return inStr.ToLong(&outValue);
+	wxString s(inStr.c_str());
+	return s.ToLong(&outValue);
 }
 
 
-long ToLong(wxString const& inStr)
+long ToLong(std::wstring const& inStr)
 {
 	long val = 0;
 	ToLong(inStr, val);
@@ -247,9 +253,25 @@ long ToLong(wxString const& inStr)
 }
 
 
-bool ToDouble(wxString const& inStr, double& outValue)
+bool ToULong(std::wstring const& inStr, unsigned long& outValue)
 {
-	bool rc = inStr.ToDouble(&outValue);
+	wxString s(inStr.c_str());
+	return s.ToULong(&outValue);
+}
+
+
+unsigned long ToULong(std::wstring const& inStr)
+{
+	unsigned long val = 0;
+	ToULong(inStr, val);
+	return val;
+}
+
+
+bool ToDouble(std::wstring const& inStr, double& outValue)
+{
+	wxString s(inStr.c_str());
+	bool rc = s.ToDouble(&outValue);
 	if (!rc)
 	{
 		// This may have failed for 2 reasons:
@@ -268,14 +290,14 @@ bool ToDouble(wxString const& inStr, double& outValue)
 		if (pt != wxT('.') && wxString::npos == inStr.find(pt))
 		{
 			wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
-			rc = inStr.ToDouble(&outValue);
+			rc = s.ToDouble(&outValue);
 		}
 	}
 	return rc;
 }
 
 
-double ToDouble(wxString const& inStr)
+double ToDouble(std::wstring const& inStr)
 {
 	double val = 0.0;
 	ToDouble(inStr, val);
@@ -283,27 +305,28 @@ double ToDouble(wxString const& inStr)
 }
 
 
-bool ToCLong(wxString const& inStr, long& outValue, bool bRetry)
+bool ToCLong(std::wstring const& inStr, long& outValue, bool bRetry)
 {
+	wxString s(inStr.c_str());
 #if wxCHECK_VERSION(2, 9, 3)
-	bool bOk = inStr.ToCLong(&outValue);
+	bool bOk = s.ToCLong(&outValue);
 	// The above fails for "123-45" and returns 0. Before it returned 123.
 	// That's the behavior I'm relying on. (Needed when reading dates)
 	if (!bOk && bRetry)
 	{
-		std::string tmp(StringUtil::stringA(inStr.ToStdWstring()));
-		std::istringstream str(tmp);
+		std::wstring tmp(s.ToStdWstring());
+		std::wistringstream str(tmp);
 		str >> outValue;
 	}
 	return bOk;
 #else
 	wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
-	return inStr.ToLong(&outValue);
+	return s.ToLong(&outValue);
 #endif
 }
 
 
-long ToCLong(wxString const& inStr)
+long ToCLong(std::wstring const& inStr)
 {
 	long val = 0;
 	ToCLong(inStr, val, true);
@@ -311,24 +334,216 @@ long ToCLong(wxString const& inStr)
 }
 
 
-bool ToCDouble(wxString const& inStr, double& outValue)
+bool ToCULong(std::wstring const& inStr, unsigned long& outValue, bool bRetry)
 {
+	wxString s(inStr.c_str());
 #if wxCHECK_VERSION(2, 9, 3)
-	// This will fail on "1.2-3". That's ok. The only time this is used
-	// is for parsing an actual number in Element.
-	return inStr.ToCDouble(&outValue);
+	bool bOk = s.ToCULong(&outValue);
+	// The above fails for "123-45" and returns 0. Before it returned 123.
+	// That's the behavior I'm relying on. (Needed when reading dates)
+	if (!bOk && bRetry)
+	{
+		std::wstring tmp(s.ToStdWstring());
+		std::wistringstream str(tmp);
+		str >> outValue;
+	}
+	return bOk;
 #else
 	wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
-	return inStr.ToDouble(&outValue);
+	return s.ToULong(&outValue);
 #endif
 }
 
 
-double ToCDouble(wxString const& inStr)
+unsigned long ToCULong(std::wstring const& inStr)
+{
+	unsigned long val = 0;
+	ToCULong(inStr, val, true);
+	return val;
+}
+
+
+bool ToCDouble(std::wstring const& inStr, double& outValue)
+{
+#if wxCHECK_VERSION(2, 9, 3)
+	// This will fail on "1.2-3". That's ok. The only time this is used
+	// is for parsing an actual number in Element.
+	return stringWX(inStr).ToCDouble(&outValue);
+#else
+	wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
+	return stringWX(inStr).ToDouble(&outValue);
+#endif
+}
+
+
+double ToCDouble(std::wstring const& inStr)
 {
 	double val = 0.0;
 	ToCDouble(inStr, val);
 	return val;
+}
+
+
+static const char* const sc_Whitespace = "\r\n\t ";
+static const wchar_t* const sc_wWhitespace = L"\r\n\t ";
+enum TrimType
+{
+	eTrimLeft = 0x1,
+	eTrimRight = 0x2,
+	eTrimBoth = eTrimLeft | eTrimRight
+};
+
+
+template <typename T> T TrimImpl(T const& inStr, T const& toTrim, TrimType type)
+{
+	if (0 == inStr.length())
+		return inStr;
+	typename T::size_type posFirst = 0;
+	if (type & eTrimLeft)
+	{
+		posFirst = inStr.find_first_not_of(toTrim);
+		if (T::npos == posFirst)
+			return T();
+	}
+	typename T::size_type posLast = inStr.length() - 1;
+	if (type & eTrimRight)
+	{
+		posLast = inStr.find_last_not_of(toTrim);
+		if (T::npos == posLast)
+			return T();
+	}
+	if (inStr.length() == posLast - posFirst + 1)
+		return inStr;
+	typename T::size_type posLength = posLast - posFirst + 1;
+	return inStr.substr(posFirst, posLength);
+}
+
+
+std::string Trim(std::string const& inStr)
+{
+	return TrimImpl<std::string>(inStr, sc_Whitespace, eTrimBoth);
+}
+
+
+std::wstring Trim(std::wstring const& inStr)
+{
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, eTrimBoth);
+}
+
+
+std::string Trim(std::string const& inStr, char toTrim)
+{
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim), eTrimBoth);
+}
+
+
+std::wstring Trim(std::wstring const& inStr, wchar_t toTrim)
+{
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), eTrimBoth);
+}
+
+
+std::string TrimLeft(std::string const& inStr)
+{
+	return TrimImpl<std::string>(inStr, sc_Whitespace, eTrimLeft);
+}
+
+
+std::wstring TrimLeft(std::wstring const& inStr)
+{
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, eTrimLeft);
+}
+
+
+std::string TrimLeft(std::string const& inStr, char toTrim)
+{
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim), eTrimLeft);
+}
+
+
+std::wstring TrimLeft(std::wstring const& inStr, wchar_t toTrim)
+{
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), eTrimLeft);
+}
+
+
+std::string TrimRight(std::string const& inStr)
+{
+	return TrimImpl<std::string>(inStr, sc_Whitespace, eTrimRight);
+}
+
+
+std::wstring TrimRight(std::wstring const& inStr)
+{
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, eTrimRight);
+}
+
+
+std::string TrimRight(std::string const& inStr, char toTrim)
+{
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim), eTrimRight);
+}
+
+
+std::wstring TrimRight(std::wstring const& inStr, wchar_t toTrim)
+{
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), eTrimRight);
+}
+
+
+static void my_tolower(char& ch)
+{
+	ch = std::tolower(ch, std::locale::classic());
+}
+
+
+std::string ToLower(std::string const& inStr)
+{
+	std::string out(inStr);
+	std::for_each(out.begin(), out.end(), my_tolower);
+	return out;
+}
+
+
+static void my_wtolower(wchar_t& ch)
+{
+	ch = std::tolower(ch, std::locale::classic());
+}
+
+
+std::wstring ToLower(std::wstring const& inStr)
+{
+	std::wstring out(inStr);
+	std::for_each(out.begin(), out.end(), my_wtolower);
+	return out;
+}
+
+
+static void my_toupper(char& ch)
+{
+	ch = std::toupper(ch, std::locale::classic());
+}
+
+
+std::string ToUpper(std::string const& inStr)
+{
+	std::string out(inStr);
+	std::for_each(out.begin(), out.end(), my_toupper);
+	return out;
+}
+
+
+static void my_wtoupper(wchar_t& ch)
+{
+	ch = std::toupper(ch, std::locale::classic());
+}
+
+
+std::wstring ToUpper(std::wstring const& inStr)
+{
+	std::wstring out(inStr);
+	std::for_each(out.begin(), out.end(), my_wtoupper);
+	return out;
 }
 
 
@@ -361,15 +576,6 @@ template <typename T, typename S> T ReplaceImpl(
 		}
 	}
 	return str.str();
-}
-
-
-wxString Trim(wxString const& inStr)
-{
-	wxString str(inStr);
-	str.Trim(true);
-	str.Trim(false);
-	return str;
 }
 
 

@@ -30,7 +30,7 @@ class CBasePanel : public wxPanel
 public:
 	CBasePanel(
 			wxWindow* parent,
-			wxString const& helpText);
+			std::wstring const& helpText);
 	virtual ~CBasePanel();
 
 	void ActivateView();

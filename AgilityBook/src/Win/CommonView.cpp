@@ -74,7 +74,7 @@ void CAgilityBookBaseExtraView::OnActivateView(
 		DoActivateView(activate, activeView, deactiveView);
 		if (activate)
 		{
-			wxString msg;
+			std::wstring msg;
 			if (GetMessage(msg))
 				wxGetApp().SetMessageText(msg, IsFiltered());
 			if (GetMessage2(msg))
@@ -87,7 +87,7 @@ void CAgilityBookBaseExtraView::OnActivateView(
 
 void CAgilityBookBaseExtraView::UpdateMessages()
 {
-	wxString msg;
+	std::wstring msg;
 	if (GetMessage(msg))
 		wxGetApp().SetMessageText(msg, IsFiltered());
 	if (GetMessage2(msg))

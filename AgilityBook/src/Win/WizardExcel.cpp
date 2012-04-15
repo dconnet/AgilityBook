@@ -7,10 +7,12 @@
 /**
  * @file
  *
- * @brief Import/Export Wizard for Excel
+ * @brief Spreadsheet interface
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-18 Added eSpreadSheetNumberNoZero
+ * @li 2012-02-05 Added alignment and formatting.
  * @li 2012-02-04 Clear data in GetRowCol. Fix writing formulas.
  * @li 2012-01-14 DRC Change creation to only create one worksheet.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -22,13 +24,10 @@
 #include "stdafx.h"
 #include "WizardExcel.h"
 
-#if defined(__WXMSW__) && wxUSE_OLE_AUTOMATION
-#define HAS_AUTOMATION	1
-#else
-#define HAS_AUTOMATION	0
-#endif
-
+#include "ARBString.h"
 #include "ARBTypes.h"
+#include <sstream>
+
 #if HAS_AUTOMATION
 #include "AgilityBook.h"
 #include "DlgProgress.h"
@@ -38,7 +37,7 @@
 #include <wx/msw/ole/automtn.h>
 #endif //HAS_AUTOMATION
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
@@ -74,7 +73,7 @@ public:
 	}
 
 protected:
-	wxString m_FileName;
+	std::wstring m_FileName;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -151,6 +150,19 @@ public:
 			long inCol,
 			bool bBold);
 
+	virtual bool SetAlignment(
+			long inRow,
+			long inCol,
+			ISpreadSheetExporter::eAlign align);
+	virtual bool SetFormat(
+			long inRow,
+			long inCol,
+			ISpreadSheetExporter::eFormat format);
+	virtual bool SetFormat(
+			long inRow,
+			long inCol,
+			std::wstring const& format);
+
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
@@ -158,7 +170,7 @@ public:
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
-			wxString const& inData,
+			std::wstring const& inData,
 			bool bFormula = false);
 
 	virtual bool AutoFit(
@@ -179,9 +191,9 @@ public:
 	static CWizardExcelImport* Create(wxAutomationObject& ioApp);
 	virtual ~CWizardExcelImport();
 
-	virtual bool OpenFile(wxString const& inFilename);
+	virtual bool OpenFile(std::wstring const& inFilename);
 	virtual bool GetData(
-			std::vector< std::vector<wxString> >& outData,
+			std::vector< std::vector<std::wstring> >& outData,
 			IDlgProgress* ioProgress);
 
 private:
@@ -237,6 +249,19 @@ public:
 			long inCol,
 			bool bBold);
 
+	virtual bool SetAlignment(
+			long inRow,
+			long inCol,
+			ISpreadSheetExporter::eAlign align);
+	virtual bool SetFormat(
+			long inRow,
+			long inCol,
+			ISpreadSheetExporter::eFormat format);
+	virtual bool SetFormat(
+			long inRow,
+			long inCol,
+			std::wstring const& format);
+
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
@@ -244,7 +269,7 @@ public:
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
-			wxString const& inData,
+			std::wstring const& inData,
 			bool bFormula = false);
 
 	virtual bool AutoFit(
@@ -270,9 +295,9 @@ public:
 			wxAutomationObject& ioDesktop);
 	virtual ~CWizardCalcImport();
 
-	virtual bool OpenFile(wxString const& inFilename);
+	virtual bool OpenFile(std::wstring const& inFilename);
 	virtual bool GetData(
-			std::vector< std::vector<wxString> >& outData,
+			std::vector< std::vector<std::wstring> >& outData,
 			IDlgProgress* ioProgress);
 
 private:
@@ -346,6 +371,7 @@ CWizardExcelExport* CWizardExcelExport::Create(wxAutomationObject& ioApp)
 
 CWizardExcelExport::CWizardExcelExport(wxAutomationObject& ioApp)
 	: m_App(ioApp)
+	, m_Worksheet()
 {
 	// Create a new workbook.
 	wxAutomationObject book = m_App.CallMethod(wxT("Workbooks.Add"), xlWBATWorksheet);
@@ -354,6 +380,20 @@ CWizardExcelExport::CWizardExcelExport(wxAutomationObject& ioApp)
 	wxVariant args[1];
 	args[0] = wxVariant((short)1);
 	sheets.GetObject(m_Worksheet, wxT("Item"), 1, args);
+
+	// wx doesn't support IDispatch as a variant
+	//sheets.CallMethod(wxT("Add"), wxNullVariant, m_Worksheet, wxNullVariant, xlWorksheet);
+	// This also doesn't work
+	//sheets.CallMethod(wxT("Add"), wxNullVariant, wxNullVariant, wxNullVariant, xlWorksheet);
+	// The following python works:
+	//import win32com.client
+	//app = win32com.client.Dispatch('Excel.Application')
+	//app.Visible = True
+	//book = app.Workbooks.Add(-4167)
+	//sheet = book.Sheets(1)
+	//sheet.Name = 'Test'
+	//sheet2 = book.Sheets.Add(None, sheet, None, -4167)
+	//sheetFirst = book.Sheets.Add(None, None, None, -4167)
 }
 
 
@@ -382,7 +422,7 @@ bool CWizardExcelExport::SetTextColor(
 		long inCol,
 		wxColour inColor)
 {
-	wxString cell1;
+	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
@@ -402,7 +442,7 @@ bool CWizardExcelExport::SetBackColor(
 		long inCol,
 		wxColour inColor)
 {
-	wxString cell1;
+	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
@@ -422,7 +462,7 @@ bool CWizardExcelExport::SetItalic(
 		long inCol,
 		bool bItalic)
 {
-	wxString cell1;
+	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
@@ -442,7 +482,7 @@ bool CWizardExcelExport::SetBold(
 		long inCol,
 		bool bBold)
 {
-	wxString cell1;
+	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
@@ -457,12 +497,122 @@ bool CWizardExcelExport::SetBold(
 }
 
 
+bool CWizardExcelExport::SetAlignment(
+		long inRow,
+		long inCol,
+		ISpreadSheetExporter::eAlign align)
+{
+	if (ISpreadSheetExporter::eSpreadSheetNone == align)
+		return true;
+	std::wstring cell1;
+	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
+		return false;
+	wxAutomationObject range;
+	wxVariant args[2];
+	args[0] = cell1;
+	args[1] = cell1;
+	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
+	short val = xlHAlignGeneral;
+	switch (align)
+	{
+	default:
+	case ISpreadSheetExporter::eSpreadSheetGeneral:
+		val = xlHAlignGeneral;
+		break;
+	case ISpreadSheetExporter::eSpreadSheetLeft:
+		val = xlHAlignLeft;
+		break;
+	case ISpreadSheetExporter::eSpreadSheetRight:
+		val = xlHAlignRight;
+		break;
+	case ISpreadSheetExporter::eSpreadSheetCenter:
+		val = xlHAlignCenter;
+		break;
+	}
+	range.PutProperty(wxT("HorizontalAlignment"), val);
+	return true;
+}
+
+
+bool CWizardExcelExport::SetFormat(
+		long inRow,
+		long inCol,
+		ISpreadSheetExporter::eFormat format)
+{
+	std::wstring sFormat;
+
+	/*
+	 * Good tips on what to change
+	 * http://www.tek-tips.com/faqs.cfm?fid=6715
+	 *
+	 * general: 
+	 * number,2dec,1000sep,(redneg): #,##0.00_);[Red](#,##0.00)
+	 * number,2dec,1000sep,(neg): #,##0.00_);(#,##0.00)
+	 * number,2dec,-neg: 0.00
+	 * number,2dec,1000sep,-neg: #,##0.00
+	 * currency: $#,##0.00_);[Red]($#,##0.00)
+	 * currency,left-aligned $, "-" when 0
+	 * custom: _($* #,##0.00_);[Red]_($* (#,##0.00);_(* "-"??_);_(@_)
+	 *
+	 * (range).NumberFormat = "formatstr"
+	 *
+	 * align (also on Range)
+	 * HorizontalAlignment = xlHAlignCenter
+	 *
+	 * borders (Range)
+	 * Borders(xlEdgeBottom).LineStyle = xlDouble
+	 * Borders(xlEdgeBottom).Weight = xlThick
+	 * Borders(xlEdgeBottom).ColorIndex = 1
+	 * Borders(xlEdgeBottom).LineStyle = xlContinuous
+	 */
+
+	switch (format)
+	{
+	default:
+	case ISpreadSheetExporter::eSpreadSheetText:
+		sFormat = L"@";
+		break;
+	case ISpreadSheetExporter::eSpreadSheetCurrency:
+		sFormat = L"_($* #,##0.00_);[Red]_($* (#,##0.00);_(* \"-\"??_);_(@_)";
+		break;
+	case ISpreadSheetExporter::eSpreadSheetNumber:
+		sFormat = L"#,##0_);[Red](#,##0)";
+		break;
+	case ISpreadSheetExporter::eSpreadSheetNumberNoZero:
+		sFormat = L"#,##0_);[Red](#,##0);_(* \"\"??_);_(@_)";
+		break;
+	case ISpreadSheetExporter::eSpreadSheetDate:
+		sFormat = L"d/m/yyyy";
+		break;
+	}
+	return SetFormat(inRow, inCol, sFormat);
+}
+
+
+bool CWizardExcelExport::SetFormat(
+		long inRow,
+		long inCol,
+		std::wstring const& format)
+{
+	std::wstring cell1;
+	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
+		return false;
+	wxAutomationObject range;
+	wxVariant args[2];
+	args[0] = cell1;
+	args[1] = cell1;
+	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
+	range.PutProperty(wxT("NumberFormat"), format.c_str());
+	return true;
+}
+
+
 bool CWizardExcelExport::InsertData(
 		long inRow,
 		long inCol,
 		double inData)
 {
-	wxString cell1;
+	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
@@ -478,10 +628,10 @@ bool CWizardExcelExport::InsertData(
 bool CWizardExcelExport::InsertData(
 		long inRow,
 		long inCol,
-		wxString const& inData,
+		std::wstring const& inData,
 		bool bFormula)
 {
-	wxString cell1;
+	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
@@ -489,14 +639,14 @@ bool CWizardExcelExport::InsertData(
 	args[0] = cell1;
 	args[1] = cell1;
 	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
-	wxString prop = bFormula ? wxT("Formula") : wxT("Value2");
+	std::wstring prop = bFormula ? L"Formula" : L"Value2";
 	if (0 < inData.length() && '=' == inData[0] && !bFormula)
 	{
-		wxString data = wxString(wxT("'")) + inData;
-		range.PutProperty(prop, data);
+		std::wstring data = std::wstring(L"'") + inData;
+		range.PutProperty(prop, data.c_str());
 	}
 	else
-		range.PutProperty(prop, inData);
+		range.PutProperty(prop, inData.c_str());
 	return true;
 }
 
@@ -505,7 +655,7 @@ bool CWizardExcelExport::AutoFit(
 		long inColFrom,
 		long inColTo)
 {
-	wxString cell1, cell2;
+	std::wstring cell1, cell2;
 	if (!ISpreadSheet::GetRowCol(0, inColFrom, cell1))
 		return false;
 	if (!ISpreadSheet::GetRowCol(0, inColTo, cell2))
@@ -543,9 +693,9 @@ CWizardExcelImport::~CWizardExcelImport()
 }
 
 
-bool CWizardExcelImport::OpenFile(wxString const& inFilename)
+bool CWizardExcelImport::OpenFile(std::wstring const& inFilename)
 {
-	wxVariant bk = m_App.CallMethod(wxT("Workbooks.Open"), inFilename);
+	wxVariant bk = m_App.CallMethod(wxT("Workbooks.Open"), inFilename.c_str());
 	wxAutomationObject book((WXIDISPATCH*)bk.GetVoidPtr());
 	if (NULL == book.GetDispatchPtr())
 		return false;
@@ -560,7 +710,7 @@ bool CWizardExcelImport::OpenFile(wxString const& inFilename)
 
 
 bool CWizardExcelImport::GetData(
-		std::vector< std::vector<wxString> >& outData,
+		std::vector< std::vector<std::wstring> >& outData,
 		IDlgProgress* ioProgress)
 {
 	outData.clear();
@@ -580,9 +730,9 @@ bool CWizardExcelImport::GetData(
 		if (ioProgress)
 		{
 			wxFileName filename(m_FileName);
-			wxString msg = filename.GetFullPath();
+			std::wstring msg = filename.GetFullPath();
 			ioProgress->SetCaption(msg);
-			wxString str = wxString::Format(_("IDS_READING_ROWSCOLS"),
+			std::wstring str = wxString::Format(_("IDS_READING_ROWSCOLS"),
 				static_cast<int>(nRows),
 				static_cast<int>(nCols));
 			ioProgress->SetMessage(str);
@@ -599,11 +749,11 @@ bool CWizardExcelImport::GetData(
 				if (ioProgress->HasCanceled())
 					bAbort = true;
 			}
-			std::vector<wxString> row;
+			std::vector<std::wstring> row;
 			row.reserve(nCols);
 			for (int iCellCol = 0; iCellCol < nCols; ++iCellCol)
 			{
-				wxString cell1;
+				std::wstring cell1;
 				if (!ISpreadSheet::GetRowCol(iRow + iCellRow - 1, iCol + iCellCol - 1, cell1))
 				{
 					bAbort = true;
@@ -614,7 +764,7 @@ bool CWizardExcelImport::GetData(
 				args[0] = cell1;
 				args[1] = cell1;
 				range.GetObject(range2, wxT("Range"), 2, args);
-				row.push_back(range2.GetProperty(wxT("Value")).GetString());
+				row.push_back(StringUtil::stringW(range2.GetProperty(wxT("Value")).GetString()));
 			}
 			outData.push_back(row);
 		}
@@ -688,6 +838,8 @@ CWizardCalcExport* CWizardCalcExport::Create(
 CWizardCalcExport::CWizardCalcExport(
 		wxAutomationObject& ioDesktop)
 	: m_Desktop(ioDesktop)
+	, m_Document()
+	, m_Worksheet()
 {
 }
 
@@ -773,6 +925,53 @@ bool CWizardCalcExport::SetBold(
 }
 
 
+bool CWizardCalcExport::SetAlignment(
+		long inRow,
+		long inCol,
+		ISpreadSheetExporter::eAlign align)
+{
+#pragma PRAGMA_TODO("Enable alignment in Calc")
+	return false;
+}
+
+
+bool CWizardCalcExport::SetFormat(
+		long inRow,
+		long inCol,
+		ISpreadSheetExporter::eFormat format)
+{
+#pragma PRAGMA_TODO("Are the formatting strings the same as excel?")
+	std::wstring sFormat;
+	switch (format)
+	{
+	default:
+	case ISpreadSheetExporter::eSpreadSheetText:
+		sFormat = L"@";
+		break;
+	case ISpreadSheetExporter::eSpreadSheetCurrency:
+		sFormat = L"_($* #,##0.00_);[Red]_($* (#,##0.00);_(* \"-\"??_);_(@_)";
+		break;
+	case ISpreadSheetExporter::eSpreadSheetNumber:
+		sFormat = L"#,##0.00;[Red](#,##0.00)";
+		break;
+	case ISpreadSheetExporter::eSpreadSheetDate:
+		sFormat = L"d/m/yyyy";
+		break;
+	}
+	return SetFormat(inRow, inCol, sFormat);
+}
+
+
+bool CWizardCalcExport::SetFormat(
+		long inRow,
+		long inCol,
+		std::wstring const& format)
+{
+#pragma PRAGMA_TODO("Enable formatting in Calc")
+	return false;
+}
+
+
 bool CWizardCalcExport::InsertData(
 		long inRow,
 		long inCol,
@@ -790,7 +989,7 @@ bool CWizardCalcExport::InsertData(
 bool CWizardCalcExport::InsertData(
 		long inRow,
 		long inCol,
-		wxString const& inData,
+		std::wstring const& inData,
 		bool bFormula)
 {
 	if (!CreateWorksheet())
@@ -798,8 +997,8 @@ bool CWizardCalcExport::InsertData(
 	wxAutomationObject cell(m_Worksheet.CallMethod(wxT("getCellByPosition"), inCol, inRow));
 	if (!cell.GetDispatchPtr())
 		return false;
-	wxString property = bFormula ? wxT("Formula") : wxT("String");
-	return cell.PutProperty(property, inData);
+	std::wstring property = bFormula ? wxT("Formula") : wxT("String");
+	return cell.PutProperty(property, inData.c_str());
 }
 
 
@@ -837,18 +1036,18 @@ CWizardCalcImport::~CWizardCalcImport()
 }
 
 
-bool CWizardCalcImport::OpenFile(wxString const& inFilename)
+bool CWizardCalcImport::OpenFile(std::wstring const& inFilename)
 {
 	if (!m_Document.GetDispatchPtr())
 	{
 		// 'Calc' doesn't take kindly to wxWidgets FileNameToURL syntax.
 		// Since this is windows only, screw it, just format it the way calc likes.
-		wxString fileName(inFilename);
-		fileName.Replace(wxT("\\"), wxT("/"));
-		fileName = wxT("file:///") + fileName;
+		std::wstring fileName;
+		fileName = StringUtil::Replace(inFilename, L"\\", L"/");
+		fileName = L"file:///" + fileName;
 		wxVariant args;
 		args.NullList();
-		wxVariant file = m_Desktop.CallMethod(wxT("loadComponentFromURL"), fileName, wxT("_blank"), 0, args);
+		wxVariant file = m_Desktop.CallMethod(wxT("loadComponentFromURL"), fileName.c_str(), wxT("_blank"), 0, args);
 		if (file.IsNull())
 			return false;
 		m_Document.SetDispatchPtr(file);
@@ -866,7 +1065,7 @@ bool CWizardCalcImport::OpenFile(wxString const& inFilename)
 
 
 bool CWizardCalcImport::GetData(
-		std::vector< std::vector<wxString> >& outData,
+		std::vector< std::vector<std::wstring> >& outData,
 		IDlgProgress* ioProgress)
 {
 	outData.clear();
@@ -893,9 +1092,9 @@ bool CWizardCalcImport::GetData(
 	if (ioProgress)
 	{
 		wxFileName filename(m_FileName);
-		wxString msg = filename.GetFullPath();
+		std::wstring msg = filename.GetFullPath();
 		ioProgress->SetCaption(msg);
-		wxString str = wxString::Format(_("IDS_READING_ROWS"), nRows);
+		std::wstring str = wxString::Format(_("IDS_READING_ROWS"), nRows);
 		ioProgress->SetMessage(str);
 		ioProgress->SetRange(1, nRows);
 		ioProgress->ShowProgress();
@@ -912,11 +1111,11 @@ bool CWizardCalcImport::GetData(
 		if (!vRow.IsType(wxT("list")))
 			continue;
 		int nCols = static_cast<int>(vRow.GetCount());
-		std::vector<wxString> row;
+		std::vector<std::wstring> row;
 		row.reserve(nCols);
 		for (int iCol = 0; !bAbort && iCol < nCols; ++iCol)
 		{
-			row.push_back(vRow[iCol].GetString());
+			row.push_back(StringUtil::stringW(vRow[iCol].GetString()));
 		}
 		outData.push_back(row);
 	}
@@ -963,50 +1162,52 @@ long ISpreadSheet::GetMaxCols()
 bool ISpreadSheet::GetRowCol(
 		long inRow,
 		long inCol,
-		wxString& outCell)
+		std::wstring& outCell)
 {
 	// Lookup tables are nice!
-	static const wxChar* const sc_ColumnNames[256] =
+	static const wchar_t* const sc_ColumnNames[256] =
 	{
-		wxT("A"), wxT("B"), wxT("C"), wxT("D"), wxT("E"), wxT("F"), wxT("G"), wxT("H"),
-		wxT("I"), wxT("J"), wxT("K"), wxT("L"), wxT("M"), wxT("N"), wxT("O"), wxT("P"),
-		wxT("Q"), wxT("R"), wxT("S"), wxT("T"), wxT("U"), wxT("V"), wxT("W"), wxT("X"),
-		wxT("Y"), wxT("Z"), wxT("AA"),wxT("AB"),wxT("AC"),wxT("AD"),wxT("AE"),wxT("AF"),
-		wxT("AG"),wxT("AH"),wxT("AI"),wxT("AJ"),wxT("AK"),wxT("AL"),wxT("AM"),wxT("AN"),
-		wxT("AO"),wxT("AP"),wxT("AQ"),wxT("AR"),wxT("AS"),wxT("AT"),wxT("AU"),wxT("AV"),
-		wxT("AW"),wxT("AX"),wxT("AY"),wxT("AZ"),wxT("BA"),wxT("BB"),wxT("BC"),wxT("BD"),
-		wxT("BE"),wxT("BF"),wxT("BG"),wxT("BH"),wxT("BI"),wxT("BJ"),wxT("BK"),wxT("BL"),
-		wxT("BM"),wxT("BN"),wxT("BO"),wxT("BP"),wxT("BQ"),wxT("BR"),wxT("BS"),wxT("BT"),
-		wxT("BU"),wxT("BV"),wxT("BW"),wxT("BX"),wxT("BY"),wxT("BZ"),wxT("CA"),wxT("CB"),
-		wxT("CC"),wxT("CD"),wxT("CE"),wxT("CF"),wxT("CG"),wxT("CH"),wxT("CI"),wxT("CJ"),
-		wxT("CK"),wxT("CL"),wxT("CM"),wxT("CN"),wxT("CO"),wxT("CP"),wxT("CQ"),wxT("CR"),
-		wxT("CS"),wxT("CT"),wxT("CU"),wxT("CV"),wxT("CW"),wxT("CX"),wxT("CY"),wxT("CZ"),
-		wxT("DA"),wxT("DB"),wxT("DC"),wxT("DD"),wxT("DE"),wxT("DF"),wxT("DG"),wxT("DH"),
-		wxT("DI"),wxT("DJ"),wxT("DK"),wxT("DL"),wxT("DM"),wxT("DN"),wxT("DO"),wxT("DP"),
-		wxT("DQ"),wxT("DR"),wxT("DS"),wxT("DT"),wxT("DU"),wxT("DV"),wxT("DW"),wxT("DX"),
-		wxT("DY"),wxT("DZ"),wxT("EA"),wxT("EB"),wxT("EC"),wxT("ED"),wxT("EE"),wxT("EF"),
-		wxT("EG"),wxT("EH"),wxT("EI"),wxT("EJ"),wxT("EK"),wxT("EL"),wxT("EM"),wxT("EN"),
-		wxT("EO"),wxT("EP"),wxT("EQ"),wxT("ER"),wxT("ES"),wxT("ET"),wxT("EU"),wxT("EV"),
-		wxT("EW"),wxT("EX"),wxT("EY"),wxT("EZ"),wxT("FA"),wxT("FB"),wxT("FC"),wxT("FD"),
-		wxT("FE"),wxT("FF"),wxT("FG"),wxT("FH"),wxT("FI"),wxT("FJ"),wxT("FK"),wxT("FL"),
-		wxT("FM"),wxT("FN"),wxT("FO"),wxT("FP"),wxT("FQ"),wxT("FR"),wxT("FS"),wxT("FT"),
-		wxT("FU"),wxT("FV"),wxT("FW"),wxT("FX"),wxT("FY"),wxT("FZ"),wxT("GA"),wxT("GB"),
-		wxT("GC"),wxT("GD"),wxT("GE"),wxT("GF"),wxT("GG"),wxT("GH"),wxT("GI"),wxT("GJ"),
-		wxT("GK"),wxT("GL"),wxT("GM"),wxT("GN"),wxT("GO"),wxT("GP"),wxT("GQ"),wxT("GR"),
-		wxT("GS"),wxT("GT"),wxT("GU"),wxT("GV"),wxT("GW"),wxT("GX"),wxT("GY"),wxT("GZ"),
-		wxT("HA"),wxT("HB"),wxT("HC"),wxT("HD"),wxT("HE"),wxT("HF"),wxT("HG"),wxT("HH"),
-		wxT("HI"),wxT("HJ"),wxT("HK"),wxT("HL"),wxT("HM"),wxT("HN"),wxT("HO"),wxT("HP"),
-		wxT("HQ"),wxT("HR"),wxT("HS"),wxT("HT"),wxT("HU"),wxT("HV"),wxT("HW"),wxT("HX"),
-		wxT("HY"),wxT("HZ"),wxT("IA"),wxT("IB"),wxT("IC"),wxT("ID"),wxT("IE"),wxT("IF"),
-		wxT("IG"),wxT("IH"),wxT("II"),wxT("IJ"),wxT("IK"),wxT("IL"),wxT("IM"),wxT("IN"),
-		wxT("IO"),wxT("IP"),wxT("IQ"),wxT("IR"),wxT("IS"),wxT("IT"),wxT("IU"),wxT("IV"),
+		L"A", L"B", L"C", L"D", L"E", L"F", L"G", L"H",
+		L"I", L"J", L"K", L"L", L"M", L"N", L"O", L"P",
+		L"Q", L"R", L"S", L"T", L"U", L"V", L"W", L"X",
+		L"Y", L"Z", L"AA",L"AB",L"AC",L"AD",L"AE",L"AF",
+		L"AG",L"AH",L"AI",L"AJ",L"AK",L"AL",L"AM",L"AN",
+		L"AO",L"AP",L"AQ",L"AR",L"AS",L"AT",L"AU",L"AV",
+		L"AW",L"AX",L"AY",L"AZ",L"BA",L"BB",L"BC",L"BD",
+		L"BE",L"BF",L"BG",L"BH",L"BI",L"BJ",L"BK",L"BL",
+		L"BM",L"BN",L"BO",L"BP",L"BQ",L"BR",L"BS",L"BT",
+		L"BU",L"BV",L"BW",L"BX",L"BY",L"BZ",L"CA",L"CB",
+		L"CC",L"CD",L"CE",L"CF",L"CG",L"CH",L"CI",L"CJ",
+		L"CK",L"CL",L"CM",L"CN",L"CO",L"CP",L"CQ",L"CR",
+		L"CS",L"CT",L"CU",L"CV",L"CW",L"CX",L"CY",L"CZ",
+		L"DA",L"DB",L"DC",L"DD",L"DE",L"DF",L"DG",L"DH",
+		L"DI",L"DJ",L"DK",L"DL",L"DM",L"DN",L"DO",L"DP",
+		L"DQ",L"DR",L"DS",L"DT",L"DU",L"DV",L"DW",L"DX",
+		L"DY",L"DZ",L"EA",L"EB",L"EC",L"ED",L"EE",L"EF",
+		L"EG",L"EH",L"EI",L"EJ",L"EK",L"EL",L"EM",L"EN",
+		L"EO",L"EP",L"EQ",L"ER",L"ES",L"ET",L"EU",L"EV",
+		L"EW",L"EX",L"EY",L"EZ",L"FA",L"FB",L"FC",L"FD",
+		L"FE",L"FF",L"FG",L"FH",L"FI",L"FJ",L"FK",L"FL",
+		L"FM",L"FN",L"FO",L"FP",L"FQ",L"FR",L"FS",L"FT",
+		L"FU",L"FV",L"FW",L"FX",L"FY",L"FZ",L"GA",L"GB",
+		L"GC",L"GD",L"GE",L"GF",L"GG",L"GH",L"GI",L"GJ",
+		L"GK",L"GL",L"GM",L"GN",L"GO",L"GP",L"GQ",L"GR",
+		L"GS",L"GT",L"GU",L"GV",L"GW",L"GX",L"GY",L"GZ",
+		L"HA",L"HB",L"HC",L"HD",L"HE",L"HF",L"HG",L"HH",
+		L"HI",L"HJ",L"HK",L"HL",L"HM",L"HN",L"HO",L"HP",
+		L"HQ",L"HR",L"HS",L"HT",L"HU",L"HV",L"HW",L"HX",
+		L"HY",L"HZ",L"IA",L"IB",L"IC",L"ID",L"IE",L"IF",
+		L"IG",L"IH",L"II",L"IJ",L"IK",L"IL",L"IM",L"IN",
+		L"IO",L"IP",L"IQ",L"IR",L"IS",L"IT",L"IU",L"IV",
 	};
 	bool bOk = false;
-	outCell.Empty();
+	std::wostringstream output;
+	outCell.clear();
 	if (inRow < GetMaxRows() && inCol < GetMaxCols())
 	{
-		outCell << sc_ColumnNames[inCol] << inRow + 1;
+		output << sc_ColumnNames[inCol] << inRow + 1;
 		bOk = true;
 	}
+	outCell = output.str();
 	return bOk;
 }

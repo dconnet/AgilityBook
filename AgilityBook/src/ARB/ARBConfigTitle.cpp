@@ -37,7 +37,7 @@
 
 /*
 // Roman number conversion (modified from C# code on CodeProject)
-static short RomanDigit(wxChar digit)
+static short RomanDigit(wchar_t digit)
 {
 	switch (digit)
 	{
@@ -61,11 +61,11 @@ static short RomanDigit(wxChar digit)
 		return 0;
 	}
 }
-static short RomanToShort(wxString number)
+static short RomanToShort(std::wstring number)
 {
 	short result = 0;
 	short oldValue = 1000;
-	for (wxString::const_iterator index = number.begin(); index != number.end(); ++index)
+	for (std::wstring::const_iterator index = number.begin(); index != number.end(); ++index)
 	{
 		short newValue = RomanDigit(*index);
 		if (newValue > oldValue)
@@ -77,21 +77,21 @@ static short RomanToShort(wxString number)
 	return result;
 }
 */
-static wxString ShortToRoman(short value)
+static std::wstring ShortToRoman(short value)
 {
-	static const wxChar* romanDigits[9][4] =
+	static const wchar_t* romanDigits[9][4] =
 	{
-		{wxT("M"),   wxT("C"),    wxT("X"),    wxT("I")   },
-		{wxT("MM"),  wxT("CC"),   wxT("XX"),   wxT("II")  },
-		{wxT("MMM"), wxT("CCC"),  wxT("XXX"),  wxT("III") },
-		{NULL,       wxT("CD"),   wxT("XL"),   wxT("IV")  },
-		{NULL,       wxT("D"),    wxT("L"),    wxT("V")   },
-		{NULL,       wxT("DC"),   wxT("LX"),   wxT("VI")  },
-		{NULL,       wxT("DCC"),  wxT("LXX"),  wxT("VII") },
-		{NULL,       wxT("DCCC"), wxT("LXXX"), wxT("VIII")},
-		{NULL,       wxT("CM"),   wxT("XC"),   wxT("IX")  }
+		{L"M",   L"C",    L"X",    L"I"   },
+		{L"MM",  L"CC",   L"XX",   L"II"  },
+		{L"MMM", L"CCC",  L"XXX",  L"III" },
+		{NULL,   L"CD",   L"XL",   L"IV"  },
+		{NULL,   L"D",    L"L",    L"V"   },
+		{NULL,   L"DC",   L"LX",   L"VI"  },
+		{NULL,   L"DCC",  L"LXX",  L"VII" },
+		{NULL,   L"DCCC", L"LXXX", L"VIII"},
+		{NULL,   L"CM",   L"XC",   L"IX"  }
 	};
-	wxString result;
+	std::wostringstream result;
 	for (int index = 0; index < 4; ++index)
 	{
 		short power = static_cast<short>(pow(10.0, 3 - index));
@@ -100,24 +100,24 @@ static wxString ShortToRoman(short value)
 		if (digit > 0)
 			result << romanDigits[digit-1][index];
 	}
-	return result;
+	return result.str();
 }
 
 
-wxString ARBTitleInstance::TitleInstance(
+std::wstring ARBTitleInstance::TitleInstance(
 		bool bShowInstanceOne,
 		short instance,
 		ARBTitleStyle style) const
 {
-	wxString str;
+	std::wostringstream str;
 	if (bShowInstanceOne || 1 < instance)
 	{
 		if (eTitleRoman == style)
-			str << wxT("-") << ShortToRoman(instance);
+			str << L"-" << ShortToRoman(instance);
 		else
 			str << instance;
 	}
-	return str;
+	return str.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -230,26 +230,26 @@ bool ARBConfigTitle::Load(
 		m_MultipleStyle = static_cast<ARBTitleStyle>(tmp);
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom))
 	{
-		wxString attrib;
+		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, attrib);
-		wxString msg(Localization()->InvalidDate());
+		std::wstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg.c_str()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
 	{
-		wxString attrib;
+		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, attrib);
-		wxString msg(Localization()->InvalidDate());
+		std::wstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg.c_str()));
 		return false;
 	}
 
@@ -283,51 +283,48 @@ bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
 }
 
 
-wxString ARBConfigTitle::GetCompleteName(
+std::wstring ARBConfigTitle::GetCompleteName(
 		short inInstance,
 		bool bShowInstance,
 		bool bAbbrevFirst,
 		bool bAddDates) const
 {
-	wxString buffer = TitleInstance(bShowInstance, inInstance, m_MultipleStyle);
+	std::wostringstream buffer;
+	buffer << TitleInstance(bShowInstance, inInstance, m_MultipleStyle);
 	// Special formatting used in configuration dialogs.
 	if (0 > inInstance && 0 < m_Multiple)
 	{
-		buffer.erase();
-		buffer << wxT("+");
+		buffer << L"+";
 	}
-	wxString name;
+	std::wostringstream name;
 	if (0 < m_LongName.length())
 	{
 		if (bAbbrevFirst)
 		{
-			name << wxT("[") << m_Name;
-			if (0 < buffer.length())
-				name << buffer;
-			name << wxT("] ");
+			name << L"[" << m_Name;
+			name << buffer.str();
+			name << L"] ";
 		}
 		name << m_LongName;
 		if (!bAbbrevFirst)
 		{
-			name << wxT(" [") << m_Name;
-			if (0 < buffer.length())
-				name << buffer;
-			name << wxT("]");
+			name << L" [" << m_Name;
+			name << buffer.str();
+			name << L"]";
 		}
 	}
 	else
 	{
 		name << m_Name;
-		if (0 < buffer.length())
-			name << buffer;
+		name << buffer.str();
 	}
 	if (bAddDates)
 	{
-		wxString dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
+		std::wstring dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
 		if (!dates.empty())
-			name << wxT(" ") << dates;
+			name << L" " << dates;
 	}
-	return name;
+	return name.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -376,7 +373,7 @@ void ARBConfigTitleList::ReorderBy(ARBConfigTitleList const& inList)
 
 
 bool ARBConfigTitleList::FindTitleCompleteName(
-		wxString const& inName,
+		std::wstring const& inName,
 		short inInstance,
 		bool bShowInstance,
 		bool bAbbrevFirst,
@@ -398,7 +395,7 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 
 
 bool ARBConfigTitleList::FindTitle(
-		wxString const& inName,
+		std::wstring const& inName,
 		ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
@@ -417,7 +414,7 @@ bool ARBConfigTitleList::FindTitle(
 
 
 bool ARBConfigTitleList::AddTitle(
-		wxString const& inName,
+		std::wstring const& inName,
 		ARBConfigTitlePtr* outTitle)
 {
 	if (outTitle)
@@ -446,9 +443,9 @@ bool ARBConfigTitleList::AddTitle(ARBConfigTitlePtr inTitle)
 }
 
 
-bool ARBConfigTitleList::DeleteTitle(wxString const& inName)
+bool ARBConfigTitleList::DeleteTitle(std::wstring const& inName)
 {
-	wxString name(inName);
+	std::wstring name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

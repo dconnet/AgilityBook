@@ -41,6 +41,7 @@
 #include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigVenue.h"
+#include "ARBString.h"
 #include "DlgConfigEvent.h"
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigTitle.h"
@@ -78,14 +79,14 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 {
 	bool bAdded = false;
 	bool done = false;
-	wxString name;
+	std::wstring name;
 	switch (m_Action)
 	{
 	case CDlgConfigVenue::eDivisions:
 		while (!done)
 		{
 			done = true;
-			CDlgName dlg(name, _("IDS_DIVISION_NAME"), m_pDlg);
+			CDlgName dlg(name, StringUtil::stringW(_("IDS_DIVISION_NAME")), m_pDlg);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				name = dlg.Name();
@@ -607,8 +608,8 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 		return;
 	m_URL.Replace(wxT("\""), wxT(""));
 
-	wxString name(m_Name);
-	wxString oldName = m_pVenue->GetName();
+	std::wstring name(m_Name);
+	std::wstring oldName = m_pVenue->GetName();
 	if (oldName != name)
 	{
 		if (m_Config.GetVenues().FindVenue(name))
@@ -619,10 +620,10 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 		m_pVenue->SetName(name);
 	}
 
-	m_pVenue->SetLongName(m_LongName);
-	m_pVenue->SetURL(m_URL);
-	m_pVenue->SetDesc(m_Desc);
-	m_pVenue->SetLifetimeName(m_LifetimeName);
+	m_pVenue->SetLongName(StringUtil::stringW(m_LongName));
+	m_pVenue->SetURL(StringUtil::stringW(m_URL));
+	m_pVenue->SetDesc(StringUtil::stringW(m_Desc));
+	m_pVenue->SetLifetimeName(StringUtil::stringW(m_LifetimeName));
 
 	if (oldName != name)
 		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(0, oldName, name));

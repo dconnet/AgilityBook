@@ -54,6 +54,7 @@
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBDog.h"
+#include "ARBString.h"
 #include "DlgExistingPoints.h"
 #include "DlgRegNum.h"
 #include "DlgTitle.h"
@@ -90,7 +91,7 @@ static struct
 {
 	int fmt;
 	int cx;
-	wxChar const* idText;
+	wchar_t const* idText;
 } const colTitleInfo[] =
 {
 	{wxLIST_FORMAT_LEFT, 10, NULL},
@@ -106,7 +107,7 @@ static struct
 {
 	int fmt;
 	int cx;
-	wxChar const* idText;
+	wchar_t const* idText;
 } const colRegNumInfo[] =
 {
 	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_VENUE")},
@@ -122,7 +123,7 @@ static struct
 {
 	int fmt;
 	int cx;
-	wxChar const* idText;
+	wchar_t const* idText;
 } const colExistingPointsInfo[] =
 {
 	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_DATE")},
@@ -151,7 +152,7 @@ public:
 		, m_Title(title)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 	ARBDogTitlePtr GetData() const	{return m_Title;}
 private:
@@ -160,9 +161,9 @@ private:
 };
 
 
-wxString CDlgDogDataTitle::OnNeedText(long iCol) const
+std::wstring CDlgDogDataTitle::OnNeedText(long iCol) const
 {
-	wxString text;
+	std::wstring text;
 	switch (iCol)
 	{
 	case 1:
@@ -263,8 +264,8 @@ int wxCALLBACK CompareTitles(long item1, long item2, long sortData)
 			break;
 		case 3: // name
 			{
-				wxString n1 = pTitle1->GetGenericName();
-				wxString n2 = pTitle2->GetGenericName();
+				std::wstring n1 = pTitle1->GetGenericName();
+				std::wstring n2 = pTitle2->GetGenericName();
 				if (n1 < n2)
 					rc = -1;
 				else if (n1 > n2)
@@ -273,8 +274,8 @@ int wxCALLBACK CompareTitles(long item1, long item2, long sortData)
 			break;
 		case 4: // nice name
 			{
-				wxString name1 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
-				wxString name2 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
+				std::wstring name1 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
+				std::wstring name2 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
 				if (name1 < name2)
 					rc = -1;
 				else if (name1 > name2)
@@ -304,7 +305,7 @@ public:
 		, m_RegNum(regnum)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	ARBDogRegNumPtr GetData() const	{return m_RegNum;}
 private:
 	CDlgDog* m_pDlg;
@@ -312,9 +313,9 @@ private:
 };
 
 
-wxString CDlgDogDataRegNum::OnNeedText(long iCol) const
+std::wstring CDlgDogDataRegNum::OnNeedText(long iCol) const
 {
-	wxString text;
+	std::wstring text;
 	switch (iCol)
 	{
 	case 0:
@@ -330,8 +331,7 @@ wxString CDlgDogDataRegNum::OnNeedText(long iCol) const
 		text = m_RegNum->GetReceived() ? wxT("x") : wxT("");
 		break;
 	case 4:
-		text = m_RegNum->GetNote();
-		text.Replace(wxT("\n"), wxT(" "));
+		text = StringUtil::Replace(m_RegNum->GetNote(), wxT("\n"), wxT(" "));
 		break;
 	}
 	return text;
@@ -408,7 +408,7 @@ public:
 		, m_Pts(pts)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	ARBDogExistingPointsPtr GetData() const	{return m_Pts;}
 private:
 	CDlgDog* m_pDlg;
@@ -416,47 +416,46 @@ private:
 };
 
 
-wxString CDlgDogDataPoint::OnNeedText(long iCol) const
+std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
 {
-	wxString text;
+	std::wostringstream text;
 	switch (iCol)
 	{
 	case 0:
-		text = m_Pts->GetDate().GetString();
+		text << m_Pts->GetDate().GetString();
 		break;
 	case 1: // Type
-		text = ARBDogExistingPoints::GetPointTypeName(m_Pts->GetType());
+		text << ARBDogExistingPoints::GetPointTypeName(m_Pts->GetType());
 		break;
 	case 2: // Points
 		text << m_Pts->GetPoints();
 		break;
 	case 3: // Other Points
-		text = m_Pts->GetOtherPoints();
+		text << m_Pts->GetOtherPoints();
 		break;
 	case 4: // Venue
-		text = m_Pts->GetVenue();
+		text << m_Pts->GetVenue();
 		break;
 	case 5: // MultiQ
-		text = m_Pts->GetMultiQ();
+		text << m_Pts->GetMultiQ();
 		break;
 	case 6: // Division
-		text = m_Pts->GetDivision();
+		text << m_Pts->GetDivision();
 		break;
 	case 7: // Level
-		text = m_Pts->GetLevel();
+		text << m_Pts->GetLevel();
 		break;
 	case 8: // Event
-		text = m_Pts->GetEvent();
+		text << m_Pts->GetEvent();
 		break;
 	case 9: // SubName
-		text = m_Pts->GetSubName();
+		text << m_Pts->GetSubName();
 		break;
 	case 10: // Comment
-		text = m_Pts->GetComment();
-		text.Replace(wxT("\n"), wxT(" "));
+		text << StringUtil::Replace(m_Pts->GetComment(), wxT("\n"), wxT(" "));
 		break;
 	}
-	return text;
+	return text.str();
 }
 
 
@@ -1587,7 +1586,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	if (m_pDog->GetCallName() != m_CallName)
 	{
 		hint |= UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW;
-		m_pDog->SetCallName(m_CallName);
+		m_pDog->SetCallName(StringUtil::stringW(m_CallName));
 	}
 	if (m_pDog->GetDOB() != m_DOB)
 	{
@@ -1605,17 +1604,17 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	if (m_pDog->GetBreed() != m_Breed)
 	{
 		bModified = true;
-		m_pDog->SetBreed(m_Breed);
+		m_pDog->SetBreed(StringUtil::stringW(m_Breed));
 	}
 	if (m_pDog->GetRegisteredName() != m_RegName)
 	{
 		hint |= UPDATE_POINTS_VIEW;
-		m_pDog->SetRegisteredName(m_RegName);
+		m_pDog->SetRegisteredName(StringUtil::stringW(m_RegName));
 	}
 	if (m_pDog->GetNote() != m_Notes)
 	{
 		bModified = true;
-		m_pDog->SetNote(m_Notes);
+		m_pDog->SetNote(StringUtil::stringW(m_Notes));
 	}
 	if (m_pDog->GetTitles() != m_Titles)
 	{

@@ -113,7 +113,7 @@ public:
 struct CFindItemInfo
 {
 	ARBInfo::eInfoType type;
-	wxString name;
+	std::wstring name;
 	ARBInfoItemPtr pItem;
 };
 
@@ -124,39 +124,39 @@ public:
 	// Viewing runs
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			wxString const& inCaption,
+			std::wstring const& inCaption,
 			RunInfoData const* inData,
 			std::list<RunInfo> const& inRuns,
 			wxWindow* pParent = NULL);
 	// Viewing runs affected by configuration changes
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			wxString const& inCaption,
+			std::wstring const& inCaption,
 			std::list<ScoringRunInfo> const& inScoringRuns,
 			wxWindow* pParent = NULL);
 	// Viewing multi-Qs
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			wxString const& inCaption,
+			std::wstring const& inCaption,
 			MultiQInfoData const* inData,
 			std::set<MultiQdata> const& inMQs,
 			wxWindow* pParent = NULL);
 	// Viewing lifetime data
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			wxString const& inCaption,
+			std::wstring const& inCaption,
 			std::list<LifeTimePointInfoPtr> const& inLifetime,
 			wxWindow* pParent = NULL);
 	// Viewing other points
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			wxString const& inCaption,
+			std::wstring const& inCaption,
 			std::list<OtherPtInfo> const& inRunList,
 			wxWindow* pParent = NULL);
 	// Viewing Info
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			wxString const& inCaption,
+			std::wstring const& inCaption,
 			std::vector<CFindItemInfo> const& inItems,
 			wxWindow* pParent = NULL);
 
@@ -164,7 +164,7 @@ public:
 
 private:
 	bool Create(
-			wxString const& inCaption,
+			std::wstring const& inCaption,
 			wxWindow* pParent = NULL);
 	void FinishCreate();
 

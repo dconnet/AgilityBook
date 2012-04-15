@@ -21,6 +21,7 @@
 #include "DlgFind.h"
 
 #include "AgilityBook.h"
+#include "ARBString.h"
 #include "Widgets.h"
 
 #ifdef __WXMSW__
@@ -160,7 +161,7 @@ void CDlgFind::OnChangeName(wxCommandEvent& evt)
 
 void CDlgFind::OnFind(wxCommandEvent& evt)
 {
-	m_Callback.Text(m_textCtrl->GetValue());
+	m_Callback.Text(StringUtil::stringW(m_textCtrl->GetValue()));
 	m_Callback.MatchCase(m_checkBox->GetValue());
 	m_Callback.SearchAll(m_radioBoxSearch->GetSelection() == 0);
 	m_Callback.SearchDown(m_radioBoxDir->GetSelection() == 1);

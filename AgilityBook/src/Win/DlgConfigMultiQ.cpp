@@ -28,6 +28,7 @@
 #include "ARBConfigLevel.h"
 #include "ARBConfigSubLevel.h"
 #include "ARBConfigVenue.h"
+#include "ARBString.h"
 #include "DlgEventSelect.h"
 #include "Globals.h"
 #include "ListCtrl.h"
@@ -196,7 +197,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)
 	{
-		wxString div, level, evt;
+		std::wstring div, level, evt;
 		if (m_pMultiQ->GetItem(i, div, level, evt))
 		{
 			int idx = m_ctrlItems->InsertItem(static_cast<int>(i), div);
@@ -238,9 +239,9 @@ void CDlgConfigMultiQ::EditItem()
 	int idx = m_ctrlItems->GetFirstSelected();
 	if (0 <= idx)
 	{
-		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
-		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
-		wxString evt = GetListColumnText(m_ctrlItems, idx, 2);
+		std::wstring div = GetListColumnText(m_ctrlItems, idx, 0);
+		std::wstring level = GetListColumnText(m_ctrlItems, idx, 1);
+		std::wstring evt = GetListColumnText(m_ctrlItems, idx, 2);
 		ARBDate date = ARBDate::Today();
 		if (m_bFrom)
 			date = m_DateFrom;
@@ -347,9 +348,9 @@ void CDlgConfigMultiQ::OnRemove(wxCommandEvent& evt)
 	int idx = m_ctrlItems->GetFirstSelected();
 	if (0 <= idx)
 	{
-		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
-		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
-		wxString evnt = GetListColumnText(m_ctrlItems, idx, 2);
+		std::wstring div = GetListColumnText(m_ctrlItems, idx, 0);
+		std::wstring level = GetListColumnText(m_ctrlItems, idx, 1);
+		std::wstring evnt = GetListColumnText(m_ctrlItems, idx, 2);
 		if (m_pMultiQ->RemoveItem(div, level, evnt))
 			m_ctrlItems->DeleteItem(idx);
 		else
@@ -365,7 +366,7 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 
 	if (m_pMultiQ->GetName() != m_Name)
 	{
-		if (m_pVenue->GetMultiQs().FindMultiQ(m_Name))
+		if (m_pVenue->GetMultiQs().FindMultiQ(StringUtil::stringW(m_Name)))
 		{
 			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			m_ctrlName->SetFocus();
@@ -373,8 +374,8 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 		}
 	}
 
-	m_pMultiQ->SetName(m_Name);
-	m_pMultiQ->SetShortName(m_ShortName);
+	m_pMultiQ->SetName(StringUtil::stringW(m_Name));
+	m_pMultiQ->SetShortName(StringUtil::stringW(m_ShortName));
 	if (!m_bFrom)
 		m_DateFrom.clear();
 	m_pMultiQ->SetValidFrom(m_DateFrom);
@@ -384,9 +385,9 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 	m_pMultiQ->RemoveAllItems();
 	for (int idx = m_ctrlItems->GetItemCount() - 1; idx >= 0; --idx)
 	{
-		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
-		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
-		wxString evnt = GetListColumnText(m_ctrlItems, idx, 2);
+		std::wstring div = GetListColumnText(m_ctrlItems, idx, 0);
+		std::wstring level = GetListColumnText(m_ctrlItems, idx, 1);
+		std::wstring evnt = GetListColumnText(m_ctrlItems, idx, 2);
 		m_pMultiQ->AddItem(div, level, evnt);
 	}
 	*m_pOrigMultiQ = *m_pMultiQ;

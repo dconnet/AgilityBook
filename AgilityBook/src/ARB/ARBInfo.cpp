@@ -95,7 +95,7 @@ bool ARBInfo::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		wxString const& name = element->GetName();
+		std::wstring const& name = element->GetName();
 		if (name == TREE_CLUBINFO)
 		{
 			// Ignore any errors.

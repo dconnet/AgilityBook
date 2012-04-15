@@ -58,7 +58,7 @@ public:
 	/**
 	 * Translate the enum to a string.
 	 */
-	static wxString GetScoringStyleStr(ScoringStyle inStyle);
+	static std::wstring GetScoringStyleStr(ScoringStyle inStyle);
 
 protected:
 	ARBConfigScoring();
@@ -81,9 +81,9 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
-		return m_Division + wxT(" ") + m_Level;
+		return m_Division + L" " + m_Level;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -153,19 +153,19 @@ public:
 	{
 		m_ValidTo = inDate;
 	}
-	wxString const& GetDivision() const
+	std::wstring const& GetDivision() const
 	{
 		return m_Division;
 	}
-	void SetDivision(wxString const& inDiv)
+	void SetDivision(std::wstring const& inDiv)
 	{
 		m_Division = inDiv;
 	}
-	wxString const& GetLevel() const
+	std::wstring const& GetLevel() const
 	{
 		return m_Level;
 	}
-	void SetLevel(wxString const& inLevel)
+	void SetLevel(std::wstring const& inLevel)
 	{
 		m_Level = inLevel;
 	}
@@ -173,7 +173,7 @@ public:
 	{
 		return m_Style;
 	}
-	wxString GetScoringStyleStr() const
+	std::wstring GetScoringStyleStr() const
 	{
 		return GetScoringStyleStr(m_Style);
 	}
@@ -249,11 +249,11 @@ public:
 	{
 		m_ClosingPts = inPoints;
 	}
-	wxString const& GetNote() const
+	std::wstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(wxString const& inNote)
+	void SetNote(std::wstring const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -326,8 +326,8 @@ public:
 private:
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
-	wxString m_Division;
-	wxString m_Level;
+	std::wstring m_Division;
+	std::wstring m_Level;
 	ScoringStyle m_Style;
 	bool m_bDropFractions;
 	bool m_bCleanQ;
@@ -335,7 +335,7 @@ private:
 	bool m_bTimeFaultsOver;
 	bool m_bSubtractTimeFaults;
 	short m_TimeFaultMultiplier;
-	wxString m_Note;
+	std::wstring m_Note;
 	short m_OpeningPts;
 	short m_ClosingPts;
 	bool m_bSuperQ;
@@ -381,8 +381,8 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-			wxString const& inDivision,
-			wxString const& inLevel,
+			std::wstring const& inDivision,
+			std::wstring const& inLevel,
 			ARBDate const& inDate,
 			bool inTitlePoints,
 			ARBVector<ARBConfigScoringPtr>& outList) const;
@@ -396,8 +396,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			wxString const& inDivision,
-			wxString const& inLevel,
+			std::wstring const& inDivision,
+			std::wstring const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigScoringPtr* outEvent = NULL) const;
 
@@ -409,8 +409,8 @@ public:
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
-			wxString const& inDivision,
-			wxString const& inLevel,
+			std::wstring const& inDivision,
+			std::wstring const& inLevel,
 			ARBDate const& inDate) const;
 
 	/**

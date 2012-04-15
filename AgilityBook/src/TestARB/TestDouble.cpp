@@ -24,21 +24,21 @@
 #endif
 
 
-static wxString FormNumber(wxString const& d1, wxString const& dec, wxString const& d2)
+static std::wstring FormNumber(std::wstring const& d1, std::wstring const& dec, std::wstring const& d2)
 {
-	wxString val;
+	std::wostringstream val;
 	val << d1 << dec << d2;
-	return val;
+	return val.str();
 }
 
 
 static void RunDblTests()
 {
-	wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
+	std::wstring decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
 
 	// ARBDouble always strips 0s unless prec ==2, unless =".00"
 	double p = 3.14159265358979323846;
-	wxString s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent);
+	std::wstring s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent);
 	CHECK(FormNumber(wxT("3"), decimalPt, wxT("14")) == s);
 	s = ARBDouble::ToString(p, 4, ARBDouble::eCurrent);
 	CHECK(FormNumber(wxT("3"), decimalPt, wxT("1416")) == s);

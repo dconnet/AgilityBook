@@ -39,14 +39,14 @@ public:
 	/**
 	 * Currectly selected language.
 	 */
-	wxString CurrentLanguage() const			{return m_dirLoadedLang;}
+	std::wstring CurrentLanguage() const			{return m_dirLoadedLang;}
 
 private:
 	int SelectLang(wxWindow* parent = NULL);
 	bool SetLang(int langId);
 
-	wxString m_dirLang; /// Where the en/fr/etc directories are located
-	wxString m_dirLoadedLang; /// 'en'/'fr' etc
+	std::wstring m_dirLang; /// Where the en/fr/etc directories are located
+	std::wstring m_dirLoadedLang; /// 'en'/'fr' etc
 	wxLocale* m_locale;
 	int m_CurLang;
 	CLocalization m_Localization;

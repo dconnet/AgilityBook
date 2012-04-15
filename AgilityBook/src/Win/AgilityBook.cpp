@@ -175,7 +175,7 @@ void CAgilityBookApp::UpdateConfiguration(
 
 
 void CAgilityBookApp::SetMessageText(
-		wxString const& msg,
+		std::wstring const& msg,
 		bool bFiltered)
 {
 	CMainFrame* pFrame = wxDynamicCast(GetTopWindow(), CMainFrame);
@@ -186,7 +186,7 @@ void CAgilityBookApp::SetMessageText(
 }
 
 
-void CAgilityBookApp::SetMessageText2(wxString const& msg)
+void CAgilityBookApp::SetMessageText2(std::wstring const& msg)
 {
 	CMainFrame* pFrame = wxDynamicCast(GetTopWindow(), CMainFrame);
 	if (pFrame)
@@ -235,7 +235,7 @@ bool CAgilityBookApp::OnInit()
 	wxStandardPaths::Get().DontIgnoreAppSubDir();
 #endif
 
-	wxString errMsg;
+	std::wstring errMsg;
 	if (!Element::Initialize(errMsg))
 	{
 		wxMessageBox(errMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_ERROR);

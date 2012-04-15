@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-04-16 DRC Added GetFileTimes
  * @li 2010-10-30 DRC Moved BreakLine to a separate file.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-14 DRC Separated from AgilityBook.cpp
@@ -19,13 +20,43 @@
 #include "stdafx.h"
 #include "Globals.h"
 
+#include "ARBString.h"
 #include "ListData.h"
 #include "Widgets.h"
+#include <wx/config.h>
+#include <wx/display.h>
+#include <wx/filename.h>
+#include <wx/stdpaths.h>
 #include <wx/tokenzr.h>
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
+
+
+bool GetFileTimes(
+		wxFileName const& filename,
+		wxDateTime* dtAccess,
+		wxDateTime* dtMod,
+		wxDateTime* dtCreate)
+{
+#if defined(__WXMSW__)
+	// Using wx to get the times on network files is really slow.
+	// I suspect it's the win32 CreateFile/GetFileTime apis.
+	struct __stat64 s;
+	if (0 != _tstat64(filename.GetFullPath().wx_str(), &s))
+		return false;
+	if (dtAccess)
+		*dtAccess = wxDateTime(s.st_atime);
+	if (dtMod)
+		*dtMod = wxDateTime(s.st_mtime);
+	if (dtCreate)
+		*dtCreate = wxDateTime(s.st_ctime);
+	return true;
+#else
+	return filename.GetTimes(dtAccess, dtMod, dtCreate);
+#endif
+}
 
 
 wxWindow* FindWindowInSizer(
@@ -56,12 +87,12 @@ wxWindow* FindWindowInSizer(
 }
 
 
-wxString GetListColumnText(
+std::wstring GetListColumnText(
 		CListCtrl const* list,
 		long index,
 		long col)
 {
-	wxString val;
+	std::wstring val;
 	if (list)
 	{
 		wxListItem info;
@@ -71,12 +102,12 @@ wxString GetListColumnText(
 		if (-1 == index)
 		{
 			if (list->GetColumn(col, info))
-				val = info.GetText();
+				val = StringUtil::stringW(info.GetText());
 		}
 		else
 		{
 			if (list->GetItem(info))
-				val = info.GetText();
+				val = StringUtil::stringW(info.GetText());
 		}
 	}
 	return val;
@@ -87,20 +118,20 @@ bool SetListColumnText(
 		CListCtrl* list,
 		long index,
 		long col,
-		wxString const& text)
+		std::wstring const& text)
 {
 	if (!list)
 		return false;
 	wxListItem info;
 	info.SetId(index);
 	info.SetColumn(col);
-	info.SetText(text);
+	info.SetText(StringUtil::stringWX(text));
 	return list->SetItem(info);
 }
 
 
 void RefreshTreeItem(
-		CTreeCtrl* tree,
+		wxTreeCtrl* tree,
 		wxTreeItemId item,
 		bool bRecurse)
 {

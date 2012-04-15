@@ -22,6 +22,7 @@
 #include "DlgOptionsProgram.h"
 
 #include "AgilityBookOptions.h"
+#include "ARBString.h"
 #include "Widgets.h"
 #include <wx/url.h>
 #include <wx/valgen.h>
@@ -141,12 +142,12 @@ void CDlgOptionsProgram::Save()
 		m_bResetHtmlView = true;
 		CAgilityBookOptions::SetShowHtmlPoints(m_bShowHtml);
 	}
-	wxString oldProxy(CAgilityBookOptions::GetProxy());
+	std::wstring oldProxy(CAgilityBookOptions::GetProxy());
 	if (m_Proxy.empty())
 		m_UseProxy = false;
 	CAgilityBookOptions::SetUseProxy(m_UseProxy);
-	CAgilityBookOptions::SetProxyServer(m_Proxy);
-	wxString newProxy = CAgilityBookOptions::GetProxy();
+	CAgilityBookOptions::SetProxyServer(StringUtil::stringW(m_Proxy));
+	std::wstring newProxy = CAgilityBookOptions::GetProxy();
 	if (newProxy != oldProxy)
 		wxURL::SetDefaultProxy(newProxy);
 }

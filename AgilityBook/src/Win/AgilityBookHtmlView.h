@@ -46,8 +46,8 @@ public:
 	virtual void DetachView();
 
 	virtual bool IsFiltered() const;
-	virtual bool GetMessage(wxString& msg) const;
-	virtual bool GetMessage2(wxString& msg) const;
+	virtual bool GetMessage(std::wstring& msg) const;
+	virtual bool GetMessage2(std::wstring& msg) const;
 	virtual bool AllowStatusContext(int field) const;
 
 	virtual bool OnCreate(
@@ -63,7 +63,7 @@ public:
 			wxObject* inHint = NULL);
 
 private:
-	wxString RawHtml(
+	std::wstring RawHtml(
 			bool bFragment,
 			bool bNoInternalLinks) const;
 	void LoadData();

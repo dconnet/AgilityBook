@@ -102,31 +102,31 @@ static wxString FilterVenue(std::vector<CVenueFilter> const& venues)
 }
 
 
-static void TrainingNames(wxString inNames, std::set<wxString>& outNames)
+static void TrainingNames(wxString inNames, std::set<std::wstring>& outNames)
 {
 	if (!inNames.IsEmpty())
 	{
-		int pos;
-		while (0 <= (pos = inNames.Find(':')))
+		std::wstring::size_type pos;
+		while (std::wstring::npos != (pos = inNames.find(':')))
 		{
 			outNames.insert(inNames.Left(pos));
-			inNames = inNames.Mid(pos+1);
+			inNames = inNames.substr(pos+1);
 		}
 		outNames.insert(inNames);
 	}
 }
 
 
-static wxString TrainingNames(std::set<wxString> const& inNames)
+static std::wstring TrainingNames(std::set<std::wstring> const& inNames)
 {
-	wxString names;
-	for (std::set<wxString>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
+	std::wostringstream names;
+	for (std::set<std::wstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
-		if (!names.IsEmpty())
-			names += wxT(":");
-		names += *iter;
+		if (!names.str().empty())
+			names << wxT(":");
+		names << *iter;
 	}
-	return names;
+	return names.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -248,7 +248,7 @@ void CFilterOptions::Save()
 	val = TrainingNames(m_nameFilter);
 	wxConfig::Get()->Write(CFG_COMMON_FILTERTRAININGNAMES, val);
 
-	wxConfig::Get()->Write(CFG_COMMON_CURRENTFILTER, m_curFilter);
+	wxConfig::Get()->Write(CFG_COMMON_CURRENTFILTER, m_curFilter.c_str());
 
 	int nFilters = static_cast<int>(m_filters.size());
 	if (nFilters < m_nFilters)
@@ -271,7 +271,7 @@ void CFilterOptions::Save()
 
 
 std::vector<CFilterOptions::CFilterOptionData>::iterator
-CFilterOptions::FindFilter(wxString const& inName)
+CFilterOptions::FindFilter(std::wstring const& inName)
 {
 	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin();
 		i != m_filters.end();
@@ -285,7 +285,7 @@ CFilterOptions::FindFilter(wxString const& inName)
 
 
 size_t CFilterOptions::GetAllFilterNames(
-		std::vector<wxString>& outNames,
+		std::vector<std::wstring>& outNames,
 		bool bForEditing) const
 {
 	outNames.clear();
@@ -309,7 +309,7 @@ size_t CFilterOptions::GetAllFilterNames(
 }
 
 
-bool CFilterOptions::SetCurrentFilter(wxString const& inName)
+bool CFilterOptions::SetCurrentFilter(std::wstring const& inName)
 {
 	wxString all(_("IDS_ALL"));
 	CFilterOptions::CFilterOptionData data;
@@ -340,7 +340,7 @@ bool CFilterOptions::SetCurrentFilter(wxString const& inName)
 }
 
 
-bool CFilterOptions::AddFilter(wxString const& inName)
+bool CFilterOptions::AddFilter(std::wstring const& inName)
 {
 	if (inName == _("IDS_ALL"))
 		return false;
@@ -369,7 +369,7 @@ bool CFilterOptions::AddFilter(wxString const& inName)
 }
 
 
-bool CFilterOptions::DeleteFilter(wxString const& inName)
+bool CFilterOptions::DeleteFilter(std::wstring const& inName)
 {
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
 	if (iter != m_filters.end())
@@ -427,7 +427,7 @@ bool CFilterOptions::IsTitleVisible(
 
 bool CFilterOptions::IsVenueVisible(
 		std::vector<CVenueFilter> const& venues,
-		wxString const& venue) const
+		std::wstring const& venue) const
 {
 	if (!m_bViewAllVenues)
 	{
@@ -446,8 +446,8 @@ bool CFilterOptions::IsVenueVisible(
 
 bool CFilterOptions::IsVenueDivisionVisible(
 		std::vector<CVenueFilter> const& venues,
-		wxString const& venue,
-		wxString const& div) const
+		std::wstring const& venue,
+		std::wstring const& div) const
 {
 	if (!m_bViewAllVenues)
 	{
@@ -467,9 +467,9 @@ bool CFilterOptions::IsVenueDivisionVisible(
 
 bool CFilterOptions::IsVenueLevelVisible(
 		std::vector<CVenueFilter> const& venues,
-		wxString const& venue,
-		wxString const& div,
-		wxString const& level) const
+		std::wstring const& venue,
+		std::wstring const& div,
+		std::wstring const& level) const
 {
 	if (!m_bViewAllVenues)
 	{
@@ -641,7 +641,7 @@ bool CFilterOptions::IsCalendarVisible(
 
 
 bool CFilterOptions::IsTrainingLogVisible(
-		std::set<wxString> const& names,
+		std::set<std::wstring> const& names,
 		ARBTrainingPtr pTraining) const
 {
 	if (!m_bAllDates)
@@ -661,7 +661,7 @@ bool CFilterOptions::IsTrainingLogVisible(
 	if (!m_bViewAllNames)
 	{
 		bVisible = false;
-		for (std::set<wxString>::const_iterator iter = names.begin();
+		for (std::set<std::wstring>::const_iterator iter = names.begin();
 			iter != names.end();
 			++iter)
 		{
@@ -677,9 +677,9 @@ bool CFilterOptions::IsTrainingLogVisible(
 
 
 bool CFilterOptions::FilterExists(
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inLevel) const
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel) const
 {
 	for (std::vector<CVenueFilter>::const_iterator iter = m_venueFilter.begin();
 		iter != m_venueFilter.end();
@@ -808,7 +808,7 @@ bool CFilterOptions::CFilterOptionData::Save(int index)
 {
 	wxString section = CFG_KEY_FILTER(index);
 
-	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_NAME, filterName);
+	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_NAME, filterName.c_str());
 	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_CAL, static_cast<long>(calView.m_Filter));
 	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_ALLDATES, bAllDates);
 	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_START, bStartDate);

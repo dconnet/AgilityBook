@@ -51,7 +51,7 @@ public:
 			ARBDogPtr pDog,
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
-			wxString const& inLink,
+			std::wstring const& inLink,
 			int image)
 		: m_pDog(pDog)
 		, m_pTrial(pTrial)
@@ -61,14 +61,14 @@ public:
 		, m_Image(image)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 
 	ARBDogPtr m_pDog;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
-	wxString m_OldLink;
-	wxString m_Link;
+	std::wstring m_OldLink;
+	std::wstring m_Link;
 	int m_Image;
 };
 
@@ -77,7 +77,7 @@ public:
 #define COL_TRIAL	2
 #define COL_RUN		3
 
-wxString CDlgFindLinksData::OnNeedText(long iCol) const
+std::wstring CDlgFindLinksData::OnNeedText(long iCol) const
 {
 	switch (iCol)
 	{
@@ -112,7 +112,7 @@ void CDlgFindLinksData::OnNeedListItem(long iCol, wxListItem& info) const
 static struct
 {
 	int col;
-	wxChar const* info;
+	wchar_t const* info;
 } colLinkInfo[] =
 {
 	{COL_LINK, arbT("IDS_COL_NAME")},
@@ -143,8 +143,8 @@ int wxCALLBACK CompareLinks(long item1, long item2, long sortData)
 	for (int i = 0; i < s_SortInfo.pCols->GetSize(); ++i)
 	{
 		int col = s_SortInfo.pCols->GetColumnAt(i);
-		wxString str1 = pData1->OnNeedText(col);
-		wxString str2 = pData2->OnNeedText(col);
+		std::wstring str1 = pData1->OnNeedText(col);
+		std::wstring str2 = pData2->OnNeedText(col);
 		if (str1 < str2)
 			rc = -1;
 		else if (str1 > str2)
@@ -275,9 +275,9 @@ CDlgFindLinks::CDlgFindLinks(
 				++iterRun)
 			{
 				ARBDogRunPtr pRun = *iterRun;
-				std::set<wxString> links;
+				std::set<std::wstring> links;
 				pRun->GetLinks(links);
-				for (std::set<wxString>::iterator iter = links.begin();
+				for (std::set<std::wstring>::iterator iter = links.begin();
 					iter != links.end();
 					++iter)
 				{
@@ -319,7 +319,7 @@ CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkDataByData(long data)
 }
 
 
-int CDlgFindLinks::GetImageIndex(wxString const& inLink)
+int CDlgFindLinks::GetImageIndex(std::wstring const& inLink)
 {
 	wxBusyCursor wait;
 	int img = m_imgEmpty;
@@ -368,7 +368,7 @@ void CDlgFindLinks::Edit()
 		CDlgSelectURL dlg(data->m_Link, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			wxString newName = dlg.Name();
+			std::wstring newName = dlg.Name();
 			if (data->m_Link != newName)
 			{
 				data->m_Link = newName;
@@ -426,7 +426,7 @@ void CDlgFindLinks::OnCopy(wxCommandEvent& evt)
 		if (!clpData.isOkay())
 			return;
 
-		wxString data;
+		std::wstring data;
 		for (size_t i = 0; i < m_Data.size(); ++i)
 		{
 			data += m_Data[i]->m_OldLink;

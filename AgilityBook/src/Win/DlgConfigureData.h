@@ -28,7 +28,7 @@ class CDlgConfigureDataBase : public CTreeData
 public:
 	CDlgConfigureDataBase(CDlgConfigVenue* pDlg);
 
-	virtual wxString OnNeedText() const			{return wxEmptyString;}
+	virtual std::wstring OnNeedText() const			{return wxEmptyString;}
 
 	// After adding a node, use this to add subchildren in venue (levels/sublevels)
 	virtual void AddSubItems()					{}
@@ -60,8 +60,8 @@ public:
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
 	virtual bool CanCopy() const				{return true;}
-	virtual wxString OnNeedText() const;
-	virtual wxString OnNeedText(int iColumn) const;
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
 protected:
 	ARBConfigVenuePtr m_Venue;
 };
@@ -76,8 +76,8 @@ public:
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
 	virtual bool CanCopy() const				{return true;}
-	virtual wxString OnNeedText() const;
-	virtual wxString OnNeedText(int iColumn) const;
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
 protected:
 	ARBConfigFaultPtr m_Fault;
 };
@@ -92,8 +92,8 @@ public:
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
 	virtual bool CanCopy() const				{return true;}
-	virtual wxString OnNeedText() const;
-	virtual wxString OnNeedText(int iColumn) const;
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
 protected:
 	ARBConfigOtherPointsPtr m_OtherPoints;
 };
@@ -107,8 +107,8 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigDivisionPtr div);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Div;}
-	virtual wxString OnNeedText() const;
-	virtual wxString OnNeedText(int iColumn) const;
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
 	virtual void AddSubItems();
 	virtual bool CanAdd() const					{return true;}
 	virtual bool CanEdit() const				{return true;}
@@ -133,8 +133,8 @@ public:
 			ARBConfigLevelPtr level);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
-	virtual wxString OnNeedText() const;
-	virtual wxString OnNeedText(int iColumn) const;
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
 	virtual void AddSubItems();
 	virtual bool CanAdd() const					{return true;}
 	virtual bool CanEdit() const				{return true;}
@@ -162,8 +162,8 @@ public:
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
 	ARBConfigSubLevelPtr GetSubLevel() const	{return m_SubLevel;}
-	virtual wxString OnNeedText() const;
-	virtual wxString OnNeedText(int iColumn) const;
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
 	virtual bool CanMove() const				{return true;}
@@ -185,8 +185,8 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigTitlePtr title);
 	ARBConfigTitlePtr GetTitle() const			{return m_Title;}
-	virtual wxString OnNeedText() const;
-	virtual wxString OnNeedText(int iColumn) const;
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
 	virtual bool CanCopy() const				{return true;}
@@ -208,8 +208,8 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigEventPtr inEvent);
 	ARBConfigEventPtr GetEvent() const			{return m_Event;}
-	virtual wxString OnNeedText() const;
-	virtual wxString OnNeedText(int iColumn) const;
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
 	virtual bool CanCopy() const				{return true;}
@@ -231,8 +231,8 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigMultiQPtr multiq);
 	ARBConfigMultiQPtr GetMultiQ() const		{return m_MultiQ;}
-	virtual wxString OnNeedText() const;
-	virtual wxString OnNeedText(int iColumn) const;
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
 	virtual bool CanCopy() const				{return true;}

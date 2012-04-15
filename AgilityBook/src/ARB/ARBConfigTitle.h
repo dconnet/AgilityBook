@@ -39,7 +39,7 @@ enum ARBTitleStyle
 class ARBTitleInstance
 {
 protected:
-	virtual wxString TitleInstance(
+	virtual std::wstring TitleInstance(
 			bool bShowInstanceOne,
 			short instance,
 			ARBTitleStyle style) const;
@@ -78,7 +78,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
 		return GetNiceName();
 	}
@@ -88,7 +88,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -133,7 +133,7 @@ public:
 	 * Get the nice (long) name.
 	 * @return the nice (long) name.
 	 */
-	wxString const& GetNiceName() const
+	std::wstring const& GetNiceName() const
 	{
 		if (0 == m_LongName.length())
 			return m_Name;
@@ -149,7 +149,7 @@ public:
 	 * @param bAddDates Add the valid date ranges, if applicable.
 	 * @return The complete name.
 	 */
-	wxString GetCompleteName(
+	std::wstring GetCompleteName(
 			short inInstance = 0,
 			bool bShowInstance = false,
 			bool bAbbrevFirst = true,
@@ -158,19 +158,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	wxString const& GetName() const
+	std::wstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(wxString const& inName)
+	void SetName(std::wstring const& inName)
 	{
 		m_Name = inName;
 	}
-	wxString const& GetLongName() const
+	std::wstring const& GetLongName() const
 	{
 		return m_LongName;
 	}
-	void SetLongName(wxString const& inName)
+	void SetLongName(std::wstring const& inName)
 	{
 		m_LongName = inName;
 	}
@@ -214,24 +214,24 @@ public:
 	{
 		m_ValidTo = inDate;
 	}
-	wxString const& GetDescription() const
+	std::wstring const& GetDescription() const
 	{
 		return m_Desc;
 	}
-	void SetDescription(wxString const& inDesc)
+	void SetDescription(std::wstring const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
 
 private:
-	wxString m_Name;
-	wxString m_LongName;
+	std::wstring m_Name;
+	std::wstring m_LongName;
 	short m_Multiple;
 	ARBTitleStyle m_MultipleStyle;
 	bool m_Prefix;
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
-	wxString m_Desc;
+	std::wstring m_Desc;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -274,7 +274,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-			wxString const& inName,
+			std::wstring const& inName,
 			short inInstance,
 			bool bShowInstance,
 			bool bAbbrevFirst = true,
@@ -287,7 +287,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-			wxString const& inName,
+			std::wstring const& inName,
 			ARBConfigTitlePtr* outTitle = NULL) const;
 
 	/**
@@ -297,7 +297,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddTitle(
-			wxString const& inName,
+			std::wstring const& inName,
 			ARBConfigTitlePtr* outTitle = NULL);
 
 	/**
@@ -312,5 +312,5 @@ public:
 	 * @param inName Name of title to delete.
 	 * @return Whether title was deleted.
 	 */
-	bool DeleteTitle(wxString const& inName);
+	bool DeleteTitle(std::wstring const& inName);
 };

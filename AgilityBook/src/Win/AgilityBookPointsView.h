@@ -54,8 +54,8 @@ public:
 	virtual void DetachView();
 
 	virtual bool IsFiltered() const;
-	virtual bool GetMessage(wxString& msg) const;
-	virtual bool GetMessage2(wxString& msg) const;
+	virtual bool GetMessage(std::wstring& msg) const;
+	virtual bool GetMessage2(std::wstring& msg) const;
 	virtual bool AllowStatusContext(int field) const;
 
 	virtual bool OnCreate(
@@ -70,7 +70,7 @@ public:
 			wxView* sender,
 			wxObject* inHint = NULL);
 
-	void GetPrintLine(long item, std::vector<wxString>& line) const;
+	void GetPrintLine(long item, std::vector<std::wstring>& line) const;
 
 private:
 	CAgilityBookPointsViewDataPtr GetItemPointsData(long index) const;

@@ -72,7 +72,7 @@ ARBCalcPointsNormal::ARBCalcPointsNormal()
 }
 
 
-wxString ARBCalcPointsNormal::GetGenericName(double points, double faults) const
+std::wstring ARBCalcPointsNormal::GetGenericName(double points, double faults) const
 {
 	return Localization()->TitlePointsNameFormat(points, faults);
 }
@@ -102,9 +102,9 @@ ARBCalcPointsT2B::ARBCalcPointsT2B()
 }
 
 
-wxString ARBCalcPointsT2B::GetGenericName(double points, double faults) const
+std::wstring ARBCalcPointsT2B::GetGenericName(double points, double faults) const
 {
-	return _("IDS_TITLEPOINT_NORMAL_T2B");
+	return _("IDS_TITLEPOINT_NORMAL_T2B").wx_str();
 }
 
 
@@ -151,9 +151,9 @@ ARBCalcPointsUKI::ARBCalcPointsUKI()
 }
 
 
-wxString ARBCalcPointsUKI::GetGenericName(double points, double faults) const
+std::wstring ARBCalcPointsUKI::GetGenericName(double points, double faults) const
 {
-	return _("IDS_TITLEPOINT_NORMAL_UKI");
+	return _("IDS_TITLEPOINT_NORMAL_UKI").wx_str();
 }
 
 

@@ -111,7 +111,7 @@ SUITE(TestCalendar)
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			cal->Load(CalData2, ARBVersion(2, 0), callback);
 			ARBCalendarPtr cal2 = cal->Clone();
@@ -147,11 +147,11 @@ SUITE(TestCalendar)
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(cal->Load(CalData1, ARBVersion(1, 0), callback));
 			CHECK_EQUAL(ARBCalendar::ePlanning, cal->GetEntered());
-			wxString name = cal->GetGenericName();
+			std::wstring name = cal->GetGenericName();
 			CHECK(!name.empty());
 		}
 	}
@@ -162,7 +162,7 @@ SUITE(TestCalendar)
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(cal->Load(CalData2, ARBVersion(2, 0), callback));
 			CHECK_EQUAL(ARBCalendar::ePlanning, cal->GetEntered());
@@ -175,7 +175,7 @@ SUITE(TestCalendar)
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(cal->Load(CalData1a, ARBVersion(1, 0), callback));
 			// These are not equal as 'Entered' isn't parsed in 1.0.
@@ -189,7 +189,7 @@ SUITE(TestCalendar)
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			cal->Load(CalData2, ARBVersion(2, 0), callback);
 			ElementNodePtr ele = ElementNode::New();
@@ -303,7 +303,7 @@ SUITE(TestCalendarList)
 		if (!g_bMicroTest)
 		{
 			ARBCalendarList callist;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(callist.Load(CalData1, ARBVersion(1, 0), callback));
 			CHECK(callist.Load(CalData2, ARBVersion(2, 0), callback));
@@ -326,7 +326,7 @@ SUITE(TestCalendarList)
 		if (!g_bMicroTest)
 		{
 			ARBCalendarList callist;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(callist.Load(CalData1, ARBVersion(1, 0), callback));
 			CHECK(callist.Load(CalData2, ARBVersion(2, 0), callback));

@@ -406,11 +406,11 @@ void CDlgOptionsCalendar::Save()
 }
 
 
-wxString CDlgOptionsCalendar::GetCalText(
+std::wstring CDlgOptionsCalendar::GetCalText(
 		CAgilityBookOptions::CalendarColorItem type,
 		bool bForDisplay) const
 {
-	wxString text;
+	std::wstring text;
 	switch (type)
 	{
 	case CAgilityBookOptions::eCalColorNotEntered:
@@ -479,7 +479,7 @@ void CDlgOptionsCalendar::SetRichText()
 	std::vector<long> endLines;
 	endLines.push_back(-1);
 
-	wxString data;
+	std::wstring data;
 	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();
 		iColor != m_CalColors.end();
 		++iColor)
