@@ -35,7 +35,7 @@
 //   - this not ordered like m_order is, it is column specific.
 
 CColumnOrder::CColumnOrder(std::wstring const& pItem)
-	: m_Item(pItem)
+	: m_Item(pItem.c_str())
 	, m_nColumns(0)
 	, m_bDefaultDescending(false)
 	, m_order(NULL)

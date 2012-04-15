@@ -70,14 +70,14 @@ CDlgCalendar::CDlgCalendar(
 	, m_bDrawingUnknown(true)
 	, m_dateCloses(ARBDate::Today())
 	, m_bClosingUnknown(true)
-	, m_OnlineUrl(m_pCal->GetOnlineURL())
+	, m_OnlineUrl(StringUtil::stringWX(m_pCal->GetOnlineURL()))
 	, m_Confirmation()
-	, m_PremiumUrl(m_pCal->GetPremiumURL())
-	, m_EMailSecAddr(m_pCal->GetSecEmail())
-	, m_Venue(m_pCal->GetVenue())
-	, m_Club(m_pCal->GetClub())
-	, m_Location(m_pCal->GetLocation())
-	, m_Notes(m_pCal->GetNote())
+	, m_PremiumUrl(StringUtil::stringWX(m_pCal->GetPremiumURL()))
+	, m_EMailSecAddr(StringUtil::stringWX(m_pCal->GetSecEmail()))
+	, m_Venue(StringUtil::stringWX(m_pCal->GetVenue()))
+	, m_Club(StringUtil::stringWX(m_pCal->GetClub()))
+	, m_Location(StringUtil::stringWX(m_pCal->GetLocation()))
+	, m_Notes(StringUtil::stringWX(m_pCal->GetNote()))
 	, m_ctrlEnd(NULL)
 	, m_ctrlOpens(NULL)
 	, m_ctrlDraws(NULL)
@@ -320,7 +320,7 @@ CDlgCalendar::CDlgCalendar(
 		break;
 	case ARBCalendar::eAccomConfirmed:
 		m_ctrlAccomMade->SetValue(true);
-		m_Confirmation = m_pCal->GetConfirmation();
+		m_Confirmation = StringUtil::stringWX(m_pCal->GetConfirmation());
 		break;
 	}
 
@@ -374,7 +374,7 @@ CDlgCalendar::CDlgCalendar(
 	{
 		if (!(*i).empty())
 		{
-			m_ctrlEMailSecAddr->Append((*i));
+			m_ctrlEMailSecAddr->Append(StringUtil::stringWX((*i)));
 		}
 	}
 
@@ -581,13 +581,13 @@ CDlgCalendar::CDlgCalendar(
 
 void CDlgCalendar::UpdateLocationInfo(wxString const& location)
 {
-	std::wstring str;
+	wxString str;
 	if (!location.empty())
 	{
 		ARBInfoItemPtr pItem;
 		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(StringUtil::stringW(location), &pItem))
 		{
-			str = pItem->GetComment();
+			str = StringUtil::stringWX(pItem->GetComment());
 		}
 	}
 	m_ctrlLocationInfo->SetValue(str);
@@ -600,17 +600,18 @@ void CDlgCalendar::ListLocations()
 	m_pDoc->Book().GetAllTrialLocations(locations, true, true);
 	if (!m_pCal->GetLocation().empty())
 		locations.insert(m_pCal->GetLocation());
-	std::wstring loc(m_Location);
+	wxString loc(m_Location);
 	if (m_Location.empty())
-		loc = m_pCal->GetLocation();
+		loc = StringUtil::stringWX(m_pCal->GetLocation());
 	m_ctrlLocation->Clear();
 	for (std::set<std::wstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
 	{
-		int index = m_ctrlLocation->Append((*iter));
-		if ((*iter) == loc)
+		wxString itLoc = StringUtil::stringWX(*iter);
+		int index = m_ctrlLocation->Append(itLoc);
+		if (itLoc == loc)
 		{
 			m_ctrlLocation->SetSelection(index);
-			UpdateLocationInfo(*iter);
+			UpdateLocationInfo(itLoc);
 		}
 	}
 }
@@ -618,13 +619,13 @@ void CDlgCalendar::ListLocations()
 
 void CDlgCalendar::UpdateClubInfo(wxString const& club)
 {
-	std::wstring str;
+	wxString str;
 	if (!club.empty())
 	{
 		ARBInfoItemPtr pItem;
 		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(StringUtil::stringW(club), &pItem))
 		{
-			str = pItem->GetComment();
+			str = StringUtil::stringWX(pItem->GetComment());
 		}
 	}
 	m_ctrlClubInfo->SetValue(str);
@@ -637,17 +638,18 @@ void CDlgCalendar::ListClubs()
 	m_pDoc->Book().GetAllClubNames(clubs, true, true);
 	if (!m_pCal->GetClub().empty())
 		clubs.insert(m_pCal->GetClub());
-	std::wstring club(m_Club);
+	wxString club(m_Club);
 	if (m_Club.empty())
-		club = m_pCal->GetClub();
+		club = StringUtil::stringWX(m_pCal->GetClub());
 	m_ctrlClub->Clear();
 	for (std::set<std::wstring>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
 	{
-		int index = m_ctrlClub->Append((*iter));
-		if ((*iter) == club)
+		wxString itClub = StringUtil::stringWX((*iter));
+		int index = m_ctrlClub->Append(itClub);
+		if (itClub == club)
 		{
 			m_ctrlClub->SetSelection(index);
-			UpdateClubInfo((*iter));
+			UpdateClubInfo(itClub);
 		}
 	}
 }
@@ -773,7 +775,7 @@ void CDlgCalendar::OnClubNotes(wxCommandEvent& evt)
 	CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, StringUtil::stringW(m_Club), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		m_Club = dlg.CurrentSelection();
+		m_Club = StringUtil::stringWX(dlg.CurrentSelection());
 		ListClubs();
 	}
 }
@@ -799,7 +801,7 @@ void CDlgCalendar::OnLocationNotes(wxCommandEvent& evt)
 	CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, StringUtil::stringW(m_Location), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		m_Location = dlg.CurrentSelection();
+		m_Location = StringUtil::stringWX(dlg.CurrentSelection());
 		ListLocations();
 	}
 }

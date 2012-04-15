@@ -42,9 +42,9 @@ CDlgPartner::CDlgPartner(
 		std::set<std::wstring> const& inDogs,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_Handler(partner->GetHandler())
-	, m_Dog(partner->GetDog())
-	, m_RegNum(partner->GetRegNum())
+	, m_Handler(StringUtil::stringWX(partner->GetHandler()))
+	, m_Dog(StringUtil::stringWX(partner->GetDog()))
+	, m_RegNum(StringUtil::stringWX(partner->GetRegNum()))
 	, m_Partner(partner)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
@@ -56,14 +56,14 @@ CDlgPartner::CDlgPartner(
 	std::set<std::wstring>::const_iterator iter;
 	for (iter = inHandlers.begin(); iter != inHandlers.end(); ++iter)
 	{
-		handlers.Add((*iter));
+		handlers.Add(StringUtil::stringWX(*iter));
 	}
 	handlers.Sort();
 
 	wxArrayString dogs;
 	for (iter = inDogs.begin(); iter != inDogs.end(); ++iter)
 	{
-		dogs.Add((*iter));
+		dogs.Add(StringUtil::stringWX(*iter));
 	}
 	dogs.Sort();
 

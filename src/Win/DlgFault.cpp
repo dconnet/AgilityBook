@@ -34,7 +34,7 @@ CDlgFault::CDlgFault(
 		std::wstring const& fault,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_Fault(fault)
+	, m_Fault(StringUtil::stringWX(fault))
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -44,7 +44,7 @@ CDlgFault::CDlgFault(
 	wxArrayString faults;
 	for (std::set<std::wstring>::const_iterator iter = inFaults.begin(); iter != inFaults.end(); ++iter)
 	{
-		faults.Add((*iter));
+		faults.Add(StringUtil::stringWX(*iter));
 	}
 	faults.Sort();
 

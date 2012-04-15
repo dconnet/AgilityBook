@@ -457,7 +457,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				}
 			}
 			if (!bLoaded && 0 < err.m_ErrMsg.str().length())
-				wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+				wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 		}
 	}
 	else if (pDog
@@ -508,7 +508,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					}
 				}
 				else if (0 < err.m_ErrMsg.str().length())
-					wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+					wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
 	}
@@ -759,7 +759,7 @@ std::wstring CAgilityBookTreeDataDog::OnNeedText() const
 				if (m_pDog->GetDeceased().IsValid())
 					current = wxDateTime(m_pDog->GetDeceased().GetDate());
 				wxTimeSpan age = current - dob;
-				str << wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays()/365.0, 1).c_str());
+				str << StringUtil::stringW(wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays()/365.0, 1).c_str()));
 			}
 			break;
 		}
@@ -1392,7 +1392,7 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 			break;
 		case IO_TREE_RUN_Q:
 			{
-				wxString q;
+				std::wstring q;
 				if (m_pRun->GetQ().Qualified())
 				{
 					std::vector<ARBConfigMultiQPtr> multiQs;
@@ -1410,7 +1410,7 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 						wxString tmp(_("IDS_SQ"));
 						if (!q.empty())
 							q += L"/";
-						q += tmp;
+						q += tmp.wx_str();
 					}
 				}
 				if (q.empty())

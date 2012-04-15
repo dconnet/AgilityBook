@@ -69,7 +69,7 @@ private:
 	};
 	std::vector<NameInfo> m_Names;
 	size_t m_nAdded;
-	wxString m_CurSel;
+	std::wstring m_CurSel;
 	wxBitmapComboBox* m_ctrlNames;
 	wxButton* m_ctrlDelete;
 	wxCheckBox* m_ctrlVisible;

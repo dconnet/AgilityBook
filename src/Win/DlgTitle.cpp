@@ -32,6 +32,7 @@
 #include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBDogTitle.h"
+#include "ARBString.h"
 #include "ComboBoxes.h"
 #include "RichEditCtrl2.h"
 #include "Validators.h"
@@ -95,7 +96,7 @@ CDlgTitle::CDlgTitle(
 			m_bHidden = true;
 		if (m_pTitle->GetReceived())
 			m_bReceived = true;
-		m_Venue = m_pTitle->GetVenue();
+		m_Venue = StringUtil::stringWX(m_pTitle->GetVenue());
 	}
 
 	// Controls (these are done first to control tab order)
@@ -263,7 +264,7 @@ void CDlgTitle::FillTitles(bool bIniting)
 			{
 				if (pTitle->IsValidOn(date))
 				{
-					int idx = m_ctrlTitles->Append(pTitle->GetCompleteName());
+					int idx = m_ctrlTitles->Append(StringUtil::stringWX(pTitle->GetCompleteName()));
 					m_ctrlTitles->SetClientObject(idx, new CTitleTitleData(pTitle));
 					if ((bIniting && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
 					|| (!bIniting && pSelTitle && pSelTitle->GetName() == pTitle->GetName()))
@@ -285,7 +286,7 @@ void CDlgTitle::FillTitleInfo()
 	if (wxNOT_FOUND != index)
 	{
 		ARBConfigTitlePtr pTitle = GetTitleData(index);
-		str = pTitle->GetDescription();
+		str = StringUtil::stringWX(pTitle->GetDescription());
 	}
 	m_ctrlDesc->SetValue(str);
 }

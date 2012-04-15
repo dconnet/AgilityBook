@@ -38,7 +38,7 @@ bool CConfigHandler::LoadWxFile(
 {
 	outData.erase();
 	wxString zipfile = wxFileSystem::FileNameToURL(wxString(zipFile.c_str()));
-	zipfile += L"#zip:" + archiveFile;
+	zipfile += L"#zip:" + StringUtil::stringWX(archiveFile);
 	wxFileSystem filesys;
 	wxFSFile* file = filesys.OpenFile(zipfile);
 	if (file)

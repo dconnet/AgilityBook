@@ -19,6 +19,8 @@
 #include "stdafx.h"
 #include "ListData.h"
 
+#include "ARBString.h"
+
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
@@ -37,7 +39,7 @@ CListData::~CListData()
 void CListData::OnNeedListItem(long iCol, wxListItem& info) const
 {
 	info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
-	info.SetText(OnNeedText(iCol));
+	info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
 }
 
 

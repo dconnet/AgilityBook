@@ -63,7 +63,7 @@ public:
 			wxObject* inHint = NULL);
 
 private:
-	std::wstring RawHtml(
+	wxString RawHtml(
 			bool bFragment,
 			bool bNoInternalLinks) const;
 	void LoadData();

@@ -48,7 +48,7 @@ private:
 	CConfigEventDataTitlePoints* GetTitleData(int index) const;
 	CConfigEventDataLifetimePoints* GetLifetimeData(int index) const;
 	CConfigEventDataPlaceInfo* GetPlacementData(int index) const;
-	std::wstring GetListName(ARBConfigScoringPtr pScoring) const;
+	wxString GetListName(ARBConfigScoringPtr pScoring) const;
 	void EnableSubnameControls();
 	void EditSubname();
 	void EnablePointsControls();

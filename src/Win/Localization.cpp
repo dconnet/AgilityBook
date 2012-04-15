@@ -537,7 +537,7 @@ std::wstring CLocalization::TitlePointsNameFormat(double points, double faults) 
 {
 	wxString dbl1 = wxString::Format(L"%g", points);
 	wxString dbl2 = wxString::Format(L"%g", faults);
-	return StringUtil::stringW(wxString::Format(_("IDS_TITLEPOINTSNAME"), dbl1, dbl2));
+	return StringUtil::stringW(wxString::Format(_("IDS_TITLEPOINTSNAME"), dbl1.c_str(), dbl2.c_str()));
 }
 
 
@@ -560,7 +560,7 @@ std::wstring CLocalization::WarnDeletedRuns(int nRuns, std::wstring const& inRun
 {
 	wxString buffer;
 	buffer << wxString::Format(_("IDS_WARN_DELETED_RUNS"), nRuns)
-		<< L"\n" << inRunsMsg;
+		<< L"\n" << inRunsMsg.c_str();
 	return StringUtil::stringW(buffer);
 }
 
@@ -569,7 +569,7 @@ std::wstring CLocalization::UpdateTeamRuns(int nRuns, std::wstring const& inRuns
 {
 	wxString buffer;
 	buffer << wxString::Format(_("IDS_UPDATE_TEAM_RUNS"), nRuns)
-		<< L"\n" << inRunsMsg;
+		<< L"\n" << inRunsMsg.c_str();
 	return StringUtil::stringW(buffer);
 }
 

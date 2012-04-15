@@ -47,9 +47,9 @@ CDlgTraining::CDlgTraining(
 	, m_pTraining(pTraining)
 	, m_pDoc(pDoc)
 	, m_datePicker(NULL)
-	, m_Name(pTraining->GetName())
-	, m_SubName(pTraining->GetSubName())
-	, m_Notes(pTraining->GetNote())
+	, m_Name(StringUtil::stringWX(pTraining->GetName()))
+	, m_SubName(StringUtil::stringWX(pTraining->GetSubName()))
+	, m_Notes(StringUtil::stringWX(pTraining->GetNote()))
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -67,13 +67,13 @@ CDlgTraining::CDlgTraining(
 	std::set<std::wstring>::iterator iter;
 	for (iter = items.begin(); iter != items.end(); ++iter)
 	{
-		names.Add(*iter);
+		names.Add(StringUtil::stringWX(*iter));
 	}
 	names.Sort();
 	m_pDoc->Book().GetTraining().GetAllSubNames(items);
 	for (iter = items.begin(); iter != items.end(); ++iter)
 	{
-		subnames.Add(*iter);
+		subnames.Add(StringUtil::stringWX(*iter));
 	}
 	subnames.Sort();
 

@@ -139,7 +139,7 @@ void CAgilityBookPointsViewData::OnNeedListItem(long iCol, wxListItem& info) con
 	if (m_Data)
 	{
 		info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
-		info.SetText(OnNeedText(iCol));
+		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
 		if (0 == iCol)
 		{
 			info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
@@ -574,11 +574,11 @@ void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 
 void CAgilityBookPointsView::OnPrint(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PrintText(m_Ctrl->GetPrintDataAsHtmlTable());
+	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
 
 
 void CAgilityBookPointsView::OnPreview(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PreviewText(m_Ctrl->GetPrintDataAsHtmlTable());
+	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }

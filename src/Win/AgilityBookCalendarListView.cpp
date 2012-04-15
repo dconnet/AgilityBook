@@ -150,7 +150,7 @@ void CAgilityBookCalendarListViewData::OnNeedListItem(long iCol, wxListItem& inf
 	if (m_pCal)
 	{
 		info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
-		info.SetText(OnNeedText(iCol));
+		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
 		int idxImage = -1;
 		if (IO_CAL_START_DATE == m_pView->m_Columns[iCol])
 		{
@@ -738,7 +738,7 @@ void CAgilityBookCalendarListView::SetupColumns()
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
 			int fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
-			m_Ctrl->InsertColumn(static_cast<long>(iCol), str, fmt);
+			m_Ctrl->InsertColumn(static_cast<long>(iCol), StringUtil::stringWX(str), fmt);
 		}
 		m_SortColumn.Initialize();
 	}
@@ -1324,11 +1324,11 @@ void CAgilityBookCalendarListView::OnViewCmd(wxCommandEvent& evt)
 
 void CAgilityBookCalendarListView::OnPrint(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PrintText(m_Ctrl->GetPrintDataAsHtmlTable());
+	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
 
 
 void CAgilityBookCalendarListView::OnPreview(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PreviewText(m_Ctrl->GetPrintDataAsHtmlTable());
+	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }

@@ -40,7 +40,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	, m_bAutoShow(CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
 	, m_bShowHtml(CAgilityBookOptions::ShowHtmlPoints())
 	, m_UseProxy(CAgilityBookOptions::GetUseProxy())
-	, m_Proxy(CAgilityBookOptions::GetProxyServer())
+	, m_Proxy(StringUtil::stringWX(CAgilityBookOptions::GetProxyServer()))
 	, m_ctrlProxy(NULL)
 {
 	// Controls (these are done first to control tab order)
@@ -149,5 +149,5 @@ void CDlgOptionsProgram::Save()
 	CAgilityBookOptions::SetProxyServer(StringUtil::stringW(m_Proxy));
 	std::wstring newProxy = CAgilityBookOptions::GetProxy();
 	if (newProxy != oldProxy)
-		wxURL::SetDefaultProxy(newProxy);
+		wxURL::SetDefaultProxy(StringUtil::stringWX(newProxy));
 }

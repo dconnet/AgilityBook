@@ -104,7 +104,7 @@ CDlgInfoNote::CDlgInfoNote(
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Type(inType)
-	, m_Select(inSelect)
+	, m_Select(StringUtil::stringWX(inSelect))
 	, m_NamesInUse()
 	, m_InfoOrig(m_pDoc->Book().GetInfo().GetInfo(m_Type))
 	, m_Info(m_pDoc->Book().GetInfo().GetInfo(m_Type).GetItemName())
@@ -162,7 +162,7 @@ CDlgInfoNote::CDlgInfoNote(
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	wxDialog::Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	wxDialog::Create(pParent, wxID_ANY, caption.c_str(), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
@@ -204,7 +204,7 @@ CDlgInfoNote::CDlgInfoNote(
 	for (size_t idx = 0; idx < m_Names.size(); ++idx)
 	{
 		// Combo box is ownerdraw.
-		int index = m_ctrlNames->Append(m_Names[idx].m_Name);
+		int index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name));
 		m_ctrlNames->SetClientData(index, (void*)idx);
 		UpdateImage(index);
 		if (!bSet && 0 < m_Select.length())
@@ -254,7 +254,7 @@ DEFINE_ON_INIT(CDlgInfoNote)
 
 std::wstring CDlgInfoNote::CurrentSelection() const
 {
-	return StringUtil::stringW(m_CurSel);
+	return m_CurSel;
 }
 
 
@@ -298,7 +298,7 @@ void CDlgInfoNote::UpdateData()
 			bEnable = true;
 	}
 	m_ctrlVisible->SetValue(checked);
-	m_ctrlNotes->SetValue(data);
+	m_ctrlNotes->SetValue(StringUtil::stringWX(data));
 	m_ctrlDelete->Enable(bEnable);
 }
 
@@ -379,7 +379,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 			{
 				m_Names[idx].m_eInUse = NameInfo::eNotInUse;
 				++m_nAdded;
-				index = m_ctrlNames->Append(m_Names[idx].m_Name);
+				index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name));
 				m_ctrlNames->SetClientData(index, (void*)idx);
 				m_ctrlVisible->SetValue(true);
 				m_ctrlNotes->SetValue(L"");
@@ -395,7 +395,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 			m_Names.push_back(data);
 			size_t idx = m_Names.size() - 1;
 			++m_nAdded;
-			index = m_ctrlNames->Append(m_Names[idx].m_Name);
+			index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name));
 			m_ctrlNames->SetClientData(index, (void*)idx);
 			m_ctrlVisible->SetValue(true);
 			m_ctrlNotes->SetValue(L"");

@@ -227,7 +227,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 			CVersionNum ver(true);
 			str << wxStandardPaths::Get().GetExecutablePath() << L": ";
 			if (ver.Valid())
-				str << ver.GetVersionString();
+				str << ver.GetVersionString().c_str();
 			else
 				str << _("IDS_BAD_VERSION");
 			str << L"\n";
@@ -261,7 +261,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		std::wstring path = *iter;
 		if (path.empty())
 			continue;
-		wxFileName name(path);
+		wxFileName name(path.c_str());
 		bool bFound = false;
 		if (!wxFileName::IsCaseSensitive())
 		{

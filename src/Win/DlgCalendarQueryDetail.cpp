@@ -118,7 +118,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 		// If no checkboxes, 3rd arg is ignored
 		long idx = m_ctrlLocations->InsertItem(
 			m_ctrlLocations->GetItemCount(),
-			i->first,
+			StringUtil::stringWX(i->first),
 			(m_Locations.end() != std::find(m_Locations.begin(), m_Locations.end(), i->first)));
 		SetListColumnText(m_ctrlLocations, idx, 1, i->second);
 	}
@@ -167,7 +167,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	{
 		int idx = m_ctrlVenues->InsertItem(
 			m_ctrlVenues->GetItemCount(),
-			i->first,
+			StringUtil::stringWX(i->first),
 			(m_Venues.end() != std::find(m_Venues.begin(), m_Venues.end(), i->first)));
 		SetListColumnText(m_ctrlVenues, idx, 1, i->second);
 	}
@@ -339,7 +339,7 @@ void CDlgCalendarQueryDetail::OnNewLocationCode(wxCommandEvent& evt)
 	CDlgQueryDetail dlg(!m_EditCodes, L"", L"", this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		long idx = m_ctrlLocations->InsertItem(m_ctrlLocations->GetItemCount(), dlg.GetDetailCode());
+		long idx = m_ctrlLocations->InsertItem(m_ctrlLocations->GetItemCount(), StringUtil::stringWX(dlg.GetDetailCode()));
 		SetListColumnText(m_ctrlLocations, idx, 1, dlg.GetDetailName());
 		UpdateButtons();
 	}
@@ -368,12 +368,11 @@ void CDlgCalendarQueryDetail::OnNewVenueCode(wxCommandEvent& evt)
 	CDlgQueryDetail dlg(!m_EditCodes, L"", L"", this, &m_Config);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		std::wstring code = dlg.GetDetailCode();
-		std::wstring name = dlg.GetDetailName();
+		wxString code = StringUtil::stringWX(dlg.GetDetailCode());
 		if (!code.empty())
 		{
 			long idx = m_ctrlVenues->InsertItem(m_ctrlVenues->GetItemCount(), code);
-			SetListColumnText(m_ctrlVenues, idx, 1, name);
+			SetListColumnText(m_ctrlVenues, idx, 1, dlg.GetDetailName());
 			UpdateButtons();
 		}
 	}

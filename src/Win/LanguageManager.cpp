@@ -23,6 +23,7 @@
 #include "stdafx.h"
 #include "LanguageManager.h"
 
+#include "ARBString.h"
 #include "RegItems.h"
 #include <wx/cshelp.h>
 #include <wx/dir.h>
@@ -116,7 +117,7 @@ bool CLanguageManager::SetLang(int langId)
 	if (m_locale)
 		delete m_locale;
 	m_locale = new wxLocale();
-	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
+	m_locale->AddCatalogLookupPathPrefix(StringUtil::stringWX(m_dirLang));
 #if wxCHECK_VERSION(2, 9, 3)
 	if (!m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT))
 #else
@@ -146,7 +147,7 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 	std::vector<int> langId;
 	wxArrayString choices;
 
-	wxDir dir(m_dirLang);
+	wxDir dir(StringUtil::stringWX(m_dirLang));
 	if (dir.IsOpened())
 	{
 		wxString filename;

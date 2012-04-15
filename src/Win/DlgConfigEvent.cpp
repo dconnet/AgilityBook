@@ -130,11 +130,11 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_pEvent(pEvent)
 	, m_DlgFixup()
 	, m_Scorings()
-	, m_Name(m_pEvent->GetName())
+	, m_Name(StringUtil::stringWX(m_pEvent->GetName()))
 	, m_bHasTable(m_pEvent->HasTable())
 	, m_bHasPartners(m_pEvent->HasPartner())
 	, m_bHasSubNames(m_pEvent->HasSubNames())
-	, m_Desc(m_pEvent->GetDesc())
+	, m_Desc(StringUtil::stringWX(m_pEvent->GetDesc()))
 	, m_ctrlName(NULL)
 	, m_ctrlSubNames(NULL)
 	, m_ctrlSubNamesNew(NULL)
@@ -503,7 +503,7 @@ void CDlgConfigEvent::FillSubNames(bool bInit)
 				iter != subNames.end();
 				++iter)
 			{
-				m_ctrlSubNames->Append(*iter);
+				m_ctrlSubNames->Append(StringUtil::stringWX(*iter));
 			}
 		}
 	}
@@ -541,20 +541,20 @@ CConfigEventDataPlaceInfo* CDlgConfigEvent::GetPlacementData(int index) const
 }
 
 
-std::wstring CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
+wxString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 {
-	std::wstring all = _("IDS_ALL");
-	std::wstring str;
+	wxString all = _("IDS_ALL");
+	wxString str;
 	if (pScoring->GetDivision() == WILDCARD_DIVISION)
 		str = all;
 	else
-		str = pScoring->GetDivision();
+		str = StringUtil::stringWX(pScoring->GetDivision());
 	str += L" / ";
 	if (pScoring->GetLevel() == WILDCARD_LEVEL)
 		str += all;
 	else
-		str += pScoring->GetLevel();
-	std::wstring validStr = ARBDate::GetValidDateString(pScoring->GetValidFrom(), pScoring->GetValidTo());
+		str += StringUtil::stringWX(pScoring->GetLevel());
+	wxString validStr = StringUtil::stringWX(ARBDate::GetValidDateString(pScoring->GetValidFrom(), pScoring->GetValidTo()));
 	if (0 < validStr.length())
 	{
 		str += L" ";
@@ -579,12 +579,12 @@ void CDlgConfigEvent::EditSubname()
 	int idx = m_ctrlSubNames->GetSelection();
 	if (wxNOT_FOUND != idx)
 	{
-		std::wstring name = m_ctrlSubNames->GetString(idx);
+		std::wstring name = StringUtil::stringW(m_ctrlSubNames->GetString(idx));
 		CDlgName dlg(name, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			m_ctrlSubNames->Delete(idx);
-			m_ctrlSubNames->Insert(dlg.Name(), idx);
+			m_ctrlSubNames->Insert(StringUtil::stringWX(dlg.Name()), idx);
 			m_ctrlSubNames->SetSelection(idx);
 			EnableSubnameControls();
 		}
@@ -740,13 +740,13 @@ void CDlgConfigEvent::FillControls()
 						info << L"]";
 					}
 				}
-				m_ctrlInfo->SetLabel(info.str());
+				m_ctrlInfo->SetLabel(StringUtil::stringWX(info.str()));
 			}
 			// Take care of title points
 			FillTitlePoints(pScoring);
 			// And the note.
 			std::wstring str = pScoring->GetNote();
-			m_ctrlNote->SetValue(str);
+			m_ctrlNote->SetValue(StringUtil::stringWX(str));
 		}
 	}
 	m_ctrlEdit->Enable(bEnable);
@@ -767,7 +767,7 @@ void CDlgConfigEvent::FillMethodList()
 {
 	m_idxMethod = m_ctrlMethods->GetSelection();
 	m_ctrlMethods->Clear();
-	std::wstring str;
+	wxString str;
 	for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
 		iter != m_Scorings.end();
 		++iter)
@@ -790,9 +790,9 @@ void CDlgConfigEvent::FillMethodList()
 		{
 			if (!m_Scorings.FindEvent((*iterDiv)->GetName(), (*iterLevel)->GetName(), ARBDate::Today()))
 			{
-				str = (*iterDiv)->GetName();
+				str = StringUtil::stringWX((*iterDiv)->GetName());
 				str += L" / ";
-				str += (*iterLevel)->GetName();
+				str += StringUtil::stringWX((*iterLevel)->GetName());
 				m_ctrlUnused->Append(str);
 			}
 			// Remember, configuration doesn't do sublevels.
@@ -831,7 +831,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 		++iter)
 	{
 		ARBConfigTitlePointsPtr pTitle = (*iter);
-		int idx = m_ctrlPointsList->Append(pTitle->GetGenericName());
+		int idx = m_ctrlPointsList->Append(StringUtil::stringWX(pTitle->GetGenericName()));
 		if (wxNOT_FOUND != idx)
 		{
 			m_ctrlPointsList->SetClientObject(idx, new CConfigEventDataTitlePoints(pTitle));
@@ -844,7 +844,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 		++iter2)
 	{
 		ARBConfigLifetimePointsPtr pLife = (*iter2);
-		int idx = m_ctrlPointsList->Append(pLife->GetGenericName());
+		int idx = m_ctrlPointsList->Append(StringUtil::stringWX(pLife->GetGenericName()));
 		if (wxNOT_FOUND != idx)
 		{
 			m_ctrlPointsList->SetClientObject(idx, new CConfigEventDataLifetimePoints(pLife));
@@ -857,7 +857,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 		++iter3)
 	{
 		ARBConfigPlaceInfoPtr pPlace = (*iter3);
-		int idx = m_ctrlPointsList->Append(pPlace->GetGenericName());
+		int idx = m_ctrlPointsList->Append(StringUtil::stringWX(pPlace->GetGenericName()));
 		if (wxNOT_FOUND != idx)
 		{
 			m_ctrlPointsList->SetClientObject(idx, new CConfigEventDataPlaceInfo(pPlace));
@@ -1052,7 +1052,7 @@ void CDlgConfigEvent::OnBnClickedSubNamesNew(wxCommandEvent& evt)
 	CDlgName dlg(L"", this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		int idx = m_ctrlSubNames->Append(dlg.Name());
+		int idx = m_ctrlSubNames->Append(StringUtil::stringWX(dlg.Name()));
 		m_ctrlSubNames->SetSelection(idx);
 		EnableSubnameControls();
 	}
@@ -1100,7 +1100,7 @@ void CDlgConfigEvent::OnBnClickedNew(wxCommandEvent& evt)
 	TransferDataFromWindow();
 	SaveControls();
 	ARBConfigScoringPtr pScoring = m_Scorings.AddScoring();
-	std::wstring str = GetListName(pScoring);
+	wxString str = GetListName(pScoring);
 	m_idxMethod = m_ctrlMethods->Append(str);
 	m_ctrlMethods->SetClientObject(m_idxMethod, new CConfigEventDataScoring(pScoring));
 	m_ctrlMethods->SetSelection(m_idxMethod);
@@ -1155,7 +1155,7 @@ void CDlgConfigEvent::OnBnClickedCopy(wxCommandEvent& evt)
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		ARBConfigScoringPtr pNewScoring = m_Scorings.AddScoring();
 		*pNewScoring = *pScoring;
-		std::wstring str = GetListName(pNewScoring);
+		wxString str = GetListName(pNewScoring);
 		m_idxMethod = m_ctrlMethods->Append(str);
 		m_ctrlMethods->SetClientObject(m_idxMethod, new CConfigEventDataScoring(pNewScoring));
 		m_ctrlMethods->SetSelection(m_idxMethod);
@@ -1439,15 +1439,15 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 	}
 
 	ClearFixups();
-	if (m_pEvent->GetName() != m_Name)
+	std::wstring name(StringUtil::stringW(m_Name));
+	if (m_pEvent->GetName() != name)
 	{
-		if (m_pVenue->GetEvents().FindEvent(StringUtil::stringW(m_Name)))
+		if (m_pVenue->GetEvents().FindEvent(name))
 		{
 			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			m_ctrlName->SetFocus();
 			return;
 		}
-		std::wstring name(StringUtil::stringW(m_Name));
 		if (!m_bNewEntry)
 			m_DlgFixup.push_back(ARBConfigActionRenameEvent::New(0, m_pVenue->GetName(), m_pEvent->GetName(), name));
 		m_pEvent->SetName(name);
@@ -1482,7 +1482,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 		int nCount = m_ctrlSubNames->GetCount();
 		for (int i = 0; i < nCount; ++i)
 		{
-			std::wstring str = m_ctrlSubNames->GetString(i);
+			std::wstring str = StringUtil::stringW(m_ctrlSubNames->GetString(i));
 			str = StringUtil::Trim(str);
 			if (!str.empty())
 				subNames.insert(str);

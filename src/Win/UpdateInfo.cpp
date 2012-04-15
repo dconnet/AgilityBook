@@ -248,10 +248,10 @@ bool CUpdateInfo::ReadVersionFile(
 	m_UpdateDownload = _("LinkArbDownloadUrl");
 
 	// Read the file.
-	wxString url(_("IDS_HELP_UPDATE"));
+	std::wstring url(StringUtil::stringW(_("IDS_HELP_UPDATE")));
 	url += L"/" + VersionFile();
 	std::string data; // must be 'char' for XML parsing
-	wxString errMsg;
+	std::wstring errMsg;
 
 #ifdef USE_LOCAL
 	wxTextFile file;
@@ -266,7 +266,7 @@ bool CUpdateInfo::ReadVersionFile(
 	}
 #else
 	CReadHttp file(url, &data);
-	wxString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
+	std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
 	if (file.ReadHttpFile(userName, errMsg, wxGetApp().GetTopWindow()))
 		CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 	else
@@ -275,8 +275,8 @@ bool CUpdateInfo::ReadVersionFile(
 		{
 			data = wxString(_("IDS_UPDATE_UNKNOWN")).mb_str(wxMBConvUTF8());
 			wxString tmp = StringUtil::stringWX(data);
-			if (!errMsg.IsEmpty())
-				tmp += errMsg;
+			if (!errMsg.empty())
+				tmp << errMsg.c_str();
 			wxMessageBox(tmp, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		}
 		return false;
@@ -329,8 +329,7 @@ bool CUpdateInfo::ReadVersionFile(
 				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), VersionFile().c_str());
 				if (0 < errMsg2.str().length())
 				{
-					msg += L"\n\n";
-					msg += errMsg2.str();
+					msg << L"\n\n" << errMsg2.str().c_str();
 				}
 				wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
@@ -457,7 +456,7 @@ bool CUpdateInfo::CheckProgram(
 				bGotoWeb = true;
 			else
 			{
-				wxFileName name(m_NewFile);
+				wxFileName name(StringUtil::stringWX(m_NewFile));
 				wxString filename;
 #if defined(__WXMAC__)
 				wxFileDialog dlg(wxGetApp().GetTopWindow(),
@@ -503,8 +502,8 @@ bool CUpdateInfo::CheckProgram(
 							if (!err.empty())
 							{
 								if (!errMsg.empty())
-									errMsg += L"\n\n";
-								errMsg += err;
+									errMsg << L"\n\n";
+								errMsg << err.c_str();
 							}
 						}
 						output.Close();
@@ -515,8 +514,8 @@ bool CUpdateInfo::CheckProgram(
 							{
 								bGotoWeb = true;
 								if (!errMsg.empty())
-									errMsg += L"\n\n";
-								errMsg += _("IDS_ERROR_DOWNLOAD");
+									errMsg << L"\n\n";
+								errMsg << _("IDS_ERROR_DOWNLOAD");
 							}
 						}
 						if (bGotoWeb)
@@ -625,7 +624,7 @@ bool CUpdateInfo::CheckProgram(
 			}
 			if (bGotoWeb)
 			{
-				wxString url(m_UpdateDownload);
+				wxString url(StringUtil::stringWX(m_UpdateDownload));
 				wxString suffix = url.Right(4);
 				suffix.MakeUpper();
 				if (suffix == L".PHP")
@@ -748,7 +747,7 @@ void CUpdateInfo::CheckConfig(
 					if (0 < errMsg2.str().length())
 					{
 						msg2 += L"\n\n";
-						msg2 += errMsg2.str();
+						msg2 += errMsg2.str().c_str();
 					}
 					wxMessageBox(msg2, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
@@ -765,7 +764,7 @@ void CUpdateInfo::CheckConfig(
 						if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 						{
 							if (0 < err.m_ErrMsg.str().length())
-								wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+								wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 						}
 						else
 						{

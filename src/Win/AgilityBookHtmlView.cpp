@@ -175,7 +175,7 @@ void CAgilityBookHtmlView::OnUpdate(
 }
 
 
-std::wstring CAgilityBookHtmlView::RawHtml(
+wxString CAgilityBookHtmlView::RawHtml(
 		bool bFragment,
 		bool bNoInternalLinks) const
 {
@@ -206,7 +206,7 @@ std::wstring CAgilityBookHtmlView::RawHtml(
 		data << L"</body></html>";
 	data << L"\n";
 
-	return data.str();
+	return StringUtil::stringWX(data.str());
 }
 
 
@@ -225,29 +225,29 @@ void CAgilityBookHtmlView::LoadData()
 
 void CAgilityBookHtmlView::OnCtrlLinkClicked(wxHtmlLinkEvent& evt)
 {
-	static const std::wstring ProtocolABOUT(L"about:");
-	static const std::wstring ProtocolHTTP(L"http:");
-	static const std::wstring ProtocolHTTPS(L"https:");
-	static const std::wstring ProtocolARB(ARB_PROTOCOL);
+	static const wxString ProtocolABOUT(L"about:");
+	static const wxString ProtocolHTTP(L"http:");
+	static const wxString ProtocolHTTPS(L"https:");
+	static const wxString ProtocolARB(ARB_PROTOCOL);
 
-	std::wstring url = StringUtil::stringW(evt.GetLinkInfo().GetHref());
+	wxString url = evt.GetLinkInfo().GetHref();
 
 	bool bOpen = false;
 
 	if (url.length() > ProtocolABOUT.length()
-	&& 0 == _wcsicmp(ProtocolABOUT.c_str(), url.substr(0, ProtocolABOUT.length()).c_str()))
+	&& 0 == ProtocolABOUT.CmpNoCase(url.substr(0, ProtocolABOUT.length())))
 	{
 		// Let About thru (for "about:blank")
 		bOpen = true;
 	}
 	else if (url.length() > ProtocolARB.length()
-	&& 0 == _wcsicmp(ProtocolARB.c_str(), url.substr(0, ProtocolARB.length()).c_str()))
+	&& 0 == ProtocolARB.CmpNoCase(url.substr(0, ProtocolARB.length())))
 	{
 		// Our special internal link
 		// Remember, spaces are now %20. Other special chars may
 		// need fixing too. Just don't use those in our links.
 		bool bDidIt = false;
-		std::wstring index(url.substr(ProtocolARB.length()));
+		std::wstring index(StringUtil::stringW(url.substr(ProtocolARB.length())));
 		if (!index.empty())
 		{
 			long nItem;
@@ -264,9 +264,9 @@ void CAgilityBookHtmlView::OnCtrlLinkClicked(wxHtmlLinkEvent& evt)
 		}
 	}
 	else if ((url.length() > ProtocolHTTP.length()
-	&& 0 == _wcsicmp(ProtocolHTTP.c_str(), url.substr(0, ProtocolHTTP.length()).c_str()))
+	&& 0 == ProtocolHTTP.CmpNoCase(url.substr(0, ProtocolHTTP.length())))
 	|| (url.length() > ProtocolHTTPS.length()
-	&& 0 == _wcsicmp(ProtocolHTTPS.c_str(), url.substr(0, ProtocolHTTPS.length()).c_str())))
+	&& 0 == ProtocolHTTPS.CmpNoCase(url.substr(0, ProtocolHTTPS.length()))))
 	{
 		// Don't allow links to replace us.
 		wxLaunchDefaultBrowser(url);
@@ -314,8 +314,8 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 			CClipboardDataWriter clpData;
 			if (clpData.isOkay())
 			{
-				std::wstring data = RawHtml(true, true);
-				clpData.AddData(eFormatHtml, data);
+				wxString data = RawHtml(true, true);
+				clpData.AddData(eFormatHtml, StringUtil::stringW(data));
 				clpData.AddData(StringUtil::stringW(m_Ctrl->ToText()));
 				clpData.CommitData();
 			}

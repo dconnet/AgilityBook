@@ -147,7 +147,7 @@ static ElementNodePtr FindElementName(
 {
 	for (long i = 0; i < numConfigs; ++i)
 	{
-		std::wstring configName = wxString::Format(L"%s%ld", eleItem, i);
+		std::wstring configName = StringUtil::stringW(wxString::Format(L"%s%ld", eleItem, i));
 		int idxConfig = tree->FindElement(configName);
 		if (0 <= idxConfig
 		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
@@ -202,7 +202,7 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 	long added = 0;
 	for (long i = 0; i < numConfigs; ++i)
 	{
-		std::wstring configName = wxString::Format(L"Config%ld", i);
+		std::wstring configName = StringUtil::stringW(wxString::Format(L"Config%ld", i));
 		int idxConfig = tree->FindElement(configName);
 		if (0 <= idxConfig
 		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
@@ -216,7 +216,7 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 			if (existingConfig)
 			{
 				path = wxConfig::Get()->GetPath();
-				wxConfig::Get()->SetPath(existingConfig->GetName());
+				wxConfig::Get()->SetPath(StringUtil::stringWX(existingConfig->GetName()));
 				for (int iCfg = 0; iCfg < nodeConfig->GetElementCount(); ++iCfg)
 				{
 					ElementNodePtr node = nodeConfig->GetElementNode(iCfg);
@@ -232,7 +232,7 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 			else
 			{
 				name = nodeConfig->GetName();
-				std::wstring newName = wxString::Format(L"Config%ld", numExistingConfigs + added);
+				std::wstring newName = StringUtil::stringW(wxString::Format(L"Config%ld", numExistingConfigs + added));
 				++added;
 				nodeConfig->SetName(newName);
 				ImportConfig(nodeConfig, false);
@@ -282,7 +282,7 @@ static bool MergeFilters(ElementNodePtr tree)
 	long added = 0;
 	for (long i = 0; i < numFilters; ++i)
 	{
-		std::wstring configName = wxString::Format(L"Filter%ld", i);
+		std::wstring configName = StringUtil::stringW(wxString::Format(L"Filter%ld", i));
 		int idxFilter = tree->FindElement(configName);
 		if (0 <= idxFilter
 		&& Element::Element_Node == tree->GetElement(idxFilter)->GetType())
@@ -296,7 +296,7 @@ static bool MergeFilters(ElementNodePtr tree)
 			if (existingFilter)
 			{
 				path = wxConfig::Get()->GetPath();
-				wxConfig::Get()->SetPath(existingFilter->GetName());
+				wxConfig::Get()->SetPath(StringUtil::stringWX(existingFilter->GetName()));
 				for (int iCfg = 0; iCfg < nodeFilter->GetElementCount(); ++iCfg)
 				{
 					ElementNodePtr node = nodeFilter->GetElementNode(iCfg);
@@ -312,7 +312,7 @@ static bool MergeFilters(ElementNodePtr tree)
 			else
 			{
 				name = nodeFilter->GetName();
-				std::wstring newName = wxString::Format(L"Filter%ld", numExistingFilters + added);
+				std::wstring newName = StringUtil::stringW(wxString::Format(L"Filter%ld", numExistingFilters + added));
 				++added;
 				nodeFilter->SetName(newName);
 				ImportConfig(nodeFilter, true);
@@ -334,7 +334,7 @@ static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 	if (L"g" == type)
 	{
 		wxString path = wxConfig::Get()->GetPath();
-		wxConfig::Get()->SetPath(tree->GetName());
+		wxConfig::Get()->SetPath(StringUtil::stringWX(tree->GetName()));
 		// When importing config info, treat ColumnInfo differently.
 		// We don't want to wipe out existing items. We want to add the new
 		// names. If we find an existing name, the specified format will
@@ -373,25 +373,25 @@ static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 	}
 	else if (L"s" == type)
 	{
-		wxConfig::Get()->Write(tree->GetName(), tree->GetValue().c_str());
+		wxConfig::Get()->Write(StringUtil::stringWX(tree->GetName()), tree->GetValue().c_str());
 	}
 	else if (L"b" == type)
 	{
 		bool val;
 		tree->GetAttrib(L"val", val);
-		wxConfig::Get()->Write(tree->GetName(), val);
+		wxConfig::Get()->Write(StringUtil::stringWX(tree->GetName()), val);
 	}
 	else if (L"i" == type)
 	{
 		long val;
 		tree->GetAttrib(L"val", val);
-		wxConfig::Get()->Write(tree->GetName(), val);
+		wxConfig::Get()->Write(StringUtil::stringWX(tree->GetName()), val);
 	}
 	else if (L"f" == type)
 	{
 		double val;
 		tree->GetAttrib(L"val", val);
-		wxConfig::Get()->Write(tree->GetName(), val);
+		wxConfig::Get()->Write(StringUtil::stringWX(tree->GetName()), val);
 	}
 }
 
@@ -487,7 +487,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 void CFontInfo::CreateFont(wxFont& font)
 {
 	font = wxFont();
-	font.SetFaceName(name);
+	font.SetFaceName(name.c_str());
 	font.SetPointSize(size);
 	int style = wxFONTSTYLE_NORMAL;
 	if (italic)
@@ -871,7 +871,7 @@ void CAgilityBookOptions::GetPrinterFontInfo(CFontInfo& info)
 	info.size = 80;
 	info.italic = false;
 	info.bold = false;
-	info.name = wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTNAME, info.name);
+	info.name = StringUtil::stringW(wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTNAME, info.name.c_str()));
 	wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTSIZE, &info.size, info.size);
 	wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTITALIC, &info.italic, info.italic);
 	wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTBOLD, &info.bold, info.bold);
@@ -1022,7 +1022,7 @@ void CAgilityBookOptions::GetCalendarFontInfo(CFontInfo& info)
 	info.size = 80;
 	info.italic = false;
 	info.bold = false;
-	info.name = wxConfig::Get()->Read(CFG_CAL_FONTTEXTNAME, info.name);
+	info.name = StringUtil::stringW(wxConfig::Get()->Read(CFG_CAL_FONTTEXTNAME, info.name.c_str()));
 	wxConfig::Get()->Read(CFG_CAL_FONTTEXTSIZE, &info.size, info.size);
 	wxConfig::Get()->Read(CFG_CAL_FONTTEXTITALIC, &info.italic, info.italic);
 	wxConfig::Get()->Read(CFG_CAL_FONTTEXTBOLD, &info.bold, info.bold);
@@ -1161,7 +1161,7 @@ void CAgilityBookOptions::GetImportExportDelimiters(
 	delim = eDelimTab;
 	delimiter.clear();
 	delim = wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIM, delim);
-	delimiter = wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIMITER, delimiter);
+	delimiter = StringUtil::stringW(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIMITER, delimiter.c_str()));
 	if (1 < delimiter.length())
 		delimiter = delimiter.substr(0, 1);
 }
@@ -1248,9 +1248,9 @@ void CAgilityBookOptions::GetColumnOrder(
 	{
 		wxString item;
 		if (!namedColumn.empty())
-			item << L'/' << namedColumn;
+			item << L'/' << namedColumn.c_str();
 		item << GetColumnName(eOrder) << CFG_COL_BASENAME(idxColumn);
-		std::wstring data = wxConfig::Get()->Read(item, wxEmptyString);
+		std::wstring data = StringUtil::stringW(wxConfig::Get()->Read(item, wxEmptyString));
 		std::wstring::size_type idx = data.find(',');
 		while (std::wstring::npos != idx)
 		{
@@ -1529,7 +1529,7 @@ void CAgilityBookOptions::SetColumnOrder(
 	}
 	wxString item;
 	if (!namedColumn.empty())
-		item << L'/' << namedColumn;
+		item << L'/' << namedColumn.c_str();
 	item << GetColumnName(eOrder) << CFG_COL_BASENAME(idxColumn);
 	wxConfig::Get()->Write(item, data);
 }
@@ -1610,7 +1610,7 @@ void CAgilityBookOptions::SetShowHtmlPoints(bool bSet)
 std::wstring CAgilityBookOptions::GetUserName(std::wstring const& hint)
 {
 	wxString section(CFG_KEY_USERNAMES);
-	section += hint;
+	section += hint.c_str();
 	return StringUtil::stringW(wxConfig::Get()->Read(section, wxString()));
 }
 
@@ -1620,7 +1620,7 @@ void CAgilityBookOptions::SetUserName(
 		std::wstring const& userName)
 {
 	wxString section(CFG_KEY_USERNAMES);
-	section += hint;
+	section += hint.c_str();
 	wxConfig::Get()->Write(section, userName.c_str());
 }
 
@@ -1672,7 +1672,7 @@ bool CAgilityBookOptions::IsCalSiteVisible(
 		return true;
 	bool bVisible = true;
 	wxString section(CFG_KEY_CALSITES);
-	section += filename;
+	section += filename.c_str();
 	bool bCheckStatus = true;
 	wxConfig::Get()->Read(section, &bCheckStatus);
 	if (bCheckStatus)
@@ -1694,7 +1694,7 @@ void CAgilityBookOptions::SuppressCalSite(
 	if (filename.empty())
 		return;
 	wxString section(CFG_KEY_CALSITES);
-	section += filename;
+	section += filename.c_str();
 	wxConfig::Get()->Write(section, !bSuppress);
 }
 
@@ -1705,7 +1705,7 @@ CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(std::wstring const& f
 	if (!filename.empty())
 	{
 		wxString section(CFG_KEY_CALSITES2);
-		section += filename;
+		section += filename.c_str();
 		std::wstring str = wxConfig::Get()->Read(section, wxString()).wx_str();
 		if (!str.empty())
 			ver.Parse(str);
@@ -1722,7 +1722,7 @@ void CAgilityBookOptions::SuppressCalSitePermanently(
 	if (filename.empty())
 		return;
 	wxString section(CFG_KEY_CALSITES2);
-	section += filename;
+	section += filename.c_str();
 	if (bSuppress)
 		wxConfig::Get()->Write(section, inVer.GetVersionString().c_str());
 	else

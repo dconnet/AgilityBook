@@ -54,8 +54,8 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	, m_pVenue(inVenue)
 	, m_pOrigMultiQ(inMultiQ)
 	, m_pMultiQ(inMultiQ->Clone())
-	, m_Name(inMultiQ->GetName())
-	, m_ShortName(inMultiQ->GetShortName())
+	, m_Name(StringUtil::stringWX(inMultiQ->GetName()))
+	, m_ShortName(StringUtil::stringWX(inMultiQ->GetShortName()))
 	, m_bFrom(inMultiQ->GetValidFrom().IsValid())
 	, m_ctrlDateFrom(NULL)
 	, m_DateFrom(inMultiQ->GetValidFrom())
@@ -200,7 +200,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 		std::wstring div, level, evt;
 		if (m_pMultiQ->GetItem(i, div, level, evt))
 		{
-			int idx = m_ctrlItems->InsertItem(static_cast<int>(i), div);
+			int idx = m_ctrlItems->InsertItem(static_cast<int>(i), StringUtil::stringWX(div));
 			SetListColumnText(m_ctrlItems, idx, 1, level);
 			SetListColumnText(m_ctrlItems, idx, 2, evt);
 		}
@@ -254,7 +254,7 @@ void CDlgConfigMultiQ::EditItem()
 				m_ctrlItems->DeleteItem(idx);
 			if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
 			{
-				idx = m_ctrlItems->InsertItem(idx, dlg.GetDivision());
+				idx = m_ctrlItems->InsertItem(idx, StringUtil::stringWX(dlg.GetDivision()));
 				SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
 				SetListColumnText(m_ctrlItems, idx, 2, dlg.GetEvent());
 				m_ctrlItems->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
@@ -323,7 +323,7 @@ void CDlgConfigMultiQ::OnAdd(wxCommandEvent& evt)
 	{
 		if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
 		{
-			int idx = m_ctrlItems->InsertItem(m_ctrlItems->GetItemCount(), dlg.GetDivision());
+			int idx = m_ctrlItems->InsertItem(m_ctrlItems->GetItemCount(), StringUtil::stringWX(dlg.GetDivision()));
 			SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
 			SetListColumnText(m_ctrlItems, idx, 2, dlg.GetEvent());
 			m_ctrlItems->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
@@ -364,9 +364,10 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	if (m_pMultiQ->GetName() != m_Name)
+	std::wstring stdName(StringUtil::stringW(m_Name));
+	if (m_pMultiQ->GetName() != stdName)
 	{
-		if (m_pVenue->GetMultiQs().FindMultiQ(StringUtil::stringW(m_Name)))
+		if (m_pVenue->GetMultiQs().FindMultiQ(stdName))
 		{
 			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			m_ctrlName->SetFocus();

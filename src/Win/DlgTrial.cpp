@@ -86,9 +86,9 @@ CDlgTrial::CDlgTrial(
 		ARBDogTrialPtr pTrial,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_Location(pTrial->GetLocation())
+	, m_Location(StringUtil::stringWX(pTrial->GetLocation()))
 	, m_Verified(pTrial->IsVerified())
-	, m_Notes(pTrial->GetNote())
+	, m_Notes(StringUtil::stringWX(pTrial->GetNote()))
 	, m_ctrlLocationInfo(NULL)
 	, m_ctrlEdit(NULL)
 	, m_ctrlDelete(NULL)
@@ -102,7 +102,7 @@ CDlgTrial::CDlgTrial(
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY,
-			pDoc->AddDogToCaption(StringUtil::stringW(_("IDD_TRIAL"))),
+			StringUtil::stringWX(pDoc->AddDogToCaption(StringUtil::stringW(_("IDD_TRIAL")))),
 			wxDefaultPosition, wxDefaultSize,
 			wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
@@ -313,7 +313,7 @@ void CDlgTrial::UpdateNotes(
 		{
 			str = pItem->GetComment();
 		}
-		m_ctrlLocationInfo->SetValue(str);
+		m_ctrlLocationInfo->SetValue(StringUtil::stringWX(str));
 	}
 	if (bClub)
 	{
@@ -322,12 +322,12 @@ void CDlgTrial::UpdateNotes(
 		if (pClub)
 		{
 			ARBInfoItemPtr pItem;
-			if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(StringUtil::stringW(pClub->GetName()), &pItem))
+			if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName(), &pItem))
 			{
 				str = pItem->GetComment();
 			}
 		}
-		m_ctrlClubInfo->SetValue(str);
+		m_ctrlClubInfo->SetValue(StringUtil::stringWX(str));
 	}
 }
 
@@ -344,7 +344,7 @@ void CDlgTrial::ListLocations()
 	m_ctrlLocation->Clear();
 	for (std::set<std::wstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
 	{
-		int index = m_ctrlLocation->Append(*iter);
+		int index = m_ctrlLocation->Append(StringUtil::stringWX(*iter));
 		if ((*iter) == loc)
 			m_ctrlLocation->SetSelection(index);
 	}
@@ -444,7 +444,7 @@ void CDlgTrial::OnLocationNotes(wxCommandEvent& evt)
 		CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, StringUtil::stringW(m_Location), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			m_Location = dlg.CurrentSelection();
+			m_Location = StringUtil::stringWX(dlg.CurrentSelection());
 			TransferDataToWindow();
 			ListLocations();
 			UpdateNotes(true, false);
@@ -566,7 +566,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			}
 			if (0 < nDelete)
 			{
-				std::wstring msg = wxString::Format(_("IDS_CONFIG_DELETE_RUNS"),
+				wxString msg = wxString::Format(_("IDS_CONFIG_DELETE_RUNS"),
 					static_cast<int>(m_pTrial->GetRuns().size()));
 				if (wxYES != wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 					return;

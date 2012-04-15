@@ -293,13 +293,13 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 	{
 		wxClientDC dc(statusbar);
 		dc.SetFont(statusbar->GetFont());
-		m_Widths[index] = dc.GetTextExtent(msg).x;
+		m_Widths[index] = dc.GetTextExtent(StringUtil::stringWX(msg)).x;
 #if !wxCHECK_VERSION(2, 9, 3)
 		m_Widths[index] += 4;
 #endif
 		SetStatusBarWidths(statusbar, index, m_Widths);
 	}
-	SetStatusText(msg, index);
+	SetStatusText(StringUtil::stringWX(msg), index);
 }
 
 
@@ -563,7 +563,7 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 		CVersionNum ver(true);
 		str << wxStandardPaths::Get().GetExecutablePath() << L": ";
 		if (ver.Valid())
-			str << ver.GetVersionString();
+			str << ver.GetVersionString().c_str();
 		else
 			str << _("IDS_BAD_VERSION");
 		str << L"\n";

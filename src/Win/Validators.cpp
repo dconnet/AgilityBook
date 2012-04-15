@@ -316,7 +316,7 @@ bool CGenericValidator::TransferToWindow()
 		}
 		else if (m_pDouble)
 		{
-			pTextControl->ChangeValue(ARBDouble::ToString(*m_pDouble, m_Prec));
+			pTextControl->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(*m_pDouble, m_Prec)));
 			return true;
 		}
 		else if (m_pTime)
@@ -414,7 +414,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				double dbl;
 				if (textVal.empty() && m_bUseDefOnEmpty)
 				{
-					pTextControl->ChangeValue(ARBDouble::ToString(m_Default.dbl, m_Prec));
+					pTextControl->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(m_Default.dbl, m_Prec)));
 				}
 				else if (!StringUtil::ToDouble(StringUtil::stringW(textVal), dbl))
 				{
@@ -600,7 +600,7 @@ bool CQualifyingValidator::TransferToWindow()
 		CQualifyingComboBox* pControl = (CQualifyingComboBox*)m_validatorWindow;
 		if (m_pQ)
 		{
-			int idx = pControl->FindString(m_pQ->str(), true);
+			int idx = pControl->FindString(StringUtil::stringWX(m_pQ->str()), true);
 			pControl->SetSelection(idx);
 			return true;
 		}

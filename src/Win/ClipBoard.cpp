@@ -124,7 +124,7 @@ bool CClipboardDataReader::GetData(
 	bool bOk = outTree->LoadXML(data.c_str(), data.length(), err);
 	if (!bOk && 0 < err.str().length())
 	{
-		wxMessageBox(err.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(StringUtil::stringWX(err.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 	}
 	return bOk;
 }
@@ -294,7 +294,7 @@ bool CClipboardDataWriter::AddData(
 	}
 	else
 	{
-		wxTextDataObject* dataObj = new wxTextDataObject(inData);
+		wxTextDataObject* dataObj = new wxTextDataObject(inData.c_str());
 		dataObj->SetFormat(GetClipboardFormat(clpFmt));
 		if (!m_Object)
 			m_Object = new wxDataObjectComposite();
@@ -308,7 +308,7 @@ bool CClipboardDataWriter::AddData(std::wstring const& inData)
 {
 	if (!m_Object)
 		m_Object = new wxDataObjectComposite();
-	m_Object->Add(new wxTextDataObject(inData));
+	m_Object->Add(new wxTextDataObject(inData.c_str()));
 	return true;
 }
 

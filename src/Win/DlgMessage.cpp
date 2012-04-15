@@ -33,10 +33,10 @@ CDlgMessage::CDlgMessage(
 {
 	if (caption.empty())
 		caption = StringUtil::stringW(_("IDD_MESSAGE"));
-	Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(pParent, wxID_ANY, caption.c_str(), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 	// Controls (these are done first to control tab order)
 
-	CTextCtrl* textCtrl = new CTextCtrl(this, wxID_ANY, msg,
+	CTextCtrl* textCtrl = new CTextCtrl(this, wxID_ANY, msg.c_str(),
 		wxDefaultPosition, wxSize(450, 300),
 		wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
 

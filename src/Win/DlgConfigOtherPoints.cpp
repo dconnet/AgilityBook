@@ -112,10 +112,10 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	: wxDialog()
 	, m_Config(config)
 	, m_pOther(pOther)
-	, m_Name(pOther->GetName())
+	, m_Name(StringUtil::stringWX(pOther->GetName()))
 	, m_ctrlTally(NULL)
 	, m_Default(pOther->GetDefault())
-	, m_Desc(pOther->GetDescription())
+	, m_Desc(StringUtil::stringWX(pOther->GetDescription()))
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)

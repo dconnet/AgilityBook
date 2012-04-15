@@ -27,6 +27,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBAgilityRecordBook.h"
+#include "ARBString.h"
 #include "ConfigHandler.h"
 #include "Element.h"
 #include "Widgets.h"
@@ -134,7 +135,7 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 			wxString msg = _("AFX_IDP_FAILED_TO_OPEN_DOC");
 			if (0 < errMsg.str().length())
 			{
-				msg << L"\n\n" << errMsg.str();
+				msg << L"\n\n" << errMsg.str().c_str();
 			}
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
@@ -143,11 +144,11 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 		if (!m_Book.Load(tree, false, false, true, false, false, err))
 		{
 			if (0 < err.m_ErrMsg.str().length())
-				wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+				wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
 		else if (0 < err.m_ErrMsg.str().length())
-			wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return true;
 }

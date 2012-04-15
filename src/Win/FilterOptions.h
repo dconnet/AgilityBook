@@ -129,7 +129,7 @@ private:
 		}
 		bool Save(int index);
 
-		std::wstring filterName;
+		wxString filterName;
 		CCalendarViewFilter calView;
 		bool bAllDates;
 		bool bStartDate;
