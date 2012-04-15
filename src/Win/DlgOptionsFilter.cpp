@@ -680,7 +680,7 @@ void CDlgOptionsFilter::OnFilterLogNames(wxCommandEvent& evt)
 	{
 		if (m_ctrlNames->IsChecked(item))
 		{
-			names.insert(m_ctrlNames->GetString(item));
+			names.insert(StringUtil::stringW(m_ctrlNames->GetString(item)));
 		}
 	}
 	m_FilterOptions.SetTrainingFilterNames(names);

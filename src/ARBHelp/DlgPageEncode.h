@@ -18,6 +18,7 @@
  */
 
 #include "ARBTypes.h"
+#include <sstream>
 #include <wx/wizard.h>
 class CDlgARBHelp;
 
@@ -31,9 +32,9 @@ public:
 
 private:
 	void DumpGroup(
-			wxString* data,
+			std::wostringstream* data,
 			wxString const& group,
-			std::vector<wxString>* items);
+			std::vector<std::wstring>* items);
 
 	CDlgARBHelp* m_Parent;
 	wxRadioBox* m_DiskChoices;

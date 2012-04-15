@@ -19,6 +19,7 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
+#include "ARBString.h"
 #include "Element.h"
 
 #ifdef __WXMSW__
@@ -104,7 +105,7 @@ ARBCalcPointsT2B::ARBCalcPointsT2B()
 
 std::wstring ARBCalcPointsT2B::GetGenericName(double points, double faults) const
 {
-	return _("IDS_TITLEPOINT_NORMAL_T2B").wx_str();
+	return StringUtil::stringW(_("IDS_TITLEPOINT_NORMAL_T2B"));
 }
 
 
@@ -153,7 +154,7 @@ ARBCalcPointsUKI::ARBCalcPointsUKI()
 
 std::wstring ARBCalcPointsUKI::GetGenericName(double points, double faults) const
 {
-	return _("IDS_TITLEPOINT_NORMAL_UKI").wx_str();
+	return StringUtil::stringW(_("IDS_TITLEPOINT_NORMAL_UKI"));
 }
 
 

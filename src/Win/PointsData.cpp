@@ -248,7 +248,7 @@ std::wstring CPointsDataDog::GetHtml(
 	std::wostringstream data;
 	if (m_pDog)
 	{
-		data << L"<h1 align=\"center\">" << _("IDS_TITLING_POINTS").wx_str() << L" "
+		data << L"<h1 align=\"center\">" << StringUtil::stringW(_("IDS_TITLING_POINTS")) << L" "
 			<< Sanitize(ARBDate::Today().GetString())
 			<< L"</h1>"
 			<< L"<h1>";
@@ -591,7 +591,7 @@ std::wstring CPointsDataEvent::GetHtml(
 void CPointsDataEvent::Details() const
 {
 	std::wostringstream str;
-	str << _("IDS_RUNS").wx_str() << L": "
+	str << StringUtil::stringW(_("IDS_RUNS")) << L": "
 		<< m_Div->GetName()
 		<< L"/"
 		<< m_Level->GetName()
@@ -658,10 +658,10 @@ std::wstring CPointsDataLifetime::OnNeedText(int inCol) const
 			str << wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str()).wx_str();
 		}
 		else
-			str << _("IDS_PLACEMENT_POINTS").wx_str();
+			str << StringUtil::stringW(_("IDS_PLACEMENT_POINTS"));
 		break;
 	case 2:
-		str << _("IDS_TOTAL").wx_str() << L": ";
+		str << StringUtil::stringW(_("IDS_TOTAL")) << L": ";
 		if (0 < m_Filtered)
 			str << m_Lifetime - m_Filtered << L" (" << m_Lifetime << L")";
 		else

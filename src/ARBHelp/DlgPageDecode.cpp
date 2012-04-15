@@ -110,7 +110,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 	std::wstring::size_type pos = data.find(STREAM_DATA_BEGIN);
 	if (std::wstring::npos != pos)
 	{
-		data = data.substr(pos + wxString(STREAM_DATA_BEGIN).length());
+		data = data.substr(pos + wcslen(STREAM_DATA_BEGIN));
 		pos = data.find(STREAM_DATA_END);
 		if (0 <= pos)
 			data = data.substr(0, pos);
@@ -138,10 +138,10 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 			pos = data.find(sc_sections[idx].begin);
 			if (0 <= pos)
 			{
-				int posEnd = data.find(sc_sections[idx].end);
+				std::wstring::size_type posEnd = data.find(sc_sections[idx].end);
 				if (pos < posEnd)
 				{
-					size_t posData = pos + static_cast<int>(sc_sections[idx].begin.length());
+					size_t posData = pos + sc_sections[idx].begin.length();
 					// Dump the preceding data.
 					editData << data.substr(0, posData) << L"\n";
 					// Trim preceding
@@ -168,7 +168,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 			std::wstring::size_type posEnd = data.find(STREAM_FILE_END);
 			if (0 < posEnd && posEnd > pos)
 			{
-				int posData = pos + static_cast<int>(wxString(STREAM_FILE_BEGIN).length());
+				std::wstring::size_type posData = pos + wcslen(STREAM_FILE_BEGIN);
 				// Dump the preceding data (but not identifier.
 				editData << data.substr(0, pos); // New line included
 				// Trim preceding
@@ -178,7 +178,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				posEnd = data.find(STREAM_FILE_END); // Recompute - we just changed the string
 				dataIn = data.substr(0, posEnd);
 				// Strip that from main data.
-				data = data.substr(posEnd + wxString(STREAM_FILE_END).length());
+				data = data.substr(posEnd + wcslen(STREAM_FILE_END));
 				data = StringUtil::TrimLeft(data);
 				// Now decode
 				unsigned char* binData = NULL;

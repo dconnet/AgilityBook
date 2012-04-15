@@ -275,7 +275,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 				info.SetMask(wxLIST_MASK_TEXT);
 				info.SetColumn(i);
 				m_pView->m_Ctrl->GetItem(info);
-				strings.insert(info.GetText());
+				strings.insert(StringUtil::stringW(info.GetText()));
 			}
 		}
 		for (std::set<std::wstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)

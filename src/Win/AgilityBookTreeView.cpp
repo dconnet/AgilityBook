@@ -156,7 +156,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 		}
 		else
 		{
-			strings.insert(m_pView->m_Ctrl->GetItemText(hItem));
+			strings.insert(StringUtil::stringW(m_pView->m_Ctrl->GetItemText(hItem)));
 		}
 		for (std::set<std::wstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{

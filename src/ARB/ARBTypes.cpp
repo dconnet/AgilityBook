@@ -129,7 +129,7 @@ std::wstring ARB_Q::GetValidTypes()
 	{
 		if (0 < i)
 			types << L", ";
-		types << wxGetTranslation(sc_Qs[i].trans).wx_str();
+		types << StringUtil::stringW(wxGetTranslation(sc_Qs[i].trans));
 	}
 	return types.str();
 }
@@ -140,7 +140,7 @@ void ARB_Q::GetValidTypes(std::vector<std::wstring>& outTypes)
 	outTypes.clear();
 	for (int i = 0; i < sc_nQs; ++i)
 	{
-		outTypes.push_back(wxGetTranslation(sc_Qs[i].trans).wx_str());
+		outTypes.push_back(StringUtil::stringW(wxGetTranslation(sc_Qs[i].trans)));
 	}
 }
 
