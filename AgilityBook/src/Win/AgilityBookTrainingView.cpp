@@ -423,14 +423,14 @@ bool CAgilityBookTrainingView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
-	msg = wxString::Format(_("IDS_NUM_TRAINING"), m_Ctrl->GetItemCount());
+	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_TRAINING"), m_Ctrl->GetItemCount()));
 	return true;
 }
 
 
 bool CAgilityBookTrainingView::GetMessage2(std::wstring& msg) const
 {
-	msg = _("IDS_INDICATOR_BLANK");
+	msg = StringUtil::stringW(_("IDS_INDICATOR_BLANK"));
 	return true;
 }
 

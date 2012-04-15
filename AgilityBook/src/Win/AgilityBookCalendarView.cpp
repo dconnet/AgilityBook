@@ -330,7 +330,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 
 				// Display date (only day now, not full date)
 				//wxString str(day.GetString());
-				str = wxString::Format(L"%d", day.GetDay());
+				str = StringUtil::stringW(wxString::Format(L"%d", day.GetDay()));
 				{
 					wxDCClipper clip(*pDC, rect);
 					pDC->DrawLabel(StringUtil::stringWX(str), rect, wxALIGN_TOP|wxALIGN_RIGHT);
@@ -1265,14 +1265,14 @@ bool CAgilityBookCalendarView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
-	msg = wxString::Format(_("IDS_NUM_EVENTS"), m_Ctrl->NumEvents());
+	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_EVENTS"), m_Ctrl->NumEvents()));
 	return true;
 }
 
 
 bool CAgilityBookCalendarView::GetMessage2(std::wstring& msg) const
 {
-	msg = _("IDS_INDICATOR_BLANK");
+	msg = StringUtil::stringW(_("IDS_INDICATOR_BLANK"));
 	return true;
 }
 

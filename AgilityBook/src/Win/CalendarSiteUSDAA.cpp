@@ -555,7 +555,7 @@ std::string CCalendarSiteUSDAA::Process(
 										iTD = td->FindElement(L"a");
 										if (0 <= iTD)
 										{
-											wxString email;
+											std::wstring email;
 											td->GetElementNode(iTD)->GetAttrib(L"href", email);
 											cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
 										}

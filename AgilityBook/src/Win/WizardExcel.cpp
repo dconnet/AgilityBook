@@ -732,9 +732,9 @@ bool CWizardExcelImport::GetData(
 			wxFileName filename(m_FileName);
 			std::wstring msg = filename.GetFullPath();
 			ioProgress->SetCaption(msg);
-			std::wstring str = wxString::Format(_("IDS_READING_ROWSCOLS"),
+			std::wstring str = StringUtil::stringW(wxString::Format(_("IDS_READING_ROWSCOLS"),
 				static_cast<int>(nRows),
-				static_cast<int>(nCols));
+				static_cast<int>(nCols)));
 			ioProgress->SetMessage(str);
 			ioProgress->SetRange(1, nRows);
 			ioProgress->ShowProgress();
@@ -1094,7 +1094,7 @@ bool CWizardCalcImport::GetData(
 		wxFileName filename(m_FileName);
 		std::wstring msg = filename.GetFullPath();
 		ioProgress->SetCaption(msg);
-		std::wstring str = wxString::Format(_("IDS_READING_ROWS"), nRows);
+		std::wstring str = StringUtil::stringW(wxString::Format(_("IDS_READING_ROWS"), nRows));
 		ioProgress->SetMessage(str);
 		ioProgress->SetRange(1, nRows);
 		ioProgress->ShowProgress();

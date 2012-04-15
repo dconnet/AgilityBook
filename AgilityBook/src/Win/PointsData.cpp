@@ -655,7 +655,7 @@ std::wstring CPointsDataLifetime::OnNeedText(int inCol) const
 				lifetime = m_Venue->GetLifetimeName();
 			else
 				lifetime = _("IDS_TITLEPOINT_LIFETIME");
-			str << wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str()).wx_str();
+			str << StringUtil::stringW(wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str()));
 		}
 		else
 			str << StringUtil::stringW(_("IDS_PLACEMENT_POINTS"));

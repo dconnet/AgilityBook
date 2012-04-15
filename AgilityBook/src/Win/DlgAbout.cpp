@@ -53,7 +53,8 @@ public:
 	CHyperlinkCtrl();
 	CHyperlinkCtrl(wxWindow *pParent,
 			wxWindowID id,
-			const wxString& label, const wxString& url,
+			const wxString& label,
+			const wxString& url,
 			const wxPoint& pos = wxDefaultPosition,
 			const wxSize& size = wxDefaultSize,
 			long style = wxHL_DEFAULT_STYLE,
@@ -83,7 +84,8 @@ CHyperlinkCtrl::CHyperlinkCtrl()
 
 CHyperlinkCtrl::CHyperlinkCtrl(wxWindow *pParent,
 		wxWindowID id,
-		const wxString& label, const wxString& url,
+		const wxString& label,
+		const wxString& url,
 		const wxPoint& pos,
 		const wxSize& size,
 		long style,

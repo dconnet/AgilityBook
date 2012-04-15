@@ -53,10 +53,10 @@ void CLocalization::Load()
 	m_InvalidDivLevel = _("IDS_INVALID_DIV_LEVEL");
 	m_InvalidEventName = _("IDS_INVALID_EVENT_NAME");
 
-	m_InvalidRoot = wxString::Format(_("IDS_INVALID_ROOT"), TREE_BOOK);
-	m_MissingConfig = wxString::Format(_("IDS_MISSING_CONFIG"), TREE_CONFIG);
-	m_InvalidConfig = wxString::Format(_("IDS_INVALID_CONFIG"), TREE_CONFIG);
-	m_InvalidVenueConfig = wxString::Format(_("IDS_INVALID_VENUE_CONFIG"), TREE_DIVISION, TREE_EVENT);
+	m_InvalidRoot = StringUtil::stringW(wxString::Format(_("IDS_INVALID_ROOT"), TREE_BOOK));
+	m_MissingConfig = StringUtil::stringW(wxString::Format(_("IDS_MISSING_CONFIG"), TREE_CONFIG));
+	m_InvalidConfig = StringUtil::stringW(wxString::Format(_("IDS_INVALID_CONFIG"), TREE_CONFIG));
+	m_InvalidVenueConfig = StringUtil::stringW(wxString::Format(_("IDS_INVALID_VENUE_CONFIG"), TREE_DIVISION, TREE_EVENT));
 	m_InvalidDivName = _("IDS_INVALID_DIV_NAME");
 	m_InvalidVenueName = _("IDS_INVALID_VENUE_NAME");
 	m_InvalidOtherPtsName = _("IDS_INVALID_OTHER_PTS_NAME");
@@ -582,7 +582,8 @@ std::wstring CLocalization::UpdateTableRuns(int nRuns) const
 
 std::wstring CLocalization::ErrorInvalidDocStructure(wchar_t const* const inMsg) const
 {
-	std::wostringstream buffer(m_InvalidDocStructure);
+	std::wostringstream buffer;
+	buffer << m_InvalidDocStructure;
 	if (inMsg)
 		buffer << L": " << inMsg << L"\n";
 	return buffer.str();
