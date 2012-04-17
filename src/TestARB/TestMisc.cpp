@@ -45,6 +45,18 @@ SUITE(TestMisc)
 	}
 
 
+	TEST(Version)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBVersion ver(0xf3f3, 0xff44);
+			CHECK(ver.Major() == 0xf3f3);
+			CHECK(ver.Minor() == 0xff44);
+		}
+	}
+
+
+
 	TEST(Localization)
 	{
 		if (!g_bMicroTest)
