@@ -248,6 +248,22 @@ SUITE(TestDate)
 	}
 
 
+	TEST(DayOfYear)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBDate d1(2009, 1, 1);
+			ARBDate d2(2009, 2, 1);
+			ARBDate d3(2009, 12, 31);
+			ARBDate d4(2004, 12, 31);
+			CHECK(1 == d1.GetDayOfYear());
+			CHECK(32 == d2.GetDayOfYear());
+			CHECK(365 == d3.GetDayOfYear());
+			CHECK(366 == d4.GetDayOfYear());
+		}
+	}
+
+
 	TEST(DSTDate)
 	{
 		ARBDate d1(2010, 6, 1); // A date in DST

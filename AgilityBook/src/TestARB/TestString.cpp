@@ -180,13 +180,26 @@ SUITE(TestString)
 	{
 		if (!g_bMicroTest)
 		{
-			/*
-			std::wstring one(L"one");
-			std::wstring two(L"two");
-			std::wstring fmt = std::wstring::Format(L"%2$s %1$s", one.c_str(), two.c_str());
-			CHECK(fmt == L"two one");
-			*/
 			CHECK(L"two one" == wxString::Format(L"%2$s %1$s", L"one", L"two"));
 		}
 	}
+
+
+	TEST(Trim)
+	{
+		std::wstring str(L"  xyx  ");
+		CHECK(StringUtil::Trim(str) == L"xyx");
+		CHECK(StringUtil::TrimLeft(str) == L"xyx  ");
+		CHECK(StringUtil::TrimRight(str) == L"  xyx");
+	}
+
+
+	TEST(TrimChar)
+	{
+		std::wstring str(L"\"xyx\"");
+		CHECK(StringUtil::Trim(str, '"') == L"xyx");
+		CHECK(StringUtil::TrimLeft(str, '"') == L"xyx\"");
+		CHECK(StringUtil::TrimRight(str, '"') == L"\"xyx");
+	}
+
 }

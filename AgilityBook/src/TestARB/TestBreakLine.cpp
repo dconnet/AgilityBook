@@ -63,11 +63,18 @@ SUITE(TestBreakLine)
 	static wchar_t const* recordMore1b = L"2010-10-30;Name;\"Subname\";\"Line 1";
 	static wchar_t const* recordMore2b = L"Line 2\"";
 
+
 	TEST(BreakLine)
 	{
 		std::vector<std::wstring> fields;
 		CHECK(4 == BreakLine(';', record4, fields));
+		CHECK(4 == fields.size());
+		CHECK(4 == BreakLine(';', record4, fields, true));
+		CHECK(3 == fields.size());
 		CHECK(7 == BreakLine(';', record7, fields));
+		CHECK(7 == fields.size());
+		CHECK(7 == BreakLine(';', record7, fields, true));
+		CHECK(6 == fields.size());
 	}
 
 
