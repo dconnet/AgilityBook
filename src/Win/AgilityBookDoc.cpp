@@ -1389,7 +1389,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 	{
 		BackupFile(filename);
 		// Then we can stream that tree out as XML.
-		if (tree->SaveXML(filename.wx_str()))
+		if (tree->SaveXML(StringUtil::stringW(filename)))
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, filename);
 			bOk = true;

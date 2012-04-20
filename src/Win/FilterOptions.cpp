@@ -305,7 +305,7 @@ size_t CFilterOptions::GetAllFilterNames(
 	if (!bForEditing)
 	{
 		if (0 < outNames.size() || IsFilterEnabled())
-			outNames.insert(outNames.begin(), _("IDS_ALL"));
+			outNames.insert(outNames.begin(), StringUtil::stringW(_("IDS_ALL")));
 	}
 	return outNames.size();
 }

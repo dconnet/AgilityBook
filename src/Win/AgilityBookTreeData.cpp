@@ -1407,10 +1407,10 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 					}
 					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
 					{
-						wxString tmp(_("IDS_SQ"));
+						std::wstring tmp(StringUtil::stringW(_("IDS_SQ")));
 						if (!q.empty())
 							q += L"/";
-						q += tmp.wx_str();
+						q += tmp;
 					}
 				}
 				if (q.empty())

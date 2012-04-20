@@ -87,6 +87,7 @@
 #include "ARBConfig.h"
 #include "ARBDog.h"
 #include "ARBLocalization.h"
+#include "ARBString.h"
 #include "ARBTypes.h"
 #include "Element.h"
 
@@ -339,7 +340,7 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 	outTree->AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_PLATFORM, GetArch());
-	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, ::wxGetOsDescription());
+	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, StringUtil::stringW(::wxGetOsDescription()));
 	outTree->AddAttrib(ATTRIB_BOOK_TIMESTAMP, GetTimeStamp());
 	if (inCalendar)
 	{

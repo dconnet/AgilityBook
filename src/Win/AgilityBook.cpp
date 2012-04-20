@@ -30,6 +30,7 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "ARBString.h"
 #include "Element.h"
 #include "LanguageManager.h"
 #include "MainFrm.h"
@@ -416,7 +417,7 @@ bool CAgilityBookApp::OnInit()
 	// Check for updates every 30 days.
 	if (CAgilityBookOptions::GetAutoUpdateCheck())
 	{
-		std::wstring ver = wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, L"").wx_str();
+		std::wstring ver = StringUtil::stringW(wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, L""));
 		ARBDate date = ARBDate::FromString(ver, ARBDate::eISO);
 		if (date.IsValid())
 		{
