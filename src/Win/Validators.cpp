@@ -263,7 +263,7 @@ bool CGenericValidator::TransferFromWindow()
 		else if (m_pTime)
 		{
 			textVal.MakeUpper();
-			return NULL != m_pTime->ParseFormat(textVal, s_TimeFormat);
+			return m_pTime->ParseFormat(textVal, s_TimeFormat);
 		}
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
