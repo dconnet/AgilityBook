@@ -2121,7 +2121,7 @@
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				SYMROOT = "build-trunk-unicode";
 			};
@@ -2196,7 +2196,7 @@
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				SYMROOT = "build-trunk-unicode";
 			};
