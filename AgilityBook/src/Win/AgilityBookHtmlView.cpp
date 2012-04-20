@@ -182,7 +182,7 @@ wxString CAgilityBookHtmlView::RawHtml(
 	ARBDate today(ARBDate::Today());
 	std::wostringstream data;
 
-	std::wstring title = _("IDS_TITLING_POINTS");
+	std::wstring title = StringUtil::stringW(_("IDS_TITLING_POINTS"));
 
 	data << L"<html>\n";
 	if (!bFragment)

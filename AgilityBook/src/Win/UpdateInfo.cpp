@@ -729,7 +729,7 @@ void CUpdateInfo::CheckConfig(
 		if (UpdateConfig(pDoc, msg.c_str()))
 		{
 			// Load the config.
-			std::wstring url = _("IDS_HELP_UPDATE");
+			std::wstring url = StringUtil::stringW(_("IDS_HELP_UPDATE"));
 			url += L"/";
 			url += m_ConfigFileName;
 			std::string strConfig;
