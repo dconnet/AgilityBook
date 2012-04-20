@@ -49,9 +49,9 @@ USAGE="Usage $0 trunk|2.8 unicode|ansi [debug|release]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
-	VERSION="--disable-compat28 --disable-uiactionsim"
-elif test "x$1" = "xtrunk5"; then
-	WXWIN=~/wx/trunk
+	#10.4
+	#VERSION="--disable-compat28 --disable-uiactionsim"
+	#10.5
 	VERSION="--disable-compat28"
 elif test "x$1" = "x2.8"; then
 	WXWIN=~/wx/wxWidgets-2.8.12
@@ -83,15 +83,12 @@ else
 	$0 $1 $2 release
 	exit
 fi
-if test "x$1" = "xtrunk5"; then
-	BUILDDIR+="-10.5"
-fi
 
 rm -rf $BUILDDIR
 mkdir $BUILDDIR
 cd $BUILDDIR
 
-if test "x$1" = "xtrunk5"; then
+if test "x$1" = "xtrunk"; then
 	COMPILERS=
 	MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Developer/SDKs/MacOSX10.5.sdk"
 else
