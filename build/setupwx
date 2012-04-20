@@ -4,45 +4,11 @@
 #
 # This will clean and configure the build directory for a wxWidget build.
 # (I put this script in my home dir)
-# Please note: Enabling unicode just doesn't seem to work right.
-# If you type the following in and compile, it will demonstrate that
-# (strip leading "#<space>")
-# FROM HERE
-# #include "wx/init.h"
-# #include "wx/string.h"
-# #if wxCHECK_VERSION(2, 9, 0)
-# #include "wx/wxcrt.h"
-# #endif
-# int main(int argc, char** argv)
-# {
-# 	wxInitializer init;
-# 	if (!init.IsOk())
-# 	{
-# 		printf("Init FAIL!\n");
-# 		return 1;
-# 	}
-# #if wxUSE_UNICODE
-# 	wxPuts(wxT("unicode - yes"));
-# #else
-# 	wxPuts(wxT("unicode - no"));
-# #endif
-# #if wxUSE_UNICODE_UTF8
-# 	wxPuts(wxT("unicode-utf8 - yes"));
-# #else
-# 	wxPuts(wxT("unicode-utf8 - no"));
-# #endif
-# 	wxPuts(wxString::Format(wxT("sizeof wxChar: %d"), sizeof(wxChar)));
-# 	wxPuts(wxT("Test: normal:"));
-# 	wxPuts(wxString::Format(wxT("\t%%s %%s: %s %s"), wxT("second"), wxT("first")));
-# 	wxPuts(wxT("Test: format change:"));
-# 	wxPuts(wxString::Format(wxT("\t%%2$s %%1$s : %2$s %1$s"), wxT("second"), wxT("first")));
-# 	return 0;
-# }
-# TO HERE
 
 export BUILDDIR
 export DEBUG
 export UNICODESETTING
+export LIBRARIES
 export VERSION=
 export WXWIN=
 USAGE="Usage $0 trunk|2.8 unicode|ansi [debug|release]"
@@ -95,7 +61,7 @@ else
 	COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
 	MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk"
 fi
-LIBRARIES=--with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no
+LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no"
 
 echo "Running: ../configure $COMPILERS --disable-shared $DEBUG $VERSION $UNICODESETTING --enable-universal_binary $LIBRARIES $MINSDK"
 
