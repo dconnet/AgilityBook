@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-04 DRC Add bAlwaysStripZeros to ARBDouble::ToString.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
  * @li 2009-09-28 DRC Fix abs() on Mac.
@@ -224,7 +225,8 @@ bool ARB_Q::Save(
 std::wstring ARBDouble::ToString(
 		double inValue,
 		int inPrec,
-		LocaleType eUseDefaultLocale)
+		LocaleType eUseDefaultLocale,
+		bool bAlwaysStripZeros)
 {
 #if !defined(__WXWINDOWS__)
 	eUseDefaultLocale = eNone;
@@ -262,7 +264,7 @@ std::wstring ARBDouble::ToString(
 	if (std::wstring::npos != pos)
 	{
 		// Strip trailing zeros iff they are all 0.
-		if (2 == inPrec)
+		if (2 == inPrec && !bAlwaysStripZeros)
 		{
 			std::wstring twoZeros;
 			twoZeros = pt;

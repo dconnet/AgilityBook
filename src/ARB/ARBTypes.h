@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-04 DRC Add bAlwaysStripZeros to ARBDouble::ToString.
  * @li 2011-08-22 DRC ARBVersion was only using 16 instead of 32bits.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-04-20 DRC Added DNR.
@@ -513,10 +514,15 @@ public:
 		eCurrent,	///< Use current locale.
 		eDefault	///< Use default (system) locale.
 	};
+	/**
+	 * Trailing zeros are trimmed unless inPrec=2.
+	 * Then they are only trimmed if all zero (and inPrec=2).
+	 */
 	static std::wstring ToString(
 			double inValue,
 			int inPrec = 2,
-			LocaleType eUseDefaultLocale = eDefault);
+			LocaleType eUseDefaultLocale = eDefault,
+			bool bAlwaysStripZeros = false);
 	/**
 	 * Compare two doubles, allowing for 'prec' error.
 	 */
