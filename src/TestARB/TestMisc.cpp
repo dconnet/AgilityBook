@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-04-03 DRC Added ARBVersion test.
  * @li 2011-11-17 DRC Add localization test.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-12 DRC Created

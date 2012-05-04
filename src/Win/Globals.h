@@ -34,7 +34,7 @@ class wxTreeCtrl;
  * @param outBuffer Decoded password
  * @return Success
  */
-bool GetFileTimes(
+extern bool GetFileTimes(
 		wxFileName const& filename,
 		wxDateTime* dtAccess,
 		wxDateTime* dtMod,

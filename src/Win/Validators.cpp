@@ -263,7 +263,11 @@ bool CGenericValidator::TransferFromWindow()
 		else if (m_pTime)
 		{
 			textVal.MakeUpper();
+#if wxCHECK_VERSION(2, 9, 3)
 			return m_pTime->ParseFormat(textVal, s_TimeFormat);
+#else
+			return NULL != m_pTime->ParseFormat(textVal, s_TimeFormat);
+#endif
 		}
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
@@ -387,7 +391,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				{
 					ok = false;
 					if (errormsg.empty())
-						errormsg = _("IDS_NEED_NUMBER");
+						errormsg = _("Please enter a valid number");
 				}
 			}
 			if (m_pShort || m_pLong)
@@ -406,7 +410,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				{
 					ok = false;
 					if (errormsg.empty())
-						errormsg = _("IDS_NEED_NUMBER");
+						errormsg = _("Please enter a valid number");
 				}
 			}
 			else if (m_pDouble)
@@ -420,7 +424,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				{
 					ok = false;
 					if (errormsg.empty())
-						errormsg = _("IDS_NEED_NUMBER");
+						errormsg = _("Please enter a valid number");
 				}
 			}
 			else if (m_pTime)
@@ -431,7 +435,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				{
 					ok = false;
 					if (errormsg.empty())
-						errormsg = _("IDS_NEED_NUMBER");
+						errormsg = _("Please enter a valid number");
 				}
 			}
 		}
@@ -441,7 +445,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 	if (!ok)
 	{
 		if (errormsg.empty())
-			errormsg = _("IDS_NEED_VALUE");
+			errormsg = _("Please enter a value");
 
 		if (pTextControl)
 			pTextControl->SelectAll();
@@ -546,7 +550,7 @@ bool CTrimValidator::Validate(wxWindow* parent)
 		ok = false;
 		errormsg = m_ErrMsg;
 		if (errormsg.empty())
-			errormsg = _("IDS_NEED_VALUE");
+			errormsg = _("Please enter a value");
 	}
 
 	if (!ok)

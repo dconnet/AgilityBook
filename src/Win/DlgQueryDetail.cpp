@@ -187,7 +187,7 @@ void CDlgQueryDetail::OnOk(wxCommandEvent& evt)
 		{
 			wxBell();
 			m_ctrlCode->SetFocus();
-			wxMessageBox(_("IDS_NEED_VALUE"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION);
+			wxMessageBox(_("Please enter a value"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION);
 			return;
 		}
 

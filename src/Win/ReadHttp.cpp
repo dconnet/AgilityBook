@@ -100,7 +100,7 @@ bool CReadHttp::ReadHttpFile(
 		m_Data->erase();
 	if (!m_URL || !m_URL->IsOk())
 	{
-		outErrMsg = _("IDS_HTTP_INVALID_URL");
+		outErrMsg = _("Invalid URL");
 		outErrMsg += L": ";
 		outErrMsg += m_address;
 		return false;
