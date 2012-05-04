@@ -57,7 +57,6 @@ SUITE(TestMisc)
 	}
 
 
-
 	TEST(Localization)
 	{
 		if (!g_bMicroTest)
