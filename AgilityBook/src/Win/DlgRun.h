@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-16 DRC Merged DlgRun* into here.
  * @li 2009-02-09 DRC Ported to wxWidgets.
@@ -47,6 +48,7 @@
 #include <wx/listctrl.h>
 #include <wx/notebook.h>
 class CAgilityBookDoc;
+class CAutoFillComboBox;
 class CDlgDogDivData;
 class CDlgDogLevelData;
 class CListCtrl;
@@ -127,16 +129,16 @@ private:
 	wxComboBox* m_ctrlLevels;
 	wxComboBox* m_ctrlEvents;
 	wxStaticText* m_ctrlSubNamesText;
-	wxComboBox* m_ctrlSubNames;
+	CAutoFillComboBox* m_ctrlSubNames;
 	wxString m_SubName;
 	wxCheckBox* m_ctrlTable;
 	bool m_Table;
-	wxComboBox* m_ctrlHeight;
+	CAutoFillComboBox* m_ctrlHeight;
 	wxString m_Height;
-	wxComboBox* m_ctrlJudge;
+	CAutoFillComboBox* m_ctrlJudge;
 	wxString m_Judge;
 	//CNoteButton m_ctrlJudgeNotes;
-	wxComboBox* m_ctrlHandler;
+	CAutoFillComboBox* m_ctrlHandler;
 	wxString m_Handler;
 	CTextCtrl* m_ctrlConditions;
 	wxString m_Conditions;

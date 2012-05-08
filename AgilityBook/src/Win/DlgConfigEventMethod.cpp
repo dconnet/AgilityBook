@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Fixed some comboboxes that should have been readonly.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -182,7 +183,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	m_ctrlDivision = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, 0);
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
 	BIND_OR_CONNECT_CTRL(m_ctrlDivision, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgConfigEventMethod::OnSelchangeDivision);
 	m_ctrlDivision->SetHelpText(_("HIDC_CONFIG_EVENT_DIVISION"));
 	m_ctrlDivision->SetToolTip(_("HIDC_CONFIG_EVENT_DIVISION"));
@@ -208,7 +209,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	m_ctrlLevel = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, 0);
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
 	m_ctrlLevel->SetHelpText(_("HIDC_CONFIG_EVENT_LEVEL"));
 	m_ctrlLevel->SetToolTip(_("HIDC_CONFIG_EVENT_LEVEL"));
 

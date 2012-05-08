@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-20 DRC Ported to wxWidgets.
  * @li 2008-01-05 DRC Added CVenueComboBox
@@ -66,21 +67,30 @@ CVenueComboBox::CVenueComboBox(
 		wxCB_DROPDOWN | (bEditable ? 0 : wxCB_READONLY) | wxCB_SORT,
 		validator);
 
+#if wxCHECK_VERSION(2, 9, 3)
+	wxArrayString choices;
+#endif
 	for (ARBConfigVenueList::const_iterator iterVenue = inVenues.begin();
 		iterVenue != inVenues.end();
 		++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
-		wxString wxName = StringUtil::stringWX(pVenue->GetName());
+		wxString wxShortName = StringUtil::stringWX(pVenue->GetName());
+		wxString wxName(wxShortName);
 		int index;
 		if (useLongName)
-			index = Append(StringUtil::stringWX(pVenue->GetLongName()));
-		else
-			index = Append(wxName);
+			wxName = StringUtil::stringWX(pVenue->GetLongName());
+		index = Append(wxName);
+#if wxCHECK_VERSION(2, 9, 3)
+		choices.Add(wxName);
+#endif
 		SetClientObject(index, new CVenueComboData(pVenue));
-		if (!inSelectVenue.empty() && wxName == inSelectVenue)
+		if (!inSelectVenue.empty() && wxShortName == inSelectVenue)
 			SetSelection(index);
 	}
+#if wxCHECK_VERSION(2, 9, 3)
+	AutoComplete(choices);
+#endif
 }
 
 

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Fixed some comboboxes that should have been readonly.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -196,7 +197,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	textDisplay->Wrap(-1);
 
 	m_ctrlStyle = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0, NULL, 0); 
+		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
 	m_ctrlStyle->SetHelpText(_("HIDC_CONFIG_TITLE_STYLE"));
 	m_ctrlStyle->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
 	static struct

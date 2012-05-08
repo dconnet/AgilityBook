@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -23,6 +24,7 @@
 #include "AgilityBook.h"
 #include "ARBDogRunPartner.h"
 #include "ARBString.h"
+#include "ComboBoxes.h"
 #include "Validators.h"
 #include "Widgets.h"
 
@@ -74,24 +76,26 @@ CDlgPartner::CDlgPartner(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textHandler->Wrap(-1);
 
-	wxComboBox* ctrlHandler = new wxComboBox(this, wxID_ANY, m_Handler,
+	CAutoFillComboBox* ctrlHandler = new CAutoFillComboBox(this, wxID_ANY, m_Handler,
 		wxDefaultPosition, wxDefaultSize,
 		handlers, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Handler, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHandler->SetHelpText(_("HIDC_PARTNER_NAME"));
 	ctrlHandler->SetToolTip(_("HIDC_PARTNER_NAME"));
+	ctrlHandler->AutoComplete(handlers);
 
 	wxStaticText* textDog = new wxStaticText(this, wxID_ANY,
 		_("IDC_PARTNER_CALLNAME"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDog->Wrap(-1);
 
-	wxComboBox* ctrlDog = new wxComboBox(this, wxID_ANY, m_Dog,
+	CAutoFillComboBox* ctrlDog = new CAutoFillComboBox(this, wxID_ANY, m_Dog,
 		wxDefaultPosition, wxDefaultSize,
 		dogs, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Dog, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlDog->SetHelpText(_("HIDC_PARTNER_CALLNAME"));
 	ctrlDog->SetToolTip(_("HIDC_PARTNER_CALLNAME"));
+	ctrlDog->AutoComplete(dogs);
 
 	wxStaticText* textNumber = new wxStaticText(this, wxID_ANY,
 		_("IDC_PARTNER_REG_NUM"),

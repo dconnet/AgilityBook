@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2012-01-03 DRC Fix field updating (some fields didn't have validator
  *                    associated variables tied to them)
@@ -894,7 +895,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlSubNamesText->Wrap(-1);
 
-	m_ctrlSubNames = new wxComboBox(m_panelScore, wxID_ANY,
+	m_ctrlSubNames = new CAutoFillComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN,
 		CTrimValidator(&m_SubName, TRIMVALIDATOR_TRIM_BOTH));
@@ -914,7 +915,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textHeight->Wrap(-1);
 
-	m_ctrlHeight = new wxComboBox(m_panelScore, wxID_ANY,
+	m_ctrlHeight = new CAutoFillComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition,
 #ifdef __WXMAC__
 		wxSize(100, -1), // Just not wide enough on a Mac...
@@ -928,17 +929,21 @@ CDlgRun::CDlgRun(
 	std::set<std::wstring> names;
 	m_pDoc->Book().GetAllHeights(names);
 	std::set<std::wstring>::const_iterator iter;
+	wxArrayString choices;
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
-		m_ctrlHeight->Append(StringUtil::stringWX(*iter));
+		wxString wxName(StringUtil::stringWX(*iter));
+		m_ctrlHeight->Append(wxName);
+		choices.Add(wxName);
 	}
+	m_ctrlHeight->AutoComplete(choices);
 
 	wxStaticText* textJudge = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_JUDGE"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textJudge->Wrap(-1);
 
-	m_ctrlJudge = new wxComboBox(m_panelScore, wxID_ANY,
+	m_ctrlJudge = new CAutoFillComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN,
 		CTrimValidator(&m_Judge, TRIMVALIDATOR_DEFAULT, _("IDS_SELECT_JUDGE")));
@@ -955,17 +960,21 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textHandler->Wrap(-1);
 
-	m_ctrlHandler = new wxComboBox(m_panelScore, wxID_ANY,
+	m_ctrlHandler = new CAutoFillComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN,
 		CTrimValidator(&m_Handler, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlHandler->SetHelpText(_("HIDC_RUNSCORE_HANDLER"));
 	m_ctrlHandler->SetToolTip(_("HIDC_RUNSCORE_HANDLER"));
 	m_pDoc->Book().GetAllHandlers(names);
+	choices.Clear();
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
-		m_ctrlHandler->Append(StringUtil::stringWX(*iter));
+		wxString wxName(StringUtil::stringWX(*iter));
+		m_ctrlHandler->Append(wxName);
+		choices.Add(wxName);
 	}
+	m_ctrlHandler->AutoComplete(choices);
 
 	wxStaticText* textConditions = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_CONDITIONS"),
@@ -1920,12 +1929,16 @@ void CDlgRun::FillSubNames()
 			std::set<std::wstring> names;
 			m_pDoc->Book().GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
 			m_ctrlSubNames->Clear();
+			wxArrayString choices;
 			for (std::set<std::wstring>::const_iterator iter = names.begin();
 				iter != names.end();
 				++iter)
 			{
-				m_ctrlSubNames->Append(StringUtil::stringWX(*iter));
+				wxString wxName(StringUtil::stringWX(*iter));
+				m_ctrlSubNames->Append(wxName);
+				choices.Add(wxName);
 			}
+			m_ctrlSubNames->AutoComplete(choices);
 			m_ctrlSubNamesText->Show(true);
 			m_ctrlSubNames->Show(true);
 		}
@@ -1950,10 +1963,14 @@ void CDlgRun::FillJudges()
 	if (!m_Run->GetJudge().empty())
 		names.insert(m_Run->GetJudge());
 	m_ctrlJudge->Clear();
+	wxArrayString choices;
 	for (std::set<std::wstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
-		m_ctrlJudge->Append(StringUtil::stringWX(*iter));
+		wxString wxName(StringUtil::stringWX(*iter));
+		m_ctrlJudge->Append(wxName);
+		choices.Add(wxName);
 	}
+	m_ctrlJudge->AutoComplete(choices);
 	m_ctrlJudge->SetValue(m_Judge);
 }
 

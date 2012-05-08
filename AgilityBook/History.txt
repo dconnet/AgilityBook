@@ -1,4 +1,6 @@
 4/10/2012: v2.3.6.<in development>
+- New features / Enhancements:
+  - Added autocompletion support to comboboxes (using wx2.9)
 
 4/8/2012: v2.3.5.3389
 - Bumped Configuration v36:

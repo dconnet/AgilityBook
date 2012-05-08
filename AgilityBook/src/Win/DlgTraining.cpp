@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -25,6 +26,7 @@
 #include "ARBConfig.h"
 #include "ARBString.h"
 #include "ARBTraining.h"
+#include "ComboBoxes.h"
 #include "Validators.h"
 #include "Widgets.h"
 #include <wx/datectrl.h>
@@ -95,24 +97,26 @@ CDlgTraining::CDlgTraining(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY, m_Name,
+	CAutoFillComboBox* ctrlName = new CAutoFillComboBox(this, wxID_ANY, m_Name,
 		wxDefaultPosition, wxDefaultSize,
 		names, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlName->SetHelpText(_("HIDC_TRAINING_NAME"));
 	ctrlName->SetToolTip(_("HIDC_TRAINING_NAME"));
+	ctrlName->AutoComplete(names);
 
 	wxStaticText* textSubname = new wxStaticText(this, wxID_ANY,
 		_("IDC_TRAINING_SUBNAME"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textSubname->Wrap(-1);
 
-	wxComboBox* ctrlSubname = new wxComboBox(this, wxID_ANY, m_SubName,
+	CAutoFillComboBox* ctrlSubname = new CAutoFillComboBox(this, wxID_ANY, m_SubName,
 		wxDefaultPosition, wxDefaultSize,
 		subnames, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_SubName, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlSubname->SetHelpText(_("HIDC_TRAINING_SUBNAME"));
 	ctrlSubname->SetToolTip(_("HIDC_TRAINING_SUBNAME"));
+	ctrlSubname->AutoComplete(subnames);
 
 	CTextCtrl* ctrlNote = new CTextCtrl(this, wxID_ANY, m_Notes,
 		wxDefaultPosition, wxSize(370,210),

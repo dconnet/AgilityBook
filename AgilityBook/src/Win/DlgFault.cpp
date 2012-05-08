@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -22,6 +23,7 @@
 
 #include "AgilityBook.h"
 #include "ARBString.h"
+#include "ComboBoxes.h"
 #include "Validators.h"
 
 #ifdef __WXMSW__
@@ -50,13 +52,14 @@ CDlgFault::CDlgFault(
 
 	// Controls (these are done first to control tab order)
 
-	wxComboBox* comboBox = new wxComboBox(this, wxID_ANY, m_Fault,
+	CAutoFillComboBox* comboBox = new CAutoFillComboBox(this, wxID_ANY, m_Fault,
 		wxDefaultPosition, wxDefaultSize,
 		faults,
 		wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Fault, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	comboBox->SetHelpText(_("HIDC_FAULTS"));
 	comboBox->SetToolTip(_("HIDC_FAULTS"));
+	comboBox->AutoComplete(faults);
 
 	// Sizers (sizer creation is in same order as wxFormBuilder)
 

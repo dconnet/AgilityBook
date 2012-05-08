@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-25 DRC Fixed dates (again). Damn bool->time_t autoconversion.
@@ -35,6 +36,7 @@
 #include "ARBConfigVenue.h"
 #include "ARBString.h"
 #include "CheckTreeCtrl.h"
+#include "ComboBoxes.h"
 #include "Validators.h"
 #include "Widgets.h"
 #include <wx/datectrl.h>
@@ -79,7 +81,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	wxStaticBox* boxFilters = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_NAMES"));
 
-	m_ctrlFilters = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlFilters = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN,
 		CTrimValidator(&m_FilterName, TRIMVALIDATOR_TRIM_BOTH));
@@ -88,17 +90,21 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlFilters->SetToolTip(_("HIDC_OPT_FILTER_NAMES"));
 	std::vector<std::wstring> filterNames;
 	m_FilterOptions.GetAllFilterNames(filterNames, true);
+	wxArrayString choices;
 	for (std::vector<std::wstring>::iterator iterName = filterNames.begin();
 		iterName != filterNames.end();
 		++iterName)
 	{
-		int idx = m_ctrlFilters->Append(StringUtil::stringWX(*iterName));
+		wxString wxName(StringUtil::stringWX(*iterName));
+		int idx = m_ctrlFilters->Append(wxName);
+		choices.Add(wxName);
 		if ((*iterName) == m_FilterOptions.GetCurrentFilter())
 		{
 			m_FilterName = StringUtil::stringWX(m_FilterOptions.GetCurrentFilter());
 			m_ctrlFilters->SetSelection(idx);
 		}
 	}
+	m_ctrlFilters->AutoComplete(choices);
 
 	wxButton* btnSave = new wxButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_NAMES_SAVE"),

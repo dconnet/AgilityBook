@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -84,12 +85,13 @@ CDlgClub::CDlgClub(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	m_ctrlClubs = new wxComboBox(this, wxID_ANY, m_Club,
+	m_ctrlClubs = new CAutoFillComboBox(this, wxID_ANY, m_Club,
 		wxDefaultPosition, wxDefaultSize,
 		clubs, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Club, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	m_ctrlClubs->SetHelpText(_("HIDC_CLUB_CLUBS"));
 	m_ctrlClubs->SetToolTip(_("HIDC_CLUB_CLUBS"));
+	m_ctrlClubs->AutoComplete(clubs);
 
 	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
 		_("IDC_CLUB_VENUES"),
