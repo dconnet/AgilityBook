@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-08-16 DRC Make trial notes multi-line.
  * @li 2009-10-14 DRC Add dog's name to dialog caption.
@@ -32,6 +33,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBDogTrial.h"
+#include "ComboBoxes.h"
 #include "DlgClub.h"
 #include "DlgInfoNote.h"
 #include "ListCtrl.h"
@@ -115,7 +117,7 @@ CDlgTrial::CDlgTrial(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLocation->Wrap(-1);
 
-	m_ctrlLocation = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlLocation = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_SORT,
@@ -342,12 +344,16 @@ void CDlgTrial::ListLocations()
 	if (m_Location.empty())
 		loc = m_pTrial->GetLocation();
 	m_ctrlLocation->Clear();
+	wxArrayString choices;
 	for (std::set<std::wstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
 	{
-		int index = m_ctrlLocation->Append(StringUtil::stringWX(*iter));
+		wxString wxName(StringUtil::stringWX(*iter));
+		int index = m_ctrlLocation->Append(wxName);
+		choices.Add(wxName);
 		if ((*iter) == loc)
 			m_ctrlLocation->SetSelection(index);
 	}
+	m_ctrlLocation->AutoComplete(choices);
 }
 
 

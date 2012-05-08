@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Set focus to first control.
  * @li 2011-12-30 DRC Fixed CGenericValidator.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
@@ -356,7 +357,7 @@ CDlgCalendar::CDlgCalendar(
 	if (m_EMailSecAddr.empty())
 		m_ctrlEMailSec->Enable(false);
 
-	m_ctrlEMailSecAddr = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlEMailSecAddr = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_EMailSecAddr, TRIMVALIDATOR_TRIM_BOTH));
@@ -370,13 +371,17 @@ CDlgCalendar::CDlgCalendar(
 	{
 		addrs.insert((*iCal)->GetSecEmail());
 	}
+	wxArrayString choices;
 	for (std::set<std::wstring>::iterator i = addrs.begin(); i != addrs.end(); ++i)
 	{
 		if (!(*i).empty())
 		{
-			m_ctrlEMailSecAddr->Append(StringUtil::stringWX((*i)));
+			wxString wxName(StringUtil::stringWX((*i)));
+			m_ctrlEMailSecAddr->Append(wxName);
+			choices.Add(wxName);
 		}
 	}
+	m_ctrlEMailSecAddr->AutoComplete(choices);
 
 	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
 		_("IDC_CAL_VENUE"),
@@ -393,7 +398,7 @@ CDlgCalendar::CDlgCalendar(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textClub->Wrap(-1);
 
-	m_ctrlClub = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlClub = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Club, TRIMVALIDATOR_TRIM_BOTH));
@@ -416,7 +421,7 @@ CDlgCalendar::CDlgCalendar(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLocation->Wrap(-1);
 
-	m_ctrlLocation = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlLocation = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location, TRIMVALIDATOR_TRIM_BOTH));
@@ -604,16 +609,19 @@ void CDlgCalendar::ListLocations()
 	if (m_Location.empty())
 		loc = StringUtil::stringWX(m_pCal->GetLocation());
 	m_ctrlLocation->Clear();
+	wxArrayString choices;
 	for (std::set<std::wstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
 	{
 		wxString itLoc = StringUtil::stringWX(*iter);
 		int index = m_ctrlLocation->Append(itLoc);
+		choices.Add(itLoc);
 		if (itLoc == loc)
 		{
 			m_ctrlLocation->SetSelection(index);
 			UpdateLocationInfo(itLoc);
 		}
 	}
+	m_ctrlLocation->AutoComplete(choices);
 }
 
 
@@ -642,16 +650,19 @@ void CDlgCalendar::ListClubs()
 	if (m_Club.empty())
 		club = StringUtil::stringWX(m_pCal->GetClub());
 	m_ctrlClub->Clear();
+	wxArrayString choices;
 	for (std::set<std::wstring>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
 	{
 		wxString itClub = StringUtil::stringWX((*iter));
 		int index = m_ctrlClub->Append(itClub);
+		choices.Add(itClub);
 		if (itClub == club)
 		{
 			m_ctrlClub->SetSelection(index);
 			UpdateClubInfo(itClub);
 		}
 	}
+	m_ctrlClub->AutoComplete(choices);
 }
 
 

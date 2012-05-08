@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
@@ -22,6 +23,7 @@
 #include "ARBDate.h"
 #include "ARBTypes.h"
 class CAgilityBookDoc;
+class CAutoFillComboBox;
 class CNoteButton;
 class CRichEditCtrl2;
 class CTextCtrl;
@@ -81,12 +83,12 @@ private:
 	wxButton* m_ctrlPremiumEntry;
 	CTextCtrl* m_ctrlPremiumUrl;
 	wxButton* m_ctrlEMailSec;
-	wxComboBox* m_ctrlEMailSecAddr;
+	CAutoFillComboBox* m_ctrlEMailSecAddr;
 	CVenueComboBox* m_ctrlVenue;
-	wxComboBox* m_ctrlClub;
+	CAutoFillComboBox* m_ctrlClub;
 	CNoteButton* m_ctrlClubNotes;
 	CRichEditCtrl2* m_ctrlClubInfo;
-	wxComboBox* m_ctrlLocation;
+	CAutoFillComboBox* m_ctrlLocation;
 	CNoteButton* m_ctrlLocationNotes;
 	CRichEditCtrl2* m_ctrlLocationInfo;
 

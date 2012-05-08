@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -23,6 +24,7 @@
 #include "ARBTypes.h"
 #include "ARBDogClub.h"
 class CAgilityBookDoc;
+class CAutoFillComboBox;
 class CNoteButton;
 class CReportListCtrl;
 class CRichEditCtrl2;
@@ -42,7 +44,7 @@ public:
 
 private:
 	wxString m_Location;
-	wxComboBox* m_ctrlLocation;
+	CAutoFillComboBox* m_ctrlLocation;
 	bool m_Verified;
 	wxString m_Notes;
 	CNoteButton* m_ctrlLocationNotes;

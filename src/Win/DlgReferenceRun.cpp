@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2010-05-22 DRC Fix initialization of Q.
@@ -150,12 +151,13 @@ CDlgReferenceRun::CDlgReferenceRun(
 		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	wxComboBox* ctrlHt = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	CAutoFillComboBox* ctrlHt = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1),
 		choices, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHt->SetHelpText(_("HIDC_REFRUN_HEIGHT"));
 	ctrlHt->SetToolTip(_("HIDC_REFRUN_HEIGHT"));
+	ctrlHt->AutoComplete(choices);
 
 	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
 		_("IDC_REFRUN_NAME"),
@@ -168,12 +170,13 @@ CDlgReferenceRun::CDlgReferenceRun(
 		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY,
+	CAutoFillComboBox* ctrlName = new CAutoFillComboBox(this, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		choices, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlName->SetHelpText(_("HIDC_REFRUN_NAME"));
 	ctrlName->SetToolTip(_("HIDC_REFRUN_NAME"));
+	ctrlName->AutoComplete(choices);
 
 	wxStaticText* textBreed = new wxStaticText(this, wxID_ANY,
 		_("IDC_REFRUN_BREED"),
@@ -186,12 +189,13 @@ CDlgReferenceRun::CDlgReferenceRun(
 		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	wxComboBox* ctrlBreed = new wxComboBox(this, wxID_ANY, wxString(),
+	CAutoFillComboBox* ctrlBreed = new CAutoFillComboBox(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxDefaultSize,
 		choices, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Breed, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlBreed->SetHelpText(_("HIDC_REFRUN_BREED"));
 	ctrlBreed->SetToolTip(_("HIDC_REFRUN_BREED"));
+	ctrlBreed->AutoComplete(choices);
 
 	wxStaticText* textNotes = new wxStaticText(this, wxID_ANY,
 		_("IDC_REFRUN_NOTES"),

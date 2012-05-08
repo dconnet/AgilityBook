@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Fixed some comboboxes that should have been readonly.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -289,7 +290,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 
 	m_ctrlSubNames = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN,
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_TextSubName));
 	m_ctrlSubNames->SetHelpText(_("HIDC_EXISTING_SUBNAME"));
 	m_ctrlSubNames->SetToolTip(_("HIDC_EXISTING_SUBNAME"));

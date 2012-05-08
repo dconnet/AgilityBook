@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
@@ -22,6 +23,7 @@
 #include "FilterOptions.h"
 #include <wx/treectrl.h>
 class CAgilityBookDoc;
+class CAutoFillComboBox;
 class CCheckTreeCtrl;
 class wxDatePickerCtrl;
 class wxTreeEvent;
@@ -54,7 +56,7 @@ private:
 	bool m_bPlanning;
 	bool m_bEntered;
 
-	wxComboBox* m_ctrlFilters;
+	CAutoFillComboBox* m_ctrlFilters;
 	wxRadioButton* m_ctrlDatesAll;
 	wxRadioButton* m_ctrlDatesSome;
 	wxCheckBox* m_ctrlDateStartCheck;

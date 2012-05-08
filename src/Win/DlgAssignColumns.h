@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2010-02-17 DRC Added SubName to runs view.
  * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -167,6 +168,7 @@
 #include "AgilityBookOptions.h"
 #include "NamedColumns.h"
 class CAgilityBookDoc;
+class CAutoFillComboBox;
 class CListCtrl;
 class ColumnData;
 class wxListEvent;
@@ -207,7 +209,7 @@ private:
 	long m_initSelection;
 	bool m_bIncludeBlank;
 	wxString m_ConfigName;
-	wxComboBox* m_ctrlConfig;
+	CAutoFillComboBox* m_ctrlConfig;
 	CListCtrl* m_ctrlType;
 	wxListBox* m_ctrlAvailable;
 	wxListBox* m_ctrlColumns;

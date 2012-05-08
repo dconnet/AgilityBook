@@ -72,6 +72,7 @@ Training Log:
 
  *
  * Revision History
+ * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2010-11-04 DRC When adding items, add after the current selection.
  * @li 2010-02-17 DRC Added SubName to runs view.
@@ -93,6 +94,7 @@ Training Log:
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "ComboBoxes.h"
 #include "ListCtrl.h"
 #include "Validators.h"
 #include <wx/listctrl.h>
@@ -859,7 +861,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 			wxDefaultPosition, wxDefaultSize, 0);
 	textNames->Wrap(-1);
 
-	m_ctrlConfig = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlConfig = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_ConfigName, TRIMVALIDATOR_TRIM_BOTH));
@@ -868,17 +870,21 @@ CDlgAssignColumns::CDlgAssignColumns(
 	m_ctrlConfig->SetToolTip(_("HIDC_ASSIGN_NAMES"));
 	std::vector<std::wstring> configNames;
 	m_Configs.GetAllConfigNames(configNames);
+	wxArrayString choices;
 	for (std::vector<std::wstring>::iterator iterName = configNames.begin();
 		iterName != configNames.end();
 		++iterName)
 	{
-		int idx = m_ctrlConfig->Append(StringUtil::stringWX((*iterName)));
+		wxString wxName(StringUtil::stringWX((*iterName)));
+		int idx = m_ctrlConfig->Append(wxName);
+		choices.Add(wxName);
 		if ((*iterName) == m_Configs.GetCurrentConfig())
 		{
 			m_ConfigName = StringUtil::stringWX(m_Configs.GetCurrentConfig());
 			m_ctrlConfig->SetSelection(idx);
 		}
 	}
+	m_ctrlConfig->AutoComplete(choices);
 
 	wxButton* btnSave = new wxButton(this, wxID_ANY,
 		_("IDC_ASSIGN_NAMES_SAVE"),
