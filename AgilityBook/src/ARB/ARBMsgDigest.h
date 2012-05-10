@@ -23,6 +23,8 @@ class ARBMsgDigest
 	ARBMsgDigest();
 public:
 	static std::wstring ComputeBuffer(
+			std::wstring const& inData);
+	static std::wstring ComputeBuffer(
 			char const* inData,
 			size_t nData);
 	static std::wstring ComputeFile(

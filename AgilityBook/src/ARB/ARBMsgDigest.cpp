@@ -392,6 +392,14 @@ static std::wstring ConvertBuffer(const unsigned char digest[16])
 	return str.str();
 }
 
+
+std::wstring ARBMsgDigest::ComputeBuffer(std::wstring const& inData)
+{
+	std::string data(StringUtil::stringA(inData));
+	return ComputeBuffer(data.c_str(), data.length());
+}
+
+
 std::wstring ARBMsgDigest::ComputeBuffer(
 		char const* inData,
 		size_t nData)
