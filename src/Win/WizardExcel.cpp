@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-16 Fixed Calc format strings.
  * @li 2012-02-18 Added eSpreadSheetNumberNoZero
  * @li 2012-02-05 Added alignment and formatting.
  * @li 2012-02-04 Clear data in GetRowCol. Fix writing formulas.
@@ -131,6 +132,8 @@ public:
 	static CWizardExcelExport* Create(wxAutomationObject& ioApp);
 	virtual ~CWizardExcelExport();
 
+	virtual wchar_t GetSumIfSeparator() const;
+
 	virtual bool AllowAccess(bool bAllow);
 
 	virtual bool SetTextColor(
@@ -224,11 +227,15 @@ class CWizardCalcExport : public ISpreadSheetExporter
 {
 protected:
 	CWizardCalcExport(
+			wxAutomationObject& ioManager,
 			wxAutomationObject& ioDesktop);
 public:
 	static CWizardCalcExport* Create(
+			wxAutomationObject& ioManager,
 			wxAutomationObject& ioDesktop);
 	virtual ~CWizardCalcExport();
+
+	virtual wchar_t GetSumIfSeparator() const;
 
 	virtual bool AllowAccess(bool bAllow);
 
@@ -279,6 +286,7 @@ public:
 private:
 	bool CreateWorksheet();
 
+	wxAutomationObject& m_Manager;
 	wxAutomationObject& m_Desktop;
 	wxAutomationObject m_Document;
 	wxAutomationObject m_Worksheet;
@@ -401,6 +409,12 @@ CWizardExcelExport::~CWizardExcelExport()
 {
 	if (NULL != m_Worksheet.GetDispatchPtr() && !m_App.GetProperty(L"Visible").GetBool())
 		m_App.CallMethod(L"Quit");
+}
+
+
+wchar_t CWizardExcelExport::GetSumIfSeparator() const
+{
+	return L',';
 }
 
 
@@ -817,7 +831,7 @@ CWizardCalc::~CWizardCalc()
 
 ISpreadSheetExporterPtr CWizardCalc::GetExporter() const
 {
-	return ISpreadSheetExporterPtr(CWizardCalcExport::Create(m_Desktop));
+	return ISpreadSheetExporterPtr(CWizardCalcExport::Create(m_Manager, m_Desktop));
 }
 
 
@@ -829,15 +843,18 @@ ISpreadSheetImporterPtr CWizardCalc::GetImporter() const
 /////////////////////////////////////////////////////////////////////////////
 
 CWizardCalcExport* CWizardCalcExport::Create(
+		wxAutomationObject& ioManager,
 		wxAutomationObject& ioDesktop)
 {
-	return new CWizardCalcExport(ioDesktop);
+	return new CWizardCalcExport(ioManager, ioDesktop);
 }
 
 
 CWizardCalcExport::CWizardCalcExport(
+		wxAutomationObject& ioManager,
 		wxAutomationObject& ioDesktop)
-	: m_Desktop(ioDesktop)
+	: m_Manager(ioManager)
+	, m_Desktop(ioDesktop)
 	, m_Document()
 	, m_Worksheet()
 {
@@ -867,6 +884,12 @@ bool CWizardCalcExport::CreateWorksheet()
 		m_Worksheet.SetDispatchPtr(sheets.CallMethod(L"getByIndex", 0));
 	}
 	return m_Worksheet.GetDispatchPtr() != NULL;
+}
+
+
+wchar_t CWizardCalcExport::GetSumIfSeparator() const
+{
+	return L';';
 }
 
 
@@ -930,8 +953,35 @@ bool CWizardCalcExport::SetAlignment(
 		long inCol,
 		ISpreadSheetExporter::eAlign align)
 {
-#pragma PRAGMA_TODO("Enable alignment in Calc")
-	return false;
+	if (ISpreadSheetExporter::eSpreadSheetNone == align)
+		return true;
+	wxAutomationObject cell(m_Worksheet.CallMethod(L"getCellByPosition", inCol, inRow));
+	if (!cell.GetDispatchPtr())
+		return false;
+
+	// com.sun.star.table.CellHoriJustify.STANDARD
+	long val = 0;
+	switch (align)
+	{
+	default:
+	case ISpreadSheetExporter::eSpreadSheetGeneral:
+		// com.sun.star.table.CellHoriJustify.STANDARD
+		val = 0;
+		break;
+	case ISpreadSheetExporter::eSpreadSheetLeft:
+		// com.sun.star.table.CellHoriJustify.LEFT
+		val = 1;
+		break;
+	case ISpreadSheetExporter::eSpreadSheetCenter:
+		// com.sun.star.table.CellHoriJustify.CENTER
+		val = 2;
+		break;
+	case ISpreadSheetExporter::eSpreadSheetRight:
+		// com.sun.star.table.CellHoriJustify.RIGHT
+		val = 3;
+		break;
+	}
+	return cell.PutProperty(L"HoriJustify", val);
 }
 
 
@@ -940,7 +990,6 @@ bool CWizardCalcExport::SetFormat(
 		long inCol,
 		ISpreadSheetExporter::eFormat format)
 {
-#pragma PRAGMA_TODO("Are the formatting strings the same as excel?")
 	std::wstring sFormat;
 	switch (format)
 	{
@@ -949,13 +998,13 @@ bool CWizardCalcExport::SetFormat(
 		sFormat = L"@";
 		break;
 	case ISpreadSheetExporter::eSpreadSheetCurrency:
-		sFormat = L"_($* #,##0.00_);[Red]_($* (#,##0.00);_(* \"-\"??_);_(@_)";
+		sFormat = L"_($#,##0.00_);[RED]_($(#,##0.00);_(\"-\"??_);_(@_)";
 		break;
 	case ISpreadSheetExporter::eSpreadSheetNumber:
-		sFormat = L"#,##0.00;[Red](#,##0.00)";
+		sFormat = L"#,##0_);[RED](#,##0)";
 		break;
 	case ISpreadSheetExporter::eSpreadSheetDate:
-		sFormat = L"d/m/yyyy";
+		sFormat = L"DD/MM/YYYY";
 		break;
 	}
 	return SetFormat(inRow, inCol, sFormat);
@@ -967,8 +1016,31 @@ bool CWizardCalcExport::SetFormat(
 		long inCol,
 		std::wstring const& format)
 {
-#pragma PRAGMA_TODO("Enable formatting in Calc")
-	return false;
+	if (!CreateWorksheet())
+		return false;
+	wxAutomationObject cell(m_Worksheet.CallMethod(L"getCellByPosition", inCol, inRow));
+	if (!cell.GetDispatchPtr())
+		return false;
+
+	wxAutomationObject numberFormats(m_Document.CallMethod(L"getNumberFormats"));
+	if (!numberFormats.GetDispatchPtr())
+		return false;
+
+	wxAutomationObject localSettings;
+	{
+		// This creation keeps throwing some weird invalid property value
+		// messages. Doesn't seem to do anything, so ignore them.
+		wxLogNull logSuppressor;
+		localSettings.SetDispatchPtr(m_Manager.CallMethod(L"createInstance", L"com.sun.star.lang.Locale"));
+	}
+	localSettings.PutProperty(L"Language", wxString(L"en"));
+	localSettings.PutProperty(L"Country", wxString(L"US"));
+
+	wxVariant numberFormatId = numberFormats.CallMethod(L"queryKey", format, localSettings.GetDispatchPtr(), true);
+	if (numberFormatId.GetInteger() == -1)
+	   numberFormatId = numberFormats.CallMethod(L"addNew", format, localSettings.GetDispatchPtr());
+
+	return cell.PutProperty(L"NumberFormat", numberFormatId);
 }
 
 
