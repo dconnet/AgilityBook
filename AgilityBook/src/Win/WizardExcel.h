@@ -43,6 +43,8 @@ class ISpreadSheetExporter
 public:
 	virtual ~ISpreadSheetExporter() = 0;
 
+	virtual wchar_t GetSumIfSeparator() const = 0;
+
 	virtual bool AllowAccess(bool bAllow) = 0;
 
 	virtual bool SetTextColor(
