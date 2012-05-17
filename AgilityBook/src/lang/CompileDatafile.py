@@ -4,6 +4,7 @@
 # Requires gettext (msgcat/msgfmt) in PATH
 #
 # Revision History
+# 2012-05-16 DRC Add multiprocessing awareness. Kind of.
 # 2012-03-03 DRC Fixed writing file into dat file.
 # 2012-02-19 DRC Remove --use-fuzzy option, reoganized how po files.
 # 2012-01-29 DRC Change msgfmt options to not do header checks
@@ -12,7 +13,7 @@
 # 2009-03-05 DRC Fixed some parameter passing issues (spaces/hyphens in names)
 # 2009-03-01 DRC Support multiple po files (by using msgcat)
 # 2009-01-02 DRC Updated to support creation of data files
-"""compile.py [-x] [-d] sourceDir firstFile executableDir targetname
+"""CompileDatafile.py [-x] [-d] [-f filelist] sourceDir firstFile executableDir targetname
 -x: Exclude ARBUpdater (not needed in test program)
 -d: Debugging mode (does not delete generated autogen.po file)
 -f filelist: List of files to include in .dat file
@@ -33,6 +34,35 @@ import zipfile
 # By default, gettext is in the path
 # This file is generated with msgcat of all po files ('firstFile' is first)
 autogenFile = 'autogen.po'
+
+
+class LockFile:
+	def __init__(self, filename):
+		self.m_filename = filename
+		self.m_fd = None
+		self.m_pid = os.getpid()
+
+	def __del__(self):
+		self.release()
+
+	def acquire(self):
+		try:
+			self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
+			os.write(self.m_fd, "%d" % self.m_pid)
+			return 1
+		except OSError:
+			self.m_fd = None
+			return 0
+
+	def release(self):
+		if not self.m_fd:
+			return 0
+		try:
+			os.close(self.m_fd)
+			os.remove(self.m_filename)
+			return 1
+		except OSError:
+			return 0
 
 
 def ReadPipe(logFile, cmd):
@@ -154,4 +184,11 @@ def main():
 
 
 if __name__ == '__main__':
-	sys.exit(main())
+	rc = 0
+	lockfile = LockFile("CompileDatafile.lck")
+	if lockfile.acquire():
+		rc = main()
+		lockfile.release()
+	else:
+		print "CompileDatafile is locked"
+	sys.exit(rc)
