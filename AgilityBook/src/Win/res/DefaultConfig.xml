@@ -2651,13 +2651,13 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Event Name="Regular">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
-        <Scoring Division="Proficient" Level="*" ValidFrom="2012-5-19" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
           <LifeTime Faults="0" Points="10"/>
           <LifeTime Faults="5" Points="5"/>
         </Scoring>
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" ValidTo="2012-5-18" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" ValidTo="2012-5-17" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
