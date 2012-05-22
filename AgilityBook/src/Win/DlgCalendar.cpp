@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-22 DRC Removed killfocus handlers, not needed.
  * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Set focus to first control.
  * @li 2011-12-30 DRC Fixed CGenericValidator.
@@ -577,10 +578,6 @@ CDlgCalendar::CDlgCalendar(
 	CenterOnParent();
 
 	ctrlStart->SetFocus();
-
-	// Bind killfocus handlers last
-	BIND_OR_CONNECT_CTRL(m_ctrlClub, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgCalendar::OnKillfocusClub);
-	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgCalendar::OnKillfocusLocation);
 }
 
 
@@ -772,14 +769,6 @@ void CDlgCalendar::OnSelchangeClub(wxCommandEvent& evt)
 }
 
 
-void CDlgCalendar::OnKillfocusClub(wxFocusEvent& evt)
-{
-	TransferDataFromWindow();
-	UpdateClubInfo(m_Club);
-	evt.Skip();
-}
-
-
 void CDlgCalendar::OnClubNotes(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
@@ -798,13 +787,6 @@ void CDlgCalendar::OnSelchangeLocation(wxCommandEvent& evt)
 	UpdateLocationInfo(s);
 }
 
-
-void CDlgCalendar::OnKillfocusLocation(wxFocusEvent& evt)
-{
-	TransferDataFromWindow();
-	UpdateLocationInfo(m_Location);
-	evt.Skip();
-}
 
 void CDlgCalendar::OnLocationNotes(wxCommandEvent& evt)
 {

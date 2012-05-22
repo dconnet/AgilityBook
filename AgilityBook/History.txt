@@ -1,8 +1,11 @@
-5/21/2012: v2.3.6.<in development>
+5/22/2012: v2.3.6.<in development>
 - Bumped Configuration v36:
   - Enable 5pt Qs in NADAC Proficient Regular.
 - New features / Enhancements:
   - Added autocompletion support to comboboxes (using wx2.9)
+- Bug fixes:
+  - Change all OnKillFocus handling. Edit controls on a Mac don't get this
+    message when a button is clicked (or dialog closed).
 
 4/8/2012: v2.3.5.3389
 - Bumped Configuration v36:

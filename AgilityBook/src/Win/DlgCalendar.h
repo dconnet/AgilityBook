@@ -106,10 +106,8 @@ private:
 	void OnEmailSec(wxCommandEvent& evt);
 	void OnAccommodation(wxCommandEvent& evt);
 	void OnSelchangeClub(wxCommandEvent& evt);
-	void OnKillfocusClub(wxFocusEvent& evt);
 	void OnClubNotes(wxCommandEvent& evt);
 	void OnSelchangeLocation(wxCommandEvent& evt);
-	void OnKillfocusLocation(wxFocusEvent& evt);
 	void OnLocationNotes(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

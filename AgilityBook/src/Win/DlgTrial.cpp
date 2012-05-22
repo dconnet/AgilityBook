@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
  * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-08-16 DRC Make trial notes multi-line.
@@ -122,6 +123,7 @@ CDlgTrial::CDlgTrial(
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location), _("IDS_ENTER_NAME"));
+	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgTrial::OnEnChangeLocation);
 	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgTrial::OnSelchangeLocation);
 	m_ctrlLocation->SetHelpText(_("HIDC_TRIAL_LOCATION"));
 	m_ctrlLocation->SetToolTip(_("HIDC_TRIAL_LOCATION"));
@@ -282,12 +284,9 @@ CDlgTrial::CDlgTrial(
 	m_ctrlDelete->Enable(false);
 	ListLocations();
 	ListClubs();
-	UpdateNotes(true, true);
+	UpdateNotes(m_Location, true, true);
 
 	IMPLEMENT_ON_INIT(CDlgTrial, m_ctrlLocation)
-
-	// Bind killfocus handlers last
-	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgTrial::OnKillfocusLocation);
 }
 
 
@@ -304,6 +303,7 @@ ARBDogClubPtr CDlgTrial::GetClubData(long index) const
 
 
 void CDlgTrial::UpdateNotes(
+		wxString const& location,
 		bool bLocation,
 		bool bClub)
 {
@@ -311,7 +311,7 @@ void CDlgTrial::UpdateNotes(
 	{
 		std::wstring str;
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(StringUtil::stringW(m_Location), &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(StringUtil::stringW(location), &pItem))
 		{
 			str = pItem->GetComment();
 		}
@@ -389,23 +389,24 @@ void CDlgTrial::EditClub()
 }
 
 
-void CDlgTrial::OnSelchangeLocation(wxCommandEvent& evt)
+void CDlgTrial::OnEnChangeLocation(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
-	UpdateNotes(true, false);
+	wxString s = m_ctrlLocation->GetValue();
+	UpdateNotes(s, true, false);
+	evt.Skip();
 }
 
 
-void CDlgTrial::OnKillfocusLocation(wxFocusEvent& evt)
+void CDlgTrial::OnSelchangeLocation(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	UpdateNotes(true, false);
-	evt.Skip();
+	UpdateNotes(m_Location, true, false);
 }
 
 
 void CDlgTrial::OnItemSelectedClubs(wxListEvent& evt)
 {
+	TransferDataFromWindow();
 	if (0 == m_ctrlClubs->GetSelectedItemCount())
 	{
 		m_ctrlEdit->Enable(false);
@@ -418,7 +419,7 @@ void CDlgTrial::OnItemSelectedClubs(wxListEvent& evt)
 		m_ctrlClubNotes->Enable(true);
 		m_ctrlDelete->Enable(true);
 	}
-	UpdateNotes(false, true);
+	UpdateNotes(m_Location, false, true);
 }
 
 
@@ -453,7 +454,7 @@ void CDlgTrial::OnLocationNotes(wxCommandEvent& evt)
 			m_Location = StringUtil::stringWX(dlg.CurrentSelection());
 			TransferDataToWindow();
 			ListLocations();
-			UpdateNotes(true, false);
+			UpdateNotes(m_Location, true, false);
 		}
 	}
 }
@@ -464,6 +465,7 @@ void CDlgTrial::OnClubNotes(wxCommandEvent& evt)
 	long index = m_ctrlClubs->GetFirstSelected();
 	if (0 <= index)
 	{
+		TransferDataFromWindow();
 		ARBDogClubPtr pClub = GetClubData(index);
 		CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName(), this);
 		if (wxID_OK == dlg.ShowModal())
@@ -474,7 +476,7 @@ void CDlgTrial::OnClubNotes(wxCommandEvent& evt)
 				ListClubs(&pClub);
 			}
 			else
-				UpdateNotes(false, true);
+				UpdateNotes(m_Location, false, true);
 		}
 	}
 }

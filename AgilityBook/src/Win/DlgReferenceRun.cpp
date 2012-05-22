@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
  * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
@@ -60,6 +61,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_Place(ref->GetPlace())
 	, m_Q(ref->GetQ())
 	, m_Time(ref->GetTime())
+	, m_ctrlTime(NULL)
 	, m_ctrlYPS(NULL)
 	, m_Points(StringUtil::stringWX(ref->GetScore()))
 	, m_Height(StringUtil::stringWX(ref->GetHeight()))
@@ -112,11 +114,12 @@ CDlgReferenceRun::CDlgReferenceRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textTime->Wrap(-1);
 
-	CTextCtrl* ctrlTime = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlTime = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(60, -1), 0,
 		CGenericValidator(&m_Time));
-	ctrlTime->SetHelpText(_("HIDC_REFRUN_TIME"));
-	ctrlTime->SetToolTip(_("HIDC_REFRUN_TIME"));
+	BIND_OR_CONNECT_CTRL(m_ctrlTime, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgReferenceRun::OnEnChangeRefRunTime);
+	m_ctrlTime->SetHelpText(_("HIDC_REFRUN_TIME"));
+	m_ctrlTime->SetToolTip(_("HIDC_REFRUN_TIME"));
 
 	wxStaticText* textYPS = new wxStaticText(this, wxID_ANY,
 		_("IDC_REFRUN_YPS"),
@@ -218,7 +221,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	sizerStats->Add(textQ, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerStats->Add(ctrlQ, 0, wxALL, 5);
 	sizerStats->Add(textTime, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStats->Add(ctrlTime, 0, wxALL, 5);
+	sizerStats->Add(m_ctrlTime, 0, wxALL, 5);
 	sizerStats->Add(textYPS, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerStats->Add(m_ctrlYPS, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerStats->Add(textScore, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -256,27 +259,24 @@ CDlgReferenceRun::CDlgReferenceRun(
 	CenterOnParent();
 
 	IMPLEMENT_ON_INIT(CDlgReferenceRun, ctrlPlace)
-
-	// Bind killfocus handlers last
-	BIND_OR_CONNECT_CTRL(ctrlTime, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgReferenceRun::OnKillfocusRefRunTime);
 }
 
 
 DEFINE_ON_INIT(CDlgReferenceRun)
 
 
-void CDlgReferenceRun::OnKillfocusRefRunTime(wxFocusEvent& evt)
+void CDlgReferenceRun::OnEnChangeRefRunTime(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	wxString strTime = m_ctrlTime->GetValue();
+	double time = 0.0;
 	std::wstring strYPS;
-	double yps;
-	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
+	if (StringUtil::ToDouble(StringUtil::stringW(strTime), time))
 	{
-		strYPS = ARBDouble::ToString(yps, 3);
-	}
-	else
-	{
-		strYPS.clear();
+		double yps;
+		if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), time, yps))
+		{
+			strYPS = ARBDouble::ToString(yps, 3);
+		}
 	}
 	m_ctrlYPS->SetLabel(StringUtil::stringWX(strYPS));
 	evt.Skip();

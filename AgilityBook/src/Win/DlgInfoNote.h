@@ -85,6 +85,6 @@ private:
 	void OnNewItem(wxCommandEvent& evt);
 	void OnDeleteItem(wxCommandEvent& evt);
 	void OnClickedJudgeVisible(wxCommandEvent& evt);
-	void OnKillfocusComments(wxFocusEvent& evt);
+	void OnEnChangeComments(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
