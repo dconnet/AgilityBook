@@ -16,6 +16,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -197,6 +198,7 @@ CDlgInfoNote::CDlgInfoNote(
 
 	m_ctrlNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(300, 100), wxTE_MULTILINE);
+	BIND_OR_CONNECT_CTRL(m_ctrlNotes, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgInfoNote::OnEnChangeComments);
 	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
 	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));
 
@@ -243,9 +245,6 @@ CDlgInfoNote::CDlgInfoNote(
 	CenterOnParent();
 
 	IMPLEMENT_ON_INIT(CDlgInfoNote, m_ctrlNames)
-
-	// Bind killfocus handlers last
-	BIND_OR_CONNECT_CTRL(m_ctrlNotes, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgInfoNote::OnKillfocusComments);
 }
 
 
@@ -327,7 +326,7 @@ void CDlgInfoNote::OnClickedJudgeVisible(wxCommandEvent& evt)
 }
 
 
-void CDlgInfoNote::OnKillfocusComments(wxFocusEvent& evt)
+void CDlgInfoNote::OnEnChangeComments(wxCommandEvent& evt)
 {
 	int index = m_ctrlNames->GetSelection();
 	if (wxNOT_FOUND != index)

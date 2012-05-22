@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
  * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
@@ -62,6 +63,7 @@ private:
 private:
 	ARBDogClubPtr GetClubData(long index) const;
 	void UpdateNotes(
+			wxString const& location,
 			bool bLocation,
 			bool bClub);
 	void ListLocations();
@@ -70,8 +72,8 @@ private:
 
 	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
+	void OnEnChangeLocation(wxCommandEvent& evt);
 	void OnSelchangeLocation(wxCommandEvent& evt);
-	void OnKillfocusLocation(wxFocusEvent& evt);
 	void OnItemSelectedClubs(wxListEvent& evt);
 	void OnItemActivatedClubs(wxListEvent& evt);
 	void OnKeydownClubs(wxKeyEvent& evt);

@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -21,6 +22,7 @@
 #include <set>
 #include "ARBTypes.h"
 class CAgilityBookDoc;
+class CTextCtrl;
 
 
 class CDlgReferenceRun : public wxDialog
@@ -42,6 +44,7 @@ private:
 	short m_Place;
 	ARB_Q m_Q;
 	double m_Time;
+	CTextCtrl* m_ctrlTime;
 	wxStaticText* m_ctrlYPS;
 	wxString m_Points;
 	wxString m_Height;
@@ -51,6 +54,6 @@ private:
 
 	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
-	void OnKillfocusRefRunTime(wxFocusEvent& evt);
+	void OnEnChangeRefRunTime(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
