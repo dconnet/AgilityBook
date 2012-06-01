@@ -54,6 +54,7 @@
 // 1400: VC8.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.80%29.aspx
 // 1500: VC9.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.90%29.aspx
 // 1600: VC10.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.100%29.aspx
+// 1700: VC11.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.110%29.aspx
 // _M_IX86: Defined for x86 (value specifies processor)
 // _M_X64: Defined for x64 processors
 // _M_IA64: Defined for Itanium processor family
@@ -110,7 +111,9 @@
 #endif
 
 #ifndef WINVER
-	#if defined(_M_IA64)
+	#if _MSC_VER >= 1700
+		#define WINVER	0x0600
+	#elif defined(_M_IA64)
 		#define WINVER	0x0502
 	#elif defined(_M_X64)
 		#define WINVER	0x0501
@@ -141,7 +144,12 @@
 // Error checking
 // VC9: Minimum system: x86 - Win2000, x64 - XP, Itanium - Server 2003
 // VC10: Minimum system: x86 - XP SP2, x64 - XP, Itanium - Server 2003 SP1
-#if _MSC_VER >= 1600
+// VC11: Minimum system: Vista
+#if _MSC_VER >= 1700
+	#if WINVER < 0x0600
+		#error VC11 minimum version is 0x0600
+	#endif
+#elif _MSC_VER >= 1600
 	#if defined(_M_IA64) && WINVER < 0x0502
 		#error Itanium minimum version is 0x0502
 	#elif defined(_M_X64) && WINVER < 0x0501
