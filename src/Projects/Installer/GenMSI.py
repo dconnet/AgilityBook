@@ -153,7 +153,6 @@ def getversion(numParts):
 		ver2 = ver2 + '_' + version[i]
 	return ver, ver2
 
-#$(PlatformToolsetVersion)
 
 # returns baseDir, outputFile
 def getoutputvars(code, version, vcver):
