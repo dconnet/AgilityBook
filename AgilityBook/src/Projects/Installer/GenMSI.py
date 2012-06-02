@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2012-06-01 DRC Changed VC10 output directory
 # 2011-11-23 DRC Add internet shortcut to start menu
 # 2011-11-14 DRC Treat wix warnings as errors
 # 2011-09-23 DRC Allow support of admin installs "msiexec /a msi"
@@ -152,11 +153,15 @@ def getversion(numParts):
 		ver2 = ver2 + '_' + version[i]
 	return ver, ver2
 
+#$(PlatformToolsetVersion)
 
 # returns baseDir, outputFile
 def getoutputvars(code, version, vcver):
 	outputFile = ''
 	baseDir = ''
+	platformTools = vcver
+	if not vcver == '9':
+		vcver = vcver + '0'
 	if code32 == code:
 		outputFile = 'AgilityBook-' + version + '-win'
 		baseDir = AgilityBookDir + r'\bin\VC' + vcver + 'Win32\Release'
