@@ -5,6 +5,7 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2012-06-01 DRC Added VC11 support.
 # 2011-07-30 DRC Require -w option.
 # 2010-11-20 DRC Automatically determine hasprefix support.
 # 2010-11-07 DRC Removed DEBUG_FLAG from build - set in setup.h instead.
@@ -20,11 +21,11 @@
 """CompileWX.py -w wxwin [-e] [-a] [-p] [-d] [-m] [-s name]* compiler*
 	-w wxwin: Root of wx tree, normally %WXWIN%
 	-e:       Just show the environment, don't do it
-	-a:       Compile all (vc9, vc9x64)
+	-a:       Compile all (vc10, vc10x64)
 	-d:       Compile as DLLs (default: static)
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
-	compiler: vc7, vc8, vc9, vc10, vc9x64, vc10x64
+	compiler: vc7, vc8, vc9, vc10, vc9x64, vc10x64, vc11, vc11x64
 """
 
 import getopt
@@ -51,6 +52,7 @@ vc7Base     = r'\Microsoft Visual Studio .NET 2003'
 vc8Base     = r'\Microsoft Visual Studio 8'
 vc9Base     = r'\Microsoft Visual Studio 9.0'
 vc10Base    = r'\Microsoft Visual Studio 10.0'
+vc11Base    = r'\Microsoft Visual Studio 11.0'
 useVC10SDK = False
 
 
@@ -76,7 +78,7 @@ def GetWindowsSdkDir(vcinstalldir):
 	return WindowsSdkDir
 
 
-# 7.1, 8.0, 9.0, 10.0 (as observed on my machine)
+# 7.1, 8.0, 9.0, 10.0, 11.0 (as observed on my machine)
 def GetVSDir(version):
 	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
@@ -89,7 +91,7 @@ def GetVSDir(version):
 
 
 def AddCompiler(compilers, c):
-	global vc6Base, vc7Base, vc8Base, vc9Base, vc10Base
+	global vc6Base, vc7Base, vc8Base, vc9Base, vc10Base, vc11Base
 	baseDir = ''
 	testFile = ''
 	if c == 'vc6':
@@ -139,6 +141,17 @@ def AddCompiler(compilers, c):
 			testFile = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd'
 		else:
 			testFile = baseDir + r'\VC\vcvarsall.bat'
+	elif c == 'vc11':
+		vc11Base = GetVSDir("11.0")
+		baseDir = vc11Base
+		testFile = baseDir + r'\VC\vcvarsall.bat'
+	elif c == 'vc11x64':
+		vc11Base = GetVSDir("11.0")
+		if not useUnicode:
+			print 'ERROR: VC11x64 does not do MBCS'
+			return False
+		baseDir = vc11Base
+		testFile = baseDir + r'\VC\vcvarsall.bat'
 	else:
 		return False
 	if not os.access(baseDir, os.F_OK) or not os.access(testFile, os.F_OK):
@@ -210,8 +223,8 @@ def main():
 		elif '-w' == o:
 			wxwin = a
 		elif '-a' == o:
-			AddCompiler(compilers, 'vc9')
-			AddCompiler(compilers, 'vc9x64')
+			AddCompiler(compilers, 'vc10')
+			AddCompiler(compilers, 'vc10x64')
 		elif '-d' == o:
 			useStatic = False
 		elif '-m' == o:
@@ -348,6 +361,27 @@ def main():
 				cfg = ' COMPILER_PREFIX=vc100'
 			else:
 				cfg = ' CFG=_VC100'
+			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
+
+		elif compiler == 'vc11':
+			setenv_rel = 'call "' + vc11Base + r'\VC\vcvarsall.bat" x86'
+			if hasPrefix:
+				cfg = ' COMPILER_PREFIX=vc110'
+			else:
+				cfg = ' CFG=_VC110'
+			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
+
+		elif compiler == 'vc11x64':
+			setenv_rel = 'call "' + vc11Base + r'\VC\vcvarsall.bat" '
+			if not bit64on64:
+				setenv_rel += 'x86_amd64'
+			else:
+				setenv_rel += 'amd64'
+			target_cpu = ' TARGET_CPU=amd64'
+			if hasPrefix:
+				cfg = ' COMPILER_PREFIX=vc110'
+			else:
+				cfg = ' CFG=_VC110'
 			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		build_rel = ''

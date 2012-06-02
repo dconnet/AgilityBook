@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2012-06-01 DRC Changed VC10 output directory
 # 2010-11-07 DRC Updated to use vc10pro or sdk
 # 2010-06-11 DRC Support building on x64 OS
 # 2010-05-30 DRC Converted .bat to .py (keeps environment clean!)
@@ -19,7 +20,6 @@ import win32api
 import win32con
 
 ProgramFiles = r'c:\Program Files'
-ProgramFiles64 = r'c:\Program Files'
 useVC10SDK = False
 
 
@@ -100,17 +100,16 @@ def main():
 		print 'Usage:', __doc__
 		return 1
 
-	global ProgramFiles, ProgramFiles64
+	# ProgramFiles must point to the native one since the SDK installs there.
+	global ProgramFiles
 	bit64on64 = False
 	if os.environ.has_key('ProgramFiles'):
 		ProgramFiles = os.environ['ProgramFiles']
 	# 64bit on 64bit
 	if os.environ.has_key('PROCESSOR_ARCHITECTURE') and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
 		bit64on64 = True
-		ProgramFiles = r'c:\Program Files (x86)'
 	# 64bit on Wow64 (32bit cmd shell spawned from msdev)
-	if os.environ.has_key('PROCESSOR_ARCHITEW6432') and os.environ['PROCESSOR_ARCHITEW6432'] == 'AMD64':
-		ProgramFiles = r'c:\Program Files (x86)'
+	#if os.environ.has_key('PROCESSOR_ARCHITEW6432') and os.environ['PROCESSOR_ARCHITEW6432'] == 'AMD64':
 
 	buildVC9 = True
 	buildVC10 = True
@@ -200,31 +199,42 @@ def main():
 
 	if buildVC10:
 		vc10Base = GetVSDir("10.0")
+		PlatformTools = '100'
 		if useVC10SDK:
 			setvcvars = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd'
 		else:
 			setvcvars = vc10Base + r'\VC\vcvarsall.bat'
-		if not os.access(vc10Base, os.F_OK) or not os.access(setvcvars, os.F_OK):
+		if not os.access(vc10Base, os.F_OK):
 			print 'ERROR: "' + vc10Base + '" does not exist'
 			return 1
+		if not os.access(setvcvars, os.F_OK):
+			print 'ERROR: "' + setvcvars + '" does not exist'
+			return 1
 		if clean:
-			RmMinusRF('../../../bin/VC10Win32')
-		cmds = (
-			r'title VC10 Release Win32',
-			r'cd ..\VC10',
-			r'call "' + setvcvars + r'" x86',
-			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
+			RmMinusRF('../../../bin/VC' + PlatformTools + 'Win32')
+		if useVC10SDK:
+			cmds = (
+				r'title VC10 Release Win32',
+				r'cd ..\VC10',
+				r'call "' + setvcvars + r'" /Release /x86 /xp',
+				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
+		else:
+			cmds = (
+				r'title VC10 Release Win32',
+				r'cd ..\VC10',
+				r'call "' + setvcvars + r'" x86',
+				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
 		RunCmds(cmds)
-		if not os.access('../../../bin/VC10Win32/Release/AgilityBook.exe', os.F_OK):
+		if not os.access('../../../bin/VC' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
 			print 'ERROR: Compile failed, bailing out'
 			return 1
 		if clean:
-			RmMinusRF('../../../bin/VC10x64')
+			RmMinusRF('../../../bin/VC' + PlatformTools + 'x64')
 		if useVC10SDK:
 			cmds = (
 				r'title VC10 Release x64',
 				r'cd ..\VC10',
-				r'call "' + setvcvars + r'" /release /x64 /xp',
+				r'call "' + setvcvars + r'" /Release /x64 /xp',
 				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64',
 				r'color 07')
 		elif bit64on64:
@@ -240,7 +250,7 @@ def main():
 				r'call "' + setvcvars + r'" x86_amd64',
 				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
 		RunCmds(cmds)
-		if not os.access('../../../bin/VC10x64/Release/AgilityBook.exe', os.F_OK):
+		if not os.access('../../../bin/VC' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
 			print 'ERROR: Compile failed, bailing out'
 			return 1
 

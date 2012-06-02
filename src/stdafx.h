@@ -232,10 +232,10 @@
 	#endif
 #endif
 
-// VC9 defines _HAS_TR1 if tr1 is present.
+// VC9/VC10 defines _HAS_TR1 if tr1 is present (via yvals.h).
 #include <memory>
 // If not present, pick up boost's. Now we can use std::tr1::shared_ptr
-#if !_HAS_TR1
+#if _MSC_VER < 1700 && (!defined(_HAS_TR1) || !_HAS_TR1)
 // Boost can also be included by tweaking the include path and
 // including <memory>:
 //  boost-root/boost/tr1/tr1
