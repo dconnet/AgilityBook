@@ -1036,9 +1036,9 @@ bool CWizardCalcExport::SetFormat(
 	localSettings.PutProperty(L"Language", wxString(L"en"));
 	localSettings.PutProperty(L"Country", wxString(L"US"));
 
-	wxVariant numberFormatId = numberFormats.CallMethod(L"queryKey", format, localSettings.GetDispatchPtr(), true);
+	wxVariant numberFormatId = numberFormats.CallMethod(L"queryKey", format.c_str(), localSettings.GetDispatchPtr(), true);
 	if (numberFormatId.GetInteger() == -1)
-	   numberFormatId = numberFormats.CallMethod(L"addNew", format, localSettings.GetDispatchPtr());
+	   numberFormatId = numberFormats.CallMethod(L"addNew", format.c_str(), localSettings.GetDispatchPtr());
 
 	return cell.PutProperty(L"NumberFormat", numberFormatId);
 }

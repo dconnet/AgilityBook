@@ -59,18 +59,8 @@
 // _M_X64: Defined for x64 processors
 // _M_IA64: Defined for Itanium processor family
 
-// VC6
-#if _MSC_VER < 1300
-	#error VC6 is not supported.
-
-// VC7
-#elif _MSC_VER >= 1300 && _MSC_VER < 1400
-	#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
-	#pragma warning ( disable : 4702 )	// unreachable code (generated during link from STL code)
-
-// VC8
-#elif _MSC_VER >= 1400 && _MSC_VER < 1500
-	#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
+#if _MSC_VER < 1500
+	#error pre-VC9 is not supported.
 
 // VC9
 #elif _MSC_VER >= 1500
@@ -81,10 +71,6 @@
 #ifndef VC_EXTRALEAN
 	#define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 #endif
-
-// Modify the following defines if you have to target a platform prior to the
-// ones specified below. Refer to MSDN for the latest info on corresponding
-// values for different platforms.
 
 // Minimum system
 // Vista              _WIN32_WINNT >= 0x0600  WINVER >= 0x0600
@@ -110,6 +96,7 @@
 	#define _WIN32_IE 0x0500	// Minimum IE, 5.0
 #endif
 
+// Unless overridden, target XP by default.
 #ifndef WINVER
 	#if _MSC_VER >= 1700
 		#define WINVER	0x0600
@@ -118,13 +105,7 @@
 	#elif defined(_M_X64)
 		#define WINVER	0x0501
 	#else //x86
-		#if _MSC_VER >= 1600
-			#define WINVER	0x0501
-		#elif _MSC_VER >= 1500
-			#define WINVER	0x0500
-		#else
-			#define WINVER	0x0400
-		#endif
+		#define WINVER	0x0501
 	#endif
 #endif
 
@@ -165,6 +146,8 @@
 	#elif WINVER < 0x0500
 		#error VC9 minimum version is 0x0500
 	#endif
+#else
+	#error Go away. Only VC9+ supported.
 #endif
 
 #else // _WIN32
