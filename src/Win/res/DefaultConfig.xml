@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2012-05-21 DRC Configuration version 37.
+2012-06-16 DRC Configuration version 37.
                Enable 5pt Qs in NADAC Proficient Regular.
+               Add support for multi-point time faults in pointed games.
 2012-01-06 DRC Configuration version 36.
                Remove start date from PACH title.
                Remove start date from AKC lifetime titles.
@@ -2986,12 +2987,24 @@ TG3 + 10 Qs in at least 5 games
       </Event>
       <Event Name="Game: Faults/Time" hasSubNames="y" hasTable="y">
         <Desc>This is for events scored like Standard.</Desc>
+        <SubName>Box Game</SubName>
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
+      <Event Name="Game: Faults/Time (2)" hasSubNames="y" hasTable="y">
+        <Desc>This is for events scored like Standard, but allows faults.</Desc>
+        <SubName>Colors</SubName>
+        <Scoring Division="*" Level="Superior" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="*" type="FaultsThenTime">
+          <TitlePoints Faults="5" Points="1"/>
+        </Scoring>
+      </Event>
       <Event Name="Game: Time+Faults" hasSubNames="y">
         <Desc>This is for Time plus Fault events. Time faults are not added.</Desc>
+        <SubName>Chutes and Ladders</SubName>
         <SubName>Louganis</SubName>
         <SubName>Time Warp</SubName>
         <Scoring Division="*" Level="*" type="TimePlusFaults">
@@ -3001,11 +3014,29 @@ TG3 + 10 Qs in at least 5 games
       <Event Name="Game: Total Points" hasSubNames="y">
         <Desc>Points are accumulated in a single time period, like Snooker.</Desc>
         <SubName>12 Tone Row</SubName>
+        <SubName>Beat the Clock</SubName>
+        <SubName>Black Hole</SubName>
+        <SubName>BlackJack</SubName>
+        <SubName>Boston Bowling</SubName>
+        <SubName>Connect the Dots</SubName>
         <SubName>Dare to Double</SubName>
         <SubName>Quidditch</SubName>
         <SubName>Snooker</SubName>
         <SubName>The Weakest Link</SubName>
         <Scoring Division="*" Level="*" type="OCScoreThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+      </Event>
+      <Event Name="Game: Total Points - TimeFaults1" hasSubNames="y">
+        <Desc>Points are accumulated in a single time period, like Snooker. Time over SCT is deducted.</Desc>
+        <Scoring Division="*" Level="*" dropFractions="y" overTF="y" subtractTF="y" type="OCScoreThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+      </Event>
+      <Event Name="Game: Total Points - TimeFaults2" hasSubNames="y">
+        <Desc>Points are accumulated in a single time period. 2 points are deducted for each second over SCT.</Desc>
+        <SubName>Copycat</SubName>
+        <Scoring Division="*" Level="*" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>

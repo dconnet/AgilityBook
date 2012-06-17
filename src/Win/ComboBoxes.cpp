@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-06-16 DRC Do not enable autocomplete on readonly combos.
  * @li 2012-05-07 DRC Added autocompletion.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-20 DRC Ported to wxWidgets.
@@ -89,7 +90,8 @@ CVenueComboBox::CVenueComboBox(
 			SetSelection(index);
 	}
 #if wxCHECK_VERSION(2, 9, 3)
-	AutoComplete(choices);
+	if (bEditable)
+		AutoComplete(choices);
 #endif
 }
 
