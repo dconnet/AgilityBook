@@ -11,6 +11,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-06-16 DRC Show time fault multiplier in point games.
+ *                Fixed initial layout with speed points.
  * @li 2012-05-07 DRC Fixed some comboboxes that should have been readonly.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
@@ -143,9 +145,9 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_ctrlPlacementEdit(NULL)
 	, m_ctrlPlacementDelete(NULL)
 	, m_ctrlTimeFaultsCleanQ(NULL)
+	, m_ctrlSubtractTimeFaults(NULL)
 	, m_ctrlTimeFaultsUnder(NULL)
 	, m_ctrlTimeFaultsOver(NULL)
-	, m_ctrlSubtractTimeFaults(NULL)
 	, m_ctrlPointsOpeningText(NULL)
 	, m_ctrlPointsOpening(NULL)
 	, m_ctrlPointsClosingText(NULL)
@@ -158,9 +160,9 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_SpeedPts(m_pScoring->HasSpeedPts())
 	, m_Multiply(m_pScoring->TimeFaultMultiplier())
 	, m_TimeFaultsCleanQ(m_pScoring->QsMustBeClean())
+	, m_SubtractTimeFaults(m_pScoring->SubtractTimeFaultsFromScore())
 	, m_TimeFaultsUnder(m_pScoring->ComputeTimeFaultsUnder())
 	, m_TimeFaultsOver(m_pScoring->ComputeTimeFaultsOver())
-	, m_SubtractTimeFaults(m_pScoring->SubtractTimeFaultsFromScore())
 	, m_OpeningPts(m_pScoring->GetRequiredOpeningPoints())
 	, m_ClosingPts(m_pScoring->GetRequiredClosingPoints())
 {
@@ -341,6 +343,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		_("IDC_CONFIG_EVENT_PLACEMENT"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPlacementText->Wrap(-1);
+	m_ctrlPlacementText->Show(m_SpeedPts);
 
 	m_ctrlPlacement = new CReportListCtrl(this,
 		wxDefaultPosition, wxDefaultSize,
@@ -365,6 +368,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacement->SortItems(ComparePlacement, 0);
 	m_ctrlPlacement->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 	m_ctrlPlacement->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
+	m_ctrlPlacement->Show(m_SpeedPts);
 
 	m_ctrlPlacementNew = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_NEW"),
@@ -372,6 +376,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	BIND_OR_CONNECT_CTRL(m_ctrlPlacementNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnPlacementNew);
 	m_ctrlPlacementNew->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_NEW"));
 	m_ctrlPlacementNew->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_NEW"));
+	m_ctrlPlacementNew->Show(m_SpeedPts);
 
 	m_ctrlPlacementEdit = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_EDIT"),
@@ -379,6 +384,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	BIND_OR_CONNECT_CTRL(m_ctrlPlacementEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnPlacementEdit);
 	m_ctrlPlacementEdit->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_EDIT"));
 	m_ctrlPlacementEdit->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_EDIT"));
+	m_ctrlPlacementEdit->Show(m_SpeedPts);
 
 	m_ctrlPlacementDelete = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_DELETE"),
@@ -386,6 +392,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	BIND_OR_CONNECT_CTRL(m_ctrlPlacementDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnPlacementDelete);
 	m_ctrlPlacementDelete->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_DELETE"));
 	m_ctrlPlacementDelete->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_DELETE"));
+	m_ctrlPlacementDelete->Show(m_SpeedPts);
 
 	m_ctrlTimeFaultsCleanQ = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"),
@@ -394,10 +401,19 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlTimeFaultsCleanQ->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"));
 	m_ctrlTimeFaultsCleanQ->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"));
 
+	m_ctrlSubtractTimeFaults = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_SubtractTimeFaults));
+	BIND_OR_CONNECT_CTRL(m_ctrlSubtractTimeFaults, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnComputeTimeFaults);
+	m_ctrlSubtractTimeFaults->SetHelpText(_("HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"));
+	m_ctrlSubtractTimeFaults->SetToolTip(_("HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"));
+
 	m_ctrlTimeFaultsUnder = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_UNDER"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_TimeFaultsUnder));
+	BIND_OR_CONNECT_CTRL(m_ctrlTimeFaultsUnder, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnComputeTimeFaults);
 	m_ctrlTimeFaultsUnder->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"));
 	m_ctrlTimeFaultsUnder->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"));
 
@@ -405,15 +421,9 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_OVER"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_TimeFaultsOver));
+	BIND_OR_CONNECT_CTRL(m_ctrlTimeFaultsOver, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnComputeTimeFaults);
 	m_ctrlTimeFaultsOver->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"));
 	m_ctrlTimeFaultsOver->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"));
-
-	m_ctrlSubtractTimeFaults = new wxCheckBox(this, wxID_ANY,
-		_("IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"),
-		wxDefaultPosition, wxDefaultSize, 0,
-		wxGenericValidator(&m_SubtractTimeFaults));
-	m_ctrlSubtractTimeFaults->SetHelpText(_("HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"));
-	m_ctrlSubtractTimeFaults->SetToolTip(_("HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"));
 
 	m_ctrlPointsOpeningText = new wxStaticText(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_OPENING_PTS"),
@@ -503,9 +513,9 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	wxBoxSizer* sizerCol2 = new wxBoxSizer(wxVERTICAL);
 	sizerCol2->Add(m_ctrlTimeFaultsCleanQ, 0, wxALL, 5);
+	sizerCol2->Add(m_ctrlSubtractTimeFaults, 0, wxALL, 5);
 	sizerCol2->Add(m_ctrlTimeFaultsUnder, 0, wxALL, 5);
 	sizerCol2->Add(m_ctrlTimeFaultsOver, 0, wxALL, 5);
-	sizerCol2->Add(m_ctrlSubtractTimeFaults, 0, wxALL, 5);
 
 	wxFlexGridSizer* sizerPoints = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerPoints->SetFlexibleDirection(wxBOTH);
@@ -578,6 +588,28 @@ void CDlgConfigEventMethod::UpdateButtons()
 		bEdit = bDelete = true;
 	m_ctrlPlacementEdit->Enable(bEdit);
 	m_ctrlPlacementDelete->Enable(bDelete);
+	if (m_ctrlMultiply->IsShown())
+	{
+		bool bEnable = true;
+		if (m_ctrlSubtractTimeFaults->IsShown()
+			&& (m_ctrlTimeFaultsUnder->IsShown()
+			|| m_ctrlTimeFaultsOver->IsShown()))
+		{
+			bEnable = (m_SubtractTimeFaults && (m_TimeFaultsUnder || m_TimeFaultsOver));
+		}
+		m_ctrlMultiply->Enable(bEnable);
+	}
+	if (m_ctrlTimeFaultsUnder->IsShown()
+		|| m_ctrlTimeFaultsOver->IsShown())
+	{
+		bool bEnableOverUnder = true;
+		if (m_ctrlSubtractTimeFaults->IsShown())
+		{
+			bEnableOverUnder = m_SubtractTimeFaults;
+		}
+		m_ctrlTimeFaultsUnder->Enable(bEnableOverUnder);
+		m_ctrlTimeFaultsOver->Enable(bEnableOverUnder);
+	}
 }
 
 
@@ -640,8 +672,8 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlSubtractTimeFaults->Show(true);
 			m_ctrlTimeFaultsUnder->Show(true);
 			m_ctrlTimeFaultsOver->Show(true);
-			m_ctrlMultiplyText->Show(false);
-			m_ctrlMultiply->Show(false);
+			m_ctrlMultiplyText->Show(true);
+			m_ctrlMultiply->Show(true);
 			m_ctrlPointsOpeningText->SetLabel(_("IDC_CONFIG_EVENT_OPENING_PTS"));
 			break;
 		case ARBConfigScoring::eScoreThenTime:
@@ -654,8 +686,8 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlSubtractTimeFaults->Show(true);
 			m_ctrlTimeFaultsUnder->Show(true);
 			m_ctrlTimeFaultsOver->Show(true);
-			m_ctrlMultiplyText->Show(false);
-			m_ctrlMultiply->Show(false);
+			m_ctrlMultiplyText->Show(true);
+			m_ctrlMultiply->Show(true);
 			m_ctrlPointsOpeningText->SetLabel(_("IDS_SCORING_REQUIRED_POINTS"));
 			break;
 		case ARBConfigScoring::eTimePlusFaults:
@@ -783,6 +815,13 @@ void CDlgConfigEventMethod::OnSpeedPoints(wxCommandEvent& evt)
 	m_ctrlPlacementDelete->Show(m_SpeedPts);
 	Layout();
 	GetSizer()->Fit(this);
+}
+
+
+void CDlgConfigEventMethod::OnComputeTimeFaults(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	UpdateButtons();
 }
 
 
@@ -958,12 +997,14 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		m_pScoring->SetSubtractTimeFaultsFromScore(m_SubtractTimeFaults);
 		m_pScoring->SetComputeTimeFaultsUnder(m_TimeFaultsUnder);
 		m_pScoring->SetComputeTimeFaultsOver(m_TimeFaultsOver);
+		m_pScoring->SetTimeFaultMultiplier(m_Multiply);
 		break;
 	case ARBConfigScoring::eScoreThenTime:
 		m_pScoring->SetRequiredOpeningPoints(m_OpeningPts);
 		m_pScoring->SetSubtractTimeFaultsFromScore(m_SubtractTimeFaults);
 		m_pScoring->SetComputeTimeFaultsUnder(m_TimeFaultsUnder);
 		m_pScoring->SetComputeTimeFaultsOver(m_TimeFaultsOver);
+		m_pScoring->SetTimeFaultMultiplier(m_Multiply);
 		break;
 	case ARBConfigScoring::eTimePlusFaults:
 		m_pScoring->SetQsMustBeClean(m_TimeFaultsCleanQ);

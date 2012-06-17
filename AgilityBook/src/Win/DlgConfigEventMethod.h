@@ -73,9 +73,9 @@ private:
 	wxButton* m_ctrlPlacementEdit;
 	wxButton* m_ctrlPlacementDelete;
 	wxCheckBox* m_ctrlTimeFaultsCleanQ;
+	wxCheckBox* m_ctrlSubtractTimeFaults;
 	wxCheckBox* m_ctrlTimeFaultsUnder;
 	wxCheckBox* m_ctrlTimeFaultsOver;
-	wxCheckBox* m_ctrlSubtractTimeFaults;
 	wxStaticText* m_ctrlPointsOpeningText;
 	CTextCtrl* m_ctrlPointsOpening;
 	wxStaticText* m_ctrlPointsClosingText;
@@ -88,9 +88,9 @@ private:
 	bool m_SpeedPts;
 	short m_Multiply;
 	bool m_TimeFaultsCleanQ;
+	bool m_SubtractTimeFaults;
 	bool m_TimeFaultsUnder;
 	bool m_TimeFaultsOver;
-	bool m_SubtractTimeFaults;
 	short m_OpeningPts;
 	short m_ClosingPts;
 
@@ -101,6 +101,7 @@ private:
 	void OnValidTo(wxCommandEvent& evt);
 	void OnSelchangeType(wxCommandEvent& evt);
 	void OnSpeedPoints(wxCommandEvent& evt);
+	void OnComputeTimeFaults(wxCommandEvent& evt);
 	void OnItemchangedPlacement(wxListEvent& evt);
 	void OnItemActivatedPlacement(wxListEvent& evt);
 	void OnKeydownPlacement(wxKeyEvent& evt);

@@ -19,6 +19,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2012-06-16 DRC Display number of faults for each time fault.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -649,16 +650,19 @@ void CDlgConfigEvent::FillControls()
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
 						info << L"; " << str1;
-					}
-					if (pScoring->ComputeTimeFaultsUnder())
-					{
-						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-						info << L"; " << str1;
-					}
-					if (pScoring->ComputeTimeFaultsOver())
-					{
-						str1 = _("IDS_CONFIGEVENT_TF_OVER");
-						info << L"; " << str1;
+						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
+						info << L"; " << str1 << L": "
+							<< pScoring->TimeFaultMultiplier();
+						if (pScoring->ComputeTimeFaultsUnder())
+						{
+							str1 = _("IDS_CONFIGEVENT_TF_UNDER");
+							info << L"; " << str1;
+						}
+						if (pScoring->ComputeTimeFaultsOver())
+						{
+							str1 = _("IDS_CONFIGEVENT_TF_OVER");
+							info << L"; " << str1;
+						}
 					}
 					break;
 				case ARBConfigScoring::eScoreThenTime:
@@ -669,16 +673,19 @@ void CDlgConfigEvent::FillControls()
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
 						info << L"; " << str1;
-					}
-					if (pScoring->ComputeTimeFaultsUnder())
-					{
-						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-						info << L"; " << str1;
-					}
-					if (pScoring->ComputeTimeFaultsOver())
-					{
-						str1 = _("IDS_CONFIGEVENT_TF_OVER");
-						info << L"; " << str1;
+						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
+						info << L"; " << str1 << L": "
+							<< pScoring->TimeFaultMultiplier();
+						if (pScoring->ComputeTimeFaultsUnder())
+						{
+							str1 = _("IDS_CONFIGEVENT_TF_UNDER");
+							info << L"; " << str1;
+						}
+						if (pScoring->ComputeTimeFaultsOver())
+						{
+							str1 = _("IDS_CONFIGEVENT_TF_OVER");
+							info << L"; " << str1;
+						}
 					}
 					break;
 				case ARBConfigScoring::eTimePlusFaults:
@@ -691,6 +698,13 @@ void CDlgConfigEvent::FillControls()
 						// the 'Time+Fault' at start.
 						str1 = _("IDS_CONFIGEVENT_CLEANQ");
 						info << L"; " << str1;
+					}
+					if (pScoring->ComputeTimeFaultsUnder()
+						|| pScoring->ComputeTimeFaultsOver())
+					{
+						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
+						info << L"; " << str1 << L": "
+							<< pScoring->TimeFaultMultiplier();
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
