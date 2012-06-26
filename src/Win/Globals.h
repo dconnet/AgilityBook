@@ -31,8 +31,10 @@ class wxTreeCtrl;
 /**
  * Using wx to get the times on network files is really slow.
  * I suspect it's the win32 CreateFile/GetFileTime apis.
- * @param inPassword Password to decode
- * @param outBuffer Decoded password
+ * @param filename File name to access.
+ * @param dtAccess Last access time, may be NULL.
+ * @param dtMod Last modification time, may be NULL.
+ * @param dtCreate Creation time, may be NULL.
  * @return Success
  */
 extern bool GetFileTimes(
