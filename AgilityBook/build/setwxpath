@@ -1,31 +1,20 @@
-export UNICODESETTING
 export DEBUG
 export WXWIN
 
-USAGE="Usage $0 trunk|2.8 unicode|ansi [debug]"
+USAGE="Usage $0 trunk|2.8 [debug]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
 elif test "x$1" = "x2.8"; then
-	#WXWIN=~/wx/wxMac-2.8.10
 	WXWIN=~/wx/wxWidgets-2.8.12
 else
 	echo $USAGE
 	return
 fi
 
-if test "x$2" = "xunicode"; then
-	UNICODESETTING="-unicode"
-elif test "x$2" = "xansi"; then
-	UNICODESETTING="-ansi"
-else
-	echo $USAGE
-	return
-fi
-
-if test "x$3" = "xdebug"; then
+if test "x$2" = "xdebug"; then
 	DEBUG="-debug"
 fi
 
-export PATH=$WXWIN/build${UNICODESETTING}${DEBUG}:$PATH
+export PATH=$WXWIN/build-unicode${DEBUG}:$PATH
 echo $PATH
