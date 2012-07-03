@@ -17,7 +17,7 @@ if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
 	#10.4
 	#VERSION="--disable-compat28 --disable-uiactionsim"
-	#10.5
+	#10.5 (note, trunk no longer supports 10.4)
 	VERSION="--disable-compat28"
 elif test "x$1" = "x2.8"; then
 	WXWIN=~/wx/wxWidgets-2.8.12
@@ -55,8 +55,8 @@ mkdir $BUILDDIR
 cd $BUILDDIR
 
 if test "x$1" = "xtrunk"; then
-	COMPILERS=
-	MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Developer/SDKs/MacOSX10.5.sdk"
+	COMPILERS="CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2"
+	MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Developer/SDKs/MacOSX10.5.sdk --enable-macosx_arch=i386 --with-osx_carbon"
 else
 	COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
 	MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk"
