@@ -7,11 +7,10 @@
 
 export BUILDDIR
 export DEBUG
-export UNICODESETTING
 export LIBRARIES
 export VERSION=
 export WXWIN=
-USAGE="Usage $0 trunk|2.8 unicode|ansi [debug|release]"
+USAGE="Usage $0 trunk|2.8 [debug|release]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
@@ -26,27 +25,16 @@ else
 	echo $USAGE
 	exit
 fi
-BUILDDIR="$WXWIN/build"
+BUILDDIR="$WXWIN/build-unicode"
 
-if test "x$2" = "xunicode"; then
-	BUILDDIR+="-unicode"
-	UNICODESETTING="--enable-unicode"
-elif test "x$2" = "xansi"; then
-	BUILDDIR+="-ansi"
-	UNICODESETTING="--disable-unicode"
-else
-	echo $USAGE
-	exit
-fi
-
-if test "x$3" = "xdebug"; then
+if test "x$2" = "xdebug"; then
 	DEBUG="--enable-debug --enable-debug_gdb"
 	BUILDDIR+="-debug"
-elif test "x$3" = "xrelease"; then
+elif test "x$2" = "xrelease"; then
 	DEBUG="--disable-debug_flag"
 else
-	$0 $1 $2 debug
-	$0 $1 $2 release
+	$0 $1 debug
+	$0 $1 release
 	exit
 fi
 
@@ -59,10 +47,10 @@ if test "x$1" = "xtrunk"; then
 	MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Developer/SDKs/MacOSX10.5.sdk --enable-macosx_arch=i386 --with-osx_carbon"
 else
 	COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
-	MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk"
+	MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk --enable-universal_binary"
 fi
 LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no"
 
-echo "Running: ../configure $COMPILERS --disable-shared $DEBUG $VERSION $UNICODESETTING --enable-universal_binary $LIBRARIES $MINSDK"
+echo "Running: ../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION --enable-universal_binary $LIBRARIES $MINSDK"
 
-../configure $COMPILERS --disable-shared $DEBUG $VERSION $UNICODESETTING --enable-universal_binary $LIBRARIES $MINSDK
+../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $MINSDK
