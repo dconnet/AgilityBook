@@ -5,6 +5,8 @@
 # project is defined in.
 #
 # Revision History
+# 2012-07-04 DRC This file is wildly out of date. Just return an error now.
+#                (above comments are wrong too)
 # 2007-11-21 DRC Add VC9 support. VC9 is Unicode-only, for win98 (non-unicode)
 #                builds, use VC8. VC9 config no longer has 'unicode' in name
 # 2006-12-15 DRC Translated BuildHelp.bat to python, add Unicode support.
@@ -41,6 +43,9 @@ def RunCommand(cmd):
 	childout.close()
 
 def main():
+	print >>sys.stderr, "This file is no longer supported. There currently is no help file."
+	return 1
+
 	if len(sys.argv) != 3 and len(sys.argv) != 4:
 		print >>sys.stderr, "Usage: ", __doc__
 		return 1

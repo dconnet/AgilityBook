@@ -82,7 +82,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -149,7 +149,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -216,7 +216,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -284,280 +284,10 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug - No Unicode|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="0"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
-				PreprocessorDefinitions="_CONSOLE"
-				RuntimeLibrary="1"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
-				SubSystem="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug - No Unicode|x64"
-			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="0"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
-				PreprocessorDefinitions="_CONSOLE"
-				RuntimeLibrary="1"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
-				SubSystem="1"
-				TargetMachine="17"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release - No Unicode|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="0"
-			CharacterSet="2"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
-				PreprocessorDefinitions="_CONSOLE"
-				RuntimeLibrary="0"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
-				SubSystem="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release - No Unicode|x64"
-			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="0"
-			CharacterSet="2"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
-				PreprocessorDefinitions="_CONSOLE"
-				RuntimeLibrary="0"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
-				SubSystem="1"
-				TargetMachine="17"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -x -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;python &quot;$(ProjectDir)RunARBTests.py&quot; &quot;$(ProjectDir)\..\..&quot; &quot;$(OutDir) &quot; &quot;$(TargetName) &quot; $(PlatformName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
-	<References>
-	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
@@ -601,38 +331,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug - No Unicode|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug - No Unicode|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release - No Unicode|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release - No Unicode|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

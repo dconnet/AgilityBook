@@ -6,7 +6,7 @@
   - Added VALOR.
 - New features / Enhancements:
   - Added autocompletion support to comboboxes (using wx2.9)
-  - Added VC11 project files
+  - Added VC11 project files, stripped all ansi builds.
   - Added support for different time fault multipliers in point games.
 - Bug fixes:
   - Change all OnKillFocus handling. Edit controls on a Mac don't get this
