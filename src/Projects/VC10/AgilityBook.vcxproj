@@ -1,28 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug - No Unicode|Win32">
-      <Configuration>Debug - No Unicode</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug - No Unicode|x64">
-      <Configuration>Debug - No Unicode</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release - No Unicode|Win32">
-      <Configuration>Release - No Unicode</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release - No Unicode|x64">
-      <Configuration>Release - No Unicode</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -40,17 +24,6 @@
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v100</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
@@ -60,17 +33,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v100</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -87,16 +49,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Release Settings.props" />
-    <Import Project="$(SolutionDir)/Win32 Support.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Debug Settings.props" />
-    <Import Project="$(SolutionDir)/Win32 Support.props" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/Release Settings.props" />
@@ -106,16 +58,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/Debug Settings.props" />
     <Import Project="$(SolutionDir)/Win32 Support.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Release Settings.props" />
-    <Import Project="$(SolutionDir)/x64 Support.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Debug Settings.props" />
-    <Import Project="$(SolutionDir)/x64 Support.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -228,104 +170,6 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
       <Message>Generating Data File</Message>
     </CustomBuildStep>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|Win32'">
-    <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\..\Include
-python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
-</Command>
-    </PreBuildEvent>
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <AdditionalIncludeDirectories>../../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib_VC$(PlatformToolsetVersion);$(WXWIN)\lib\vc$(PlatformToolsetVersion)_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-    <PostBuildEvent />
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
-      <Outputs>$(OutDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|x64'">
-    <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\..\Include
-python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
-</Command>
-    </PreBuildEvent>
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <AdditionalIncludeDirectories>../../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_amd64_lib_VC$(PlatformToolsetVersion);$(WXWIN)\lib\vc$(PlatformToolsetVersion)_amd64_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <TargetMachine>MachineX64</TargetMachine>
-    </Link>
-    <PostBuildEvent />
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
-      <Outputs>$(OutDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|Win32'">
-    <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\..\Include
-python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
-</Command>
-    </PreBuildEvent>
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <AdditionalIncludeDirectories>../../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib_VC$(PlatformToolsetVersion);$(WXWIN)\lib\vc$(PlatformToolsetVersion)_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-    <PostBuildEvent />
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
-      <Outputs>$(OutDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|x64'">
-    <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\..\Include
-python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
-</Command>
-    </PreBuildEvent>
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <AdditionalIncludeDirectories>../../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_amd64_lib_VC$(PlatformToolsetVersion);$(WXWIN)\lib\vc$(PlatformToolsetVersion)_amd64_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <TargetMachine>MachineX64</TargetMachine>
-    </Link>
-    <PostBuildEvent />
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
-      <Outputs>$(OutDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Win\AgilityBook.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookCalendarListView.cpp" />
@@ -414,12 +258,8 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClCompile Include="..\..\Win\ReadHttp.cpp" />
     <ClCompile Include="..\..\Win\RichEditCtrl2.cpp" />
     <ClCompile Include="..\..\stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>

@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2012-07-04 DRC Update to supported compilers (vc9+)
 # 2012-06-01 DRC Changed VC10 output directory
 # 2010-11-07 DRC Updated to use vc10pro or sdk
 # 2010-06-11 DRC Support building on x64 OS
@@ -143,28 +144,10 @@ def main():
 		os.environ['SETBUILDNUMBER_UPDATE'] = '-x'
 
 	# Targets:
-	# VC7.1
-	#  Configuration: 'Release'/'Debug' (non-unicode)
-	#  Platform: Win32
-	#  Targets:
-	#   AgilityBook: all
-	#   LibTidy: all
-	# VC8
-	#  Configuration: 'Release'/'Debug'/'Unicode Release'/'Unicode Debug'
+	# VC9/VC10/VC11
+	#  Configuration: 'Release'/'Debug'
 	#  Platform: Win32, x64
-	#  ARBHelp: 'Release'/'Debug'
-	#  Targets:
-	#   AgilityBook: all
-	#   ARBHelp: no unicode
-	#   LibTidy: no unicode
-	# VC9/VC10
-	#  Configuration: 'Release'/'Debug'/'Release - No Unicode'/'Debug - No Unicode'
-	#  Platform: Win32, x64
-	#  Targets:
-	#   AgilityBook: unicode only
-	#   ARBHelp: unicode only
-	#   LibTidy: no unicode [debug/release=non unicode]
-	#   TestARB: all
+	#  Targets: AgilityBook, ARBHelp, ARBUpdater, LibARB, LibTidy, TestARB
 
 	if buildVC9:
 		vc9Base = GetVSDir("9.0")
@@ -237,18 +220,51 @@ def main():
 				r'call "' + setvcvars + r'" /Release /x64 /xp',
 				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64',
 				r'color 07')
-		elif bit64on64:
-			cmds = (
-				r'title VC10 Release x64',
-				r'cd ..\VC10',
-				r'call "' + setvcvars + r'" amd64',
-				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
 		else:
+			envTarget = 'x86_amd64'
+			if bit64on64:
+				envTarget = 'amd64'
 			cmds = (
 				r'title VC10 Release x64',
 				r'cd ..\VC10',
-				r'call "' + setvcvars + r'" x86_amd64',
+				r'call "' + setvcvars + r'" ' + envTarget,
 				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
+		RunCmds(cmds)
+		if not os.access('../../../bin/VC' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
+			print 'ERROR: Compile failed, bailing out'
+			return 1
+
+	if buildVC11:
+		vc11Base = GetVSDir("11.0")
+		PlatformTools = '110'
+		setvcvars = vc11Base + r'\VC\vcvarsall.bat'
+		if not os.access(vc11Base, os.F_OK):
+			print 'ERROR: "' + vc11Base + '" does not exist'
+			return 1
+		if not os.access(setvcvars, os.F_OK):
+			print 'ERROR: "' + setvcvars + '" does not exist'
+			return 1
+		if clean:
+			RmMinusRF('../../../bin/VC' + PlatformTools + 'Win32')
+		cmds = (
+			r'title VC11 Release Win32',
+			r'cd ..\VC11',
+			r'call "' + setvcvars + r'" x86',
+			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
+		RunCmds(cmds)
+		if not os.access('../../../bin/VC' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
+			print 'ERROR: Compile failed, bailing out'
+			return 1
+		if clean:
+			RmMinusRF('../../../bin/VC' + PlatformTools + 'x64')
+		envTarget = 'x86_amd64'
+		if bit64on64:
+			envTarget = 'amd64'
+		cmds = (
+			r'title VC11 Release x64',
+			r'cd ..\VC11',
+			r'call "' + setvcvars + r'" ' + envTarget,
+			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
 			print 'ERROR: Compile failed, bailing out'
