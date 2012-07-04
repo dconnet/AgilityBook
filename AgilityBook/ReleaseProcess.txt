@@ -42,7 +42,9 @@ Do a full rebuild and verify it.
 Commit all changes to SVN.
 
 Pull files onto Mac and build there (see MAC_BUILD.txt)
-- If major or minor version number has changed, update Info.plist in xcode.
+- If major or minor version number has changed:
+  - update Info.plist in xcode
+  - update Project Version in xcode target properties
 - export PATH=$WXWIN/build-unicode:$PATH
 - cd .../AgilityBook
 - autoconf
@@ -55,7 +57,7 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 - make dist
 [note: the makefile is not generating the image correctly to run on osx10.4
 So do a release build in xcode and copy that executable into the 'dist'
-generated .app folder - MAKE SURE TO UPDATE Project Version in xcode project]
+generated .app folder]
 TODO: check if above comment is still correct when using CC/CXX/LD definitions
 during 'configure' [doesn't seem like it. sigh.]
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
