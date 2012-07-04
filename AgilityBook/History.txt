@@ -1,13 +1,13 @@
-7/3/2012: v2.3.6.<in development>
+7/4/2012: v2.3.6.3476
 - Bumped Configuration v37:
   - Enable 5pt Qs in NADAC Proficient Regular.
   - Add support for multi-point time faults in pointed games (TDAA).
   - Fixed AKC JWW Century title name.
   - Added VALOR.
 - New features / Enhancements:
+  - Added support for different time fault multipliers in point games.
   - Added autocompletion support to comboboxes (using wx2.9)
   - Added VC11 project files, stripped all ansi builds.
-  - Added support for different time fault multipliers in point games.
 - Bug fixes:
   - Change all OnKillFocus handling. Edit controls on a Mac don't get this
     message when a button is clicked (or dialog closed).

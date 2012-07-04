@@ -188,7 +188,7 @@ SUITE(TestConfig)
 			CHECK_EQUAL(139u, config.GetActions().size());
 			CHECK_EQUAL(0u, config.GetFaults().size());
 			CHECK_EQUAL(5u, config.GetOtherPoints().size());
-			CHECK_EQUAL(13u, config.GetVenues().size());
+			CHECK_EQUAL(14u, config.GetVenues().size());
 			CHECK(config.GetVenues().FindVenue(L"AAC"));
 			CHECK(config.GetVenues().FindVenue(L"AKC"));
 			CHECK(config.GetVenues().FindVenue(L"ASCA"));
@@ -202,6 +202,7 @@ SUITE(TestConfig)
 			CHECK(config.GetVenues().FindVenue(L"UKC"));
 			CHECK(config.GetVenues().FindVenue(L"UKI"));
 			CHECK(config.GetVenues().FindVenue(L"USDAA"));
+			CHECK(config.GetVenues().FindVenue(L"VALOR"));
 		}
 	}
 
