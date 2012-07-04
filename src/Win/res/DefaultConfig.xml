@@ -4,9 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2012-06-16 DRC Configuration version 37.
+2012-07-02 DRC Configuration version 37.
                Enable 5pt Qs in NADAC Proficient Regular.
                Add support for multi-point time faults in pointed games.
+               Fixed AKC JWW Century title name.
 2012-01-06 DRC Configuration version 36.
                Remove start date from PACH title.
                Remove start date from AKC lifetime titles.
@@ -256,6 +257,8 @@ Revision History:
     <Action Config="33" OldName="O-XTN" NewName="O-XGT" Venue="NADAC" Verb="RenameTitle" />
     <Action Config="33" OldName="S-XTN" NewName="S-XGT" Venue="NADAC" Verb="RenameTitle" />
     <Action Config="33" OldName="Extreme Tunnelers" NewName="Extreme Gaters" Venue="NADAC" Verb="RenameEvent" />
+    <Action Config="29" OldName="MFC" NewName="MJC" Venue="AKC" Verb="RenameTitle" />
+
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
       <Titles LongName="Starters Games Dog of Canada" Name="SGDC">2 qualifying scores in each of the 3 games (jumpers, gamblers, snooker) under at least 2 different judges in each game
@@ -456,22 +459,22 @@ Revision History:
       <Titles LongName="Master Bronze Agility Title" Name="MXB">25 Qs</Titles>
       <Titles LongName="Master Silver Agility Title" Name="MXS">50 Qs</Titles>
       <Titles LongName="Master Gold Agility Title" Name="MXG">75 Qs</Titles>
-      <Titles LongName="Master Centery Agility Title" Name="MXC">100 Qs</Titles>
+      <Titles LongName="Master Century Agility Title" Name="MXC">100 Qs</Titles>
       <Titles LongName="Master Bronze JWW Title" Name="MJB">25 Qs</Titles>
       <Titles LongName="Master Silver JWW Title" Name="MJS">50 Qs</Titles>
       <Titles LongName="Master Gold JWW Title" Name="MJG">75 Qs</Titles>
-      <Titles LongName="Master Centery JWW Title" Name="MFC">100 Qs</Titles>
+      <Titles LongName="Master Century JWW Title" Name="MJC">100 Qs</Titles>
       <Titles LongName="Master Bronze FAST Title" Name="MFB">25 Qs</Titles>
       <Titles LongName="Master Silver FAST Title" Name="MFS">50 Qs</Titles>
       <Titles LongName="Master Gold FAST Title" Name="MFG">75 Qs</Titles>
       <Titles LongName="Master Bronze Agility Preferred Title" Name="MXPB">25 Qs</Titles>
       <Titles LongName="Master Silver Agility Preferred Title" Name="MXPS">50 Qs</Titles>
       <Titles LongName="Master Gold Agility Preferred Title" Name="MXPG">75 Qs</Titles>
-      <Titles LongName="Master Centery Agility Preferred Title" Name="MXPC">100 Qs</Titles>
+      <Titles LongName="Master Century Agility Preferred Title" Name="MXPC">100 Qs</Titles>
       <Titles LongName="Master Bronze JWW Preferred Title" Name="MJPB">25 Qs</Titles>
       <Titles LongName="Master Silver JWW Preferred Title" Name="MJPS">50 Qs</Titles>
       <Titles LongName="Master Gold JWW Preferred Title" Name="MJPG">75 Qs</Titles>
-      <Titles LongName="Master Centery JWW Preferred Title" Name="MFPC">100 Qs</Titles>
+      <Titles LongName="Master Century JWW Preferred Title" Name="MFPC">100 Qs</Titles>
       <Titles LongName="Master Bronze FAST Preferred Title" Name="MFPB">25 Qs</Titles>
       <Titles LongName="Master Silver FAST Preferred Title" Name="MFPS">50 Qs</Titles>
       <Titles LongName="Master Gold FAST Preferred Title" Name="MFPG">75 Qs</Titles>
