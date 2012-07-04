@@ -1,7 +1,7 @@
 7/3/2012: v2.3.6.<in development>
 - Bumped Configuration v37:
   - Enable 5pt Qs in NADAC Proficient Regular.
-  - Add support for multi-point time faults in pointed games.
+  - Add support for multi-point time faults in pointed games (TDAA).
   - Fixed AKC JWW Century title name.
   - Added VALOR.
 - New features / Enhancements:
