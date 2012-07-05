@@ -1064,7 +1064,7 @@ msgstr "Use Run &Time in OPS"
 
 #: Win/AgilityBookMenu.cpp:247
 msgid "DescViewIncludeRunTime"
-msgstr "Use the run time in the OPS for gambles"
+msgstr "Use the dog's time in the OPS computation for gambles"
 
 #: Win/AgilityBookMenu.cpp:250
 msgid "MenuViewSortPoints"
