@@ -1,6 +1,6 @@
 7/4/2012: v2.3.7.<in development>
 - Bug fixes:
-  - Fix OPS to use run time, not opening time in gambles.
+  - Add option to use run time or opening time in gamble OPS.
 
 7/4/2012: v2.3.6.3476
 - Bumped Configuration v37:

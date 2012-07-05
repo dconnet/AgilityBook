@@ -707,7 +707,7 @@ void CWizardExport::UpdatePreview()
 									case IO_RUNS_OPS:
 										{
 											double ops;
-											if (pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
+											if (pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops))
 											{
 												data += AddPreviewData(iLine, idx, ARBDouble::ToString(ops, 3));
 											}

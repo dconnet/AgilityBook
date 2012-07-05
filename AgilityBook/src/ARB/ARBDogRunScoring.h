@@ -117,11 +117,13 @@ public:
 	/**
 	 * Get the Obstacles per second for the run.
 	 * @param inTableInYPS Include table in computation.
+	 * @param inRunTimeInOPS Use runtime instead of opening time in OPS.
 	 * @param outOPS OPS for the run.
 	 * @return Indicates whether outOPS is valid (needs obstacle count and time)
 	 */
 	bool GetObstaclesPS(
 			bool inTableInYPS,
+			bool inRunTimeInOPS,
 			double& outOPS) const;
 
 	/**

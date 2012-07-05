@@ -14,6 +14,7 @@
  * If they are only in a context menu, the accelerator will not work.
  *
  * Revision History
+ * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2009-09-19 DRC Fix IdMenuRecentFiles on language switch.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-09-09 DRC Fix Ctrl+R. See note above.
@@ -244,6 +245,7 @@ void CAgilityBookMenu::CreateMenu(
 		DoMenu(handles.menu, bCreate, ID_VIEW_SORTRUNS, _("MenuViewNewestTrials"), _("DescViewNewestTrials"), eMenuCheck);
 		DoMenu(handles.menu, bCreate, ID_VIEW_RUNS_BY_TRIAL, _("MenuViewRunsByTrial"), _("DescViewRunsByTrial"), eMenuCheck);
 		DoMenu(handles.menu, bCreate, ID_VIEW_TABLE_IN_YPS, _("MenuViewIncludeTable"), _("DescViewIncludeTable"), eMenuCheck);
+		DoMenu(handles.menu, bCreate, ID_VIEW_RUNTIME_IN_OPS, _("MenuViewIncludeRunTime"), _("DescViewIncludeRunTime"), eMenuCheck);
 		if (bCreate)
 			handles.menu->AppendSeparator();
 		DoMenu(handles.menu, bCreate, ID_VIEW_POINTS_VIEW_SORT, _("MenuViewSortPoints"), _("DescViewSortPoints"));

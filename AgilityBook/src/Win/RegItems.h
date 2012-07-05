@@ -165,6 +165,8 @@ inline wxString CFG_CI_KEY_CONFIG(int n, bool bIncSep = true)
 #define CFG_COMMON_STARTFILTERJDAY		L"Common/StartFilterJDay"
 //	DW TableInYPS
 #define CFG_COMMON_TABLEINYPS			L"Common/TableInYPS"
+//	DW RunTimeInOPS
+#define CFG_COMMON_RUNTIMEINOPS			L"Common/RunTimeInOPS"
 //	DW ViewAllDates (FilterOptions.cpp)
 #define CFG_COMMON_VIEWALLDATES			L"Common/ViewAllDates"
 //	DW ViewAllNames (FilterOptions.cpp)

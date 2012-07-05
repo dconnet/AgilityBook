@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2010-11-07 DRC Merge filters on program settings import also.
  * @li 2010-11-04 DRC Change importing program settings to merge columninfo.
  * @li 2010-03-28 DRC Added ability to import/export program settings (v2.2.0).
@@ -844,6 +845,20 @@ bool CAgilityBookOptions::GetTableInYPS()
 void CAgilityBookOptions::SetTableInYPS(bool bSet)
 {
 	wxConfig::Get()->Write(CFG_COMMON_TABLEINYPS, bSet);
+}
+
+
+bool CAgilityBookOptions::GetRunTimeInOPS()
+{
+	bool val = false;
+	wxConfig::Get()->Read(CFG_COMMON_RUNTIMEINOPS, &val);
+	return val;
+}
+
+
+void CAgilityBookOptions::SetRunTimeInOPS(bool bSet)
+{
+	wxConfig::Get()->Write(CFG_COMMON_RUNTIMEINOPS, bSet);
 }
 
 

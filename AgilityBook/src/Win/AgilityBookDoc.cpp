@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -164,6 +165,7 @@ BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_HIDDEN, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(wxID_ABOUT, CAgilityBookDoc::OnUpdateCmd)
 	EVT_MENU(wxID_ABOUT, CAgilityBookDoc::OnCmd)
@@ -1573,6 +1575,11 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case ID_VIEW_TABLE_IN_YPS:
 		evt.Check(CAgilityBookOptions::GetTableInYPS() ? 1 : 0);
+		evt.Enable(false);
+		evt.Skip();
+		break;
+	case ID_VIEW_RUNTIME_IN_OPS:
+		evt.Check(CAgilityBookOptions::GetRunTimeInOPS() ? 1 : 0);
 		evt.Enable(false);
 		evt.Skip();
 		break;
