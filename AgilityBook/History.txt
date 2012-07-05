@@ -1,3 +1,5 @@
+7/4/2012: v2.3.7.<in development>
+
 7/4/2012: v2.3.6.3476
 - Bumped Configuration v37:
   - Enable 5pt Qs in NADAC Proficient Regular.
