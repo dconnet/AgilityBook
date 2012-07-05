@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-04 DRC Fix OPS to use run time, not opening time in gambles.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
  * @li 2007-02-14 DRC Fixed a problem in YPS table file conversion.
@@ -381,8 +382,6 @@ bool ARBDogRunScoring::GetObstaclesPS(
 		double t = GetTime();
 		if (eTypeByTime == m_type && HasTable() && 5.0 < t && !inTableInYPS)
 			t -= 5;
-		else if (eTypeByOpenClose == m_type && t > m_SCT && m_SCT2 > 0.0)
-			t = m_SCT;
 		outOPS = GetObstacles() / t;
 	}
 	return bOk;
