@@ -126,6 +126,8 @@ public:
 	static void SetViewLifetimePointsByEvent(bool bSet);
 	static bool GetTableInYPS();
 	static void SetTableInYPS(bool bSet);
+	static bool GetRunTimeInOPS();
+	static void SetRunTimeInOPS(bool bSet);
 	static bool GetIncludeCRCDImage();
 	static void SetIncludeCRCDImage(bool bSet);
 	// Font options

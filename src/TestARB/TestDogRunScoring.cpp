@@ -124,7 +124,7 @@ SUITE(TestDogRunScoring)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool GetObstaclesPS(bool inTableInYPS, double& outOPS) const;
+		//	bool GetObstaclesPS(bool inTableInYPS, bool inRunTimeInOPS, double& outOPS) const;
 		}
 	}
 

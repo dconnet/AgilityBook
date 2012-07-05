@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-10-14 DRC Add run reordering support.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -223,7 +224,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 		case IO_RUNS_OPS:
 			{
 				double ops;
-				if (m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
+				if (m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops))
 				{
 					str << ARBDouble::ToString(ops, 3);
 				}
@@ -748,8 +749,8 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 	case IO_RUNS_OPS:
 		{
 			double ops1, ops2;
-			bool bOk1 = pRun1->GetRun()->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops1);
-			bool bOk2 = pRun2->GetRun()->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops2);
+			bool bOk1 = pRun1->GetRun()->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops1);
+			bool bOk2 = pRun2->GetRun()->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops2);
 			if (bOk1 && bOk2)
 			{
 				if (ops1 < ops2)
@@ -1237,6 +1238,8 @@ BEGIN_EVENT_TABLE(CAgilityBookRunsView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_TABLE_IN_YPS, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookRunsView::OnViewCmd)
 	EVT_MENU(wxID_PRINT, CAgilityBookRunsView::OnPrint)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookRunsView::OnPreview)
 END_EVENT_TABLE()
@@ -1749,6 +1752,9 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_VIEW_TABLE_IN_YPS:
 		evt.Enable(true);
 		break;
+	case ID_VIEW_RUNTIME_IN_OPS:
+		evt.Enable(true);
+		break;
 	}
 }
 
@@ -1955,7 +1961,12 @@ bool CAgilityBookRunsView::OnCmd(int id)
 
 	case ID_VIEW_TABLE_IN_YPS:
 		CAgilityBookOptions::SetTableInYPS(!CAgilityBookOptions::GetTableInYPS());
-		wxGetApp().GetTopWindow()->Refresh();
+		LoadData();
+		break;
+
+	case ID_VIEW_RUNTIME_IN_OPS:
+		CAgilityBookOptions::SetRunTimeInOPS(!CAgilityBookOptions::GetRunTimeInOPS());
+		LoadData();
 		break;
 	}
 	return bHandled;
