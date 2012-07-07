@@ -2,18 +2,11 @@
 <VisualStudioPropertySheet
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="x64 Settings"
+	Name="CommonRelease32"
+	InheritedPropertySheets="$(SolutionDir)/Common32.vsprops;$(SolutionDir)/CommonRelease.vsprops"
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		PreprocessorDefinitions="WIN32;WIN64"
-	/>
-	<Tool
-		Name="VCLinkerTool"
-		TargetMachine="17"
-	/>
-	<Tool
-		Name="VCMIDLTool"
-		TargetEnvironment="3"
+		RuntimeLibrary="0"
 	/>
 </VisualStudioPropertySheet>

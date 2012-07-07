@@ -21,7 +21,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonDebug32.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			>
@@ -43,9 +43,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../tidy/include;../../tidy/src"
-				PreprocessorDefinitions="_WINDOWS;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
+				PreprocessorDefinitions="_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
 				SmallerTypeCheck="false"
-				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
@@ -82,7 +81,7 @@
 		<Configuration
 			Name="Debug|x64"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonDebug64.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			>
@@ -104,9 +103,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../tidy/include;../../tidy/src"
-				PreprocessorDefinitions="_WINDOWS;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
+				PreprocessorDefinitions="_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
 				SmallerTypeCheck="false"
-				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DisableSpecificWarnings="4267;4244;4312"
@@ -142,7 +140,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonRelease32.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -165,8 +163,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../tidy/include;../../tidy/src"
-				PreprocessorDefinitions="_WINDOWS;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
-				RuntimeLibrary="0"
+				PreprocessorDefinitions="_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
@@ -203,7 +200,7 @@
 		<Configuration
 			Name="Release|x64"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonRelease64.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -226,8 +223,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../tidy/include;../../tidy/src"
-				PreprocessorDefinitions="_WINDOWS;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
-				RuntimeLibrary="0"
+				PreprocessorDefinitions="_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DisableSpecificWarnings="4267;4244;4312"

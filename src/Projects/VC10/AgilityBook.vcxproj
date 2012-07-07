@@ -51,23 +51,19 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Release Settings.props" />
-    <Import Project="$(SolutionDir)/Win32 Support.props" />
+    <Import Project="$(SolutionDir)/CommonRelease32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Debug Settings.props" />
-    <Import Project="$(SolutionDir)/Win32 Support.props" />
+    <Import Project="$(SolutionDir)/CommonDebug32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Release Settings.props" />
-    <Import Project="$(SolutionDir)/x64 Support.props" />
+    <Import Project="$(SolutionDir)/CommonRelease64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Debug Settings.props" />
-    <Import Project="$(SolutionDir)/x64 Support.props" />
+    <Import Project="$(SolutionDir)/CommonDebug64.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -83,15 +79,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ResourceCompile>
-      <AdditionalIncludeDirectories>../../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib_VC$(PlatformToolsetVersion);$(WXWIN)\lib\vc$(PlatformToolsetVersion)_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-    <PostBuildEvent />
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
@@ -107,15 +95,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
-    <ResourceCompile>
-      <AdditionalIncludeDirectories>../../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_amd64_lib_VC$(PlatformToolsetVersion);$(WXWIN)\lib\vc$(PlatformToolsetVersion)_amd64_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-    <PostBuildEvent />
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
@@ -131,15 +111,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
-    <ResourceCompile>
-      <AdditionalIncludeDirectories>../../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib_VC$(PlatformToolsetVersion);$(WXWIN)\lib\vc$(PlatformToolsetVersion)_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-    <PostBuildEvent />
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
@@ -155,15 +127,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
-    <ResourceCompile>
-      <AdditionalIncludeDirectories>../../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_amd64_lib_VC$(PlatformToolsetVersion);$(WXWIN)\lib\vc$(PlatformToolsetVersion)_amd64_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-    <PostBuildEvent />
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>

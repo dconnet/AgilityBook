@@ -21,6 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{05967875-9726-4F06-8EC8-DB6170C00BF3}</ProjectGuid>
     <RootNamespace>LibTidy</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -55,23 +56,19 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Release Settings.props" />
-    <Import Project="$(SolutionDir)/Win32 Support.props" />
+    <Import Project="$(SolutionDir)/CommonRelease32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Debug Settings.props" />
-    <Import Project="$(SolutionDir)/Win32 Support.props" />
+    <Import Project="$(SolutionDir)/CommonDebug32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Release Settings.props" />
-    <Import Project="$(SolutionDir)/x64 Support.props" />
+    <Import Project="$(SolutionDir)/CommonRelease64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/Debug Settings.props" />
-    <Import Project="$(SolutionDir)/x64 Support.props" />
+    <Import Project="$(SolutionDir)/CommonDebug64.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -82,7 +79,6 @@
       <AdditionalIncludeDirectories>../../tidy/include;../../tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SmallerTypeCheck>false</SmallerTypeCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -94,7 +90,6 @@
       <AdditionalIncludeDirectories>../../tidy/include;../../tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SmallerTypeCheck>false</SmallerTypeCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -105,7 +100,6 @@
     <ClCompile>
       <AdditionalIncludeDirectories>../../tidy/include;../../tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -116,7 +110,6 @@
     <ClCompile>
       <AdditionalIncludeDirectories>../../tidy/include;../../tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>

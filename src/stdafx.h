@@ -171,10 +171,12 @@
 #endif
 
 // ARB was developed against v2.8.10 - anything earlier is not supported.
-// And specifically exclude 2.9.0-2.9.2 (.3 had api changes/fixes)
+// And specifically exclude 2.9.0-2.9.3
+//  (.3 had api changes/fixes)
+//  (.4 changed the lib directory for x64)
 #include <wx/version.h>
-#if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER < 3
-#error pre-v2.9.3 not supported
+#if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER < 4
+#error pre-v2.9.4 not supported
 #endif
 #if !wxCHECK_VERSION(2, 8, 10)
 #error Unsupported wxWidget version
