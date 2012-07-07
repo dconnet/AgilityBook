@@ -22,7 +22,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonDebug32.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -45,21 +45,18 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../Win"
 				PreprocessorDefinitions="_WINDOWS"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -87,7 +84,7 @@
 		<Configuration
 			Name="Debug|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonDebug64.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -110,21 +107,18 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../Win"
 				PreprocessorDefinitions="_WINDOWS"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -152,7 +146,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonRelease32.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -176,21 +170,18 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../Win"
 				PreprocessorDefinitions="_WINDOWS"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -218,7 +209,7 @@
 		<Configuration
 			Name="Release|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonRelease64.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -242,21 +233,18 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../Win"
 				PreprocessorDefinitions="_WINDOWS"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"

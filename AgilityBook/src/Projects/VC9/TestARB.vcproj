@@ -21,8 +21,9 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonDebug32.vsprops;$(SolutionDir)/UnitTest.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			>
@@ -43,23 +44,20 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
+				AdditionalIncludeDirectories="../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
 				SubSystem="1"
 			/>
 			<Tool
@@ -88,7 +86,7 @@
 		<Configuration
 			Name="Debug|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonDebug64.vsprops;$(SolutionDir)/UnitTest.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			>
@@ -109,25 +107,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
+				AdditionalIncludeDirectories="../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
 				SubSystem="1"
-				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -155,7 +149,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonRelease32.vsprops;$(SolutionDir)/UnitTest.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -177,23 +171,20 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
+				AdditionalIncludeDirectories="../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
 				SubSystem="1"
 			/>
 			<Tool
@@ -222,7 +213,7 @@
 		<Configuration
 			Name="Release|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonRelease64.vsprops;$(SolutionDir)/UnitTest.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -244,25 +235,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
+				AdditionalIncludeDirectories="../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
 				SubSystem="1"
-				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -288,6 +275,8 @@
 			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
 		<Filter
 			Name="Source Files"

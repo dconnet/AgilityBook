@@ -2,15 +2,11 @@
 <VisualStudioPropertySheet
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Win32 Settings"
+	Name="CommonRelease64"
+	InheritedPropertySheets="$(SolutionDir)/Common64.vsprops;$(SolutionDir)/CommonRelease.vsprops"
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		PreprocessorDefinitions="WIN32"
-	/>
-	<Tool
-		Name="VCLinkerTool"
-		AdditionalOptions="/SafeSEH"
-		TargetMachine="1"
+		RuntimeLibrary="0"
 	/>
 </VisualStudioPropertySheet>

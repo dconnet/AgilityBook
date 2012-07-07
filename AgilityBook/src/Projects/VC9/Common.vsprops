@@ -2,14 +2,14 @@
 <VisualStudioPropertySheet
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Common Settings"
+	Name="Common"
 	OutputDirectory="$(SolutionDir)\..\..\..\bin\VC9$(PlatformName)\$(ConfigurationName)"
 	IntermediateDirectory="$(OutDir)\$(ProjectName)"
 	>
 	<Tool
 		Name="VCCLCompilerTool"
 		AdditionalIncludeDirectories="$(WXBASE)\wxWidgets-2.8.12\include;$(WXBASE)\wxWidgets-2.8.12\include\msvc;..\..\Include;..\..\ARB"
-		PreprocessorDefinitions="_SECURE_SCL=1;_SECURE_SCL_THROWS=1;wxMSVC_VERSION_AUTO=1"
+		PreprocessorDefinitions="wxMSVC_VERSION_AUTO=1;_SECURE_SCL=1;_SECURE_SCL_THROWS=1"
 		StringPooling="true"
 		UsePrecompiledHeader="2"
 		WarningLevel="4"
@@ -21,6 +21,8 @@
 		AdditionalLibraryDirectories="$(OutDir)"
 		AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib ws2_32.lib"
 		SubSystem="2"
+		RandomizedBaseAddress="1"
+		DataExecutionPrevention="0"
 	/>
 	<Tool
 		Name="VCMIDLTool"
@@ -29,6 +31,6 @@
 	<Tool
 		Name="VCResourceCompilerTool"
 		Culture="1033"
-		AdditionalIncludeDirectories="$(IntDir);$(WXBASE)\wxWidgets-2.8.12\include"
+		AdditionalIncludeDirectories="..\..\Include;$(WXBASE)\wxWidgets-2.8.12\include;$(IntDir)"
 	/>
 </VisualStudioPropertySheet>

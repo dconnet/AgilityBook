@@ -5,6 +5,7 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2012-07-07 DRC wx2.9 added x64 target - use that instead of amd64
 # 2012-06-01 DRC Added VC11 support.
 # 2011-07-30 DRC Require -w option.
 # 2010-11-20 DRC Automatically determine hasprefix support.
@@ -255,6 +256,10 @@ def main():
 	if version[0] == '2' and version[1] == '8':
 		hasPrefix = False
 
+	x64Target = 'x64'
+	if not hasPrefix:
+		x64Target = 'amd64'
+
 	for c in args:
 		if not AddCompiler(compilers, c):
 			print 'Unknown compiler:', c
@@ -330,7 +335,7 @@ def main():
 				setenv_rel += 'x86_amd64'
 			else:
 				setenv_rel += 'amd64'
-			target_cpu = ' TARGET_CPU=amd64'
+			target_cpu = ' TARGET_CPU=' + x64Target
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc90'
 			else:
@@ -356,7 +361,7 @@ def main():
 					setenv_rel += 'x86_amd64'
 				else:
 					setenv_rel += 'amd64'
-			target_cpu = ' TARGET_CPU=amd64'
+			target_cpu = ' TARGET_CPU=' + x64Target
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc100'
 			else:
@@ -377,7 +382,7 @@ def main():
 				setenv_rel += 'x86_amd64'
 			else:
 				setenv_rel += 'amd64'
-			target_cpu = ' TARGET_CPU=amd64'
+			target_cpu = ' TARGET_CPU=' + x64Target
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc110'
 			else:

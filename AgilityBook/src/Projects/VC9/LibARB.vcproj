@@ -21,7 +21,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonDebug32.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -43,7 +43,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="_LIB"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -76,7 +75,7 @@
 		<Configuration
 			Name="Debug|x64"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonDebug64.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -98,7 +97,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="_LIB"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -131,7 +129,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonRelease32.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -153,7 +151,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="_LIB"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -186,7 +183,7 @@
 		<Configuration
 			Name="Release|x64"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/CommonRelease64.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -208,7 +205,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="_LIB"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
