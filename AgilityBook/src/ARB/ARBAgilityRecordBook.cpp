@@ -17,6 +17,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2012-07-08 DRC Fix title instance when a title is changed to recurring.
  * @li 2011-07-31 DRC File version 13.1
  *                    Added 'platform','os' to 'AgilityBook', modified
  *                    TitlePoints (see ARBConfigTitlePoints.cpp).
@@ -457,7 +458,12 @@ bool ARBAgilityRecordBook::Update(
 			ARBDogTitlePtr pTitle = *iterTitle;
 			ARBConfigTitlePtr pConfigTitle;
 			if (m_Config.GetVenues().FindTitle(pTitle->GetVenue(), pTitle->GetRawName(), &pConfigTitle))
-				pTitle->SetName(pTitle->GetRawName(), pTitle->GetInstance(), pConfigTitle->GetMultiple() == 1, pConfigTitle->GetMultipleStyle());
+			{
+				short inst = pTitle->GetInstance();
+				if (0 == inst && 1 < pConfigTitle->GetMultiple())
+					inst = 1;
+				pTitle->SetName(pTitle->GetRawName(), inst, pConfigTitle->GetMultiple() == 1, pConfigTitle->GetMultipleStyle());
+			}
 		}
 		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();

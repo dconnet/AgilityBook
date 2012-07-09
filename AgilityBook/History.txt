@@ -5,6 +5,7 @@
   - Add option to use run time or opening time in gamble OPS.
   - Get icons to show up in menus.
   - AKC metalic titles were not set up to repeat. Missed the MFC title (FAST)
+  - Fix title instance when a title is changed to recurring.
 
 7/4/2012: v2.3.6.3476
 - Bumped Configuration v37:
