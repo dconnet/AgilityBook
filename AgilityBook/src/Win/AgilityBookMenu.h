@@ -67,7 +67,11 @@ private:
 			MenuHandles& handles,
 			bool bCreate,
 			wxDocManager* manager = NULL); // Only used when creating filemenu
-	void CreateSubMenu(wxMenu* parent, MenuHandles& handles, bool bCreate);
+	void CreateSubMenu(
+			wxMenu* parent,
+			MenuHandles& handles,
+			const char* const* pBitmap,
+			bool bCreate);
 
 	wxDocParentFrame* m_Frame;
 	wxMenuBar* m_MenuBar;
