@@ -46,21 +46,6 @@
 #include "res/AgilityBook32.xpm"
 #include "res/AgilityBook48.xpm"
 #include "res/AgilityBook256.xpm"
-#include "res/toolbarNew.xpm"
-#include "res/toolbarOpen.xpm"
-#include "res/toolbarSave.xpm"
-#include "res/toolbarDog.xpm"
-#include "res/toolbarTitle.xpm"
-#include "res/toolbarTrial.xpm"
-#include "res/toolbarRun.xpm"
-#include "res/toolbarCalendar.xpm"
-#include "res/toolbarTraining.xpm"
-#include "res/toolbarCut.xpm"
-#include "res/toolbarCopy.xpm"
-#include "res/toolbarPaste.xpm"
-#include "res/toolbarPreview.xpm"
-#include "res/toolbarPrint.xpm"
-#include "res/toolbarAbout.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -117,37 +102,6 @@ BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_MENU(ID_HELP_SYSINFO, CMainFrame::OnHelpSysinfo)
 END_EVENT_TABLE()
 
-
-static const struct
-{
-	int id;
-	wchar_t const* label;
-	wchar_t const* shortHelp;
-	const char** bitmap;
-} sc_Toolbar[] =
-{
-	{wxID_NEW, arbT("MenuFileNew"), arbT("DescFileNew"), toolbarNew_xpm},
-	{wxID_OPEN, arbT("MenuFileOpen"), arbT("DescFileOpen"), toolbarOpen_xpm},
-	{wxID_SAVE, arbT("MenuFileSave"), arbT("DescFileSave"), toolbarSave_xpm},
-	{0, NULL, NULL, NULL},
-	{ID_AGILITY_NEW_DOG, arbT("MenuNew"), arbT("DescDogNew"), toolbarDog_xpm},
-	{ID_AGILITY_NEW_TITLE, arbT("MenuNew"), arbT("DescTitleNew"), toolbarTitle_xpm},
-	{ID_AGILITY_NEW_TRIAL, arbT("MenuNew"), arbT("DescTrialNew"), toolbarTrial_xpm},
-	{ID_AGILITY_NEW_RUN, arbT("MenuNew"), arbT("DescRunNew"), toolbarRun_xpm},
-	{ID_AGILITY_NEW_CALENDAR, arbT("MenuNew"), arbT("DescCalendarNew"), toolbarCalendar_xpm},
-	{ID_AGILITY_NEW_TRAINING, arbT("MenuNew"), arbT("DescTrainingNew"), toolbarTraining_xpm},
-	{0, NULL, NULL, NULL},
-	{wxID_CUT, arbT("MenuEditCut"), arbT("DescEditCut"), toolbarCut_xpm},
-	{wxID_COPY, arbT("MenuEditCopy"), arbT("DescEditCopy"), toolbarCopy_xpm},
-	{wxID_PASTE, arbT("MenuEditPaste"), arbT("DescEditPaste"), toolbarPaste_xpm},
-	{0, NULL, NULL, NULL},
-	{wxID_PREVIEW, arbT("MenuFilePrintPreview"), arbT("DescFilePrintPreview"), toolbarPreview_xpm},
-	{wxID_PRINT, arbT("MenuFilePrint"), arbT("DescFilePrint"), toolbarPrint_xpm},
-	{0, NULL, NULL, NULL},
-	{wxID_ABOUT, arbT("MenuHelpAbout"), arbT("DescHelpAbout"), toolbarAbout_xpm},
-};
-static const int sc_ToolbarSize = sizeof(sc_Toolbar) / sizeof(sc_Toolbar[0]);
-
 /////////////////////////////////////////////////////////////////////////////
 
 static void SetStatusBarWidths(
@@ -195,19 +149,6 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 //#endif
 
 	m_MenuBar.CreateMenu(this, manager);
-
-	wxToolBar* toolbar = CreateToolBar(wxTB_FLAT);
-	if (toolbar)
-	{
-		for (int i = 0; i < sc_ToolbarSize; ++i)
-		{
-			if (0 == sc_Toolbar[i].id)
-				toolbar->AddSeparator();
-			else
-				toolbar->AddTool(sc_Toolbar[i].id, wxGetTranslation(sc_Toolbar[i].label), sc_Toolbar[i].bitmap, wxGetTranslation(sc_Toolbar[i].shortHelp));
-		}
-		toolbar->Realize();
-	}
 
 	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
 	if (statusbar)
@@ -443,21 +384,6 @@ void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 			GetDocumentManager()->GetCurrentDocument()->UpdateAllViews(NULL, &hint);
 		}
 		m_MenuBar.UpdateMenu();
-		wxToolBar* toolbar = GetToolBar();
-		if (toolbar)
-		{
-			for (int i = 0; i < sc_ToolbarSize; ++i)
-			{
-				if (0 == sc_Toolbar[i].id)
-					continue;
-				wxToolBarToolBase* btn = toolbar->FindById(sc_Toolbar[i].id);
-				if (btn)
-				{
-					btn->SetLabel(wxGetTranslation(sc_Toolbar[i].label));
-					btn->SetShortHelp(wxGetTranslation(sc_Toolbar[i].shortHelp));
-				}
-			}
-		}
 
 		CAgilityBookBaseView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseView);
 		std::wstring msg;

@@ -1,6 +1,7 @@
-7/4/2012: v2.3.7.<in development>
+7/8/2012: v2.3.7.<in development>
 - Bug fixes:
   - Add option to use run time or opening time in gamble OPS.
+  - Get icons to show up in menus.
 
 7/4/2012: v2.3.6.3476
 - Bumped Configuration v37:
