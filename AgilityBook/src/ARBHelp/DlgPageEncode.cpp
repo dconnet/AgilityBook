@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-10 DRC Fix serialization. Broken in 4/15 wxString checkin.
  * @li 2011-10-19 DRC Wrap '/' with wxT() so it's not output as int.
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  * @li 2009-03-01 DRC Ported to wxWidgets.
@@ -136,12 +137,12 @@ void CDlgPageEncode::DumpGroup(
 			{
 			default:
 				if (data)
-					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str << L" unknown\n";
+					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" unknown\n";
 				break;
 			case wxConfigBase::Type_String:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str << L" string\n";
+					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" string\n";
 					*data << wxConfig::Get()->Read(str, wxEmptyString).wx_str() << L"\n";
 				}
 				else if (items)
@@ -150,7 +151,7 @@ void CDlgPageEncode::DumpGroup(
 			case wxConfigBase::Type_Boolean:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str << L" bool\n";
+					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" bool\n";
 					bool b;
 					wxConfig::Get()->Read(str, &b);
 					*data << b << L"\n";
@@ -159,14 +160,14 @@ void CDlgPageEncode::DumpGroup(
 			case wxConfigBase::Type_Integer:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << L'/' << str << L" int\n";
+					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" int\n";
 					*data << wxConfig::Get()->Read(str, 0L) << L"\n";
 				}
 				break;
 			case wxConfigBase::Type_Float:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << L'/' << str << L" float\n";
+					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" float\n";
 					double d;
 					wxConfig::Get()->Read(str, &d);
 					*data << d << L"\n";
