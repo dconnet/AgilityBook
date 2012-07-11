@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-10 DRC Fix serialization. Broken in 4/15 wxString checkin.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  *                    Fixed decoding binary files.
@@ -112,7 +113,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 	{
 		data = data.substr(pos + wcslen(STREAM_DATA_BEGIN));
 		pos = data.find(STREAM_DATA_END);
-		if (0 <= pos)
+		if (std::wstring::npos != pos)
 			data = data.substr(0, pos);
 		data = StringUtil::Trim(data);
 
@@ -136,7 +137,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 		for (int idx = 0; !sc_sections[idx].begin.empty(); ++idx)
 		{
 			pos = data.find(sc_sections[idx].begin);
-			if (0 <= pos)
+			if (std::wstring::npos != pos)
 			{
 				std::wstring::size_type posEnd = data.find(sc_sections[idx].end);
 				if (pos < posEnd)
@@ -145,7 +146,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 					// Dump the preceding data.
 					editData << data.substr(0, posData) << L"\n";
 					// Trim preceding
-					data = data.substr(0, posData);
+					data = data.substr(posData);
 					data = StringUtil::TrimLeft(data);
 					// Get the data to decode
 					posEnd = data.find(sc_sections[idx].end); // Recompute - we just changed the string
@@ -193,7 +194,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				{
 					output.Write(binData, nBytes);
 					output.Close();
-					editData << L"File written to: " << tempname << L"\n\n";
+					editData << L"File written to: " << tempname.wx_str() << L"\n\n";
 				}
 				else
 				{

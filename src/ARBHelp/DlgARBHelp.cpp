@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-10 DRC Fix serialization. Broken in 4/15 wxString checkin.
  * @li 2011-10-19 DRC Add timestamp info on skipped files. Add file size.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
@@ -124,8 +125,8 @@ std::wstring CDlgARBHelp::GetEncodedData()
 		rawdata << L"\n";
 		if (fileName.GetTimes(NULL, &dtMod, &dtCreate))
 		{
-			rawdata << L"Created: " << dtCreate.Format() << L"\n"
-				<< L"Modified: " << dtMod.Format() << L"\n";
+			rawdata << L"Created: " << dtCreate.Format().wx_str() << L"\n"
+				<< L"Modified: " << dtMod.Format().wx_str() << L"\n";
 		}
 		wxULongLong size = fileName.GetSize();
 		if (wxInvalidSize != size)
