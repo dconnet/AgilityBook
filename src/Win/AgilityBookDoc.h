@@ -125,6 +125,17 @@ public:
 	void SortDates();
 	void ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
+
+	enum ImportStatus
+	{
+		eImportError,
+		eImportAdded,
+		eImportUpdated,
+		eImportDuplicate,
+	};
+	ImportStatus ImportARBCalEntry(ARBCalendarPtr inCal);
+	ImportStatus ImportARBLogEntry(ARBTrainingPtr inLog);
+
 	bool ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent);
 	bool ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent);
 	bool ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent);
