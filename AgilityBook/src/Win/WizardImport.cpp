@@ -1403,25 +1403,23 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					}
 				}
-				if (pCal)
+				switch (m_pDoc->ImportARBCalEntry(pCal))
 				{
-					ARBCalendarPtr cal;
-					if (!m_pDoc->Book().GetCalendar().FindCalendar(pCal, false, &cal))
-					{
-						m_pDoc->Book().GetCalendar().AddCalendar(pCal);
-						bSortCal = true;
-						++nAdded;
-					}
-					else
-					{
-						if (pCal->Update(cal))
-							++nUpdated;
-						else
-							++nDuplicate;
-					}
-				}
-				else
+				default:
 					++nSkipped;
+					break;
+				case CAgilityBookDoc::eImportAdded:
+					bSortCal = true;
+					++nAdded;
+					break;
+				case CAgilityBookDoc::eImportUpdated:
+					bSortCal = true;
+					++nUpdated;
+					break;
+				case CAgilityBookDoc::eImportDuplicate:
+					++nDuplicate;
+					break;
+				}
 			}
 			break;
 
@@ -1470,19 +1468,19 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					}
 				}
-				if (pLog)
+				switch (m_pDoc->ImportARBLogEntry(pLog))
 				{
-					if (!m_pDoc->Book().GetTraining().FindTraining(pLog))
-					{
-						m_pDoc->Book().GetTraining().AddTraining(pLog);
-						bSortLog = true;
-						++nAdded;
-					}
-					else
-						++nDuplicate;
-				}
-				else
+				default:
 					++nSkipped;
+					break;
+				case CAgilityBookDoc::eImportAdded:
+					bSortLog = true;
+					++nAdded;
+					break;
+				case CAgilityBookDoc::eImportDuplicate:
+					++nDuplicate;
+					break;
+				}
 			}
 			break;
 		}

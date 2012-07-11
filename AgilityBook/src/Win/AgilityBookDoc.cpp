@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-11 DRC After importing an ARB file, sort it.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
@@ -579,6 +580,49 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 }
 
 
+CAgilityBookDoc::ImportStatus CAgilityBookDoc::ImportARBCalEntry(ARBCalendarPtr inCal)
+{
+	ImportStatus status = eImportError;
+	if (inCal)
+	{
+		ARBCalendarPtr calFound;
+		if (!m_Records.GetCalendar().FindCalendar(inCal, false, &calFound))
+		{
+			if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && inCal->GetEndDate() < ARBDate::Today()))
+			{
+				m_Records.GetCalendar().AddCalendar(inCal);
+				status = eImportAdded;
+			}
+		}
+		else
+		{
+			if (calFound->Update(inCal))
+				status = eImportUpdated;
+			else
+				status = eImportDuplicate;
+		}
+	}
+	return status;
+}
+
+
+CAgilityBookDoc::ImportStatus CAgilityBookDoc::ImportARBLogEntry(ARBTrainingPtr inLog)
+{
+	ImportStatus status = eImportError;
+	if (inLog)
+	{
+		if (!m_Records.GetTraining().FindTraining(inLog))
+		{
+			m_Records.GetTraining().AddTraining(inLog);
+			status = eImportAdded;
+		}
+		else
+			status = eImportDuplicate;
+	}
+	return status;
+}
+
+
 bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 {
 	bool bOk = false;
@@ -719,7 +763,9 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 					}
 				}
 			}
+			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 		}
+
 		for (ARBInfoItemList::const_iterator iterClub = book.GetInfo().GetInfo(ARBInfo::eClubInfo).begin();
 			iterClub != book.GetInfo().GetInfo(ARBInfo::eClubInfo).end();
 			++iterClub)
@@ -886,22 +932,19 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 		int nUpdated = 0;
 		for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
 		{
-			ARBCalendarPtr cal = *iter;
-			ARBCalendarPtr calFound;
-			if (!m_Records.GetCalendar().FindCalendar(cal, false, &calFound))
+			switch (ImportARBCalEntry(*iter))
 			{
-				if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
-				{
-					m_Records.GetCalendar().AddCalendar(cal);
-					++nAdded;
-				}
-			}
-			else
-			{
-				if (calFound->Update(cal))
-					++nUpdated;
+			default:
+				break;
+			case CAgilityBookDoc::eImportAdded:
+				++nAdded;
+				break;
+			case CAgilityBookDoc::eImportUpdated:
+				++nUpdated;
+				break;
 			}
 		}
+
 		if (0 < nAdded + nUpdated)
 		{
 			m_Records.GetCalendar().sort();
@@ -931,13 +974,13 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
 		int count = 0;
 		for (ARBTrainingList::iterator iter = book.GetTraining().begin(); iter != book.GetTraining().end(); ++iter)
 		{
+
 			ARBTrainingPtr item = *iter;
-			if (!m_Records.GetTraining().FindTraining(item))
-			{
-				m_Records.GetTraining().AddTraining(item);
-				++count;
-			}
+
 		}
+
+		m_Records.GetTraining().sort();
+
 		if (0 < count)
 		{
 			m_Records.GetTraining().sort();
