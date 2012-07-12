@@ -126,15 +126,18 @@ public:
 	void ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
 
-	enum ImportStatus
-	{
-		eImportError,
-		eImportAdded,
-		eImportUpdated,
-		eImportDuplicate,
-	};
-	ImportStatus ImportARBCalEntry(ARBCalendarPtr inCal);
-	ImportStatus ImportARBLogEntry(ARBTrainingPtr inLog);
+	bool ImportARBCalEntry(
+			ARBCalendarList const& listCal,
+			long& nAdded,
+			long& nUpdated,
+			long& nDuplicate,
+			long& nSkipped);
+	bool ImportARBTrainingEntry(
+			ARBTrainingList const& listLog,
+			long& nAdded,
+			long& nUpdated,
+			long& nDuplicate,
+			long& nSkipped);
 
 	bool ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent);
 	bool ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent);
