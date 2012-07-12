@@ -784,6 +784,9 @@ bool CWizardImport::DoWizardFinish()
 	{
 		CDlgAssignColumns::GetColumnOrder(order, iCol, columns[iCol]);
 	}
+
+	ARBCalendarList listCal;
+	ARBTrainingList listTraining;
 	std::wstring loadstr;
 	std::wostringstream errLog;
 	long nAdded = 0;
@@ -1403,23 +1406,8 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					}
 				}
-				switch (m_pDoc->ImportARBCalEntry(pCal))
-				{
-				default:
+				if (!listCal.AddCalendar(pCal))
 					++nSkipped;
-					break;
-				case CAgilityBookDoc::eImportAdded:
-					bSortCal = true;
-					++nAdded;
-					break;
-				case CAgilityBookDoc::eImportUpdated:
-					bSortCal = true;
-					++nUpdated;
-					break;
-				case CAgilityBookDoc::eImportDuplicate:
-					++nDuplicate;
-					break;
-				}
 			}
 			break;
 
@@ -1468,23 +1456,18 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					}
 				}
-				switch (m_pDoc->ImportARBLogEntry(pLog))
-				{
-				default:
+				if (!listTraining.AddTraining(pLog))
 					++nSkipped;
-					break;
-				case CAgilityBookDoc::eImportAdded:
-					bSortLog = true;
-					++nAdded;
-					break;
-				case CAgilityBookDoc::eImportDuplicate:
-					++nDuplicate;
-					break;
-				}
 			}
 			break;
 		}
 	}
+
+	if (m_pDoc->ImportARBCalEntry(listCal, nAdded, nUpdated, nDuplicate, nSkipped))
+		bSortCal = true;
+	if (m_pDoc->ImportARBTrainingEntry(listTraining, nAdded, nUpdated, nDuplicate, nSkipped))
+		bSortLog = true;
+
 	for (std::set<ARBDogPtr>::iterator iterDog = sortTrials.begin();
 		iterDog != sortTrials.end();
 		++iterDog)

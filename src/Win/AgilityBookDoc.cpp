@@ -580,46 +580,64 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 }
 
 
-CAgilityBookDoc::ImportStatus CAgilityBookDoc::ImportARBCalEntry(ARBCalendarPtr inCal)
+bool CAgilityBookDoc::ImportARBCalEntry(
+		ARBCalendarList const& listCal,
+		long& nAdded,
+		long& nUpdated,
+		long& nDuplicate,
+		long& nSkipped)
 {
-	ImportStatus status = eImportError;
-	if (inCal)
+	bool bModified = false;
+	for (ARBCalendarList::const_iterator iter = listCal.begin(); iter != listCal.end(); ++iter)
 	{
+		ARBCalendarPtr pCal = *iter;
 		ARBCalendarPtr calFound;
-		if (!m_Records.GetCalendar().FindCalendar(inCal, false, &calFound))
+		if (!m_Records.GetCalendar().FindCalendar(pCal, false, &calFound))
 		{
-			if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && inCal->GetEndDate() < ARBDate::Today()))
+			if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && pCal->GetEndDate() < ARBDate::Today()))
 			{
-				m_Records.GetCalendar().AddCalendar(inCal);
-				status = eImportAdded;
+				m_Records.GetCalendar().AddCalendar(pCal);
+				++nAdded;
 			}
+			else
+				++nSkipped;
 		}
 		else
 		{
-			if (calFound->Update(inCal))
-				status = eImportUpdated;
+			if (calFound->Update(pCal))
+				++nUpdated;
 			else
-				status = eImportDuplicate;
+				++nDuplicate;
 		}
 	}
-	return status;
+	return bModified;
 }
 
 
-CAgilityBookDoc::ImportStatus CAgilityBookDoc::ImportARBLogEntry(ARBTrainingPtr inLog)
+bool CAgilityBookDoc::ImportARBTrainingEntry(
+		ARBTrainingList const& listLog,
+		long& nAdded,
+		long& nUpdated,
+		long& nDuplicate,
+		long& nSkipped)
 {
-	ImportStatus status = eImportError;
-	if (inLog)
+	bool bModified = false;
+	for (ARBTrainingList::const_iterator iter = listLog.begin(); iter != listLog.end(); ++iter)
 	{
-		if (!m_Records.GetTraining().FindTraining(inLog))
+		ARBTrainingPtr pLog = *iter;
+		if (!m_Records.GetTraining().FindTraining(pLog))
 		{
-			m_Records.GetTraining().AddTraining(inLog);
-			status = eImportAdded;
+			bModified = true;
+			m_Records.GetTraining().AddTraining(pLog);
+			++nAdded;
 		}
 		else
-			status = eImportDuplicate;
+		{
+			bModified = true;
+			++nDuplicate;
+		}
 	}
-	return status;
+	return bModified;
 }
 
 
@@ -928,30 +946,19 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 	{
 		if (0 < err.m_ErrMsg.str().length())
 			wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
-		int nAdded = 0;
-		int nUpdated = 0;
-		for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
-		{
-			switch (ImportARBCalEntry(*iter))
-			{
-			default:
-				break;
-			case CAgilityBookDoc::eImportAdded:
-				++nAdded;
-				break;
-			case CAgilityBookDoc::eImportUpdated:
-				++nUpdated;
-				break;
-			}
-		}
 
-		if (0 < nAdded + nUpdated)
+		long nAdded = 0;
+		long nUpdated = 0;
+		long nDuplicate = 0;
+		long nSkipped = 0;
+		if (ImportARBCalEntry(book.GetCalendar(), nAdded, nUpdated, nDuplicate, nSkipped))
 		{
 			m_Records.GetCalendar().sort();
 			CUpdateHint hint(UPDATE_CALENDAR_VIEW);
 			UpdateAllViews(NULL, &hint);
 			Modify(true);
 		}
+
 		wxString str = wxString::Format(_("IDS_UPDATED_CAL_ITEMS"), nAdded, nUpdated);
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
@@ -971,24 +978,20 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
 	{
 		if (0 < err.m_ErrMsg.str().length())
 			wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
-		int count = 0;
-		for (ARBTrainingList::iterator iter = book.GetTraining().begin(); iter != book.GetTraining().end(); ++iter)
-		{
 
-			ARBTrainingPtr item = *iter;
-
-		}
-
-		m_Records.GetTraining().sort();
-
-		if (0 < count)
+		long nAdded = 0;
+		long nUpdated = 0;
+		long nDuplicate = 0;
+		long nSkipped = 0;
+		if (ImportARBTrainingEntry(book.GetTraining(), nAdded, nUpdated, nDuplicate, nSkipped))
 		{
 			m_Records.GetTraining().sort();
 			CUpdateHint hint(UPDATE_TRAINING_VIEW);
 			UpdateAllViews(NULL, &hint);
 			Modify(true);
 		}
-		wxString str = wxString::Format(_("IDS_ADDED_TRAINING_ITEMS"), count);
+
+		wxString str = wxString::Format(_("IDS_UPDATED_TRAINING_ITEMS"), nAdded, nUpdated);
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
