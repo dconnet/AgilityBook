@@ -324,7 +324,7 @@
  * Bind is only available on wx2.9+.
  * Rather than ifdef each instance of Connect, hide behind an evil macro.
  */
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 	#define BIND_OR_CONNECT(evt, cast, func) \
 		Bind(evt, &func, this)
 	#define UNBIND_OR_DISCONNECT(evt, cast, func) \

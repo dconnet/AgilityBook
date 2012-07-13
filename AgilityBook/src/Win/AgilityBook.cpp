@@ -229,7 +229,7 @@ CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
 
 bool CAgilityBookApp::OnInit()
 {
-#if defined(__WXMSW__) && wxCHECK_VERSION(2, 9, 3)
+#if defined(__WXMSW__) && wxCHECK_VERSION(2, 9, 4)
 	// By default, the path directories are tweaked to remove debug/release.
 	// I assume my files are in the same location as the binary.
 	// Now I don't need to tweak the wx source!
@@ -261,7 +261,7 @@ bool CAgilityBookApp::OnInit()
 	wxString filename;
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 		{wxCMD_LINE_PARAM, NULL, NULL, "input file", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
 #else
 		{wxCMD_LINE_PARAM, NULL, NULL, L"input file", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},

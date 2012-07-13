@@ -26,7 +26,7 @@
 #define STATUS_DOG			1
 #define STATUS_STATUS		2
 #define STATUS_FILTERED		3
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 #define NUM_STATUS_FIELDS	4
 #else
 #define STATUS_FILLER		4

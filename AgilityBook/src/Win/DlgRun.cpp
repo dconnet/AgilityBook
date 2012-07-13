@@ -282,7 +282,7 @@ std::wstring CDlgDogRefRunData::OnNeedText(long iCol) const
 }
 
 
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 int wxCALLBACK CompareRefRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 #else
 int wxCALLBACK CompareRefRuns(long item1, long item2, long sortData)

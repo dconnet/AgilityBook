@@ -506,7 +506,7 @@ void CAgilityBookMenu::CreateSubMenu(
 		DoMenuItem(parent, wxID_ANY, title, handles.menu, pBitmap);
 	}
 	else
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 		parent->FindItemByPosition(handles.idx)->SetItemLabel(title);
 #else
 		parent->FindItemByPosition(handles.idx)->SetText(title);

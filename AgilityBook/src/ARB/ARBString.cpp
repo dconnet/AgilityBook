@@ -63,7 +63,7 @@ wxString stringWX(std::string const& inStr)
 
 std::wstring stringW(wxString const& inStr)
 {
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 	return inStr.ToStdWstring();
 #else
 	return std::wstring(inStr.wx_str());
@@ -277,7 +277,7 @@ bool ToDouble(std::wstring const& inStr, double& outValue)
 		// This may have failed for 2 reasons:
 		// - Bad data.
 		// - Different decimal point from Locale.
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 		wxUniChar pt = '.';
 #else
 		wxChar pt = '.';
@@ -308,7 +308,7 @@ double ToDouble(std::wstring const& inStr)
 bool ToCLong(std::wstring const& inStr, long& outValue, bool bRetry)
 {
 	wxString s(inStr.c_str());
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 	bool bOk = s.ToCLong(&outValue);
 	// The above fails for "123-45" and returns 0. Before it returned 123.
 	// That's the behavior I'm relying on. (Needed when reading dates)
@@ -337,7 +337,7 @@ long ToCLong(std::wstring const& inStr)
 bool ToCULong(std::wstring const& inStr, unsigned long& outValue, bool bRetry)
 {
 	wxString s(inStr.c_str());
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 	bool bOk = s.ToCULong(&outValue);
 	// The above fails for "123-45" and returns 0. Before it returned 123.
 	// That's the behavior I'm relying on. (Needed when reading dates)
@@ -365,7 +365,7 @@ unsigned long ToCULong(std::wstring const& inStr)
 
 bool ToCDouble(std::wstring const& inStr, double& outValue)
 {
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 	// This will fail on "1.2-3". That's ok. The only time this is used
 	// is for parsing an actual number in Element.
 	return stringWX(inStr).ToCDouble(&outValue);
