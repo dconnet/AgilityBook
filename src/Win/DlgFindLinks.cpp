@@ -130,7 +130,7 @@ static struct
 } s_SortInfo;
 
 
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 int wxCALLBACK CompareLinks(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 #else
 int wxCALLBACK CompareLinks(long item1, long item2, long sortData)

@@ -213,7 +213,6 @@ bool CGenericValidator::TransferFromWindow()
 			if (textVal.empty() && m_bUseDefOnEmpty)
 			{
 				*m_pUShort = m_Default.us;
-				return true;
 			}
 			else
 			{
@@ -221,15 +220,14 @@ bool CGenericValidator::TransferFromWindow()
 				if (!StringUtil::ToLong(StringUtil::stringW(textVal), val))
 					return false;
 				*m_pUShort = static_cast<unsigned short>(val);
-				return true;
 			}
+			return true;
 		}
 		else if (m_pShort)
 		{
 			if (textVal.empty() && m_bUseDefOnEmpty)
 			{
 				*m_pShort = m_Default.s;
-				return true;
 			}
 			else
 			{
@@ -237,8 +235,8 @@ bool CGenericValidator::TransferFromWindow()
 				if (!StringUtil::ToLong(StringUtil::stringW(textVal), val))
 					return false;
 				*m_pShort = static_cast<short>(val);
-				return true;
 			}
+			return true;
 		}
 		else if (m_pLong)
 		{
@@ -247,8 +245,7 @@ bool CGenericValidator::TransferFromWindow()
 				*m_pLong = m_Default.l;
 				return true;
 			}
-			else
-				return StringUtil::ToLong(StringUtil::stringW(textVal), *m_pLong);
+			return StringUtil::ToLong(StringUtil::stringW(textVal), *m_pLong);
 		}
 		else if (m_pDouble)
 		{
@@ -257,13 +254,16 @@ bool CGenericValidator::TransferFromWindow()
 				*m_pDouble = m_Default.dbl;
 				return true;
 			}
-			else
-				return StringUtil::ToDouble(StringUtil::stringW(textVal), *m_pDouble);
+			return StringUtil::ToDouble(StringUtil::stringW(textVal), *m_pDouble);
 		}
 		else if (m_pTime)
 		{
 			textVal.MakeUpper();
+#if wxCHECK_VERSION(2, 9, 4)
+			return m_pTime->ParseFormat(textVal, s_TimeFormat);
+#else
 			return NULL != m_pTime->ParseFormat(textVal, s_TimeFormat);
+#endif
 		}
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
@@ -341,13 +341,12 @@ bool CGenericValidator::TransferToWindow()
 				{
 					wxDateTime date;
 					pControl->SetValue(date);
-					return true;
 				}
 				else
 				{
 					pControl->SetValue(ARBDate::Today().GetDate());
-					return true;
 				}
+				return true;
 			}
 		}
 		else if (m_pTime)
@@ -531,7 +530,7 @@ bool CTrimValidator::Validate(wxWindow* parent)
 			textCtrl->ChangeValue(val);
 		else if (comboCtrl)
 		{
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 			comboCtrl->ChangeValue(val);
 #else
 			comboCtrl->SetValue(val);

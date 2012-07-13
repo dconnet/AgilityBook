@@ -8,6 +8,7 @@
   - AKC metalic titles were not set up to repeat. Missed the MFC title (FAST)
   - Fix title instance when a title is changed to recurring.
   - After importing an ARB file, sort it.
+  - Fix text wrapping in About dialog on Mac.
 
 7/4/2012: v2.3.6.3476
 - Bumped Configuration v37:

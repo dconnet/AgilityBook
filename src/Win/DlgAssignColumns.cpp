@@ -792,7 +792,7 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns dialog
 
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 int wxCALLBACK CompareTypes(wxIntPtr lParam1, wxIntPtr lParam2, wxIntPtr lParam3)
 #else
 int wxCALLBACK CompareTypes(long lParam1, long lParam2, long lParam3)
@@ -1229,7 +1229,7 @@ void CDlgAssignColumns::OnAdd(wxCommandEvent& evt)
 		int idxCur = m_ctrlColumns->GetSelection();
 		if (0 <= idxCur)
 		{
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 			idxCol = m_ctrlColumns->Insert(str, idxCur + 1);
 #else
 			idxCol = m_ctrlColumns->wxControlWithItems::Insert(str, idxCur + 1);

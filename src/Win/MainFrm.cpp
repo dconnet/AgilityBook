@@ -180,14 +180,14 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 			case STATUS_FILTERED:
 				str = _("ID_INDICATOR_FILTERED");
 				break;
-#if !wxCHECK_VERSION(2, 9, 3)
+#if !wxCHECK_VERSION(2, 9, 4)
 			case STATUS_FILLER:
 				str = L"   "; // Filler for where the grabber is
 				break;
 #endif
 			}
 			m_Widths[i] = dc.GetTextExtent(str).x;
-#if !wxCHECK_VERSION(2, 9, 3)
+#if !wxCHECK_VERSION(2, 9, 4)
 			m_Widths[i] += 4;
 #endif
 			style[i] = wxSB_NORMAL;
@@ -235,7 +235,7 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 		wxClientDC dc(statusbar);
 		dc.SetFont(statusbar->GetFont());
 		m_Widths[index] = dc.GetTextExtent(StringUtil::stringWX(msg)).x;
-#if !wxCHECK_VERSION(2, 9, 3)
+#if !wxCHECK_VERSION(2, 9, 4)
 		m_Widths[index] += 4;
 #endif
 		SetStatusBarWidths(statusbar, index, m_Widths);

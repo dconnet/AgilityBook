@@ -81,7 +81,7 @@ Element::~Element()
 
 static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 {
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 	wxXmlAttribute* attribs = node->GetAttributes();
 #else
 	wxXmlProperty* attribs = node->GetProperties();
@@ -114,7 +114,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 	{
 		std::wstring name, value;
 		toWrite.GetNthAttrib(i, name, value);
-#if wxCHECK_VERSION(2, 9, 3)
+#if wxCHECK_VERSION(2, 9, 4)
 		node->AddAttribute(name, value);
 #else
 		node->AddProperty(StringUtil::stringWX(name), StringUtil::stringWX(value));
