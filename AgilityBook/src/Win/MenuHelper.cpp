@@ -319,8 +319,8 @@ void CMenuHelper::UpdateMenu()
 				wxToolBarToolBase* btn = toolbar->FindById(i->id);
 				if (btn)
 				{
-					btn->SetLabel(wxGetTranslation(i->name));
-					btn->SetShortHelp(wxGetTranslation(i->desc));
+					btn->SetLabel(wxGetTranslation(i->name.c_str()));
+					btn->SetShortHelp(wxGetTranslation(i->desc.c_str()));
 				}
 			}
 		}
