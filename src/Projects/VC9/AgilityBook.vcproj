@@ -597,6 +597,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\MenuHelper.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\NamedColumns.cpp"
 				>
 			</File>
@@ -1016,6 +1020,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\MainFrm.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\MenuHelper.h"
 				>
 			</File>
 			<File

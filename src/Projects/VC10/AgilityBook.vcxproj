@@ -219,6 +219,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClCompile Include="..\..\Win\ListData.cpp" />
     <ClCompile Include="..\..\Win\Localization.cpp" />
     <ClCompile Include="..\..\Win\MainFrm.cpp" />
+    <ClCompile Include="..\..\Win\MenuHelper.cpp" />
     <ClCompile Include="..\..\Win\NamedColumns.cpp" />
     <ClCompile Include="..\..\Win\NoteButton.cpp" />
     <ClCompile Include="..\..\Win\PointsData.cpp" />
@@ -322,6 +323,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClInclude Include="..\..\Win\ListData.h" />
     <ClInclude Include="..\..\Win\Localization.h" />
     <ClInclude Include="..\..\Win\MainFrm.h" />
+    <ClInclude Include="..\..\Win\MenuHelper.h" />
     <ClInclude Include="..\..\Win\NamedColumns.h" />
     <ClInclude Include="..\..\Win\NoteButton.h" />
     <ClInclude Include="..\..\Win\PointsData.h" />

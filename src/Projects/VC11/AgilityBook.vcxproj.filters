@@ -255,6 +255,9 @@
     <ClCompile Include="..\..\Win\MainFrm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\MenuHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\NamedColumns.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -543,6 +546,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\MenuHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\NamedColumns.h">
