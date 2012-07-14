@@ -19,6 +19,7 @@
  */
 
 #include "AgilityBookMenu.h"
+#include "MenuHelper.h"
 #include <wx/dnd.h>
 #include <wx/docview.h>
 
@@ -67,7 +68,7 @@ private:
 	void SetMessage(std::wstring const& msg, int index, bool bResize);
 
 	wxDocManager* m_manager;
-	CAgilityBookMenu m_MenuBar;
+	CMenuHelper m_menus;
 #ifdef __WXMSW__
 	wxFont m_fontStatusBar;
 #endif

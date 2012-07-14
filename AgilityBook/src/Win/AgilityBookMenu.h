@@ -13,86 +13,11 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-13 DRC Reworked menu creation to use a generic reusable helper.
  * @li 2008-12-14 DRC Created
  */
 
-class wxDocManager;
-class wxDocParentFrame;
-
-
-class CAgilityBookMenu
-{
-public:
-	CAgilityBookMenu();
-	~CAgilityBookMenu();
-
-	void CreateMenu(wxDocParentFrame* pFrame, wxDocManager* manager);
-	void UpdateMenu();
-
-private:
-	enum MenuIdentity
-	{
-		IdMenuNone,
-		IdMenuFile,
-			IdMenuRecentFiles,
-		IdMenuEdit,
-		IdMenuAgility,
-			IdMenuAgilityDog,
-			IdMenuAgilityTitle,
-			IdMenuAgilityTrial,
-			IdMenuAgilityRun,
-			IdMenuAgilityCalendar,
-			IdMenuAgilityTraining,
-		IdMenuNotes,
-		IdMenuView,
-			IdMenuViewType,
-			IdMenuViewOrientation,
-		IdMenuWindow,
-		IdMenuHelp,
-	};
-private:
-	struct MenuHandles
-	{
-		MenuHandles() : id(IdMenuNone), menu(NULL), idx(-1) {}
-		void Create(MenuIdentity menuId)
-		{
-			id = menuId;
-			menu = new wxMenu();
-		}
-		MenuIdentity id;
-		wxMenu* menu;
-		int idx;
-	};
-	void CreateMenu(
-			MenuHandles& handles,
-			bool bCreate,
-			wxDocManager* manager = NULL); // Only used when creating filemenu
-	void CreateSubMenu(
-			wxMenu* parent,
-			MenuHandles& handles,
-			const char* const* pBitmap,
-			bool bCreate);
-
-	wxDocParentFrame* m_Frame;
-	wxMenuBar* m_MenuBar;
-	MenuHandles m_MenuFile;
-	MenuHandles m_MenuFileRecent;
-	MenuHandles m_MenuEdit;
-	MenuHandles m_MenuAgility;
-	MenuHandles m_MenuNotes;
-	MenuHandles m_MenuView;
-	MenuHandles m_MenuWindow;
-	MenuHandles m_MenuHelp;
-	MenuHandles m_MenuAgilityDog;
-	MenuHandles m_MenuAgilityTitle;
-	MenuHandles m_MenuAgilityTrial;
-	MenuHandles m_MenuAgilityRun;
-	MenuHandles m_MenuAgilityCalendar;
-	MenuHandles m_MenuAgilityTraining;
-	MenuHandles m_MenuViewType;
-	MenuHandles m_MenuViewOrientation;
-};
-
+class CMenuHelper;
 
 enum MenuIdentityPopup
 {
@@ -104,6 +29,13 @@ enum MenuIdentityPopup
 	IdMenuCalendar,
 	IdMenuTraining,
 };
+
+
+extern void CreateMainMenu(
+		CMenuHelper& menus,
+		wxFrame* pFrame,
+		wxMenu* pRecent);
+
 
 extern wxMenu* CreatePopup(MenuIdentityPopup idMenu);
 
