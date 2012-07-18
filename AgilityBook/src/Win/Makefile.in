@@ -118,6 +118,7 @@ agilitybook_SRCS = \
 	ListData.cpp \
 	Localization.cpp \
 	MainFrm.cpp \
+	MenuHelper.cpp \
 	NamedColumns.cpp \
 	NoteButton.cpp \
 	PointsData.cpp \
