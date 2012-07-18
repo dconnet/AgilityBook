@@ -21,7 +21,6 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(SolutionDir)/CommonDebug32.vsprops;$(SolutionDir)/UnitTest.vsprops"
 			UseOfMFC="0"
