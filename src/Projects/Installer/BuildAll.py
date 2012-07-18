@@ -196,8 +196,8 @@ def main():
 		return 1
 	os.environ['WXWIN'] = wxwin
 
-	if not updateBuildNumber:
-		os.environ['SETBUILDNUMBER_UPDATE'] = '-x'
+	if updateBuildNumber:
+		os.environ['SETBUILDNUMBER_UPDATE'] = '--official'
 
 	# Targets:
 	# VC9/VC10/VC11

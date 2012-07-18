@@ -1,8 +1,9 @@
-# Update build number in VersionNumber.h (Number of days since ARB was born)
+# Update build number in VersionNumber.h
 # and ../../configure.in
 #
 # This assumes the current directory is 'Include'
 #
+# @li 2012-07-18 DRC Change build number from days-since-birth to sequential.
 # @li 2011-08-20 DRC Added a nicer file lock.
 # @li 2010-03-05 DRC Removed CalVerNum
 # @li 2009-12-20 DRC Added -x argument
@@ -73,12 +74,15 @@ def doWork():
 			pos = line.find(defineBld)
 			if 0 == pos:
 				vBldOld = string.strip(line[pos+len(defineBld):])
-				vBldARB = str((datetime.date.today() - datetime.date(2002,12,28)).days)
-				if not vBldOld == vBldARB:
-					update = 1
-					print >>verOut, defineBld + '\t\t\t\t\t' + vBldARB
-				else:
-					print >>verOut, line,
+				vBldARB = str(int(vBldOld) + 1)
+				update = 1
+				print >>verOut, defineBld + '\t\t\t\t\t' + vBldARB
+				#vBldARB = str((datetime.date.today() - datetime.date(2002,12,28)).days)
+				#if not vBldOld == vBldARB:
+				#	update = 1
+				#	print >>verOut, defineBld + '\t\t\t\t\t' + vBldARB
+				#else:
+				#	print >>verOut, line,
 			else:
 				print >>verOut, line,
 		else:
@@ -95,7 +99,7 @@ def doWork():
 
 	update = 0
 	conf = open('../../configure.in', 'r')
-	confOut = open('../../configure.in.new', 'wb')
+	confOut = open('../../configure.in.new', 'w')
 	while 1:
 		line = conf.readline()
 		if line:
@@ -124,13 +128,13 @@ def doWork():
 
 
 if __name__ == '__main__':
-	if 2 == len(sys.argv) and sys.argv[1] == "-x":
-		print "SetBuildNumber skipped"
-	else:
+	if 2 == len(sys.argv) and sys.argv[1] == "--official":
 		lockfile = LockFile("SetBuildNumber.lck")
 		if lockfile.acquire():
 			doWork()
 			lockfile.release()
 		else:
 			print "SetBuildNumber is locked"
+	else:
+		print "SetBuildNumber skipped"
 	sys.exit(0)

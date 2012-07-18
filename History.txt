@@ -1,6 +1,8 @@
 7/11/2012: v2.3.7.<in development>
 - Bumped Configuration v38:
   - Fixed AKC metalic titles to allow repeats.
+- New features / Enhancements:
+  - Change meaning of part4 of build number.
 - Bug fixes:
   - Fixed ARBHelp. Totally broken in 2.3.6 release.
   - Add option to use run time or opening time in gamble OPS.
