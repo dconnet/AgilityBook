@@ -288,6 +288,7 @@
 		E158FCBC1001371B00735E7F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
 		E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
 		E1AE409F12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
+		E1C8D4A615B9AACC00F91623 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */; };
 		E1D5510413E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */; };
 		E1D5510513E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */; };
 		E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
@@ -588,6 +589,9 @@
 		E1AE409C12873800003BFF9F /* BreakLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakLine.h; sourceTree = "<group>"; };
 		E1BF78EE0FFFE144009B81A7 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../stdafx.h; sourceTree = SOURCE_ROOT; };
 		E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../stdafx.cpp; sourceTree = SOURCE_ROOT; };
+		E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuHelper.cpp; sourceTree = "<group>"; };
+		E1C8D4A415B9AACC00F91623 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
+		E1C8D4A515B9AACC00F91623 /* RegItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegItems.h; sourceTree = "<group>"; };
 		E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBCalcPoints.cpp; sourceTree = "<group>"; };
 		E1D5510213E6859E00EB1F5B /* ARBCalcPoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBCalcPoints.h; sourceTree = "<group>"; };
 		E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
@@ -685,6 +689,9 @@
 		E155979C10000B1200B7074A /* Win */ = {
 			isa = PBXGroup;
 			children = (
+				E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */,
+				E1C8D4A415B9AACC00F91623 /* MenuHelper.h */,
+				E1C8D4A515B9AACC00F91623 /* RegItems.h */,
 				E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */,
 				E1FA1B5511602EA300FAFD0F /* NamedColumns.h */,
 				E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */,
@@ -1216,6 +1223,7 @@
 				E1FA1B5811602EA300FAFD0F /* NamedColumns.cpp in Sources */,
 				E1AE409F12873800003BFF9F /* BreakLine.cpp in Sources */,
 				E1D5510513E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */,
+				E1C8D4A615B9AACC00F91623 /* MenuHelper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
