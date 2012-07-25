@@ -71,11 +71,6 @@
     <CustomBuildAfterTargets>Link</CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\..\Include
-python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
-</Command>
-    </PreBuildEvent>
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -88,11 +83,6 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\..\Include
-python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
-</Command>
-    </PreBuildEvent>
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -105,11 +95,6 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\..\Include
-python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
-</Command>
-    </PreBuildEvent>
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -122,11 +107,6 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <PreBuildEvent>
-      <Command>cd $(ProjectDir)\..\..\Include
-python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
-</Command>
-    </PreBuildEvent>
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
