@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-25 DRC Importing runs with multiple clubs didn't parse venue correctly.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-01-22 DRC Defer sorting of imported items until the end.
  * @li 2011-01-08 DRC Fix importing dates directly from Excel (time was
@@ -893,7 +894,7 @@ bool CWizardImport::DoWizardFinish()
 				assert(0 <= i);
 
 				std::wstring nameReg, nameCall;
-				std::wstring trialVenue, trialClub, trialLocation, trialNotes;
+				std::wstring trialVenue, primaryVenue, trialClub, trialLocation, trialNotes;
 				ARBDogRunPtr pRun;
 				for (iCol = 0; iCol < entry.size() && iCol < columns[i].size(); ++iCol)
 				{
@@ -950,6 +951,7 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_RUNS_VENUE:
 						trialVenue = entry[iCol];
+						primaryVenue = GetPrimaryVenue(trialVenue);
 						break;
 					case IO_RUNS_CLUB:
 						trialClub = entry[iCol];
@@ -1093,17 +1095,17 @@ bool CWizardImport::DoWizardFinish()
 				// matched for pScoring! So check v/d/l/e again.
 				if (pRun)
 				{
-					if (!m_pDoc->Book().GetConfig().GetVenues().FindVenue(trialVenue))
+					if (!m_pDoc->Book().GetConfig().GetVenues().FindVenue(primaryVenue))
 					{
 						loadstr = StringUtil::stringW(wxString::Format(
 							_("IDS_IMPORT_BAD_VENUE"),
 							static_cast<int>(nItem + 1),
-							trialVenue.c_str()));
+							primaryVenue.c_str()));
 						errLog << loadstr << L"\n";
 						pRun.reset();
 					}
 					else if (!m_pDoc->Book().GetConfig().GetVenues().FindEvent(
-						trialVenue,
+						primaryVenue,
 						pRun->GetEvent(),
 						pRun->GetDivision(),
 						pRun->GetLevel(),
