@@ -1,4 +1,4 @@
-7/11/2012: v2.3.7.<in development>
+7/25/2012: v2.3.7.<in development>
 - Bumped Configuration v38:
   - Fixed AKC metalic titles to allow repeats.
 - New features / Enhancements:
@@ -11,6 +11,7 @@
   - Fix title instance when a title is changed to recurring.
   - After importing an ARB file, sort it.
   - Fix text wrapping in About dialog on Mac.
+  - Importing runs with multiple clubs didn't parse venue correctly.
 
 7/4/2012: v2.3.6.3476
 - Bumped Configuration v37:
