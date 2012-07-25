@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2012-07-25 DRC Only run version include update from here.
 # 2012-07-04 DRC Update to supported compilers (vc9+)
 #                Specifically set WXWIN to official release branch.
 #                Changed program options.
@@ -197,7 +198,10 @@ def main():
 	os.environ['WXWIN'] = wxwin
 
 	if updateBuildNumber:
-		os.environ['SETBUILDNUMBER_UPDATE'] = '--official'
+		cmds = (
+			r'cd ..\..\Include',
+			r'python SetBuildNumber.py --official')
+		RunCmds(cmds)
 
 	# Targets:
 	# VC9/VC10/VC11
