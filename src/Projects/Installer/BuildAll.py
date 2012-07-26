@@ -10,7 +10,7 @@
 # 2010-11-07 DRC Updated to use vc10pro or sdk
 # 2010-06-11 DRC Support building on x64 OS
 # 2010-05-30 DRC Converted .bat to .py (keeps environment clean!)
-"""BuildAll.py -w wxwin [-b fullupdate | clean] compiler*
+"""BuildAll.py -w wxwin [-b type] compiler*
    -w wxwin: Root of wx tree, normally %WXBASE%\\wxWidgets-2.8.12'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -t:       Testing, just print commands to run
