@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-25 DRC Fix a CSV read problem with multiline continuation data.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2010-10-30 DRC Moved BreakLine from Globals.cpp, added CSV routines.
  */
@@ -88,6 +89,11 @@ ReadStatus ReadCSV(
 	if (!bContinuation)
 		ioFields.clear();
 	ReadStatus status = DataOk;
+	if (bContinuation && inRecord.empty())
+	{
+		ioFields[ioFields.size()-1] += newLine;
+		status = DataNeedMore;
+	}
 	bool bAddEmpty = false;
 	while (!inRecord.empty())
 	{

@@ -53,9 +53,6 @@ typedef enum
  *                      last existing one.
  * @param newLine On continuation, append this.
  * @return Status of whether more data is needed (due to quoting multiline data)
- *
- * The RFC actually specifies \\r\\n as the newline in a continued field.
- * By default, this only uses \\n.
  */
 extern ReadStatus ReadCSV(
 		wchar_t inSep,
@@ -70,9 +67,6 @@ extern ReadStatus ReadCSV(
  * @param inSep Separator character
  * @param inFields Fields to write
  * @return A string that can be written to a file. (not newline terminated)
- *
- * The RFC actually specifies \\r\\n as the newline in a continued field.
- * This code makes no checks. It simply writes out the data found.
  */
 extern std::wstring WriteCSV(
 		wchar_t inSep,
