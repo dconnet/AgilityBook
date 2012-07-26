@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-25 DRC Adhere to RFC4180 and use CRLF between records.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-01-08 DRC Fixed export (was writing unicode instead of utf8)
  *                    Also columns didn't always line up.
@@ -443,7 +444,7 @@ void CWizardExport::UpdatePreview()
 	std::wstring hdrSep(L"/");
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
-		hdrSep = L"\n";
+		hdrSep = L"\r\n";
 	std::vector<std::wstring> cols;
 
 	switch (m_pSheet->GetImportExportItem())
@@ -1510,7 +1511,7 @@ bool CWizardExport::DoWizardFinish()
 				for (long i = 0; i < m_ctrlPreview->GetItemCount(); ++i)
 				{
 					std::wstring line = GetListColumnText(m_ctrlPreview, i, 0);
-					line += L"\n";
+					line += L"\r\n";
 					std::string utf8(StringUtil::stringA(line));
 					output.Write(utf8.c_str(), utf8.length());
 				}

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-25 DRC Add 2 multiline CSV tests.
  * @li 2010-10-17 DRC Created
  */
 
@@ -62,6 +63,10 @@ SUITE(TestBreakLine)
 	static wchar_t const* recordMore2a = L";line\";\"\"\"quote\"\" here\";;";
 	static wchar_t const* recordMore1b = L"2010-10-30;Name;\"Subname\";\"Line 1";
 	static wchar_t const* recordMore2b = L"Line 2\"";
+	static wchar_t const* recordMore1c = L"field1;\"Line1";
+	static wchar_t const* recordMore2c = L"Line2";
+	static wchar_t const* recordMore2cb = L"";
+	static wchar_t const* recordMore3c = L"Line3\";field3";
 
 
 	TEST(BreakLine)
@@ -121,6 +126,39 @@ SUITE(TestBreakLine)
 			CHECK(fields[1] == L"Name");
 			CHECK(fields[2] == L"Subname");
 			CHECK(fields[3] == L"Line 1\nLine 2");
+		}
+	}
+
+
+	TEST(ReadCSVMultiLine3)
+	{
+		std::vector<std::wstring> fields;
+		CHECK(DataNeedMore == ReadCSV(';', recordMore1c, fields));
+		CHECK(DataNeedMore == ReadCSV(';', recordMore2c, fields, true));
+		CHECK(DataOk == ReadCSV(';', recordMore3c, fields, true));
+		CHECK(3 == fields.size());
+		if (3 == fields.size())
+		{
+			CHECK(fields[0] == L"field1");
+			CHECK(fields[1] == L"Line1\nLine2\nLine3");
+			CHECK(fields[2] == L"field3");
+		}
+	}
+
+
+	TEST(ReadCSVMultiLine4)
+	{
+		std::vector<std::wstring> fields;
+		CHECK(DataNeedMore == ReadCSV(';', recordMore1c, fields));
+		CHECK(DataNeedMore == ReadCSV(';', recordMore2c, fields, true));
+		CHECK(DataNeedMore == ReadCSV(';', recordMore2cb, fields, true));
+		CHECK(DataOk == ReadCSV(';', recordMore3c, fields, true));
+		CHECK(3 == fields.size());
+		if (3 == fields.size())
+		{
+			CHECK(fields[0] == L"field1");
+			CHECK(fields[1] == L"Line1\nLine2\n\nLine3");
+			CHECK(fields[2] == L"field3");
 		}
 	}
 

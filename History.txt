@@ -12,6 +12,7 @@
   - After importing an ARB file, sort it.
   - Fix text wrapping in About dialog on Mac.
   - Importing runs with multiple clubs didn't parse venue correctly.
+  - Importing comments that contained blank lines didn't import correctly.
 
 7/4/2012: v2.3.6.3476
 - Bumped Configuration v37:
