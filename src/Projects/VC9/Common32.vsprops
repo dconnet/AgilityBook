@@ -6,10 +6,6 @@
 	InheritedPropertySheets="$(SolutionDir)/Common.vsprops"
 	>
 	<Tool
-		Name="VCCLCompilerTool"
-		PreprocessorDefinitions="WIN32"
-	/>
-	<Tool
 		Name="VCLinkerTool"
 		AdditionalOptions="/SafeSEH"
 		AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90"
