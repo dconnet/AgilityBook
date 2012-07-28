@@ -517,12 +517,12 @@ bool CWizardStart::DoWizardFinish()
 				{
 					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					bool bOk = false;
+					bool bLoadOk = false;
 					{
 						wxBusyCursor wait;
-						bOk = tree->LoadXML(file.GetPath(), errMsg);
+						bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 					}
-					if (!bOk)
+					if (!bLoadOk)
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
@@ -549,12 +549,12 @@ bool CWizardStart::DoWizardFinish()
 				{
 					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					bool bOk = false;
+					bool bLoadOk = false;
 					{
 						wxBusyCursor wait;
-						bOk = tree->LoadXML(file.GetPath(), errMsg);
+						bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 					}
-					if (!bOk)
+					if (!bLoadOk)
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
@@ -656,12 +656,12 @@ bool CWizardStart::DoWizardFinish()
 				{
 					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					bool bOk = false;
+					bool bLoadOk = false;
 					{
 						wxBusyCursor wait;
-						bOk = tree->LoadXML(file.GetPath(), errMsg);
+						bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 					}
-					if (!bOk)
+					if (!bLoadOk)
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
@@ -807,12 +807,12 @@ bool CWizardStart::DoWizardFinish()
 				{
 					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					bool bOk = false;
+					bool bLoadOk = false;
 					{
 						wxBusyCursor wait;
-						bOk = tree->LoadXML(file.GetPath(), errMsg);
+						bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 					}
-					if (bOk && CAgilityBookOptions::ImportSettings(tree))
+					if (bLoadOk && CAgilityBookOptions::ImportSettings(tree))
 					{
 						bOk = true;
 					}
