@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-28 DRC Crap, v2.3.6 was hosed. Fix version parsing.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-28 DRC Removed Windows VERSIONNUM support (use VersionNumber.h)
@@ -79,7 +80,7 @@ bool CVersionNum::Parse(std::wstring inVer)
 		&m_Version.part3,
 		&m_Version.part4
 	};
-	for (size_t i = 0; i < fields[4].size(); ++i)
+	for (size_t i = 0; i < fields.size(); ++i)
 	{
 		*(parts[i]) = static_cast<unsigned short>(StringUtil::ToCLong(fields[i]));
 	}
