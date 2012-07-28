@@ -4,8 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2012-07-08 DRC Configuration version 38.
+2012-07-27 DRC Configuration version 38.
                Enable repeating on the new AKC metalic titles.
+               Add NADAC Extreme Barrel Racing.
+               Renamed NADAC divisions to reflect Division and Category.
 2012-07-03 DRC Configuration version 37.
                Enable 5pt Qs in NADAC Proficient Regular.
                Add support for multi-point time faults in pointed games.
@@ -263,6 +265,17 @@ Revision History:
 	<!-- Note, c37 had jumpers named MFC, this fixed it.
 	v38 brings back fast as MFC ('Config' makes sure this won't 'fix' that) -->
     <Action Config="37" OldName="MFC" NewName="MJC" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="38" OldName="Proficient" NewName="Std Proficient" Venue="NADAC" Verb="RenameDivision" />
+    <Action Config="38" OldName="Skilled" NewName="Std Skilled" Venue="NADAC" Verb="RenameDivision" />
+    <Action Config="38" OldName="XCC" NewName="XCC-N" Venue="NADAC" Verb="RenameTitle" />
+    <Action Config="38" OldName="XHP" NewName="XHP-N" Venue="NADAC" Verb="RenameTitle" />
+    <Action Config="38" OldName="XGT" NewName="XGT-N" Venue="NADAC" Verb="RenameTitle" />
+    <Action Config="38" OldName="O-XCC" NewName="O-XCC-N" Venue="NADAC" Verb="RenameTitle" />
+    <Action Config="38" OldName="O-XHP" NewName="O-XHP-N" Venue="NADAC" Verb="RenameTitle" />
+    <Action Config="38" OldName="O-XGT" NewName="O-XGT-N" Venue="NADAC" Verb="RenameTitle" />
+    <Action Config="38" OldName="S-XCC" NewName="S-XCC-N" Venue="NADAC" Verb="RenameTitle" />
+    <Action Config="38" OldName="S-XHP" NewName="S-XHP-N" Venue="NADAC" Verb="RenameTitle" />
+    <Action Config="38" OldName="S-XGT" NewName="S-XGT-N" Venue="NADAC" Verb="RenameTitle" />
 
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
@@ -2629,16 +2642,43 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Multiple="4" Name="JH-NATCH" Prefix="y" ValidTo="2005-12-9">Points are the same as NATCH.</Titles>
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH" Prefix="y" ValidTo="2005-12-9"/>
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH" Prefix="y" ValidTo="2005-12-9"/>
-      <Titles LongName="Extreme Chances" Name="XCC">300 points</Titles>
-      <Titles LongName="Outstanding Extreme Chances" Name="O-XCC">600 points</Titles>
-      <Titles LongName="Superior Extreme Chances" Name="S-XCC">1000 points</Titles>
-      <Titles LongName="Extreme Hoopers" Name="XHP">300 points</Titles>
-      <Titles LongName="Outstanding Extreme Hoopers" Name="O-XHP">600 points</Titles>
-      <Titles LongName="Superior Extreme Hoopers" Name="S-XHP">1000 points</Titles>
-      <Titles LongName="Extreme Gaters" Name="XGT">300 points</Titles>
-      <Titles LongName="Outstanding Extreme Gaters" Name="O-XGT">600 points</Titles>
-      <Titles LongName="Superior Extreme Gaters" Name="S-XGT">1000 points</Titles>
-      <Division Name="Proficient">
+      <Titles LongName="Novice Extreme Chances" Name="XCC-N">300 points</Titles>
+      <Titles LongName="Novice Extreme Hoopers" Name="XHP-N">300 points</Titles>
+      <Titles LongName="Novice Extreme Gaters" Name="XGT-N">300 points</Titles>
+      <Titles LongName="Novice Extreme Barrel Racing" Name="XBR-N">300 points</Titles>
+      <Titles LongName="Novice Outstanding Extreme Chances" Name="O-XCC-N">600 points</Titles>
+      <Titles LongName="Novice Outstanding Extreme Hoopers" Name="O-XHP-N">600 points</Titles>
+      <Titles LongName="Novice Outstanding Extreme Gaters" Name="O-XGT-N">600 points</Titles>
+      <Titles LongName="Novice Outstanding Extreme Barrel Racing" Name="O-XBR-N">600 points</Titles>
+      <Titles LongName="Novice Superior Extreme Chances" Name="S-XCC-N">1000 points</Titles>
+      <Titles LongName="Novice Superior Extreme Hoopers" Name="S-XHP-N">1000 points</Titles>
+      <Titles LongName="Novice Superior Extreme Gaters" Name="S-XGT-N">1000 points</Titles>
+      <Titles LongName="Novice Superior Extreme Barrel Racing" Name="S-XBR-N">1000 points</Titles>
+      <Titles LongName="Open Extreme Chances" Name="XCC-O">300 points</Titles>
+      <Titles LongName="Open Extreme Hoopers" Name="XHP-O">300 points</Titles>
+      <Titles LongName="Open Extreme Gaters" Name="XGT-O">300 points</Titles>
+      <Titles LongName="Open Extreme Barrel Racing" Name="XBR-O">300 points</Titles>
+      <Titles LongName="Open Outstanding Extreme Chances" Name="O-XCC-O">600 points</Titles>
+      <Titles LongName="Open Outstanding Extreme Hoopers" Name="O-XHP-O">600 points</Titles>
+      <Titles LongName="Open Outstanding Extreme Gaters" Name="O-XGT-O">600 points</Titles>
+      <Titles LongName="Open Outstanding Extreme Barrel Racing" Name="O-XBR-O">600 points</Titles>
+      <Titles LongName="Open Superior Extreme Chances" Name="S-XCC-O">1000 points</Titles>
+      <Titles LongName="Open Superior Extreme Hoopers" Name="S-XHP-O">1000 points</Titles>
+      <Titles LongName="Open Superior Extreme Gaters" Name="S-XGT-O">1000 points</Titles>
+      <Titles LongName="Open Superior Extreme Barrel Racing" Name="S-XBR-O">1000 points</Titles>
+      <Titles LongName="Elite Extreme Chances" Name="XCC-E">300 points</Titles>
+      <Titles LongName="Elite Extreme Hoopers" Name="XHP-E">300 points</Titles>
+      <Titles LongName="Elite Extreme Gaters" Name="XGT-E">300 points</Titles>
+      <Titles LongName="Elite Extreme Barrel Racing" Name="XBR-E">300 points</Titles>
+      <Titles LongName="Elite Outstanding Extreme Chances" Name="O-XCC-E">1000 points</Titles>
+      <Titles LongName="Elite Outstanding Extreme Hoopers" Name="O-XHP-E">1000 points</Titles>
+      <Titles LongName="Elite Outstanding Extreme Gaters" Name="O-XGT-E">1000 points</Titles>
+      <Titles LongName="Elite Outstanding Extreme Barrel Racing" Name="O-XBR-E">1000 points</Titles>
+      <Titles LongName="Elite Superior Extreme Chances" Name="S-XCC-E">2000 points</Titles>
+      <Titles LongName="Elite Superior Extreme Hoopers" Name="S-XHP-E">2000 points</Titles>
+      <Titles LongName="Elite Superior Extreme Gaters" Name="S-XGT-E">2000 points</Titles>
+      <Titles LongName="Elite Superior Extreme Barrel Racing" Name="S-XBR-E">2000 points</Titles>
+      <Division Name="Std Proficient">
         <Level Name="Novice">
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
@@ -2646,7 +2686,39 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Skilled">
+      <Division Name="Vet Proficient">
+        <Level Name="Novice">
+          <SubLevel Name="Novice A"/>
+          <SubLevel Name="Novice B"/>
+        </Level>
+        <Level Name="Open"/>
+        <Level Name="Elite"/>
+      </Division>
+      <Division Name="Jr Proficient">
+        <Level Name="Novice">
+          <SubLevel Name="Novice A"/>
+          <SubLevel Name="Novice B"/>
+        </Level>
+        <Level Name="Open"/>
+        <Level Name="Elite"/>
+      </Division>
+      <Division Name="Std Skilled">
+        <Level Name="Novice">
+          <SubLevel Name="Novice A"/>
+          <SubLevel Name="Novice B"/>
+        </Level>
+        <Level Name="Open"/>
+        <Level Name="Elite"/>
+      </Division>
+      <Division Name="Vet Skilled">
+        <Level Name="Novice">
+          <SubLevel Name="Novice A"/>
+          <SubLevel Name="Novice B"/>
+        </Level>
+        <Level Name="Open"/>
+        <Level Name="Elite"/>
+      </Division>
+      <Division Name="Jr Skilled">
         <Level Name="Novice">
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
@@ -2680,17 +2752,49 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Event Name="Regular">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
-        <Scoring Division="Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Std Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
           <LifeTime Faults="0" Points="10"/>
           <LifeTime Faults="5" Points="5"/>
         </Scoring>
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" ValidTo="2012-5-17" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <TitlePoints Faults="5" Points="5"/>
+          <LifeTime Faults="0" Points="10"/>
+          <LifeTime Faults="5" Points="5"/>
+        </Scoring>
+        <Scoring Division="Jr Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <TitlePoints Faults="5" Points="5"/>
+          <LifeTime Faults="0" Points="10"/>
+          <LifeTime Faults="5" Points="5"/>
+        </Scoring>
+        <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" ValidTo="2012-5-17" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" ValidTo="2012-5-17" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" ValidTo="2012-5-17" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <TitlePoints Faults="5" Points="5"/>
+          <LifeTime Faults="0" Points="10"/>
+          <LifeTime Faults="5" Points="5"/>
+        </Scoring>
+        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <TitlePoints Faults="5" Points="5"/>
+          <LifeTime Faults="0" Points="10"/>
+          <LifeTime Faults="5" Points="5"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
           <LifeTime Faults="0" Points="10"/>
@@ -2716,11 +2820,27 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         </Scoring>
       </Event>
       <Event Name="Jumpers">
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
@@ -2786,12 +2906,32 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Event Name="Chances">
         <Desc>Transition Gamblers class
 Was called Wild Card briefly.</Desc>
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
+        <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
+        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
+          <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
+          <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
+          <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
+          <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
@@ -2799,11 +2939,19 @@ Was called Wild Card briefly.</Desc>
       </Event>
       <Event Name="Tunnelers">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
@@ -2814,11 +2962,19 @@ Was called Wild Card briefly.</Desc>
       </Event>
       <Event Name="TouchNGo">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
@@ -2828,11 +2984,19 @@ Was called Wild Card briefly.</Desc>
         </Scoring>
       </Event>
       <Event Name="Weavers">
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
@@ -2842,49 +3006,98 @@ Was called Wild Card briefly.</Desc>
         </Scoring>
       </Event>
       <Event Name="Hoopers">
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
       </Event>
       <Event Name="Gaters">
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+        <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Chances">
         <Desc>Use Bonus Points to enter earned points</Desc>
-        <Scoring Division="Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+        <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+        <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Hoopers">
         <Desc>Use Bonus Points to enter earned points</Desc>
-        <Scoring Division="Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+        <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+        <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Gaters">
         <Desc>Use Bonus Points to enter earned points</Desc>
-        <Scoring Division="Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+        <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
-        <Scoring Division="Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+        <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="Extreme Barrel Racing">
+        <Desc>Use Bonus Points to enter earned points</Desc>
+        <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
