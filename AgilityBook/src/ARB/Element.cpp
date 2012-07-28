@@ -10,7 +10,7 @@
  * @brief Tree structure to store XML.
  * @author David Connet
  *
- * Actual reading and writing of XML is done using Xerces (or wxWidgets)
+ * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use

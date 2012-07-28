@@ -1,4 +1,6 @@
 7/28/2012: v2.3.8.<in development>
+- Bug fixes:
+  - Fixed missing About menu item.
 
 7/28/2012: v2.3.7.81
 - Bumped Configuration v38:

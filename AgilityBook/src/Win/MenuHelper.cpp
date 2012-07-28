@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-28 DRC Fix About menu insertion.
  * @li 2012-07-13 DRC Created
  */
 
@@ -82,7 +83,7 @@ void CMenuHelper::Menu(
 	{
 		if (MENU_SEP & items[index].flags)
 			handle.pMenu->AppendSeparator();
-		else if ((MENU_ITEM | MENU_MRU) & items[index].flags)
+		else if ((MENU_ITEM | MENU_MRU | MENU_HELP) & items[index].flags)
 		{
 			assert(items[index].menu);
 			if (MENU_MRU & items[index].flags)

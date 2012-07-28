@@ -14,6 +14,7 @@
  * If they are only in a context menu, the accelerator will not work.
  *
  * Revision History
+ * @li 2012-07-28 DRC Fixed extra separator on Mac, removed Update menu icon.
  * @li 2012-07-13 DRC Reworked menu creation to use a generic reusable helper.
  * @li 2012-07-08 DRC Put images into menu.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
@@ -182,9 +183,11 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{MENU_ITEM, ID_PREV_PANE,             wxITEM_NORMAL, 1, NULL, arbT("MenuWindowPrev"), arbT("DescWindowPrev"), NULL},
 
 	{MENU_ITEM, 0,                        wxITEM_NORMAL, 0, NULL, arbT("MenuHelp"), NULL, NULL},
-	{MENU_ITEM, ID_HELP_UPDATE,           wxITEM_NORMAL, 1, NULL, arbT("MenuHelpUpdates"), arbT("DescHelpUpdates"), toolbarNew_xpm},
+	{MENU_ITEM, ID_HELP_UPDATE,           wxITEM_NORMAL, 1, NULL, arbT("MenuHelpUpdates"), arbT("DescHelpUpdates"), NULL},
 	{MENU_ITEM, ID_HELP_SYSINFO,          wxITEM_NORMAL, 1, NULL, arbT("MenuHelpSysInfo"), arbT("DescHelpSysInfo"), NULL},
+#ifndef __WXMAC__
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
+#endif
 	{MENU_HELP, wxID_ABOUT,               wxITEM_NORMAL, 1, arbT("MenuHelpAbout"), arbT("MenuHelpAbout"), arbT("DescHelpAbout"), toolbarAbout_xpm},
 };
 static const size_t sc_ItemsCount = sizeof(sc_Items) / sizeof(sc_Items[0]);
