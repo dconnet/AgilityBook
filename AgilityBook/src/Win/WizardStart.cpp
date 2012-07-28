@@ -515,10 +515,14 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					wxBusyCursor wait;
 					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					if (!tree->LoadXML(file.GetPath(), errMsg))
+					bool bOk = false;
+					{
+						wxBusyCursor wait;
+						bOk = tree->LoadXML(file.GetPath(), errMsg);
+					}
+					if (!bOk)
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
@@ -543,10 +547,14 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					wxBusyCursor wait;
 					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					if (!tree->LoadXML(file.GetPath(), errMsg))
+					bool bOk = false;
+					{
+						wxBusyCursor wait;
+						bOk = tree->LoadXML(file.GetPath(), errMsg);
+					}
+					if (!bOk)
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
@@ -646,10 +654,14 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					wxBusyCursor wait;
 					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					if (!tree->LoadXML(file.GetPath(), errMsg))
+					bool bOk = false;
+					{
+						wxBusyCursor wait;
+						bOk = tree->LoadXML(file.GetPath(), errMsg);
+					}
+					if (!bOk)
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
@@ -793,11 +805,14 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					wxBusyCursor wait;
 					std::wostringstream errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					if (tree->LoadXML(file.GetPath(), errMsg)
-					&& CAgilityBookOptions::ImportSettings(tree))
+					bool bOk = false;
+					{
+						wxBusyCursor wait;
+						bOk = tree->LoadXML(file.GetPath(), errMsg);
+					}
+					if (bOk && CAgilityBookOptions::ImportSettings(tree))
 					{
 						bOk = true;
 					}

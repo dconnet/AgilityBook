@@ -393,7 +393,6 @@ bool CWizardImport::DoImportFile()
 		m_FileName = dlg.GetPath();
 		wxString str = wxString::Format(_("IDS_FILE_PREVIEW"), m_FileName.c_str());
 		m_ctrlPreviewFile->SetLabel(str);
-		wxBusyCursor wait;
 		m_FileData.clear();
 		m_ExcelData.clear();
 		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
@@ -421,6 +420,7 @@ bool CWizardImport::DoImportFile()
 		}
 		else
 		{
+			wxBusyCursor wait;
 			wxTextFile file;
 			if (file.Open(m_FileName.c_str()))
 			{

@@ -111,6 +111,7 @@ static short GetCurrentConfigVersion()
 	static bool bLoaded = false;
 	if (!bLoaded)
 	{
+		wxBusyCursor wait;
 		bLoaded = true;
 		CConfigHandler handler;
 		ARBConfig config;
@@ -542,7 +543,12 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 {
 	std::wostringstream info;
 	CConfigActionCallback callback;
-	if (m_Records.Update(0, update, info, callback))
+	bool bOk = false;
+	{
+		wxBusyCursor wait;
+		bOk = m_Records.Update(0, update, info, callback);
+	}
+	if (bOk)
 	{
 		CDlgMessage dlg(info.str(), wxGetApp().GetTopWindow());
 		dlg.ShowModal();
@@ -587,6 +593,7 @@ bool CAgilityBookDoc::ImportARBCalEntry(
 		long& nDuplicate,
 		long& nSkipped)
 {
+	wxBusyCursor wait;
 	bool bModified = false;
 	for (ARBCalendarList::const_iterator iter = listCal.begin(); iter != listCal.end(); ++iter)
 	{
@@ -621,6 +628,7 @@ bool CAgilityBookDoc::ImportARBTrainingEntry(
 		long& nDuplicate,
 		long& nSkipped)
 {
+	wxBusyCursor wait;
 	bool bModified = false;
 	for (ARBTrainingList::const_iterator iter = listLog.begin(); iter != listLog.end(); ++iter)
 	{
@@ -643,6 +651,7 @@ bool CAgilityBookDoc::ImportARBTrainingEntry(
 
 bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 {
+	wxBusyCursor wait;
 	bool bOk = false;
 	CErrorCallback err;
 	ARBAgilityRecordBook book;
@@ -939,6 +948,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 
 bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 {
+	wxBusyCursor wait;
 	bool bOk = false;
 	CErrorCallback err;
 	ARBAgilityRecordBook book;
@@ -971,6 +981,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 
 bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
 {
+	wxBusyCursor wait;
 	bool bOk = false;
 	CErrorCallback err;
 	ARBAgilityRecordBook book;
@@ -1326,63 +1337,66 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		return false;
 	}
-	wxBusyCursor wait;
 
-	std::wostringstream err;
-	ElementNodePtr tree(ElementNode::New());
-	// Translate the XML to a tree form.
-	if (!tree->LoadXML(filename, err))
 	{
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
-		// This string is in fr/fr.po
-		wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
-		if (0 < err.str().length())
+		wxBusyCursor wait;
+
+		std::wostringstream err;
+		ElementNodePtr tree(ElementNode::New());
+		// Translate the XML to a tree form.
+		if (!tree->LoadXML(filename, err))
 		{
-			msg << L"\n\n" << StringUtil::stringWX(err.str());
+			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
+			// This string is in fr/fr.po
+			wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
+			if (0 < err.str().length())
+			{
+				msg << L"\n\n" << StringUtil::stringWX(err.str());
+			}
+			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			return false;
 		}
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
-		return false;
-	}
-	// Translate the tree to a class structure.
-	CErrorCallback callback;
-	if (!m_Records.Load(tree, callback))
-	{
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
-		wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
-		if (0 < callback.m_ErrMsg.str().length())
+		// Translate the tree to a class structure.
+		CErrorCallback callback;
+		if (!m_Records.Load(tree, callback))
 		{
+			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
+			wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
+			if (0 < callback.m_ErrMsg.str().length())
+			{
+				msg << L"\n\n" << StringUtil::stringWX(callback.m_ErrMsg.str());
+			}
+			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			return false;
+		}
+		else if (0 < callback.m_ErrMsg.str().length())
+		{
+			wxString msg(_("IDS_NONFATAL_MSGS"));
 			msg << L"\n\n" << StringUtil::stringWX(callback.m_ErrMsg.str());
+			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		}
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
-		return false;
+		SortDates();
+
+		ResetVisibility();
+
+		//
+		// End DoOpenDocument stuff
+		//
+
+		SetFilename(filename, true);
+		Modify(false);
+		m_savedYet = true;
+
+		if (CAgilityBookOptions::AutoDeleteCalendarEntries())
+		{
+			ARBDate today(ARBDate::Today());
+			today -= CAgilityBookOptions::DaysTillEntryIsPast();
+			if (0 < m_Records.GetCalendar().TrimEntries(today))
+				Modify(true);
+		}
+
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, filename);
 	}
-	else if (0 < callback.m_ErrMsg.str().length())
-	{
-		wxString msg(_("IDS_NONFATAL_MSGS"));
-		msg << L"\n\n" << StringUtil::stringWX(callback.m_ErrMsg.str());
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
-	}
-	SortDates();
-
-	ResetVisibility();
-
-	//
-	// End DoOpenDocument stuff
-	//
-
-	SetFilename(filename, true);
-	Modify(false);
-	m_savedYet = true;
-
-	if (CAgilityBookOptions::AutoDeleteCalendarEntries())
-	{
-		ARBDate today(ARBDate::Today());
-		today -= CAgilityBookOptions::DaysTillEntryIsPast();
-		if (0 < m_Records.GetCalendar().TrimEntries(today))
-			Modify(true);
-	}
-
-	wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, filename);
 
 	// Check our internal config.
 	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
@@ -1410,7 +1424,10 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	*/
 
 	// Kick the LoadData in every view
-	UpdateAllViews();
+	{
+		wxBusyCursor wait;
+		UpdateAllViews();
+	}
 	// Finally, force a status update (currently, the last loaddata is the winner)
 	if (GetDocumentManager())
 	{

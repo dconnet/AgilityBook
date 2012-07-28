@@ -322,7 +322,12 @@ bool CUpdateInfo::ReadVersionFile(
 		 */
 		std::wostringstream errMsg2;
 		ElementNodePtr tree(ElementNode::New());
-		if (!tree->LoadXML(data.c_str(), data.length(), errMsg2))
+		bool bOk = false;
+		{
+			wxBusyCursor wait;
+			bOk = tree->LoadXML(data.c_str(), data.length(), errMsg2);
+		}
+		if (!bOk)
 		{
 			if (bVerbose)
 			{
@@ -741,7 +746,12 @@ void CUpdateInfo::CheckConfig(
 				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				ElementNodePtr tree(ElementNode::New());
 				std::wostringstream errMsg2;
-				if (!tree->LoadXML(strConfig.c_str(), strConfig.length(), errMsg2))
+				bool bOk = false;
+				{
+					wxBusyCursor wait;
+					bOk = tree->LoadXML(strConfig.c_str(), strConfig.length(), errMsg2);
+				}
+				if (!bOk)
 				{
 					wxString msg2 = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());
 					if (0 < errMsg2.str().length())
