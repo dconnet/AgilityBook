@@ -464,12 +464,18 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 
 	// OS version
 	wxPlatformInfo info;
+	int majVer = info.GetOSMajorVersion();
+	int minVer = info.GetOSMinorVersion();
+#if !wxCHECK_VERSION(2, 9, 4)
+	majVer = (majVer == 16 ? 10 : majVer);
+	minVer = (minVer >> 4);
+#endif
 	str << L"OS: "
 		<< info.GetOperatingSystemIdName()
 		<< L" "
-		<< info.GetOSMajorVersion()
+		<< majVer
 		<< L"."
-		<< info.GetOSMinorVersion()
+		<< minVer
 		<< L"\n";
 	if (wxPORT_BASE != info.GetPortId())
 	{
