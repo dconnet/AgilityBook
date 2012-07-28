@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-27 DRC Disable spell checking on OSX 10.7+. It crashes.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Fix file autoload failure so it opens new document.
  * @li 2008-12-14 DRC Ported to wxWidgets.
@@ -296,7 +297,19 @@ bool CAgilityBookApp::OnInit()
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
 #ifdef __WXMAC__
 	wxFileName::MacRegisterDefaultTypeAndCreator(L"arb", 'ARBB', 'ARBA');
-	wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
+	{
+		wxPlatformInfo info;
+		int majVer = info.GetOSMajorVersion();
+		int minVer = info.GetOSMinorVersion();
+#if !wxCHECK_VERSION(2, 9, 4)
+		majVer = (majVer == 16 ? 10 : majVer);
+		minVer = (minVer >> 4);
+#endif
+		if (majVer == 10 && minVer < 7)
+		{
+			wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
+		}
+	}
 	// Sorting is broken in the native sorting in wx 2.8.10 and earlier
 	wxSystemOptions::SetOption(L"mac.listctrl.always_use_generic", 1);
 #endif
