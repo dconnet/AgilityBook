@@ -784,7 +784,6 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 
 void CDlgConfigure::OnOk(wxCommandEvent& evt)
 {
-	wxBusyCursor wait;
 	if (m_Book.GetConfig() != m_Config)
 	{
 		m_pDoc->ImportConfiguration(m_Config);

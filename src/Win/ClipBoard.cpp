@@ -121,7 +121,11 @@ bool CClipboardDataReader::GetData(
 		data = txtData.GetText().ToUTF8();
 	}
 	std::wostringstream err;
-	bool bOk = outTree->LoadXML(data.c_str(), data.length(), err);
+	bool bOk = false;
+	{
+		wxBusyCursor wait;
+		bOk = outTree->LoadXML(data.c_str(), data.length(), err);
+	}
 	if (!bOk && 0 < err.str().length())
 	{
 		wxMessageBox(StringUtil::stringWX(err.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);

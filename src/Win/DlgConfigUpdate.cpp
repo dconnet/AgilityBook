@@ -119,9 +119,9 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 
 bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 {
-	wxBusyCursor wait;
 	if (!pFile)
 	{
+		wxBusyCursor wait;
 		CConfigHandler handler;
 		m_Book.GetConfig().Default(&handler);
 	}
@@ -130,7 +130,12 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 		std::wostringstream errMsg;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
-		if (!tree->LoadXML(pFile, errMsg))
+		bool bOk = false;
+		{
+			wxBusyCursor wait;
+			bOk = tree->LoadXML(pFile, errMsg);
+		}
+		if (!bOk)
 		{
 			wxString msg = _("AFX_IDP_FAILED_TO_OPEN_DOC");
 			if (0 < errMsg.str().length())

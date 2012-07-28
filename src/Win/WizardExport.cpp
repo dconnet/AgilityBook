@@ -1456,7 +1456,6 @@ bool CWizardExport::DoWizardFinish()
 			pExporter = m_pSheet->CalcHelper()->GetExporter();
 		if (pExporter)
 		{
-			wxBusyCursor wait;
 			pExporter->AllowAccess(false);
 			long nColumnCount = m_ctrlPreview->GetColumnCount();
 			IDlgProgress* pProgress = IDlgProgress::CreateProgress(1, this);

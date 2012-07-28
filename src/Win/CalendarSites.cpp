@@ -500,7 +500,6 @@ private:
 
 std::string CPluginConfigData::Process(IProgressMeter *progress)
 {
-	wxBusyCursor wait;
 	std::wstring url = m_Site->GetFormattedURL(m_LocationCodes, m_VenueCodes);
 	progress->SetMessage(url.c_str());
 	std::string data;
@@ -968,7 +967,6 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 
 	CProgressMeter progress(nEntries, this);
 
-	wxBusyCursor wait;
 	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie);
 		hItem.IsOk();
 		hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
