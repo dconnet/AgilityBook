@@ -1,4 +1,4 @@
-7/27/2012: v2.3.7.<in development>
+7/28/2012: v2.3.7.80
 - Bumped Configuration v38:
   - Fixed AKC metalic titles to allow repeats.
   - Add NADAC Extreme Barrel Racing.
