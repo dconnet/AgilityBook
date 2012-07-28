@@ -1,3 +1,5 @@
+7/28/2012: v2.3.8.<in development>
+
 7/28/2012: v2.3.7.81
 - Bumped Configuration v38:
   - Fixed AKC metalic titles to allow repeats.
@@ -16,7 +18,7 @@
   - Fix text wrapping in About dialog on Mac.
   - Importing runs with multiple clubs didn't parse venue correctly.
   - Importing comments that contained blank lines didn't import correctly.
-  - Fixed spell checking related crash on OSX 10.7+. Disabled it.
+  - Fixed spell checking related crash on OSX 10.8. Disabled it.
 
 7/4/2012: v2.3.6.3476
 - Bumped Configuration v37:
