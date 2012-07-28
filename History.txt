@@ -1,4 +1,4 @@
-7/28/2012: v2.3.7.80
+7/28/2012: v2.3.7.81
 - Bumped Configuration v38:
   - Fixed AKC metalic titles to allow repeats.
   - Add NADAC Extreme Barrel Racing.
@@ -6,6 +6,7 @@
 - New features / Enhancements:
   - Change meaning of part4 of build number.
 - Bug fixes:
+  - Version checking in v2.3.6 will crash.
   - Fixed ARBHelp. Totally broken in 2.3.6 release.
   - Add option to use run time or opening time in gamble OPS.
   - Get icons to show up in menus.
