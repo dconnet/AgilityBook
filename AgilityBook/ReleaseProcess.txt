@@ -29,9 +29,10 @@ Run Doxygen and fix any warnings/errors it reports.
 
 Do a full rebuild and verify it.
 - cd src\Projects\Installer
-- 'BuildAll.py fullupdate' [runs VC9 and/or VC10 compile]
+- 'BuildAll.py -w %WSBASE%\wxWidgets-2.8.12 -b fullupdate' [runs VC9 and VC10 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
       -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-2.8.12'
+	            Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
       compiler: vc9, vc10, vc11 (default: vc9, vc10)
@@ -44,7 +45,7 @@ Commit all changes to SVN.
 Pull files onto Mac and build there (see MAC_BUILD.txt)
 - If major or minor version number has changed:
   - update Info.plist in xcode
-  - update Project Version in xcode target properties
+- Update Project Version in xcode target properties (x.y.z)
 - export PATH=$WXWIN/build-unicode:$PATH
 - cd .../AgilityBook
 - autoconf
@@ -58,8 +59,6 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 [note: the makefile is not generating the image correctly to run on osx10.4
 So do a release build in xcode and copy that executable into the 'dist'
 generated .app folder]
-TODO: check if above comment is still correct when using CC/CXX/LD definitions
-during 'configure' [doesn't seem like it. sigh.]
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
   - Name it AgilityBook-n_n_n_n-mac.dmg
   - After dragging in image, rename the mount point. (AgilityBook x.y.z)
@@ -68,14 +67,14 @@ during 'configure' [doesn't seem like it. sigh.]
 Commit all changes to SVN (should just be the xcode project).
 
 Tag SubVersion repository
- - https://agilitybook.svn.sourceforge.net/svnroot/agilitybook/tags/vn.n.n.n
+ - /tags/vn.n.n.n
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Copy a backup of released files to \AgilityBook\test\[vc10/vc10x64]
   Currently, I only archive vc10/x64 - the exe's that are released to the wild.
   [exe,dll,dat,lang/...]
-- Use SVN to export AgilityBook\ to distrib directory
+- Use SVN to export AgilityBook\ to distrib\AgilityBook\ directory
   - Zip AgilityBook to AgilityBook-n_n_n_n-src.zip
   - Delete AgilityBook directory
 - Readme1st.vn.n.n.n.txt
@@ -89,22 +88,29 @@ SourceForge:
   - AgilityBook-n_n_n_n-x64.zip
   - AgilityBook-n_n_n_n-mac.dmg
 - Set default file information (sets up file to auto-download)
+  - Windows: -win
+  - Mac: -mac
+  - Others: -src
 
 Web Site:
-- Upload zip files (not src) to files/
+- Upload msi zip files and dmg to files/
 - Update "$fileversion" and "$fileVerNo" in func.php
   - Login to php(mysql) http://agilityrecordbook.com/phpAdmin/main.php
   - Export columns as 'Excel 2000'
+    - Save this into local Excel file for archiving
+	- Copy existing log files from server (delete from server after copying)
   - Delete old rows (so query returns actual number of downloads for current version)
     - note, leave last item so next download auto-increments id
-- Update version2.xml
+- Update version2.xml and version.txt
   - Run 'ARBUpdater /g' and generate new size and md5 tags for each file.
-  - Update config file (ConfigN.txt)
+  - Update config file (ConfigN.txt) [if necessary]
 - Make sure things are current (ongoing task!).
   - Update DTD
-  - Update bugs.php
+  - Update bugs.php, index.php
+  - Update news.xml (RSS feed)
 - Push all updated files to server.
 - Verify downloads are good.
+  - Verify auto-update works from program
 - Delete old zip files.
 
 In Yahoo
