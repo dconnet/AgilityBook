@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-30 DRC Add CVersionNum tests.
  * @li 2011-08-22 DRC ARBVersion was only using 16 instead of 32bits.
  * @li 2008-01-12 DRC Created
  */
@@ -18,6 +19,7 @@
 #include "TestARB.h"
 
 #include "ARBTypes.h"
+#include "VersionNum.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -76,4 +78,19 @@ SUITE(TestVersion)
 			CHECK(v1.Minor() == min);
 		}
 	}
+
+    TEST(VerParse)
+    {
+		if (!g_bMicroTest)
+        {
+            CVersionNum v(false);
+            CHECK(v.Parse(L"1.2.3.4"));
+            CVersionNum::VERSION_NUMBER ver;
+            v.GetVersion(ver);
+            CHECK(ver.part1 == 1);
+            CHECK(ver.part2 == 2);
+            CHECK(ver.part3 == 3);
+            CHECK(ver.part4 == 4);
+        }
+    }
 }
