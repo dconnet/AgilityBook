@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-30 DRC Added new recurring title style (none).
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-08-05 DRC Added Roman numbers
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -29,10 +30,12 @@
 #include "ARBTypes.h"
 
 
+// Do not change these numbers, they are serialized.
 enum ARBTitleStyle
 {
 	eTitleNumber = 0,	/// "Title4"
 	eTitleRoman = 1,	/// "Title IV"
+	eTitleNone = 2,		/// "Title"
 };
 
 

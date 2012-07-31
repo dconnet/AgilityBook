@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-25 08:19-0800\n"
-"PO-Revision-Date: 2012-07-25 08:19-0800\n"
+"POT-Creation-Date: 2012-07-30 19:42-0800\n"
+"PO-Revision-Date: 2012-07-30 19:43-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "MIME-Version: 1.0\n"
@@ -477,20 +477,20 @@ msgstr "Updated %1$d Team runs."
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Parametre table changé pour %1$d parcours."
 
-#: Win/AgilityBook.cpp:133
+#: Win/AgilityBook.cpp:134
 msgid "Sorry, print preview needs a printer to be installed."
 msgstr "L'aperçu avant impression nécessite une imprimante installée."
 
-#: Win/AgilityBook.cpp:136
+#: Win/AgilityBook.cpp:137
 msgid "Print Preview"
 msgstr "Aperçu avant impression"
 
-#: Win/AgilityBook.cpp:249
+#: Win/AgilityBook.cpp:250
 msgid "IDS_MIN_RESOLUTION"
 msgstr "Ce logiciel demand un resolution ecran a au moins 800x600 ou quelqes dialogue ne vont pas etre visible. Voulez-vous continuer?"
 
 #: Win/AgilityBookCalendarListView.cpp:479
-#: Win/AgilityBookDoc.cpp:1515
+#: Win/AgilityBookDoc.cpp:1532
 #: Win/AgilityBookRunsView.cpp:1190
 #: Win/AgilityBookTrainingView.cpp:296
 msgid "IDS_CANNOT_FIND"
@@ -503,7 +503,7 @@ msgstr "%1$d epreuves"
 
 #: Win/AgilityBookCalendarListView.cpp:648
 #: Win/AgilityBookCalendarView.cpp:1275
-#: Win/AgilityBookDoc.cpp:1269
+#: Win/AgilityBookDoc.cpp:1280
 #: Win/AgilityBookHtmlView.cpp:111
 #: Win/AgilityBookPointsView.cpp:226
 #: Win/AgilityBookTrainingView.cpp:433
@@ -543,7 +543,7 @@ msgid "IDS_COL_CLOSES"
 msgstr "Fermeture"
 
 #: Win/AgilityBookCalendarView.cpp:620
-#: Win/AgilityBookDoc.cpp:1854
+#: Win/AgilityBookDoc.cpp:1871
 msgid "IDS_COL_NOTES"
 msgstr "Notes"
 
@@ -623,96 +623,96 @@ msgstr "vendredi"
 msgid "Saturday"
 msgstr "samedi"
 
-#: Win/AgilityBookDoc.cpp:527
+#: Win/AgilityBookDoc.cpp:528
 msgid "IDS_ARE_YOU_SURE_CONTINUE"
 msgstr "Vous etes sur de continuer?"
 
-#: Win/AgilityBookDoc.cpp:554
+#: Win/AgilityBookDoc.cpp:560
 msgid "IDS_CONFIG_NO_UPDATE"
 msgstr "Pas mis a jour; configurations pas changé."
 
-#: Win/AgilityBookDoc.cpp:848
+#: Win/AgilityBookDoc.cpp:857
 msgid "IDS_ADDED"
 msgstr "Ajouté "
 
-#: Win/AgilityBookDoc.cpp:855
+#: Win/AgilityBookDoc.cpp:864
 msgid "IDS_ADDED_DOGS"
 msgstr "%1$d chiens"
 
-#: Win/AgilityBookDoc.cpp:862
-#: Win/AgilityBookDoc.cpp:917
+#: Win/AgilityBookDoc.cpp:871
+#: Win/AgilityBookDoc.cpp:926
 msgid "IDS_ADDED_REGNUMS"
 msgstr "%1$d numeros d'enregistrement"
 
-#: Win/AgilityBookDoc.cpp:869
+#: Win/AgilityBookDoc.cpp:878
 msgid "IDS_ADDED_EXISTINGPTS"
 msgstr "%1$d points existant"
 
-#: Win/AgilityBookDoc.cpp:876
-#: Win/AgilityBookDoc.cpp:929
+#: Win/AgilityBookDoc.cpp:885
+#: Win/AgilityBookDoc.cpp:938
 msgid "IDS_ADDED_TITLES"
 msgstr "%1$d distinctions"
 
-#: Win/AgilityBookDoc.cpp:883
+#: Win/AgilityBookDoc.cpp:892
 msgid "IDS_ADDED_TRIALS"
 msgstr "%1$d epreuves"
 
-#: Win/AgilityBookDoc.cpp:890
+#: Win/AgilityBookDoc.cpp:899
 msgid "IDS_ADDED_CLUBS"
 msgstr "%1$d clubs"
 
-#: Win/AgilityBookDoc.cpp:897
+#: Win/AgilityBookDoc.cpp:906
 msgid "IDS_ADDED_JUDGES"
 msgstr "%1$d juges"
 
-#: Win/AgilityBookDoc.cpp:904
+#: Win/AgilityBookDoc.cpp:913
 msgid "IDS_ADDED_LOCATIONS"
 msgstr "%1$d endroits"
 
-#: Win/AgilityBookDoc.cpp:914
-#: Win/AgilityBookDoc.cpp:926
+#: Win/AgilityBookDoc.cpp:923
+#: Win/AgilityBookDoc.cpp:935
 msgid "IDS_UPDATED"
 msgstr "Mis a jour "
 
-#: Win/AgilityBookDoc.cpp:962
+#: Win/AgilityBookDoc.cpp:972
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "%1$d nouveaux entrés calendrier rajouté, %2$d entrés mis a jour."
 
-#: Win/AgilityBookDoc.cpp:994
+#: Win/AgilityBookDoc.cpp:1005
 msgid "IDS_UPDATED_TRAINING_ITEMS"
 msgstr "%1$d nouveaux entrés Log Entraînement rajoutés, %2$d entrés mis a jour."
 
-#: Win/AgilityBookDoc.cpp:1293
+#: Win/AgilityBookDoc.cpp:1304
 msgid "IDS_COL_DOG"
 msgstr "Chien"
 
-#: Win/AgilityBookDoc.cpp:1325
+#: Win/AgilityBookDoc.cpp:1336
 msgid "Sorry, could not open this file."
 msgstr "Impossible d'ouvrir ce fichier."
 
-#: Win/AgilityBookDoc.cpp:1338
 #: Win/AgilityBookDoc.cpp:1351
+#: Win/AgilityBookDoc.cpp:1364
 #, c-format
 msgid "Cannot open file '%s'."
 msgstr "Impossible d'ouvrir le fichier « %s »."
 
-#: Win/AgilityBookDoc.cpp:1361
+#: Win/AgilityBookDoc.cpp:1374
 msgid "IDS_NONFATAL_MSGS"
 msgstr "Attention: Des messages pas fatal ont etais crée en chargent le fichier:"
 
-#: Win/AgilityBookDoc.cpp:1448
+#: Win/AgilityBookDoc.cpp:1465
 msgid "IDS_CANNOT_OPEN"
 msgstr "Impossible d'ouvrir fichier '%1$s' pour ecriture."
 
-#: Win/AgilityBookDoc.cpp:1454
+#: Win/AgilityBookDoc.cpp:1471
 msgid "IDS_INTERNAL_ERROR"
 msgstr "Erreur interne: Fichier pas enregistré."
 
-#: Win/AgilityBookDoc.cpp:1477
+#: Win/AgilityBookDoc.cpp:1494
 msgid "IDS_SEARCH_NOTES"
 msgstr "Notes Recherche"
 
-#: Win/AgilityBookDoc.cpp:1659
+#: Win/AgilityBookDoc.cpp:1676
 msgid "IDS_NO_LINKED_FILES"
 msgstr "Aucun fichier associé trouvé."
 
@@ -721,816 +721,816 @@ msgstr "Aucun fichier associé trouvé."
 msgid "IDS_TITLING_POINTS"
 msgstr "Points Distinction"
 
-#: Win/AgilityBookMenu.cpp:55
+#: Win/AgilityBookMenu.cpp:56
 msgid "MenuFile"
 msgstr "&Fichier"
 
-#: Win/AgilityBookMenu.cpp:56
+#: Win/AgilityBookMenu.cpp:57
 msgid "MenuFileNew"
 msgstr "&Nouveau\tCtrl+N"
 
-#: Win/AgilityBookMenu.cpp:56
+#: Win/AgilityBookMenu.cpp:57
 msgid "DescFileNew"
 msgstr "Créer un nouveau document"
 
-#: Win/AgilityBookMenu.cpp:57
 #: Win/AgilityBookMenu.cpp:58
+#: Win/AgilityBookMenu.cpp:59
 msgid "MenuFileOpen"
 msgstr "&Ouvrir...\tCtrl+O"
 
-#: Win/AgilityBookMenu.cpp:57
+#: Win/AgilityBookMenu.cpp:58
 msgid "DescFileOpen"
 msgstr "Ouvrir un document existant"
 
-#: Win/AgilityBookMenu.cpp:58
+#: Win/AgilityBookMenu.cpp:59
 msgid "MenuFileSave"
 msgstr "&Enregistrer\tCtrl+S"
 
-#: Win/AgilityBookMenu.cpp:58
+#: Win/AgilityBookMenu.cpp:59
 msgid "DescFileSave"
 msgstr "Enregistrer le document actif"
 
-#: Win/AgilityBookMenu.cpp:59
+#: Win/AgilityBookMenu.cpp:60
 msgid "MenuFileSaveAs"
 msgstr "Enregistrer &Sous...\tF12"
 
-#: Win/AgilityBookMenu.cpp:59
+#: Win/AgilityBookMenu.cpp:60
 msgid "DescFileSaveAs"
 msgstr "Enregistrer le document actif sous un nouveau nom"
 
-#: Win/AgilityBookMenu.cpp:61
+#: Win/AgilityBookMenu.cpp:62
 msgid "MenuFileLanguage"
 msgstr "&Choisir langue..."
 
-#: Win/AgilityBookMenu.cpp:61
+#: Win/AgilityBookMenu.cpp:62
 msgid "DescFileLanguage"
 msgstr "Choisir une langue"
 
-#: Win/AgilityBookMenu.cpp:63
+#: Win/AgilityBookMenu.cpp:64
 msgid "MenuFileImportExport"
 msgstr "Importer et E&xporter...\tCtrl+E"
 
-#: Win/AgilityBookMenu.cpp:63
+#: Win/AgilityBookMenu.cpp:64
 msgid "DescFileImportExport"
 msgstr "Guide Import et Export"
 
-#: Win/AgilityBookMenu.cpp:64
+#: Win/AgilityBookMenu.cpp:65
 msgid "MenuFileLinkedFiles"
 msgstr "&Trouver tous fichiers liés..."
 
-#: Win/AgilityBookMenu.cpp:64
+#: Win/AgilityBookMenu.cpp:65
 msgid "DescFileLinkedFiles"
 msgstr "Trouver tous fichiers associés"
 
-#: Win/AgilityBookMenu.cpp:66
+#: Win/AgilityBookMenu.cpp:67
 msgid "MenuFilePrint"
 msgstr "&Imprimer...\tCtrl+P"
 
-#: Win/AgilityBookMenu.cpp:66
+#: Win/AgilityBookMenu.cpp:67
 msgid "DescFilePrint"
 msgstr "Imprimer le document actif"
 
-#: Win/AgilityBookMenu.cpp:67
+#: Win/AgilityBookMenu.cpp:68
 msgid "MenuFilePrintBlank"
 msgstr "Imprimer Parcours &Vierges..."
 
-#: Win/AgilityBookMenu.cpp:67
+#: Win/AgilityBookMenu.cpp:68
 msgid "DescFilePrintBlank"
 msgstr "Emprimer page vierge pour enregistrer parcours"
 
-#: Win/AgilityBookMenu.cpp:68
+#: Win/AgilityBookMenu.cpp:69
 msgid "MenuFilePrintPreview"
 msgstr "&Aperçu avant Impression\tCtrl+Alt+P"
 
-#: Win/AgilityBookMenu.cpp:68
+#: Win/AgilityBookMenu.cpp:69
 msgid "DescFilePrintPreview"
 msgstr "Afficher des pages entières"
 
-#: Win/AgilityBookMenu.cpp:69
+#: Win/AgilityBookMenu.cpp:70
 msgid "MenuFileRecent"
 msgstr "&Fichiers récents"
 
-#: Win/AgilityBookMenu.cpp:71
+#: Win/AgilityBookMenu.cpp:72
 msgid "MenuFileExit"
 msgstr "&Quitter"
 
-#: Win/AgilityBookMenu.cpp:71
+#: Win/AgilityBookMenu.cpp:72
 msgid "DescFileExit"
 msgstr "Fermer l'application; propose d'enregistrer les documents"
 
-#: Win/AgilityBookMenu.cpp:73
+#: Win/AgilityBookMenu.cpp:74
 msgid "MenuEdit"
 msgstr "&Édition"
 
-#: Win/AgilityBookMenu.cpp:74
-#: Win/AgilityBookMenu.cpp:265
-#: Win/AgilityBookMenu.cpp:284
-#: Win/AgilityBookMenu.cpp:303
-#: Win/AgilityBookMenu.cpp:329
-#: Win/AgilityBookMenu.cpp:346
+#: Win/AgilityBookMenu.cpp:75
+#: Win/AgilityBookMenu.cpp:268
+#: Win/AgilityBookMenu.cpp:287
+#: Win/AgilityBookMenu.cpp:306
+#: Win/AgilityBookMenu.cpp:332
+#: Win/AgilityBookMenu.cpp:349
 msgid "MenuEditDuplicate"
 msgstr "&Dupliquer"
 
-#: Win/AgilityBookMenu.cpp:74
-#: Win/AgilityBookMenu.cpp:265
-#: Win/AgilityBookMenu.cpp:284
-#: Win/AgilityBookMenu.cpp:303
-#: Win/AgilityBookMenu.cpp:329
-#: Win/AgilityBookMenu.cpp:346
+#: Win/AgilityBookMenu.cpp:75
+#: Win/AgilityBookMenu.cpp:268
+#: Win/AgilityBookMenu.cpp:287
+#: Win/AgilityBookMenu.cpp:306
+#: Win/AgilityBookMenu.cpp:332
+#: Win/AgilityBookMenu.cpp:349
 msgid "DescEditDuplicate"
 msgstr "Dupliquer selection courant"
 
-#: Win/AgilityBookMenu.cpp:75
-#: Win/AgilityBookMenu.cpp:266
-#: Win/AgilityBookMenu.cpp:285
-#: Win/AgilityBookMenu.cpp:304
-#: Win/AgilityBookMenu.cpp:330
-#: Win/AgilityBookMenu.cpp:347
+#: Win/AgilityBookMenu.cpp:76
+#: Win/AgilityBookMenu.cpp:269
+#: Win/AgilityBookMenu.cpp:288
+#: Win/AgilityBookMenu.cpp:307
+#: Win/AgilityBookMenu.cpp:333
+#: Win/AgilityBookMenu.cpp:350
 msgid "MenuEditCut"
 msgstr "Co&uper\tCtrl+X"
 
-#: Win/AgilityBookMenu.cpp:75
-#: Win/AgilityBookMenu.cpp:266
-#: Win/AgilityBookMenu.cpp:285
-#: Win/AgilityBookMenu.cpp:304
-#: Win/AgilityBookMenu.cpp:330
-#: Win/AgilityBookMenu.cpp:347
+#: Win/AgilityBookMenu.cpp:76
+#: Win/AgilityBookMenu.cpp:269
+#: Win/AgilityBookMenu.cpp:288
+#: Win/AgilityBookMenu.cpp:307
+#: Win/AgilityBookMenu.cpp:333
+#: Win/AgilityBookMenu.cpp:350
 msgid "DescEditCut"
 msgstr "Couper la sélection"
 
-#: Win/AgilityBookMenu.cpp:76
-#: Win/AgilityBookMenu.cpp:267
-#: Win/AgilityBookMenu.cpp:286
-#: Win/AgilityBookMenu.cpp:305
-#: Win/AgilityBookMenu.cpp:331
-#: Win/AgilityBookMenu.cpp:348
+#: Win/AgilityBookMenu.cpp:77
+#: Win/AgilityBookMenu.cpp:270
+#: Win/AgilityBookMenu.cpp:289
+#: Win/AgilityBookMenu.cpp:308
+#: Win/AgilityBookMenu.cpp:334
+#: Win/AgilityBookMenu.cpp:351
 msgid "MenuEditCopy"
 msgstr "&Copier\tCtrl+C"
 
-#: Win/AgilityBookMenu.cpp:76
-#: Win/AgilityBookMenu.cpp:267
-#: Win/AgilityBookMenu.cpp:286
-#: Win/AgilityBookMenu.cpp:305
-#: Win/AgilityBookMenu.cpp:318
-#: Win/AgilityBookMenu.cpp:331
-#: Win/AgilityBookMenu.cpp:348
+#: Win/AgilityBookMenu.cpp:77
+#: Win/AgilityBookMenu.cpp:270
+#: Win/AgilityBookMenu.cpp:289
+#: Win/AgilityBookMenu.cpp:308
+#: Win/AgilityBookMenu.cpp:321
+#: Win/AgilityBookMenu.cpp:334
+#: Win/AgilityBookMenu.cpp:351
 msgid "DescEditCopy"
 msgstr "Copier la sélection"
 
-#: Win/AgilityBookMenu.cpp:77
-#: Win/AgilityBookMenu.cpp:268
-#: Win/AgilityBookMenu.cpp:287
-#: Win/AgilityBookMenu.cpp:306
-#: Win/AgilityBookMenu.cpp:332
-#: Win/AgilityBookMenu.cpp:349
+#: Win/AgilityBookMenu.cpp:78
+#: Win/AgilityBookMenu.cpp:271
+#: Win/AgilityBookMenu.cpp:290
+#: Win/AgilityBookMenu.cpp:309
+#: Win/AgilityBookMenu.cpp:335
+#: Win/AgilityBookMenu.cpp:352
 msgid "MenuEditPaste"
 msgstr "Co&ller\tCtrl+V"
 
-#: Win/AgilityBookMenu.cpp:77
-#: Win/AgilityBookMenu.cpp:268
-#: Win/AgilityBookMenu.cpp:287
-#: Win/AgilityBookMenu.cpp:306
-#: Win/AgilityBookMenu.cpp:332
-#: Win/AgilityBookMenu.cpp:349
+#: Win/AgilityBookMenu.cpp:78
+#: Win/AgilityBookMenu.cpp:271
+#: Win/AgilityBookMenu.cpp:290
+#: Win/AgilityBookMenu.cpp:309
+#: Win/AgilityBookMenu.cpp:335
+#: Win/AgilityBookMenu.cpp:352
 msgid "DescEditPaste"
 msgstr "Coller"
 
-#: Win/AgilityBookMenu.cpp:79
-#: Win/AgilityBookMenu.cpp:321
+#: Win/AgilityBookMenu.cpp:80
+#: Win/AgilityBookMenu.cpp:324
 msgid "MenuEditSelectAll"
 msgstr "&Sélectionner Tout\tCtrl+A"
 
-#: Win/AgilityBookMenu.cpp:79
-#: Win/AgilityBookMenu.cpp:321
+#: Win/AgilityBookMenu.cpp:80
+#: Win/AgilityBookMenu.cpp:324
 msgid "DescEditSelectAll"
 msgstr "Sélectionner le document entier"
 
-#: Win/AgilityBookMenu.cpp:81
-#: Win/AgilityBookMenu.cpp:319
+#: Win/AgilityBookMenu.cpp:82
+#: Win/AgilityBookMenu.cpp:322
 msgid "MenuEditCopyTitles"
 msgstr "Copier &Récompenses"
 
-#: Win/AgilityBookMenu.cpp:81
-#: Win/AgilityBookMenu.cpp:319
+#: Win/AgilityBookMenu.cpp:82
+#: Win/AgilityBookMenu.cpp:322
 msgid "DescEditCopyTitles"
 msgstr "Copier Récompenses"
 
-#: Win/AgilityBookMenu.cpp:82
-#: Win/AgilityBookMenu.cpp:271
-#: Win/AgilityBookMenu.cpp:290
-#: Win/AgilityBookMenu.cpp:309
+#: Win/AgilityBookMenu.cpp:83
+#: Win/AgilityBookMenu.cpp:274
+#: Win/AgilityBookMenu.cpp:293
+#: Win/AgilityBookMenu.cpp:312
 msgid "MenuEditReorder"
 msgstr "&Trier..."
 
-#: Win/AgilityBookMenu.cpp:82
-#: Win/AgilityBookMenu.cpp:271
-#: Win/AgilityBookMenu.cpp:290
-#: Win/AgilityBookMenu.cpp:309
+#: Win/AgilityBookMenu.cpp:83
+#: Win/AgilityBookMenu.cpp:274
+#: Win/AgilityBookMenu.cpp:293
+#: Win/AgilityBookMenu.cpp:312
 msgid "DescEditReorder"
 msgstr "Trier objets"
 
-#: Win/AgilityBookMenu.cpp:84
+#: Win/AgilityBookMenu.cpp:85
 msgid "MenuEditFind"
 msgstr "Rechercher...\tCtrl+F"
 
-#: Win/AgilityBookMenu.cpp:84
+#: Win/AgilityBookMenu.cpp:85
 msgid "DescEditFind"
 msgstr "Rechercher le texte spécifié"
 
-#: Win/AgilityBookMenu.cpp:85
+#: Win/AgilityBookMenu.cpp:86
 msgid "MenuEditFindNext"
 msgstr "Rechercher Suivant\tF3"
 
-#: Win/AgilityBookMenu.cpp:85
+#: Win/AgilityBookMenu.cpp:86
 msgid "DescEditFindNext"
 msgstr "Trouver prochaine texte specifié"
 
-#: Win/AgilityBookMenu.cpp:86
+#: Win/AgilityBookMenu.cpp:87
 msgid "MenuEditFindPrev"
 msgstr "Rechercher Précédent\tShift+F3"
 
-#: Win/AgilityBookMenu.cpp:86
+#: Win/AgilityBookMenu.cpp:87
 msgid "DescEditFindPrev"
 msgstr "Trouver texte specifié precedent"
 
-#: Win/AgilityBookMenu.cpp:88
+#: Win/AgilityBookMenu.cpp:89
 msgid "MenuEditConfig"
 msgstr "Co&nfigurer..."
 
-#: Win/AgilityBookMenu.cpp:88
+#: Win/AgilityBookMenu.cpp:89
 msgid "DescEditConfig"
 msgstr "Editer configurations organisation"
 
-#: Win/AgilityBookMenu.cpp:90
+#: Win/AgilityBookMenu.cpp:91
 msgid "MenuAgility"
 msgstr "&Agility"
 
-#: Win/AgilityBookMenu.cpp:91
+#: Win/AgilityBookMenu.cpp:92
 msgid "MenuDog"
 msgstr "&Chien"
 
-#: Win/AgilityBookMenu.cpp:92
-#: Win/AgilityBookMenu.cpp:261
+#: Win/AgilityBookMenu.cpp:93
+#: Win/AgilityBookMenu.cpp:264
 msgid "MenuDogProperties"
 msgstr "&Propriétés..."
 
-#: Win/AgilityBookMenu.cpp:92
-#: Win/AgilityBookMenu.cpp:94
-#: Win/AgilityBookMenu.cpp:261
+#: Win/AgilityBookMenu.cpp:93
+#: Win/AgilityBookMenu.cpp:95
+#: Win/AgilityBookMenu.cpp:264
 msgid "DescDogProperties"
 msgstr "Editer information sur chien"
 
-#: Win/AgilityBookMenu.cpp:94
-#: Win/AgilityBookMenu.cpp:99
-#: Win/AgilityBookMenu.cpp:104
-#: Win/AgilityBookMenu.cpp:118
-#: Win/AgilityBookMenu.cpp:128
-#: Win/AgilityBookMenu.cpp:264
-#: Win/AgilityBookMenu.cpp:283
-#: Win/AgilityBookMenu.cpp:302
-#: Win/AgilityBookMenu.cpp:328
-#: Win/AgilityBookMenu.cpp:345
+#: Win/AgilityBookMenu.cpp:95
+#: Win/AgilityBookMenu.cpp:100
+#: Win/AgilityBookMenu.cpp:105
+#: Win/AgilityBookMenu.cpp:119
+#: Win/AgilityBookMenu.cpp:129
+#: Win/AgilityBookMenu.cpp:267
+#: Win/AgilityBookMenu.cpp:286
+#: Win/AgilityBookMenu.cpp:305
+#: Win/AgilityBookMenu.cpp:331
+#: Win/AgilityBookMenu.cpp:348
 msgid "MenuNew"
 msgstr "&Nouveau..."
 
-#: Win/AgilityBookMenu.cpp:95
-#: Win/AgilityBookMenu.cpp:269
+#: Win/AgilityBookMenu.cpp:96
+#: Win/AgilityBookMenu.cpp:272
 msgid "MenuDogDelete"
 msgstr "&Supprimer"
 
-#: Win/AgilityBookMenu.cpp:95
-#: Win/AgilityBookMenu.cpp:269
+#: Win/AgilityBookMenu.cpp:96
+#: Win/AgilityBookMenu.cpp:272
 msgid "DescDogDelete"
 msgstr "Supprimer chien et tous information associé"
 
-#: Win/AgilityBookMenu.cpp:96
+#: Win/AgilityBookMenu.cpp:97
 msgid "MenuTitle"
 msgstr "&Récompense"
 
-#: Win/AgilityBookMenu.cpp:97
+#: Win/AgilityBookMenu.cpp:98
 msgid "MenuTitleProperties"
 msgstr "&Propriétés..."
 
-#: Win/AgilityBookMenu.cpp:97
+#: Win/AgilityBookMenu.cpp:98
 msgid "DescTitleProperties"
 msgstr "Editer information sur distinction"
 
-#: Win/AgilityBookMenu.cpp:99
-#: Win/AgilityBookMenu.cpp:235
+#: Win/AgilityBookMenu.cpp:100
+#: Win/AgilityBookMenu.cpp:238
 msgid "DescTitleNew"
 msgstr "Creer nouveau distinction"
 
-#: Win/AgilityBookMenu.cpp:100
+#: Win/AgilityBookMenu.cpp:101
 msgid "MenuTitleDelete"
 msgstr "&Supprimer"
 
-#: Win/AgilityBookMenu.cpp:100
+#: Win/AgilityBookMenu.cpp:101
 msgid "DescTitleDelete"
 msgstr "Supprimer distinction"
 
-#: Win/AgilityBookMenu.cpp:101
+#: Win/AgilityBookMenu.cpp:102
 msgid "MenuTrial"
 msgstr "C&oncours"
 
-#: Win/AgilityBookMenu.cpp:102
-#: Win/AgilityBookMenu.cpp:280
+#: Win/AgilityBookMenu.cpp:103
+#: Win/AgilityBookMenu.cpp:283
 msgid "MenuTrialProperties"
 msgstr "&Propriétés..."
 
-#: Win/AgilityBookMenu.cpp:102
-#: Win/AgilityBookMenu.cpp:280
+#: Win/AgilityBookMenu.cpp:103
+#: Win/AgilityBookMenu.cpp:283
 msgid "DescTrialProperties"
 msgstr "Editer l'information sur concours"
 
-#: Win/AgilityBookMenu.cpp:104
-#: Win/AgilityBookMenu.cpp:237
+#: Win/AgilityBookMenu.cpp:105
+#: Win/AgilityBookMenu.cpp:240
 msgid "DescTrialNew"
 msgstr "Creer nouveau concours"
 
-#: Win/AgilityBookMenu.cpp:105
-#: Win/AgilityBookMenu.cpp:288
+#: Win/AgilityBookMenu.cpp:106
+#: Win/AgilityBookMenu.cpp:291
 msgid "MenuTrialDelete"
 msgstr "&Supprimer"
 
-#: Win/AgilityBookMenu.cpp:105
-#: Win/AgilityBookMenu.cpp:288
+#: Win/AgilityBookMenu.cpp:106
+#: Win/AgilityBookMenu.cpp:291
 msgid "DescTrialDelete"
 msgstr "Supprimer concours"
 
-#: Win/AgilityBookMenu.cpp:107
-#: Win/AgilityBookMenu.cpp:295
+#: Win/AgilityBookMenu.cpp:108
+#: Win/AgilityBookMenu.cpp:298
 msgid "MenuTrialPrintRuns"
 msgstr "&Imprimer Parcours..."
 
-#: Win/AgilityBookMenu.cpp:107
-#: Win/AgilityBookMenu.cpp:295
+#: Win/AgilityBookMenu.cpp:108
+#: Win/AgilityBookMenu.cpp:298
 msgid "DescTrialPrintRuns"
 msgstr "Emprimer tous parcours pour concours selectionné"
 
-#: Win/AgilityBookMenu.cpp:108
+#: Win/AgilityBookMenu.cpp:109
 msgid "MenuRun"
 msgstr "&Parcours"
 
-#: Win/AgilityBookMenu.cpp:109
-#: Win/AgilityBookMenu.cpp:299
+#: Win/AgilityBookMenu.cpp:110
+#: Win/AgilityBookMenu.cpp:302
 msgid "MenuRunProperties"
 msgstr "&Propriétés..."
 
-#: Win/AgilityBookMenu.cpp:109
-#: Win/AgilityBookMenu.cpp:299
+#: Win/AgilityBookMenu.cpp:110
+#: Win/AgilityBookMenu.cpp:302
 msgid "DescRunProperties"
 msgstr "Editer information parcours"
 
-#: Win/AgilityBookMenu.cpp:111
+#: Win/AgilityBookMenu.cpp:112
 msgid "MenuNewRun"
 msgstr "&Nouveau...\tCtrl+R"
 
-#: Win/AgilityBookMenu.cpp:111
-#: Win/AgilityBookMenu.cpp:240
+#: Win/AgilityBookMenu.cpp:112
+#: Win/AgilityBookMenu.cpp:243
 msgid "DescRunNew"
 msgstr "Creer nouveau parcours"
 
-#: Win/AgilityBookMenu.cpp:112
-#: Win/AgilityBookMenu.cpp:307
+#: Win/AgilityBookMenu.cpp:113
+#: Win/AgilityBookMenu.cpp:310
 msgid "MenuRunDelete"
 msgstr "&Supprimer"
 
-#: Win/AgilityBookMenu.cpp:112
-#: Win/AgilityBookMenu.cpp:307
+#: Win/AgilityBookMenu.cpp:113
+#: Win/AgilityBookMenu.cpp:310
 msgid "DescRunDelete"
 msgstr "Supprimer a Parcours"
 
-#: Win/AgilityBookMenu.cpp:114
-#: Win/AgilityBookMenu.cpp:311
+#: Win/AgilityBookMenu.cpp:115
+#: Win/AgilityBookMenu.cpp:314
 msgid "MenuRunPrintRuns"
 msgstr "&Imprimer Parcours..."
 
-#: Win/AgilityBookMenu.cpp:114
-#: Win/AgilityBookMenu.cpp:311
+#: Win/AgilityBookMenu.cpp:115
+#: Win/AgilityBookMenu.cpp:314
 msgid "DescRunPrintRuns"
 msgstr "Emprimer tous parcours selectionnés"
 
-#: Win/AgilityBookMenu.cpp:115
+#: Win/AgilityBookMenu.cpp:116
 msgid "MenuCalendar"
 msgstr "C&alendrier"
 
-#: Win/AgilityBookMenu.cpp:116
-#: Win/AgilityBookMenu.cpp:325
+#: Win/AgilityBookMenu.cpp:117
+#: Win/AgilityBookMenu.cpp:328
 msgid "MenuCalendarProperties"
 msgstr "&Propriétés..."
 
-#: Win/AgilityBookMenu.cpp:116
-#: Win/AgilityBookMenu.cpp:325
+#: Win/AgilityBookMenu.cpp:117
+#: Win/AgilityBookMenu.cpp:328
 msgid "DescCalendarProperties"
 msgstr "Editer futur entré calendrier"
 
-#: Win/AgilityBookMenu.cpp:118
-#: Win/AgilityBookMenu.cpp:328
+#: Win/AgilityBookMenu.cpp:119
+#: Win/AgilityBookMenu.cpp:331
 msgid "DescCalendarNew"
 msgstr "Creer futur entré calendrier"
 
-#: Win/AgilityBookMenu.cpp:119
-#: Win/AgilityBookMenu.cpp:333
+#: Win/AgilityBookMenu.cpp:120
+#: Win/AgilityBookMenu.cpp:336
 msgid "MenuCalendarDelete"
 msgstr "&Supprimer"
 
-#: Win/AgilityBookMenu.cpp:119
-#: Win/AgilityBookMenu.cpp:333
+#: Win/AgilityBookMenu.cpp:120
+#: Win/AgilityBookMenu.cpp:336
 msgid "DescCalendarDelete"
 msgstr "Supprimer futur entré calendrier"
 
-#: Win/AgilityBookMenu.cpp:121
-#: Win/AgilityBookMenu.cpp:335
+#: Win/AgilityBookMenu.cpp:122
+#: Win/AgilityBookMenu.cpp:338
 msgid "MenuCalendarUpdate"
 msgstr "&Mise à jour..."
 
-#: Win/AgilityBookMenu.cpp:121
-#: Win/AgilityBookMenu.cpp:335
+#: Win/AgilityBookMenu.cpp:122
+#: Win/AgilityBookMenu.cpp:338
 msgid "DescCalendarUpdate"
 msgstr "Mettre a jour des entrés calendrier d'un source online"
 
-#: Win/AgilityBookMenu.cpp:122
-#: Win/AgilityBookMenu.cpp:336
+#: Win/AgilityBookMenu.cpp:123
+#: Win/AgilityBookMenu.cpp:339
 msgid "MenuCalendarExport"
 msgstr "E&xporter..."
 
-#: Win/AgilityBookMenu.cpp:122
-#: Win/AgilityBookMenu.cpp:336
+#: Win/AgilityBookMenu.cpp:123
+#: Win/AgilityBookMenu.cpp:339
 msgid "DescCalendarExport"
 msgstr "Exporter des entrés calendrier"
 
-#: Win/AgilityBookMenu.cpp:124
-#: Win/AgilityBookMenu.cpp:338
+#: Win/AgilityBookMenu.cpp:125
+#: Win/AgilityBookMenu.cpp:341
 msgid "MenuCalendarTrialEntry"
 msgstr "Créer &Entrée Concours..."
 
-#: Win/AgilityBookMenu.cpp:124
-#: Win/AgilityBookMenu.cpp:338
+#: Win/AgilityBookMenu.cpp:125
+#: Win/AgilityBookMenu.cpp:341
 msgid "DescCalendarTrialEntry"
 msgstr "Creer un entré concours"
 
-#: Win/AgilityBookMenu.cpp:125
+#: Win/AgilityBookMenu.cpp:126
 msgid "MenuTraining"
 msgstr "&Entrainement"
 
-#: Win/AgilityBookMenu.cpp:126
-#: Win/AgilityBookMenu.cpp:342
+#: Win/AgilityBookMenu.cpp:127
+#: Win/AgilityBookMenu.cpp:345
 msgid "MenuTrainingProperties"
 msgstr "&Propriétés..."
 
-#: Win/AgilityBookMenu.cpp:126
-#: Win/AgilityBookMenu.cpp:342
+#: Win/AgilityBookMenu.cpp:127
+#: Win/AgilityBookMenu.cpp:345
 msgid "DescTrainingProperties"
 msgstr "Editer entré Log Entraînement"
 
-#: Win/AgilityBookMenu.cpp:128
-#: Win/AgilityBookMenu.cpp:345
+#: Win/AgilityBookMenu.cpp:129
+#: Win/AgilityBookMenu.cpp:348
 msgid "DescTrainingNew"
 msgstr "Creer un nouveau entré Log Entraînement"
 
-#: Win/AgilityBookMenu.cpp:129
-#: Win/AgilityBookMenu.cpp:350
+#: Win/AgilityBookMenu.cpp:130
+#: Win/AgilityBookMenu.cpp:353
 msgid "MenuTrainingDelete"
 msgstr "&Supprimer"
 
-#: Win/AgilityBookMenu.cpp:129
-#: Win/AgilityBookMenu.cpp:350
+#: Win/AgilityBookMenu.cpp:130
+#: Win/AgilityBookMenu.cpp:353
 msgid "DescTrainingDelete"
 msgstr "Supprimer un entré Log Entraînement"
 
-#: Win/AgilityBookMenu.cpp:131
+#: Win/AgilityBookMenu.cpp:132
 msgid "MenuNotes"
 msgstr "&Notes"
 
-#: Win/AgilityBookMenu.cpp:132
+#: Win/AgilityBookMenu.cpp:133
 msgid "MenuNotesClubs"
 msgstr "&Clubs..."
 
-#: Win/AgilityBookMenu.cpp:132
+#: Win/AgilityBookMenu.cpp:133
 msgid "DescNotesClubs"
 msgstr "Editer information sur club"
 
-#: Win/AgilityBookMenu.cpp:133
+#: Win/AgilityBookMenu.cpp:134
 msgid "MenuNotesJudges"
 msgstr "&Juges...\tCtrl+J"
 
-#: Win/AgilityBookMenu.cpp:133
+#: Win/AgilityBookMenu.cpp:134
 msgid "DescNotesJudges"
 msgstr "Editer information sur juge"
 
-#: Win/AgilityBookMenu.cpp:134
+#: Win/AgilityBookMenu.cpp:135
 msgid "MenuNotesLocations"
 msgstr "&Endroits"
 
-#: Win/AgilityBookMenu.cpp:134
+#: Win/AgilityBookMenu.cpp:135
 msgid "DescNotesLocations"
 msgstr "Editer information sur endroit"
 
-#: Win/AgilityBookMenu.cpp:136
+#: Win/AgilityBookMenu.cpp:137
 msgid "MenuNotesSearch"
 msgstr "&Recherche Notes..."
 
-#: Win/AgilityBookMenu.cpp:136
+#: Win/AgilityBookMenu.cpp:137
 msgid "DescNotesSearch"
 msgstr "Recherche information note"
 
-#: Win/AgilityBookMenu.cpp:138
+#: Win/AgilityBookMenu.cpp:139
 msgid "MenuView"
 msgstr "Affi&chage"
 
-#: Win/AgilityBookMenu.cpp:139
-#: Win/AgilityBookMenu.cpp:262
-#: Win/AgilityBookMenu.cpp:281
-#: Win/AgilityBookMenu.cpp:300
-#: Win/AgilityBookMenu.cpp:316
-#: Win/AgilityBookMenu.cpp:326
-#: Win/AgilityBookMenu.cpp:343
+#: Win/AgilityBookMenu.cpp:140
+#: Win/AgilityBookMenu.cpp:265
+#: Win/AgilityBookMenu.cpp:284
+#: Win/AgilityBookMenu.cpp:303
+#: Win/AgilityBookMenu.cpp:319
+#: Win/AgilityBookMenu.cpp:329
+#: Win/AgilityBookMenu.cpp:346
 msgid "MenuViewOptions"
 msgstr "&Options...\tF7"
 
-#: Win/AgilityBookMenu.cpp:139
-#: Win/AgilityBookMenu.cpp:262
-#: Win/AgilityBookMenu.cpp:281
-#: Win/AgilityBookMenu.cpp:300
-#: Win/AgilityBookMenu.cpp:316
-#: Win/AgilityBookMenu.cpp:326
-#: Win/AgilityBookMenu.cpp:343
+#: Win/AgilityBookMenu.cpp:140
+#: Win/AgilityBookMenu.cpp:265
+#: Win/AgilityBookMenu.cpp:284
+#: Win/AgilityBookMenu.cpp:303
+#: Win/AgilityBookMenu.cpp:319
+#: Win/AgilityBookMenu.cpp:329
+#: Win/AgilityBookMenu.cpp:346
 msgid "DescViewOptions"
 msgstr "Changer option affichage"
 
-#: Win/AgilityBookMenu.cpp:140
+#: Win/AgilityBookMenu.cpp:141
 msgid "MenuViewCustomize"
 msgstr "&Customiser..."
 
-#: Win/AgilityBookMenu.cpp:140
+#: Win/AgilityBookMenu.cpp:141
 msgid "DescViewCustomize"
 msgstr "Personalliser presentation colonnes"
 
-#: Win/AgilityBookMenu.cpp:142
+#: Win/AgilityBookMenu.cpp:143
 msgid "MenuViewNewestTrials"
 msgstr "Montrer &Dernier Concours en premier"
 
-#: Win/AgilityBookMenu.cpp:142
+#: Win/AgilityBookMenu.cpp:143
 msgid "DescViewNewestTrials"
 msgstr "Trier avec plus recent concours au debut"
 
-#: Win/AgilityBookMenu.cpp:143
+#: Win/AgilityBookMenu.cpp:144
 msgid "MenuViewRunsByTrial"
 msgstr "Montrer &Parcours par Concours"
 
-#: Win/AgilityBookMenu.cpp:143
+#: Win/AgilityBookMenu.cpp:144
 msgid "DescViewRunsByTrial"
 msgstr "Montrer parcours par concours selectioné"
 
-#: Win/AgilityBookMenu.cpp:144
+#: Win/AgilityBookMenu.cpp:145
 msgid "MenuViewIncludeTable"
 msgstr "Inclure Table en &TPS"
 
-#: Win/AgilityBookMenu.cpp:144
+#: Win/AgilityBookMenu.cpp:145
 msgid "DescViewIncludeTable"
 msgstr "Inclure temps table dans m/s"
 
-#: Win/AgilityBookMenu.cpp:145
+#: Win/AgilityBookMenu.cpp:146
 msgid "MenuViewIncludeRunTime"
 msgstr "OPS &basé sur temps total "
 
-#: Win/AgilityBookMenu.cpp:145
+#: Win/AgilityBookMenu.cpp:146
 msgid "DescViewIncludeRunTime"
 msgstr "Utilise le temps total pour calculer OPS (obstacles par second) en Gamblers"
 
-#: Win/AgilityBookMenu.cpp:147
+#: Win/AgilityBookMenu.cpp:148
 msgid "MenuViewSortPoints"
 msgstr "Trier &Affichage Points..."
 
-#: Win/AgilityBookMenu.cpp:147
+#: Win/AgilityBookMenu.cpp:148
 msgid "DescViewSortPoints"
 msgstr "Trier points par ordre selectionné"
 
-#: Win/AgilityBookMenu.cpp:148
+#: Win/AgilityBookMenu.cpp:149
 msgid "MenuViewHiddenTitles"
 msgstr "&Montrer Récompenses Cachées"
 
-#: Win/AgilityBookMenu.cpp:148
+#: Win/AgilityBookMenu.cpp:149
 msgid "DescViewHiddenTitles"
 msgstr "Montrer distinction cachés"
 
-#: Win/AgilityBookMenu.cpp:149
+#: Win/AgilityBookMenu.cpp:150
 msgid "MenuViewLifePoints"
 msgstr "Points c&umulatifs par épreuve"
 
-#: Win/AgilityBookMenu.cpp:149
+#: Win/AgilityBookMenu.cpp:150
 msgid "DescViewLifePoints"
 msgstr "Afficher points cumulatifs triés par degré ou épreuve"
 
-#: Win/AgilityBookMenu.cpp:151
-#: Win/AgilityBookMenu.cpp:273
-#: Win/AgilityBookMenu.cpp:292
+#: Win/AgilityBookMenu.cpp:152
+#: Win/AgilityBookMenu.cpp:276
+#: Win/AgilityBookMenu.cpp:295
 msgid "MenuViewExpand"
 msgstr "Développer"
 
-#: Win/AgilityBookMenu.cpp:151
-#: Win/AgilityBookMenu.cpp:273
-#: Win/AgilityBookMenu.cpp:292
+#: Win/AgilityBookMenu.cpp:152
+#: Win/AgilityBookMenu.cpp:276
+#: Win/AgilityBookMenu.cpp:295
 msgid "DescViewExpand"
 msgstr "Développer"
 
-#: Win/AgilityBookMenu.cpp:152
-#: Win/AgilityBookMenu.cpp:274
-#: Win/AgilityBookMenu.cpp:293
+#: Win/AgilityBookMenu.cpp:153
+#: Win/AgilityBookMenu.cpp:277
+#: Win/AgilityBookMenu.cpp:296
 msgid "MenuViewCollapse"
 msgstr "Réduire"
 
-#: Win/AgilityBookMenu.cpp:152
-#: Win/AgilityBookMenu.cpp:274
-#: Win/AgilityBookMenu.cpp:293
+#: Win/AgilityBookMenu.cpp:153
+#: Win/AgilityBookMenu.cpp:277
+#: Win/AgilityBookMenu.cpp:296
 msgid "DescViewCollapse"
 msgstr "Réduire"
 
-#: Win/AgilityBookMenu.cpp:153
-#: Win/AgilityBookMenu.cpp:275
+#: Win/AgilityBookMenu.cpp:154
+#: Win/AgilityBookMenu.cpp:278
 msgid "MenuViewExpandAll"
 msgstr "Développer Tout"
 
-#: Win/AgilityBookMenu.cpp:153
-#: Win/AgilityBookMenu.cpp:275
+#: Win/AgilityBookMenu.cpp:154
+#: Win/AgilityBookMenu.cpp:278
 msgid "DescViewExpandAll"
 msgstr "Développer Tout"
 
-#: Win/AgilityBookMenu.cpp:154
-#: Win/AgilityBookMenu.cpp:276
+#: Win/AgilityBookMenu.cpp:155
+#: Win/AgilityBookMenu.cpp:279
 msgid "MenuViewCollapseAll"
 msgstr "Réduire Tout"
 
-#: Win/AgilityBookMenu.cpp:154
-#: Win/AgilityBookMenu.cpp:276
+#: Win/AgilityBookMenu.cpp:155
+#: Win/AgilityBookMenu.cpp:279
 msgid "DescViewCollapseAll"
 msgstr "Réduire Tout"
 
-#: Win/AgilityBookMenu.cpp:156
+#: Win/AgilityBookMenu.cpp:157
 msgid "MenuViewType"
 msgstr "Affichage"
 
-#: Win/AgilityBookMenu.cpp:158
+#: Win/AgilityBookMenu.cpp:159
 msgid "MenuViewNotebook"
 msgstr "&Notes\tCtrl-1"
 
-#: Win/AgilityBookMenu.cpp:158
+#: Win/AgilityBookMenu.cpp:159
 msgid "DescViewNotebook"
 msgstr "Notes"
 
-#: Win/AgilityBookMenu.cpp:161
+#: Win/AgilityBookMenu.cpp:162
 msgid "MenuViewListbook"
 msgstr "&Liste\tCtrl-2"
 
-#: Win/AgilityBookMenu.cpp:161
+#: Win/AgilityBookMenu.cpp:162
 msgid "DescViewListbook"
 msgstr "Liste"
 
-#: Win/AgilityBookMenu.cpp:164
+#: Win/AgilityBookMenu.cpp:165
 msgid "MenuViewChoicebook"
 msgstr "&Choix\tCtrl-3"
 
-#: Win/AgilityBookMenu.cpp:164
+#: Win/AgilityBookMenu.cpp:165
 msgid "DescViewChoicebook"
 msgstr "Choix"
 
-#: Win/AgilityBookMenu.cpp:167
+#: Win/AgilityBookMenu.cpp:168
 msgid "MenuViewTreebook"
 msgstr "&Arbre\tCtrl-4"
 
-#: Win/AgilityBookMenu.cpp:167
+#: Win/AgilityBookMenu.cpp:168
 msgid "DescViewTreebook"
 msgstr "Arbre"
 
-#: Win/AgilityBookMenu.cpp:170
+#: Win/AgilityBookMenu.cpp:171
 msgid "MenuViewToolbook"
 msgstr "&Outils\tCtrl-5"
 
-#: Win/AgilityBookMenu.cpp:170
+#: Win/AgilityBookMenu.cpp:171
 msgid "DescViewToolbook"
 msgstr "Outils"
 
-#: Win/AgilityBookMenu.cpp:172
+#: Win/AgilityBookMenu.cpp:173
 msgid "MenuViewOrientation"
 msgstr "Orientation"
 
-#: Win/AgilityBookMenu.cpp:173
+#: Win/AgilityBookMenu.cpp:174
 msgid "MenuViewTop"
 msgstr "En &haut"
 
-#: Win/AgilityBookMenu.cpp:173
+#: Win/AgilityBookMenu.cpp:174
 msgid "DescViewTop"
 msgstr "En haut"
 
-#: Win/AgilityBookMenu.cpp:174
+#: Win/AgilityBookMenu.cpp:175
 msgid "MenuViewBottom"
 msgstr "En &bas"
 
-#: Win/AgilityBookMenu.cpp:174
+#: Win/AgilityBookMenu.cpp:175
 msgid "DescViewBottom"
 msgstr "En bas"
 
-#: Win/AgilityBookMenu.cpp:175
+#: Win/AgilityBookMenu.cpp:176
 msgid "MenuViewLeft"
 msgstr "A &gauche"
 
-#: Win/AgilityBookMenu.cpp:175
+#: Win/AgilityBookMenu.cpp:176
 msgid "DescViewLeft"
 msgstr "A gauche"
 
-#: Win/AgilityBookMenu.cpp:176
+#: Win/AgilityBookMenu.cpp:177
 msgid "MenuViewRight"
 msgstr "A &droite"
 
-#: Win/AgilityBookMenu.cpp:176
+#: Win/AgilityBookMenu.cpp:177
 msgid "DescViewRight"
 msgstr "A droite"
 
-#: Win/AgilityBookMenu.cpp:178
+#: Win/AgilityBookMenu.cpp:179
 msgid "MenuWindow"
 msgstr "Fenê&tre"
 
-#: Win/AgilityBookMenu.cpp:179
+#: Win/AgilityBookMenu.cpp:180
 msgid "MenuWindowSplitter"
 msgstr "Ajuster &Fractionnement"
 
-#: Win/AgilityBookMenu.cpp:179
+#: Win/AgilityBookMenu.cpp:180
 msgid "DescWindowSplitter"
 msgstr "Fractionner la fenêtre active en deux volets"
 
-#: Win/AgilityBookMenu.cpp:181
+#: Win/AgilityBookMenu.cpp:182
 msgid "MenuWindowNext"
 msgstr "Onglet &suivant\tF6"
 
-#: Win/AgilityBookMenu.cpp:181
+#: Win/AgilityBookMenu.cpp:182
 msgid "DescWindowNext"
 msgstr "Passer au fenêtre suivant"
 
-#: Win/AgilityBookMenu.cpp:182
+#: Win/AgilityBookMenu.cpp:183
 msgid "MenuWindowPrev"
 msgstr "Onglet &précédent\tShift+F6"
 
-#: Win/AgilityBookMenu.cpp:182
+#: Win/AgilityBookMenu.cpp:183
 msgid "DescWindowPrev"
 msgstr "Revenir au fenêtre précédent"
 
-#: Win/AgilityBookMenu.cpp:184
+#: Win/AgilityBookMenu.cpp:185
 msgid "MenuHelp"
 msgstr "Ai&de"
 
-#: Win/AgilityBookMenu.cpp:185
+#: Win/AgilityBookMenu.cpp:186
 msgid "MenuHelpUpdates"
 msgstr "Recherche de &Mise à jour..."
 
-#: Win/AgilityBookMenu.cpp:185
+#: Win/AgilityBookMenu.cpp:186
 msgid "DescHelpUpdates"
 msgstr "Cherche mise a jour"
 
-#: Win/AgilityBookMenu.cpp:186
+#: Win/AgilityBookMenu.cpp:187
 msgid "MenuHelpSysInfo"
 msgstr "Information &Système..."
 
-#: Win/AgilityBookMenu.cpp:186
+#: Win/AgilityBookMenu.cpp:187
 msgid "DescHelpSysInfo"
 msgstr "Montrer information sur system"
 
-#: Win/AgilityBookMenu.cpp:188
+#: Win/AgilityBookMenu.cpp:191
 msgid "MenuHelpAbout"
 msgstr "&A propos de Agility Record Book..."
 
-#: Win/AgilityBookMenu.cpp:188
+#: Win/AgilityBookMenu.cpp:191
 msgid "DescHelpAbout"
 msgstr "Afficher info sur le programme, version et copyright"
 
-#: Win/AgilityBookMenu.cpp:234
+#: Win/AgilityBookMenu.cpp:237
 msgid "MenuDogNew"
 msgstr "&Chien..."
 
-#: Win/AgilityBookMenu.cpp:234
+#: Win/AgilityBookMenu.cpp:237
 msgid "DescDogNew"
 msgstr "Creer nouveau chien"
 
-#: Win/AgilityBookMenu.cpp:235
+#: Win/AgilityBookMenu.cpp:238
 msgid "MenuTitleNew"
 msgstr "&Récompense"
 
-#: Win/AgilityBookMenu.cpp:237
+#: Win/AgilityBookMenu.cpp:240
 msgid "MenuTrialNew"
 msgstr "C&oncours"
 
-#: Win/AgilityBookMenu.cpp:240
+#: Win/AgilityBookMenu.cpp:243
 msgid "MenuRunNew"
 msgstr "&Parcours\tCtrl+R"
 
-#: Win/AgilityBookMenu.cpp:315
+#: Win/AgilityBookMenu.cpp:318
 msgid "MenuDetails"
 msgstr "&Détails..."
 
-#: Win/AgilityBookMenu.cpp:315
+#: Win/AgilityBookMenu.cpp:318
 msgid "DescDetails"
 msgstr "Montrer details"
 
-#: Win/AgilityBookMenu.cpp:318
+#: Win/AgilityBookMenu.cpp:321
 msgid "MenuEditCopySelection"
 msgstr "&Copier la sélection\tCtrl+C"
 
@@ -1626,98 +1626,98 @@ msgstr ""
 msgid "IDS_CREATEDOG_FAILED"
 msgstr "Erreur: Impossible de créer chien."
 
-#: Win/CalendarSites.cpp:605
-#: Win/CalendarSites.cpp:619
+#: Win/CalendarSites.cpp:604
+#: Win/CalendarSites.cpp:618
 msgid "IDS_DISABLED"
 msgstr "Eteindre"
 
 # DlgCalendarPlugins (CalendarSites.cpp)
-#: Win/CalendarSites.cpp:737
+#: Win/CalendarSites.cpp:736
 msgid "IDD_CALENDAR_PLUGINS"
 msgstr "Plugins calendrier"
 
+#: Win/CalendarSites.cpp:744
 #: Win/CalendarSites.cpp:745
-#: Win/CalendarSites.cpp:746
 msgid "HIDC_PLUGIN_TREE"
 msgstr "Liste de plugins calendrier disponible et leurs entrées de calendrier."
 
+#: Win/CalendarSites.cpp:751
 #: Win/CalendarSites.cpp:752
-#: Win/CalendarSites.cpp:753
 msgid "HIDC_PLUGIN_DETAILS"
 msgstr "Les détails pour l'article choisi dans larborescence."
 
-#: Win/CalendarSites.cpp:756
+#: Win/CalendarSites.cpp:755
 msgid "IDC_PLUGIN_READ"
 msgstr "&Lire Entrées"
 
+#: Win/CalendarSites.cpp:758
 #: Win/CalendarSites.cpp:759
-#: Win/CalendarSites.cpp:760
 msgid "HIDC_PLUGIN_READ"
 msgstr "Lire les entrées calendrier à partir des plugins choisis."
 
-#: Win/CalendarSites.cpp:763
+#: Win/CalendarSites.cpp:762
 msgid "IDC_PLUGIN_ADD"
 msgstr "&Rajouter Entrées"
 
+#: Win/CalendarSites.cpp:765
 #: Win/CalendarSites.cpp:766
-#: Win/CalendarSites.cpp:767
 msgid "HIDC_PLUGIN_ADD"
 msgstr "Ajouter les entrées calendrier choisies dans le programme."
 
-#: Win/CalendarSites.cpp:770
+#: Win/CalendarSites.cpp:769
 msgid "IDC_PLUGIN_ENABLE"
 msgstr "&Activer"
 
+#: Win/CalendarSites.cpp:772
 #: Win/CalendarSites.cpp:773
-#: Win/CalendarSites.cpp:774
 msgid "HIDC_PLUGIN_ENABLE"
 msgstr "Activer le plugin choisi. Les Plugins peuvent être désactivés si le format du fichier html prévu a changé, causant l'écher de l'algorithme d'analyse. Normalement, un plugin ne devrait être activé que si la dernière version de ce plugin a été téléchargée."
 
-#: Win/CalendarSites.cpp:777
+#: Win/CalendarSites.cpp:776
 msgid "IDC_PLUGIN_QUERYDETAILS"
 msgstr "&Détails..."
 
+#: Win/CalendarSites.cpp:779
 #: Win/CalendarSites.cpp:780
-#: Win/CalendarSites.cpp:781
 msgid "HIDC_PLUGIN_QUERYDETAILS"
 msgstr "Éditer l'information détaillée pour le plugin choisi, si disponible."
 
-#: Win/CalendarSites.cpp:784
+#: Win/CalendarSites.cpp:783
 msgid "IDC_PLUGIN_NEW"
 msgstr "Nouveau..."
 
+#: Win/CalendarSites.cpp:786
 #: Win/CalendarSites.cpp:787
-#: Win/CalendarSites.cpp:788
 msgid "HIDC_PLUGIN_NEW"
 msgstr "Rajouter un nouveau plugin Calendrier à la configuration actuelle."
 
-#: Win/CalendarSites.cpp:791
+#: Win/CalendarSites.cpp:790
 msgid "IDC_PLUGIN_EDIT"
 msgstr "Édition..."
 
+#: Win/CalendarSites.cpp:793
 #: Win/CalendarSites.cpp:794
-#: Win/CalendarSites.cpp:795
 msgid "HIDC_PLUGIN_EDIT"
 msgstr "Éditer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins dans la configuration.)"
 
-#: Win/CalendarSites.cpp:798
+#: Win/CalendarSites.cpp:797
 msgid "IDC_PLUGIN_DELETE"
 msgstr "Supprimer"
 
+#: Win/CalendarSites.cpp:800
 #: Win/CalendarSites.cpp:801
-#: Win/CalendarSites.cpp:802
 msgid "HIDC_PLUGIN_DELETE"
 msgstr "Supprimer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins dans la configuration.)"
 
-#: Win/CalendarSites.cpp:805
+#: Win/CalendarSites.cpp:804
 msgid "IDC_PLUGIN_CLOSE"
 msgstr "Quitter"
 
-#: Win/CalendarSites.cpp:1021
+#: Win/CalendarSites.cpp:1019
 msgid "IDS_ERR_PARSING_DATA"
 msgstr "Erreur parsing %1$s data"
 
-#: Win/CalendarSites.cpp:1031
+#: Win/CalendarSites.cpp:1029
 msgid "IDS_USE_PLUGIN"
 msgstr "Voulez-vous continuer d'utiliser ce plugin?"
 
@@ -3549,10 +3549,14 @@ msgid "HIDC_CONFIG_TITLE_STYLE"
 msgstr "Quand un titre permet des copies multiples, afficher le nombre soit en chiffres arabes soit en chiffres romains."
 
 #: Win/DlgConfigTitle.cpp:208
+msgid "IDS_CONFIG_TITLE_NONE"
+msgstr "aucun"
+
+#: Win/DlgConfigTitle.cpp:209
 msgid "IDS_CONFIG_TITLE_NUMBER"
 msgstr "chiffre arabe"
 
-#: Win/DlgConfigTitle.cpp:209
+#: Win/DlgConfigTitle.cpp:210
 msgid "IDS_CONFIG_TITLE_ROMAN"
 msgstr "chiffre romain"
 
@@ -3649,11 +3653,11 @@ msgid "HIDC_CONFIG_UPDATE_FILENAME"
 msgstr "Le nom de dossier pour fusionner."
 
 # MFCisms
-#: Win/DlgConfigUpdate.cpp:135
+#: Win/DlgConfigUpdate.cpp:140
 msgid "AFX_IDP_FAILED_TO_OPEN_DOC"
 msgstr "L'ouverture du document a échoué."
 
-#: Win/DlgConfigUpdate.cpp:190
+#: Win/DlgConfigUpdate.cpp:195
 msgid "IDS_FILEEXT_FILTER_ARB"
 msgstr "Agility Record Book (*.arb)|*.arb|Tous fichiers (*.*)|*.*||"
 
@@ -6348,53 +6352,53 @@ msgid "IDS_UPDATED_CONFIG"
 msgstr "La configuration a etais mise a jour. Voulez-vous introduire vos data?"
 
 #: Win/UpdateInfo.cpp:251
-#: Win/UpdateInfo.cpp:732
+#: Win/UpdateInfo.cpp:737
 msgid "IDS_HELP_UPDATE"
 msgstr "http://www.agilityrecordbook.com"
 
 #: Win/UpdateInfo.cpp:276
-#: Win/UpdateInfo.cpp:376
+#: Win/UpdateInfo.cpp:381
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Version current pas determinable."
 
-#: Win/UpdateInfo.cpp:329
-#: Win/UpdateInfo.cpp:746
+#: Win/UpdateInfo.cpp:334
+#: Win/UpdateInfo.cpp:756
 msgid "IDS_LOAD_FAILED"
 msgstr "Impossible de charger '%1$s'."
 
-#: Win/UpdateInfo.cpp:451
+#: Win/UpdateInfo.cpp:456
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version %1$s accesible. Voulez-vous le telecharger? "
 
-#: Win/UpdateInfo.cpp:491
+#: Win/UpdateInfo.cpp:496
 msgid "IDS_DOWNLOADING"
 msgstr "Téléchargement en cours..."
 
-#: Win/UpdateInfo.cpp:512
+#: Win/UpdateInfo.cpp:517
 msgid "IDS_VALIDATING"
 msgstr "Validation en cours..."
 
-#: Win/UpdateInfo.cpp:518
-#: Win/UpdateInfo.cpp:542
-#: Win/UpdateInfo.cpp:550
-#: Win/UpdateInfo.cpp:558
+#: Win/UpdateInfo.cpp:523
+#: Win/UpdateInfo.cpp:547
+#: Win/UpdateInfo.cpp:555
+#: Win/UpdateInfo.cpp:563
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERREUR: Le fichier téléchargé est corrompu."
 
-#: Win/UpdateInfo.cpp:534
+#: Win/UpdateInfo.cpp:539
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr "%1$s a fini de télécharger. Agility Record Book va fermer pour vous laisser l'installer."
 
-#: Win/UpdateInfo.cpp:566
+#: Win/UpdateInfo.cpp:571
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERREUR: Format de fichier non reconnu, fichier MSI attendu."
 
-#: Win/UpdateInfo.cpp:600
-#: Win/UpdateInfo.cpp:618
+#: Win/UpdateInfo.cpp:605
+#: Win/UpdateInfo.cpp:623
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERREUR: Erreur interne pendant la mise à jour. Procédure annulée."
 
-#: Win/UpdateInfo.cpp:781
+#: Win/UpdateInfo.cpp:791
 msgid "IDS_UPDATE_CURRENT"
 msgstr "Pas des mises a jour."
 
@@ -6428,135 +6432,135 @@ msgstr "Lire %1$d lignes and %2$d colonnes"
 msgid "Reading %1$d rows"
 msgstr "Lire %1$d lignes"
 
-#: Win/WizardExport.cpp:92
+#: Win/WizardExport.cpp:93
 msgid "IDC_WIZARD_EXPORT_DELIM_GROUP"
 msgstr "Limites"
 
-#: Win/WizardExport.cpp:95
+#: Win/WizardExport.cpp:96
 msgid "IDC_WIZARD_EXPORT_DELIM_TAB"
 msgstr "Tabulation"
 
-#: Win/WizardExport.cpp:98
 #: Win/WizardExport.cpp:99
+#: Win/WizardExport.cpp:100
 msgid "HIDC_WIZARD_EXPORT_DELIM_TAB"
 msgstr "Un tabulation est utilisé pour séparer les différents champs."
 
-#: Win/WizardExport.cpp:102
+#: Win/WizardExport.cpp:103
 msgid "IDC_WIZARD_EXPORT_DELIM_COLON"
 msgstr "Point"
 
-#: Win/WizardExport.cpp:105
 #: Win/WizardExport.cpp:106
+#: Win/WizardExport.cpp:107
 msgid "HIDC_WIZARD_EXPORT_DELIM_COLON"
 msgstr "\":\" est utilisé pour séparer les différents champs."
 
-#: Win/WizardExport.cpp:109
+#: Win/WizardExport.cpp:110
 msgid "IDC_WIZARD_EXPORT_DELIM_COMMA"
 msgstr "Virgule"
 
-#: Win/WizardExport.cpp:112
 #: Win/WizardExport.cpp:113
+#: Win/WizardExport.cpp:114
 msgid "HIDC_WIZARD_EXPORT_DELIM_COMMA"
 msgstr "\",\" est utilisé pour séparer les différents champs."
 
-#: Win/WizardExport.cpp:116
+#: Win/WizardExport.cpp:117
 msgid "IDC_WIZARD_EXPORT_DELIM_SPACE"
 msgstr "Espace"
 
-#: Win/WizardExport.cpp:119
 #: Win/WizardExport.cpp:120
+#: Win/WizardExport.cpp:121
 msgid "HIDC_WIZARD_EXPORT_DELIM_SPACE"
 msgstr "\" \" est utilisé pour séparer les différents champs."
 
-#: Win/WizardExport.cpp:123
+#: Win/WizardExport.cpp:124
 msgid "IDC_WIZARD_EXPORT_DELIM_SEMI"
 msgstr "Point-virgule"
 
-#: Win/WizardExport.cpp:126
 #: Win/WizardExport.cpp:127
+#: Win/WizardExport.cpp:128
 msgid "HIDC_WIZARD_EXPORT_DELIM_SEMI"
 msgstr "\";\" est utilisé pour séparer les différents champs."
 
-#: Win/WizardExport.cpp:130
+#: Win/WizardExport.cpp:131
 msgid "IDC_WIZARD_EXPORT_DELIM_OTHER"
 msgstr "Autre:"
 
-#: Win/WizardExport.cpp:133
 #: Win/WizardExport.cpp:134
+#: Win/WizardExport.cpp:135
 msgid "HIDC_WIZARD_EXPORT_DELIM_OTHER"
 msgstr "Le caractère spécifié pour séparer les différents champs."
 
-#: Win/WizardExport.cpp:164
 #: Win/WizardExport.cpp:165
+#: Win/WizardExport.cpp:166
 msgid "HIDC_WIZARD_EXPORT_DELIM"
 msgstr "Le caractère qui sépare les différents champs."
 
-#: Win/WizardExport.cpp:168
+#: Win/WizardExport.cpp:169
 msgid "IDC_WIZARD_EXPORT_ASSIGN"
 msgstr "Attribuer Colonnes..."
 
-#: Win/WizardExport.cpp:171
 #: Win/WizardExport.cpp:172
+#: Win/WizardExport.cpp:173
 msgid "HIDC_WIZARD_EXPORT_ASSIGN"
 msgstr "Configurer la façon dont les données exportées sont alignées. Quand les champs/colonnes sont assignés, les changements seront affichés dans l'aperçu dessous."
 
-#: Win/WizardExport.cpp:175
+#: Win/WizardExport.cpp:176
 msgid "IDC_WIZARD_EXPORT_DATE"
 msgstr "Format date:"
 
-#: Win/WizardExport.cpp:189
+#: Win/WizardExport.cpp:190
 msgid "IDS_DATEFORMAT_DASH_MDY"
 msgstr "M-J-A"
 
-#: Win/WizardExport.cpp:191
+#: Win/WizardExport.cpp:192
 msgid "IDS_DATEFORMAT_SLASH_MDY"
 msgstr "M/J/A"
 
-#: Win/WizardExport.cpp:193
+#: Win/WizardExport.cpp:194
 msgid "IDS_DATEFORMAT_DASH_YMD"
 msgstr "A-M-J"
 
-#: Win/WizardExport.cpp:195
+#: Win/WizardExport.cpp:196
 msgid "IDS_DATEFORMAT_SLASH_YMD"
 msgstr "A/M/J"
 
-#: Win/WizardExport.cpp:197
+#: Win/WizardExport.cpp:198
 msgid "IDS_DATEFORMAT_DASH_DMY"
 msgstr "J-M-A"
 
-#: Win/WizardExport.cpp:199
+#: Win/WizardExport.cpp:200
 msgid "IDS_DATEFORMAT_SLASH_DMY"
 msgstr "J/M/A"
 
-#: Win/WizardExport.cpp:215
 #: Win/WizardExport.cpp:216
+#: Win/WizardExport.cpp:217
 msgid "HIDC_WIZARD_EXPORT_DATE"
 msgstr "Le format dans lequel la date sera exportée."
 
-#: Win/WizardExport.cpp:219
+#: Win/WizardExport.cpp:220
 msgid "IDC_WIZARD_EXPORT_PREVIEW"
 msgstr "Apreçu"
 
-#: Win/WizardExport.cpp:225
 #: Win/WizardExport.cpp:226
+#: Win/WizardExport.cpp:227
 msgid "HIDC_WIZARD_EXPORT_PREVIEW"
 msgstr "Un aperçu de la façon dont les données exportées apparaîtront. Utiliser le bouton 'Assigner des Colonnes' au-dessus pour aligner."
 
-#: Win/WizardExport.cpp:424
+#: Win/WizardExport.cpp:425
 msgid "IDS_NO_DELIM_SPECIFIED"
 msgstr "Aucun délimiteur specifié. Impossible de prevoir data."
 
-#: Win/WizardExport.cpp:1208
+#: Win/WizardExport.cpp:1209
 msgid "IDS_TRIAL_DATES"
 msgstr "Dates concours: %1$s a %2$s"
 
 # WizardExport
-#: Win/WizardExport.cpp:1399
+#: Win/WizardExport.cpp:1400
 msgid "IDD_WIZARD_EXPORT"
 msgstr "Utilitaire d'Exportation"
 
-#: Win/WizardExport.cpp:1431
-#: Win/WizardImport.cpp:766
+#: Win/WizardExport.cpp:1432
+#: Win/WizardImport.cpp:767
 msgid "IDS_SPECIFY_DATEFORMAT"
 msgstr "SVP specifiez un format date."
 
@@ -6569,147 +6573,147 @@ msgid "IDS_EXPORT_FAILED"
 msgstr "Impossible d'exporter data."
 
 #: Win/WizardExport.cpp:1502
-#: Win/WizardImport.cpp:383
+#: Win/WizardImport.cpp:384
 msgid "IDS_FILEEXT_FILTER_TXTCSV"
 msgstr "Fichiers Texte (*.txt; *.csv)|*.txt;*.csv|Tous fichiers (*.*)|*.*||"
 
-#: Win/WizardImport.cpp:99
+#: Win/WizardImport.cpp:100
 msgid "IDC_WIZARD_IMPORT_ROW"
 msgstr "Importer à partir de la ligne:"
 
-#: Win/WizardImport.cpp:106
 #: Win/WizardImport.cpp:107
+#: Win/WizardImport.cpp:108
 msgid "HIDC_WIZARD_IMPORT_ROW"
 msgstr "Commencer l'importation à la ligne spécifiée. Ceci permet de ne pas inclure les données d'en-tête."
 
-#: Win/WizardImport.cpp:110
+#: Win/WizardImport.cpp:111
 msgid "IDC_WIZARD_IMPORT_DATE"
 msgstr "Format date:"
 
-#: Win/WizardImport.cpp:124
+#: Win/WizardImport.cpp:125
 msgid "IDS_DATEFORMAT_DASH_MMDDYYYY"
 msgstr "MM-JJ-AAAA"
 
-#: Win/WizardImport.cpp:126
+#: Win/WizardImport.cpp:127
 msgid "IDS_DATEFORMAT_SLASH_MMDDYYYY"
 msgstr "MM/JJ/AAAA"
 
-#: Win/WizardImport.cpp:128
+#: Win/WizardImport.cpp:129
 msgid "IDS_DATEFORMAT_DASH_YYYYMMDD"
 msgstr "AAAA-MM-JJ"
 
-#: Win/WizardImport.cpp:130
+#: Win/WizardImport.cpp:131
 msgid "IDS_DATEFORMAT_SLASH_YYYYMMDD"
 msgstr "AAAA/MM/JJ"
 
-#: Win/WizardImport.cpp:132
+#: Win/WizardImport.cpp:133
 msgid "IDS_DATEFORMAT_DASH_DDMMYYYY"
 msgstr "JJ-MM-AAAA"
 
-#: Win/WizardImport.cpp:134
+#: Win/WizardImport.cpp:135
 msgid "IDS_DATEFORMAT_SLASH_DDMMYYYY"
 msgstr "JJ/MM/AAAA"
 
-#: Win/WizardImport.cpp:149
 #: Win/WizardImport.cpp:150
+#: Win/WizardImport.cpp:151
 msgid "HIDC_WIZARD_IMPORT_DATE"
 msgstr "Le format dans lequel la date sera importée."
 
-#: Win/WizardImport.cpp:152
+#: Win/WizardImport.cpp:153
 msgid "IDC_WIZARD_IMPORT_DELIM_GROUP"
 msgstr "Limites"
 
-#: Win/WizardImport.cpp:155
+#: Win/WizardImport.cpp:156
 msgid "IDC_WIZARD_IMPORT_DELIM_TAB"
 msgstr "Tabulation"
 
-#: Win/WizardImport.cpp:158
 #: Win/WizardImport.cpp:159
+#: Win/WizardImport.cpp:160
 msgid "HIDC_WIZARD_IMPORT_DELIM_TAB"
 msgstr "Un tabulation est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:162
+#: Win/WizardImport.cpp:163
 msgid "IDC_WIZARD_IMPORT_DELIM_COLON"
 msgstr "Point"
 
-#: Win/WizardImport.cpp:165
 #: Win/WizardImport.cpp:166
+#: Win/WizardImport.cpp:167
 msgid "HIDC_WIZARD_IMPORT_DELIM_COLON"
 msgstr "\":\" est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:169
+#: Win/WizardImport.cpp:170
 msgid "IDC_WIZARD_IMPORT_DELIM_COMMA"
 msgstr "Virgule"
 
-#: Win/WizardImport.cpp:172
 #: Win/WizardImport.cpp:173
+#: Win/WizardImport.cpp:174
 msgid "HIDC_WIZARD_IMPORT_DELIM_COMMA"
 msgstr "\",\" est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:176
+#: Win/WizardImport.cpp:177
 msgid "IDC_WIZARD_IMPORT_DELIM_SPACE"
 msgstr "Espace"
 
-#: Win/WizardImport.cpp:179
 #: Win/WizardImport.cpp:180
+#: Win/WizardImport.cpp:181
 msgid "HIDC_WIZARD_IMPORT_DELIM_SPACE"
 msgstr "\" \" est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:183
+#: Win/WizardImport.cpp:184
 msgid "IDC_WIZARD_IMPORT_DELIM_SEMI"
 msgstr "Point-virgule"
 
-#: Win/WizardImport.cpp:186
 #: Win/WizardImport.cpp:187
+#: Win/WizardImport.cpp:188
 msgid "HIDC_WIZARD_IMPORT_DELIM_SEMI"
 msgstr "\";\" est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:190
+#: Win/WizardImport.cpp:191
 msgid "IDC_WIZARD_IMPORT_DELIM_OTHER"
 msgstr "Autre:"
 
-#: Win/WizardImport.cpp:193
 #: Win/WizardImport.cpp:194
+#: Win/WizardImport.cpp:195
 msgid "HIDC_WIZARD_IMPORT_DELIM_OTHER"
 msgstr "Le caractère qui sépare les différents champs."
 
-#: Win/WizardImport.cpp:223
 #: Win/WizardImport.cpp:224
+#: Win/WizardImport.cpp:225
 msgid "HIDC_WIZARD_IMPORT_DELIM"
 msgstr "Le caractère spécifié sépare les champs différents."
 
-#: Win/WizardImport.cpp:227
+#: Win/WizardImport.cpp:228
 msgid "IDC_WIZARD_IMPORT_ASSIGN"
 msgstr "Attribuer Colonnes..."
 
-#: Win/WizardImport.cpp:230
 #: Win/WizardImport.cpp:231
+#: Win/WizardImport.cpp:232
 msgid "HIDC_WIZARD_IMPORT_ASSIGN"
 msgstr "Configurer comment les données importées seront alignées. Quand les champs/colonnes sont assignées, les changements seront affichés dans l'aperçu dessous."
 
-#: Win/WizardImport.cpp:234
+#: Win/WizardImport.cpp:235
 msgid "IDC_WIZARD_IMPORT_FILE"
 msgstr "Fichier..."
 
-#: Win/WizardImport.cpp:237
 #: Win/WizardImport.cpp:238
+#: Win/WizardImport.cpp:239
 msgid "HIDC_WIZARD_IMPORT_FILE"
 msgstr "Choisir un dossier pour importer."
 
-#: Win/WizardImport.cpp:246
 #: Win/WizardImport.cpp:247
+#: Win/WizardImport.cpp:248
 msgid "HIDC_WIZARD_IMPORT_PREVIEW"
 msgstr "Un aperçu de la façon dont les champs importés seront alignés. Vérifiez que les données sont alignées comme il faut avant d'importer. Utiliser le bouton 'Assigner des Colonnes' au-dessus pour aligner."
 
-#: Win/WizardImport.cpp:379
+#: Win/WizardImport.cpp:380
 msgid "IDS_FILEEXT_FILTER_MSEXCEL"
 msgstr "Fichiers Excel (*.xls,*.xlsx)|*.xls;*.xlsx|Tous fichiers (*.*)|*.*||"
 
-#: Win/WizardImport.cpp:381
+#: Win/WizardImport.cpp:382
 msgid "IDS_FILEEXT_FILTER_OOCALC"
 msgstr "Fichiers Calc (*.ods)|*.ods|Tous fichiers (*.*)|*.*||"
 
-#: Win/WizardImport.cpp:393
+#: Win/WizardImport.cpp:394
 msgid "IDS_FILE_PREVIEW"
 msgstr "Prevue de %1$s."
 
@@ -6718,48 +6722,48 @@ msgid "IDS_IMPORT_FAILED"
 msgstr "Impossible de lire data."
 
 # WizardImport
-#: Win/WizardImport.cpp:730
+#: Win/WizardImport.cpp:731
 msgid "IDD_WIZARD_IMPORT"
 msgstr "Utilitaire d'Importation"
 
-#: Win/WizardImport.cpp:870
-#: Win/WizardImport.cpp:1112
+#: Win/WizardImport.cpp:871
+#: Win/WizardImport.cpp:1114
 msgid "IDS_IMPORT_SKIP_NOCONFIG"
 msgstr "Attention: Ligne %1$d: Entré passé, impossible de trouver un entré configuration valide"
 
-#: Win/WizardImport.cpp:940
+#: Win/WizardImport.cpp:941
 msgid "IDS_IMPORT_BAD_DATE_RUN"
 msgstr "ERREUR: Ligne %1$d, Colonne %2$d: Date parcours invalide: %3$s"
 
-#: Win/WizardImport.cpp:1099
+#: Win/WizardImport.cpp:1101
 msgid "IDS_IMPORT_BAD_VENUE"
 msgstr "Attention: Ligne %1$d: Entré passé, nom organisation invalide: %2$s"
 
-#: Win/WizardImport.cpp:1276
+#: Win/WizardImport.cpp:1278
 msgid "IDS_IMPORT_BAD_DATE_CALSTART"
 msgstr "ERREUR: Ligne %1$d, colonne %2$d: Date commencement calendrier invalide: %3$s"
 
-#: Win/WizardImport.cpp:1298
+#: Win/WizardImport.cpp:1300
 msgid "IDS_IMPORT_BAD_DATE_CALEND"
 msgstr "ERREUR: Ligne %1$d, colonne %2$d: Date fermeture calendrier invalide: %3$s"
 
-#: Win/WizardImport.cpp:1337
+#: Win/WizardImport.cpp:1339
 msgid "IDS_IMPORT_BAD_CAL_VALUE"
 msgstr "ERREUR: Ligne %1$d, colonne %2$d: Invalide entré calendrier: %3$s (valide: N, P ou E)"
 
-#: Win/WizardImport.cpp:1370
+#: Win/WizardImport.cpp:1372
 msgid "IDS_IMPORT_BAD_DATE_CALOPEN"
 msgstr "ERREUR: Ligne %1$d, colonne %2$d: Date ouverture calendrier invalide: %3$s"
 
-#: Win/WizardImport.cpp:1392
+#: Win/WizardImport.cpp:1394
 msgid "IDS_IMPORT_BAD_DATE_CALCLOSE"
 msgstr "ERREUR: Ligne %1$d, colonne %2$d: Date fermeture calendrier invalide: %3$s"
 
-#: Win/WizardImport.cpp:1434
+#: Win/WizardImport.cpp:1436
 msgid "IDS_IMPORT_BAD_DATE_LOG"
 msgstr "ERREUR: Ligne %1$d, colonne %2$d: Date log entraînement invalide: %3$s"
 
-#: Win/WizardImport.cpp:1483
+#: Win/WizardImport.cpp:1485
 msgid "IDS_IMPORT_STATS"
 msgstr ""
 "%1$d entrés rajoutés\n"
@@ -7052,51 +7056,51 @@ msgid "IDS_WIZ_EXPORT_SETTINGS_ARB"
 msgstr "Exporter vos paramètres programme vers un autre ordinateur ou pour backup."
 
 #: Win/WizardStart.cpp:513
-#: Win/WizardStart.cpp:541
-#: Win/WizardStart.cpp:569
-#: Win/WizardStart.cpp:644
-#: Win/WizardStart.cpp:672
-#: Win/WizardStart.cpp:701
+#: Win/WizardStart.cpp:545
+#: Win/WizardStart.cpp:577
+#: Win/WizardStart.cpp:652
+#: Win/WizardStart.cpp:684
+#: Win/WizardStart.cpp:713
 msgid "IDS_FILEEXT_FNAME_ARB"
 msgstr "*.arb"
 
-#: Win/WizardStart.cpp:593
+#: Win/WizardStart.cpp:601
 msgid "IDS_FILEEXT_FNAME_VCS"
 msgstr "*.vcs"
 
-#: Win/WizardStart.cpp:594
+#: Win/WizardStart.cpp:602
 msgid "IDS_FILEEXT_FILTER_VCS"
 msgstr "vCalendar (*.vcs)|*.vcs|Touts fichiers (*.*)|*.*||"
 
-#: Win/WizardStart.cpp:598
+#: Win/WizardStart.cpp:606
 msgid "IDS_FILEEXT_FNAME_ICS"
 msgstr "*.ics"
 
-#: Win/WizardStart.cpp:599
+#: Win/WizardStart.cpp:607
 msgid "IDS_FILEEXT_FILTER_ICS"
 msgstr "iCalendar (*.ics)|*.ics|Touts fichiers (*.*)|*.*||"
 
-#: Win/WizardStart.cpp:725
+#: Win/WizardStart.cpp:737
 msgid "IDS_FILEEXT_FILTER_DTD"
 msgstr "Fichiers DTD (*.dtd)|*.dtd|Tous fichiers (*.*)|*.*||"
 
-#: Win/WizardStart.cpp:749
-#: Win/WizardStart.cpp:755
-#: Win/WizardStart.cpp:759
+#: Win/WizardStart.cpp:761
+#: Win/WizardStart.cpp:767
+#: Win/WizardStart.cpp:771
 msgid "IDS_FILEEXT_DEF_XML"
 msgstr "xml"
 
-#: Win/WizardStart.cpp:766
+#: Win/WizardStart.cpp:778
 msgid "IDS_FILEEXT_FILTER_XML"
 msgstr "Fichiers XML (*.xml)|*.xml|Touts fichiers (*.*)|*.*||"
 
-#: Win/WizardStart.cpp:787
-#: Win/WizardStart.cpp:820
+#: Win/WizardStart.cpp:799
+#: Win/WizardStart.cpp:835
 msgid "IDS_FILEEXT_DEF_SETTINGS"
 msgstr "arbsettings"
 
-#: Win/WizardStart.cpp:792
-#: Win/WizardStart.cpp:825
+#: Win/WizardStart.cpp:804
+#: Win/WizardStart.cpp:840
 msgid "IDS_FILEEXT_FILTER_SETTINGS"
 msgstr "Paramètres Agility Record Book (*.arbsettings)|*.arbsettings|Tous fichiers (*.*)|*.*||"
 

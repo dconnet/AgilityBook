@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DefaultConfig Book="13.1">
+<DefaultConfig Book="13.2">
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2012-07-30 DRC Configuration version 39.
+               Add TDAA TNAC title.
+               Add new recurring title style (none).
 2012-07-27 DRC Configuration version 38.
                Enable repeating on the new AKC metalic titles.
                Add NADAC Extreme Barrel Racing.
@@ -123,7 +126,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="38">
+  <Configuration version="39">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -3213,6 +3216,7 @@ TG3 + 10 Qs in at least 5 games
 (Each successive title is +5Qs</Titles>
       <Titles LongName="Teacup Master Agility Dog" Multiple="2" Name="TMAD">TSAD + 10 Qs</Titles>
       <Titles LongName="Teacup Master Agility Games Dog" Multiple="2" Name="TMAG">TG3 + 10 Qs</Titles>
+      <Titles LongName="TDAA National Agility Championship" Multiple="2" Name="TNAC" Style="2" ValidFrom="2012-10-28">Highest overall score in each jump height at the TDAA Petit Prix.</Titles>
       <Division Name="Standard">
         <Level Name="Beginner"/>
         <Level Name="Intermediate"/>

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-30 DRC Added tests for checking recurring title styles.
  * @li 2011-01-22 DRC Simplified how configs are added.
  * @li 2010-08-13 DRC Updated for config 29.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -255,14 +256,38 @@ SUITE(TestConfig)
 			ARBDogTitlePtr title = ARBDogTitle::New();
 			title->SetVenue(L"AKC");
 			title->SetName(L"MX", 1, false, eTitleNumber);
+			// [MX] desc
 			std::wstring name1 = config.GetTitleCompleteName(title);
 			CHECK(0 != name1.length());
+			// desc [MX]
 			std::wstring name2 = config.GetTitleCompleteName(title, false);
 			CHECK(0 != name2.length());
 			CHECK(name1 != name2);
 			std::wstring nice = config.GetTitleNiceName(L"AKC", L"MX");
 			nice += L" [MX]";
 			CHECK(nice == name2);
+		}
+	}
+
+
+	TEST(RecurringTitle)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBConfig config;
+			CConfigHandler handler;
+			config.Default(&handler);
+			ARBDogTitlePtr title = ARBDogTitle::New();
+			title->SetVenue(L"AKC");
+
+			title->SetName(L"MACH", 2, true, eTitleNumber);
+			CHECK(title->GetGenericName() == L"MACH2");
+
+			title->SetName(L"MACH", 2, true, eTitleRoman);
+			CHECK(title->GetGenericName() == L"MACH-II");
+
+			title->SetName(L"MACH", 2, true, eTitleNone);
+			CHECK(title->GetGenericName() == L"MACH");
 		}
 	}
 

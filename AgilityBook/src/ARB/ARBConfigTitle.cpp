@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-30 DRC Added new recurring title style (none).
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-14 DRC Added option to prefix a title.
@@ -112,10 +113,20 @@ std::wstring ARBTitleInstance::TitleInstance(
 	std::wostringstream str;
 	if (bShowInstanceOne || 1 < instance)
 	{
-		if (eTitleRoman == style)
-			str << L"-" << ShortToRoman(instance);
-		else
+		switch (style)
+		{
+		default:
+			assert(0);
+			// fall thru
+		case eTitleNumber:
 			str << instance;
+			break;
+		case eTitleRoman:
+			str << L"-" << ShortToRoman(instance);
+			break;
+		case eTitleNone:
+			break;
+		}
 	}
 	return str.str();
 }

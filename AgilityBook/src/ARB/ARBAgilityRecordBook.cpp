@@ -17,6 +17,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2012-07-30 DRC File version 13.2
+ *                    Added new title style (eTitleNone).
  * @li 2012-07-08 DRC Fix title instance when a title is changed to recurring.
  * @li 2011-07-31 DRC File version 13.1
  *                    Added 'platform','os' to 'AgilityBook', modified
@@ -101,7 +103,7 @@
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(13, 1);
+	static ARBVersion const curVersion(13, 2);
 	return curVersion;
 }
 

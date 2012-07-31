@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-07-30 DRC Added new recurring title style (none).
  * @li 2012-05-07 DRC Fixed some comboboxes that should have been readonly.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
@@ -205,6 +206,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wchar_t const* idRes;
 		ARBTitleStyle style;
 	} styles[] = {
+		{arbT("IDS_CONFIG_TITLE_NONE"), eTitleNone},
 		{arbT("IDS_CONFIG_TITLE_NUMBER"), eTitleNumber},
 		{arbT("IDS_CONFIG_TITLE_ROMAN"), eTitleRoman},
 	};
