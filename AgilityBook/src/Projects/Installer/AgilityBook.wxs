@@ -25,6 +25,7 @@ Note: For System.AppUserModel.ID to work on Win7,
       must be enabled. This is done in the Properties of the Start menu.
 
 Revision History
+2012-08-03 DRC Set INSTALLDIR properly during upgrade and maintenance.
 2012-04-08 DRC Fix min OS conditions (using VC10 now)
 2011-11-23 DRC Add internet shortcut to start menu
 2011-11-12 DRC Update .mo file name.
@@ -88,6 +89,42 @@ Revision History
 			Type="raw"
 			Win64="$(var.Win64)" />
 	</Property>
+
+	<!-- Handle INSTALLDIR for upgrade/maintenance -->
+	<Property Id="INSTALLDIR_OLD">
+		<RegistrySearch
+			Id="arpInstallUpgrade"
+			Root="HKLM"
+			Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[OLDVERSIONFOUND]"
+			Name="InstallLocation"
+			Type="raw"
+			Win64="$(var.Win64)" />
+	</Property>
+	<Property Id="INSTALLDIR_MAINT">
+		<RegistrySearch
+			Id="arpInstallMaint"
+			Root="HKLM"
+			Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+			Name="InstallLocation"
+			Type="raw"
+			Win64="$(var.Win64)" />
+	</Property>
+
+	<SetDirectory Id="INSTALLDIR"
+		Value="[INSTALLDIR_OLD]">
+		Not INSTALLDIR And OLDVERSIONFOUND And INSTALLDIR_OLD
+	</SetDirectory>
+	<!-- Can't use SetDirectory here as it generates the same CA-id as above -->
+	<CustomAction
+		Id="SetINSTALLDIR2"
+		Property="INSTALLDIR"
+		Value="[INSTALLDIR_MAINT]" />
+	<InstallUISequence>
+		<Custom Action="SetINSTALLDIR2" After="CostInitialize">Not INSTALLDIR And Installed And INSTALLDIR_MAINT</Custom>
+	</InstallUISequence>
+	<InstallExecuteSequence>
+		<Custom Action="SetINSTALLDIR2" After="CostInitialize">Not INSTALLDIR And Installed And INSTALLDIR_MAINT</Custom>
+	</InstallExecuteSequence>
 
 	<Property Id="ARPCOMMENTS" Value="!(loc.Comments)" />
 	<Property Id="ARPCONTACT" Value="David Connet" />
@@ -326,7 +363,7 @@ Revision History
 
 	<SetProperty Id="ARPINSTALLLOCATION"
 		Sequence="execute"
-		After="InstallValidate"
+		After="CostFinalize"
 		Value="[INSTALLDIR]" />
 	<SetProperty Id="ARBHasPerUserSupport"
 		Sequence="ui"
