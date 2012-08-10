@@ -461,7 +461,7 @@ CTrimValidator::CTrimValidator(
 	, m_ErrMsg()
 {
 	if (errMsg)
-		m_ErrMsg = *errMsg;
+		m_ErrMsg = errMsg;
 }
 
 
