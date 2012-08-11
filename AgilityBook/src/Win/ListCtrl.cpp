@@ -34,6 +34,7 @@
 
 #include "Globals.h"
 #include "ListData.h"
+#include <sstream>
 
 #include "res/CalEmpty.xpm"
 #include "res/checked.xpm"

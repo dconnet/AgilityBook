@@ -61,11 +61,6 @@
 
 #if _MSC_VER < 1500
 	#error pre-VC9 is not supported.
-
-// VC9
-#elif _MSC_VER >= 1500
-	#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
-
 #endif // End VC-elifs
 
 #ifndef VC_EXTRALEAN
@@ -93,7 +88,7 @@
 // IE3.0, 3.01, 3.02 _WIN32_IE >= 0x0300
 
 #ifndef _WIN32_IE
-	#define _WIN32_IE 0x0500	// Minimum IE, 5.0
+	#define _WIN32_IE 0x0600	// Minimum IE, 6.0
 #endif
 
 // Unless overridden, target XP by default.

@@ -26,6 +26,9 @@
  */
 
 #include "ARBTypes.h"
+#if defined(__WXWINDOWS__)
+#include <wx/datetime.h>
+#endif
 
 
 /**

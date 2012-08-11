@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-30 19:42-0800\n"
-"PO-Revision-Date: 2012-07-30 19:42-0800\n"
+"POT-Creation-Date: 2012-08-11 10:08-0800\n"
+"PO-Revision-Date: 2012-08-11 10:08-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "MIME-Version: 1.0\n"
@@ -3459,105 +3459,105 @@ msgid "HIDC_CONFIG_PLACEINFO_VALUE"
 msgstr "Enter the multiplier value for the specified placement."
 
 # DlgConfigTitle
-#: Win/DlgConfigTitle.cpp:100
+#: Win/DlgConfigTitle.cpp:101
 msgid "IDD_CONFIG_TITLE"
 msgstr "Title Configuration"
 
-#: Win/DlgConfigTitle.cpp:105
+#: Win/DlgConfigTitle.cpp:106
 msgid "IDC_CONFIG_TITLE_NAME"
 msgstr "&Name"
 
-#: Win/DlgConfigTitle.cpp:112
 #: Win/DlgConfigTitle.cpp:113
+#: Win/DlgConfigTitle.cpp:114
 msgid "HIDC_CONFIG_TITLE_NAME"
 msgstr "Title abbreviation."
 
-#: Win/DlgConfigTitle.cpp:116
+#: Win/DlgConfigTitle.cpp:117
 msgid "IDC_CONFIG_TITLE_PREFIX"
 msgstr "&Prefix?"
 
-#: Win/DlgConfigTitle.cpp:119
 #: Win/DlgConfigTitle.cpp:120
+#: Win/DlgConfigTitle.cpp:121
 msgid "HIDC_CONFIG_TITLE_PREFIX"
 msgstr "Is this title listed before a dog's name?"
 
-#: Win/DlgConfigTitle.cpp:123
+#: Win/DlgConfigTitle.cpp:124
 msgid "IDC_CONFIG_TITLE_LONG_NAME"
 msgstr "&Long Name"
 
-#: Win/DlgConfigTitle.cpp:130
 #: Win/DlgConfigTitle.cpp:131
+#: Win/DlgConfigTitle.cpp:132
 msgid "HIDC_CONFIG_TITLE_LONG_NAME"
 msgstr "Long name of the title."
 
-#: Win/DlgConfigTitle.cpp:134
+#: Win/DlgConfigTitle.cpp:135
 msgid "IDC_CONFIG_TITLE_DESC"
 msgstr "&Description"
 
-#: Win/DlgConfigTitle.cpp:141
 #: Win/DlgConfigTitle.cpp:142
+#: Win/DlgConfigTitle.cpp:143
 msgid "HIDC_CONFIG_TITLE_DESC"
 msgstr "Description of this title."
 
-#: Win/DlgConfigTitle.cpp:145
+#: Win/DlgConfigTitle.cpp:146
 msgid "IDC_CONFIG_TITLE_ALLOW_MULTIPLE"
 msgstr "&Allow user to create multiple copies of this title"
 
-#: Win/DlgConfigTitle.cpp:149
 #: Win/DlgConfigTitle.cpp:150
+#: Win/DlgConfigTitle.cpp:151
 msgid "HIDC_CONFIG_TITLE_ALLOW_MULTIPLE"
 msgstr "Allow the title to be created multiple times. For instance, MACH, MACH-2, etc. Usually, this will be 2. In some cases, like NADAC, it may start higher."
 
-#: Win/DlgConfigTitle.cpp:153
+#: Win/DlgConfigTitle.cpp:154
 msgid "IDC_CONFIG_TITLE_MULTIPLE"
 msgstr "&Start at:"
 
-#: Win/DlgConfigTitle.cpp:163
+#: Win/DlgConfigTitle.cpp:164
 msgid "IDC_CONFIG_TITLE_VALID_FROM"
 msgstr "Valid &From"
 
-#: Win/DlgConfigTitle.cpp:167
 #: Win/DlgConfigTitle.cpp:168
+#: Win/DlgConfigTitle.cpp:169
 msgid "HIDC_CONFIG_TITLE_VALID_FROM"
 msgstr "Enable/disable the setting of a date. This allows for evolving title changes."
 
-#: Win/DlgConfigTitle.cpp:175
 #: Win/DlgConfigTitle.cpp:176
+#: Win/DlgConfigTitle.cpp:177
 msgid "HIDC_CONFIG_TITLE_VALID_FROM_DATE"
 msgstr "Date this title becomes valid."
 
-#: Win/DlgConfigTitle.cpp:179
+#: Win/DlgConfigTitle.cpp:180
 msgid "IDC_CONFIG_TITLE_VALID_TO"
 msgstr "Valid &To"
 
-#: Win/DlgConfigTitle.cpp:183
 #: Win/DlgConfigTitle.cpp:184
+#: Win/DlgConfigTitle.cpp:185
 msgid "HIDC_CONFIG_TITLE_VALID_TO"
 msgstr "Enable/disable the setting of a date. This allows for evolving title changes."
 
-#: Win/DlgConfigTitle.cpp:191
 #: Win/DlgConfigTitle.cpp:192
+#: Win/DlgConfigTitle.cpp:193
 msgid "HIDC_CONFIG_TITLE_VALID_TO_DATE"
 msgstr "Date this title is valid until."
 
-#: Win/DlgConfigTitle.cpp:195
+#: Win/DlgConfigTitle.cpp:196
 msgid "IDC_CONFIG_TITLE_STYLE"
 msgstr "D&isplay As:"
 
-#: Win/DlgConfigTitle.cpp:201
 #: Win/DlgConfigTitle.cpp:202
+#: Win/DlgConfigTitle.cpp:203
 msgid "HIDC_CONFIG_TITLE_STYLE"
 msgstr "When a title allows multiple copies, display the number as either a number or a roman numeral."
 
-#: Win/DlgConfigTitle.cpp:208
+#: Win/DlgConfigTitle.cpp:209
 msgid "IDS_CONFIG_TITLE_NONE"
 msgstr "None"
 
-#: Win/DlgConfigTitle.cpp:209
+#: Win/DlgConfigTitle.cpp:210
 msgid "IDS_CONFIG_TITLE_NUMBER"
 msgstr "Number"
 
-#: Win/DlgConfigTitle.cpp:210
+#: Win/DlgConfigTitle.cpp:211
 msgid "IDS_CONFIG_TITLE_ROMAN"
 msgstr "Roman Numeral"
 
@@ -6229,27 +6229,27 @@ msgstr ""
 "Are you sure you want to continue?"
 
 # DlgLanguage
-#: Win/LanguageManager.cpp:92
-#: Win/LanguageManager.cpp:180
+#: Win/LanguageManager.cpp:93
+#: Win/LanguageManager.cpp:181
 msgid "IDD_LANGUAGE"
 msgstr "Language Selection"
 
 # Description strings returned by wxWidgets wxLocale.
 # Keep each one in the native form (like Win7's display language selection)
-#: Win/LanguageManager.cpp:163
+#: Win/LanguageManager.cpp:164
 msgid "English (U.S.)"
 msgstr "English"
 
-#: Win/LanguageManager.cpp:164
+#: Win/LanguageManager.cpp:165
 msgid "French"
 msgstr "français"
 
-#: Win/LanguageManager.cpp:180
-msgid "IDC_LANG_CHOOSE"
+#: Win/LanguageManager.cpp:181
+msgid "Choose a language:"
 msgstr "Choose a language:"
 
-#: Win/LanguageManager.cpp:181
-msgid "HIDC_LANGUAGE"
+#: Win/LanguageManager.cpp:182
+msgid "Select a language to use."
 msgstr "Select a language to use."
 
 #: Win/MainFrm.cpp:178

@@ -126,6 +126,7 @@ public:
 	CQualifyingValidator(CQualifyingValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CQualifyingValidator(*this);}
+	bool Copy(CQualifyingValidator const& val);
 
 	virtual bool TransferFromWindow();
 	virtual bool TransferToWindow();

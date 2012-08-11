@@ -29,6 +29,7 @@
 #include <wx/dir.h>
 #include <wx/html/helpctrl.h>
 #include <wx/stdpaths.h>
+#include <vector>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -177,8 +178,8 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 	else
 	{
 		// Note, the size arguments are ignored. sigh.
-		wxSingleChoiceDialog dialog(parent, _("IDC_LANG_CHOOSE"), _("IDD_LANGUAGE"), choices);
-		dialog.SetHelpText(_("HIDC_LANGUAGE"));
+		wxSingleChoiceDialog dialog(parent, _("Choose a language:"), _("IDD_LANGUAGE"), choices);
+		dialog.SetHelpText(_("Select a language to use."));
 		dialog.SetSelection(idxLang);
 		if (wxID_OK == dialog.ShowModal())
 			lang = langId[dialog.GetSelection()];

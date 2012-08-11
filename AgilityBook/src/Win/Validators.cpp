@@ -575,6 +575,15 @@ CQualifyingValidator::CQualifyingValidator(CQualifyingValidator const& rhs)
 }
 
 
+bool CQualifyingValidator::Copy(CQualifyingValidator const& val)
+{
+	wxValidator::Copy(val);
+	m_pQ = val.m_pQ;
+	m_bAllowNoSel = val.m_bAllowNoSel;
+	return true;
+}
+
+
 bool CQualifyingValidator::TransferFromWindow()
 {
 	if (m_validatorWindow->IsKindOf(CLASSINFO(CQualifyingComboBox)))

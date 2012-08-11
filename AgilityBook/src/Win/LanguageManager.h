@@ -18,6 +18,7 @@
  */
 
 #include "Localization.h"
+#include <string>
 class wxLocale;
 
 
