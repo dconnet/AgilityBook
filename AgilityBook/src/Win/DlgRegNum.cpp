@@ -49,6 +49,7 @@ CDlgRegNum::CDlgRegNum(
 	: wxDialog()
 	, m_RegNums(regnums)
 	, m_pRegNum(pRegNum)
+	, m_ctrlVenues(NULL)
 	, m_Venue()
 	, m_RegNum()
 	, m_Height()
@@ -76,11 +77,11 @@ CDlgRegNum::CDlgRegNum(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textVenue->Wrap(-1);
 
-	CVenueComboBox* ctrlVenues = new CVenueComboBox(this,
+	m_ctrlVenues = new CVenueComboBox(this,
 		config.GetVenues(), m_Venue, false,
-		CTrimValidator(&m_Venue));
-	ctrlVenues->SetHelpText(_("HIDC_REGNUM_VENUES"));
-	ctrlVenues->SetToolTip(_("HIDC_REGNUM_VENUES"));
+		wxGenericValidator(&m_Venue));
+	m_ctrlVenues->SetHelpText(_("HIDC_REGNUM_VENUES"));
+	m_ctrlVenues->SetToolTip(_("HIDC_REGNUM_VENUES"));
 
 	wxStaticText* textRegNum = new wxStaticText(this, wxID_ANY,
 		_("IDC_REGNUM_REG_NUM"),
@@ -124,7 +125,7 @@ CDlgRegNum::CDlgRegNum(
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
 	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerVenue->Add(ctrlVenues, 0, wxALL, 5);
+	sizerVenue->Add(m_ctrlVenues, 0, wxALL, 5);
 
 	bSizer->Add(sizerVenue, 0, wxEXPAND, 5);
 
@@ -151,7 +152,7 @@ CDlgRegNum::CDlgRegNum(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 	
-	IMPLEMENT_ON_INIT(CDlgRegNum, ctrlVenues)
+	IMPLEMENT_ON_INIT(CDlgRegNum, m_ctrlVenues)
 }
 
 
@@ -162,6 +163,13 @@ void CDlgRegNum::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
 		return;
+
+	if (wxNOT_FOUND == m_ctrlVenues->GetSelection())
+	{
+		wxMessageBox(_("IDS_SELECT_VENUE"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION, this);
+		m_ctrlVenues->SetFocus();
+		return;
+	}
 
 	if (m_pRegNum)
 	{

@@ -153,6 +153,14 @@ void CDlgClub::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
 		return;
+
+	if (wxNOT_FOUND == m_ctrlVenues->GetSelection())
+	{
+		wxMessageBox(_("IDS_SELECT_VENUE"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION, this);
+		m_ctrlVenues->SetFocus();
+		return;
+	}
+
 	if (m_pClub)
 	{
 		m_pClub->SetName(StringUtil::stringW(m_Club));

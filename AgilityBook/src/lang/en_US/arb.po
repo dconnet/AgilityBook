@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-11 10:22-0800\n"
-"PO-Revision-Date: 2012-08-11 10:22-0800\n"
+"POT-Creation-Date: 2012-08-11 13:42-0800\n"
+"PO-Revision-Date: 2012-08-11 13:42-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -2644,6 +2644,18 @@ msgstr "&Venue"
 msgid "HIDC_CLUB_VENUES"
 msgstr "Venue of hosting club."
 
+#: Win/DlgClub.cpp:160 Win/DlgRegNum.cpp:170
+msgid "IDS_SELECT_VENUE"
+msgstr "Please select a venue."
+
+#: Win/DlgClub.cpp:160 Win/DlgConfigOtherPoints.cpp:69
+#: Win/DlgConfigPlaceInfo.cpp:66 Win/DlgConfigPlaceInfo.cpp:72
+#: Win/DlgConfigPlaceInfo.cpp:107 Win/DlgQueryDetail.cpp:190
+#: Win/DlgRegNum.cpp:170 Win/Validators.cpp:448 Win/Validators.cpp:554
+#: Win/Validators.cpp:625 Win/Validators.cpp:634
+msgid "Validation conflict"
+msgstr "Validation conflict"
+
 # DlgConfigEvent
 #: Win/DlgConfigEvent.cpp:163
 msgid "IDD_CONFIG_EVENT"
@@ -3228,13 +3240,6 @@ msgstr "&Remove"
 #: Win/DlgConfigMultiQ.cpp:156 Win/DlgConfigMultiQ.cpp:157
 msgid "HIDC_CONFIG_MULTIQ_DELETE"
 msgstr "Delete a selected event."
-
-#: Win/DlgConfigOtherPoints.cpp:69 Win/DlgConfigPlaceInfo.cpp:66
-#: Win/DlgConfigPlaceInfo.cpp:72 Win/DlgConfigPlaceInfo.cpp:107
-#: Win/DlgQueryDetail.cpp:190 Win/Validators.cpp:448 Win/Validators.cpp:554
-#: Win/Validators.cpp:625 Win/Validators.cpp:634
-msgid "Validation conflict"
-msgstr "Validation conflict"
 
 #: Win/DlgConfigOtherPoints.cpp:83
 msgid "IDS_OTHERPTS_ALL"
@@ -5197,43 +5202,43 @@ msgid "HIDC_REFRUN_NOTES"
 msgstr "General notes about run."
 
 # DlgRegNum
-#: Win/DlgRegNum.cpp:61
+#: Win/DlgRegNum.cpp:62
 msgid "IDD_REG_NUM"
 msgstr "Registration Number"
 
-#: Win/DlgRegNum.cpp:75
+#: Win/DlgRegNum.cpp:76
 msgid "IDC_REGNUM_VENUES"
 msgstr "&Venue"
 
-#: Win/DlgRegNum.cpp:82 Win/DlgRegNum.cpp:83
+#: Win/DlgRegNum.cpp:83 Win/DlgRegNum.cpp:84
 msgid "HIDC_REGNUM_VENUES"
 msgstr "Select an existing venue this registration is for."
 
-#: Win/DlgRegNum.cpp:86
+#: Win/DlgRegNum.cpp:87
 msgid "IDC_REGNUM_REG_NUM"
 msgstr "Registration &Number"
 
-#: Win/DlgRegNum.cpp:93 Win/DlgRegNum.cpp:94
+#: Win/DlgRegNum.cpp:94 Win/DlgRegNum.cpp:95
 msgid "HIDC_REGNUM_REG_NUM"
 msgstr "Registration number of dog."
 
-#: Win/DlgRegNum.cpp:97
+#: Win/DlgRegNum.cpp:98
 msgid "IDC_REGNUM_HEIGHT"
 msgstr "Measured &Height"
 
-#: Win/DlgRegNum.cpp:104 Win/DlgRegNum.cpp:105
+#: Win/DlgRegNum.cpp:105 Win/DlgRegNum.cpp:106
 msgid "HIDC_REGNUM_HEIGHT"
 msgstr "Measured height."
 
-#: Win/DlgRegNum.cpp:108
+#: Win/DlgRegNum.cpp:109
 msgid "IDC_REGNUM_RECEIVED"
 msgstr "Height Card &Received"
 
-#: Win/DlgRegNum.cpp:111 Win/DlgRegNum.cpp:112
+#: Win/DlgRegNum.cpp:112 Win/DlgRegNum.cpp:113
 msgid "HIDC_REGNUM_RECEIVED"
 msgstr "Have you received a permanent height card?"
 
-#: Win/DlgRegNum.cpp:118 Win/DlgRegNum.cpp:119
+#: Win/DlgRegNum.cpp:119 Win/DlgRegNum.cpp:120
 msgid "HIDC_REGNUM_NOTE"
 msgstr ""
 "Any additional information about this registration, such as your number."

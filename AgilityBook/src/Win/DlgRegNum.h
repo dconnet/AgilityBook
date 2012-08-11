@@ -34,6 +34,7 @@ public:
 private:
 	ARBDogRegNumList& m_RegNums;
 	ARBDogRegNumPtr m_pRegNum;
+	CVenueComboBox* m_ctrlVenues;
 	wxString m_Venue;
 	wxString m_RegNum;
 	wxString m_Height;
