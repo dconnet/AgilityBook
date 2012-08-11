@@ -296,8 +296,12 @@ bool CAgilityBookApp::OnInit()
 	(void)new wxDocTemplate(m_manager, L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
 #ifdef __WXMAC__
+#if __WXMAC_CARBON__
 	wxFileName::MacRegisterDefaultTypeAndCreator(L"arb", 'ARBB', 'ARBA');
+#endif
 	{
+		bool useSpellChecker = true;
+#if __WXMAC_CARBON__
 		wxPlatformInfo info;
 		int majVer = info.GetOSMajorVersion();
 		int minVer = info.GetOSMinorVersion();
@@ -306,6 +310,11 @@ bool CAgilityBookApp::OnInit()
 		minVer = (minVer >> 4);
 #endif
 		if (majVer == 10 && minVer < 8)
+		{
+			useSpellChecker = false;
+		}
+#endif
+		if (useSpellChecker)
 		{
 			wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
 		}
