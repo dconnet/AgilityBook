@@ -307,7 +307,7 @@
 		5048396D09E3307300765E4B /* arbProj.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = arbProj.xcconfig; sourceTree = "<group>"; };
 		5048396E09E3307300765E4B /* arbTarget.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = arbTarget.xcconfig; sourceTree = "<group>"; };
 		8D0C4E960486CD37000505A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E1144EF810813B4F00356F61 /* agilitybook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agilitybook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1144EF810813B4F00356F61 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1144F5C1082880800356F61 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
 		E1144F5D1082880800356F61 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
 		E155979E10000B1200B7074A /* AgilityBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBook.cpp; sourceTree = "<group>"; };
@@ -584,7 +584,7 @@
 		E15599E810000B4700B7074A /* VersionNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNumber.h; sourceTree = "<group>"; };
 		E15599F910000CEC00B7074A /* arb_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arb_Prefix.pch; sourceTree = "<group>"; };
 		E158FC261001333500735E7F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		E158FCC01001371B00735E7F /* agilitybook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agilitybook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E158FCC01001371B00735E7F /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1AE409B12873800003BFF9F /* BreakLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BreakLine.cpp; sourceTree = "<group>"; };
 		E1AE409C12873800003BFF9F /* BreakLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakLine.h; sourceTree = "<group>"; };
 		E1BF78EE0FFFE144009B81A7 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../stdafx.h; sourceTree = SOURCE_ROOT; };
@@ -626,8 +626,8 @@
 		195DF8CFFE9D517E11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E158FCC01001371B00735E7F /* agilitybook.app */,
-				E1144EF810813B4F00356F61 /* agilitybook.app */,
+				E158FCC01001371B00735E7F /* AgilityBook.app */,
+				E1144EF810813B4F00356F61 /* AgilityBook.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1000,9 +1000,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E1144E6610813B4F00356F61 /* AgilityBook (unicode) */ = {
+		E1144E6610813B4F00356F61 /* AgilityBook */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook (unicode)" */;
+			buildConfigurationList = E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook" */;
 			buildPhases = (
 				E1144E6710813B4F00356F61 /* Resources */,
 				E1144E6B10813B4F00356F61 /* Sources */,
@@ -1012,15 +1012,15 @@
 			);
 			dependencies = (
 			);
-			name = "AgilityBook (unicode)";
+			name = AgilityBook;
 			productInstallPath = "$(HOME)/Applications";
 			productName = arb;
-			productReference = E1144EF810813B4F00356F61 /* agilitybook.app */;
+			productReference = E1144EF810813B4F00356F61 /* AgilityBook.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E158FC2F1001371B00735E7F /* AgilityBook (unicode-trunk) */ = {
+		E158FC2F1001371B00735E7F /* AgilityBook (trunk) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (unicode-trunk)" */;
+			buildConfigurationList = E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (trunk)" */;
 			buildPhases = (
 				E158FC301001371B00735E7F /* Resources */,
 				E158FC331001371B00735E7F /* Sources */,
@@ -1030,10 +1030,10 @@
 			);
 			dependencies = (
 			);
-			name = "AgilityBook (unicode-trunk)";
+			name = "AgilityBook (trunk)";
 			productInstallPath = "$(HOME)/Applications";
 			productName = arb;
-			productReference = E158FCC01001371B00735E7F /* agilitybook.app */;
+			productReference = E158FCC01001371B00735E7F /* AgilityBook.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1048,8 +1048,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E1144E6610813B4F00356F61 /* AgilityBook (unicode) */,
-				E158FC2F1001371B00735E7F /* AgilityBook (unicode-trunk) */,
+				E1144E6610813B4F00356F61 /* AgilityBook */,
+				E158FC2F1001371B00735E7F /* AgilityBook (trunk) */,
 			);
 		};
 /* End PBXProject section */
@@ -1489,7 +1489,7 @@
 					"-liconv",
 					"-ltidy",
 				);
-				PRODUCT_NAME = agilitybook;
+				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				SYMROOT = "build-unicode";
@@ -1563,7 +1563,7 @@
 					"-ltidy",
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
-				PRODUCT_NAME = agilitybook;
+				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				SYMROOT = "build-unicode";
@@ -1643,7 +1643,7 @@
 					"-ltidy",
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
-				PRODUCT_NAME = agilitybook;
+				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				SYMROOT = "build-trunk-unicode";
@@ -1720,7 +1720,7 @@
 					"-ltidy",
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
-				PRODUCT_NAME = agilitybook;
+				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				SYMROOT = "build-trunk-unicode";
@@ -1739,7 +1739,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook (unicode)" */ = {
+		E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E1144EF610813B4F00356F61 /* Debug */,
@@ -1748,7 +1748,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (unicode-trunk)" */ = {
+		E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (trunk)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E158FCBE1001371B00735E7F /* Debug */,

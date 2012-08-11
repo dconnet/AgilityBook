@@ -28,12 +28,12 @@ INCLUDES += -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB
 ##########
 # List of programs and archives to link
 ##########
-PROGRAMS = testarb
+PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 
 ##########
 # Source files for each target
 ##########
-testarb_SRCS = ConfigHandler.cpp \
+@PACKAGE_TEST_SHORTNAME@_SRCS = ConfigHandler.cpp \
 	Local.cpp \
 	TestAgilityRecordBook.cpp \
 	TestARB.cpp \
@@ -83,7 +83,7 @@ testarb_SRCS = ConfigHandler.cpp \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-testarb_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb -L$(TOPBUILDDIR)/src/UnitTest++ -lUnitTest `wx-config --libs`
+@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb -L$(TOPBUILDDIR)/src/UnitTest++ -lUnitTest `wx-config --libs`
 
 ##########
 # Precompiled headers
@@ -93,18 +93,18 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 ##########
 # Stuff to install
 ##########
-INSTALL_BIN = testarb
+INSTALL_BIN = @PACKAGE_TEST_SHORTNAME@
 
 @NAM_RULES@
 
-resources: testarb
+resources: @PACKAGE_TEST_SHORTNAME@
 	echo "LANGDIR $(CURDIR)"
-	python $(TOPSRCDIR)/src/lang/CompileDatafile.py -x -f $(TOPSRCDIR)/src/lang/CompileDatList.txt $(TOPSRCDIR)/src/lang arb.po $(CURDIR) testarb
+	python $(TOPSRCDIR)/src/lang/CompileDatafile.py -x -f $(TOPSRCDIR)/src/lang/CompileDatList.txt $(TOPSRCDIR)/src/lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
 
-all: testarb resources
-	python $(TOPSRCDIR)/src/Projects/VC10/RunARBTests.py $(TOPSRCDIR)/src $(CURDIR) testarb Mac
+all: @PACKAGE_TEST_SHORTNAME@ resources
+	python $(TOPSRCDIR)/src/Projects/VC10/RunARBTests.py $(TOPSRCDIR)/src $(CURDIR) @PACKAGE_TEST_SHORTNAME@ Mac
 
-dist:: testarb resources
+dist:: @PACKAGE_TEST_SHORTNAME@ resources
 
 ################################################################################
 # End of File: Makefile                                                        #

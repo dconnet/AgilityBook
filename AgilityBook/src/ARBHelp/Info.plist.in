@@ -17,11 +17,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>@PACKAGE_VERSION@</string>
 	<key>CFBundleName</key>
-	<string>@PACKAGE_NAME@</string>
+	<string>@PACKAGE_HLP_SHORTNAME@</string>
 	<key>CFBundleIconFile</key>
 	<string>AgilityBook.icns</string>
 	<key>CFBundleGetInfoString</key>
-	<string>@PACKAGE_NAME@ version @PACKAGE_VERSION@, (c) @PACKAGE_COPYRIGHT@</string>
+	<string>@PACKAGE_HLP_SHORTNAME@ Version @PACKAGE_VERSION@, (c) @PACKAGE_COPYRIGHT@</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.agilityrecordbook.@PACKAGE_HLP_SHORTNAME@</string>
 	<key>CFBundleLongVersionString</key>

@@ -32,12 +32,12 @@ INCLUDES += -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB
 ##########
 # List of programs and archives to link
 ##########
-PROGRAMS = agilitybook
+PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 
 ##########
 # Source files for each target
 ##########
-agilitybook_SRCS = \
+@PACKAGE_ARB_SHORTNAME@_SRCS = \
 	AgilityBook.cpp \
 	AgilityBookCalendarListView.cpp \
 	AgilityBookCalendarView.cpp \
@@ -138,8 +138,8 @@ agilitybook_SRCS = \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-agilitybook_LIBS = -L$(TOPBUILDDIR)/src/tidy/lib -L$(TOPBUILDDIR)/src/ARB -ltidy -larb
-agilitybook_LDFLAGS = -L$(TOPSRCDIR) `wx-config --libs`
+@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/tidy/lib -L$(TOPBUILDDIR)/src/ARB -ltidy -larb
+@PACKAGE_ARB_SHORTNAME@_LDFLAGS = -L$(TOPSRCDIR) `wx-config --libs`
 
 ##########
 # Precompiled headers
@@ -149,7 +149,7 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = agilitybook
+#INSTALL_BIN = @PACKAGE_ARB_SHORTNAME@
 #INSTALL_SBIN = prog2
 #INSTALL_MAN = prog1.5
 
@@ -159,23 +159,23 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 
 @NAM_RULES@
 
-resources: agilitybook
+resources: @PACKAGE_ARB_SHORTNAME@
 	echo "LANGDIR $(CURDIR)"
-	python $(TOPSRCDIR)/src/lang/CompileDatafile.py -f $(TOPSRCDIR)/src/lang/CompileDatList.txt $(TOPSRCDIR)/src/lang arb.po $(CURDIR) agilitybook
+	python $(TOPSRCDIR)/src/lang/CompileDatafile.py -f $(TOPSRCDIR)/src/lang/CompileDatList.txt $(TOPSRCDIR)/src/lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
 
-all: agilitybook resources
+all: @PACKAGE_ARB_SHORTNAME@ resources
 
 dist:: all $(PHONY)
-	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS
-	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/English.lproj
-	cp Info.plist $(TOPBUILDDIR)/AgilityBook.app/Contents/
-	cp version.plist $(TOPBUILDDIR)/AgilityBook.app/Contents/
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/English.lproj
+	cp Info.plist $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/
+	cp version.plist $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/
 	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
-	echo 'APPL????\c' > $(TOPBUILDDIR)/AgilityBook.app/Contents/PkgInfo
-	cp agilitybook $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS/agilitybook
-	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/
-	cp -pR lang $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/
-	cp agilitybook.dat $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/
+	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/PkgInfo
+	cp @PACKAGE_ARB_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS/@PACKAGE_ARB_SHORTNAME@
+	cp $(TOPSRCDIR)/src/Win/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
+	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
+	cp @PACKAGE_ARB_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 
 ################################################################################
 # End of File: Makefile                                                        #

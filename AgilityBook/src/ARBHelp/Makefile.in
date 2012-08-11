@@ -28,12 +28,12 @@ INCLUDES += -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB
 ##########
 # List of programs and archives to link
 ##########
-PROGRAMS = arbhelp
+PROGRAMS = @PACKAGE_HLP_SHORTNAME@
 
 ##########
 # Source files for each target
 ##########
-arbhelp_SRCS = ARBHelp.cpp \
+@PACKAGE_HLP_SHORTNAME@_SRCS = ARBHelp.cpp \
 	DlgARBHelp.cpp \
 	DlgPageDecode.cpp \
 	DlgPageEncode.cpp \
@@ -44,8 +44,8 @@ arbhelp_SRCS = ARBHelp.cpp \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-arbhelp_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb
-arbhelp_LDFLAGS = `wx-config --libs`
+@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb
+@PACKAGE_HLP_SHORTNAME@_LDFLAGS = `wx-config --libs`
 
 ##########
 # Precompiled headers
@@ -55,21 +55,21 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = arbhelp
+#INSTALL_BIN = @PACKAGE_HLP_SHORTNAME@
 
 @NAM_RULES@
 
-all: arbhelp
+all: @PACKAGE_HLP_SHORTNAME@
 
 dist:: all $(PHONY)
-	mkdir -p $(TOPBUILDDIR)/ARBHelp.app/Contents/MacOS
-	mkdir -p $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/English.lproj
-	cp Info.plist $(TOPBUILDDIR)/ARBHelp.app/Contents/
-	cp version.plist $(TOPBUILDDIR)/ARBHelp.app/Contents/
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/English.lproj
+	cp Info.plist $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/
+	cp version.plist $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/
 	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
-	echo 'APPL????\c' > $(TOPBUILDDIR)/ARBHelp.app/Contents/PkgInfo
-	cp arbhelp $(TOPBUILDDIR)/ARBHelp.app/Contents/MacOS/arbhelp
-	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/
+	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/PkgInfo
+	cp @PACKAGE_HLP_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS/@PACKAGE_HLP_SHORTNAME@
+	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
 
 ################################################################################
 # End of File: Makefile                                                        #
