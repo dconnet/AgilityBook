@@ -20,6 +20,7 @@
 #include "TestARB.h"
 
 #include "ARBTypes.h"
+#include "StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -54,6 +55,16 @@ SUITE(TestMisc)
 			CHECK(ver.Major() == 0xf3f3);
 			CHECK(ver.Minor() == 0xff44);
 		}
+	}
+
+
+	TEST(FormatBytes)
+	{
+		CHECK(StringUtil::FormatBytes(1000.0) == L"1000 bytes");
+		CHECK(StringUtil::FormatBytes(1024.0) == L"1 KiB");
+		CHECK(StringUtil::FormatBytes(1536.0) == L"1.5 KiB");
+		CHECK(StringUtil::FormatBytes(1600.0) == L"1.56 KiB");
+		CHECK(StringUtil::FormatBytes(16000.0) == L"15.63 KiB");
 	}
 
 

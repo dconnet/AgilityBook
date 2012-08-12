@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-08-12 DRC Moved FormatBytes to StringUtil
  * @li 2012-05-04 DRC Added FormatBytes
  * @li 2011-04-16 DRC Added GetFileTimes
  * @li 2010-10-30 DRC Moved BreakLine to a separate file.
@@ -233,45 +234,4 @@ void DrawBetterLabel(
 	}
 	if (!bCalc)
 		pDC->DestroyClippingRegion();
-}
-
-
-// Using IEC binary prefixes
-std::wstring FormatBytes(
-		double inSize,
-		int inPrec)
-{
-	std::wstring form(L" bytes");
-	if (inSize >= 1024)
-	{
-		form = L" KiB";
-		inSize /= 1024;
-		if (inSize >= 1024)
-		{
-			form = L" MiB"; // mebibyte
-			inSize /= 1024;
-			if (inSize >= 1024)
-			{
-				form = L" GiB"; // gibibyte
-				inSize /= 1024;
-				if (inSize >= 1024)
-				{
-					form = L" TiB"; // tebibyte
-					inSize /= 1024;
-					if (inSize >= 1024)
-					{
-						form = L" PiB"; // pebibyte
-						inSize /= 1024;
-						if (inSize >= 1024)
-						{
-							form = L" EiB"; // exbibyte
-							inSize /= 1024;
-							// Ok, there's  zebibytes and yobibytes, but really!
-						}
-					}
-				}
-			}
-		}
-	}
-	return ARBDouble::ToString(inSize, inPrec, ARBDouble::eDefault, true) + form;
 }

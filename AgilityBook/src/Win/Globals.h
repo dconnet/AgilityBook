@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-08-12 DRC Moved FormatBytes to StringUtil
  * @li 2012-05-04 DRC Added FormatBytes
  * @li 2010-10-30 DRC Moved BreakLine to a separate file.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -101,13 +102,3 @@ extern void DrawBetterLabel(
 		wxRect& rect,
 		int flags,
 		bool bCalc);
-
-
-/**
- * Return a formatted string using IEC binary prefixes.
- * @param inSize Number of bytes
- * @param inPrec Precision (passed to ARBDouble::ToString)
- */
-extern std::wstring FormatBytes(
-		double inSize,
-		int inPrec = 2);

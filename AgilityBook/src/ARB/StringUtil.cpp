@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-08-12 DRC Moved FormatBytes to StringUtil
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2010-12-30 DRC Fix a memory leak when transforming a stream.
  * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
@@ -22,6 +23,7 @@
 #include "stdafx.h"
 #include "StringUtil.h"
 
+#include "ARBTypes.h"
 #include <algorithm>
 #include <locale>
 #include <sstream>
@@ -594,6 +596,47 @@ std::wstring Replace(
 		std::wstring const& inReplaceWith)
 {
 	return ReplaceImpl<std::wstring, std::wostringstream>(inStr, inReplace, inReplaceWith);
+}
+
+
+// Using IEC binary prefixes
+std::wstring FormatBytes(
+		double inSize,
+		int inPrec)
+{
+	std::wstring form(L" bytes");
+	if (inSize >= 1024)
+	{
+		form = L" KiB";
+		inSize /= 1024;
+		if (inSize >= 1024)
+		{
+			form = L" MiB"; // mebibyte
+			inSize /= 1024;
+			if (inSize >= 1024)
+			{
+				form = L" GiB"; // gibibyte
+				inSize /= 1024;
+				if (inSize >= 1024)
+				{
+					form = L" TiB"; // tebibyte
+					inSize /= 1024;
+					if (inSize >= 1024)
+					{
+						form = L" PiB"; // pebibyte
+						inSize /= 1024;
+						if (inSize >= 1024)
+						{
+							form = L" EiB"; // exbibyte
+							inSize /= 1024;
+							// Ok, there's  zebibytes and yobibytes, but really!
+						}
+					}
+				}
+			}
+		}
+	}
+	return ARBDouble::ToString(inSize, inPrec, ARBDouble::eDefault, true) + form;
 }
 
 };
