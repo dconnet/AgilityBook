@@ -209,7 +209,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\TestARB\ConfigHandler.h" />
     <ClInclude Include="..\..\TestARB\Local.h" />
-    <ClInclude Include="..\..\TestARB\resource.h" />
     <ClInclude Include="..\..\stdafx.h" />
     <ClInclude Include="..\..\TestARB\TestARB.h" />
   </ItemGroup>
