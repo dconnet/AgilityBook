@@ -296,12 +296,12 @@ bool CAgilityBookApp::OnInit()
 	(void)new wxDocTemplate(m_manager, L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
 #ifdef __WXMAC__
-#if __WXMAC_CARBON__
+#ifndef __WXOSX_COCOA__
 	wxFileName::MacRegisterDefaultTypeAndCreator(L"arb", 'ARBB', 'ARBA');
 #endif
 	{
 		bool useSpellChecker = true;
-#if __WXMAC_CARBON__
+#ifndef __WXOSX_COCOA__
 		wxPlatformInfo info;
 		int majVer = info.GetOSMajorVersion();
 		int minVer = info.GetOSMinorVersion();

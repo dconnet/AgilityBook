@@ -99,7 +99,7 @@
 		E1144EC210813B4F00356F61 /* UpdateInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A110000B1200B7074A /* UpdateInfo.cpp */; };
 		E1144EC310813B4F00356F61 /* Validators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A310000B1200B7074A /* Validators.cpp */; };
 		E1144EC410813B4F00356F61 /* Wizard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A610000B1200B7074A /* Wizard.cpp */; };
-		E1144EC510813B4F00356F61 /* WizardExcel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A810000B1200B7074A /* WizardExcel.cpp */; };
+		E1144EC510813B4F00356F61 /* SpreadSheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A810000B1200B7074A /* SpreadSheet.cpp */; };
 		E1144EC610813B4F00356F61 /* WizardExport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598AA10000B1200B7074A /* WizardExport.cpp */; };
 		E1144EC710813B4F00356F61 /* WizardImport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598AC10000B1200B7074A /* WizardImport.cpp */; };
 		E1144EC810813B4F00356F61 /* WizardStart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598AE10000B1200B7074A /* WizardStart.cpp */; };
@@ -139,7 +139,7 @@
 		E1144EEA10813B4F00356F61 /* ARBInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A510000B3100B7074A /* ARBInfo.cpp */; };
 		E1144EEB10813B4F00356F61 /* ARBInfoItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A710000B3100B7074A /* ARBInfoItem.cpp */; };
 		E1144EEC10813B4F00356F61 /* ARBLocalization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A910000B3100B7074A /* ARBLocalization.cpp */; };
-		E1144EED10813B4F00356F61 /* ARBString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599AB10000B3100B7074A /* ARBString.cpp */; };
+		E1144EED10813B4F00356F61 /* StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599AB10000B3100B7074A /* StringUtil.cpp */; };
 		E1144EEE10813B4F00356F61 /* ARBTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599AE10000B3100B7074A /* ARBTraining.cpp */; };
 		E1144EEF10813B4F00356F61 /* ARBTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B010000B3100B7074A /* ARBTypes.cpp */; };
 		E1144EF010813B4F00356F61 /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B210000B3100B7074A /* BinaryData.cpp */; };
@@ -239,7 +239,7 @@
 		E158FC8A1001371B00735E7F /* UpdateInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A110000B1200B7074A /* UpdateInfo.cpp */; };
 		E158FC8B1001371B00735E7F /* Validators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A310000B1200B7074A /* Validators.cpp */; };
 		E158FC8C1001371B00735E7F /* Wizard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A610000B1200B7074A /* Wizard.cpp */; };
-		E158FC8D1001371B00735E7F /* WizardExcel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A810000B1200B7074A /* WizardExcel.cpp */; };
+		E158FC8D1001371B00735E7F /* SpreadSheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A810000B1200B7074A /* SpreadSheet.cpp */; };
 		E158FC8E1001371B00735E7F /* WizardExport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598AA10000B1200B7074A /* WizardExport.cpp */; };
 		E158FC8F1001371B00735E7F /* WizardImport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598AC10000B1200B7074A /* WizardImport.cpp */; };
 		E158FC901001371B00735E7F /* WizardStart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598AE10000B1200B7074A /* WizardStart.cpp */; };
@@ -279,7 +279,7 @@
 		E158FCB21001371B00735E7F /* ARBInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A510000B3100B7074A /* ARBInfo.cpp */; };
 		E158FCB31001371B00735E7F /* ARBInfoItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A710000B3100B7074A /* ARBInfoItem.cpp */; };
 		E158FCB41001371B00735E7F /* ARBLocalization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A910000B3100B7074A /* ARBLocalization.cpp */; };
-		E158FCB51001371B00735E7F /* ARBString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599AB10000B3100B7074A /* ARBString.cpp */; };
+		E158FCB51001371B00735E7F /* StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599AB10000B3100B7074A /* StringUtil.cpp */; };
 		E158FCB61001371B00735E7F /* ARBTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599AE10000B3100B7074A /* ARBTraining.cpp */; };
 		E158FCB71001371B00735E7F /* ARBTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B010000B3100B7074A /* ARBTypes.cpp */; };
 		E158FCB81001371B00735E7F /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B210000B3100B7074A /* BinaryData.cpp */; };
@@ -486,8 +486,8 @@
 		E15598A410000B1200B7074A /* Validators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Validators.h; sourceTree = "<group>"; };
 		E15598A610000B1200B7074A /* Wizard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wizard.cpp; sourceTree = "<group>"; };
 		E15598A710000B1200B7074A /* Wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wizard.h; sourceTree = "<group>"; };
-		E15598A810000B1200B7074A /* WizardExcel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WizardExcel.cpp; sourceTree = "<group>"; };
-		E15598A910000B1200B7074A /* WizardExcel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardExcel.h; sourceTree = "<group>"; };
+		E15598A810000B1200B7074A /* SpreadSheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpreadSheet.cpp; sourceTree = "<group>"; };
+		E15598A910000B1200B7074A /* SpreadSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadSheet.h; sourceTree = "<group>"; };
 		E15598AA10000B1200B7074A /* WizardExport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WizardExport.cpp; sourceTree = "<group>"; };
 		E15598AB10000B1200B7074A /* WizardExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardExport.h; sourceTree = "<group>"; };
 		E15598AC10000B1200B7074A /* WizardImport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WizardImport.cpp; sourceTree = "<group>"; };
@@ -566,8 +566,8 @@
 		E15599A810000B3100B7074A /* ARBInfoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBInfoItem.h; sourceTree = "<group>"; };
 		E15599A910000B3100B7074A /* ARBLocalization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBLocalization.cpp; sourceTree = "<group>"; };
 		E15599AA10000B3100B7074A /* ARBLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBLocalization.h; sourceTree = "<group>"; };
-		E15599AB10000B3100B7074A /* ARBString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBString.cpp; sourceTree = "<group>"; };
-		E15599AC10000B3100B7074A /* ARBString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBString.h; sourceTree = "<group>"; };
+		E15599AB10000B3100B7074A /* StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtil.cpp; sourceTree = "<group>"; };
+		E15599AC10000B3100B7074A /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
 		E15599AD10000B3100B7074A /* ARBStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBStructure.h; sourceTree = "<group>"; };
 		E15599AE10000B3100B7074A /* ARBTraining.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBTraining.cpp; sourceTree = "<group>"; };
 		E15599AF10000B3100B7074A /* ARBTraining.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBTraining.h; sourceTree = "<group>"; };
@@ -874,8 +874,8 @@
 				E15598A410000B1200B7074A /* Validators.h */,
 				E15598A610000B1200B7074A /* Wizard.cpp */,
 				E15598A710000B1200B7074A /* Wizard.h */,
-				E15598A810000B1200B7074A /* WizardExcel.cpp */,
-				E15598A910000B1200B7074A /* WizardExcel.h */,
+				E15598A810000B1200B7074A /* SpreadSheet.cpp */,
+				E15598A910000B1200B7074A /* SpreadSheet.h */,
 				E15598AA10000B1200B7074A /* WizardExport.cpp */,
 				E15598AB10000B1200B7074A /* WizardExport.h */,
 				E15598AC10000B1200B7074A /* WizardImport.cpp */,
@@ -968,8 +968,8 @@
 				E15599A810000B3100B7074A /* ARBInfoItem.h */,
 				E15599A910000B3100B7074A /* ARBLocalization.cpp */,
 				E15599AA10000B3100B7074A /* ARBLocalization.h */,
-				E15599AB10000B3100B7074A /* ARBString.cpp */,
-				E15599AC10000B3100B7074A /* ARBString.h */,
+				E15599AB10000B3100B7074A /* StringUtil.cpp */,
+				E15599AC10000B3100B7074A /* StringUtil.h */,
 				E15599AD10000B3100B7074A /* ARBStructure.h */,
 				E15599AE10000B3100B7074A /* ARBTraining.cpp */,
 				E15599AF10000B3100B7074A /* ARBTraining.h */,
@@ -1171,7 +1171,7 @@
 				E1144EC210813B4F00356F61 /* UpdateInfo.cpp in Sources */,
 				E1144EC310813B4F00356F61 /* Validators.cpp in Sources */,
 				E1144EC410813B4F00356F61 /* Wizard.cpp in Sources */,
-				E1144EC510813B4F00356F61 /* WizardExcel.cpp in Sources */,
+				E1144EC510813B4F00356F61 /* SpreadSheet.cpp in Sources */,
 				E1144EC610813B4F00356F61 /* WizardExport.cpp in Sources */,
 				E1144EC710813B4F00356F61 /* WizardImport.cpp in Sources */,
 				E1144EC810813B4F00356F61 /* WizardStart.cpp in Sources */,
@@ -1211,7 +1211,7 @@
 				E1144EEA10813B4F00356F61 /* ARBInfo.cpp in Sources */,
 				E1144EEB10813B4F00356F61 /* ARBInfoItem.cpp in Sources */,
 				E1144EEC10813B4F00356F61 /* ARBLocalization.cpp in Sources */,
-				E1144EED10813B4F00356F61 /* ARBString.cpp in Sources */,
+				E1144EED10813B4F00356F61 /* StringUtil.cpp in Sources */,
 				E1144EEE10813B4F00356F61 /* ARBTraining.cpp in Sources */,
 				E1144EEF10813B4F00356F61 /* ARBTypes.cpp in Sources */,
 				E1144EF010813B4F00356F61 /* BinaryData.cpp in Sources */,
@@ -1320,7 +1320,7 @@
 				E158FC8A1001371B00735E7F /* UpdateInfo.cpp in Sources */,
 				E158FC8B1001371B00735E7F /* Validators.cpp in Sources */,
 				E158FC8C1001371B00735E7F /* Wizard.cpp in Sources */,
-				E158FC8D1001371B00735E7F /* WizardExcel.cpp in Sources */,
+				E158FC8D1001371B00735E7F /* SpreadSheet.cpp in Sources */,
 				E158FC8E1001371B00735E7F /* WizardExport.cpp in Sources */,
 				E158FC8F1001371B00735E7F /* WizardImport.cpp in Sources */,
 				E158FC901001371B00735E7F /* WizardStart.cpp in Sources */,
@@ -1360,7 +1360,7 @@
 				E158FCB21001371B00735E7F /* ARBInfo.cpp in Sources */,
 				E158FCB31001371B00735E7F /* ARBInfoItem.cpp in Sources */,
 				E158FCB41001371B00735E7F /* ARBLocalization.cpp in Sources */,
-				E158FCB51001371B00735E7F /* ARBString.cpp in Sources */,
+				E158FCB51001371B00735E7F /* StringUtil.cpp in Sources */,
 				E158FCB61001371B00735E7F /* ARBTraining.cpp in Sources */,
 				E158FCB71001371B00735E7F /* ARBTypes.cpp in Sources */,
 				E158FCB81001371B00735E7F /* BinaryData.cpp in Sources */,

@@ -1,7 +1,7 @@
-export DEBUG
+export BUILDDIR
 export WXWIN
 
-USAGE="Usage $0 trunk|2.8 [debug]"
+USAGE="Usage $0 trunk|2.8 [release|debug] [cocoa]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
@@ -11,10 +11,20 @@ else
 	echo $USAGE
 	return
 fi
+BUILDDIR="$WXWIN/build-unicode"
 
-if test "x$2" = "xdebug"; then
-	DEBUG="-debug"
+if test "x$3" = "xcocoa"; then
+	BUILDDIR+="-cocoa"
 fi
 
-export PATH=$WXWIN/build-unicode${DEBUG}:$PATH
+if test "x$2" = "xdebug"; then
+	BUILDDIR+="-debug"
+elif test "x$2" = "xrelease"; then
+	DUMMY=0
+else
+	echo $USAGE
+	return
+fi
+
+export PATH=$BUILDDIR:$PATH
 echo $PATH
