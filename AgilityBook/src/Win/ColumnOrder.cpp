@@ -16,7 +16,6 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "ColumnOrder.h"
 
 #include "ARBString.h"

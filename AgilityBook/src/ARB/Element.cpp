@@ -40,7 +40,6 @@
 
 #include "ARBDate.h"
 #include "ARBString.h"
-#include "ARBStructure.h"
 #include "ARBTypes.h"
 
 #include <wx/mstream.h>
