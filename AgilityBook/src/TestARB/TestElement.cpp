@@ -20,9 +20,9 @@
 #include "TestARB.h"
 
 #include "ARBDate.h"
-#include "ARBString.h"
 #include "ARBStructure.h"
 #include "Element.h"
+#include "StringUtil.h"
 #include <wx/filefn.h>
 #include <wx/mstream.h>
 

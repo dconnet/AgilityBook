@@ -24,9 +24,9 @@
 #include "Validators.h"
 
 #include "ARBDate.h"
-#include "ARBString.h"
 #include "ARBTypes.h"
 #include "ComboBoxes.h"
+#include "StringUtil.h"
 #include <wx/datectrl.h>
 
 #if defined(__WXMSW__)

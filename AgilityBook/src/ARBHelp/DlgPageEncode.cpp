@@ -24,9 +24,9 @@
 
 #include "../ARB/VersionNum.h"
 #include "ARBHelp.h"
-#include "ARBString.h"
 #include "ARBTypes.h"
 #include "DlgARBHelp.h"
+#include "StringUtil.h"
 #include <set>
 #include <wx/config.h>
 #include <wx/dir.h>

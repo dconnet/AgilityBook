@@ -28,13 +28,13 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookMenu.h"
-#include "ARBString.h"
 #include "CommonView.h"
 #include "DlgMessage.h"
 #include "Globals.h"
 #include "PointsData.h"
 #include "Print.h"
 #include "RegItems.h"
+#include "StringUtil.h"
 #include "TabView.h"
 #include <wx/config.h>
 #include <wx/dnd.h>

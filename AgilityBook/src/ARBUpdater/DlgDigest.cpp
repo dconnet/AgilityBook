@@ -18,7 +18,7 @@
 #include "DlgDigest.h"
 
 #include "ARBMsgDigest.h"
-#include "ARBString.h"
+#include "StringUtil.h"
 #include "../Win/Globals.h"
 #include <wx/filedlg.h>
 #include <wx/valgen.h>

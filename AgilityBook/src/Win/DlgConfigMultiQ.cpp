@@ -28,10 +28,10 @@
 #include "ARBConfigLevel.h"
 #include "ARBConfigSubLevel.h"
 #include "ARBConfigVenue.h"
-#include "ARBString.h"
 #include "DlgEventSelect.h"
 #include "Globals.h"
 #include "ListCtrl.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include <wx/datectrl.h>
 #include <wx/listctrl.h>

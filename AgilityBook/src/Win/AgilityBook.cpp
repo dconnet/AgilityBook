@@ -31,12 +31,12 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBString.h"
 #include "Element.h"
 #include "LanguageManager.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
+#include "StringUtil.h"
 #include "TabView.h"
 #include <vector>
 #include <wx/choicdlg.h>

@@ -19,7 +19,7 @@
 #include "stdafx.h"
 #include "ListData.h"
 
-#include "ARBString.h"
+#include "StringUtil.h"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>

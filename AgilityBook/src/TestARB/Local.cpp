@@ -27,8 +27,8 @@
 #include "stdafx.h"
 #include "Local.h"
 
-#include "ARBString.h"
 #include "ARBStructure.h"
+#include "StringUtil.h"
 #include <wx/string.h>
 
 #ifdef __WXMSW__

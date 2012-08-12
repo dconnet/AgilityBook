@@ -34,9 +34,9 @@
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBConfigVenue.h"
-#include "ARBString.h"
 #include "CheckTreeCtrl.h"
 #include "ComboBoxes.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
 #include <wx/datectrl.h>

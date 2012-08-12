@@ -23,11 +23,11 @@
 #include "DlgARBHelp.h"
 
 #include "ARBHelp.h"
-#include "ARBString.h"
 #include "BinaryData.h"
 #include "DlgPageEncode.h"
 #include "DlgPageEncodeFiles.h"
 #include "DlgPageEncodeFinish.h"
+#include "StringUtil.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
 

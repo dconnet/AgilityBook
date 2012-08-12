@@ -23,13 +23,13 @@
 #include "CalendarSiteUSDAA.h"
 
 #include "../tidy/include/tidy.h"
-#include "ARBString.h"
 #include "ARBStructure.h"
 #include "BreakLine.h"
 #include "Element.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
 #include "ReadHttp.h"
+#include "StringUtil.h"
 #include "VersionNum.h"
 #include <errno.h>
 #include <wx/ffile.h>

@@ -27,8 +27,8 @@
 #include "ARBConfigLevel.h"
 #include "ARBConfigSubLevel.h"
 #include "ARBConfigVenue.h"
-#include "ARBString.h"
 #include "Globals.h"
+#include "StringUtil.h"
 #include <wx/valgen.h>
 
 #ifdef __WXMSW__

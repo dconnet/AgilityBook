@@ -27,9 +27,9 @@
 #include "ARBDate.h"
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
-#include "ARBString.h"
 #include "AgilityBookOptions.h"
 #include "RegItems.h"
+#include "StringUtil.h"
 #include <algorithm>
 #include <wx/config.h>
 

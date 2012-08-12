@@ -19,7 +19,7 @@
 #include "DlgName.h"
 
 #include "AgilityBook.h"
-#include "ARBString.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
 

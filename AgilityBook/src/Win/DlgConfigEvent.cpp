@@ -46,12 +46,12 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigVenue.h"
-#include "ARBString.h"
 #include "DlgConfigEventMethod.h"
 #include "DlgConfigTitlePoints.h"
 #include "DlgConfigure.h"
 #include "DlgName.h"
 #include "ListData.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
 #include <algorithm>

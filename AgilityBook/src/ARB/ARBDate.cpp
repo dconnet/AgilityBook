@@ -30,7 +30,7 @@
 #include <sstream>
 #include <time.h>
 
-#include "ARBString.h"
+#include "StringUtil.h"
 #include <wx/datetime.h>
 #include <wx/intl.h>
 

@@ -39,8 +39,8 @@
 #include <sstream>
 
 #include "ARBDate.h"
-#include "ARBString.h"
 #include "ARBTypes.h"
+#include "StringUtil.h"
 
 #include <wx/mstream.h>
 #include <wx/stream.h>

@@ -22,8 +22,8 @@
 #include "DlgFault.h"
 
 #include "AgilityBook.h"
-#include "ARBString.h"
 #include "ComboBoxes.h"
+#include "StringUtil.h"
 #include "Validators.h"
 
 #ifdef __WXMSW__

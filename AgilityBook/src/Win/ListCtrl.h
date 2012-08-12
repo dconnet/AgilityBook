@@ -18,8 +18,8 @@
  * @li 2008-12-14 DRC Created
  */
 
-#include "ARBString.h"
 #include "ARBTypes.h"
+#include "StringUtil.h"
 #include "Widgets.h"
 #include <map>
 #include <vector>

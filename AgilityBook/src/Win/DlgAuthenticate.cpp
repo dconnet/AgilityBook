@@ -19,7 +19,7 @@
 #include "stdafx.h"
 #include "DlgAuthenticate.h"
 
-#include "ARBString.h"
+#include "StringUtil.h"
 #include "Widgets.h"
 #include <wx/sizer.h>
 #include <wx/statbox.h>

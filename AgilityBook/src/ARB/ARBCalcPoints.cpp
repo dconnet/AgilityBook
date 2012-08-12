@@ -19,8 +19,8 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
-#include "ARBString.h"
 #include "Element.h"
+#include "StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

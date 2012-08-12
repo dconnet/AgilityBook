@@ -32,9 +32,9 @@
 #include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBDogTitle.h"
-#include "ARBString.h"
 #include "ComboBoxes.h"
 #include "RichEditCtrl2.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>

@@ -39,10 +39,10 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBString.h"
 #include "ConfigHandler.h"
 #include "DlgMessage.h"
 #include "Element.h"
+#include "StringUtil.h"
 #include "Wizard.h"
 #include "VersionNum.h"
 #include <wx/config.h>

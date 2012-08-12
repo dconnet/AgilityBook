@@ -19,7 +19,7 @@
  */
 
 #include "ARBCalendar.h"
-#include "WizardExcel.h"
+#include "SpreadSheet.h"
 #include <vector>
 #include <wx/wizard.h>
 class CAgilityBookDoc;

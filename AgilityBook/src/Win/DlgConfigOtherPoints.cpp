@@ -24,7 +24,7 @@
 #include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
-#include "ARBString.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
 

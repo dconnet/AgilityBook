@@ -27,9 +27,9 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBAgilityRecordBook.h"
-#include "ARBString.h"
 #include "ConfigHandler.h"
 #include "Element.h"
+#include "StringUtil.h"
 #include "Widgets.h"
 #include <wx/filedlg.h>
 

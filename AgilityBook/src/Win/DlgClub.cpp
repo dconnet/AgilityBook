@@ -25,8 +25,8 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBDogClub.h"
-#include "ARBString.h"
 #include "ComboBoxes.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include <set>
 

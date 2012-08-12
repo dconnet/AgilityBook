@@ -29,7 +29,7 @@
 
 #include "AgilityBook.h"
 #include "ARBConfigTitle.h"
-#include "ARBString.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
 #include <wx/datectrl.h>

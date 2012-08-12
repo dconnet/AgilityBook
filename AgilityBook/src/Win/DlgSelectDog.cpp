@@ -22,10 +22,10 @@
 
 #include "AgilityBook.h"
 #include "ARBDog.h"
-#include "ARBString.h"
 #include "ARBTypes.h"
 #include "AgilityBookDoc.h"
 #include "RegItems.h"
+#include "StringUtil.h"
 #include <algorithm>
 #include <wx/config.h>
 

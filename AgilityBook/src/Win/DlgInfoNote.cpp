@@ -43,8 +43,8 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "ARBString.h"
 #include "DlgName.h"
+#include "StringUtil.h"
 #include "Widgets.h"
 #include <algorithm>
 #include <wx/bmpcbox.h>

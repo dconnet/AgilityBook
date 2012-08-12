@@ -25,7 +25,7 @@
 #include "AgilityBookDoc.h"
 #include "ARBDate.h"
 #include "ARBDog.h"
-#include "ARBString.h"
+#include "StringUtil.h"
 #include "Widgets.h"
 
 #ifdef __WXMSW__

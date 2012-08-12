@@ -57,7 +57,6 @@
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
-#include "ARBString.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
@@ -71,6 +70,7 @@
 #include "Globals.h"
 #include "PointsData.h"
 #include "Print.h"
+#include "StringUtil.h"
 #include "TabView.h"
 
 #ifdef __WXMSW__

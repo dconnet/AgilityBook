@@ -28,9 +28,9 @@
 #include "ARBTypes.h"
 
 #include "ARBLocalization.h"
-#include "ARBString.h"
 #include "ARBStructure.h"
 #include "Element.h"
+#include "StringUtil.h"
 #include <iostream>
 #include <math.h>
 #include <sstream>

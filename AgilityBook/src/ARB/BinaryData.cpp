@@ -20,7 +20,7 @@
 #include "BinaryData.h"
 
 #include "ARBBase64.h"
-#include "ARBString.h"
+#include "StringUtil.h"
 #include <wx/mstream.h>
 #include <wx/wfstream.h>
 #include <wx/zstream.h>

@@ -18,9 +18,9 @@
 #include "stdafx.h"
 #include "ColumnOrder.h"
 
-#include "ARBString.h"
 #include "ARBTypes.h"
 #include "RegItems.h"
+#include "StringUtil.h"
 #include <wx/config.h>
 
 #if defined(__WXMSW__)

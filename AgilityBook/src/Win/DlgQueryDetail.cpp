@@ -23,8 +23,8 @@
 
 #include "AgilityBook.h"
 #include "ARBConfig.h"
-#include "ARBString.h"
 #include "ComboBoxes.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
 

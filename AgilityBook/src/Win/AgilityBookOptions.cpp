@@ -50,10 +50,10 @@
 #include "ARBDate.h"
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
-#include "ARBString.h"
 #include "DlgAssignColumns.h"
 #include "Element.h"
 #include "RegItems.h"
+#include "StringUtil.h"
 #include "VersionNum.h"
 
 #include <wx/config.h>

@@ -23,7 +23,7 @@
 #include "stdafx.h"
 #include "ARBMsgDigest.h"
 
-#include "ARBString.h"
+#include "StringUtil.h"
 #include <sstream>
 #include <wx/file.h> 
 

@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "DlgPageEncodeFiles.h"
 
-#include "ARBString.h"
 #include "DlgARBHelp.h"
+#include "StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

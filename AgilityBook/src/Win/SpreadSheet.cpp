@@ -23,10 +23,10 @@
  */
 
 #include "stdafx.h"
-#include "WizardExcel.h"
+#include "SpreadSheet.h"
 
-#include "ARBString.h"
 #include "ARBTypes.h"
+#include "StringUtil.h"
 #include <sstream>
 
 #if HAS_AUTOMATION

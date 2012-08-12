@@ -90,9 +90,9 @@
 #include "ARBConfig.h"
 #include "ARBDog.h"
 #include "ARBLocalization.h"
-#include "ARBString.h"
 #include "ARBTypes.h"
 #include "Element.h"
+#include "StringUtil.h"
 
 #include <wx/utils.h>
 #ifdef __WXMSW__

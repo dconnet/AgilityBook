@@ -28,7 +28,6 @@
 #include "ARBConfig.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigVenue.h"
-#include "ARBString.h"
 #include "DlgConfigEvent.h"
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigOtherPoints.h"
@@ -38,6 +37,7 @@
 #include "DlgName.h"
 #include "DlgReorder.h"
 #include "Globals.h"
+#include "StringUtil.h"
 #include "Widgets.h"
 
 #ifdef __WXMSW__

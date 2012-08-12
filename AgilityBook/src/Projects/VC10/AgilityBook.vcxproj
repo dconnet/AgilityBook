@@ -206,6 +206,7 @@
     <ClCompile Include="..\..\Win\Print.cpp" />
     <ClCompile Include="..\..\Win\ReadHttp.cpp" />
     <ClCompile Include="..\..\Win\RichEditCtrl2.cpp" />
+    <ClCompile Include="..\..\Win\SpreadSheet.cpp" />
     <ClCompile Include="..\..\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -217,7 +218,6 @@
     <ClCompile Include="..\..\Win\Validators.cpp" />
     <ClCompile Include="..\..\Win\Widgets.cpp" />
     <ClCompile Include="..\..\Win\Wizard.cpp" />
-    <ClCompile Include="..\..\Win\WizardExcel.cpp" />
     <ClCompile Include="..\..\Win\WizardExport.cpp" />
     <ClCompile Include="..\..\Win\WizardImport.cpp" />
     <ClCompile Include="..\..\Win\WizardStart.cpp" />
@@ -310,13 +310,13 @@
     <ClInclude Include="..\..\Win\ReadHttp.h" />
     <ClInclude Include="..\..\Win\RegItems.h" />
     <ClInclude Include="..\..\Win\RichEditCtrl2.h" />
+    <ClInclude Include="..\..\Win\SpreadSheet.h" />
     <ClInclude Include="..\..\stdafx.h" />
     <ClInclude Include="..\..\Win\TabView.h" />
     <ClInclude Include="..\..\Win\UpdateInfo.h" />
     <ClInclude Include="..\..\Win\Validators.h" />
     <ClInclude Include="..\..\Win\Widgets.h" />
     <ClInclude Include="..\..\Win\Wizard.h" />
-    <ClInclude Include="..\..\Win\WizardExcel.h" />
     <ClInclude Include="..\..\Win\WizardExport.h" />
     <ClInclude Include="..\..\Win\WizardImport.h" />
     <ClInclude Include="..\..\Win\WizardStart.h" />

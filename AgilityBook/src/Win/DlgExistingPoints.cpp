@@ -31,8 +31,8 @@
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBDogExistingPoints.h"
-#include "ARBString.h"
 #include "Globals.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
 #include <wx/datectrl.h>

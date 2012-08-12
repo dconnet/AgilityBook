@@ -389,10 +389,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARB\ARBString.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\ARB\ARBStructure.h"
 				>
 			</File>
@@ -417,11 +413,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\stdafx.h"
+				RelativePath="..\..\ARB\StringUtil.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\ARB\VersionNum.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\stdafx.h"
 				>
 			</File>
 		</Filter>
@@ -582,10 +582,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARB\ARBString.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\ARB\ARBTraining.cpp"
 				>
 			</File>
@@ -603,6 +599,14 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\Element.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\StringUtil.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\VersionNum.cpp"
 				>
 			</File>
 			<File
@@ -640,10 +644,6 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\ARB\VersionNum.cpp"
-				>
 			</File>
 		</Filter>
 	</Files>

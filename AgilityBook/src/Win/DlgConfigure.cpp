@@ -35,7 +35,6 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigVenue.h"
-#include "ARBString.h"
 #include "DlgConfigOtherPoints.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigureData.h"
@@ -45,6 +44,7 @@
 #include "DlgMessageBox.h"
 #include "DlgName.h"
 #include "Globals.h"
+#include "StringUtil.h"
 #include "Widgets.h"
 #include <wx/artprov.h>
 

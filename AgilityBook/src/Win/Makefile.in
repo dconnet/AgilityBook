@@ -125,12 +125,12 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	Print.cpp \
 	ReadHttp.cpp \
 	RichEditCtrl2.cpp \
+	SpreadSheet.cpp \
 	TabView.cpp \
 	UpdateInfo.cpp \
 	Validators.cpp \
 	Widgets.cpp \
 	Wizard.cpp \
-	WizardExcel.cpp \
 	WizardExport.cpp \
 	WizardImport.cpp \
 	WizardStart.cpp

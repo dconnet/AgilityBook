@@ -25,9 +25,9 @@
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBDogRunOtherPoints.h"
-#include "ARBString.h"
 #include "DlgConfigOtherPoints.h"
 #include "RichEditCtrl2.h"
+#include "StringUtil.h"
 #include "Validators.h"
 
 #ifdef __WXMSW__

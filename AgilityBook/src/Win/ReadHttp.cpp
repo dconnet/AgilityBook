@@ -25,9 +25,10 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
-#include "ARBString.h"
 #include "DlgAuthenticate.h"
 #include "DlgProgress.h"
+#include "StringUtil.h"
+
 #include <wx/sstream.h>
 #include <wx/url.h>
 #include <wx/wfstream.h>

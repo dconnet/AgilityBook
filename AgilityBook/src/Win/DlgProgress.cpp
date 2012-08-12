@@ -20,8 +20,8 @@
 #include "stdafx.h"
 #include "DlgProgress.h"
 
-#include "ARBString.h"
 #include "Globals.h"
+#include "StringUtil.h"
 #include <vector>
 #include <wx/utils.h>
 

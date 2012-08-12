@@ -22,10 +22,10 @@
 #include "Local.h"
 
 #include "ARBConfig.h"
-#include "ARBString.h"
 #include "ARBStructure.h"
 #include "ConfigHandler.h"
 #include "Element.h"
+#include "StringUtil.h"
 #include <wx/app.h>
 #include <wx/filesys.h>
 #include <wx/fs_zip.h>

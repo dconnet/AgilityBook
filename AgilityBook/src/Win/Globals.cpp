@@ -21,8 +21,8 @@
 #include "stdafx.h"
 #include "Globals.h"
 
-#include "ARBString.h"
 #include "ListData.h"
+#include "StringUtil.h"
 #include "Widgets.h"
 #include <wx/config.h>
 #include <wx/display.h>

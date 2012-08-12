@@ -25,10 +25,10 @@
 #include "../ARB/VersionNum.h"
 #include "../Win/Widgets.h"
 #include "ARBHelp.h"
-#include "ARBString.h"
 #include "ARBTypes.h"
 #include "BinaryData.h"
 #include "DlgARBHelp.h"
+#include "StringUtil.h"
 #include <algorithm>
 #include <wx/ffile.h>
 #include <wx/filename.h>

@@ -26,7 +26,7 @@
 #include "ARBConfigVenue.h"
 #include "ARBDogReferenceRun.h"
 #include "ARBDogRun.h"
-#include "ARBString.h"
+#include "StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

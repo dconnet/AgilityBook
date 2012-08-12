@@ -24,9 +24,9 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
-#include "ARBString.h"
 #include "ARBTraining.h"
 #include "ComboBoxes.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
 #include <wx/datectrl.h>

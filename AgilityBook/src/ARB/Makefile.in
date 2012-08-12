@@ -71,12 +71,12 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBInfoItem.cpp \
 	ARBLocalization.cpp \
 	ARBMsgDigest.cpp \
-	ARBString.cpp \
 	ARBTraining.cpp \
 	ARBTypes.cpp \
 	BinaryData.cpp \
 	BreakLine.cpp \
 	Element.cpp \
+	StringUtil.cpp \
 	VersionNum.cpp
 
 ##########

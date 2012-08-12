@@ -54,13 +54,13 @@
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBDog.h"
-#include "ARBString.h"
 #include "DlgExistingPoints.h"
 #include "DlgRegNum.h"
 #include "DlgTitle.h"
 #include "FilterOptions.h"
 #include "ListCtrl.h"
 #include "ListData.h"
+#include "StringUtil.h"
 #include "Validators.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>

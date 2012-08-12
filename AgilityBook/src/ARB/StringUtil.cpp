@@ -20,7 +20,7 @@
  */
 
 #include "stdafx.h"
-#include "ARBString.h"
+#include "StringUtil.h"
 
 #include <algorithm>
 #include <locale>

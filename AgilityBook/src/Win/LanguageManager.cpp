@@ -23,8 +23,8 @@
 #include "stdafx.h"
 #include "LanguageManager.h"
 
-#include "ARBString.h"
 #include "RegItems.h"
+#include "StringUtil.h"
 #include <wx/cshelp.h>
 #include <wx/dir.h>
 #include <wx/html/helpctrl.h>

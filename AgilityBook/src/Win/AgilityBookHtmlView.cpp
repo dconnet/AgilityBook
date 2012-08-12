@@ -24,13 +24,13 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
-#include "ARBString.h"
 #include "ClipBoard.h"
 #include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
 #include "PointsData.h"
 #include "Print.h"
+#include "StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

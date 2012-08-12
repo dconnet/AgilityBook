@@ -17,7 +17,7 @@
 #include "stdafx.h"
 #include "DlgMessage.h"
 
-#include "ARBString.h"
+#include "StringUtil.h"
 #include "Widgets.h"
 
 #ifdef __WXMSW__

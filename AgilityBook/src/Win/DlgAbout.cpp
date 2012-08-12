@@ -29,7 +29,7 @@
 #include "DlgAbout.h"
 
 #include "AgilityBook.h"
-#include "ARBString.h"
+#include "StringUtil.h"
 #include "VersionNumber.h"
 
 #include "res/AgilityBook32.xpm"
