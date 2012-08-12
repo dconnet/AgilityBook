@@ -32,6 +32,7 @@
 
 // Forward references
 class ARBConfig;
+
 #define ARB_TYPEDEF(name) \
 	class name;\
 	typedef std::tr1::shared_ptr<name> name##Ptr;

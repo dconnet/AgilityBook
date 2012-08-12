@@ -36,7 +36,7 @@ namespace StringUtil
 	wxString stringWX(std::string const& inStr);
 	std::wstring stringW(wxString const& inStr);
 	std::string stringA(wxMemoryOutputStream const& inStr);
- 
+
 	// String conversion
 	std::string stringA(wchar_t const* const inStr, size_t inLen);
 	std::string stringA(std::wstring const& inStr);
