@@ -30,6 +30,13 @@
  * @li 2004-01-04 DRC Moved date parsing code to ARBDate::FromString.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
+ * @li Code evolved to AgilityRecordBook Element
+ * @li 2002-11-27 DRC Added additional SetValue methods.
+ * @li 2002-11-22 DRC Fixed a problem between unicode/mbcs compiles.
+ * @li 2002-11-19 DRC Simplified to Element/Tree to a single class.
+ * @li 2002-07-24 DRC Convert to Xerces 2.0.0. Takeadvantage that
+ *                    XMLCh == wchar_t and MFC7's CString[AW]
+ * @li 2001-09-13 DRC Created CStringTree
  */
 
 #include "stdafx.h"
