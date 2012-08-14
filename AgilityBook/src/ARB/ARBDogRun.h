@@ -25,6 +25,7 @@
  */
 
 #include <set>
+#include "ARB_Q.h"
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBDogNotes.h"

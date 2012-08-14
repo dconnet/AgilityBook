@@ -34,13 +34,14 @@ ARCHIVES = libarb
 # Source files for each target
 ##########
 libarb_SRCS = ARBAgilityRecordBook.cpp \
-	ARBBase64.cpp \
+	ARB_Q.cpp \
 	ARBBase.cpp \
+	ARBBase64.cpp \
 	ARBCalcPoints.cpp \
 	ARBCalendar.cpp \
+	ARBConfig.cpp \
 	ARBConfigAction.cpp \
 	ARBConfigCalSite.cpp \
-	ARBConfig.cpp \
 	ARBConfigDivision.cpp \
 	ARBConfigEvent.cpp \
 	ARBConfigFault.cpp \
@@ -55,8 +56,8 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBConfigTitlePoints.cpp \
 	ARBConfigVenue.cpp \
 	ARBDate.cpp \
-	ARBDogClub.cpp \
 	ARBDog.cpp \
+	ARBDogClub.cpp \
 	ARBDogExistingPoints.cpp \
 	ARBDogNotes.cpp \
 	ARBDogReferenceRun.cpp \

@@ -20,6 +20,7 @@
  */
 
 #include <set>
+#include "ARB_Q.h"
 #include "ARBTypes.h"
 class CAgilityBookDoc;
 class CTextCtrl;

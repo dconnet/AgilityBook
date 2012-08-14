@@ -241,6 +241,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\ARB\ARB_Q.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\ARB\ARBBase.h"
 				>
 			</File>
@@ -431,6 +435,10 @@
 			>
 			<File
 				RelativePath="..\..\ARB\ARBAgilityRecordBook.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARB_Q.cpp"
 				>
 			</File>
 			<File

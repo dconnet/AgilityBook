@@ -20,6 +20,7 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
+#include "ARB_Q.h"
 #include "ARBBase.h"
 #include "ARBTypes.h"
 

@@ -129,6 +129,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	TabView.cpp \
 	UpdateInfo.cpp \
 	Validators.cpp \
+	ValidatorsQ.cpp \
 	Widgets.cpp \
 	Wizard.cpp \
 	WizardExport.cpp \

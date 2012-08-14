@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-08-13 DRC Moved CQualifyingValidator to separate file.
  * @li 2012-01-02 DRC Change validator to support default value on empty field.
  * @li 2009-02-15 DRC Created
  */
@@ -114,25 +115,4 @@ public:
 protected:
 	long m_TrimStyle;
 	wxString m_ErrMsg;
-};
-
-
-/// For use with CQualifyingComboBox
-class CQualifyingValidator : public wxValidator
-{
-DECLARE_CLASS(CQualifyingValidator)
-public:
-	CQualifyingValidator(ARB_Q* valPtr = NULL, bool bAllowNoSel = false);
-	CQualifyingValidator(CQualifyingValidator const& rhs);
-
-	virtual wxObject *Clone() const {return new CQualifyingValidator(*this);}
-	bool Copy(CQualifyingValidator const& val);
-
-	virtual bool TransferFromWindow();
-	virtual bool TransferToWindow();
-	virtual bool Validate(wxWindow* parent);
-
-private:
-	ARB_Q* m_pQ;
-	bool m_bAllowNoSel;
 };

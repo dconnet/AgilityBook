@@ -216,6 +216,7 @@
     <ClCompile Include="..\..\Win\TabView.cpp" />
     <ClCompile Include="..\..\Win\UpdateInfo.cpp" />
     <ClCompile Include="..\..\Win\Validators.cpp" />
+    <ClCompile Include="..\..\Win\ValidatorsQ.cpp" />
     <ClCompile Include="..\..\Win\Widgets.cpp" />
     <ClCompile Include="..\..\Win\Wizard.cpp" />
     <ClCompile Include="..\..\Win\WizardExport.cpp" />
@@ -315,6 +316,7 @@
     <ClInclude Include="..\..\Win\TabView.h" />
     <ClInclude Include="..\..\Win\UpdateInfo.h" />
     <ClInclude Include="..\..\Win\Validators.h" />
+    <ClInclude Include="..\..\Win\ValidatorsQ.h" />
     <ClInclude Include="..\..\Win\Widgets.h" />
     <ClInclude Include="..\..\Win\Wizard.h" />
     <ClInclude Include="..\..\Win\WizardExport.h" />

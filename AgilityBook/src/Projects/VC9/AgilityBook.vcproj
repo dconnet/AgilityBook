@@ -621,6 +621,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\SpreadSheet.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -669,15 +673,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\ValidatorsQ.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\Widgets.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\Wizard.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\WizardExcel.cpp"
 				>
 			</File>
 			<File
@@ -1047,6 +1051,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\SpreadSheet.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\stdafx.h"
 				>
 			</File>
@@ -1063,15 +1071,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\ValidatorsQ.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\Widgets.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\Wizard.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\WizardExcel.h"
 				>
 			</File>
 			<File
