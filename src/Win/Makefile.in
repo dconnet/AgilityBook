@@ -1,0 +1,183 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for the src/Win subsystem                                           #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Recursively make in these subdirectories
+##########
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES += -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags`
+
+##########
+# List of programs and archives to link
+##########
+PROGRAMS = @PACKAGE_ARB_SHORTNAME@
+
+##########
+# Source files for each target
+##########
+@PACKAGE_ARB_SHORTNAME@_SRCS = \
+	AgilityBook.cpp \
+	AgilityBookCalendarListView.cpp \
+	AgilityBookCalendarView.cpp \
+	AgilityBookDoc.cpp \
+	AgilityBookHtmlView.cpp \
+	AgilityBookMenu.cpp \
+	AgilityBookOptions.cpp \
+	AgilityBookPanels.cpp \
+	AgilityBookPointsView.cpp \
+	AgilityBookRunsView.cpp \
+	AgilityBookTrainingView.cpp \
+	AgilityBookTreeData.cpp \
+	AgilityBookTreeView.cpp \
+	CalendarSites.cpp \
+	CalendarSiteUSDAA.cpp \
+	CheckLink.cpp \
+	CheckTreeCtrl.cpp \
+	ClipBoard.cpp \
+	ColumnOrder.cpp \
+	ComboBoxes.cpp \
+	CommonView.cpp \
+	ConfigHandler.cpp \
+	DlgAbout.cpp \
+	DlgAssignColumns.cpp \
+	DlgAuthenticate.cpp \
+	DlgCalendar.cpp \
+	DlgCalendarQueryDetail.cpp \
+	DlgClub.cpp \
+	DlgConfigEvent.cpp \
+	DlgConfigEventMethod.cpp \
+	DlgConfigMultiQ.cpp \
+	DlgConfigOtherPoints.cpp \
+	DlgConfigPlaceInfo.cpp \
+	DlgConfigTitle.cpp \
+	DlgConfigTitlePoints.cpp \
+	DlgConfigUpdate.cpp \
+	DlgConfigure.cpp \
+	DlgConfigureData.cpp \
+	DlgConfigVenue.cpp \
+	DlgCRCDViewer.cpp \
+	DlgDog.cpp \
+	DlgEventSelect.cpp \
+	DlgExistingPoints.cpp \
+	DlgFault.cpp \
+	DlgFind.cpp \
+	DlgFindLinks.cpp \
+	DlgInfoNote.cpp \
+	DlgListCtrl.cpp \
+	DlgListViewer.cpp \
+	DlgMessage.cpp \
+	DlgMessageBox.cpp \
+	DlgName.cpp \
+	DlgOptions.cpp \
+	DlgOptionsCalendar.cpp \
+	DlgOptionsFilter.cpp \
+	DlgOptionsPrint.cpp \
+	DlgOptionsProgram.cpp \
+	DlgOtherPoint.cpp \
+	DlgPartner.cpp \
+	DlgPluginDetails.cpp \
+	DlgPointsViewSort.cpp \
+	DlgProgress.cpp \
+	DlgQueryDetail.cpp \
+	DlgReferenceRun.cpp \
+	DlgRegNum.cpp \
+	DlgReorder.cpp \
+	DlgRun.cpp \
+	DlgSelectDog.cpp \
+	DlgSelectURL.cpp \
+	DlgTitle.cpp \
+	DlgTraining.cpp \
+	DlgTrial.cpp \
+	FilterOptions.cpp \
+	Globals.cpp \
+	IconList.cpp \
+	LanguageManager.cpp \
+	ListCtrl.cpp \
+	ListData.cpp \
+	Localization.cpp \
+	MainFrm.cpp \
+	MenuHelper.cpp \
+	NamedColumns.cpp \
+	NoteButton.cpp \
+	PointsData.cpp \
+	Print.cpp \
+	ReadHttp.cpp \
+	RichEditCtrl2.cpp \
+	SpreadSheet.cpp \
+	TabView.cpp \
+	UpdateInfo.cpp \
+	Validators.cpp \
+	ValidatorsQ.cpp \
+	Widgets.cpp \
+	Wizard.cpp \
+	WizardExport.cpp \
+	WizardImport.cpp \
+	WizardStart.cpp
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/tidy/lib -L$(TOPBUILDDIR)/src/ARB -ltidy -larb
+@PACKAGE_ARB_SHORTNAME@_LDFLAGS = -L$(TOPSRCDIR) `wx-config --libs`
+
+##########
+# Precompiled headers
+##########
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
+
+##########
+# Stuff to install
+##########
+#INSTALL_BIN = @PACKAGE_ARB_SHORTNAME@
+#INSTALL_SBIN = prog2
+#INSTALL_MAN = prog1.5
+
+#######
+# Default distribution rules.
+#######
+
+@NAM_RULES@
+
+resources: @PACKAGE_ARB_SHORTNAME@
+	echo "LANGDIR $(CURDIR)"
+	python $(TOPSRCDIR)/src/lang/CompileDatafile.py -f $(TOPSRCDIR)/src/lang/CompileDatList.txt $(TOPSRCDIR)/src/lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
+
+all: @PACKAGE_ARB_SHORTNAME@ resources
+
+dist:: all $(PHONY)
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/English.lproj
+	cp Info.plist $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/
+	cp version.plist $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/
+	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
+	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/PkgInfo
+	cp @PACKAGE_ARB_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS/@PACKAGE_ARB_SHORTNAME@
+	cp $(TOPSRCDIR)/src/Win/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
+	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
+	cp @PACKAGE_ARB_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

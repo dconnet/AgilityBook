@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="CommonRelease64"
+	InheritedPropertySheets="$(SolutionDir)/Common64.vsprops;$(SolutionDir)/CommonRelease.vsprops"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		RuntimeLibrary="0"
+	/>
+</VisualStudioPropertySheet>

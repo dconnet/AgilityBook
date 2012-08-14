@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="Common64"
+	InheritedPropertySheets="$(SolutionDir)/Common.vsprops"
+	>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90"
+		TargetMachine="17"
+	/>
+	<Tool
+		Name="VCMIDLTool"
+		TargetEnvironment="3"
+	/>
+</VisualStudioPropertySheet>

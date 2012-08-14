@@ -1,0 +1,237 @@
+/*
+ * Copyright (c) David Connet. All Rights Reserved.
+ *
+ * License: See License.txt
+ */
+
+/**
+ * @file
+ *
+ * @brief Global functions
+ * @author David Connet
+ *
+ * Revision History
+ * @li 2012-08-12 DRC Moved FormatBytes to StringUtil
+ * @li 2012-05-04 DRC Added FormatBytes
+ * @li 2011-04-16 DRC Added GetFileTimes
+ * @li 2010-10-30 DRC Moved BreakLine to a separate file.
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
+ * @li 2009-02-14 DRC Separated from AgilityBook.cpp
+ */
+
+#include "stdafx.h"
+#include "Globals.h"
+
+#include "ListData.h"
+#include "StringUtil.h"
+#include "Widgets.h"
+#include <wx/config.h>
+#include <wx/display.h>
+#include <wx/filename.h>
+#include <wx/stdpaths.h>
+#include <wx/tokenzr.h>
+
+#if defined(__WXMSW__)
+#include <wx/msw/msvcrt.h>
+#endif
+
+
+bool GetFileTimes(
+		wxFileName const& filename,
+		wxDateTime* dtAccess,
+		wxDateTime* dtMod,
+		wxDateTime* dtCreate)
+{
+#if defined(__WXMSW__)
+	// Using wx to get the times on network files is really slow.
+	// I suspect it's the win32 CreateFile/GetFileTime apis.
+	struct __stat64 s;
+	if (0 != _tstat64(filename.GetFullPath().wx_str(), &s))
+		return false;
+	if (dtAccess)
+		*dtAccess = wxDateTime(s.st_atime);
+	if (dtMod)
+		*dtMod = wxDateTime(s.st_mtime);
+	if (dtCreate)
+		*dtCreate = wxDateTime(s.st_ctime);
+	return true;
+#else
+	return filename.GetTimes(dtAccess, dtMod, dtCreate);
+#endif
+}
+
+
+wxWindow* FindWindowInSizer(
+		wxSizer* sizer,
+		int id)
+{
+	if (sizer)
+	{
+		wxSizerItemList& items = sizer->GetChildren();
+		for (wxSizerItemList::iterator iter = items.begin(); iter != items.end(); ++iter)
+		{
+			if ((*iter)->IsWindow())
+			{
+				if ((*iter)->GetWindow()->GetId() == id)
+				{
+					return (*iter)->GetWindow();
+				}
+			}
+			if ((*iter)->IsSizer())
+			{
+				wxWindow* win = FindWindowInSizer((*iter)->GetSizer(), id);
+				if (win)
+					return win;
+			}
+		}
+	}
+	return NULL;
+}
+
+
+std::wstring GetListColumnText(
+		CListCtrl const* list,
+		long index,
+		long col)
+{
+	std::wstring val;
+	if (list)
+	{
+		wxListItem info;
+		info.SetId(index);
+		info.SetColumn(col);
+		info.SetMask(wxLIST_MASK_TEXT);
+		if (-1 == index)
+		{
+			if (list->GetColumn(col, info))
+				val = StringUtil::stringW(info.GetText());
+		}
+		else
+		{
+			if (list->GetItem(info))
+				val = StringUtil::stringW(info.GetText());
+		}
+	}
+	return val;
+}
+
+
+bool SetListColumnText(
+		CListCtrl* list,
+		long index,
+		long col,
+		std::wstring const& text)
+{
+	if (!list)
+		return false;
+	wxListItem info;
+	info.SetId(index);
+	info.SetColumn(col);
+	info.SetText(StringUtil::stringWX(text));
+	return list->SetItem(info);
+}
+
+
+void RefreshTreeItem(
+		wxTreeCtrl* tree,
+		wxTreeItemId item,
+		bool bRecurse)
+{
+	if (tree)
+	{
+		if (item.IsOk())
+		{
+			CTreeData* pData = dynamic_cast<CTreeData*>(tree->GetItemData(item));
+			if (pData)
+			{
+				tree->SetItemText(item, StringUtil::stringWX(pData->OnNeedText()));
+			}
+			if (bRecurse)
+			{
+				wxTreeItemIdValue cookie;
+				for (wxTreeItemId child = tree->GetFirstChild(item, cookie);
+					child.IsOk();
+					child = tree->GetNextChild(item, cookie))
+				{
+					RefreshTreeItem(tree, child, bRecurse);
+				}
+			}
+		}
+	}
+}
+
+
+void DrawBetterLabel(
+		wxDC* pDC,
+		wxString const& inStr,
+		wxRect& rect,
+		int flags,
+		bool bCalc)
+{
+	if (!pDC)
+		return;
+
+	if (!bCalc)
+		pDC->SetClippingRegion(rect.x, rect.y, rect.width, rect.height);
+
+	wxCoord x = rect.x;
+	wxCoord y = rect.y;
+	rect.height = 0;
+
+	wxArrayString lines = wxStringTokenize(inStr, L"\n");
+	for (size_t i = 0; i < lines.GetCount(); ++i)
+	{
+		wxString line;
+		wxCoord width = 0;
+		wxSize szLine;
+
+		wxArrayString words = wxStringTokenize(lines[i], L" ", wxTOKEN_RET_DELIMS);
+		for (size_t k = 0; k < words.GetCount(); ++k)
+		{
+			szLine = pDC->GetTextExtent(words[k]);
+			if ((width += szLine.x) > rect.width)
+			{
+				if (!bCalc)
+					pDC->DrawText(line, x, y);
+				y += szLine.y;
+				rect.height += szLine.y;
+				line = L"";
+				width = szLine.x;
+			}
+			if (szLine.x > rect.width)
+			{
+				wxString s;
+				int a = 0;
+				size_t len = words[k].Length();
+
+				for (size_t iWord = 0; iWord < len; ++iWord)
+				{
+					wxSize szChar = pDC->GetTextExtent(words[k][iWord]);
+					if ((a += szChar.x) > rect.width)
+					{
+						if (!bCalc)
+							pDC->DrawText(s, x, y);
+						y += szChar.y;
+						rect.height += szChar.y;
+						s = L"";
+						a = szChar.x;
+					}
+					s << words[k][iWord];
+				}
+				words[k] = s;
+				width = a;
+			}
+			line << words[k];
+		}
+
+		if (!line.empty())
+		{
+			if (!bCalc)
+				pDC->DrawText(line, x, y);
+			y += szLine.y;
+			rect.height += szLine.y;
+		}
+	}
+	if (!bCalc)
+		pDC->DestroyClippingRegion();
+}

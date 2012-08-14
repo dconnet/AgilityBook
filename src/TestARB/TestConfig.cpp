@@ -1,0 +1,306 @@
+/*
+ * Copyright (c) David Connet. All Rights Reserved.
+ *
+ * License: See License.txt
+ */
+
+/**
+ * @file
+ * @brief Test ARBConfig class.
+ * @author David Connet
+ *
+ * Revision History
+ * @li 2012-07-30 DRC Added tests for checking recurring title styles.
+ * @li 2011-01-22 DRC Simplified how configs are added.
+ * @li 2010-08-13 DRC Updated for config 29.
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
+ * @li 2008-01-18 DRC Created empty file
+ */
+
+#include "stdafx.h"
+#include "TestARB.h"
+
+#include "ARBAgilityRecordBook.h"
+#include "ARBStructure.h"
+#include "ARBConfig.h"
+#include "ARBDogTitle.h"
+#include "ConfigHandler.h"
+#include "Element.h"
+
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
+
+// When adding a new config:
+//  - Add entry here. That's it.
+// RunARBTests.py will automatically pick up all XML files in ./res/
+// Also, update "Default" test if venues/actions/etc changed.
+const wchar_t* const gc_Configs[] =
+{
+	L"DefaultConfig.xml",
+	L"Config08_v10_2.xml",
+	L"Config09_v11_0.xml",
+	L"Config12_v12_1.xml",
+	L"Config14_v12_2.xml",
+	L"Config19_v12_5.xml",
+	L"Config20_v12_6.xml",
+	L"Config21_v12_7.xml",
+	L"Config22_v12_7.xml",
+	L"Config23_v12_8.xml",
+	L"Config24_v12_8.xml",
+	L"Config25_v12_9.xml",
+	L"Config26_v12_9.xml",
+	L"Config27_v12_10.xml",
+	L"Config28_v12_11.xml",
+	L"Config29_v12_11.xml",
+	L"Config30_v12_11.xml",
+	L"Config31_v12_11.xml",
+	L"Config32_v12_11.xml",
+	L"Config33_v13_1.xml",
+	L"Config34_v13_1.xml",
+	L"Config35_v13_1.xml",
+	L"Config36_v13_1.xml",
+	L"Config37_v13_1.xml",
+	L"Config38_v13_1.xml",
+};
+size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
+
+
+SUITE(TestConfig)
+{
+	TEST(Equality)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBConfig config1, config2;
+			CHECK(config1 == config2);
+			CConfigHandler handler;
+			config1.Default(&handler);
+			CHECK(config1 != config2);
+			ARBConfig config3(config1);
+			CHECK(config1 == config3);
+		}
+	}
+
+
+	TEST(Clear)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBConfig config1, config2;
+			CConfigHandler handler;
+			config1.Default(&handler);
+			CHECK(config1 != config2);
+			config1.clear();
+			CHECK(config1 == config2);
+		}
+	}
+
+
+	TEST(LoadFault)
+	{
+		if (!g_bMicroTest)
+		{
+			ElementNodePtr data = ElementNode::New();
+			ARBConfig config;
+			std::wostringstream err;
+			ARBErrorCallback callback(err);
+			CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(1,0), callback));
+			CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(2,0), callback));
+			CHECK(!config.LoadFault(data, ARBVersion(1,0), callback));
+			CHECK(!config.LoadFault(data, ARBVersion(2,0), callback));
+			data->SetName(TREE_FAULTTYPE);
+			data->SetValue(L"A fault");
+			CHECK(!config.LoadFault(data, ARBVersion(1,0), callback));
+			CHECK(config.LoadFault(data, ARBVersion(2,0), callback));
+			data->AddAttrib(L"Name", L"A fault");
+			CHECK(config.LoadFault(data, ARBVersion(1,0), callback));
+		}
+	}
+
+
+	TEST(LoadOtherPoints)
+	{
+		if (!g_bMicroTest)
+		{
+			ElementNodePtr data = ElementNode::New();
+			ARBConfig config;
+			std::wostringstream err;
+			ARBErrorCallback callback(err);
+			CHECK(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1,0), callback));
+			CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			data->SetName(TREE_OTHERPTS);
+			CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			data->AddAttrib(ATTRIB_OTHERPTS_NAME, L"Some Breed points");
+			CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			data->AddAttrib(ATTRIB_OTHERPTS_COUNT, L"2");
+			CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			data->AddAttrib(ATTRIB_OTHERPTS_COUNT, L"All");
+			CHECK(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+		}
+	}
+
+
+	TEST(Load)
+	{
+		if (!g_bMicroTest)
+		{
+			for (size_t i = 1; i < gc_NumConfigs; ++i)
+			{
+				ElementNodePtr tree = LoadXMLData(i);
+				// This probably means a config file is missing.
+				CHECK(tree);
+				ARBConfig config;
+				CHECK(LoadConfigFromTree(tree, config));
+			}
+		}
+	}
+
+
+	TEST(Save)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBConfig config;
+			CConfigHandler handler;
+			config.Default(&handler);
+			ElementNodePtr tree = ElementNode::New();
+			CHECK(config.Save(tree));
+			CHECK_EQUAL(1, tree->GetNodeCount(ElementNode::Element_Node));
+			int idx = tree->FindElement(TREE_CONFIG);
+			CHECK(idx >= 0);
+		}
+	}
+
+
+	TEST(Default)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBConfig config;
+			CHECK_EQUAL(0u, config.GetCalSites().size());
+			CHECK_EQUAL(0u, config.GetActions().size());
+			CHECK_EQUAL(0u, config.GetFaults().size());
+			CHECK_EQUAL(0u, config.GetOtherPoints().size());
+			CHECK_EQUAL(0u, config.GetVenues().size());
+			CConfigHandler handler;
+			config.Default(&handler);
+			CHECK_EQUAL(0u, config.GetCalSites().size());
+			CHECK_EQUAL(150u, config.GetActions().size());
+			CHECK_EQUAL(0u, config.GetFaults().size());
+			CHECK_EQUAL(5u, config.GetOtherPoints().size());
+			CHECK_EQUAL(14u, config.GetVenues().size());
+			CHECK(config.GetVenues().FindVenue(L"AAC"));
+			CHECK(config.GetVenues().FindVenue(L"AKC"));
+			CHECK(config.GetVenues().FindVenue(L"ASCA"));
+			CHECK(config.GetVenues().FindVenue(L"CKC"));
+			CHECK(config.GetVenues().FindVenue(L"CPE"));
+			CHECK(config.GetVenues().FindVenue(L"DOCNA"));
+			CHECK(config.GetVenues().FindVenue(L"FCI"));
+			CHECK(config.GetVenues().FindVenue(L"NADAC"));
+			CHECK(config.GetVenues().FindVenue(L"SCC"));
+			CHECK(config.GetVenues().FindVenue(L"TDAA"));
+			CHECK(config.GetVenues().FindVenue(L"UKC"));
+			CHECK(config.GetVenues().FindVenue(L"UKI"));
+			CHECK(config.GetVenues().FindVenue(L"USDAA"));
+			CHECK(config.GetVenues().FindVenue(L"VALOR"));
+		}
+	}
+
+
+	TEST(GetDTD)
+	{
+		if (!g_bMicroTest)
+		{
+			CConfigHandler handler;
+			std::string dtd = ARBConfig::GetDTD(&handler);
+			CHECK(0 != dtd.length());
+			std::string dtd2 = ARBConfig::GetDTD(&handler, false);
+			CHECK(0 != dtd2.length());
+			std::string::size_type pos = dtd2.find("\r\n");
+			// Expectations: dtd should be in OS-specific line ending (if SVN is set right)
+#ifdef __WXMSW__
+			CHECK(pos != std::string::npos);
+#else
+			CHECK(pos == std::string::npos);
+#endif
+			if (pos != std::string::npos)
+				CHECK(dtd != dtd2);
+			else
+				CHECK(dtd == dtd2);
+		}
+	}
+
+
+	TEST(GetTitleNiceName)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBConfig config;
+			CConfigHandler handler;
+			config.Default(&handler);
+			std::wstring nice = config.GetTitleNiceName(L"AKC", L"MX");
+			CHECK(0 != nice.length());
+		}
+	}
+
+
+	TEST(GetTitleCompleteName)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBConfig config;
+			CConfigHandler handler;
+			config.Default(&handler);
+			ARBDogTitlePtr title = ARBDogTitle::New();
+			title->SetVenue(L"AKC");
+			title->SetName(L"MX", 1, false, eTitleNumber);
+			// [MX] desc
+			std::wstring name1 = config.GetTitleCompleteName(title);
+			CHECK(0 != name1.length());
+			// desc [MX]
+			std::wstring name2 = config.GetTitleCompleteName(title, false);
+			CHECK(0 != name2.length());
+			CHECK(name1 != name2);
+			std::wstring nice = config.GetTitleNiceName(L"AKC", L"MX");
+			nice += L" [MX]";
+			CHECK(nice == name2);
+		}
+	}
+
+
+	TEST(RecurringTitle)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBConfig config;
+			CConfigHandler handler;
+			config.Default(&handler);
+			ARBDogTitlePtr title = ARBDogTitle::New();
+			title->SetVenue(L"AKC");
+
+			title->SetName(L"MACH", 2, true, eTitleNumber);
+			CHECK(title->GetGenericName() == L"MACH2");
+
+			title->SetName(L"MACH", 2, true, eTitleRoman);
+			CHECK(title->GetGenericName() == L"MACH-II");
+
+			title->SetName(L"MACH", 2, true, eTitleNone);
+			CHECK(title->GetGenericName() == L"MACH");
+		}
+	}
+
+
+	TEST(Update)
+	{
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//bool Update(
+			//		int indent,
+			//		ARBConfig const& inConfigNew,
+			//		std::wstring& ioInfo);
+		}
+	}
+}

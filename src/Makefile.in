@@ -1,0 +1,66 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for the                                               #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Recursively make in these subdirectories
+##########
+SUBDIRS = UnitTest++ ARB TestARB ARBHelp Win
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES = -DWXWIDGETS
+
+##########
+# List of programs and archives to link
+##########
+#PROGRAMS = arb testarb
+#ARCHIVES = arblib
+
+##########
+# Source files for each target
+##########
+
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+# prog1_LIBS = -lextralib
+# prog1_LDFLAGS = -L/path/to/extralib
+
+##########
+# Precompiled headers
+##########
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h 
+
+##########
+# Stuff to install
+##########
+#INSTALL_BIN = arb
+#INSTALL_SBIN = prog2
+#INSTALL_MAN = prog1.5
+
+@NAM_RULES@
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

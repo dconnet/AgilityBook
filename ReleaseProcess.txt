@@ -1,0 +1,127 @@
+Notes for releasing a new version.
+
+[On new year, update License.txt and src/Include/VersionNumber.h.]
+
+Files to change before marking files for release:
+- If file version has changed (arb version, not build number):
+  - Update comments in src/Win/res/AgilityRecordBook.dtd (update website too)
+  - Update the version in DefaultConfig.xml
+  - Plus: Make sure that the Update() methods have been updated!
+    If this is missed, the new data will not be merged.
+- If configuration has changed:
+  - Same as file version changing above
+  - Make sure it is added to TestARB (TestConfig.cpp)
+- Update CD Labels
+  - lsl: LightScribe Template Labeler
+- History.txt
+  Update program version and date, along with any comments.
+  - Reflect these changes into help/html/HistoryData.html
+  - Run "src\UpdateHistory.py -h -w"
+    (note: while a help file is no longer actually generated, continue doing
+    this as the website pulls it's data from this too. And at some point, I
+    may reinstate the help file [-h: arbhelp, -w: website])
+- Todo.txt
+  Any necessary changes...
+
+Run Doxygen and fix any warnings/errors it reports.
+- cd ...\AgilityBook
+- doxygen AgilityBook.dox
+
+Do a full rebuild and verify it.
+- cd src\Projects\Installer
+- 'BuildAll.py -w %WSBASE%\wxWidgets-2.8.12 -b fullupdate' [runs VC9 and VC10 compile]
+  - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
+      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-2.8.12'
+	            Default is %WXWIN%
+      -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
+      -t:       Testing, just print commands to run
+      compiler: vc9, vc10, vc11 (default: vc9, vc10)
+- Run 'GenMSI.py /all' to create w32/x64 installers and auto-update
+  Misc\Installations\InstallGUIDs.csv
+  - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
+
+Commit all changes to SVN.
+
+Pull files onto Mac and build there (see MAC_BUILD.txt)
+- If major or minor version number has changed:
+  - update Info.plist in xcode
+- Update Project Version in xcode target properties (x.y.z)
+- export PATH=$WXWIN/build-unicode:$PATH
+- cd .../AgilityBook
+- autoconf
+- rm -rf build-unicode
+- mkdir build-unicode
+- cd build-unicode
+- ../configure CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0
+-   If using wx-trunk, ../configure CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2
+    But first, tweak configure.in to set 10.5 sdk and no ppc.
+- make dist
+[note: the makefile is not generating the image correctly to run on osx10.4
+So do a release build in xcode and copy that executable into the 'dist'
+generated .app folder]
+- Use the '/Application/Utilities/Disk Utility' to create a dmg file
+  - Name it AgilityBook-n_n_n_n-mac.dmg
+  - After dragging in image, rename the mount point. (AgilityBook x.y.z)
+  - Unmount and 'Convert' in DU (save as same name) to compress.
+
+Commit all changes to SVN (should just be the xcode project).
+
+Tag SubVersion repository
+ - /tags/vn.n.n.n
+
+Create the files to be distributed (make sure you archive them too)
+- Any extra readme files required
+- Copy a backup of released files to \AgilityBook\test\[vc10/vc10x64]
+  Currently, I only archive vc10/x64 - the exe's that are released to the wild.
+  [exe,dll,dat,lang/...]
+- Use SVN to export AgilityBook\ to distrib\AgilityBook\ directory
+  - Zip AgilityBook to AgilityBook-n_n_n_n-src.zip
+  - Delete AgilityBook directory
+- Readme1st.vn.n.n.n.txt
+  - Copy Misc/Instructions.txt to Readme1st.vn.n.n.n.txt and modify [if needed]
+
+SourceForge:
+- Upload all files (https://sourceforge.net/projects/agilitybook/files/)
+  - Readme1st.vn.n.n.n.txt
+  - AgilityBook-n_n_n_n-src.zip
+  - AgilityBook-n_n_n_n-win.zip
+  - AgilityBook-n_n_n_n-x64.zip
+  - AgilityBook-n_n_n_n-mac.dmg
+- Set default file information (sets up file to auto-download)
+  - Windows: -win
+  - Mac: -mac
+  - Others: -src
+
+Web Site:
+- Upload msi zip files and dmg to files/
+- Update "$fileversion" and "$fileVerNo" in func.php
+  - Login to php(mysql) http://agilityrecordbook.com/phpAdmin/main.php
+  - Export columns as 'Excel 2000'
+    - Save this into local Excel file for archiving
+	- Copy existing log files from server (delete from server after copying)
+  - Delete old rows (so query returns actual number of downloads for current version)
+    - note, leave last item so next download auto-increments id
+- Update version2.xml and version.txt
+  - Run 'ARBUpdater /g' and generate new size and md5 tags for each file.
+  - Update config file (ConfigN.txt) [if necessary]
+- Make sure things are current (ongoing task!).
+  - Update DTD
+  - Update bugs.php, index.php
+  - Update news.xml (RSS feed)
+- Push all updated files to server.
+- Verify downloads are good.
+  - Verify auto-update works from program
+- Delete old zip files.
+
+In Yahoo
+- Note: Files are no longer released on Yahoo (as of v1.8)
+- Send an email announcing new release - send as a 'Special Notice' from Yahoo.
+
+Backup:
+- Backup development directory onto CD.
+  - Remove unnecessary files (build relics, svn)
+
+Prepare for next release:
+- Update version number
+  - This is done by editing .../include/VersionNumber.h
+- Update History.txt

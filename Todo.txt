@@ -1,0 +1,83 @@
+Last Updated: 1/6/2012
+
+- USDAA top-10 calculations:
+  - Number of places
+    - 1-3 dogs: 1
+    - 4-5 dogs: 2
+    - 6-10 dogs: 3
+    - >10: ((NumDogs - 1) / 10) + 3 [integer truncation]
+  - Points: (NumDogs - Place) * 2 + 1
+
+- Detect peruser/permachine installs to prevent 'bad' upgrades from happening.
+  From an email on 'wix-users' list:
+  "Products like InstallShield use an early-scheduled custom action to detect
+  installed products and, if an old version is found, sets ALLUSERS to the
+  correct value before the rest of the installation proceeds. The dialog is
+  also disabled in this case.
+  There's sample code for such a custom action in this thread
+  http://windows-installer-xml-wix-toolset.687559.n2.nabble.com/detecting-previous-version-s-ALLUSERS-property-td695163.html#a695164"
+
+- Make Mac dmg nicer for install (like Firefox)
+
+- Add 'YPS' into Reference Run list
+  (currently only in dialog to enter Reference Run data).
+
+- Make the trial properties dialog easier to add a club.
+
+- Add persistence to CalSite location/venue selection data.
+
+- Add persistence to selected CalSites.
+
+- Be able to select yards or meters (this is really just a visual thing, since
+  the program won't do anything differently)
+
+- Add a way to set the icon for a venue.
+  Currently, it's handcoded in the configuration.
+
+- Add drag-drop support in the runs view to move/copy runs.
+
+- Add display name to configuration items.
+
+- Make the Run dialog combo boxes check the filter to 'hide' levels/etc.
+
+- Make TopTen (OtherPoint) visible in the Runs view.
+
+- Fix printing so it wraps multi-line text.
+  Possibly have printed columns managed separately from viewed columns.
+
+- Import/Export data formats (formats, etc)
+  - Calendar export: Generate a listing like Karey's
+    <http://www.bayteam.org/docs/KareysCalendar.html>
+  - Export Runs: Figure out a way to export the reference runs.
+    Also imbedded CRCD and linked files?
+
+- Run entry dialog integrity checks (define!)
+  - If faults entered is greated then faults allowed, and 'Q' is set, warn
+    about possible problem
+  - If 'Q' not set and total faults says it should be a Q, warn.
+  - ...
+
+- Add logic to the reorder dialog to know if an item can be reordered around
+  an adjacent entry. (For instance, when reordering runs, reordering really
+  only applies to runs on a given date. If you attempt to reorder more, the
+  sorting that occurs after the reordering will undo what you did.)
+
+=== Considered, but probably will never do. ===
+
+- Add a column in runs to allow cumulative title points. Also add this to
+  the score tab in the run properties.
+  - Probably not - due to the current implementation, this could be rather
+    expensive.
+
+- Possible expense tracking?
+  - Most users said NO!
+
+- Refine Points (rename to Reports?)
+  - track faults, generate avgs in ranges (.5 refusals in last 6 months
+    compared to .8 in previous 6)
+  - Qs related to judges
+  - fastest yps/avg (base on related events)
+  - graph of similar runs showing yps, include sct.
+  --- Note the previous stuff will probably _not_ be implemented. Now that
+      we have a good export mechanism, spreadsheet programs are much better
+      at data analysis than I am!

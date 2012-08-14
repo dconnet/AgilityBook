@@ -1,0 +1,47 @@
+//
+// TestARB.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+#include "VersionNumber.h"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION ARB_VERSION
+ PRODUCTVERSION ARB_VERSION
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", ARB_VERSION_CompanyName
+            VALUE "FileDescription", "Agility Record Book UnitTest"
+            VALUE "FileVersion", ARB_VERSION_STRING
+            VALUE "InternalName", "TestARB.exe"
+            VALUE "LegalCopyright", ARB_VERSION_LegalCopyright
+            VALUE "OriginalFilename", "TestARB.exe"
+            VALUE "ProductName", "Agility Record Book UnitTest"
+            VALUE "ProductVersion", ARB_VERSION_STRING
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

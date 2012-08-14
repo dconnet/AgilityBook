@@ -1,0 +1,76 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for ARBHelp                                                         #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES += -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags`
+
+##########
+# List of programs and archives to link
+##########
+PROGRAMS = @PACKAGE_HLP_SHORTNAME@
+
+##########
+# Source files for each target
+##########
+@PACKAGE_HLP_SHORTNAME@_SRCS = ARBHelp.cpp \
+	DlgARBHelp.cpp \
+	DlgPageDecode.cpp \
+	DlgPageEncode.cpp \
+	DlgPageEncodeFiles.cpp \
+	DlgPageEncodeFinish.cpp \
+	../Win/Widgets.cpp
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb
+@PACKAGE_HLP_SHORTNAME@_LDFLAGS = `wx-config --libs`
+
+##########
+# Precompiled headers
+##########
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
+
+##########
+# Stuff to install
+##########
+#INSTALL_BIN = @PACKAGE_HLP_SHORTNAME@
+
+@NAM_RULES@
+
+all: @PACKAGE_HLP_SHORTNAME@
+
+dist:: all $(PHONY)
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/English.lproj
+	cp Info.plist $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/
+	cp version.plist $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/
+	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
+	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/PkgInfo
+	cp @PACKAGE_HLP_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS/@PACKAGE_HLP_SHORTNAME@
+	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

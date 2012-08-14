@@ -1,0 +1,111 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for the TestARB                                                     #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES += -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB -I$(TOPSRCDIR)/src/UnitTest++/src `wx-config --cppflags`
+
+##########
+# List of programs and archives to link
+##########
+PROGRAMS = @PACKAGE_TEST_SHORTNAME@
+
+##########
+# Source files for each target
+##########
+@PACKAGE_TEST_SHORTNAME@_SRCS = ConfigHandler.cpp \
+	Local.cpp \
+	TestAgilityRecordBook.cpp \
+	TestARB.cpp \
+	TestBinaryData.cpp \
+	TestBreakLine.cpp \
+	TestCalendar.cpp \
+	TestCalcPoints.cpp \
+	TestConfigAction.cpp \
+	TestConfigCalSite.cpp \
+	TestConfig.cpp \
+	TestConfigDivision.cpp \
+	TestConfigEvent.cpp \
+	TestConfigFault.cpp \
+	TestConfigLevel.cpp \
+	TestConfigLifetimePoints.cpp \
+	TestConfigMultiQ.cpp \
+	TestConfigOtherPoints.cpp \
+	TestConfigPlaceInfo.cpp \
+	TestConfigScoring.cpp \
+	TestConfigSubLevel.cpp \
+	TestConfigTitle.cpp \
+	TestConfigTitlePoints.cpp \
+	TestConfigVenue.cpp \
+	TestDate.cpp \
+	TestDogClub.cpp \
+	TestDog.cpp \
+	TestDogExistingPoints.cpp \
+	TestDogNotes.cpp \
+	TestDogReferenceRun.cpp \
+	TestDogRegNum.cpp \
+	TestDogRun.cpp \
+	TestDogRunOtherPoints.cpp \
+	TestDogRunPartner.cpp \
+	TestDogRunScoring.cpp \
+	TestDogTitle.cpp \
+	TestDogTrial.cpp \
+	TestDouble.cpp \
+	TestElement.cpp \
+	TestErrorCallback.cpp \
+	TestInfoItem.cpp \
+	TestMisc.cpp \
+	TestQ.cpp \
+	TestString.cpp \
+	TestTraining.cpp \
+	TestVersion.cpp
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb -L$(TOPBUILDDIR)/src/UnitTest++ -lUnitTest `wx-config --libs`
+
+##########
+# Precompiled headers
+##########
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
+
+##########
+# Stuff to install
+##########
+INSTALL_BIN = @PACKAGE_TEST_SHORTNAME@
+
+@NAM_RULES@
+
+resources: @PACKAGE_TEST_SHORTNAME@
+	echo "LANGDIR $(CURDIR)"
+	python $(TOPSRCDIR)/src/lang/CompileDatafile.py -x -f $(TOPSRCDIR)/src/lang/CompileDatList.txt $(TOPSRCDIR)/src/lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
+
+all: @PACKAGE_TEST_SHORTNAME@ resources
+	python $(TOPSRCDIR)/src/Projects/VC10/RunARBTests.py $(TOPSRCDIR)/src $(CURDIR) @PACKAGE_TEST_SHORTNAME@ Mac
+
+dist:: @PACKAGE_TEST_SHORTNAME@ resources
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

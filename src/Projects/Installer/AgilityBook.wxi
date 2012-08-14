@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+
+	<!--
+		The reason for different upgrade codes is that it allows beta testing
+		side-by-side. When the next version is actually released, it will
+		upgrade (uninstall) all previous versions.
+		IMPORTANT: The default directory must be different!
+
+		When a beta ends, undef BETA. That will then include the V1 upgrade 
+		ode. To start a beta, define BETA, define a new upgrade code and new
+		default folder. Also adjust the wxs code to support another code.
+		Non-betas will upgrade all other codes, BETAs will only upgrade itself.
+	-->
+
+	<?ifdef BETA?>
+		<?undef BETA?>
+	<?endif?>
+
+	<!-- v1 upgrade code [used thru v1.10.10] -->
+	<?define DEFFOLDERv1=Agility Record Book?>
+	<?define UPGRADECODEv1=DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB?>
+	<!-- v2 upgrade code [started with v2.0.0] -->
+	<?define DEFFOLDERv2=Agility Record Book v2?>
+	<?define UPGRADECODEv2=4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4?>
+
+	<?define DEFFOLDER=$(var.DEFFOLDERv2)?>
+	<!-- Make sure this is the same as in GenMSI.py -->
+	<?define UPGRADECODE=$(var.UPGRADECODEv2)?>
+
+	<?if $(sys.BUILDARCH) = x64 ?>
+		<?define Win64=yes?>
+		<?define ProgramFilesFolder="ProgramFiles64Folder"?>
+	<?elseif $(sys.BUILDARCH) = x86 ?>
+		<?define Win64=no?>
+		<?define ProgramFilesFolder="ProgramFilesFolder"?>
+	<?endif?>
+
+</Include>

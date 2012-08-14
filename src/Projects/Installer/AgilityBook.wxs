@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Copyright (c) David Connet. All Rights Reserved.
+License: See License.txt
+
+Command line options
+ per-user install:
+   XP,Vista: ALLUSERS=""
+   Win7: ALLUSERS=2 MSIINSTALLPERUSER=1
+   - Note: You can do a per-user install on Vista, but you'll still get
+     a UAC prompt due to Package/@InstallScope being set to perMachine.
+     [that's why ARBHasPerUserSupport is not set on Vista]
+ per-machine install:
+   XP,Vista: ALLUSERS=1
+   Win7: ALLUSERS=2 MSIINSTALLPERUSER=""
+ INSTALLDIR: Directory to install to
+ - If you run as admin and don't specify INSTALLDIR, it will install a
+   per-user install into ProgFiles. As non-admin, it fails. Be careful!
+ INSTALLDESKTOPSHORTCUT: Set to any value to install a desktop shortcut
+   ("" to suppress)
+
+Note: For System.AppUserModel.ID to work on Win7,
+      HKCU\Software\Microsoft\CurrentVersion\Explorer\Advanced\Start_TrackDocs
+      must be enabled. This is done in the Properties of the Start menu.
+
+Revision History
+2012-08-03 DRC Set INSTALLDIR properly during upgrade and maintenance.
+2012-04-08 DRC Fix min OS conditions (using VC10 now)
+2011-11-23 DRC Add internet shortcut to start menu
+2011-11-12 DRC Update .mo file name.
+2011-08-19 DRC Fix System.AppUserModel.ID name. Still doesn't fix uninstall.
+2011-05-11 DRC Add System.AppUserModel.ID to desktop shortcut too.
+2011-04-27 DRC Generate unique prodcodes for each architecture.
+2011-04-14 DRC Add System.AppUserModel.ID to support recent used files.
+2011-01-18 DRC Update VersionNT checks to agree with how code is compiled.
+2010-12-24 DRC Oops, Using NeverOverwrite breaks on upgrade.
+2010-12-23 DRC Minor tweak to change type51CA+Seq to SetProperty element.
+2010-11-19 DRC Added NeverOverwrite to Lang3 registry setting.
+2010-11-16 DRC Put supported languages into a foreach loop.
+2010-11-01 DRC No, don't. (Detect same version as old in upgrade table.)
+2010-08-25 DRC Detect same version as old in upgrade table.
+2010-05-22 DRC Added comment block!
+               Added a user/machine install option. Default to per-machine
+               install. The INSTALL_SCOPE macro is _not_ used for this.
+               That is for creating a totally separate installer that will
+               be marked as not requiring UAC.
+-->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+	<?include AgilityBook.wxi?>
+
+<Product Id="*"
+	UpgradeCode="$(var.UPGRADECODE)"
+	Name="Agility Record Book $(var.CURRENT_VERSION)"
+	Codepage="0"
+	Language="!(loc.LANG)"
+	Version="$(var.CURRENT_VERSION)"
+	Manufacturer="dcon Software">
+	<Package
+		Description="!(loc.Description)"
+		Comments="!(loc.Comments)"
+		InstallScope="$(var.INSTALL_SCOPE)"
+		InstallerVersion="200"
+		SummaryCodepage="!(loc.CODEPAGE)"
+		Compressed="yes" />
+
+	<WixVariable Id="WixUIDialogBmp" Value="ArbDialogBmp.bmp" />
+	<WixVariable Id="WixUIBannerBmp" Value="ArbBannerBmp.bmp" />
+
+	<Icon Id="IconAgilityBook.ico" SourceFile="..\..\..\src\win\res\AgilityBook.ico" />
+
+	<Property Id="AppName" Value="Agility Record Book" />
+	<Property Id="AppUserModelId" Value="dconSoft.AgilityRecordBook" />
+	<!--
+	I forgot - using the NeverOverwrite (added 11/19/2010) causes issues at
+	upgrade. During costing, the entry is seen, hence marked for not adding.
+	But RemoveExistingProducts then takes it out. So turn that off, get
+	the previous value and use that to set the registry.
+	-->
+	<Property Id="LANG3" Value="!(loc.Lang3)">
+		<RegistrySearch
+			Id="regLang3"
+			Root="HKCU"
+			Key="Software\[Manufacturer]\[AppName]\Settings"
+			Name="Lang3"
+			Type="raw"
+			Win64="$(var.Win64)" />
+	</Property>
+
+	<!-- Handle INSTALLDIR for upgrade/maintenance -->
+	<Property Id="INSTALLDIR_OLD">
+		<RegistrySearch
+			Id="arpInstallUpgrade"
+			Root="HKLM"
+			Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[OLDVERSIONFOUND]"
+			Name="InstallLocation"
+			Type="raw"
+			Win64="$(var.Win64)" />
+	</Property>
+	<Property Id="INSTALLDIR_MAINT">
+		<RegistrySearch
+			Id="arpInstallMaint"
+			Root="HKLM"
+			Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+			Name="InstallLocation"
+			Type="raw"
+			Win64="$(var.Win64)" />
+	</Property>
+
+	<SetDirectory Id="INSTALLDIR"
+		Value="[INSTALLDIR_OLD]">
+		Not INSTALLDIR And OLDVERSIONFOUND And INSTALLDIR_OLD
+	</SetDirectory>
+	<!-- Can't use SetDirectory here as it generates the same CA-id as above -->
+	<CustomAction
+		Id="SetINSTALLDIR2"
+		Property="INSTALLDIR"
+		Value="[INSTALLDIR_MAINT]" />
+	<InstallUISequence>
+		<Custom Action="SetINSTALLDIR2" After="CostInitialize">Not INSTALLDIR And Installed And INSTALLDIR_MAINT</Custom>
+	</InstallUISequence>
+	<InstallExecuteSequence>
+		<Custom Action="SetINSTALLDIR2" After="CostInitialize">Not INSTALLDIR And Installed And INSTALLDIR_MAINT</Custom>
+	</InstallExecuteSequence>
+
+	<Property Id="ARPCOMMENTS" Value="!(loc.Comments)" />
+	<Property Id="ARPCONTACT" Value="David Connet" />
+	<Property Id="ARPPRODUCTICON" Value="IconAgilityBook.ico" />
+	<Property Id="ARPHELPLINK" Value="http://www.agilityrecordbook.com" />
+	<Property Id="ARPURLINFOABOUT" Value="http://www.agilityrecordbook.com" />
+	<Property Id="ARPNOMODIFY" Value="1" />
+
+	<!-- Used in WindowsInstaller 5.0 -->
+	<Property Id="MSIINSTALLPERUSER" Value="1" />
+	<Property Id="ARBAllUsers" Value="1" />
+
+	<Property Id="INSTALLDESKTOPSHORTCUT" Value="1" />
+	<Property Id="LAUNCHPROGRAM" Value="1" Secure="yes" />
+
+	<!-- For success dialog in order to launch program -->
+	<Property Id="WixShellExecTarget" Value="[#_AgilityBook.exe]" />
+
+	<!-- Launch Conditions -->
+<?if $(sys.BUILDARCH)=x64?>
+	<Condition Message="!(loc.On64NT)">VersionNT&gt;=600 Or (VersionNT=502 And ServicePackLevel&gt;=1)</Condition>
+<?else?>
+	<Condition Message="!(loc.OnNT)">VersionNT&gt;=600 Or (VersionNT=501 And ServicePackLevel&gt;=2) Or (VersionNT=502 And ServicePackLevel&gt;=1)</Condition>
+<?endif?>
+
+	<!-- During beta, do not remove v1.
+	(that's why we created a different upgrade code) -->
+<?ifndef var.BETA?>
+	<!-- When checked the v1 guid, include ["0.0.0" < ver < "2.0.0"] -->
+	<Upgrade Id="$(var.UPGRADECODEv1)">
+		<UpgradeVersion
+			OnlyDetect="no"
+			Minimum="0.0.0"
+			IncludeMinimum="no"
+			Maximum="2.0.0"
+			IncludeMaximum="no"
+			Property="OLDVERSIONFOUND_V1" />
+	</Upgrade>
+<?endif?>
+	<!-- For current guid, include ["2.0.0" <= ver <= CurVer] -->
+	<Upgrade Id="$(var.UPGRADECODEv2)">
+		<UpgradeVersion
+			OnlyDetect="no"
+			Minimum="2.0.0"
+			IncludeMinimum="yes"
+			Maximum="$(var.CURRENT_VERSION)"
+			IncludeMaximum="no"
+			Property="OLDVERSIONFOUND" />
+		<UpgradeVersion
+			OnlyDetect="yes"
+			Minimum="$(var.CURRENT_VERSION)"
+			IncludeMinimum="yes"
+			Maximum="$(var.CURRENT_VERSION)"
+			IncludeMaximum="yes"
+			Property="SAMEVERSIONDETECTED" />
+		<UpgradeVersion
+			OnlyDetect="yes"
+			Minimum="$(var.CURRENT_VERSION)"
+			IncludeMinimum="no"
+			Property="NEWERVERSIONDETECTED" />
+	</Upgrade>
+
+	<Media Id="1" Cabinet="AgilityBook.cab" EmbedCab="yes" />
+
+	<Directory Id="TARGETDIR" Name="SourceDir">
+		<Directory Id="DesktopFolder" />
+		<Directory Id="ProgramMenuFolder">
+			<Directory Id="ARBMenuFolder" Name="$(var.DEFFOLDER)" />
+		</Directory>
+		<Directory Id="$(var.ProgramFilesFolder)">
+			<Directory Id="CompanyFolder" Name="dcon Software">
+				<Directory Id="INSTALLDIR" Name="$(var.DEFFOLDER)">
+					<Directory Id="dirLang" Name="lang">
+<?foreach langVar in $(var.SUPPORTED_LANGS)?>
+						<Directory Id="dir.$(var.langVar)" Name="$(var.langVar)">
+
+							<Component Id="C_$(var.langVar)" Guid="*" Win64="$(var.Win64)">
+								<File Id="_$(var.langVar).mo"
+									Name="AgilityBook.mo"
+									Source="$(var.BASEDIR)\lang\$(var.langVar)\AgilityBook.mo"
+									KeyPath="yes"
+									DiskId="1" />
+							</Component>
+						</Directory>
+<?endforeach?>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+	</Directory>
+
+	<DirectoryRef Id="INSTALLDIR">
+		<Component Id="C_AgilityBook.exe" Guid="B48C351B-3E9C-4C66-AC0B-150D26047499" Win64="$(var.Win64)">
+			<File Id="_AgilityBook.exe"
+				Name="AgilityBook.exe"
+				Source="$(var.BASEDIR)\AgilityBook.exe"
+				KeyPath="yes"
+				Checksum="yes"
+				DiskId="1" />
+			<!-- The description is the same since that was what MFC set it to (v1) -->
+			<ProgId Id="AgilityBook.Document"
+				Description="AgilityBook.Document"
+				Icon="_AgilityBook.exe">
+				<Extension Id="arb">
+					<Verb Id="open"
+						Command="Open"
+						TargetFile="_AgilityBook.exe"
+						Argument="&quot;%1&quot;" />
+				</Extension>
+			</ProgId>
+		</Component>
+
+		<Component
+			Id="C_RegistryEntries"
+			Guid="B5864F95-CB30-41B0-81F6-2E672423482C"
+			Win64="$(var.Win64)">
+			<!--
+			We only create (not remove) since none of the other registry
+			entries created by the program are removed. (This is created too,
+			just added here to remove an initial language selection dialog)
+			-->
+			<RegistryKey
+				Action="create"
+				Root="HKCU"
+				Key="Software\[Manufacturer]\[AppName]\Settings">
+				<RegistryValue
+					KeyPath="yes"
+					Name="Lang3"
+					Type="string"
+					Value="[LANG3]" />
+			</RegistryKey>
+		</Component>
+
+		<Component Id="C_AgilityBook.dat" Guid="C44F2D55-7128-423F-926A-AAE9848D1842" Win64="$(var.Win64)">
+			<File Id="_AgilityBook.dat"
+				Name="AgilityBook.dat"
+				Source="$(var.BASEDIR)\AgilityBook.dat"
+				KeyPath="yes"
+				DiskId="1" />
+		</Component>
+
+		<Component Id="C_ARBHelp.exe" Guid="6E5D1584-06A0-4024-A197-84B9E0326EA1" Win64="$(var.Win64)">
+			<File Id="_ARBHelp.exe"
+				Name="ARBHelp.exe"
+				Source="$(var.BASEDIR)\ARBHelp.exe"
+				KeyPath="yes"
+				Checksum="yes"
+				DiskId="1" />
+		</Component>
+	</DirectoryRef>
+
+	<DirectoryRef Id="ARBMenuFolder">
+		<Component Id="C_MenuShortcutsARB" Guid="74105C3C-0E12-4CE4-B955-DA4551365A97" Win64="$(var.Win64)">
+			<RegistryValue
+				KeyPath="yes"
+				Root="HKCU"
+				Key="Software\[Manufacturer]\[AppName]\Settings"
+				Name="inst_help"
+				Type="integer"
+				Value="1" />
+			<Shortcut Id="ShortcutARBExe"
+				Name="$(var.DEFFOLDER)"
+				Target="[INSTALLDIR]AgilityBook.exe">
+				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
+				<ShortcutProperty Key="System.AppUserModel.ID" Value="[AppUserModelId]" />
+			</Shortcut>
+			<util:InternetShortcut
+				Id="wwwArb"
+				Name="www.agilityrecordbook.com"
+				Target="http://www.agilityrecordbook.com"
+				Type="url" />
+			<RemoveFolder Id="ARBMenuFolder" On="uninstall" />
+		</Component>
+
+		<Component Id="C_MenuShortcutsHelp" Guid="2F642C5F-5C66-40C8-B548-D7794CBF580A" Win64="$(var.Win64)">
+			<RegistryValue
+				KeyPath="yes"
+				Root="HKCU"
+				Key="Software\[Manufacturer]\[AppName]\Settings"
+				Name="inst_arb"
+				Type="integer"
+				Value="1" />
+			<Shortcut Id="ShortcutARBHelp"
+				Name="ARB Helper"
+				Target="[INSTALLDIR]ARBHelp.exe">
+				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="1" />
+			</Shortcut>
+		</Component>
+	</DirectoryRef>
+
+	<DirectoryRef Id="DesktopFolder">
+		<Component Id="C_DeskShortcuts" Guid="988854A1-81B4-4B57-A51D-5C08BE963E5F" Win64="$(var.Win64)">
+			<Condition>INSTALLDESKTOPSHORTCUT</Condition>
+			<RegistryValue
+				KeyPath="yes"
+				Root="HKCU"
+				Key="Software\[Manufacturer]\[AppName]\Settings"
+				Name="inst_desk"
+				Type="integer"
+				Value="1" />
+			<Shortcut Id="AppDesktop"
+				Name="$(var.DEFFOLDER)"
+				Target="[INSTALLDIR]AgilityBook.exe">
+				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
+				<ShortcutProperty Key="System.AppUserModel.ID" Value="[AppUserModelId]" />
+			</Shortcut>
+		</Component>
+	</DirectoryRef>
+
+	<Feature Id="Complete"
+		Display="expand"
+		Level="1"
+		AllowAdvertise="no"
+		Title="Agility Record Book"
+		Description="!(loc.FeatureCompleteDesc)"
+		ConfigurableDirectory="INSTALLDIR">
+		<ComponentRef Id="C_MenuShortcutsARB" />
+		<ComponentRef Id="C_DeskShortcuts" />
+		<ComponentRef Id="C_RegistryEntries" />
+		<ComponentRef Id="C_AgilityBook.exe" />
+		<ComponentRef Id="C_AgilityBook.dat" />
+<?foreach langVar in $(var.SUPPORTED_LANGS)?>
+		<ComponentRef Id="C_$(var.langVar)" />
+<?endforeach?>
+
+		<Feature Id="ARBHelp"
+			Display="expand"
+			Level="1"
+			AllowAdvertise="no"
+			Title="!(loc.FeatureArbHelpTitle)"
+			Description="!(loc.FeatureArbHelpDesc)">
+			<ComponentRef Id="C_ARBHelp.exe" />
+			<ComponentRef Id="C_MenuShortcutsHelp" />
+		</Feature>
+	</Feature>
+
+	<SetProperty Id="ARPINSTALLLOCATION"
+		Sequence="execute"
+		After="CostFinalize"
+		Value="[INSTALLDIR]" />
+	<SetProperty Id="ARBHasPerUserSupport"
+		Sequence="ui"
+		After="FindRelatedProducts"
+		Value="1">(VersionNT&lt;600 And Privileged) Or VersionNT&gt;=601</SetProperty>
+
+	<CustomAction Id="ARB_AlreadyUpdated" Error="!(loc.ARB_AlreadyUpdated)" />
+	<CustomAction Id="ARB_NoDowngrade" Error="!(loc.ARB_NoDowngrade)" />
+	<CustomAction Id="ARB_LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
+	<InstallUISequence>
+		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">SAMEVERSIONDETECTED</Custom>
+		<Custom Action="ARB_NoDowngrade" After="ARB_AlreadyUpdated">NEWERVERSIONDETECTED</Custom>
+	</InstallUISequence>
+
+	<InstallExecuteSequence>
+		<RemoveExistingProducts After="InstallInitialize" />
+		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">SAMEVERSIONDETECTED</Custom>
+		<Custom Action="ARB_NoDowngrade" After="ARB_AlreadyUpdated">NEWERVERSIONDETECTED</Custom>
+		<!--
+		START_APP should only be set on the command line during auto-upgrading
+		(hence, it's not documented above). If set during full UI, it will
+		cause ARB to be launched before the installer is done. So, only allow
+		on silent and basic UI.
+		-->
+		<Custom Action="ARB_LaunchApplication" After="InstallFinalize">START_APP And UILevel&lt;4</Custom>
+	</InstallExecuteSequence>
+
+	<UI>
+		<!-- Copied from WixUI_InstallDir.wxs -->
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+
+		<TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+		<TextStyle Id="WixUI_Font_Emphasized" FaceName="Tahoma" Size="8" Bold="yes" />
+		<TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+		<TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+		<Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+		<Property Id="WixUI_Mode" Value="InstallDir" />
+
+		<DialogRef Id="BrowseDlg" />
+		<DialogRef Id="DiskCostDlg" />
+		<DialogRef Id="ErrorDlg" />
+		<DialogRef Id="FatalError" />
+		<DialogRef Id="FilesInUse" />
+		<DialogRef Id="MsiRMFilesInUse" />
+		<DialogRef Id="PrepareDlg" />
+		<DialogRef Id="ProgressDlg" />
+		<DialogRef Id="ResumeDlg" />
+		<DialogRef Id="UserExit" />
+
+		<Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="3">1</Publish>
+		<Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+
+		<Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+
+		<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+
+		<Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+		<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="MyInstallScopeDlg">LicenseAccepted="1" And ARBHasPerUserSupport</Publish>
+		<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="MyInstallDirDlg">LicenseAccepted="1" And Not ARBHasPerUserSupport</Publish>
+
+		<Publish Dialog="MyInstallScopeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+		<Publish Dialog="MyInstallScopeDlg" Control="Next" Event="NewDialog" Value="MyInstallDirDlg">1</Publish>
+
+		<Publish Dialog="MyInstallDirDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">Not ARBHasPerUserSupport</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="Back" Event="NewDialog" Value="MyInstallScopeDlg">ARBHasPerUserSupport</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+		
+		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MyInstallDirDlg" Order="1">NOT Installed</Publish>
+		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed</Publish>
+
+		<Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+		<Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+		<Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+		<Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+
+		<Dialog Id="MyInstallScopeDlg" Width="370" Height="270" Title="!(loc.InstallScopeDlg_Title)" KeepModeless="yes">
+			<Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.InstallScopeDlgBannerBitmap)" />
+			<Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallScopeDlgTitle)" />
+			<Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+			<Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallScopeDlgDescription)" />
+			<Control Id="BothScopes" Type="RadioButtonGroup" X="20" Y="55" Width="330" Height="120" Property="ARBAllUsers">
+				<RadioButtonGroup Property="ARBAllUsers">
+					<RadioButton Value="0" X="0" Y="0" Width="295" Height="16" Text="!(loc.InstallScopeDlgPerUser)" />
+					<RadioButton Value="1" X="0" Y="60" Width="295" Height="16" Text="!(loc.InstallScopeDlgPerMachine)" />
+				</RadioButtonGroup>
+			</Control>
+			<Control Id="PerUserDescription" Type="Text" X="33" Y="70" Width="300" Height="36" NoPrefix="yes" Text="!(loc.InstallScopeDlgPerUserDescription)" />
+			<Control Id="PerMachineDescription" Type="Text" X="33" Y="131" Width="300" Height="36" NoPrefix="yes" Text="!(loc.InstallScopeDlgPerMachineDescription)" />
+			<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+			<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
+			<Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)">
+				<!-- ALLUSERS is set in both cases simply to get the shield to display properly -->
+				<Publish Property="ALLUSERS" Value="1">VersionNT&lt;=600 And ARBAllUsers=1</Publish>
+				<Publish Property="ALLUSERS" Value="2">VersionNT&gt;=601 And ARBAllUsers=1</Publish>
+				<Publish Property="MSIINSTALLPERUSER" Value="{}">VersionNT&gt;=601 And ARBAllUsers=1</Publish>
+				<Publish Property="ALLUSERS" Value="{}">ARBAllUsers&lt;&gt;1</Publish>
+				<Publish Property="MSIINSTALLPERUSER" Value="1">VersionNT&gt;=601 And ARBAllUsers&lt;&gt;1</Publish>
+			</Control>
+			<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+				<Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+			</Control>
+		</Dialog>
+
+		<Dialog Id="MyInstallDirDlg" Width="370" Height="270" Title="!(loc.InstallDirDlg_Title)">
+			<Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
+			<Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallDirDlgTitle)" />
+			<Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallDirDlgDescription)" />
+			<Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+			<Control Id="FolderLabel" Type="Text" X="20" Y="60" Width="290" Height="30" NoPrefix="yes" Text="!(loc.InstallDirDlgFolderLabel)" />
+			<Control Id="Folder" Type="PathEdit" X="20" Y="100" Width="320" Height="18" Property="WIXUI_INSTALLDIR" Indirect="yes" />
+			<Control Id="ChangeFolder" Type="PushButton" X="20" Y="120" Width="56" Height="17" Text="!(loc.InstallDirDlgChange)" />
+			<Control Id="DesktopShortcut" Type="CheckBox" X="20" Y="170" Width="330" Height="16" Property="INSTALLDESKTOPSHORTCUT" CheckBoxValue="1" Text="!(loc.DesktopShortcutText)" />
+			<Control Id="LaunchCheckBox" Type="CheckBox" X="20" Y="200" Width="330" Height="16" Property="LAUNCHPROGRAM" Hidden="yes" CheckBoxValue="1" Text="!(loc.LaunchPgm)">
+				<Condition Action="show">Not START_APP And Not Installed</Condition>
+			</Control>
+			<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+			<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
+			<Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
+			<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+				<Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+			</Control>
+		</Dialog>
+
+		<Publish Dialog="ExitDialog"
+			Control="Finish"
+			Event="DoAction"
+			Value="ARB_LaunchApplication">ACTION&lt;&gt;"ADMIN" And Not START_APP And LAUNCHPROGRAM And Not Installed</Publish>
+	</UI>
+
+</Product>
+</Wix>

@@ -1,0 +1,77 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for the ARB subdirectory                                            #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES = -I$(TOPSRCDIR)/src/UnitTest++/src/Posix `wx-config --cppflags`
+
+##########
+# List of programs and archives to link
+##########
+ARCHIVES = libUnitTest
+
+##########
+# Source files for each target
+##########
+libUnitTest_SRCS = src/AssertException.cpp \
+	src/Test.cpp \
+	src/Checks.cpp \
+	src/TestRunner.cpp \
+	src/TestResults.cpp \
+	src/TestReporter.cpp \
+	src/TestReporterStdout.cpp \
+	src/ReportAssert.cpp \
+	src/TestList.cpp \
+	src/TimeConstraint.cpp \
+	src/TestDetails.cpp \
+	src/MemoryOutStream.cpp \
+	src/DeferredTestReporter.cpp \
+	src/DeferredTestResult.cpp \
+	src/XmlTestReporter.cpp \
+	src/CurrentTest.cpp \
+	src/posix_SignalTranslator.cpp \
+	src/posix_TimeHelpers.cpp
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+#UnitTest_LIBS = `wx-config --libs`
+# prog1_LDFLAGS = -L/path/to/extralib
+
+##########
+# Precompiled headers
+##########
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
+
+
+##########
+# Stuff to install
+##########
+#INSTALL_BIN = libUnitTest
+#INSTALL_MAN = prog1.5
+
+@NAM_RULES@
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

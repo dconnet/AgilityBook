@@ -1,0 +1,59 @@
+#pragma once
+
+/*
+ * Copyright (c) David Connet. All Rights Reserved.
+ *
+ * License: See License.txt
+ */
+
+/**
+ * @file
+ *
+ * @brief interface of the CDlgReorder class
+ * @author David Connet
+ *
+ * Revision History
+ * @li 2011-10-14 DRC Changed how reorder dlg is used.
+ * @li 2009-02-09 DRC Ported to wxWidgets.
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ */
+
+#include "ARBBase.h"
+#include <vector>
+class CAgilityBookDoc;
+class CTreeCtrl;
+class wxTreeEvent;
+
+
+class CDlgReorder : public wxDialog
+{
+public:
+	CDlgReorder(
+			CAgilityBookDoc* pDoc,
+			ARBDogList* dogs,
+			wxWindow* pParent = NULL);
+	CDlgReorder(
+			CAgilityBookDoc* pDoc,
+			ARBDogTrialPtr trial,
+			wxWindow* pParent = NULL);
+
+private:
+	CAgilityBookDoc* m_pDoc;
+	ARBDogList* m_Dogs;
+	ARBDogTrialPtr m_Trial;
+	wxListBox* m_ctrlList;
+	CTreeCtrl* m_ctrlTree;
+	wxButton* m_ctrlUp;
+	wxButton* m_ctrlDown;
+
+protected:
+	void Init(wxWindow* pParent);
+	void UpdateControls();
+
+	DECLARE_EVENT_TABLE()
+	void OnListSelected(wxCommandEvent& evt);
+	void OnTreeSelected(wxTreeEvent& evt);
+	void OnMoveUp(wxCommandEvent& evt);
+	void OnMoveDown(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
+};

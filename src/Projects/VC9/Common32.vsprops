@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="Common32"
+	InheritedPropertySheets="$(SolutionDir)/Common.vsprops"
+	>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalOptions="/SafeSEH"
+		AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90"
+		TargetMachine="1"
+	/>
+	<Tool
+		Name="VCMIDLTool"
+		TargetEnvironment="1"
+	/>
+</VisualStudioPropertySheet>
