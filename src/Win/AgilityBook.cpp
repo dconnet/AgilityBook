@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-08-28 DRC Rework how wxCmdLineParser is initialized.
  * @li 2012-07-27 DRC Disable spell checking on OSX 10.8. It crashes.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Fix file autoload failure so it opens new document.
@@ -259,17 +260,9 @@ bool CAgilityBookApp::OnInit()
 	wxXmlResource::Get()->InitAllHandlers();
 	m_LangMgr = new CLanguageManager();
 
-	wxString filename;
-	static const wxCmdLineEntryDesc cmdLineDesc[] =
-	{
-#if wxCHECK_VERSION(2, 9, 4)
-		{wxCMD_LINE_PARAM, NULL, NULL, "input file", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
-#else
-		{wxCMD_LINE_PARAM, NULL, NULL, L"input file", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
-#endif
-		{wxCMD_LINE_NONE}
-	};
-	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
+	wxCmdLineParser cmdline(argc, argv);
+	cmdline.AddParam(_("input file"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL);
+
 	if (0 != cmdline.Parse(false))
 	{
 		cmdline.Usage();
@@ -278,6 +271,8 @@ bool CAgilityBookApp::OnInit()
 		m_LangMgr = NULL;
 		return false;
 	}
+
+	wxString filename;
 	if (0 < cmdline.GetParamCount())
 	{
 		filename = cmdline.GetParam(0);
