@@ -261,7 +261,7 @@ bool CAgilityBookApp::OnInit()
 	m_LangMgr = new CLanguageManager();
 
 	wxCmdLineParser cmdline(argc, argv);
-	cmdline.AddParam(_("input file"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL);
+	cmdline.AddParam(_("Agility Record Book file"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL);
 
 	if (0 != cmdline.Parse(false))
 	{

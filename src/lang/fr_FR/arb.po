@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-11 13:42-0800\n"
-"PO-Revision-Date: 2012-08-11 13:44-0800\n"
+"POT-Creation-Date: 2012-08-28 06:59-0800\n"
+"PO-Revision-Date: 2012-08-28 07:01-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -31,27 +31,27 @@ msgstr "AKC / Time 2 Beat"
 msgid "IDS_TITLEPOINT_NORMAL_UKI"
 msgstr "UKI"
 
-#: ARB/ARBTypes.cpp:116
+#: ARB/ARB_Q.cpp:37
 msgid "IDS_QTYPE_NA"
 msgstr "INV"
 
-#: ARB/ARBTypes.cpp:117
+#: ARB/ARB_Q.cpp:38
 msgid "IDS_QTYPE_Q"
 msgstr "Q"
 
-#: ARB/ARBTypes.cpp:118
+#: ARB/ARB_Q.cpp:39
 msgid "IDS_QTYPE_NQ"
 msgstr "NQ"
 
-#: ARB/ARBTypes.cpp:119
+#: ARB/ARB_Q.cpp:40
 msgid "IDS_QTYPE_E"
 msgstr "E"
 
-#: ARB/ARBTypes.cpp:120
+#: ARB/ARB_Q.cpp:41
 msgid "IDS_QTYPE_DNR"
 msgstr "PC"
 
-#: ARB/ARBTypes.cpp:121
+#: ARB/ARB_Q.cpp:42
 msgid "IDS_QTYPE_SQ"
 msgstr "SQ"
 
@@ -59,7 +59,7 @@ msgstr "SQ"
 msgid "IDS_BAD_VERSION"
 msgstr "Impossible de determiner information version"
 
-#: TestARB/Local.cpp:46 TestARB/TestMisc.cpp:65 Win/Localization.cpp:46
+#: TestARB/Local.cpp:46 TestARB/TestMisc.cpp:76 Win/Localization.cpp:46
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Version document inconnu"
 
@@ -473,19 +473,23 @@ msgstr "Updated %1$d Team runs."
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Parametre table changé pour %1$d parcours."
 
-#: Win/AgilityBook.cpp:134 Win/Print.cpp:956 Win/Print.cpp:990
+#: Win/AgilityBook.cpp:135 Win/Print.cpp:956 Win/Print.cpp:990
 msgid "Sorry, print preview needs a printer to be installed."
 msgstr "L'aperçu avant impression nécessite une imprimante installée."
 
-#: Win/AgilityBook.cpp:137 Win/Print.cpp:959
+#: Win/AgilityBook.cpp:138 Win/Print.cpp:959
 msgid "Print Preview"
 msgstr "Aperçu avant impression"
 
-#: Win/AgilityBook.cpp:250
+#: Win/AgilityBook.cpp:251
 msgid "IDS_MIN_RESOLUTION"
 msgstr ""
 "Ce logiciel demand un resolution ecran a au moins 800x600 ou quelqes "
 "dialogue ne vont pas etre visible. Voulez-vous continuer?"
+
+#: Win/AgilityBook.cpp:264
+msgid "Agility Record Book file"
+msgstr "fichier de Agility Record Book"
 
 #: Win/AgilityBookCalendarListView.cpp:479 Win/AgilityBookDoc.cpp:1532
 #: Win/AgilityBookRunsView.cpp:1190 Win/AgilityBookTrainingView.cpp:296
@@ -2653,15 +2657,15 @@ msgstr "&Organisation"
 msgid "HIDC_CLUB_VENUES"
 msgstr "Lorganisation pour le club d'accueil."
 
-#: Win/DlgClub.cpp:160 Win/DlgRegNum.cpp:170
+#: Win/DlgClub.cpp:159 Win/DlgRegNum.cpp:169
 msgid "IDS_SELECT_VENUE"
 msgstr "Choisissez un epreuve."
 
-#: Win/DlgClub.cpp:160 Win/DlgConfigOtherPoints.cpp:69
+#: Win/DlgClub.cpp:159 Win/DlgConfigOtherPoints.cpp:69
 #: Win/DlgConfigPlaceInfo.cpp:66 Win/DlgConfigPlaceInfo.cpp:72
 #: Win/DlgConfigPlaceInfo.cpp:107 Win/DlgQueryDetail.cpp:190
-#: Win/DlgRegNum.cpp:170 Win/Validators.cpp:448 Win/Validators.cpp:554
-#: Win/Validators.cpp:625 Win/Validators.cpp:634
+#: Win/DlgRegNum.cpp:169 Win/Validators.cpp:447 Win/Validators.cpp:553
+#: Win/ValidatorsQ.cpp:95 Win/ValidatorsQ.cpp:104
 msgid "Validation conflict"
 msgstr "Conflit de validation"
 
@@ -3545,7 +3549,7 @@ msgstr "Utiliser configuration &existante"
 #: Win/DlgConfigUpdate.cpp:70 Win/DlgConfigUpdate.cpp:71
 msgid "HIDC_CONFIG_UPDATE_EXISTING"
 msgstr ""
-"Fusionnez dans une configuration d'un autre dossier d'AgilityRecordBook."
+"Fusionnez dans une configuration d'un autre dossier de Agility Record Book."
 
 #: Win/DlgConfigUpdate.cpp:76
 msgid "IDC_CONFIG_UPDATE_NAME"
@@ -5172,80 +5176,80 @@ msgid "HIDC_QUERYDETAIL_NAME"
 msgstr ""
 "Ceci est le nom qui va être affiché à lutilisateur pour sélectionner un code."
 
-#: Win/DlgQueryDetail.cpp:190 Win/Validators.cpp:443 Win/Validators.cpp:548
+#: Win/DlgQueryDetail.cpp:190 Win/Validators.cpp:442 Win/Validators.cpp:547
 msgid "Please enter a value"
 msgstr "Renseignez le champ, svp."
 
 # DlgReferenceRun
-#: Win/DlgReferenceRun.cpp:75
+#: Win/DlgReferenceRun.cpp:76
 msgid "IDD_REF_RUN"
 msgstr "Parcours de référence"
 
-#: Win/DlgReferenceRun.cpp:92
+#: Win/DlgReferenceRun.cpp:93
 msgid "IDC_REFRUN_PLACE"
 msgstr "&Classement"
 
-#: Win/DlgReferenceRun.cpp:99 Win/DlgReferenceRun.cpp:100
+#: Win/DlgReferenceRun.cpp:100 Win/DlgReferenceRun.cpp:101
 msgid "HIDC_REFRUN_PLACE"
 msgstr "Le Classement du chien. Si pas connu, mettez à 0."
 
-#: Win/DlgReferenceRun.cpp:103
+#: Win/DlgReferenceRun.cpp:104
 msgid "IDC_REFRUN_Q"
 msgstr "&Qualifiant?"
 
-#: Win/DlgReferenceRun.cpp:109 Win/DlgReferenceRun.cpp:110
+#: Win/DlgReferenceRun.cpp:110 Win/DlgReferenceRun.cpp:111
 msgid "HIDC_REFRUN_Q"
 msgstr "Qualifiant?"
 
-#: Win/DlgReferenceRun.cpp:113
+#: Win/DlgReferenceRun.cpp:114
 msgid "IDC_REFRUN_TIME"
 msgstr "&Temps"
 
-#: Win/DlgReferenceRun.cpp:121 Win/DlgReferenceRun.cpp:122
+#: Win/DlgReferenceRun.cpp:122 Win/DlgReferenceRun.cpp:123
 msgid "HIDC_REFRUN_TIME"
 msgstr "Le temps pour finir le parcours."
 
-#: Win/DlgReferenceRun.cpp:125
+#: Win/DlgReferenceRun.cpp:126
 msgid "IDC_REFRUN_YPS"
 msgstr "m/s"
 
-#: Win/DlgReferenceRun.cpp:135
+#: Win/DlgReferenceRun.cpp:136
 msgid "IDC_REFRUN_POINTS"
 msgstr "&Résultat"
 
-#: Win/DlgReferenceRun.cpp:142 Win/DlgReferenceRun.cpp:143
+#: Win/DlgReferenceRun.cpp:143 Win/DlgReferenceRun.cpp:144
 msgid "HIDC_REFRUN_POINTS"
 msgstr "Le résultat du parcours."
 
-#: Win/DlgReferenceRun.cpp:146
+#: Win/DlgReferenceRun.cpp:147
 msgid "IDC_REFRUN_HEIGHT"
 msgstr "&Hauteur"
 
-#: Win/DlgReferenceRun.cpp:161 Win/DlgReferenceRun.cpp:162
+#: Win/DlgReferenceRun.cpp:162 Win/DlgReferenceRun.cpp:163
 msgid "HIDC_REFRUN_HEIGHT"
 msgstr "La hauteur du chien."
 
-#: Win/DlgReferenceRun.cpp:166
+#: Win/DlgReferenceRun.cpp:167
 msgid "IDC_REFRUN_NAME"
 msgstr "&Nom"
 
-#: Win/DlgReferenceRun.cpp:180 Win/DlgReferenceRun.cpp:181
+#: Win/DlgReferenceRun.cpp:181 Win/DlgReferenceRun.cpp:182
 msgid "HIDC_REFRUN_NAME"
 msgstr "Le nom du chien."
 
-#: Win/DlgReferenceRun.cpp:185
+#: Win/DlgReferenceRun.cpp:186
 msgid "IDC_REFRUN_BREED"
 msgstr "R&ace"
 
-#: Win/DlgReferenceRun.cpp:199 Win/DlgReferenceRun.cpp:200
+#: Win/DlgReferenceRun.cpp:200 Win/DlgReferenceRun.cpp:201
 msgid "HIDC_REFRUN_BREED"
 msgstr "La race du chien."
 
-#: Win/DlgReferenceRun.cpp:204
+#: Win/DlgReferenceRun.cpp:205
 msgid "IDC_REFRUN_NOTES"
 msgstr "N&otes"
 
-#: Win/DlgReferenceRun.cpp:211 Win/DlgReferenceRun.cpp:212
+#: Win/DlgReferenceRun.cpp:212 Win/DlgReferenceRun.cpp:213
 msgid "HIDC_REFRUN_NOTES"
 msgstr "Note du parcours."
 
@@ -5800,7 +5804,7 @@ msgstr ""
 "Impossible de trouver le method pour calculer les points (epreuve/degré/"
 "niveau conducteur) specifié dans le configuration."
 
-#: Win/DlgRun.cpp:3225 Win/Validators.cpp:634
+#: Win/DlgRun.cpp:3225 Win/ValidatorsQ.cpp:104
 msgid "IDS_SELECT_Q"
 msgstr "Choisissez un 'Q'."
 
@@ -6122,9 +6126,19 @@ msgstr "Autres points"
 msgid "IDS_COL_NAME_BREED_NOTE"
 msgstr "Nom/Race/Notes"
 
-#: Win/ReadHttp.cpp:103
+#: Win/ReadHttp.cpp:104
 msgid "Invalid URL"
 msgstr "URL invalide"
+
+#: Win/SpreadSheet.cpp:748
+#, c-format
+msgid "Reading %1$d rows and %2$d columns"
+msgstr "Lire %1$d lignes and %2$d colonnes"
+
+#: Win/SpreadSheet.cpp:1168
+#, c-format
+msgid "Reading %1$d rows"
+msgstr "Lire %1$d lignes"
 
 #: Win/TabView.cpp:241 Win/TabView.cpp:345
 msgid "IDS_TRAINING"
@@ -6181,8 +6195,8 @@ msgstr "ERREUR: Erreur interne pendant la mise à jour. Procédure annulée."
 msgid "IDS_UPDATE_CURRENT"
 msgstr "Pas des mises a jour."
 
-#: Win/Validators.cpp:389 Win/Validators.cpp:408 Win/Validators.cpp:422
-#: Win/Validators.cpp:433
+#: Win/Validators.cpp:388 Win/Validators.cpp:407 Win/Validators.cpp:421
+#: Win/Validators.cpp:432
 msgid "Please enter a valid number"
 msgstr "Merci d'enter un nombre valide."
 
@@ -6198,16 +6212,6 @@ msgstr "&Suivant >"
 #: Win/Wizard.cpp:107
 msgid "&Finish"
 msgstr "&Finir"
-
-#: Win/WizardExcel.cpp:749
-#, c-format
-msgid "Reading %1$d rows and %2$d columns"
-msgstr "Lire %1$d lignes and %2$d colonnes"
-
-#: Win/WizardExcel.cpp:1169
-#, c-format
-msgid "Reading %1$d rows"
-msgstr "Lire %1$d lignes"
 
 #: Win/WizardExport.cpp:93
 msgid "IDC_WIZARD_EXPORT_DELIM_GROUP"
