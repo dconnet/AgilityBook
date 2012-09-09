@@ -11,7 +11,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
+ * @li 2012-09-09 DRC Added 'titlePts','speedPts' to 'Placement'.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-06-11 DRC Still not right - runs with 0 SCT should allow title pts.
  * @li 2008-03-03 DRC Title point computation on T+F runs was wrong.
@@ -390,7 +390,10 @@ bool ARBDogRun::Load(
 }
 
 
-bool ARBDogRun::Save(ElementNodePtr ioTree, double titlePts) const
+bool ARBDogRun::Save(
+		ElementNodePtr ioTree,
+		ARBDogTrial const* pTrial,
+		ARBConfig const& inConfig) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -416,6 +419,7 @@ bool ARBDogRun::Save(ElementNodePtr ioTree, double titlePts) const
 		return false;
 	if (!m_Scoring.Save(run))
 		return false;
+
 	if (0 < m_Place || ARB_Q::eQ_NA != m_Q)
 	{
 		ElementNodePtr element = run->AddElementNode(TREE_PLACEMENT);
@@ -425,11 +429,31 @@ bool ARBDogRun::Save(ElementNodePtr ioTree, double titlePts) const
 			element->AddAttrib(ATTRIB_PLACEMENT_INCLASS, m_InClass);
 		if (0 <= m_DogsQd)
 			element->AddAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
-		if (m_Q.Qualified())
-			element->AddAttrib(ATTRIB_PLACEMENT_TITLE_POINTS, titlePts);
+
+		if (pTrial && m_Q.Qualified())
+		{
+			ARBConfigScoringPtr pScoring;
+			if (pTrial->GetClubs().GetPrimaryClub())
+				inConfig.GetVenues().FindEvent(
+					pTrial->GetClubs().GetPrimaryClubVenue(),
+					GetEvent(),
+					GetDivision(),
+					GetLevel(),
+					GetDate(),
+					NULL,
+					&pScoring);
+			if (pScoring)
+			{
+				element->AddAttrib(ATTRIB_PLACEMENT_TITLE_POINTS, GetTitlePoints(pScoring));
+				if (pScoring->HasSpeedPts())
+					element->AddAttrib(ATTRIB_PLACEMENT_SPEED_POINTS, GetSpeedPoints(pScoring));
+			}
+		}
+
 		if (!m_OtherPoints.Save(element))
 			return false;
 	}
+
 	if (!m_Notes.Save(run))
 		return false;
 	if (!m_RefRuns.Save(run))
@@ -757,26 +781,7 @@ bool ARBDogRunList::Save(
 		iter != end();
 		++iter)
 	{
-		ARBDogRunPtr pRun = *iter;
-		double pts = 0;
-		if (pRun->GetQ().Qualified())
-		{
-			ARBConfigScoringPtr pScoring;
-			if (pTrial->GetClubs().GetPrimaryClub())
-				inConfig.GetVenues().FindEvent(
-					pTrial->GetClubs().GetPrimaryClubVenue(),
-					pRun->GetEvent(),
-					pRun->GetDivision(),
-					pRun->GetLevel(),
-					pRun->GetDate(),
-					NULL,
-					&pScoring);
-			if (pScoring)
-			{
-				pts = pRun->GetTitlePoints(pScoring);
-			}
-		}
-		if (!pRun->Save(ioTree, pts))
+		if (!(*iter)->Save(ioTree, pTrial, inConfig))
 			return false;
 	}
 	return true;

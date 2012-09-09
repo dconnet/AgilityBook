@@ -3,7 +3,7 @@
   - Added TDAA TNAC title.
 - Bumped file version to 13.2:
   - Added support for new recurring title style (none).
-  - Added 'titlePts' to 'Placement'
+  - Added 'titlePts','speedPts' to 'Placement'
 - Bug fixes:
   - Fixed missing About menu item.
   - Require Venue when editing a Registration Number or Club.

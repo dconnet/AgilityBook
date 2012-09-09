@@ -12,7 +12,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
+ * @li 2012-09-09 DRC Added 'titlePts','speedPts' to 'Placement'.
  * @li 2007-08-14 DRC Separated from ARBAgilityRecordBook.h
  */
 
@@ -242,6 +242,7 @@
 #define ATTRIB_PLACEMENT_PLACE				L"Place"
 #define ATTRIB_PLACEMENT_INCLASS			L"InClass"
 #define ATTRIB_PLACEMENT_DOGSQD				L"DogsQd"
+#define ATTRIB_PLACEMENT_SPEED_POINTS		L"speedPts"
 #define ATTRIB_PLACEMENT_TITLE_POINTS		L"titlePts"
 #define ATTRIB_PLACEMENT_OTHERPOINTS_NAME	L"Name"
 #define ATTRIB_PLACEMENT_OTHERPOINTS_POINTS	L"Points"
