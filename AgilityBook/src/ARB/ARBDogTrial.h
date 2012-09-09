@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -80,10 +81,13 @@ public:
 	/**
 	 * Save a document.
 	 * @param ioTree Parent element.
+	 * @param inConfig Configuration.
 	 * @return Success
 	 * @post The ARBDogTrial element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(
+			ElementNodePtr ioTree,
+			ARBConfig const& inConfig) const;
 
 	/**
 	 * Set the MultiQ settings on individual runs. See ARBDogRun::GetMultiQ.
@@ -168,7 +172,7 @@ private:
 /**
  * List of ARBDogTrial objects.
  */
-class ARBDogTrialList : public ARBVector<ARBDogTrialPtr>
+class ARBDogTrialList : public ARBVectorSaveConfig<ARBDogTrialPtr>
 {
 public:
 	/**

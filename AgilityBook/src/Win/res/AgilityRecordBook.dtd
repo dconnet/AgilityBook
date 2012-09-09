@@ -11,6 +11,9 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2012-09-09 DRC File version 13.2
+               Added new title style (eTitleNone).
+               Added 'titlePts' to 'Placement'.
 2011-07-31 DRC File version 13.1
                Added 'platform','os' to 'AgilityBook', modified
                TitlePoints (see ARBConfigTitlePoints.cpp).
@@ -624,7 +627,9 @@ These 3 elements define the major scoring mechanisms.
 		>
 
 <!--
- Integer: Place,InClass,DogsQd,Points
+ Integer: Place,InClass,DogsQd,Points,titlePts
+ Note: titlePts is not used internally. It allows external apps access to
+       title point information without needing to compute them.
 -->
 <!ELEMENT Placement (OtherPoints*) >
 	<!ATTLIST Placement
@@ -632,6 +637,7 @@ These 3 elements define the major scoring mechanisms.
 		Place CDATA #REQUIRED
 		InClass CDATA #IMPLIED
 		DogsQd CDATA #IMPLIED
+		titlePts CDATA #IMPLIED
 	>
 <!ELEMENT OtherPoints EMPTY >
 	<!ATTLIST OtherPoints

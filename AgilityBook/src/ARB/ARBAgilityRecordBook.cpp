@@ -19,6 +19,7 @@
  * Revision History
  * @li 2012-07-30 DRC File version 13.2
  *                    Added new title style (eTitleNone).
+ *                    Added 'titlePts' to 'Placement'.
  * @li 2012-07-08 DRC Fix title instance when a title is changed to recurring.
  * @li 2011-07-31 DRC File version 13.1
  *                    Added 'platform','os' to 'AgilityBook', modified
@@ -367,7 +368,7 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 	}
 	if (inDogs)
 	{
-		if (!m_Dogs.Save(outTree))
+		if (!m_Dogs.Save(outTree, m_Config))
 			return false;
 	}
 	return true;

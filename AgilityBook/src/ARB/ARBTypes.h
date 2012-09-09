@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-09 DRC Added ARBVectorNoSave.
  * @li 2012-08-13 DRC Moved ARB_Q to separate file.
  * @li 2012-05-04 DRC Add bAlwaysStripZeros to ARBDouble::ToString.
  * @li 2011-08-22 DRC ARBVersion was only using 16 instead of 32bits.
@@ -108,25 +109,25 @@ std::wstring SanitizeStringForHTML(
  * Extend some common functionality.
  */
 template <typename T>
-class ARBVector : public std::vector<T>
+class ARBVectorNoSave : public std::vector<T>
 {
 public:
-	ARBVector()
+	ARBVectorNoSave()
 	{
 	}
 
 	/**
 	 * Equality test (by value, not pointer).
 	 */
-	bool operator==(ARBVector<T> const& rhs) const
+	bool operator==(ARBVectorNoSave<T> const& rhs) const
 	{
 		if (this == &rhs)
 			return true;
-		if (ARBVector<T>::size() != rhs.size())
+		if (ARBVectorNoSave<T>::size() != rhs.size())
 			return false;
-		typename ARBVector<T>::const_iterator iter1, iter2;
-		for (iter1 = ARBVector<T>::begin(), iter2 = rhs.begin();
-			iter1 != ARBVector<T>::end();
+		typename ARBVectorNoSave<T>::const_iterator iter1, iter2;
+		for (iter1 = ARBVectorNoSave<T>::begin(), iter2 = rhs.begin();
+			iter1 != ARBVectorNoSave<T>::end();
 			++iter1, ++iter2)
 		{
 			if (*(*iter1) != *(*iter2))
@@ -134,7 +135,7 @@ public:
 		}
 		return true;
 	}
-	bool operator!=(ARBVector<T> const& rhs) const
+	bool operator!=(ARBVectorNoSave<T> const& rhs) const
 	{
 		return !operator==(rhs);
 	}
@@ -143,12 +144,12 @@ public:
 	 * Make a copy of everything.
 	 * @param outList Object being copied to.
 	 */
-	size_t Clone(ARBVector<T>& outList) const
+	size_t Clone(ARBVectorNoSave<T>& outList) const
 	{
 		outList.clear();
-		outList.reserve(ARBVector<T>::size());
-		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin();
-			iter != ARBVector<T>::end();
+		outList.reserve(ARBVectorNoSave<T>::size());
+		for (typename ARBVectorNoSave<T>::const_iterator iter = ARBVectorNoSave<T>::begin();
+			iter != ARBVectorNoSave<T>::end();
 			++iter)
 		{
 			T pItem = *iter;
@@ -166,8 +167,8 @@ public:
 	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		size_t nItems = 0;
-		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin();
-			iter != ARBVector<T>::end();
+		for (typename ARBVectorNoSave<T>::const_iterator iter = ARBVectorNoSave<T>::begin();
+			iter != ARBVectorNoSave<T>::end();
 			++iter)
 		{
 			nItems += (*iter)->GetSearchStrings(ioStrings);
@@ -189,8 +190,8 @@ public:
 		if (inItem)
 		{
 			int n = 0;
-			for (typename ARBVector<T>::iterator iter = ARBVector<T>::begin();
-				iter != ARBVector<T>::end();
+			for (typename ARBVectorNoSave<T>::iterator iter = ARBVectorNoSave<T>::begin();
+				iter != ARBVectorNoSave<T>::end();
 				++iter, ++n)
 			{
 				if (inItem == *iter)
@@ -198,18 +199,28 @@ public:
 					int offset = n + inMove;
 					if (offset < 0)
 						offset = 0;
-					if (offset >= static_cast<int>(ARBVector<T>::size()))
-						offset = static_cast<int>(ARBVector<T>::size()) - 1;
+					if (offset >= static_cast<int>(ARBVectorNoSave<T>::size()))
+						offset = static_cast<int>(ARBVectorNoSave<T>::size()) - 1;
 					if (offset != n)
 					{
 						bOk = true;
-						std::swap(ARBVector<T>::at(n), ARBVector<T>::at(offset));
+						std::swap(ARBVectorNoSave<T>::at(n), ARBVectorNoSave<T>::at(offset));
 						break;
 					}
 				}
 			}
 		}
 		return bOk;
+	}
+};
+
+
+template <typename T>
+class ARBVector : public ARBVectorNoSave<T>
+{
+public:
+	ARBVector()
+	{
 	}
 
 	/**
@@ -227,6 +238,37 @@ public:
 			++iter)
 		{
 			if (!(*iter)->Save(ioTree))
+				return false;
+		}
+		return true;
+	}
+};
+
+
+template <typename T>
+class ARBVectorSaveConfig : public ARBVectorNoSave<T>
+{
+public:
+	ARBVectorSaveConfig()
+	{
+	}
+
+	/**
+	 * Save a document.
+	 * In general, the vectors themselves are never stored, only the elements.
+	 * (It flattens the tree a little.)
+	 * @param ioTree Parent element.
+	 * @param inConfig Configuration.
+	 * @return Success
+	 * @post The T element will be created in ioTree.
+	 */
+	bool Save(ElementNodePtr ioTree, ARBConfig const& inConfig) const
+	{
+		for (typename ARBVectorSaveConfig<T>::const_iterator iter = ARBVectorSaveConfig<T>::begin();
+			iter != ARBVectorSaveConfig<T>::end();
+			++iter)
+		{
+			if (!(*iter)->Save(ioTree, inConfig))
 				return false;
 		}
 		return true;

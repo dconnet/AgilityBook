@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-06-11 DRC Still not right - runs with 0 SCT should allow title pts.
  * @li 2008-03-03 DRC Title point computation on T+F runs was wrong.
@@ -389,7 +390,7 @@ bool ARBDogRun::Load(
 }
 
 
-bool ARBDogRun::Save(ElementNodePtr ioTree) const
+bool ARBDogRun::Save(ElementNodePtr ioTree, double titlePts) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -424,6 +425,8 @@ bool ARBDogRun::Save(ElementNodePtr ioTree) const
 			element->AddAttrib(ATTRIB_PLACEMENT_INCLASS, m_InClass);
 		if (0 <= m_DogsQd)
 			element->AddAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
+		if (m_Q.Qualified())
+			element->AddAttrib(ATTRIB_PLACEMENT_TITLE_POINTS, titlePts);
 		if (!m_OtherPoints.Save(element))
 			return false;
 	}
@@ -740,6 +743,42 @@ bool ARBDogRunList::Load(
 	if (!thing->Load(inConfig, inClubs, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
+	return true;
+}
+
+
+bool ARBDogRunList::Save(
+		ElementNodePtr ioTree,
+		ARBDogTrial const* pTrial,
+		ARBConfig const& inConfig) const
+{
+	assert(pTrial);
+	for (ARBVector<ARBDogRunPtr>::const_iterator iter = begin();
+		iter != end();
+		++iter)
+	{
+		ARBDogRunPtr pRun = *iter;
+		double pts = 0;
+		if (pRun->GetQ().Qualified())
+		{
+			ARBConfigScoringPtr pScoring;
+			if (pTrial->GetClubs().GetPrimaryClub())
+				inConfig.GetVenues().FindEvent(
+					pTrial->GetClubs().GetPrimaryClubVenue(),
+					pRun->GetEvent(),
+					pRun->GetDivision(),
+					pRun->GetLevel(),
+					pRun->GetDate(),
+					NULL,
+					&pScoring);
+			if (pScoring)
+			{
+				pts = pRun->GetTitlePoints(pScoring);
+			}
+		}
+		if (!pRun->Save(ioTree, pts))
+			return false;
+	}
 	return true;
 }
 

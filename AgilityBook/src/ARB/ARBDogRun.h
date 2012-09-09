@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -87,10 +88,11 @@ public:
 	/**
 	 * Save a document.
 	 * @param ioTree Parent element.
+	 * @param titlePts Titling points (for external app use)
 	 * @return Success
 	 * @post The ARBDogRun element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr ioTree, double titlePts) const;
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -361,7 +363,7 @@ private:
 /**
  * List of ARBDogRun objects.
  */
-class ARBDogRunList : public ARBVector<ARBDogRunPtr>
+class ARBDogRunList : public ARBVectorNoSave<ARBDogRunPtr>
 {
 public:
 	/**
@@ -380,6 +382,19 @@ public:
 			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @param pTrial Parent trial.
+	 * @param inConfig Configuration.
+	 * @return Success
+	 * @post The T element will be created in ioTree.
+	 */
+	bool Save(
+			ElementNodePtr ioTree,
+			ARBDogTrial const* pTrial,
+			ARBConfig const& inConfig) const;
 
 	/**
 	 * Sort the list by date in ascending order. The user interface handles
