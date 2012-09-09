@@ -88,11 +88,15 @@ public:
 	/**
 	 * Save a document.
 	 * @param ioTree Parent element.
-	 * @param titlePts Titling points (for external app use)
+	 * @param pTrial Parent trial.
+	 * @param inConfig Configuration.
 	 * @return Success
 	 * @post The ARBDogRun element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree, double titlePts) const;
+	bool Save(
+			ElementNodePtr ioTree,
+			ARBDogTrial const* pTrial,
+			ARBConfig const& inConfig) const;
 
 	/**
 	 * Number of OtherPoint objects in use.

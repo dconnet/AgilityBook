@@ -1312,7 +1312,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			{
 				wxBusyCursor wait;
 				ElementNodePtr tree(ElementNode::New(CLIPDATA));
-				GetRun()->Save(tree, 0.0); // copy/paste: title points don't matter
+				GetRun()->Save(tree, NULL, m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
 				clpData.AddData(eFormatRun, tree);
 				clpData.AddData(m_pTree->GetPrintLine(GetId()));
 				clpData.CommitData();

@@ -1813,7 +1813,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 				{
 					CAgilityBookRunsViewDataPtr pData = GetItemRunData(*iter);
 					if (pData)
-						pData->GetRun()->Save(tree, 0.0); // copy/paste: title points don't matter
+						pData->GetRun()->Save(tree, NULL, GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
 					std::vector<std::wstring> line;
 					m_Ctrl->GetPrintLine((*iter), line);
 					table.StartLine();
