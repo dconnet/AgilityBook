@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2012-03-03 DRC Fixed new unearned titles from showing up in view.
  * @li 2011-10-14 DRC Modify how reorder dialog is invoked.
  * @li 2010-12-30 DRC After copying/deleting runs, update multi-Q status.
@@ -644,7 +645,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 			{
 				wxBusyCursor wait;
 				ElementNodePtr tree(ElementNode::New(CLIPDATA));
-				GetDog()->Save(tree);
+				GetDog()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
 				clpData.AddData(eFormatDog, tree);
 				clpData.AddData(m_pTree->GetPrintLine(GetId()));
 				clpData.CommitData();
@@ -941,7 +942,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 			{
 				wxBusyCursor wait;
 				ElementNodePtr tree(ElementNode::New(CLIPDATA));
-				GetTrial()->Save(tree);
+				GetTrial()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
 				clpData.AddData(eFormatTrial, tree);
 				clpData.AddData(m_pTree->GetPrintLine(GetId()));
 				clpData.CommitData();
@@ -1311,7 +1312,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			{
 				wxBusyCursor wait;
 				ElementNodePtr tree(ElementNode::New(CLIPDATA));
-				GetRun()->Save(tree);
+				GetRun()->Save(tree, 0.0); // copy/paste: title points don't matter
 				clpData.AddData(eFormatRun, tree);
 				clpData.AddData(m_pTree->GetPrintLine(GetId()));
 				clpData.CommitData();

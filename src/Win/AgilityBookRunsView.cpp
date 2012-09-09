@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-10-14 DRC Add run reordering support.
@@ -1812,7 +1813,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 				{
 					CAgilityBookRunsViewDataPtr pData = GetItemRunData(*iter);
 					if (pData)
-						pData->GetRun()->Save(tree);
+						pData->GetRun()->Save(tree, 0.0); // copy/paste: title points don't matter
 					std::vector<std::wstring> line;
 					m_Ctrl->GetPrintLine((*iter), line);
 					table.StartLine();

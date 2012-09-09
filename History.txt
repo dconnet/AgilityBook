@@ -1,8 +1,9 @@
-8/11/2012: v2.3.8.<in development>
+9/9/2012: v2.3.8.<in development>
 - Bumped Configuration v39:
   - Added TDAA TNAC title.
-- Bumped file version to 12.11:
+- Bumped file version to 13.2:
   - Added support for new recurring title style (none).
+  - Added 'titlePts' to 'Placement'
 - Bug fixes:
   - Fixed missing About menu item.
   - Require Venue when editing a Registration Number or Club.

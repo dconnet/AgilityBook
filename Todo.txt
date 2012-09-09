@@ -1,4 +1,21 @@
-Last Updated: 1/6/2012
+Last Updated: 9/9/2012
+
+-Import/Export info:
+  Calendar:
+    fuzzy match: startdate/enddate/venue/club
+    CAgilityBookDoc::ImportARBCalEntry
+  Training:
+    exact match
+    (could do fuzzy: date/name/subname)
+    CAgilityBookDoc::ImportARBLogEntry
+  Trials:
+    CAgilityBookDoc::ImportARBRunData
+      Dogs: match by callname
+        if dog exists, only update existing points registration numbers,
+        titles and trials.  otherwise, entire dog data merged
+      Trials: if newTrial != oldTrial, add newtrial (no merging happens)
+  CWizardImport::DoWizardFinish
+    A lot more logic to find scoringstyle, then run
 
 - USDAA top-10 calculations:
   - Number of places

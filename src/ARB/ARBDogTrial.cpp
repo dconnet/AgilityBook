@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2012-02-16 DRC Fixed an issue in co-sanctioned trial detection.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-05 DRC Fixed sort predicate so it is really stable.
@@ -206,7 +207,9 @@ bool ARBDogTrial::Load(
 }
 
 
-bool ARBDogTrial::Save(ElementNodePtr ioTree) const
+bool ARBDogTrial::Save(
+		ElementNodePtr ioTree,
+		ARBConfig const& inConfig) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -226,7 +229,7 @@ bool ARBDogTrial::Save(ElementNodePtr ioTree) const
 	}
 	if (!m_Clubs.Save(trial))
 		return false;
-	if (!m_Runs.Save(trial))
+	if (!m_Runs.Save(trial, this, inConfig))
 		return false;
 	return true;
 }

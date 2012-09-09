@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -258,7 +259,9 @@ bool ARBDog::Load(
 }
 
 
-bool ARBDog::Save(ElementNodePtr ioTree) const
+bool ARBDog::Save(
+		ElementNodePtr ioTree,
+		ARBConfig const& inConfig) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -289,7 +292,7 @@ bool ARBDog::Save(ElementNodePtr ioTree) const
 		return false;
 	if (!m_Titles.Save(dog))
 		return false;
-	if (!m_Trials.Save(dog))
+	if (!m_Trials.Save(dog, inConfig))
 		return false;
 	return true;
 }
