@@ -7,7 +7,7 @@
 	>
 	<Tool
 		Name="VCLinkerTool"
-		AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90"
+		AdditionalLibraryDirectories="$(WXWIN)\lib\vc90_x64_lib"
 		TargetMachine="17"
 	/>
 	<Tool

@@ -8,7 +8,7 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="$(WXBASE)\wxWidgets-2.8.12\include;$(WXBASE)\wxWidgets-2.8.12\include\msvc;..\..\Include;..\..\ARB"
+		AdditionalIncludeDirectories="$(WXWIN)\include;$(WXWIN)\include\msvc;..\..\Include;..\..\ARB"
 		PreprocessorDefinitions="wxMSVC_VERSION_AUTO=1;_SECURE_SCL=1;_SECURE_SCL_THROWS=1"
 		StringPooling="true"
 		UsePrecompiledHeader="2"
@@ -31,6 +31,6 @@
 	<Tool
 		Name="VCResourceCompilerTool"
 		Culture="1033"
-		AdditionalIncludeDirectories="..\..\Include;$(WXBASE)\wxWidgets-2.8.12\include;$(IntDir)"
+		AdditionalIncludeDirectories="..\..\Include;$(WXWIN)\include;$(IntDir)"
 	/>
 </VisualStudioPropertySheet>

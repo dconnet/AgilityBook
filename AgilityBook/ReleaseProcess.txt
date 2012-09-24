@@ -52,9 +52,7 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 - rm -rf build-unicode
 - mkdir build-unicode
 - cd build-unicode
-- ../configure CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0
--   If using wx-trunk, ../configure CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2
-    But first, tweak configure.in to set 10.5 sdk and no ppc.
+- ../configure CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2
 - make dist
 [note: the makefile is not generating the image correctly to run on osx10.4
 So do a release build in xcode and copy that executable into the 'dist'

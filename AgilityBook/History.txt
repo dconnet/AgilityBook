@@ -1,3 +1,5 @@
+9/23/2012: v3.0.0.<in development>
+
 9/23/2012: v2.3.8.82
 - Bumped Configuration v39:
   - Added TDAA TNAC title.

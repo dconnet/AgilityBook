@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2012-09-23 DRC Migrate to wx2.9 for ARBv3.
 # 2012-07-25 DRC Only run version include update from here.
 # 2012-07-04 DRC Update to supported compilers (vc9+)
 #                Specifically set WXWIN to official release branch.
@@ -11,7 +12,7 @@
 # 2010-06-11 DRC Support building on x64 OS
 # 2010-05-30 DRC Converted .bat to .py (keeps environment clean!)
 """BuildAll.py -w wxwin [-b type] compiler*
-   -w wxwin: Root of wx tree, normally %WXBASE%\\wxWidgets-2.8.12'
+   -w wxwin: Root of wx tree, normally %WXBASE%\\trunk'
              Default is %WXWIN%
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -t:       Testing, just print commands to run
@@ -32,7 +33,7 @@ ProgramFiles = r'c:\Program Files'
 useVC10SDK = False
 
 # ARB is officially released using this branch. This is located under $WXBASE.
-wxBranch = r'\wxWidgets-2.8.12'
+wxBranch = r'\trunk'
 
 testing = False
 

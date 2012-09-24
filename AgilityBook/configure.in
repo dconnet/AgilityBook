@@ -62,10 +62,8 @@ case `uname` in
 Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
 	# build universal binaries on Mac OS
-	AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4 -arch ppc -arch i386")
-	AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386"])
-	#AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -arch i386")
-	#AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.5.sdk -arch i386"])
+	AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -arch i386")
+	AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.5.sdk -arch i386"])
 	# dependency generation not supported for g++ for universal binaries
 	# For some reason ./configure --disable-dependency-generation is not supported by autoconf 2.63
 	# so put dependencies checking under non-Darwin builds
