@@ -3,6 +3,7 @@
 #
 # This assumes the current directory is 'Include'
 #
+# @li 2012-09-24 DRC Sync copyright in configure.in with VersionNumber.h
 # @li 2012-07-18 DRC Change build number from days-since-birth to sequential.
 # @li 2011-08-20 DRC Added a nicer file lock.
 # @li 2010-03-05 DRC Removed CalVerNum
@@ -49,6 +50,7 @@ class LockFile:
 
 def doWork():
 	update = 0
+	copyRight = ''
 	vMajARB = '0'
 	vMinARB = '0'
 	vDotARB = '0'
@@ -58,10 +60,14 @@ def doWork():
 	while 1:
 		line = ver.readline()
 		if line:
+			defineCopy = '#define ARB_VERSION_LegalCopyright'
 			defineMaj = '#define ARB_VER_MAJOR'
 			defineMin = '#define ARB_VER_MINOR'
 			defineDot = '#define ARB_VER_DOT'
 			defineBld = '#define ARB_VER_BUILD'
+			pos = line.find(defineCopy)
+			if 0 == pos:
+				copyRight = string.strip(line[pos+len(defineCopy):])
 			pos = line.find(defineMaj)
 			if 0 == pos:
 				vMajARB = string.strip(line[pos+len(defineMaj):])
@@ -105,6 +111,13 @@ def doWork():
 		if line:
 			if 0 == line.find('AC_INIT('):
 				newLine = 'AC_INIT(Agility Record Book, ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB + ', [help@agilityrecordbook.com])\n'
+				if not line == newLine:
+					update = 1
+					print >>confOut, newLine,
+				else:
+					print >>confOut, line,
+			elif 0 == line.find('AC_SUBST(PACKAGE_COPYRIGHT,'):
+				newLine = 'AC_SUBST(PACKAGE_COPYRIGHT, ' + copyRight + ')\n'
 				if not line == newLine:
 					update = 1
 					print >>confOut, newLine,
