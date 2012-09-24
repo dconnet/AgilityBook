@@ -13,7 +13,7 @@ AC_CONFIG_SRCDIR(src/stdafx.cpp)
 AC_SUBST(PACKAGE_ARB_SHORTNAME, "AgilityBook")
 AC_SUBST(PACKAGE_HLP_SHORTNAME, "ARBHelp")
 AC_SUBST(PACKAGE_TEST_SHORTNAME, "testarb")
-AC_SUBST(PACKAGE_COPYRIGHT, "2002-2010 David Connet")
+AC_SUBST(PACKAGE_COPYRIGHT, "2002-2012 David Connet")
 define([svnversion], esyscmd([sh -c "svnversion|tr -d '\n'"]))dnl
 AC_SUBST(SVN_VERSION, "svnversion")
 ################################################################################
