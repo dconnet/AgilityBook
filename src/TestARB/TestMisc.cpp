@@ -64,7 +64,12 @@ SUITE(TestMisc)
 		CHECK(StringUtil::FormatBytes(1024.0) == L"1 KiB");
 		CHECK(StringUtil::FormatBytes(1536.0) == L"1.5 KiB");
 		CHECK(StringUtil::FormatBytes(1600.0) == L"1.56 KiB");
+#ifdef __WXMAC__
+		// Note: On Mac, 15.625 is rounding differently than Windows.
+		CHECK(StringUtil::FormatBytes(16000.0) == L"15.62 KiB");
+#else
 		CHECK(StringUtil::FormatBytes(16000.0) == L"15.63 KiB");
+#endif
 	}
 
 
