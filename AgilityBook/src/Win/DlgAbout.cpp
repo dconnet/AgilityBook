@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-23 DRC Fix text wrapping on Mac (wx2.9).
  * @li 2012-07-13 DRC Fix text wrapping on Mac.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-04-26 DRC wx2.9.2 added native hyperlinks and generic support.
@@ -174,11 +175,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	wxStaticText* version = new wxStaticText(this, wxID_ANY,
 		wxString::Format(_("AboutVersion"), wxString::From8BitData(ARB_VERSION_STRING).c_str(), _("Agility Record Book")),
 		wxDefaultPosition, wxDefaultSize, 0);
-#ifdef __WXMSW__
-	// Windows goes full screen width. Mac wraps nicely. And setting this on
-	// Mac causes it to wrap very badly.
 	version->Wrap(400);
-#endif
 
 	CHyperlinkCtrl* link1 = new CHyperlinkCtrl(this, wxID_ANY,
 		_("LinkYahooText"), _("LinkYahooUrl"),
