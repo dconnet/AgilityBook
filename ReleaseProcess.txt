@@ -43,8 +43,6 @@ Do a full rebuild and verify it.
 Commit all changes to SVN.
 
 Pull files onto Mac and build there (see MAC_BUILD.txt)
-- If major or minor version number has changed:
-  - update Info.plist in xcode
 - Update Project Version in xcode target properties (x.y.z)
 - export PATH=$WXWIN/build-unicode:$PATH
 - cd .../AgilityBook
