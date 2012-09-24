@@ -1,4 +1,4 @@
-9/9/2012: v2.3.8.<in development>
+9/23/2012: v2.3.8.82
 - Bumped Configuration v39:
   - Added TDAA TNAC title.
 - Bumped file version to 13.2:
