@@ -144,10 +144,16 @@ void CReportListCtrl::SetColumnSort(long column, int iconDirection)
 
 long CReportListCtrl::InsertItem(CListDataPtr inData)
 {
+	return InsertItem(GetItemCount(), inData);
+}
+
+
+long CReportListCtrl::InsertItem(long index, CListDataPtr inData)
+{
 	if (!inData)
 		return -1;
 	wxListItem info;
-	info.SetId(GetItemCount());
+	info.SetId(index);
 	info.SetMask(wxLIST_MASK_DATA);
 	info.SetData(m_NextId);
 	m_OwnerData[m_NextId] = inData;

@@ -60,6 +60,7 @@ public:
 	void SetColumnSort(long column, int iconDirection);
 
 	long InsertItem(CListDataPtr inData);
+	long InsertItem(long index, CListDataPtr inData);
 
 	/**
 	 * Returns the first selected item.
