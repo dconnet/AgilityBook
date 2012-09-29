@@ -13,6 +13,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * @li 2012-09-29 DRC Trap wx generated xml parsing errors into our buffer.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -869,9 +870,20 @@ bool ElementNode::LoadXML(
 		wxInputStream& inStream,
 		std::wostringstream& ioErrMsg)
 {
+	wxLogBuffer* log = new wxLogBuffer();
+	// wxLogChain will delete the log given to it.
+	wxLogChain chain(log);
+	chain.PassMessages(false);
+	chain.DisableTimestamp();
+
 	wxXmlDocument source;
 	if (!source.Load(inStream))
+	{
+		ioErrMsg << StringUtil::stringW(log->GetBuffer());
+		// This does not call Flush (which displays a dialog). Yea!
+		chain.SetLog(NULL);
 		return false;
+	}
 	return LoadXMLNode(m_Me.lock(), source, ioErrMsg);
 }
 
@@ -881,7 +893,6 @@ bool ElementNode::LoadXML(
 		size_t nData,
 		std::wostringstream& ioErrMsg)
 {
-	wxXmlDocument source;
 	wxMemoryInputStream input(inData, nData);
 	return LoadXML(input, ioErrMsg);
 }
@@ -891,11 +902,10 @@ bool ElementNode::LoadXML(
 		wchar_t const* inFileName,
 		std::wostringstream& ioErrMsg)
 {
-	wxXmlDocument source;
-	wxFileInputStream stream(inFileName);
-	if (!stream.IsOk())
+	wxFileInputStream input(inFileName);
+	if (!input.IsOk())
 		return false;
-	return LoadXML(stream, ioErrMsg);
+	return LoadXML(input, ioErrMsg);
 }
 
 
