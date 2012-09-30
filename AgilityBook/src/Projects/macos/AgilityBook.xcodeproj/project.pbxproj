@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		E10673BA161895C500AAD75B /* AgilityBookTreeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10673B8161895C500AAD75B /* AgilityBookTreeModel.cpp */; };
 		E1144F5F1082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
-		E158FC311001371B00735E7F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
-		E158FC321001371B00735E7F /* main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD57FA0DA1D07D00B32029 /* main.xib */; };
 		E158FC341001371B00735E7F /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */; };
 		E158FC351001371B00735E7F /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
 		E158FC361001371B00735E7F /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */; };
@@ -158,8 +156,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0867D6ABFE840B52C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1DDD57FB0DA1D07D00B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/main.xib; sourceTree = "<group>"; };
 		20286C33FDCF999611CA2CEA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		5048396D09E3307300765E4B /* arbProj.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = arbProj.xcconfig; sourceTree = "<group>"; };
 		5048396E09E3307300765E4B /* arbTarget.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = arbTarget.xcconfig; sourceTree = "<group>"; };
@@ -514,8 +510,6 @@
 				20286C2AFDCF999611CA2CEA /* Sources */,
 				E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */,
 				8D0C4E960486CD37000505A6 /* Info.plist */,
-				0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */,
-				1DDD57FA0DA1D07D00B32029 /* main.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -895,8 +889,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E158FC311001371B00735E7F /* InfoPlist.strings in Resources */,
-				E158FC321001371B00735E7F /* main.xib in Resources */,
 				E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1056,25 +1048,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0867D6ABFE840B52C02AAC07 /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		1DDD57FA0DA1D07D00B32029 /* main.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DDD57FB0DA1D07D00B32029 /* English */,
-			);
-			name = main.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C0E91ACA08A95435008D54AB /* Debug */ = {
