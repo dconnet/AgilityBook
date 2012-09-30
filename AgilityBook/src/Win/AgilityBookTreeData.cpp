@@ -607,7 +607,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		bool& bModified,
 		bool* bTreeSelectionSet)
 {
-	static bool bPrompt = true;
+	//static bool bPrompt = true;
 	bool bHandled = true;
 #pragma PRAGMA_TODO("Fix me")
 #if 0
@@ -885,7 +885,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 		bool& bModified,
 		bool* bTreeSelectionSet)
 {
-	static bool bPrompt = true;
+	//static bool bPrompt = true;
 	bool bHandled = true;
 #pragma PRAGMA_TODO("Fix me")
 #if 0
@@ -1177,7 +1177,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		bool& bModified,
 		bool* bTreeSelectionSet)
 {
-	static bool bPrompt = true;
+	//static bool bPrompt = true;
 	bool bHandled = true;
 #pragma PRAGMA_TODO("Fix me")
 #if 0

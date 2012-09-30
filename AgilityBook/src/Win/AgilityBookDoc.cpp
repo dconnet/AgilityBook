@@ -407,10 +407,10 @@ void CAgilityBookDoc::AddTitle(ARBDogRunPtr pSelectedRun)
 
 void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
-	CAgilityBookTreeView* pTree = GetTreeView();
-	assert(pTree);
 #pragma PRAGMA_TODO("Fix me")
 #if 0
+	CAgilityBookTreeView* pTree = GetTreeView();
+	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
 	if (pData)
 	{
@@ -428,10 +428,10 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 
 void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 {
-	CAgilityBookTreeView* pTree = GetTreeView();
-	assert(pTree);
 #pragma PRAGMA_TODO("Fix me")
 #if 0
+	CAgilityBookTreeView* pTree = GetTreeView();
+	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
 	if (pData)
 	{
@@ -449,10 +449,10 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 
 void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 {
-	CAgilityBookTreeView* pTree = GetTreeView();
-	assert(pTree);
 #pragma PRAGMA_TODO("Fix me")
 #if 0
+	CAgilityBookTreeView* pTree = GetTreeView();
+	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(pRun);
 	if (pData)
 	{
@@ -470,10 +470,10 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 
 void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 {
-	CAgilityBookTreeView* pTree = GetTreeView();
-	assert(pTree);
 #pragma PRAGMA_TODO("Fix me")
 #if 0
+	CAgilityBookTreeView* pTree = GetTreeView();
+	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(pRun);
 	if (pData)
 	{
