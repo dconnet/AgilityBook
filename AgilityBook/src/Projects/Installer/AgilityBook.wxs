@@ -150,9 +150,6 @@ Revision History
 	<Condition Message="!(loc.OnNT)">VersionNT&gt;=600 Or (VersionNT=501 And ServicePackLevel&gt;=2) Or (VersionNT=502 And ServicePackLevel&gt;=1)</Condition>
 <?endif?>
 
-	<!-- During beta, do not remove v1.
-	(that's why we created a different upgrade code) -->
-<?ifndef var.BETA?>
 	<!-- When checked the v1 guid, include ["0.0.0" < ver < "2.0.0"] -->
 	<Upgrade Id="$(var.UPGRADECODEv1)">
 		<UpgradeVersion
@@ -163,6 +160,10 @@ Revision History
 			IncludeMaximum="no"
 			Property="OLDVERSIONFOUND_V1" />
 	</Upgrade>
+	<!-- During beta, do not remove. -->
+<?ifndef var.BETA?>
+	<!-- TODO: For next beta, create new upgradecode then modify the v2 one
+	to be similar to above and move the endif to the bottom of this block -->
 <?endif?>
 	<!-- For current guid, include ["2.0.0" <= ver <= CurVer] -->
 	<Upgrade Id="$(var.UPGRADECODEv2)">
