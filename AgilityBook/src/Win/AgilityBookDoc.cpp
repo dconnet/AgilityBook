@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-29 DRC Strip the Runs View.
  * @li 2012-07-11 DRC After importing an ARB file, sort it.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
@@ -63,7 +64,6 @@
 #include "AgilityBookCalendarView.h"
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookRunsView.h"
 #include "AgilityBookTrainingView.h"
 #include "AgilityBookTreeData.h"
 #include "AgilityBookTreeView.h"
@@ -335,9 +335,12 @@ std::wstring CAgilityBookDoc::AddDogToCaption(std::wstring const& caption) const
 ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 {
 	ARBDogPtr pDog;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	if (pTree && pTree->GetCurrentTreeItem())
 		pDog = pTree->GetCurrentTreeItem()->GetDog();
+#endif
 	return pDog;
 }
 
@@ -348,10 +351,13 @@ ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial() const
 {
 	ARBDogTrialPtr pTrial;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
 		pTrial = pTree->GetCurrentTreeItem()->GetTrial();
+#endif
 	return pTrial;
 }
 
@@ -362,10 +368,13 @@ ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial() const
 ARBDogRunPtr CAgilityBookDoc::GetCurrentRun() const
 {
 	ARBDogRunPtr pRun;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
 		pRun = pTree->GetCurrentTreeItem()->GetRun();
+#endif
 	return pRun;
 }
 
@@ -377,6 +386,8 @@ ARBDogRunPtr CAgilityBookDoc::GetCurrentRun() const
  */
 void CAgilityBookDoc::AddTitle(ARBDogRunPtr pSelectedRun)
 {
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
@@ -390,6 +401,7 @@ void CAgilityBookDoc::AddTitle(ARBDogRunPtr pSelectedRun)
 				Modify(true);
 		}
 	}
+#endif
 }
 
 
@@ -397,6 +409,8 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
 	if (pData)
 	{
@@ -408,6 +422,7 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 				Modify(true);
 		}
 	}
+#endif
 }
 
 
@@ -415,6 +430,8 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
 	if (pData)
 	{
@@ -426,6 +443,7 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 				Modify(true);
 		}
 	}
+#endif
 }
 
 
@@ -433,6 +451,8 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 {
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	CAgilityBookTreeData* pData = pTree->FindData(pRun);
 	if (pData)
 	{
@@ -444,6 +464,7 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 				Modify(true);
 		}
 	}
+#endif
 }
 
 
@@ -451,6 +472,8 @@ void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 {
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	CAgilityBookTreeData* pData = pTree->FindData(pRun);
 	if (pData)
 	{
@@ -462,6 +485,7 @@ void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 				Modify(true);
 		}
 	}
+#endif
 }
 
 
@@ -1174,21 +1198,6 @@ CAgilityBookTreeView* CAgilityBookDoc::GetTreeView() const
 
 
 /**
- * Function to get the run view.
- */
-CAgilityBookRunsView* CAgilityBookDoc::GetRunsView() const
-{
-	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
-	{
-		CAgilityBookRunsView* pView = wxDynamicCast(*iView, CAgilityBookRunsView);
-		if (pView)
-			return pView;
-	}
-	return NULL;
-}
-
-
-/**
  * Function to get the calendar list view. This is used by the calendar view
  * and by the export wizard.
  */
@@ -1772,9 +1781,12 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 					pTab->SetCurTab(IDX_PANE_RUNS);
 				if (m_Records.GetDogs().AddDog(dog))
 				{
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 					CAgilityBookTreeView* pTree = GetTreeView();
 					if (pTree)
 						pTree->InsertDog(dog, true);
+#endif
 				}
 			}
 		}

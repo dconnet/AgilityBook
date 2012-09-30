@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-29 DRC Strip the Runs View.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-05 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
@@ -38,7 +39,6 @@
 #include <wx/docview.h>
 class CAgilityBookCalendarListView;
 class CAgilityBookCalendarView;
-class CAgilityBookRunsView;
 class CAgilityBookTrainingView;
 class CAgilityBookTreeView;
 class CStatusHandler;
@@ -52,10 +52,9 @@ struct CVenueFilter;
 #define UPDATE_CALENDAR_VIEW		0x0001
 #define UPDATE_TRAINING_VIEW		0x0002
 #define UPDATE_POINTS_VIEW			0x0004
-#define UPDATE_RUNS_VIEW			0x0008
 #define UPDATE_RUNS_SELECTION_VIEW	0x0010
 #define UPDATE_TREE_VIEW			0x0020
-#define UPDATE_ALL_VIEW				(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
+#define UPDATE_ALL_VIEW				(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_TREE_VIEW)
 #define UPDATE_CONFIG				0x0100
 #define UPDATE_OPTIONS				0x0200
 #define UPDATE_NEW_TRIAL			0x0300
@@ -171,7 +170,6 @@ public:
 	bool ShowPointsAsHtml(bool bHtml);
 	CTabView* GetTabView() const;
 	CAgilityBookTreeView* GetTreeView() const;
-	CAgilityBookRunsView* GetRunsView() const;
 	CAgilityBookCalendarListView* GetCalendarListView() const;
 	CAgilityBookCalendarView* GetCalendarView() const;
 	CAgilityBookTrainingView* GetTrainingView() const;

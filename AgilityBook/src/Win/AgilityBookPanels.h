@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-29 DRC Strip the Runs View.
  * @li 2008-12-14 DRC Created
  */
 
@@ -58,12 +59,6 @@ public:
 			wxDocument* doc,
 			long flags,
 			std::vector<CAgilityBookBaseExtraView*> const& inViews);
-	~CAgilityBookPanelRuns();
-
-private:
-	bool m_bInit;
-	wxSplitterWindow* m_splitter;
-	void SplitterOnIdle(wxIdleEvent&);
 };
 
 

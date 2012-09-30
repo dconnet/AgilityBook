@@ -111,9 +111,6 @@ public:
 
 protected:
 	CAgilityBookTreeView* m_pTree;
-	std::vector<long> const& GetDogColumns() const;
-	std::vector<long> const& GetTrialColumns() const;
-	std::vector<long> const& GetRunColumns() const;
 };
 
 /////////////////////////////////////////////////////////////////////////////

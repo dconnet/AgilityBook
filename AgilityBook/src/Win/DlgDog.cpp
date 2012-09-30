@@ -1585,7 +1585,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 
 	if (m_pDog->GetCallName() != StringUtil::stringW(m_CallName))
 	{
-		hint |= UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW;
+		hint |= UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW;
 		m_pDog->SetCallName(StringUtil::stringW(m_CallName));
 	}
 	if (m_pDog->GetDOB() != m_DOB)

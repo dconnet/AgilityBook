@@ -309,15 +309,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBookRunsView.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\AgilityBookTrainingView.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookTreeData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookTreeModel.cpp"
 				>
 			</File>
 			<File
@@ -739,15 +739,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBookRunsView.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\AgilityBookTrainingView.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookTreeData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookTreeModel.h"
 				>
 			</File>
 			<File

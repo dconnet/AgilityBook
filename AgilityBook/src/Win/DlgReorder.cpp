@@ -366,7 +366,7 @@ void CDlgReorder::OnOk(wxCommandEvent& evt)
 			m_Dogs->AddDog(pData->m_pDog);
 		}
 		m_pDoc->Modify(true);
-		CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW);
+		CUpdateHint hint(UPDATE_TREE_VIEW);
 		m_pDoc->UpdateAllViews(NULL, &hint);
 	}
 	else if (m_Trial && m_ctrlTree)
@@ -388,7 +388,7 @@ void CDlgReorder::OnOk(wxCommandEvent& evt)
 		}
 		m_Trial->GetRuns().sort();
 		m_pDoc->Modify(true);
-		CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW);
+		CUpdateHint hint(UPDATE_TREE_VIEW);
 		m_pDoc->UpdateAllViews(NULL, &hint);
 	}
 

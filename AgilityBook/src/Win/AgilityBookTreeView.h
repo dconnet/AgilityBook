@@ -28,14 +28,15 @@
  *                    prevent constant re-evaluation.
  */
 
-#include "ARBBase.h"
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "IconList.h"
-#include "Widgets.h"
 #include <vector>
+#include <wx/dataview.h>
 #include <wx/docview.h>
+class CAgilityBookTreeCtrl;
 class CAgilityBookTreeData;
+class CAgilityBookTreeModel;
 class CAgilityBookTreeView;
 
 
@@ -48,11 +49,34 @@ public:
 	}
 	virtual bool Search(CDlgFind* pDlg) const;
 private:
-	void FillTree(wxTreeItemId hItem) const;
-	wxTreeItemId GetNextItem() const;
 	CAgilityBookTreeView* m_pView;
-	mutable std::vector<wxTreeItemId> m_Items;
-	mutable std::vector<wxTreeItemId>::const_iterator m_Iter;
+};
+
+
+class CAgilityBookTreeCtrl : public wxDataViewCtrl
+{
+	DECLARE_DYNAMIC_CLASS_NO_ASSIGN(CAgilityBookTreeCtrl)
+public:
+	CAgilityBookTreeCtrl();
+	CAgilityBookTreeCtrl(
+			wxWindow* parent,
+			wxWindowID id,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = wxDV_ROW_LINES,
+			const wxValidator& validator = wxDefaultValidator);
+	~CAgilityBookTreeCtrl();
+
+	bool Create(
+			wxWindow *parent,
+			wxWindowID id,
+			const wxPoint& pos,
+			const wxSize& size,
+			long style,
+			const wxValidator& validator);
+
+	CAgilityBookTreeModel* GetStore();
+	const CAgilityBookTreeModel* GetStore() const;
 };
 
 
@@ -77,11 +101,7 @@ public:
 			int proportion = 0,
 			int sizerFlags = 0,
 			int border = 0);
-	virtual wxWindow* GetControl()		{return m_Ctrl;}
-	virtual bool HasNextPane() const	{return true;}
-	virtual bool NextPane();
-	virtual bool HasPrevPane() const	{return true;}
-	virtual bool PrevPane();
+	virtual wxWindow* GetControl();
 	virtual void DetachView();
 
 	virtual bool IsFiltered() const;
@@ -105,25 +125,8 @@ public:
 	void Freeze()								{m_Ctrl->Freeze();}
 	void Thaw()									{m_Ctrl->Thaw();}
 	void Refresh()								{m_Ctrl->Refresh();}
-	void RefreshItem(wxTreeItemId item, bool bRecurse = false);
-	bool IsExpanded(wxTreeItemId item) const	{return m_Ctrl->IsExpanded(item);}
-	void Expand(wxTreeItemId item)				{m_Ctrl->Expand(item);}
-	void ExpandAllChildren(wxTreeItemId item)	{m_Ctrl->ExpandAllChildren(item);}
-	void Collapse(wxTreeItemId item)			{m_Ctrl->Collapse(item);}
-	void CollapseAllChildren(wxTreeItemId item)	{m_Ctrl->CollapseAllChildren(item);}
-	void SelectItem(wxTreeItemId item)			{ChangeSelection(item, true);}
-	void EnsureVisible(wxTreeItemId item)		{m_Ctrl->EnsureVisible(item);}
-	bool ItemHasChildren(wxTreeItemId item) const
-		{return m_Ctrl->ItemHasChildren(item);}
-	void Delete(wxTreeItemId item)				{m_Ctrl->Delete(item);}
-	wxTreeItemId GetItemParent(wxTreeItemId item) const
-		{return m_Ctrl->GetItemParent(item);}
 
-	CIconList const& GetImageList() const	{return m_ImageList;}
-	CAgilityBookTreeData* GetCurrentTreeItem() const;
-	CAgilityBookTreeData* GetTreeItem(wxTreeItemId hItem) const;
-	bool SelectDog(ARBDogPtr);
-
+	/*
 	CAgilityBookTreeData* FindData(ARBBasePtr pBase) const
 	{
 		return FindData(m_Ctrl->GetRootItem(), pBase);
@@ -152,63 +155,40 @@ public:
 	CAgilityBookTreeData* FindData(
 			wxTreeItemId hItem,
 			ARBDogRunPtr pRun) const;
+			*/
 
-	wxTreeItemId InsertDog(
-			ARBDogPtr pDog,
-			bool bSelect = false);
-	wxTreeItemId InsertTrial(
-			ARBDogTrialPtr pTrial,
-			wxTreeItemId hParent);
-	wxTreeItemId InsertRun(
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun,
-			wxTreeItemId hParent);
+	bool SelectDog(ARBDogPtr);
 	bool PasteDog(bool& bLoaded);
-	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
-
-	std::wstring GetPrintLine(wxTreeItemId hItem) const;
+	std::wstring GetPrintLine(long item) const;
 
 private:
-	void UpdateData(wxTreeItemId hItem);
-	void ChangeSelection(
-			wxTreeItemId hItem,
-			bool bEnsureVisible = true);
-	void DoSelectionChange(wxTreeItemId hItem);
+	void UpdateData(long item);
+	//void ChangeSelection(
+	//		wxTreeItemId hItem,
+	//		bool bEnsureVisible = true);
+	//void DoSelectionChange(wxTreeItemId hItem);
 	void LoadData();
 	void PrintLine(
 			std::wostringstream& data,
-			wxTreeItemId id,
+			long id,
 			int indent) const;
 	std::wstring GetPrintDataAsHtmlTable() const;
 	bool OnCmd(int id);
-	//void PrintLine(
-	//		CDC* pDC,
-	//		CTreePrintData *pData,
-	//		wxTreeItemId hItem,
-	//		int indent) const;
 
-	CTreeCtrl* m_Ctrl;
-	CIconList m_ImageList;
-#ifdef WX_TREE_HAS_STATE
-	wxImageList m_ImageListStates;
-	int m_idxEmpty;
-	int m_idxChecked;
-#endif
-	std::vector<long> m_Columns[3];
-	bool m_bReset;
-	bool m_bSuppressSelect;
-	bool m_bInPopup;
-	bool m_bInDelete;
-	bool m_bDeleteChanged; // Used with m_itemPopup
-	wxTreeItemId m_itemPopup; // Tried to select item during menu - delay
+	CAgilityBookTreeCtrl* m_Ctrl;
+	//CIconList m_ImageList;
+//#ifdef WX_TREE_HAS_STATE
+	//wxImageList m_ImageListStates;
+	//int m_idxEmpty;
+	//int m_idxChecked;
+//#endif
 	CFindTree m_Callback;
 	ARBDogPtr m_pDog;
 
 	DECLARE_EVENT_TABLE()
-	void OnCtrlSetFocus(wxFocusEvent& evt);
-	void OnCtrlContextMenu(wxTreeEvent& evt);
-	void OnCtrlSelectionChanged(wxTreeEvent& evt);
-	void OnCtrlItemActivated(wxTreeEvent& evt);
+	void OnCtrlContextMenu(wxDataViewEvent& evt);
+	void OnCtrlSelectionChanged(wxDataViewEvent& evt);
+	void OnCtrlItemActivated(wxDataViewEvent& evt);
 	void OnCtrlKeyDown(wxKeyEvent& evt);
 	void OnViewContextMenu(wxContextMenuEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);

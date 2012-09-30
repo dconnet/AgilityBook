@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-09-29 DRC Strip the Runs View.
  * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2012-03-03 DRC Fixed new unearned titles from showing up in view.
  * @li 2011-10-14 DRC Modify how reorder dialog is invoked.
@@ -79,6 +80,8 @@
 #endif
 
 
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 static bool EditDog(
 		CAgilityBookTreeDataDog* pDogData,
 		CAgilityBookTreeView* pTree,
@@ -192,7 +195,7 @@ static bool EditTrial(
 		// caused the trial to be reordered.
 		if (bOk)
 		{
-			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_TREE_VIEW);
 			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 		}
 	}
@@ -284,7 +287,7 @@ static bool EditRun(
 		// caused the trial to be reordered.
 		if (bOk)
 		{
-			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_TREE_VIEW);
 			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 		}
 	}
@@ -355,6 +358,7 @@ static bool AddTitle(
 	else
 		return false;
 }
+#endif
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -432,7 +436,10 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 					{
 						ARBDogRunPtr pRun = *iter;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 						hItem = m_pTree->InsertRun(pTrial, pRun, GetDataTrial()->GetId());
+#endif
 					}
 					m_pTree->Thaw();
 					m_pTree->Refresh();
@@ -445,14 +452,17 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					}
 					else
 					{
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 						m_pTree->SelectItem(hItem);
 						if (bTreeSelectionSet)
 							*bTreeSelectionSet = true;
+#endif
 					}
 					if (bOk)
 					{
 						pTrial->SetMultiQs(m_pTree->GetDocument()->Book().GetConfig());
-						CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+						CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_TREE_VIEW);
 						m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 					}
 				}
@@ -485,10 +495,13 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
 						m_pTree->Freeze();
-						wxTreeItemId hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetId());
+#pragma PRAGMA_TODO("Fix me")
+						//wxTreeItemId hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetId());
 						m_pTree->Thaw();
 						m_pTree->Refresh();
 						bool bOk = true;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 						if (!hItem.IsOk())
 						{
 							bOk = false;
@@ -500,10 +513,11 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 							if (bTreeSelectionSet)
 								*bTreeSelectionSet = true;
 						}
+#endif
 						if (bOk)
 						{
 							pNewTrial->SetMultiQs(m_pTree->GetDocument()->Book().GetConfig());
-							CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+							CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_TREE_VIEW);
 							m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 						}
 					}
@@ -514,24 +528,6 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 		}
 	}
 	return bLoaded;
-}
-
-
-std::vector<long> const& CAgilityBookTreeData::GetDogColumns() const
-{
-	return m_pTree->m_Columns[0];
-}
-
-
-std::vector<long> const& CAgilityBookTreeData::GetTrialColumns() const
-{
-	return m_pTree->m_Columns[1];
-}
-
-
-std::vector<long> const& CAgilityBookTreeData::GetRunColumns() const
-{
-	return m_pTree->m_Columns[2];
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -578,6 +574,8 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(int id, bool& ioEnable) const
 		if (m_pTree && 1 < m_pTree->GetDocument()->Book().GetDogs().size())
 			bEnable = true;
 		break;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	case ID_EXPAND:
 		if (GetId().IsOk() && m_pTree && m_pTree->ItemHasChildren(GetId()))
 		{
@@ -597,6 +595,7 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(int id, bool& ioEnable) const
 		if (GetId().IsOk() && m_pTree && m_pTree->ItemHasChildren(GetId()))
 			bEnable = true;
 		break;
+#endif
 	}
 	ioEnable = bEnable;
 	return bHandled;
@@ -610,6 +609,8 @@ bool CAgilityBookTreeDataDog::OnCmd(
 {
 	static bool bPrompt = true;
 	bool bHandled = true;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	switch (id)
 	{
 	default:
@@ -627,7 +628,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 			ARBDogPtr pDog = GetDog()->Clone();
 			m_pTree->GetDocument()->Book().GetDogs().AddDog(pDog);
 			bModified = true;
-			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
+			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW);
 			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 		}
 		break;
@@ -680,7 +681,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 				// Delete() will cause this object to be deleted.
 				m_pTree->Delete(GetId());
 				bModified = true;
-				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+				CUpdateHint hint(UPDATE_POINTS_VIEW);
 				pDoc->UpdateAllViews(NULL, &hint);
 			}
 		}
@@ -726,52 +727,20 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		}
 		break;
 	}
+#endif
 	return bHandled;
 }
 
 
 std::wstring CAgilityBookTreeDataDog::OnNeedText() const
 {
-	std::wostringstream str;
-	for (size_t idx = 0; idx < GetDogColumns().size(); ++idx)
-	{
-		if (0 < idx)
-			str << L" ";
-		switch (GetDogColumns()[idx])
-		{
-		case IO_TREE_DOG_REGNAME:
-			str << m_pDog->GetRegisteredName();
-			break;
-		case IO_TREE_DOG_CALLNAME:
-			str << m_pDog->GetCallName();
-			break;
-		case IO_TREE_DOG_BREED:
-			str << m_pDog->GetBreed();
-			break;
-		case IO_TREE_DOG_DOB:
-			if (m_pDog->GetDOB().IsValid())
-				str << m_pDog->GetDOB().GetString();
-			break;
-		case IO_TREE_DOG_AGE:
-			if (m_pDog->GetDOB().IsValid())
-			{
-				wxDateTime dob(m_pDog->GetDOB().GetDate());
-				wxDateTime current = wxDateTime::Now();
-				if (m_pDog->GetDeceased().IsValid())
-					current = wxDateTime(m_pDog->GetDeceased().GetDate());
-				wxTimeSpan age = current - dob;
-				str << StringUtil::stringW(wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays()/365.0, 1).c_str()));
-			}
-			break;
-		}
-	}
-	return str.str();
+	return std::wstring();
 }
-
-
 int CAgilityBookTreeDataDog::OnNeedIcon() const
 {
-	return m_pTree->GetImageList().Dog();
+#pragma PRAGMA_TODO("Fix me")
+	//return m_pTree->GetImageList().Dog();
+	return -1;
 }
 
 
@@ -796,7 +765,8 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 	, m_pTrial(pTrial)
 	, m_idxIcon(-1)
 {
-	m_idxIcon = m_pTree->GetImageList().Trial();
+#pragma PRAGMA_TODO("Fix me")
+//	m_idxIcon = m_pTree->GetImageList().Trial();
 	if (m_pTrial)
 	{
 		ARBDogClubPtr pClub;
@@ -805,9 +775,12 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 			ARBConfigVenuePtr pVenue;
 			if (pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
 			{
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 				short idx = pVenue->GetIcon();
 				if (0 <= idx && idx < m_pTree->GetImageList().GetImageCount())
 					m_idxIcon = idx;
+#endif
 			}
 		}
 	}
@@ -832,25 +805,31 @@ ARBDogPtr CAgilityBookTreeDataTrial::GetDog()
 
 CAgilityBookTreeDataDog const* CAgilityBookTreeDataTrial::GetDataDog() const
 {
-	if (!GetId().IsOk())
+#pragma PRAGMA_TODO("Fix me")
+//	if (!GetId().IsOk())
 		return NULL;
+#if 0
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData const* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataDog const* pDog = dynamic_cast<CAgilityBookTreeDataDog const*>(pData);
 	assert(pDog);
 	return pDog;
+#endif
 }
 
 
 CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
 {
-	if (!GetId().IsOk())
+#pragma PRAGMA_TODO("Fix me")
+//	if (!GetId().IsOk())
 		return NULL;
+#if 0
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataDog* pDog = dynamic_cast<CAgilityBookTreeDataDog*>(pData);
 	assert(pDog);
 	return pDog;
+#endif
 }
 
 
@@ -858,6 +837,8 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(int id, bool& ioEnable) const
 {
 	bool bHandled = true;
 	bool bEnable = false;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	switch (id)
 	{
 	default:
@@ -893,6 +874,7 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(int id, bool& ioEnable) const
 			bEnable = true;
 		break;
 	}
+#endif
 	ioEnable = bEnable;
 	return bHandled;
 }
@@ -905,6 +887,8 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 {
 	static bool bPrompt = true;
 	bool bHandled = true;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	switch (id)
 	{
 	default:
@@ -924,7 +908,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 			bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
 			GetDog()->GetTrials().sort(bDescending);
 			bModified = true;
-			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
+			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW);
 			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 		}
 		break;
@@ -983,7 +967,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 				// Delete() will cause this object to be deleted.
 				m_pTree->Delete(GetId());
 				bModified = true;
-				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+				CUpdateHint hint(UPDATE_POINTS_VIEW);
 				pDoc->UpdateAllViews(NULL, &hint);
 			}
 		}
@@ -1007,111 +991,15 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 		}
 		break;
 	}
+#endif
 	return bHandled;
 }
 
 
 std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 {
-	std::wostringstream str;
-	bool bNeedSpace = false;
-	for (size_t idx = 0; idx < GetTrialColumns().size(); ++idx)
-	{
-		switch (GetTrialColumns()[idx])
-		{
-		case IO_TREE_TRIAL_START:
-			if (m_pTrial->GetRuns().GetStartDate().IsValid())
-			{
-				if (bNeedSpace)
-				{
-					if (IO_TREE_TRIAL_END == GetTrialColumns()[idx-1])
-						str << L"-";
-					else
-						str << L" ";
-				}
-				str << m_pTrial->GetRuns().GetStartDate().GetString();
-				bNeedSpace = true;
-			}
-			break;
-		case IO_TREE_TRIAL_END:
-			if (m_pTrial->GetRuns().GetEndDate().IsValid())
-			{
-				if (bNeedSpace)
-				{
-					if (IO_TREE_TRIAL_START == GetTrialColumns()[idx-1])
-						str << L"-";
-					else
-						str << L" ";
-				}
-				str << m_pTrial->GetRuns().GetEndDate().GetString();
-				bNeedSpace = true;
-			}
-			break;
-		case IO_TREE_TRIAL_VERIFIED:
-			if (bNeedSpace)
-				str << L" ";
-			if (m_pTrial->IsVerified())
-				str << L"*";
-			else
-				str << L"  "; // 2 spaces due to font (variable spacing)
-			bNeedSpace = true;
-			break;
-		case IO_TREE_TRIAL_CLUB:
-			{
-				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					str << L" ";
-				int i = 0;
-				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
-					iter != m_pTrial->GetClubs().end();
-					++iter, ++i)
-				{
-					if (0 < i)
-						str << L"/";
-					str << (*iter)->GetName();
-					bNeedSpace = true;
-				}
-			}
-			break;
-		case IO_TREE_TRIAL_VENUE:
-			{
-				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					str << L" ";
-				int i = 0;
-				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
-					iter != m_pTrial->GetClubs().end();
-					++iter, ++i)
-				{
-					if (0 < i)
-						str << L"/";
-					str << (*iter)->GetVenue();
-					bNeedSpace = true;
-				}
-			}
-			break;
-		case IO_TREE_TRIAL_LOCATION:
-			if (!m_pTrial->GetLocation().empty())
-			{
-				if (bNeedSpace)
-					str << L" ";
-				str << m_pTrial->GetLocation();
-				bNeedSpace = true;
-			}
-			break;
-		case IO_TREE_TRIAL_NOTES:
-			if (!m_pTrial->GetNote().empty())
-			{
-				if (bNeedSpace)
-					str << L" ";
-				str << StringUtil::Replace(m_pTrial->GetNote(), L"\n", L" ");
-				bNeedSpace = true;
-			}
-			break;
-		}
-	}
-	return str.str();
+	return std::wstring();
 }
-
-
 int CAgilityBookTreeDataTrial::OnNeedIcon() const
 {
 	return m_idxIcon;
@@ -1180,49 +1068,61 @@ ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial()
 
 CAgilityBookTreeDataDog const* CAgilityBookTreeDataRun::GetDataDog() const
 {
-	if (!GetId().IsOk())
+#pragma PRAGMA_TODO("Fix me")
+//	if (!GetId().IsOk())
 		return NULL;
+#if 0
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData const* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
 	assert(pTrial);
 	return pTrial->GetDataDog();
+#endif
 }
 
 
 CAgilityBookTreeDataTrial const* CAgilityBookTreeDataRun::GetDataTrial() const
 {
-	if (!GetId().IsOk())
+#pragma PRAGMA_TODO("Fix me")
+//	if (!GetId().IsOk())
 		return NULL;
+#if 0
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData const* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
 	assert(pTrial);
 	return pTrial;
+#endif
 }
 
 
 CAgilityBookTreeDataDog* CAgilityBookTreeDataRun::GetDataDog()
 {
-	if (!GetId().IsOk())
+#pragma PRAGMA_TODO("Fix me")
+//	if (!GetId().IsOk())
 		return NULL;
+#if 0
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
 	assert(pTrial);
 	return pTrial->GetDataDog();
+#endif
 }
 
 
 CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
 {
-	if (!GetId().IsOk())
+#pragma PRAGMA_TODO("Fix me")
+//	if (!GetId().IsOk())
 		return NULL;
+#if 0
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
 	assert(pTrial);
 	return pTrial;
+#endif
 }
 
 
@@ -1230,6 +1130,8 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(int id, bool& ioEnable) const
 {
 	bool bHandled = true;
 	bool bEnable = false;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	switch (id)
 	{
 	default:
@@ -1264,6 +1166,7 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(int id, bool& ioEnable) const
 		bEnable = true;
 		break;
 	}
+#endif
 	ioEnable = bEnable;
 	return bHandled;
 }
@@ -1276,6 +1179,8 @@ bool CAgilityBookTreeDataRun::OnCmd(
 {
 	static bool bPrompt = true;
 	bool bHandled = true;
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	switch (id)
 	{
 	default:
@@ -1294,7 +1199,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			GetTrial()->GetRuns().AddRun(pRun);
 			GetTrial()->GetRuns().sort();
 			bModified = true;
-			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
+			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW);
 			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 		}
 		break;
@@ -1355,7 +1260,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 				m_pTree->Delete(GetId());
 				bModified = true;
 				pTrial->SetMultiQs(pDoc->Book().GetConfig());
-				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+				CUpdateHint hint(UPDATE_POINTS_VIEW);
 				pDoc->UpdateAllViews(NULL, &hint);
 			}
 		}
@@ -1375,71 +1280,20 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		}
 		break;
 	}
+#endif
 	return bHandled;
 }
 
 
 std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 {
-	std::wostringstream str;
-	for (size_t idx = 0; idx < GetRunColumns().size(); ++idx)
-	{
-		if (0 < idx)
-			str << L" ";
-		switch (GetRunColumns()[idx])
-		{
-		case IO_TREE_RUN_DATE:
-			str << m_pRun->GetDate().GetString();
-			break;
-		case IO_TREE_RUN_Q:
-			{
-				std::wstring q;
-				if (m_pRun->GetQ().Qualified())
-				{
-					std::vector<ARBConfigMultiQPtr> multiQs;
-					if (0 < m_pRun->GetMultiQs(multiQs))
-					{
-						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
-						{
-							if (!q.empty())
-								q += L"/";
-							q += (*iMultiQ)->GetShortName();
-						}
-					}
-					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
-					{
-						std::wstring tmp(StringUtil::stringW(_("IDS_SQ")));
-						if (!q.empty())
-							q += L"/";
-						q += tmp;
-					}
-				}
-				if (q.empty())
-					q = m_pRun->GetQ().str();
-				str << q;
-			}
-			break;
-		case IO_TREE_RUN_EVENT:
-			str << m_pRun->GetEvent();
-			break;
-		case IO_TREE_RUN_DIVISION:
-			str << m_pRun->GetDivision();
-			break;
-		case IO_TREE_RUN_LEVEL:
-			str << m_pRun->GetLevel();
-			break;
-		case IO_TREE_RUN_HEIGHT:
-			str << m_pRun->GetHeight();
-			break;
-		}
-	}
-	return str.str();
+	return std::wstring();
 }
-
-
 int CAgilityBookTreeDataRun::OnNeedIcon() const
 {
-	return m_pTree->GetImageList().Run();
+#pragma PRAGMA_TODO("Fix me")
+	//return m_pTree->GetImageList().Run();
+	return -1;
 }
 
 
