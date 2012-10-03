@@ -1,4 +1,6 @@
-9/23/2012: v2.3.9.<in development>
+10/3/2012: v2.3.9.<in development>
+- Bug fixes:
+  - Fixed a printing problem in the tree.
 
 9/23/2012: v2.3.8.82
 - Bumped Configuration v39:
