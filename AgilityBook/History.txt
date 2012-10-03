@@ -1,7 +1,9 @@
-9/29/2012: v3.0.0.<in development>
+10/3/2012: v3.0.0.<in development>
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
 [ Note, full functionality is NOT complete ]
+- Bug fixes:
+  - Fixed a printing problem in the tree.
 
 9/23/2012: v2.3.8.82
 - Bumped Configuration v39:

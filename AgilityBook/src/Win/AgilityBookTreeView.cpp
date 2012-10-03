@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-10-03 DRC Fixed a printing problem in the tree.
  * @li 2012-09-29 DRC Strip the Runs View.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
@@ -818,7 +819,7 @@ void CAgilityBookTreeView::PrintLine(
 	{
 		for (int idx = 0; idx < indent; ++idx)
 			data << spaces;
-		data << m_Ctrl->GetItemText(id) << L"<br />\n"; // Note, wxWidgets needs the space before the slash
+		data << m_Ctrl->GetItemText(id).wx_str() << L"<br />\n"; // Note, wxWidgets needs the space before the slash
 	}
 	wxTreeItemIdValue cookie;
 	wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(id, cookie);
