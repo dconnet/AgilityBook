@@ -38,7 +38,7 @@
 
 
 bool CreateBackupFile(
-		wxString const& filename,
+		wxString const& inFilename,
 		int nBackups)
 {
 	bool bChanged = false;
@@ -49,7 +49,7 @@ bool CreateBackupFile(
 		int i;
 		for (i = 1; i <= nBackups; ++i)
 		{
-			wxString backup = wxString::Format(L"%s.bck%d", filename.c_str(), i);
+			wxString backup = wxString::Format(L"%s.bck%d", inFilename.c_str(), i);
 			if (!wxFile::Exists(backup))
 			{
 				nHole = i;
@@ -61,19 +61,19 @@ bool CreateBackupFile(
 		// Then shift all the files into the hole.
 		for (i = nHole; i > 1; --i)
 		{
-			wxString backup = wxString::Format(L"%s.bck%d", filename.c_str(), i);
+			wxString backup = wxString::Format(L"%s.bck%d", inFilename.c_str(), i);
 			if (wxFile::Exists(backup))
 				wxRemoveFile(backup);
-			wxString filename = wxString::Format(L"%s.bck%d", filename.c_str(), i-1);
+			wxString filename = wxString::Format(L"%s.bck%d", inFilename.c_str(), i-1);
 			wxRenameFile(filename, backup);
 			bChanged = true;
 		}
-		wxString backup = filename + L".bck1";
 		// File may not exist if doing a 'save as'
-		if (wxFile::Exists(filename))
+		if (wxFile::Exists(inFilename))
 		{
 			bChanged = true;
-			wxCopyFile(filename, backup, false);
+			wxString backup = inFilename + L".bck1";
+			wxCopyFile(inFilename, backup, false);
 		}
 	}
 	return bChanged;

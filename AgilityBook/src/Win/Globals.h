@@ -32,12 +32,12 @@ class wxTreeCtrl;
 
 /**
  * Create a backup file (and reorganize if some were deleted)
- * @param filename File name to backup.
+ * @param inFilename File name to backup.
  * @param nBackups Number of backups to keep.
  * @return Backup files reorganized.
  */
 extern bool CreateBackupFile(
-		wxString const& filename,
+		wxString const& inFilename,
 		int nBackups);
 
 
