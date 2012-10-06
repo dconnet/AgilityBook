@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-10-06 DRC Moved backup function from doc to here.
  * @li 2012-08-12 DRC Moved FormatBytes to StringUtil
  * @li 2012-05-04 DRC Added FormatBytes
  * @li 2011-04-16 DRC Added GetFileTimes
@@ -34,6 +35,49 @@
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
+
+
+bool CreateBackupFile(
+		wxString const& filename,
+		int nBackups)
+{
+	bool bChanged = false;
+	if (0 < nBackups)
+	{
+		// First find a hole.
+		int nHole = -1;
+		int i;
+		for (i = 1; i <= nBackups; ++i)
+		{
+			wxString backup = wxString::Format(L"%s.bck%d", filename.c_str(), i);
+			if (!wxFile::Exists(backup))
+			{
+				nHole = i;
+				break;
+			}
+		}
+		if (-1 == nHole)
+			nHole = nBackups;
+		// Then shift all the files into the hole.
+		for (i = nHole; i > 1; --i)
+		{
+			wxString backup = wxString::Format(L"%s.bck%d", filename.c_str(), i);
+			if (wxFile::Exists(backup))
+				wxRemoveFile(backup);
+			wxString filename = wxString::Format(L"%s.bck%d", filename.c_str(), i-1);
+			wxRenameFile(filename, backup);
+			bChanged = true;
+		}
+		wxString backup = filename + L".bck1";
+		// File may not exist if doing a 'save as'
+		if (wxFile::Exists(filename))
+		{
+			bChanged = true;
+			wxCopyFile(filename, backup, false);
+		}
+	}
+	return bChanged;
+}
 
 
 bool GetFileTimes(
