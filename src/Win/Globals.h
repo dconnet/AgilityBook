@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-10-06 DRC Moved backup function from doc to here.
  * @li 2012-08-12 DRC Moved FormatBytes to StringUtil
  * @li 2012-05-04 DRC Added FormatBytes
  * @li 2010-10-30 DRC Moved BreakLine to a separate file.
@@ -27,6 +28,17 @@ class CListCtrl;
 class wxDateTime;
 class wxFileName;
 class wxTreeCtrl;
+
+
+/**
+ * Create a backup file (and reorganize if some were deleted)
+ * @param filename File name to backup.
+ * @param nBackups Number of backups to keep.
+ * @return Backup files reorganized.
+ */
+extern bool CreateBackupFile(
+		wxString const& filename,
+		int nBackups);
 
 
 /**

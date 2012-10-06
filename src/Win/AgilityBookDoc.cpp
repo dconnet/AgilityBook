@@ -84,6 +84,7 @@
 #include "DlgTrial.h"
 #include "Element.h"
 #include "FilterOptions.h"
+#include "Globals.h"
 #include "MainFrm.h"
 #include "RegItems.h"
 #include "TabView.h"
@@ -1239,37 +1240,7 @@ CAgilityBookTrainingView* CAgilityBookDoc::GetTrainingView() const
 
 void CAgilityBookDoc::BackupFile(wxString const& lpszPathName)
 {
-	int nBackups = CAgilityBookOptions::GetNumBackupFiles();
-	if (0 < nBackups)
-	{
-		// First find a hole.
-		int nHole = -1;
-		int i;
-		for (i = 1; i <= nBackups; ++i)
-		{
-			wxString backup = wxString::Format(L"%s.bck%d", lpszPathName.c_str(), i);
-			if (!wxFile::Exists(backup))
-			{
-				nHole = i;
-				break;
-			}
-		}
-		if (-1 == nHole)
-			nHole = nBackups;
-		// Then shift all the files into the hole.
-		for (i = nHole; i > 1; --i)
-		{
-			wxString backup = wxString::Format(L"%s.bck%d", lpszPathName.c_str(), i);
-			if (wxFile::Exists(backup))
-				wxRemoveFile(backup);
-			wxString filename = wxString::Format(L"%s.bck%d", lpszPathName.c_str(), i-1);
-			wxRenameFile(filename, backup);
-		}
-		wxString backup = lpszPathName + L".bck1";
-		// File may not exist if doing a 'save as'
-		if (wxFile::Exists(lpszPathName))
-			wxCopyFile(lpszPathName, backup, false);
-	}
+	CreateBackupFile(lpszPathName, CAgilityBookOptions::GetNumBackupFiles());
 }
 
 
