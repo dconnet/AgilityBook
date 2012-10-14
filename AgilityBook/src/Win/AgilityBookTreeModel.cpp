@@ -5,9 +5,11 @@
 
 #include "ARBTypes.h"
 #include "DlgAssignColumns.h"
+#include "RegItems.h"
 #include "StringUtil.h"
 #include <algorithm>
 #include <vector>
+#include <wx/config.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -18,8 +20,9 @@
 class CAgilityBookTreeModelNode
 {
 public:
-	CAgilityBookTreeModelNode()
-		: m_parent(NULL)
+	CAgilityBookTreeModelNode(CAgilityBookTreeModel* pModel)
+		: m_pModel(pModel)
+		, m_parent(NULL)
 	{
 	}
 	virtual ~CAgilityBookTreeModelNode();
@@ -33,6 +36,7 @@ public:
 	virtual eNodeType Type() const = 0;
 
 	virtual bool IsContainer() const = 0;
+	virtual wxIcon GetIcon(unsigned int col) const	{return wxIcon();}
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
@@ -41,9 +45,16 @@ public:
 	CAgilityBookTreeModelNode* GetParent() const	{return m_parent;}
 	unsigned int GetChildren(wxDataViewItemArray& array) const;
 
+	virtual ARBBasePtr GetARBBase() const			{return ARBBasePtr();}
+	virtual ARBDogPtr GetDog() const				{return ARBDogPtr();}
+	virtual ARBDogTrialPtr GetTrial() const			{return ARBDogTrialPtr();}
+	virtual ARBDogRunPtr GetRun() const				{return ARBDogRunPtr();}
+
 	void Append(CAgilityBookTreeModelNode* child);
 	void Remove(CAgilityBookTreeModelNode* child);
 
+protected:
+	CAgilityBookTreeModel* m_pModel;
 private:
 	CAgilityBookTreeModelNode* m_parent;
 	std::vector<CAgilityBookTreeModelNode*> m_children;
@@ -98,7 +109,8 @@ void CAgilityBookTreeModelNode::Remove(CAgilityBookTreeModelNode* child)
 class CAgilityBookTreeModelNodeFake : public CAgilityBookTreeModelNode
 {
 public:
-	CAgilityBookTreeModelNodeFake()
+	CAgilityBookTreeModelNodeFake(CAgilityBookTreeModel* pModel)
+		: CAgilityBookTreeModelNode(pModel)
 	{
 	}
 	virtual eNodeType Type() const			{return eDog;}
@@ -114,19 +126,34 @@ public:
 class CAgilityBookTreeModelNodeDog : public CAgilityBookTreeModelNode
 {
 public:
-	CAgilityBookTreeModelNodeDog(ARBDogPtr dog)
-		: m_pDog(dog)
+	CAgilityBookTreeModelNodeDog(
+			CAgilityBookTreeModel* pModel,
+			ARBDogPtr dog)
+		: CAgilityBookTreeModelNode(pModel)
+		, m_pDog(dog)
 	{
 	}
 	virtual eNodeType Type() const			{return eDog;}
 	virtual bool IsContainer() const		{return true;}
+	virtual wxIcon GetIcon(unsigned int col) const;
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
 			unsigned int col) const;
 
+	virtual ARBBasePtr GetARBBase() const			{return m_pDog;}
+	virtual ARBDogPtr GetDog() const				{return m_pDog;}
+
 	ARBDogPtr m_pDog;
 };
+
+
+wxIcon CAgilityBookTreeModelNodeDog::GetIcon(unsigned int col) const
+{
+	if (0 == col)
+		return m_pModel->IconList().GetIcon(m_pModel->IconList().Dog());
+	return wxIcon();
+}
 
 
 wxVariant CAgilityBookTreeModelNodeDog::GetColumn(
@@ -180,19 +207,37 @@ wxVariant CAgilityBookTreeModelNodeDog::GetColumn(
 class CAgilityBookTreeModelNodeTrial : public CAgilityBookTreeModelNode
 {
 public:
-	CAgilityBookTreeModelNodeTrial(ARBDogTrialPtr trial)
-		: m_pTrial(trial)
+	CAgilityBookTreeModelNodeTrial(
+			CAgilityBookTreeModel* pModel,
+			ARBDogTrialPtr trial)
+		: CAgilityBookTreeModelNode(pModel)
+		, m_pTrial(trial)
 	{
 	}
 	virtual eNodeType Type() const			{return eTrial;}
 	virtual bool IsContainer() const		{return true;}
+	virtual wxIcon GetIcon(unsigned int col) const;
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
 			unsigned int col) const;
 
+	virtual ARBBasePtr GetARBBase() const			{return m_pTrial;}
+	virtual ARBDogTrialPtr GetTrial() const			{return m_pTrial;}
+
 	ARBDogTrialPtr m_pTrial;
 };
+
+
+wxIcon CAgilityBookTreeModelNodeTrial::GetIcon(unsigned int col) const
+{
+	if (0 == col)
+	{
+		int idx = m_pModel->IconList().Trial(m_pModel->GetDocument()->Book().GetConfig(), m_pTrial);
+		return m_pModel->IconList().GetIcon(idx);
+	}
+	return wxIcon();
+}
 
 
 wxVariant CAgilityBookTreeModelNodeTrial::GetColumn(
@@ -309,25 +354,39 @@ class CAgilityBookTreeModelNodeRun : public CAgilityBookTreeModelNode
 {
 public:
 	CAgilityBookTreeModelNodeRun(
+			CAgilityBookTreeModel* pModel,
 			ARBDogPtr dog,
 			ARBDogTrialPtr trial,
 			ARBDogRunPtr run)
-		: m_pDog(dog)
+		: CAgilityBookTreeModelNode(pModel)
+		, m_pDog(dog)
 		, m_pTrial(trial)
 		, m_pRun(run)
 	{
 	}
 	virtual eNodeType Type() const			{return eRun;}
 	virtual bool IsContainer() const		{return false;}
+	virtual wxIcon GetIcon(unsigned int col) const;
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
 			unsigned int col) const;
 
+	virtual ARBBasePtr GetARBBase() const			{return m_pRun;}
+	virtual ARBDogRunPtr GetRun() const				{return m_pRun;}
+
 	ARBDogPtr m_pDog;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
 };
+
+
+wxIcon CAgilityBookTreeModelNodeRun::GetIcon(unsigned int col) const
+{
+	if (0 == col)
+		return m_pModel->IconList().GetIcon(m_pModel->IconList().Run());
+	return wxIcon();
+}
 
 
 wxVariant CAgilityBookTreeModelNodeRun::GetColumn(
@@ -694,7 +753,7 @@ void CAgilityBookTreeModel::FakeRoot()
 {
 	if (m_roots.size() == 0 && !m_emptyRoot)
 	{
-		m_emptyRoot = new CAgilityBookTreeModelNodeFake();
+		m_emptyRoot = new CAgilityBookTreeModelNodeFake(this);
 		ItemAdded(wxDataViewItem(0), wxDataViewItem(m_emptyRoot));
 	}
 	else if (m_roots.size() > 0 && m_emptyRoot)
@@ -737,9 +796,15 @@ void CAgilityBookTreeModel::UpdateColumns()
 				fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[2][iCol-1]);
 			}
 
+			wxDataViewRenderer* renderer;
+			if (0 == iCol)
+				renderer = new wxDataViewIconTextRenderer("string", wxDATAVIEW_CELL_INERT);
+			else
+				renderer = new wxDataViewTextRenderer("string", wxDATAVIEW_CELL_INERT);
+
 			wxDataViewColumn* column = new wxDataViewColumn(
 				StringUtil::stringWX(str),
-				new wxDataViewTextRenderer("string", wxDATAVIEW_CELL_INERT),
+				renderer,
 				iCol,
 				wxCOL_WIDTH_AUTOSIZE,
 				wxALIGN_LEFT,
@@ -757,35 +822,35 @@ void CAgilityBookTreeModel::LoadData()
 	m_Ctrl->Freeze();
 
 	// Remember the currently selected item.
-	/*
 	std::wstring strCallName;
-	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
-	if (!pData)
+	CAgilityBookTreeModelNode* node = GetNode(m_Ctrl->GetSelection());
+	if (!node)
 	{
 		strCallName = wxConfig::Get()->Read(CFG_SETTINGS_LASTDOG, wxString());
 	}
 	std::list<ARBBasePtr> baseItems;
-	while (pData)
+	while (node)
 	{
-		baseItems.push_front(pData->GetARBBase());
-		pData = pData->GetParent();
+		baseItems.push_front(node->GetARBBase());
+		node = node->GetParent();
 	}
-	*/
 
 	DeleteAllItems();
 
-///
 	// Load the data
+	wxDataViewItem item;
 	for (ARBDogList::const_iterator iterDog = m_pDoc->Book().GetDogs().begin();
 		iterDog != m_pDoc->Book().GetDogs().end();
 		++iterDog)
 	{
-		CAgilityBookTreeModelNodeDog* nodeDog = new CAgilityBookTreeModelNodeDog(*iterDog);
+		CAgilityBookTreeModelNodeDog* nodeDog = new CAgilityBookTreeModelNodeDog(this, *iterDog);
 		m_roots.push_back(nodeDog);
 		ItemAdded(wxDataViewItem(0), wxDataViewItem(nodeDog));
 		FakeRoot();
-		//if (0 < strCallName.length() && (*iterDog)->GetCallName() == strCallName)
-		//	hItem = hItem2;
+		if (0 < strCallName.length() && (*iterDog)->GetCallName() == strCallName)
+		{
+			item = wxDataViewItem(nodeDog);
+		}
 
 		for (ARBDogTrialList::const_iterator iterTrial = (*iterDog)->GetTrials().begin();
 			iterTrial != (*iterDog)->GetTrials().end();
@@ -793,7 +858,7 @@ void CAgilityBookTreeModel::LoadData()
 		{
 			if (!(*iterTrial)->IsFiltered())
 			{
-				CAgilityBookTreeModelNodeTrial* nodeTrial = new CAgilityBookTreeModelNodeTrial(*iterTrial);
+				CAgilityBookTreeModelNodeTrial* nodeTrial = new CAgilityBookTreeModelNodeTrial(this, *iterTrial);
 				nodeDog->Append(nodeTrial);
 				for (ARBDogRunList::const_iterator iterRun = (*iterTrial)->GetRuns().begin();
 					iterRun != (*iterTrial)->GetRuns().end();
@@ -801,18 +866,45 @@ void CAgilityBookTreeModel::LoadData()
 				{
 					if (!(*iterRun)->IsFiltered())
 					{
-						CAgilityBookTreeModelNodeRun* nodeRun = new CAgilityBookTreeModelNodeRun(*iterDog, *iterTrial, *iterRun);
+						CAgilityBookTreeModelNodeRun* nodeRun = new CAgilityBookTreeModelNodeRun(this, *iterDog, *iterTrial, *iterRun);
 						nodeTrial->Append(nodeRun);
 					}
 				}
 			}
 		}
 	}
-
-	//m_Ctrl->SelectItem(hItem);
-	//m_Ctrl->EnsureVisible(hItem);
 	Resort();
 	Expand(m_Ctrl);
+
+	if (!item.IsOk())
+	{
+#if 0
+		// Work thru all the base items...
+		// Otherwise, after a reorder, the wrong item is selected.
+		hItem = m_Ctrl->GetRootItem();
+		for (std::list<ARBBasePtr>::iterator iter = baseItems.begin();
+			iter != baseItems.end();
+			++iter)
+		{
+			pData = FindData(hItem, (*iter));
+			if (pData)
+				hItem = pData->GetId();
+		}
+		if (hItem == m_Ctrl->GetRootItem())
+			hItem = wxTreeItemId();
+#endif
+	}
+	if (!item.IsOk())
+	{
+		//wxTreeItemIdValue cookie;
+		//hItem = m_Ctrl->GetFirstChild(m_Ctrl->GetRootItem(), cookie);
+	}
+
+	if (item.IsOk())
+	{
+		m_Ctrl->Select(item);
+		m_Ctrl->EnsureVisible(item);
+	}
 
 	// Reset the context menu reset.
 	// We may have reloaded during a context menu operation.
@@ -977,7 +1069,16 @@ void CAgilityBookTreeModel::GetValue(
 	CAgilityBookTreeModelNode* node = GetNode(item);
 	wxASSERT(node);
 
-	variant = node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col);
+	wxIcon icon = node->GetIcon(col);
+	if (icon.IsOk())
+	{
+		wxDataViewIconText data;
+		data.SetIcon(icon);
+		data.SetText(node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col));
+		variant << data;
+	}
+	else
+		variant = node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col);
 }
 
 

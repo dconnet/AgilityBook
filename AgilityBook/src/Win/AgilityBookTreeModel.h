@@ -1,5 +1,6 @@
 #pragma once
 
+#include "IconList.h"
 #include <wx/dataview.h>
 class CAgilityBookDoc;
 class CAgilityBookTreeModelNode;
@@ -10,6 +11,9 @@ class CAgilityBookTreeModel : public wxDataViewModel
 public:
 	CAgilityBookTreeModel();
 	~CAgilityBookTreeModel();
+
+	CAgilityBookDoc* GetDocument() const	{return m_pDoc;}
+	CIconList const& IconList() const		{return m_icons;}
 
 	void CreateColumns(wxDataViewCtrl* ctrl, CAgilityBookDoc* pDoc);
 	void UpdateColumns();
@@ -51,6 +55,7 @@ private:
 	wxDataViewCtrl* m_Ctrl;
 	std::vector<long> m_Columns[3];
 
+	CIconList m_icons;
 	std::vector<CAgilityBookTreeModelNode*> m_roots;
 	// Deleting the last item does really bad things. Something in the base
 	// class is messed up and newly added items don't show up.

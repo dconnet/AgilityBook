@@ -16,8 +16,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "IconList.h"
+
+#include "AgilityBook.h"
+#include "ARBConfig.h"
+#include "ARBDogTrial.h"
 
 #include "res/AgilityBook16.xpm"
 #include "res/dog.xpm"
@@ -84,4 +87,25 @@ CIconList::CIconList()
 		}
 #endif
 	}
+}
+
+
+int CIconList::Trial(ARBConfig& config, ARBDogTrialPtr pTrial) const
+{
+	int idxIcon = Trial();
+	if (pTrial)
+	{
+		ARBDogClubPtr pClub;
+		if (pTrial->GetClubs().GetPrimaryClub(&pClub))
+		{
+			ARBConfigVenuePtr pVenue;
+			if (config.GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
+			{
+				short idx = pVenue->GetIcon();
+				if (0 <= idx && idx < GetImageCount())
+					idxIcon = idx;
+			}
+		}
+	}
+	return idxIcon;
 }

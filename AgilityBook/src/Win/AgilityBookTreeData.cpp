@@ -766,24 +766,7 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 	, m_idxIcon(-1)
 {
 #pragma PRAGMA_TODO("Fix me")
-//	m_idxIcon = m_pTree->GetImageList().Trial();
-	if (m_pTrial)
-	{
-		ARBDogClubPtr pClub;
-		if (m_pTrial->GetClubs().GetPrimaryClub(&pClub))
-		{
-			ARBConfigVenuePtr pVenue;
-			if (pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
-			{
-#pragma PRAGMA_TODO("Fix me")
-#if 0
-				short idx = pVenue->GetIcon();
-				if (0 <= idx && idx < m_pTree->GetImageList().GetImageCount())
-					m_idxIcon = idx;
-#endif
-			}
-		}
-	}
+//	m_idxIcon = m_pTree->GetImageList().Trial(pTree->GetDocument()->Book().GetConfig(), m_pTrial);
 }
 
 

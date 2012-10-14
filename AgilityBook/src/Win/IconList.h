@@ -17,6 +17,7 @@
  * @li 2007-04-22 DRC Created.
  */
 
+#include "ARBTypes.h"
 #include <wx/imaglist.h>
 
 
@@ -42,6 +43,8 @@ public:
 	int USDAA() const		{return m_idxVenueUSDAA;}
 	int FCI() const			{return m_idxVenueFCI;}
 	int SCC() const			{return m_idxVenueSCC;}
+
+	int Trial(ARBConfig& config, ARBDogTrialPtr pTrial) const;
 
 protected:
 	int m_idxARB;
