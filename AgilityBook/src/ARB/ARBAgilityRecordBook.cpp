@@ -123,7 +123,7 @@ std::wstring ARBAgilityRecordBook::GetArch()
 	return L"mac";
 #else
 #pragma PRAGMA_TODO("Define platform arch in version file for download")
-	return wxEmptyString;
+	return std::wstring();
 #endif
 }
 
