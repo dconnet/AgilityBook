@@ -330,9 +330,14 @@
 	#define UNBIND_OR_DISCONNECT_CTRL(ctrl, evt, cast, func) \
 		ctrl->Unbind(evt, &func, this)
 
-	#define BIND_OR_CONNECT_ID(ctrl, id, evt, cast, func) \
+	#define BIND_OR_CONNECT_ID(id, evt, cast, func) \
+		Bind(evt, &func, this, id)
+	#define UNBIND_OR_DISCONNECT_ID(id, evt, cast, func) \
+		Unbind(evt, &func, this, id)
+
+	#define BIND_OR_CONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
 		ctrl->Bind(evt, &func, this, id)
-	#define UNBIND_OR_DISCONNECT_ID(ctrl, id, evt, cast, func) \
+	#define UNBIND_OR_DISCONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
 		ctrl->Unbind(evt, &func, this, id)
 
 #else
@@ -346,9 +351,14 @@
 	#define UNBIND_OR_DISCONNECT_CTRL(ctrl, evt, cast, func) \
 		ctrl->Disconnect(evt, cast(func), NULL, this);
 
-	#define BIND_OR_CONNECT_ID(ctrl, id, evt, cast, func) \
+	#define BIND_OR_CONNECT_ID(id, evt, cast, func) \
+		Connect(id, evt, cast(func), NULL, this)
+	#define UNBIND_OR_DISCONNECT_ID(id, evt, cast, func) \
+		Disconnect(id, evt, cast(func), NULL, this)
+
+	#define BIND_OR_CONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
 		ctrl->Connect(id, evt, cast(func), NULL, this)
-	#define UNBIND_OR_DISCONNECT_ID(ctrl, id, evt, cast, func) \
+	#define UNBIND_OR_DISCONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
 		ctrl->Disconnect(id, evt, cast(func), NULL, this)
 #endif
 
