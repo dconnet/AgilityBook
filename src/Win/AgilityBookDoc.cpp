@@ -261,7 +261,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				ARBDogList::const_iterator iDog;
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
-					BIND_OR_CONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
+					BIND_OR_CONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
 					std::wstring item = StringUtil::Replace((*iDog)->GetGenericName(), L"&", L"&&");
 					wxMenuItem* menuitem = menu->AppendCheckItem(menuId, StringUtil::stringWX(item));
 					if (*(*iDog) == *curDog)
@@ -275,7 +275,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				menuId = baseID;
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
-					UNBIND_OR_DISCONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
+					UNBIND_OR_DISCONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
 				}
 			}
 			break;
@@ -295,7 +295,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 						iFilter != data.filterNames.end();
 						++iFilter, ++menuId)
 					{
-						BIND_OR_CONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
+						BIND_OR_CONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
 						std::wstring item = StringUtil::Replace(*iFilter, L"&", L"&&");
 						wxMenuItem* menuitem = menu->AppendCheckItem(menuId, StringUtil::stringWX(item));
 						if (*iFilter == filterName)
@@ -310,7 +310,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 						iFilter != data.filterNames.end();
 						++iFilter, ++menuId)
 					{
-						UNBIND_OR_DISCONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
+						UNBIND_OR_DISCONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
 					}
 				}
 			}
