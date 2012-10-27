@@ -755,10 +755,11 @@ std::wstring CAgilityBookTreeDataDog::OnNeedText() const
 		case IO_TREE_DOG_AGE:
 			if (m_pDog->GetDOB().IsValid())
 			{
-				wxDateTime dob(m_pDog->GetDOB().GetDate());
+				wxDateTime dob;
+				m_pDog->GetDOB().GetDate(dob);
 				wxDateTime current = wxDateTime::Now();
 				if (m_pDog->GetDeceased().IsValid())
-					current = wxDateTime(m_pDog->GetDeceased().GetDate());
+					m_pDog->GetDeceased().GetDate(current);
 				wxTimeSpan age = current - dob;
 				str << StringUtil::stringW(wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays()/365.0, 1).c_str()));
 			}

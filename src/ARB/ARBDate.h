@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-10-26 DRC Changed ARBDate::GetTime to avoid time_t when possible.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2009-10-30 DRC Add support for localized dates.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -286,21 +287,6 @@ public:
 			bool inForceOutput = false) const;
 
 	/**
-	 * Convert the date to a time.
-	 * Note, this will return an invalid time_t (-1) if the date falls
-	 * outside the range of a time_t (mktime()).
-	 * @return Date converted to time_t.
-	 */
-	time_t GetDate() const;
-
-#ifdef _WIN32
-	/**
-	 * Convert the date to a time.
-	 */
-	bool GetDate(SYSTEMTIME& outTime) const;
-#endif
-
-	/**
 	 * Get the current date.
 	 * @param outYr Current year.
 	 * @param outMon Current month.
@@ -310,6 +296,29 @@ public:
 			int& outYr,
 			int& outMon,
 			int& outDay) const;
+
+	/**
+	 * Convert the date to a time.
+	 * Note, this will return an invalid time_t (-1) if the date falls
+	 * outside the range of a time_t (mktime()).
+	 * It is best to avoid using this function.
+	 * @return Date converted to time_t.
+	 */
+	bool GetDate(time_t& outTime) const;
+
+#ifdef _WIN32
+	/**
+	 * Convert the date to a time.
+	 */
+	bool GetDate(SYSTEMTIME& outTime) const;
+#endif
+
+#if defined(__WXWINDOWS__)
+	/**
+	 * Get the current date.
+	 */
+	bool GetDate(wxDateTime& outDate) const;
+#endif
 
 	int GetDay() const;		///< Get the current day.
 	int GetMonth() const;	///< Get the current month.

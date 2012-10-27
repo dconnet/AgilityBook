@@ -226,7 +226,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	if (m_dateFrom.IsValid())
 	{
 		m_ctrlValidFrom->SetValue(true);
-		date = m_dateFrom.GetDate();
+		m_dateFrom.GetDate(date);
 	}
 	else
 	{
@@ -253,7 +253,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	if (m_dateTo.IsValid())
 	{
 		m_ctrlValidTo->SetValue(true);
-		date = m_dateTo.GetDate();
+		m_dateTo.GetDate(date);
 	}
 	else
 	{
