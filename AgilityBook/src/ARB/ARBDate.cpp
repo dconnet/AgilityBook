@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-10-26 DRC Changed ARBDate::GetTime to avoid time_t when possible.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2011-12-30 DRC Added eVerbose to GetString.
  * @li 2010-09-06 DRC Fix a bug when adjusting for DST.
@@ -543,9 +544,18 @@ std::wstring ARBDate::GetString(
 }
 
 
-time_t ARBDate::GetDate() const
+void ARBDate::GetDate(
+		int& outYr,
+		int& outMon,
+		int& outDay) const
 {
-	time_t t = 0;
+	SdnToGregorian(m_Julian, &outYr, &outMon, &outDay);
+}
+
+
+bool ARBDate::GetDate(time_t& outTime) const
+{
+	outTime = (time_t)-1;
 	if (0 < m_Julian)
 	{
 		int yr, mon, day;
@@ -567,7 +577,7 @@ time_t ARBDate::GetDate() const
 		tim.tm_year = yr - 1900;
 		tim.tm_wday = 0;
 		tim.tm_yday = 0;
-		t = mktime(&tim);
+		outTime = mktime(&tim);
 		// If DST changes, recompute - otherwise we can end up 1 day early.
 		if (dst != tim.tm_isdst)
 		{
@@ -579,10 +589,10 @@ time_t ARBDate::GetDate() const
 			tim.tm_year = yr - 1900;
 			tim.tm_wday = 0;
 			tim.tm_yday = 0;
-			t = mktime(&tim);
+			outTime = mktime(&tim);
 		}
 	}
-	return t;
+	return outTime != (time_t)-1;
 }
 
 
@@ -608,13 +618,17 @@ bool ARBDate::GetDate(SYSTEMTIME& outTime) const
 #endif
 
 
-void ARBDate::GetDate(
-		int& outYr,
-		int& outMon,
-		int& outDay) const
+#if defined(__WXWINDOWS__)
+bool ARBDate::GetDate(wxDateTime& outDate) const
 {
-	SdnToGregorian(m_Julian, &outYr, &outMon, &outDay);
+	if (!IsValid())
+		return false;
+	int yr, mon, day;
+	GetDate(yr, mon, day);
+	outDate.Set((wxDateTime::wxDateTime_t)day, (wxDateTime::Month)(mon - 1), yr);
+	return true;
 }
+#endif
 
 
 int ARBDate::GetDay() const

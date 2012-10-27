@@ -170,7 +170,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 
 	wxDateTime date(wxDateTime::Now());
 	if (m_DateFrom)
-		date = m_Title->GetValidFrom().GetDate();
+		m_Title->GetValidFrom().GetDate(date);
 	m_ctrlDateFrom = new wxDatePickerCtrl(this, wxID_ANY, date,
 		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
 	m_ctrlDateFrom->SetHelpText(_("HIDC_CONFIG_TITLE_VALID_FROM_DATE"));
@@ -186,7 +186,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 
 	date = wxDateTime::Now();
 	if (m_DateTo)
-		date = m_Title->GetValidTo().GetDate();
+		m_Title->GetValidTo().GetDate(date);
 	m_ctrlDateTo = new wxDatePickerCtrl(this, wxID_ANY, date,
 		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
 	m_ctrlDateTo->SetHelpText(_("HIDC_CONFIG_TITLE_VALID_TO_DATE"));
