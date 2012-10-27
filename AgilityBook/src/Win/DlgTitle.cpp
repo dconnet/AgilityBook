@@ -89,7 +89,7 @@ CDlgTitle::CDlgTitle(
 	if (m_pTitle)
 	{
 		if (m_pTitle->GetDate().IsValid())
-			date.Set(m_pTitle->GetDate().GetDate());
+			m_pTitle->GetDate().GetDate(date);
 		else
 			m_bEarned = false;
 		if (m_pTitle->IsHidden())

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-10-26 DRC Changed ARBDate::GetTime to avoid time_t when possible.
  * @li 2012-08-13 DRC Moved CQualifyingValidator to separate file.
  * @li 2012-03-15 DRC Missed upper casing the Validate() method.
  * @li 2012-03-01 DRC Change time to upper case before parsing.
@@ -331,7 +332,9 @@ bool CGenericValidator::TransferToWindow()
 		{
 			if (m_pDate->IsValid())
 			{
-				pControl->SetValue(m_pDate->GetDate());
+				wxDateTime date;
+				if (m_pDate->GetDate(date))
+					pControl->SetValue(date);
 				return true;
 			}
 			else
@@ -343,7 +346,9 @@ bool CGenericValidator::TransferToWindow()
 				}
 				else
 				{
-					pControl->SetValue(ARBDate::Today().GetDate());
+					wxDateTime date;
+					if (ARBDate::Today().GetDate(date))
+						pControl->SetValue(date);
 				}
 				return true;
 			}

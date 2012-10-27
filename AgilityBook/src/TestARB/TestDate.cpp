@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-10-26 DRC Changed ARBDate::GetTime to avoid time_t when possible.
  * @li 2009-10-30 DRC Add support for localized dates.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-11 DRC Created
@@ -42,7 +43,8 @@ SUITE(TestDate)
 		if (!g_bMicroTest)
 		{
 			ARBDate d(1999, 3, 27);
-			wxDateTime wxD(d.GetDate());
+			wxDateTime wxD;
+			d.GetDate(wxD);
 			CHECK_EQUAL(1999, wxD.GetYear());
 			CHECK_EQUAL(3, wxD.GetMonth() + 1); // 'Month' is an enum, starting at 0
 			CHECK_EQUAL(27, wxD.GetDay());
@@ -268,8 +270,10 @@ SUITE(TestDate)
 	{
 		ARBDate d1(2010, 6, 1); // A date in DST
 		ARBDate d2(2010, 12, 1); // A date not.
-		time_t t1 = d1.GetDate();
-		time_t t2 = d2.GetDate();
+		time_t t1;
+		d1.GetDate(t1);
+		time_t t2;
+		d2.GetDate(t2);
 		CHECK(d1 == ARBDate(t1));
 		CHECK(d2 == ARBDate(t2));
 	}

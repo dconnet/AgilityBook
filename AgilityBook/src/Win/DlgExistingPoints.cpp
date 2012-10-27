@@ -217,8 +217,10 @@ CDlgExistingPoints::CDlgExistingPoints(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textEarned->Wrap(-1);
 
+	wxDateTime date;
+	m_Date.GetDate(date);
 	m_ctrlDate = new wxDatePickerCtrl(this, wxID_ANY,
-		wxDateTime(m_Date.GetDate()),
+		date,
 		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
 	BIND_OR_CONNECT_CTRL(m_ctrlDate, wxEVT_DATE_CHANGED, wxDateEventHandler, CDlgExistingPoints::OnDateChanged);
 	m_ctrlDate->SetHelpText(_("HIDC_EXISTING_DATE"));

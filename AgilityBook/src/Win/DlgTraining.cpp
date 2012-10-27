@@ -60,7 +60,7 @@ CDlgTraining::CDlgTraining(
 
 	wxDateTime date(wxDateTime::Now());
 	if (pTraining->GetDate().IsValid())
-		date.Set(pTraining->GetDate().GetDate());
+		pTraining->GetDate().GetDate(date);
 
 	wxArrayString names, subnames;
 
