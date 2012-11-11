@@ -106,23 +106,6 @@ void CAgilityBookTreeModelNode::Remove(CAgilityBookTreeModelNode* child)
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CAgilityBookTreeModelNodeFake : public CAgilityBookTreeModelNode
-{
-public:
-	CAgilityBookTreeModelNodeFake(CAgilityBookTreeModel* pModel)
-		: CAgilityBookTreeModelNode(pModel)
-	{
-	}
-	virtual eNodeType Type() const			{return eDog;}
-	virtual bool IsContainer() const		{return true;}
-	virtual wxVariant GetColumn(
-			ARBConfig const& config,
-			std::vector<long> const& columns,
-			unsigned int col) const			{return wxVariant();}
-};
-
-/////////////////////////////////////////////////////////////////////////////
-
 class CAgilityBookTreeModelNodeDog : public CAgilityBookTreeModelNode
 {
 public:
@@ -730,7 +713,6 @@ CAgilityBookTreeModel::CAgilityBookTreeModel()
 	, m_Ctrl(NULL)
 	, m_Columns()
 	, m_roots()
-	, m_emptyRoot(NULL)
 {
 }
 
@@ -738,7 +720,6 @@ CAgilityBookTreeModel::CAgilityBookTreeModel()
 CAgilityBookTreeModel::~CAgilityBookTreeModel()
 {
 	DeleteAllItems();
-	delete m_emptyRoot;
 }
 
 
@@ -747,22 +728,6 @@ CAgilityBookTreeModelNode* CAgilityBookTreeModel::GetNode(const wxDataViewItem& 
 	if (item.IsOk())
 		return reinterpret_cast<CAgilityBookTreeModelNode*>(item.GetID());
 	return NULL;
-}
-
-
-void CAgilityBookTreeModel::FakeRoot()
-{
-	if (m_roots.size() == 0 && !m_emptyRoot)
-	{
-		m_emptyRoot = new CAgilityBookTreeModelNodeFake(this);
-		ItemAdded(wxDataViewItem(0), wxDataViewItem(m_emptyRoot));
-	}
-	else if (m_roots.size() > 0 && m_emptyRoot)
-	{
-		delete m_emptyRoot;
-		ItemDeleted(wxDataViewItem(0), wxDataViewItem(m_emptyRoot));
-		m_emptyRoot = NULL;
-	}
 }
 
 
@@ -847,7 +812,6 @@ void CAgilityBookTreeModel::LoadData()
 		CAgilityBookTreeModelNodeDog* nodeDog = new CAgilityBookTreeModelNodeDog(this, *iterDog);
 		m_roots.push_back(nodeDog);
 		ItemAdded(wxDataViewItem(0), wxDataViewItem(nodeDog));
-		FakeRoot();
 		if (0 < strCallName.length() && (*iterDog)->GetCallName() == strCallName)
 		{
 			item = wxDataViewItem(nodeDog);
@@ -931,7 +895,6 @@ void CAgilityBookTreeModel::Delete(const wxDataViewItem& item)
 		std::vector<CAgilityBookTreeModelNode*>::iterator i = std::find(m_roots.begin(), m_roots.end(), node);
 		wxASSERT(i != m_roots.end());
 		m_roots.erase(i);
-		FakeRoot();
 		delete node;
 	}
 	else
@@ -951,7 +914,6 @@ void CAgilityBookTreeModel::DeleteAllItems()
 		std::vector<CAgilityBookTreeModelNode*>::iterator i = m_roots.begin();
 		CAgilityBookTreeModelNode* node = *i;
 		m_roots.erase(i);
-		FakeRoot();
 
 		wxDataViewItem parent(0);
 		wxDataViewItem item(node);
@@ -1119,11 +1081,13 @@ unsigned int CAgilityBookTreeModel::GetChildren(
 	CAgilityBookTreeModelNode* node = GetNode(parent);
 	if (!node)
 	{
+		/*
 		if (m_roots.size() == 0 && m_emptyRoot)
 		{
 			array.Add(wxDataViewItem(m_emptyRoot));
 			return 1;
 		}
+		*/
 		for (std::vector<CAgilityBookTreeModelNode*>::const_iterator i = m_roots.begin();
 			i != m_roots.end();
 			++i)

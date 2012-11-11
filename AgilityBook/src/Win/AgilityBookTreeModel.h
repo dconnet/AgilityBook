@@ -49,7 +49,6 @@ public:
 
 private:
 	CAgilityBookTreeModelNode* GetNode(const wxDataViewItem& item) const;
-	void FakeRoot();
 
 	CAgilityBookDoc* m_pDoc;
 	wxDataViewCtrl* m_Ctrl;
@@ -57,8 +56,4 @@ private:
 
 	CIconList m_icons;
 	std::vector<CAgilityBookTreeModelNode*> m_roots;
-	// Deleting the last item does really bad things. Something in the base
-	// class is messed up and newly added items don't show up.
-	// By adding/removing a fake node, the control stays usable.
-	CAgilityBookTreeModelNode* m_emptyRoot;
 };
