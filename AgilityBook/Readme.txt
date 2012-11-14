@@ -58,13 +58,13 @@ This will generate an initial set of strings to translate.
 --------------------
 
 poedit: http://www.poedit.net
-Cross platform editor for modifying .po files. Currently using 1.4.6.
+Cross platform editor for modifying .po files. Currently using 1.5.4.
 (makes use of gettext)
 Use this to keep the catalog in sync with the source code.
 
 --------------------
 
-wxFormBuilder: http://www.wxformbuilder.org/
+wxFormBuilder: http://sourceforge.net/projects/wxformbuilder/
 Useful for figuring out how a lay a dialog out.
 
 --------------------
@@ -93,18 +93,18 @@ All VC project files have been copied/renamed/modified such that:
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.44.0. There is no need
+ARB has been built and tested using Boost version 1.52.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
 weak_ptr templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
-above. The default directory when unpacked is boost_1_44_0 (of course,
+above. The default directory when unpacked is boost_1_52_0 (of course,
 this will vary based on boost version). Set BOOST_ROOT to point to this
 directory. The projects use this environment variable.
 
 --------------------
 
-Windows Installer XML toolset: http://wix.sourceforge.net/releases/
+Windows Installer XML toolset: http://wixtoolset.org/
 Currently using Version 3.5.2519.0 (as of ARB v2.2.6).
 - Install votive [optional]
 - (1), run WiX installer. That will set the environment variable WIX.
@@ -116,15 +116,14 @@ Currently using Version 3.5.2519.0 (as of ARB v2.2.6).
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.7.4.
-Earlier versions may work. (started using v1.6.?, but the dox file has been
-updated since)
+Used to create source code documentation. AgilityBook.dox uses v1.8.2.
+This is imcompatible with earlier versions.
 [Install to default location]
 
 --------------------
 
 GraphViz: http://www.graphviz.org
-Used to create source code documentation. AgilityBook.dox uses v2.26.3
+Used to create source code documentation. AgilityBook.dox uses v2.28.0
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
@@ -142,28 +141,28 @@ Microsoft Visual Studio .NET (VC7)
 ==================================
    Not supported.
 
-Microsoft Visual Studio .NET 2003 (VC7.1)
-=========================================
+Microsoft Visual Studio 2003 (VC7.1)
+====================================
    Not supported.
    (dropped after moving to a new machine, no longer have compiler)
 
-Microsoft Visual Studio .NET 2005 (VC8)
-=======================================
+Microsoft Visual Studio 2005 (VC8)
+==================================
    Not supported.
    (dropped after moving to a new machine, no longer have compiler)
 
-Microsoft Visual Studio .NET 2008 (VC9)
-=======================================
+Microsoft Visual Studio 2008 (VC9)
+==================================
    Not supported.
 
-Microsoft Visual Studio .NET 2008 (VC9) + SP1
-=============================================
+Microsoft Visual Studio 2008 (VC9) + SP1
+========================================
    It works, no additional notes.
    [x86: UNICODE and MBCS] [note: MBCS support has been dropped]
    [x64: UNICODE only]
 
-Microsoft Visual Studio .NET 2010 (VC10)
-========================================
+Microsoft Visual Studio 2010 (VC10)
+===================================
    It works, no additional notes.
    [x86: UNICODE and MBCS] [note: MBCS support has been dropped]
    [x64: UNICODE only]
@@ -177,3 +176,7 @@ Microsoft Visual Studio .NET 2010 (VC10)
      properly bring in the current SDK version.
    - Make sure you set the SDK in Platform Toolset (project properties)
      [this is done for ARB]
+
+Microsoft Visual Studio 2012 (VC11)
+===================================
+   It works, no additional notes.
