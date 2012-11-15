@@ -28,6 +28,7 @@
 #include "Widgets.h"
 #include <wx/config.h>
 #include <wx/display.h>
+#include <wx/file.h>
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include <wx/tokenzr.h>

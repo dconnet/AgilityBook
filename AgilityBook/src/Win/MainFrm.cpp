@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-11-14 DRC "Filtered" was truncated in wx2.8 status bar.
  * @li 2012-01-07 DRC Fix tab type/orientation persistence.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -185,7 +186,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 				break;
 #if !wxCHECK_VERSION(2, 9, 4)
 			case STATUS_FILLER:
-				str = L"   "; // Filler for where the grabber is
+				str = L"     "; // Filler for where the grabber is
 				break;
 #endif
 			}

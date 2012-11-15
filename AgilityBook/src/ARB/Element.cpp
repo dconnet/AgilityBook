@@ -874,7 +874,9 @@ bool ElementNode::LoadXML(
 	// wxLogChain will delete the log given to it.
 	wxLogChain chain(log);
 	chain.PassMessages(false);
+#if wxCHECK_VERSION(2, 9, 4)
 	chain.DisableTimestamp();
+#endif
 
 	wxXmlDocument source;
 	if (!source.Load(inStream))
