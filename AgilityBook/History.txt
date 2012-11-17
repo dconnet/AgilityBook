@@ -1,6 +1,7 @@
-10/3/2012: v3.0.0.<in development>
+11/17/2012: v3.0.0.<in development>
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
+  - Allow an empty judge in runs.
 [ Note, full functionality is NOT complete ]
 - Bug fixes:
   - Fixed a printing problem in the tree.

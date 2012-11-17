@@ -1097,5 +1097,8 @@ unsigned int CAgilityBookTreeModel::GetChildren(
 		return m_roots.size();
 	}
 
+#pragma PRAGMA_TODO(remove once in use)
+_("IDS_NUM_RUNS_QS")
+
 	return node->GetChildren(array);
 }

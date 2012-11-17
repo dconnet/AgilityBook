@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-11-17 DRC Allow judge to be empty.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Fix initial focus.
@@ -947,7 +948,7 @@ CDlgRun::CDlgRun(
 	m_ctrlJudge = new CAutoFillComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN,
-		CTrimValidator(&m_Judge, TRIMVALIDATOR_DEFAULT, _("IDS_SELECT_JUDGE")));
+		CTrimValidator(&m_Judge, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlJudge->SetHelpText(_("HIDC_RUNSCORE_JUDGE"));
 	m_ctrlJudge->SetToolTip(_("HIDC_RUNSCORE_JUDGE"));
 
