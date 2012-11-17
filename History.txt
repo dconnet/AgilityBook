@@ -1,4 +1,6 @@
-11/14/2012: v2.3.9.<in development>
+11/17/2012: v2.3.9.<in development>
+- New features / Enhancements:
+  - Allow an empty judge in runs.
 - Bug fixes:
   - Fixed a printing problem in the tree.
   - "Filtered" message was truncated in status bar.
