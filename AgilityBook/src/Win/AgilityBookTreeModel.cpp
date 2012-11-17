@@ -1098,7 +1098,7 @@ unsigned int CAgilityBookTreeModel::GetChildren(
 	}
 
 #pragma PRAGMA_TODO(remove once in use)
-_("IDS_NUM_RUNS_QS")
+_("IDS_NUM_RUNS_QS");
 
 	return node->GetChildren(array);
 }

@@ -299,13 +299,6 @@ bool ARBAgilityRecordBook::Load(
 	return bLoaded;
 }
 
-#ifndef _WIN32
-#ifdef UNICODE
-#define _tcsftime	wcsftime
-#else
-#define _tcsftime	strftime
-#endif
-#endif
 
 static std::wstring GetTimeStamp()
 {
