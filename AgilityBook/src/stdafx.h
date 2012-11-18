@@ -228,7 +228,7 @@
 #include <boost/make_shared.hpp>
 namespace std
 {
-	using boost:make_shared;
+	using boost::make_shared;
 };
 #endif
 
