@@ -1569,7 +1569,7 @@ void CAgilityBookRunsView::LoadData()
 				if (pRun->GetQ().Qualified())
 					++nQs;
 
-				long index = m_Ctrl->InsertItem(make_shared<CAgilityBookRunsViewData>(this, pDog, pTrial, pRun));
+				long index = m_Ctrl->InsertItem(std::make_shared<CAgilityBookRunsViewData>(this, pDog, pTrial, pRun));
 				// Compare by ptr, not value.
 				if (pCurRun && pCurRun == pRun)
 				{

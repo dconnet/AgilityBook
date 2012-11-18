@@ -49,7 +49,7 @@ namespace
 
 ARBMetaDataPtr ARBMetaData::MetaData()
 {
-	return make_shared<ARBMetaData_concrete>();
+	return std::make_shared<ARBMetaData_concrete>();
 }
 
 

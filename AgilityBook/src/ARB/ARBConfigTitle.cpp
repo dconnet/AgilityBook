@@ -149,7 +149,7 @@ namespace
 
 ARBConfigTitlePtr ARBConfigTitle::New()
 {
-	return make_shared<ARBConfigTitle_concrete>();
+	return std::make_shared<ARBConfigTitle_concrete>();
 }
 
 
@@ -186,7 +186,7 @@ ARBConfigTitle::~ARBConfigTitle()
 
 ARBConfigTitlePtr ARBConfigTitle::Clone() const
 {
-	return make_shared<ARBConfigTitle_concrete>(*this);
+	return std::make_shared<ARBConfigTitle_concrete>(*this);
 }
 
 

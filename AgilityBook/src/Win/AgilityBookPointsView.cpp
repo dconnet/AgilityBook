@@ -360,7 +360,7 @@ void CAgilityBookPointsView::LoadData()
 		CPointsDataBasePtr data = items.GetLine(nItem);
 		if (data->IsVisible())
 		{
-			long item = m_Ctrl->InsertItem(make_shared<CAgilityBookPointsViewData>(data, m_Ctrl->ImageEmpty()));
+			long item = m_Ctrl->InsertItem(std::make_shared<CAgilityBookPointsViewData>(data, m_Ctrl->ImageEmpty()));
 			if (curData && data->IsEqual(curData))
 			{
 				m_Ctrl->Select(item);

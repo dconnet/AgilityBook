@@ -59,7 +59,7 @@ namespace
 
 ARBConfigVenuePtr ARBConfigVenue::New()
 {
-	return make_shared<ARBConfigVenue_concrete>();
+	return std::make_shared<ARBConfigVenue_concrete>();
 }
 
 
@@ -104,7 +104,7 @@ ARBConfigVenue::~ARBConfigVenue()
 
 ARBConfigVenuePtr ARBConfigVenue::Clone() const
 {
-	return make_shared<ARBConfigVenue_concrete>(*this);
+	return std::make_shared<ARBConfigVenue_concrete>(*this);
 }
 
 

@@ -97,7 +97,7 @@ namespace
 ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::New(
 		std::wstring const& inName)
 {
-	return make_shared<ARBConfigActionDeleteCalPlugin_concrete>(inName);
+	return std::make_shared<ARBConfigActionDeleteCalPlugin_concrete>(inName);
 }
 
 
@@ -118,7 +118,7 @@ ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(ARBConfigActionDe
 
 ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::Clone() const
 {
-	return make_shared<ARBConfigActionDeleteCalPlugin_concrete>(m_Name);
+	return std::make_shared<ARBConfigActionDeleteCalPlugin_concrete>(m_Name);
 }
 
 
@@ -165,7 +165,7 @@ ARBConfigActionPtr ARBConfigActionRenameOtherPoints::New(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return make_shared<ARBConfigActionRenameOtherPoints_concrete>(
+	return std::make_shared<ARBConfigActionRenameOtherPoints_concrete>(
 		configVersion,
 		inOldName,
 		inNewName);
@@ -193,7 +193,7 @@ ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(ARBConfigActi
 
 ARBConfigActionPtr ARBConfigActionRenameOtherPoints::Clone() const
 {
-	return make_shared<ARBConfigActionRenameOtherPoints_concrete>(
+	return std::make_shared<ARBConfigActionRenameOtherPoints_concrete>(
 		m_configVersion,
 		m_OldName,
 		m_NewName);
@@ -255,7 +255,7 @@ ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::New(
 		short configVersion,
 		std::wstring const& inName)
 {
-	return make_shared<ARBConfigActionDeleteOtherPoints_concrete>(
+	return std::make_shared<ARBConfigActionDeleteOtherPoints_concrete>(
 		configVersion,
 		inName);
 }
@@ -279,7 +279,7 @@ ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(ARBConfigActi
 
 ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::Clone() const
 {
-	return make_shared<ARBConfigActionDeleteOtherPoints_concrete>(
+	return std::make_shared<ARBConfigActionDeleteOtherPoints_concrete>(
 		m_configVersion,
 		m_Name);
 }
@@ -343,7 +343,7 @@ ARBConfigActionPtr ARBConfigActionRenameVenue::New(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return make_shared<ARBConfigActionRenameVenue_concrete>(
+	return std::make_shared<ARBConfigActionRenameVenue_concrete>(
 		configVersion,
 		inOldName,
 		inNewName);
@@ -371,7 +371,7 @@ ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(ARBConfigActionRenameVenu
 
 ARBConfigActionPtr ARBConfigActionRenameVenue::Clone() const
 {
-	return make_shared<ARBConfigActionRenameVenue_concrete>(
+	return std::make_shared<ARBConfigActionRenameVenue_concrete>(
 		m_configVersion,
 		m_OldName,
 		m_NewName);
@@ -438,7 +438,7 @@ ARBConfigActionPtr ARBConfigActionDeleteVenue::New(
 		short configVersion,
 		std::wstring const& inName)
 {
-	return make_shared<ARBConfigActionDeleteVenue_concrete>(
+	return std::make_shared<ARBConfigActionDeleteVenue_concrete>(
 		configVersion,
 		inName);
 }
@@ -462,7 +462,7 @@ ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenu
 
 ARBConfigActionPtr ARBConfigActionDeleteVenue::Clone() const
 {
-	return make_shared<ARBConfigActionDeleteVenue_concrete>(
+	return std::make_shared<ARBConfigActionDeleteVenue_concrete>(
 		m_configVersion,
 		m_Name);
 }
@@ -532,7 +532,7 @@ ARBConfigActionPtr ARBConfigActionRenameMultiQ::New(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return make_shared<ARBConfigActionRenameMultiQ_concrete>(
+	return std::make_shared<ARBConfigActionRenameMultiQ_concrete>(
 		configVersion,
 		inVenue,
 		inOldName,
@@ -564,7 +564,7 @@ ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(ARBConfigActionRenameMu
 
 ARBConfigActionPtr ARBConfigActionRenameMultiQ::Clone() const
 {
-	return make_shared<ARBConfigActionRenameMultiQ_concrete>(
+	return std::make_shared<ARBConfigActionRenameMultiQ_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_OldName,
@@ -634,7 +634,7 @@ ARBConfigActionPtr ARBConfigActionDeleteMultiQ::New(
 		std::wstring const& inVenue,
 		std::wstring const& inName)
 {
-	return make_shared<ARBConfigActionDeleteMultiQ_concrete>(
+	return std::make_shared<ARBConfigActionDeleteMultiQ_concrete>(
 		configVersion,
 		inVenue,
 		inName);
@@ -662,7 +662,7 @@ ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMu
 
 ARBConfigActionPtr ARBConfigActionDeleteMultiQ::Clone() const
 {
-	return make_shared<ARBConfigActionDeleteMultiQ_concrete>(
+	return std::make_shared<ARBConfigActionDeleteMultiQ_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_Name);
@@ -732,7 +732,7 @@ ARBConfigActionPtr ARBConfigActionRenameDivision::New(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return make_shared<ARBConfigActionRenameDivision_concrete>(
+	return std::make_shared<ARBConfigActionRenameDivision_concrete>(
 		configVersion,
 		inVenue,
 		inOldName,
@@ -764,7 +764,7 @@ ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(ARBConfigActionRena
 
 ARBConfigActionPtr ARBConfigActionRenameDivision::Clone() const
 {
-	return make_shared<ARBConfigActionRenameDivision_concrete>(
+	return std::make_shared<ARBConfigActionRenameDivision_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_OldName,
@@ -837,7 +837,7 @@ ARBConfigActionPtr ARBConfigActionDeleteDivision::New(
 		std::wstring const& inVenue,
 		std::wstring const& inName)
 {
-	return make_shared<ARBConfigActionDeleteDivision_concrete>(
+	return std::make_shared<ARBConfigActionDeleteDivision_concrete>(
 		configVersion,
 		inVenue,
 		inName);
@@ -865,7 +865,7 @@ ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(ARBConfigActionDele
 
 ARBConfigActionPtr ARBConfigActionDeleteDivision::Clone() const
 {
-	return make_shared<ARBConfigActionDeleteDivision_concrete>(
+	return std::make_shared<ARBConfigActionDeleteDivision_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_Name);
@@ -942,7 +942,7 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewLevel(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return make_shared<ARBConfigActionRenameLevel_concrete>(
+	return std::make_shared<ARBConfigActionRenameLevel_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
@@ -960,7 +960,7 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewSubLevel(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return make_shared<ARBConfigActionRenameLevel_concrete>(
+	return std::make_shared<ARBConfigActionRenameLevel_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
@@ -999,7 +999,7 @@ ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(ARBConfigActionRenameLeve
 
 ARBConfigActionPtr ARBConfigActionRenameLevel::Clone() const
 {
-	return make_shared<ARBConfigActionRenameLevel_concrete>(
+	return std::make_shared<ARBConfigActionRenameLevel_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_Div,
@@ -1105,7 +1105,7 @@ ARBConfigActionPtr ARBConfigActionDeleteLevel::NewLevel(
 		std::wstring const& inDiv,
 		std::wstring const& inName)
 {
-	return make_shared<ARBConfigActionDeleteLevel_concrete>(
+	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
@@ -1121,7 +1121,7 @@ ARBConfigActionPtr ARBConfigActionDeleteLevel::NewSubLevel(
 		std::wstring const& inLevel,
 		std::wstring const& inName)
 {
-	return make_shared<ARBConfigActionDeleteLevel_concrete>(
+	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
@@ -1157,7 +1157,7 @@ ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(ARBConfigActionDeleteLeve
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::Clone() const
 {
-	return make_shared<ARBConfigActionDeleteLevel_concrete>(
+	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_Div,
@@ -1282,7 +1282,7 @@ ARBConfigActionPtr ARBConfigActionRenameTitle::New(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return make_shared<ARBConfigActionRenameTitle_concrete>(
+	return std::make_shared<ARBConfigActionRenameTitle_concrete>(
 		configVersion,
 		inVenue,
 		inOldName,
@@ -1314,7 +1314,7 @@ ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(ARBConfigActionRenameTitl
 
 ARBConfigActionPtr ARBConfigActionRenameTitle::Clone() const
 {
-	return make_shared<ARBConfigActionRenameTitle_concrete>(
+	return std::make_shared<ARBConfigActionRenameTitle_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_OldName,
@@ -1397,7 +1397,7 @@ ARBConfigActionPtr ARBConfigActionDeleteTitle::New(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return make_shared<ARBConfigActionDeleteTitle_concrete>(
+	return std::make_shared<ARBConfigActionDeleteTitle_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
@@ -1433,7 +1433,7 @@ ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitl
 
 ARBConfigActionPtr ARBConfigActionDeleteTitle::Clone() const
 {
-	return make_shared<ARBConfigActionDeleteTitle_concrete>(
+	return std::make_shared<ARBConfigActionDeleteTitle_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_Div,
@@ -1522,7 +1522,7 @@ ARBConfigActionPtr ARBConfigActionRenameEvent::New(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return make_shared<ARBConfigActionRenameEvent_concrete>(
+	return std::make_shared<ARBConfigActionRenameEvent_concrete>(
 		configVersion,
 		inVenue,
 		inOldName,
@@ -1554,7 +1554,7 @@ ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(ARBConfigActionRenameEven
 
 ARBConfigActionPtr ARBConfigActionRenameEvent::Clone() const
 {
-	return make_shared<ARBConfigActionRenameEvent_concrete>(
+	return std::make_shared<ARBConfigActionRenameEvent_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_OldName,
@@ -1626,7 +1626,7 @@ ARBConfigActionPtr ARBConfigActionDeleteEvent::New(
 		std::wstring const& inVenue,
 		std::wstring const& inName)
 {
-	return make_shared<ARBConfigActionDeleteEvent_concrete>(
+	return std::make_shared<ARBConfigActionDeleteEvent_concrete>(
 		configVersion,
 		inVenue,
 		inName);
@@ -1654,7 +1654,7 @@ ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(ARBConfigActionDeleteEven
 
 ARBConfigActionPtr ARBConfigActionDeleteEvent::Clone() const
 {
-	return make_shared<ARBConfigActionDeleteEvent_concrete>(
+	return std::make_shared<ARBConfigActionDeleteEvent_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_Name);

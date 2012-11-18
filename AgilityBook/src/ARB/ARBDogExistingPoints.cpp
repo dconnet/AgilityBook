@@ -83,7 +83,7 @@ namespace
 
 ARBDogExistingPointsPtr ARBDogExistingPoints::New()
 {
-	return make_shared<ARBDogExistingPoints_concrete>();
+	return std::make_shared<ARBDogExistingPoints_concrete>();
 }
 
 
@@ -126,7 +126,7 @@ ARBDogExistingPoints::~ARBDogExistingPoints()
 
 ARBDogExistingPointsPtr ARBDogExistingPoints::Clone() const
 {
-	return make_shared<ARBDogExistingPoints_concrete>(*this);
+	return std::make_shared<ARBDogExistingPoints_concrete>(*this);
 }
 
 

@@ -49,7 +49,7 @@ namespace
 
 ARBDogReferenceRunPtr ARBDogReferenceRun::New()
 {
-	return make_shared<ARBDogReferenceRun_concrete>();
+	return std::make_shared<ARBDogReferenceRun_concrete>();
 }
 
 
@@ -86,7 +86,7 @@ ARBDogReferenceRun::~ARBDogReferenceRun()
 
 ARBDogReferenceRunPtr ARBDogReferenceRun::Clone() const
 {
-	return make_shared<ARBDogReferenceRun_concrete>(*this);
+	return std::make_shared<ARBDogReferenceRun_concrete>(*this);
 }
 
 

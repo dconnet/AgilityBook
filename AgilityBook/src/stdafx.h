@@ -230,9 +230,10 @@
 #endif
 #include <boost/tr1/memory.hpp>
 #include <boost/make_shared.hpp>
-using boost::make_shared;
-#else
-using std::make_shared;
+namespace std
+{
+	using boost::make_shared;
+};
 #endif
 
 #include <assert.h>
