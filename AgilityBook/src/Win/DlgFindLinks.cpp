@@ -282,7 +282,7 @@ CDlgFindLinks::CDlgFindLinks(
 					++iter)
 				{
 					int image = GetImageIndex(*iter);
-					m_Data.push_back(CDlgFindLinksDataPtr(new CDlgFindLinksData(pDog, pTrial, pRun, *iter, image)));
+					m_Data.push_back(std::make_shared<CDlgFindLinksData>(pDog, pTrial, pRun, *iter, image));
 				}
 			}
 		}

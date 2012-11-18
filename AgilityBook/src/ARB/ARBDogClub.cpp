@@ -35,9 +35,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDogClub_concrete : public ARBDogClub
+	{
+	public:
+		ARBDogClub_concrete() {}
+		ARBDogClub_concrete(ARBDogClub const& rhs)
+			: ARBDogClub(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogClubPtr ARBDogClub::New()
 {
-	return ARBDogClubPtr(new ARBDogClub());
+	return std::make_shared<ARBDogClub_concrete>();
 }
 
 
@@ -62,7 +76,7 @@ ARBDogClub::~ARBDogClub()
 
 ARBDogClubPtr ARBDogClub::Clone() const
 {
-	return ARBDogClubPtr(new ARBDogClub(*this));
+	return std::make_shared<ARBDogClub_concrete>(*this);
 }
 
 

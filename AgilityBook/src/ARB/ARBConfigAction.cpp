@@ -77,10 +77,27 @@ ARBConfigAction::~ARBConfigAction()
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionDeleteCalPlugin_concrete : public ARBConfigActionDeleteCalPlugin
+	{
+	public:
+		ARBConfigActionDeleteCalPlugin_concrete(std::wstring const& inName)
+			: ARBConfigActionDeleteCalPlugin(inName)
+		{
+		}
+		ARBConfigActionDeleteCalPlugin_concrete(ARBConfigActionDeleteCalPlugin const& rhs)
+			: ARBConfigActionDeleteCalPlugin(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::New(
 		std::wstring const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteCalPlugin(inName));
+	return std::make_shared<ARBConfigActionDeleteCalPlugin_concrete>(inName);
 }
 
 
@@ -101,7 +118,7 @@ ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(ARBConfigActionDe
 
 ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteCalPlugin(m_Name));
+	return std::make_shared<ARBConfigActionDeleteCalPlugin_concrete>(m_Name);
 }
 
 
@@ -122,15 +139,36 @@ bool ARBConfigActionDeleteCalPlugin::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionRenameOtherPoints_concrete : public ARBConfigActionRenameOtherPoints
+	{
+	public:
+		ARBConfigActionRenameOtherPoints_concrete(
+				short configVersion,
+				std::wstring const& inOldName,
+				std::wstring const& inNewName)
+			: ARBConfigActionRenameOtherPoints(configVersion, inOldName, inNewName)
+		{
+		}
+		ARBConfigActionRenameOtherPoints_concrete(
+				ARBConfigActionRenameOtherPoints const& rhs)
+			: ARBConfigActionRenameOtherPoints(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionRenameOtherPoints::New(
 		short configVersion,
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameOtherPoints(
+	return std::make_shared<ARBConfigActionRenameOtherPoints_concrete>(
 		configVersion,
 		inOldName,
-		inNewName));
+		inNewName);
 }
 
 
@@ -155,10 +193,10 @@ ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(ARBConfigActi
 
 ARBConfigActionPtr ARBConfigActionRenameOtherPoints::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameOtherPoints(
+	return std::make_shared<ARBConfigActionRenameOtherPoints_concrete>(
 		m_configVersion,
 		m_OldName,
-		m_NewName));
+		m_NewName);
 }
 
 
@@ -193,13 +231,33 @@ bool ARBConfigActionRenameOtherPoints::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionDeleteOtherPoints_concrete : public ARBConfigActionDeleteOtherPoints
+	{
+	public:
+		ARBConfigActionDeleteOtherPoints_concrete(
+				short configVersion,
+				std::wstring const& inName)
+			: ARBConfigActionDeleteOtherPoints(configVersion, inName)
+		{
+		}
+		ARBConfigActionDeleteOtherPoints_concrete(
+				ARBConfigActionDeleteOtherPoints const& rhs)
+			: ARBConfigActionDeleteOtherPoints(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::New(
 		short configVersion,
 		std::wstring const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteOtherPoints(
+	return std::make_shared<ARBConfigActionDeleteOtherPoints_concrete>(
 		configVersion,
-		inName));
+		inName);
 }
 
 
@@ -221,9 +279,9 @@ ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(ARBConfigActi
 
 ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteOtherPoints(
+	return std::make_shared<ARBConfigActionDeleteOtherPoints_concrete>(
 		m_configVersion,
-		m_Name));
+		m_Name);
 }
 
 
@@ -259,15 +317,36 @@ bool ARBConfigActionDeleteOtherPoints::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionRenameVenue_concrete : public ARBConfigActionRenameVenue
+	{
+	public:
+		ARBConfigActionRenameVenue_concrete(
+				short configVersion,
+				std::wstring const& inOldName,
+				std::wstring const& inNewName)
+			: ARBConfigActionRenameVenue(configVersion, inOldName, inNewName)
+		{
+		}
+		ARBConfigActionRenameVenue_concrete(
+				ARBConfigActionRenameVenue const& rhs)
+			: ARBConfigActionRenameVenue(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionRenameVenue::New(
 		short configVersion,
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameVenue(
+	return std::make_shared<ARBConfigActionRenameVenue_concrete>(
 		configVersion,
 		inOldName,
-		inNewName));
+		inNewName);
 }
 
 
@@ -292,10 +371,10 @@ ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(ARBConfigActionRenameVenu
 
 ARBConfigActionPtr ARBConfigActionRenameVenue::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameVenue(
+	return std::make_shared<ARBConfigActionRenameVenue_concrete>(
 		m_configVersion,
 		m_OldName,
-		m_NewName));
+		m_NewName);
 }
 
 
@@ -335,13 +414,33 @@ bool ARBConfigActionRenameVenue::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionDeleteVenue_concrete : public ARBConfigActionDeleteVenue
+	{
+	public:
+		ARBConfigActionDeleteVenue_concrete(
+				short configVersion,
+				std::wstring const& inName)
+			: ARBConfigActionDeleteVenue(configVersion, inName)
+		{
+		}
+		ARBConfigActionDeleteVenue_concrete(
+				ARBConfigActionDeleteVenue const& rhs)
+			: ARBConfigActionDeleteVenue(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionDeleteVenue::New(
 		short configVersion,
 		std::wstring const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteVenue(
+	return std::make_shared<ARBConfigActionDeleteVenue_concrete>(
 		configVersion,
-		inName));
+		inName);
 }
 
 
@@ -363,9 +462,9 @@ ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenu
 
 ARBConfigActionPtr ARBConfigActionDeleteVenue::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteVenue(
+	return std::make_shared<ARBConfigActionDeleteVenue_concrete>(
 		m_configVersion,
-		m_Name));
+		m_Name);
 }
 
 
@@ -405,17 +504,39 @@ bool ARBConfigActionDeleteVenue::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionRenameMultiQ_concrete : public ARBConfigActionRenameMultiQ
+	{
+	public:
+		ARBConfigActionRenameMultiQ_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inOldName,
+				std::wstring const& inNewName)
+			: ARBConfigActionRenameMultiQ(configVersion, inVenue, inOldName, inNewName)
+		{
+		}
+		ARBConfigActionRenameMultiQ_concrete(
+				ARBConfigActionRenameMultiQ const& rhs)
+			: ARBConfigActionRenameMultiQ(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionRenameMultiQ::New(
 		short configVersion,
 		std::wstring const& inVenue,
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameMultiQ(
+	return std::make_shared<ARBConfigActionRenameMultiQ_concrete>(
 		configVersion,
 		inVenue,
 		inOldName,
-		inNewName));
+		inNewName);
 }
 
 
@@ -443,11 +564,11 @@ ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(ARBConfigActionRenameMu
 
 ARBConfigActionPtr ARBConfigActionRenameMultiQ::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameMultiQ(
+	return std::make_shared<ARBConfigActionRenameMultiQ_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_OldName,
-		m_NewName));
+		m_NewName);
 }
 
 
@@ -487,15 +608,36 @@ bool ARBConfigActionRenameMultiQ::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionDeleteMultiQ_concrete : public ARBConfigActionDeleteMultiQ
+	{
+	public:
+		ARBConfigActionDeleteMultiQ_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inName)
+			: ARBConfigActionDeleteMultiQ(configVersion, inVenue, inName)
+		{
+		}
+		ARBConfigActionDeleteMultiQ_concrete(
+				ARBConfigActionDeleteMultiQ const& rhs)
+			: ARBConfigActionDeleteMultiQ(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionDeleteMultiQ::New(
 		short configVersion,
 		std::wstring const& inVenue,
 		std::wstring const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteMultiQ(
+	return std::make_shared<ARBConfigActionDeleteMultiQ_concrete>(
 		configVersion,
 		inVenue,
-		inName));
+		inName);
 }
 
 
@@ -520,10 +662,10 @@ ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMu
 
 ARBConfigActionPtr ARBConfigActionDeleteMultiQ::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteMultiQ(
+	return std::make_shared<ARBConfigActionDeleteMultiQ_concrete>(
 		m_configVersion,
 		m_Venue,
-		m_Name));
+		m_Name);
 }
 
 
@@ -563,17 +705,38 @@ bool ARBConfigActionDeleteMultiQ::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionRenameDivision_concrete : public ARBConfigActionRenameDivision
+	{
+	public:
+		ARBConfigActionRenameDivision_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inOldName,
+				std::wstring const& inNewName)
+			: ARBConfigActionRenameDivision(configVersion, inVenue, inOldName, inNewName)
+		{
+		}
+		ARBConfigActionRenameDivision_concrete(ARBConfigActionRenameDivision const& rhs)
+			: ARBConfigActionRenameDivision(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionRenameDivision::New(
 		short configVersion,
 		std::wstring const& inVenue,
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameDivision(
+	return std::make_shared<ARBConfigActionRenameDivision_concrete>(
 		configVersion,
 		inVenue,
 		inOldName,
-		inNewName));
+		inNewName);
 }
 
 
@@ -601,11 +764,11 @@ ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(ARBConfigActionRena
 
 ARBConfigActionPtr ARBConfigActionRenameDivision::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameDivision(
+	return std::make_shared<ARBConfigActionRenameDivision_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_OldName,
-		m_NewName));
+		m_NewName);
 }
 
 
@@ -648,15 +811,36 @@ bool ARBConfigActionRenameDivision::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionDeleteDivision_concrete : public ARBConfigActionDeleteDivision
+	{
+	public:
+		ARBConfigActionDeleteDivision_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inName)
+			: ARBConfigActionDeleteDivision(configVersion, inVenue, inName)
+		{
+		}
+		ARBConfigActionDeleteDivision_concrete(
+				ARBConfigActionDeleteDivision const& rhs)
+			: ARBConfigActionDeleteDivision(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionDeleteDivision::New(
 		short configVersion,
 		std::wstring const& inVenue,
 		std::wstring const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteDivision(
+	return std::make_shared<ARBConfigActionDeleteDivision_concrete>(
 		configVersion,
 		inVenue,
-		inName));
+		inName);
 }
 
 
@@ -681,10 +865,10 @@ ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(ARBConfigActionDele
 
 ARBConfigActionPtr ARBConfigActionDeleteDivision::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteDivision(
+	return std::make_shared<ARBConfigActionDeleteDivision_concrete>(
 		m_configVersion,
 		m_Venue,
-		m_Name));
+		m_Name);
 }
 
 
@@ -728,6 +912,29 @@ bool ARBConfigActionDeleteDivision::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionRenameLevel_concrete : public ARBConfigActionRenameLevel
+	{
+	public:
+		ARBConfigActionRenameLevel_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inDiv,
+				std::wstring const& inLevel,
+				std::wstring const& inOldName,
+				std::wstring const& inNewName)
+			: ARBConfigActionRenameLevel(configVersion, inVenue, inDiv, inLevel, inOldName, inNewName)
+		{
+		}
+		ARBConfigActionRenameLevel_concrete(
+				ARBConfigActionRenameLevel const& rhs)
+			: ARBConfigActionRenameLevel(rhs)
+		{
+		}
+	};
+};
+
 ARBConfigActionPtr ARBConfigActionRenameLevel::NewLevel(
 		short configVersion,
 		std::wstring const& inVenue,
@@ -735,13 +942,13 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewLevel(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(
+	return std::make_shared<ARBConfigActionRenameLevel_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
 		std::wstring(),
 		inOldName,
-		inNewName));
+		inNewName);
 }
 
 
@@ -753,13 +960,13 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewSubLevel(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(
+	return std::make_shared<ARBConfigActionRenameLevel_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
 		inLevel,
 		inOldName,
-		inNewName));
+		inNewName);
 }
 
 
@@ -792,13 +999,13 @@ ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(ARBConfigActionRenameLeve
 
 ARBConfigActionPtr ARBConfigActionRenameLevel::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(
+	return std::make_shared<ARBConfigActionRenameLevel_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_Div,
 		m_Level,
 		m_OldName,
-		m_NewName));
+		m_NewName);
 }
 
 
@@ -869,18 +1076,41 @@ bool ARBConfigActionRenameLevel::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionDeleteLevel_concrete : public ARBConfigActionDeleteLevel
+	{
+	public:
+		ARBConfigActionDeleteLevel_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inDiv,
+				std::wstring const& inLevel,
+				std::wstring const& inName)
+			: ARBConfigActionDeleteLevel(configVersion, inVenue, inDiv, inLevel, inName)
+		{
+		}
+		ARBConfigActionDeleteLevel_concrete(
+				ARBConfigActionDeleteLevel const& rhs)
+			: ARBConfigActionDeleteLevel(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionDeleteLevel::NewLevel(
 		short configVersion,
 		std::wstring const& inVenue,
 		std::wstring const& inDiv,
 		std::wstring const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(
+	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
 		std::wstring(),
-		inName));
+		inName);
 }
 
 
@@ -891,12 +1121,12 @@ ARBConfigActionPtr ARBConfigActionDeleteLevel::NewSubLevel(
 		std::wstring const& inLevel,
 		std::wstring const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(
+	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
 		inLevel,
-		inName));
+		inName);
 }
 
 
@@ -927,12 +1157,12 @@ ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(ARBConfigActionDeleteLeve
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(
+	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_Div,
 		m_Level,
-		m_Name));
+		m_Name);
 }
 
 
@@ -1025,17 +1255,38 @@ bool ARBConfigActionDeleteLevel::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionRenameTitle_concrete : public ARBConfigActionRenameTitle
+	{
+	public:
+		ARBConfigActionRenameTitle_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inOldName,
+				std::wstring const& inNewName)
+			: ARBConfigActionRenameTitle(configVersion, inVenue, inOldName, inNewName)
+		{
+		}
+		ARBConfigActionRenameTitle_concrete(ARBConfigActionRenameTitle const& rhs)
+			: ARBConfigActionRenameTitle(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionRenameTitle::New(
 		short configVersion,
 		std::wstring const& inVenue,
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameTitle(
+	return std::make_shared<ARBConfigActionRenameTitle_concrete>(
 		configVersion,
 		inVenue,
 		inOldName,
-		inNewName));
+		inNewName);
 }
 
 
@@ -1063,11 +1314,11 @@ ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(ARBConfigActionRenameTitl
 
 ARBConfigActionPtr ARBConfigActionRenameTitle::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameTitle(
+	return std::make_shared<ARBConfigActionRenameTitle_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_OldName,
-		m_NewName));
+		m_NewName);
 }
 
 
@@ -1116,6 +1367,29 @@ bool ARBConfigActionRenameTitle::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionDeleteTitle_concrete : public ARBConfigActionDeleteTitle
+	{
+	public:
+		ARBConfigActionDeleteTitle_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inDiv,
+				std::wstring const& inOldName,
+				std::wstring const& inNewName)
+			: ARBConfigActionDeleteTitle(configVersion, inVenue, inDiv, inOldName, inNewName)
+		{
+		}
+		ARBConfigActionDeleteTitle_concrete(
+				ARBConfigActionDeleteTitle const& rhs)
+			: ARBConfigActionDeleteTitle(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionDeleteTitle::New(
 		short configVersion,
 		std::wstring const& inVenue,
@@ -1123,12 +1397,12 @@ ARBConfigActionPtr ARBConfigActionDeleteTitle::New(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteTitle(
+	return std::make_shared<ARBConfigActionDeleteTitle_concrete>(
 		configVersion,
 		inVenue,
 		inDiv,
 		inOldName,
-		inNewName));
+		inNewName);
 }
 
 
@@ -1159,12 +1433,12 @@ ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitl
 
 ARBConfigActionPtr ARBConfigActionDeleteTitle::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteTitle(
+	return std::make_shared<ARBConfigActionDeleteTitle_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_Div,
 		m_OldName,
-		m_NewName));
+		m_NewName);
 }
 
 
@@ -1220,17 +1494,39 @@ bool ARBConfigActionDeleteTitle::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionRenameEvent_concrete : public ARBConfigActionRenameEvent
+	{
+	public:
+		ARBConfigActionRenameEvent_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inOldName,
+				std::wstring const& inNewName)
+			: ARBConfigActionRenameEvent(configVersion, inVenue, inOldName, inNewName)
+		{
+		}
+		ARBConfigActionRenameEvent_concrete(
+				ARBConfigActionRenameEvent const& rhs)
+			: ARBConfigActionRenameEvent(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionRenameEvent::New(
 		short configVersion,
 		std::wstring const& inVenue,
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameEvent(
+	return std::make_shared<ARBConfigActionRenameEvent_concrete>(
 		configVersion,
 		inVenue,
 		inOldName,
-		inNewName));
+		inNewName);
 }
 
 
@@ -1258,11 +1554,11 @@ ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(ARBConfigActionRenameEven
 
 ARBConfigActionPtr ARBConfigActionRenameEvent::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameEvent(
+	return std::make_shared<ARBConfigActionRenameEvent_concrete>(
 		m_configVersion,
 		m_Venue,
 		m_OldName,
-		m_NewName));
+		m_NewName);
 }
 
 
@@ -1304,15 +1600,36 @@ bool ARBConfigActionRenameEvent::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigActionDeleteEvent_concrete : public ARBConfigActionDeleteEvent
+	{
+	public:
+		ARBConfigActionDeleteEvent_concrete(
+				short configVersion,
+				std::wstring const& inVenue,
+				std::wstring const& inName)
+			: ARBConfigActionDeleteEvent(configVersion, inVenue, inName)
+		{
+		}
+		ARBConfigActionDeleteEvent_concrete(
+				ARBConfigActionDeleteEvent const& rhs)
+			: ARBConfigActionDeleteEvent(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigActionPtr ARBConfigActionDeleteEvent::New(
 		short configVersion,
 		std::wstring const& inVenue,
 		std::wstring const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteEvent(
+	return std::make_shared<ARBConfigActionDeleteEvent_concrete>(
 		configVersion,
 		inVenue,
-		inName));
+		inName);
 }
 
 
@@ -1337,10 +1654,10 @@ ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(ARBConfigActionDeleteEven
 
 ARBConfigActionPtr ARBConfigActionDeleteEvent::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteEvent(
+	return std::make_shared<ARBConfigActionDeleteEvent_concrete>(
 		m_configVersion,
 		m_Venue,
-		m_Name));
+		m_Name);
 }
 
 

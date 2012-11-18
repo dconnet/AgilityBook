@@ -92,9 +92,23 @@ std::wstring ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigScoring_concrete : public ARBConfigScoring
+	{
+	public:
+		ARBConfigScoring_concrete() {}
+		ARBConfigScoring_concrete(ARBConfigScoring const& rhs)
+			: ARBConfigScoring(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigScoringPtr ARBConfigScoring::New()
 {
-	return ARBConfigScoringPtr(new ARBConfigScoring());
+	return std::make_shared<ARBConfigScoring_concrete>();
 }
 
 
@@ -163,7 +177,7 @@ ARBConfigScoring::~ARBConfigScoring()
 
 ARBConfigScoringPtr ARBConfigScoring::Clone() const
 {
-	return ARBConfigScoringPtr(new ARBConfigScoring(*this));
+	return std::make_shared<ARBConfigScoring_concrete>(*this);
 }
 
 

@@ -62,9 +62,19 @@ ARBCalcPoints::~ARBCalcPoints()
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBCalcPointsNormal_concrete : public ARBCalcPointsNormal
+	{
+	public:
+		ARBCalcPointsNormal_concrete() {}
+	};
+};
+
+
 ARBCalcPointsNormalPtr ARBCalcPointsNormal::New()
 {
-	return ARBCalcPointsNormalPtr(new ARBCalcPointsNormal());
+	return std::make_shared<ARBCalcPointsNormal_concrete>();
 }
 
 
@@ -92,9 +102,19 @@ double ARBCalcPointsNormal::GetPoints(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBCalcPointsT2B_concrete : public ARBCalcPointsT2B
+	{
+	public:
+		ARBCalcPointsT2B_concrete() {}
+	};
+};
+
+
 ARBCalcPointsT2BPtr ARBCalcPointsT2B::New()
 {
-	return ARBCalcPointsT2BPtr(new ARBCalcPointsT2B());
+	return std::make_shared<ARBCalcPointsT2B_concrete>();
 }
 
 
@@ -141,9 +161,19 @@ double ARBCalcPointsT2B::GetPoints(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBCalcPointsUKI_concrete : public ARBCalcPointsUKI
+	{
+	public:
+		ARBCalcPointsUKI_concrete() {}
+	};
+};
+
+
 ARBCalcPointsUKIPtr ARBCalcPointsUKI::New()
 {
-	return ARBCalcPointsUKIPtr(new ARBCalcPointsUKI());
+	return std::make_shared<ARBCalcPointsUKI_concrete>();
 }
 
 

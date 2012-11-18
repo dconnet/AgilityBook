@@ -34,9 +34,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDogRunPartner_concrete : public ARBDogRunPartner
+	{
+	public:
+		ARBDogRunPartner_concrete() {}
+		ARBDogRunPartner_concrete(ARBDogRunPartner const& rhs)
+			: ARBDogRunPartner(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogRunPartnerPtr ARBDogRunPartner::New()
 {
-	return ARBDogRunPartnerPtr(new ARBDogRunPartner());
+	return std::make_shared<ARBDogRunPartner_concrete>();
 }
 
 
@@ -63,7 +77,7 @@ ARBDogRunPartner::~ARBDogRunPartner()
 
 ARBDogRunPartnerPtr ARBDogRunPartner::Clone() const
 {
-	return ARBDogRunPartnerPtr(new ARBDogRunPartner(*this));
+	return std::make_shared<ARBDogRunPartner_concrete>(*this);
 }
 
 

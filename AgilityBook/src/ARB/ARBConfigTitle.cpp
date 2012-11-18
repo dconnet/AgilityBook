@@ -133,9 +133,23 @@ std::wstring ARBTitleInstance::TitleInstance(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigTitle_concrete : public ARBConfigTitle
+	{
+	public:
+		ARBConfigTitle_concrete() {}
+		ARBConfigTitle_concrete(ARBConfigTitle const& rhs)
+			: ARBConfigTitle(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigTitlePtr ARBConfigTitle::New()
 {
-	return ARBConfigTitlePtr(new ARBConfigTitle());
+	return std::make_shared<ARBConfigTitle_concrete>();
 }
 
 
@@ -172,7 +186,7 @@ ARBConfigTitle::~ARBConfigTitle()
 
 ARBConfigTitlePtr ARBConfigTitle::Clone() const
 {
-	return ARBConfigTitlePtr(new ARBConfigTitle(*this));
+	return std::make_shared<ARBConfigTitle_concrete>(*this);
 }
 
 

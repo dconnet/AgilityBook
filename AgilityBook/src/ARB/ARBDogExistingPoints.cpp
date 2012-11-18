@@ -67,9 +67,23 @@ std::wstring ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointT
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDogExistingPoints_concrete : public ARBDogExistingPoints
+	{
+	public:
+		ARBDogExistingPoints_concrete() {}
+		ARBDogExistingPoints_concrete(ARBDogExistingPoints const& rhs)
+			: ARBDogExistingPoints(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogExistingPointsPtr ARBDogExistingPoints::New()
 {
-	return ARBDogExistingPointsPtr(new ARBDogExistingPoints());
+	return std::make_shared<ARBDogExistingPoints_concrete>();
 }
 
 
@@ -112,7 +126,7 @@ ARBDogExistingPoints::~ARBDogExistingPoints()
 
 ARBDogExistingPointsPtr ARBDogExistingPoints::Clone() const
 {
-	return ARBDogExistingPointsPtr(new ARBDogExistingPoints(*this));
+	return std::make_shared<ARBDogExistingPoints_concrete>(*this);
 }
 
 

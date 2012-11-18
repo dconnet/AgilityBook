@@ -74,9 +74,29 @@ static std::wstring TypeToPoints(ARBPointsType type)
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigTitlePoints_concrete : public ARBConfigTitlePoints
+	{
+	public:
+		ARBConfigTitlePoints_concrete() {}
+		ARBConfigTitlePoints_concrete(
+				double inPoints,
+				double inFaults,
+				ARBPointsType inType)
+			: ARBConfigTitlePoints(inPoints, inFaults, inType)
+		{
+		}
+		ARBConfigTitlePoints_concrete(ARBConfigTitlePoints const& rhs)
+			: ARBConfigTitlePoints(rhs)
+		{
+		}
+	};
+};
+
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
 {
-	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints());
+	return std::make_shared<ARBConfigTitlePoints_concrete>();
 }
 
 
@@ -85,7 +105,7 @@ ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(
 		double inFaults,
 		ARBPointsType inType)
 {
-	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults, inType));
+	return std::make_shared<ARBConfigTitlePoints_concrete>(inPoints, inFaults, inType);
 }
 
 
@@ -123,7 +143,7 @@ ARBConfigTitlePoints::~ARBConfigTitlePoints()
 
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::Clone() const
 {
-	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(*this));
+	return std::make_shared<ARBConfigTitlePoints_concrete>(*this);
 }
 
 
