@@ -47,9 +47,23 @@ void ARBConfigOtherPoints::GetTallyValidValues(std::vector<std::wstring>& outVal
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigOtherPoints_concrete : public ARBConfigOtherPoints
+	{
+	public:
+		ARBConfigOtherPoints_concrete() {}
+		ARBConfigOtherPoints_concrete(ARBConfigOtherPoints const& rhs)
+			: ARBConfigOtherPoints(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigOtherPointsPtr ARBConfigOtherPoints::New()
 {
-	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints());
+	return std::make_shared<ARBConfigOtherPoints_concrete>();
 }
 
 
@@ -78,7 +92,7 @@ ARBConfigOtherPoints::~ARBConfigOtherPoints()
 
 ARBConfigOtherPointsPtr ARBConfigOtherPoints::Clone() const
 {
-	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints(*this));
+	return std::make_shared<ARBConfigOtherPoints_concrete>(*this);
 }
 
 

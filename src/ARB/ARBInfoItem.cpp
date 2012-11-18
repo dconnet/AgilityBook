@@ -34,9 +34,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBInfoItem_concrete : public ARBInfoItem
+	{
+	public:
+		ARBInfoItem_concrete() {}
+		ARBInfoItem_concrete(ARBInfoItem const& rhs)
+			: ARBInfoItem(rhs)
+		{
+		}
+	};
+};
+
+
 ARBInfoItemPtr ARBInfoItem::New()
 {
-	return ARBInfoItemPtr(new ARBInfoItem());
+	return std::make_shared<ARBInfoItem_concrete>();
 }
 
 
@@ -63,7 +77,7 @@ ARBInfoItem::~ARBInfoItem()
 
 ARBInfoItemPtr ARBInfoItem::Clone() const
 {
-	return ARBInfoItemPtr(new ARBInfoItem(*this));
+	return std::make_shared<ARBInfoItem_concrete>(*this);
 }
 
 

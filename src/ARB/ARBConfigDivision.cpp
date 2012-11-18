@@ -39,9 +39,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigDivision_concrete : public ARBConfigDivision
+	{
+	public:
+		ARBConfigDivision_concrete() {}
+		ARBConfigDivision_concrete(ARBConfigDivision const& rhs)
+			: ARBConfigDivision(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigDivisionPtr ARBConfigDivision::New()
 {
-	return ARBConfigDivisionPtr(new ARBConfigDivision());
+	return std::make_shared<ARBConfigDivision_concrete>();
 }
 
 
@@ -67,7 +81,7 @@ ARBConfigDivision::~ARBConfigDivision()
 
 ARBConfigDivisionPtr ARBConfigDivision::Clone() const
 {
-	return ARBConfigDivisionPtr(new ARBConfigDivision(*this));
+	return std::make_shared<ARBConfigDivision_concrete>(*this);
 }
 
 

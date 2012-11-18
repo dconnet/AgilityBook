@@ -37,9 +37,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBTraining_concrete : public ARBTraining
+	{
+	public:
+		ARBTraining_concrete() {}
+		ARBTraining_concrete(ARBTraining const& rhs)
+			: ARBTraining(rhs)
+		{
+		}
+	};
+};
+
+
 ARBTrainingPtr ARBTraining::New()
 {
-	return ARBTrainingPtr(new ARBTraining());
+	return std::make_shared<ARBTraining_concrete>();
 }
 
 
@@ -68,7 +82,7 @@ ARBTraining::~ARBTraining()
 
 ARBTrainingPtr ARBTraining::Clone() const
 {
-	return ARBTrainingPtr(new ARBTraining(*this));
+	return std::make_shared<ARBTraining_concrete>(*this);
 }
 
 

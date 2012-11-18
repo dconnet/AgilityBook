@@ -37,9 +37,19 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBMetaData_concrete : public ARBMetaData
+	{
+	public:
+		ARBMetaData_concrete() {}
+	};
+};
+
+
 ARBMetaDataPtr ARBMetaData::MetaData()
 {
-	return ARBMetaDataPtr(new ARBMetaData());
+	return std::make_shared<ARBMetaData_concrete>();
 }
 
 

@@ -45,15 +45,33 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDogTrial_concrete : public ARBDogTrial
+	{
+	public:
+		ARBDogTrial_concrete() {}
+		ARBDogTrial_concrete(ARBCalendar const& inCal)
+			: ARBDogTrial(inCal)
+		{
+		}
+		ARBDogTrial_concrete(ARBDogTrial const& rhs)
+			: ARBDogTrial(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogTrialPtr ARBDogTrial::New()
 {
-	return ARBDogTrialPtr(new ARBDogTrial());
+	return std::make_shared<ARBDogTrial_concrete>();
 }
 
 
 ARBDogTrialPtr ARBDogTrial::New(ARBCalendar const& inCal)
 {
-	return ARBDogTrialPtr(new ARBDogTrial(inCal));
+	return std::make_shared<ARBDogTrial_concrete>(inCal);
 }
 
 
@@ -97,7 +115,7 @@ ARBDogTrial::~ARBDogTrial()
 
 ARBDogTrialPtr ARBDogTrial::Clone() const
 {
-	return ARBDogTrialPtr(new ARBDogTrial(*this));
+	return std::make_shared<ARBDogTrial_concrete>(*this);
 }
 
 

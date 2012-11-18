@@ -45,9 +45,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDog_concrete : public ARBDog
+	{
+	public:
+		ARBDog_concrete() {}
+		ARBDog_concrete(ARBDog const& rhs)
+			: ARBDog(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogPtr ARBDog::New()
 {
-	return ARBDogPtr(new ARBDog());
+	return std::make_shared<ARBDog_concrete>();
 }
 
 
@@ -92,7 +106,7 @@ ARBDog::~ARBDog()
 
 ARBDogPtr ARBDog::Clone() const
 {
-	return ARBDogPtr(new ARBDog(*this));
+	return std::make_shared<ARBDog_concrete>(*this);
 }
 
 

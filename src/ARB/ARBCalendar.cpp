@@ -329,9 +329,23 @@ ICalendar* ICalendar::iCalendarBegin(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBCalendar_concrete : public ARBCalendar
+	{
+	public:
+		ARBCalendar_concrete() {}
+		ARBCalendar_concrete(ARBCalendar const& rhs)
+			: ARBCalendar(rhs)
+		{
+		}
+	};
+};
+
+
 ARBCalendarPtr ARBCalendar::New()
 {
-	return ARBCalendarPtr(new ARBCalendar());
+	return std::make_shared<ARBCalendar_concrete>();
 }
 
 
@@ -384,7 +398,7 @@ ARBCalendar::~ARBCalendar()
 
 ARBCalendarPtr ARBCalendar::Clone() const
 {
-	return ARBCalendarPtr(new ARBCalendar(*this));
+	return std::make_shared<ARBCalendar_concrete>(*this);
 }
 
 

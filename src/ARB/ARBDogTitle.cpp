@@ -39,9 +39,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDogTitle_concrete : public ARBDogTitle
+	{
+	public:
+		ARBDogTitle_concrete() {}
+		ARBDogTitle_concrete(ARBDogTitle const& rhs)
+			: ARBDogTitle(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogTitlePtr ARBDogTitle::New()
 {
-	return ARBDogTitlePtr(new ARBDogTitle());
+	return std::make_shared<ARBDogTitle_concrete>();
 }
 
 
@@ -78,7 +92,7 @@ ARBDogTitle::~ARBDogTitle()
 
 ARBDogTitlePtr ARBDogTitle::Clone() const
 {
-	return ARBDogTitlePtr(new ARBDogTitle(*this));
+	return std::make_shared<ARBDogTitle_concrete>(*this);
 }
 
 

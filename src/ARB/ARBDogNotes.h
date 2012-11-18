@@ -31,6 +31,7 @@ typedef std::tr1::shared_ptr<ARBMetaData> ARBMetaDataPtr;
 class ARBMetaData
 {
 	friend class ARBDogNotes;
+protected:
 	ARBMetaData();
 public:
 	static ARBMetaDataPtr MetaData();
