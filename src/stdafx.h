@@ -229,6 +229,10 @@
 #error Minimum supported version of Boost: 1.38.0
 #endif
 #include <boost/tr1/memory.hpp>
+#include <boost/make_shared.hpp>
+using boost::make_shared;
+#else
+using std::make_shared;
 #endif
 
 #include <assert.h>

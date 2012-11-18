@@ -63,7 +63,7 @@ namespace
 
 ARBConfigOtherPointsPtr ARBConfigOtherPoints::New()
 {
-	return std::make_shared<ARBConfigOtherPoints_concrete>();
+	return make_shared<ARBConfigOtherPoints_concrete>();
 }
 
 
@@ -92,7 +92,7 @@ ARBConfigOtherPoints::~ARBConfigOtherPoints()
 
 ARBConfigOtherPointsPtr ARBConfigOtherPoints::Clone() const
 {
-	return std::make_shared<ARBConfigOtherPoints_concrete>(*this);
+	return make_shared<ARBConfigOtherPoints_concrete>(*this);
 }
 
 

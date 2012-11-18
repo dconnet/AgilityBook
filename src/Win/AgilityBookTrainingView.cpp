@@ -553,7 +553,7 @@ void CAgilityBookTrainingView::LoadData()
 		ARBTrainingPtr pTraining = (*iter);
 		if (pTraining->IsFiltered())
 			continue;
-		long index = m_Ctrl->InsertItem(std::make_shared<CAgilityBookTrainingViewData>(this, pTraining));
+		long index = m_Ctrl->InsertItem(make_shared<CAgilityBookTrainingViewData>(this, pTraining));
 		// We may have modified the entry, so don't do a full equality test.
 		// Just check the start/end date, location, club and venue. This allows
 		// us to modify the opens/closes dates, notes and entry status.

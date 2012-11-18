@@ -96,7 +96,7 @@ namespace
 
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
 {
-	return std::make_shared<ARBConfigTitlePoints_concrete>();
+	return make_shared<ARBConfigTitlePoints_concrete>();
 }
 
 
@@ -105,7 +105,7 @@ ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(
 		double inFaults,
 		ARBPointsType inType)
 {
-	return std::make_shared<ARBConfigTitlePoints_concrete>(inPoints, inFaults, inType);
+	return make_shared<ARBConfigTitlePoints_concrete>(inPoints, inFaults, inType);
 }
 
 
@@ -143,7 +143,7 @@ ARBConfigTitlePoints::~ARBConfigTitlePoints()
 
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::Clone() const
 {
-	return std::make_shared<ARBConfigTitlePoints_concrete>(*this);
+	return make_shared<ARBConfigTitlePoints_concrete>(*this);
 }
 
 

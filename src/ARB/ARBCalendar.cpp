@@ -345,7 +345,7 @@ namespace
 
 ARBCalendarPtr ARBCalendar::New()
 {
-	return std::make_shared<ARBCalendar_concrete>();
+	return make_shared<ARBCalendar_concrete>();
 }
 
 
@@ -398,7 +398,7 @@ ARBCalendar::~ARBCalendar()
 
 ARBCalendarPtr ARBCalendar::Clone() const
 {
-	return std::make_shared<ARBCalendar_concrete>(*this);
+	return make_shared<ARBCalendar_concrete>(*this);
 }
 
 

@@ -74,7 +74,7 @@ namespace
 
 ARBCalcPointsNormalPtr ARBCalcPointsNormal::New()
 {
-	return std::make_shared<ARBCalcPointsNormal_concrete>();
+	return make_shared<ARBCalcPointsNormal_concrete>();
 }
 
 
@@ -114,7 +114,7 @@ namespace
 
 ARBCalcPointsT2BPtr ARBCalcPointsT2B::New()
 {
-	return std::make_shared<ARBCalcPointsT2B_concrete>();
+	return make_shared<ARBCalcPointsT2B_concrete>();
 }
 
 
@@ -173,7 +173,7 @@ namespace
 
 ARBCalcPointsUKIPtr ARBCalcPointsUKI::New()
 {
-	return std::make_shared<ARBCalcPointsUKI_concrete>();
+	return make_shared<ARBCalcPointsUKI_concrete>();
 }
 
 

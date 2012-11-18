@@ -50,7 +50,7 @@ namespace
 
 ARBDogRunPartnerPtr ARBDogRunPartner::New()
 {
-	return std::make_shared<ARBDogRunPartner_concrete>();
+	return make_shared<ARBDogRunPartner_concrete>();
 }
 
 
@@ -77,7 +77,7 @@ ARBDogRunPartner::~ARBDogRunPartner()
 
 ARBDogRunPartnerPtr ARBDogRunPartner::Clone() const
 {
-	return std::make_shared<ARBDogRunPartner_concrete>(*this);
+	return make_shared<ARBDogRunPartner_concrete>(*this);
 }
 
 

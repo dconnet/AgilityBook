@@ -51,7 +51,7 @@ namespace
 
 ARBDogRegNumPtr ARBDogRegNum::New()
 {
-	return std::make_shared<ARBDogRegNum_concrete>();
+	return make_shared<ARBDogRegNum_concrete>();
 }
 
 
@@ -82,7 +82,7 @@ ARBDogRegNum::~ARBDogRegNum()
 
 ARBDogRegNumPtr ARBDogRegNum::Clone() const
 {
-	return std::make_shared<ARBDogRegNum_concrete>(*this);
+	return make_shared<ARBDogRegNum_concrete>(*this);
 }
 
 

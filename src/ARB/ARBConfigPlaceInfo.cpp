@@ -50,7 +50,7 @@ namespace
 
 ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New()
 {
-	return std::make_shared<ARBConfigPlaceInfo_concrete>();
+	return make_shared<ARBConfigPlaceInfo_concrete>();
 }
 
 
@@ -59,7 +59,7 @@ ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New(
 		double inValue,
 		bool bMustQ)
 {
-	return std::make_shared<ARBConfigPlaceInfo_concrete>(inPlace, inValue, bMustQ);
+	return make_shared<ARBConfigPlaceInfo_concrete>(inPlace, inValue, bMustQ);
 }
 
 
@@ -97,7 +97,7 @@ ARBConfigPlaceInfo::~ARBConfigPlaceInfo()
 
 ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::Clone() const
 {
-	return std::make_shared<ARBConfigPlaceInfo_concrete>(*this);
+	return make_shared<ARBConfigPlaceInfo_concrete>(*this);
 }
 
 
