@@ -57,7 +57,7 @@ namespace
 
 ARBConfigEventPtr ARBConfigEvent::New()
 {
-	return std::make_shared<ARBConfigEvent_concrete>();
+	return make_shared<ARBConfigEvent_concrete>();
 }
 
 
@@ -93,7 +93,7 @@ ARBConfigEvent::~ARBConfigEvent()
 
 ARBConfigEventPtr ARBConfigEvent::Clone() const
 {
-	return std::make_shared<ARBConfigEvent_concrete>(*this);
+	return make_shared<ARBConfigEvent_concrete>(*this);
 }
 
 

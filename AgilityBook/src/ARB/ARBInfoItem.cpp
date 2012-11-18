@@ -50,7 +50,7 @@ namespace
 
 ARBInfoItemPtr ARBInfoItem::New()
 {
-	return std::make_shared<ARBInfoItem_concrete>();
+	return make_shared<ARBInfoItem_concrete>();
 }
 
 
@@ -77,7 +77,7 @@ ARBInfoItem::~ARBInfoItem()
 
 ARBInfoItemPtr ARBInfoItem::Clone() const
 {
-	return std::make_shared<ARBInfoItem_concrete>(*this);
+	return make_shared<ARBInfoItem_concrete>(*this);
 }
 
 

@@ -55,7 +55,7 @@ namespace
 
 ARBDogTitlePtr ARBDogTitle::New()
 {
-	return std::make_shared<ARBDogTitle_concrete>();
+	return make_shared<ARBDogTitle_concrete>();
 }
 
 
@@ -92,7 +92,7 @@ ARBDogTitle::~ARBDogTitle()
 
 ARBDogTitlePtr ARBDogTitle::Clone() const
 {
-	return std::make_shared<ARBDogTitle_concrete>(*this);
+	return make_shared<ARBDogTitle_concrete>(*this);
 }
 
 
