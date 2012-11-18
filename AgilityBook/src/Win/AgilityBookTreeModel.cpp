@@ -8,6 +8,7 @@
 #include "RegItems.h"
 #include "StringUtil.h"
 #include <algorithm>
+#include <list>
 #include <vector>
 #include <wx/config.h>
 
