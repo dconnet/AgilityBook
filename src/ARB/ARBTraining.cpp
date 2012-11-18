@@ -53,7 +53,7 @@ namespace
 
 ARBTrainingPtr ARBTraining::New()
 {
-	return make_shared<ARBTraining_concrete>();
+	return std::make_shared<ARBTraining_concrete>();
 }
 
 
@@ -82,7 +82,7 @@ ARBTraining::~ARBTraining()
 
 ARBTrainingPtr ARBTraining::Clone() const
 {
-	return make_shared<ARBTraining_concrete>(*this);
+	return std::make_shared<ARBTraining_concrete>(*this);
 }
 
 

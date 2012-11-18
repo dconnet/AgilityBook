@@ -61,7 +61,7 @@ namespace
 
 ARBDogPtr ARBDog::New()
 {
-	return make_shared<ARBDog_concrete>();
+	return std::make_shared<ARBDog_concrete>();
 }
 
 
@@ -106,7 +106,7 @@ ARBDog::~ARBDog()
 
 ARBDogPtr ARBDog::Clone() const
 {
-	return make_shared<ARBDog_concrete>(*this);
+	return std::make_shared<ARBDog_concrete>(*this);
 }
 
 

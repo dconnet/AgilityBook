@@ -47,7 +47,7 @@ namespace
 
 ARBConfigFaultPtr ARBConfigFault::New()
 {
-	return make_shared<ARBConfigFault_concrete>();
+	return std::make_shared<ARBConfigFault_concrete>();
 }
 
 
@@ -70,7 +70,7 @@ ARBConfigFault::~ARBConfigFault()
 
 ARBConfigFaultPtr ARBConfigFault::Clone() const
 {
-	return make_shared<ARBConfigFault_concrete>(*this);
+	return std::make_shared<ARBConfigFault_concrete>(*this);
 }
 
 

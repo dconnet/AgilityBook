@@ -108,7 +108,7 @@ namespace
 
 ARBConfigScoringPtr ARBConfigScoring::New()
 {
-	return make_shared<ARBConfigScoring_concrete>();
+	return std::make_shared<ARBConfigScoring_concrete>();
 }
 
 
@@ -177,7 +177,7 @@ ARBConfigScoring::~ARBConfigScoring()
 
 ARBConfigScoringPtr ARBConfigScoring::Clone() const
 {
-	return make_shared<ARBConfigScoring_concrete>(*this);
+	return std::make_shared<ARBConfigScoring_concrete>(*this);
 }
 
 

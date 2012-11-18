@@ -89,7 +89,7 @@ LifeTimePointInfoPtr LifeTimePointInfo::New(
 		double inPoints,
 		double inFiltered)
 {
-	return make_shared<LifeTimePointInfo_concrete>(inSort1, inSort2, inPoints, inFiltered);
+	return std::make_shared<LifeTimePointInfo_concrete>(inSort1, inSort2, inPoints, inFiltered);
 }
 
 
@@ -1304,8 +1304,8 @@ void CPointsDataItems::InsertVenueHeader(
 		ARBDogPtr inDog,
 		ARBConfigVenuePtr pVenue)
 {
-	m_Lines.push_back(make_shared<CPointsDataText>(pDoc, false));
-	m_Lines.push_back(make_shared<CPointsDataVenue>(pDoc, inDog, pVenue));
+	m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, false));
+	m_Lines.push_back(std::make_shared<CPointsDataVenue>(pDoc, inDog, pVenue));
 }
 
 
@@ -1323,7 +1323,7 @@ void CPointsDataItems::LoadData(
 	CFilterOptions::Options().GetFilterVenue(venues);
 
 	// Put general info about the dog in...
-	m_Lines.push_back(make_shared<CPointsDataDog>(pDoc, inDog));
+	m_Lines.push_back(std::make_shared<CPointsDataDog>(pDoc, inDog));
 
 	// For each venue...
 	for (ARBConfigVenueList::const_iterator iterVenue = pDoc->Book().GetConfig().GetVenues().begin();
@@ -1352,13 +1352,13 @@ void CPointsDataItems::LoadData(
 					data += _("IDS_TITLES");
 					data += L"</h3>";
 					data += s_TableHeader;
-					m_Lines.push_back(make_shared<CPointsDataSeparator>(pDoc, data));
+					m_Lines.push_back(std::make_shared<CPointsDataSeparator>(pDoc, data));
 				}
-				m_Lines.push_back(make_shared<CPointsDataTitle>(pDoc, inDog, pTitle));
+				m_Lines.push_back(std::make_shared<CPointsDataTitle>(pDoc, inDog, pTitle));
 			}
 		}
 		if (bHeaderInserted)
-			m_Lines.push_back(make_shared<CPointsDataSeparator>(pDoc, L"</table>"));
+			m_Lines.push_back(std::make_shared<CPointsDataSeparator>(pDoc, L"</table>"));
 
 		bool bRunsInserted = false;
 		LifeTimePointsList lifetime;
@@ -1390,7 +1390,7 @@ void CPointsDataItems::LoadData(
 			data += _("IDS_RUNS");
 			data += L"</h3>";
 			data += s_TableHeader;
-			m_Lines.push_back(make_shared<CPointsDataSeparator>(pDoc, data));
+			m_Lines.push_back(std::make_shared<CPointsDataSeparator>(pDoc, data));
 			std::vector<CPointsDataBasePtr> speedPtsData;
 			// Show events sorted out by division/level.
 			std::vector<CPointsDataEvent*> items;
@@ -1651,7 +1651,7 @@ void CPointsDataItems::LoadData(
 				} // level loop
 				if (bHasSpeedPts)
 				{
-					speedPtsData.push_back(make_shared<CPointsDataSpeedPts>(pDoc, pVenue, pDiv, speedPts));
+					speedPtsData.push_back(std::make_shared<CPointsDataSpeedPts>(pDoc, pVenue, pDiv, speedPts));
 				}
 			} // division loop
 			if (1 < items.size())
@@ -1700,7 +1700,7 @@ void CPointsDataItems::LoadData(
 					iter != MQs.end();
 					++iter)
 				{
-					m_Lines.push_back(make_shared<CPointsDataMultiQs>(pDoc, inDog, pVenue, (*iter).first, (*iter).second));
+					m_Lines.push_back(std::make_shared<CPointsDataMultiQs>(pDoc, inDog, pVenue, (*iter).first, (*iter).second));
 				}
 			}
 		}
@@ -1886,7 +1886,7 @@ void CPointsDataItems::LoadData(
 			}
 		}
 		if (bRunsInserted)
-			m_Lines.push_back(make_shared<CPointsDataSeparator>(pDoc, L"</table>"));
+			m_Lines.push_back(std::make_shared<CPointsDataSeparator>(pDoc, L"</table>"));
 	}
 
 	// After all the venues, we do 'other points'.
@@ -1900,9 +1900,9 @@ void CPointsDataItems::LoadData(
 		table += L"</h2>";
 		table += s_TableHeader;
 
-		m_Lines.push_back(make_shared<CPointsDataSeparator>(pDoc, table));
-		m_Lines.push_back(make_shared<CPointsDataText>(pDoc, false));
-		m_Lines.push_back(make_shared<CPointsDataText>(pDoc, false, str.c_str()));
+		m_Lines.push_back(std::make_shared<CPointsDataSeparator>(pDoc, table));
+		m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, false));
+		m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, false, str.c_str()));
 		for (ARBConfigOtherPointsList::const_iterator iterOther = other.begin();
 			iterOther != other.end();
 			++iterOther)
@@ -1977,11 +1977,11 @@ void CPointsDataItems::LoadData(
 			{
 			default:
 			case ARBConfigOtherPoints::eTallyAll:
-				m_Lines.push_back(make_shared<CPointsDataOtherPointsTallyAll>(pDoc, pOther->GetName(), runs));
+				m_Lines.push_back(std::make_shared<CPointsDataOtherPointsTallyAll>(pDoc, pOther->GetName(), runs));
 				break;
 
 			case ARBConfigOtherPoints::eTallyAllByEvent:
-				m_Lines.push_back(make_shared<CPointsDataText>(pDoc, true, L"", pOther->GetName().c_str()));
+				m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, true, L"", pOther->GetName().c_str()));
 				{
 					std::set<std::wstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -1999,13 +1999,13 @@ void CPointsDataItems::LoadData(
 							if ((*iter).m_Event == (*iterTally))
 								validRuns.push_back(*iter);
 						}
-						m_Lines.push_back(make_shared<CPointsDataOtherPointsTallyAllByEvent>(pDoc, (*iterTally), validRuns));
+						m_Lines.push_back(std::make_shared<CPointsDataOtherPointsTallyAllByEvent>(pDoc, (*iterTally), validRuns));
 					}
 				}
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevel:
-				m_Lines.push_back(make_shared<CPointsDataText>(pDoc, true, L"", pOther->GetName().c_str()));
+				m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, true, L"", pOther->GetName().c_str()));
 				{
 					std::set<std::wstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -2023,13 +2023,13 @@ void CPointsDataItems::LoadData(
 							if ((*iter).m_Level == (*iterTally))
 								validRuns.push_back(*iter);
 						}
-						m_Lines.push_back(make_shared<CPointsDataOtherPointsTallyLevel>(pDoc, (*iterTally), validRuns));
+						m_Lines.push_back(std::make_shared<CPointsDataOtherPointsTallyLevel>(pDoc, (*iterTally), validRuns));
 					}
 				}
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevelByEvent:
-				m_Lines.push_back(make_shared<CPointsDataText>(pDoc, true, L"", pOther->GetName().c_str()));
+				m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, true, L"", pOther->GetName().c_str()));
 				{
 					typedef std::pair<std::wstring, std::wstring> LevelEvent;
 					std::set<LevelEvent> tally;
@@ -2049,13 +2049,13 @@ void CPointsDataItems::LoadData(
 							&& (*iter).m_Event == (*iterTally).second)
 								validRuns.push_back(*iter);
 						}
-						m_Lines.push_back(make_shared<CPointsDataOtherPointsTallyLevelByEvent>(pDoc, (*iterTally).first, (*iterTally).second, validRuns));
+						m_Lines.push_back(std::make_shared<CPointsDataOtherPointsTallyLevelByEvent>(pDoc, (*iterTally).first, (*iterTally).second, validRuns));
 					}
 				}
 				break;
 			}
 		}
-		m_Lines.push_back(make_shared<CPointsDataSeparator>(pDoc, L"</table></html>"));
+		m_Lines.push_back(std::make_shared<CPointsDataSeparator>(pDoc, L"</table></html>"));
 	}
 }
 
