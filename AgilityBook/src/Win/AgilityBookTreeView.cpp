@@ -489,6 +489,7 @@ bool CAgilityBookTreeView::GetMessage(std::wstring& msg) const
 	return true;
 }
 */
+	_("IDS_NUM_RUNS_QS"); // just here so poedit sees it
 	msg.clear();
 	return false;
 }
