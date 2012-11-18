@@ -31,9 +31,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigFault_concrete : public ARBConfigFault
+	{
+	public:
+		ARBConfigFault_concrete() {}
+		ARBConfigFault_concrete(ARBConfigFault const& rhs)
+			: ARBConfigFault(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigFaultPtr ARBConfigFault::New()
 {
-	return ARBConfigFaultPtr(new ARBConfigFault());
+	return std::make_shared<ARBConfigFault_concrete>();
 }
 
 
@@ -56,7 +70,7 @@ ARBConfigFault::~ARBConfigFault()
 
 ARBConfigFaultPtr ARBConfigFault::Clone() const
 {
-	return ARBConfigFaultPtr(new ARBConfigFault(*this));
+	return std::make_shared<ARBConfigFault_concrete>(*this);
 }
 
 

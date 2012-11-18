@@ -35,9 +35,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigLevel_concrete : public ARBConfigLevel
+	{
+	public:
+		ARBConfigLevel_concrete() {}
+		ARBConfigLevel_concrete(ARBConfigLevel const& rhs)
+			: ARBConfigLevel(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigLevelPtr ARBConfigLevel::New()
 {
-	return ARBConfigLevelPtr(new ARBConfigLevel());
+	return std::make_shared<ARBConfigLevel_concrete>();
 }
 
 
@@ -63,7 +77,7 @@ ARBConfigLevel::~ARBConfigLevel()
 
 ARBConfigLevelPtr ARBConfigLevel::Clone() const
 {
-	return ARBConfigLevelPtr(new ARBConfigLevel(*this));
+	return std::make_shared<ARBConfigLevel_concrete>(*this);
 }
 
 

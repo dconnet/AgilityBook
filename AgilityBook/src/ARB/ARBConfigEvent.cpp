@@ -41,9 +41,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigEvent_concrete : public ARBConfigEvent
+	{
+	public:
+		ARBConfigEvent_concrete() {}
+		ARBConfigEvent_concrete(ARBConfigEvent const& rhs)
+			: ARBConfigEvent(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigEventPtr ARBConfigEvent::New()
 {
-	return ARBConfigEventPtr(new ARBConfigEvent());
+	return std::make_shared<ARBConfigEvent_concrete>();
 }
 
 
@@ -79,7 +93,7 @@ ARBConfigEvent::~ARBConfigEvent()
 
 ARBConfigEventPtr ARBConfigEvent::Clone() const
 {
-	return ARBConfigEventPtr(new ARBConfigEvent(*this));
+	return std::make_shared<ARBConfigEvent_concrete>(*this);
 }
 
 

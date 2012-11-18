@@ -32,9 +32,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDogRunOtherPoints_concrete : public ARBDogRunOtherPoints
+	{
+	public:
+		ARBDogRunOtherPoints_concrete() {}
+		ARBDogRunOtherPoints_concrete(ARBDogRunOtherPoints const& rhs)
+			: ARBDogRunOtherPoints(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::New()
 {
-	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints());
+	return std::make_shared<ARBDogRunOtherPoints_concrete>();
 }
 
 
@@ -59,7 +73,7 @@ ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 
 ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::Clone() const
 {
-	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints(*this));
+	return std::make_shared<ARBDogRunOtherPoints_concrete>(*this);
 }
 
 

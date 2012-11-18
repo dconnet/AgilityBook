@@ -51,9 +51,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDogRun_concrete : public ARBDogRun
+	{
+	public:
+		ARBDogRun_concrete() {}
+		ARBDogRun_concrete(ARBDogRun const& rhs)
+			: ARBDogRun(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogRunPtr ARBDogRun::New()
 {
-	return ARBDogRunPtr(new ARBDogRun());
+	return std::make_shared<ARBDogRun_concrete>();
 }
 
 
@@ -117,7 +131,7 @@ ARBDogRun::~ARBDogRun()
 
 ARBDogRunPtr ARBDogRun::Clone() const
 {
-	return ARBDogRunPtr(new ARBDogRun(*this));
+	return std::make_shared<ARBDogRun_concrete>(*this);
 }
 
 

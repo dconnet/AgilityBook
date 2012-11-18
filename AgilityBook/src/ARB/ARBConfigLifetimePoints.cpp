@@ -30,9 +30,27 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigLifetimePoints_concrete : public ARBConfigLifetimePoints
+	{
+	public:
+		ARBConfigLifetimePoints_concrete() {}
+		ARBConfigLifetimePoints_concrete(double inPoints, double inFaults)
+			: ARBConfigLifetimePoints(inPoints, inFaults)
+		{
+		}
+		ARBConfigLifetimePoints_concrete(ARBConfigLifetimePoints const& rhs)
+			: ARBConfigLifetimePoints(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New()
 {
-	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints());
+	return std::make_shared<ARBConfigLifetimePoints_concrete>();
 }
 
 
@@ -40,7 +58,7 @@ ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(
 		double inPoints,
 		double inFaults)
 {
-	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(inPoints, inFaults));
+	return std::make_shared<ARBConfigLifetimePoints_concrete>(inPoints, inFaults);
 }
 
 
@@ -74,7 +92,7 @@ ARBConfigLifetimePoints::~ARBConfigLifetimePoints()
 
 ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::Clone() const
 {
-	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(*this));
+	return std::make_shared<ARBConfigLifetimePoints_concrete>(*this);
 }
 
 

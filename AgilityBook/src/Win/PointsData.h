@@ -49,7 +49,7 @@ class LifeTimePointInfo;
 typedef std::tr1::shared_ptr<LifeTimePointInfo> LifeTimePointInfoPtr;
 class LifeTimePointInfo
 {
-private:
+protected:
 	LifeTimePointInfo(
 			std::wstring const& inSort1,
 			std::wstring const& inSort2,

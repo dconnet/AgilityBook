@@ -35,9 +35,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDogRegNum_concrete : public ARBDogRegNum
+	{
+	public:
+		ARBDogRegNum_concrete() {}
+		ARBDogRegNum_concrete(ARBDogRegNum const& rhs)
+			: ARBDogRegNum(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogRegNumPtr ARBDogRegNum::New()
 {
-	return ARBDogRegNumPtr(new ARBDogRegNum());
+	return std::make_shared<ARBDogRegNum_concrete>();
 }
 
 
@@ -68,7 +82,7 @@ ARBDogRegNum::~ARBDogRegNum()
 
 ARBDogRegNumPtr ARBDogRegNum::Clone() const
 {
-	return ARBDogRegNumPtr(new ARBDogRegNum(*this));
+	return std::make_shared<ARBDogRegNum_concrete>(*this);
 }
 
 

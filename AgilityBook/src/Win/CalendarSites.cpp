@@ -371,7 +371,7 @@ private:
 CCalendarSitesImpl::CCalendarSitesImpl()
 	: m_DirectAccess()
 {
-	m_DirectAccess.push_back(CalSiteDataPtr(new CalSiteData(new CCalendarSiteUSDAA())));
+	m_DirectAccess.push_back(std::make_shared<CalSiteData>(new CCalendarSiteUSDAA()));
 }
 
 

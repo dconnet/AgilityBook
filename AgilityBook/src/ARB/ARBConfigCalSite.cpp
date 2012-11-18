@@ -29,9 +29,22 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigCalSite_concrete : public ARBConfigCalSite
+	{
+	public:
+		ARBConfigCalSite_concrete() {}
+		ARBConfigCalSite_concrete(ARBConfigCalSite const& rhs)
+			: ARBConfigCalSite(rhs)
+		{
+		}
+	};
+};
+
 ARBConfigCalSitePtr ARBConfigCalSite::New()
 {
-	return ARBConfigCalSitePtr(new ARBConfigCalSite());
+	return std::make_shared<ARBConfigCalSite_concrete>();
 }
 
 
@@ -64,7 +77,7 @@ ARBConfigCalSite::~ARBConfigCalSite()
 
 ARBConfigCalSitePtr ARBConfigCalSite::Clone() const
 {
-	return ARBConfigCalSitePtr(new ARBConfigCalSite(*this));
+	return std::make_shared<ARBConfigCalSite_concrete>(*this);
 }
 
 

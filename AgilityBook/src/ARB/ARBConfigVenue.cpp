@@ -43,9 +43,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigVenue_concrete : public ARBConfigVenue
+	{
+	public:
+		ARBConfigVenue_concrete() {}
+		ARBConfigVenue_concrete(ARBConfigVenue const& rhs)
+			: ARBConfigVenue(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigVenuePtr ARBConfigVenue::New()
 {
-	return ARBConfigVenuePtr(new ARBConfigVenue());
+	return std::make_shared<ARBConfigVenue_concrete>();
 }
 
 
@@ -90,7 +104,7 @@ ARBConfigVenue::~ARBConfigVenue()
 
 ARBConfigVenuePtr ARBConfigVenue::Clone() const
 {
-	return ARBConfigVenuePtr(new ARBConfigVenue(*this));
+	return std::make_shared<ARBConfigVenue_concrete>(*this);
 }
 
 

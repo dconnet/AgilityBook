@@ -30,9 +30,27 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigPlaceInfo_concrete : public ARBConfigPlaceInfo
+	{
+	public:
+		ARBConfigPlaceInfo_concrete() {}
+		ARBConfigPlaceInfo_concrete(short inPlace, double inValue, bool bMustQ)
+			: ARBConfigPlaceInfo(inPlace, inValue, bMustQ)
+		{
+		}
+		ARBConfigPlaceInfo_concrete(ARBConfigPlaceInfo const& rhs)
+			: ARBConfigPlaceInfo(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New()
 {
-	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo());
+	return std::make_shared<ARBConfigPlaceInfo_concrete>();
 }
 
 
@@ -41,7 +59,7 @@ ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New(
 		double inValue,
 		bool bMustQ)
 {
-	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(inPlace, inValue, bMustQ));
+	return std::make_shared<ARBConfigPlaceInfo_concrete>(inPlace, inValue, bMustQ);
 }
 
 
@@ -79,7 +97,7 @@ ARBConfigPlaceInfo::~ARBConfigPlaceInfo()
 
 ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::Clone() const
 {
-	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(*this));
+	return std::make_shared<ARBConfigPlaceInfo_concrete>(*this);
 }
 
 

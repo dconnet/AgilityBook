@@ -33,9 +33,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBDogReferenceRun_concrete : public ARBDogReferenceRun
+	{
+	public:
+		ARBDogReferenceRun_concrete() {}
+		ARBDogReferenceRun_concrete(ARBDogReferenceRun const& rhs)
+			: ARBDogReferenceRun(rhs)
+		{
+		}
+	};
+};
+
+
 ARBDogReferenceRunPtr ARBDogReferenceRun::New()
 {
-	return ARBDogReferenceRunPtr(new ARBDogReferenceRun());
+	return std::make_shared<ARBDogReferenceRun_concrete>();
 }
 
 
@@ -72,7 +86,7 @@ ARBDogReferenceRun::~ARBDogReferenceRun()
 
 ARBDogReferenceRunPtr ARBDogReferenceRun::Clone() const
 {
-	return ARBDogReferenceRunPtr(new ARBDogReferenceRun(*this));
+	return std::make_shared<ARBDogReferenceRun_concrete>(*this);
 }
 
 

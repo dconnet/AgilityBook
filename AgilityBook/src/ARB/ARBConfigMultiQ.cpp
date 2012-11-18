@@ -30,9 +30,23 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ARBConfigMultiQ_concrete : public ARBConfigMultiQ
+	{
+	public:
+		ARBConfigMultiQ_concrete() {}
+		ARBConfigMultiQ_concrete(ARBConfigMultiQ const& rhs)
+			: ARBConfigMultiQ(rhs)
+		{
+		}
+	};
+};
+
+
 ARBConfigMultiQPtr ARBConfigMultiQ::New()
 {
-	return ARBConfigMultiQPtr(new ARBConfigMultiQ());
+	return std::make_shared<ARBConfigMultiQ_concrete>();
 }
 
 
@@ -63,7 +77,7 @@ ARBConfigMultiQ::~ARBConfigMultiQ()
 
 ARBConfigMultiQPtr ARBConfigMultiQ::Clone() const
 {
-	return ARBConfigMultiQPtr(new ARBConfigMultiQ(*this));
+	return std::make_shared<ARBConfigMultiQ_concrete>(*this);
 }
 
 
