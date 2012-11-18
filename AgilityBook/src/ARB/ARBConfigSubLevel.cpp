@@ -48,7 +48,7 @@ namespace
 
 ARBConfigSubLevelPtr ARBConfigSubLevel::New()
 {
-	return make_shared<ARBConfigSubLevel_concrete>();
+	return std::make_shared<ARBConfigSubLevel_concrete>();
 }
 
 
@@ -71,7 +71,7 @@ ARBConfigSubLevel::~ARBConfigSubLevel()
 
 ARBConfigSubLevelPtr ARBConfigSubLevel::Clone() const
 {
-	return make_shared<ARBConfigSubLevel_concrete>(*this);
+	return std::make_shared<ARBConfigSubLevel_concrete>(*this);
 }
 
 

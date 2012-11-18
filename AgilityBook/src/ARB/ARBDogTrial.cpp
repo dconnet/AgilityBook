@@ -65,13 +65,13 @@ namespace
 
 ARBDogTrialPtr ARBDogTrial::New()
 {
-	return make_shared<ARBDogTrial_concrete>();
+	return std::make_shared<ARBDogTrial_concrete>();
 }
 
 
 ARBDogTrialPtr ARBDogTrial::New(ARBCalendar const& inCal)
 {
-	return make_shared<ARBDogTrial_concrete>(inCal);
+	return std::make_shared<ARBDogTrial_concrete>(inCal);
 }
 
 
@@ -115,7 +115,7 @@ ARBDogTrial::~ARBDogTrial()
 
 ARBDogTrialPtr ARBDogTrial::Clone() const
 {
-	return make_shared<ARBDogTrial_concrete>(*this);
+	return std::make_shared<ARBDogTrial_concrete>(*this);
 }
 
 

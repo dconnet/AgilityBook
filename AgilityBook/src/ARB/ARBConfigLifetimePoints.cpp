@@ -50,7 +50,7 @@ namespace
 
 ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New()
 {
-	return make_shared<ARBConfigLifetimePoints_concrete>();
+	return std::make_shared<ARBConfigLifetimePoints_concrete>();
 }
 
 
@@ -58,7 +58,7 @@ ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(
 		double inPoints,
 		double inFaults)
 {
-	return make_shared<ARBConfigLifetimePoints_concrete>(inPoints, inFaults);
+	return std::make_shared<ARBConfigLifetimePoints_concrete>(inPoints, inFaults);
 }
 
 
@@ -92,7 +92,7 @@ ARBConfigLifetimePoints::~ARBConfigLifetimePoints()
 
 ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::Clone() const
 {
-	return make_shared<ARBConfigLifetimePoints_concrete>(*this);
+	return std::make_shared<ARBConfigLifetimePoints_concrete>(*this);
 }
 
 

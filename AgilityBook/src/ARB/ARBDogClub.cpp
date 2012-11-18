@@ -51,7 +51,7 @@ namespace
 
 ARBDogClubPtr ARBDogClub::New()
 {
-	return make_shared<ARBDogClub_concrete>();
+	return std::make_shared<ARBDogClub_concrete>();
 }
 
 
@@ -76,7 +76,7 @@ ARBDogClub::~ARBDogClub()
 
 ARBDogClubPtr ARBDogClub::Clone() const
 {
-	return make_shared<ARBDogClub_concrete>(*this);
+	return std::make_shared<ARBDogClub_concrete>(*this);
 }
 
 

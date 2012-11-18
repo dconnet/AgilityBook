@@ -48,7 +48,7 @@ namespace
 
 ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::New()
 {
-	return make_shared<ARBDogRunOtherPoints_concrete>();
+	return std::make_shared<ARBDogRunOtherPoints_concrete>();
 }
 
 
@@ -73,7 +73,7 @@ ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 
 ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::Clone() const
 {
-	return make_shared<ARBDogRunOtherPoints_concrete>(*this);
+	return std::make_shared<ARBDogRunOtherPoints_concrete>(*this);
 }
 
 
