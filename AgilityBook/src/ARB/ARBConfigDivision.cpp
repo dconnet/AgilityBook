@@ -55,7 +55,7 @@ namespace
 
 ARBConfigDivisionPtr ARBConfigDivision::New()
 {
-	return std::make_shared<ARBConfigDivision_concrete>();
+	return make_shared<ARBConfigDivision_concrete>();
 }
 
 
@@ -81,7 +81,7 @@ ARBConfigDivision::~ARBConfigDivision()
 
 ARBConfigDivisionPtr ARBConfigDivision::Clone() const
 {
-	return std::make_shared<ARBConfigDivision_concrete>(*this);
+	return make_shared<ARBConfigDivision_concrete>(*this);
 }
 
 

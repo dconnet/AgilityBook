@@ -44,7 +44,7 @@ namespace
 
 ARBConfigCalSitePtr ARBConfigCalSite::New()
 {
-	return std::make_shared<ARBConfigCalSite_concrete>();
+	return make_shared<ARBConfigCalSite_concrete>();
 }
 
 
@@ -77,7 +77,7 @@ ARBConfigCalSite::~ARBConfigCalSite()
 
 ARBConfigCalSitePtr ARBConfigCalSite::Clone() const
 {
-	return std::make_shared<ARBConfigCalSite_concrete>(*this);
+	return make_shared<ARBConfigCalSite_concrete>(*this);
 }
 
 

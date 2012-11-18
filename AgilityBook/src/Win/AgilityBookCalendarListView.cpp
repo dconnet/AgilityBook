@@ -814,7 +814,7 @@ void CAgilityBookCalendarListView::LoadData()
 			if (bSuppress)
 				continue;
 		}
-		long index = m_Ctrl->InsertItem(std::make_shared<CAgilityBookCalendarListViewData>(this, pCal));
+		long index = m_Ctrl->InsertItem(make_shared<CAgilityBookCalendarListViewData>(this, pCal));
 		// We may have modified the entry, so don't do a full equality test.
 		// Just check the start/end date, location, club and venue. This allows
 		// us to modify the opens/closes dates, notes and entry status.

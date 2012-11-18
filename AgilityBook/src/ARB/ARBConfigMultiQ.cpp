@@ -46,7 +46,7 @@ namespace
 
 ARBConfigMultiQPtr ARBConfigMultiQ::New()
 {
-	return std::make_shared<ARBConfigMultiQ_concrete>();
+	return make_shared<ARBConfigMultiQ_concrete>();
 }
 
 
@@ -77,7 +77,7 @@ ARBConfigMultiQ::~ARBConfigMultiQ()
 
 ARBConfigMultiQPtr ARBConfigMultiQ::Clone() const
 {
-	return std::make_shared<ARBConfigMultiQ_concrete>(*this);
+	return make_shared<ARBConfigMultiQ_concrete>(*this);
 }
 
 
