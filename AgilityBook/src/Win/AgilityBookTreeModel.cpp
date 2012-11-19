@@ -745,7 +745,8 @@ void CAgilityBookTreeModel::CreateColumns(
 
 void CAgilityBookTreeModel::UpdateColumns()
 {
-	m_Ctrl->ClearColumns();
+	if (0 < m_Ctrl->GetColumnCount())
+		m_Ctrl->ClearColumns();
 
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
