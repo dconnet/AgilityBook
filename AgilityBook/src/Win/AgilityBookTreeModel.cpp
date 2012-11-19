@@ -16,6 +16,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+#ifdef __WXMAC__
+#define USE_ICONRENDERER	0
+#else
+#define USE_ICONRENDERER	1
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 class CAgilityBookTreeModelNode
@@ -745,8 +751,7 @@ void CAgilityBookTreeModel::CreateColumns(
 
 void CAgilityBookTreeModel::UpdateColumns()
 {
-	if (0 < m_Ctrl->GetColumnCount())
-		m_Ctrl->ClearColumns();
+	m_Ctrl->ClearColumns();
 
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
@@ -765,9 +770,11 @@ void CAgilityBookTreeModel::UpdateColumns()
 			}
 
 			wxDataViewRenderer* renderer;
+#if USE_ICONRENDERER
 			if (0 == iCol)
 				renderer = new wxDataViewIconTextRenderer("string", wxDATAVIEW_CELL_INERT);
 			else
+#endif
 				renderer = new wxDataViewTextRenderer("string", wxDATAVIEW_CELL_INERT);
 
 			wxDataViewColumn* column = new wxDataViewColumn(
@@ -1035,6 +1042,7 @@ void CAgilityBookTreeModel::GetValue(
 	wxASSERT(node);
 
 	wxIcon icon = node->GetIcon(col);
+#if USE_ICONRENDERER
 	if (icon.IsOk())
 	{
 		wxDataViewIconText data;
@@ -1043,7 +1051,10 @@ void CAgilityBookTreeModel::GetValue(
 		variant << data;
 	}
 	else
+#endif
+	{
 		variant = node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col);
+	}
 }
 
 
