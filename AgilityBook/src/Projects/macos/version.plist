@@ -5,9 +5,9 @@
 	<key>BuildVersion</key>
 	<string>3</string>
 	<key>CFBundleShortVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>${CURRENT_PROJECT_VERSION}</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>${CURRENT_PROJECT_VERSION}</string>
 	<key>ProjectName</key>
 	<string>DevToolsWizardTemplates</string>
 	<key>SourceVersion</key>
