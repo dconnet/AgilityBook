@@ -4,6 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2012-11-21 DRC Configuration version 40.
+               Rename AKC ExcellentB to Master. (This has the unfortunate side
+               effect of changing all old trials too)
 2012-07-30 DRC Configuration version 39.
                Add TDAA TNAC title.
                Add new recurring title style (none).
@@ -126,7 +129,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="39">
+  <Configuration version="40">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -265,8 +268,8 @@ Revision History:
     <Action Config="33" OldName="O-XTN" NewName="O-XGT" Venue="NADAC" Verb="RenameTitle" />
     <Action Config="33" OldName="S-XTN" NewName="S-XGT" Venue="NADAC" Verb="RenameTitle" />
     <Action Config="33" OldName="Extreme Tunnelers" NewName="Extreme Gaters" Venue="NADAC" Verb="RenameEvent" />
-	<!-- Note, c37 had jumpers named MFC, this fixed it.
-	v38 brings back fast as MFC ('Config' makes sure this won't 'fix' that) -->
+    <!-- Note, c37 had jumpers named MFC, this fixed it.
+    v38 brings back fast as MFC ('Config' makes sure this won't 'fix' that) -->
     <Action Config="37" OldName="MFC" NewName="MJC" Venue="AKC" Verb="RenameTitle" />
     <Action Config="38" OldName="Proficient" NewName="Std Proficient" Venue="NADAC" Verb="RenameDivision" />
     <Action Config="38" OldName="Skilled" NewName="Std Skilled" Venue="NADAC" Verb="RenameDivision" />
@@ -279,6 +282,9 @@ Revision History:
     <Action Config="38" OldName="S-XCC" NewName="S-XCC-N" Venue="NADAC" Verb="RenameTitle" />
     <Action Config="38" OldName="S-XHP" NewName="S-XHP-N" Venue="NADAC" Verb="RenameTitle" />
     <Action Config="38" OldName="S-XGT" NewName="S-XGT-N" Venue="NADAC" Verb="RenameTitle" />
+    <Action Config="40" Div="ISC" OldName="Excellent B" NewName="Master" Venue="AKC" Verb="RenameLevel" />
+    <Action Config="40" Div="Regular" OldName="Excellent B" NewName="Master" Venue="AKC" Verb="RenameLevel" />
+    <Action Config="40" Div="Preferred" OldName="Excellent B" NewName="Master" Venue="AKC" Verb="RenameLevel" />
 
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
@@ -445,6 +451,7 @@ Revision History:
       </Event>
     </Venue>
     <Venue LongName="American Kennel Club" Name="AKC" URL="http://www.akc.org/" icon="4">
+      <Desc>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Desc>
       <Titles LongName="Novice Agility" Name="NA">3 Qs</Titles>
       <Titles LongName="Open Agility" Name="OA">3 Qs</Titles>
       <Titles LongName="Agility Excellent" Name="AX">3 Qs</Titles>
@@ -467,13 +474,13 @@ Revision History:
       <Titles LongName="Open FAST Title" Name="OF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Excellent FAST Title" Name="XF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Master Excellent FAST Title" Name="MXF" ValidFrom="2007-1-1">10 Qs under at least 2 different judges</Titles>
-      <Titles LongName="Triple Q Excellent" Name="TQX" ValidFrom="2010-1-1">10 QQQs (Excellent B Std/JWW/FAST)</Titles>
+      <Titles LongName="Triple Q Excellent" Name="TQX" ValidFrom="2010-1-1">10 QQQs (Master Std/JWW/FAST)</Titles>
       <Titles LongName="FAST Century Title" Multiple="1" Name="FTC" ValidFrom="2007-1-1">MXF plus 100 Qs (FTC2 == 200Qs)</Titles>
       <Titles LongName="Novice Preferred FAST Title" Name="NFP" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Open Preferred FAST Title" Name="OFP" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Excellent Preferred FAST Title" Name="XFP" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Master Preferred Excellent FAST Title" Name="MFP" ValidFrom="2007-1-1">10 Qs under at least 2 different judges</Titles>
-      <Titles LongName="Triple Q Excellent Preferred" Name="TQXP" ValidFrom="2010-1-1">10 QQQs (Excellent B Std/JWW/FAST)</Titles>
+      <Titles LongName="Triple Q Excellent Preferred" Name="TQXP" ValidFrom="2010-1-1">10 QQQs (Master Std/JWW/FAST)</Titles>
       <Titles LongName="FAST Century Preferred Title" Multiple="1" Name="FTCP" ValidFrom="2007-1-1">MFP plus 100 Qs (FTCP2 == 200Qs)</Titles>
       <Titles LongName="Time 2 Beat" Multiple="2" Name="T2B" ValidFrom="2011-7-1">15 Qs and 100 points</Titles>
       <Titles LongName="Time 2 Beat Preferred" Multiple="2" Name="T2BP" ValidFrom="2011-7-1">15 Qs and 100 points</Titles>
@@ -521,7 +528,7 @@ Repeat titles are MFPC + 75 Qs</Titles>
       <Titles LongName="Master Century FAST Preferred Title" Multiple="2" Name="MFPC">100 Qs</Titles>
       <Titles LongName="Preferred Agility Champion" Multiple="2" Name="PACH" Prefix="y">20 Double Qs, 750 championship points</Titles>
       <Division Name="ISC">
-        <Level Name="Excellent B"/>
+        <Level Name="Master"/>
       </Division>
       <Division Name="Regular">
         <Level Name="Novice">
@@ -530,7 +537,7 @@ Repeat titles are MFPC + 75 Qs</Titles>
         </Level>
         <Level Name="Open"/>
         <Level Name="Excellent A"/>
-        <Level Name="Excellent B"/>
+        <Level Name="Master"/>
         <Level Name="T2B"/>
       </Division>
       <Division Name="Preferred">
@@ -540,23 +547,27 @@ Repeat titles are MFPC + 75 Qs</Titles>
         </Level>
         <Level Name="Open"/>
         <Level Name="Excellent A"/>
-        <Level Name="Excellent B"/>
+        <Level Name="Master"/>
         <Level Name="T2B"/>
       </Division>
       <Event Name="Standard" hasTable="y">
-        <Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
+        <Scoring Division="ISC" Level="Master" type="FaultsThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Regular" Level="Excellent B" ValidTo="2011-6-30" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Regular" Level="Master" ValidFrom="2011-7-1" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Regular" Level="Master" ValidTo="2011-6-30" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <PlaceInfo Place="1" Value="2"/>
           <PlaceInfo Place="2" Value="1.5"/>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Regular" Level="Excellent B" ValidFrom="2011-7-1" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
-          <TitlePoints Faults="0" Points="1"/>
-        </Scoring>
-        <Scoring Division="Preferred" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
-          <Note>PACH title starts 7-Jul-2011 and points are retroactive.</Note>
+        <Scoring Division="Preferred" Level="Master" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>PACH title starts 7-Jul-2011 and points are retroactive.
+Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
@@ -572,19 +583,23 @@ Repeat titles are MFPC + 75 Qs</Titles>
         </Scoring>
       </Event>
       <Event Name="JWW">
-        <Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
+        <Scoring Division="ISC" Level="Master" type="FaultsThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Regular" Level="Excellent B" ValidTo="2011-6-30" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Regular" Level="Master" ValidFrom="2011-7-1" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Regular" Level="Master" ValidTo="2011-6-30" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <PlaceInfo Place="1" Value="2"/>
           <PlaceInfo Place="2" Value="1.5"/>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Regular" Level="Excellent B" ValidFrom="2011-7-1" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
-          <TitlePoints Faults="0" Points="1"/>
-        </Scoring>
-        <Scoring Division="Preferred" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
-          <Note>PACH title starts 7-Jul-2011 and points are retroactive.</Note>
+        <Scoring Division="Preferred" Level="Master" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>PACH title starts 7-Jul-2011 and points are retroactive.
+Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
@@ -601,77 +616,81 @@ Repeat titles are MFPC + 75 Qs</Titles>
       </Event>
       <Event Name="National Rounds">
         <Desc>Hybrid, Challenger and Final Rounds</Desc>
-        <Scoring Division="Regular" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime"/>
+        <Scoring Division="Regular" Level="Master" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+        </Scoring>
       </Event>
       <Event Name="FAST">
         <Desc>Fifteen and Send Time</Desc>
-        <Scoring Division="*" Level="*" OpeningPts="50" ValidTo="2006-12-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime"/>
-        <Scoring Division="Regular" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
-          <Note>SCT: 38/35/32</Note>
-          <TitlePoints Faults="0" Points="1"/>
-        </Scoring>
-        <Scoring Division="Preferred" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
-          <Note>SCT: 41/38/35</Note>
-          <TitlePoints Faults="0" Points="1"/>
-        </Scoring>
-        <Scoring Division="Regular" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
-          <Note>SCT: 38/35/32</Note>
-          <TitlePoints Faults="0" Points="1"/>
-        </Scoring>
-        <Scoring Division="Preferred" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
-          <Note>SCT: 41/38/35</Note>
+        <Scoring Division="Regular" Level="Master" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>SCT: 38/35/32
+Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Regular" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <Note>SCT: 38/35/32</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Regular" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>SCT: 38/35/32</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Regular" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>SCT: 38/35/32</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Preferred" Level="Master" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>SCT: 41/38/35
+Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Preferred" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <Note>SCT: 41/38/35</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Regular" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
-          <Note>SCT: 38/35/32</Note>
-          <TitlePoints Faults="0" Points="1"/>
-        </Scoring>
-        <Scoring Division="Preferred" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+        <Scoring Division="Preferred" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <Note>SCT: 41/38/35</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Preferred" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>SCT: 41/38/35</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="*" OpeningPts="50" ValidTo="2006-12-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime"/>
       </Event>
       <Event Name="T2B">
         <Desc>Time 2 Beat
 You must enter the SCT (1st place) and your placement to generate the titling points.</Desc>
-        <Scoring Division="Regular" Level="T2B" ValidFrom="2010-1-1" ValidTo="2011-6-30" timeFault="0" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
         <Scoring Division="Regular" Level="T2B" ValidFrom="2011-7-1" timeFault="0" type="FaultsThenTime">
           <TitlePoints Type="T2B"/>
         </Scoring>
-        <Scoring Division="Preferred" Level="T2B" ValidFrom="2010-1-1" ValidTo="2011-6-30" timeFault="0" type="FaultsThenTime">
+        <Scoring Division="Regular" Level="T2B" ValidFrom="2010-1-1" ValidTo="2011-6-30" timeFault="0" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
         <Scoring Division="Preferred" Level="T2B" ValidFrom="2011-7-1" timeFault="0" type="FaultsThenTime">
           <TitlePoints Type="T2B"/>
         </Scoring>
+        <Scoring Division="Preferred" Level="T2B" ValidFrom="2010-1-1" ValidTo="2011-6-30" timeFault="0" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
       </Event>
       <MultiQ Name="Double Q" SName="QQ">
-        <MultiQItem Div="Regular" Event="JWW" Level="Excellent B"/>
-        <MultiQItem Div="Regular" Event="Standard" Level="Excellent B"/>
+        <MultiQItem Div="Regular" Event="JWW" Level="Master"/>
+        <MultiQItem Div="Regular" Event="Standard" Level="Master"/>
       </MultiQ>
       <MultiQ Name="Preferred Double Q" SName="QQ">
-        <MultiQItem Div="Preferred" Event="JWW" Level="Excellent B"/>
-        <MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
+        <MultiQItem Div="Preferred" Event="JWW" Level="Master"/>
+        <MultiQItem Div="Preferred" Event="Standard" Level="Master"/>
       </MultiQ>
       <MultiQ Name="Triple Q" SName="QQQ">
-        <MultiQItem Div="Regular" Event="FAST" Level="Excellent B"/>
-        <MultiQItem Div="Regular" Event="JWW" Level="Excellent B"/>
-        <MultiQItem Div="Regular" Event="Standard" Level="Excellent B"/>
+        <MultiQItem Div="Regular" Event="FAST" Level="Master"/>
+        <MultiQItem Div="Regular" Event="JWW" Level="Master"/>
+        <MultiQItem Div="Regular" Event="Standard" Level="Master"/>
       </MultiQ>
       <MultiQ Name="Preferred Triple Q" SName="QQQ">
-        <MultiQItem Div="Preferred" Event="FAST" Level="Excellent B"/>
-        <MultiQItem Div="Preferred" Event="JWW" Level="Excellent B"/>
-        <MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
+        <MultiQItem Div="Preferred" Event="FAST" Level="Master"/>
+        <MultiQItem Div="Preferred" Event="JWW" Level="Master"/>
+        <MultiQItem Div="Preferred" Event="Standard" Level="Master"/>
       </MultiQ>
     </Venue>
     <Venue LongName="Australian Shepherd Club of America" Name="ASCA" URL="http://www.asca.org/" icon="5">
@@ -2341,10 +2360,6 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
       </Event>
       <Event Name="Gamblers">
         <Desc>Traditional</Desc>
-        <Scoring Division="*" Level="*" OpeningPts="19" ValidTo="2006-8-10" cleanQ="y" type="OCScoreThenTime">
-          <Note>Opening: 25 seconds</Note>
-          <TitlePoints Faults="0" Points="1"/>
-        </Scoring>
         <Scoring Division="*" Level="Specialist" OpeningPts="19" ValidFrom="2006-8-11" cleanQ="y" type="OCScoreThenTime">
           <Note>Opening: 30 seconds</Note>
           <TitlePoints Faults="0" Points="1"/>
@@ -2355,6 +2370,10 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
         </Scoring>
         <Scoring Division="*" Level="Beginner" OpeningPts="15" ValidFrom="2006-8-11" cleanQ="y" type="OCScoreThenTime">
           <Note>Opening: 30 seconds</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="*" OpeningPts="19" ValidTo="2006-8-10" cleanQ="y" type="OCScoreThenTime">
+          <Note>Opening: 25 seconds</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
@@ -3794,10 +3813,10 @@ TG3 + 10 Qs in at least 5 games
       <Event Name="Standard" hasTable="y">
         <Scoring Division="Championship" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -3814,10 +3833,10 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Performance" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -3846,10 +3865,10 @@ TG3 + 10 Qs in at least 5 games
       <Event Name="Jumpers">
         <Scoring Division="Championship" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -3861,16 +3880,16 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Championship" Level="Advanced" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="FaultsThenTime"/>
         <Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="FaultsThenTime"/>
         <Scoring Division="Performance" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -3896,10 +3915,10 @@ TG3 + 10 Qs in at least 5 games
       </Event>
       <Event Name="Gamblers">
         <Scoring Division="Championship" Level="Nationals" type="OCScoreThenTime"/>
-        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="OCScoreThenTime"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="OCScoreThenTime">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="OCScoreThenTime"/>
         <Scoring Division="Championship" Level="Masters" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -3912,10 +3931,10 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="OCScoreThenTime"/>
         <Scoring Division="Performance" Level="Nationals" type="OCScoreThenTime"/>
-        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="OCScoreThenTime"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="OCScoreThenTime">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="OCScoreThenTime"/>
         <Scoring Division="Performance" Level="PIII" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -3937,10 +3956,10 @@ TG3 + 10 Qs in at least 5 games
       </Event>
       <Event Name="Snooker">
         <Scoring Division="Championship" Level="Nationals" type="ScoreThenTime"/>
-        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="ScoreThenTime"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="ScoreThenTime">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="ScoreThenTime"/>
         <Scoring Division="Championship" Level="Masters" OpeningPts="37" superQ="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -3953,10 +3972,10 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
         <Scoring Division="Performance" Level="Nationals" type="ScoreThenTime"/>
-        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="ScoreThenTime"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="ScoreThenTime">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="ScoreThenTime"/>
         <Scoring Division="Performance" Level="PIII" OpeningPts="37" superQ="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -4047,10 +4066,10 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
       </Event>
       <Event Name="Grand Prix">
-        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="FaultsThenTime"/>
         <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="FaultsThenTime">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="FaultsThenTime"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="FaultsThenTime">
           <Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="0" Points="1"/>
@@ -4066,14 +4085,14 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="7" Points="1"/>
           <LifeTime Faults="7" Points="1"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="FaultsThenTime">
-          <Note>Performance National Standard
-For tracking purposes, you can use this to record Veterans GP also.</Note>
-        </Scoring>
         <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="FaultsThenTime">
           <Note>Performance National Standard
 For tracking purposes, you can use this to record Veterans GP also.</Note>
           <LifeTime Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="FaultsThenTime">
+          <Note>Performance National Standard
+For tracking purposes, you can use this to record Veterans GP also.</Note>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="FaultsThenTime">
           <Note>Performance National Standard
@@ -4096,10 +4115,10 @@ In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be m
         </Scoring>
       </Event>
       <Event Name="Steeplechase">
-        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
           <Note>Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="0" Points="1"/>
@@ -4108,12 +4127,12 @@ In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be m
         <Scoring Division="Championship" Level="Tournament" ValidTo="1998-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults">
-          <Note>Performance Speed Jumping</Note>
-        </Scoring>
         <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
           <Note>Performance Speed Jumping</Note>
           <LifeTime Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults">
+          <Note>Performance Speed Jumping</Note>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2006-9-23" type="TimePlusFaults">
           <Note>Performance Speed Jumping
