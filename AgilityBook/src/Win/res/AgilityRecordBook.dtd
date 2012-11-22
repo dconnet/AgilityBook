@@ -200,6 +200,11 @@ for renaming titles.
     Div: Unused
     OldName: Event to be renamed.
     NewName: New name.
+  'RenameLevel': AKC ExcellentB -> Master
+    Venue: Venue that contains division
+    Div: Division containing level.
+    OldName: Level to be renamed.
+    NewName: New name.
   'RenameDivision': CPE Standard->Regular, shouldn't have had Junior
     Venue: Venue that contains division
     Div: Unused
