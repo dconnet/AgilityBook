@@ -16,6 +16,7 @@
  * maintain our data integrity, we need to update things to deal with this.
  *
  * Revision History
+ * @li 2012-11-21 DRC Add RenameLevel action verb.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-12-03 DRC Complete re-write of action class.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -42,6 +43,7 @@
 #define ACTION_VERB_RENAME_TITLE		L"RenameTitle"
 #define ACTION_VERB_DELETE_EVENT		L"DeleteEvent"
 #define ACTION_VERB_RENAME_EVENT		L"RenameEvent"
+#define ACTION_VERB_RENAME_LEVEL		L"RenameLevel"
 #define ACTION_VERB_RENAME_DIV			L"RenameDivision"
 #define ACTION_VERB_RENAME_VENUE		L"RenameVenue"
 
@@ -1755,6 +1757,10 @@ bool ARBConfigActionList::Load(
 	{
 		item = ARBConfigActionRenameEvent::New(configVer, venue, oldName, newName);
 	}
+	else if (ACTION_VERB_RENAME_LEVEL == verb)
+	{
+		item = ARBConfigActionRenameLevel::NewLevel(configVer, venue, div, oldName, newName);
+	}
 	else if (ACTION_VERB_RENAME_DIV == verb)
 	{
 		item = ARBConfigActionRenameDivision::New(configVer, venue, oldName, newName);
@@ -1775,6 +1781,8 @@ bool ARBConfigActionList::Load(
 		msg += ACTION_VERB_DELETE_EVENT;
 		msg += L", ";
 		msg += ACTION_VERB_RENAME_EVENT;
+		msg += L", ";
+		msg += ACTION_VERB_RENAME_LEVEL;
 		msg += L", ";
 		msg += ACTION_VERB_RENAME_DIV;
 		msg += L", ";
