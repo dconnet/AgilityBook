@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-11-21 DRC Fix MultiQItem sorting (wasn't antisymetric).
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-15 DRC Created.
@@ -231,13 +232,11 @@ private:
 		std::wstring m_Event;
 		bool operator<(MultiQItem const& rhs) const
 		{
-			if (m_Div < rhs.m_Div)
-				return true;
-			if (m_Level < rhs.m_Level)
-				return true;
-			if (m_Event < rhs.m_Event)
-				return true;
-			return false;
+			if (m_Div != rhs.m_Div)
+				return (m_Div < rhs.m_Div);
+			if (m_Level != rhs.m_Level)
+				return (m_Level < rhs.m_Level);
+			return (m_Event < rhs.m_Event);
 		}
 		bool operator==(MultiQItem const& rhs) const
 		{
