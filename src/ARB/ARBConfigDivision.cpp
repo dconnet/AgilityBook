@@ -39,17 +39,14 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace
+class ARBConfigDivision_concrete : public ARBConfigDivision
 {
-	class ARBConfigDivision_concrete : public ARBConfigDivision
+public:
+	ARBConfigDivision_concrete() {}
+	ARBConfigDivision_concrete(ARBConfigDivision const& rhs)
+		: ARBConfigDivision(rhs)
 	{
-	public:
-		ARBConfigDivision_concrete() {}
-		ARBConfigDivision_concrete(ARBConfigDivision const& rhs)
-			: ARBConfigDivision(rhs)
-		{
-		}
-	};
+	}
 };
 
 

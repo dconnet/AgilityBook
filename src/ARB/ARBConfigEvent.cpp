@@ -41,17 +41,14 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace
+class ARBConfigEvent_concrete : public ARBConfigEvent
 {
-	class ARBConfigEvent_concrete : public ARBConfigEvent
+public:
+	ARBConfigEvent_concrete() {}
+	ARBConfigEvent_concrete(ARBConfigEvent const& rhs)
+		: ARBConfigEvent(rhs)
 	{
-	public:
-		ARBConfigEvent_concrete() {}
-		ARBConfigEvent_concrete(ARBConfigEvent const& rhs)
-			: ARBConfigEvent(rhs)
-		{
-		}
-	};
+	}
 };
 
 

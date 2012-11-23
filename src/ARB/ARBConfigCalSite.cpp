@@ -29,17 +29,14 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace
+class ARBConfigCalSite_concrete : public ARBConfigCalSite
 {
-	class ARBConfigCalSite_concrete : public ARBConfigCalSite
+public:
+	ARBConfigCalSite_concrete() {}
+	ARBConfigCalSite_concrete(ARBConfigCalSite const& rhs)
+		: ARBConfigCalSite(rhs)
 	{
-	public:
-		ARBConfigCalSite_concrete() {}
-		ARBConfigCalSite_concrete(ARBConfigCalSite const& rhs)
-			: ARBConfigCalSite(rhs)
-		{
-		}
-	};
+	}
 };
 
 ARBConfigCalSitePtr ARBConfigCalSite::New()
