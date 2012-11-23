@@ -329,17 +329,14 @@ ICalendar* ICalendar::iCalendarBegin(
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace
+class ARBCalendar_concrete : public ARBCalendar
 {
-	class ARBCalendar_concrete : public ARBCalendar
+public:
+	ARBCalendar_concrete() {}
+	ARBCalendar_concrete(ARBCalendar const& rhs)
+		: ARBCalendar(rhs)
 	{
-	public:
-		ARBCalendar_concrete() {}
-		ARBCalendar_concrete(ARBCalendar const& rhs)
-			: ARBCalendar(rhs)
-		{
-		}
-	};
+	}
 };
 
 

@@ -62,13 +62,10 @@ ARBCalcPoints::~ARBCalcPoints()
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace
+class ARBCalcPointsNormal_concrete : public ARBCalcPointsNormal
 {
-	class ARBCalcPointsNormal_concrete : public ARBCalcPointsNormal
-	{
-	public:
-		ARBCalcPointsNormal_concrete() {}
-	};
+public:
+	ARBCalcPointsNormal_concrete() {}
 };
 
 
@@ -102,13 +99,10 @@ double ARBCalcPointsNormal::GetPoints(
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace
+class ARBCalcPointsT2B_concrete : public ARBCalcPointsT2B
 {
-	class ARBCalcPointsT2B_concrete : public ARBCalcPointsT2B
-	{
-	public:
-		ARBCalcPointsT2B_concrete() {}
-	};
+public:
+	ARBCalcPointsT2B_concrete() {}
 };
 
 
@@ -161,13 +155,10 @@ double ARBCalcPointsT2B::GetPoints(
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace
+class ARBCalcPointsUKI_concrete : public ARBCalcPointsUKI
 {
-	class ARBCalcPointsUKI_concrete : public ARBCalcPointsUKI
-	{
-	public:
-		ARBCalcPointsUKI_concrete() {}
-	};
+public:
+	ARBCalcPointsUKI_concrete() {}
 };
 
 
