@@ -1,4 +1,7 @@
-11/17/2012: v2.3.9.<in development>
+11/23/2012: v2.3.9.83
+- Bumped Configuration v40:
+  - Rename AKC ExcellentB to Master. (This has the unfortunate side
+    effect of changing all old trials too)
 - New features / Enhancements:
   - Allow an empty judge in runs.
 - Bug fixes:
