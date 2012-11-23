@@ -6,6 +6,16 @@
 - Bug fixes:
   - Fixed a printing problem in the tree.
 
+11/23/2012: v2.3.9.83
+- Bumped Configuration v40:
+  - Rename AKC ExcellentB to Master. (This has the unfortunate side
+    effect of changing all old trials too)
+- New features / Enhancements:
+  - Allow an empty judge in runs.
+- Bug fixes:
+  - Fixed a printing problem in the tree.
+  - "Filtered" message was truncated in status bar.
+
 9/23/2012: v2.3.8.82
 - Bumped Configuration v39:
   - Added TDAA TNAC title.
