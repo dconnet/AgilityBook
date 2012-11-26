@@ -13,6 +13,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * @li 2012-11-25 DRC Add libxml support back in.
  * @li 2012-09-29 DRC Trap wx generated xml parsing errors into our buffer.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
@@ -42,6 +43,7 @@
 
 #include "stdafx.h"
 #include "Element.h"
+#include <fstream>
 #include <list>
 #include <map>
 #include <sstream>
@@ -50,11 +52,35 @@
 #include "ARBTypes.h"
 #include "StringUtil.h"
 
+#if !defined(USE_LIBXML2)
+#if defined(__WXWINDOWS__)
+#define USE_LIBXML2		0
+#else
+#error No idea what XML parser you want!
+#endif
+#endif
+
+#if USE_LIBXML2
+#include "libxml/encoding.h"
+#include "libxml/parser.h"
+#include "libxml/xmlIO.h"
+#include "libxml/xmlreader.h"
+#include "libxml/xmlstring.h"
+#include "libxml/xmlwriter.h"
+
+#if defined(_WINDLL)
+#pragma comment(lib, "libxml2.lib")
+#else
+#pragma comment(lib, "libxml2_a.lib")
+#endif
+
+#else // USE_LIBXML2
 #include <wx/mstream.h>
 #include <wx/stream.h>
 #include <wx/wfstream.h>
 #include <wx/xml/xml.h>
 #pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
+#endif // USE_LIBXML2
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -65,12 +91,19 @@
 bool Element::Initialize(std::wstring& outMsg)
 {
 	outMsg.erase();
+#if USE_LIBXML2
+	xmlInitParser();
+	xmlSubstituteEntitiesDefault(1);
+#endif
 	return true;
 }
 
 
 void Element::Terminate()
 {
+#if USE_LIBXML2
+	xmlCleanupParser();
+#endif
 }
 
 
@@ -85,6 +118,130 @@ Element::~Element()
 
 
 ////////////////////////////////////////////////////////////////////////////
+
+#if USE_LIBXML2
+
+class XMLstring : public std::basic_string<xmlChar>
+{
+public:
+	XMLstring() {}
+	XMLstring(std::string const& inStr)
+		: std::basic_string<xmlChar>((xmlChar*)inStr.c_str())
+	{
+	}
+	XMLstring(std::wstring const& inStr)
+	{
+		std::string str = StringUtil::stringA(inStr);
+		operator=(str.c_str());
+	}
+	XMLstring& operator=(std::string const& inStr)
+	{
+		std::basic_string<xmlChar>::operator=((xmlChar*)inStr.c_str());
+		return *this;
+	}
+	XMLstring& operator=(std::wstring const& inStr)
+	{
+		std::string str = StringUtil::stringA(inStr);
+		operator=(str.c_str());
+		return *this;
+	}
+	XMLstring& operator=(const char* inStr)
+	{
+		std::basic_string<xmlChar>::operator=((xmlChar*)inStr);
+		return *this;
+	}
+	XMLstring& operator=(const wchar_t* inStr)
+	{
+		std::string str = StringUtil::stringA(inStr);
+		operator=(str.c_str());
+		return *this;
+	}
+};
+
+
+class StringDOM : public std::wstring
+{
+public:
+	StringDOM() {}
+	StringDOM(const xmlChar* inStr)
+#ifndef UNICODE
+		: std::string((const char*)inStr)
+#endif
+	{
+#ifdef UNICODE
+		std::string s((const char*)inStr);
+		std::wstring::operator=(StringUtil::stringW(s));
+#endif
+	}
+};
+
+
+static void ReadDoc(xmlNode* inNode, ElementNodePtr tree)
+{
+	if (!inNode)
+		return;
+	for (xmlAttr* attrib = inNode->properties; attrib; attrib = attrib->next)
+	{
+		tree->AddAttrib(StringDOM(attrib->name), StringDOM(attrib->children->content));
+	}
+	for (xmlNode* child = inNode->children; child; child = child->next)
+	{
+		if (child->type == XML_ELEMENT_NODE)
+		{
+			if (tree->HasTextNodes())
+				tree->RemoveAllElements();
+			ElementNodePtr subtree = tree->AddElementNode(StringDOM(child->name));
+			ReadDoc(child, subtree);
+		}
+		else if (child->type == XML_TEXT_NODE)
+		{
+			if (tree->HasTextNodes() || 0 == tree->GetElementCount())
+				tree->SetValue(StringDOM(child->content));
+		}
+	}
+}
+
+
+static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffer, ElementNode const& toWrite)
+{
+	int i;
+	for (i = 0; i < toWrite.GetAttribCount(); ++i)
+	{
+		std::wstring name, value;
+		toWrite.GetNthAttrib(i, name, value);
+		XMLstring name2(name);
+		XMLstring value2(value);
+		xmlTextWriterWriteAttribute(formatter, name2.c_str(), value2.c_str());
+		xmlOutputBufferFlush(outputBuffer);
+	}
+	int count = toWrite.GetElementCount();
+	for (i = 0; i < count; ++i)
+	{
+		ElementPtr element = toWrite.GetElement(i);
+		switch (element->GetType())
+		{
+		case Element::Element_Node:
+			{
+				XMLstring name(element->GetName());
+				xmlTextWriterStartElement(formatter, name.c_str());
+				xmlOutputBufferFlush(outputBuffer);
+				CreateDoc(formatter, outputBuffer, *(dynamic_cast<ElementNode*>(element.get())));
+				xmlTextWriterEndElement(formatter);
+				xmlOutputBufferFlush(outputBuffer);
+			}
+			break;
+		case Element::Element_Text:
+			{
+				XMLstring value(element->GetValue());
+				xmlTextWriterWriteString(formatter, value.c_str());
+				xmlOutputBufferFlush(outputBuffer);
+			}
+			break;
+		}
+	}
+}
+
+#else // USE_LIBXML2
 
 static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 {
@@ -154,6 +311,8 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 		}
 	}
 }
+
+#endif // USE_LIBXML2
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -853,23 +1012,41 @@ bool ElementNode::FindElementDeep(
 
 static bool LoadXMLNode(
 		ElementNodePtr node,
+#if USE_LIBXML2
+		xmlDocPtr inSource,
+#else
 		wxXmlDocument& inSource,
+#endif
 		std::wostringstream& ioErrMsg)
 {
 	node->clear();
+
+#if USE_LIBXML2
+	xmlNode* root = xmlDocGetRootElement(inSource);
+	if (!root)
+		return false;
+	node->SetName(StringDOM(root->name));
+	ReadDoc(root, node);
+#else
 
 	if (!inSource.GetRoot())
 		return false;
 	node->SetName(StringUtil::stringW(inSource.GetRoot()->GetName()));
 	ReadDoc(inSource.GetRoot(), node);
+#endif
 	return true;
 }
 
 
+#ifdef __WXWINDOWS__
 bool ElementNode::LoadXML(
 		wxInputStream& inStream,
 		std::wostringstream& ioErrMsg)
 {
+#if USE_LIBXML2
+	assert(0);
+	return false;
+#else
 	wxLogBuffer* log = new wxLogBuffer();
 	// wxLogChain will delete the log given to it.
 	wxLogChain chain(log);
@@ -887,7 +1064,9 @@ bool ElementNode::LoadXML(
 		return false;
 	}
 	return LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+#endif
 }
+#endif
 
 
 bool ElementNode::LoadXML(
@@ -895,8 +1074,16 @@ bool ElementNode::LoadXML(
 		size_t nData,
 		std::wostringstream& ioErrMsg)
 {
+#if USE_LIBXML2
+	xmlDocPtr source = xmlReadMemory(inData, static_cast<int>(nData), NULL, NULL, 0);
+	bool rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+	if (source)
+		xmlFreeDoc(source);
+	return rc;
+#else
 	wxMemoryInputStream input(inData, nData);
 	return LoadXML(input, ioErrMsg);
+#endif
 }
 
 
@@ -904,24 +1091,113 @@ bool ElementNode::LoadXML(
 		wchar_t const* inFileName,
 		std::wostringstream& ioErrMsg)
 {
+#if USE_LIBXML2
+	std::string filename = StringUtil::stringA(inFileName);
+	xmlDocPtr source = xmlReadFile(filename.c_str(), NULL, 0);
+	bool rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+	if (source)
+		xmlFreeDoc(source);
+	return rc;
+#else
 	wxFileInputStream input(inFileName);
 	if (!input.IsOk())
 		return false;
 	return LoadXML(input, ioErrMsg);
+#endif
 }
 
 
-bool ElementNode::SaveXML(wxOutputStream& outOutput) const
+bool ElementNode::SaveXML(std::ostream& outOutput) const
 {
 	std::string dtd;
 	return SaveXML(outOutput, dtd);
 }
 
 
+#ifdef __WXWINDOWS__
+bool ElementNode::SaveXML(wxOutputStream& outOutput) const
+{
+	std::string dtd;
+	return SaveXML(outOutput, dtd);
+}
+#endif
+
+
+#if USE_LIBXML2
+static int BufferWriteCallback(void* context, const char* buffer, int len)
+{
+	if (!context)
+		return -1;
+	std::ostream* output = reinterpret_cast<std::ostream*>(context);
+	output->write(buffer, len);
+	return len;
+}
+static int BufferCloseCallback(void* context)
+{
+	// don't close
+	return 0;
+}
+#endif
+
+
+bool ElementNode::SaveXML(
+		std::ostream& outOutput,
+		std::string const& inDTD) const
+{
+#if USE_LIBXML2
+	// On Win32, an XMLCh is a UNICODE character.
+	outOutput << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+	if (!inDTD.empty())
+	{
+#ifdef UNICODE
+		std::string rootName = StringUtil::stringA(GetName());
+#else
+		std::string rootName = GetName();
+#endif
+		outOutput << "<!DOCTYPE " << rootName << " [\n";
+		outOutput << inDTD;
+		outOutput << "\n]>\n";
+	}
+	xmlOutputBufferPtr outputBuffer = xmlOutputBufferCreateIO(BufferWriteCallback, BufferCloseCallback, (void*)(&outOutput), NULL);
+	xmlTextWriterPtr formatter = xmlNewTextWriter(outputBuffer);
+	xmlTextWriterSetIndent(formatter, 2); // Only puts out 1 space no matter what.
+	xmlTextWriterSetIndentString(formatter, BAD_CAST "\t");
+	XMLstring name(GetName());
+	xmlTextWriterStartElement(formatter, name.c_str());
+	xmlOutputBufferFlush(outputBuffer);
+	CreateDoc(formatter, outputBuffer, *this);
+	xmlTextWriterEndElement(formatter);
+	xmlOutputBufferFlush(outputBuffer);
+	xmlFreeTextWriter(formatter);
+	return true;
+#else
+	wxXmlDocument doc;
+	doc.SetVersion(L"1.0");
+	doc.SetFileEncoding(L"utf-8");
+	wxXmlNode* root = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, StringUtil::stringWX(GetName()));
+	doc.SetRoot(root);
+	// TODO: Insert DTD
+	CreateDoc(root, *this);
+	wxMemoryOutputStream out;
+	bool bOk = doc.Save(out);
+	if (bOk)
+	{
+		outOutput << StringUtil::stringA(out);
+	}
+	return bOk;
+#endif
+}
+
+
+#ifdef __WXWINDOWS__
 bool ElementNode::SaveXML(
 		wxOutputStream& outOutput,
 		std::string const& inDTD) const
 {
+#if USE_LIBXML2
+	assert(0);
+	return false;
+#else
 	wxXmlDocument doc;
 	doc.SetVersion(L"1.0");
 	doc.SetFileEncoding(L"utf-8");
@@ -930,7 +1206,9 @@ bool ElementNode::SaveXML(
 	// TODO: Insert DTD
 	CreateDoc(root, *this);
 	return doc.Save(outOutput);
+#endif
 }
+#endif
 
 
 bool ElementNode::SaveXML(std::wstring const& outFile) const
@@ -947,12 +1225,25 @@ bool ElementNode::SaveXML(
 	bool bOk = false;
 	if (outFile.empty())
 		return bOk;
+#if 1
+	char const* pFile = NULL;
+	std::string filename = StringUtil::stringA(outFile);
+	pFile = filename.c_str();
+	std::ofstream output(pFile, std::ios::out | std::ios::binary);
+	output.exceptions(std::ios_base::badbit);
+	if (output.is_open())
+	{
+		bOk = SaveXML(output, inDTD);
+		output.close();
+	}
+#else
 	wxFFileOutputStream output(outFile.c_str(), L"wb");
 	if (output.IsOk())
 	{
 		bOk = SaveXML(output, inDTD);
 		output.Close();
 	}
+#endif
 	return bOk;
 }
 
