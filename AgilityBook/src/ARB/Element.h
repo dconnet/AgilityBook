@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-11-25 DRC Add libxml support back in.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -29,8 +30,10 @@
 #include <vector>
 class ARBDate;
 class ARBVersion;
+#ifdef __WXWINDOWS__
 class wxInputStream;
 class wxOutputStream;
+#endif
 
 /**
  * Tree-like structure to hold XML data.
@@ -377,6 +380,7 @@ public:
 			std::wstring const& inName,
 			std::wstring const* inValue = NULL) const;
 
+#ifdef __WXWINDOWS__
 	/**
 	 * Populate this element from the given stream.
 	 * @param inStream XML stream to load.
@@ -386,6 +390,7 @@ public:
 	bool LoadXML(
 			wxInputStream& inStream,
 			std::wostringstream& ioErrMsg);
+#endif
 
 	/**
 	 * Populate this element from the given buffer.
@@ -415,7 +420,10 @@ public:
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
+	bool SaveXML(std::ostream& outStream) const;
+#ifdef __WXWINDOWS__
 	bool SaveXML(wxOutputStream& outStream) const;
+#endif
 
 	/**
 	 * Save this element to the given output stream.
@@ -425,8 +433,13 @@ public:
 	 * @retval false Tree failed to save.
 	 */
 	bool SaveXML(
+			std::ostream& outStream,
+			std::string const& inDTD) const;
+#ifdef __WXWINDOWS__
+	bool SaveXML(
 			wxOutputStream& outStream,
 			std::string const& inDTD) const;
+#endif
 
 	/**
 	 * Save this element to the given file.
