@@ -228,7 +228,8 @@ Revision History
 			<!-- The description is the same since that was what MFC set it to (v1) -->
 			<ProgId Id="AgilityBook.Document"
 				Description="AgilityBook.Document"
-				Icon="_AgilityBook.exe">
+				Icon="_AgilityBook.exe"
+				IconIndex="0">
 				<Extension Id="arb">
 					<Verb Id="open"
 						Command="Open"
