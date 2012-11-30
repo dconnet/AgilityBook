@@ -1,3 +1,5 @@
+11/30/2012: v2.3.11.84 <in development>
+
 11/30/2012: v2.3.10.84
 - Bumped Configuration v41:
   - Rename AKC ExcellentA to Excellent. (This has the unfortunate side
