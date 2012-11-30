@@ -65,6 +65,7 @@ const wchar_t* const gc_Configs[] =
 	L"Config38_v13_1.xml",
 	L"Config39_v13_2.xml",
 	L"Config40_v13_2.xml",
+	L"Config41_v13_2.xml",
 };
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
@@ -189,7 +190,7 @@ SUITE(TestConfig)
 			CConfigHandler handler;
 			config.Default(&handler);
 			CHECK_EQUAL(0u, config.GetCalSites().size());
-			CHECK_EQUAL(153u, config.GetActions().size());
+			CHECK_EQUAL(155u, config.GetActions().size());
 			CHECK_EQUAL(0u, config.GetFaults().size());
 			CHECK_EQUAL(5u, config.GetOtherPoints().size());
 			CHECK_EQUAL(14u, config.GetVenues().size());
