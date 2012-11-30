@@ -1,4 +1,7 @@
-11/26/2012: v2.3.10.83 <in development>
+11/30/2012: v2.3.10.84
+- Bumped Configuration v41:
+  - Rename AKC ExcellentA to Excellent. (This has the unfortunate side
+    effect of changing all old trials too)
 
 11/23/2012: v2.3.9.83
 - Bumped Configuration v40:
