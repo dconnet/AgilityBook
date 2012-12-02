@@ -173,7 +173,9 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 		}
 	}
 
-	if (1 == choices.size())
+	if (0 == choices.size())
+		lang = wxLANGUAGE_ENGLISH_US;
+	else if (1 == choices.size())
 		lang = langId[0];
 	else
 	{
