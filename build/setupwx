@@ -22,10 +22,12 @@ else
 	echo $USAGE
 	exit
 fi
-BUILDDIR="$WXWIN/build-unicode"
+BUILDDIR="$WXWIN/build"
 
 if test "x$3" = "xcocoa"; then
 	BUILDDIR+="-cocoa"
+else
+	BUILDDIR+="-carbon"
 fi
 
 if test "x$2" = "xdebug"; then
@@ -45,17 +47,29 @@ cd $BUILDDIR
 
 # Note, trunk no longer supports 10.4
 if test "x$1" = "xtrunk"; then
-	COMPILERS="CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2"
-	MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Developer/SDKs/MacOSX10.5.sdk --enable-macosx_arch=i386"
+        if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+	then
+		MINSDK="--with-macosx-version-min=10.7 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk --enable-macosx_arch=i386"
+	else
+		COMPILERS="CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2"
+		MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Developer/SDKs/MacOSX10.5.sdk --enable-macosx_arch=i386"
+	fi
+
 	if test "x$3" = "xcocoa"; then
 		MINSDK+=" --with-osx_cocoa"
 	else
 		MINSDK+=" --with-osx_carbon"
 	fi
 else
-	COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
-	MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk --enable-universal_binary"
+        if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+	then
+		MINSDK="--with-macosx-version-min=10.7 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk --enable-macosx_arch=i386"
+	else
+		COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
+		MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk --enable-universal_binary"
+	fi
 fi
+
 LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no"
 
 echo "../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $MINSDK"
