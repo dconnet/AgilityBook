@@ -180,3 +180,11 @@ Microsoft Visual Studio 2010 (VC10)
 Microsoft Visual Studio 2012 (VC11)
 ===================================
    It works, no additional notes.
+
+XCode
+=====
+The xcode projects were used as follows:
+.../macos: Xcode 3.1 on OSX10.5
+           Targets trunk, carbon
+.../mac-cocoa: Xcode 4.5 on OSX10.8
+			   Targets trunk, cocoa
