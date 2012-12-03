@@ -11,10 +11,12 @@ else
 	echo $USAGE
 	return
 fi
-BUILDDIR="$WXWIN/build-unicode"
+BUILDDIR="$WXWIN/build"
 
 if test "x$3" = "xcocoa"; then
 	BUILDDIR+="-cocoa"
+else
+	BUILDDIR+="-carbon"
 fi
 
 if test "x$2" = "xdebug"; then
