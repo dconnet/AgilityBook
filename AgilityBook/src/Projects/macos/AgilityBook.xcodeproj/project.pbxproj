@@ -1096,7 +1096,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$BOOST_ROOT",
-					"-I$WXBASE/trunk/build-unicode-debug/lib/wx/include/osx_carbon-unicode-static-2.9",
+					"-I$WXBASE/trunk/build-carbon-debug/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
@@ -1104,7 +1104,7 @@
 					"-D__WXOSX_CARBON__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXBASE/trunk/build-unicode-debug/lib",
+					"-L$WXBASE/trunk/build-carbon-debug/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1143,7 +1143,7 @@
 				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-unicode";
+				SYMROOT = "build-carbon";
 			};
 			name = Debug;
 		};
@@ -1171,7 +1171,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-I$BOOST_ROOT",
-					"-I$WXBASE/trunk/build-unicode/lib/wx/include/osx_carbon-unicode-static-2.9",
+					"-I$WXBASE/trunk/build-carbon/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
@@ -1180,7 +1180,7 @@
 					"-D__WXOSX_CARBON__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXBASE/trunk/build-unicode/lib",
+					"-L$WXBASE/trunk/build-carbon/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1219,7 +1219,7 @@
 				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-unicode";
+				SYMROOT = "build-carbon";
 			};
 			name = Release;
 		};

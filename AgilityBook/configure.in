@@ -61,9 +61,16 @@ AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not foun
 case `uname` in
 Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
-	# build universal binaries on Mac OS
-	AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -arch i386")
-	AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.5.sdk -arch i386"])
+
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+	then
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -mmacosx-version-min=10.7 -arch i386")
+		AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -arch i386"])
+	else
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -arch i386")
+		AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.5.sdk -arch i386"])
+	fi
+
 	# dependency generation not supported for g++ for universal binaries
 	# For some reason ./configure --disable-dependency-generation is not supported by autoconf 2.63
 	# so put dependencies checking under non-Darwin builds

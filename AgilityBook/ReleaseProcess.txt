@@ -44,17 +44,24 @@ Commit all changes to SVN.
 
 Pull files onto Mac and build there (see MAC_BUILD.txt)
 - Update Project Version in xcode target properties (x.y.z)
-- export PATH=$WXWIN/build-unicode:$PATH
+On Mac10.5:
+- export PATH=$WXWIN/build-carbon:$PATH
 - cd .../AgilityBook
 - autoconf
-- rm -rf build-unicode
-- mkdir build-unicode
-- cd build-unicode
+- rm -rf build-carbon
+- mkdir build-carbon
+- cd build-carbon
 - ../configure CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2
+On Mac10.8:
+- export PATH=$WXWIN/build-cocoa:$PATH
+- cd .../AgilityBook
+- autoconf
+- rm -rf build-cocoa
+- mkdir build-cocoa
+- cd build-cocoa
+- ../configure
+Both:
 - make dist
-[note: the makefile is not generating the image correctly to run on osx10.4
-So do a release build in xcode and copy that executable into the 'dist'
-generated .app folder]
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
   - Name it AgilityBook-n_n_n_n-mac.dmg
   - After dragging in image, rename the mount point. (AgilityBook x.y.z)
