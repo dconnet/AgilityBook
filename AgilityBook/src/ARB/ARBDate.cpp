@@ -83,17 +83,17 @@ static void SdnToGregorian(
 	long int temp = (sdn + SDN_OFFSET) * 4 - 1;
 
 	/* Calculate the century (year/100). */
-	int century = temp / DAYS_PER_400_YEARS;
+	long int century = temp / DAYS_PER_400_YEARS;
 
 	/* Calculate the year and day of year (1 <= dayOfYear <= 366). */
 	temp = ((temp % DAYS_PER_400_YEARS) / 4) * 4 + 3;
-	int year = (century * 100) + (temp / DAYS_PER_4_YEARS);
-	int dayOfYear = (temp % DAYS_PER_4_YEARS) / 4 + 1;
+	long int year = (century * 100) + (temp / DAYS_PER_4_YEARS);
+	long int dayOfYear = (temp % DAYS_PER_4_YEARS) / 4 + 1;
 
 	/* Calculate the month and day of month. */
 	temp = dayOfYear * 5 - 3;
-	int month = temp / DAYS_PER_5_MONTHS;
-	int day = (temp % DAYS_PER_5_MONTHS) / 5 + 1;
+	long int month = temp / DAYS_PER_5_MONTHS;
+	long int day = (temp % DAYS_PER_5_MONTHS) / 5 + 1;
 
 	/* Convert to the normal beginning of the year. */
 	if (month < 10)
