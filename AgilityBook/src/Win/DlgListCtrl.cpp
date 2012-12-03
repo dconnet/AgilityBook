@@ -161,12 +161,7 @@ std::wstring CDlgListCtrlDataCalendar::OnNeedText(long iCol) const
 bool CDlgListCtrlDataCalendar::OnEdit()
 {
 	CDlgCalendar dlg(m_pCal, m_Parent->m_pDoc);
-	if (wxID_OK == dlg.ShowModal())
-	{
-		if (CAgilityBookOptions::AutoDeleteCalendarEntries() && m_pCal->GetEndDate() < ARBDate::Today())
-			return true;
-	}
-	return false;
+	return wxID_OK == dlg.ShowModal();
 }
 
 
@@ -303,10 +298,7 @@ std::wstring CDlgListCtrlDataOtherPoints::OnNeedText(long iCol) const
 bool CDlgListCtrlDataOtherPoints::OnEdit()
 {
 	CDlgOtherPoint dlg(m_pConfig, m_Other);
-	if (wxID_OK == dlg.ShowModal())
-		return true;
-	else
-		return false;
+	return wxID_OK == dlg.ShowModal();
 }
 
 
@@ -367,10 +359,7 @@ bool CDlgListCtrlDataPartners::OnEdit()
 	std::set<std::wstring> handlers, dogs;
 	m_pDlg->GetAllPartners(handlers, dogs);
 	CDlgPartner dlg(m_Partner, handlers, dogs);
-	if (wxID_OK == dlg.ShowModal())
-		return true;
-	else
-		return false;
+	return wxID_OK == dlg.ShowModal();
 }
 
 
