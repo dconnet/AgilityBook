@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E1144E6810813B4F00356F61 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
-		E1144E6910813B4F00356F61 /* main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD57FA0DA1D07D00B32029 /* main.xib */; };
 		E1144E6A10813B4F00356F61 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
 		E1144E6C10813B4F00356F61 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */; };
 		E1144E6D10813B4F00356F61 /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
@@ -145,11 +143,8 @@
 		E1144EF010813B4F00356F61 /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B210000B3100B7074A /* BinaryData.cpp */; };
 		E1144EF110813B4F00356F61 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B410000B3100B7074A /* Element.cpp */; };
 		E1144EF210813B4F00356F61 /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B710000B3100B7074A /* VersionNum.cpp */; };
-		E1144EF410813B4F00356F61 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
 		E1144F5F1082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
 		E1144F601082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
-		E158FC311001371B00735E7F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
-		E158FC321001371B00735E7F /* main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD57FA0DA1D07D00B32029 /* main.xib */; };
 		E158FC341001371B00735E7F /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */; };
 		E158FC351001371B00735E7F /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
 		E158FC361001371B00735E7F /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */; };
@@ -285,7 +280,6 @@
 		E158FCB81001371B00735E7F /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B210000B3100B7074A /* BinaryData.cpp */; };
 		E158FCB91001371B00735E7F /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B410000B3100B7074A /* Element.cpp */; };
 		E158FCBA1001371B00735E7F /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B710000B3100B7074A /* VersionNum.cpp */; };
-		E158FCBC1001371B00735E7F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
 		E1674C1D160FEB0700E6B2B3 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1674C1B160FEB0700E6B2B3 /* ARB_Q.cpp */; };
 		E1674C25160FED3600E6B2B3 /* ValidatorsQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1674C23160FED3600E6B2B3 /* ValidatorsQ.cpp */; };
 		E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
@@ -303,11 +297,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0867D6ABFE840B52C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1DDD57FB0DA1D07D00B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/main.xib; sourceTree = "<group>"; };
-		20286C33FDCF999611CA2CEA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		5048396D09E3307300765E4B /* arbProj.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = arbProj.xcconfig; sourceTree = "<group>"; };
-		5048396E09E3307300765E4B /* arbTarget.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = arbTarget.xcconfig; sourceTree = "<group>"; };
 		8D0C4E960486CD37000505A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1144EF810813B4F00356F61 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1144F5C1082880800356F61 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
@@ -614,7 +603,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1144EF410813B4F00356F61 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,7 +610,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E158FCBC1001371B00735E7F /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,11 +628,10 @@
 		20286C29FDCF999611CA2CEA /* arb */ = {
 			isa = PBXGroup;
 			children = (
-				5048396909E3304600765E4B /* Configuration Files */,
+				20286C2AFDCF999611CA2CEA /* Sources */,
 				20286C2CFDCF999611CA2CEA /* Resources */,
 				20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */,
 				195DF8CFFE9D517E11CA2CBB /* Products */,
-				E158FC261001333500735E7F /* Carbon.framework */,
 			);
 			name = arb;
 			sourceTree = "<group>";
@@ -666,11 +652,8 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				20286C2AFDCF999611CA2CEA /* Sources */,
 				E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */,
 				8D0C4E960486CD37000505A6 /* Info.plist */,
-				0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */,
-				1DDD57FA0DA1D07D00B32029 /* main.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -678,34 +661,14 @@
 		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				20286C33FDCF999611CA2CEA /* Carbon.framework */,
+				E158FC261001333500735E7F /* Carbon.framework */,
 			);
 			name = "External Frameworks and Libraries";
-			sourceTree = "<group>";
-		};
-		5048396909E3304600765E4B /* Configuration Files */ = {
-			isa = PBXGroup;
-			children = (
-				5048396D09E3307300765E4B /* arbProj.xcconfig */,
-				5048396E09E3307300765E4B /* arbTarget.xcconfig */,
-			);
-			name = "Configuration Files";
 			sourceTree = "<group>";
 		};
 		E155979C10000B1200B7074A /* Win */ = {
 			isa = PBXGroup;
 			children = (
-				E1674C23160FED3600E6B2B3 /* ValidatorsQ.cpp */,
-				E1674C24160FED3600E6B2B3 /* ValidatorsQ.h */,
-				E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */,
-				E1C8D4A415B9AACC00F91623 /* MenuHelper.h */,
-				E1C8D4A515B9AACC00F91623 /* RegItems.h */,
-				E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */,
-				E1FA1B5511602EA300FAFD0F /* NamedColumns.h */,
-				E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */,
-				E1FA1A0D115FF44200FAFD0F /* CalendarSiteUSDAA.h */,
-				E1144F5C1082880800356F61 /* Widgets.cpp */,
-				E1144F5D1082880800356F61 /* Widgets.h */,
 				E155979E10000B1200B7074A /* AgilityBook.cpp */,
 				E155979F10000B1200B7074A /* AgilityBook.h */,
 				E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */,
@@ -734,6 +697,8 @@
 				E15597B810000B1200B7074A /* AgilityBookTreeView.h */,
 				E15597B910000B1200B7074A /* CalendarSites.cpp */,
 				E15597BA10000B1200B7074A /* CalendarSites.h */,
+				E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */,
+				E1FA1A0D115FF44200FAFD0F /* CalendarSiteUSDAA.h */,
 				E15597BB10000B1200B7074A /* CheckLink.cpp */,
 				E15597BC10000B1200B7074A /* CheckLink.h */,
 				E15597BD10000B1200B7074A /* CheckTreeCtrl.cpp */,
@@ -864,6 +829,10 @@
 				E155983C10000B1200B7074A /* Localization.h */,
 				E155983D10000B1200B7074A /* MainFrm.cpp */,
 				E155983E10000B1200B7074A /* MainFrm.h */,
+				E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */,
+				E1C8D4A415B9AACC00F91623 /* MenuHelper.h */,
+				E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */,
+				E1FA1B5511602EA300FAFD0F /* NamedColumns.h */,
 				E155984010000B1200B7074A /* NoteButton.cpp */,
 				E155984110000B1200B7074A /* NoteButton.h */,
 				E155984310000B1200B7074A /* PointsData.cpp */,
@@ -872,18 +841,23 @@
 				E155984610000B1200B7074A /* Print.h */,
 				E155984710000B1200B7074A /* ReadHttp.cpp */,
 				E155984810000B1200B7074A /* ReadHttp.h */,
+				E1C8D4A515B9AACC00F91623 /* RegItems.h */,
 				E155989D10000B1200B7074A /* RichEditCtrl2.cpp */,
 				E155989E10000B1200B7074A /* RichEditCtrl2.h */,
+				E15598A810000B1200B7074A /* SpreadSheet.cpp */,
+				E15598A910000B1200B7074A /* SpreadSheet.h */,
 				E155989F10000B1200B7074A /* TabView.cpp */,
 				E15598A010000B1200B7074A /* TabView.h */,
 				E15598A110000B1200B7074A /* UpdateInfo.cpp */,
 				E15598A210000B1200B7074A /* UpdateInfo.h */,
 				E15598A310000B1200B7074A /* Validators.cpp */,
 				E15598A410000B1200B7074A /* Validators.h */,
+				E1674C23160FED3600E6B2B3 /* ValidatorsQ.cpp */,
+				E1674C24160FED3600E6B2B3 /* ValidatorsQ.h */,
 				E15598A610000B1200B7074A /* Wizard.cpp */,
 				E15598A710000B1200B7074A /* Wizard.h */,
-				E15598A810000B1200B7074A /* SpreadSheet.cpp */,
-				E15598A910000B1200B7074A /* SpreadSheet.h */,
+				E1144F5C1082880800356F61 /* Widgets.cpp */,
+				E1144F5D1082880800356F61 /* Widgets.h */,
 				E15598AA10000B1200B7074A /* WizardExport.cpp */,
 				E15598AB10000B1200B7074A /* WizardExport.h */,
 				E15598AC10000B1200B7074A /* WizardImport.cpp */,
@@ -900,18 +874,14 @@
 			children = (
 				E1674C1B160FEB0700E6B2B3 /* ARB_Q.cpp */,
 				E1674C1C160FEB0700E6B2B3 /* ARB_Q.h */,
-				E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */,
-				E1D5510213E6859E00EB1F5B /* ARBCalcPoints.h */,
-				E1AE409B12873800003BFF9F /* BreakLine.cpp */,
-				E1AE409C12873800003BFF9F /* BreakLine.h */,
-				E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */,
-				E1FA1A07115FF3FD00FAFD0F /* ARBMsgDigest.h */,
 				E155996310000B3100B7074A /* ARBAgilityRecordBook.cpp */,
 				E155996410000B3100B7074A /* ARBAgilityRecordBook.h */,
 				E155996510000B3100B7074A /* ARBBase.cpp */,
 				E155996610000B3100B7074A /* ARBBase.h */,
 				E155996710000B3100B7074A /* ARBBase64.cpp */,
 				E155996810000B3100B7074A /* ARBBase64.h */,
+				E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */,
+				E1D5510213E6859E00EB1F5B /* ARBCalcPoints.h */,
 				E155996910000B3100B7074A /* ARBCalendar.cpp */,
 				E155996A10000B3100B7074A /* ARBCalendar.h */,
 				E155996B10000B3100B7074A /* ARBConfig.cpp */,
@@ -978,8 +948,8 @@
 				E15599A810000B3100B7074A /* ARBInfoItem.h */,
 				E15599A910000B3100B7074A /* ARBLocalization.cpp */,
 				E15599AA10000B3100B7074A /* ARBLocalization.h */,
-				E15599AB10000B3100B7074A /* StringUtil.cpp */,
-				E15599AC10000B3100B7074A /* StringUtil.h */,
+				E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */,
+				E1FA1A07115FF3FD00FAFD0F /* ARBMsgDigest.h */,
 				E15599AD10000B3100B7074A /* ARBStructure.h */,
 				E15599AE10000B3100B7074A /* ARBTraining.cpp */,
 				E15599AF10000B3100B7074A /* ARBTraining.h */,
@@ -987,8 +957,12 @@
 				E15599B110000B3100B7074A /* ARBTypes.h */,
 				E15599B210000B3100B7074A /* BinaryData.cpp */,
 				E15599B310000B3100B7074A /* BinaryData.h */,
+				E1AE409B12873800003BFF9F /* BreakLine.cpp */,
+				E1AE409C12873800003BFF9F /* BreakLine.h */,
 				E15599B410000B3100B7074A /* Element.cpp */,
 				E15599B510000B3100B7074A /* Element.h */,
+				E15599AB10000B3100B7074A /* StringUtil.cpp */,
+				E15599AC10000B3100B7074A /* StringUtil.h */,
 				E15599B710000B3100B7074A /* VersionNum.cpp */,
 				E15599B810000B3100B7074A /* VersionNum.h */,
 			);
@@ -1069,8 +1043,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1144E6810813B4F00356F61 /* InfoPlist.strings in Resources */,
-				E1144E6910813B4F00356F61 /* main.xib in Resources */,
 				E1144E6A10813B4F00356F61 /* AgilityBook.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1079,8 +1051,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E158FC311001371B00735E7F /* InfoPlist.strings in Resources */,
-				E158FC321001371B00735E7F /* main.xib in Resources */,
 				E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1388,25 +1358,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0867D6ABFE840B52C02AAC07 /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		1DDD57FA0DA1D07D00B32029 /* main.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DDD57FB0DA1D07D00B32029 /* English */,
-			);
-			name = main.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C0E91ACA08A95435008D54AB /* Debug */ = {
