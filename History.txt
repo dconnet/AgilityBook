@@ -1,4 +1,6 @@
-11/30/2012: v2.3.11.84 <in development>
+12/3/2012: v2.3.11.84 <in development>
+- Bug fixes:
+  - Fix Calendar icon updates in list dialog.
 
 11/30/2012: v2.3.10.84
 - Bumped Configuration v41:
