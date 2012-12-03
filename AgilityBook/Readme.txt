@@ -52,7 +52,7 @@ Make sure WXWIN is set to wxWidgets root directory.
     directory from the appdir, which causes problems.
 -[all]- src/generic/odcombo.cpp
   - In wxVListBoxComboPopup::Insert, add the following after m_strings.Insert
-	m_clientDatas.Insert(0,pos);
+    m_clientDatas.Insert(0,pos);
   [This probably applies to all prior versions of wx, just found in 2.8.12]
 -[mac]- src/common/wxchar.cpp
   - This fixes positional parameter formatting on Mac. Now possible to use unicode.
@@ -353,3 +353,16 @@ Microsoft Visual Studio 2010 (VC10)
 Microsoft Visual Studio 2012 (VC11)
 ===================================
    It works, no additional notes.
+
+Xcode
+=====
+The xcode projects were used as follows:
+.../xcode3: Xcode 3.1 on OSX10.5
+            AgilityBook.xcodeproj
+                wx2.8 (production), carbon
+                trunk, carbon
+            AgilityBookCocoa.xcodeproj
+                trunk, cocoa
+.../xcode4: Xcode 4.5 on OSX10.8
+            AgilityBook.xcworkspace
+                trunk, cocoa
