@@ -1,6 +1,8 @@
-11/17/2012: v3.0.0.<in development>
+12/3/2012: v3.0.0.<in development>
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
+- Bug fixes:
+  - Fix Calendar icon updates in list dialog.
 [ Note, full functionality is NOT complete ]
 
 11/30/2012: v2.3.10.84
