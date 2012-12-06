@@ -34,7 +34,6 @@
 #include <math.h>
 #include <sstream>
 #include <time.h>
-#include <wx/string.h>
 
 #if defined(__WXWINDOWS__)
 #include <wx/string.h>

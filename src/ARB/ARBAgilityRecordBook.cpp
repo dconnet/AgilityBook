@@ -95,9 +95,11 @@
 #include "Element.h"
 #include "StringUtil.h"
 
+#if defined(__WXWINDOWS__)
 #include <wx/utils.h>
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
+#endif
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -337,7 +339,11 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 	outTree->AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_PLATFORM, GetArch());
+#if defined(__WXWINDOWS__)
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, StringUtil::stringW(::wxGetOsDescription()));
+#else
+	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, L"TODO");
+#endif
 	outTree->AddAttrib(ATTRIB_BOOK_TIMESTAMP, GetTimeStamp());
 	if (inCalendar)
 	{
