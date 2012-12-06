@@ -109,6 +109,7 @@
 #include <wx/filename.h>
 #include <wx/filesys.h>
 #include <wx/stdpaths.h>
+#include <wx/stdstream.h>
 #include <wx/wfstream.h>
 #include <wx/zipstrm.h>
 
@@ -515,7 +516,9 @@ bool CUpdateInfo::CheckProgram(
 						if (!bGotoWeb && !m_md5.empty())
 						{
 							progress->SetCaption(StringUtil::stringW(_("IDS_VALIDATING")));
-							if (ARBMsgDigest::ComputeFile(filename) != m_md5)
+							wxFileInputStream file(filename);
+							wxStdInputStream stdfile(file);
+							if (ARBMsgDigest::ComputeFile(stdfile) != m_md5)
 							{
 								bGotoWeb = true;
 								if (!errMsg.empty())

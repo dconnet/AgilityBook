@@ -16,6 +16,7 @@
  */
 
 #include <string>
+#include <istream>
 
 
 class ARBMsgDigest
@@ -28,9 +29,6 @@ public:
 			char const* inData,
 			size_t nData);
 	static std::wstring ComputeFile(
-			wchar_t const* const inFileName,
-			size_t* outSize = NULL);
-	static std::wstring ComputeFile(
-			std::wstring const& inFileName,
+			std::istream& inFile,
 			size_t* outSize = NULL);
 };

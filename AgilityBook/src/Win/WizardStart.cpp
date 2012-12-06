@@ -46,6 +46,7 @@
 #include "Wizard.h"
 #include "VersionNum.h"
 #include <wx/config.h>
+#include <wx/stdstream.h>
 #include <wx/wfstream.h>
 
 #ifdef __WXMSW__
@@ -626,8 +627,9 @@ bool CWizardStart::DoWizardFinish()
 						}
 						entries = &allEntries;
 					}
-					wxFFileOutputStream output(file.GetPath(), L"wb");
-					if (output.IsOk())
+					wxFFileOutputStream rawOut(file.GetPath(), L"wb");
+					wxStdOutputStream output(rawOut);
+					if (rawOut.IsOk())
 					{
 						int nWarning = CAgilityBookOptions::CalendarOpeningNear();
 						ICalendar* iCalendar = ICalendar::iCalendarBegin(output, (WIZ_EXPORT_CALENDAR_VCAL == data) ? 1 : 2);
@@ -637,7 +639,7 @@ bool CWizardStart::DoWizardFinish()
 							pCal->iCalendar(iCalendar, nWarning);
 						}
 						iCalendar->Release();
-						output.Close();
+						rawOut.Close();
 					}
 					bOk = true;
 				}

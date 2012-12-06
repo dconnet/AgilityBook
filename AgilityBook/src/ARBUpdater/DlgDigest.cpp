@@ -21,8 +21,10 @@
 #include "StringUtil.h"
 #include "../Win/Globals.h"
 #include <wx/filedlg.h>
+#include <wx/stdstream.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>
+#include <wx/wfstream.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -124,7 +126,9 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	{
 		wxBusyCursor wait;
 		size_t size;
-		m_MD5 = ARBMsgDigest::ComputeFile(m_File.wx_str(), &size);
+		wxFileInputStream file(m_File);
+		wxStdInputStream stdfile(file);
+		m_MD5 = ARBMsgDigest::ComputeFile(stdfile, &size);
 		if (m_MD5.empty())
 			m_File.erase();
 		else
@@ -177,7 +181,9 @@ void CDlgDigest::OnOk(wxCommandEvent& evt)
 		wxBusyCursor wait;
 		m_File = dlg.GetPath();
 		size_t size;
-		m_MD5 = ARBMsgDigest::ComputeFile(m_File, &size);
+		wxFileInputStream file(m_File);
+		wxStdInputStream stdfile(file);
+		m_MD5 = ARBMsgDigest::ComputeFile(stdfile, &size);
 		m_Size = static_cast<long>(size);
 		TransferDataToWindow();
 	}

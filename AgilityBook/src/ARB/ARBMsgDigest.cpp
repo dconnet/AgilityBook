@@ -415,20 +415,22 @@ std::wstring ARBMsgDigest::ComputeBuffer(
 
 
 std::wstring ARBMsgDigest::ComputeFile(
-		wchar_t const* const inFileName,
+		std::istream& inFile,
 		size_t* outSize)
 {
 	if (outSize)
 		*outSize = 0;
-	wxFile file;
-	if (!file.Open(inFileName))
+	if (inFile.bad())
 		return std::wstring();
 	MD5_CTX context;
 	MD5Init(&context); 
-	ssize_t bytes;
-	unsigned char buffer[1024];
-	while (0 < (bytes = file.Read(buffer, sizeof(buffer))))
+	while (!inFile.bad())
 	{
+		unsigned char buffer[1024];
+		inFile.read(reinterpret_cast<char*>(buffer), sizeof(buffer));
+		std::streamsize bytes = inFile.gcount();
+		if (0 >= bytes)
+			break;
 		if (outSize)
 			*outSize += bytes;
 		MD5Update(&context, buffer, bytes);
@@ -436,12 +438,4 @@ std::wstring ARBMsgDigest::ComputeFile(
 	unsigned char digest[16];
 	MD5Final(digest, &context);
 	return ConvertBuffer(digest);
-}
-
-
-std::wstring ARBMsgDigest::ComputeFile(
-		std::wstring const& inFileName,
-		size_t* outSize)
-{
-	return ComputeFile(inFileName.c_str(), outSize);
 }

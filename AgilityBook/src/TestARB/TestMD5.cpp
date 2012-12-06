@@ -38,4 +38,15 @@ SUITE(TestMsgDigest)
 			CHECK(digest == DigestString);
 		}
 	}
+
+
+	TEST(RawDecodeStream)
+	{
+		if (!g_bMicroTest)
+		{
+            std::stringstream str(RawString);
+			std::wstring digest = ARBMsgDigest::ComputeFile(str);
+			CHECK(digest == DigestString);
+		}
+	}
 }
