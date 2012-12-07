@@ -25,15 +25,12 @@
  */
 
 #include "ARBTypes.h"
+#include <istream>
 #include <map>
 #include <sstream>
 #include <vector>
 class ARBDate;
 class ARBVersion;
-#ifdef __WXWINDOWS__
-class wxInputStream;
-class wxOutputStream;
-#endif
 
 /**
  * Tree-like structure to hold XML data.
@@ -380,7 +377,6 @@ public:
 			std::wstring const& inName,
 			std::wstring const* inValue = NULL) const;
 
-#ifdef __WXWINDOWS__
 	/**
 	 * Populate this element from the given stream.
 	 * @param inStream XML stream to load.
@@ -388,9 +384,8 @@ public:
 	 * @return Whether file loaded successfully.
 	 */
 	bool LoadXML(
-			wxInputStream& inStream,
+			std::istream& inStream,
 			std::wostringstream& ioErrMsg);
-#endif
 
 	/**
 	 * Populate this element from the given buffer.
@@ -421,9 +416,6 @@ public:
 	 * @retval false Tree failed to save.
 	 */
 	bool SaveXML(std::ostream& outStream) const;
-#ifdef __WXWINDOWS__
-	bool SaveXML(wxOutputStream& outStream) const;
-#endif
 
 	/**
 	 * Save this element to the given output stream.
@@ -435,11 +427,6 @@ public:
 	bool SaveXML(
 			std::ostream& outStream,
 			std::string const& inDTD) const;
-#ifdef __WXWINDOWS__
-	bool SaveXML(
-			wxOutputStream& outStream,
-			std::string const& inDTD) const;
-#endif
 
 	/**
 	 * Save this element to the given file.

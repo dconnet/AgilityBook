@@ -580,9 +580,9 @@ std::string CCalendarSiteUSDAA::Process(
 //calTree->SaveXML(raw);
 //}
 #endif
-		wxMemoryOutputStream s;
+		std::stringstream s;
 		calTree->SaveXML(s);
-		return StringUtil::stringA(s);
+		return s.str();
 	}
 	return std::string();
 }

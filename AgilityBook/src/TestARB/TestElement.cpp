@@ -306,7 +306,7 @@ SUITE(TestElement)
 			ElementNodePtr tree = LoadXMLData();
 
 			wxString tmpFile(L"data.tmp");
-			wxMemoryOutputStream tmp1;
+			std::stringstream tmp1;
 			CHECK(tree->SaveXML(tmpFile.wx_str()));
 			CHECK(tree->SaveXML(tmp1));
 
@@ -316,11 +316,11 @@ SUITE(TestElement)
 
 			wxRemoveFile(tmpFile);
 
-			wxMemoryOutputStream tmp2;
+			std::stringstream tmp2;
 			CHECK(tree2->SaveXML(tmp2));
 
-			std::string tmp1data = StringUtil::stringA(tmp1);
-			std::string tmp2data = StringUtil::stringA(tmp2);
+			std::string tmp1data = tmp1.str();
+			std::string tmp2data = tmp2.str();
 			CHECK(tmp1data == tmp2data);
 		}
 	}

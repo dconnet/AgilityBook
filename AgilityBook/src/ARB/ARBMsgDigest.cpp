@@ -420,11 +420,11 @@ std::wstring ARBMsgDigest::ComputeFile(
 {
 	if (outSize)
 		*outSize = 0;
-	if (inFile.bad())
+	if (!inFile.good())
 		return std::wstring();
 	MD5_CTX context;
 	MD5Init(&context); 
-	while (!inFile.bad())
+	while (inFile.good())
 	{
 		unsigned char buffer[1024];
 		inFile.read(reinterpret_cast<char*>(buffer), sizeof(buffer));

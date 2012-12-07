@@ -232,9 +232,9 @@ bool CClipboardDataWriter::AddData(
 
 	std::wstring data;
 	{
-		wxMemoryOutputStream out;
+		std::stringstream out;
 		inTree->SaveXML(out);
-		data = StringUtil::stringW(StringUtil::stringA(out));
+		data = StringUtil::stringW(out.str());
 	}
 	return AddData(clpFmt, data);
 }
