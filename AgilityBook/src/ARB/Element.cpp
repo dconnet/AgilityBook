@@ -1103,6 +1103,7 @@ static bool LoadXMLNode(
 }
 
 #else
+
 static bool LoadXMLNode(
 		ElementNodePtr node,
 		wxXmlDocument& inSource,
@@ -1166,8 +1167,8 @@ bool ElementNode::LoadXML(
 		xmlFreeDoc(source);
 	return rc;
 #else
-	std::istringstream stdinput(std::string(inData, nData));
-	return LoadXML(stdinput, ioErrMsg);
+	std::istringstream input(std::string(inData, nData));
+	return LoadXML(input, ioErrMsg);
 #endif
 }
 
