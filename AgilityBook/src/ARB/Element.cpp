@@ -1187,7 +1187,12 @@ bool ElementNode::LoadXML(
 		xmlFreeDoc(source);
 	return rc;
 #else
+#ifdef ARB_HAS_ISTREAM_WCHAR
 	std::ifstream input(inFileName);
+#else
+	std::string filename(StringUtil::stringA(inFileName));
+	std::ifstream input(filename.c_str());
+#endif
 	if (!input.good())
 		return false;
 	return LoadXML(input, ioErrMsg);

@@ -281,6 +281,12 @@ namespace std
 #define ARB_HAS_PRAGMAPUSHPOP
 #endif
 
+// ARB_HAS_ISTREAM_WCHAR
+//  Supports ifstream(wchar_t*) (MS does, xcode 4.5 doesn't)
+#ifdef _MSC_VER
+#define ARB_HAS_ISTREAM_WCHAR
+#endif
+
 // Some often used includes for speeding the build
 #ifndef _WIN32
 #include <map>
