@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-12-12 DRC Use fabs instead of abs. Works on Mac too.
  * @li 2012-08-13 DRC Moved ARB_Q to separate file.
  * @li 2012-05-04 DRC Add bAlwaysStripZeros to ARBDouble::ToString.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
@@ -193,13 +194,6 @@ bool ARBDouble::equal(
 		return false;
 
 	double epsilon = ldexp(inPrec, mag1);
-#if defined(__WXMAC__)
-	// On Mac, I'm getting 'int abs(int)'. Doesn't seem to be a double version.
-	double diff = inVal1 - inVal2;
-	if (0.0 > diff)
-		diff *= -1.0;
-#else
-	double diff = abs(inVal1 - inVal2);
-#endif
+	double diff = fabs(inVal1 - inVal2);
 	return diff <= epsilon;
 }
