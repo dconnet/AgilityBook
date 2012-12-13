@@ -1,4 +1,4 @@
-12/3/2012: v3.0.0.<in development>
+12/12/2012: v3.0.0.<in development>
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
 - Bug fixes:

@@ -24,52 +24,45 @@
 #include "ARBDogTrial.h"
 #include "ListData.h"
 #include <vector>
+#include <wx/dataview.h>
 class CAgilityBookTreeView;
 class CAgilityBookTreeDataDog;
 class CAgilityBookTreeDataTrial;
 class CAgilityBookTreeDataRun;
+class CAgilityBookTreeModel;
 
 
-class CAgilityBookTreeData : public CTreeData
+class CAgilityBookTreeData
 {
 public:
-	CAgilityBookTreeData(CAgilityBookTreeView* pTree)
-		: m_pTree(pTree)
-	{}
+	CAgilityBookTreeData(CAgilityBookTreeModel* pModel);
+	virtual ~CAgilityBookTreeData();
 
 	// This removes a need for a dynamic cast
 	enum CTreeDataType { eTreeDog, eTreeTrial, eTreeRun };
-	virtual CTreeDataType GetType() const = 0;
+	virtual CTreeDataType Type() const = 0;
 
-	virtual CAgilityBookTreeData const* GetParent() const = 0;
-	virtual ARBBasePtr GetARBBase() const
-	{
-		return ARBBasePtr();
-	}
-	virtual ARBDogPtr GetDog() const
-	{
-		return ARBDogPtr();
-	}
-	virtual ARBDogTrialPtr GetTrial() const
-	{
-		return ARBDogTrialPtr();
-	}
-	virtual ARBDogRunPtr GetRun() const
-	{
-		return ARBDogRunPtr();
-	}
-	virtual ARBDogPtr GetDog()
-	{
-		return ARBDogPtr();
-	}
-	virtual ARBDogTrialPtr GetTrial()
-	{
-		return ARBDogTrialPtr();
-	}
-	virtual ARBDogRunPtr GetRun()
-	{
-		return ARBDogRunPtr();
-	}
+	virtual bool IsContainer() const = 0;
+	virtual wxIcon GetIcon(unsigned int col) const	{return wxIcon();}
+	virtual wxVariant GetColumn(
+			ARBConfig const& config,
+			std::vector<long> const& columns,
+			unsigned int col) const = 0;
+
+	CAgilityBookTreeData* GetParent() const	{return m_parent;}
+	//virtual CAgilityBookTreeData const* GetParent() const {return m_parent;}
+	unsigned int GetChildren(wxDataViewItemArray& array) const;
+	void Append(CAgilityBookTreeData* child);
+	void Remove(CAgilityBookTreeData* child);
+
+	virtual ARBBasePtr GetARBBase() const			{return ARBBasePtr();}
+	virtual ARBDogPtr GetDog() const				{return ARBDogPtr();}
+	virtual ARBDogTrialPtr GetTrial() const			{return ARBDogTrialPtr();}
+	virtual ARBDogRunPtr GetRun() const				{return ARBDogRunPtr();}
+	virtual ARBDogPtr GetDog()						{return ARBDogPtr();}
+	virtual ARBDogTrialPtr GetTrial()				{return ARBDogTrialPtr();}
+	virtual ARBDogRunPtr GetRun()					{return ARBDogRunPtr();}
+
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const
 	{
 		return NULL;
@@ -101,16 +94,16 @@ public:
 			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet) = 0; // Returns true if data modified
-	virtual std::wstring OnNeedText() const = 0;
-	virtual int OnNeedIcon() const = 0;
-
 	virtual void Properties() = 0;
 
 	bool CanPaste() const;
 	bool DoPaste(bool* bTreeSelectionSet);
 
 protected:
-	CAgilityBookTreeView* m_pTree;
+	CAgilityBookTreeModel* m_pModel;
+private:
+	CAgilityBookTreeData* m_parent;
+	std::vector<CAgilityBookTreeData*> m_children;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -119,31 +112,24 @@ class CAgilityBookTreeDataDog : public CAgilityBookTreeData
 {
 public:
 	CAgilityBookTreeDataDog(
-			CAgilityBookTreeView* pTree,
-			ARBDogPtr pDog);
+			CAgilityBookTreeModel* pModel,
+			ARBDogPtr dog);
 	~CAgilityBookTreeDataDog();
-
-	virtual CTreeDataType GetType() const
+	virtual CTreeDataType Type() const
 	{
 		return CAgilityBookTreeData::eTreeDog;
 	}
 
-	virtual CAgilityBookTreeData const* GetParent() const
-	{
-		return NULL;
-	}
-	virtual ARBBasePtr GetARBBase() const
-	{
-		return m_pDog;
-	}
-	virtual ARBDogPtr GetDog() const
-	{
-		return m_pDog;
-	}
-	virtual ARBDogPtr GetDog()
-	{
-		return m_pDog;
-	}
+	virtual bool IsContainer() const		{return true;}
+	virtual wxIcon GetIcon(unsigned int col) const;
+	virtual wxVariant GetColumn(
+			ARBConfig const& config,
+			std::vector<long> const& columns,
+			unsigned int col) const;
+
+	virtual ARBBasePtr GetARBBase() const			{return m_pDog;}
+	virtual ARBDogPtr GetDog() const				{return m_pDog;}
+	virtual ARBDogPtr GetDog()						{return m_pDog;}
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const
 	{
 		return this;
@@ -162,9 +148,6 @@ public:
 			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
-	virtual std::wstring OnNeedText() const;
-	virtual int OnNeedIcon() const;
-
 	virtual void Properties();
 
 private:
@@ -177,32 +160,26 @@ class CAgilityBookTreeDataTrial : public CAgilityBookTreeData
 {
 public:
 	CAgilityBookTreeDataTrial(
-			CAgilityBookTreeView* pTree,
-			ARBDogTrialPtr pTrial);
-
-	virtual CTreeDataType GetType() const
+			CAgilityBookTreeModel* pModel,
+			ARBDogTrialPtr trial);
+	~CAgilityBookTreeDataTrial();
+	virtual CTreeDataType Type() const
 	{
 		return CAgilityBookTreeData::eTreeTrial;
 	}
 
-	virtual CAgilityBookTreeData const* GetParent() const
-	{
-		return GetDataDog();
-	}
-	virtual ARBBasePtr GetARBBase() const
-	{
-		return m_pTrial;
-	}
+	virtual bool IsContainer() const		{return true;}
+	virtual wxIcon GetIcon(unsigned int col) const;
+	virtual wxVariant GetColumn(
+			ARBConfig const& config,
+			std::vector<long> const& columns,
+			unsigned int col) const;
+
+	virtual ARBBasePtr GetARBBase() const			{return m_pTrial;}
 	virtual ARBDogPtr GetDog() const;
-	virtual ARBDogTrialPtr GetTrial() const
-	{
-		return m_pTrial;
-	}
+	virtual ARBDogTrialPtr GetTrial() const			{return m_pTrial;}
 	virtual ARBDogPtr GetDog();
-	virtual ARBDogTrialPtr GetTrial()
-	{
-		return m_pTrial;
-	}
+	virtual ARBDogTrialPtr GetTrial()				{return m_pTrial;}
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
 	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const
 	{
@@ -223,14 +200,11 @@ public:
 			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
-	virtual std::wstring OnNeedText() const;
-	virtual int OnNeedIcon() const;
-
 	virtual void Properties();
 
 private:
 	ARBDogTrialPtr m_pTrial;
-	int m_idxIcon;
+	wxIcon m_idxIcon;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -239,35 +213,28 @@ class CAgilityBookTreeDataRun : public CAgilityBookTreeData
 {
 public:
 	CAgilityBookTreeDataRun(
-			CAgilityBookTreeView* pTree,
-			ARBDogRunPtr pRun);
+			CAgilityBookTreeModel* pModel,
+			ARBDogRunPtr run);
 	~CAgilityBookTreeDataRun();
-
-	virtual CTreeDataType GetType() const
+	virtual CTreeDataType Type() const
 	{
 		return CAgilityBookTreeData::eTreeRun;
 	}
 
-	virtual CAgilityBookTreeData const* GetParent() const
-	{
-		return GetDataTrial();
-	}
-	virtual ARBBasePtr GetARBBase() const
-	{
-		return m_pRun;
-	}
+	virtual bool IsContainer() const		{return false;}
+	virtual wxIcon GetIcon(unsigned int col) const;
+	virtual wxVariant GetColumn(
+			ARBConfig const& config,
+			std::vector<long> const& columns,
+			unsigned int col) const;
+
+	virtual ARBBasePtr GetARBBase() const			{return m_pRun;}
 	virtual ARBDogPtr GetDog() const;
 	virtual ARBDogTrialPtr GetTrial() const;
-	virtual ARBDogRunPtr GetRun() const
-	{
-		return m_pRun;
-	}
+	virtual ARBDogRunPtr GetRun() const				{return m_pRun;}
 	virtual ARBDogPtr GetDog();
 	virtual ARBDogTrialPtr GetTrial();
-	virtual ARBDogRunPtr GetRun()
-	{
-		return m_pRun;
-	}
+	virtual ARBDogRunPtr GetRun()					{return m_pRun;}
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
 	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const;
 	virtual CAgilityBookTreeDataRun const* GetDataRun() const
@@ -290,9 +257,6 @@ public:
 			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
-	virtual std::wstring OnNeedText() const;
-	virtual int OnNeedIcon() const;
-
 	virtual void Properties();
 
 private:

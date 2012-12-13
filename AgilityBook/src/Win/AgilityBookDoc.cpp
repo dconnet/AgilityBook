@@ -212,9 +212,12 @@ void CAgilityBookDoc::OnStatusDog(wxCommandEvent& evt)
 	&& evt.GetId() < static_cast<int>(m_StatusData->dogs.size()) + baseID
 	&& m_StatusData->dogs[evt.GetId()-baseID] != GetCurrentDog())
 	{
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 		CAgilityBookTreeView* pTree = GetTreeView();
 		if (pTree)
 			pTree->SelectDog(m_StatusData->dogs[evt.GetId()-baseID]);
+#endif
 	}
 }
 
@@ -252,7 +255,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 		switch (id)
 		{
 		case STATUS_DOG:
-			if (GetTreeView() && 1 < m_Records.GetDogs().size())
+			if (GetTreeModel() && 1 < m_Records.GetDogs().size())
 			{
 				ARBDogPtr curDog = GetCurrentDog();
 				wxMenu* menu = new wxMenu();
@@ -336,12 +339,19 @@ std::wstring CAgilityBookDoc::AddDogToCaption(std::wstring const& caption) const
 ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 {
 	ARBDogPtr pDog;
+	if (1 == m_Records.GetDogs().size())
+	{
+		pDog = *(m_Records.GetDogs().begin());
+	}
+	else
+	{
 #pragma PRAGMA_TODO("Fix me")
 #if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	if (pTree && pTree->GetCurrentTreeItem())
 		pDog = pTree->GetCurrentTreeItem()->GetDog();
 #endif
+	}
 	return pDog;
 }
 
@@ -1186,14 +1196,17 @@ CTabView* CAgilityBookDoc::GetTabView() const
 /**
  * Function to get the tree view. This is used internally and by the runs view.
  */
-CAgilityBookTreeView* CAgilityBookDoc::GetTreeView() const
+CAgilityBookTreeModel* CAgilityBookDoc::GetTreeModel() const
 {
+#pragma PRAGMA_TODO("Fix me")
+#if 0
 	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
 	{
 		CAgilityBookTreeView* pView = wxDynamicCast(*iView, CAgilityBookTreeView);
 		if (pView)
 			return pView;
 	}
+#endif
 	return NULL;
 }
 

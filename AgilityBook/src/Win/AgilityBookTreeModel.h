@@ -3,7 +3,7 @@
 #include "IconList.h"
 #include <wx/dataview.h>
 class CAgilityBookDoc;
-class CAgilityBookTreeModelNode;
+class CAgilityBookTreeData;
 
 
 class CAgilityBookTreeModel : public wxDataViewModel
@@ -47,13 +47,14 @@ public:
 			const wxDataViewItem& parent,
 			wxDataViewItemArray& array) const;
 
-private:
-	CAgilityBookTreeModelNode* GetNode(const wxDataViewItem& item) const;
+	wxString GetPrintLine(const wxDataViewItem& item) const;
+	CAgilityBookTreeData* GetNode(const wxDataViewItem& item) const;
 
+private:
 	CAgilityBookDoc* m_pDoc;
 	wxDataViewCtrl* m_Ctrl;
 	std::vector<long> m_Columns[3];
 
 	CIconList m_icons;
-	std::vector<CAgilityBookTreeModelNode*> m_roots;
+	std::vector<CAgilityBookTreeData*> m_roots;
 };

@@ -126,51 +126,40 @@ public:
 	void Thaw()									{m_Ctrl->Thaw();}
 	void Refresh()								{m_Ctrl->Refresh();}
 
-	/*
-	CAgilityBookTreeData* FindData(ARBBasePtr pBase) const
-	{
-		return FindData(m_Ctrl->GetRootItem(), pBase);
-	}
-	CAgilityBookTreeData* FindData(
-			wxTreeItemId hItem,
+	wxDataViewItem FindData(ARBBasePtr pBase) const;
+	wxDataViewItem FindData(
+			wxDataViewItem const& inItem,
 			ARBBasePtr pBase) const;
-	CAgilityBookTreeData* FindData(ARBDogPtr pDog) const
-	{
-		return FindData(m_Ctrl->GetRootItem(), pDog);
-	}
-	CAgilityBookTreeData* FindData(
-			wxTreeItemId hItem,
+	wxDataViewItem FindData(ARBDogPtr pDog) const;
+	wxDataViewItem FindData(
+			wxDataViewItem const& inItem,
 			ARBDogPtr pDog) const;
-	CAgilityBookTreeData* FindData(ARBDogTrialPtr pTrial) const
-	{
-		return FindData(m_Ctrl->GetRootItem(), pTrial);
-	}
-	CAgilityBookTreeData* FindData(
-			wxTreeItemId hItem,
+	wxDataViewItem FindData(ARBDogTrialPtr pTrial) const;
+	wxDataViewItem FindData(
+			wxDataViewItem const& inItem,
 			ARBDogTrialPtr pTrial) const;
-	CAgilityBookTreeData* FindData(ARBDogRunPtr pRun) const
-	{
-		return FindData(m_Ctrl->GetRootItem(), pRun);
-	}
-	CAgilityBookTreeData* FindData(
-			wxTreeItemId hItem,
+	wxDataViewItem FindData(ARBDogRunPtr pRun) const;
+	wxDataViewItem FindData(
+			wxDataViewItem const& inItem,
 			ARBDogRunPtr pRun) const;
-			*/
 
 	bool SelectDog(ARBDogPtr);
 	bool PasteDog(bool& bLoaded);
-	std::wstring GetPrintLine(long item) const;
+	std::wstring GetPrintLine(wxDataViewItem const& item) const;
 
 private:
-	void UpdateData(long item);
-	//void ChangeSelection(
-	//		wxTreeItemId hItem,
-	//		bool bEnsureVisible = true);
-	//void DoSelectionChange(wxTreeItemId hItem);
-	void LoadData();
+	CAgilityBookTreeData* GetCurrentTreeItem();
+	void GetQCount(
+			int& ioCount,
+			int& ioTotal) const;
+	void ChangeSelection(
+			wxDataViewItem const& item,
+			bool bEnsureVisible = true);
+	void DoSelectionChange(wxDataViewItem const& item);
+	void LoadData(bool bColumns);
 	void PrintLine(
 			std::wostringstream& data,
-			long id,
+			wxDataViewItem item,
 			int indent) const;
 	std::wstring GetPrintDataAsHtmlTable() const;
 	bool OnCmd(int id);

@@ -326,7 +326,7 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 		if (GetDocument()->GetCurrentDog())
 		{
 			// Convenience! No duplicated code!
-			CAgilityBookTreeDataDog data(GetDocument()->GetTreeView(), GetDocument()->GetCurrentDog());
+			CAgilityBookTreeDataDog data(GetDocument()->GetTreeModel(), GetDocument()->GetCurrentDog());
 			bool bModified = false;
 			if (data.OnCmd(ID_AGILITY_NEW_TITLE, bModified, NULL))
 			{
