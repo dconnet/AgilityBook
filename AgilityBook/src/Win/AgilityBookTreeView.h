@@ -75,6 +75,9 @@ public:
 			long style,
 			const wxValidator& validator);
 
+	void CollapseAllChildren(wxDataViewItem const& item);
+	void ExpandAllChildren(wxDataViewItem const& item);
+
 	CAgilityBookTreeModel* GetStore();
 	const CAgilityBookTreeModel* GetStore() const;
 };
@@ -144,11 +147,21 @@ public:
 			ARBDogRunPtr pRun) const;
 
 	bool SelectDog(ARBDogPtr);
+	wxDataViewItem InsertDog(
+			ARBDogPtr pDog,
+			bool bSelect = false);
+	wxDataViewItem InsertTrial(
+			ARBDogTrialPtr pTrial,
+			wxDataViewItem parent);
+	wxDataViewItem InsertRun(
+			ARBDogRunPtr pRun,
+			wxDataViewItem parent);
 	bool PasteDog(bool& bLoaded);
 	std::wstring GetPrintLine(wxDataViewItem const& item) const;
 
 private:
-	CAgilityBookTreeData* GetCurrentTreeItem();
+	CAgilityBookTreeData* GetCurrentTreeItem() const;
+	CAgilityBookTreeData* GetTreeItem(wxDataViewItem const& item) const;
 	void GetQCount(
 			int& ioCount,
 			int& ioTotal) const;
@@ -174,12 +187,10 @@ private:
 	CFindTree m_Callback;
 	ARBDogPtr m_pDog;
 
-	DECLARE_EVENT_TABLE()
-	void OnCtrlContextMenu(wxDataViewEvent& evt);
-	void OnCtrlSelectionChanged(wxDataViewEvent& evt);
-	void OnCtrlItemActivated(wxDataViewEvent& evt);
-	void OnCtrlKeyDown(wxKeyEvent& evt);
-	void OnViewContextMenu(wxContextMenuEvent& evt);
+	void OnContextMenu(wxDataViewEvent& evt);
+	void OnSelectionChanged(wxDataViewEvent& evt);
+	void OnItemActivated(wxDataViewEvent& evt);
+	void OnKeyDown(wxKeyEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
 	void OnViewCmd(wxCommandEvent& evt);
 	void OnPrint(wxCommandEvent& evt);

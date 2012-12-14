@@ -17,6 +17,10 @@ public:
 
 	void CreateColumns(wxDataViewCtrl* ctrl, CAgilityBookDoc* pDoc);
 	void UpdateColumns();
+
+	wxDataViewItem LoadData(ARBDogPtr pDog);
+	wxDataViewItem LoadData(ARBDogTrialPtr pTrial, wxDataViewItem parent);
+	wxDataViewItem LoadData(ARBDogRunPtr pRun, wxDataViewItem parent);
 	void LoadData();
 
 	void Delete(const wxDataViewItem& item);

@@ -100,6 +100,67 @@ void CAgilityBookTreeModel::UpdateColumns()
 }
 
 
+wxDataViewItem CAgilityBookTreeModel::LoadData(ARBDogPtr pDog)
+{
+	wxDataViewItem itemDog;
+
+	if (pDog)
+	{
+		CAgilityBookTreeDataDog* nodeDog = new CAgilityBookTreeDataDog(this, pDog);
+		itemDog = wxDataViewItem(nodeDog);
+
+		m_roots.push_back(nodeDog);
+		ItemAdded(wxDataViewItem(0), wxDataViewItem(nodeDog));
+
+		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
+			iterTrial != pDog->GetTrials().end();
+			++iterTrial)
+		{
+			LoadData(*iterTrial, itemDog);
+		}
+	}
+	return itemDog;
+}
+
+
+wxDataViewItem CAgilityBookTreeModel::LoadData(
+		ARBDogTrialPtr pTrial,
+		wxDataViewItem parent)
+{
+	wxDataViewItem itemTrial;
+	CAgilityBookTreeData* pParent = GetNode(parent);
+	if (pParent && pTrial && !pTrial->IsFiltered())
+	{
+		CAgilityBookTreeDataTrial* nodeTrial = new CAgilityBookTreeDataTrial(this, pTrial);
+		itemTrial = wxDataViewItem(nodeTrial);
+		pParent->Append(nodeTrial);
+		for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+			iterRun != pTrial->GetRuns().end();
+			++iterRun)
+		{
+			LoadData(*iterRun, itemTrial);
+		}
+	}
+	return itemTrial;
+}
+
+
+wxDataViewItem CAgilityBookTreeModel::LoadData(
+		ARBDogRunPtr pRun,
+		wxDataViewItem parent)
+{
+	wxDataViewItem itemRun;
+	CAgilityBookTreeData* pParent = GetNode(parent);
+	if (pParent && pRun && !pRun->IsFiltered())
+	{
+		CAgilityBookTreeDataRun* nodeRun = new CAgilityBookTreeDataRun(this, pRun);
+		itemRun = wxDataViewItem(nodeRun);
+		pParent->Append(nodeRun);
+	}
+	return itemRun;
+}
+
+
 void CAgilityBookTreeModel::LoadData()
 {
 	wxBusyCursor wait;
@@ -128,33 +189,10 @@ void CAgilityBookTreeModel::LoadData()
 		iterDog != m_pDoc->Book().GetDogs().end();
 		++iterDog)
 	{
-		CAgilityBookTreeDataDog* nodeDog = new CAgilityBookTreeDataDog(this, *iterDog);
-		m_roots.push_back(nodeDog);
-		ItemAdded(wxDataViewItem(0), wxDataViewItem(nodeDog));
+		wxDataViewItem itemDog = LoadData(*iterDog);
 		if (0 < strCallName.length() && (*iterDog)->GetCallName() == strCallName)
 		{
-			item = wxDataViewItem(nodeDog);
-		}
-
-		for (ARBDogTrialList::const_iterator iterTrial = (*iterDog)->GetTrials().begin();
-			iterTrial != (*iterDog)->GetTrials().end();
-			++iterTrial)
-		{
-			if (!(*iterTrial)->IsFiltered())
-			{
-				CAgilityBookTreeDataTrial* nodeTrial = new CAgilityBookTreeDataTrial(this, *iterTrial);
-				nodeDog->Append(nodeTrial);
-				for (ARBDogRunList::const_iterator iterRun = (*iterTrial)->GetRuns().begin();
-					iterRun != (*iterTrial)->GetRuns().end();
-					++iterRun)
-				{
-					if (!(*iterRun)->IsFiltered())
-					{
-						CAgilityBookTreeDataRun* nodeRun = new CAgilityBookTreeDataRun(this, *iterRun);
-						nodeTrial->Append(nodeRun);
-					}
-				}
-			}
+			item = itemDog;
 		}
 	}
 	Resort();
@@ -162,6 +200,7 @@ void CAgilityBookTreeModel::LoadData()
 
 	if (!item.IsOk())
 	{
+#pragma PRAGMA_TODO("Fix me")
 #if 0
 		// Work thru all the base items...
 		// Otherwise, after a reorder, the wrong item is selected.

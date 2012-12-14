@@ -78,7 +78,7 @@
 
 #pragma PRAGMA_TODO("Fix me")
 #if 0
-void CFindTree::FillTree(wxTreeItemId hItem) const
+void CFindTree::FillTree(wxDataViewItem hItem) const
 {
 	if (!hItem.IsOk())
 		return;
@@ -87,7 +87,7 @@ void CFindTree::FillTree(wxTreeItemId hItem) const
 		m_Items.push_back(hItem);
 
 	wxTreeItemIdValue cookie;
-	wxTreeItemId hChildItem = m_pView->m_Ctrl->GetFirstChild(hItem, cookie);
+	wxDataViewItem hChildItem = m_pView->m_Ctrl->GetFirstChild(hItem, cookie);
 	while (hChildItem.IsOk())
 	{
 		FillTree(hChildItem);
@@ -96,9 +96,9 @@ void CFindTree::FillTree(wxTreeItemId hItem) const
 }
 
 
-wxTreeItemId CFindTree::GetNextItem() const
+wxDataViewItem CFindTree::GetNextItem() const
 {
-	wxTreeItemId hItem;
+	wxDataViewItem hItem;
 	if (SearchDown())
 	{
 		++m_Iter;
@@ -132,7 +132,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 	if (0 == m_Items.size())
 		return bFound;
 
-	wxTreeItemId hItem = m_pView->m_Ctrl->GetSelection();
+	wxDataViewItem hItem = m_pView->m_Ctrl->GetSelection();
 	if (!hItem.IsOk())
 	{
 		if (SearchDown())
@@ -236,6 +236,39 @@ bool CAgilityBookTreeCtrl::Create(
 }
 
 
+void CAgilityBookTreeCtrl::CollapseAllChildren(wxDataViewItem const& item)
+{
+	if (!item.IsOk() || !GetStore()->IsContainer(item))
+		return;
+
+	wxDataViewItemArray items;
+	unsigned int n = GetStore()->GetChildren(item, items);
+	for (unsigned int i = 0; i < n; ++i)
+	{
+		CollapseAllChildren(items[i]);
+	}
+
+	if (IsExpanded(item))
+		Collapse(item);
+}
+
+
+void CAgilityBookTreeCtrl::ExpandAllChildren(wxDataViewItem const& item)
+{
+	if (!item.IsOk() || !GetStore()->IsContainer(item))
+		return;
+	if (!IsExpanded(item))
+		Expand(item);
+
+	wxDataViewItemArray items;
+	unsigned int n = GetStore()->GetChildren(item, items);
+	for (unsigned int i = 0; i < n; ++i)
+	{
+		ExpandAllChildren(items[i]);
+	}
+}
+
+
 CAgilityBookTreeModel* CAgilityBookTreeCtrl::GetStore()
 {
 	return (CAgilityBookTreeModel*)GetModel();
@@ -250,73 +283,6 @@ const CAgilityBookTreeModel* CAgilityBookTreeCtrl::GetStore() const
 /////////////////////////////////////////////////////////////////////////////
 
 IMPLEMENT_CLASS(CAgilityBookTreeView, CAgilityBookBaseExtraView)
-
-
-BEGIN_EVENT_TABLE(CAgilityBookTreeView, CAgilityBookBaseExtraView)
-	EVT_CONTEXT_MENU(CAgilityBookTreeView::OnViewContextMenu)
-	EVT_UPDATE_UI(wxID_DUPLICATE, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(wxID_DUPLICATE, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(wxID_CUT, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(wxID_CUT, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(wxID_COPY, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(wxID_COPY, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(wxID_PASTE, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(wxID_PASTE, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(wxID_SELECTALL, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(wxID_SELECTALL, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_REORDER, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_REORDER, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(wxID_FIND, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(wxID_FIND, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_EDIT_FIND_NEXT, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_EDIT_FIND_NEXT, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_EDIT_FIND_PREVIOUS, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_EDIT_FIND_PREVIOUS, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_EDIT_DOG, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_EDIT_DOG, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_DOG, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_NEW_DOG, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_DELETE_DOG, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_DELETE_DOG, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_TITLE, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_NEW_TITLE, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_EDIT_TRIAL, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_EDIT_TRIAL, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_TRIAL, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_NEW_TRIAL, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_DELETE_TRIAL, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_DELETE_TRIAL, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_PRINT_TRIAL, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_PRINT_TRIAL, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_EDIT_RUN, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_EDIT_RUN, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_RUN, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_NEW_RUN, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_DELETE_RUN, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_DELETE_RUN, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_PRINT_RUNS, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_PRINT_RUNS, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_VIEW_SORTRUNS, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_VIEW_SORTRUNS, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_VIEW_TABLE_IN_YPS, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_EXPAND, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_EXPAND, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_COLLAPSE, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_COLLAPSE, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_EXPAND_ALL, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_EXPAND_ALL, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_COLLAPSE_ALL, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_COLLAPSE_ALL, CAgilityBookTreeView::OnViewCmd)
-	EVT_MENU(wxID_PRINT, CAgilityBookTreeView::OnPrint)
-	EVT_MENU(wxID_PREVIEW, CAgilityBookTreeView::OnPreview)
-END_EVENT_TABLE()
 
 
 #ifdef ARB_HAS_PRAGMAPUSHPOP
@@ -368,10 +334,74 @@ bool CAgilityBookTreeView::Create(
 		int border)
 {
 	m_Ctrl = new CAgilityBookTreeCtrl(parentCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_DATAVIEW_ITEM_CONTEXT_MENU, wxDataViewEventHandler, CAgilityBookTreeView::OnCtrlContextMenu);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_DATAVIEW_SELECTION_CHANGED, wxDataViewEventHandler, CAgilityBookTreeView::OnCtrlSelectionChanged);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_DATAVIEW_ITEM_ACTIVATED, wxDataViewEventHandler, CAgilityBookTreeView::OnCtrlItemActivated);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookTreeView::OnCtrlKeyDown);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_DATAVIEW_ITEM_CONTEXT_MENU, wxDataViewEventHandler, CAgilityBookTreeView::OnContextMenu);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_DATAVIEW_SELECTION_CHANGED, wxDataViewEventHandler, CAgilityBookTreeView::OnSelectionChanged);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_DATAVIEW_ITEM_ACTIVATED, wxDataViewEventHandler, CAgilityBookTreeView::OnItemActivated);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookTreeView::OnKeyDown);
+
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_DUPLICATE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_DUPLICATE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_CUT, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_CUT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_COPY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_COPY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_PASTE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_PASTE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_SELECTALL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_SELECTALL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_REORDER, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_REORDER, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_FIND, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_FIND, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_EDIT_FIND_NEXT, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_EDIT_FIND_NEXT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_EDIT_FIND_PREVIOUS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_EDIT_FIND_PREVIOUS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_EDIT_DOG, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_EDIT_DOG, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_NEW_DOG, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_NEW_DOG, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_DELETE_DOG, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_DELETE_DOG, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_NEW_TITLE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_NEW_TITLE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_EDIT_TRIAL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_EDIT_TRIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_NEW_TRIAL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_NEW_TRIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_DELETE_TRIAL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_DELETE_TRIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_PRINT_TRIAL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_PRINT_TRIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_EDIT_RUN, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_EDIT_RUN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_NEW_RUN, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_NEW_RUN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_DELETE_RUN, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_DELETE_RUN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_PRINT_RUNS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_AGILITY_PRINT_RUNS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_CUSTOMIZE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_CUSTOMIZE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_SORTRUNS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_SORTRUNS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_RUNS_BY_TRIAL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_RUNS_BY_TRIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_TABLE_IN_YPS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_TABLE_IN_YPS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_RUNTIME_IN_OPS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_VIEW_RUNTIME_IN_OPS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_EXPAND, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_EXPAND, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_COLLAPSE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_COLLAPSE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_EXPAND_ALL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_EXPAND_ALL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_COLLAPSE_ALL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnViewUpdateCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, ID_COLLAPSE_ALL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCmd);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_PRINT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnPrint);
+	BIND_OR_CONNECT_ID_CTRL(m_Ctrl, wxID_PREVIEW, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnPreview);
+
 #pragma PRAGMA_TODO("Fix me")
 	//m_Ctrl->SetImageList(&m_ImageList);
 #ifdef WX_TREE_HAS_STATE
@@ -494,29 +524,18 @@ bool CAgilityBookTreeView::AllowStatusContext(int field) const
 }
 
 
-CAgilityBookTreeData* CAgilityBookTreeView::GetCurrentTreeItem()
+CAgilityBookTreeData* CAgilityBookTreeView::GetCurrentTreeItem() const
 {
-	if (m_Ctrl)
-	{
-		wxDataViewItem item = m_Ctrl->GetSelection();
-		if (item.IsOk())
-		{
-			return m_Ctrl->GetStore()->GetNode(item);
-		}
-	}
-	return NULL;
+	return GetTreeItem(m_Ctrl->GetSelection());
 }
 
 
-#pragma PRAGMA_TODO("Fix me")
-#if 0
-CAgilityBookTreeData* CAgilityBookTreeView::GetTreeItem(wxTreeItemId hItem) const
+CAgilityBookTreeData* CAgilityBookTreeView::GetTreeItem(wxDataViewItem const& item) const
 {
-	if (m_Ctrl && hItem.IsOk())
-		return dynamic_cast<CAgilityBookTreeData*>(m_Ctrl->GetItemData(hItem));
+	if (m_Ctrl && item.IsOk())
+		return m_Ctrl->GetStore()->GetNode(item);
 	return NULL;
 }
-#endif
 
 
 wxDataViewItem CAgilityBookTreeView::FindData(ARBBasePtr pBase) const
@@ -700,10 +719,51 @@ bool CAgilityBookTreeView::SelectDog(ARBDogPtr dog)
 }
 
 
+wxDataViewItem CAgilityBookTreeView::InsertDog(
+		ARBDogPtr pDog,
+		bool bSelect)
+{
+	wxDataViewItem item;
+	if (pDog && m_Ctrl)
+	{
+		item = m_Ctrl->GetStore()->LoadData(pDog);
+		if (bSelect)
+		{
+			ChangeSelection(item);
+		}
+	}
+	return item;
+}
+
+
+wxDataViewItem CAgilityBookTreeView::InsertTrial(
+		ARBDogTrialPtr pTrial,
+		wxDataViewItem parent)
+{
+	wxDataViewItem trial;
+	if (pTrial && !pTrial->IsFiltered() && m_Ctrl)
+	{
+		trial = m_Ctrl->GetStore()->LoadData(pTrial, parent);
+	}
+	return trial;
+}
+
+
+wxDataViewItem CAgilityBookTreeView::InsertRun(
+		ARBDogRunPtr pRun,
+		wxDataViewItem parent)
+{
+	wxDataViewItem run;
+	if (pRun && !pRun->IsFiltered() && m_Ctrl)
+	{
+		run = m_Ctrl->GetStore()->LoadData(pRun, parent);
+	}
+	return run;
+}
+
+
 bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 {
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	if (!m_Ctrl)
 		return false;
 	ElementNodePtr tree(ElementNode::New());
@@ -745,7 +805,6 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 		}
 		return true;
 	}
-#endif
 	return false;
 }
 
@@ -872,58 +931,59 @@ std::wstring CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
 }
 
 
-void CAgilityBookTreeView::OnCtrlContextMenu(wxDataViewEvent& evt)
+void CAgilityBookTreeView::OnContextMenu(wxDataViewEvent& evt)
 {
 	bool bSkip = true;
-#pragma PRAGMA_TODO("Fix me")
-#if 0
-	wxPoint point;
-	if (GetMenuPosition(point, *this, evt))
+
+	wxDataViewItem item = evt.GetItem();
+	if (!item.IsOk())
 	{
-		CAgilityBookTreeData* pData = GetTreeItem(evt.GetItem());
-		if (pData)
-		{
-			bSkip = false;
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item == evt.GetItem())
-			{
-				// If it's the same one, don't reset.
-				// (or we die on delete on a Mac)
-				item = wxTreeItemId();
-			}
-			else
-			{
-				// On a r-click context, the highlighting is set, but the
-				// current item doesn't change. The wxTreeCtrl api does not
-				// appear to have the concept of the current highlight item
-				// like windows does. So we'll force the current item, then
-				// reset. But ignore the changes! (do not use the changing msg
-				// and veto it - that kills the change!)
-				m_Ctrl->SelectItem(evt.GetItem());
-			}
-			wxMenu* menu = CreatePopup(pData->GetMenuID());
-			if (menu)
-			{
-				m_Ctrl->PopupMenu(menu, point);
-				delete menu;
-			}
-			if (item.IsOk())
-				m_Ctrl->SelectItem(item);
-		}
+		item = m_Ctrl->GetSelection();
 	}
-#endif
+
+	CAgilityBookTreeData* pData = GetTreeItem(item);
+	if (pData)
+	{
+		bSkip = false;
+		if (item == evt.GetItem())
+		{
+			// If it's the same one, don't reset.
+			// (or we die on delete on a Mac)
+			//TODO: Check this with new DVC
+			item = wxDataViewItem();
+		}
+		else
+		{
+			// On a r-click context, the highlighting is set, but the
+			// current item doesn't change. The wxTreeCtrl api does not
+			// appear to have the concept of the current highlight item
+			// like windows does. So we'll force the current item, then
+			// reset. But ignore the changes! (do not use the changing msg
+			// and veto it - that kills the change!)
+			m_Ctrl->Select(evt.GetItem());
+		}
+		wxMenu* menu = CreatePopup(pData->GetMenuID());
+		if (menu)
+		{
+			m_Ctrl->PopupMenu(menu, evt.GetPosition());
+			delete menu;
+		}
+		if (item.IsOk())
+			m_Ctrl->Select(item);
+	}
+
 	if (bSkip)
 		evt.Skip();
 }
 
 
-void CAgilityBookTreeView::OnCtrlSelectionChanged(wxDataViewEvent& evt)
+void CAgilityBookTreeView::OnSelectionChanged(wxDataViewEvent& evt)
 {
 	DoSelectionChange(evt.GetItem());
 }
 
 
-void CAgilityBookTreeView::OnCtrlItemActivated(wxDataViewEvent& evt)
+void CAgilityBookTreeView::OnItemActivated(wxDataViewEvent& evt)
 {
 	CAgilityBookTreeData* pData = GetCurrentTreeItem();
 	if (pData)
@@ -936,7 +996,7 @@ void CAgilityBookTreeView::OnCtrlItemActivated(wxDataViewEvent& evt)
 }
 
 
-void CAgilityBookTreeView::OnCtrlKeyDown(wxKeyEvent& evt)
+void CAgilityBookTreeView::OnKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{
@@ -957,43 +1017,6 @@ void CAgilityBookTreeView::OnCtrlKeyDown(wxKeyEvent& evt)
 }
 
 
-void CAgilityBookTreeView::OnViewContextMenu(wxContextMenuEvent& evt)
-{
-#ifdef __WXMAC__
-	// Something is wrong on Mac. A right click generates the context menu
-	// in the control (above), but we get the message here also. When we
-	// right click on the blank view area, windows gets the view message,
-	// but the Mac gets nothing. For now, just don't support the context menu
-	// in the view for the Mac.
-	evt.Skip();
-#else
-	if (!m_Ctrl)
-		return;
-#pragma PRAGMA_TODO("Fix me")
-#if 0
-	bool bSkip = true;
-	CAgilityBookTreeData* pData = GetCurrentTreeItem();
-	if (pData)
-	{
-		wxPoint point;
-		if (GetMenuPosition(point, *m_Ctrl, evt))
-		{
-			wxMenu* menu = CreatePopup(pData->GetMenuID());
-			if (menu)
-			{
-				bSkip = false;
-				m_Ctrl->PopupMenu(menu, point);
-				delete menu;
-			}
-		}
-	}
-	if (bSkip)
-#endif
-		evt.Skip();
-#endif
-}
-
-
 void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 {
 	if (!m_Ctrl)
@@ -1002,8 +1025,6 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		return;
 	}
 	bool bEnable = false;
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	switch (evt.GetId())
 	{
 	default:
@@ -1031,8 +1052,8 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case ID_EXPAND:
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk() && m_Ctrl->ItemHasChildren(item))
+			wxDataViewItem item = m_Ctrl->GetSelection();
+			if (item.IsOk() && m_Ctrl->GetStore()->IsContainer(item))
 			{
 				if (!m_Ctrl->IsExpanded(item))
 					bEnable = true;
@@ -1041,15 +1062,15 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case ID_EXPAND_ALL:
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk() && m_Ctrl->ItemHasChildren(item))
+			wxDataViewItem item = m_Ctrl->GetSelection();
+			if (item.IsOk() && m_Ctrl->GetStore()->IsContainer(item))
 				bEnable = true;
 		}
 		break;
 	case ID_COLLAPSE:
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk() && m_Ctrl->ItemHasChildren(item))
+			wxDataViewItem item = m_Ctrl->GetSelection();
+			if (item.IsOk() && m_Ctrl->GetStore()->IsContainer(item))
 			{
 				if (m_Ctrl->IsExpanded(item))
 					bEnable = true;
@@ -1058,8 +1079,8 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case ID_COLLAPSE_ALL:
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk() && m_Ctrl->ItemHasChildren(item))
+			wxDataViewItem item = m_Ctrl->GetSelection();
+			if (item.IsOk() && m_Ctrl->GetStore()->IsContainer(item))
 				bEnable = true;
 		}
 		break;
@@ -1071,7 +1092,6 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		bEnable = true;
 		break;
 	}
-#endif
 	evt.Enable(bEnable);
 }
 
@@ -1082,8 +1102,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		return false;
 
 	bool bHandled = false;
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	switch (id)
 	{
 	default:
@@ -1152,7 +1170,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 	case ID_EXPAND:
 		bHandled = true;
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
+			wxDataViewItem item = m_Ctrl->GetSelection();
 			if (item.IsOk())
 			{
 				m_Ctrl->Expand(item);
@@ -1164,7 +1182,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 	case ID_EXPAND_ALL:
 		bHandled = true;
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
+			wxDataViewItem item = m_Ctrl->GetSelection();
 			if (item.IsOk())
 			{
 				m_Ctrl->ExpandAllChildren(item);
@@ -1176,7 +1194,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 	case ID_COLLAPSE:
 		bHandled = true;
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
+			wxDataViewItem item = m_Ctrl->GetSelection();
 			if (item.IsOk())
 			{
 				m_Ctrl->Collapse(item);
@@ -1188,7 +1206,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 	case ID_COLLAPSE_ALL:
 		bHandled = true;
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
+			wxDataViewItem item = m_Ctrl->GetSelection();
 			if (item.IsOk())
 			{
 				m_Ctrl->CollapseAllChildren(item);
@@ -1227,7 +1245,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		CAgilityBookOptions::SetRunTimeInOPS(!CAgilityBookOptions::GetRunTimeInOPS());
 		break;
 	}
-#endif
 
 	return bHandled;
 }
