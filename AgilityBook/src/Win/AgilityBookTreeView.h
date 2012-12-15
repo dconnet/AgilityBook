@@ -28,6 +28,7 @@
  *                    prevent constant re-evaluation.
  */
 
+#include "AgilityBookTreeModel.h"
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "IconList.h"
@@ -36,7 +37,6 @@
 #include <wx/docview.h>
 class CAgilityBookTreeCtrl;
 class CAgilityBookTreeData;
-class CAgilityBookTreeModel;
 class CAgilityBookTreeView;
 
 
@@ -128,6 +128,8 @@ public:
 	void Freeze()								{m_Ctrl->Freeze();}
 	void Thaw()									{m_Ctrl->Thaw();}
 	void Refresh()								{m_Ctrl->Refresh();}
+	void Select(wxDataViewItem const& item)		{m_Ctrl->Select(item);}
+	void RefreshItem(wxDataViewItem const& item);
 
 	wxDataViewItem FindData(ARBBasePtr pBase) const;
 	wxDataViewItem FindData(
@@ -156,12 +158,9 @@ public:
 	wxDataViewItem InsertRun(
 			ARBDogRunPtr pRun,
 			wxDataViewItem parent);
-	bool PasteDog(bool& bLoaded);
 	std::wstring GetPrintLine(wxDataViewItem const& item) const;
 
 private:
-	CAgilityBookTreeData* GetCurrentTreeItem() const;
-	CAgilityBookTreeData* GetTreeItem(wxDataViewItem const& item) const;
 	void GetQCount(
 			int& ioCount,
 			int& ioTotal) const;
@@ -169,13 +168,15 @@ private:
 			wxDataViewItem const& item,
 			bool bEnsureVisible = true);
 	void DoSelectionChange(wxDataViewItem const& item);
+	bool DoEdit(
+			wxDataViewItem const& item,
+			CTreeDataType type);
 	void LoadData(bool bColumns);
 	void PrintLine(
 			std::wostringstream& data,
 			wxDataViewItem item,
 			int indent) const;
 	std::wstring GetPrintDataAsHtmlTable() const;
-	bool OnCmd(int id);
 
 	CAgilityBookTreeCtrl* m_Ctrl;
 	//CIconList m_ImageList;
@@ -186,13 +187,59 @@ private:
 //#endif
 	CFindTree m_Callback;
 	ARBDogPtr m_pDog;
+	bool m_bSuppressPrompt;
 
 	void OnContextMenu(wxDataViewEvent& evt);
 	void OnSelectionChanged(wxDataViewEvent& evt);
 	void OnItemActivated(wxDataViewEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);
-	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
-	void OnViewCmd(wxCommandEvent& evt);
 	void OnPrint(wxCommandEvent& evt);
 	void OnPreview(wxCommandEvent& evt);
+	void OnUpdateEnable(wxUpdateUIEvent& evt);
+	void OnUpdateDisable(wxUpdateUIEvent& evt);
+	void OnUpdateDuplicate(wxUpdateUIEvent& evt);
+	void OnDuplicate(wxCommandEvent& evt);
+	void OnUpdateCut(wxUpdateUIEvent& evt);
+	void OnCut(wxCommandEvent& evt);
+	void OnUpdateCopy(wxUpdateUIEvent& evt);
+	void OnCopy(wxCommandEvent& evt);
+	void OnUpdatePaste(wxUpdateUIEvent& evt);
+	void OnPaste(wxCommandEvent& evt);
+	void OnUpdateDelete(wxUpdateUIEvent& evt);
+	void OnDelete(wxCommandEvent& evt);
+	void OnUpdateReorder(wxUpdateUIEvent& evt);
+	void OnReorder(wxCommandEvent& evt);
+	void OnFind(wxCommandEvent& evt);
+	void OnFindNext(wxCommandEvent& evt);
+	void OnFindPrevious(wxCommandEvent& evt);
+	void OnUpdateNewDog(wxUpdateUIEvent& evt);
+	void OnNewDog(wxCommandEvent& evt);
+	void OnUpdateEditDog(wxUpdateUIEvent& evt);
+	void OnEditDog(wxCommandEvent& evt);
+	void OnUpdateNewTitle(wxUpdateUIEvent& evt);
+	void OnNewTitle(wxCommandEvent& evt);
+	void OnUpdateNewTrial(wxUpdateUIEvent& evt);
+	void OnNewTrial(wxCommandEvent& evt);
+	void OnUpdateEditTrial(wxUpdateUIEvent& evt);
+	void OnEditTrial(wxCommandEvent& evt);
+	void OnUpdatePrintTrial(wxUpdateUIEvent& evt);
+	void OnPrintTrial(wxCommandEvent& evt);
+	void OnUpdateNewRun(wxUpdateUIEvent& evt);
+	void OnNewRun(wxCommandEvent& evt);
+	void OnUpdateEditRun(wxUpdateUIEvent& evt);
+	void OnEditRun(wxCommandEvent& evt);
+	void OnViewCustomize(wxCommandEvent& evt);
+	void OnViewSortRuns(wxCommandEvent& evt);
+	void OnViewRunsByTrial(wxCommandEvent& evt);
+	void OnViewTableInYPS(wxCommandEvent& evt);
+	void OnViewRuntimeInOPS(wxCommandEvent& evt);
+	void OnViewPreferences(wxCommandEvent& evt);
+	void OnUpdateExpand(wxUpdateUIEvent& evt);
+	void OnExpand(wxCommandEvent& evt);
+	void OnUpdateCollapse(wxUpdateUIEvent& evt);
+	void OnCollapse(wxCommandEvent& evt);
+	void OnUpdateExpandAll(wxUpdateUIEvent& evt);
+	void OnExpandAll(wxCommandEvent& evt);
+	void OnUpdateCollapseAll(wxUpdateUIEvent& evt);
+	void OnCollapseAll(wxCommandEvent& evt);
 };

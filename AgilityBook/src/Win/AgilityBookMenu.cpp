@@ -111,8 +111,6 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, ID_AGILITY_NEW_RUN,              wxITEM_NORMAL, 2, arbT("MenuNewRun"), arbT("MenuNewRun"), arbT("DescRunNew"), toolbarRun_xpm},
 	{MENU_ITEM, ID_AGILITY_DELETE_RUN,           wxITEM_NORMAL, 2, NULL, arbT("MenuRunDelete"), arbT("DescRunDelete"), NULL},
-	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
-	{MENU_ITEM, ID_AGILITY_PRINT_RUNS,           wxITEM_NORMAL, 2, NULL, arbT("MenuRunPrintRuns"), arbT("DescRunPrintRuns"), NULL},
 	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuCalendar"), NULL, toolbarCalendar_xpm},
 	{MENU_ITEM, ID_AGILITY_EDIT_CALENDAR,        wxITEM_NORMAL, 2, NULL, arbT("MenuCalendarProperties"), arbT("DescCalendarProperties"), toolbarCalendar_xpm},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
@@ -310,8 +308,6 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_DELETE_RUN, _("MenuRunDelete"), _("DescRunDelete"));
 		menu->AppendSeparator();
 		CMenuHelper::DoMenuItem(menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
-		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_PRINT_RUNS, _("MenuRunPrintRuns"), _("DescRunPrintRuns"));
 		break;
 
 	case IdMenuPoints:

@@ -20,6 +20,7 @@
  */
 
 #include "AgilityBookMenu.h"
+#include "AgilityBookTreeModel.h"
 #include "ARBDog.h"
 #include "ARBDogTrial.h"
 #include "ListData.h"
@@ -29,7 +30,6 @@ class CAgilityBookTreeView;
 class CAgilityBookTreeDataDog;
 class CAgilityBookTreeDataTrial;
 class CAgilityBookTreeDataRun;
-class CAgilityBookTreeModel;
 
 
 class CAgilityBookTreeData
@@ -39,7 +39,6 @@ public:
 	virtual ~CAgilityBookTreeData();
 
 	// This removes a need for a dynamic cast
-	enum CTreeDataType { eTreeDog, eTreeTrial, eTreeRun };
 	virtual CTreeDataType Type() const = 0;
 
 	virtual bool IsContainer() const = 0;
@@ -89,15 +88,6 @@ public:
 	}
 
 	virtual MenuIdentityPopup GetMenuID() const = 0;
-	virtual bool OnUpdateCmd(int id, bool& ioEnable) const = 0;
-	virtual bool OnCmd(
-			int id,
-			bool& bModified,
-			bool* bTreeSelectionSet) = 0; // Returns true if data modified
-	virtual void Properties() = 0;
-
-	bool CanPaste() const;
-	bool DoPaste(bool* bTreeSelectionSet);
 
 protected:
 	CAgilityBookTreeModel* m_pModel;
@@ -117,7 +107,7 @@ public:
 	~CAgilityBookTreeDataDog();
 	virtual CTreeDataType Type() const
 	{
-		return CAgilityBookTreeData::eTreeDog;
+		return eTreeDog;
 	}
 
 	virtual bool IsContainer() const		{return true;}
@@ -143,12 +133,6 @@ public:
 	{
 		return IdMenuDog;
 	}
-	virtual bool OnUpdateCmd(int id, bool& ioEnable) const;
-	virtual bool OnCmd(
-			int id,
-			bool& bModified,
-			bool* bTreeSelectionSet);
-	virtual void Properties();
 
 private:
 	ARBDogPtr m_pDog;
@@ -165,7 +149,7 @@ public:
 	~CAgilityBookTreeDataTrial();
 	virtual CTreeDataType Type() const
 	{
-		return CAgilityBookTreeData::eTreeTrial;
+		return eTreeTrial;
 	}
 
 	virtual bool IsContainer() const		{return true;}
@@ -195,12 +179,6 @@ public:
 	{
 		return IdMenuTrial;
 	}
-	virtual bool OnUpdateCmd(int id, bool& ioEnable) const;
-	virtual bool OnCmd(
-			int id,
-			bool& bModified,
-			bool* bTreeSelectionSet);
-	virtual void Properties();
 
 private:
 	ARBDogTrialPtr m_pTrial;
@@ -218,7 +196,7 @@ public:
 	~CAgilityBookTreeDataRun();
 	virtual CTreeDataType Type() const
 	{
-		return CAgilityBookTreeData::eTreeRun;
+		return eTreeRun;
 	}
 
 	virtual bool IsContainer() const		{return false;}
@@ -252,12 +230,6 @@ public:
 	{
 		return IdMenuRun;
 	}
-	virtual bool OnUpdateCmd(int id, bool& ioEnable) const;
-	virtual bool OnCmd(
-			int id,
-			bool& bModified,
-			bool* bTreeSelectionSet);
-	virtual void Properties();
 
 private:
 	ARBDogRunPtr m_pRun;

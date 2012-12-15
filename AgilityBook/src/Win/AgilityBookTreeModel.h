@@ -1,9 +1,20 @@
 #pragma once
 
+#include "AgilityBookMenu.h"
+#include "ARBBase.h"
 #include "IconList.h"
 #include <wx/dataview.h>
 class CAgilityBookDoc;
 class CAgilityBookTreeData;
+
+
+enum CTreeDataType
+{
+	eTreeUnknown = -1,
+	eTreeDog = 0,
+	eTreeTrial,
+	eTreeRun,
+};
 
 
 class CAgilityBookTreeModel : public wxDataViewModel
@@ -18,9 +29,14 @@ public:
 	void CreateColumns(wxDataViewCtrl* ctrl, CAgilityBookDoc* pDoc);
 	void UpdateColumns();
 
-	wxDataViewItem LoadData(ARBDogPtr pDog);
-	wxDataViewItem LoadData(ARBDogTrialPtr pTrial, wxDataViewItem parent);
-	wxDataViewItem LoadData(ARBDogRunPtr pRun, wxDataViewItem parent);
+	wxDataViewItem LoadData(
+			ARBDogPtr pDog);
+	wxDataViewItem LoadData(
+			ARBDogTrialPtr pTrial,
+			wxDataViewItem parent);
+	wxDataViewItem LoadData(
+			ARBDogRunPtr pRun,
+			wxDataViewItem parent);
 	void LoadData();
 
 	void Delete(const wxDataViewItem& item);
@@ -52,9 +68,17 @@ public:
 			wxDataViewItemArray& array) const;
 
 	wxString GetPrintLine(const wxDataViewItem& item) const;
-	CAgilityBookTreeData* GetNode(const wxDataViewItem& item) const;
+
+	CTreeDataType Type(const wxDataViewItem& item) const;
+	ARBBasePtr GetARBBase(const wxDataViewItem& item) const;
+	ARBDogPtr GetDog(const wxDataViewItem& item) const;
+	ARBDogTrialPtr GetTrial(const wxDataViewItem& item) const;
+	ARBDogRunPtr GetRun(const wxDataViewItem& item) const;
+	MenuIdentityPopup GetMenuID(const wxDataViewItem& item) const;
 
 private:
+	CAgilityBookTreeData* GetNode(const wxDataViewItem& item) const;
+
 	CAgilityBookDoc* m_pDoc;
 	wxDataViewCtrl* m_Ctrl;
 	std::vector<long> m_Columns[3];

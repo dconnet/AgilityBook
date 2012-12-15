@@ -100,7 +100,8 @@ void CAgilityBookTreeModel::UpdateColumns()
 }
 
 
-wxDataViewItem CAgilityBookTreeModel::LoadData(ARBDogPtr pDog)
+wxDataViewItem CAgilityBookTreeModel::LoadData(
+		ARBDogPtr pDog)
 {
 	wxDataViewItem itemDog;
 
@@ -480,4 +481,58 @@ wxString CAgilityBookTreeModel::GetPrintLine(const wxDataViewItem& item) const
 		}
 	}
 	return line;
+}
+
+
+CTreeDataType CAgilityBookTreeModel::Type(const wxDataViewItem& item) const
+{
+	CAgilityBookTreeData* pNode = GetNode(item);
+	if (pNode)
+		return pNode->Type();
+	return eTreeUnknown;
+}
+
+
+ARBBasePtr CAgilityBookTreeModel::GetARBBase(const wxDataViewItem& item) const
+{
+	CAgilityBookTreeData* pNode = GetNode(item);
+	if (pNode)
+		return pNode->GetARBBase();
+	return ARBBasePtr();
+}
+
+
+ARBDogPtr CAgilityBookTreeModel::GetDog(const wxDataViewItem& item) const
+{
+	CAgilityBookTreeData* pNode = GetNode(item);
+	if (pNode)
+		return pNode->GetDog();
+	return ARBDogPtr();
+}
+
+
+ARBDogTrialPtr CAgilityBookTreeModel::GetTrial(const wxDataViewItem& item) const
+{
+	CAgilityBookTreeData* pNode = GetNode(item);
+	if (pNode)
+		return pNode->GetTrial();
+	return ARBDogTrialPtr();
+}
+
+
+ARBDogRunPtr CAgilityBookTreeModel::GetRun(const wxDataViewItem& item) const
+{
+	CAgilityBookTreeData* pNode = GetNode(item);
+	if (pNode)
+		return pNode->GetRun();
+	return ARBDogRunPtr();
+}
+
+
+MenuIdentityPopup CAgilityBookTreeModel::GetMenuID(const wxDataViewItem& item) const
+{
+	CAgilityBookTreeData* pNode = GetNode(item);
+	if (pNode)
+		return pNode->GetMenuID();
+	return IdMenuNone;
 }

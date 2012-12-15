@@ -27,6 +27,7 @@
 // Special clipboard formats
 typedef enum
 {
+	eFormatNone,
 	eFormatDog,
 	eFormatTrial,
 	eFormatRun,
