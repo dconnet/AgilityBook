@@ -404,7 +404,7 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 		ARBDogTrialPtr trial = GetTrial();
 		std::wostringstream str;
 		short val;
-//TODO: not sure how this will work now
+#pragma PRAGMA_TODO("Fix me")
 		// Col 0 is special: it has the icons. Instead of saving it,
 		// we simply ignore it - so col is always off by 1.
 		switch (columns[col-1])

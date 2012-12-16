@@ -129,6 +129,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 	if (bAttachViews)
 	{
 		CAgilityBookBaseExtraView* pView = new CAgilityBookTreeView(pTabView, doc);
+		assert(!pView->HasNextPane() && !pView->HasPrevPane());
 		m_views.push_back(pView);
 	}
 	m_views[0]->Create(this, this, doc, flags, sizerPanel, 1, wxEXPAND, 0);

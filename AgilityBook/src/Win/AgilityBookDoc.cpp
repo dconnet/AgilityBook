@@ -255,12 +255,9 @@ void CAgilityBookDoc::OnStatusDog(wxCommandEvent& evt)
 	&& evt.GetId() < static_cast<int>(m_StatusData->dogs.size()) + baseID
 	&& m_StatusData->dogs[evt.GetId()-baseID] != GetCurrentDog())
 	{
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 		CAgilityBookTreeView* pTree = GetTreeView();
 		if (pTree)
 			pTree->SelectDog(m_StatusData->dogs[evt.GetId()-baseID]);
-#endif
 	}
 }
 
@@ -298,7 +295,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 		switch (id)
 		{
 		case STATUS_DOG:
-			if (GetTreeModel() && 1 < m_Records.GetDogs().size())
+			if (GetTreeView() && 1 < m_Records.GetDogs().size())
 			{
 				ARBDogPtr curDog = GetCurrentDog();
 				wxMenu* menu = new wxMenu();
@@ -388,12 +385,9 @@ ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 	}
 	else
 	{
-#pragma PRAGMA_TODO("Fix me")
-#if 0
-	CAgilityBookTreeView* pTree = GetTreeView();
-	if (pTree && pTree->GetCurrentTreeItem())
-		pDog = pTree->GetCurrentTreeItem()->GetDog();
-#endif
+		CAgilityBookTreeView* pTree = GetTreeView();
+		if (pTree)
+			pDog = pTree->GetStore()->GetDog(pTree->GetSelection());
 	}
 	return pDog;
 }
@@ -405,13 +399,10 @@ ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial() const
 {
 	ARBDogTrialPtr pTrial;
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	if (pTree && pTree->GetCurrentTreeItem())
-		pTrial = pTree->GetCurrentTreeItem()->GetTrial();
-#endif
+	if (pTree)
+		pTrial = pTree->GetStore()->GetTrial(pTree->GetSelection());
 	return pTrial;
 }
 
@@ -422,13 +413,10 @@ ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial() const
 ARBDogRunPtr CAgilityBookDoc::GetCurrentRun() const
 {
 	ARBDogRunPtr pRun;
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	if (pTree && pTree->GetCurrentTreeItem())
-		pRun = pTree->GetCurrentTreeItem()->GetRun();
-#endif
+	if (pTree)
+		pRun = pTree->GetStore()->GetRun(pTree->GetSelection());
 	return pRun;
 }
 
@@ -467,85 +455,57 @@ bool CAgilityBookDoc::AddTitle(ARBDogPtr pDog)
 
 void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
-	if (pData)
+	wxDataViewItem item = pTree->FindData(pSelectedRun);
+	if (item.IsOk())
 	{
-		pTree->EnsureVisible(pData->GetId());
-		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_NEW_TRIAL, bModified, NULL))
-		{
-			if (bModified)
-				Modify(true);
-		}
+		wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, ID_AGILITY_NEW_TRIAL);
+		evt.SetEventObject(this);
+		pTree->GetEventHandler()->ProcessEvent(evt);
 	}
-#endif
 }
 
 
 void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 {
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
-	if (pData)
+	wxDataViewItem item = pTree->FindData(pSelectedRun);
+	if (item.IsOk())
 	{
-		pTree->EnsureVisible(pData->GetId());
-		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_NEW_RUN, bModified, NULL))
-		{
-			if (bModified)
-				Modify(true);
-		}
+		wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, ID_AGILITY_NEW_RUN);
+		evt.SetEventObject(this);
+		pTree->GetEventHandler()->ProcessEvent(evt);
 	}
-#endif
 }
 
 
 void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 {
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(pRun);
-	if (pData)
+	wxDataViewItem item = pTree->FindData(pRun);
+	if (item.IsOk())
 	{
-		pTree->EnsureVisible(pData->GetId());
-		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_EDIT_RUN, bModified, NULL))
-		{
-			if (bModified)
-				Modify(true);
-		}
+		wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, ID_AGILITY_EDIT_RUN);
+		evt.SetEventObject(this);
+		pTree->GetEventHandler()->ProcessEvent(evt);
 	}
-#endif
 }
 
 
 void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 {
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(pRun);
-	if (pData)
+	wxDataViewItem item = pTree->FindData(pRun);
+	if (item.IsOk())
 	{
-		pTree->EnsureVisible(pData->GetId());
-		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_DELETE_RUN, bModified, NULL))
-		{
-			if (bModified)
-				Modify(true);
-		}
+		wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, ID_AGILITY_DELETE_RUN);
+		evt.SetEventObject(this);
+		pTree->GetEventHandler()->ProcessEvent(evt);
 	}
-#endif
 }
 
 
@@ -1245,17 +1205,14 @@ CTabView* CAgilityBookDoc::GetTabView() const
 /**
  * Function to get the tree view. This is used internally and by the runs view.
  */
-CAgilityBookTreeModel* CAgilityBookDoc::GetTreeModel() const
+CAgilityBookTreeView* CAgilityBookDoc::GetTreeView() const
 {
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
 	{
 		CAgilityBookTreeView* pView = wxDynamicCast(*iView, CAgilityBookTreeView);
 		if (pView)
 			return pView;
 	}
-#endif
 	return NULL;
 }
 
@@ -1814,12 +1771,9 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 					pTab->SetCurTab(IDX_PANE_RUNS);
 				if (m_Records.GetDogs().AddDog(dog))
 				{
-#pragma PRAGMA_TODO("Fix me")
-#if 0
 					CAgilityBookTreeView* pTree = GetTreeView();
 					if (pTree)
 						pTree->InsertDog(dog, true);
-#endif
 				}
 			}
 		}

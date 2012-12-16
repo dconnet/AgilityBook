@@ -128,8 +128,12 @@ public:
 	void Freeze()								{m_Ctrl->Freeze();}
 	void Thaw()									{m_Ctrl->Thaw();}
 	void Refresh()								{m_Ctrl->Refresh();}
+	wxDataViewItem GetSelection() const			{return m_Ctrl->GetSelection();}
 	void Select(wxDataViewItem const& item)		{m_Ctrl->Select(item);}
 	void RefreshItem(wxDataViewItem const& item);
+	CAgilityBookTreeModel* GetStore()			{return m_Ctrl->GetStore();}
+	const CAgilityBookTreeModel* GetStore() const	{return m_Ctrl->GetStore();}
+	wxEvtHandler* GetEventHandler() const		{return m_Ctrl;}
 
 	wxDataViewItem FindData(ARBBasePtr pBase) const;
 	wxDataViewItem FindData(

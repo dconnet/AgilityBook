@@ -40,7 +40,7 @@
 class CAgilityBookCalendarListView;
 class CAgilityBookCalendarView;
 class CAgilityBookTrainingView;
-class CAgilityBookTreeModel;
+class CAgilityBookTreeView;
 class CStatusHandler;
 class CTabView;
 struct CVenueFilter;
@@ -169,7 +169,7 @@ public:
 
 	bool ShowPointsAsHtml(bool bHtml);
 	CTabView* GetTabView() const;
-	CAgilityBookTreeModel* GetTreeModel() const;
+	CAgilityBookTreeView* GetTreeView() const;
 	CAgilityBookCalendarListView* GetCalendarListView() const;
 	CAgilityBookCalendarView* GetCalendarView() const;
 	CAgilityBookTrainingView* GetTrainingView() const;
