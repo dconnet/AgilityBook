@@ -88,6 +88,81 @@
 
 ////////////////////////////////////////////////////////////////////////////
 
+class wxInputStdStream : public wxInputStream
+{
+public:
+	wxInputStdStream(std::istream& stream) :
+		m_stream(stream)
+	{
+	}
+
+	virtual size_t OnSysRead(void* buffer, size_t size)
+	{
+		size_t count = 0;
+		if (m_stream.good())
+		{
+			m_stream.read((char*)buffer, size);
+			count = m_stream.gcount();
+
+			if (m_stream.eof())
+			{
+				m_lasterror = wxSTREAM_EOF;
+			}
+			else if (m_stream.good())
+			{
+				m_lasterror = wxSTREAM_NO_ERROR;
+			}
+			else
+			{
+				m_lasterror = wxSTREAM_READ_ERROR;
+			}
+		}
+		return count;
+	}
+
+protected:
+	std::istream& m_stream;
+};
+
+
+class wxOutputStdStream : public wxOutputStream
+{
+public:
+	wxOutputStdStream(std::ostream& stream) :
+		m_stream(stream)
+	{
+	}
+
+	virtual size_t OnSysWrite(const void* buffer, size_t size)
+	{
+		size_t count = 0;
+		if (m_stream.good())
+		{
+			m_stream.write((char*)buffer, size);
+			count = size;
+
+			if (m_stream.eof())
+			{
+				m_lasterror = wxSTREAM_EOF;
+			}
+			else if (m_stream.good())
+			{
+				m_lasterror = wxSTREAM_NO_ERROR;
+			}
+			else
+			{
+				m_lasterror = wxSTREAM_WRITE_ERROR;
+			}
+		}
+		return count;
+	}
+
+protected:
+	std::ostream& m_stream;
+};
+
+////////////////////////////////////////////////////////////////////////////
+
 bool Element::Initialize(std::wstring& outMsg)
 {
 	outMsg.erase();
@@ -1010,42 +1085,50 @@ bool ElementNode::FindElementDeep(
 }
 
 
+#if USE_LIBXML2
 static bool LoadXMLNode(
 		ElementNodePtr node,
-#if USE_LIBXML2
 		xmlDocPtr inSource,
-#else
-		wxXmlDocument& inSource,
-#endif
 		std::wostringstream& ioErrMsg)
 {
 	node->clear();
 
-#if USE_LIBXML2
 	xmlNode* root = xmlDocGetRootElement(inSource);
 	if (!root)
 		return false;
 	node->SetName(StringDOM(root->name));
 	ReadDoc(root, node);
+	return true;
+}
+
 #else
+
+static bool LoadXMLNode(
+		ElementNodePtr node,
+		wxXmlDocument& inSource,
+		std::wostringstream& ioErrMsg)
+{
+	node->clear();
 
 	if (!inSource.GetRoot())
 		return false;
 	node->SetName(StringUtil::stringW(inSource.GetRoot()->GetName()));
 	ReadDoc(inSource.GetRoot(), node);
-#endif
 	return true;
 }
+#endif
 
 
-#ifdef __WXWINDOWS__
 bool ElementNode::LoadXML(
-		wxInputStream& inStream,
+		std::istream& inStream,
 		std::wostringstream& ioErrMsg)
 {
 #if USE_LIBXML2
 	assert(0);
-	return false;
+	// TODO: Read into buffer
+	char* pData = NULL;
+	size_t nData = 0;
+	return LoadXml(pData, nData, ioErrMsg);
 #else
 	wxLogBuffer* log = new wxLogBuffer();
 	// wxLogChain will delete the log given to it.
@@ -1055,8 +1138,9 @@ bool ElementNode::LoadXML(
 	chain.DisableTimestamp();
 #endif
 
+	wxInputStdStream stream(inStream);
 	wxXmlDocument source;
-	if (!source.Load(inStream))
+	if (!source.Load(stream))
 	{
 		ioErrMsg << StringUtil::stringW(log->GetBuffer());
 		// This does not call Flush (which displays a dialog). Yea!
@@ -1066,7 +1150,6 @@ bool ElementNode::LoadXML(
 	return LoadXMLNode(m_Me.lock(), source, ioErrMsg);
 #endif
 }
-#endif
 
 
 bool ElementNode::LoadXML(
@@ -1074,6 +1157,8 @@ bool ElementNode::LoadXML(
 		size_t nData,
 		std::wostringstream& ioErrMsg)
 {
+	if (!inData || 0 == nData)
+		return false;
 #if USE_LIBXML2
 	xmlDocPtr source = xmlReadMemory(inData, static_cast<int>(nData), NULL, NULL, 0);
 	bool rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
@@ -1081,7 +1166,7 @@ bool ElementNode::LoadXML(
 		xmlFreeDoc(source);
 	return rc;
 #else
-	wxMemoryInputStream input(inData, nData);
+	std::istringstream input(std::string(inData, nData));
 	return LoadXML(input, ioErrMsg);
 #endif
 }
@@ -1091,6 +1176,8 @@ bool ElementNode::LoadXML(
 		wchar_t const* inFileName,
 		std::wostringstream& ioErrMsg)
 {
+	if (!inFileName)
+		return false;
 #if USE_LIBXML2
 	std::string filename = StringUtil::stringA(inFileName);
 	xmlDocPtr source = xmlReadFile(filename.c_str(), NULL, 0);
@@ -1099,8 +1186,13 @@ bool ElementNode::LoadXML(
 		xmlFreeDoc(source);
 	return rc;
 #else
-	wxFileInputStream input(inFileName);
-	if (!input.IsOk())
+#ifdef ARB_HAS_ISTREAM_WCHAR
+	std::ifstream input(inFileName);
+#else
+	std::string filename(StringUtil::stringA(inFileName));
+	std::ifstream input(filename.c_str());
+#endif
+	if (!input.good())
 		return false;
 	return LoadXML(input, ioErrMsg);
 #endif
@@ -1178,13 +1270,8 @@ bool ElementNode::SaveXML(
 	doc.SetRoot(root);
 	// TODO: Insert DTD
 	CreateDoc(root, *this);
-	wxMemoryOutputStream out;
-	bool bOk = doc.Save(out);
-	if (bOk)
-	{
-		outOutput << StringUtil::stringA(out);
-	}
-	return bOk;
+	wxOutputStdStream out(outOutput);
+	return doc.Save(out);
 #endif
 }
 

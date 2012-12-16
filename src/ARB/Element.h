@@ -25,6 +25,7 @@
  */
 
 #include "ARBTypes.h"
+#include <istream>
 #include <map>
 #include <sstream>
 #include <vector>
@@ -380,7 +381,6 @@ public:
 			std::wstring const& inName,
 			std::wstring const* inValue = NULL) const;
 
-#ifdef __WXWINDOWS__
 	/**
 	 * Populate this element from the given stream.
 	 * @param inStream XML stream to load.
@@ -388,9 +388,8 @@ public:
 	 * @return Whether file loaded successfully.
 	 */
 	bool LoadXML(
-			wxInputStream& inStream,
+			std::istream& inStream,
 			std::wostringstream& ioErrMsg);
-#endif
 
 	/**
 	 * Populate this element from the given buffer.
