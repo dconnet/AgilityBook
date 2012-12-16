@@ -76,7 +76,6 @@
 
 #else // USE_LIBXML2
 #include <wx/mstream.h>
-#include <wx/stdstream.h>
 #include <wx/stream.h>
 #include <wx/wfstream.h>
 #include <wx/xml/xml.h>
