@@ -707,6 +707,8 @@ wxDataViewItem CAgilityBookTreeView::FindData(
 	{
 		switch (m_Ctrl->GetStore()->Type(inItem))
 		{
+		default:
+			break;
 		case eTreeDog:
 			{
 				wxDataViewItemArray kids;
@@ -749,6 +751,8 @@ wxDataViewItem CAgilityBookTreeView::FindData(
 	{
 		switch (m_Ctrl->GetStore()->Type(inItem))
 		{
+		default:
+			break;
 		case eTreeDog:
 		case eTreeTrial:
 			{
@@ -890,6 +894,9 @@ bool CAgilityBookTreeView::DoEdit(
 		ARBDogRunPtr pRun = m_Ctrl->GetStore()->GetRun(item);
 		switch (type)
 		{
+		default:
+			break;
+				
 		case eTreeDog:
 			if (pDog)
 			{
@@ -1121,6 +1128,8 @@ void CAgilityBookTreeView::OnUpdateDuplicate(wxUpdateUIEvent& evt)
 		wxDataViewItem item = m_Ctrl->GetSelection();
 		switch (m_Ctrl->GetStore()->Type(item))
 		{
+		default:
+			break;
 		case eTreeDog:
 		case eTreeTrial:
 		case eTreeRun:
@@ -1140,6 +1149,8 @@ void CAgilityBookTreeView::OnDuplicate(wxCommandEvent& evt)
 		wxDataViewItem item = m_Ctrl->GetSelection();
 		switch (m_Ctrl->GetStore()->Type(item))
 		{
+		default:
+			break;
 		case eTreeDog:
 			if (m_Ctrl->GetStore()->GetDog(item))
 			{
@@ -1186,6 +1197,8 @@ void CAgilityBookTreeView::OnUpdateCut(wxUpdateUIEvent& evt)
 		wxDataViewItem item = m_Ctrl->GetSelection();
 		switch (m_Ctrl->GetStore()->Type(item))
 		{
+		default:
+			break;
 		case eTreeDog:
 		case eTreeTrial:
 		case eTreeRun:
@@ -1214,6 +1227,8 @@ void CAgilityBookTreeView::OnUpdateCopy(wxUpdateUIEvent& evt)
 		wxDataViewItem item = m_Ctrl->GetSelection();
 		switch (m_Ctrl->GetStore()->Type(item))
 		{
+		default:
+			break;
 		case eTreeDog:
 		case eTreeTrial:
 		case eTreeRun:
@@ -1238,6 +1253,8 @@ void CAgilityBookTreeView::OnCopy(wxCommandEvent& evt)
 			wxDataViewItem item = m_Ctrl->GetSelection();
 			switch (m_Ctrl->GetStore()->Type(item))
 			{
+			default:
+				break;
 			case eTreeDog:
 				tree = ElementNode::New(CLIPDATA);
 				m_Ctrl->GetStore()->GetDog(item)->Save(tree, GetDocument()->Book().GetConfig());
@@ -1474,6 +1491,8 @@ void CAgilityBookTreeView::OnUpdateDelete(wxUpdateUIEvent& evt)
 		wxDataViewItem item = m_Ctrl->GetSelection();
 		switch (m_Ctrl->GetStore()->Type(item))
 		{
+		default:
+			break;
 		case eTreeDog:
 		case eTreeTrial:
 		case eTreeRun:
@@ -1492,6 +1511,8 @@ void CAgilityBookTreeView::OnDelete(wxCommandEvent& evt)
 		wxDataViewItem item = m_Ctrl->GetSelection();
 		switch (m_Ctrl->GetStore()->Type(item))
 		{
+		default:
+			break;
 		case eTreeDog:
 			if (m_bSuppressPrompt
 			|| wxYES == wxMessageBox(_("IDS_DELETE_DOG_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
@@ -1552,6 +1573,8 @@ void CAgilityBookTreeView::OnUpdateReorder(wxUpdateUIEvent& evt)
 		wxDataViewItem item = m_Ctrl->GetSelection();
 		switch (m_Ctrl->GetStore()->Type(item))
 		{
+		default:
+			break;
 		case eTreeDog:
 			bEnable = (1 < GetDocument()->Book().GetDogs().size());
 			break;
@@ -1574,6 +1597,8 @@ void CAgilityBookTreeView::OnReorder(wxCommandEvent& evt)
 		wxDataViewItem item = m_Ctrl->GetSelection();
 		switch (m_Ctrl->GetStore()->Type(item))
 		{
+		default:
+			break;
 		case eTreeDog:
 			if (1 < GetDocument()->Book().GetDogs().size())
 			{
@@ -1842,7 +1867,7 @@ void CAgilityBookTreeView::OnNewRun(wxCommandEvent& evt)
 		ARBDogTrialPtr pTrial = m_Ctrl->GetStore()->GetTrial(item);
 		if (pTrial && pTrial->GetClubs().GetPrimaryClub())
 		{
-			EditRun(m_Ctrl->GetStore()->GetDog(item), pTrial, NULL, this);
+			EditRun(m_Ctrl->GetStore()->GetDog(item), pTrial, ARBDogRunPtr(), this);
 		}
 	}
 }

@@ -107,7 +107,7 @@ void CAgilityBookDocManager::ActivateView(wxView *view, bool activate)
 {
 	CTabView* pTabView = wxDynamicCast(view, CTabView);
 	if (!pTabView)
-		__super::ActivateView(view, activate);
+		wxDocManager::ActivateView(view, activate);
 }
 
 
