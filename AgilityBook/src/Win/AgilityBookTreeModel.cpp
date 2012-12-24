@@ -65,19 +65,14 @@ void CAgilityBookTreeModel::UpdateColumns()
 
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
-	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_RUNS_LIST, m_Columns[2]);
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUNS, m_Columns[2]);
 
-	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_RUNS_LIST, m_Columns[2]))
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUNS, m_Columns[2]))
 	{
-		for (size_t iCol = 0; iCol <= m_Columns[2].size(); ++iCol)
+		for (size_t iCol = 0; iCol < m_Columns[2].size(); ++iCol)
 		{
-			std::wstring str;
-			int fmt = 0;
-			if (0 < iCol)
-			{
-				str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[2][iCol-1]);
-				fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[2][iCol-1]);
-			}
+			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[2][iCol]);
+			//int fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[2][iCol]);
 
 			wxDataViewRenderer* renderer;
 #if USE_ICONRENDERER

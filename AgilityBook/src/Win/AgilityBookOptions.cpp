@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-12-23 DRC Changed default Runs view columns.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2010-11-07 DRC Merge filters on program settings import also.
  * @li 2010-11-04 DRC Change importing program settings to merge columninfo.
@@ -1473,22 +1474,17 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_TREE_DOG_AGE);
 				break;
 			case IO_TYPE_VIEW_TREE_TRIAL:
-				outValues.push_back(IO_TREE_TRIAL_START);
 #ifndef __WXMSW__
 				outValues.push_back(IO_TREE_TRIAL_VERIFIED);
 #endif
 				outValues.push_back(IO_TREE_TRIAL_VENUE);
 				outValues.push_back(IO_TREE_TRIAL_LOCATION);
 				break;
-			case IO_TYPE_VIEW_TREE_RUN:
-				outValues.push_back(IO_TREE_RUN_DATE);
-				outValues.push_back(IO_TREE_RUN_EVENT);
-				break;
-			case IO_TYPE_VIEW_RUNS_LIST:
+			case IO_TYPE_VIEW_TREE_RUNS:
+				outValues.push_back(IO_RUNS_DATE);
 				outValues.push_back(IO_RUNS_Q);
 				outValues.push_back(IO_RUNS_TITLE_POINTS);
 				outValues.push_back(IO_RUNS_SCORE);
-				outValues.push_back(IO_RUNS_DATE);
 				outValues.push_back(IO_RUNS_VENUE);
 				outValues.push_back(IO_RUNS_EVENT);
 				outValues.push_back(IO_RUNS_DIVISION);

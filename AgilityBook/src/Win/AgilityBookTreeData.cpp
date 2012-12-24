@@ -398,16 +398,13 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 		unsigned int col) const
 {
 	wxVariant variant;
-	if (0 < col && m_pRun)
+	if (0 <= col && m_pRun)
 	{
 		ARBDogPtr dog = GetDog();
 		ARBDogTrialPtr trial = GetTrial();
 		std::wostringstream str;
 		short val;
-#pragma PRAGMA_TODO("Fix me")
-		// Col 0 is special: it has the icons. Instead of saving it,
-		// we simply ignore it - so col is always off by 1.
-		switch (columns[col-1])
+		switch (columns[col])
 		{
 		default:
 			break;

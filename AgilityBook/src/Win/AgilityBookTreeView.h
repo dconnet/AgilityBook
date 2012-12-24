@@ -49,7 +49,11 @@ public:
 	}
 	virtual bool Search(CDlgFind* pDlg) const;
 private:
+	void FillTree(wxDataViewItem item) const;
+	wxDataViewItem GetNextItem() const;
 	CAgilityBookTreeView* m_pView;
+	mutable std::vector<wxDataViewItem> m_Items;
+	mutable std::vector<wxDataViewItem>::const_iterator m_Iter;
 };
 
 

@@ -79,64 +79,65 @@
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-#pragma PRAGMA_TODO("Fix me")
-#if 0
-void CFindTree::FillTree(wxDataViewItem hItem) const
+void CFindTree::FillTree(wxDataViewItem item) const
 {
-	if (!hItem.IsOk())
+	if (!item.IsOk())
 		return;
 
-	if (m_pView->m_Ctrl->GetRootItem() != hItem)
-		m_Items.push_back(hItem);
+	m_Items.push_back(item);
 
-	wxTreeItemIdValue cookie;
-	wxDataViewItem hChildItem = m_pView->m_Ctrl->GetFirstChild(hItem, cookie);
-	while (hChildItem.IsOk())
+	wxDataViewItemArray items;
+	unsigned int n = m_pView->GetStore()->GetChildren(item, items);
+	for (unsigned int i = 0; i < n; ++i)
 	{
-		FillTree(hChildItem);
-		hChildItem = m_pView->m_Ctrl->GetNextChild(hItem, cookie);
+		FillTree(items[i]);
 	}
 }
 
 
 wxDataViewItem CFindTree::GetNextItem() const
 {
-	wxDataViewItem hItem;
+	wxDataViewItem item;
 	if (SearchDown())
 	{
 		++m_Iter;
 		if (m_Iter == m_Items.end())
-			hItem = NULL;
+			item.Unset();
 		else
-			hItem = *m_Iter;
+			item = *m_Iter;
 	}
 	else
 	{
 		if (m_Iter == m_Items.begin())
-			hItem = NULL;
+			item.Unset();
 		else
 		{
 			--m_Iter;
-			hItem = *m_Iter;
+			item = *m_Iter;
 		}
 	}
-	return hItem;
+	return item;
 }
-#endif
 
 
 bool CFindTree::Search(CDlgFind* pDlg) const
 {
 	bool bFound = false;
-#pragma PRAGMA_TODO("Fix me")
-#if 0
+
 	m_Items.clear();
-	FillTree(m_pView->m_Ctrl->GetRootItem());
-	if (0 == m_Items.size())
+
+	wxDataViewItemArray items;
+	unsigned int n = m_pView->GetStore()->GetChildren(wxDataViewItem(), items);
+	if (0 == n)
 		return bFound;
 
-	wxDataViewItem hItem = m_pView->m_Ctrl->GetSelection();
-	if (!hItem.IsOk())
+	for (unsigned int i = 0; i < n; ++i)
+	{
+		FillTree(items[i]);
+	}
+
+	wxDataViewItem item = m_pView->m_Ctrl->GetSelection();
+	if (!item.IsOk())
 	{
 		if (SearchDown())
 			m_Iter = m_Items.begin();
@@ -150,26 +151,26 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 	{
 		for (m_Iter = m_Items.begin(); m_Iter != m_Items.end(); ++m_Iter)
 		{
-			if (*m_Iter == hItem)
+			if (*m_Iter == item)
 				break;
 		}
-		hItem = GetNextItem();
+		item = GetNextItem();
 	}
 	std::wstring search = Text();
 	if (!MatchCase())
 		search = StringUtil::ToLower(search);
-	while (!bFound && hItem.IsOk())
+	while (!bFound && item.IsOk())
 	{
 		std::set<std::wstring> strings;
 		if (SearchAll())
 		{
-			CAgilityBookTreeData* pData = m_pView->GetTreeItem(hItem);
-			if (pData)
-				pData->GetARBBase()->GetSearchStrings(strings);
+			ARBBasePtr pBase = m_pView->GetStore()->GetARBBase(item);
+			if (pBase)
+				pBase->GetSearchStrings(strings);
 		}
 		else
 		{
-			strings.insert(StringUtil::stringW(m_pView->m_Ctrl->GetItemText(hItem)));
+			strings.insert(StringUtil::stringW(m_pView->m_Ctrl->GetStore()->GetPrintLine(item)));
 		}
 		for (std::set<std::wstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
@@ -178,18 +179,17 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 				str = StringUtil::ToLower(str);
 			if (std::wstring::npos != str.find(search))
 			{
-				m_pView->ChangeSelection(hItem);
+				m_pView->ChangeSelection(item);
 				bFound = true;
 			}
 		}
-		hItem = GetNextItem();
+		item = GetNextItem();
 	}
 	if (!bFound)
 	{
 		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
-#endif
 	return bFound;
 }
 

@@ -72,6 +72,7 @@ Training Log:
 
  *
  * Revision History
+ * @li 2012-12-23 DRC Changed default Runs view columns.
  * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2010-11-04 DRC When adding items, add after the current selection.
@@ -142,24 +143,17 @@ static struct
 		IO_TYPE_VIEW_TREE_DOG, 1,
 		arbT("IDS_ASSCOL_VIEW_TREE_DOG"),
 		arbT("IDS_ASSCOL_VIEW_TREE_DOG_DESC")},
+
+	{0, IO_TYPE_VIEW_RESERVED1, 0, NULL, NULL},
+	{0, IO_TYPE_VIEW_RESERVED2, 0, NULL, NULL},
+	{0, IO_TYPE_VIEW_RESERVED3, 0, NULL, NULL},
+
 	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_TREE_TRIAL, 2,
-		arbT("IDS_ASSCOL_VIEW_TREE_TRIAL"),
-		arbT("IDS_ASSCOL_VIEW_TREE_TRIAL_DESC")},
-	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_TREE_RUN, 3,
-		arbT("IDS_ASSCOL_VIEW_TREE_RUN"),
-		arbT("IDS_ASSCOL_VIEW_TREE_RUN_DESC")},
-	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_RUNS_LIST, 4,
-		arbT("IDS_ASSCOL_VIEW_RUNS_LIST"),
-		arbT("IDS_ASSCOL_VIEW_RUNS_LIST_DESC")},
-	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_CALENDAR_LIST, 5,
+		IO_TYPE_VIEW_CALENDAR_LIST, 4,
 		arbT("IDS_ASSCOL_VIEW_CALENDAR_LIST"),
 		arbT("IDS_ASSCOL_VIEW_CALENDAR_LIST_DESC")},
 	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_TRAINING_LIST, 7,
+		IO_TYPE_VIEW_TRAINING_LIST, 6,
 		arbT("IDS_ASSCOL_VIEW_TRAINING_LIST"),
 		arbT("IDS_ASSCOL_VIEW_TRAINING_LIST_DESC")},
 	{CAgilityBookOptions::eCalExportAppt,
@@ -171,9 +165,17 @@ static struct
 		arbT("IDS_ASSCOL_CALENDAR_TASK"),
 		arbT("IDS_ASSCOL_CALENDAR_TASK_DESC")},
 	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_CALENDAR, 6,
+		IO_TYPE_VIEW_CALENDAR, 5,
 		arbT("IDS_ASSCOL_VIEW_CALENDAR"),
 		arbT("IDS_ASSCOL_VIEW_CALENDAR_DESC")},
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_TREE_TRIAL, 2,
+		arbT("IDS_ASSCOL_VIEW_TREE_TRIAL"),
+		arbT("IDS_ASSCOL_VIEW_TREE_TRIAL_DESC")},
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_TREE_RUNS, 3,
+		arbT("IDS_ASSCOL_VIEW_TREE_RUN"),
+		arbT("IDS_ASSCOL_VIEW_TREE_RUN_DESC")},
 	// Note: Remember to update sc_Fields when adding a type.
 };
 
@@ -696,10 +698,6 @@ static int const idxViewTreeTrial[] = {
 	IO_TREE_TRIAL_NOTES,
 -1};
 static int const idxViewTreeRun[] = {
-	IO_TREE_RUN_DATE,		IO_TREE_RUN_Q,			IO_TREE_RUN_EVENT,
-	IO_TREE_RUN_DIVISION,	IO_TREE_RUN_LEVEL,		IO_TREE_RUN_HEIGHT,
--1};
-static int const idxViewRunsList[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -758,14 +756,14 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 	idxCalendar,
 	idxTraining,
 	idxViewTreeDog,
-	idxViewTreeTrial,
-	idxViewTreeRun,
-	idxViewRunsList,
+	NULL, NULL, NULL,
 	idxViewCalendarList,
 	idxViewTrainingList,
 	idxCalendarAppt,
 	idxCalendarTask,
 	idxViewCalendar,
+	idxViewTreeTrial,
+	idxViewTreeRun,
 };
 
 /////////////////////////////////////////////////////////////////////////////
