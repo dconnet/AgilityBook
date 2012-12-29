@@ -78,6 +78,7 @@
 
 CAgilityBookTreeData::CAgilityBookTreeData(CAgilityBookTreeModel* pModel)
 	: m_pModel(pModel)
+	, m_icon()
 	, m_parent(NULL)
 {
 }
@@ -134,19 +135,12 @@ CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(
 	: CAgilityBookTreeData(pModel)
 	, m_pDog(dog)
 {
+	m_icon = CIconList::Dog();
 }
 
 
 CAgilityBookTreeDataDog::~CAgilityBookTreeDataDog()
 {
-}
-
-
-wxIcon CAgilityBookTreeDataDog::GetIcon(unsigned int col) const
-{
-	if (0 == col)
-		return m_pModel->IconList().GetIcon(m_pModel->IconList().Dog());
-	return wxIcon();
 }
 
 
@@ -204,25 +198,14 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 		ARBDogTrialPtr trial)
 	: CAgilityBookTreeData(pModel)
 	, m_pTrial(trial)
-	, m_idxIcon()
 {
-	m_idxIcon = m_pModel->IconList().GetIcon(m_pModel->IconList().Trial(m_pModel->GetDocument()->Book().GetConfig(), m_pTrial));
+	CIconList icons;
+	m_icon = icons.GetIcon(icons.Trial(m_pModel->GetDocument()->Book().GetConfig(), m_pTrial));
 }
 
 
 CAgilityBookTreeDataTrial::~CAgilityBookTreeDataTrial()
 {
-}
-
-
-wxIcon CAgilityBookTreeDataTrial::GetIcon(unsigned int col) const
-{
-	if (0 == col)
-	{
-		int idx = m_pModel->IconList().Trial(m_pModel->GetDocument()->Book().GetConfig(), m_pTrial);
-		return m_pModel->IconList().GetIcon(idx);
-	}
-	return wxIcon();
 }
 
 
@@ -376,19 +359,12 @@ CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(
 	: CAgilityBookTreeData(pModel)
 	, m_pRun(run)
 {
+	m_icon = CIconList::Run();
 }
 
 
 CAgilityBookTreeDataRun::~CAgilityBookTreeDataRun()
 {
-}
-
-
-wxIcon CAgilityBookTreeDataRun::GetIcon(unsigned int col) const
-{
-	if (0 == col)
-		return m_pModel->IconList().GetIcon(m_pModel->IconList().Run());
-	return wxIcon();
 }
 
 

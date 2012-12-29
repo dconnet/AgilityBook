@@ -208,14 +208,14 @@ CDlgConfigure::CDlgConfigure(
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 
-	m_hItemVenues = m_ctrlItems->AppendItem(root, _("IDS_COL_VENUES"), m_ImageList.ARB(), m_ImageList.ARB(), new CDlgConfigureDataRoot(eVenues));
+	m_hItemVenues = m_ctrlItems->AppendItem(root, _("IDS_COL_VENUES"), m_ImageList.IndexARB(), m_ImageList.IndexARB(), new CDlgConfigureDataRoot(eVenues));
 	LoadData(eVenues);
 	m_ctrlItems->Expand(m_hItemVenues);
 
 	m_hItemFaults = m_ctrlItems->AppendItem(root, _("IDS_COL_FAULTS"), m_idxFaults, m_idxFaults, new CDlgConfigureDataRoot(eFaults));
 	LoadData(eFaults);
 
-	m_hItemOtherPts = m_ctrlItems->AppendItem(root, _("IDS_OTHERPOINTS"), m_ImageList.Run(), m_ImageList.Run(), new CDlgConfigureDataRoot(eOtherPoints));
+	m_hItemOtherPts = m_ctrlItems->AppendItem(root, _("IDS_OTHERPOINTS"), m_ImageList.IndexRun(), m_ImageList.IndexRun(), new CDlgConfigureDataRoot(eOtherPoints));
 	LoadData(eOtherPoints);
 
 	m_ctrlItems->SelectItem(m_hItemVenues);
@@ -348,7 +348,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 				m_ctrlItems->AppendItem(
 					hParent,
 					StringUtil::stringWX(pData->OnNeedText()),
-					m_ImageList.Run(), m_ImageList.Run(),
+					m_ImageList.IndexRun(), m_ImageList.IndexRun(),
 					pData);
 			}
 		}
@@ -542,7 +542,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 					m_ctrlItems->AppendItem(
 						m_hItemVenues,
 						StringUtil::stringWX(pData->OnNeedText()),
-						m_ImageList.ARB(), m_ImageList.ARB(),
+						m_ImageList.IndexARB(), m_ImageList.IndexARB(),
 						pData);
 					m_ctrlItems->SortChildren(m_hItemVenues);
 					FindCurrentVenue(pVenue, true);
@@ -592,7 +592,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 					m_ctrlItems->AppendItem(
 						m_hItemOtherPts,
 						StringUtil::stringWX(pData->OnNeedText()),
-						m_ImageList.Run(), m_ImageList.Run(),
+						m_ImageList.IndexRun(), m_ImageList.IndexRun(),
 						pData);
 					m_ctrlItems->SortChildren(m_hItemOtherPts);
 					FindCurrentOtherPoints(pOther, true);
@@ -684,7 +684,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 				m_ctrlItems->AppendItem(
 					m_hItemVenues,
 					StringUtil::stringWX(pData->OnNeedText()),
-					m_ImageList.ARB(), m_ImageList.ARB(),
+					m_ImageList.IndexARB(), m_ImageList.IndexARB(),
 					pNewData);
 				m_ctrlItems->SortChildren(m_hItemVenues);
 				FindCurrentVenue(pNewVenue, true);
@@ -727,7 +727,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 				m_ctrlItems->AppendItem(
 					m_hItemOtherPts,
 					StringUtil::stringWX(pData->OnNeedText()),
-					m_ImageList.Run(), m_ImageList.Run(),
+					m_ImageList.IndexRun(), m_ImageList.IndexRun(),
 					pNewData);
 				m_ctrlItems->SortChildren(m_hItemOtherPts);
 				FindCurrentOtherPoints(pOther, true);

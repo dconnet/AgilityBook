@@ -42,13 +42,13 @@ public:
 	virtual CTreeDataType Type() const = 0;
 
 	virtual bool IsContainer() const = 0;
-	virtual wxIcon GetIcon(unsigned int col) const	{return wxIcon();}
+	virtual wxIcon GetIcon(unsigned int col) const	{return 0 == col ? m_icon : wxIcon();}
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
 			unsigned int col) const = 0;
 
-	CAgilityBookTreeData* GetParent() const	{return m_parent;}
+	CAgilityBookTreeData* GetParent() const			{return m_parent;}
 	//virtual CAgilityBookTreeData const* GetParent() const {return m_parent;}
 	unsigned int GetChildren(wxDataViewItemArray& array) const;
 	void Append(CAgilityBookTreeData* child);
@@ -91,6 +91,7 @@ public:
 
 protected:
 	CAgilityBookTreeModel* m_pModel;
+	wxIcon m_icon;
 private:
 	CAgilityBookTreeData* m_parent;
 	std::vector<CAgilityBookTreeData*> m_children;
@@ -111,7 +112,6 @@ public:
 	}
 
 	virtual bool IsContainer() const		{return true;}
-	virtual wxIcon GetIcon(unsigned int col) const;
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
@@ -153,7 +153,6 @@ public:
 	}
 
 	virtual bool IsContainer() const		{return true;}
-	virtual wxIcon GetIcon(unsigned int col) const;
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
@@ -182,7 +181,6 @@ public:
 
 private:
 	ARBDogTrialPtr m_pTrial;
-	wxIcon m_idxIcon;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -200,7 +198,6 @@ public:
 	}
 
 	virtual bool IsContainer() const		{return false;}
-	virtual wxIcon GetIcon(unsigned int col) const;
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,

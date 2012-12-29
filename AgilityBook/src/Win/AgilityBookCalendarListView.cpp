@@ -49,6 +49,7 @@
 #include "DlgFind.h"
 #include "Element.h"
 #include "FilterOptions.h"
+#include "IconList.h"
 #include "ListData.h"
 #include "MainFrm.h"
 #include "Print.h"
@@ -58,17 +59,6 @@
 #include <wx/mstream.h>
 #include <wx/settings.h>
 #include <wx/stdstream.h>
-
-#include "res/AccConfirm.xpm"
-#include "res/AccNone.xpm"
-#include "res/AccTodo.xpm"
-#include "res/CalEntered.xpm"
-#include "res/CalEnteredTentative.xpm"
-#include "res/CalPending.xpm"
-#include "res/CalPendingTentative.xpm"
-#include "res/CalPlan.xpm"
-#include "res/CalPlanTentative.xpm"
-#include "res/CalTentative.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -574,16 +564,16 @@ bool CAgilityBookCalendarListView::Create(
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CAgilityBookCalendarListView::OnCtrlItemSelected);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CAgilityBookCalendarListView::OnCtrlItemActivated);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookCalendarListView::OnCtrlKeyDown);
-	m_imgTentative = m_Ctrl->AddIcon(wxIcon(CalTentative_xpm));
-	m_imgPlan = m_Ctrl->AddIcon(wxIcon(CalPlan_xpm));
-	m_imgPlanTentative = m_Ctrl->AddIcon(wxIcon(CalPlanTentative_xpm));
-	m_imgPending = m_Ctrl->AddIcon(wxIcon(CalPending_xpm));
-	m_imgPendingTentative = m_Ctrl->AddIcon(wxIcon(CalPendingTentative_xpm));
-	m_imgEntered = m_Ctrl->AddIcon(wxIcon(CalEntered_xpm));
-	m_imgEnteredTentative = m_Ctrl->AddIcon(wxIcon(CalEnteredTentative_xpm));
-	m_imgAccomNone = m_Ctrl->AddIcon(wxIcon(AccNone_xpm));
-	m_imgAccomTodo = m_Ctrl->AddIcon(wxIcon(AccTodo_xpm));
-	m_imgAccomConfirm = m_Ctrl->AddIcon(wxIcon(AccConfirm_xpm));
+	m_imgTentative = m_Ctrl->AddIcon(CIconList::CalTentative());
+	m_imgPlan = m_Ctrl->AddIcon(CIconList::CalPlanning());
+	m_imgPlanTentative = m_Ctrl->AddIcon(CIconList::CalPlanTentative());
+	m_imgPending = m_Ctrl->AddIcon(CIconList::CalPending());
+	m_imgPendingTentative = m_Ctrl->AddIcon(CIconList::CalPendingTentative());
+	m_imgEntered = m_Ctrl->AddIcon(CIconList::CalEntered());
+	m_imgEnteredTentative = m_Ctrl->AddIcon(CIconList::CalEnteredTentative());
+	m_imgAccomNone = m_Ctrl->AddIcon(CIconList::AccNone());
+	m_imgAccomTodo = m_Ctrl->AddIcon(CIconList::AccTodo());
+	m_imgAccomConfirm = m_Ctrl->AddIcon(CIconList::AccConfirm());
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif

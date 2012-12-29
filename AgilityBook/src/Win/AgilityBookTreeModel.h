@@ -2,7 +2,6 @@
 
 #include "AgilityBookMenu.h"
 #include "ARBBase.h"
-#include "IconList.h"
 #include <wx/dataview.h>
 class CAgilityBookDoc;
 class CAgilityBookTreeData;
@@ -24,7 +23,6 @@ public:
 	~CAgilityBookTreeModel();
 
 	CAgilityBookDoc* GetDocument() const	{return m_pDoc;}
-	CIconList const& IconList() const		{return m_icons;}
 
 	void CreateColumns(wxDataViewCtrl* ctrl, CAgilityBookDoc* pDoc);
 	void UpdateColumns();
@@ -83,6 +81,5 @@ private:
 	wxDataViewCtrl* m_Ctrl;
 	std::vector<long> m_Columns[3];
 
-	CIconList m_icons;
 	std::vector<CAgilityBookTreeData*> m_roots;
 };

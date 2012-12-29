@@ -57,7 +57,6 @@ private:
 	wxButton* m_ctrlOpen;
 
 	CColumnOrder m_sortLinks;
-	int m_imgEmpty;
 	int m_imgOk;
 	int m_imgMissing;
 	std::vector<CDlgFindLinksDataPtr> m_Data;

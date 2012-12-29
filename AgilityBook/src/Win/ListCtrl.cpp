@@ -33,14 +33,9 @@
 #include "ListCtrl.h"
 
 #include "Globals.h"
+#include "IconList.h"
 #include "ListData.h"
 #include <sstream>
-
-#include "res/CalEmpty.xpm"
-#include "res/checked.xpm"
-#include "res/HdrDown.xpm"
-#include "res/HdrUp.xpm"
-#include "res/unchecked.xpm"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -107,9 +102,9 @@ bool CReportListCtrl::Create(
 	// it will use this by default
 	if (bHasImageList || sortHeader == eSortHeader)
 	{
-		m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
-		m_imgSortUp = m_ImageList.Add(wxIcon(HdrUp_xpm));
-		m_imgSortDn = m_ImageList.Add(wxIcon(HdrDown_xpm));
+		m_imgEmpty = m_ImageList.Add(CIconList::Blank());
+		m_imgSortUp = m_ImageList.Add(CIconList::HeaderUp());
+		m_imgSortDn = m_ImageList.Add(CIconList::HeaderDown());
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 	return true;
@@ -386,9 +381,9 @@ CCheckListCtrl::CCheckListCtrl(
 	{
 		BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckListCtrl::OnClick);
 		BIND_OR_CONNECT(wxEVT_KEY_DOWN, wxKeyEventHandler, CCheckListCtrl::OnKeyDown);
-		m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
-		m_imgNoCheck = m_ImageList.Add(wxIcon(unchecked_xpm));
-		m_imgChecked = m_ImageList.Add(wxIcon(checked_xpm));
+		m_imgEmpty = m_ImageList.Add(CIconList::Blank());
+		m_imgNoCheck = m_ImageList.Add(CIconList::UnChecked());
+		m_imgChecked = m_ImageList.Add(CIconList::Checked());
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 }

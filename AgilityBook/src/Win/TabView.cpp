@@ -28,6 +28,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookPanels.h"
 #include "AgilityBookTreeView.h"
+#include "IconList.h"
 #include "MainFrm.h"
 #include "RegItems.h"
 #include <wx/choicebk.h>
@@ -36,11 +37,6 @@
 #include <wx/notebook.h>
 #include <wx/toolbook.h>
 #include <wx/treebook.h>
-
-#include "res/run.xpm"
-#include "res/points.xpm"
-#include "res/calendar.xpm"
-#include "res/training.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -77,10 +73,10 @@ CTabView::CTabView()
 	, m_imageList(16,16)
 	, m_bIgnoreEvents(false)
 {
-	m_imageList.Add(wxIcon(run_xpm));
-	m_imageList.Add(wxIcon(points_xpm));
-	m_imageList.Add(wxIcon(calendar_xpm));
-	m_imageList.Add(wxIcon(training_xpm));
+	m_imageList.Add(CIconList::TabRuns());
+	m_imageList.Add(CIconList::TabPoints());
+	m_imageList.Add(CIconList::TabCalendar());
+	m_imageList.Add(CIconList::TabTraining());
 	m_type = wxConfig::Get()->Read(CFG_SETTINGS_VIEWTYPE, m_type);
 	if (m_type < 0 || m_type > ID_BOOK_LAST - ID_BOOK_FIRST)
 	{
