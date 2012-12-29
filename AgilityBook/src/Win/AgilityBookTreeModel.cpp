@@ -17,12 +17,6 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#ifdef __WXMAC__
-#define USE_ICONRENDERER	0
-#else
-#define USE_ICONRENDERER	1
-#endif
-
 /////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookTreeModel::CAgilityBookTreeModel()
@@ -75,11 +69,9 @@ void CAgilityBookTreeModel::UpdateColumns()
 			//int fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[2][iCol]);
 
 			wxDataViewRenderer* renderer;
-#if USE_ICONRENDERER
 			if (0 == iCol)
-				renderer = new wxDataViewIconTextRenderer("string", wxDATAVIEW_CELL_INERT);
+				renderer = new wxDataViewIconTextRenderer("wxDataViewIconText", wxDATAVIEW_CELL_INERT);
 			else
-#endif
 				renderer = new wxDataViewTextRenderer("string", wxDATAVIEW_CELL_INERT);
 
 			wxDataViewColumn* column = new wxDataViewColumn(
@@ -387,16 +379,12 @@ void CAgilityBookTreeModel::GetValue(
 	wxASSERT(node);
 
 	wxIcon icon = node->GetIcon(col);
-#if USE_ICONRENDERER
 	if (icon.IsOk())
 	{
-		wxDataViewIconText data;
-		data.SetIcon(icon);
-		data.SetText(node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col));
+		wxDataViewIconText data(node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col), icon);
 		variant << data;
 	}
 	else
-#endif
 	{
 		variant = node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col);
 	}
