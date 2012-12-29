@@ -187,12 +187,6 @@ private:
 	std::wstring GetPrintDataAsHtmlTable() const;
 
 	CAgilityBookTreeCtrl* m_Ctrl;
-	//CIconList m_ImageList;
-//#ifdef WX_TREE_HAS_STATE
-	//wxImageList m_ImageListStates;
-	//int m_idxEmpty;
-	//int m_idxChecked;
-//#endif
 	CFindTree m_Callback;
 	ARBDogPtr m_pDog;
 	bool m_bSuppressPrompt;

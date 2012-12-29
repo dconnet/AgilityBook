@@ -67,11 +67,6 @@
 #include <wx/config.h>
 #include <wx/dataview.h>
 
-#ifdef WX_TREE_HAS_STATE
-#include "res/CalEmpty.xpm"
-#include "res/CalPlan.xpm"
-#endif
-
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
@@ -273,7 +268,7 @@ static bool EditRun(
 		// caused the trial to be reordered.
 		if (bOk)
 		{
-			CUpdateHint hint(UPDATE_POINTS_VIEW);
+			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW);
 			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 		}
 	}
@@ -384,25 +379,10 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
 	, m_Ctrl(NULL)
-	//, m_ImageList()
-#ifdef WX_TREE_HAS_STATE
-	//, m_ImageListStates(16,16)
-	//, m_idxEmpty(-1)
-	//, m_idxChecked(-1)
-#endif
 	, m_Callback(this)
 	, m_pDog()
 	, m_bSuppressPrompt(false)
 {
-#pragma PRAGMA_TODO("Fix me")
-#if 0
-#ifdef WX_TREE_HAS_STATE
-	// Note: Position 0 cannot be used.
-	m_ImageListStates.Add(wxIcon(CalEmpty_xpm));
-	m_idxEmpty = m_ImageListStates.Add(wxIcon(CalEmpty_xpm));
-	m_idxChecked = m_ImageListStates.Add(wxIcon(CalPlan_xpm));
-#endif
-#endif
 }
 #ifdef ARB_HAS_PRAGMAPUSHPOP
 #pragma warning (pop)
@@ -491,11 +471,6 @@ bool CAgilityBookTreeView::Create(
 	BIND_OR_CONNECT_ID(ID_COLLAPSE_ALL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateCollapseAll);
 	BIND_OR_CONNECT_ID(ID_COLLAPSE_ALL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnCollapseAll);
 
-#pragma PRAGMA_TODO("Fix me")
-	//m_Ctrl->SetImageList(&m_ImageList);
-#ifdef WX_TREE_HAS_STATE
-	//m_Ctrl->SetStateImageList(&m_ImageListStates);
-#endif
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif
@@ -953,7 +928,6 @@ bool CAgilityBookTreeView::DoEdit(
 
 void CAgilityBookTreeView::DoSelectionChange(wxDataViewItem const& item)
 {
-	ARBBasePtr pBase;
 	unsigned int iHint = 0;
 	if (item.IsOk())
 	{
@@ -962,18 +936,12 @@ void CAgilityBookTreeView::DoSelectionChange(wxDataViewItem const& item)
 		if (!m_pDog || !pDog || m_pDog != pDog)
 			iHint |= UPDATE_POINTS_VIEW;
 		m_pDog = pDog;
-		// Pass the selected run
-		if (eTreeRun == m_Ctrl->GetStore()->Type(item))
-		{
-			pBase = m_Ctrl->GetStore()->GetRun(item);
-			iHint |= UPDATE_RUNS_SELECTION_VIEW;
-		}
 	}
 	else
 		m_pDog.reset();
 	if (iHint)
 	{
-		CUpdateHint hint(iHint, pBase);
+		CUpdateHint hint(iHint);
 		GetDocument()->UpdateAllViews(this, &hint);
 	}
 }
