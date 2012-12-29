@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-12-29 DRC Update training view properly after a paste.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-04 DRC Ported to wxWidgets.
@@ -821,11 +822,9 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 			clpData.Close();
 			if (bLoaded)
 			{
-				GetDocument()->Book().GetCalendar().sort();
+				GetDocument()->Book().GetTraining().sort();
 				LoadData();
 				GetDocument()->Modify(true);
-				CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-				GetDocument()->UpdateAllViews(this, &hint);
 			}
 		}
 		break;
