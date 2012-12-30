@@ -94,8 +94,8 @@ Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
 ARB has been built and tested using Boost version 1.52.0. There is no need
-to actually build the Boost libraries. (Currently, only the smart_ptr and
-weak_ptr templates are used.)
+to actually build the Boost libraries. (Currently, only the smart_ptr,
+weak_ptr and make_shared templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
 above. The default directory when unpacked is boost_1_52_0 (of course,
@@ -157,9 +157,7 @@ Microsoft Visual Studio 2008 (VC9)
 
 Microsoft Visual Studio 2008 (VC9) + SP1
 ========================================
-   It works, no additional notes.
-   [x86: UNICODE and MBCS] [note: MBCS support has been dropped]
-   [x64: UNICODE only]
+   Not supported. (no support for std::make_shared)
 
 Microsoft Visual Studio 2010 (VC10)
 ===================================
@@ -181,7 +179,7 @@ Microsoft Visual Studio 2012 (VC11)
 ===================================
    It works, no additional notes.
 
-XCode
+Xcode
 =====
 The xcode projects were used as follows:
 .../xcode3: Xcode 3.1 on OSX10.5
