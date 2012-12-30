@@ -79,18 +79,18 @@ SUITE(TestVersion)
 		}
 	}
 
-    TEST(VerParse)
-    {
+	TEST(VerParse)
+	{
 		if (!g_bMicroTest)
-        {
-            CVersionNum v(false);
-            CHECK(v.Parse(L"1.2.3.4"));
-            CVersionNum::VERSION_NUMBER ver;
-            v.GetVersion(ver);
-            CHECK(ver.part1 == 1);
-            CHECK(ver.part2 == 2);
-            CHECK(ver.part3 == 3);
-            CHECK(ver.part4 == 4);
-        }
-    }
+		{
+			CVersionNum v(false);
+			CHECK(v.Parse(L"1.2.3.4"));
+			CVersionNum::VERSION_NUMBER ver;
+			v.GetVersion(ver);
+			CHECK(ver.part1 == 1);
+			CHECK(ver.part2 == 2);
+			CHECK(ver.part3 == 3);
+			CHECK(ver.part4 == 4);
+		}
+	}
 }

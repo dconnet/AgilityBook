@@ -52,6 +52,7 @@ public:
 	virtual void Release() = 0;
 };
 
+
 /**
  * The calendar cribsheet.
  *

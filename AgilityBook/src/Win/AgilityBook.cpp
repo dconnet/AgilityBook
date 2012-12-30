@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-12-15 DRC Prevent TabView from getting activation.
  * @li 2012-08-28 DRC Rework how wxCmdLineParser is initialized.
  * @li 2012-07-27 DRC Disable spell checking on OSX 10.8. It crashes.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -72,6 +73,7 @@ class CAgilityBookDocManager : public wxDocManager
 public:
 	CAgilityBookDocManager(size_t historySize);
 	virtual wxFileHistory* OnCreateFileHistory();
+	virtual void ActivateView(wxView *view, bool activate = true);
 private:
 	size_t m_History;
 
@@ -98,6 +100,14 @@ CAgilityBookDocManager::CAgilityBookDocManager(size_t historySize)
 wxFileHistory* CAgilityBookDocManager::OnCreateFileHistory()
 {
 	return new wxFileHistory(m_History);
+}
+
+
+void CAgilityBookDocManager::ActivateView(wxView *view, bool activate)
+{
+	CTabView* pTabView = wxDynamicCast(view, CTabView);
+	if (!pTabView)
+		wxDocManager::ActivateView(view, activate);
 }
 
 

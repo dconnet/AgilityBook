@@ -32,11 +32,9 @@
 #include "CheckLink.h"
 #include "ClipBoard.h"
 #include "DlgSelectURL.h"
+#include "IconList.h"
 #include "ListCtrl.h"
 #include "ListData.h"
-
-#include "res/CalPlan.xpm"
-#include "res/CalTentative.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -175,7 +173,6 @@ CDlgFindLinks::CDlgFindLinks(
 	, m_ctrlEdit(NULL)
 	, m_ctrlOpen(NULL)
 	, m_sortLinks(L"Links")
-	, m_imgEmpty(-1)
 	, m_imgOk(-1)
 	, m_imgMissing(-1)
 {
@@ -196,9 +193,8 @@ CDlgFindLinks::CDlgFindLinks(
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgFindLinks::OnItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgFindLinks::OnItemActivated);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgFindLinks::OnKeyDown);
-	m_imgEmpty = m_ctrlLinks->ImageEmpty();
-	m_imgOk = m_ctrlLinks->AddIcon(wxIcon(CalPlan_xpm));
-	m_imgMissing = m_ctrlLinks->AddIcon(wxIcon(CalTentative_xpm));
+	m_imgOk = m_ctrlLinks->AddIcon(CIconList::Check());
+	m_imgMissing = m_ctrlLinks->AddIcon(CIconList::Question());
 	m_ctrlLinks->SetHelpText(_("HIDC_FINDLINKS_LIST"));
 	m_ctrlLinks->SetToolTip(_("HIDC_FINDLINKS_LIST"));
 
@@ -322,7 +318,7 @@ CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkDataByData(long data)
 int CDlgFindLinks::GetImageIndex(std::wstring const& inLink)
 {
 	wxBusyCursor wait;
-	int img = m_imgEmpty;
+	int img = m_ctrlLinks->ImageEmpty();
 	if (0 < inLink.length())
 	{
 		if (CheckLink(inLink, this))

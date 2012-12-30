@@ -13,10 +13,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-12-29 DRC Move icon management to global list.
  * @li 2009-01-27 DRC Ported to wxWidgets.
  * @li 2007-04-22 DRC Created.
  */
 
+#include "ARBTypes.h"
 #include <wx/imaglist.h>
 
 
@@ -25,10 +27,10 @@ class CIconList : public wxImageList
 public:
 	CIconList();
 
-	int ARB() const			{return m_idxARB;}
-	int Dog() const			{return m_idxDog;}
-	int Trial() const		{return m_idxTrial;}
-	int Run() const			{return m_idxRun;}
+	int IndexARB() const	{return m_idxARB;}
+	int IndexDog() const	{return m_idxDog;}
+	int IndexTrial() const	{return m_idxTrial;}
+	int IndexRun() const	{return m_idxRun;}
 	int AAC() const			{return m_idxVenueAAC;}
 	int AKC() const			{return m_idxVenueAKC;}
 	int ASCA() const		{return m_idxVenueASCA;}
@@ -42,6 +44,54 @@ public:
 	int USDAA() const		{return m_idxVenueUSDAA;}
 	int FCI() const			{return m_idxVenueFCI;}
 	int SCC() const			{return m_idxVenueSCC;}
+
+	int Trial(ARBConfig& config, ARBDogTrialPtr pTrial) const;
+
+	static wxIcon ARB();
+
+	static wxIcon TabRuns();
+	static wxIcon TabPoints();
+	static wxIcon TabCalendar();
+	static wxIcon TabTraining();
+
+	static wxIcon Dog();
+	static wxIcon Run();
+
+	static wxIcon CRCD();
+
+	static wxIcon Blank();
+	static wxIcon Checked();
+	static wxIcon UnChecked();
+	static wxIcon Check();
+	static wxIcon Question();
+
+	static wxIcon AccConfirm();
+	static wxIcon AccNone();
+	static wxIcon AccTodo();
+
+	static wxIcon CalEntered();
+	static wxIcon CalEnteredTentative();
+	static wxIcon CalPending();
+	static wxIcon CalPendingTentative();
+	static wxIcon CalPlanning();
+	static wxIcon CalPlanTentative();
+	static wxIcon CalTentative();
+
+	static wxIcon HeaderDown();
+	static wxIcon HeaderUp();
+
+	static wxIcon NoteAdded();
+	static wxIcon NoteNote();
+	static wxIcon NoteNoteAdded();
+
+	// Hidden: !
+	// Title: ribbon
+	// Have: check
+	static wxIcon Hidden();
+	static wxIcon TitledHidden();
+	static wxIcon TitledHiddenHave();
+	static wxIcon Title();
+	static wxIcon TitleHave();
 
 protected:
 	int m_idxARB;

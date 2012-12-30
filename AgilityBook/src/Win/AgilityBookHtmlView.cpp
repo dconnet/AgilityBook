@@ -23,7 +23,6 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookTreeData.h"
 #include "ClipBoard.h"
 #include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
@@ -323,17 +322,7 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 		break;
 
 	case ID_AGILITY_NEW_TITLE:
-		if (GetDocument()->GetCurrentDog())
-		{
-			// Convenience! No duplicated code!
-			CAgilityBookTreeDataDog data(GetDocument()->GetTreeView(), GetDocument()->GetCurrentDog());
-			bool bModified = false;
-			if (data.OnCmd(ID_AGILITY_NEW_TITLE, bModified, NULL))
-			{
-				if (bModified)
-					GetDocument()->Modify(true);
-			}
-		}
+		GetDocument()->AddTitle(GetDocument()->GetCurrentDog());
 		break;
 
 	case ID_VIEW_POINTS_VIEW_SORT:

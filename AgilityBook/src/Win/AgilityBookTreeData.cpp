@@ -291,71 +291,6 @@ static bool EditRun(
 	return bOk;
 }
 
-
-static void UpdateFutureTrials(
-		ARBConfig const& config,
-		ARBDogPtr pDog,
-		ARBDogTitlePtr title)
-{
-	// Find all trials in the future in the same venue.
-	std::vector<ARBDogTrialPtr> trials;
-	for (ARBDogTrialList::iterator i = pDog->GetTrials().begin();
-		i != pDog->GetTrials().end();
-		++i)
-	{
-		if ((*i)->HasVenue(title->GetVenue())
-		&& 0 < (*i)->GetRuns().size())
-		{
-			ARBDate d1 = (*((*i)->GetRuns().begin()))->GetDate();
-			if (d1 > ARBDate::Today())
-			{
-				trials.push_back(*i);
-			}
-		}
-	}
-	if (0 < trials.size())
-	{
-		/*
-		Interesting problem. Level order can be implied by the actual order in
-		the config. But what does moveup mean? I could be moving from (USDAA)
-		Ch to Pf.
-		- Need user option to suppress moveup if in top level
-		- Need to add info to a title for what events it affects (or determining
-		  if a moveup can happen can't be done)
-		- more than one event may be a move (USDAA AD implies everything goes up
-		Oh. Even more complicated. Earning NovA means NovB moveOVER.
-		*/
-#pragma PRAGMA_TODO("Add dialog to update future trials")
-		/*
-		Thought 2. Maybe we just fly an info dialog here 'You are entered in
-		N upcoming trials (list). Please check for moveups.'
-		*/
-	}
-}
-
-
-static bool AddTitle(
-		CAgilityBookTreeDataDog* pDogData,
-		CAgilityBookTreeView* pTree)
-{
-	assert(pDogData && pDogData->GetDog());
-	CDlgTitle dlg(pTree->GetDocument()->Book().GetConfig(), pDogData->GetDog()->GetTitles(), ARBDogTitlePtr());
-	if (wxID_OK == dlg.ShowModal())
-	{
-		std::vector<CVenueFilter> venues;
-		CFilterOptions::Options().GetFilterVenue(venues);
-		pTree->GetDocument()->ResetVisibility(venues, dlg.GetNewTitle());
-		UpdateFutureTrials(pTree->GetDocument()->Book().GetConfig(), pDogData->GetDog(), dlg.GetNewTitle());
-		CUpdateHint hint(UPDATE_POINTS_VIEW);
-		pTree->GetDocument()->UpdateAllViews(NULL, &hint);
-		if (CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
-			EditDog(pDogData, pTree, NULL, 1);
-		return true;
-	}
-	else
-		return false;
-}
-
 ////////////////////////////////////////////////////////////////////////////
 
 bool CAgilityBookTreeData::CanPaste() const
@@ -667,8 +602,8 @@ bool CAgilityBookTreeDataDog::OnCmd(
 			bModified = true;
 		break;
 	case ID_AGILITY_NEW_TITLE:
-		if (AddTitle(this, m_pTree))
-			bModified = true;
+		assert(GetDog());
+		m_pTree->GetDocument()->AddTitle(GetDog());
 		break;
 	case ID_AGILITY_DELETE_DOG:
 		if (!bPrompt
@@ -772,7 +707,7 @@ std::wstring CAgilityBookTreeDataDog::OnNeedText() const
 
 int CAgilityBookTreeDataDog::OnNeedIcon() const
 {
-	return m_pTree->GetImageList().Dog();
+	return m_pTree->GetImageList().IndexDog();
 }
 
 
@@ -797,7 +732,7 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 	, m_pTrial(pTrial)
 	, m_idxIcon(-1)
 {
-	m_idxIcon = m_pTree->GetImageList().Trial();
+	m_idxIcon = m_pTree->GetImageList().IndexTrial();
 	if (m_pTrial)
 	{
 		ARBDogClubPtr pClub;
@@ -971,8 +906,8 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 				bModified = true;
 		break;
 	case ID_AGILITY_NEW_TITLE:
-		if (AddTitle(GetDataDog(), m_pTree))
-			bModified = true;
+		assert(GetDataDog() && GetDataDog()->GetDog());
+		m_pTree->GetDocument()->AddTitle(GetDataDog()->GetDog());
 		break;
 	case ID_AGILITY_DELETE_TRIAL:
 		if (!bPrompt
@@ -1341,8 +1276,8 @@ bool CAgilityBookTreeDataRun::OnCmd(
 				bModified = true;
 		break;
 	case ID_AGILITY_NEW_TITLE:
-		if (AddTitle(GetDataDog(), m_pTree))
-			bModified = true;
+		assert(GetDataDog() && GetDataDog()->GetDog());
+		m_pTree->GetDocument()->AddTitle(GetDataDog()->GetDog());
 		break;
 	case ID_AGILITY_DELETE_RUN:
 		if (!bPrompt
@@ -1440,7 +1375,7 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 
 int CAgilityBookTreeDataRun::OnNeedIcon() const
 {
-	return m_pTree->GetImageList().Run();
+	return m_pTree->GetImageList().IndexRun();
 }
 
 
