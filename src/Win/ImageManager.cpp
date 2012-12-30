@@ -71,19 +71,28 @@
 #endif
 
 
+bool CImageManager::s_bNoReInit = false;
 CImageManager* CImageManager::s_pImageManager = NULL;
 
 
 CImageManager* CImageManager::Get()
 {
-	if (!s_pImageManager)
+	if (!s_pImageManager && !s_bNoReInit)
 		s_pImageManager = new CImageManager();
 	return s_pImageManager;
 }
 
 
+void CImageManager::Reset()
+{
+	Delete();
+	s_bNoReInit = false;
+}
+
+
 void CImageManager::Delete()
 {
+	s_bNoReInit = true;
 	delete s_pImageManager;
 	s_pImageManager = NULL;
 }
