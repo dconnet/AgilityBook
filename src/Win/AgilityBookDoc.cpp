@@ -379,16 +379,9 @@ std::wstring CAgilityBookDoc::AddDogToCaption(std::wstring const& caption) const
 ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 {
 	ARBDogPtr pDog;
-	if (1 == m_Records.GetDogs().size())
-	{
-		pDog = *(m_Records.GetDogs().begin());
-	}
-	else
-	{
-		CAgilityBookTreeView* pTree = GetTreeView();
-		if (pTree && pTree->GetCurrentTreeItem())
-			pDog = pTree->GetCurrentTreeItem()->GetDog();
-	}
+	CAgilityBookTreeView* pTree = GetTreeView();
+	if (pTree && pTree->GetCurrentTreeItem())
+		pDog = pTree->GetCurrentTreeItem()->GetDog();
 	return pDog;
 }
 
