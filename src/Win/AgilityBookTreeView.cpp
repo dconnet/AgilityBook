@@ -56,15 +56,11 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
+#include "IconList.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
 #include <wx/config.h>
-
-#ifdef WX_TREE_HAS_STATE
-#include "res/CalEmpty.xpm"
-#include "res/CalPlan.xpm"
-#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -280,9 +276,9 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 {
 #ifdef WX_TREE_HAS_STATE
 	// Note: Position 0 cannot be used.
-	m_ImageListStates.Add(wxIcon(CalEmpty_xpm));
-	m_idxEmpty = m_ImageListStates.Add(wxIcon(CalEmpty_xpm));
-	m_idxChecked = m_ImageListStates.Add(wxIcon(CalPlan_xpm));
+	m_ImageListStates.Add(CIconList::Blank());
+	m_idxEmpty = m_ImageListStates.Add(CIconList::Blank());
+	m_idxChecked = m_ImageListStates.Add(CIconList::Check());
 #endif
 
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);

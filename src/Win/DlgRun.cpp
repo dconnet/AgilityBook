@@ -113,6 +113,7 @@
 #include "DlgReferenceRun.h"
 #include "DlgSelectURL.h"
 #include "Globals.h"
+#include "IconList.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 #include "NoteButton.h"
@@ -124,10 +125,6 @@
 #include <wx/dateevt.h>
 #include <wx/dcbuffer.h>
 #include <wx/dnd.h>
-
-#include "res/CalEmpty.xpm"
-#include "res/CalPlan.xpm"
-#include "res/CalTentative.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -1356,9 +1353,9 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize,
 		wxLC_NO_HEADER|wxLC_REPORT|wxLC_SINGLE_SEL);
 	m_ctrlLinks->SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
-	m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
-	m_imgOk = m_ImageList.Add(wxIcon(CalPlan_xpm));
-	m_imgMissing = m_ImageList.Add(wxIcon(CalTentative_xpm));
+	m_imgEmpty = m_ImageList.Add(CIconList::Blank());
+	m_imgOk = m_ImageList.Add(CIconList::Check());
+	m_imgMissing = m_ImageList.Add(CIconList::Question());
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgRun::OnLinksItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgRun::OnLinksItemActivated);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgRun::OnLinksKeyDown);

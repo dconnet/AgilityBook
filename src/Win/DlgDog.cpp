@@ -58,6 +58,7 @@
 #include "DlgRegNum.h"
 #include "DlgTitle.h"
 #include "FilterOptions.h"
+#include "IconList.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 #include "StringUtil.h"
@@ -65,13 +66,6 @@
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 #include <wx/notebook.h>
-
-#include "res/CalEmpty.xpm"
-#include "res/hidden.xpm"
-#include "res/title-hidden-have.xpm"
-#include "res/title-hidden.xpm"
-#include "res/title-visible-have.xpm"
-#include "res/title-visible.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -723,12 +717,12 @@ CDlgDog::CDlgDog(
 	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgDog::OnTitleKeyDown);
 	m_ctrlTitles->SetHelpText(_("HIDC_DOG_TITLE_TITLES"));
 	m_ctrlTitles->SetToolTip(_("HIDC_DOG_TITLE_TITLES"));
-	m_imgTitlesEmpty = m_ctrlTitles->AddIcon(wxIcon(CalEmpty_xpm));
-	m_imgTitlesTitled = m_ctrlTitles->AddIcon(wxIcon(title_visible_xpm));
-	m_imgTitlesTitledReceived = m_ctrlTitles->AddIcon(wxIcon(title_visible_have_xpm));
-	m_imgTitlesHidden = m_ctrlTitles->AddIcon(wxIcon(hidden_xpm));
-	m_imgTitlesTitledHidden = m_ctrlTitles->AddIcon(wxIcon(title_hidden_xpm));
-	m_imgTitlesTitledHiddenReceived = m_ctrlTitles->AddIcon(wxIcon(title_hidden_have_xpm));
+	m_imgTitlesEmpty = m_ctrlTitles->AddIcon(CIconList::Blank());
+	m_imgTitlesTitled = m_ctrlTitles->AddIcon(CIconList::Title());
+	m_imgTitlesTitledReceived = m_ctrlTitles->AddIcon(CIconList::TitleHave());
+	m_imgTitlesHidden = m_ctrlTitles->AddIcon(CIconList::Hidden());
+	m_imgTitlesTitledHidden = m_ctrlTitles->AddIcon(CIconList::TitledHidden());
+	m_imgTitlesTitledHiddenReceived = m_ctrlTitles->AddIcon(CIconList::TitledHiddenHave());
 	int i;
 	for (i = 0; i < nColTitleInfo; ++i)
 	{

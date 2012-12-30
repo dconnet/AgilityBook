@@ -41,17 +41,10 @@
 #include "DlgFault.h"
 #include "DlgOtherPoint.h"
 #include "DlgPartner.h"
+#include "IconList.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 #include "StringUtil.h"
-
-#include "res/CalTentative.xpm"
-#include "res/CalPlan.xpm"
-#include "res/CalPlanTentative.xpm"
-#include "res/CalPending.xpm"
-#include "res/CalPendingTentative.xpm"
-#include "res/CalEntered.xpm"
-#include "res/CalEnteredTentative.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -119,7 +112,7 @@ int CDlgListCtrlDataCalendar::OnNeedIcon() const
 	switch (GetCalendar()->GetEntered())
 	{
 	default:
-		return GetCalendar()->IsTentative() ? m_Parent->m_imgTentative : m_Parent->m_imgEmpty;
+		return GetCalendar()->IsTentative() ? m_Parent->m_imgTentative : m_Parent->m_ctrlList->ImageEmpty();
 	case ARBCalendar::ePlanning:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgPlanTentative : m_Parent->m_imgPlan;
 	case ARBCalendar::ePending:
@@ -529,14 +522,13 @@ bool CDlgListCtrl::Create(
 	m_ctrlList = new CReportListCtrl(this,
 		wxDefaultPosition, wxSize(400,150),
 		true, CReportListCtrl::eNoSortHeader, true, bHasImageList);
-	m_imgEmpty = m_ctrlList->ImageEmpty();
-	m_imgTentative = m_ctrlList->AddIcon(wxIcon(CalTentative_xpm));
-	m_imgPlan = m_ctrlList->AddIcon(wxIcon(CalPlan_xpm));
-	m_imgPlanTentative = m_ctrlList->AddIcon(wxIcon(CalPlanTentative_xpm));
-	m_imgPending = m_ctrlList->AddIcon(wxIcon(CalPending_xpm));
-	m_imgPendingTentative = m_ctrlList->AddIcon(wxIcon(CalPendingTentative_xpm));
-	m_imgEntered = m_ctrlList->AddIcon(wxIcon(CalEntered_xpm));
-	m_imgEnteredTentative = m_ctrlList->AddIcon(wxIcon(CalEnteredTentative_xpm));
+	m_imgTentative = m_ctrlList->AddIcon(CIconList::CalTentative());
+	m_imgPlan = m_ctrlList->AddIcon(CIconList::CalPlanning());
+	m_imgPlanTentative = m_ctrlList->AddIcon(CIconList::CalPlanTentative());
+	m_imgPending = m_ctrlList->AddIcon(CIconList::CalPending());
+	m_imgPendingTentative = m_ctrlList->AddIcon(CIconList::CalPendingTentative());
+	m_imgEntered = m_ctrlList->AddIcon(CIconList::CalEntered());
+	m_imgEnteredTentative = m_ctrlList->AddIcon(CIconList::CalEnteredTentative());
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgListCtrl::OnItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgListCtrl::OnItemActivated);
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgListCtrl::OnKeyDown);

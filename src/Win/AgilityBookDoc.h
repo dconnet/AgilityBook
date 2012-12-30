@@ -112,8 +112,8 @@ public:
 	ARBDogRunPtr GetCurrentRun() const;
 	ARBAgilityRecordBook& Book()			{return m_Records;}
 
+	bool AddTitle(ARBDogPtr pDog);
 	// These are called from the Runs view so the tree view can do the add.
-	void AddTitle(ARBDogRunPtr pSelectedRun);
 	void AddTrial(ARBDogRunPtr pSelectedRun);
 	void AddRun(ARBDogRunPtr pSelectedRun);
 	void EditRun(ARBDogRunPtr pRun);

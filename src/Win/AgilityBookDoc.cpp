@@ -80,6 +80,7 @@
 #include "DlgMessage.h"
 #include "DlgOptions.h"
 #include "DlgSelectDog.h"
+#include "DlgTitle.h"
 #include "DlgTraining.h"
 #include "DlgTrial.h"
 #include "Element.h"
@@ -120,6 +121,48 @@ static short GetCurrentConfigVersion()
 		ver = config.GetVersion();
 	}
 	return ver;
+}
+
+
+static void UpdateFutureTrials(
+		ARBConfig const& config,
+		ARBDogPtr pDog,
+		ARBDogTitlePtr title)
+{
+	// Find all trials in the future in the same venue.
+	std::vector<ARBDogTrialPtr> trials;
+	for (ARBDogTrialList::iterator i = pDog->GetTrials().begin();
+		i != pDog->GetTrials().end();
+		++i)
+	{
+		if ((*i)->HasVenue(title->GetVenue())
+		&& 0 < (*i)->GetRuns().size())
+		{
+			ARBDate d1 = (*((*i)->GetRuns().begin()))->GetDate();
+			if (d1 > ARBDate::Today())
+			{
+				trials.push_back(*i);
+			}
+		}
+	}
+	if (0 < trials.size())
+	{
+		/*
+		Interesting problem. Level order can be implied by the actual order in
+		the config. But what does moveup mean? I could be moving from (USDAA)
+		Ch to Pf.
+		- Need user option to suppress moveup if in top level
+		- Need to add info to a title for what events it affects (or determining
+		  if a moveup can happen can't be done)
+		- more than one event may be a move (USDAA AD implies everything goes up
+		Oh. Even more complicated. Earning NovA means NovB moveOVER.
+		*/
+#pragma PRAGMA_TODO("Add dialog to update future trials")
+		/*
+		Thought 2. Maybe we just fly an info dialog here 'You are entered in
+		N upcoming trials (list). Please check for moveups.'
+		*/
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -336,9 +379,16 @@ std::wstring CAgilityBookDoc::AddDogToCaption(std::wstring const& caption) const
 ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 {
 	ARBDogPtr pDog;
-	CAgilityBookTreeView* pTree = GetTreeView();
-	if (pTree && pTree->GetCurrentTreeItem())
-		pDog = pTree->GetCurrentTreeItem()->GetDog();
+	if (1 == m_Records.GetDogs().size())
+	{
+		pDog = *(m_Records.GetDogs().begin());
+	}
+	else
+	{
+		CAgilityBookTreeView* pTree = GetTreeView();
+		if (pTree && pTree->GetCurrentTreeItem())
+			pDog = pTree->GetCurrentTreeItem()->GetDog();
+	}
 	return pDog;
 }
 
@@ -371,29 +421,37 @@ ARBDogRunPtr CAgilityBookDoc::GetCurrentRun() const
 }
 
 
+bool CAgilityBookDoc::AddTitle(ARBDogPtr pDog)
+{
+	if (pDog)
+	{
+		CDlgTitle dlg(Book().GetConfig(), pDog->GetTitles(), ARBDogTitlePtr());
+		if (wxID_OK == dlg.ShowModal())
+		{
+			std::vector<CVenueFilter> venues;
+			CFilterOptions::Options().GetFilterVenue(venues);
+			ResetVisibility(venues, dlg.GetNewTitle());
+			UpdateFutureTrials(Book().GetConfig(), pDog, dlg.GetNewTitle());
+			CUpdateHint hint(UPDATE_POINTS_VIEW);
+			UpdateAllViews(NULL, &hint);
+			Modify(true);
+			if (CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
+			{
+				CDlgDog dlg(this, pDog, wxGetApp().GetTopWindow(), 1);
+				dlg.ShowModal();
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
+
 /**
  * Called from the Runs view. Since the run is visible in that view and visible
  * runs are controlled by the selected item in the tree, 'pData' should never
  * be NULL.
  */
-void CAgilityBookDoc::AddTitle(ARBDogRunPtr pSelectedRun)
-{
-	CAgilityBookTreeView* pTree = GetTreeView();
-	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
-	if (pData)
-	{
-		pTree->EnsureVisible(pData->GetId());
-		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_NEW_TITLE, bModified, NULL))
-		{
-			if (bModified)
-				Modify(true);
-		}
-	}
-}
-
-
 void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTreeView* pTree = GetTreeView();

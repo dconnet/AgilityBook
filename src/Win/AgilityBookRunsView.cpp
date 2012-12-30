@@ -60,6 +60,7 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
+#include "IconList.h"
 #include "ListData.h"
 #include "MainFrm.h"
 #include "PointsData.h"
@@ -67,9 +68,6 @@
 #include "RegItems.h"
 #include <algorithm>
 #include <wx/config.h>
-
-#include "res/AgilityBook16.xpm"
-#include "res/crcd.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -1289,8 +1287,8 @@ bool CAgilityBookRunsView::Create(
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CAgilityBookRunsView::OnCtrlItemSelected);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CAgilityBookRunsView::OnCtrlItemActivated);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookRunsView::OnCtrlKeyDown);
-	m_imgCourse = m_Ctrl->AddIcon(wxIcon(AgilityBook16_xpm));
-	m_imgMap = m_Ctrl->AddIcon(wxIcon(crcd_xpm));
+	m_imgCourse = m_Ctrl->AddIcon(CIconList::ARB());
+	m_imgMap = m_Ctrl->AddIcon(CIconList::CRCD());
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif
@@ -1881,7 +1879,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 		{
 			CAgilityBookRunsViewDataPtr pData = GetItemRunData(m_Ctrl->GetSelection(true));
 			if (pData)
-				GetDocument()->AddTitle(pData->GetRun());
+				GetDocument()->AddTitle(pData->GetDog());
 		}
 		break;
 

@@ -96,7 +96,6 @@ private:
 	CTabView* m_pTabView;
 	ARBConfig* m_pConfig;
 	ARBDogRunPtr m_pRun;
-	int m_imgEmpty;
 	int m_imgTentative;
 	int m_imgPlan;
 	int m_imgPlanTentative;
