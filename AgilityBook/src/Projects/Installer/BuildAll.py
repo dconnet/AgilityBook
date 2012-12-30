@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2012-12-30 DRC Drop VC9.
 # 2012-07-25 DRC Only run version include update from here.
 # 2012-07-04 DRC Update to supported compilers (vc9+)
 #                Specifically set WXWIN to official release branch.
@@ -14,7 +15,7 @@
    -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-2.8.12)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -t:       Testing, just print commands to run
-   compiler: vc9, vc10, vc11 (default: vc9,vc10)
+   compiler: vc10, vc11 (default: vc10)
 """
 
 import getopt
@@ -114,14 +115,10 @@ def GetVSDir(version):
 
 
 def AddCompiler(compilers, c):
-	global vc9Base, vc10Base, vc11Base
+	global vc10Base, vc11Base
 	baseDir = ''
 	testFile = ''
-	if c == 'vc9':
-		vc9Base = GetVSDir("9.0")
-		baseDir = vc9Base
-		testFile = baseDir + r'\VC\vcvarsall.bat'
-	elif c == 'vc10':
+	if c == 'vc10':
 		vc10Base = GetVSDir("10.0")
 		baseDir = vc10Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
@@ -189,7 +186,6 @@ def main():
 			return 1
 
 	if 0 == len(compilers):
-		AddCompiler(compilers, 'vc9')
 		AddCompiler(compilers, 'vc10')
 
 	if len(wxwin) == 0:
@@ -204,44 +200,13 @@ def main():
 		RunCmds(cmds)
 
 	# Targets:
-	# VC9/VC10/VC11
+	# VC10/VC11
 	#  Configuration: 'Release'/'Debug'
 	#  Platform: Win32, x64
 	#  Targets: AgilityBook, ARBHelp, ARBUpdater, LibARB, LibTidy, TestARB
 
 	for compiler in compilers:
-		if compiler == 'vc9':
-			vc9Base = GetVSDir("9.0")
-			setvcvars = vc9Base + r'\VC\vcvarsall.bat'
-			if not os.access(vc9Base, os.F_OK) or not os.access(setvcvars, os.F_OK):
-				print 'ERROR: "' + vc9Base + '" does not exist'
-				return 1
-			if clean:
-				RmMinusRF('../../../bin/VC9Win32')
-			remove(r'../VC9/bldWin32.txt')
-			cmds = (
-				r'title VC9 Release Win32',
-				r'cd ..\VC9',
-				r'call "' + setvcvars + r'" x86',
-				r'devenv AgilityBook.sln /out bldWin32.txt /build "Release|Win32"')
-			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC9Win32/Release/AgilityBook.exe', os.F_OK):
-				print 'ERROR: Compile failed, bailing out'
-				return 1
-			if clean:
-				RmMinusRF('../../../bin/VC9x64')
-			remove(r'../VC9/bldWin64.txt')
-			cmds = (
-				r'title VC9 Release x64',
-				r'cd ..\VC9',
-				r'call "' + setvcvars + r'" x86_amd64',
-				r'devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"')
-			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC9x64/Release/AgilityBook.exe', os.F_OK):
-				print 'ERROR: Compile failed, bailing out'
-				return 1
-
-		elif compiler == 'vc10':
+		if compiler == 'vc10':
 			vc10Base = GetVSDir("10.0")
 			PlatformTools = '100'
 			if useVC10SDK:
