@@ -44,15 +44,11 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "DlgName.h"
+#include "ImageManager.h"
 #include "StringUtil.h"
 #include "Widgets.h"
 #include <algorithm>
 #include <wx/bmpcbox.h>
-
-#include "res/CalEmpty.xpm"
-#include "res/NoteNote.xpm"
-#include "res/NoteAdded.xpm"
-#include "res/NoteNoteAdded.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -116,10 +112,10 @@ CDlgInfoNote::CDlgInfoNote(
 	, m_ctrlDelete(NULL)
 	, m_ctrlVisible(NULL)
 	, m_ctrlNotes(NULL)
-	, m_None(CalEmpty_xpm)
-	, m_Note(NoteNote_xpm)
-	, m_Added(NoteAdded_xpm)
-	, m_NoteAdded(NoteNoteAdded_xpm)
+	, m_None(CImageManager::Get()->InfoEmpty())
+	, m_Note(CImageManager::Get()->InfoNote())
+	, m_Added(CImageManager::Get()->InfoNoteAdded())
+	, m_NoteAdded(CImageManager::Get()->InfoNoteNoteAdded())
 {
 	std::wstring caption = L"?";
 	std::set<std::wstring> names;

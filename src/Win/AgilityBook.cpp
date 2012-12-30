@@ -34,6 +34,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "Element.h"
+#include "ImageManager.h"
 #include "LanguageManager.h"
 #include "MainFrm.h"
 #include "Print.h"
@@ -481,6 +482,7 @@ int CAgilityBookApp::OnExit()
 	m_printDialogData = NULL;
 	delete m_Prn;
 	m_Prn = NULL;
+	CImageManager::Delete();
 	Element::Terminate();
 	return wxApp::OnExit();
 }

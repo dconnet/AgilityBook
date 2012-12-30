@@ -49,7 +49,7 @@
 #include "DlgFind.h"
 #include "Element.h"
 #include "FilterOptions.h"
-#include "IconList.h"
+#include "ImageManager.h"
 #include "ListData.h"
 #include "MainFrm.h"
 #include "Print.h"
@@ -563,16 +563,16 @@ bool CAgilityBookCalendarListView::Create(
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CAgilityBookCalendarListView::OnCtrlItemSelected);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CAgilityBookCalendarListView::OnCtrlItemActivated);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookCalendarListView::OnCtrlKeyDown);
-	m_imgTentative = m_Ctrl->AddIcon(CIconList::CalTentative());
-	m_imgPlan = m_Ctrl->AddIcon(CIconList::CalPlanning());
-	m_imgPlanTentative = m_Ctrl->AddIcon(CIconList::CalPlanTentative());
-	m_imgPending = m_Ctrl->AddIcon(CIconList::CalPending());
-	m_imgPendingTentative = m_Ctrl->AddIcon(CIconList::CalPendingTentative());
-	m_imgEntered = m_Ctrl->AddIcon(CIconList::CalEntered());
-	m_imgEnteredTentative = m_Ctrl->AddIcon(CIconList::CalEnteredTentative());
-	m_imgAccomNone = m_Ctrl->AddIcon(CIconList::AccNone());
-	m_imgAccomTodo = m_Ctrl->AddIcon(CIconList::AccTodo());
-	m_imgAccomConfirm = m_Ctrl->AddIcon(CIconList::AccConfirm());
+	m_imgTentative = m_Ctrl->AddIcon(CImageManager::Get()->CalTentative());
+	m_imgPlan = m_Ctrl->AddIcon(CImageManager::Get()->CalPlanning());
+	m_imgPlanTentative = m_Ctrl->AddIcon(CImageManager::Get()->CalPlanTentative());
+	m_imgPending = m_Ctrl->AddIcon(CImageManager::Get()->CalPending());
+	m_imgPendingTentative = m_Ctrl->AddIcon(CImageManager::Get()->CalPendingTentative());
+	m_imgEntered = m_Ctrl->AddIcon(CImageManager::Get()->CalEntered());
+	m_imgEnteredTentative = m_Ctrl->AddIcon(CImageManager::Get()->CalEnteredTentative());
+	m_imgAccomNone = m_Ctrl->AddIcon(CImageManager::Get()->AccomNone());
+	m_imgAccomTodo = m_Ctrl->AddIcon(CImageManager::Get()->AccomTodo());
+	m_imgAccomConfirm = m_Ctrl->AddIcon(CImageManager::Get()->AccomConfirm());
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif

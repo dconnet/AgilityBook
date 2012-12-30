@@ -452,6 +452,7 @@ bool CAgilityBookDoc::AddTitle(ARBDogPtr pDog)
  * runs are controlled by the selected item in the tree, 'pData' should never
  * be NULL.
  */
+
 void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTreeView* pTree = GetTreeView();

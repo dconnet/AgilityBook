@@ -56,7 +56,7 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
-#include "IconList.h"
+#include "ImageManager.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
@@ -276,9 +276,9 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 {
 #ifdef WX_TREE_HAS_STATE
 	// Note: Position 0 cannot be used.
-	m_ImageListStates.Add(CIconList::Blank());
-	m_idxEmpty = m_ImageListStates.Add(CIconList::Blank());
-	m_idxChecked = m_ImageListStates.Add(CIconList::Check());
+	m_ImageListStates.Add(CImageManager::Get()->Blank());
+	m_idxEmpty = m_ImageListStates.Add(CImageManager::Get()->Blank());
+	m_idxChecked = m_ImageListStates.Add(CImageManager::Get()->Check());
 #endif
 
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
