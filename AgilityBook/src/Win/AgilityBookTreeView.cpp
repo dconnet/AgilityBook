@@ -1287,7 +1287,7 @@ void CAgilityBookTreeView::OnPaste(wxCommandEvent& evt)
 	{
 		if (CLIPDATA == tree->GetName())
 		{
-			ARBDogPtr pDog(ARBDog::New());
+			pDog = ARBDog::New();
 			if (pDog)
 			{
 				CErrorCallback err;
@@ -1363,16 +1363,16 @@ void CAgilityBookTreeView::OnPaste(wxCommandEvent& evt)
 					pTrial->GetRuns().sort();
 					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 					m_Ctrl->Freeze();
-					wxDataViewItem item;
+					wxDataViewItem itemRun;
 					for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 					{
 						ARBDogRunPtr pRun = *iter;
-						item = InsertRun(pRun, itemParent);
+						itemRun = InsertRun(pRun, itemParent);
 					}
 					m_Ctrl->Thaw();
 					m_Ctrl->Refresh();
 					bool bOk = true;
-					if (!item.IsOk())
+					if (!itemRun.IsOk())
 					{
 						bOk = false;
 						if (CFilterOptions::Options().IsFilterEnabled())
@@ -1380,7 +1380,7 @@ void CAgilityBookTreeView::OnPaste(wxCommandEvent& evt)
 					}
 					else
 					{
-						m_Ctrl->Select(item);
+						m_Ctrl->Select(itemRun);
 					}
 					if (bOk)
 					{
@@ -1418,18 +1418,18 @@ void CAgilityBookTreeView::OnPaste(wxCommandEvent& evt)
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						GetDocument()->ResetVisibility(venues, pNewTrial);
 						m_Ctrl->Freeze();
-						wxDataViewItem item = InsertTrial(pNewTrial, FindData(pDog));
+						wxDataViewItem itemTrial = InsertTrial(pNewTrial, FindData(pDog));
 						m_Ctrl->Thaw();
 						m_Ctrl->Refresh();
 						bool bOk = true;
-						if (!item.IsOk())
+						if (!itemTrial.IsOk())
 						{
 							bOk = false;
 							wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 						}
 						else
 						{
-							m_Ctrl->Select(item);
+							m_Ctrl->Select(itemTrial);
 						}
 						if (bOk)
 						{
@@ -1730,10 +1730,10 @@ void CAgilityBookTreeView::OnNewTrial(wxCommandEvent& evt)
 					// Even though we will reset the tree, go ahead and add/select
 					// the item into the tree here. That will make sure when the
 					// tree is reloaded, that the new item is selected.
-					wxDataViewItem item = InsertTrial(pTrial, FindData(pDog));
-					if (item.IsOk())
+					wxDataViewItem itemTrial = InsertTrial(pTrial, FindData(pDog));
+					if (itemTrial.IsOk())
 					{
-						Select(item);
+						Select(itemTrial);
 					}
 					else
 					{
