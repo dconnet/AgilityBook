@@ -78,7 +78,7 @@ std::string stringA(wxMemoryOutputStream const& inStr)
 	std::string str;
 	if (inStr.IsOk())
 	{
-		wxFileOffset len = inStr.GetLength();
+		size_t len = static_cast<size_t>(inStr.GetLength());
 		char* buffer = new char[len+1];
 		inStr.CopyTo(buffer, len);
 		buffer[len] = 0;
