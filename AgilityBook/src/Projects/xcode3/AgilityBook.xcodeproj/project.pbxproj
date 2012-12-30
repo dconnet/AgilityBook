@@ -285,6 +285,7 @@
 		E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
 		E1AE409F12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
 		E1C8D4A615B9AACC00F91623 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */; };
+		E1CBD733169018A50003AD15 /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CBD731169018A50003AD15 /* ImageManager.cpp */; };
 		E1D5510413E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */; };
 		E1D5510513E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */; };
 		E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
@@ -587,6 +588,8 @@
 		E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuHelper.cpp; sourceTree = "<group>"; };
 		E1C8D4A415B9AACC00F91623 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
 		E1C8D4A515B9AACC00F91623 /* RegItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegItems.h; sourceTree = "<group>"; };
+		E1CBD731169018A50003AD15 /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageManager.cpp; sourceTree = "<group>"; };
+		E1CBD732169018A50003AD15 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
 		E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBCalcPoints.cpp; sourceTree = "<group>"; };
 		E1D5510213E6859E00EB1F5B /* ARBCalcPoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBCalcPoints.h; sourceTree = "<group>"; };
 		E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
@@ -819,6 +822,8 @@
 				E155983110000B1200B7074A /* Globals.h */,
 				E155983210000B1200B7074A /* IconList.cpp */,
 				E155983310000B1200B7074A /* IconList.h */,
+				E1CBD731169018A50003AD15 /* ImageManager.cpp */,
+				E1CBD732169018A50003AD15 /* ImageManager.h */,
 				E155983510000B1200B7074A /* LanguageManager.cpp */,
 				E155983610000B1200B7074A /* LanguageManager.h */,
 				E155983710000B1200B7074A /* ListCtrl.cpp */,
@@ -1206,6 +1211,7 @@
 				E1C8D4A615B9AACC00F91623 /* MenuHelper.cpp in Sources */,
 				E1674C1D160FEB0700E6B2B3 /* ARB_Q.cpp in Sources */,
 				E1674C25160FED3600E6B2B3 /* ValidatorsQ.cpp in Sources */,
+				E1CBD733169018A50003AD15 /* ImageManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

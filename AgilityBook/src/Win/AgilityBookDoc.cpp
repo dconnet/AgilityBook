@@ -418,20 +418,20 @@ bool CAgilityBookDoc::AddTitle(ARBDogPtr pDog)
 {
 	if (pDog)
 	{
-		CDlgTitle dlg(Book().GetConfig(), pDog->GetTitles(), ARBDogTitlePtr());
-		if (wxID_OK == dlg.ShowModal())
+		CDlgTitle dlgTitle(Book().GetConfig(), pDog->GetTitles(), ARBDogTitlePtr());
+		if (wxID_OK == dlgTitle.ShowModal())
 		{
 			std::vector<CVenueFilter> venues;
 			CFilterOptions::Options().GetFilterVenue(venues);
-			ResetVisibility(venues, dlg.GetNewTitle());
-			UpdateFutureTrials(Book().GetConfig(), pDog, dlg.GetNewTitle());
+			ResetVisibility(venues, dlgTitle.GetNewTitle());
+			UpdateFutureTrials(Book().GetConfig(), pDog, dlgTitle.GetNewTitle());
 			CUpdateHint hint(UPDATE_POINTS_VIEW);
 			UpdateAllViews(NULL, &hint);
 			Modify(true);
 			if (CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
 			{
-				CDlgDog dlg(this, pDog, wxGetApp().GetTopWindow(), 1);
-				dlg.ShowModal();
+				CDlgDog dlgDog(this, pDog, wxGetApp().GetTopWindow(), 1);
+				dlgDog.ShowModal();
 			}
 			return true;
 		}
