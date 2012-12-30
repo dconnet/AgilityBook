@@ -22,12 +22,14 @@
 class CImageManager
 {
 private:
+	static bool s_bNoReInit;
 	static CImageManager* s_pImageManager;
 	CImageManager();
 	~CImageManager();
 
 public:
 	static CImageManager* Get();
+	static void Reset();
 	static void Delete();
 
 	wxIcon TabRuns() const				{return m_iconRun;}
