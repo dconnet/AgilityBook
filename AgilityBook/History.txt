@@ -4,6 +4,7 @@
 - Bug fixes:
   - Fix Calendar icon updates in list dialog.
   - Fix Training view update on paste.
+  - Fix pasting metafiles.
 [ Note, full functionality is NOT complete ]
 
 11/30/2012: v2.3.10.84
