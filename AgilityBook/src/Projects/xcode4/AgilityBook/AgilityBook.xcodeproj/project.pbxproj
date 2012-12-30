@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1105D38169017DF0067091C /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1105D36169017DF0067091C /* ImageManager.cpp */; };
 		E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B63BF166C096E004DEDA4 /* Cocoa.framework */; };
 		E19B64EE166C09B9004DEDA4 /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */; };
 		E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */; };
@@ -110,6 +111,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E1105D36169017DF0067091C /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageManager.cpp; sourceTree = "<group>"; };
+		E1105D37169017DF0067091C /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
 		E19B63BB166C096E004DEDA4 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B63BF166C096E004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E19B63C2166C096E004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -547,6 +550,8 @@
 				E19B6471166C09B9004DEDA4 /* Globals.h */,
 				E19B6472166C09B9004DEDA4 /* IconList.cpp */,
 				E19B6473166C09B9004DEDA4 /* IconList.h */,
+				E1105D36169017DF0067091C /* ImageManager.cpp */,
+				E1105D37169017DF0067091C /* ImageManager.h */,
 				E19B6475166C09B9004DEDA4 /* LanguageManager.cpp */,
 				E19B6476166C09B9004DEDA4 /* LanguageManager.h */,
 				E19B6477166C09B9004DEDA4 /* ListCtrl.cpp */,
@@ -785,6 +790,7 @@
 				E19B6599166C09B9004DEDA4 /* WizardExport.cpp in Sources */,
 				E19B659A166C09B9004DEDA4 /* WizardImport.cpp in Sources */,
 				E19B659B166C09B9004DEDA4 /* WizardStart.cpp in Sources */,
+				E1105D38169017DF0067091C /* ImageManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
