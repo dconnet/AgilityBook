@@ -379,11 +379,15 @@ std::wstring CAgilityBookDoc::AddDogToCaption(std::wstring const& caption) const
 ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 {
 	ARBDogPtr pDog;
+#pragma PRAGMA_TODO(Move current dog into here instead of tracking in treeview)
+#if 0
+
 	if (1 == m_Records.GetDogs().size())
 	{
 		pDog = *(m_Records.GetDogs().begin());
 	}
 	else
+#endif
 	{
 		CAgilityBookTreeView* pTree = GetTreeView();
 		if (pTree)
