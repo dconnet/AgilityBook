@@ -1,8 +1,9 @@
-12/29/2012: v2.3.11.<in development>
+12/30/2012: v2.3.11.<in development>
 - Bug fixes:
   - Fix Calendar icon updates in list dialog.
   - Fix Training view update on paste.
   - Fix pasting metafiles.
+  - Dropped VC9 support, it hasn't been able to compile since pre-2.3.9.
 
 11/30/2012: v2.3.10.84
 - Bumped Configuration v41:

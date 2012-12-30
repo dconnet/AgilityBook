@@ -28,9 +28,6 @@ Also, kept current with development trunk of 2.9.x.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
--- Note: VC9 is hardcoded to use 2.8.12. Set WXBASE to point to the directory
-   just above 'wxWidgets-2.8.12'. (VC10 uses WXWIN which can point to any
-   supported wx version.)
 
 === Changes to <trunk> [2.9.4]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
@@ -267,8 +264,8 @@ Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
 ARB has been built and tested using Boost version 1.52.0. There is no need
-to actually build the Boost libraries. (Currently, only the smart_ptr and
-weak_ptr templates are used.)
+to actually build the Boost libraries. (Currently, only the smart_ptr,
+weak_ptr and make_shared templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
 above. The default directory when unpacked is boost_1_52_0 (of course,
@@ -330,9 +327,7 @@ Microsoft Visual Studio 2008 (VC9)
 
 Microsoft Visual Studio 2008 (VC9) + SP1
 ========================================
-   It works, no additional notes.
-   [x86: UNICODE and MBCS] [note: MBCS support has been dropped]
-   [x64: UNICODE only]
+   Not supported. (no support for std::make_shared)
 
 Microsoft Visual Studio 2010 (VC10)
 ===================================
