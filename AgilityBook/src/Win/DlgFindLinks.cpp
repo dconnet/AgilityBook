@@ -32,7 +32,7 @@
 #include "CheckLink.h"
 #include "ClipBoard.h"
 #include "DlgSelectURL.h"
-#include "IconList.h"
+#include "ImageManager.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 
@@ -193,8 +193,8 @@ CDlgFindLinks::CDlgFindLinks(
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgFindLinks::OnItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgFindLinks::OnItemActivated);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgFindLinks::OnKeyDown);
-	m_imgOk = m_ctrlLinks->AddIcon(CIconList::Check());
-	m_imgMissing = m_ctrlLinks->AddIcon(CIconList::Question());
+	m_imgOk = m_ctrlLinks->AddIcon(CImageManager::Get()->Check());
+	m_imgMissing = m_ctrlLinks->AddIcon(CImageManager::Get()->Question());
 	m_ctrlLinks->SetHelpText(_("HIDC_FINDLINKS_LIST"));
 	m_ctrlLinks->SetToolTip(_("HIDC_FINDLINKS_LIST"));
 

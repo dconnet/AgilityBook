@@ -28,7 +28,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookPanels.h"
 #include "AgilityBookTreeView.h"
-#include "IconList.h"
+#include "ImageManager.h"
 #include "MainFrm.h"
 #include "RegItems.h"
 #include <wx/choicebk.h>
@@ -73,10 +73,10 @@ CTabView::CTabView()
 	, m_imageList(16,16)
 	, m_bIgnoreEvents(false)
 {
-	m_imageList.Add(CIconList::TabRuns());
-	m_imageList.Add(CIconList::TabPoints());
-	m_imageList.Add(CIconList::TabCalendar());
-	m_imageList.Add(CIconList::TabTraining());
+	m_imageList.Add(CImageManager::Get()->TabRuns());
+	m_imageList.Add(CImageManager::Get()->TabPoints());
+	m_imageList.Add(CImageManager::Get()->TabCalendar());
+	m_imageList.Add(CImageManager::Get()->TabTraining());
 	m_type = wxConfig::Get()->Read(CFG_SETTINGS_VIEWTYPE, m_type);
 	if (m_type < 0 || m_type > ID_BOOK_LAST - ID_BOOK_FIRST)
 	{

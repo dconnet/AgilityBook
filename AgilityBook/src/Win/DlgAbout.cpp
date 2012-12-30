@@ -30,7 +30,7 @@
 #include "DlgAbout.h"
 
 #include "AgilityBook.h"
-#include "IconList.h"
+#include "ImageManager.h"
 #include "StringUtil.h"
 #include "VersionNumber.h"
 
@@ -168,7 +168,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	// Controls (these are done first to control tab order)
 
 	wxStaticBitmap* icon = new wxStaticBitmap(this, wxID_ANY,
-		CIconList::ARB(),
+		CImageManager::Get()->ARB16(),
 		wxPoint(5, 5), wxDefaultSize, 0);
 
 	wxStaticText* version = new wxStaticText(this, wxID_ANY,

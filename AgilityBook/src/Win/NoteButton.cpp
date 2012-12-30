@@ -18,7 +18,7 @@
 #include "stdafx.h"
 #include "NoteButton.h"
 
-#include "res/Note.xpm"
+#include "ImageManager.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -27,8 +27,6 @@
 
 CNoteButton::CNoteButton(wxWindow* parent)
 	: wxBitmapButton()
-	, m_ImageList(16,16)
-	, m_idxNormal(-1)
 {
-	wxBitmapButton::Create(parent, wxID_ANY, wxBitmap(Note_xpm), wxDefaultPosition, wxSize(20, 20));
+	wxBitmapButton::Create(parent, wxID_ANY, CImageManager::Get()->NoteButton(), wxDefaultPosition, wxSize(20, 20));
 }

@@ -588,5 +588,8 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 	m_pTrial->SetNote(StringUtil::stringW(m_Notes));
 	m_pTrial->SetVerified(m_Verified);
 	m_pTrial->GetClubs() = m_Clubs;
+
+	m_pDoc->Modify(true);
+
 	EndDialog(wxID_OK);
 }

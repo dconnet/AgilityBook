@@ -22,19 +22,4 @@ class CNoteButton : public wxBitmapButton
 {
 public:
 	CNoteButton(wxWindow* parent);
-
-protected:
-	wxImageList m_ImageList;
-	int m_idxNormal;
-
-#if 0
-	virtual void PreSubclassWindow();
-	virtual void DrawItem(LPDRAWITEMSTRUCT /*lpDrawItemStruct*/);
-
-	DECLARE_MESSAGE_MAP()
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
-	afx_msg void OnKillFocus(CWnd* pNewWnd);
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-#endif
 };

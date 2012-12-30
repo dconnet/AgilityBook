@@ -113,6 +113,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	FilterOptions.cpp \
 	Globals.cpp \
 	IconList.cpp \
+	ImageManager.cpp \
 	LanguageManager.cpp \
 	ListCtrl.cpp \
 	ListData.cpp \

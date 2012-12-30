@@ -65,6 +65,8 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
+#include "IconList.h"
+#include "ImageManager.h"
 #include "PointsData.h"
 #include "Print.h"
 #include "StringUtil.h"
@@ -135,7 +137,7 @@ CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(
 	: CAgilityBookTreeData(pModel)
 	, m_pDog(dog)
 {
-	m_icon = CIconList::Dog();
+	m_icon = CImageManager::Get()->Dog();
 }
 
 
@@ -359,7 +361,12 @@ CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(
 	: CAgilityBookTreeData(pModel)
 	, m_pRun(run)
 {
-	m_icon = CIconList::Run();
+	if (0 < m_pRun->GetCRCDRawMetaData().length())
+		m_icon = CImageManager::Get()->CRCD();
+	else if (0 < m_pRun->GetCRCD().length())
+		m_icon = CImageManager::Get()->ARB16();
+	else
+		m_icon = CImageManager::Get()->Run();
 }
 
 

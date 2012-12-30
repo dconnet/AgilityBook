@@ -173,5 +173,7 @@ void CDlgTraining::OnOk(wxCommandEvent& evt)
 	m_pTraining->SetSubName(StringUtil::stringW(m_SubName));
 	m_pTraining->SetNote(StringUtil::stringW(m_Notes));
 
+	m_pDoc->Modify(true);
+
 	EndDialog(wxID_OK);
 }

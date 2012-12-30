@@ -573,6 +573,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\ImageManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\LanguageManager.cpp"
 				>
 			</File>
@@ -1000,6 +1004,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\IconList.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ImageManager.h"
 				>
 			</File>
 			<File

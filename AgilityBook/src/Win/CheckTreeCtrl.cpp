@@ -31,7 +31,7 @@
 #include "stdafx.h"
 #include "CheckTreeCtrl.h"
 
-#include "IconList.h"
+#include "ImageManager.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -59,9 +59,9 @@ CCheckTreeCtrl::CCheckTreeCtrl(
 	BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckTreeCtrl::OnClick);
 	BIND_OR_CONNECT(wxEVT_KEY_DOWN, wxKeyEventHandler, CCheckTreeCtrl::OnKeyDown);
 
-	m_stateNone = m_stateList.Add(CIconList::Blank());
-	m_stateUnChecked = m_stateList.Add(CIconList::UnChecked());
-	m_stateChecked = m_stateList.Add(CIconList::Checked());
+	m_stateNone = m_stateList.Add(CImageManager::Get()->Blank());
+	m_stateUnChecked = m_stateList.Add(CImageManager::Get()->UnChecked());
+	m_stateChecked = m_stateList.Add(CImageManager::Get()->Checked());
 #ifdef WX_TREE_HAS_STATE
 	SetStateImageList(&m_stateList);
 #else

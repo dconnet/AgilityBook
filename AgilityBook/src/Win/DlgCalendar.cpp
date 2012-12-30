@@ -877,5 +877,7 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	}
 	m_pCal->SetNote(StringUtil::stringW(m_Notes));
 
+	m_pDoc->Modify(true);
+
 	EndDialog(wxID_OK);
 }
