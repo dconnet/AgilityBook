@@ -136,7 +136,7 @@ private:
 			std::wstring const& inText,
 			bool bQuotedPrint);
 
-    std::ostream& m_ioStream;
+	std::ostream& m_ioStream;
 	int m_Version;
 };
 

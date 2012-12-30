@@ -44,7 +44,7 @@ SUITE(TestMsgDigest)
 	{
 		if (!g_bMicroTest)
 		{
-            std::stringstream str(RawString);
+			std::stringstream str(RawString);
 			std::wstring digest = ARBMsgDigest::ComputeFile(str);
 			CHECK(digest == DigestString);
 		}

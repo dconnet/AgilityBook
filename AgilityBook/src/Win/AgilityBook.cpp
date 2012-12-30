@@ -73,7 +73,7 @@ class CAgilityBookDocManager : public wxDocManager
 public:
 	CAgilityBookDocManager(size_t historySize);
 	virtual wxFileHistory* OnCreateFileHistory();
-    virtual void ActivateView(wxView *view, bool activate = true);
+	virtual void ActivateView(wxView *view, bool activate = true);
 private:
 	size_t m_History;
 

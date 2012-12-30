@@ -37,6 +37,7 @@
 #include "res/CalPlanTentative.xpm"
 #include "res/CalTentative.xpm"
 #include "res/checked.xpm"
+#include "res/crcd.xpm"
 #include "res/dog.xpm"
 #include "res/HdrDown.xpm"
 #include "res/HdrUp.xpm"
@@ -177,6 +178,12 @@ wxIcon CIconList::Dog()
 wxIcon CIconList::Run()
 {
 	return wxIcon(run_xpm);
+}
+
+
+wxIcon CIconList::CRCD()
+{
+	return wxIcon(crcd_xpm);
 }
 
 

@@ -57,6 +57,8 @@ public:
 	static wxIcon Dog();
 	static wxIcon Run();
 
+	static wxIcon CRCD();
+
 	static wxIcon Blank();
 	static wxIcon Checked();
 	static wxIcon UnChecked();
