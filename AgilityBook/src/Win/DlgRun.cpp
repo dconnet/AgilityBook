@@ -114,7 +114,7 @@
 #include "DlgReferenceRun.h"
 #include "DlgSelectURL.h"
 #include "Globals.h"
-#include "IconList.h"
+#include "ImageManager.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 #include "NoteButton.h"
@@ -1359,9 +1359,9 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize,
 		wxLC_NO_HEADER|wxLC_REPORT|wxLC_SINGLE_SEL);
 	m_ctrlLinks->SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
-	m_imgEmpty = m_ImageList.Add(CIconList::Blank());
-	m_imgOk = m_ImageList.Add(CIconList::Check());
-	m_imgMissing = m_ImageList.Add(CIconList::Question());
+	m_imgEmpty = m_ImageList.Add(CImageManager::Get()->Blank());
+	m_imgOk = m_ImageList.Add(CImageManager::Get()->Check());
+	m_imgMissing = m_ImageList.Add(CImageManager::Get()->Question());
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgRun::OnLinksItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgRun::OnLinksItemActivated);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgRun::OnLinksKeyDown);

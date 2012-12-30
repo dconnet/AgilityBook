@@ -60,7 +60,7 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
-#include "IconList.h"
+#include "ImageManager.h"
 #include "ListData.h"
 #include "MainFrm.h"
 #include "PointsData.h"
@@ -1287,8 +1287,8 @@ bool CAgilityBookRunsView::Create(
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CAgilityBookRunsView::OnCtrlItemSelected);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CAgilityBookRunsView::OnCtrlItemActivated);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookRunsView::OnCtrlKeyDown);
-	m_imgCourse = m_Ctrl->AddIcon(CIconList::ARB());
-	m_imgMap = m_Ctrl->AddIcon(CIconList::CRCD());
+	m_imgCourse = m_Ctrl->AddIcon(CImageManager::Get()->ARB16());
+	m_imgMap = m_Ctrl->AddIcon(CImageManager::Get()->CRCD());
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif

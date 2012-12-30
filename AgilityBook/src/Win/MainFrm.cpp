@@ -32,6 +32,7 @@
 #include "CommonView.h"
 #include "DlgMessage.h"
 #include "Globals.h"
+#include "ImageManager.h"
 #include "PointsData.h"
 #include "Print.h"
 #include "RegItems.h"
@@ -42,11 +43,6 @@
 #include <wx/platinfo.h>
 #include <wx/stdpaths.h>
 #include <wx/version.h>
-
-#include "res/AgilityBook16.xpm"
-#include "res/AgilityBook32.xpm"
-#include "res/AgilityBook48.xpm"
-#include "res/AgilityBook256.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -139,10 +135,10 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	, m_menus()
 {
 	wxIconBundle icons;
-	icons.AddIcon(wxIcon(AgilityBook16_xpm));
-	icons.AddIcon(wxIcon(AgilityBook32_xpm));
-	icons.AddIcon(wxIcon(AgilityBook48_xpm));
-	icons.AddIcon(wxIcon(AgilityBook256_xpm));
+	icons.AddIcon(CImageManager::Get()->ARB16());
+	icons.AddIcon(CImageManager::Get()->ARB32());
+	icons.AddIcon(CImageManager::Get()->ARB48());
+	icons.AddIcon(CImageManager::Get()->ARB256());
 	SetIcons(icons);
 //#if wxUSE_HELP
 // Note: do not set help on the frame. Help will disable the min/max buttons.

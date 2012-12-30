@@ -47,52 +47,6 @@ public:
 
 	int Trial(ARBConfig& config, ARBDogTrialPtr pTrial) const;
 
-	static wxIcon ARB();
-
-	static wxIcon TabRuns();
-	static wxIcon TabPoints();
-	static wxIcon TabCalendar();
-	static wxIcon TabTraining();
-
-	static wxIcon Dog();
-	static wxIcon Run();
-
-	static wxIcon CRCD();
-
-	static wxIcon Blank();
-	static wxIcon Checked();
-	static wxIcon UnChecked();
-	static wxIcon Check();
-	static wxIcon Question();
-
-	static wxIcon AccConfirm();
-	static wxIcon AccNone();
-	static wxIcon AccTodo();
-
-	static wxIcon CalEntered();
-	static wxIcon CalEnteredTentative();
-	static wxIcon CalPending();
-	static wxIcon CalPendingTentative();
-	static wxIcon CalPlanning();
-	static wxIcon CalPlanTentative();
-	static wxIcon CalTentative();
-
-	static wxIcon HeaderDown();
-	static wxIcon HeaderUp();
-
-	static wxIcon NoteAdded();
-	static wxIcon NoteNote();
-	static wxIcon NoteNoteAdded();
-
-	// Hidden: !
-	// Title: ribbon
-	// Have: check
-	static wxIcon Hidden();
-	static wxIcon TitledHidden();
-	static wxIcon TitledHiddenHave();
-	static wxIcon Title();
-	static wxIcon TitleHave();
-
 protected:
 	int m_idxARB;
 	int m_idxDog;

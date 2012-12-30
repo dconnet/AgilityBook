@@ -33,7 +33,7 @@
 #include "ListCtrl.h"
 
 #include "Globals.h"
-#include "IconList.h"
+#include "ImageManager.h"
 #include "ListData.h"
 #include <sstream>
 
@@ -102,9 +102,9 @@ bool CReportListCtrl::Create(
 	// it will use this by default
 	if (bHasImageList || sortHeader == eSortHeader)
 	{
-		m_imgEmpty = m_ImageList.Add(CIconList::Blank());
-		m_imgSortUp = m_ImageList.Add(CIconList::HeaderUp());
-		m_imgSortDn = m_ImageList.Add(CIconList::HeaderDown());
+		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->Blank());
+		m_imgSortUp = m_ImageList.Add(CImageManager::Get()->HeaderUp());
+		m_imgSortDn = m_ImageList.Add(CImageManager::Get()->HeaderDown());
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 	return true;
@@ -381,9 +381,9 @@ CCheckListCtrl::CCheckListCtrl(
 	{
 		BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckListCtrl::OnClick);
 		BIND_OR_CONNECT(wxEVT_KEY_DOWN, wxKeyEventHandler, CCheckListCtrl::OnKeyDown);
-		m_imgEmpty = m_ImageList.Add(CIconList::Blank());
-		m_imgNoCheck = m_ImageList.Add(CIconList::UnChecked());
-		m_imgChecked = m_ImageList.Add(CIconList::Checked());
+		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->Blank());
+		m_imgNoCheck = m_ImageList.Add(CImageManager::Get()->UnChecked());
+		m_imgChecked = m_ImageList.Add(CImageManager::Get()->Checked());
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 }
