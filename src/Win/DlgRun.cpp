@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-12-29 DRC Fix pasting metafiles.
  * @li 2012-11-17 DRC Allow judge to be empty.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2012-05-07 DRC Added autocompletion to combo boxes.
@@ -533,9 +534,13 @@ void CMetaDataDisplay::OnCopy()
 					// we could end up with a non-CRCD metafile. It's still
 					// possible this may not be CRCD data - the user can
 					// just clear it then.
+					clpData.Close();
 #ifdef HAS_ENHMETAFILE
 					if (bMeta)
 					{
+						// Note, wxClipboard may be using the OLE clipboard
+						// which doesn't actually open the windows one.
+						wxOpenClipboard();
 						HENHMETAFILE hData = reinterpret_cast<HENHMETAFILE>(GetClipboardData(CF_ENHMETAFILE));
 						m_metaFile = CopyEnhMetaFile(hData, NULL);
 						m_metaFileBack = m_metaFile;
@@ -545,6 +550,7 @@ void CMetaDataDisplay::OnCopy()
 							m_ViewText = false;
 							m_Insert = false;
 						}
+						wxCloseClipboard();
 					}
 #endif
 				}
