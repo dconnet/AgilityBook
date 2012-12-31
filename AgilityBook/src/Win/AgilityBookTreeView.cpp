@@ -380,7 +380,6 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	: CAgilityBookBaseExtraView(pTabView, doc)
 	, m_Ctrl(NULL)
 	, m_Callback(this)
-	, m_pDog()
 	, m_bSuppressPrompt(false)
 {
 }
@@ -928,22 +927,10 @@ bool CAgilityBookTreeView::DoEdit(
 
 void CAgilityBookTreeView::DoSelectionChange(wxDataViewItem const& item)
 {
-	unsigned int iHint = 0;
+	ARBDogPtr pDog;
 	if (item.IsOk())
-	{
-		// Set the current dog
-		ARBDogPtr pDog = m_Ctrl->GetStore()->GetDog(item);
-		if (!m_pDog || !pDog || m_pDog != pDog)
-			iHint |= UPDATE_POINTS_VIEW;
-		m_pDog = pDog;
-	}
-	else
-		m_pDog.reset();
-	if (iHint)
-	{
-		CUpdateHint hint(iHint);
-		GetDocument()->UpdateAllViews(this, &hint);
-	}
+		pDog = m_Ctrl->GetStore()->GetDog(item);
+	GetDocument()->SetCurrentDog(pDog);
 }
 
 
@@ -1578,9 +1565,10 @@ void CAgilityBookTreeView::OnReorder(wxCommandEvent& evt)
 		case eTreeRun:
 			{
 				ARBDogTrialPtr pTrial = m_Ctrl->GetStore()->GetTrial(item);
+				ARBDogRunPtr pRun = m_Ctrl->GetStore()->GetRun(item);
 				if (pTrial && 1 < pTrial->GetRuns().size())
 				{
-					CDlgReorder dlg(GetDocument(), pTrial);
+					CDlgReorder dlg(GetDocument(), pTrial, pRun);
 					dlg.ShowModal();
 				}
 			}

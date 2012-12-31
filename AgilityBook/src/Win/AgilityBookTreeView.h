@@ -188,7 +188,6 @@ private:
 
 	CAgilityBookTreeCtrl* m_Ctrl;
 	CFindTree m_Callback;
-	ARBDogPtr m_pDog;
 	bool m_bSuppressPrompt;
 
 	void OnContextMenu(wxDataViewEvent& evt);

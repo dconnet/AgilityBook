@@ -106,6 +106,7 @@ public:
 
 	// Data
 	ARBDogPtr GetCurrentDog() const;
+	void SetCurrentDog(ARBDogPtr pDog);
 	ARBDogTrialPtr GetCurrentTrial() const;
 	ARBDogRunPtr GetCurrentRun() const;
 	ARBAgilityRecordBook& Book()			{return m_Records;}
@@ -179,6 +180,7 @@ private:
 	ARBAgilityRecordBook m_Records; ///< The real records.
 	CCalendarSites m_CalSites;
 	CStatusHandler* m_StatusData;
+	ARBDogPtr m_pCurrentDog;
 
 protected:
 	virtual bool DeleteContents();

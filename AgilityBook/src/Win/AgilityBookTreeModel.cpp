@@ -156,13 +156,13 @@ void CAgilityBookTreeModel::LoadData()
 	m_Ctrl->Freeze();
 
 	// Remember the currently selected item.
-	std::wstring strCallName;
+	std::list<ARBBasePtr> baseItems;
 	CAgilityBookTreeData* node = GetNode(m_Ctrl->GetSelection());
 	if (!node)
 	{
-		strCallName = wxConfig::Get()->Read(CFG_SETTINGS_LASTDOG, wxString());
+		if (m_pDoc->GetCurrentDog())
+			baseItems.push_back(m_pDoc->GetCurrentDog());
 	}
-	std::list<ARBBasePtr> baseItems;
 	while (node)
 	{
 		baseItems.push_front(node->GetARBBase());
@@ -178,7 +178,7 @@ void CAgilityBookTreeModel::LoadData()
 		++iterDog)
 	{
 		wxDataViewItem itemDog = LoadData(*iterDog);
-		if (0 < strCallName.length() && (*iterDog)->GetCallName() == strCallName)
+		if (baseItems.size() > 0 && *iterDog == baseItems.front())
 		{
 			item = itemDog;
 		}
@@ -186,29 +186,26 @@ void CAgilityBookTreeModel::LoadData()
 	Resort();
 	Expand(m_Ctrl);
 
-	if (!item.IsOk())
+	if (item.IsOk() && baseItems.size() > 1)
 	{
-#pragma PRAGMA_TODO("Fix me")
-#if 0
-		// Work thru all the base items...
-		// Otherwise, after a reorder, the wrong item is selected.
-		hItem = m_Ctrl->GetRootItem();
-		for (std::list<ARBBasePtr>::iterator iter = baseItems.begin();
-			iter != baseItems.end();
-			++iter)
+		std::list<ARBBasePtr>::iterator iter = baseItems.begin();
+		for (++iter; item.IsOk() && iter != baseItems.end(); ++iter)
 		{
-			pData = FindData(hItem, (*iter));
-			if (pData)
-				hItem = pData->GetId();
+			wxDataViewItemArray kids;
+			unsigned int n = GetChildren(item, kids);
+			for (unsigned int i = 0; i < n; ++i)
+			{
+				if (GetARBBase(kids[i]) == *iter)
+				{
+					item = kids[i];
+					break;
+				}
+			}
 		}
-		if (hItem == m_Ctrl->GetRootItem())
-			hItem = wxTreeItemId();
-#endif
 	}
-	if (!item.IsOk())
+	if (!item.IsOk() && m_roots.size() > 0)
 	{
-		//wxTreeItemIdValue cookie;
-		//hItem = m_Ctrl->GetFirstChild(m_Ctrl->GetRootItem(), cookie);
+		item = wxDataViewItem(m_roots.front());
 	}
 
 	if (item.IsOk())
@@ -217,6 +214,7 @@ void CAgilityBookTreeModel::LoadData()
 		m_Ctrl->EnsureVisible(item);
 	}
 
+#pragma PRAGMA_TODO(cleanup - test context menu operations)
 	// Reset the context menu reset.
 	// We may have reloaded during a context menu operation.
 	//m_bReset = false;

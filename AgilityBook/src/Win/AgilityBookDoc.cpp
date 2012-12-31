@@ -224,6 +224,7 @@ CAgilityBookDoc::CAgilityBookDoc()
 	: m_Records()
 	, m_CalSites()
 	, m_StatusData(NULL)
+	, m_pCurrentDog()
 {
 }
 
@@ -378,22 +379,19 @@ std::wstring CAgilityBookDoc::AddDogToCaption(std::wstring const& caption) const
  */
 ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 {
-	ARBDogPtr pDog;
-#pragma PRAGMA_TODO(Move current dog into here instead of tracking in treeview)
-#if 0
+	return m_pCurrentDog;
+}
 
-	if (1 == m_Records.GetDogs().size())
+
+void CAgilityBookDoc::SetCurrentDog(ARBDogPtr pDog)
+{
+	if (m_pCurrentDog != pDog)
 	{
-		pDog = *(m_Records.GetDogs().begin());
+		m_pCurrentDog = pDog;
+
+		CUpdateHint hint(UPDATE_POINTS_VIEW);
+		UpdateAllViews(NULL, &hint);
 	}
-	else
-#endif
-	{
-		CAgilityBookTreeView* pTree = GetTreeView();
-		if (pTree)
-			pDog = pTree->GetStore()->GetDog(pTree->GetSelection());
-	}
-	return pDog;
 }
 
 
@@ -1399,6 +1397,26 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		}
 
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, filename);
+	}
+
+	if (1 == m_Records.GetDogs().size())
+	{
+		m_pCurrentDog = m_Records.GetDogs().front();
+	}
+	else
+	{
+		std::wstring strCallName = wxConfig::Get()->Read(CFG_SETTINGS_LASTDOG, wxString());
+		if (!strCallName.empty())
+		{
+			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog)
+			{
+				if ((*iDog)->GetCallName() == strCallName)
+				{
+					m_pCurrentDog = *iDog;
+					break;
+				}
+			}
+		}
 	}
 
 	// Check our internal config.

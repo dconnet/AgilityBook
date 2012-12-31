@@ -1,6 +1,7 @@
-12/30/2012: v3.0.0.<in development>
+12/31/2012: v3.0.0.<in development>
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
+  - Select current run in Reorder dialog.
 - Bug fixes:
   - Fix Calendar icon updates in list dialog.
   - Fix Training view update on paste.
