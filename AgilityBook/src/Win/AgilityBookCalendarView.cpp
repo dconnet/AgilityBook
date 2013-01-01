@@ -1458,20 +1458,13 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 		motion = eMotionMonthNext;
 		break;
 	case WXK_HOME:
-#ifdef __WXMSW__
-		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekStart;
-#else
-		// Note: The mac synthesizes HOME with fn+<left>
-		motion = eMotionWeekStart;
-#endif
+		// Note: The mac synthesizes HOME with fn+<left>,
+		// hence we support fn+control+left as ctrl+home too.
+		motion = (wxMOD_RAW_CONTROL == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekStart;
 		break;
 	case WXK_END:
-#ifdef __WXMSW__
-		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekEnd;
-#else
 		// Note: The mac synthesizes END with fn+<right>
-		motion = eMotionWeekEnd;
-#endif
+		motion = (wxMOD_RAW_CONTROL == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekEnd;
 		break;
 	}
 	switch (motion)
