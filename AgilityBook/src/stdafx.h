@@ -37,6 +37,7 @@
 #define PRAGMA_TODO(x) message( FILE_LINE "TODO: " #x )
 #define PRAGMA_FIXME(x) message( FILE_LINE "FIXME: " #x )
 
+
 #if defined(_WIN32)
 
 // _MSC_VER
