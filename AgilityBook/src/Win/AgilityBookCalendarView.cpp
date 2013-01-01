@@ -1427,19 +1427,11 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 		break;
 	case WXK_LEFT:
 	case WXK_NUMPAD_LEFT:
-#ifdef __WXMAC__
-		motion = (wxMOD_CMD == evt.GetModifiers()) ? eMotionWeekStart : eMotionDayLast;
-#else
 		motion = eMotionDayLast;
-#endif
 		break;
 	case WXK_RIGHT:
 	case WXK_NUMPAD_RIGHT:
-#ifdef __WXMAC__
-		motion = (wxMOD_CMD == evt.GetModifiers()) ? eMotionWeekEnd : eMotionDayNext;
-#else
 		motion = eMotionDayNext;
-#endif
 		break;
 	case WXK_UP:
 	case WXK_NUMPAD_UP:
@@ -1458,15 +1450,18 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 #endif
 		break;
 	case WXK_PAGEUP:
+		// Note: The mac synthesizes PAGEUP with fn+<up>
 		motion = eMotionMonthLast;
 		break;
 	case WXK_PAGEDOWN:
+		// Note: The mac synthesizes PAGEDOWN with fn+<dn>
 		motion = eMotionMonthNext;
 		break;
 	case WXK_HOME:
 #ifdef __WXMSW__
 		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekStart;
 #else
+		// Note: The mac synthesizes HOME with fn+<left>
 		motion = eMotionWeekStart;
 #endif
 		break;
@@ -1474,6 +1469,7 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 #ifdef __WXMSW__
 		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekEnd;
 #else
+		// Note: The mac synthesizes END with fn+<right>
 		motion = eMotionWeekEnd;
 #endif
 		break;
