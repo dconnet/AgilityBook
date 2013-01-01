@@ -1435,7 +1435,7 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 		break;
 	case WXK_UP:
 	case WXK_NUMPAD_UP:
-#ifdef __WXMAC__
+#if defined(__WXMAC__)
 		motion = (wxMOD_CMD == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekLast;
 #else
 		motion = eMotionWeekLast;
@@ -1443,7 +1443,7 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 		break;
 	case WXK_DOWN:
 	case WXK_NUMPAD_DOWN:
-#ifdef __WXMAC__
+#if defined(__WXMAC__)
 		motion = (wxMOD_CMD == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekNext;
 #else
 		motion = eMotionWeekNext;
@@ -1459,17 +1459,18 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 		break;
 	case WXK_HOME:
 		// Note: The mac synthesizes HOME with fn+<left>,
-		// hence we support fn+control+left as ctrl+home too.
-#if wxCHECK_VERSION(2, 9, 4)
-		motion = (wxMOD_RAW_CONTROL == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekStart;
+		// But don't support fn+control+left as ctrl+home since ctrl+a is also
+		// synthesized into HOME - hence ctrl+a == ctrl+home which is wrong.
+#if defined(__WXMAC__)
+		motion = eMotionWeekStart;
 #else
 		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekStart;
 #endif
 		break;
 	case WXK_END:
 		// Note: The mac synthesizes END with fn+<right>
-#if wxCHECK_VERSION(2, 9, 4)
-		motion = (wxMOD_RAW_CONTROL == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekEnd;
+#if defined(__WXMAC__)
+		motion = eMotionWeekEnd;
 #else
 		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekEnd;
 #endif
