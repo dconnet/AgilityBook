@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-01 DRC Allow the mouse wheel to scroll beyond last entry.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-14 DRC Removed wxScrollWindow - scroll wasn't used.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -586,12 +587,9 @@ void CAgilityBookCalendar::OnWheel(int wheel)
 	}
 	else
 	{
-		if (m_nCurOffset + 1 < m_nMonths)
-		{
-			++m_nCurOffset;
-			Refresh();
-			Update();
-		}
+		++m_nCurOffset;
+		Refresh();
+		Update();
 	}
 }
 
