@@ -1,4 +1,6 @@
-12/30/2012: v2.3.11.<in development>
+1/1/2013: v2.3.11.<in development>
+- New features / Enhancements:
+  - Allow scrolling in the Calendar view to extend past the last entry.
 - Bug fixes:
   - Fix Calendar icon updates in list dialog.
   - Fix Training view update on paste.

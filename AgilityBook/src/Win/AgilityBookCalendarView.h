@@ -88,7 +88,7 @@ private:
 #if wxUSE_MOUSEWHEEL
 	void OnCtrlMouseWheel(wxMouseEvent& evt);
 #endif
-	void OnCtrlKeyDown(wxKeyEvent& evt);
+	void OnCtrlChar(wxKeyEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
 	void OnViewCmd(wxCommandEvent& evt);
 };
