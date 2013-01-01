@@ -1405,7 +1405,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	}
 	else
 	{
-		std::wstring strCallName = wxConfig::Get()->Read(CFG_SETTINGS_LASTDOG, wxString());
+		std::wstring strCallName = StringUtil::stringW(wxConfig::Get()->Read(CFG_SETTINGS_LASTDOG, wxString()));
 		if (!strCallName.empty())
 		{
 			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog)
