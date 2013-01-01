@@ -18,6 +18,7 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
+ * @li 2013-01-01 DRC Added _VARIADIC_MAX for vc11.
  * @li 2012-01-29 DRC Add macro to ease selecting all text on dialog init.
  * @li 2011-12-22 DRC Add a macro to make using Bind() easier.
  * @li 2009-05-30 DRC Tweaked pragma message macro.
@@ -125,6 +126,8 @@
 	#if WINVER < 0x0600
 		#error VC11 minimum version is 0x0600
 	#endif
+	// VC11 changed how make_shared works. Default is 5. I need 6.
+	#define _VARIADIC_MAX 6
 #elif _MSC_VER >= 1600
 	#if defined(_M_IA64) && WINVER < 0x0502
 		#error Itanium minimum version is 0x0502
