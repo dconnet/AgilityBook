@@ -12,6 +12,7 @@
  *
  * Revision History
  * @li 2013-01-01 DRC Allow the mouse wheel to scroll beyond last entry.
+ *                    Add better keyboard navigation on Mac.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-14 DRC Removed wxScrollWindow - scroll wasn't used.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -1203,7 +1204,7 @@ bool CAgilityBookCalendarView::Create(
 #if wxUSE_MOUSEWHEEL
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_MOUSEWHEEL, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseWheel);
 #endif
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookCalendarView::OnCtrlKeyDown);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_CHAR, wxKeyEventHandler, CAgilityBookCalendarView::OnCtrlChar);
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif
@@ -1389,13 +1390,30 @@ void CAgilityBookCalendarView::OnCtrlMouseWheel(wxMouseEvent& evt)
 #endif
 
 
-void CAgilityBookCalendarView::OnCtrlKeyDown(wxKeyEvent& evt)
+enum CalendarMotion
+{
+	eMotionNone,
+	eMotionDayLast,
+	eMotionDayNext,
+	eMotionWeekLast,
+	eMotionWeekNext,
+	eMotionMonthLast,
+	eMotionMonthNext,
+	eMotionWeekStart,
+	eMotionWeekEnd,
+	eMotionCalStart,
+	eMotionCalEnd
+};
+
+
+void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 {
 	if (!m_Ctrl)
 		return;
 	ARBDate date = m_Ctrl->CurrentDate();
 	if (!date.IsValid())
 		return;
+	CalendarMotion motion = eMotionNone;
 	switch (evt.GetKeyCode())
 	{
 	default:
@@ -1409,21 +1427,63 @@ void CAgilityBookCalendarView::OnCtrlKeyDown(wxKeyEvent& evt)
 		break;
 	case WXK_LEFT:
 	case WXK_NUMPAD_LEFT:
-		--date;
+		motion = eMotionDayLast;
 		break;
 	case WXK_RIGHT:
 	case WXK_NUMPAD_RIGHT:
-		++date;
+		motion = eMotionDayNext;
 		break;
 	case WXK_UP:
 	case WXK_NUMPAD_UP:
-		date -= 7;
+#ifdef __WXMAC__
+		motion = (wxMOD_CMD == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekLast;
+#else
+		motion = eMotionWeekLast;
+#endif
 		break;
 	case WXK_DOWN:
 	case WXK_NUMPAD_DOWN:
-		date += 7;
+#ifdef __WXMAC__
+		motion = (wxMOD_CMD == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekNext;
+#else
+		motion = eMotionWeekNext;
+#endif
 		break;
 	case WXK_PAGEUP:
+		// Note: The mac synthesizes PAGEUP with fn+<up>
+		motion = eMotionMonthLast;
+		break;
+	case WXK_PAGEDOWN:
+		// Note: The mac synthesizes PAGEDOWN with fn+<dn>
+		motion = eMotionMonthNext;
+		break;
+	case WXK_HOME:
+		// Note: The mac synthesizes HOME with fn+<left>,
+		// hence we support fn+control+left as ctrl+home too.
+		motion = (wxMOD_RAW_CONTROL == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekStart;
+		break;
+	case WXK_END:
+		// Note: The mac synthesizes END with fn+<right>
+		motion = (wxMOD_RAW_CONTROL == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekEnd;
+		break;
+	}
+	switch (motion)
+	{
+	default:
+		break;
+	case eMotionDayLast:
+		--date;
+		break;
+	case eMotionDayNext:
+		++date;
+		break;
+	case eMotionWeekLast:
+		date -= 7;
+		break;
+	case eMotionWeekNext:
+		date += 7;
+		break;
+	case eMotionMonthLast:
 		if (1 == date.GetMonth())
 		{
 			date.SetDate(date.GetYear() - 1, 12, date.GetDay());
@@ -1439,7 +1499,7 @@ void CAgilityBookCalendarView::OnCtrlKeyDown(wxKeyEvent& evt)
 			}
 		}
 		break;
-	case WXK_PAGEDOWN:
+	case eMotionMonthNext:
 		if (12 == date.GetMonth())
 		{
 			date.SetDate(date.GetYear() + 1, 1, date.GetDay());
@@ -1455,17 +1515,17 @@ void CAgilityBookCalendarView::OnCtrlKeyDown(wxKeyEvent& evt)
 			}
 		}
 		break;
-	case WXK_HOME:
-		if (evt.CmdDown())
-			date = m_Ctrl->FirstDate();
-		else
-			date = m_Ctrl->FirstDayOfWeek(date);
+	case eMotionWeekStart:
+		date = m_Ctrl->FirstDayOfWeek(date);
 		break;
-	case WXK_END:
-		if (evt.CmdDown())
-			date = m_Ctrl->LastDate();
-		else
-			date = m_Ctrl->LastDayOfWeek(date);
+	case eMotionWeekEnd:
+		date = m_Ctrl->LastDayOfWeek(date);
+		break;
+	case eMotionCalStart:
+		date = m_Ctrl->FirstDate();
+		break;
+	case eMotionCalEnd:
+		date = m_Ctrl->LastDate();
 		break;
 	}
 	if (date != m_Ctrl->CurrentDate())
