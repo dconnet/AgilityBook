@@ -231,7 +231,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	sizerName->Add(ctrlName, 0, wxALL, 5);
 	sizerName->Add(ctrlPrefix, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+	bSizer->Add(sizerName, 0, wxEXPAND, 0);
 	bSizer->Add(textLong, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP, 5);
 	bSizer->Add(ctrlLongName, 0, wxALL|wxEXPAND, 5);
 	bSizer->Add(textDesc, 0, wxLEFT|wxRIGHT|wxTOP, 5);
@@ -249,7 +249,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 
 	sizerMultiple->Add(sizerStart, 0, wxTOP, 2);
 
-	sizerDetails->Add(sizerMultiple, 0, wxEXPAND, 5);
+	sizerDetails->Add(sizerMultiple, 0, wxEXPAND, 0);
 
 	wxFlexGridSizer* sizerDates;
 	sizerDates = new wxFlexGridSizer(2, 2, 0, 0);
@@ -260,7 +260,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	sizerDates->Add(ctrlValidTo, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxLEFT|wxRIGHT, 5);
 	sizerDates->Add(m_ctrlDateTo, 0, wxALL, 3);
 
-	sizerDetails->Add(sizerDates, 0, wxEXPAND, 5);
+	sizerDetails->Add(sizerDates, 0, wxEXPAND, 0);
 
 	bSizer->Add(sizerDetails, 0, wxALL|wxEXPAND, 5);
 
@@ -269,7 +269,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	sizerDisplay->Add(textDisplay, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
 	sizerDisplay->Add(m_ctrlStyle, 0, wxLEFT|wxRIGHT, 5);
 
-	bSizer->Add(sizerDisplay, 0, wxEXPAND, 5);
+	bSizer->Add(sizerDisplay, 0, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

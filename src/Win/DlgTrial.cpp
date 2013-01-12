@@ -221,10 +221,10 @@ CDlgTrial::CDlgTrial(
 	sizerTop2->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerTop2->Add(m_ctrlLocation, 1, wxALL|wxEXPAND, 5);
 
-	sizerTop->Add(sizerTop2, 3, wxEXPAND, 5);
+	sizerTop->Add(sizerTop2, 3, wxEXPAND, 0);
 	sizerTop->Add(checkVerified, 2, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerTop, 0, wxEXPAND, 5);
+	bSizer->Add(sizerTop, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerNoteText = new wxBoxSizer(wxHORIZONTAL);
 	sizerNoteText->Add(textNotes, 3, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -233,40 +233,40 @@ CDlgTrial::CDlgTrial(
 	sizerLocationNotes->Add(m_ctrlLocationNotes, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
 	sizerLocationNotes->Add(noteLocationNotes, 0, wxALIGN_BOTTOM|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	sizerNoteText->Add(sizerLocationNotes, 2, wxEXPAND, 5);
+	sizerNoteText->Add(sizerLocationNotes, 2, wxEXPAND, 0);
 
-	bSizer->Add(sizerNoteText, 0, wxEXPAND, 5);
+	bSizer->Add(sizerNoteText, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerNote = new wxBoxSizer(wxHORIZONTAL);
 	sizerNote->Add(ctrlTrialNotes, 3, wxALL|wxEXPAND, 5);
 	sizerNote->Add(m_ctrlLocationInfo, 2, wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizerNote, 1, wxEXPAND, 5);
+	bSizer->Add(sizerNote, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerClubText = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerClub = new wxBoxSizer(wxHORIZONTAL);
 	sizerClub->Add(textClub, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerClub->Add(0, 0, 1, wxEXPAND, 5);
+	sizerClub->Add(0, 0, 1, wxEXPAND, 0);
 	sizerClub->Add(btnNew, 0, wxLEFT|wxRIGHT, 5);
 	sizerClub->Add(m_ctrlEdit, 0, wxLEFT|wxRIGHT, 5);
 	sizerClub->Add(m_ctrlDelete, 0, wxLEFT|wxRIGHT, 5);
 
-	sizerClubText->Add(sizerClub, 3, wxEXPAND, 5);
+	sizerClubText->Add(sizerClub, 3, wxEXPAND, 0);
 
 	wxBoxSizer* sizerClubNotes = new wxBoxSizer(wxHORIZONTAL);
 	sizerClubNotes->Add(m_ctrlClubNotes, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
 	sizerClubNotes->Add(textClubNotes, 0, wxALIGN_BOTTOM|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	sizerClubText->Add(sizerClubNotes, 2, wxEXPAND, 5);
+	sizerClubText->Add(sizerClubNotes, 2, wxEXPAND, 0);
 
-	bSizer->Add(sizerClubText, 0, wxEXPAND, 5);
+	bSizer->Add(sizerClubText, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerClubs = new wxBoxSizer(wxHORIZONTAL);
 	sizerClubs->Add(m_ctrlClubs, 3, wxALL|wxEXPAND, 5);
 	sizerClubs->Add(m_ctrlClubInfo, 2, wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizerClubs, 1, wxEXPAND, 5);
+	bSizer->Add(sizerClubs, 1, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

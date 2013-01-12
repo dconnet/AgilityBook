@@ -230,25 +230,25 @@ CDlgReferenceRun::CDlgReferenceRun(
 	sizerStats->Add(textHt, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerStats->Add(ctrlHt, 0, wxALL, 5);
 
-	bSizer->Add(sizerStats, 0, wxEXPAND, 5);
+	bSizer->Add(sizerStats, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
 	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerName->Add(ctrlName, 1, wxALL, 5);
 
-	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+	bSizer->Add(sizerName, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerBreed = new wxBoxSizer(wxHORIZONTAL);
 	sizerBreed->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerBreed->Add(ctrlBreed, 1, wxALL, 5);
 
-	bSizer->Add(sizerBreed, 0, wxEXPAND, 5);
+	bSizer->Add(sizerBreed, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerNotes = new wxBoxSizer(wxHORIZONTAL);
 	sizerNotes->Add(textNotes, 0, wxALIGN_TOP|wxALL, 5);
 	sizerNotes->Add(ctrlNotes, 1, wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizerNotes, 1, wxEXPAND, 5);
+	bSizer->Add(sizerNotes, 1, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

@@ -112,13 +112,13 @@ CDlgClub::CDlgClub(
 	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerName->Add(m_ctrlClubs, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+	bSizer->Add(sizerName, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
 	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerVenue->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizerVenue, 0, wxEXPAND, 5);
+	bSizer->Add(sizerVenue, 0, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

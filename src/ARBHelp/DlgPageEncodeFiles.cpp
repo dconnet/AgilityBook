@@ -58,9 +58,9 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	sizerBtns->Add(btnAll, 0, wxALL, 5);
 	sizerBtns->Add(btnNone, 0, wxALL, 5);
 
-	sizerListBtns->Add(sizerBtns, 0, wxEXPAND, 5);
+	sizerListBtns->Add(sizerBtns, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerListBtns, 1, wxEXPAND, 5);
+	bSizer->Add(sizerListBtns, 1, wxEXPAND, 0);
 
 	SetSizer(bSizer);
 	Layout();

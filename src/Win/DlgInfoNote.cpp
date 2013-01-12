@@ -227,7 +227,7 @@ CDlgInfoNote::CDlgInfoNote(
 	sizerJudges->Add(ctrlNew, 0, wxALL, 5);
 	sizerJudges->Add(m_ctrlDelete, 0, wxALL, 5);
 
-	bSizer->Add(sizerJudges, 0, wxEXPAND, 5);
+	bSizer->Add(sizerJudges, 0, wxEXPAND, 0);
 	bSizer->Add(m_ctrlVisible, 0, wxALL, 5);
 	bSizer->Add(m_ctrlNotes, 1, wxALL|wxEXPAND, 5);
 

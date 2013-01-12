@@ -124,7 +124,7 @@ CDlgFind::CDlgFind(
 	bSizer2->Add(staticText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	bSizer2->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(bSizer2, 0, wxEXPAND, 5);
+	bSizer->Add(bSizer2, 0, wxEXPAND, 0);
 	bSizer->Add(m_checkBox, 0, wxALL, 5);
 
 	wxBoxSizer* bSizer3 = new wxBoxSizer(wxHORIZONTAL);
@@ -134,11 +134,11 @@ CDlgFind::CDlgFind(
 	bSizer->Add(bSizer3, 0, 0, 5);
 
 	wxBoxSizer* bSizerBtns = new wxBoxSizer(wxHORIZONTAL);
-	bSizerBtns->Add(0, 0, 1, wxEXPAND, 5);
+	bSizerBtns->Add(0, 0, 1, wxEXPAND, 0);
 	bSizerBtns->Add(m_btnFind, 0, wxALL, 5);
 	bSizerBtns->Add(btnClose, 0, wxALL, 5);
 
-	bSizer->Add(bSizerBtns, 0, wxEXPAND, 5);
+	bSizer->Add(bSizerBtns, 0, wxEXPAND, 0);
 
 	SetSizer(bSizer);
 	Layout();

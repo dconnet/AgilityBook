@@ -836,7 +836,7 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	sizerPlugins->Add(m_ctrlPlugins, 1, wxALL|wxEXPAND, 5);
 	sizerPlugins->Add(m_ctrlDetails, 0, wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizerPlugins, 1, wxEXPAND, 5);
+	bSizer->Add(sizerPlugins, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
 	sizerBtns->Add(m_ctrlRead, 0, wxALL, 5);
@@ -855,10 +855,10 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	sizerBtns->Add( 
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
 		0, wxEXPAND | wxALL, 5 );
-	sizerBtns->Add(0, 0, 1, wxEXPAND, 5);
+	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerBtns->Add(btnClose, 0, wxALL, 5);
 
-	bSizer->Add(sizerBtns, 0, wxEXPAND, 5);
+	bSizer->Add(sizerBtns, 0, wxEXPAND, 0);
 
 	SetSizer(bSizer);
 	Layout();

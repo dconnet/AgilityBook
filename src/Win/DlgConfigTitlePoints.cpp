@@ -136,13 +136,13 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	sizerValue->Add(m_textValue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerValue->Add(m_ctrlValue, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerValue, 0, wxEXPAND, 5);
+	bSizer->Add(sizerValue, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
 	sizerPoints->Add(m_textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerPoints->Add(m_ctrlPoints, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND, 5);
+	bSizer->Add(sizerPoints, 0, wxEXPAND, 0);
 	bSizer->Add(m_ctrlType, 0, wxALL|wxEXPAND, 5);
 	bSizer->Add(m_ctrlTypeNormal, 0, wxALL|wxEXPAND, 5);
 

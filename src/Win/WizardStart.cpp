@@ -202,7 +202,7 @@ CWizardStart::CWizardStart(
 
 	sizerAction->Add(sizerDesc, 1, wxEXPAND|wxLEFT|wxRIGHT, 5);
 
-	bSizer->Add(sizerAction, 1, wxEXPAND, 5);
+	bSizer->Add(sizerAction, 1, wxEXPAND, 0);
 
 	SetSizer(bSizer);
 	bSizer->Fit(this);

@@ -167,13 +167,13 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	sizerPlace->Add(textPlace, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerPlace->Add(ctrlPlace, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerPlace, 0, wxEXPAND, 5);
+	bSizer->Add(sizerPlace, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerValue = new wxBoxSizer(wxHORIZONTAL);
 	sizerValue->Add(textValue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerValue->Add(ctrlValue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerValue, 0, wxEXPAND, 5);
+	bSizer->Add(sizerValue, 0, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

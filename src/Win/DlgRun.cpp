@@ -1411,7 +1411,7 @@ CDlgRun::CDlgRun(
 	sizerDate->Add(textClub, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerDate->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	sizerScorePanel->Add(sizerDate, 0, wxEXPAND, 5);
+	sizerScorePanel->Add(sizerDate, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerDivHt = new wxBoxSizer(wxHORIZONTAL);
 
@@ -1426,10 +1426,10 @@ CDlgRun::CDlgRun(
 	sizerEvent->Add(m_ctrlEvents, 0, wxALL, 5);
 	sizerEvent->Add(m_ctrlSubNamesText, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
 	sizerEvent->Add(m_ctrlSubNames, 0, wxALL, 5);
-	sizerEvent->Add(0, 0, 1, wxEXPAND, 5);
+	sizerEvent->Add(0, 0, 1, wxEXPAND, 0);
 	sizerEvent->Add(m_ctrlTable, 0, wxALL, 5);
 
-	sizerDivHt->Add(sizerEvent, 0, wxEXPAND, 5);
+	sizerDivHt->Add(sizerEvent, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerHtCond = new wxBoxSizer(wxVERTICAL);
 
@@ -1442,13 +1442,13 @@ CDlgRun::CDlgRun(
 	sizerHt->Add(textHandler, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
 	sizerHt->Add(m_ctrlHandler, 0, wxALL, 5);
 
-	sizerHtCond->Add(sizerHt, 0, wxEXPAND, 5);
+	sizerHtCond->Add(sizerHt, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerCond = new wxBoxSizer(wxHORIZONTAL);
 	sizerCond->Add(textConditions, 0, wxBOTTOM|wxLEFT|wxTOP, 5);
 	sizerCond->Add(m_ctrlConditions, 1, wxALL|wxEXPAND, 5);
 
-	sizerHtCond->Add(sizerCond, 1, wxEXPAND, 5);
+	sizerHtCond->Add(sizerCond, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerComments = new wxBoxSizer(wxHORIZONTAL);
 	sizerComments->Add(m_ctrlDesc, 1, wxALL|wxEXPAND, 5);
@@ -1457,13 +1457,13 @@ CDlgRun::CDlgRun(
 	sizerPartner->Add(m_ctrlPartnerEdit, 0, wxALL, 5);
 	sizerPartner->Add(m_ctrlPartner, 0, wxALL, 5);
 
-	sizerComments->Add(sizerPartner, 0, wxEXPAND, 5);
+	sizerComments->Add(sizerPartner, 0, wxEXPAND, 0);
 
-	sizerHtCond->Add(sizerComments, 0, wxEXPAND, 5);
+	sizerHtCond->Add(sizerComments, 0, wxEXPAND, 0);
 
-	sizerDivHt->Add(sizerHtCond, 0, wxEXPAND, 5);
+	sizerDivHt->Add(sizerHtCond, 0, wxEXPAND, 0);
 
-	sizerScorePanel->Add(sizerDivHt, 0, wxEXPAND, 5);
+	sizerScorePanel->Add(sizerDivHt, 0, wxEXPAND, 0);
 
 	wxFlexGridSizer* sizerResults = new wxFlexGridSizer(5, 4, 0, 0);
 	sizerResults->SetFlexibleDirection(wxBOTH);
@@ -1555,7 +1555,7 @@ CDlgRun::CDlgRun(
 
 	sizerResults->Add(sizerClosingPtsTotalFaults, 0, wxALIGN_RIGHT, 5);
 
-	sizerResults->Add(0, 0, 1, wxEXPAND, 5);
+	sizerResults->Add(0, 0, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerScore = new wxBoxSizer(wxHORIZONTAL);
 	sizerScore->Add(textScore, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
@@ -1574,10 +1574,10 @@ CDlgRun::CDlgRun(
 	sizerObsSec->Add(m_ctrlObstaclesPS, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
 	sizerResults->Add(sizerObsSec, 0, wxALIGN_RIGHT, 5);
-	sizerResults->Add(0, 0, 1, wxEXPAND, 5);
+	sizerResults->Add(0, 0, 1, wxEXPAND, 0);
 	sizerResults->Add(btnOtherPoints, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
 
-	sizerScorePanel->Add(sizerResults, 1, wxEXPAND, 5);
+	sizerScorePanel->Add(sizerResults, 1, wxEXPAND, 0);
 
 	m_panelScore->SetSizer(sizerScorePanel);
 	m_panelScore->Layout();
@@ -1591,7 +1591,7 @@ CDlgRun::CDlgRun(
 	sizerFaultsList->Add(m_ctrlFaultsList, 1, wxALL, 5);
 	sizerFaultsList->Add(btnFaults, 0, wxALL, 5);
 
-	sizerCommentsFaults->Add(sizerFaultsList, 0, wxEXPAND, 5);
+	sizerCommentsFaults->Add(sizerFaultsList, 0, wxEXPAND, 0);
 
 	panelComments->SetSizer(sizerCommentsFaults);
 	panelComments->Layout();
@@ -1606,7 +1606,7 @@ CDlgRun::CDlgRun(
 	sizerRefBtns->Add(m_ctrlRefAddMe, 0, wxALL, 5);
 	sizerRefBtns->Add(m_ctrlRefEdit, 0, wxALL, 5);
 	sizerRefBtns->Add(m_ctrlRefDelete, 0, wxALL, 5);
-	sizerRefRuns->Add(sizerRefBtns, 0, wxEXPAND, 5);
+	sizerRefRuns->Add(sizerRefBtns, 0, wxEXPAND, 0);
 
 	panelRefRuns->SetSizer(sizerRefRuns);
 	panelRefRuns->Layout();
@@ -1620,7 +1620,7 @@ CDlgRun::CDlgRun(
 	sizerDisplay->Add(textCRCD, 0, wxALL, 5);
 	sizerDisplay->Add(m_CRCDDisplay, 1, wxALL|wxEXPAND, 5);
 
-	sizerCRCD->Add(sizerDisplay, 1, wxEXPAND, 5);
+	sizerCRCD->Add(sizerDisplay, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerBtnsCRCD = new wxBoxSizer(wxVERTICAL);
 	if (m_ctrlCourse)
@@ -1633,7 +1633,7 @@ CDlgRun::CDlgRun(
 	if (textImageDesc)
 		sizerBtnsCRCD->Add(textImageDesc, 0, wxALL, 5);
 
-	sizerCRCD->Add(sizerBtnsCRCD, 0, wxEXPAND, 5);
+	sizerCRCD->Add(sizerBtnsCRCD, 0, wxEXPAND, 0);
 
 	panelCRCD->SetSizer(sizerCRCD);
 	panelCRCD->Layout();
@@ -1647,10 +1647,10 @@ CDlgRun::CDlgRun(
 	sizerLinkBtns->Add(btnLinkNew, 0, wxALL, 5);
 	sizerLinkBtns->Add(m_ctrlLinkEdit, 0, wxALL, 5);
 	sizerLinkBtns->Add(m_ctrlLinkDelete, 0, wxALL, 5);
-	sizerLinkBtns->Add(0, 0, 1, wxEXPAND, 5);
+	sizerLinkBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerLinkBtns->Add(m_ctrlLinkOpen, 0, wxALL, 5);
 
-	sizerLinks->Add(sizerLinkBtns, 0, wxEXPAND, 5);
+	sizerLinks->Add(sizerLinkBtns, 0, wxEXPAND, 0);
 
 	panelLinks->SetSizer(sizerLinks);
 	panelLinks->Layout();

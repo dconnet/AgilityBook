@@ -858,13 +858,13 @@ CDlgDog::CDlgDog(
 	sizerName->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerName->Add(ctrlBreed, 3, wxALL, 5);
 
-	sizerProp->Add(sizerName, 0, wxEXPAND, 5);
+	sizerProp->Add(sizerName, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerRegName = new wxBoxSizer(wxHORIZONTAL);
 	sizerRegName->Add(textRegName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerRegName->Add(ctrlRegName, 1, wxALL, 5);
 
-	sizerProp->Add(sizerRegName, 0, wxEXPAND, 5);
+	sizerProp->Add(sizerRegName, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerAge = new wxBoxSizer(wxHORIZONTAL);
 	sizerAge->Add(textAge, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -874,7 +874,7 @@ CDlgDog::CDlgDog(
 	sizerAge->Add(ctrlDeceased, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerAge->Add(m_ctrlDDay, 0, wxALL, 5);
 
-	sizerProp->Add(sizerAge, 0, wxEXPAND, 5);
+	sizerProp->Add(sizerAge, 0, wxEXPAND, 0);
 	sizerProp->Add(textNotes, 0, wxLEFT|wxRIGHT|wxTOP, 5);
 	sizerProp->Add(ctrlNotes, 1, wxALL|wxEXPAND, 5);
 
@@ -890,10 +890,10 @@ CDlgDog::CDlgDog(
 	sizerTitleBtns->Add(btnTitleNew, 0, wxALL, 5);
 	sizerTitleBtns->Add(m_ctrlTitleEdit, 0, wxALL, 5);
 	sizerTitleBtns->Add(m_ctrlTitleDelete, 0, wxALL, 5);
-	sizerTitleBtns->Add(0, 0, 1, wxEXPAND, 5);
+	sizerTitleBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerTitleBtns->Add(ctrlHidden, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	sizerTitles->Add(sizerTitleBtns, 0, wxEXPAND, 5);
+	sizerTitles->Add(sizerTitleBtns, 0, wxEXPAND, 0);
 
 	panelTitles->SetSizer(sizerTitles);
 	panelTitles->Layout();
@@ -908,7 +908,7 @@ CDlgDog::CDlgDog(
 	sizerRegBtns->Add(m_ctrlRegEdit, 0, wxALL, 5);
 	sizerRegBtns->Add(m_ctrlRegDelete, 0, wxALL, 5);
 
-	sizerReg->Add(sizerRegBtns, 0, wxEXPAND, 5);
+	sizerReg->Add(sizerRegBtns, 0, wxEXPAND, 0);
 
 	panelRegNums->SetSizer(sizerReg);
 	panelRegNums->Layout();
@@ -922,11 +922,11 @@ CDlgDog::CDlgDog(
 	sizerPtsBtns->Add(btnPtsNew, 0, wxALL, 5);
 	sizerPtsBtns->Add(m_ctrlPointsEdit, 0, wxALL, 5);
 	sizerPtsBtns->Add(m_ctrlPointsDelete, 0, wxALL, 5);
-	sizerPtsBtns->Add(0, 0, 1, wxEXPAND, 5);
+	sizerPtsBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerPtsBtns->Add(textPts, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerPtsBtns->Add(m_ctrlSelectedPts, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	sizerPts->Add(sizerPtsBtns, 0, wxEXPAND, 5);
+	sizerPts->Add(sizerPtsBtns, 0, wxEXPAND, 0);
 
 	panelPoints->SetSizer(sizerPts);
 	panelPoints->Layout();

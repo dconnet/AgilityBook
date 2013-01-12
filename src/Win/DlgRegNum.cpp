@@ -127,19 +127,19 @@ CDlgRegNum::CDlgRegNum(
 	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerVenue->Add(m_ctrlVenues, 0, wxALL, 5);
 
-	bSizer->Add(sizerVenue, 0, wxEXPAND, 5);
+	bSizer->Add(sizerVenue, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerRegNum = new wxBoxSizer(wxHORIZONTAL);
 	sizerRegNum->Add(textRegNum, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerRegNum->Add(ctrlRegNum, 0, wxALL, 5);
 
-	bSizer->Add(sizerRegNum, 0, wxEXPAND, 5);
+	bSizer->Add(sizerRegNum, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerHeight = new wxBoxSizer(wxHORIZONTAL);
 	sizerHeight->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerHeight->Add(ctrlHeight, 0, wxALL, 5);
 
-	bSizer->Add(sizerHeight, 0, wxEXPAND, 5);
+	bSizer->Add(sizerHeight, 0, wxEXPAND, 0);
 	bSizer->Add(checkReceived, 0, wxALL, 5);
 	bSizer->Add(ctrlDesc, 1, wxALL|wxEXPAND, 5);
 
