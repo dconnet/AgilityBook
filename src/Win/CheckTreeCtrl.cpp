@@ -88,11 +88,7 @@ void CCheckTreeCtrl::ShowCheckbox(
 bool CCheckTreeCtrl::IsCheckVisible(wxTreeItemId hItem)
 {
 	int index = GetItemState(hItem);
-#ifdef WX_TREE_HAS_STATE
-	return index != m_stateNone;
-#else
 	return index == m_stateChecked || index == m_stateUnChecked;
-#endif
 }
 
 
