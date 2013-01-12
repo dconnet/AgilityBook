@@ -133,19 +133,19 @@ CDlgTraining::CDlgTraining(
 	sizerDate->Add(textDate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerDate->Add(m_datePicker, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerDate, 0, wxEXPAND, 5);
+	bSizer->Add(sizerDate, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
 	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerName->Add(ctrlName, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+	bSizer->Add(sizerName, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerSubname = new wxBoxSizer(wxHORIZONTAL);
 	sizerSubname->Add(textSubname, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerSubname->Add(ctrlSubname, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerSubname, 0, wxEXPAND, 5);
+	bSizer->Add(sizerSubname, 0, wxEXPAND, 0);
 	bSizer->Add(ctrlNote, 1, wxALL|wxEXPAND, 5);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);

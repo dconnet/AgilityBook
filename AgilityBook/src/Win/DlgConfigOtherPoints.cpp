@@ -186,19 +186,19 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerName->Add(ctrlName, 1, wxALL, 5);
 
-	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+	bSizer->Add(sizerName, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerTally = new wxBoxSizer(wxHORIZONTAL);
 	sizerTally->Add(textTally, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerTally->Add(m_ctrlTally, 1, wxALL, 5);
 
-	bSizer->Add(sizerTally, 0, wxEXPAND, 5);
+	bSizer->Add(sizerTally, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
 	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerPoints->Add(ctrlPoints, 0, wxALL, 5);
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND, 5);
+	bSizer->Add(sizerPoints, 0, wxEXPAND, 0);
 	bSizer->Add(textDesc, 0, wxALL, 5);
 	bSizer->Add(ctrlDesc, 1, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5);
 

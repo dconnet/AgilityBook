@@ -111,14 +111,14 @@ CDlgOtherPoint::CDlgOtherPoint(
 	sizerItems->Add(m_ctrlOtherPoints, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 	sizerItems->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerItems, 0, wxEXPAND, 5);
+	bSizer->Add(sizerItems, 0, wxEXPAND, 0);
 	bSizer->Add(m_ctrlDesc, 1, wxALL|wxEXPAND, 5);
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
 	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND, 5);
+	bSizer->Add(sizerPoints, 0, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

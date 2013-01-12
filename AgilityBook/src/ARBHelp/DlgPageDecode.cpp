@@ -87,10 +87,10 @@ CDlgPageDecode::CDlgPageDecode()
 
 	wxBoxSizer* sizeBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizeBtns->Add(btnDecode, 0, wxALL, 5);
-	sizeBtns->Add(0, 0, 1, wxEXPAND, 5);
+	sizeBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizeBtns->Add(btnClose, 0, wxALL, 5);
 
-	bSizer->Add(sizeBtns, 0, wxEXPAND, 5);
+	bSizer->Add(sizeBtns, 0, wxEXPAND, 0);
 
 	SetSizer(bSizer);
 	Layout();

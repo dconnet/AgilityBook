@@ -255,12 +255,12 @@ CWizardImport::CWizardImport(
 	sizerStart->Add(textRow, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerStart->Add(m_ctrlRow, 0, wxALL, 5);
 
-	sizerStart->Add(0, 0, 1, wxEXPAND, 5);
+	sizerStart->Add(0, 0, 1, wxEXPAND, 0);
 	sizerStart->Add(m_ctrlAssign, 0, wxALL, 5);
 	sizerStart->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerStart->Add(m_ctrlDateFormat, 0, wxALL, 5);
 
-	bSizer->Add(sizerStart, 0, wxEXPAND, 5);
+	bSizer->Add(sizerStart, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerOptions = new wxBoxSizer(wxHORIZONTAL);
 
@@ -279,19 +279,19 @@ CWizardImport::CWizardImport(
 	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerOther->Add(m_ctrlOtherChar, 0, wxALL, 5);
 
-	sizerDelim2->Add(sizerOther, 1, wxEXPAND, 5);
+	sizerDelim2->Add(sizerOther, 1, wxEXPAND, 0);
 
-	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND, 5);
+	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND, 0);
 
-	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 5);
+	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerOptions, 0, wxEXPAND, 5);
+	bSizer->Add(sizerOptions, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizeFile = new wxBoxSizer(wxHORIZONTAL);
 	sizeFile->Add(btnFile, 0, wxALL, 5);
 	sizeFile->Add(m_ctrlPreviewFile, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP, 5);
 
-	bSizer->Add(sizeFile, 0, wxEXPAND, 5);
+	bSizer->Add(sizeFile, 0, wxEXPAND, 0);
 	bSizer->Add(m_ctrlPreview, 1, wxALL|wxEXPAND, 5);
 
 	SetSizer(bSizer);

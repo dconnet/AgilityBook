@@ -159,13 +159,13 @@ void CDlgReorder::Init(wxWindow* pParent)
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
 	bSizerSide->Add(btnOk, 0, wxALL, 5);
 	bSizerSide->Add(btnCancel, 0, wxALL, 5);
-	bSizerSide->Add(0, 0, 1, wxEXPAND, 5);
+	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
 	bSizerSide->Add(m_ctrlUp, 0, wxALL, 5);
 	bSizerSide->Add(m_ctrlDown, 0, wxALL, 5);
 
-	bSizerList->Add(bSizerSide, 0, wxEXPAND, 5);
+	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
 
-	bSizer->Add(bSizerList, 1, wxEXPAND, 5);
+	bSizer->Add(bSizerList, 1, wxEXPAND, 0);
 
 	if (m_Dogs && m_ctrlList)
 	{

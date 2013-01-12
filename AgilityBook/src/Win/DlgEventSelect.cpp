@@ -150,19 +150,19 @@ CDlgEventSelect::CDlgEventSelect(
 	sizer1->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizer1->Add(m_ctrlDivisions, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizer1, 0, wxEXPAND, 5);
+	bSizer->Add(sizer1, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	sizer2->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizer2->Add(m_ctrlLevels, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizer2, 0, wxEXPAND, 5);
+	bSizer->Add(sizer2, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
 	sizer3->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizer3->Add(m_ctrlEvents, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizer3, 1, wxEXPAND, 5);
+	bSizer->Add(sizer3, 1, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

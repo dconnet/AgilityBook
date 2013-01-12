@@ -101,7 +101,7 @@ CDlgMessageBox::CDlgMessageBox(
 		sizerText->Add(ctrlIcon, 0, wxALL, 5);
 	sizerText->Add(ctrlText, 1, wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizerText, 1, wxEXPAND, 5);
+	bSizer->Add(sizerText, 1, wxEXPAND, 0);
 
 	if (ctrlDetails)
 		bSizer->Add(ctrlDetails, 0, wxALIGN_RIGHT|wxALL, 5);

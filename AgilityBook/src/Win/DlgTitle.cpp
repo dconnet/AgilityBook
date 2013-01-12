@@ -179,29 +179,29 @@ CDlgTitle::CDlgTitle(
 	sizerDate->Add(checkEarned, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerDate->Add(m_ctrlDate, 0, wxALL, 5);
 
-	sizerDateVenue->Add(sizerDate, 0, wxEXPAND, 5);
+	sizerDateVenue->Add(sizerDate, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
 	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerVenue->Add(m_ctrlVenues, 0, wxALL, 5);
 
-	sizerDateVenue->Add(sizerVenue, 0, wxEXPAND, 5);
+	sizerDateVenue->Add(sizerVenue, 0, wxEXPAND, 0);
 
-	sizerTop2Rows->Add(sizerDateVenue, 0, wxEXPAND, 5);
+	sizerTop2Rows->Add(sizerDateVenue, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerChecks = new wxBoxSizer(wxVERTICAL);
 	sizerChecks->Add(m_ctrlHide, 0, wxALL, 5);
 	sizerChecks->Add(m_ctrlReceived, 0, wxALL, 5);
 
-	sizerTop2Rows->Add(sizerChecks, 0, wxEXPAND, 5);
+	sizerTop2Rows->Add(sizerChecks, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerTop2Rows, 0, wxEXPAND, 5);
+	bSizer->Add(sizerTop2Rows, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerTitle = new wxBoxSizer(wxHORIZONTAL);
 	sizerTitle->Add(textTitle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerTitle->Add(m_ctrlTitles, 1, wxALL, 5);
 
-	bSizer->Add(sizerTitle, 0, wxEXPAND, 5);
+	bSizer->Add(sizerTitle, 0, wxEXPAND, 0);
 
 	bSizer->Add(m_ctrlDesc, 1, wxALL|wxEXPAND, 5);
 

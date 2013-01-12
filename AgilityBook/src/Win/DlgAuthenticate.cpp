@@ -81,15 +81,15 @@ CDlgAuthenticate::CDlgAuthenticate(
 	sizerUserName->Add(textUserName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerUserName->Add(ctrlUsername, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	sizerRows->Add(sizerUserName, 1, wxEXPAND, 5);
+	sizerRows->Add(sizerUserName, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerPassword = new wxBoxSizer(wxHORIZONTAL);
 	sizerPassword->Add(textPassword, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerPassword->Add(ctrlPassword, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	sizerRows->Add(sizerPassword, 1, wxEXPAND, 5);
+	sizerRows->Add(sizerPassword, 1, wxEXPAND, 0);
 
-	sizer->Add(sizerRows, 1, wxEXPAND, 5);
+	sizer->Add(sizerRows, 1, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	sizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

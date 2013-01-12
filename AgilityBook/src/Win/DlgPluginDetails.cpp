@@ -134,7 +134,7 @@ CDlgPluginDetails::CDlgPluginDetails(
 	sizerName->Add(textName, 0, wxALIGN_CENTER|wxALL, 5);
 	sizerName->Add(m_ctrlName, 1, wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+	bSizer->Add(sizerName, 0, wxEXPAND, 0);
 	bSizer->Add(textDesc, 0, wxALL, 5);
 	bSizer->Add(ctrlDesc, 0, wxALL|wxEXPAND, 5);
 	bSizer->Add(textSearchURL, 0, wxALL, 5);

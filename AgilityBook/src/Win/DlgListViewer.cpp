@@ -1440,7 +1440,7 @@ bool CDlgListViewer::Create(
 	bSizer->Add(m_ctrlList, 1, wxALL|wxEXPAND, 5);
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerBtns->Add(0, 0, 1, wxEXPAND, 5);
+	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerBtns->Add(m_ctrlCopy, 0, wxALL, 5);
 	sizerBtns->Add(btnClose, 0, wxALL, 5);
 

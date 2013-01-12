@@ -376,14 +376,14 @@ CDlgConfigEvent::CDlgConfigEvent(
 	sizerName->Add(ctrlTable, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerName->Add(ctrlPartners, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	sizerTop->Add(sizerName, 1, wxEXPAND, 5);
+	sizerTop->Add(sizerName, 1, wxEXPAND, 0);
 	sizerTop->Add(ctrlHasSubnames, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	wxBoxSizer* sizerNotes = new wxBoxSizer(wxHORIZONTAL);
 	sizerNotes->Add(textNote, 0, wxALL, 5);
 	sizerNotes->Add(ctrlNote, 1, wxALL|wxEXPAND, 5);
 
-	sizerTop->Add(sizerNotes, 1, wxEXPAND, 5);
+	sizerTop->Add(sizerNotes, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerSubname = new wxBoxSizer(wxHORIZONTAL);
 	sizerSubname->Add(m_ctrlSubNames, 1, wxALL|wxEXPAND, 5);
@@ -393,11 +393,11 @@ CDlgConfigEvent::CDlgConfigEvent(
 	sizerBtnSub->Add(m_ctrlSubNamesEdit, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 	sizerBtnSub->Add(m_ctrlSubNamesDelete, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
-	sizerSubname->Add(sizerBtnSub, 0, wxEXPAND, 5);
+	sizerSubname->Add(sizerBtnSub, 0, wxEXPAND, 0);
 
-	sizerTop->Add(sizerSubname, 1, wxEXPAND, 5);
+	sizerTop->Add(sizerSubname, 1, wxEXPAND, 0);
 
-	bSizer->Add(sizerTop, 0, wxEXPAND, 5);
+	bSizer->Add(sizerTop, 0, wxEXPAND, 0);
 
 	wxStaticBoxSizer* sizerMethods = new wxStaticBoxSizer(boxMethods, wxVERTICAL);
 
@@ -407,7 +407,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	sizerDefined->Add(textDefined, 0, wxLEFT|wxRIGHT|wxTOP, 5);
 	sizerDefined->Add(m_ctrlMethods, 1, wxALL|wxEXPAND, 5);
 
-	sizerDefinitions->Add(sizerDefined, 1, wxEXPAND, 5);
+	sizerDefinitions->Add(sizerDefined, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
 	sizerBtns->Add(m_ctrlNew, 0, wxALL, 5);
@@ -417,15 +417,15 @@ CDlgConfigEvent::CDlgConfigEvent(
 	sizerBtns->Add(m_ctrlUp, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
 	sizerBtns->Add(m_ctrlDown, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
-	sizerDefinitions->Add(sizerBtns, 0, wxEXPAND, 5);
+	sizerDefinitions->Add(sizerBtns, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerNotDefined = new wxBoxSizer(wxVERTICAL);
 	sizerNotDefined->Add(textNotDefined, 0, wxLEFT|wxRIGHT|wxTOP, 5);
 	sizerNotDefined->Add(m_ctrlUnused, 1, wxALL|wxEXPAND, 5);
 
-	sizerDefinitions->Add(sizerNotDefined, 1, wxEXPAND, 5);
+	sizerDefinitions->Add(sizerNotDefined, 1, wxEXPAND, 0);
 
-	sizerMethods->Add(sizerDefinitions, 1, wxEXPAND, 5);
+	sizerMethods->Add(sizerDefinitions, 1, wxEXPAND, 0);
 
 	wxStaticLine* staticLine = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
 	sizerMethods->Add(staticLine, 0, wxBOTTOM|wxEXPAND|wxTOP, 5);
@@ -440,13 +440,13 @@ CDlgConfigEvent::CDlgConfigEvent(
 	sizerBtnPts->Add(m_ctrlPointsEdit, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 	sizerBtnPts->Add(m_ctrlPointsDelete, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
-	sizerPoints->Add(sizerBtnPts, 0, wxEXPAND, 5);
+	sizerPoints->Add(sizerBtnPts, 0, wxEXPAND, 0);
 	sizerPoints->Add(textMethodNote, 0, wxALL, 5);
 	sizerPoints->Add(m_ctrlNote, 1, wxALL|wxEXPAND, 5);
 
-	sizerMethods->Add(sizerPoints, 0, wxEXPAND, 5);
+	sizerMethods->Add(sizerPoints, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerMethods, 1, wxEXPAND, 5);
+	bSizer->Add(sizerMethods, 1, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

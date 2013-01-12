@@ -97,10 +97,10 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	bSizer->Add(bSizerRadio, 0, 0, 5);
 
 	wxBoxSizer* bSizerWithSpace = new wxBoxSizer(wxHORIZONTAL);
-	bSizerWithSpace->Add(15, 0, 0, wxEXPAND, 5);
+	bSizerWithSpace->Add(15, 0, 0, wxEXPAND, 0);
 	bSizerWithSpace->Add(m_FileName, 1, wxALL|wxEXPAND, 5);
 
-	bSizer->Add(bSizerWithSpace, 0, wxEXPAND, 5);
+	bSizer->Add(bSizerWithSpace, 0, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

@@ -461,7 +461,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	sizerDiv->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
 	sizerDiv->Add(m_ctrlLevel, 1, wxALL, 5);
 
-	sizerDivDates->Add(sizerDiv, 0, wxEXPAND, 5);
+	sizerDivDates->Add(sizerDiv, 0, wxEXPAND, 0);
 
 	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerDates->SetFlexibleDirection(wxBOTH);
@@ -471,15 +471,15 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	sizerDates->Add(m_ctrlValidTo, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
 	sizerDates->Add(m_ctrlDateTo, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	sizerDivDates->Add(sizerDates, 1, wxEXPAND, 5);
+	sizerDivDates->Add(sizerDates, 1, wxEXPAND, 0);
 
-	bSizer->Add(sizerDivDates, 0, wxEXPAND, 5);
+	bSizer->Add(sizerDivDates, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerStyle = new wxBoxSizer(wxHORIZONTAL);
 	sizerStyle->Add(textStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerStyle->Add(m_ctrlType, 0, wxALL, 5);
 
-	bSizer->Add(sizerStyle, 0, wxEXPAND, 5);
+	bSizer->Add(sizerStyle, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerOptions = new wxBoxSizer(wxHORIZONTAL);
 
@@ -505,11 +505,11 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	sizerBtns->Add(m_ctrlPlacementEdit, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 	sizerBtns->Add(m_ctrlPlacementDelete, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
-	sizerPlacements->Add(sizerBtns, 0, wxEXPAND, 5);
+	sizerPlacements->Add(sizerBtns, 0, wxEXPAND, 0);
 
-	sizerCol1->Add(sizerPlacements, 0, wxEXPAND, 5);
+	sizerCol1->Add(sizerPlacements, 0, wxEXPAND, 0);
 
-	sizerOptions->Add(sizerCol1, 1, wxEXPAND, 5);
+	sizerOptions->Add(sizerCol1, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerCol2 = new wxBoxSizer(wxVERTICAL);
 	sizerCol2->Add(m_ctrlTimeFaultsCleanQ, 0, wxALL, 5);
@@ -525,11 +525,11 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	sizerPoints->Add(m_ctrlPointsClosingText, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
 	sizerPoints->Add(m_ctrlPointsClosing, 0, wxALL, 5);
 
-	sizerCol2->Add(sizerPoints, 0, wxEXPAND, 5);
+	sizerCol2->Add(sizerPoints, 0, wxEXPAND, 0);
 
-	sizerOptions->Add(sizerCol2, 1, wxEXPAND, 5);
+	sizerOptions->Add(sizerCol2, 1, wxEXPAND, 0);
 
-	bSizer->Add(sizerOptions, 1, wxEXPAND, 5);
+	bSizer->Add(sizerOptions, 1, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

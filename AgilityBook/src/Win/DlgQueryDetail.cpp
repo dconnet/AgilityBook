@@ -114,13 +114,13 @@ CDlgQueryDetail::CDlgQueryDetail(
 	sizerCode->Add(textCode, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerCode->Add(m_ctrlCode, 0, wxALL, 5);
 
-	bSizer->Add(sizerCode, 1, wxEXPAND, 5);
+	bSizer->Add(sizerCode, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
 	sizerVenue->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerVenue->Add(ctrlLocationOrVenue, 1, wxALL, 5);
 
-	bSizer->Add(sizerVenue, 1, wxEXPAND, 5);
+	bSizer->Add(sizerVenue, 1, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

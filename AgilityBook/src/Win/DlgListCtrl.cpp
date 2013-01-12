@@ -592,22 +592,22 @@ bool CDlgListCtrl::Create(
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
 	bSizerSide->Add(btnOk, 0, wxALL, 5);
 	bSizerSide->Add(btnCancel, 0, wxALL, 5);
-	bSizerSide->Add(0, 0, 1, wxEXPAND, 5);
+	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
 	bSizerSide->Add(m_ctrlUp, 0, wxALL, 5);
 	bSizerSide->Add(m_ctrlDown, 0, wxALL, 5);
 
-	bSizerList->Add(bSizerSide, 0, wxEXPAND, 5);
+	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
 
-	bSizer->Add(bSizerList, 1, wxEXPAND, 5);
+	bSizer->Add(bSizerList, 1, wxEXPAND, 0);
 
 	wxBoxSizer* bSizerEdit = new wxBoxSizer(wxHORIZONTAL);
 	bSizerEdit->Add(m_ctrlNew, 0, wxALL, 5);
 	bSizerEdit->Add(m_ctrlEdit, 0, wxALL, 5);
 	bSizerEdit->Add(m_ctrlDelete, 0, wxALL, 5);
-	bSizerEdit->Add(0, 0, 1, wxEXPAND, 5);
+	bSizerEdit->Add(0, 0, 1, wxEXPAND, 0);
 	bSizerEdit->Add(m_ctrlCreateTrial, 0, wxALL, 5);
 
-	bSizer->Add(bSizerEdit, 0, wxEXPAND, 5);
+	bSizer->Add(bSizerEdit, 0, wxEXPAND, 0);
 
 	SetSizer(bSizer);
 	Layout();
