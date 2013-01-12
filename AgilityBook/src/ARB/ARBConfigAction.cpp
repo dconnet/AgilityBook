@@ -16,6 +16,7 @@
  * maintain our data integrity, we need to update things to deal with this.
  *
  * Revision History
+ * @li 2013-01-11 DRC Fix filters on configuration import.
  * @li 2012-11-21 DRC Add RenameLevel action verb.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-12-03 DRC Complete re-write of action class.
@@ -398,6 +399,22 @@ bool ARBConfigActionRenameVenue::Apply(
 			ioConfig.GetVenues().DeleteVenue(m_OldName);
 		else
 			oldVenue->SetName(m_NewName);
+	}
+	return bChanged;
+}
+
+
+bool ARBConfigActionRenameVenue::Update(
+		ARBConfig const& inConfigCurrent,
+		std::wstring& ioVenue,
+		std::wstring& ioDivision,
+		std::wstring& ioSubLevel) const
+{
+	bool bChanged = false;
+	if (!ioVenue.empty() && ioVenue == m_OldName)
+	{
+		bChanged = true;
+		ioVenue = m_NewName;
 	}
 	return bChanged;
 }
@@ -787,6 +804,23 @@ bool ARBConfigActionRenameDivision::Apply(
 	return bChanged;
 }
 
+
+bool ARBConfigActionRenameDivision::Update(
+		ARBConfig const& inConfigCurrent,
+		std::wstring& ioVenue,
+		std::wstring& ioDivision,
+		std::wstring& ioSubLevel) const
+{
+	bool bChanged = false;
+	if (!ioVenue.empty() && ioVenue == m_Venue
+		&& !ioDivision.empty() && ioDivision == m_OldName)
+	{
+		bChanged = true;
+		ioDivision = m_NewName;
+	}
+	return bChanged;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 class ARBConfigActionDeleteDivision_concrete : public ARBConfigActionDeleteDivision
@@ -1040,6 +1074,45 @@ bool ARBConfigActionRenameLevel::Apply(
 				}
 				else
 					oldLevel->SetName(m_NewName);
+			}
+		}
+	}
+	return bChanged;
+}
+
+
+bool ARBConfigActionRenameLevel::Update(
+		ARBConfig const& inConfigCurrent,
+		std::wstring& ioVenue,
+		std::wstring& ioDivision,
+		std::wstring& ioSubLevel) const
+{
+	bool bChanged = false;
+	if (!ioVenue.empty() && ioVenue == m_Venue
+		&& !ioDivision.empty() && ioDivision == m_Div
+		&& !ioSubLevel.empty())
+	{
+		ARBConfigVenuePtr venue;
+		if (inConfigCurrent.GetVenues().FindVenue(m_Venue, &venue))
+		{
+			ARBConfigDivisionPtr div;
+			if (venue->GetDivisions().FindDivision(m_Div, &div))
+			{
+				// If level is not empty, we're dealing with a sublevel
+				if (m_Level.empty())
+				{
+					ARBConfigLevelPtr level;
+					if (div->GetLevels().FindLevel(m_Level, &level))
+					{
+						if (0 != level->GetSubLevels().size())
+							return false;
+					}
+				}
+				if (ioSubLevel == m_OldName)
+				{
+					bChanged = true;
+					ioSubLevel = m_NewName;
+				}
 			}
 		}
 	}
@@ -1775,4 +1848,28 @@ int ARBConfigActionList::Apply(
 	if (0 < nChanges)
 		ioInfo << L"\n";
 	return nChanges;
+}
+
+
+bool ARBConfigActionList::Update(
+		short configVersionPreUpdate,
+		ARBConfig const& inConfigCurrent,
+		std::wstring& ioVenue,
+		std::wstring& ioDivision,
+		std::wstring& ioSubLevel) const
+{
+	std::wstring inVenue(ioVenue);
+	std::wstring inDivision(ioDivision);
+	std::wstring inSubLevel(ioSubLevel);
+	for (ARBConfigActionList::const_iterator iterAction = begin();
+			iterAction != end();
+			++iterAction)
+	{
+		if (0 != (*iterAction)->GetVersion() && configVersionPreUpdate >= (*iterAction)->GetVersion())
+			continue;
+		(*iterAction)->Update(inConfigCurrent, ioVenue, ioDivision, ioSubLevel);
+	}
+	return inVenue != ioVenue ||
+		inDivision != ioDivision ||
+		inSubLevel != ioSubLevel;
 }
