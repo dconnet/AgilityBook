@@ -169,10 +169,11 @@ This section defines the rules of each venue (the Configuration).
 
 <!--
 This is a special element that is applied to the old configuration before
-we import the new one (where this resides). Currently, it is used only
-for renaming titles.
+we import the new one (where this resides).
  Config: Only apply this action up to this config (non-inclusive, 0 == always)
          Basically, this is when the action was added. See ARBConfigAction.h.
+ Imporant: If a venue/division/level name changes all at the same time, make
+           sure they are ordered that way.
  Verb: Supported actions (determines usage of other attributes):
   'DeleteCalPlugin':
     Venue: Unused
@@ -203,7 +204,7 @@ for renaming titles.
   'RenameLevel': AKC ExcellentB -> Master
     Venue: Venue that contains division
     Div: Division containing level.
-    OldName: Level to be renamed.
+    OldName: Level to be renamed. (note: NOT sublevel name)
     NewName: New name.
   'RenameDivision': CPE Standard->Regular, shouldn't have had Junior
     Venue: Venue that contains division
