@@ -365,7 +365,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	sizerCalEntries->Add(m_ctrlCalView, 1, wxALL|wxEXPAND, 5);
 	sizerCalEntries->Add(ctrlFont, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-	sizerCalView->Add(sizerCalEntries, 0, wxEXPAND, 5);
+	sizerCalView->Add(sizerCalEntries, 0, wxEXPAND, 0);
 
 	sizerCal->Add(sizerCalView, 0, 0, 5);
 

@@ -247,11 +247,11 @@ CWizardExport::CWizardExport(
 	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerOther->Add(m_ctrlOtherChar, 0, wxALL, 5);
 
-	sizerDelim2->Add(sizerOther, 1, wxEXPAND, 5);
+	sizerDelim2->Add(sizerOther, 1, wxEXPAND, 0);
 
-	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND, 5);
+	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND, 0);
 
-	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 5);
+	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerAssign = new wxBoxSizer(wxHORIZONTAL);
 	sizerAssign->Add(m_ctrlAssign, 0, wxALL, 5);
@@ -262,10 +262,10 @@ CWizardExport::CWizardExport(
 
 	sizerAssign->Add(sizerFormat, 0, wxALIGN_TOP, 5);
 
-	sizerOptions->Add(0, 0, 1, wxEXPAND, 5);
-	sizerOptions->Add(sizerAssign, 0, wxEXPAND, 5);
+	sizerOptions->Add(0, 0, 1, wxEXPAND, 0);
+	sizerOptions->Add(sizerAssign, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerOptions, 0, wxEXPAND, 5);
+	bSizer->Add(sizerOptions, 0, wxEXPAND, 0);
 	bSizer->Add(textPreview, 0, wxLEFT|wxRIGHT|wxTOP, 5);
 	bSizer->Add(m_ctrlPreview, 1, wxALL|wxEXPAND, 5);
 

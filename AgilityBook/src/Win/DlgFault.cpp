@@ -67,7 +67,7 @@ CDlgFault::CDlgFault(
 	bSizer->Add(comboBox, 1, wxALL|wxEXPAND, 5);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND, 5);
+	bSizer->Add(sdbSizer, 0, wxEXPAND, 0);
 
 	SetSizer(bSizer);
 	Layout();

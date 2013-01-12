@@ -193,15 +193,15 @@ CDlgConfigure::CDlgConfigure(
 	sizerBtns->Add(m_ctrlDelete, 0, wxALL, 5);
 	sizerBtns->Add(m_ctrlCopy, 0, wxALL, 5);
 
-	sizerConfig->Add(sizerBtns, 0, wxEXPAND, 5);
+	sizerConfig->Add(sizerBtns, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerConfig, 1, wxEXPAND, 5);
+	bSizer->Add(sizerConfig, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerUpdate = new wxBoxSizer(wxHORIZONTAL);
-	sizerUpdate->Add(0, 0, 1, wxEXPAND, 5);
+	sizerUpdate->Add(0, 0, 1, wxEXPAND, 0);
 	sizerUpdate->Add(btnUpdate, 0, wxALL, 5);
 
-	bSizer->Add(sizerUpdate, 0, wxEXPAND, 5);
+	bSizer->Add(sizerUpdate, 0, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);

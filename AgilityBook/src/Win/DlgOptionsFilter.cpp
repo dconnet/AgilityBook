@@ -265,7 +265,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	sizerBtns->Add(btnSave, 0, wxALL, 5);
 	sizerBtns->Add(btnDelete, 0, wxALL, 5);
 
-	sizerFilters->Add(sizerBtns, 1, wxEXPAND, 5);
+	sizerFilters->Add(sizerBtns, 1, wxEXPAND, 0);
 
 	sizerCol1->Add(sizerFilters, 0, wxALL|wxEXPAND, 5);
 
@@ -281,7 +281,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	sizerDateRange->Add(m_ctrlDateEndCheck, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
 	sizerDateRange->Add(m_ctrlDateEnd, 0, wxALL, 3);
 
-	sizerDates->Add(sizerDateRange, 1, wxEXPAND, 5);
+	sizerDates->Add(sizerDateRange, 1, wxEXPAND, 0);
 
 	sizerCol1->Add(sizerDates, 0, wxALL|wxEXPAND, 5);
 
@@ -317,7 +317,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	sizerCol2->Add(sizerVenue, 1, wxALL|wxEXPAND, 5);
 
-	sizerFilter->Add(sizerCol2, 1, wxEXPAND, 5);
+	sizerFilter->Add(sizerCol2, 1, wxEXPAND, 0);
 
 	FillControls();
 

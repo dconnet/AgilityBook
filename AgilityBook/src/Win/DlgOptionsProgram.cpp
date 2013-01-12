@@ -113,7 +113,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	sizerBackups->Add(ctrlBackups, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerBackups->Add(textBackupHelp, 0, wxALL, 5);
 
-	sizerPgm->Add(sizerBackups, 0, wxEXPAND, 5);
+	sizerPgm->Add(sizerBackups, 0, wxEXPAND, 0);
 	sizerPgm->Add(ctrlShowDog, 0, wxALL, 5);
 	sizerPgm->Add(ctrlHtml, 0, wxALL, 5);
 	sizerPgm->Add(ctrlUseProxy, 0, wxALL, 5);

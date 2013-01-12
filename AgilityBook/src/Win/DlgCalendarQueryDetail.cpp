@@ -210,17 +210,17 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	sizerLocationCodes->Add(textLocCodes, 0, wxALL, 5);
 	sizerLocationCodes->Add(m_ctrlLocations, 1, wxALL|wxEXPAND, 5);
 
-	sizerLocation->Add(sizerLocationCodes, 1, wxEXPAND, 5);
+	sizerLocation->Add(sizerLocationCodes, 1, wxEXPAND, 0);
 
 	if (m_EditCodes)
 	{
 		wxBoxSizer* sizerLocBtns = new wxBoxSizer(wxVERTICAL);
-		sizerLocBtns->Add(0, 0, 1, wxEXPAND, 5);
+		sizerLocBtns->Add(0, 0, 1, wxEXPAND, 0);
 		sizerLocBtns->Add(m_ctrlNewLoc, 0, wxALL, 5);
 		sizerLocBtns->Add(m_ctrlEditLoc, 0, wxALL, 5);
 		sizerLocBtns->Add(m_ctrlDeleteLoc, 0, wxALL, 5);
 
-		sizerLocation->Add(sizerLocBtns, 0, wxEXPAND, 5);
+		sizerLocation->Add(sizerLocBtns, 0, wxEXPAND, 0);
 	}
 
 	bSizer->Add(sizerLocation, 1, wxEXPAND|wxLEFT|wxRIGHT|wxTOP, 5);
@@ -231,17 +231,17 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	sizerVenueCodes->Add(textVenueCodes, 0, wxALL, 5);
 	sizerVenueCodes->Add(m_ctrlVenues, 1, wxALL|wxEXPAND, 5);
 
-	sizerVenue->Add(sizerVenueCodes, 1, wxEXPAND, 5);
+	sizerVenue->Add(sizerVenueCodes, 1, wxEXPAND, 0);
 
 	if (m_EditCodes)
 	{
 		wxBoxSizer* sizerVenueBtns = new wxBoxSizer(wxVERTICAL);
-		sizerVenueBtns->Add(0, 0, 1, wxEXPAND, 5);
+		sizerVenueBtns->Add(0, 0, 1, wxEXPAND, 0);
 		sizerVenueBtns->Add(m_ctrlNewVenue, 0, wxALL, 5);
 		sizerVenueBtns->Add(m_ctrlEditVenue, 0, wxALL, 5);
 		sizerVenueBtns->Add(m_ctrlDeleteVenue, 0, wxALL, 5);
 
-		sizerVenue->Add(sizerVenueBtns, 0, wxEXPAND, 5);
+		sizerVenue->Add(sizerVenueBtns, 0, wxEXPAND, 0);
 	}
 
 	bSizer->Add(sizerVenue, 1, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5);

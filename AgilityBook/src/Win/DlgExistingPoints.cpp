@@ -328,7 +328,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerPoints->Add(ctrlPoints, 0, wxALL, 5);
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND, 5);
+	bSizer->Add(sizerPoints, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerContent = new wxBoxSizer(wxHORIZONTAL);
 
@@ -356,7 +356,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	sizerCombo->Add(textOther, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerCombo->Add(m_ctrlOthers, 0, wxALL, 5);
 
-	sizerWhere->Add(sizerCombo, 0, wxEXPAND, 5);
+	sizerWhere->Add(sizerCombo, 0, wxEXPAND, 0);
 
 	sizerContent->Add(sizerWhere, 1, wxALL|wxEXPAND, 5);
 
@@ -364,7 +364,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	sizerComment->Add(ctrlNote, 1, wxALL|wxEXPAND, 5);
 	sizerContent->Add(sizerComment, 1, wxALL|wxEXPAND, 5);
 
-	bSizer->Add(sizerContent, 1, wxEXPAND, 5);
+	bSizer->Add(sizerContent, 1, wxEXPAND, 0);
 
 	// Not a separated sizer like most other dialogs because of the groups
 	// boxes right above them.
