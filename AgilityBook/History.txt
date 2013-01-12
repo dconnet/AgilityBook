@@ -9,6 +9,7 @@
   - Fix pasting metafiles.
   - Dropped VC9 support, it hasn't been able to compile since pre-2.3.9.
   - Update filters when updating the configuration.
+  - Don't all empty names in URL selection dialog.
 [ Note, full functionality is NOT complete ]
 
 11/30/2012: v2.3.10.84

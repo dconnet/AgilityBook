@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-12 DRC Clean up spacing.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -46,7 +47,7 @@ CDlgSelectURL::CDlgSelectURL(
 
 	m_textCtrl = new CTextCtrl(this, wxID_ANY, m_Name,
 		wxDefaultPosition, wxSize(300, -1), 0,
-		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
+		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	m_textCtrl->SetHelpText(_("HIDC_SELECTURL_NAME"));
 	m_textCtrl->SetToolTip(_("HIDC_SELECTURL_NAME"));
 
@@ -65,10 +66,10 @@ CDlgSelectURL::CDlgSelectURL(
 	bTextSizer->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	bTextSizer->Add(btnSelect, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
 
-	bSizer->Add(bTextSizer, 1, wxEXPAND, 5);
+	bSizer->Add(bTextSizer, 1, wxALL|wxEXPAND, 5);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 1, wxEXPAND, 5);
+	bSizer->Add(sdbSizer, 1, wxALL|wxEXPAND, 5);
 
 	SetSizer(bSizer);
 	Layout();
