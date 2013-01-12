@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-11 DRC Fix filters on configuration import.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-12-03 DRC Complete re-write of action class.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -116,6 +117,18 @@ public:
 			ARBDogList* ioDogs,
 			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const = 0;
+
+	/**
+	 * Allow the UI to update filter contents.
+	 */
+	virtual bool Update(
+			ARBConfig const& inConfigCurrent,
+			std::wstring& ioVenue,
+			std::wstring& ioDivision,
+			std::wstring& ioSubLevel) const
+	{
+		return false;
+	}
 
 protected:
 	// Apply action up to this configuration. Basically, this is when the action
@@ -229,6 +242,12 @@ public:
 			ARBDogList* ioDogs,
 			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
+
+	virtual bool Update(
+			ARBConfig const& inConfigCurrent,
+			std::wstring& ioVenue,
+			std::wstring& ioDivision,
+			std::wstring& ioSubLevel) const;
 
 private:
 	std::wstring m_OldName;
@@ -350,6 +369,12 @@ public:
 			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
+	virtual bool Update(
+			ARBConfig const& inConfigCurrent,
+			std::wstring& ioVenue,
+			std::wstring& ioDivision,
+			std::wstring& ioSubLevel) const;
+
 protected:
 	std::wstring m_Venue;
 	std::wstring m_OldName;
@@ -422,6 +447,12 @@ public:
 			ARBDogList* ioDogs,
 			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
+
+	virtual bool Update(
+			ARBConfig const& inConfigCurrent,
+			std::wstring& ioVenue,
+			std::wstring& ioDivision,
+			std::wstring& ioSubLevel) const;
 
 protected:
 	std::wstring m_Venue;
@@ -628,4 +659,20 @@ public:
 			ARBDogList* ioDogs,
 			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
+
+	/**
+	 * Allow the UI to update filter contents.
+	 * @param configVersionPreUpdate Version of inConfigCurrent prior to update.
+	 * @param inConfigCurrent Existing configuration to check from.
+	 * @param ioVenue Name of venue
+	 * @param ioDivision Name of division
+	 * @param ioSubLevel Name of sublevel (or level)
+	 * @return A name was updated.
+	 */
+	bool Update(
+			short configVersionPreUpdate,
+			ARBConfig const& inConfigCurrent,
+			std::wstring& ioVenue,
+			std::wstring& ioDivision,
+			std::wstring& ioSubLevel) const;
 };

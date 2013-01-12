@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-11 DRC Fix filters on configuration import.
  * @li 2011-10-12 DRC Added better filter change detection.
  * @li 2011-08-10 DRC Added builtin support for an 'all' filter.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -145,6 +146,61 @@ CFilterOptions::CFilterOptions()
 }
 
 
+bool CFilterOptions::Update(
+		ARBConfig const& inConfigNew,
+		short configVersionPreUpdate,
+		ARBConfig const& inConfigCurrent)
+{
+	bool bRefresh = false;
+
+	if (!m_bViewAllVenues)
+	{
+		for (std::vector<CVenueFilter>::iterator i = m_venueFilter.begin();
+			i != m_venueFilter.end();
+			++i)
+		{
+			CVenueFilter filter = *i;
+			if (inConfigNew.GetActions().Update(configVersionPreUpdate, inConfigCurrent, filter.venue, filter.division, filter.level))
+			{
+				bRefresh = true;
+				(*i).venue = filter.venue;
+				(*i).division = filter.division;
+				(*i).level = filter.level;
+			}
+		}
+	}
+
+	for (std::vector<CFilterOptionData>::iterator iFilter = m_filters.begin();
+		iFilter != m_filters.end();
+		++iFilter)
+	{
+		if (!(*iFilter).bViewAllVenues)
+		{
+			for (std::vector<CVenueFilter>::iterator i = (*iFilter).venueFilter.begin();
+				i != (*iFilter).venueFilter.end();
+				++i)
+			{
+				CVenueFilter filter = *i;
+				if (inConfigNew.GetActions().Update(configVersionPreUpdate, inConfigCurrent, filter.venue, filter.division, filter.level))
+				{
+					bRefresh = true;
+					(*i).venue = filter.venue;
+					(*i).division = filter.division;
+					(*i).level = filter.level;
+				}
+			}
+		}
+	}
+
+	if (bRefresh)
+	{
+		Save();
+		CFilterOptions::Options().Load();
+	}
+	return bRefresh;
+}
+
+
 void CFilterOptions::Load()
 {
 	wxString val;
@@ -207,9 +263,13 @@ void CFilterOptions::Save()
 	data.bEndDate = m_bEndDate;
 	data.dateEndDate = m_dateEndDate;
 	data.bViewAllVenues = m_bViewAllVenues;
+	if (m_bViewAllVenues)
+		m_venueFilter.clear();
 	data.venueFilter = m_venueFilter;
 	data.eRuns = m_eRuns;
 	data.bViewAllNames = m_bViewAllNames;
+	if (m_bViewAllNames)
+		m_nameFilter.clear();
 	data.nameFilter = m_nameFilter;
 
 	bool bFound = false;
