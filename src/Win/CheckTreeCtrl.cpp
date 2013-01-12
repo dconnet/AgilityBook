@@ -70,6 +70,20 @@ CCheckTreeCtrl::CCheckTreeCtrl(
 }
 
 
+CCheckTreeCtrl::~CCheckTreeCtrl()
+{
+	// Note: wx2.8 has no problem. But wx2.9 gets a custom draw message during
+	// destruction that then accesses the image list and asserts. Clearing them
+	// here fixes that. Should note, it only appears to happen with state image
+	// lists, but I'll clear both for safety.
+#ifdef WX_TREE_HAS_STATE
+	SetStateImageList(NULL);
+#else
+	SetImageList(NULL);
+#endif
+}
+
+
 void CCheckTreeCtrl::ShowCheckbox(
 		wxTreeItemId hItem,
 		bool bShow)
