@@ -29,6 +29,7 @@ public:
 			wxWindow* pParent,
 			const wxPoint& pos = wxDefaultPosition,
 			const wxSize& size = wxDefaultSize);
+	~CCheckTreeCtrl();
 
 	void ShowCheckbox(
 			wxTreeItemId hItem,
