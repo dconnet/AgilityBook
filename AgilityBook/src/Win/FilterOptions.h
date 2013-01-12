@@ -164,6 +164,10 @@ private:
 public:
 	static CFilterOptions& Options();
 	CFilterOptions(); ///< Should only be used in options dialog
+	bool Update(
+			ARBConfig const& inConfigNew,
+			short configVersionPreUpdate,
+			ARBConfig const& inConfigCurrent);
 	void Load();
 	void Save();
 	std::wstring GetCurrentFilter() const

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-11 DRC Reset filters on configuration import.
  * @li 2012-09-29 DRC Strip the Runs View.
  * @li 2012-07-11 DRC After importing an ARB file, sort it.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
@@ -587,19 +588,30 @@ void CConfigActionCallback::PostDelete(std::wstring const& msg) const
 
 void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 {
+	unsigned int iHint = 0;
 	std::wostringstream info;
 	CConfigActionCallback callback;
 	bool bOk = false;
 	{
 		wxBusyCursor wait;
+		short configVersionPreUpdate = m_Records.GetConfig().GetVersion();
 		bOk = m_Records.Update(0, update, info, callback);
+
+		if (bOk)
+		{
+			CFilterOptions filterOptions;
+			if (filterOptions.Update(update, configVersionPreUpdate, m_Records.GetConfig()) && ResetVisibility())
+			{
+				iHint |= UPDATE_ALL_VIEW;
+			}
+		}
 	}
 	if (bOk)
 	{
 		CDlgMessage dlg(info.str(), wxGetApp().GetTopWindow());
 		dlg.ShowModal();
 		Modify(true);
-		CUpdateHint hint(UPDATE_CONFIG);
+		CUpdateHint hint(UPDATE_CONFIG | iHint);
 		UpdateAllViews(NULL, &hint);
 	}
 	else
