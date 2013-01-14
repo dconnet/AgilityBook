@@ -5,7 +5,7 @@
   - Added new recurring title suffix style.
 - New features / Enhancements:
   - Allow scrolling in the Calendar view to extend past the last entry.
-  - Don't all empty names in URL selection dialog.
+  - Don't allow empty names in URL selection dialog.
 - Bug fixes:
   - Fix Calendar icon updates in list dialog.
   - Fix Training view update on paste.
