@@ -3420,7 +3420,7 @@ msgstr ""
 "NADAC, cela peut commencer plus haut."
 
 #: Win/DlgConfigTitle.cpp:154
-msgid "IDC_CONFIG_TITLE_MULTIPLE"
+msgid "IDC_CONFIG_TITLE_STARTAT"
 msgstr "C&ommencer par:"
 
 #: Win/DlgConfigTitle.cpp:164

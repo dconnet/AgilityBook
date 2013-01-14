@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-13 DRC Added more recurring tests for new style.
  * @li 2012-07-30 DRC Added tests for checking recurring title styles.
  * @li 2011-01-22 DRC Simplified how configs are added.
  * @li 2010-08-13 DRC Updated for config 29.
@@ -66,6 +67,7 @@ const wchar_t* const gc_Configs[] =
 	L"Config39_v13_2.xml",
 	L"Config40_v13_2.xml",
 	L"Config41_v13_2.xml",
+	L"Config42_v14_0.xml",
 };
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
@@ -249,6 +251,38 @@ SUITE(TestConfig)
 	}
 
 
+	TEST(GetCompleteName)
+	{
+		if (!g_bMicroTest)
+		{
+			ARBConfig config;
+			CConfigHandler handler;
+			config.Default(&handler);
+
+			static struct
+			{
+				wchar_t const* pVenue;
+				wchar_t const* pTitle;
+				wchar_t const* pResult;
+			} sc_Titles[] = {
+				{L"AKC", L"MX", L"[MX] Master Agility Excellent"},
+				{L"AKC", L"FTC", L"[FTC+] FAST Century Title"},
+				{L"NADAC", L"EAC", L"[EAC+] Elite Agility Certificate"},
+				{NULL, NULL, NULL},
+			};
+
+			for (size_t i = 0; sc_Titles[i].pVenue; ++i)
+			{
+				ARBConfigTitlePtr configTitle;
+				CHECK(config.GetVenues().FindTitle(sc_Titles[i].pVenue, sc_Titles[i].pTitle, &configTitle));
+
+				std::wstring name = configTitle->GetCompleteName(-1);
+				CHECK(name == sc_Titles[i].pResult);
+			}
+		}
+	}
+
+
 	TEST(GetTitleCompleteName)
 	{
 		if (!g_bMicroTest)
@@ -256,9 +290,13 @@ SUITE(TestConfig)
 			ARBConfig config;
 			CConfigHandler handler;
 			config.Default(&handler);
+
+			ARBConfigTitlePtr configTitle;
+			CHECK(config.GetVenues().FindTitle(L"AKC", L"MX", &configTitle));
+
 			ARBDogTitlePtr title = ARBDogTitle::New();
 			title->SetVenue(L"AKC");
-			title->SetName(L"MX", 1, false, eTitleNumber);
+			title->SetName(L"MX", 1, configTitle);
 			// [MX] desc
 			std::wstring name1 = config.GetTitleCompleteName(title);
 			CHECK(0 != name1.length());
@@ -280,17 +318,46 @@ SUITE(TestConfig)
 			ARBConfig config;
 			CConfigHandler handler;
 			config.Default(&handler);
-			ARBDogTitlePtr title = ARBDogTitle::New();
-			title->SetVenue(L"AKC");
 
-			title->SetName(L"MACH", 2, true, eTitleNumber);
-			CHECK(title->GetGenericName() == L"MACH2");
+			static struct
+			{
+				wchar_t const* pVenue;
+				wchar_t const* pTitle;
+				short repeat;
+				wchar_t const* pResult;
+			} sc_Titles[] = {
+				{L"AKC", L"MACH", 1, L"MACH"},
+				{L"AKC", L"MACH", 2, L"MACH2"},
+				{L"AKC", L"FTC", 1, L"FTC1"},
+				{L"AKC", L"FTC", 2, L"FTC2"},
+				{L"ASCA", L"ATCH", 2, L"ATCH-II"},
+				{L"NADAC", L"NAC", 1, L"NAC"},
+				{L"NADAC", L"NAC", 2, L"NAC-400"},
+				{L"NADAC", L"NAC", 3, L"NAC-600"},
+				{L"NADAC", L"EAC", 1, L"EAC"},
+				{L"NADAC", L"EAC", 2, L"EAC-600"},
+				{L"NADAC", L"EAC", 3, L"EAC-800"},
+				{L"NADAC", L"NJC", 1, L"NJC"},
+				{L"NADAC", L"NJC", 2, L"NJC-200"},
+				{L"NADAC", L"NJC", 3, L"NJC-300"},
+				{L"NADAC", L"EJC", 1, L"EJC"},
+				{L"NADAC", L"EJC", 2, L"EJC-300"},
+				{L"NADAC", L"EJC", 3, L"EJC-400"},
+				{NULL, NULL, 0, NULL},
+			};
 
-			title->SetName(L"MACH", 2, true, eTitleRoman);
-			CHECK(title->GetGenericName() == L"MACH-II");
+			for (size_t i = 0; sc_Titles[i].pVenue; ++i)
+			{
+				ARBConfigTitlePtr configTitle;
+				CHECK(config.GetVenues().FindTitle(sc_Titles[i].pVenue, sc_Titles[i].pTitle, &configTitle));
 
-			title->SetName(L"MACH", 2, true, eTitleNone);
-			CHECK(title->GetGenericName() == L"MACH");
+				ARBDogTitlePtr title = ARBDogTitle::New();
+				title->SetVenue(sc_Titles[i].pVenue);
+
+				title->SetName(sc_Titles[i].pTitle, sc_Titles[i].repeat, configTitle);
+				std::wstring result = title->GetGenericName();
+				CHECK(result == sc_Titles[i].pResult);
+			}
 		}
 	}
 

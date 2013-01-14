@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -63,9 +64,12 @@ ARBDogTitle::ARBDogTitle()
 	: m_Date()
 	, m_Venue()
 	, m_Name()
-	, m_bShowInstanceOne(false)
 	, m_Instance(1)
-	, m_MultipleStyle(eTitleNumber)
+	, m_MultipleStartAt(0)
+	, m_MultipleIncrement(1)
+	, m_bShowInstanceOne(false)
+	, m_MultipleStyle(eTitleStyleNumber)
+	, m_MultipleSeparator(eTitleSeparatorNone)
 	, m_bReceived(false)
 	, m_bHidden(false)
 {
@@ -76,9 +80,12 @@ ARBDogTitle::ARBDogTitle(ARBDogTitle const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
-	, m_bShowInstanceOne(rhs.m_bShowInstanceOne)
 	, m_Instance(rhs.m_Instance)
+	, m_MultipleStartAt(rhs.m_MultipleStartAt)
+	, m_MultipleIncrement(rhs.m_MultipleIncrement)
+	, m_bShowInstanceOne(rhs.m_bShowInstanceOne)
 	, m_MultipleStyle(rhs.m_MultipleStyle)
+	, m_MultipleSeparator(rhs.m_MultipleSeparator)
 	, m_bReceived(rhs.m_bReceived)
 	, m_bHidden(rhs.m_bHidden)
 {
@@ -103,9 +110,12 @@ ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)
 		m_Date = rhs.m_Date;
 		m_Venue = rhs.m_Venue;
 		m_Name = rhs.m_Name;
-		m_bShowInstanceOne = rhs.m_bShowInstanceOne;
 		m_Instance = rhs.m_Instance;
+		m_MultipleStartAt = rhs.m_MultipleStartAt;
+		m_MultipleIncrement = rhs.m_MultipleIncrement;
+		m_bShowInstanceOne = rhs.m_bShowInstanceOne;
 		m_MultipleStyle = rhs.m_MultipleStyle;
+		m_MultipleSeparator = rhs.m_MultipleSeparator;
 		m_bReceived = rhs.m_bReceived;
 		m_bHidden = rhs.m_bHidden;
 	}
@@ -118,9 +128,12 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 	return m_Date == rhs.m_Date
 		&& m_Venue == rhs.m_Venue
 		&& m_Name == rhs.m_Name
-		&& m_bShowInstanceOne == rhs.m_bShowInstanceOne
 		&& m_Instance == rhs.m_Instance
+		&& m_MultipleStartAt == rhs.m_MultipleStartAt
+		&& m_MultipleIncrement == rhs.m_MultipleIncrement
+		&& m_bShowInstanceOne == rhs.m_bShowInstanceOne
 		&& m_MultipleStyle == rhs.m_MultipleStyle
+		&& m_MultipleSeparator == rhs.m_MultipleSeparator
 		&& m_bReceived == rhs.m_bReceived
 		&& m_bHidden == rhs.m_bHidden;
 }
@@ -128,7 +141,7 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 
 std::wstring ARBDogTitle::GetGenericName() const
 {
-	std::wstring name = m_Name + TitleInstance(m_bShowInstanceOne, m_Instance, m_MultipleStyle);
+	std::wstring name = m_Name + TitleInstance(m_bShowInstanceOne, m_Instance, m_MultipleStartAt, m_MultipleIncrement, m_MultipleStyle, m_MultipleSeparator);
 	return name;
 }
 
@@ -207,13 +220,12 @@ bool ARBDogTitle::Load(
 		}
 	}
 
-	inTree->GetAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
 	inTree->GetAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
-	if (1 < m_Instance)
-		m_bShowInstanceOne = true;
-	short tmp;
-	if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_TITLE_STYLE, tmp))
-		m_MultipleStyle = static_cast<ARBTitleStyle>(tmp);
+	inTree->GetAttrib(ATTRIB_TITLE_INSTANCE_STARTAT, m_MultipleStartAt);
+	inTree->GetAttrib(ATTRIB_TITLE_INSTANCE_INC, m_MultipleIncrement);
+	inTree->GetAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
+	LoadTitleStyle(inTree, ATTRIB_TITLE_INSTANCE_STYLE, inVersion, m_MultipleStyle);
+	LoadTitleSeparator(inTree, ATTRIB_TITLE_INSTANCE_SEP, inVersion, m_MultipleStyle, m_MultipleSeparator);
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
@@ -226,8 +238,8 @@ bool ARBDogTitle::Load(
 		// This fixes a bug in v1.0.0.8 where the 'nice' name was being written
 		// as the title name.
 		ARBConfigTitlePtr pTitle;
-		if (!inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, m_bShowInstanceOne, true, &pTitle))
-			inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, m_bShowInstanceOne, false, &pTitle);
+		if (!inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, true, &pTitle))
+			inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, false, &pTitle);
 		if (pTitle)
 		{
 			m_Name = pTitle->GetName();
@@ -266,15 +278,32 @@ bool ARBDogTitle::Save(ElementNodePtr ioTree) const
 	}
 	title->AddAttrib(ATTRIB_TITLE_VENUE, m_Venue);
 	title->AddAttrib(ATTRIB_TITLE_NAME, m_Name);
-	if (1 == m_Instance && m_bShowInstanceOne)
-		title->AddAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
 	if (1 < m_Instance)
 		title->AddAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
-	if (eTitleNumber != m_MultipleStyle)
-		title->AddAttrib(ATTRIB_TITLE_STYLE, static_cast<short>(m_MultipleStyle));
+	if (1 < m_MultipleIncrement)
+		title->AddAttrib(ATTRIB_TITLE_INSTANCE_INC, m_MultipleIncrement);
+	if (m_bShowInstanceOne)
+		title->AddAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
+	SaveTitleStyle(title, ATTRIB_TITLE_INSTANCE_STYLE, m_MultipleStyle);
+	SaveTitleSeparator(title, ATTRIB_TITLE_INSTANCE_SEP, m_MultipleSeparator);
 	if (m_bReceived) // Default is no.
 		title->AddAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived);
 	return true;
+}
+
+
+void ARBDogTitle::SetName(
+		std::wstring const& inName,
+		short inInstance,
+		ARBConfigTitlePtr inConfigTitle)
+{
+	m_Name = inName;
+	m_Instance = inInstance;
+	m_MultipleStartAt = inConfigTitle->GetMultipleStartAt();
+	m_bShowInstanceOne = inConfigTitle->ShowMultipleOnFirstInstance();
+	m_MultipleIncrement = inConfigTitle->GetMultipleIncrement();
+	m_MultipleStyle = inConfigTitle->GetMultipleStyle();
+	m_MultipleSeparator = inConfigTitle->GetMultipleStyleSeparator();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -437,7 +466,7 @@ int ARBDogTitleList::RenameTitle(
 		if ((*iter)->GetVenue() == inVenue && (*iter)->GetRawName() == inOldTitle)
 		{
 			++count;
-			(*iter)->SetName(inNewTitle, (*iter)->GetInstance(), (*iter)->ShowInstanceOne(), (*iter)->GetStyle());
+			(*iter)->Rename(inNewTitle);
 		}
 	}
 	return count;

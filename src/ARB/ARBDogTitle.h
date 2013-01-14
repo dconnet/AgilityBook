@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -116,30 +117,33 @@ public:
 	{
 		return m_Name;
 	}
-	bool ShowInstanceOne() const
-	{
-		return m_bShowInstanceOne;
-	}
 	short GetInstance() const
 	{
 		return m_Instance;
+	}
+	short GetInstanceIncrement() const
+	{
+		return m_MultipleIncrement;
+	}
+	bool ShowInstanceOne() const
+	{
+		return 1 == m_Instance && m_bShowInstanceOne;
 	}
 	ARBTitleStyle GetStyle() const
 	{
 		return m_MultipleStyle;
 	}
+	ARBTitleSeparator GetStyleSeparator() const
+	{
+		return m_MultipleSeparator;
+	}
 	void SetName(
 			std::wstring const& inName,
 			short inInstance,
-			bool bShowInstance,
-			ARBTitleStyle style)
+			ARBConfigTitlePtr inConfigTitle);
+	void Rename(std::wstring const& inName)
 	{
 		m_Name = inName;
-		m_Instance = inInstance;
-		m_bShowInstanceOne = false;
-		if (1 == m_Instance && bShowInstance)
-			m_bShowInstanceOne = true;
-		m_MultipleStyle = style;
 	}
 	bool GetReceived() const
 	{
@@ -165,9 +169,12 @@ private:
 	ARBDate m_Date;
 	std::wstring m_Venue;
 	std::wstring m_Name;
-	bool m_bShowInstanceOne;
 	short m_Instance;
+	unsigned short m_MultipleStartAt;
+	short m_MultipleIncrement;
+	bool m_bShowInstanceOne;
 	ARBTitleStyle m_MultipleStyle;
+	ARBTitleSeparator m_MultipleSeparator;
 	bool m_bReceived;
 	bool m_bHidden;
 };

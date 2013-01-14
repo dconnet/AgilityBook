@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2007-10-10 DRC Added 'LifetimeName'
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -364,8 +365,9 @@ bool ARBConfigVenue::Update(
 				{
 					++nChanged;
 					pTitle->SetLongName((*iterTitle)->GetLongName());
-					pTitle->SetMultiple((*iterTitle)->GetMultiple());
-					pTitle->SetMultipleStyle((*iterTitle)->GetMultipleStyle());
+					pTitle->SetMultipleStartAt((*iterTitle)->GetMultipleStartAt());
+					pTitle->SetMultipleIncrement((*iterTitle)->GetMultipleIncrement());
+					pTitle->SetMultipleStyle((*iterTitle)->GetMultipleStyle(), (*iterTitle)->GetMultipleStyleSeparator());
 					pTitle->SetPrefix((*iterTitle)->GetPrefix());
 					pTitle->SetValidFrom((*iterTitle)->GetValidFrom());
 					pTitle->SetValidTo((*iterTitle)->GetValidTo());
@@ -640,7 +642,6 @@ bool ARBConfigVenueList::VerifyEvent(
 bool ARBConfigVenueList::FindTitleCompleteName(
 		std::wstring const& inVenue,
 		std::wstring const& inName,
-		bool bShowInstance,
 		bool bAbbrevFirst,
 		ARBConfigTitlePtr* outTitle) const
 {
@@ -651,7 +652,7 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 	if (FindVenue(inVenue, &pVenue))
 	{
 		ARBConfigTitlePtr pTitle;
-		if (pVenue->GetTitles().FindTitleCompleteName(inName, bShowInstance, bAbbrevFirst, true, &pTitle))
+		if (pVenue->GetTitles().FindTitleCompleteName(inName, bAbbrevFirst, true, &pTitle))
 		{
 			if (outTitle)
 				*outTitle = pTitle;
