@@ -545,7 +545,7 @@ std::wstring CDlgConfigureDataTitle::OnNeedText() const
 
 std::wstring CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 {
-	return m_Title->GetCompleteName(-1, false, true, true);
+	return m_Title->GetCompleteName(-1, true, true);
 }
 
 

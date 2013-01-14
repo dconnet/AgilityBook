@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2012-09-09 DRC Added 'titlePts','speedPts' to 'Placement'.
  * @li 2007-08-14 DRC Separated from ARBAgilityRecordBook.h
  */
@@ -144,11 +145,14 @@
 #define ATTRIB_LEVEL_NAME					L"Name"
 #define ATTRIB_TITLES_NAME					L"Name"
 #define ATTRIB_TITLES_LONGNAME				L"LongName"
-#define ATTRIB_TITLES_MULTIPLE				L"Multiple"
-#define ATTRIB_TITLES_MULTIPLE_STYLE		L"Style"
 #define ATTRIB_TITLES_PREFIX				L"Prefix"
 #define ATTRIB_TITLES_VALIDFROM				L"ValidFrom"
 #define ATTRIB_TITLES_VALIDTO				L"ValidTo"
+#define ATTRIB_TITLES_MULTIPLE_STARTAT		L"StartAt"
+#define ATTRIB_TITLES_MULTIPLE_INC			L"Inc"
+#define ATTRIB_TITLES_MULTIPLE_ONFIRST		L"OnFirst"
+#define ATTRIB_TITLES_MULTIPLE_STYLE		L"Style"
+#define ATTRIB_TITLES_MULTIPLE_SEP			L"Sep"
 #define ATTRIB_SUBLEVEL_NAME				L"Name"
 #define ATTRIB_EVENT_NAME					L"Name"
 #define ATTRIB_EVENT_HAS_TABLE				L"hasTable"
@@ -203,9 +207,12 @@
 #define ATTRIB_TITLE_VENUE					L"Venue"
 #define ATTRIB_TITLE_NAME					L"Name"
 #define ATTRIB_TITLE_DATE					L"Date"
-#define ATTRIB_TITLE_INSTANCE_SHOW			L"show"
 #define ATTRIB_TITLE_INSTANCE				L"instance"
-#define ATTRIB_TITLE_STYLE					L"style"
+#define ATTRIB_TITLE_INSTANCE_STARTAT		L"startat"
+#define ATTRIB_TITLE_INSTANCE_INC			L"inc"
+#define ATTRIB_TITLE_INSTANCE_SHOW			L"show"
+#define ATTRIB_TITLE_INSTANCE_STYLE			L"style"
+#define ATTRIB_TITLE_INSTANCE_SEP			L"sep"
 #define ATTRIB_TITLE_RECEIVED				L"isReceived"
 #define ATTRIB_TITLE_HIDDEN					L"isHidden"
 #define ATTRIB_TRIAL_VERIFIED				L"Verified"

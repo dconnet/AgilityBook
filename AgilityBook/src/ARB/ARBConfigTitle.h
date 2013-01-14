@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2012-07-30 DRC Added new recurring title style (none).
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-08-05 DRC Added Roman numbers
@@ -28,15 +29,44 @@
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
+#include "Element.h"
 
 
-// Do not change these numbers, they are serialized.
 enum ARBTitleStyle
 {
-	eTitleNumber = 0,	/// "Title4"
-	eTitleRoman = 1,	/// "Title IV"
-	eTitleNone = 2,		/// "Title"
+	eTitleStyleNone,	/// "Title"
+	eTitleStyleNumber,	/// "Title4"
+	eTitleStyleRoman,	/// "Title-IV"
 };
+
+ElementNode::AttribLookup LoadTitleStyle(
+		ElementNodePtr inTree,
+		wchar_t const* inAttrib,
+		ARBVersion const& inVersion,
+		ARBTitleStyle& ioStyle);
+void SaveTitleStyle(
+		ElementNodePtr ioTree,
+		wchar_t const* inAttrib,
+		ARBTitleStyle inStyle);
+
+
+enum ARBTitleSeparator
+{
+	eTitleSeparatorNone,	/// "Title4"
+	eTitleSeparatorSpace,	/// "Title 4"
+	eTitleSeparatorHyphen,	/// "Title-4"
+};
+
+ElementNode::AttribLookup LoadTitleSeparator(
+		ElementNodePtr inTree,
+		wchar_t const* inAttrib,
+		ARBVersion const& inVersion,
+		ARBTitleStyle inStyle,
+		ARBTitleSeparator& ioSep);
+void SaveTitleSeparator(
+		ElementNodePtr ioTree,
+		wchar_t const* inAttrib,
+		ARBTitleSeparator inSep);
 
 
 class ARBTitleInstance
@@ -45,7 +75,10 @@ protected:
 	virtual std::wstring TitleInstance(
 			bool bShowInstanceOne,
 			short instance,
-			ARBTitleStyle style) const;
+			short startAt,
+			short increment,
+			ARBTitleStyle style,
+			ARBTitleSeparator sep) const;
 };
 
 
@@ -147,14 +180,12 @@ public:
 	/**
 	 * Get the complete name (name + nicename).
 	 * @param inInstance Instance of the title to allow for multiple.
-	 * @param bShowInstance Show '1' in title name for 1st title.
 	 * @param bAbbrevFirst Name is before or after Longname.
 	 * @param bAddDates Add the valid date ranges, if applicable.
 	 * @return The complete name.
 	 */
 	std::wstring GetCompleteName(
 			short inInstance = 0,
-			bool bShowInstance = false,
 			bool bAbbrevFirst = true,
 			bool bAddDates = false) const;
 
@@ -177,21 +208,13 @@ public:
 	{
 		m_LongName = inName;
 	}
-	short GetMultiple() const
+	std::wstring const& GetDescription() const
 	{
-		return m_Multiple;
+		return m_Desc;
 	}
-	void SetMultiple(short inMultiple)
+	void SetDescription(std::wstring const& inDesc)
 	{
-		m_Multiple = inMultiple;
-	}
-	ARBTitleStyle GetMultipleStyle() const
-	{
-		return m_MultipleStyle;
-	}
-	void SetMultipleStyle(ARBTitleStyle inMultipleStyle)
-	{
-		m_MultipleStyle = inMultipleStyle;
+		m_Desc = inDesc;
 	}
 	bool GetPrefix() const
 	{
@@ -217,24 +240,64 @@ public:
 	{
 		m_ValidTo = inDate;
 	}
-	std::wstring const& GetDescription() const
+	// Recurring properties
+	bool IsRecurring() const
 	{
-		return m_Desc;
+		return 0 != m_MultipleStartAt;
 	}
-	void SetDescription(std::wstring const& inDesc)
+	short GetMultipleStartAt() const
 	{
-		m_Desc = inDesc;
+		return m_MultipleStartAt;
+	}
+	void SetMultipleStartAt(short startAt)
+	{
+		m_MultipleStartAt = startAt;
+	}
+	unsigned short GetMultipleIncrement() const
+	{
+		return m_MultipleIncrement;
+	}
+	void SetMultipleIncrement(unsigned short inc)
+	{
+		m_MultipleIncrement = inc;
+	}
+	bool ShowMultipleOnFirstInstance() const
+	{
+		return m_MultipleOnFirst;
+	}
+	void SetMultipleOnFirstInstance(bool onFirst)
+	{
+		m_MultipleOnFirst = onFirst;
+	}
+	ARBTitleStyle GetMultipleStyle() const
+	{
+		return m_MultipleStyle;
+	}
+	ARBTitleSeparator GetMultipleStyleSeparator() const
+	{
+		return m_MultipleSeparator;
+	}
+	void SetMultipleStyle(
+			ARBTitleStyle inMultipleStyle,
+			ARBTitleSeparator inMultipleSeparator)
+	{
+		m_MultipleStyle = inMultipleStyle;
+		m_MultipleSeparator = inMultipleSeparator;
 	}
 
 private:
 	std::wstring m_Name;
 	std::wstring m_LongName;
-	short m_Multiple;
-	ARBTitleStyle m_MultipleStyle;
+	std::wstring m_Desc;
 	bool m_Prefix;
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
-	std::wstring m_Desc;
+	// Recurring properties
+	short m_MultipleStartAt;
+	unsigned short m_MultipleIncrement;
+	bool m_MultipleOnFirst;
+	ARBTitleStyle m_MultipleStyle;
+	ARBTitleSeparator m_MultipleSeparator;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -271,7 +334,6 @@ public:
 	 * This api is used to fix a problem introduced in v1.0.0.8.
 	 * @param inName Complete name of title to find.
 	 * @param inInstance Instance of the title to allow for multiple.
-	 * @param bShowInstance Show '1' in title name for 1st title.
 	 * @param bAbbrevFirst Name is before or after Longname.
 	 * @param outTitle Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
@@ -279,7 +341,6 @@ public:
 	bool FindTitleCompleteName(
 			std::wstring const& inName,
 			short inInstance,
-			bool bShowInstance,
 			bool bAbbrevFirst = true,
 			ARBConfigTitlePtr* outTitle = NULL) const;
 

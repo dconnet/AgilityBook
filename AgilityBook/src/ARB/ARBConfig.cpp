@@ -282,7 +282,7 @@ std::wstring ARBConfig::GetTitleCompleteName(
 		return std::wstring();
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName(), &pTitle))
-		return pTitle->GetCompleteName(inTitle->GetInstance(), inTitle->ShowInstanceOne(), bAbbrevFirst);
+		return pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
 	else
 		return inTitle->GetGenericName();
 }

@@ -1,4 +1,8 @@
-1/11/2013: v2.3.11.<in development>
+1/13/2013: v2.3.11.<in development>
+- Bumped Configuration v42:
+  - New NADAC extended titles.
+- Bumped file version to 14.0:
+  - Added new recurring title suffix style.
 - New features / Enhancements:
   - Allow scrolling in the Calendar view to extend past the last entry.
   - Don't all empty names in URL selection dialog.

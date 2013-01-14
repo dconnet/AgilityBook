@@ -3393,7 +3393,7 @@ msgstr ""
 "etc. Usually, this will be 2. In some cases, like NADAC, it may start higher."
 
 #: Win/DlgConfigTitle.cpp:154
-msgid "IDC_CONFIG_TITLE_MULTIPLE"
+msgid "IDC_CONFIG_TITLE_STARTAT"
 msgstr "&Start at:"
 
 #: Win/DlgConfigTitle.cpp:164

@@ -17,6 +17,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2013-01-13 DRC File version 14.0
+ *                    Added new recurring title suffix style.
  * @li 2012-07-30 DRC File version 13.2
  *                    Added new title style (eTitleNone).
  *                    Added 'titlePts' to 'Placement'.
@@ -106,7 +108,7 @@
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(13, 2);
+	static ARBVersion const curVersion(14, 0);
 	return curVersion;
 }
 
@@ -462,9 +464,9 @@ bool ARBAgilityRecordBook::Update(
 			if (m_Config.GetVenues().FindTitle(pTitle->GetVenue(), pTitle->GetRawName(), &pConfigTitle))
 			{
 				short inst = pTitle->GetInstance();
-				if (0 == inst && 1 < pConfigTitle->GetMultiple())
+				if (0 == inst && 1 < pConfigTitle->GetMultipleStartAt())
 					inst = 1;
-				pTitle->SetName(pTitle->GetRawName(), inst, pConfigTitle->GetMultiple() == 1, pConfigTitle->GetMultipleStyle());
+				pTitle->SetName(pTitle->GetRawName(), inst, pConfigTitle);
 			}
 		}
 		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();

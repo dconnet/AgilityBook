@@ -11,6 +11,9 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2013-01-13 DRC File version 14.0
+               Added new recurring title suffix style.
+               Titles now are unique with Name+recurring.
 2012-09-09 DRC File version 13.2
                Added new title style (eTitleNone).
                Added 'titlePts','speedPts' to 'Placement'.
@@ -309,12 +312,23 @@ top-ten points. The 'Count' value is how they are accumulated
 		LifetimeName CDATA #IMPLIED
 		>
 
+<!--
+Style: 0: None
+       n: Number
+       r: Roman
+Sep n: None
+    s: Space
+    h: Hyphon
+-->
 <!ELEMENT Titles (#PCDATA) >
 	<!ATTLIST Titles
 		Name CDATA #REQUIRED
 		LongName CDATA #IMPLIED
-		Multiple CDATA #IMPLIED
-		Style CDATA #IMPLIED
+		OnFirst (y|n) 'n'
+		StartAt CDATA #IMPLIED
+		Inc CDATA #IMPLIED
+		Style (0|n|r) 'n'
+		Sep (n|s|h) 'n'
 		Prefix (y|n) 'n'
 		ValidFrom CDATA #IMPLIED
 		ValidTo CDATA #IMPLIED
@@ -532,15 +546,21 @@ depends on how a venue has been defined above.
 		Height CDATA #IMPLIED
 		isReceived (y|n) 'n'
 	>
-<!-- 'show' is used to show instance 1: "FTC1" -->
+<!--
+'show' is used to show instance 1: "FTC1"
+style/sep: See Titles
+-->
 <!ELEMENT Title EMPTY >
 	<!ATTLIST Title
 		Date CDATA #IMPLIED
 		Venue CDATA #REQUIRED
 		Name CDATA #REQUIRED
-		show (y|n) 'n'
 		instance CDATA #IMPLIED
-		style CDATA #IMPLIED
+		startat CDATA #IMPLIED
+		inc CDATA #IMPLIED
+		show (y|n) 'n'
+		style (0|n|r) 'n'
+		sep (n|s|h) 'n'
 		isReceived (y|n) 'n'
 		isHidden (y|n) 'n'
 	>

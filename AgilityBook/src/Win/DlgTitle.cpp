@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-08-17 DRC Add support to get newly created title.
  * @li 2010-01-10 DRC Forcing hidden title didn't update internal flags.
@@ -258,7 +259,7 @@ void CDlgTitle::FillTitles(bool bIniting)
 		{
 			ARBConfigTitlePtr pTitle = (*iterTitle);
 			// Suppress any titles we already have.
-			if (0 < pTitle->GetMultiple()
+			if (pTitle->IsRecurring()
 			|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
 			|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
 			{
@@ -366,16 +367,13 @@ void CDlgTitle::OnOk(wxCommandEvent& evt)
 	}
 
 	short instance = 0;
-	if (0 < pTitle->GetMultiple())
+	if (pTitle->IsRecurring())
 	{
 		if (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
 			instance = m_pTitle->GetInstance();
 		else
 		{
-			instance = pTitle->GetMultiple();
-			short next = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName()) + 1;
-			if (next > instance || 1 == next)
-				instance = next;
+			instance = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName()) + 1;
 		}
 	}
 
@@ -383,7 +381,7 @@ void CDlgTitle::OnOk(wxCommandEvent& evt)
 	title->SetDate(date);
 	title->SetHidden(m_bHidden);
 	title->SetVenue(pVenue->GetName());
-	title->SetName(pTitle->GetName(), instance, pTitle->GetMultiple() == 1, pTitle->GetMultipleStyle());
+	title->SetName(pTitle->GetName(), instance, pTitle);
 	title->SetReceived(m_bReceived);
 	if (m_pTitle)
 	{
