@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
@@ -38,13 +39,18 @@ private:
 	wxString m_LongName;
 	wxString m_Desc;
 	bool m_AllowMany;
-	short m_Multiple;
+	short m_MultipleStartAt;
+	unsigned short m_MultipleInc;
+	bool m_bShowFirst;
 	bool m_DateFrom;
 	bool m_DateTo;
-	CTextCtrl* m_ctrlMultiple;
+	wxCheckBox* m_ctrlShowFirst;
+	CTextCtrl* m_ctrlMultipleStartAt;
+	CTextCtrl* m_ctrlMultipleInc;
 	wxDatePickerCtrl* m_ctrlDateFrom;
 	wxDatePickerCtrl* m_ctrlDateTo;
 	wxComboBox* m_ctrlStyle;
+	wxComboBox* m_ctrlSep;
 
 protected:
 	void UpdateButtons();

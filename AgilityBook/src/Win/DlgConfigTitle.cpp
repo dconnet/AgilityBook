@@ -11,7 +11,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-30 DRC Added new recurring title style (none).
+ * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2012-05-07 DRC Fixed some comboboxes that should have been readonly.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
@@ -86,14 +86,20 @@ CDlgConfigTitle::CDlgConfigTitle(
 	, m_Prefix(inTitle->GetPrefix())
 	, m_LongName(StringUtil::stringWX(inTitle->GetLongName()))
 	, m_Desc(StringUtil::stringWX(inTitle->GetDescription()))
-	, m_AllowMany(0 < inTitle->GetMultiple())
-	, m_Multiple(inTitle->GetMultiple())
+
+	, m_AllowMany(inTitle->IsRecurring())
+	, m_MultipleStartAt(inTitle->GetMultipleStartAt())
+	, m_MultipleInc(inTitle->GetMultipleIncrement())
+	, m_bShowFirst(inTitle->ShowMultipleOnFirstInstance())
+
 	, m_DateFrom(inTitle->GetValidFrom().IsValid())
 	, m_DateTo(inTitle->GetValidTo().IsValid())
-	, m_ctrlMultiple(NULL)
+	, m_ctrlMultipleStartAt(NULL)
+	, m_ctrlMultipleInc(NULL)
 	, m_ctrlDateFrom(NULL)
 	, m_ctrlDateTo(NULL)
 	, m_ctrlStyle(NULL)
+	, m_ctrlSep(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -150,15 +156,94 @@ CDlgConfigTitle::CDlgConfigTitle(
 	ctrlAllowMany->SetHelpText(_("HIDC_CONFIG_TITLE_ALLOW_MULTIPLE"));
 	ctrlAllowMany->SetToolTip(_("HIDC_CONFIG_TITLE_ALLOW_MULTIPLE"));
 
+	m_ctrlShowFirst = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_SHOW_FIRST"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bShowFirst));
+	m_ctrlShowFirst->SetHelpText(_("HIDC_CONFIG_TITLE_SHOW_FIRST"));
+	m_ctrlShowFirst->SetToolTip(_("HIDC_CONFIG_TITLE_SHOW_FIRST"));
+
 	wxStaticText* textStart = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_TITLE_MULTIPLE"),
+		_("IDC_CONFIG_TITLE_STARTAT"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textStart->Wrap(-1);
 
-	m_ctrlMultiple = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlMultipleStartAt = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
-		CMultipleValidator(ctrlAllowMany, &m_Multiple));
-	m_ctrlMultiple->Enable(m_AllowMany);
+		CMultipleValidator(ctrlAllowMany, &m_MultipleStartAt));
+	m_ctrlMultipleStartAt->SetHelpText(_("HIDC_CONFIG_TITLE_MULTIPLE_STARTAT"));
+	m_ctrlMultipleStartAt->SetToolTip(_("HIDC_CONFIG_TITLE_MULTIPLE_STARTAT"));
+
+	wxStaticText* textInc = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_INCREMENT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textInc->Wrap(-1);
+
+	m_ctrlMultipleInc = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1), 0,
+		CGenericValidator(&m_MultipleInc));
+	m_ctrlMultipleInc->SetHelpText(_("HIDC_CONFIG_TITLE_MULTIPLE_INC"));
+	m_ctrlMultipleInc->SetToolTip(_("HIDC_CONFIG_TITLE_MULTIPLE_INC"));
+
+	wxStaticText* textDisplay = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_STYLE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDisplay->Wrap(-1);
+
+	m_ctrlStyle = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
+	m_ctrlStyle->SetHelpText(_("HIDC_CONFIG_TITLE_STYLE"));
+	m_ctrlStyle->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
+	static struct
+	{
+		wchar_t const* idRes;
+		ARBTitleStyle style;
+	} styles[] = {
+		{arbT("IDS_CONFIG_TITLE_NONE"), eTitleStyleNone},
+		{arbT("IDS_CONFIG_TITLE_NUMBER"), eTitleStyleNumber},
+		{arbT("IDS_CONFIG_TITLE_ROMAN"), eTitleStyleRoman},
+	};
+	static int nStyles = sizeof(styles) / sizeof(styles[0]);
+	for (int n = 0; n < nStyles; ++n)
+	{
+		wxString str = wxGetTranslation(styles[n].idRes);
+		int idx = m_ctrlStyle->Append(str);
+		m_ctrlStyle->SetClientData(idx, reinterpret_cast<void*>(styles[n].style));
+		if (m_Title->GetMultipleStyle() == styles[n].style)
+			m_ctrlStyle->SetSelection(n);
+	}
+	if (0 > m_ctrlStyle->GetSelection())
+		m_ctrlStyle->SetSelection(0);
+
+	wxStaticText* textSep = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_SEP"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textSep->Wrap(-1);
+
+	m_ctrlSep = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
+	m_ctrlSep->SetHelpText(_("HIDC_CONFIG_TITLE_STYLE"));
+	m_ctrlSep->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
+	static struct
+	{
+		wchar_t const* idRes;
+		ARBTitleSeparator sep;
+	} seps[] = {
+		{arbT("IDS_CONFIG_TITLE_SEP_NONE"), eTitleSeparatorNone},
+		{arbT("IDS_CONFIG_TITLE_SEP_SPACE"), eTitleSeparatorSpace},
+		{arbT("IDS_CONFIG_TITLE_SEP_HYPHEN"), eTitleSeparatorHyphen},
+	};
+	static int nSeps = sizeof(seps) / sizeof(seps[0]);
+	for (int n = 0; n < nSeps; ++n)
+	{
+		wxString str = wxGetTranslation(seps[n].idRes);
+		int idx = m_ctrlSep->Append(str);
+		m_ctrlSep->SetClientData(idx, reinterpret_cast<void*>(seps[n].sep));
+		if (m_Title->GetMultipleStyleSeparator() == seps[n].sep)
+			m_ctrlSep->SetSelection(n);
+	}
+	if (0 > m_ctrlSep->GetSelection())
+		m_ctrlSep->SetSelection(0);
 
 	wxCheckBox* ctrlValidFrom = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_TITLE_VALID_FROM"),
@@ -192,36 +277,6 @@ CDlgConfigTitle::CDlgConfigTitle(
 	m_ctrlDateTo->SetHelpText(_("HIDC_CONFIG_TITLE_VALID_TO_DATE"));
 	m_ctrlDateTo->SetToolTip(_("HIDC_CONFIG_TITLE_VALID_TO_DATE"));
 
-	wxStaticText* textDisplay = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_TITLE_STYLE"),
-		wxDefaultPosition, wxDefaultSize, 0);
-	textDisplay->Wrap(-1);
-
-	m_ctrlStyle = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
-	m_ctrlStyle->SetHelpText(_("HIDC_CONFIG_TITLE_STYLE"));
-	m_ctrlStyle->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
-	static struct
-	{
-		wchar_t const* idRes;
-		ARBTitleStyle style;
-	} styles[] = {
-		{arbT("IDS_CONFIG_TITLE_NONE"), eTitleNone},
-		{arbT("IDS_CONFIG_TITLE_NUMBER"), eTitleNumber},
-		{arbT("IDS_CONFIG_TITLE_ROMAN"), eTitleRoman},
-	};
-	static int nStyles = sizeof(styles) / sizeof(styles[0]);
-	for (int n = 0; n < nStyles; ++n)
-	{
-		wxString str = wxGetTranslation(styles[n].idRes);
-		int idx = m_ctrlStyle->Append(str);
-		m_ctrlStyle->SetClientData(idx, reinterpret_cast<void*>(styles[n].style));
-		if (m_Title->GetMultipleStyle() == styles[n].style)
-			m_ctrlStyle->SetSelection(n);
-	}
-	if (0 > m_ctrlStyle->GetSelection())
-		m_ctrlStyle->SetSelection(0);
-
 	// Sizers (sizer creation is in same order as wxFormBuilder)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
@@ -241,13 +296,20 @@ CDlgConfigTitle::CDlgConfigTitle(
 
 	wxBoxSizer* sizerMultiple = new wxBoxSizer(wxVERTICAL);
 	sizerMultiple->Add(ctrlAllowMany, 0, wxALL, 5);
+	sizerMultiple->Add(m_ctrlShowFirst, 0, wxALL, 5);
 
 	wxBoxSizer* sizerStart = new wxBoxSizer(wxHORIZONTAL);
 	sizerStart->Add(15, 0, 0, 0, 5);
 	sizerStart->Add(textStart, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStart->Add(m_ctrlMultiple, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
+	sizerStart->Add(m_ctrlMultipleStartAt, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
+
+	wxBoxSizer* sizerInc = new wxBoxSizer(wxHORIZONTAL);
+	sizerInc->Add(15, 0, 0, 0, 5);
+	sizerInc->Add(textInc, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerInc->Add(m_ctrlMultipleInc, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
 
 	sizerMultiple->Add(sizerStart, 0, wxTOP, 2);
+	sizerMultiple->Add(sizerInc, 0, wxTOP, 2);
 
 	sizerDetails->Add(sizerMultiple, 0, wxEXPAND, 0);
 
@@ -269,7 +331,13 @@ CDlgConfigTitle::CDlgConfigTitle(
 	sizerDisplay->Add(textDisplay, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
 	sizerDisplay->Add(m_ctrlStyle, 0, wxLEFT|wxRIGHT, 5);
 
+	wxBoxSizer* sizerSep = new wxBoxSizer(wxHORIZONTAL);
+	sizerSep->Add(15, 0, 0, 0, 5);
+	sizerSep->Add(textSep, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
+	sizerSep->Add(m_ctrlSep, 0, wxLEFT|wxRIGHT, 5);
+
 	bSizer->Add(sizerDisplay, 0, wxEXPAND, 0);
+	bSizer->Add(sizerSep, 0, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
@@ -293,19 +361,21 @@ void CDlgConfigTitle::UpdateButtons()
 {
 	m_ctrlDateFrom->Enable(m_DateFrom);
 	m_ctrlDateTo->Enable(m_DateTo);
-	m_ctrlStyle->Enable(m_ctrlMultiple->IsEnabled());
+	m_ctrlShowFirst->Enable(m_AllowMany);
+	m_ctrlMultipleStartAt->Enable(m_AllowMany);
+	m_ctrlMultipleInc->Enable(m_AllowMany);
+	m_ctrlStyle->Enable(m_AllowMany);
 }
 
 
 void CDlgConfigTitle::OnAllowMultiple(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	if (m_AllowMany && 1 > m_Multiple)
+	if (m_AllowMany && 1 > m_MultipleStartAt)
 	{
-		m_Multiple = 2;
+		m_MultipleStartAt = 2;
 		TransferDataToWindow();
 	}
-	m_ctrlMultiple->Enable(m_AllowMany);
 	UpdateButtons();
 }
 
@@ -321,21 +391,32 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
 		return;
-	if (!m_AllowMany && 0 != m_Multiple)
+	if (!m_AllowMany && 0 != m_MultipleStartAt)
 	{
-		m_Multiple = 0;
+		m_MultipleStartAt = 0;
 	}
 
+	m_Title->clear();
 	m_Title->SetName(StringUtil::stringW(m_Name));
 	m_Title->SetLongName(StringUtil::stringW(m_LongName));
 	m_Title->SetDescription(StringUtil::stringW(m_Desc));
 	m_Title->SetPrefix(m_Prefix);
-	m_Title->SetMultiple(m_Multiple);
-	if (0 <= m_ctrlStyle->GetSelection())
-		m_Title->SetMultipleStyle(
-			static_cast<ARBTitleStyle>(
-				reinterpret_cast<int>(
-					m_ctrlStyle->GetClientData(m_ctrlStyle->GetSelection()))));
+#pragma PRAGMA_TODO(increment)
+	m_Title->SetMultipleStartAt(m_MultipleStartAt);
+	if (0 < m_MultipleStartAt)
+	{
+		m_Title->SetMultipleIncrement(m_MultipleInc);
+		m_Title->SetMultipleOnFirstInstance(m_bShowFirst);
+		if (0 <= m_ctrlStyle->GetSelection())
+		{
+	#pragma PRAGMA_TODO(style)
+			m_Title->SetMultipleStyle(
+				static_cast<ARBTitleStyle>(
+					reinterpret_cast<int>(
+						m_ctrlStyle->GetClientData(m_ctrlStyle->GetSelection()))),
+				eTitleSeparatorNone);
+		}
+	}
 	ARBDate date;
 	if (m_DateFrom)
 	{

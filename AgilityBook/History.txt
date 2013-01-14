@@ -1,8 +1,13 @@
-1/11/2013: v3.0.0.<in development>
+1/13/2013: v3.0.0.<in development>
+- Bumped Configuration v42:
+  - New NADAC extended titles.
+- Bumped file version to 14.0:
+  - Added new recurring title suffix style.
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
   - Select current run in Reorder dialog.
   - Allow scrolling in the Calendar view to extend past the last entry.
+  - Don't allow empty names in URL selection dialog.
 - Bug fixes:
   - Fix Calendar icon updates in list dialog.
   - Fix Training view update on paste.
