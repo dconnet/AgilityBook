@@ -64,7 +64,7 @@ bool CMultipleValidator::Validate(wxWindow* parent)
 	if (m_ctrlAllowMany->GetValue() && 1 > val)
 	{
 		wxBell();
-		pControl->SetValue(L"2");
+		pControl->SetValue(L"1");
 		return false;
 	}
 	return true;
@@ -287,57 +287,51 @@ CDlgConfigTitle::CDlgConfigTitle(
 	sizerName->Add(ctrlPrefix, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	bSizer->Add(sizerName, 0, wxEXPAND, 0);
-	bSizer->Add(textLong, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP, 5);
-	bSizer->Add(ctrlLongName, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(textLong, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+	bSizer->Add(ctrlLongName, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
 	bSizer->Add(textDesc, 0, wxLEFT|wxRIGHT|wxTOP, 5);
-	bSizer->Add(ctrlDesc, 1, wxALL|wxEXPAND, 5);
-
-	wxBoxSizer* sizerDetails = new wxBoxSizer(wxHORIZONTAL);
+	bSizer->Add(ctrlDesc, 1, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
 
 	wxBoxSizer* sizerMultiple = new wxBoxSizer(wxVERTICAL);
-	sizerMultiple->Add(ctrlAllowMany, 0, wxALL, 5);
-	sizerMultiple->Add(m_ctrlShowFirst, 0, wxALL, 5);
+	sizerMultiple->Add(ctrlAllowMany, 0, wxBOTTOM, 2);
 
-	wxBoxSizer* sizerStart = new wxBoxSizer(wxHORIZONTAL);
-	sizerStart->Add(15, 0, 0, 0, 5);
-	sizerStart->Add(textStart, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStart->Add(m_ctrlMultipleStartAt, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
+	wxBoxSizer* sizerShowFirst = new wxBoxSizer(wxHORIZONTAL);
+	sizerShowFirst->Add(15, 0, 0, 0, 0);
+	sizerShowFirst->Add(m_ctrlShowFirst, 0, 0, 0);
+	sizerMultiple->Add(sizerShowFirst, 0, wxTOP, 2);
 
-	wxBoxSizer* sizerInc = new wxBoxSizer(wxHORIZONTAL);
-	sizerInc->Add(15, 0, 0, 0, 5);
-	sizerInc->Add(textInc, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerInc->Add(m_ctrlMultipleInc, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
+	wxFlexGridSizer* sizerMultiInfo = new wxFlexGridSizer(4, 3, 0, 0);
+	sizerMultiInfo->SetFlexibleDirection(wxBOTH);
+	sizerMultiInfo->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+	sizerMultiInfo->Add(15, 0, 0, 0, 0);
+	sizerMultiInfo->Add(textStart, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxRIGHT, 5);
+	sizerMultiInfo->Add(m_ctrlMultipleStartAt, 0, wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 2);
+	sizerMultiInfo->Add(15, 0, 0, 0, 0);
+	sizerMultiInfo->Add(textInc, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxRIGHT, 5);
+	sizerMultiInfo->Add(m_ctrlMultipleInc, 0, wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 2);
+	sizerMultiInfo->Add(15, 0, 0, 0, 0);
+	sizerMultiInfo->Add(textDisplay, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxRIGHT, 5);
+	sizerMultiInfo->Add(m_ctrlStyle, 0, wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 2);
+	sizerMultiInfo->Add(15, 0, 0, 0, 0);
+	sizerMultiInfo->Add(textSep, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxRIGHT, 5);
+	sizerMultiInfo->Add(m_ctrlSep, 0, wxALIGN_CENTER_VERTICAL|wxTOP, 2);
+	sizerMultiple->Add(sizerMultiInfo, 0, wxTOP, 2);
 
-	sizerMultiple->Add(sizerStart, 0, wxTOP, 2);
-	sizerMultiple->Add(sizerInc, 0, wxTOP, 2);
+	wxBoxSizer* sizerDetails = new wxBoxSizer(wxHORIZONTAL);
+	sizerDetails->Add(sizerMultiple, 0, wxALL, 5);
+	sizerDetails->Add(0, 0, 1, wxEXPAND, 0);
 
-	sizerDetails->Add(sizerMultiple, 0, wxEXPAND, 0);
-
-	wxFlexGridSizer* sizerDates;
-	sizerDates = new wxFlexGridSizer(2, 2, 0, 0);
+	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerDates->SetFlexibleDirection(wxBOTH);
 	sizerDates->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerDates->Add(ctrlValidFrom, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxLEFT|wxRIGHT, 5);
-	sizerDates->Add(m_ctrlDateFrom, 0, wxALL, 3);
+	sizerDates->Add(m_ctrlDateFrom, 0, wxLEFT|wxBOTTOM, 3);
 	sizerDates->Add(ctrlValidTo, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxLEFT|wxRIGHT, 5);
-	sizerDates->Add(m_ctrlDateTo, 0, wxALL, 3);
+	sizerDates->Add(m_ctrlDateTo, 0, wxLEFT|wxTOP, 3);
 
-	sizerDetails->Add(sizerDates, 0, wxEXPAND, 0);
+	sizerDetails->Add(sizerDates, 0, wxALL, 5);
 
-	bSizer->Add(sizerDetails, 0, wxALL|wxEXPAND, 5);
-
-	wxBoxSizer* sizerDisplay = new wxBoxSizer(wxHORIZONTAL);
-	sizerDisplay->Add(15, 0, 0, 0, 5);
-	sizerDisplay->Add(textDisplay, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
-	sizerDisplay->Add(m_ctrlStyle, 0, wxLEFT|wxRIGHT, 5);
-
-	wxBoxSizer* sizerSep = new wxBoxSizer(wxHORIZONTAL);
-	sizerSep->Add(15, 0, 0, 0, 5);
-	sizerSep->Add(textSep, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
-	sizerSep->Add(m_ctrlSep, 0, wxLEFT|wxRIGHT, 5);
-
-	bSizer->Add(sizerDisplay, 0, wxEXPAND, 0);
-	bSizer->Add(sizerSep, 0, wxEXPAND, 0);
+	bSizer->Add(sizerDetails, 0, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
@@ -365,6 +359,7 @@ void CDlgConfigTitle::UpdateButtons()
 	m_ctrlMultipleStartAt->Enable(m_AllowMany);
 	m_ctrlMultipleInc->Enable(m_AllowMany);
 	m_ctrlStyle->Enable(m_AllowMany);
+	m_ctrlSep->Enable(m_AllowMany);
 }
 
 
@@ -373,7 +368,7 @@ void CDlgConfigTitle::OnAllowMultiple(wxCommandEvent& evt)
 	TransferDataFromWindow();
 	if (m_AllowMany && 1 > m_MultipleStartAt)
 	{
-		m_MultipleStartAt = 2;
+		m_MultipleStartAt = 1;
 		TransferDataToWindow();
 	}
 	UpdateButtons();
@@ -401,7 +396,6 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 	m_Title->SetLongName(StringUtil::stringW(m_LongName));
 	m_Title->SetDescription(StringUtil::stringW(m_Desc));
 	m_Title->SetPrefix(m_Prefix);
-#pragma PRAGMA_TODO(increment)
 	m_Title->SetMultipleStartAt(m_MultipleStartAt);
 	if (0 < m_MultipleStartAt)
 	{
@@ -409,12 +403,13 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 		m_Title->SetMultipleOnFirstInstance(m_bShowFirst);
 		if (0 <= m_ctrlStyle->GetSelection())
 		{
-	#pragma PRAGMA_TODO(style)
 			m_Title->SetMultipleStyle(
 				static_cast<ARBTitleStyle>(
 					reinterpret_cast<int>(
 						m_ctrlStyle->GetClientData(m_ctrlStyle->GetSelection()))),
-				eTitleSeparatorNone);
+				static_cast<ARBTitleSeparator>(
+					reinterpret_cast<int>(
+						m_ctrlSep->GetClientData(m_ctrlSep->GetSelection()))));
 		}
 	}
 	ARBDate date;
