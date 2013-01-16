@@ -191,7 +191,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	textDisplay->Wrap(-1);
 
 	m_ctrlStyle = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
+		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
 	m_ctrlStyle->SetHelpText(_("HIDC_CONFIG_TITLE_STYLE"));
 	m_ctrlStyle->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
 	static struct
@@ -221,9 +221,9 @@ CDlgConfigTitle::CDlgConfigTitle(
 	textSep->Wrap(-1);
 
 	m_ctrlSep = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
-	m_ctrlSep->SetHelpText(_("HIDC_CONFIG_TITLE_STYLE"));
-	m_ctrlSep->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
+		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlSep->SetHelpText(_("HIDC_CONFIG_TITLE_SEP"));
+	m_ctrlSep->SetToolTip(_("HIDC_CONFIG_TITLE_SEP"));
 	static struct
 	{
 		wchar_t const* idRes;
