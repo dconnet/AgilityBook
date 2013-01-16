@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-13 19:11-0800\n"
-"PO-Revision-Date: 2013-01-13 19:15-0800\n"
+"POT-Creation-Date: 2013-01-16 10:36-0800\n"
+"PO-Revision-Date: 2013-01-16 10:36-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -3458,7 +3458,6 @@ msgid "IDC_CONFIG_TITLE_STYLE"
 msgstr "&Afficher comme:"
 
 #: Win/DlgConfigTitle.cpp:195 Win/DlgConfigTitle.cpp:196
-#: Win/DlgConfigTitle.cpp:225 Win/DlgConfigTitle.cpp:226
 msgid "HIDC_CONFIG_TITLE_STYLE"
 msgstr ""
 "Quand un titre permet des copies multiples, afficher le nombre soit en "
@@ -3480,6 +3479,13 @@ msgstr "chiffre romain"
 #, fuzzy
 msgid "IDC_CONFIG_TITLE_SEP"
 msgstr "F&ormat:"
+
+#: Win/DlgConfigTitle.cpp:225 Win/DlgConfigTitle.cpp:226
+#, fuzzy
+msgid "HIDC_CONFIG_TITLE_SEP"
+msgstr ""
+"When a title allows multiple copies, set the formatting for the multiple "
+"after the title."
 
 #: Win/DlgConfigTitle.cpp:232
 #, fuzzy
