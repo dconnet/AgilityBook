@@ -1,6 +1,7 @@
-1/13/2013: v3.0.0.<in development>
+1/22/2013: v3.0.0.<in development>
 - Bumped Configuration v42:
   - New NADAC extended titles.
+  - New USDAA Diamond LAA titles.
 - Bumped file version to 14.0:
   - Added new recurring title suffix style.
 - New features / Enhancements:
