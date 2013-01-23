@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-01-23 DRC Initialize points correctly when editing existing entry.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -154,7 +155,8 @@ void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr inOther)
 		{
 			m_ctrlOtherPoints->SetSelection(index);
 			m_ctrlDesc->SetValue(StringUtil::stringWX(pOther->GetDescription()));
-			m_Points = pOther->GetDefault();
+			if (0.0 == m_Points)
+				m_Points = pOther->GetDefault();
 			TransferDataToWindow();
 		}
 	}

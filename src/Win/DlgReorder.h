@@ -35,12 +35,14 @@ public:
 	CDlgReorder(
 			CAgilityBookDoc* pDoc,
 			ARBDogTrialPtr trial,
+			ARBDogRunPtr run,
 			wxWindow* pParent = NULL);
 
 private:
 	CAgilityBookDoc* m_pDoc;
 	ARBDogList* m_Dogs;
 	ARBDogTrialPtr m_Trial;
+	ARBDogRunPtr m_Run;
 	wxListBox* m_ctrlList;
 	CTreeCtrl* m_ctrlTree;
 	wxButton* m_ctrlUp;
