@@ -1841,7 +1841,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 				CAgilityBookRunsViewDataPtr pData = GetItemRunData(indices[0]);
 				if (pData->GetTrial())
 				{
-					CDlgReorder dlg(GetDocument(), pData->GetTrial());
+					CDlgReorder dlg(GetDocument(), pData->GetTrial(), pData->GetRun());
 					dlg.ShowModal();
 				}
 			}

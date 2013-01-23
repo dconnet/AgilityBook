@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-12-31 DRC Select run on startup.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-10-14 DRC Changed how reorder dlg is used, made run reorder a tree.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -68,6 +69,7 @@ CDlgReorder::CDlgReorder(
 	, m_pDoc(pDoc)
 	, m_Dogs(dogs)
 	, m_Trial()
+	, m_Run()
 	, m_ctrlList(NULL)
 	, m_ctrlTree(NULL)
 	, m_ctrlUp(NULL)
@@ -80,11 +82,13 @@ CDlgReorder::CDlgReorder(
 CDlgReorder::CDlgReorder(
 		CAgilityBookDoc* pDoc,
 		ARBDogTrialPtr trial,
+		ARBDogRunPtr run,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Dogs(NULL)
 	, m_Trial(trial)
+	, m_Run(run)
 	, m_ctrlList(NULL)
 	, m_ctrlTree(NULL)
 	, m_ctrlUp(NULL)
@@ -174,6 +178,7 @@ void CDlgReorder::Init(wxWindow* pParent)
 	}
 	else if (m_Trial && m_ctrlTree)
 	{
+		wxTreeItemId idSelect;
 		wxTreeItemId root = m_ctrlTree->AddRoot(L"Root");
 		std::map<ARBDate, wxTreeItemId> dates;
 		for (ARBDogRunList::iterator iter = m_Trial->GetRuns().begin();
@@ -183,13 +188,20 @@ void CDlgReorder::Init(wxWindow* pParent)
 			ARBDogRunPtr pRun = *iter;
 			if (dates.end() == dates.find(pRun->GetDate()))
 				dates[pRun->GetDate()] = m_ctrlTree->AppendItem(root, StringUtil::stringWX(pRun->GetDate().GetString()));
-			m_ctrlTree->AppendItem(dates[pRun->GetDate()], StringUtil::stringWX(pRun->GetGenericName()), -1, 1, new CReorderTreeData(pRun));
+			wxTreeItemId item = m_ctrlTree->AppendItem(dates[pRun->GetDate()], StringUtil::stringWX(pRun->GetGenericName()), -1, 1, new CReorderTreeData(pRun));
+			if (m_Run == pRun)
+				idSelect = item;
 		}
 		for (std::map<ARBDate, wxTreeItemId>::iterator i = dates.begin();
 			i != dates.end();
 			++i)
 		{
 			m_ctrlTree->Expand(i->second);
+		}
+		if (idSelect.IsOk())
+		{
+			m_ctrlTree->EnsureVisible(idSelect);
+			m_ctrlTree->SelectItem(idSelect);
 		}
 	}
 	UpdateControls();

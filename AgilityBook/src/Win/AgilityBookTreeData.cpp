@@ -927,7 +927,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 	case ID_REORDER:
 		if (GetTrial())
 		{
-			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial());
+			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial(), GetRun());
 			dlg.ShowModal();
 		}
 		break;
@@ -1299,7 +1299,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 	case ID_REORDER:
 		if (GetTrial())
 		{
-			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial());
+			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial(), GetRun());
 			dlg.ShowModal();
 		}
 		break;
