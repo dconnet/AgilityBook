@@ -4472,7 +4472,7 @@ msgid "IDD_MESSAGE"
 msgstr "Message"
 
 #: Win/DlgMessage.cpp:43
-msgid "IDD_MESSAGE_CLOSE"
+msgid "IDC_MESSAGE_CLOSE"
 msgstr "Quitter"
 
 # DlgMessageBox
