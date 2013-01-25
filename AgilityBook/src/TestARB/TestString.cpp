@@ -30,7 +30,9 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			std::string s("narrow");
-			std::wstring s2 = StringUtil::stringW(s);
+			std::wstring s1 = StringUtil::stringW(s);
+			CHECK(L"narrow" == s1);
+			wxString s2 = StringUtil::stringWX(s);
 			CHECK(L"narrow" == s2);
 		}
 	}
@@ -41,8 +43,10 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			std::wstring s(L"wide");
-			std::string s2 = StringUtil::stringA(s);
-			CHECK("wide" == s2);
+			std::string s1 = StringUtil::stringA(s);
+			CHECK("wide" == s1);
+			wxString s2 = StringUtil::stringWX(s);
+			CHECK(L"wide" == s2);
 		}
 	}
 
