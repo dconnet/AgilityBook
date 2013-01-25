@@ -20,8 +20,10 @@
  */
 
 #include <string>
+#if defined(__WXWINDOWS__)
 #include <wx/string.h>
 class wxMemoryOutputStream;
+#endif
 
 
 /**
@@ -29,6 +31,7 @@ class wxMemoryOutputStream;
  */
 namespace StringUtil
 {
+#if defined(__WXWINDOWS__)
 	// Some explicit conversion between wxString and std.
 	// In general, we want to always work in std (based on discussion on list)
 	wxString stringWX(wchar_t const* const inStr, size_t inLen);
@@ -37,6 +40,7 @@ namespace StringUtil
 	wxString stringWX(std::string const& inStr);
 	std::wstring stringW(wxString const& inStr);
 	std::string stringA(wxMemoryOutputStream const& inStr);
+#endif
 
 	// String conversion
 	std::string stringA(wchar_t const* const inStr, size_t inLen);

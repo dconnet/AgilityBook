@@ -30,11 +30,9 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			std::string s("narrow");
-			/*
-			std::wstring s2 = StringUtil::tstringW(s);
-			CHECK(L"narrow" == s2);
-			*/
-			std::wstring s2 = StringUtil::stringW(s);
+			std::wstring s1 = StringUtil::stringW(s);
+			CHECK(L"narrow" == s1);
+			wxString s2 = StringUtil::stringWX(s);
 			CHECK(L"narrow" == s2);
 		}
 	}
@@ -45,10 +43,8 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			std::wstring s(L"wide");
-			/*
-			std::string s2 = StringUtil::stringA(s);
-			CHECK("wide" == s2);
-			*/
+			std::string s1 = StringUtil::stringA(s);
+			CHECK("wide" == s1);
 			wxString s2 = StringUtil::stringWX(s);
 			CHECK(L"wide" == s2);
 		}
@@ -60,23 +56,48 @@ SUITE(TestString)
 	{
 		if (!g_bMicroTest)
 		{
+			// http://www.ftrain.com/unicode/#65275
 			wchar_t w = 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
 			std::wstring s(1, w);
-			//std::string s2 = StringUtil::stringA(s);
 			std::string s2 = StringUtil::stringA(s);
 			CHECK(s.length() == 1);
+			// MBCS: 0, UTF8: 3
 			CHECK(s2.length() == 3);
 		}
 	}
 
 
-	TEST(Atol)
+	TEST(Convert_Multi2)
+	{
+		if (!g_bMicroTest)
+		{
+			// http://www.ftrain.com/unicode/#247
+			wchar_t w = 0x00f7; // Division sign
+			std::wstring s(1, w);
+			std::string s2 = StringUtil::stringA(s);
+			CHECK(s.length() == 1);
+			// MBCS: 1, UTF8: 2
+			CHECK(s2.length() > 0);
+		}
+	}
+
+
+	TEST(AtolGoodData)
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring s1(L"123");
 			long a1 = StringUtil::ToCLong(s1);
 			CHECK(a1 == 123);
+			CHECK(StringUtil::ToCLong(s1, a1));
+		}
+	}
+
+
+	TEST(AtolBadData)
+	{
+		if (!g_bMicroTest)
+		{
 			std::wstring s2(L"12-3");
 			long a2 = StringUtil::ToCLong(s2);
 			CHECK(a2 == 12);
@@ -88,13 +109,22 @@ SUITE(TestString)
 	}
 
 
-	TEST(Atod)
+	TEST(AtodGoodData)
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToCDouble(s1);
 			CHECK(a1 == 12.3);
+			CHECK(StringUtil::ToCDouble(s1, a1));
+		}
+	}
+
+
+	TEST(AtodBadData)
+	{
+		if (!g_bMicroTest)
+		{
 			std::wstring s2(L"1.3-12");
 			double a2;
 			CHECK(!StringUtil::ToCDouble(s2, a2));
