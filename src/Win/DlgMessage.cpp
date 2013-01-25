@@ -40,7 +40,7 @@ CDlgMessage::CDlgMessage(
 		wxDefaultPosition, wxSize(450, 300),
 		wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
 
-	wxButton* btnClose = new wxButton(this, wxID_OK, _("IDD_MESSAGE_CLOSE"));
+	wxButton* btnClose = new wxButton(this, wxID_OK, _("IDC_MESSAGE_CLOSE"));
 	btnClose->SetDefault();
 
 	// Sizers (sizer creation is in same order as wxFormBuilder)
