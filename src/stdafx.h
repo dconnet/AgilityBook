@@ -277,6 +277,13 @@ namespace std
 #define ARB_HAS_SECURE_MBS_WCS
 #endif
 
+// ARB_HAS_SECURE_SPRINTF
+//  sprintf_s(char*, size_t, const char*, ...)
+//  swprintf_s(wchar_t*, size_t, const char*, ...)
+#if _MSC_VER >= 1400
+#define ARB_HAS_SECURE_SPRINTF
+#endif
+
 // ARB_SET_ERASE_RETURNS_ITERATOR
 //  std::set<x>::iterator i = var.begin()...; i = var.erase(i); ...
 //  If not defined, will use "var.erase(i++);" construct
