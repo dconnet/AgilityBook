@@ -112,7 +112,11 @@ public:
 		{
 			char buffer[100];
 			Write("BEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-PT");
-			sprintf_s(buffer, "%d", inDaysBefore * 24 * 60);
+#ifdef ARB_HAS_SECURE_SPRINTF
+			sprintf_s(buffer, _countof(buffer), "%d", inDaysBefore * 24 * 60);
+#else
+			sprintf(buffer, "%d", inDaysBefore * 24 * 60);
+#endif
 			Write(buffer);
 			Write("M\r\nDESCRIPTION:Reminder\r\nEND:VALARM\r\n");
 		}
@@ -297,13 +301,25 @@ void ARBiCal::DoDTSTAMP()
 		struct tm* pTime = localtime(&t);
 #endif
 		char buffer[50];
-		sprintf_s(buffer, "DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
+#ifdef ARB_HAS_SECURE_SPRINTF
+		sprintf_s(buffer, _countof(buffer),
+			"DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
 			pTime->tm_year + 1900,
 			pTime->tm_mon + 1,
 			pTime->tm_mday,
 			pTime->tm_hour,
 			pTime->tm_min,
 			pTime->tm_sec);
+#else
+		sprintf(buffer,
+			"DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
+			pTime->tm_year + 1900,
+			pTime->tm_mon + 1,
+			pTime->tm_mday,
+			pTime->tm_hour,
+			pTime->tm_min,
+			pTime->tm_sec);
+#endif
 		Write(buffer);
 	}
 }
