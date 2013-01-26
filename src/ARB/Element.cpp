@@ -401,11 +401,7 @@ static std::wstring GetIndentBuffer(int indent)
 	if (0 < indent)
 	{
 		wchar_t* buffer = new wchar_t[indent + 1];
-#ifdef ARB_HAS_SECURE_SPRINTF
 		swprintf_s(buffer, indent + 1, L"%*s", indent, L" ");
-#else
-		swprintf(buffer, L"%*s", indent, L" ");
-#endif
 		str = buffer;
 		delete [] buffer;
 	}
