@@ -133,11 +133,9 @@ std::wstring CDlgARBHelp::GetEncodedData()
 			rawdata << L"Size: " << StringUtil::stringW(size.ToString()) << L"\n";
 		if ((*iFile).second)
 		{
-			wxFFile file;
-			if (file.Open((*iFile).first.c_str(), L"rb"))
+			std::wstring data;
+			if (BinaryData::EncodeFile((*iFile).first, data))
 			{
-				std::wstring data;
-				BinaryData::Encode(file, data);
 				rawdata << STREAM_FILE_BEGIN << L"\n"
 					<< data
 					<< L"\n" << STREAM_FILE_END << L"\n";

@@ -48,6 +48,12 @@ bool BinaryData::Decode(
 	if (inBase64.empty())
 		return false;
 
+#if !defined(__WXWINDOWS__)
+#pragma PRAGMA_TODO(implement non-wx version)
+	return false;
+
+#else
+
 	unsigned char* pData;
 	size_t len;
 	if (!ARBBase64::Decode(inBase64, pData, len))
@@ -66,6 +72,7 @@ bool BinaryData::Decode(
 	ARBBase64::Release(pData);
 
 	return true;
+#endif
 }
 
 
@@ -83,6 +90,12 @@ bool BinaryData::Encode(
 	outBase64.erase();
 	if (0 == inBytes)
 		return false;
+
+#if !defined(__WXWINDOWS__)
+#pragma PRAGMA_TODO(implement non-wx version)
+	return false;
+
+#else
 
 	size_t nData = 0;
 	unsigned char* pData = NULL;
@@ -103,16 +116,24 @@ bool BinaryData::Encode(
 	delete [] pData;
 
 	return bOk;
+#endif
 }
 
 
-bool BinaryData::Encode(
-		wxFFile& inData,
+bool BinaryData::EncodeFile(
+		std::wstring const& inFileName,
 		std::wstring& outBase64)
 {
 	outBase64.erase();
 
-	if (!inData.IsOpened())
+#if !defined(__WXWINDOWS__)
+#pragma PRAGMA_TODO(implement non-wx version)
+	return false;
+#endif
+
+#if defined(__WXWINDOWS__)
+	wxFFile file;
+	if (!file.Open(inFileName, L"rb"))
 		return false;
 
 	size_t nData = 0;
@@ -121,7 +142,7 @@ bool BinaryData::Encode(
 	wxMemoryOutputStream output;
 	{
 		wxZlibOutputStream strm(output);
-		wxFFileInputStream instrm(inData);
+		wxFFileInputStream instrm(file);
 		strm.Write(instrm);
 		strm.Close();
 	}
@@ -135,6 +156,7 @@ bool BinaryData::Encode(
 	delete [] pData;
 
 	return bOk;
+#endif
 }
 
 

@@ -502,7 +502,12 @@ bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 	default:
 		assert(0);
 #ifdef _DEBUG
+#if defined(__WXWINDOWS__)
 		wxLogError(L"%s", Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE));
+#else
+		OutputDebugString(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE).c_str());
+		assert(0);
+#endif
 #endif
 		return false;
 	case eFaultsThenTime:
@@ -715,7 +720,14 @@ bool ARBConfigScoringList::FindEvent(
 #ifdef _DEBUG
 			// If date is not valid, we will have multiple items.
 			if (inDate.IsValid() && items.size() - wildcard > 1)
+			{
+#if defined(__WXWINDOWS__)
 				wxLogWarning(L"FindEvent: Overlapping date ranges");
+#else
+				OutputDebugString(L"FindEvent: Overlapping date ranges\n");
+				assert(0);
+#endif
+			}
 #endif
 			pEvent = *(items.begin());
 		}
