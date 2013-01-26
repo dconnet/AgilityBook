@@ -19,8 +19,17 @@
 #include "ARBTypes.h"
 #include "PointsData.h"
 #include <vector>
+
+#if wxCHECK_VERSION(2, 9, 4)
 #include <wx/html/htmprint.h>
 #include <wx/print.h>
+#else
+#pragma warning(push)
+#pragma warning(disable : 4244)
+#include <wx/html/htmprint.h>
+#include <wx/print.h>
+#pragma warning(pop)
+#endif
 
 
 class CPrintPreview : public wxPrintPreview

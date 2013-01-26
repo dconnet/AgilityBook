@@ -51,7 +51,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_ctrlType(NULL)
 	, m_ctrlTypeNormal(NULL)
 	, m_Faults(inValue)
-	, m_Place(inValue)
+	, m_Place(static_cast<short>(inValue))
 	, m_Points(inPoints)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
@@ -200,7 +200,7 @@ void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 	}
 	if (eTitlePlacement == m_Type)
 	{
-		m_Place = m_Faults; // Copy old value
+		m_Place = static_cast<short>(m_Faults); // Copy old value
 		m_textValue->SetLabel(_("IDC_CONFIG_TITLEPTS_VALUE_TEXT2"));
 		m_ctrlValue->SetValidator(CGenericValidator(&m_Place));
 		bRefit = true;

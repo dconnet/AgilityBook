@@ -530,8 +530,8 @@ int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 #endif
 {
-	CAgilityBookRunsViewDataPtr pRun1 = s_SortInfo.pThis->GetItemRunDataByData(item1);
-	CAgilityBookRunsViewDataPtr pRun2 = s_SortInfo.pThis->GetItemRunDataByData(item2);
+	CAgilityBookRunsViewDataPtr pRun1 = s_SortInfo.pThis->GetItemRunDataByData(static_cast<long>(item1));
+	CAgilityBookRunsViewDataPtr pRun2 = s_SortInfo.pThis->GetItemRunDataByData(static_cast<long>(item2));
 
 	int nRet = 0;
 	int iCol = abs(s_SortInfo.nCol);

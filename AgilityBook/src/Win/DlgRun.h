@@ -46,7 +46,16 @@
 #include "ARBTypes.h"
 #include "ColumnOrder.h"
 #include <wx/listctrl.h>
+
+#if wxCHECK_VERSION(2, 9, 4)
 #include <wx/notebook.h>
+#else
+#pragma warning(push)
+#pragma warning(disable : 4244)
+#include <wx/notebook.h>
+#pragma warning(pop)
+#endif
+
 class CAgilityBookDoc;
 class CAutoFillComboBox;
 class CDlgDogDivData;

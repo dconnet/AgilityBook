@@ -48,7 +48,15 @@
 #include "StringUtil.h"
 #include "Widgets.h"
 #include <algorithm>
+
+#if wxCHECK_VERSION(2, 9, 4)
 #include <wx/bmpcbox.h>
+#else
+#pragma warning(push)
+#pragma warning(disable : 4512)
+#include <wx/bmpcbox.h>
+#pragma warning(pop)
+#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

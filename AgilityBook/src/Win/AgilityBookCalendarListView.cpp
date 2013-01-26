@@ -327,8 +327,8 @@ int wxCALLBACK CompareCalendar(long item1, long item2, long sortData)
 {
 	if (0 == s_SortInfo.nCol)
 		return 0;
-	CAgilityBookCalendarListViewDataPtr pItem1 = s_SortInfo.pThis->GetItemCalDataByData(item1);
-	CAgilityBookCalendarListViewDataPtr pItem2 = s_SortInfo.pThis->GetItemCalDataByData(item2);
+	CAgilityBookCalendarListViewDataPtr pItem1 = s_SortInfo.pThis->GetItemCalDataByData(static_cast<long>(item1));
+	CAgilityBookCalendarListViewDataPtr pItem2 = s_SortInfo.pThis->GetItemCalDataByData(static_cast<long>(item2));
 	int nRet = 0;
 	int iCol = abs(s_SortInfo.nCol);
 	switch (s_SortInfo.pThis->m_Columns[iCol-1])

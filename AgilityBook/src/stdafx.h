@@ -36,6 +36,11 @@
 #define PRAGMA_TODO(x) message( FILE_LINE "TODO: " #x )
 #define PRAGMA_FIXME(x) message( FILE_LINE "FIXME: " #x )
 
+#define DECLARE_NO_COPY_IMPLEMENTED(cls) \
+	private: \
+		cls(cls const&); \
+		cls& operator=(cls const&);
+
 
 #if defined(_WIN32)
 
@@ -163,6 +168,7 @@
 
 #else // NO_WXWIDGETS
 
+#pragma warning(push)
 // Pre-compiled header setup
 #include <wx/wxprec.h>
 #ifdef __BORLANDC__
@@ -181,6 +187,8 @@
 //  (.3 had api changes/fixes)
 //  (.4 changed the lib directory for x64)
 #include <wx/version.h>
+#pragma warning(pop)
+
 #if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER < 4
 #error pre-v2.9.4 not supported
 #endif
@@ -279,7 +287,6 @@ namespace std
 
 // ARB_HAS_SECURE_SPRINTF
 //  sprintf_s(char*, size_t, const char*, ...)
-//  swprintf_s(wchar_t*, size_t, const char*, ...)
 #if _MSC_VER >= 1400
 #define ARB_HAS_SECURE_SPRINTF
 #endif
@@ -303,6 +310,12 @@ namespace std
 //   #pragma warning (disable : 4355)
 #ifdef _MSC_VER
 #define ARB_HAS_PRAGMAPUSHPOP
+#endif
+
+// ARB_HAS_ISTREAM_WCHAR
+//  Supports ifstream(wchar_t*) (MS does, xcode 4.5 doesn't)
+#ifdef _MSC_VER
+#define ARB_HAS_ISTREAM_WCHAR
 #endif
 
 // Some often used includes for speeding the build

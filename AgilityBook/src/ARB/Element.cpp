@@ -401,7 +401,7 @@ static std::wstring GetIndentBuffer(int indent)
 	if (0 < indent)
 	{
 		wchar_t* buffer = new wchar_t[indent + 1];
-		swprintf_s(buffer, indent + 1, L"%*s", indent, L" ");
+		swprintf(buffer, indent + 1, L"%*s", indent, L" ");
 		str = buffer;
 		delete [] buffer;
 	}

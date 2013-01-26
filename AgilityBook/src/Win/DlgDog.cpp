@@ -224,8 +224,8 @@ int wxCALLBACK CompareTitles(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 int wxCALLBACK CompareTitles(long item1, long item2, long sortData)
 #endif
 {
-	CDlgDogDataTitlePtr pData1 = s_SortInfo.pThis->GetTitleDataByData(item1);
-	CDlgDogDataTitlePtr pData2 = s_SortInfo.pThis->GetTitleDataByData(item2);
+	CDlgDogDataTitlePtr pData1 = s_SortInfo.pThis->GetTitleDataByData(static_cast<long>(item1));
+	CDlgDogDataTitlePtr pData2 = s_SortInfo.pThis->GetTitleDataByData(static_cast<long>(item2));
 	ARBDogTitlePtr pTitle1 = pData1->GetData();
 	ARBDogTitlePtr pTitle2 = pData2->GetData();
 	int rc = 0;
@@ -338,8 +338,8 @@ int wxCALLBACK CompareRegNums(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 int wxCALLBACK CompareRegNums(long item1, long item2, long sortData)
 #endif
 {
-	CDlgDogDataRegNumPtr pData1 = s_SortInfo.pThis->GetRegNumDataByData(item1);
-	CDlgDogDataRegNumPtr pData2 = s_SortInfo.pThis->GetRegNumDataByData(item2);
+	CDlgDogDataRegNumPtr pData1 = s_SortInfo.pThis->GetRegNumDataByData(static_cast<long>(item1));
+	CDlgDogDataRegNumPtr pData2 = s_SortInfo.pThis->GetRegNumDataByData(static_cast<long>(item2));
 	ARBDogRegNumPtr pRegNum1 = pData1->GetData();
 	ARBDogRegNumPtr pRegNum2 = pData2->GetData();
 	int rc = 0;
@@ -459,8 +459,8 @@ int wxCALLBACK ComparePoints(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 int wxCALLBACK ComparePoints(long item1, long item2, long sortData)
 #endif
 {
-	CDlgDogDataPointPtr pData1 = s_SortInfo.pThis->GetPointDataByData(item1);
-	CDlgDogDataPointPtr pData2 = s_SortInfo.pThis->GetPointDataByData(item2);
+	CDlgDogDataPointPtr pData1 = s_SortInfo.pThis->GetPointDataByData(static_cast<long>(item1));
+	CDlgDogDataPointPtr pData2 = s_SortInfo.pThis->GetPointDataByData(static_cast<long>(item2));
 	ARBDogExistingPointsPtr pExistingPoints1 = pData1->GetData();
 	ARBDogExistingPointsPtr pExistingPoints2 = pData2->GetData();
 	int rc = 0;
