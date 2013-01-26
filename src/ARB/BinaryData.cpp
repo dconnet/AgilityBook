@@ -21,9 +21,11 @@
 
 #include "ARBBase64.h"
 #include "StringUtil.h"
+#if defined(__WXWINDOWS__)
 #include <wx/mstream.h>
 #include <wx/wfstream.h>
 #include <wx/zstream.h>
+#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -152,7 +154,7 @@ bool BinaryData::DecodeString(
 	// TODO: Better conversion
 	std::string tmp(reinterpret_cast<char*>(data), len);
 	Release(data);
-	outData = StringUtil::stringWX(tmp);
+	outData = StringUtil::stringW(tmp);
 	return true;
 }
 
