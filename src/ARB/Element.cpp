@@ -88,6 +88,8 @@
 
 ////////////////////////////////////////////////////////////////////////////
 
+#if defined(__WXWINDOWS__)
+
 class wxInputStdStream : public wxInputStream
 {
 public:
@@ -160,6 +162,8 @@ public:
 protected:
 	std::ostream& m_stream;
 };
+
+#endif // __WXWINDOWS__
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -391,6 +395,31 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 
 /////////////////////////////////////////////////////////////////////////////
 
+static std::wstring GetIndentBuffer(int indent)
+{
+	std::wstring str;
+	if (0 < indent)
+	{
+		wchar_t* buffer = new wchar_t[indent + 1];
+		swprintf_s(buffer, indent + 1, L"%*s", indent, L" ");
+		str = buffer;
+		delete [] buffer;
+	}
+	return str;
+}
+
+static void LogMessage(	std::wostringstream& msg)
+{
+#if defined(__WXWINDOWS__)
+	wxLogMessage(L"%s", msg.str().c_str());
+#else
+	msg << L"\n";
+	OutputDebugString(msg.str().c_str());
+#endif
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 ElementNodePtr ElementNode::New()
 {
 	ElementNodePtr pNode(new ElementNode());
@@ -436,7 +465,7 @@ void ElementNode::Dump(int inLevel) const
 {
 	int i;
 	std::wostringstream msg;
-	msg << StringUtil::stringW(wxString::Format(L"%*s%s", inLevel, L" ", m_Name.c_str()));
+	msg << GetIndentBuffer(inLevel) << m_Name;
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		std::wstring name, value;
@@ -447,7 +476,7 @@ void ElementNode::Dump(int inLevel) const
 			<< value
 			<< L"\"";
 	}
-	wxLogMessage(L"%s", msg.str().c_str());
+	LogMessage(msg);
 	for (i = 0; i < GetElementCount(); ++i)
 	{
 		GetElement(i)->Dump(inLevel+1);
@@ -1128,7 +1157,7 @@ bool ElementNode::LoadXML(
 	// TODO: Read into buffer
 	char* pData = NULL;
 	size_t nData = 0;
-	return LoadXml(pData, nData, ioErrMsg);
+	return LoadXML(pData, nData, ioErrMsg);
 #else
 	wxLogBuffer* log = new wxLogBuffer();
 	// wxLogChain will delete the log given to it.
@@ -1367,12 +1396,12 @@ ElementText::ElementText(std::wstring const& inText)
 void ElementText::Dump(int inLevel) const
 {
 	std::wostringstream msg;
-	msg << StringUtil::stringW(wxString::Format(L"%*s%s", inLevel, L" ", GetName().c_str()));
+	msg << GetIndentBuffer(inLevel) << GetName();
 	if (0 < m_Value.length())
 	{
 		msg << L": " << m_Value;
 	}
-	wxLogMessage(L"%s", msg.str().c_str());
+	LogMessage(msg);
 }
 
 

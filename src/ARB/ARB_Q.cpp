@@ -51,7 +51,7 @@ std::wstring ARB_Q::GetValidTypes()
 	{
 		if (0 < i)
 			types << L", ";
-		types << StringUtil::stringW(wxGetTranslation(sc_Qs[i].trans));
+		types << StringUtil::GetTranslation(sc_Qs[i].trans);
 	}
 	return types.str();
 }
@@ -62,7 +62,7 @@ void ARB_Q::GetValidTypes(std::vector<std::wstring>& outTypes)
 	outTypes.clear();
 	for (int i = 0; i < sc_nQs; ++i)
 	{
-		outTypes.push_back(StringUtil::stringW(wxGetTranslation(sc_Qs[i].trans)));
+		outTypes.push_back(StringUtil::GetTranslation(sc_Qs[i].trans));
 	}
 }
 
@@ -91,7 +91,7 @@ std::wstring ARB_Q::str() const
 	{
 		if (sc_Qs[i].q == m_Q)
 		{
-			s = wxGetTranslation(sc_Qs[i].trans);
+			s = StringUtil::GetTranslation(sc_Qs[i].trans);
 			break;
 		}
 	}

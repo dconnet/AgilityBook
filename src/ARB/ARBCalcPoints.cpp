@@ -119,7 +119,7 @@ ARBCalcPointsT2B::ARBCalcPointsT2B()
 
 std::wstring ARBCalcPointsT2B::GetGenericName(double points, double faults) const
 {
-	return StringUtil::stringW(_("IDS_TITLEPOINT_NORMAL_T2B"));
+	return StringUtil::GetTranslation(arbT("IDS_TITLEPOINT_NORMAL_T2B"));
 }
 
 
@@ -175,7 +175,7 @@ ARBCalcPointsUKI::ARBCalcPointsUKI()
 
 std::wstring ARBCalcPointsUKI::GetGenericName(double points, double faults) const
 {
-	return StringUtil::stringW(_("IDS_TITLEPOINT_NORMAL_UKI"));
+	return StringUtil::GetTranslation(arbT("IDS_TITLEPOINT_NORMAL_UKI"));
 }
 
 

@@ -20,6 +20,8 @@
  * @li 2004-03-04 DRC Created
  */
 
+#include <string>
+
 
 class CVersionNum
 {

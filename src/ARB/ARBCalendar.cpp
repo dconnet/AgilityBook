@@ -113,7 +113,7 @@ public:
 		{
 			char buffer[100];
 			Write("BEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-PT");
-			sprintf(buffer, "%d", inDaysBefore * 24 * 60);
+			sprintf_s(buffer, "%d", inDaysBefore * 24 * 60);
 			Write(buffer);
 			Write("M\r\nDESCRIPTION:Reminder\r\nEND:VALARM\r\n");
 		}
@@ -139,6 +139,9 @@ private:
 
 	wxOutputStream& m_ioStream;
 	int m_Version;
+	// Not implemented
+	ARBiCal(ARBiCal const& rhs);
+	ARBiCal& operator=(ARBiCal const& rhs);
 };
 
 
@@ -295,7 +298,7 @@ void ARBiCal::DoDTSTAMP()
 		struct tm* pTime = localtime(&t);
 #endif
 		char buffer[50];
-		sprintf(buffer, "DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
+		sprintf_s(buffer, "DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
 			pTime->tm_year + 1900,
 			pTime->tm_mon + 1,
 			pTime->tm_mday,
