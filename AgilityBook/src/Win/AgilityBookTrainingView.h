@@ -51,11 +51,7 @@ class CAgilityBookTrainingView : public CAgilityBookBaseExtraView
 {
 	friend class CAgilityBookTrainingViewData;
 	friend class CFindTraining;
-#if wxCHECK_VERSION(2, 9, 4)
 	friend int wxCALLBACK CompareTraining(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
-#else
-	friend int wxCALLBACK CompareTraining(long item1, long item2, long sortData);
-#endif
 	DECLARE_CLASS(CAgilityBookTrainingView)
 	CAgilityBookTrainingView(
 			CTabView* pTabView,
@@ -109,6 +105,7 @@ private:
 
 	class CSortColumn
 	{
+		DECLARE_NO_COPY_IMPLEMENTED(CSortColumn)
 	public:
 		CSortColumn(std::vector<long>& inColumns);
 		void Initialize();

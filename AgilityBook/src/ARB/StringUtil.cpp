@@ -106,7 +106,7 @@ std::string stringA(wxMemoryOutputStream const& inStr)
 	std::string str;
 	if (inStr.IsOk())
 	{
-		size_t len = static_cast<size_t>(inStr.GetLength());
+		size_t len = inStr.GetLength();
 		char* buffer = new char[len+1];
 		inStr.CopyTo(buffer, len);
 		buffer[len] = 0;

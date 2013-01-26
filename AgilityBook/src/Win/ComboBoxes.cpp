@@ -68,9 +68,7 @@ CVenueComboBox::CVenueComboBox(
 		wxCB_DROPDOWN | (bEditable ? 0 : wxCB_READONLY) | wxCB_SORT,
 		validator);
 
-#if wxCHECK_VERSION(2, 9, 4)
 	wxArrayString choices;
-#endif
 	for (ARBConfigVenueList::const_iterator iterVenue = inVenues.begin();
 		iterVenue != inVenues.end();
 		++iterVenue)
@@ -82,17 +80,13 @@ CVenueComboBox::CVenueComboBox(
 		if (useLongName)
 			wxName = StringUtil::stringWX(pVenue->GetLongName());
 		index = Append(wxName);
-#if wxCHECK_VERSION(2, 9, 4)
 		choices.Add(wxName);
-#endif
 		SetClientObject(index, new CVenueComboData(pVenue));
 		if (!inSelectVenue.empty() && wxShortName == inSelectVenue)
 			SetSelection(index);
 	}
-#if wxCHECK_VERSION(2, 9, 4)
 	if (bEditable)
 		AutoComplete(choices);
-#endif
 }
 
 

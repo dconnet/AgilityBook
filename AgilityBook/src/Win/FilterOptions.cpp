@@ -206,7 +206,7 @@ void CFilterOptions::Load()
 	wxString val;
 	std::wstring all(StringUtil::stringW(_("IDS_ALL")));
 
-	m_calView.m_Filter = static_cast<CCalendarViewFilter::eViewFilter>(wxConfig::Get()->Read(CFG_CAL_FILTER, static_cast<long>(CCalendarViewFilter::eViewNormal)));
+	m_calView.m_Filter = static_cast<unsigned short>(wxConfig::Get()->Read(CFG_CAL_FILTER, static_cast<long>(CCalendarViewFilter::eViewNormal)));
 	wxConfig::Get()->Read(CFG_COMMON_VIEWALLDATES, &m_bAllDates, true);
 	wxConfig::Get()->Read(CFG_COMMON_STARTFILTER, &m_bStartDate, false);
 	m_dateStartDate = ARBDate::Today();
@@ -791,7 +791,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 	wxString section = CFG_KEY_FILTER(index);
 
 	filterName = wxConfig::Get()->Read(section + CFG_FILTER_ITEM_NAME, filterName);
-	calView.m_Filter = static_cast<CCalendarViewFilter::eViewFilter>(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_CAL, static_cast<long>(calView.m_Filter)));
+	calView.m_Filter = static_cast<unsigned short>(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_CAL, static_cast<long>(calView.m_Filter)));
 	wxConfig::Get()->Read(section + CFG_FILTER_ITEM_ALLDATES, &bAllDates, bAllDates);
 	wxConfig::Get()->Read(section + CFG_FILTER_ITEM_START, &bStartDate, bStartDate);
 	dateStartDate.SetJulianDay(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_STARTJDAY, dateStartDate.GetJulianDay()));

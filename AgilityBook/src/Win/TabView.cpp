@@ -130,6 +130,7 @@ void CTabView::OnOrient(int id)
 
 class CIgnore
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CIgnore);
 public:
 	CIgnore(bool& ignore) : m_Ignore(ignore) { m_Ignore = true; }
 	~CIgnore()								{ reset(); }

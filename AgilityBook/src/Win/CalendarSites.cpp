@@ -185,7 +185,7 @@ CProgressMeter::CProgressMeter(int nEntries, wxWindow* pParent)
 	: m_nEntries(nEntries)
 	, m_pProgress(NULL)
 {
-	int nBars = 1;
+	short nBars = 1;
 	if (1 < m_nEntries)
 		nBars = 2;
 	m_pProgress = IDlgProgress::CreateProgress(nBars, pParent);

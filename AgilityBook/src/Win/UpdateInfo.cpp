@@ -109,9 +109,13 @@
 #include <wx/filename.h>
 #include <wx/filesys.h>
 #include <wx/stdpaths.h>
-#include <wx/stdstream.h>
 #include <wx/wfstream.h>
+
+#pragma warning(push)
+#pragma warning(disable : 4244 4355 4512)
+#include <wx/stdstream.h>
 #include <wx/zipstrm.h>
+#pragma warning(pop)
 
 #ifdef _DEBUG
 #define USE_LOCAL

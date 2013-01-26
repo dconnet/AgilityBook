@@ -52,11 +52,7 @@ private:
 
 class CAgilityBookCalendarListView : public CAgilityBookBaseExtraView
 {
-#if wxCHECK_VERSION(2, 9, 4)
 	friend int wxCALLBACK CompareCalendar(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
-#else
-	friend int wxCALLBACK CompareCalendar(long item1, long item2, long sortData);
-#endif
 	friend class CAgilityBookCalendarListViewData;
 	friend class CFindCalendar;
 	DECLARE_CLASS(CAgilityBookCalendarListView)
@@ -127,6 +123,7 @@ private:
 
 	class CSortColumn
 	{
+		DECLARE_NO_COPY_IMPLEMENTED(CSortColumn)
 	public:
 		CSortColumn(std::vector<long>& inColumns);
 		void Initialize();

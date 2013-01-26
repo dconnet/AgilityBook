@@ -58,7 +58,11 @@
 #include <wx/config.h>
 #include <wx/mstream.h>
 #include <wx/settings.h>
+
+#pragma warning(push)
+#pragma warning(disable : 4512)
 #include <wx/stdstream.h>
+#pragma warning(pop)
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -320,16 +324,12 @@ static struct
 	int nCol;
 } s_SortInfo;
 
-#if wxCHECK_VERSION(2, 9, 4)
 int wxCALLBACK CompareCalendar(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
-#else
-int wxCALLBACK CompareCalendar(long item1, long item2, long sortData)
-#endif
 {
 	if (0 == s_SortInfo.nCol)
 		return 0;
-	CAgilityBookCalendarListViewDataPtr pItem1 = s_SortInfo.pThis->GetItemCalDataByData(item1);
-	CAgilityBookCalendarListViewDataPtr pItem2 = s_SortInfo.pThis->GetItemCalDataByData(item2);
+	CAgilityBookCalendarListViewDataPtr pItem1 = s_SortInfo.pThis->GetItemCalDataByData(static_cast<long>(item1));
+	CAgilityBookCalendarListViewDataPtr pItem2 = s_SortInfo.pThis->GetItemCalDataByData(static_cast<long>(item2));
 	int nRet = 0;
 	int iCol = abs(s_SortInfo.nCol);
 	switch (s_SortInfo.pThis->m_Columns[iCol-1])

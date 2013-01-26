@@ -20,11 +20,16 @@
 #include "ARBMsgDigest.h"
 #include "StringUtil.h"
 #include "../Win/Globals.h"
+
 #include <wx/filedlg.h>
-#include <wx/stdstream.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>
 #include <wx/wfstream.h>
+
+#pragma warning(push)
+#pragma warning(disable : 4512)
+#include <wx/stdstream.h>
+#pragma warning(pop)
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

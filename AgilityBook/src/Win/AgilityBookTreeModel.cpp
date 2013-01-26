@@ -63,7 +63,7 @@ void CAgilityBookTreeModel::UpdateColumns()
 
 	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUNS, m_Columns[2]))
 	{
-		for (size_t iCol = 0; iCol < m_Columns[2].size(); ++iCol)
+		for (unsigned int iCol = 0; iCol < static_cast<unsigned int>(m_Columns[2].size()); ++iCol)
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[2][iCol]);
 			//int fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[2][iCol]);
@@ -352,7 +352,7 @@ int CAgilityBookTreeModel::Compare(
 	// items must be different
 	wxUIntPtr id1 = wxPtrToUInt(item1.GetID());
 	wxUIntPtr id2 = wxPtrToUInt(item2.GetID());
-	return ascending ? id1 - id2 : id2 - id1;
+	return ascending ? static_cast<int>(id1 - id2) : static_cast<int>(id2 - id1);
 }
 
 
@@ -438,7 +438,7 @@ unsigned int CAgilityBookTreeModel::GetChildren(
 		{
 			array.Add(wxDataViewItem(*i));
 		}
-		return m_roots.size();
+		return static_cast<unsigned int>(m_roots.size());
 	}
 
 	return node->GetChildren(array);

@@ -107,6 +107,7 @@ bool g_bMicroTest = false;
 
 class CLanguageManager
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CLanguageManager)
 public:
 	CLanguageManager(CLocalization& localization)
 		: m_Localization(localization)

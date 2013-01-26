@@ -31,11 +31,7 @@ typedef std::tr1::shared_ptr<CDlgConfigureDataPlacement> CDlgConfigureDataPlacem
 
 class CDlgConfigEventMethod : public wxDialog
 {
-#if wxCHECK_VERSION(2, 9, 4)
 	friend int wxCALLBACK ComparePlacement(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
-#else
-	friend int wxCALLBACK ComparePlacement(long item1, long item2, long sortData);
-#endif
 public:
 	CDlgConfigEventMethod(
 			ARBConfigVenuePtr pVenue,

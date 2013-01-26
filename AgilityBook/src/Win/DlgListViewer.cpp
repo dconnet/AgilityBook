@@ -1038,14 +1038,10 @@ static struct
 } s_SortInfo;
 
 
-#if wxCHECK_VERSION(2, 9, 4)
 int wxCALLBACK CompareRows(wxIntPtr item1, wxIntPtr item2, wxIntPtr item3)
-#else
-int wxCALLBACK CompareRows(long item1, long item2, long item3)
-#endif
 {
-	CDlgListViewerDataPtr pRow1 = s_SortInfo.pThis->GetDataByData(item1);
-	CDlgListViewerDataPtr pRow2 = s_SortInfo.pThis->GetDataByData(item2);
+	CDlgListViewerDataPtr pRow1 = s_SortInfo.pThis->GetDataByData(static_cast<long>(item1));
+	CDlgListViewerDataPtr pRow2 = s_SortInfo.pThis->GetDataByData(static_cast<long>(item2));
 	if (!pRow1 || !pRow2)
 		return 0;
 	int iCol = abs(s_SortInfo.nCol);

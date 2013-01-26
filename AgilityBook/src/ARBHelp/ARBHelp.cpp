@@ -52,11 +52,7 @@ bool CARBHelpApp::OnInit()
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
-#if wxCHECK_VERSION(2, 9, 4)
 		{wxCMD_LINE_SWITCH, "decode", NULL, "Decode ARBHelp data from clipboard"},
-#else
-		{wxCMD_LINE_SWITCH, L"decode", NULL, L"Decode ARBHelp data from clipboard"},
-#endif
 		{wxCMD_LINE_NONE}
 	};
 	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);

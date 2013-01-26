@@ -27,9 +27,13 @@
 #include "StringUtil.h"
 #include <wx/cshelp.h>
 #include <wx/dir.h>
-#include <wx/html/helpctrl.h>
 #include <wx/stdpaths.h>
 #include <vector>
+
+#pragma warning(push)
+#pragma warning(disable : 4244 4355)
+#include <wx/html/helpctrl.h>
+#pragma warning(pop)
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -119,11 +123,7 @@ bool CLanguageManager::SetLang(int langId)
 		delete m_locale;
 	m_locale = new wxLocale();
 	m_locale->AddCatalogLookupPathPrefix(StringUtil::stringWX(m_dirLang));
-#if wxCHECK_VERSION(2, 9, 4)
 	if (!m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT))
-#else
-	if (!m_locale->Init(m_CurLang, wxLOCALE_CONV_ENCODING))
-#endif
 	{
 		//return false;
 	}

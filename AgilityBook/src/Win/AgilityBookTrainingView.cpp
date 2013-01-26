@@ -190,16 +190,12 @@ static struct
 } s_SortInfo;
 
 
-#if wxCHECK_VERSION(2, 9, 4)
 int wxCALLBACK CompareTraining(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
-#else
-int wxCALLBACK CompareTraining(long item1, long item2, long sortData)
-#endif
 {
 	if (0 == s_SortInfo.nCol)
 		return 0;
-	CListDataPtr pRawItem1 = s_SortInfo.pThis->m_Ctrl->GetDataByData(item1);
-	CListDataPtr pRawItem2 = s_SortInfo.pThis->m_Ctrl->GetDataByData(item2);
+	CListDataPtr pRawItem1 = s_SortInfo.pThis->m_Ctrl->GetDataByData(static_cast<long>(item1));
+	CListDataPtr pRawItem2 = s_SortInfo.pThis->m_Ctrl->GetDataByData(static_cast<long>(item2));
 	CAgilityBookTrainingViewDataPtr pItem1 = std::tr1::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem1);
 	CAgilityBookTrainingViewDataPtr pItem2 = std::tr1::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem2);
 	int nRet = 0;

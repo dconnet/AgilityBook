@@ -37,6 +37,11 @@
 #define PRAGMA_TODO(x) message( FILE_LINE "TODO: " #x )
 #define PRAGMA_FIXME(x) message( FILE_LINE "FIXME: " #x )
 
+#define DECLARE_NO_COPY_IMPLEMENTED(cls) \
+	private: \
+		cls(cls const&); \
+		cls& operator=(cls const&);
+
 
 #if defined(_WIN32)
 
@@ -164,6 +169,7 @@
 
 #else // NO_WXWIDGETS
 
+#pragma warning(push)
 // Pre-compiled header setup
 #include <wx/wxprec.h>
 #ifdef __BORLANDC__
@@ -180,6 +186,8 @@
 // ARBv3 was developed against v2.9.4+ - anything earlier is not supported.
 // It makes use of features not available in earlier versions.
 #include <wx/version.h>
+#pragma warning(pop)
+
 #if !wxCHECK_VERSION(2, 9, 4)
 #error Unsupported wxWidget version
 #endif
@@ -275,7 +283,6 @@ namespace std
 
 // ARB_HAS_SECURE_SPRINTF
 //  sprintf_s(char*, size_t, const char*, ...)
-//  swprintf_s(wchar_t*, size_t, const char*, ...)
 #if _MSC_VER >= 1400
 #define ARB_HAS_SECURE_SPRINTF
 #endif
