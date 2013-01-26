@@ -31,12 +31,24 @@
 #include "ImageManager.h"
 #include "MainFrm.h"
 #include "RegItems.h"
-#include <wx/choicebk.h>
 #include <wx/config.h>
+
+#if wxCHECK_VERSION(2, 9, 4)
+#include <wx/choicebk.h>
 #include <wx/listbook.h>
 #include <wx/notebook.h>
 #include <wx/toolbook.h>
 #include <wx/treebook.h>
+#else
+#pragma warning(push)
+#pragma warning(disable : 4244)
+#include <wx/choicebk.h>
+#include <wx/listbook.h>
+#include <wx/notebook.h>
+#include <wx/toolbook.h>
+#include <wx/treebook.h>
+#pragma warning(pop)
+#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -130,6 +142,7 @@ void CTabView::OnOrient(int id)
 
 class CIgnore
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CIgnore);
 public:
 	CIgnore(bool& ignore) : m_Ignore(ignore) { m_Ignore = true; }
 	~CIgnore()								{ reset(); }

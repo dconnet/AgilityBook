@@ -133,7 +133,7 @@ bool BinaryData::EncodeFile(
 
 #if defined(__WXWINDOWS__)
 	wxFFile file;
-	if (!file.Open(inFileName, L"rb"))
+	if (!file.Open(inFileName.c_str(), L"rb"))
 		return false;
 
 	size_t nData = 0;

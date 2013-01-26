@@ -77,6 +77,7 @@ private:
 // Also affects DlgMessageBox.*
 class CDetails : public IMessageBoxCallback
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDetails)
 public:
 	CDetails(
 			CAgilityBookDoc* inDoc,

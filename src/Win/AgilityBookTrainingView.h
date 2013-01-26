@@ -109,6 +109,7 @@ private:
 
 	class CSortColumn
 	{
+		DECLARE_NO_COPY_IMPLEMENTED(CSortColumn)
 	public:
 		CSortColumn(std::vector<long>& inColumns);
 		void Initialize();

@@ -82,6 +82,7 @@ class CClipboardDataWriter;
  */
 class CClipboardDataTable
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CClipboardDataTable)
 public:
 	CClipboardDataTable(std::wstring& ioText, std::wstring& ioHtml);
 	void Reset();

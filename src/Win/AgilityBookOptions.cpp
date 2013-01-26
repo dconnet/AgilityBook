@@ -964,10 +964,10 @@ void CAgilityBookOptions::GetPrinterMargins(
 	{
 		// Convert to logical
 		wxSize szPPI = pDC->GetPPI();
-		outLeft = pDC->DeviceToLogicalXRel(outLeft / 100.0 * szPPI.x);
-		outRight = pDC->DeviceToLogicalXRel(outRight / 100.0 * szPPI.x);
-		outTop = pDC->DeviceToLogicalYRel(outTop / 100.0 * szPPI.y);
-		outBottom = pDC->DeviceToLogicalYRel(outBottom / 100.0 * szPPI.y);
+		outLeft = pDC->DeviceToLogicalXRel(static_cast<wxCoord>(outLeft / 100.0 * szPPI.x));
+		outRight = pDC->DeviceToLogicalXRel(static_cast<wxCoord>(outRight / 100.0 * szPPI.x));
+		outTop = pDC->DeviceToLogicalYRel(static_cast<wxCoord>(outTop / 100.0 * szPPI.y));
+		outBottom = pDC->DeviceToLogicalYRel(static_cast<wxCoord>(outBottom / 100.0 * szPPI.y));
 	}
 }
 
@@ -1014,8 +1014,8 @@ void CAgilityBookOptions::GetRunPageSize(
 	{
 		// Convert to logical
 		wxSize szPPI = pDC->GetPPI();
-		outWidth = pDC->DeviceToLogicalXRel(outWidth / 100.0 * szPPI.x);
-		outHeight = pDC->DeviceToLogicalXRel(outHeight / 100.0 * szPPI.x);
+		outWidth = pDC->DeviceToLogicalXRel(static_cast<wxCoord>(outWidth / 100.0 * szPPI.x));
+		outHeight = pDC->DeviceToLogicalXRel(static_cast<wxCoord>(outHeight / 100.0 * szPPI.x));
 	}
 }
 

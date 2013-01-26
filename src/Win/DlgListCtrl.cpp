@@ -248,6 +248,7 @@ void CDlgListCtrlDataFaults::Apply()
 
 class CDlgListCtrlDataOtherPoints : public CDlgListCtrlData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgListCtrlDataOtherPoints)
 public:
 	CDlgListCtrlDataOtherPoints(
 			CReportListCtrl* list,

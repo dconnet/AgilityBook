@@ -51,8 +51,17 @@
 #include "Globals.h"
 #include "ListCtrl.h"
 #include "Wizard.h"
+
+#if wxCHECK_VERSION(2, 9, 4)
 #include <wx/spinctrl.h>
 #include <wx/textfile.h>
+#else
+#pragma warning(push)
+#pragma warning(disable : 4244)
+#include <wx/spinctrl.h>
+#include <wx/textfile.h>
+#pragma warning(pop)
+#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

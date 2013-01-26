@@ -287,8 +287,8 @@ int wxCALLBACK CompareRefRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 int wxCALLBACK CompareRefRuns(long item1, long item2, long sortData)
 #endif
 {
-	CDlgDogRefRunDataPtr pData1 = s_SortInfo.pThis->GetReferenceDataByData(item1);
-	CDlgDogRefRunDataPtr pData2 = s_SortInfo.pThis->GetReferenceDataByData(item2);
+	CDlgDogRefRunDataPtr pData1 = s_SortInfo.pThis->GetReferenceDataByData(static_cast<long>(item1));
+	CDlgDogRefRunDataPtr pData2 = s_SortInfo.pThis->GetReferenceDataByData(static_cast<long>(item2));
 	ARBDogReferenceRunPtr pTitle1 = pData1->GetData();
 	ARBDogReferenceRunPtr pTitle2 = pData2->GetData();
 	int rc = 0;

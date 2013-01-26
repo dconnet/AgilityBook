@@ -33,7 +33,6 @@
 #include "Globals.h"
 #include "ListCtrl.h"
 #include "PointsData.h"
-#include <wx/print.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -516,6 +515,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, in
 		{
 			switch (run->GetScoring().GetType())
 			{
+			default:
+				break;
 			case ARBDogRunScoring::eTypeByOpenClose:
 				if (0 < run->GetScoring().GetNeedOpenPts())
 					text << run->GetScoring().GetNeedOpenPts();
@@ -566,6 +567,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, in
 		{
 			switch (run->GetScoring().GetType())
 			{
+			default:
+				break;
 			case ARBDogRunScoring::eTypeByOpenClose:
 				if (0 < run->GetScoring().GetOpenPts())
 					text << run->GetScoring().GetOpenPts();
@@ -786,9 +789,9 @@ enum RingBinder
 };
 
 
-static void PrintMark(wxDC* pDC, int x, int y, double m_OneInch)
+static void PrintMark(wxDC* pDC, wxCoord x, wxCoord y, double oneInch)
 {
-	int halfLine = m_OneInch / 10;
+	wxCoord halfLine = static_cast<wxCoord>(oneInch / 10);
 	pDC->DrawLine(x - halfLine, y - halfLine, x + halfLine, y + halfLine);
 	pDC->DrawLine(x + halfLine, y - halfLine, x - halfLine, y + halfLine);
 }
@@ -803,29 +806,29 @@ static void PrintBinderMarkings(
 		wxDC* pDC,
 		wxRect rPrinted,
 		int margin,
-		double m_OneInch)
+		double oneInch)
 {
 	pDC->SetPen(*wxGREY_PEN);
-	int x = rPrinted.x - margin + .375 * m_OneInch;
-	int y = rPrinted.y + rPrinted.height / 2; // centered
+	wxCoord x = static_cast<wxCoord>(rPrinted.x - margin + 0.375 * oneInch);
+	wxCoord y = rPrinted.y + rPrinted.height / 2; // centered
 	switch (style)
 	{
 	default:
 	case eSmall3Ring:
-		PrintMark(pDC, x, y, m_OneInch);
-		PrintMark(pDC, x, y - 2.75 * m_OneInch, m_OneInch);
-		PrintMark(pDC, x, y + 2.75 * m_OneInch, m_OneInch);
+		PrintMark(pDC, x, y, oneInch);
+		PrintMark(pDC, x, static_cast<wxCoord>(y - 2.75 * oneInch), oneInch);
+		PrintMark(pDC, x, static_cast<wxCoord>(y + 2.75 * oneInch), oneInch);
 		break;
 	case eLarge3Ring:
-		PrintMark(pDC, x, y, m_OneInch);
-		PrintMark(pDC, x, y - 4.25 * m_OneInch, m_OneInch);
-		PrintMark(pDC, x, y + 4.25 * m_OneInch, m_OneInch);
+		PrintMark(pDC, x, y, oneInch);
+		PrintMark(pDC, x, static_cast<wxCoord>(y - 4.25 * oneInch), oneInch);
+		PrintMark(pDC, x, static_cast<wxCoord>(y + 4.25 * oneInch), oneInch);
 		break;
 	case eLarge4Ring:
-		PrintMark(pDC, x, y - 3.5 * m_OneInch, m_OneInch); // 1 3/8 + 2 1/8
-		PrintMark(pDC, x, y - 2.125 * m_OneInch, m_OneInch);
-		PrintMark(pDC, x, y + 2.125 * m_OneInch, m_OneInch);
-		PrintMark(pDC, x, y + 3.5 * m_OneInch, m_OneInch);
+		PrintMark(pDC, x, static_cast<wxCoord>(y - 3.5 * oneInch), oneInch); // 1 3/8 + 2 1/8
+		PrintMark(pDC, x, static_cast<wxCoord>(y - 2.125 * oneInch), oneInch);
+		PrintMark(pDC, x, static_cast<wxCoord>(y + 2.125 * oneInch), oneInch);
+		PrintMark(pDC, x, static_cast<wxCoord>(y + 3.5 * oneInch), oneInch);
 		break;
 	}
 	pDC->SetPen(wxNullPen);

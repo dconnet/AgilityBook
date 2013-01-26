@@ -27,9 +27,13 @@
 #include "StringUtil.h"
 #include <wx/cshelp.h>
 #include <wx/dir.h>
-#include <wx/html/helpctrl.h>
 #include <wx/stdpaths.h>
 #include <vector>
+
+#pragma warning(push)
+#pragma warning(disable : 4244 4355)
+#include <wx/html/helpctrl.h>
+#pragma warning(pop)
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

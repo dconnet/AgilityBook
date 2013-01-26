@@ -35,7 +35,7 @@ private:
 	ARBConfigOtherPointsPtr m_pOther;
 	wxString m_Name;
 	wxComboBox* m_ctrlTally;
-	short m_Default;
+	double m_Default;
 	wxString m_Desc;
 
 	DECLARE_ON_INIT()
