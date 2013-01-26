@@ -55,6 +55,16 @@
 namespace StringUtil
 {
 
+std::wstring GetTranslation(wchar_t const* const inId)
+{
+#if defined(__WXWINDOWS__)
+	return stringW(wxGetTranslation(inId));
+#else
+#pragma PRAGMA_TODO(nonWx i18n)
+	return std::wstring(inId);
+#endif
+}
+
 #if defined(__WXWINDOWS__)
 
 wxString stringWX(wchar_t const* const inStr, size_t inLen)

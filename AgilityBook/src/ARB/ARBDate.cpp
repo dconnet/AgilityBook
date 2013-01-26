@@ -32,8 +32,10 @@
 #include <time.h>
 
 #include "StringUtil.h"
+#if defined(__WXWINDOWS__)
 #include <wx/datetime.h>
 #include <wx/intl.h>
+#endif
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -209,6 +211,7 @@ ARBDate ARBDate::FromString(
 	ARBDate date;
 	if (eLocale == inFormat || eCurrentLocale == inFormat)
 	{
+#if defined(__WXWINDOWS__)
 		wxLocale* locale = NULL;
 		if (eLocale == inFormat)
 			locale = new wxLocale(wxLANGUAGE_DEFAULT, 0);
@@ -216,6 +219,10 @@ ARBDate ARBDate::FromString(
 		if (dt.ParseDate(inDate.c_str()))
 			date.SetDate(dt.GetYear(), static_cast<int>(dt.GetMonth())+1, dt.GetDay());
 		delete locale;
+#else
+#pragma PRAGMA_TODO(parse date using locale)
+		assert(0);
+#endif
 	}
 	else if (0 < inDate.length())
 	{
@@ -388,15 +395,25 @@ std::wstring ARBDate::GetString(
 	{
 	case eLocale:
 		{
+#if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_DEFAULT, 0);
 			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
 			date = dt.FormatDate();
+#else
+#pragma PRAGMA_TODO(format date using locale)
+			assert(0);
+#endif
 		}
 		break;
 	case eCurrentLocale:
 		{
+#if defined(__WXWINDOWS__)
 			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
 			date = dt.FormatDate();
+#else
+#pragma PRAGMA_TODO(format date using locale)
+			assert(0);
+#endif
 		}
 		break;
 	case eDashMMDDYYYY:		///< MM-DD-YYYY
@@ -427,8 +444,13 @@ std::wstring ARBDate::GetString(
 		break;
 	case eVerbose:
 		{
+#if defined(__WXWINDOWS__)
 			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
 			date = StringUtil::stringW(dt.Format(L"%A, %B %d, %Y"));
+#else
+#pragma PRAGMA_TODO(convert wxDateTime usage)
+			assert(0);
+#endif
 		}
 		break;
 	default:				///< YYYY-MM-DD or MM/DD/YYYY

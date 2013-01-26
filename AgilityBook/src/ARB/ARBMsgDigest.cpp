@@ -25,7 +25,9 @@
 
 #include "StringUtil.h"
 #include <sstream>
-#include <wx/file.h> 
+#if defined(__WXWINDOWS__)
+#include <wx/file.h>
+#endif
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -154,7 +156,7 @@ static void MD5_memset(
 static void MD5_memcpy(
 		POINTER output,
 		POINTER input,
-		unsigned int len)
+		std::streamsize len)
 {
 	memcpy(output, input, len);
 	//for (unsigned int i = 0; i < len; ++i)
@@ -320,7 +322,7 @@ static void MD5Init(MD5_CTX* context)
 static void MD5Update(
 		MD5_CTX *context,           /* context */
 		unsigned char const* input, /* input block */
-		unsigned int inputLen)      /* length of input block */
+		std::streamsize inputLen)   /* length of input block */
 {
 	unsigned int i, index, partLen;
 

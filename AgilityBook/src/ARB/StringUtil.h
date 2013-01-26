@@ -31,6 +31,8 @@ class wxMemoryOutputStream;
  */
 namespace StringUtil
 {
+	std::wstring GetTranslation(wchar_t const* const inId);
+
 #if defined(__WXWINDOWS__)
 	// Some explicit conversion between wxString and std.
 	// In general, we want to always work in std (based on discussion on list)

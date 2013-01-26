@@ -155,6 +155,14 @@
 
 #endif // _WIN32
 
+#ifdef NO_WXWIDGETS
+
+#ifdef _WIN32
+#include <windows.h>
+#include <time.h>
+#endif
+
+#else // NO_WXWIDGETS
 
 // Pre-compiled header setup
 #include <wx/wxprec.h>
@@ -210,6 +218,8 @@
 		#error _UNICODE must be defined when using wxUSE_UNICODE
 	#endif
 #endif
+
+#endif // NO_WXWIDGETS
 
 // VC9/VC10 defines _HAS_TR1 if tr1 is present (via yvals.h).
 #include <memory>
@@ -297,6 +307,7 @@ namespace std
 #include <string>
 #include <vector>
 
+#ifndef NO_WXWIDGETS
 #include <wx/choicebk.h>
 #include <wx/clipbrd.h>
 #include <wx/colour.h>
@@ -315,15 +326,18 @@ namespace std
 #include <wx/treectrl.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>
+#endif // NO_WXWIDGETS
 #endif
 
 // For _() usage when used indirectly.
 // poedit is configured to also look for these.
-#if wxUSE_UNICODE
+#if wxUSE_UNICODE || defined(UNICODE) || defined(_UNICODE)
 #define arbT(x)	L##x
 #else
 #define arbT(x)	x
 #endif
+
+#ifndef NO_WXWIDGETS
 
 /*
  * Bind is only available on wx2.9+.
@@ -399,3 +413,5 @@ namespace std
 				pText->SelectAll(); \
 		} \
 	}
+
+#endif // #ifndef NO_WXWIDGETS

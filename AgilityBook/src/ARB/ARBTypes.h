@@ -312,6 +312,10 @@ public:
 
 protected:
 	std::wostringstream& m_ErrMsg;
+private:
+	// Not implemented
+	ARBErrorCallback(ARBErrorCallback const& rhs);
+	ARBErrorCallback& operator=(ARBErrorCallback const& rhs);
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -20,7 +20,6 @@
  */
 
 #include "ARBTypes.h"
-class wxFFile;
 
 
 class BinaryData
@@ -55,8 +54,8 @@ public:
 			unsigned char const* inBinData,
 			size_t inBytes,
 			std::wstring& outBase64);
-	static bool Encode(
-			wxFFile& inData,
+	static bool EncodeFile(
+			std::wstring const& inFileName,
 			std::wstring& outBase64);
 
 	static bool DecodeString(
