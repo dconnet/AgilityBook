@@ -48,11 +48,6 @@ INCLUDES = -DWXWIDGETS
 # prog1_LDFLAGS = -L/path/to/extralib
 
 ##########
-# Precompiled headers
-##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h 
-
-##########
 # Stuff to install
 ##########
 #INSTALL_BIN = arb

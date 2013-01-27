@@ -46,3 +46,11 @@ namespace std
 #endif
 
 #include <assert.h>
+
+// For _() usage when used indirectly.
+// poedit is configured to also look for these.
+#if defined(UNICODE) || defined(_UNICODE)
+#define arbT(x)	L##x
+#else
+#define arbT(x)	x
+#endif
