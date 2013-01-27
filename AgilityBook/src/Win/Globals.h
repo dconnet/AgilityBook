@@ -22,16 +22,6 @@
  */
 
 #include "ARBTypes.h"
-
-#if wxCHECK_VERSION(2, 9, 4)
-#include <wx/treectrl.h>
-#else
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#include <wx/treectrl.h>
-#pragma warning(pop)
-#endif
-
 class CListCtrl;
 class wxDateTime;
 class wxFileName;

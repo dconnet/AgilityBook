@@ -209,7 +209,7 @@
     <ClCompile Include="..\..\Win\ReadHttp.cpp" />
     <ClCompile Include="..\..\Win\RichEditCtrl2.cpp" />
     <ClCompile Include="..\..\Win\SpreadSheet.cpp" />
-    <ClCompile Include="..\..\stdafx.cpp">
+    <ClCompile Include="..\..\Win\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -226,6 +226,14 @@
     <ClCompile Include="..\..\Win\WizardStart.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\Include\ICalendarSite.h" />
+    <ClInclude Include="..\..\Include\IProgressMeter.h" />
+    <ClInclude Include="..\..\Include\VersionNumber.h" />
     <ClInclude Include="..\..\Win\AgilityBook.h" />
     <ClInclude Include="..\..\Win\AgilityBookCalendarListView.h" />
     <ClInclude Include="..\..\Win\AgilityBookCalendarView.h" />
@@ -315,7 +323,7 @@
     <ClInclude Include="..\..\Win\RegItems.h" />
     <ClInclude Include="..\..\Win\RichEditCtrl2.h" />
     <ClInclude Include="..\..\Win\SpreadSheet.h" />
-    <ClInclude Include="..\..\stdafx.h" />
+    <ClInclude Include="..\..\Win\stdafx.h" />
     <ClInclude Include="..\..\Win\TabView.h" />
     <ClInclude Include="..\..\Win\UpdateInfo.h" />
     <ClInclude Include="..\..\Win\Validators.h" />

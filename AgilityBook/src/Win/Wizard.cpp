@@ -30,11 +30,7 @@
 #endif
 
 
-#ifdef ARB_HAS_PRAGMAPUSHPOP
-#pragma warning( push )
-// Disable "warning C4355: 'this' : used in base member initializer list"
-#pragma warning( disable : 4355 )
-#endif
+#include "Platform/arbWarningPush.h"
 CWizard::CWizard(
 		CAgilityBookDoc* pDoc,
 		std::vector<ARBCalendarPtr>* pCalEntries,
@@ -73,9 +69,7 @@ CWizard::CWizard(
 	RunWizard(m_pageStart);
 	Destroy();
 }
-#ifdef ARB_HAS_PRAGMAPUSHPOP
-#pragma warning( pop )
-#endif
+#include "Platform/arbWarningPop.h"
 
 
 wxWizardPage* CWizard::GetImportPage() const

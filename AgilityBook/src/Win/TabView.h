@@ -20,24 +20,6 @@
 #include "CommonView.h"
 #include <wx/docview.h>
 #include <wx/imaglist.h>
-
-#if wxCHECK_VERSION(2, 9, 4)
-#include <wx/choicebk.h>
-#include <wx/listbook.h>
-#include <wx/notebook.h>
-#include <wx/toolbook.h>
-#include <wx/treebook.h>
-#else
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#include <wx/choicebk.h>
-#include <wx/listbook.h>
-#include <wx/notebook.h>
-#include <wx/toolbook.h>
-#include <wx/treebook.h>
-#pragma warning(pop)
-#endif
-
 class CMainFrame;
 
 #define IDX_PANE_RUNS		0

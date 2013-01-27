@@ -21,16 +21,6 @@
 #include "ARBConfig.h"
 #include "ARBTypes.h"
 #include "IconList.h"
-
-#if wxCHECK_VERSION(2, 9, 4)
-#include <wx/treectrl.h>
-#else
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#include <wx/treectrl.h>
-#pragma warning(pop)
-#endif
-
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
 class CDlgConfigureDataBase;

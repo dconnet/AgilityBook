@@ -88,7 +88,7 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/src/TestARB/stdafx.h
 
 ##########
 # Stuff to install

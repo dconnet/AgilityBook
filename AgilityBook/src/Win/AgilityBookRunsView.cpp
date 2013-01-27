@@ -1244,10 +1244,7 @@ BEGIN_EVENT_TABLE(CAgilityBookRunsView, CAgilityBookBaseExtraView)
 END_EVENT_TABLE()
 
 
-#ifdef ARB_HAS_PRAGMAPUSHPOP
-#pragma warning (push)
-#pragma warning (disable : 4355)
-#endif
+#include "Platform/arbWarningPush.h"
 CAgilityBookRunsView::CAgilityBookRunsView(
 		CTabView* pTabView,
 		wxDocument* doc)
@@ -1261,9 +1258,7 @@ CAgilityBookRunsView::CAgilityBookRunsView(
 	, m_SortColumn(m_Columns)
 {
 }
-#ifdef ARB_HAS_PRAGMAPUSHPOP
-#pragma warning (pop)
-#endif
+#include "Platform/arbWarningPop.h"
 
 
 CAgilityBookRunsView::~CAgilityBookRunsView()
