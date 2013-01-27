@@ -158,7 +158,7 @@ static void MD5_memcpy(
 		POINTER input,
 		std::streamsize len)
 {
-	memcpy(output, input, len);
+	memcpy(output, input, static_cast<size_t>(len));
 	//for (unsigned int i = 0; i < len; ++i)
 	//	output[i] = input[i];
 }
@@ -432,7 +432,7 @@ std::wstring ARBMsgDigest::ComputeFile(
 	while (0 < (bytes = file.Read(buffer, sizeof(buffer))))
 	{
 		if (outSize)
-			*outSize += bytes;
+			*outSize += static_cast<size_t>(bytes);
 		MD5Update(&context, buffer, bytes);
 	}
 	unsigned char digest[16];
