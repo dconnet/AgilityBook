@@ -154,7 +154,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\TestARB\ConfigHandler.cpp" />
     <ClCompile Include="..\..\TestARB\Local.cpp" />
-    <ClCompile Include="..\..\stdafx.cpp">
+    <ClCompile Include="..\..\TestARB\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -207,9 +207,17 @@
     <ClCompile Include="..\..\TestARB\TestVersion.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\Include\ICalendarSite.h" />
+    <ClInclude Include="..\..\Include\IProgressMeter.h" />
+    <ClInclude Include="..\..\Include\VersionNumber.h" />
     <ClInclude Include="..\..\TestARB\ConfigHandler.h" />
     <ClInclude Include="..\..\TestARB\Local.h" />
-    <ClInclude Include="..\..\stdafx.h" />
+    <ClInclude Include="..\..\TestARB\stdafx.h" />
     <ClInclude Include="..\..\TestARB\TestARB.h" />
   </ItemGroup>
   <ItemGroup>

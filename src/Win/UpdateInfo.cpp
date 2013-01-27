@@ -111,25 +111,12 @@
 #include <wx/stdpaths.h>
 #include <wx/wfstream.h>
 
-#pragma warning(push)
-#pragma warning(disable : 4244 4355 4512)
-#include <wx/zipstrm.h>
-#pragma warning(pop)
-
 #ifdef _DEBUG
 #define USE_LOCAL
 #endif
 
 #ifdef USE_LOCAL
 #include <wx/stdpaths.h>
-#if wxCHECK_VERSION(2, 9, 4)
-#include <wx/textfile.h>
-#else
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#include <wx/textfile.h>
-#pragma warning(pop)
-#endif
 #endif
 
 #ifdef __WXMSW__

@@ -50,7 +50,7 @@ PROGRAMS = @PACKAGE_HLP_SHORTNAME@
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/src/ARBHelp/stdafx.h
 
 ##########
 # Stuff to install

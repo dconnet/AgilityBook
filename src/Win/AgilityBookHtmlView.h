@@ -19,12 +19,6 @@
 
 #include "CommonView.h"
 #include <wx/docview.h>
-
-#pragma warning(push)
-#pragma warning(disable : 4244 4355)
-#include <wx/html/htmlwin.h>
-#pragma warning(pop)
-
 class CPointsDataItems;
 
 

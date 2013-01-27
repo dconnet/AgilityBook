@@ -249,10 +249,7 @@ BEGIN_EVENT_TABLE(CAgilityBookTreeView, CAgilityBookBaseExtraView)
 END_EVENT_TABLE()
 
 
-#ifdef ARB_HAS_PRAGMAPUSHPOP
-#pragma warning (push)
-#pragma warning (disable : 4355)
-#endif
+#include "Platform/arbWarningPush.h"
 CAgilityBookTreeView::CAgilityBookTreeView(
 		CTabView* pTabView,
 		wxDocument* doc)
@@ -285,9 +282,7 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
 }
-#ifdef ARB_HAS_PRAGMAPUSHPOP
-#pragma warning (pop)
-#endif
+#include "Platform/arbWarningPop.h"
 
 
 CAgilityBookTreeView::~CAgilityBookTreeView()

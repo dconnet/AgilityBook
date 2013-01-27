@@ -146,7 +146,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/src/Win/stdafx.h
 
 ##########
 # Stuff to install

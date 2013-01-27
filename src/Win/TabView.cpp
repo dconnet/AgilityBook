@@ -33,23 +33,6 @@
 #include "RegItems.h"
 #include <wx/config.h>
 
-#if wxCHECK_VERSION(2, 9, 4)
-#include <wx/choicebk.h>
-#include <wx/listbook.h>
-#include <wx/notebook.h>
-#include <wx/toolbook.h>
-#include <wx/treebook.h>
-#else
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#include <wx/choicebk.h>
-#include <wx/listbook.h>
-#include <wx/notebook.h>
-#include <wx/toolbook.h>
-#include <wx/treebook.h>
-#pragma warning(pop)
-#endif
-
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
