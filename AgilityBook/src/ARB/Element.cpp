@@ -104,7 +104,7 @@ public:
 		if (m_stream.good())
 		{
 			m_stream.read((char*)buffer, size);
-			count = m_stream.gcount();
+			count = static_cast<size_t>(m_stream.gcount());
 
 			if (m_stream.eof())
 			{
