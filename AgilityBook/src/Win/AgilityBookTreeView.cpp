@@ -370,10 +370,7 @@ const CAgilityBookTreeModel* CAgilityBookTreeCtrl::GetStore() const
 IMPLEMENT_CLASS(CAgilityBookTreeView, CAgilityBookBaseExtraView)
 
 
-#ifdef ARB_HAS_PRAGMAPUSHPOP
-#pragma warning (push)
-#pragma warning (disable : 4355)
-#endif
+#include "Platform/arbWarningPush.h"
 CAgilityBookTreeView::CAgilityBookTreeView(
 		CTabView* pTabView,
 		wxDocument* doc)
@@ -383,9 +380,7 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	, m_bSuppressPrompt(false)
 {
 }
-#ifdef ARB_HAS_PRAGMAPUSHPOP
-#pragma warning (pop)
-#endif
+#include "Platform/arbWarningPop.h"
 
 
 CAgilityBookTreeView::~CAgilityBookTreeView()

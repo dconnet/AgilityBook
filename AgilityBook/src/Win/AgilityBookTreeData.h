@@ -25,12 +25,6 @@
 #include "ARBDogTrial.h"
 #include "ListData.h"
 #include <vector>
-
-#pragma warning(push)
-#pragma warning(disable : 4244 4267 4355)
-#include <wx/dataview.h>
-#pragma warning(pop)
-
 class CAgilityBookTreeView;
 class CAgilityBookTreeDataDog;
 class CAgilityBookTreeDataTrial;

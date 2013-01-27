@@ -51,8 +51,6 @@
 #include "Globals.h"
 #include "ListCtrl.h"
 #include "Wizard.h"
-#include <wx/spinctrl.h>
-#include <wx/textfile.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

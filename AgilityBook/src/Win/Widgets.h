@@ -23,7 +23,6 @@
  */
 
 #include <wx/listctrl.h>
-#include <wx/treectrl.h>
 
 
 class CListCtrl : public wxListView

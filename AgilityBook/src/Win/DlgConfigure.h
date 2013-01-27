@@ -21,8 +21,6 @@
 #include "ARBConfig.h"
 #include "ARBTypes.h"
 #include "IconList.h"
-#include <wx/treectrl.h>
-
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
 class CDlgConfigureDataBase;

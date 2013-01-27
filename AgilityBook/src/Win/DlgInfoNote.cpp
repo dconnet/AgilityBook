@@ -48,7 +48,6 @@
 #include "StringUtil.h"
 #include "Widgets.h"
 #include <algorithm>
-#include <wx/bmpcbox.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

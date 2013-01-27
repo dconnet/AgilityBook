@@ -2,12 +2,6 @@
 
 #include "AgilityBookMenu.h"
 #include "ARBBase.h"
-
-#pragma warning(push)
-#pragma warning(disable : 4244 4267 4355)
-#include <wx/dataview.h>
-#pragma warning(pop)
-
 class CAgilityBookDoc;
 class CAgilityBookTreeData;
 

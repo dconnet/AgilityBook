@@ -13,6 +13,12 @@
       <UniqueIdentifier>{4656557a-acb0-43c0-80e9-476762c00f8a}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{e4e91246-72c2-4952-bc54-cb1aa82653f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Platform">
+      <UniqueIdentifier>{8481adbe-eb4b-41f9-991c-e7889ff459ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ARB\ARBAgilityRecordBook.cpp">
@@ -147,7 +153,7 @@
     <ClCompile Include="..\..\ARB\VersionNum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\stdafx.cpp">
+    <ClCompile Include="..\..\ARB\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ARB\ARBCalcPoints.cpp">
@@ -290,10 +296,7 @@
     <ClInclude Include="..\..\ARB\StringUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ARB\VersionNum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\stdafx.h">
+    <ClInclude Include="..\..\ARB\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ARB\ARBCalcPoints.h">
@@ -301,6 +304,33 @@
     </ClInclude>
     <ClInclude Include="..\..\ARB\ARB_Q.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\VersionNum.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ICalendarSite.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\IProgressMeter.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\VersionNumber.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

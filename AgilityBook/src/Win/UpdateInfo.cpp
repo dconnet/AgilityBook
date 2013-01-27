@@ -111,19 +111,12 @@
 #include <wx/stdpaths.h>
 #include <wx/wfstream.h>
 
-#pragma warning(push)
-#pragma warning(disable : 4244 4355 4512)
-#include <wx/stdstream.h>
-#include <wx/zipstrm.h>
-#pragma warning(pop)
-
 #ifdef _DEBUG
 #define USE_LOCAL
 #endif
 
 #ifdef USE_LOCAL
 #include <wx/stdpaths.h>
-#include <wx/textfile.h>
 #endif
 
 #ifdef __WXMSW__

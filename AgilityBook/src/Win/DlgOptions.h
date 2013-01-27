@@ -18,7 +18,6 @@
  * @li 2005-08-18 DRC Separated options and filters into two dialogs.
  */
 
-#include <wx/notebook.h>
 class CAgilityBookDoc;
 class CDlgOptionsCalendar;
 class CDlgOptionsFilter;

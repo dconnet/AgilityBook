@@ -22,8 +22,6 @@
  */
 
 #include "ARBTypes.h"
-#include <wx/treectrl.h>
-
 class CListCtrl;
 class wxDateTime;
 class wxFileName;

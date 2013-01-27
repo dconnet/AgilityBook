@@ -8,7 +8,7 @@
 ################################################################################
 AC_INIT(Agility Record Book, 3.0.0.84, [help@agilityrecordbook.com])
 
-AC_CONFIG_SRCDIR(src/stdafx.cpp)
+AC_CONFIG_SRCDIR(src/Win/stdafx.cpp)
 
 AC_SUBST(PACKAGE_ARB_SHORTNAME, "AgilityBook")
 AC_SUBST(PACKAGE_HLP_SHORTNAME, "ARBHelp")

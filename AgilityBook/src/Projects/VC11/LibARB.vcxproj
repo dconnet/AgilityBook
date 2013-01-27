@@ -137,7 +137,7 @@
     <ClCompile Include="..\..\ARB\Element.cpp" />
     <ClCompile Include="..\..\ARB\StringUtil.cpp" />
     <ClCompile Include="..\..\ARB\VersionNum.cpp" />
-    <ClCompile Include="..\..\stdafx.cpp">
+    <ClCompile Include="..\..\ARB\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -192,7 +192,15 @@
     <ClInclude Include="..\..\ARB\Element.h" />
     <ClInclude Include="..\..\ARB\StringUtil.h" />
     <ClInclude Include="..\..\ARB\VersionNum.h" />
-    <ClInclude Include="..\..\stdafx.h" />
+    <ClInclude Include="..\..\ARB\stdafx.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\Include\ICalendarSite.h" />
+    <ClInclude Include="..\..\Include\IProgressMeter.h" />
+    <ClInclude Include="..\..\Include\VersionNumber.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -48,11 +48,6 @@
 #include <wx/config.h>
 #include <wx/wfstream.h>
 
-#pragma warning(push)
-#pragma warning(disable : 4512)
-#include <wx/stdstream.h>
-#pragma warning(pop)
-
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif

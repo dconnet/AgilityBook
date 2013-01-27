@@ -21,7 +21,6 @@
 
 #include <wx/string.h>
 #include <wx/listctrl.h>
-#include <wx/treectrl.h>
 
 
 class CListData

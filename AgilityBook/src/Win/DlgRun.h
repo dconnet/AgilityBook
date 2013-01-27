@@ -46,7 +46,6 @@
 #include "ARBTypes.h"
 #include "ColumnOrder.h"
 #include <wx/listctrl.h>
-#include <wx/notebook.h>
 class CAgilityBookDoc;
 class CAutoFillComboBox;
 class CDlgDogDivData;

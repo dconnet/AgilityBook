@@ -97,7 +97,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\ARBUpdater\ARBUpdater.cpp" />
     <ClCompile Include="..\..\ARBUpdater\DlgDigest.cpp" />
-    <ClCompile Include="..\..\stdafx.cpp">
+    <ClCompile Include="..\..\ARBUpdater\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -112,9 +112,17 @@
     <ResourceCompile Include="..\..\ARBUpdater\ARBUpdater.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\Include\ICalendarSite.h" />
+    <ClInclude Include="..\..\Include\IProgressMeter.h" />
+    <ClInclude Include="..\..\Include\VersionNumber.h" />
     <ClInclude Include="..\..\Win\Globals.h" />
     <ClInclude Include="..\..\ARBUpdater\DlgDigest.h" />
-    <ClInclude Include="..\..\stdafx.h" />
+    <ClInclude Include="..\..\ARBUpdater\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="LibARB.vcxproj">

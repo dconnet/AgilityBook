@@ -21,7 +21,6 @@
  */
 
 #include "FilterOptions.h"
-#include <wx/treectrl.h>
 class CAgilityBookDoc;
 class CAutoFillComboBox;
 class CCheckTreeCtrl;

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		E10673BA161895C500AAD75B /* AgilityBookTreeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10673B8161895C500AAD75B /* AgilityBookTreeModel.cpp */; };
 		E1144F5F1082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
-		E158FC341001371B00735E7F /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */; };
 		E158FC351001371B00735E7F /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
 		E158FC361001371B00735E7F /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */; };
 		E158FC371001371B00735E7F /* AgilityBookCalendarView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A310000B1200B7074A /* AgilityBookCalendarView.cpp */; };
@@ -144,6 +143,8 @@
 		E158FCB91001371B00735E7F /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B410000B3100B7074A /* Element.cpp */; };
 		E158FCBA1001371B00735E7F /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B710000B3100B7074A /* VersionNum.cpp */; };
 		E158FCBC1001371B00735E7F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+		E17F8D9616B5B480003C0BF2 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E17F8D9416B5B480003C0BF2 /* stdafx.cpp */; };
+		E17F8D9716B5B480003C0BF2 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E17F8D9416B5B480003C0BF2 /* stdafx.cpp */; };
 		E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
 		E1BAA4651610271300157293 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BAA4631610271300157293 /* ARB_Q.cpp */; };
 		E1BAA4681610274B00157293 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BAA4671610274B00157293 /* MenuHelper.cpp */; };
@@ -436,6 +437,8 @@
 		E15599F910000CEC00B7074A /* arb_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arb_Prefix.pch; sourceTree = "<group>"; };
 		E158FCC01001371B00735E7F /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1674C24160FED3600E6B2B3 /* ValidatorsQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidatorsQ.h; sourceTree = "<group>"; };
+		E17F8D9416B5B480003C0BF2 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../Win/stdafx.cpp; sourceTree = SOURCE_ROOT; };
+		E17F8D9516B5B480003C0BF2 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../Win/stdafx.h; sourceTree = SOURCE_ROOT; };
 		E1AE409B12873800003BFF9F /* BreakLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BreakLine.cpp; sourceTree = "<group>"; };
 		E1AE409C12873800003BFF9F /* BreakLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakLine.h; sourceTree = "<group>"; };
 		E1BAA4631610271300157293 /* ARB_Q.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARB_Q.cpp; sourceTree = "<group>"; };
@@ -497,8 +500,8 @@
 				E155996210000B3100B7074A /* ARB */,
 				E155979C10000B1200B7074A /* Win */,
 				E15599F910000CEC00B7074A /* arb_Prefix.pch */,
-				E1BF78EE0FFFE144009B81A7 /* stdafx.h */,
-				E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */,
+				E17F8D9416B5B480003C0BF2 /* stdafx.cpp */,
+				E17F8D9516B5B480003C0BF2 /* stdafx.h */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -891,7 +894,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E158FC341001371B00735E7F /* stdafx.cpp in Sources */,
 				E158FC351001371B00735E7F /* AgilityBook.cpp in Sources */,
 				E158FC361001371B00735E7F /* AgilityBookCalendarListView.cpp in Sources */,
 				E158FC371001371B00735E7F /* AgilityBookCalendarView.cpp in Sources */,

@@ -33,10 +33,6 @@
 #include "RegItems.h"
 #include <wx/choicebk.h>
 #include <wx/config.h>
-#include <wx/listbook.h>
-#include <wx/notebook.h>
-#include <wx/toolbook.h>
-#include <wx/treebook.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

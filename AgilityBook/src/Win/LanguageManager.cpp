@@ -30,11 +30,6 @@
 #include <wx/stdpaths.h>
 #include <vector>
 
-#pragma warning(push)
-#pragma warning(disable : 4244 4355)
-#include <wx/html/helpctrl.h>
-#pragma warning(pop)
-
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif

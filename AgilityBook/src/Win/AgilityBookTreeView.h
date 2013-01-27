@@ -34,12 +34,6 @@
 #include "IconList.h"
 #include <vector>
 #include <wx/docview.h>
-
-#pragma warning(push)
-#pragma warning(disable : 4244 4267 4355)
-#include <wx/dataview.h>
-#pragma warning(pop)
-
 class CAgilityBookTreeCtrl;
 class CAgilityBookTreeData;
 class CAgilityBookTreeView;
