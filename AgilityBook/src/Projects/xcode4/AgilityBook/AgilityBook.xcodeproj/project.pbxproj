@@ -108,6 +108,7 @@
 		E19B659B166C09B9004DEDA4 /* WizardStart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64EC166C09B9004DEDA4 /* WizardStart.cpp */; };
 		E19B65CB166C0E01004DEDA4 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E19B65CA166C0E01004DEDA4 /* AgilityBook.icns */; };
 		E19B65D9166C115F004DEDA4 /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B65D8166C115F004DEDA4 /* libARB.a */; };
+		E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -318,10 +319,15 @@
 		E19B659D166C09C4004DEDA4 /* ICalendarSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICalendarSite.h; sourceTree = "<group>"; };
 		E19B659E166C09C4004DEDA4 /* IProgressMeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IProgressMeter.h; sourceTree = "<group>"; };
 		E19B65A0166C09C4004DEDA4 /* VersionNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNumber.h; sourceTree = "<group>"; };
-		E19B65C6166C0C36004DEDA4 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../../../stdafx.cpp; sourceTree = "<group>"; };
-		E19B65C7166C0C36004DEDA4 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../../stdafx.h; sourceTree = "<group>"; };
 		E19B65CA166C0E01004DEDA4 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AgilityBook.icns; sourceTree = "<group>"; };
 		E19B65D8166C115F004DEDA4 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
+		E1CAE57016B5BF6E00B33FE5 /* arbWarningPop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPop.h; sourceTree = "<group>"; };
+		E1CAE57116B5BF6E00B33FE5 /* arbWarningPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPush.h; sourceTree = "<group>"; };
+		E1CAE57216B5BF6E00B33FE5 /* SetupARBPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPost.h; sourceTree = "<group>"; };
+		E1CAE57316B5BF6E00B33FE5 /* SetupARBPre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPre.h; sourceTree = "<group>"; };
+		E1CAE57516B5BF6E00B33FE5 /* SetupWX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupWX.h; sourceTree = "<group>"; };
+		E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
+		E1CAE57716B5BF8700B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,8 +385,6 @@
 			children = (
 				E19B659C166C09C4004DEDA4 /* Include */,
 				E19B63DC166C09B9004DEDA4 /* Win */,
-				E19B65C6166C0C36004DEDA4 /* stdafx.cpp */,
-				E19B65C7166C0C36004DEDA4 /* stdafx.h */,
 				E19B63C6166C096E004DEDA4 /* Supporting Files */,
 			);
 			name = Source;
@@ -400,6 +404,8 @@
 		E19B63DC166C09B9004DEDA4 /* Win */ = {
 			isa = PBXGroup;
 			children = (
+				E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */,
+				E1CAE57716B5BF8700B33FE5 /* stdafx.h */,
 				E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */,
 				E19B63DE166C09B9004DEDA4 /* AgilityBook.h */,
 				E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */,
@@ -605,12 +611,25 @@
 		E19B659C166C09C4004DEDA4 /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				E1CAE56F16B5BF6E00B33FE5 /* Platform */,
 				E19B659D166C09C4004DEDA4 /* ICalendarSite.h */,
 				E19B659E166C09C4004DEDA4 /* IProgressMeter.h */,
 				E19B65A0166C09C4004DEDA4 /* VersionNumber.h */,
 			);
 			name = Include;
 			path = ../../../../Include;
+			sourceTree = "<group>";
+		};
+		E1CAE56F16B5BF6E00B33FE5 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				E1CAE57016B5BF6E00B33FE5 /* arbWarningPop.h */,
+				E1CAE57116B5BF6E00B33FE5 /* arbWarningPush.h */,
+				E1CAE57216B5BF6E00B33FE5 /* SetupARBPost.h */,
+				E1CAE57316B5BF6E00B33FE5 /* SetupARBPre.h */,
+				E1CAE57516B5BF6E00B33FE5 /* SetupWX.h */,
+			);
+			path = Platform;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -791,6 +810,7 @@
 				E19B659A166C09B9004DEDA4 /* WizardImport.cpp in Sources */,
 				E19B659B166C09B9004DEDA4 /* WizardStart.cpp in Sources */,
 				E1105D38169017DF0067091C /* ImageManager.cpp in Sources */,
+				E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,10 +841,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../ARB",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
-					"-I$SRCROOT/../../../ARB",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
 					"-D__WXOSX__",
@@ -887,10 +908,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../ARB",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
-					"-I$SRCROOT/../../../ARB",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
 					"-D__WXMAC__",

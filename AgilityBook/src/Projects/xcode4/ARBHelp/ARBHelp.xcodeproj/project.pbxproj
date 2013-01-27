@@ -17,6 +17,7 @@
 		E19B664C166C17C3004DEDA4 /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B664B166C17C3004DEDA4 /* libARB.a */; };
 		E19B6650166C18B3004DEDA4 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B664E166C18B3004DEDA4 /* Widgets.cpp */; };
 		E19B6653166C1928004DEDA4 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E19B6652166C1928004DEDA4 /* AgilityBook.icns */; };
+		E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,11 +40,12 @@
 		E19B662B166C166F004DEDA4 /* DlgPageEncodeFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFiles.h; sourceTree = "<group>"; };
 		E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPageEncodeFinish.cpp; sourceTree = "<group>"; };
 		E19B662D166C166F004DEDA4 /* DlgPageEncodeFinish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFinish.h; sourceTree = "<group>"; };
-		E19B663E166C167F004DEDA4 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../../stdafx.h; sourceTree = "<group>"; };
 		E19B664B166C17C3004DEDA4 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
 		E19B664E166C18B3004DEDA4 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Widgets.cpp; path = ../../../../Win/Widgets.cpp; sourceTree = "<group>"; };
 		E19B664F166C18B3004DEDA4 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Widgets.h; path = ../../../../Win/Widgets.h; sourceTree = "<group>"; };
 		E19B6652166C1928004DEDA4 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../AgilityBook/AgilityBook/AgilityBook.icns; sourceTree = "<group>"; };
+		E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
+		E1CAE57B16B5BFA200B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +122,6 @@
 			children = (
 				E19B6620166C166F004DEDA4 /* ARBHelp */,
 				E19B664D166C17F3004DEDA4 /* Win */,
-				E19B663E166C167F004DEDA4 /* stdafx.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -128,6 +129,8 @@
 		E19B6620166C166F004DEDA4 /* ARBHelp */ = {
 			isa = PBXGroup;
 			children = (
+				E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */,
+				E1CAE57B16B5BFA200B33FE5 /* stdafx.h */,
 				E19B6621166C166F004DEDA4 /* ARBHelp.cpp */,
 				E19B6622166C166F004DEDA4 /* ARBHelp.h */,
 				E19B6624166C166F004DEDA4 /* DlgARBHelp.cpp */,
@@ -224,6 +227,7 @@
 				E19B6638166C166F004DEDA4 /* DlgPageEncodeFiles.cpp in Sources */,
 				E19B6639166C166F004DEDA4 /* DlgPageEncodeFinish.cpp in Sources */,
 				E19B6650166C18B3004DEDA4 /* Widgets.cpp in Sources */,
+				E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,10 +258,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../ARB",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
-					"-I$SRCROOT/../../../ARB",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
 					"-D__WXOSX__",
@@ -320,10 +325,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../ARB",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
-					"-I$SRCROOT/../../../ARB",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
 					"-D__WXMAC__",
