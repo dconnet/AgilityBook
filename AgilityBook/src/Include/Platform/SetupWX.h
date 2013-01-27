@@ -49,6 +49,7 @@
 #endif
 
 // Include most wx headers needed here. Include any that cause warnings.
+#ifndef WX_MINIMAL_HEADERS
 #include <wx/bmpcbox.h>
 #include <wx/choicebk.h>
 #include <wx/clipbrd.h>
@@ -75,6 +76,7 @@
 #include <wx/valgen.h>
 #include <wx/valtext.h>
 #include <wx/zipstrm.h>
+#endif
 
 // ARBv3 was developed against v2.9.4+ - anything earlier is not supported.
 // It makes use of features not available in earlier versions.
