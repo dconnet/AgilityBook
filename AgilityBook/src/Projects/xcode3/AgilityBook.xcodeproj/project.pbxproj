@@ -583,6 +583,11 @@
 		E1674C24160FED3600E6B2B3 /* ValidatorsQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidatorsQ.h; sourceTree = "<group>"; };
 		E17F8D9416B5B480003C0BF2 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../Win/stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		E17F8D9516B5B480003C0BF2 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../Win/stdafx.h; sourceTree = SOURCE_ROOT; };
+		E17F8DA216B5B7CE003C0BF2 /* arbWarningPop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPop.h; sourceTree = "<group>"; };
+		E17F8DA316B5B7CE003C0BF2 /* arbWarningPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPush.h; sourceTree = "<group>"; };
+		E17F8DA416B5B7CE003C0BF2 /* SetupARBPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPost.h; sourceTree = "<group>"; };
+		E17F8DA516B5B7CE003C0BF2 /* SetupARBPre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPre.h; sourceTree = "<group>"; };
+		E17F8DA616B5B7CE003C0BF2 /* SetupWX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupWX.h; sourceTree = "<group>"; };
 		E1AE409B12873800003BFF9F /* BreakLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BreakLine.cpp; sourceTree = "<group>"; };
 		E1AE409C12873800003BFF9F /* BreakLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakLine.h; sourceTree = "<group>"; };
 		E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuHelper.cpp; sourceTree = "<group>"; };
@@ -978,6 +983,7 @@
 		E15599E410000B4700B7074A /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				E17F8DA116B5B7CE003C0BF2 /* Platform */,
 				E15599E510000B4700B7074A /* ICalendarSite.h */,
 				E15599E610000B4700B7074A /* IProgressMeter.h */,
 				E15599E810000B4700B7074A /* VersionNumber.h */,
@@ -985,6 +991,18 @@
 			name = Include;
 			path = ../../Include;
 			sourceTree = SOURCE_ROOT;
+		};
+		E17F8DA116B5B7CE003C0BF2 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				E17F8DA216B5B7CE003C0BF2 /* arbWarningPop.h */,
+				E17F8DA316B5B7CE003C0BF2 /* arbWarningPush.h */,
+				E17F8DA416B5B7CE003C0BF2 /* SetupARBPost.h */,
+				E17F8DA516B5B7CE003C0BF2 /* SetupARBPre.h */,
+				E17F8DA616B5B7CE003C0BF2 /* SetupWX.h */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -1412,6 +1430,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = (
+					"-I",
+					../../Include,
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/wxWidgets-2.8.12/build-carbon-debug/lib/wx/include/mac-unicode-debug-static-2.8",
 					"-I$WXBASE/wxWidgets-2.8.12/include",
@@ -1486,6 +1506,8 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
+					"-I",
+					../../Include,
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/wxWidgets-2.8.12/build-carbon/lib/wx/include/mac-unicode-release-static-2.8",
 					"-I$WXBASE/wxWidgets-2.8.12/include",
@@ -1566,6 +1588,8 @@
 				INFOPLIST_FILE = Info.plist;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
+					"-I",
+					../../Include,
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-carbon-debug/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
@@ -1642,6 +1666,8 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
+					"-I",
+					../../Include,
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-carbon/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
