@@ -280,6 +280,10 @@
 		E158FCBA1001371B00735E7F /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B710000B3100B7074A /* VersionNum.cpp */; };
 		E1674C1D160FEB0700E6B2B3 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1674C1B160FEB0700E6B2B3 /* ARB_Q.cpp */; };
 		E1674C25160FED3600E6B2B3 /* ValidatorsQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1674C23160FED3600E6B2B3 /* ValidatorsQ.cpp */; };
+		E171DC1D16B5C7B600BE9417 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */; };
+		E171DC1E16B5C7BC00BE9417 /* ValidatorsQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1674C23160FED3600E6B2B3 /* ValidatorsQ.cpp */; };
+		E171DC1F16B5C7CA00BE9417 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1674C1B160FEB0700E6B2B3 /* ARB_Q.cpp */; };
+		E171DC2116B5C8B900BE9417 /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CBD731169018A50003AD15 /* ImageManager.cpp */; };
 		E17F8D9616B5B480003C0BF2 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E17F8D9416B5B480003C0BF2 /* stdafx.cpp */; };
 		E17F8D9716B5B480003C0BF2 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E17F8D9416B5B480003C0BF2 /* stdafx.cpp */; };
 		E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
@@ -1378,6 +1382,10 @@
 				E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */,
 				E1D5510413E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */,
 				E17F8D9716B5B480003C0BF2 /* stdafx.cpp in Sources */,
+				E171DC1D16B5C7B600BE9417 /* MenuHelper.cpp in Sources */,
+				E171DC1E16B5C7BC00BE9417 /* ValidatorsQ.cpp in Sources */,
+				E171DC1F16B5C7CA00BE9417 /* ARB_Q.cpp in Sources */,
+				E171DC2116B5C8B900BE9417 /* ImageManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
