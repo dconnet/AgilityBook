@@ -184,9 +184,9 @@ Xcode
 The xcode projects were used as follows:
 .../xcode3: Xcode 3.1 on OSX10.5
             AgilityBook.xcodeproj
-                trunk, carbon
+                trunk, carbon, OSX10.5 sdk
             AgilityBookCocoa.xcodeproj
-                trunk, cocoa
+                trunk, cocoa, OSX10.5 sdk
 .../xcode4: Xcode 4.5 on OSX10.8
             AgilityBook.xcworkspace
-                trunk, cocoa
+                trunk, cocoa, OSX10.7 sdk

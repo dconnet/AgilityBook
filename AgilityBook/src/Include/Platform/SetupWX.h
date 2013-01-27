@@ -76,17 +76,12 @@
 #include <wx/valtext.h>
 #include <wx/zipstrm.h>
 
-// ARB was developed against v2.8.10 - anything earlier is not supported.
-// And specifically exclude 2.9.0-2.9.3
-//  (.3 had api changes/fixes)
-//  (.4 changed the lib directory for x64)
+// ARBv3 was developed against v2.9.4+ - anything earlier is not supported.
+// It makes use of features not available in earlier versions.
 #include <wx/version.h>
 #include "Platform/arbWarningPop.h"
 
-#if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER < 4
-#error pre-v2.9.4 not supported
-#endif
-#if !wxCHECK_VERSION(2, 8, 10)
+#if !wxCHECK_VERSION(2, 9, 4)
 #error Unsupported wxWidget version
 #endif
 // Some sanity checking
