@@ -1311,10 +1311,14 @@ bool ElementNode::SaveXML(
 	if (outFile.empty())
 		return bOk;
 #if 1
+#if defined(ARB_HAS_OSTREAM_WCHAR)
+	std::ofstream output(outFile.c_str(), std::ios::out | std::ios::binary);
+#else
 	char const* pFile = NULL;
 	std::string filename = StringUtil::stringA(outFile);
 	pFile = filename.c_str();
 	std::ofstream output(pFile, std::ios::out | std::ios::binary);
+#endif
 	output.exceptions(std::ios_base::badbit);
 	if (output.is_open())
 	{
