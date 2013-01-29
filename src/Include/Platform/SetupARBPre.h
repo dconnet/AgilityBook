@@ -210,3 +210,9 @@
 #ifdef _MSC_VER
 #define ARB_HAS_ISTREAM_WCHAR
 #endif
+
+// ARB_HAS_OSTREAM_WCHAR
+//  Supports ofstream(wchar_t*) (MS does, xcode 4.5 doesn't)
+#ifdef _MSC_VER
+#define ARB_HAS_OSTREAM_WCHAR
+#endif
