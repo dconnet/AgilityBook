@@ -38,6 +38,7 @@ SUITE(TestDate)
 	}
 
 
+#if defined(__WXWINDOWS__)
 	TEST(wxDate)
 	{
 		if (!g_bMicroTest)
@@ -50,6 +51,7 @@ SUITE(TestDate)
 			CHECK_EQUAL(27, wxD.GetDay());
 		}
 	}
+#endif
 
 
 	TEST(Valid)
@@ -117,11 +119,20 @@ SUITE(TestDate)
 		{
 			ARBDate d(1999, 3, 2);
 			{
+#if defined(__WXWINDOWS__)
 				wxLocale locale(wxLANGUAGE_ENGLISH_UK);
+#else
+				CHECK(setlocale(LC_ALL, "english-uk"));
+#pragma PRAGMA_TODO(Write localization)
+#endif
 				CHECK(L"02/03/1999" == d.GetString(ARBDate::eCurrentLocale));
 			}
 			{
+#if defined(__WXWINDOWS__)
 				wxLocale locale(wxLANGUAGE_ENGLISH_US);
+#else
+				CHECK(setlocale(LC_ALL, "english-us"));
+#endif
 #ifdef __WXMAC__
 				CHECK(L"03/02/1999" == d.GetString(ARBDate::eCurrentLocale));
 #else
@@ -199,7 +210,11 @@ SUITE(TestDate)
 		if (!g_bMicroTest)
 		{
 			ARBDate d2(1999, 3, 27);
+#if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_ENGLISH_UK);
+#else
+			CHECK(setlocale(LC_ALL, "english-uk"));
+#endif
 			ARBDate d = ARBDate::FromString(L"27/3/1999", ARBDate::eCurrentLocale);
 			CHECK(d.IsValid());
 			CHECK(d == d2);
@@ -212,7 +227,11 @@ SUITE(TestDate)
 		if (!g_bMicroTest)
 		{
 			ARBDate d2(1999, 3, 27);
+#if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_ENGLISH_US);
+#else
+			CHECK(setlocale(LC_ALL, "english-us"));
+#endif
 			ARBDate d = ARBDate::FromString(L"3/27/1999", ARBDate::eCurrentLocale);
 			CHECK(d.IsValid());
 			CHECK(d == d2);

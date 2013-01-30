@@ -35,7 +35,12 @@ static std::wstring FormNumber(std::wstring const& d1, std::wstring const& dec, 
 
 static void RunDblTests()
 {
+#if defined(__WXWINDOWS__)
 	std::wstring decimalPt = StringUtil::stringW(wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER));
+#else
+#pragma PRAGMA_TODO(Write localization)
+	std::wstring decimalPt = L".";
+#endif
 
 	// ARBDouble always strips 0s unless prec ==2, unless =".00"
 	double p = 3.14159265358979323846;
@@ -68,7 +73,11 @@ SUITE(TestDouble)
 	{
 		if (!g_bMicroTest)
 		{
+#if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_ENGLISH_US);
+#else
+			CHECK(setlocale(LC_ALL, "english-us"));
+#endif
 			RunDblTests();
 		}
 	}
@@ -79,7 +88,11 @@ SUITE(TestDouble)
 		if (!g_bMicroTest)
 		{
 			// Using French since the default decimal separator is a comma.
+#if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_FRENCH);
+#else
+			CHECK(setlocale(LC_ALL, "french"));
+#endif
 			RunDblTests();
 		}
 	}

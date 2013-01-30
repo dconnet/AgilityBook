@@ -69,6 +69,8 @@ IDR_MAINFRAME           ICON                    "..\\Win\\res\\AgilityBook.ico"
 // Generated from the TEXTINCLUDE 3 resource.
 //
 #include "res/TestARB.rc2"
+#if !defined(NO_WXWIDGETS)
 #include "wx/msw/wx.rc"
+#endif
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

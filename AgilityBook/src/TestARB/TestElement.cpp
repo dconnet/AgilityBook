@@ -23,8 +23,10 @@
 #include "ARBStructure.h"
 #include "Element.h"
 #include "StringUtil.h"
+#if defined(__WXWINDOWS__)
 #include <wx/filefn.h>
 #include <wx/mstream.h>
+#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -305,16 +307,20 @@ SUITE(TestElement)
 		{
 			ElementNodePtr tree = LoadXMLData();
 
-			wxString tmpFile(L"data.tmp");
+			std::wstring tmpFile(L"data.tmp");
 			std::stringstream tmp1;
-			CHECK(tree->SaveXML(tmpFile.wx_str()));
+			CHECK(tree->SaveXML(tmpFile));
 			CHECK(tree->SaveXML(tmp1));
 
 			ElementNodePtr tree2(ElementNode::New());
 			std::wostringstream errs;
 			CHECK(tree2->LoadXML(tmpFile.c_str(), errs));
 
+#if defined(__WXWINDOWS__)
 			wxRemoveFile(tmpFile);
+#else
+#pragma PRAGMA_TODO(remove file)
+#endif
 
 			std::stringstream tmp2;
 			CHECK(tree2->SaveXML(tmp2));

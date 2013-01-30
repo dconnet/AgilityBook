@@ -17,6 +17,7 @@
 #include "TestARB.h"
 
 #include "StringUtil.h"
+#include <locale>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -32,8 +33,10 @@ SUITE(TestString)
 			std::string s("narrow");
 			std::wstring s1 = StringUtil::stringW(s);
 			CHECK(L"narrow" == s1);
+#if defined(__WXWINDOWS__)
 			wxString s2 = StringUtil::stringWX(s);
 			CHECK(L"narrow" == s2);
+#endif
 		}
 	}
 
@@ -45,8 +48,10 @@ SUITE(TestString)
 			std::wstring s(L"wide");
 			std::string s1 = StringUtil::stringA(s);
 			CHECK("wide" == s1);
+#if defined(__WXWINDOWS__)
 			wxString s2 = StringUtil::stringWX(s);
 			CHECK(L"wide" == s2);
+#endif
 		}
 	}
 
@@ -137,7 +142,11 @@ SUITE(TestString)
 	{
 		if (!g_bMicroTest)
 		{
+#if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_ENGLISH_US);
+#else
+			CHECK(setlocale(LC_ALL, "english-us"));
+#endif
 			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToDouble(s1);
 			CHECK(a1 == 12.3);
@@ -149,12 +158,15 @@ SUITE(TestString)
 		}
 	}
 
-
 	TEST(AtodFR)
 	{
 		if (!g_bMicroTest)
 		{
+#if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_FRENCH);
+#else
+			CHECK(setlocale(LC_ALL, "french"));
+#endif
 			std::wstring s1(L"12,3");
 			double a1 = StringUtil::ToDouble(s1);
 			CHECK(a1 == 12.3);
@@ -172,7 +184,11 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			// Even in French, I want to have "." separators parse properly.
+#if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_FRENCH);
+#else
+			CHECK(setlocale(LC_ALL, "french"));
+#endif
 			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToDouble(s1);
 			CHECK(a1 == 12.3);
@@ -210,7 +226,11 @@ SUITE(TestString)
 	{
 		if (!g_bMicroTest)
 		{
+#if defined(__WXWINDOWS__)
 			CHECK(L"two one" == wxString::Format(L"%2$s %1$s", L"one", L"two"));
+#else
+#pragma PRAGMA_TODO(Write formatting test)
+#endif
 		}
 	}
 

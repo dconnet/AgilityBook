@@ -26,10 +26,13 @@
 #include "ConfigHandler.h"
 #include "Element.h"
 #include "StringUtil.h"
+#include <iostream>
+#if defined(__WXWINDOWS__)
 #include <wx/app.h>
 #include <wx/filesys.h>
 #include <wx/fs_zip.h>
 #include <wx/stdpaths.h>
+#endif
 #include "TestReporterStdout.h"
 
 #ifdef __WXMSW__
@@ -105,6 +108,7 @@ void CReporterVerbose::ReportTestFinish(UnitTest::TestDetails const& test, float
 
 bool g_bMicroTest = false;
 
+
 class CLanguageManager
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CLanguageManager)
@@ -112,9 +116,14 @@ public:
 	CLanguageManager(CLocalization& localization)
 		: m_Localization(localization)
 		, m_dirLang()
+#if defined(__WXWINDOWS__)
 		, m_CurLang(wxLANGUAGE_DEFAULT)
 		, m_locale(NULL)
+#else
+		, m_CurLang(0)
+#endif
 	{
+#if defined(__WXWINDOWS__)
 #ifdef __WXMAC__
 		// Command line programs on Mac are acting like unix. GetResourcesDir
 		// returns /usr/local/share. And GetExecutablePath is returning nothing.
@@ -122,10 +131,13 @@ public:
 #else
 		m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + L"lang";
 #endif
+#endif
 	}
 	~CLanguageManager()
 	{
+#if defined(__WXWINDOWS__)
 		delete m_locale;
+#endif
 	}
 
 	bool SetLang(int langId);
@@ -133,7 +145,9 @@ public:
 	CLocalization& m_Localization;
 	std::wstring m_dirLang;
 	int m_CurLang;
+#if defined(__WXWINDOWS__)
 	wxLocale* m_locale;
+#endif
 };
 static CLanguageManager* g_LangMgr = NULL;
 
@@ -143,6 +157,7 @@ bool CLanguageManager::SetLang(int langId)
 	if (langId == m_CurLang)
 		return false;
 
+#if defined(__WXWINDOWS__)
 	m_CurLang = langId;
 	if (m_locale)
 		delete m_locale;
@@ -163,8 +178,11 @@ bool CLanguageManager::SetLang(int langId)
 	m_Localization.Load();
 
 	return true;
-}
 
+#else
+	return false;
+#endif
+}
 
 void SetLang(int langId)
 {
@@ -197,12 +215,14 @@ int main(int argc, char** argv)
 		}
 	}
 
+#if defined(__WXWINDOWS__)
 	wxInitializer initializer(argc, argv);
 #if defined(__WXMSW__) && wxCHECK_VERSION(2, 9, 4)
 	// By default, the path directories are tweaked to remove debug/release.
 	// I assume my files are in the same location as the binary.
 	// Now I don't need to tweak the wx source!
 	wxStandardPaths::Get().DontIgnoreAppSubDir();
+#endif
 #endif
 
 	std::wstring errs;
@@ -211,14 +231,18 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
+#if defined(__WXWINDOWS__)
 	wxFileSystem::AddHandler(new wxZipFSHandler);
+#endif
 
 	// Some names are 'funny' since it's cut/paste from ../Win/
 	static CLocalization m_Localization;
 	IARBLocalization::Init(&m_Localization);
 
+#if defined(__WXWINDOWS__)
 	g_LangMgr = new CLanguageManager(m_Localization);
 	SetLang(wxLANGUAGE_ENGLISH_US);
+#endif
 
 	CReporterVerbose reporter(bVerbose);
 	UnitTest::TestRunner runner(reporter);
@@ -238,6 +262,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
+#if defined(__WXWINDOWS__)
 #ifdef __WXMAC__
 	// Command line programs on Mac are acting like unix. GetResourcesDir
 	// returns /usr/local/share. And GetExecutablePath is returning nothing.
@@ -246,13 +271,17 @@ ElementNodePtr LoadXMLData(size_t id)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	std::wstring datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 #endif
+#else
+#pragma PRAGMA_TODO(write LoadXMLData)
+	std::wstring datafile = L"./testarb.dat";
+#endif
 	assert(id < gc_NumConfigs);
 	std::string data;
 	bool bOk = CConfigHandler::LoadWxFile(datafile, gc_Configs[id], data);
 	assert(bOk);
 	if (!bOk || !tree->LoadXML(data.c_str(), data.length(), errMsg))
 	{
-		wxLogError(L"%s", errMsg.str().c_str());
+		std::wcerr << errMsg.str() << std::endl;
 		tree.reset();
 	}
 	return tree;
@@ -368,7 +397,7 @@ ElementNodePtr CreateActionList()
 	bool bParse = actions->LoadXML(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
-		wxLogError(L"%s", errmsg.str().c_str());
+		std::wcerr << errmsg.str() << std::endl;
 	}
 	assert(bParse);
 	return actions;
