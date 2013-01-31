@@ -281,7 +281,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	assert(bOk);
 	if (!bOk || !tree->LoadXML(data.c_str(), data.length(), errMsg))
 	{
-		std::wcerr << errMsg.str() << std::endl;
+		std::wcout << errMsg.str() << std::endl;
 		tree.reset();
 	}
 	return tree;
@@ -397,7 +397,7 @@ ElementNodePtr CreateActionList()
 	bool bParse = actions->LoadXML(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
-		std::wcerr << errmsg.str() << std::endl;
+		std::wcout << errmsg.str() << std::endl;
 	}
 	assert(bParse);
 	return actions;

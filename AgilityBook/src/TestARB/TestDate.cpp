@@ -123,7 +123,6 @@ SUITE(TestDate)
 				wxLocale locale(wxLANGUAGE_ENGLISH_UK);
 #else
 				CHECK(setlocale(LC_ALL, "english-uk"));
-#pragma PRAGMA_TODO(Write localization)
 #endif
 				CHECK(L"02/03/1999" == d.GetString(ARBDate::eCurrentLocale));
 			}
