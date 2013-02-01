@@ -66,12 +66,14 @@
 #include "libxml/xmlIO.h"
 #include "libxml/xmlreader.h"
 #include "libxml/xmlstring.h"
+#include "libxml/xmlversion.h"
 #include "libxml/xmlwriter.h"
 
 #if defined(_WINDLL)
 #pragma comment(lib, "libxml2.lib")
 #else
 #pragma comment(lib, "libxml2_a.lib")
+#pragma message ( "Compiling with libxml2 " LIBXML_DOTTED_VERSION )
 #endif
 
 #else // USE_LIBXML2
