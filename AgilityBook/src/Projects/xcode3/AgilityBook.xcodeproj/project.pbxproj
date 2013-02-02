@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E10673BA161895C500AAD75B /* AgilityBookTreeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10673B8161895C500AAD75B /* AgilityBookTreeModel.cpp */; };
 		E1144F5F1082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
+		E137431216BD93D2006380B5 /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E137430C16BD93D2006380B5 /* LibArchive.cpp */; };
 		E158FC351001371B00735E7F /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
 		E158FC361001371B00735E7F /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */; };
 		E158FC371001371B00735E7F /* AgilityBookCalendarView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A310000B1200B7074A /* AgilityBookCalendarView.cpp */; };
@@ -162,6 +163,8 @@
 		E10673B9161895C500AAD75B /* AgilityBookTreeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeModel.h; sourceTree = "<group>"; };
 		E1144F5C1082880800356F61 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
 		E1144F5D1082880800356F61 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
+		E137430C16BD93D2006380B5 /* LibArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibArchive.cpp; path = ../../LibArchive/LibArchive.cpp; sourceTree = SOURCE_ROOT; };
+		E137430D16BD93D2006380B5 /* LibArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibArchive.h; path = ../../LibArchive/LibArchive.h; sourceTree = SOURCE_ROOT; };
 		E155979E10000B1200B7074A /* AgilityBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBook.cpp; sourceTree = "<group>"; };
 		E155979F10000B1200B7074A /* AgilityBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBook.h; sourceTree = "<group>"; };
 		E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookCalendarListView.cpp; sourceTree = "<group>"; };
@@ -497,6 +500,7 @@
 		20286C2AFDCF999611CA2CEA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E137430B16BD93A9006380B5 /* LibArchive */,
 				E15599E410000B4700B7074A /* Include */,
 				E155996210000B3100B7074A /* ARB */,
 				E155979C10000B1200B7074A /* Win */,
@@ -522,6 +526,15 @@
 				20286C33FDCF999611CA2CEA /* Carbon.framework */,
 			);
 			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		E137430B16BD93A9006380B5 /* LibArchive */ = {
+			isa = PBXGroup;
+			children = (
+				E137430C16BD93D2006380B5 /* LibArchive.cpp */,
+				E137430D16BD93D2006380B5 /* LibArchive.h */,
+			);
+			name = LibArchive;
 			sourceTree = "<group>";
 		};
 		E155979C10000B1200B7074A /* Win */ = {
@@ -1052,6 +1065,7 @@
 				E1BAA46B1610277F00157293 /* ValidatorsQ.cpp in Sources */,
 				E10673BA161895C500AAD75B /* AgilityBookTreeModel.cpp in Sources */,
 				E1CBD74616901A6B0003AD15 /* ImageManager.cpp in Sources */,
+				E137431216BD93D2006380B5 /* LibArchive.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1105,6 +1119,8 @@
 				OTHER_CFLAGS = (
 					"-I",
 					../../Include,
+					"-I",
+					../..,
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-carbon-debug/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
@@ -1182,6 +1198,8 @@
 				OTHER_CFLAGS = (
 					"-I",
 					../../Include,
+					"-I",
+					../..,
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-carbon/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
