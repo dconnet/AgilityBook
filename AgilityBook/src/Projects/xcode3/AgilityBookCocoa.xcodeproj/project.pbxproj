@@ -498,7 +498,6 @@
 		20286C2AFDCF999611CA2CEA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				E137432016BD93F1006380B5 /* LibArchive */,
 				E15599E410000B4700B7074A /* Include */,
 				E155996210000B3100B7074A /* ARB */,
 				E155979C10000B1200B7074A /* Win */,
@@ -524,13 +523,6 @@
 				E19C6A3C166C4B8D00657355 /* Cocoa.framework */,
 			);
 			name = "External Frameworks and Libraries";
-			sourceTree = "<group>";
-		};
-		E137432016BD93F1006380B5 /* LibArchive */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = LibArchive;
 			sourceTree = "<group>";
 		};
 		E155979C10000B1200B7074A /* Win */ = {
