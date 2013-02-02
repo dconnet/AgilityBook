@@ -358,6 +358,3 @@ The xcode projects were used as follows:
                 trunk, carbon, OSX10.5 sdk
             AgilityBookCocoa.xcodeproj
                 trunk, cocoa, OSX10.5 sdk
-.../xcode4: Xcode 4.5 on OSX10.8
-            AgilityBook.xcworkspace
-                trunk, cocoa, OSX10.7 sdk
