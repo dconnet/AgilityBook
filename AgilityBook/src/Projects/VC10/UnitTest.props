@@ -4,6 +4,5 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\UnitTest++\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link />
   </ItemDefinitionGroup>
 </Project>

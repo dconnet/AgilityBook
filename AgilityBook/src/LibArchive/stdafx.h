@@ -21,4 +21,8 @@
  * @li 2013-01-27 DRC Split/moved stdafx.h.
  */
 
+#ifdef NO_WXWIDGETS
+#include "Platform/SetupWinRT.h"
+#else
 #include "Platform/SetupWX.h"
+#endif

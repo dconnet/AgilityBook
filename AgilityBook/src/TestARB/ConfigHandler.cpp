@@ -23,7 +23,7 @@
 
 #include "ARB/Element.h"
 #include "ARB/StringUtil.h"
-#include "LibArchive.h"
+#include "LibArchive/LibArchive.h"
 
 #if defined(__WXWINDOWS__)
 #include <wx/stdpaths.h>

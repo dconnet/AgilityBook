@@ -124,10 +124,10 @@
     <ClInclude Include="..\..\LibArchive\zlib\zlib.h">
       <Filter>Source Files\zlib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LibArchive\LibArchive.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\LibArchive\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibArchive\LibArchive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
