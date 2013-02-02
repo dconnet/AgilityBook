@@ -18,8 +18,8 @@
  * @li 2004-10-06 DRC Removed ARB classes so it could be used to lifetime pts.
  */
 
-#include "ARBTypes.h"
-#include "ARBCalcPoints.h"
+#include "ARB/ARBTypes.h"
+#include "ARB/ARBCalcPoints.h"
 class CTextCtrl;
 
 

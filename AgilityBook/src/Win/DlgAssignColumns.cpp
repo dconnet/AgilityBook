@@ -98,6 +98,7 @@ Training Log:
 #include "ComboBoxes.h"
 #include "ListCtrl.h"
 #include "Validators.h"
+
 #include <wx/listctrl.h>
 
 #ifdef __WXMSW__

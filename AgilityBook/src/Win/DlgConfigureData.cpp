@@ -24,10 +24,6 @@
 #include "stdafx.h"
 #include "DlgConfigureData.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfig.h"
-#include "ARBConfigDivision.h"
-#include "ARBConfigVenue.h"
 #include "DlgConfigEvent.h"
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigOtherPoints.h"
@@ -37,8 +33,13 @@
 #include "DlgName.h"
 #include "DlgReorder.h"
 #include "Globals.h"
-#include "StringUtil.h"
 #include "Widgets.h"
+
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBConfigDivision.h"
+#include "ARB/ARBConfigVenue.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

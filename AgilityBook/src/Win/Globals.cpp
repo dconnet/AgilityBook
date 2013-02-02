@@ -24,8 +24,9 @@
 #include "Globals.h"
 
 #include "ListData.h"
-#include "StringUtil.h"
 #include "Widgets.h"
+
+#include "ARB/StringUtil.h"
 #include <wx/config.h>
 #include <wx/display.h>
 #include <wx/file.h>

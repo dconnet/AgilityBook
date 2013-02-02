@@ -21,7 +21,7 @@
  * @li 2003-12-07 DRC Created
  */
 
-#include "ARBInfo.h"
+#include "ARB/ARBInfo.h"
 #include <set>
 #include <vector>
 class CAgilityBookDoc;

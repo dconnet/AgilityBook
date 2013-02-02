@@ -24,10 +24,11 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "ARBDate.h"
-#include "ARBDog.h"
-#include "StringUtil.h"
 #include "Widgets.h"
+
+#include "ARB/ARBDate.h"
+#include "ARB/ARBDog.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

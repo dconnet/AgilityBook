@@ -19,7 +19,7 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "ARBDate.h"
+#include "ARB/ARBDate.h"
 #include <vector>
 class CAgilityBookDoc;
 class CReportListCtrl;

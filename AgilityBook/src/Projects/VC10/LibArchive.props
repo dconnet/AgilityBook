@@ -4,5 +4,6 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\LibArchive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link />
   </ItemDefinitionGroup>
 </Project>

@@ -22,8 +22,9 @@
 #include "DlgOptionsProgram.h"
 
 #include "AgilityBookOptions.h"
-#include "StringUtil.h"
 #include "Widgets.h"
+
+#include "ARB/StringUtil.h"
 #include <wx/url.h>
 #include <wx/valgen.h>
 

@@ -22,11 +22,12 @@
 #include "DlgConfigOtherPoints.h"
 
 #include "AgilityBook.h"
-#include "ARBConfig.h"
-#include "ARBConfigOtherPoints.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBConfigOtherPoints.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -41,10 +41,11 @@
 #include "AgilityBookOptions.h"
 #include "ConfigHandler.h"
 #include "DlgMessage.h"
-#include "Element.h"
-#include "StringUtil.h"
 #include "Wizard.h"
-#include "VersionNum.h"
+
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
+#include "ARB/VersionNum.h"
 #include <wx/config.h>
 #include <wx/wfstream.h>
 

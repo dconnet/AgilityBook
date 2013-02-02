@@ -5,9 +5,4 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\UnitTest++\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup>
-    <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\UnitTest++\bin\$(PlatformName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-  </ItemDefinitionGroup>
 </Project>

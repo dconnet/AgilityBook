@@ -22,8 +22,9 @@
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
 
-#include "ARBDate.h"
 #include "CommonView.h"
+
+#include "ARB/ARBDate.h"
 #include <wx/docview.h>
 class CAgilityBookCalendar;
 

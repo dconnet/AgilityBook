@@ -42,12 +42,10 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookMenu.h"
 #include "AgilityBookPanels.h"
-#include "ARBCalendar.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgCalendar.h"
 #include "DlgFind.h"
-#include "Element.h"
 #include "FilterOptions.h"
 #include "ImageManager.h"
 #include "ListData.h"
@@ -55,6 +53,9 @@
 #include "Print.h"
 #include "RegItems.h"
 #include "Wizard.h"
+
+#include "ARB/ARBCalendar.h"
+#include "ARB/Element.h"
 #include <wx/config.h>
 #include <wx/mstream.h>
 #include <wx/settings.h>

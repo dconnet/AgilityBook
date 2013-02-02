@@ -18,9 +18,9 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "ARBConfig.h"
-#include "ARBTypes.h"
 #include "IconList.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBTypes.h"
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
 class CDlgConfigureDataBase;

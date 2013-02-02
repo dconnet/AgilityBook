@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibARB", "LibARB.vcxproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibArchive", "LibArchive.vcxproj", "{0B172FDD-7B2E-4D76-A32C-1B2F627CCF1C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest++", "UnitTest++.vcxproj", "{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -79,6 +81,14 @@ Global
 		{0B172FDD-7B2E-4D76-A32C-1B2F627CCF1C}.Release|Win32.Build.0 = Release|Win32
 		{0B172FDD-7B2E-4D76-A32C-1B2F627CCF1C}.Release|x64.ActiveCfg = Release|x64
 		{0B172FDD-7B2E-4D76-A32C-1B2F627CCF1C}.Release|x64.Build.0 = Release|x64
+		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Debug|Win32.Build.0 = Debug|Win32
+		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Debug|x64.ActiveCfg = Debug|x64
+		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Debug|x64.Build.0 = Debug|x64
+		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Release|Win32.ActiveCfg = Release|Win32
+		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Release|Win32.Build.0 = Release|Win32
+		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Release|x64.ActiveCfg = Release|x64
+		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

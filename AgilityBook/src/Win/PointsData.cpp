@@ -34,17 +34,18 @@
 #include "stdafx.h"
 #include "PointsData.h"
 
-#include <algorithm>
-#include <map>
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookPointsView.h"
-#include "ARBDate.h"
-#include "ARBDog.h"
 #include "DlgDog.h"
 #include "DlgListViewer.h"
 #include "DlgTitle.h"
 #include "FilterOptions.h"
+
+#include "ARB/ARBDate.h"
+#include "ARB/ARBDog.h"
+#include <algorithm>
+#include <map>
 #include <wx/utils.h>
 
 #ifdef __WXMSW__

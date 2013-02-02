@@ -26,15 +26,16 @@
 #include "DlgFindLinks.h"
 
 #include "AgilityBook.h"
-#include "ARBDog.h"
-#include "ARBDogRun.h"
-#include "ARBDogTrial.h"
 #include "CheckLink.h"
 #include "ClipBoard.h"
 #include "DlgSelectURL.h"
 #include "ImageManager.h"
 #include "ListCtrl.h"
 #include "ListData.h"
+
+#include "ARB/ARBDog.h"
+#include "ARB/ARBDogRun.h"
+#include "ARB/ARBDogTrial.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

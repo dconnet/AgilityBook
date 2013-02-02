@@ -18,7 +18,7 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "ARBBase.h"
+#include "ARB/ARBBase.h"
 #include <vector>
 class CAgilityBookDoc;
 class CTreeCtrl;

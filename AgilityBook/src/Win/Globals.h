@@ -21,7 +21,7 @@
  * @li 2009-02-14 DRC Moved from AgilityBook.h
  */
 
-#include "ARBTypes.h"
+#include "ARB/ARBTypes.h"
 class CListCtrl;
 class wxDateTime;
 class wxFileName;

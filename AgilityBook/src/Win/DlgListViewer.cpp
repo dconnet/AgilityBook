@@ -32,15 +32,16 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBConfig.h"
-#include "ARBDate.h"
-#include "ARBDog.h"
-#include "ARBDogExistingPoints.h"
-#include "ARBDogRun.h"
-#include "ARBDogTrial.h"
 #include "ClipBoard.h"
 #include "ListCtrl.h"
 #include "FilterOptions.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBDate.h"
+#include "ARB/ARBDog.h"
+#include "ARB/ARBDogExistingPoints.h"
+#include "ARB/ARBDogRun.h"
+#include "ARB/ARBDogTrial.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

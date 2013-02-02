@@ -21,8 +21,8 @@
  * @li 2004-07-29 DRC Created
  */
 
-#include "ARBInfo.h"
 #include "PointsData.h"
+#include "ARB/ARBInfo.h"
 #include <set>
 class ARBDate;
 class CAgilityBookDoc;

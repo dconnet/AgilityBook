@@ -16,8 +16,8 @@
  * @li 2009-04-19 DRC Moved from Globals.h
  */
 
-#include "ARBTypes.h"
 #include "PointsData.h"
+#include "ARB/ARBTypes.h"
 #include <vector>
 #include <wx/html/htmprint.h>
 #include <wx/print.h>

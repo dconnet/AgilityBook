@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AgilityBookMenu.h"
-#include "ARBBase.h"
+#include "ARB/ARBBase.h"
 class CAgilityBookDoc;
 class CAgilityBookTreeData;
 

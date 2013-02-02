@@ -26,9 +26,6 @@
 #include "DlgConfigEventMethod.h"
 
 #include "AgilityBook.h"
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfigEvent.h"
-#include "ARBConfigVenue.h"
 #include "DlgConfigPlaceInfo.h"
 #include "DlgConfigTitlePoints.h"
 #include "DlgConfigure.h"
@@ -37,6 +34,10 @@
 #include "ListCtrl.h"
 #include "ListData.h"
 #include "Validators.h"
+
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfigEvent.h"
+#include "ARB/ARBConfigVenue.h"
 #include <wx/datectrl.h>
 
 #ifdef __WXMSW__

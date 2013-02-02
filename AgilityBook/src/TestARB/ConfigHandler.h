@@ -17,7 +17,7 @@
  * @li 2008-10-31 DRC Created
  */
 
-#include "ARBConfig.h"
+#include <ARB/ARBConfig.h>
 
 
 class CConfigHandler : public IARBConfigHandler

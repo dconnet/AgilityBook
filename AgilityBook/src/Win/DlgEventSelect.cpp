@@ -22,13 +22,14 @@
 #include "DlgEventSelect.h"
 
 #include "AgilityBook.h"
-#include "ARBConfigDivision.h"
-#include "ARBConfigEvent.h"
-#include "ARBConfigLevel.h"
-#include "ARBConfigSubLevel.h"
-#include "ARBConfigVenue.h"
 #include "Globals.h"
-#include "StringUtil.h"
+
+#include "ARB/ARBConfigDivision.h"
+#include "ARB/ARBConfigEvent.h"
+#include "ARB/ARBConfigLevel.h"
+#include "ARB/ARBConfigSubLevel.h"
+#include "ARB/ARBConfigVenue.h"
+#include "ARB/StringUtil.h"
 #include <wx/valgen.h>
 
 #ifdef __WXMSW__

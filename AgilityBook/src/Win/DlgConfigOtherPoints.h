@@ -17,7 +17,7 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "ARBTypes.h"
+#include "ARB/ARBTypes.h"
 
 
 class CDlgConfigOtherPoints : public wxDialog

@@ -17,7 +17,7 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "BinaryData.h"
+#include "ARB/BinaryData.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

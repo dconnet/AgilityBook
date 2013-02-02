@@ -17,10 +17,10 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARBInfo.h"
-#include "ARBInfoItem.h"
-#include "ARBStructure.h"
-#include "Element.h"
+#include "ARB/ARBInfo.h"
+#include "ARB/ARBInfoItem.h"
+#include "ARB/ARBStructure.h"
+#include "ARB/Element.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -42,9 +42,9 @@
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  */
 
-#include "ARBDate.h"
-#include "ARBTypes.h"
 #include "ColumnOrder.h"
+#include "ARB/ARBDate.h"
+#include "ARB/ARBTypes.h"
 #include <wx/listctrl.h>
 class CAgilityBookDoc;
 class CAutoFillComboBox;

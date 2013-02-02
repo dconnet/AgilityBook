@@ -20,8 +20,8 @@
  * @li 2004-08-03 DRC Created
  */
 
-#include "ARBTypes.h"
-#include "VersionNum.h"
+#include "ARB/ARBTypes.h"
+#include "ARB/VersionNum.h"
 #include <map>
 #include <vector>
 class CAgilityBookDoc;

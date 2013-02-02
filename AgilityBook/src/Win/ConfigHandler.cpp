@@ -21,9 +21,10 @@
 #include "stdafx.h"
 #include "ConfigHandler.h"
 
-#include "Element.h"
 #include "LibArchive.h"
-#include "StringUtil.h"
+
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
 #include <wx/stdpaths.h>
 
 #ifdef __WXMSW__

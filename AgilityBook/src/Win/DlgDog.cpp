@@ -52,8 +52,6 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBConfig.h"
-#include "ARBDog.h"
 #include "DlgExistingPoints.h"
 #include "DlgRegNum.h"
 #include "DlgTitle.h"
@@ -61,9 +59,12 @@
 #include "ImageManager.h"
 #include "ListCtrl.h"
 #include "ListData.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include <wx/datectrl.h>
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBDog.h"
+#include "ARB/StringUtil.h"
 #include <wx/dateevt.h>
 #include <wx/notebook.h>
 

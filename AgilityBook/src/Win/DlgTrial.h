@@ -22,8 +22,8 @@
  * @li 2004-12-19 DRC Added Location/Club note information.
  */
 
-#include "ARBTypes.h"
-#include "ARBDogClub.h"
+#include "ARB/ARBTypes.h"
+#include "ARB/ARBDogClub.h"
 class CAgilityBookDoc;
 class CAutoFillComboBox;
 class CNoteButton;

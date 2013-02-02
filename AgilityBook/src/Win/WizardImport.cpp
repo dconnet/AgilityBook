@@ -44,13 +44,14 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "BreakLine.h"
 #include "DlgAssignColumns.h"
 #include "DlgMessage.h"
 #include "DlgProgress.h"
 #include "Globals.h"
 #include "ListCtrl.h"
 #include "Wizard.h"
+
+#include "ARB/BreakLine.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

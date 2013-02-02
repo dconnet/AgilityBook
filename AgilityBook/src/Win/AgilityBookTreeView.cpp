@@ -46,9 +46,6 @@
 #include "AgilityBookOptions.h"
 #include "AgilityBookPanels.h"
 #include "AgilityBookTreeModel.h"
-#include "ARBDog.h"
-#include "ARBDogRun.h"
-#include "ARBDogTrial.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
@@ -57,13 +54,17 @@
 #include "DlgReorder.h"
 #include "DlgRun.h"
 #include "DlgTrial.h"
-#include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
-#include "StringUtil.h"
+
+#include "ARB/ARBDog.h"
+#include "ARB/ARBDogRun.h"
+#include "ARB/ARBDogTrial.h"
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
 #include <wx/config.h>
 #include <wx/dataview.h>
 

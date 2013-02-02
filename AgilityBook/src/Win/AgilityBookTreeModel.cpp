@@ -3,11 +3,11 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookTreeData.h"
-
-#include "ARBTypes.h"
 #include "DlgAssignColumns.h"
 #include "RegItems.h"
-#include "StringUtil.h"
+
+#include "ARB/ARBTypes.h"
+#include "ARB/StringUtil.h"
 #include <algorithm>
 #include <list>
 #include <vector>

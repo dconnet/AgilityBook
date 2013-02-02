@@ -66,15 +66,16 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
-#include "ARBDogClub.h"
-#include "ARBDogTrial.h"
-#include "ARBTypes.h"
 #include "ClipBoard.h"
 #include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
 #include "PointsData.h"
 #include "Print.h"
+
+#include "ARB/ARBDogClub.h"
+#include "ARB/ARBDogTrial.h"
+#include "ARB/ARBTypes.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

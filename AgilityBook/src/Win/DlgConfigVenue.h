@@ -18,7 +18,7 @@
  * @li 2004-01-24 DRC Created
  */
 
-#include "ARBConfigScoring.h"
+#include "ARB/ARBConfigScoring.h"
 class ARBAgilityRecordBook;
 class CDlgConfigureDataBase;
 class CTreeCtrl;

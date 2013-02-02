@@ -23,12 +23,13 @@
 #include "DlgRegNum.h"
 
 #include "AgilityBook.h"
-#include "ARBConfig.h"
-#include "ARBDogRegNum.h"
 #include "ComboBoxes.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBDogRegNum.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

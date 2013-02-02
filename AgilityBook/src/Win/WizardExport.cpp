@@ -38,17 +38,18 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTrainingView.h"
-#include "ARBConfigScoring.h"
-#include "ARBDog.h"
-#include "ARBDogRun.h"
-#include "ARBDogTrial.h"
-#include "ARBLocalization.h"
-#include "BreakLine.h"
 #include "DlgAssignColumns.h"
 #include "DlgProgress.h"
 #include "Globals.h"
 #include "ListCtrl.h"
 #include "Wizard.h"
+
+#include "ARB/ARBConfigScoring.h"
+#include "ARB/ARBDog.h"
+#include "ARB/ARBDogRun.h"
+#include "ARB/ARBDogTrial.h"
+#include "ARB/ARBLocalization.h"
+#include "ARB/BreakLine.h"
 #include <wx/valgen.h>
 #include <wx/wfstream.h>
 

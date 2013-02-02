@@ -24,7 +24,8 @@
 #include "LanguageManager.h"
 
 #include "RegItems.h"
-#include "StringUtil.h"
+
+#include "ARB/StringUtil.h"
 #include <wx/cshelp.h>
 #include <wx/dir.h>
 #include <wx/stdpaths.h>

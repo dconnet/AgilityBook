@@ -22,7 +22,7 @@
  * @li 2004-11-15 DRC Added time fault computation option on T+F.
  */
 
-#include "ARBConfigScoring.h"
+#include "ARB/ARBConfigScoring.h"
 class CConfigEventDataLifetimePoints;
 class CConfigEventDataPlaceInfo;
 class CConfigEventDataScoring;

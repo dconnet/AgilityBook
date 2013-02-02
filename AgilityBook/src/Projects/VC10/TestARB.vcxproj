@@ -250,6 +250,9 @@
     <ProjectReference Include="LibTidy.vcxproj">
       <Project>{05967875-9726-4f06-8ec8-db6170c00bf3}</Project>
     </ProjectReference>
+    <ProjectReference Include="UnitTest++.vcxproj">
+      <Project>{64a4fefe-0461-4e95-8cc1-91ef5f57dbc6}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

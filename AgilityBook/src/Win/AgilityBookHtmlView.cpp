@@ -29,7 +29,8 @@
 #include "MainFrm.h"
 #include "PointsData.h"
 #include "Print.h"
-#include "StringUtil.h"
+
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

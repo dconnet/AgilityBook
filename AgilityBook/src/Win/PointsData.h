@@ -28,12 +28,12 @@
  * @li 2004-08-06 DRC Created
  */
 
+#include "ListData.h"
+#include "ARB/ARBDate.h"
+#include "ARB/ARBTypes.h"
 #include <list>
 #include <set>
 #include <vector>
-#include "ARBDate.h"
-#include "ARBTypes.h"
-#include "ListData.h"
 class CAgilityBookDoc;
 
 typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;

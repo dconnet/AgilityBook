@@ -33,7 +33,6 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "ARBDogTrial.h"
 #include "ComboBoxes.h"
 #include "DlgClub.h"
 #include "DlgInfoNote.h"
@@ -42,6 +41,8 @@
 #include "NoteButton.h"
 #include "RichEditCtrl2.h"
 #include "Validators.h"
+
+#include "ARB/ARBDogTrial.h"
 #include <set>
 #include <wx/valgen.h>
 

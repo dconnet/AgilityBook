@@ -27,8 +27,8 @@
 #include "AgilityBookOptions.h"
 #include "DlgAuthenticate.h"
 #include "DlgProgress.h"
-#include "StringUtil.h"
 
+#include "ARB/StringUtil.h"
 #include <wx/sstream.h>
 #include <wx/url.h>
 #include <wx/wfstream.h>

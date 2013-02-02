@@ -32,9 +32,6 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfig.h"
-#include "ARBConfigVenue.h"
 #include "DlgConfigOtherPoints.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigureData.h"
@@ -44,8 +41,12 @@
 #include "DlgMessageBox.h"
 #include "DlgName.h"
 #include "Globals.h"
-#include "StringUtil.h"
 #include "Widgets.h"
+
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBConfigVenue.h"
+#include "ARB/StringUtil.h"
 #include <wx/artprov.h>
 
 #ifdef __WXMSW__

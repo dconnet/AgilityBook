@@ -74,6 +74,9 @@
     <ClCompile Include="..\..\LibArchive\LibArchive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\LibArchive\stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\LibArchive\zlib\crc32.h">
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="..\..\LibArchive\LibArchive.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibArchive\stdafx.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

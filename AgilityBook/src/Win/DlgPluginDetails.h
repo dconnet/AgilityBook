@@ -17,7 +17,7 @@
  * @li 2007-12-24 DRC Created
  */
 
-#include "ARBConfigCalSite.h"
+#include "ARB/ARBConfigCalSite.h"
 class ARBConfig;
 class CTextCtrl;
 

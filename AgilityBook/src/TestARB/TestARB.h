@@ -19,12 +19,13 @@
  */
 
 #include "UnitTest++.h"
-#include "ARBTypes.h"
+#include <ARB/ARBTypes.h>
 
 // Set this to 1 to cause TODO_TESTs to fail
 #define FAIL_TODO_TEST	0
 
 #define IDR_DTD_AGILITYRECORDBOOK	1
+
 
 extern const wchar_t* const gc_Configs[];
 extern size_t gc_NumConfigs;

@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\Include;..\..\ARB;$(WXWIN)\include;$(WXWIN)\include\msvc;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\Include;$(SolutionDir)..\..;$(WXWIN)\include;$(WXWIN)\include\msvc;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>wxMSVC_VERSION_AUTO=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
