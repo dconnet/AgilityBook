@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E1105D38169017DF0067091C /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1105D36169017DF0067091C /* ImageManager.cpp */; };
+		E124BBB416BD90D0006FBF2D /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E124BBB316BD90D0006FBF2D /* libLibArchive.a */; };
 		E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B63BF166C096E004DEDA4 /* Cocoa.framework */; };
 		E19B64EE166C09B9004DEDA4 /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */; };
 		E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */; };
@@ -114,6 +115,7 @@
 /* Begin PBXFileReference section */
 		E1105D36169017DF0067091C /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageManager.cpp; sourceTree = "<group>"; };
 		E1105D37169017DF0067091C /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
+		E124BBB316BD90D0006FBF2D /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libLibArchive.a; path = ../LibArchive/build/Release/libLibArchive.a; sourceTree = "<group>"; };
 		E19B63BB166C096E004DEDA4 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B63BF166C096E004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E19B63C2166C096E004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -335,6 +337,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E124BBB416BD90D0006FBF2D /* libLibArchive.a in Frameworks */,
 				E19B65D9166C115F004DEDA4 /* libARB.a in Frameworks */,
 				E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */,
 			);
@@ -346,6 +349,7 @@
 		E19B63B0166C096E004DEDA4 = {
 			isa = PBXGroup;
 			children = (
+				E124BBB316BD90D0006FBF2D /* libLibArchive.a */,
 				E19B65D8166C115F004DEDA4 /* libARB.a */,
 				E19B63C5166C096E004DEDA4 /* Source */,
 				E19B63BE166C096E004DEDA4 /* Frameworks */,
@@ -842,7 +846,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../ARB",
+					"-I$SRCROOT/../../..",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
@@ -909,7 +913,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../ARB",
+					"-I$SRCROOT/../../..",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",

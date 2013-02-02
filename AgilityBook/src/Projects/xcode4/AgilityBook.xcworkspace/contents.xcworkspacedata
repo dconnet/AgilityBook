@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:LibArchive/LibArchive.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:ARBHelp/ARBHelp.xcodeproj">
    </FileRef>
    <FileRef

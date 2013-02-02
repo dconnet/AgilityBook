@@ -259,7 +259,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../ARB",
+					"-I$SRCROOT/../../..",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
@@ -326,7 +326,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../ARB",
+					"-I$SRCROOT/../../..",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
