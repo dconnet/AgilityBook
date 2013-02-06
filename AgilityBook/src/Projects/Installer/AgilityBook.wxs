@@ -24,6 +24,9 @@ Note: For System.AppUserModel.ID to work on Win7,
       HKCU\Software\Microsoft\CurrentVersion\Explorer\Advanced\Start_TrackDocs
       must be enabled. This is done in the Properties of the Start menu.
 
+Note: !(bind.fileVersion._AgilityBook.exe) could replace $(var.CURRENT_VERSION)
+      Only difference is bind is all 4 parts, the var is only 3.
+
 Revision History
 2012-08-03 DRC Set INSTALLDIR properly during upgrade and maintenance.
 2012-04-08 DRC Fix min OS conditions (using VC10 now)
