@@ -191,9 +191,6 @@
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\Platform\SetupWX.h">
-      <Filter>Include\Platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\ICalendarSite.h">
       <Filter>Include</Filter>
     </ClInclude>
@@ -202,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupWinRT.h">
+      <Filter>Include\Platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

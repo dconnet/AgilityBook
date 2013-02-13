@@ -90,6 +90,17 @@
 
 ////////////////////////////////////////////////////////////////////////////
 
+#ifndef _WIN32
+#include <iostream>
+static void OutputDebugString(wchar_t const* msg)
+{
+	if (msg)
+		std::wcout << msg;
+}
+#endif
+
+////////////////////////////////////////////////////////////////////////////
+
 #if defined(__WXWINDOWS__)
 
 class wxInputStdStream : public wxInputStream

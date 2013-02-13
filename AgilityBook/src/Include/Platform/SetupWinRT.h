@@ -21,7 +21,9 @@
 
 #include "Platform/SetupARBPre.h"
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #include <time.h>
 
 #include "Platform/SetupARBPost.h"
