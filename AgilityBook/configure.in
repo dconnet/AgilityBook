@@ -58,6 +58,8 @@ if test "x$BOOST_ROOT" != "x"; then
 fi
 AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not found. export BOOST_ROOT=fullpath to boost install])])
 
+AC_SUBST(CXXFLAGS,"$CXXFLAGS -DUSE_WXWIDGETS")
+
 case `uname` in
 Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')

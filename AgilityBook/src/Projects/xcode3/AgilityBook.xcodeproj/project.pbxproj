@@ -1117,10 +1117,9 @@
 				INFOPLIST_FILE = Info.plist;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
-					"-I",
-					../../Include,
-					"-I",
-					../..,
+					"-DUSE_WXWIDGETS",
+					"-I../../Include",
+					"-I../..",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-carbon-debug/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
@@ -1196,10 +1195,9 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-I",
-					../../Include,
-					"-I",
-					../..,
+					"-DUSE_WXWIDGETS",
+					"-I../../Include",
+					"-I../..",
 					"-I$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-carbon/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
