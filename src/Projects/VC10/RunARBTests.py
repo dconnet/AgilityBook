@@ -67,6 +67,8 @@ def main():
 		zip.write(file, os.path.basename(file))
 	zip.close()
 
+	os.chdir(executableDir)
+
 	if "Win32" == platform:
 		cmd = [os.path.join(executableDir, targetname + '.exe')]
 		return RunCommand(cmd, 0)

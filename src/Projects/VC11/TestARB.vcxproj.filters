@@ -2,22 +2,22 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{718D9CED-72EB-4A38-8517-BC03AE844060}</UniqueIdentifier>
+      <UniqueIdentifier>{a6538bc2-9f62-48a3-b7fd-bb24bdf7a3d5}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{9DF372DE-C31D-44D4-BDB1-28D168BD0C30}</UniqueIdentifier>
+      <UniqueIdentifier>{06d02fc0-c6a5-4c20-b82b-d4e394228ad7}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
-      <UniqueIdentifier>{E1B4C1A5-7666-48C3-AF3F-66FC44216E3B}</UniqueIdentifier>
+      <UniqueIdentifier>{8927dfa3-023b-48b5-8994-4534ef82b1ec}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="Include">
-      <UniqueIdentifier>{2ac178b3-1962-4006-aa7e-584e9392915c}</UniqueIdentifier>
+      <UniqueIdentifier>{c04b8558-b1ae-485d-af94-f3aaface5c6a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Include\Platform">
-      <UniqueIdentifier>{6eefa7b1-2ef7-4d66-9172-5d4cc15dcc28}</UniqueIdentifier>
+      <UniqueIdentifier>{23b8e184-6287-4af6-b7bb-6e1a9d26da89}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
