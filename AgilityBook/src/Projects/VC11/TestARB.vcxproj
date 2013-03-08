@@ -22,7 +22,6 @@
     <ProjectGuid>{5870EA58-CDEC-45E7-AA2F-2BE93A56DF9E}</ProjectGuid>
     <RootNamespace>TestARB</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -57,8 +56,8 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/CommonRelease32.props" />
-    <Import Project="$(SolutionDir)/UnitTest.props" />
     <Import Project="$(SolutionDir)/LibArchive.props" />
+    <Import Project="$(SolutionDir)/UnitTest.props" />
     <Import Project="$(SolutionDir)/libxml2.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
@@ -219,7 +218,7 @@
     <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWinRT.h" />
     <ClInclude Include="..\..\Include\ICalendarSite.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />

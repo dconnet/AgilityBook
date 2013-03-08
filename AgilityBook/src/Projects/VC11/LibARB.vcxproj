@@ -22,7 +22,6 @@
     <ProjectGuid>{23B8E184-6287-4AF6-B7BB-6E1A9D26DA89}</ProjectGuid>
     <RootNamespace>LibARB</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -201,7 +200,7 @@
     <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWinRT.h" />
     <ClInclude Include="..\..\Include\ICalendarSite.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
