@@ -19,34 +19,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}</ProjectGuid>
-    <RootNamespace>ARBHelp</RootNamespace>
+    <ProjectGuid>{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}</ProjectGuid>
+    <RootNamespace>UnitTest</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
@@ -56,22 +52,18 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/CommonRelease32.props" />
-    <Import Project="$(SolutionDir)/wxWidgetsLib32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/CommonDebug32.props" />
-    <Import Project="$(SolutionDir)/wxWidgetsLib32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/CommonRelease64.props" />
-    <Import Project="$(SolutionDir)/wxWidgetsLib64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/CommonDebug64.props" />
-    <Import Project="$(SolutionDir)/wxWidgetsLib64.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -79,74 +71,74 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ARBHelp\ARBHelp.cpp" />
-    <ClCompile Include="..\..\ARBHelp\DlgARBHelp.cpp" />
-    <ClCompile Include="..\..\ARBHelp\DlgPageDecode.cpp" />
-    <ClCompile Include="..\..\ARBHelp\DlgPageEncode.cpp" />
-    <ClCompile Include="..\..\ARBHelp\DlgPageEncodeFiles.cpp" />
-    <ClCompile Include="..\..\ARBHelp\DlgPageEncodeFinish.cpp" />
-    <ClCompile Include="..\..\ARBHelp\stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\Widgets.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\Win32\TimeHelpers.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\AssertException.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\Checks.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\CurrentTest.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\DeferredTestReporter.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\DeferredTestResult.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\MemoryOutStream.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\ReportAssert.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\Test.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\TestDetails.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\TestList.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\TestReporter.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\TestReporterStdout.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\TestResults.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\TestRunner.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\TimeConstraint.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\XmlTestReporter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Win\res\AgilityBook.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\..\ARBHelp\ARBHelp.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\ARBHelp\ARBHelp.h" />
-    <ClInclude Include="..\..\ARBHelp\DlgARBHelp.h" />
-    <ClInclude Include="..\..\ARBHelp\DlgPageDecode.h" />
-    <ClInclude Include="..\..\ARBHelp\DlgPageEncode.h" />
-    <ClInclude Include="..\..\ARBHelp\DlgPageEncodeFiles.h" />
-    <ClInclude Include="..\..\ARBHelp\DlgPageEncodeFinish.h" />
-    <ClInclude Include="..\..\ARBHelp\stdafx.h" />
-    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
-    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
-    <ClInclude Include="..\..\Include\ICalendarSite.h" />
-    <ClInclude Include="..\..\Include\IProgressMeter.h" />
-    <ClInclude Include="..\..\Include\VersionNumber.h" />
-    <ClInclude Include="..\..\Win\Widgets.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="LibARB.vcxproj">
-      <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
-    </ProjectReference>
+    <ClInclude Include="..\..\UnitTest++\src\Win32\TimeHelpers.h" />
+    <ClInclude Include="..\..\UnitTest++\src\AssertException.h" />
+    <ClInclude Include="..\..\UnitTest++\src\CheckMacros.h" />
+    <ClInclude Include="..\..\UnitTest++\src\Checks.h" />
+    <ClInclude Include="..\..\UnitTest++\src\Config.h" />
+    <ClInclude Include="..\..\UnitTest++\src\CurrentTest.h" />
+    <ClInclude Include="..\..\UnitTest++\src\DeferredTestReporter.h" />
+    <ClInclude Include="..\..\UnitTest++\src\DeferredTestResult.h" />
+    <ClInclude Include="..\..\UnitTest++\src\ExecuteTest.h" />
+    <ClInclude Include="..\..\UnitTest++\src\MemoryOutStream.h" />
+    <ClInclude Include="..\..\UnitTest++\src\ReportAssert.h" />
+    <ClInclude Include="..\..\UnitTest++\src\Test.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TestDetails.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TestList.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TestMacros.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TestReporter.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TestReporterStdout.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TestResults.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TestRunner.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TestSuite.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TimeConstraint.h" />
+    <ClInclude Include="..\..\UnitTest++\src\TimeHelpers.h" />
+    <ClInclude Include="..\..\UnitTest++\src\UnitTest++.h" />
+    <ClInclude Include="..\..\UnitTest++\src\XmlTestReporter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties RESOURCE_FILE="ARBHelp.rc" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

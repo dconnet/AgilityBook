@@ -36,45 +36,6 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#ifdef _MSC_VER
-#if _MSC_VER >= 1300 && _MSC_VER < 1400
-#define UT_NAME			"UnitTest++.VC7"
-#elif _MSC_VER >= 1400 && _MSC_VER < 1500
-#define UT_NAME			"UnitTest++.VC8"
-#elif _MSC_VER >= 1500 && _MSC_VER < 1600
-#define UT_NAME			"UnitTest++.VC9"
-#elif _MSC_VER >= 1600 && _MSC_VER < 1700
-#define UT_NAME			"UnitTest++.VC10"
-#elif _MSC_VER == 1700
-#define UT_NAME			"UnitTest++.VC11"
-#else
-#error Unsupported compiler
-#endif
-#endif
-
-// Note, if using static runtime, swap comments on following 2 defines
-// I don't know if there's a compiler define that tells us which runtime
-// we're linking with...
-#ifdef _DLL
-#define UT_STATIC_RTL	""
-#else
-#define UT_STATIC_RTL	"S"
-#endif
-
-#ifdef _UNICODE
-#define UT_UNICODE		"U"
-#else
-#define UT_UNICODE		""
-#endif
-
-#ifdef _DEBUG
-#define UT_DEBUG		"D"
-#else
-#define UT_DEBUG		""
-#endif
-
-#pragma comment(lib, UT_NAME UT_STATIC_RTL UT_UNICODE UT_DEBUG ".lib")
-
 
 class CReporterVerbose : public UnitTest::TestReporterStdout
 {
