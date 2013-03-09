@@ -845,16 +845,17 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
-					"-DUSE_WXWIDGETS",
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../..",
-					"-I$BOOST_ROOT",
+					"-isystem",
+					"$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
 					"-D__WXOSX__",
 					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
 				);
 				OTHER_LDFLAGS = (
 					"-L$WXBASE/trunk/build-cocoa-debug/lib",
@@ -913,10 +914,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = (
-					"-DUSE_WXWIDGETS",
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../..",
-					"-I$BOOST_ROOT",
+					"-isystem",
+					"$BOOST_ROOT",
 					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -924,6 +925,7 @@
 					"-D__WXMAC__",
 					"-D__WXOSX__",
 					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
 				);
 				OTHER_LDFLAGS = (
 					"-L$WXBASE/trunk/build-cocoa/lib",
