@@ -28,10 +28,11 @@
 #include "DlgConfigTitle.h"
 
 #include "AgilityBook.h"
-#include "ARBConfigTitle.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
+
+#include "ARB/ARBConfigTitle.h"
+#include "ARB/StringUtil.h"
 #include <wx/datectrl.h>
 
 #ifdef __WXMSW__

@@ -33,14 +33,15 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "Element.h"
 #include "ImageManager.h"
 #include "LanguageManager.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
-#include "StringUtil.h"
 #include "TabView.h"
+
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
 #include <vector>
 #include <wx/choicdlg.h>
 #include <wx/cmdline.h>

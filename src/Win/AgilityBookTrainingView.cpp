@@ -36,17 +36,18 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
-#include "ARBTraining.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgFind.h"
 #include "DlgTraining.h"
-#include "Element.h"
 #include "FilterOptions.h"
 #include "ListData.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
+
+#include "ARB/ARBTraining.h"
+#include "ARB/Element.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__

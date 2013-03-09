@@ -30,7 +30,8 @@
 #include "AgilityBookTreeView.h"
 #include "CommonView.h"
 #include "RegItems.h"
-#include "StringUtil.h"
+
+#include "ARB/StringUtil.h"
 #include <wx/config.h>
 #include <wx/object.h>
 #include <wx/splitter.h>

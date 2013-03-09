@@ -15,13 +15,14 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgAssignColumns.h"
 #include "NamedColumns.h"
 
-#include "ARBAgilityRecordBook.h"
+#include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 #include "RegItems.h"
+
+#include "ARB/ARBAgilityRecordBook.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__

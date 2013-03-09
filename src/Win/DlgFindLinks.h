@@ -20,8 +20,8 @@
  * @li 2004-03-31 DRC Created.
  */
 
-#include "ARBTypes.h"
 #include "ColumnOrder.h"
+#include "ARB/ARBTypes.h"
 #include <vector>
 class CReportListCtrl;
 class wxListEvent;

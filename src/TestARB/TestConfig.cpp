@@ -21,12 +21,13 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBStructure.h"
-#include "ARBConfig.h"
-#include "ARBDogTitle.h"
 #include "ConfigHandler.h"
-#include "Element.h"
+
+#include <ARB/ARBAgilityRecordBook.h>
+#include <ARB/ARBStructure.h>
+#include <ARB/ARBConfig.h>
+#include <ARB/ARBDogTitle.h>
+#include <ARB/Element.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -17,7 +17,7 @@
  * @li 2009-02-15 DRC Created
  */
 
-#include "ARB_Q.h"
+#include "ARB/ARB_Q.h"
 #include <wx/validate.h>
 
 

@@ -84,15 +84,16 @@
 #include "DlgTitle.h"
 #include "DlgTraining.h"
 #include "DlgTrial.h"
-#include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "MainFrm.h"
 #include "RegItems.h"
 #include "TabView.h"
 #include "UpdateInfo.h"
-#include "VersionNum.h"
 #include "Wizard.h"
+
+#include "ARB/Element.h"
+#include "ARB/VersionNum.h"
 #include <algorithm>
 #include <fstream>
 #include <wx/config.h>

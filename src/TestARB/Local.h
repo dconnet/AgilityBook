@@ -18,7 +18,8 @@
  * @li 2008-01-13 DRC Created
  */
 
-#include "ARBLocalization.h"
+#include <ARB/ARBLocalization.h>
+
 
 class CLocalization : public IARBLocalization
 {

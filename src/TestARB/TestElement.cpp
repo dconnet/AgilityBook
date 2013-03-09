@@ -19,12 +19,15 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARBDate.h"
-#include "ARBStructure.h"
-#include "Element.h"
-#include "StringUtil.h"
+#include "ARB/ARBDate.h"
+#include "ARB/ARBStructure.h"
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
+
+#if defined(__WXWINDOWS__)
 #include <wx/filefn.h>
 #include <wx/mstream.h>
+#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -314,7 +317,11 @@ SUITE(TestElement)
 			std::wostringstream errs;
 			CHECK(tree2->LoadXML(tmpFile.c_str(), errs));
 
+#if defined(__WXWINDOWS__)
 			wxRemoveFile(tmpFile);
+#else
+#pragma PRAGMA_TODO(remove file)
+#endif
 
 			wxMemoryOutputStream tmp2;
 			CHECK(tree2->SaveXML(tmp2));

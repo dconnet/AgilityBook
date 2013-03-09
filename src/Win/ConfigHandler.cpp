@@ -20,8 +20,8 @@
 #include "stdafx.h"
 #include "ConfigHandler.h"
 
-#include "Element.h"
-#include "StringUtil.h"
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
 #include <wx/filesys.h>
 #include <wx/mstream.h>
 #include <wx/stdpaths.h>

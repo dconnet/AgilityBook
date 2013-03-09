@@ -22,8 +22,9 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
-#include "Element.h"
-#include "StringUtil.h"
+
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
 #include <sstream>
 #include <wx/mstream.h>
 

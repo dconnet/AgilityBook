@@ -22,10 +22,11 @@
 #include "DlgCalendarQueryDetail.h"
 
 #include "AgilityBook.h"
-#include "ARBConfig.h"
 #include "DlgQueryDetail.h"
 #include "Globals.h"
 #include "ListCtrl.h"
+
+#include "ARB/ARBConfig.h"
 #include <algorithm>
 #include <wx/listctrl.h>
 

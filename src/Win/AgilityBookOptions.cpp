@@ -45,17 +45,17 @@
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBCalendar.h"
-#include "ARBDate.h"
-#include "ARBDogTitle.h"
-#include "ARBDogTrial.h"
 #include "DlgAssignColumns.h"
-#include "Element.h"
 #include "RegItems.h"
-#include "StringUtil.h"
-#include "VersionNum.h"
 
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBCalendar.h"
+#include "ARB/ARBDate.h"
+#include "ARB/ARBDogTitle.h"
+#include "ARB/ARBDogTrial.h"
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
+#include "ARB/VersionNum.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__

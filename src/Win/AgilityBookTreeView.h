@@ -28,11 +28,12 @@
  *                    prevent constant re-evaluation.
  */
 
-#include "ARBBase.h"
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "IconList.h"
 #include "Widgets.h"
+
+#include "ARB/ARBBase.h"
 #include <vector>
 #include <wx/docview.h>
 class CAgilityBookTreeData;

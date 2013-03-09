@@ -19,10 +19,10 @@
  * @li 2006-03-02 DRC Separated filter options from main options.
  */
 
+#include "ARB/ARBDate.h"
+#include "ARB/ARBTypes.h"
 #include <set>
 #include <vector>
-#include "ARBDate.h"
-#include "ARBTypes.h"
 
 
 struct CVenueFilter

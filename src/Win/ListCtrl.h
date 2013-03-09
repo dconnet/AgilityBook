@@ -18,9 +18,9 @@
  * @li 2008-12-14 DRC Created
  */
 
-#include "ARBTypes.h"
-#include "StringUtil.h"
 #include "Widgets.h"
+#include "ARB/ARBTypes.h"
+#include "ARB/StringUtil.h"
 #include <map>
 #include <vector>
 #include <wx/imaglist.h>

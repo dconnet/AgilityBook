@@ -18,7 +18,7 @@
  * @li 2007-04-22 DRC Created.
  */
 
-#include "ARBTypes.h"
+#include "ARB/ARBTypes.h"
 #include <wx/imaglist.h>
 
 

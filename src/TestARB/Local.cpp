@@ -27,9 +27,12 @@
 #include "stdafx.h"
 #include "Local.h"
 
-#include "ARBStructure.h"
-#include "StringUtil.h"
+#include "ARB/ARBStructure.h"
+#include "ARB/StringUtil.h"
+
+#if defined(__WXWINDOWS__)
 #include <wx/string.h>
+#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

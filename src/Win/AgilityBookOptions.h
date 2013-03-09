@@ -31,8 +31,8 @@
  * @li 2003-12-11 DRC Added options for import/export wizard.
  */
 
-#include "ARBDate.h"
-#include "ARBTypes.h"
+#include "ARB/ARBDate.h"
+#include "ARB/ARBTypes.h"
 #include <set>
 #include <vector>
 #include <wx/colour.h>

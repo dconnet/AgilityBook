@@ -23,14 +23,15 @@
 #include "AgilityBook.h"
 #include "FilterOptions.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBCalendar.h"
-#include "ARBDate.h"
-#include "ARBDogTitle.h"
-#include "ARBDogTrial.h"
 #include "AgilityBookOptions.h"
 #include "RegItems.h"
-#include "StringUtil.h"
+
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBCalendar.h"
+#include "ARB/ARBDate.h"
+#include "ARB/ARBDogTitle.h"
+#include "ARB/ARBDogTrial.h"
+#include "ARB/StringUtil.h"
 #include <algorithm>
 #include <wx/config.h>
 

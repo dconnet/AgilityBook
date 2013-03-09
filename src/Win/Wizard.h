@@ -18,8 +18,8 @@
  * @li 2003-12-10 DRC Created
  */
 
-#include "ARBCalendar.h"
 #include "SpreadSheet.h"
+#include "ARB/ARBCalendar.h"
 #include <vector>
 #include <wx/wizard.h>
 class CAgilityBookDoc;
@@ -51,6 +51,7 @@ class CWizardStart;
 #define WIZARD_RADIO_CALC			3L
 #define WIZARD_RADIO_SPREADSHEET	1L
 #define WIZARD_RADIO_ARB			2L
+
 
 class CWizard : public wxWizard
 {

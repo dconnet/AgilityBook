@@ -23,12 +23,13 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "ARBConfig.h"
-#include "ARBTraining.h"
 #include "ComboBoxes.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBTraining.h"
+#include "ARB/StringUtil.h"
 #include <wx/datectrl.h>
 
 #ifdef __WXMSW__

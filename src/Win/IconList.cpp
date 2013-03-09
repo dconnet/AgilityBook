@@ -20,9 +20,10 @@
 #include "IconList.h"
 
 #include "AgilityBook.h"
-#include "ARBConfig.h"
-#include "ARBDogTrial.h"
 #include "ImageManager.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBDogTrial.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -99,12 +99,6 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBConfig.h"
-#include "ARBConfigOtherPoints.h"
-#include "ARBConfigVenue.h"
-#include "ARBDogClub.h"
-#include "ARBDogRun.h"
-#include "ARBDogTrial.h"
 #include "CheckLink.h"
 #include "ClipBoard.h"
 #include "ComboBoxes.h"
@@ -119,8 +113,15 @@
 #include "ListData.h"
 #include "NoteButton.h"
 #include "RichEditCtrl2.h"
-#include "StringUtil.h"
 #include "Validators.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBConfigOtherPoints.h"
+#include "ARB/ARBConfigVenue.h"
+#include "ARB/ARBDogClub.h"
+#include "ARB/ARBDogRun.h"
+#include "ARB/ARBDogTrial.h"
+#include "ARB/StringUtil.h"
 #include <set>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>

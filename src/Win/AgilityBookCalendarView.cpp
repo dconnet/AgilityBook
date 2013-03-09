@@ -43,15 +43,16 @@
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookPanels.h"
-#include "ARBCalendar.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgCalendar.h"
 #include "DlgListCtrl.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
-#include "StringUtil.h"
 #include "TabView.h"
+
+#include "ARB/ARBCalendar.h"
+#include "ARB/StringUtil.h"
 #include <wx/dcbuffer.h>
 
 #ifdef __WXMSW__

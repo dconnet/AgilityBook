@@ -25,14 +25,15 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
-#include "ARBConfig.h"
-#include "ARBDog.h"
-#include "ARBDogRun.h"
-#include "ARBDogRunOtherPoints.h"
-#include "ARBDogTrial.h"
 #include "Globals.h"
 #include "ListCtrl.h"
 #include "PointsData.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBDog.h"
+#include "ARB/ARBDogRun.h"
+#include "ARB/ARBDogRunOtherPoints.h"
+#include "ARB/ARBDogTrial.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

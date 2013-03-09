@@ -30,8 +30,9 @@
 
 #include "AgilityBook.h"
 #include "ImageManager.h"
-#include "StringUtil.h"
 #include "VersionNumber.h"
+
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

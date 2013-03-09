@@ -1,4 +1,4 @@
-1/23/2013: v2.3.11.<in development>
+3/9/2013: v2.3.11.85
 - Bumped Configuration v42:
   - New NADAC extended titles.
   - New USDAA Diamond LAA titles.
@@ -7,14 +7,13 @@
 - New features / Enhancements:
   - Select current run in Reorder dialog.
   - Allow scrolling in the Calendar view to extend past the last entry.
-  - Don't allow empty names in URL selection dialog.
 - Bug fixes:
   - Fix Calendar icon updates in list dialog.
   - Fix Training view update on paste.
   - Fix pasting metafiles.
   - Dropped VC9 support, it hasn't been able to compile since pre-2.3.9.
   - Update filters when updating the configuration.
-  - Don't all empty names in URL selection dialog.
+  - Don't allow empty names in URL selection dialog.
   - Initialize Other Points dialog correctly when editing existing entry.
 
 11/30/2012: v2.3.10.84

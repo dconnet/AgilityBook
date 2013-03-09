@@ -21,7 +21,8 @@
 #include "DlgProgress.h"
 
 #include "Globals.h"
-#include "StringUtil.h"
+
+#include "ARB/StringUtil.h"
 #include <vector>
 #include <wx/utils.h>
 

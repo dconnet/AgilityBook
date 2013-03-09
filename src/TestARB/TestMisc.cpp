@@ -19,8 +19,8 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARBTypes.h"
-#include "StringUtil.h"
+#include "ARB/ARBTypes.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -78,12 +78,13 @@ SUITE(TestMisc)
 		if (!g_bMicroTest)
 		{
 			std::wstring s1(L"IDS_ARB_UNKNOWN_VERSION");
-			std::wstring s2(_("IDS_ARB_UNKNOWN_VERSION"));
+			std::wstring s2(StringUtil::GetTranslation(arbT("IDS_ARB_UNKNOWN_VERSION")));
 			CHECK(s1 != s2);
 		}
 	}
 
 
+#if defined(__WXWINDOWS__)
 	TEST(LocalizationDesc)
 	{
 		if (!g_bMicroTest)
@@ -141,6 +142,9 @@ SUITE(TestMisc)
 			}
 		}
 	}
+#else
+#pragma PRAGMA_TODO(Write localization test)
+#endif
 
 
 #ifdef __WXMSW__

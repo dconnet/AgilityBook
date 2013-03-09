@@ -96,14 +96,15 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBMsgDigest.h"
 #include "ConfigHandler.h"
 #include "DlgProgress.h"
-#include "Element.h"
 #include "LanguageManager.h"
 #include "ReadHttp.h"
 #include "RegItems.h"
-#include "VersionNum.h"
+
+#include "ARB/ARBMsgDigest.h"
+#include "ARB/Element.h"
+#include "ARB/VersionNum.h"
 #include <wx/config.h>
 #include <wx/filedlg.h>
 #include <wx/filename.h>

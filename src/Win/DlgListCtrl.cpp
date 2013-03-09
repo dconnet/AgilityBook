@@ -32,11 +32,6 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBCalendar.h"
-#include "ARBConfigVenue.h"
-#include "ARBDogRun.h"
-#include "ARBDogRunOtherPoints.h"
-#include "ARBDogRunPartner.h"
 #include "DlgCalendar.h"
 #include "DlgFault.h"
 #include "DlgOtherPoint.h"
@@ -44,7 +39,13 @@
 #include "ImageManager.h"
 #include "ListCtrl.h"
 #include "ListData.h"
-#include "StringUtil.h"
+
+#include "ARB/ARBCalendar.h"
+#include "ARB/ARBConfigVenue.h"
+#include "ARB/ARBDogRun.h"
+#include "ARB/ARBDogRunOtherPoints.h"
+#include "ARB/ARBDogRunPartner.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

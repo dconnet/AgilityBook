@@ -16,7 +16,7 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARBCalcPoints.h"
+#include "ARB/ARBCalcPoints.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

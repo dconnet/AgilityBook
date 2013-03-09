@@ -55,9 +55,6 @@
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeView.h"
-#include "ARBDog.h"
-#include "ARBDogRun.h"
-#include "ARBDogTrial.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
@@ -66,13 +63,17 @@
 #include "DlgRun.h"
 #include "DlgTitle.h"
 #include "DlgTrial.h"
-#include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "PointsData.h"
 #include "Print.h"
-#include "StringUtil.h"
 #include "TabView.h"
+
+#include "ARB/ARBDog.h"
+#include "ARB/ARBDogRun.h"
+#include "ARB/ARBDogTrial.h"
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
