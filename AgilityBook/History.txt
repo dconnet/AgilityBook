@@ -1,3 +1,5 @@
+3/9/2013: v2.3.12.<in development>
+
 3/9/2013: v2.3.11.85
 - Bumped Configuration v42:
   - New NADAC extended titles.
