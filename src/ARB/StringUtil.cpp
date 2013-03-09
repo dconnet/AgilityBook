@@ -106,11 +106,7 @@ std::string stringA(wxMemoryOutputStream const& inStr)
 	std::string str;
 	if (inStr.IsOk())
 	{
-#if wxCHECK_VERSION(2, 9, 4)
 		size_t len = static_cast<size_t>(inStr.GetLength());
-#else
-		wxFileOffset len = inStr.GetLength();
-#endif
 		char* buffer = new char[len+1];
 		inStr.CopyTo(buffer, len);
 		buffer[len] = 0;
