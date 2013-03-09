@@ -1419,7 +1419,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.3.10;
+				CURRENT_PROJECT_VERSION = 2.3.11;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1438,15 +1438,16 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = (
-					"-I",
-					../../Include,
-					"-I$BOOST_ROOT",
+					"-I../../Include",
+					"-isystem",
+					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-2.8.12/build-carbon-debug/lib/wx/include/mac-unicode-debug-static-2.8",
 					"-I$WXBASE/wxWidgets-2.8.12/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D_LARGE_FILES",
 					"-D__WXDEBUG__",
 					"-D__WXMAC__",
+					"-DUSE_WXWIDGETS",
 				);
 				OTHER_LDFLAGS = (
 					"-L$WXBASE/wxWidgets-2.8.12/build-carbon-debug/lib",
@@ -1497,7 +1498,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CURRENT_PROJECT_VERSION = 2.3.10;
+				CURRENT_PROJECT_VERSION = 2.3.11;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1514,14 +1515,15 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-I",
-					../../Include,
-					"-I$BOOST_ROOT",
+					"-I../../Include",
+					"-isystem",
+					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-2.8.12/build-carbon/lib/wx/include/mac-unicode-release-static-2.8",
 					"-I$WXBASE/wxWidgets-2.8.12/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D_LARGE_FILES",
 					"-D__WXMAC__",
+					"-DUSE_WXWIDGETS",
 				);
 				OTHER_LDFLAGS = (
 					"-L$WXBASE/wxWidgets-2.8.12/build-carbon/lib",
@@ -1575,7 +1577,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.3.10;
+				CURRENT_PROJECT_VERSION = 2.3.11;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1596,15 +1598,16 @@
 				INFOPLIST_FILE = Info.plist;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
-					"-I",
-					../../Include,
-					"-I$BOOST_ROOT",
+					"-I../../Include",
+					"-isystem",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-carbon-debug/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
 					"-D__WXOSX__",
 					"-D__WXOSX_CARBON__",
+					"-DUSE_WXWIDGETS",
 				);
 				OTHER_LDFLAGS = (
 					"-L$WXBASE/trunk/build-carbon-debug/lib",
@@ -1656,7 +1659,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH)";
-				CURRENT_PROJECT_VERSION = 2.3.10;
+				CURRENT_PROJECT_VERSION = 2.3.11;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1674,9 +1677,9 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-I",
-					../../Include,
-					"-I$BOOST_ROOT",
+					"-I../../Include",
+					"-isystem",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-carbon/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -1684,6 +1687,7 @@
 					"-D__WXMAC__",
 					"-D__WXOSX__",
 					"-D__WXOSX_CARBON__",
+					"-DUSE_WXWIDGETS",
 				);
 				OTHER_LDFLAGS = (
 					"-L$WXBASE/trunk/build-carbon/lib",
