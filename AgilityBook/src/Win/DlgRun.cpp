@@ -3264,5 +3264,8 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	CAgilityBookOptions::SetLastEnteredHeight(m_Run->GetHeight().c_str());
 	CAgilityBookOptions::SetLastEnteredJudge(m_Run->GetJudge().c_str());
 	CAgilityBookOptions::SetLastEnteredHandler(m_Run->GetHandler().c_str());
+
+	m_pDoc->Modify(true);
+
 	EndDialog(wxID_OK);
 }
