@@ -373,7 +373,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E137436916BD9B83006380B5</string>
+										<string>E115B98516EAC2220045502D</string>
 										<key>history</key>
 										<array>
 											<string>E19C6CB5166C552A00657355</string>
@@ -391,7 +391,7 @@
 											<string>E19C6D00166C588200657355</string>
 											<string>E137436416BD9B83006380B5</string>
 											<string>E137436516BD9B83006380B5</string>
-											<string>E137436616BD9B83006380B5</string>
+											<string>E137436916BD9B83006380B5</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -467,9 +467,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E137436A16BD9B83006380B5</string>
+				<string>E115B98616EAC2220045502D</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>E137436B16BD9B83006380B5</string>
+				<string>E115B98716EAC2220045502D</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -588,7 +588,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>381524867.50715399</real>
+	<real>384483874.79973799</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -645,8 +645,6 @@
 							<string>218pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -686,7 +684,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>E19C6B0D166C517C00657355</string>
-				<string>E137435216BD996D006380B5</string>
+				<string>E115B98816EAC2220045502D</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
