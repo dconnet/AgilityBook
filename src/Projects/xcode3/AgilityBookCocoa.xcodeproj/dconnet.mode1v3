@@ -374,7 +374,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E115B96416EAB8410045502D</string>
+										<string>E13ABE9916EBC1BA00349391</string>
 										<key>history</key>
 										<array>
 											<string>E19C6CB5166C552A00657355</string>
@@ -392,7 +392,7 @@
 											<string>E19C6CFF166C588200657355</string>
 											<string>E19C6D00166C588200657355</string>
 											<string>E137434016BD98D7006380B5</string>
-											<string>E137436D16BD9FB3006380B5</string>
+											<string>E115B96416EAB8410045502D</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -468,9 +468,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E115B95D16EAB1C70045502D</string>
+				<string>E13ABE9A16EBC1BA00349391</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>E115B95E16EAB1C70045502D</string>
+				<string>E13ABE9B16EBC1BA00349391</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -589,7 +589,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>384481345.40381902</real>
+	<real>384549271.58675897</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -604,7 +604,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E19C6B0D166C517C00657355</string>
 		<string>/Users/dconnet/agilitybook/v2/AgilityBook/src/Projects/xcode3/AgilityBookCocoa.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

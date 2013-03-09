@@ -1109,6 +1109,7 @@
 				INFOPLIST_FILE = InfoCocoa.plist;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
+					"-I../..",
 					"-I../../Include",
 					"-isystem",
 					$BOOST_ROOT,
@@ -1188,6 +1189,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
+					"-I../..",
 					"-I../../Include",
 					"-isystem",
 					$BOOST_ROOT,
