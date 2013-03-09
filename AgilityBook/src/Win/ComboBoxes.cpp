@@ -23,10 +23,10 @@
 #include "stdafx.h"
 #include "ComboBoxes.h"
 
-#include "ARBConfigVenue.h"
-#include "ARBDogReferenceRun.h"
-#include "ARBDogRun.h"
-#include "StringUtil.h"
+#include "ARB/ARBConfigVenue.h"
+#include "ARB/ARBDogReferenceRun.h"
+#include "ARB/ARBDogRun.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

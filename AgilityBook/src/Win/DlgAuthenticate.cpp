@@ -19,8 +19,9 @@
 #include "stdafx.h"
 #include "DlgAuthenticate.h"
 
-#include "StringUtil.h"
 #include "Widgets.h"
+
+#include "ARB/StringUtil.h"
 #include <wx/sizer.h>
 #include <wx/statbox.h>
 #include <wx/valgen.h>

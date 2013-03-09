@@ -20,8 +20,9 @@
  * @li 2006-02-12 DRC Created
  */
 
-#include "ARB_Q.h"
-#include "ARBTypes.h"
+#include "ARB/ARB_Q.h"
+#include "ARB/ARBTypes.h"
+
 
 /// Enable autofill (wx2.9+) API on wx2.8.
 class CAutoFillComboBox : public wxComboBox

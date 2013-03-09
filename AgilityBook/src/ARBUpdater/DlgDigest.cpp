@@ -17,9 +17,10 @@
 #include "stdafx.h"
 #include "DlgDigest.h"
 
-#include "ARBMsgDigest.h"
-#include "StringUtil.h"
-#include "../Win/Globals.h"
+#include "ARB/ARBMsgDigest.h"
+#include "ARB/StringUtil.h"
+#include "Win/Globals.h"
+
 #include <wx/filedlg.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>

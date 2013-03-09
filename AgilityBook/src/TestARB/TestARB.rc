@@ -43,7 +43,9 @@ END
 3 TEXTINCLUDE  
 BEGIN
     "#include ""res\\TestARB.rc2""\r\n"
-    "#include ""wx/msw/wx.rc""\r\n\0"
+    "#if defined(USE_WXWIDGETS)\r\n"
+    "#include ""wx/msw/wx.rc""\r\n"
+    "#endif\r\n\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -69,6 +71,8 @@ IDR_MAINFRAME           ICON                    "..\\Win\\res\\AgilityBook.ico"
 // Generated from the TEXTINCLUDE 3 resource.
 //
 #include "res/TestARB.rc2"
+#if defined(USE_WXWIDGETS)
 #include "wx/msw/wx.rc"
+#endif
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

@@ -22,13 +22,14 @@
 #include "stdafx.h"
 #include "DlgPageDecode.h"
 
-#include "../ARB/VersionNum.h"
-#include "../Win/Widgets.h"
 #include "ARBHelp.h"
-#include "ARBTypes.h"
-#include "BinaryData.h"
 #include "DlgARBHelp.h"
-#include "StringUtil.h"
+
+#include "ARB/ARBTypes.h"
+#include "ARB/BinaryData.h"
+#include "ARB/StringUtil.h"
+#include "ARB/VersionNum.h"
+#include "Win/Widgets.h"
 #include <algorithm>
 #include <wx/ffile.h>
 #include <wx/filename.h>

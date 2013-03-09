@@ -21,11 +21,12 @@
 #include "DlgSelectDog.h"
 
 #include "AgilityBook.h"
-#include "ARBDog.h"
-#include "ARBTypes.h"
 #include "AgilityBookDoc.h"
 #include "RegItems.h"
-#include "StringUtil.h"
+
+#include "ARB/ARBDog.h"
+#include "ARB/ARBTypes.h"
+#include "ARB/StringUtil.h"
 #include <algorithm>
 #include <wx/config.h>
 

@@ -31,9 +31,10 @@
  *                    prevent constant re-evaluation.
  */
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBTypes.h"
 #include "CalendarSites.h"
+
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBTypes.h"
 #include <set>
 #include <wx/docview.h>
 class CAgilityBookCalendarListView;

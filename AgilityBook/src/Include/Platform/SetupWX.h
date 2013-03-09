@@ -30,7 +30,7 @@
 
 #include "Platform/SetupARBPre.h"
 
-#ifdef NO_WXWIDGETS
+#ifndef USE_WXWIDGETS
 #error Then do not include this file!
 #endif
 

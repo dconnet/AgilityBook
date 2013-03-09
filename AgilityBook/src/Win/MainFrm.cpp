@@ -36,8 +36,9 @@
 #include "PointsData.h"
 #include "Print.h"
 #include "RegItems.h"
-#include "StringUtil.h"
 #include "TabView.h"
+
+#include "ARB/StringUtil.h"
 #include <wx/config.h>
 #include <wx/dnd.h>
 #include <wx/platinfo.h>

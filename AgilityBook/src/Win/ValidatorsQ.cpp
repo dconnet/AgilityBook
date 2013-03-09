@@ -18,7 +18,8 @@
 #include "ValidatorsQ.h"
 
 #include "ComboBoxes.h"
-#include "StringUtil.h"
+
+#include "ARB/StringUtil.h"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>

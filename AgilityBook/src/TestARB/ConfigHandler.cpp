@@ -20,11 +20,13 @@
 #include "stdafx.h"
 #include "ConfigHandler.h"
 
-#include "Element.h"
-#include "StringUtil.h"
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
 #include <wx/filesys.h>
 #include <wx/mstream.h>
+#if defined(__WXWINDOWS__)
 #include <wx/stdpaths.h>
+#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -77,16 +79,20 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 
+#if defined(__WXWINDOWS__)
 #ifdef __WXMAC__
 	// Command line programs on Mac are acting like unix. GetResourcesDir
 	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	wxString datafile = L"./testarb.dat";
+	std::wstring datafile = L"./testarb.dat";
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
+	std::wstring datafile = StringUtil::stringW(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
+#endif
+#else
+	std::wstring datafile = L"./testarb.dat";
 #endif
 	std::string data;
-	if (LoadWxFile(StringUtil::stringW(datafile), L"DefaultConfig.xml", data))
+	if (LoadWxFile(datafile, L"DefaultConfig.xml", data))
 		bOk = tree->LoadXML(data.c_str(), data.length(), errMsg);
 
 	return bOk ? tree : ElementNodePtr();
@@ -95,17 +101,21 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 
 std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 {
+#if defined(__WXWINDOWS__)
 #ifdef __WXMAC__
 	// Command line programs on Mac are acting like unix. GetResourcesDir
 	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	wxString datafile = L"./testarb.dat";
+	std::wstring datafile = L"./testarb.dat";
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
+	std::wstring datafile = StringUtil::stringW(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
+#endif
+#else
+	std::wstring datafile = L"./testarb.dat";
 #endif
 
 	std::string dtd;
-	LoadWxFile(StringUtil::stringW(datafile), L"AgilityRecordBook.dtd", dtd);
+	LoadWxFile(datafile, L"AgilityRecordBook.dtd", dtd);
 
 	if (bNormalizeCRNL)
 		dtd = StringUtil::Replace(dtd, "\r\n", "\n");

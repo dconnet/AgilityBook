@@ -19,7 +19,8 @@
 #include "DlgPageEncodeFiles.h"
 
 #include "DlgARBHelp.h"
-#include "StringUtil.h"
+
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

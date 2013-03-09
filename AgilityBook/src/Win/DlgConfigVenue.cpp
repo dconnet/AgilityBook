@@ -39,17 +39,18 @@
 #include "DlgConfigVenue.h"
 
 #include "AgilityBook.h"
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfigVenue.h"
 #include "DlgConfigEvent.h"
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigTitle.h"
 #include "DlgConfigureData.h"
 #include "DlgName.h"
 #include "Globals.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
+
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfigVenue.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

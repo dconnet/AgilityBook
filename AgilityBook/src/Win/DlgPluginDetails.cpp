@@ -22,12 +22,13 @@
 #include "DlgPluginDetails.h"
 
 #include "AgilityBook.h"
-#include "ARBConfig.h"
-#include "ARBConfigCalSite.h"
 #include "DlgCalendarQueryDetail.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBConfigCalSite.h"
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

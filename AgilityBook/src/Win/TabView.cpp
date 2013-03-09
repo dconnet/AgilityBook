@@ -31,6 +31,7 @@
 #include "ImageManager.h"
 #include "MainFrm.h"
 #include "RegItems.h"
+#include <wx/choicebk.h>
 #include <wx/config.h>
 
 #ifdef __WXMSW__

@@ -23,14 +23,15 @@
 #include "CalendarSiteUSDAA.h"
 
 #include "../tidy/include/tidy.h"
-#include "ARBStructure.h"
-#include "BreakLine.h"
-#include "Element.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
 #include "ReadHttp.h"
-#include "StringUtil.h"
-#include "VersionNum.h"
+
+#include "ARB/ARBStructure.h"
+#include "ARB/BreakLine.h"
+#include "ARB/Element.h"
+#include "ARB/StringUtil.h"
+#include "ARB/VersionNum.h"
 #include <errno.h>
 #include <wx/ffile.h>
 #include <wx/mstream.h>

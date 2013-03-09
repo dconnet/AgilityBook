@@ -17,9 +17,10 @@
  * @li 2007-08-12 DRC Created
  */
 
-#include "ARBTypes.h"
+#include "ARB/ARBTypes.h"
 class CAgilityBookDoc;
 class CCalendarSitesImpl;
+
 
 /**
  * This class manages the direct download of calendar data from the web.

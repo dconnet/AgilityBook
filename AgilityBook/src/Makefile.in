@@ -28,7 +28,7 @@ SUBDIRS = UnitTest++ ARB TestARB ARBHelp Win
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -DWXWIDGETS
+INCLUDES =
 
 ##########
 # List of programs and archives to link

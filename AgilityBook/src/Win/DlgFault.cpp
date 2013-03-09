@@ -23,8 +23,9 @@
 
 #include "AgilityBook.h"
 #include "ComboBoxes.h"
-#include "StringUtil.h"
 #include "Validators.h"
+
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

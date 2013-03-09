@@ -27,8 +27,8 @@
 #include "stdafx.h"
 #include "Localization.h"
 
-#include "ARBStructure.h"
-#include "StringUtil.h"
+#include "ARB/ARBStructure.h"
+#include "ARB/StringUtil.h"
 #include <wx/string.h>
 
 #ifdef __WXMSW__

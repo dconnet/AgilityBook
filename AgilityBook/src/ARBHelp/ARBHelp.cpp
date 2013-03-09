@@ -20,6 +20,7 @@
 #include "DlgARBHelp.h"
 
 #include "DlgPageDecode.h"
+
 #include <wx/cmdline.h>
 #include <wx/config.h>
 

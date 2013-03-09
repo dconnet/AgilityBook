@@ -27,21 +27,22 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfig.h"
 #include "CalendarSiteUSDAA.h"
 #include "CheckTreeCtrl.h"
 #include "DlgAssignColumns.h"
 #include "DlgCalendarQueryDetail.h"
 #include "DlgPluginDetails.h"
 #include "DlgProgress.h"
-#include "Element.h"
 #include "Globals.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
 #include "ListData.h"
 #include "ReadHttp.h"
-#include "VersionNum.h"
+
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/Element.h"
+#include "ARB/VersionNum.h"
 #include <map>
 #include <vector>
 #include <wx/dir.h>

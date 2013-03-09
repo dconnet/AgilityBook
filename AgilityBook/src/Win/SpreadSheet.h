@@ -26,7 +26,7 @@
 #define HAS_AUTOMATION	0
 #endif
 
-#include "ARBTypes.h"
+#include "ARB/ARBTypes.h"
 #include <string>
 #include <vector>
 class IDlgProgress;

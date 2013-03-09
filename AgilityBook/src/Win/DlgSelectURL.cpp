@@ -22,9 +22,10 @@
 #include "DlgSelectURL.h"
 
 #include "AgilityBook.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
+
+#include "ARB/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

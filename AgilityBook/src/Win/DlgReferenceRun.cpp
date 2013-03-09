@@ -28,13 +28,14 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBDogReferenceRun.h"
-#include "ARBTypes.h"
 #include "ComboBoxes.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "ValidatorsQ.h"
 #include "Widgets.h"
+
+#include "ARB/ARBDogReferenceRun.h"
+#include "ARB/ARBTypes.h"
+#include "ARB/StringUtil.h"
 #include <set>
 
 #ifdef __WXMSW__

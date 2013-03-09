@@ -29,12 +29,13 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "ARBConfig.h"
-#include "ARBDogExistingPoints.h"
 #include "Globals.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBDogExistingPoints.h"
+#include "ARB/StringUtil.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 

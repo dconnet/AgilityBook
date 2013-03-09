@@ -18,8 +18,8 @@
  * @li 2004-02-03 DRC Created
  */
 
-#include "ARBDate.h"
-#include "ARBDogExistingPoints.h"
+#include "ARB/ARBDate.h"
+#include "ARB/ARBDogExistingPoints.h"
 class CAgilityBookDoc;
 class CDlgPointsDivisionData;
 class CDlgPointsEventData;

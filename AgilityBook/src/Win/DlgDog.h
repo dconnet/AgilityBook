@@ -35,12 +35,12 @@
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
-#include "ARBDate.h"
-#include "ARBDogExistingPoints.h"
-#include "ARBDogRegNum.h"
-#include "ARBDogTitle.h"
-#include "ARBTypes.h"
 #include "ColumnOrder.h"
+#include "ARB/ARBDate.h"
+#include "ARB/ARBDogExistingPoints.h"
+#include "ARB/ARBDogRegNum.h"
+#include "ARB/ARBDogTitle.h"
+#include "ARB/ARBTypes.h"
 #include <wx/listctrl.h>
 class CAgilityBookDoc;
 class CDlgDogDataTitle;

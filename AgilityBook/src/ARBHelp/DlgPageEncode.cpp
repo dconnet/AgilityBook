@@ -22,11 +22,12 @@
 #include "stdafx.h"
 #include "DlgPageEncode.h"
 
-#include "../ARB/VersionNum.h"
 #include "ARBHelp.h"
-#include "ARBTypes.h"
 #include "DlgARBHelp.h"
-#include "StringUtil.h"
+
+#include "ARB/ARBTypes.h"
+#include "ARB/StringUtil.h"
+#include "ARB/VersionNum.h"
 #include <set>
 #include <wx/config.h>
 #include <wx/dir.h>

@@ -52,12 +52,10 @@
 #include "AgilityBookPanels.h"
 #include "AgilityBookTreeData.h"
 #include "AgilityBookTreeView.h"
-#include "ARBTypes.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgFind.h"
 #include "DlgReorder.h"
-#include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "ImageManager.h"
@@ -66,6 +64,9 @@
 #include "PointsData.h"
 #include "Print.h"
 #include "RegItems.h"
+
+#include "ARB/ARBTypes.h"
+#include "ARB/Element.h"
 #include <algorithm>
 #include <wx/config.h>
 

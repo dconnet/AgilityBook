@@ -18,7 +18,8 @@
  * @li 2005-09-20 DRC Created
  */
 
-#include "ARBTypes.h"
+#include "ARB/ARBTypes.h"
+
 
 extern bool CheckLink(
 		std::wstring const& inLink,

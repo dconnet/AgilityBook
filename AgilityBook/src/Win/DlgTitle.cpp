@@ -31,12 +31,13 @@
 #include "DlgTitle.h"
 
 #include "AgilityBook.h"
-#include "ARBConfig.h"
-#include "ARBDogTitle.h"
 #include "ComboBoxes.h"
 #include "RichEditCtrl2.h"
-#include "StringUtil.h"
 #include "Validators.h"
+
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBDogTitle.h"
+#include "ARB/StringUtil.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 

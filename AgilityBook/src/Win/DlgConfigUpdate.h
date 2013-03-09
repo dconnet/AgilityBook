@@ -16,7 +16,7 @@
  * @li 2009-02-10 DRC Ported to wxWidgets.
  */
 
-#include "ARBAgilityRecordBook.h"
+#include "ARB/ARBAgilityRecordBook.h"
 class CTextCtrl;
 
 

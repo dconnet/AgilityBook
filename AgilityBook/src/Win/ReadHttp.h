@@ -19,7 +19,7 @@
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
  */
 
-#include "StringUtil.h"
+#include "ARB/StringUtil.h"
 class IDlgProgress;
 class wxOutputStream;
 class wxURL;

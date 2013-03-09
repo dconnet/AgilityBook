@@ -18,8 +18,8 @@
  * @li 2004-04-02 DRC Up the ref count to prevent problems.
  */
 
-#include "ARBTypes.h"
 #include "ListData.h"
+#include "ARB/ARBTypes.h"
 class CDlgConfigVenue;
 
 

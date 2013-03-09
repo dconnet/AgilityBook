@@ -17,9 +17,9 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARBCalendar.h"
-#include "ARBStructure.h"
-#include "Element.h"
+#include "ARB/ARBCalendar.h"
+#include "ARB/ARBStructure.h"
+#include "ARB/Element.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

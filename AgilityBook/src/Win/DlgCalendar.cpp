@@ -33,14 +33,15 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ARBCalendar.h"
-#include "ARBConfig.h"
 #include "ComboBoxes.h"
 #include "DlgInfoNote.h"
 #include "NoteButton.h"
 #include "RichEditCtrl2.h"
-#include "StringUtil.h"
 #include "Validators.h"
+
+#include "ARB/ARBCalendar.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/StringUtil.h"
 #include <set>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>

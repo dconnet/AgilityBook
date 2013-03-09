@@ -19,9 +19,9 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
+#include "ARB/ARB_Q.h"
+#include "ARB/ARBTypes.h"
 #include <set>
-#include "ARB_Q.h"
-#include "ARBTypes.h"
 class CAgilityBookDoc;
 class CTextCtrl;
 

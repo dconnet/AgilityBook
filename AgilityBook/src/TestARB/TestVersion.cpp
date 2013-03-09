@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARBTypes.h"
-#include "VersionNum.h"
+#include "ARB/ARBTypes.h"
+#include "ARB/VersionNum.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

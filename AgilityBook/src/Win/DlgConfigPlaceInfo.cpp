@@ -20,9 +20,10 @@
 #include "DlgConfigPlaceInfo.h"
 
 #include "AgilityBook.h"
-#include "StringUtil.h"
 #include "Validators.h"
 #include "Widgets.h"
+
+#include "ARB/StringUtil.h"
 #include <algorithm>
 #include <wx/valgen.h>
 
