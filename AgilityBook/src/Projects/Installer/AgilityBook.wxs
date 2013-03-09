@@ -57,7 +57,7 @@ Revision History
 
 <Product Id="*"
 	UpgradeCode="$(var.UPGRADECODE)"
-	Name="Agility Record Book $(var.CURRENT_VERSION)"
+	Name="Agility Record Book !(bind.fileVersion._AgilityBook.exe)"
 	Codepage="0"
 	Language="!(loc.LANG)"
 	Version="$(var.CURRENT_VERSION)"

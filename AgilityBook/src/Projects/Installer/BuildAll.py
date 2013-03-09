@@ -197,7 +197,8 @@ def main():
 	if updateBuildNumber:
 		cmds = (
 			r'cd ..\..\Include',
-			r'python SetBuildNumber.py --official')
+			r'python SetBuildNumber.py --official',
+			r'cd ..\Projects\Installer')
 		RunCmds(cmds)
 
 	# Targets:

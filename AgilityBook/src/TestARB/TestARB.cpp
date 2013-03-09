@@ -147,6 +147,7 @@ bool CLanguageManager::SetLang(int langId)
 #endif
 }
 
+
 void SetLang(int langId)
 {
 	if (g_LangMgr)

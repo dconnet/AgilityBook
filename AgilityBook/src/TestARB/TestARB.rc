@@ -43,7 +43,7 @@ END
 3 TEXTINCLUDE  
 BEGIN
     "#include ""res\\TestARB.rc2""\r\n"
-	"#if defined(USE_WXWIDGETS)\r\n"
+    "#if defined(USE_WXWIDGETS)\r\n"
     "#include ""wx/msw/wx.rc""\r\n"
     "#endif\r\n\0"
 END
