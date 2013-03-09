@@ -1109,11 +1109,12 @@
 				INFOPLIST_FILE = InfoCocoa.plist;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
-					"-I",
-					../../Include,
-					"-I$BOOST_ROOT",
+					"-I../../Include",
+					"-isystem",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
+					"-DUSE_WXWIDGETS",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
 					"-D__WXOSX__",
@@ -1187,11 +1188,12 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-I",
-					../../Include,
-					"-I$BOOST_ROOT",
+					"-I../../Include",
+					"-isystem",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
+					"-DUSE_WXWIDGETS",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
 					"-D__WXMAC__",
