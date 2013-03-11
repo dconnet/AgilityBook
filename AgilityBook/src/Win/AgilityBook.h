@@ -49,6 +49,10 @@ protected:
 	virtual bool OnInit();
 	virtual int OnExit();
 
+	DECLARE_EVENT_TABLE()
+	void OnQueryEndSession(wxCloseEvent& evt);
+	void OnEndSession(wxCloseEvent& evt);
+
 	CLanguageManager* m_LangMgr;
 	CUpdateInfo m_UpdateInfo;
 	CAgilityBookDocManager* m_manager;
