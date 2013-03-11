@@ -64,6 +64,7 @@ public:
 	virtual int OnNeedIcon() const				{return -1;}
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 	virtual bool OnEdit() = 0;
+	virtual bool Validate() = 0;
 	virtual void Apply() = 0;
 	virtual ARBCalendarPtr GetCalendar() const	{return ARBCalendarPtr();}
 protected:
@@ -99,6 +100,7 @@ public:
 	virtual int OnNeedIcon() const;
 	virtual std::wstring OnNeedText(long iCol) const;
 	virtual bool OnEdit();
+	virtual bool Validate();
 	virtual void Apply();
 	virtual ARBCalendarPtr GetCalendar() const	{return m_pCal;}
 private:
@@ -159,6 +161,13 @@ bool CDlgListCtrlDataCalendar::OnEdit()
 }
 
 
+bool CDlgListCtrlDataCalendar::Validate()
+{
+#pragma PRAGMA_TODO(validate)
+	return true;
+}
+
+
 void CDlgListCtrlDataCalendar::Apply()
 {
 	m_Parent->m_pDoc->Book().GetCalendar().AddCalendar(m_pCal);
@@ -187,6 +196,7 @@ public:
 	}
 	virtual std::wstring OnNeedText(long iCol) const	{return m_Fault;}
 	virtual bool OnEdit();
+	virtual bool Validate();
 	virtual void Apply();
 private:
 	CAgilityBookDoc* m_pDoc;
@@ -239,6 +249,13 @@ bool CDlgListCtrlDataFaults::OnEdit()
 }
 
 
+bool CDlgListCtrlDataFaults::Validate()
+{
+#pragma PRAGMA_TODO(validate)
+	return true;
+}
+
+
 void CDlgListCtrlDataFaults::Apply()
 {
 	if (0 < m_Fault.length())
@@ -264,6 +281,7 @@ public:
 	}
 	virtual std::wstring OnNeedText(long iCol) const;
 	virtual bool OnEdit();
+	virtual bool Validate();
 	virtual void Apply();
 private:
 	ARBConfig& m_pConfig;
@@ -297,6 +315,13 @@ bool CDlgListCtrlDataOtherPoints::OnEdit()
 }
 
 
+bool CDlgListCtrlDataOtherPoints::Validate()
+{
+#pragma PRAGMA_TODO(validate)
+	return true;
+}
+
+
 void CDlgListCtrlDataOtherPoints::Apply()
 {
 	m_pRun->GetOtherPoints().AddOtherPoints(m_Other);
@@ -320,6 +345,7 @@ public:
 	}
 	virtual std::wstring OnNeedText(long iCol) const;
 	virtual bool OnEdit();
+	virtual bool Validate();
 	virtual void Apply();
 private:
 	CDlgListCtrl* m_pDlg;
@@ -355,6 +381,13 @@ bool CDlgListCtrlDataPartners::OnEdit()
 	m_pDlg->GetAllPartners(handlers, dogs);
 	CDlgPartner dlg(m_Partner, handlers, dogs);
 	return wxID_OK == dlg.ShowModal();
+}
+
+
+bool CDlgListCtrlDataPartners::Validate()
+{
+#pragma PRAGMA_TODO(validate)
+	return true;
 }
 
 
@@ -936,6 +969,18 @@ bool CDlgListCtrl::DoOK()
 		m_pRun->GetPartners().clear();
 		break;
 	}
+
+	// Validate
+	for (int index = 0; index < m_ctrlList->GetItemCount(); ++index)
+	{
+		CDlgListCtrlDataPtr pData = GetItemListData(index);
+		if (pData)
+		{
+			if (!pData->Validate())
+				return false;
+		}
+	}
+
 
 	// Apply
 	for (int index = 0; index < m_ctrlList->GetItemCount(); ++index)
