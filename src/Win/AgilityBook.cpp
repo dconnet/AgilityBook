@@ -156,6 +156,12 @@ void CAgilityBookDocManager::OnPreview(wxCommandEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
+BEGIN_EVENT_TABLE(CAgilityBookApp, wxApp)
+	EVT_QUERY_END_SESSION(CAgilityBookApp::OnQueryEndSession)
+	EVT_END_SESSION(CAgilityBookApp::OnEndSession)
+END_EVENT_TABLE()
+
+
 CAgilityBookApp::CAgilityBookApp()
 	: m_LangMgr(NULL)
 	, m_UpdateInfo()
@@ -486,4 +492,42 @@ int CAgilityBookApp::OnExit()
 	CImageManager::Delete();
 	Element::Terminate();
 	return wxApp::OnExit();
+}
+
+
+void CAgilityBookApp::OnQueryEndSession(wxCloseEvent& evt)
+{
+	if (m_manager)
+	{
+		wxDocument* pDoc = m_manager->GetCurrentDocument();
+		if (pDoc && pDoc->IsModified())
+		{
+			wxString name = pDoc->GetFilename();
+			// If the doc has never been saved (hence has no filename),
+			// let normal processing pop up a save dlg to block shutdown.
+			if (name.empty() || !pDoc->GetDocumentSaved())
+			{
+				evt.Skip();
+			}
+		}
+	}
+}
+
+
+void CAgilityBookApp::OnEndSession(wxCloseEvent& evt)
+{
+	if (m_manager)
+	{
+		wxDocument* pDoc = m_manager->GetCurrentDocument();
+		if (pDoc && pDoc->IsModified())
+		{
+			wxString name = pDoc->GetFilename();
+			if (!name.empty() && pDoc->GetDocumentSaved())
+			{
+				pDoc->OnSaveDocument(name);
+			}
+		}
+	}
+	// Pass control to wx so it shuts things down normally.
+	evt.Skip();
 }
