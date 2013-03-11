@@ -1,4 +1,6 @@
-3/9/2013: v2.3.12.<in development>
+3/10/2013: v2.3.12.<in development>
+- New features / Enhancements:
+  - Autosave modified file when user logs out or reboots system.
 
 3/9/2013: v2.3.11.85
 - Bumped Configuration v42:
