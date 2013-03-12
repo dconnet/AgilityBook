@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-03-12 DRC Dog/Handler may not be empty.
  * @li 2012-05-07 DRC Added autocompletion to combo boxes.
  * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -80,7 +81,7 @@ CDlgPartner::CDlgPartner(
 	CAutoFillComboBox* ctrlHandler = new CAutoFillComboBox(this, wxID_ANY, m_Handler,
 		wxDefaultPosition, wxDefaultSize,
 		handlers, wxCB_DROPDOWN|wxCB_SORT,
-		CTrimValidator(&m_Handler, TRIMVALIDATOR_TRIM_BOTH));
+		CTrimValidator(&m_Handler, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	ctrlHandler->SetHelpText(_("HIDC_PARTNER_NAME"));
 	ctrlHandler->SetToolTip(_("HIDC_PARTNER_NAME"));
 	ctrlHandler->AutoComplete(handlers);
@@ -93,7 +94,7 @@ CDlgPartner::CDlgPartner(
 	CAutoFillComboBox* ctrlDog = new CAutoFillComboBox(this, wxID_ANY, m_Dog,
 		wxDefaultPosition, wxDefaultSize,
 		dogs, wxCB_DROPDOWN|wxCB_SORT,
-		CTrimValidator(&m_Dog, TRIMVALIDATOR_TRIM_BOTH));
+		CTrimValidator(&m_Dog, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	ctrlDog->SetHelpText(_("HIDC_PARTNER_CALLNAME"));
 	ctrlDog->SetToolTip(_("HIDC_PARTNER_CALLNAME"));
 	ctrlDog->AutoComplete(dogs);
