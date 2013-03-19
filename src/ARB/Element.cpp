@@ -90,6 +90,17 @@
 
 ////////////////////////////////////////////////////////////////////////////
 
+#ifndef _WIN32
+#include <iostream>
+static void OutputDebugString(wchar_t const* msg)
+{
+	if (msg)
+		std::wcout << msg;
+}
+#endif
+
+////////////////////////////////////////////////////////////////////////////
+
 #if defined(__WXWINDOWS__)
 
 class wxInputStdStream : public wxInputStream
@@ -1237,15 +1248,6 @@ bool ElementNode::SaveXML(std::ostream& outOutput) const
 }
 
 
-#ifdef __WXWINDOWS__
-bool ElementNode::SaveXML(wxOutputStream& outOutput) const
-{
-	std::string dtd;
-	return SaveXML(outOutput, dtd);
-}
-#endif
-
-
 #if USE_LIBXML2
 static int BufferWriteCallback(void* context, const char* buffer, int len)
 {
@@ -1305,28 +1307,6 @@ bool ElementNode::SaveXML(
 	return doc.Save(out);
 #endif
 }
-
-
-#ifdef __WXWINDOWS__
-bool ElementNode::SaveXML(
-		wxOutputStream& outOutput,
-		std::string const& inDTD) const
-{
-#if USE_LIBXML2
-	assert(0);
-	return false;
-#else
-	wxXmlDocument doc;
-	doc.SetVersion(L"1.0");
-	doc.SetFileEncoding(L"utf-8");
-	wxXmlNode* root = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, StringUtil::stringWX(GetName()));
-	doc.SetRoot(root);
-	// TODO: Insert DTD
-	CreateDoc(root, *this);
-	return doc.Save(outOutput);
-#endif
-}
-#endif
 
 
 bool ElementNode::SaveXML(std::wstring const& outFile) const

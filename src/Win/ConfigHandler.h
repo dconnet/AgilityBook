@@ -27,13 +27,13 @@ public:
 	 * Load a file from a wxWidget archive (zip file)
 	 * @param zipFile Full path name.
 	 * @param archiveFile Name of file in zip file to extract.
-	 * @param outData Data of from archiveFile.
+	 * @param ioData Data of from archiveFile.
 	 * @return Success
 	 */
 	static bool LoadWxFile(
 			std::wstring const& zipFile,
 			std::wstring const& archiveFile,
-			std::string& outData);
+			std::iostream& ioData);
 
 	CConfigHandler();
 
