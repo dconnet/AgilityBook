@@ -128,7 +128,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		size_t size;
 		wxFileInputStream file(m_File);
 		wxStdInputStream stdfile(file);
-		m_MD5 = ARBMsgDigest::ComputeFile(stdfile, &size);
+		m_MD5 = ARBMsgDigest::Compute(stdfile, &size);
 		if (m_MD5.empty())
 			m_File.erase();
 		else
@@ -183,7 +183,7 @@ void CDlgDigest::OnOk(wxCommandEvent& evt)
 		size_t size;
 		wxFileInputStream file(m_File);
 		wxStdInputStream stdfile(file);
-		m_MD5 = ARBMsgDigest::ComputeFile(stdfile, &size);
+		m_MD5 = ARBMsgDigest::Compute(stdfile, &size);
 		m_Size = static_cast<long>(size);
 		TransferDataToWindow();
 	}

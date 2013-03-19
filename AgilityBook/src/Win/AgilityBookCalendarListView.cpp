@@ -1068,8 +1068,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 					table.EndLine();
 				}
 
-				wxMemoryOutputStream rawCal;
-				wxStdOutputStream iCal(rawCal);
+				std::stringstream iCal;
 				ElementNodePtr tree(ElementNode::New(CLIPDATA));
 
 				// Now all the data.
@@ -1093,11 +1092,10 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 					table.EndLine();
 				}
 				iCalendar->Release();
-				rawCal.Close();
 
 				clpData.AddData(eFormatCalendar, tree);
 				clpData.AddData(table);
-				clpData.AddData(eFormatiCalendar, StringUtil::stringW(StringUtil::stringA(rawCal)));
+				clpData.AddData(eFormatiCalendar, StringUtil::stringW(iCal.str()));
 				clpData.CommitData();
 			}
 		}

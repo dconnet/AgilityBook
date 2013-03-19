@@ -37,12 +37,12 @@
 bool CConfigHandler::LoadWxFile(
 		std::wstring const& zipFile,
 		std::wstring const& archiveFile,
-		std::string& outData)
+		std::iostream& ioData)
 {
 #if defined(__WXWINDOWS__)
-	return ExtractFile(zipFile, StringUtil::stringWX(archiveFile), outData);
+	return ExtractFile(zipFile, StringUtil::stringWX(archiveFile), ioData);
 #else
-	return ExtractFile(StringUtil::stringA(zipFile), StringUtil::stringA(archiveFile), outData);
+	return ExtractFile(StringUtil::stringA(zipFile), StringUtil::stringA(archiveFile), ioData);
 #endif
 }
 
@@ -71,9 +71,9 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 #else
 	std::wstring datafile = L"./testarb.dat";
 #endif
-	std::string data;
+	std::stringstream data;
 	if (LoadWxFile(datafile, L"DefaultConfig.xml", data))
-		bOk = tree->LoadXML(data.c_str(), data.length(), errMsg);
+		bOk = tree->LoadXML(data, errMsg);
 
 	return bOk ? tree : ElementNodePtr();
 }
@@ -94,8 +94,9 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 	std::wstring datafile = L"./testarb.dat";
 #endif
 
-	std::string dtd;
-	LoadWxFile(datafile, L"AgilityRecordBook.dtd", dtd);
+	std::stringstream data;
+	LoadWxFile(datafile, L"AgilityRecordBook.dtd", data);
+	std::string dtd(data.str());
 
 	if (bNormalizeCRNL)
 		dtd = StringUtil::Replace(dtd, "\r\n", "\n");

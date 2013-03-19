@@ -516,7 +516,7 @@ bool CUpdateInfo::CheckProgram(
 							progress->SetCaption(StringUtil::stringW(_("IDS_VALIDATING")));
 							wxFileInputStream file(filename);
 							wxStdInputStream stdfile(file);
-							if (ARBMsgDigest::ComputeFile(stdfile) != m_md5)
+							if (ARBMsgDigest::Compute(stdfile) != m_md5)
 							{
 								bGotoWeb = true;
 								if (!errMsg.empty())

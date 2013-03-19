@@ -627,19 +627,21 @@ bool CWizardStart::DoWizardFinish()
 						}
 						entries = &allEntries;
 					}
-					wxFFileOutputStream rawOut(file.GetPath(), L"wb");
-					wxStdOutputStream output(rawOut);
-					if (rawOut.IsOk())
+					std::stringstream outData;
+					int nWarning = CAgilityBookOptions::CalendarOpeningNear();
+					ICalendar* iCalendar = ICalendar::iCalendarBegin(outData, (WIZ_EXPORT_CALENDAR_VCAL == data) ? 1 : 2);
+					for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
 					{
-						int nWarning = CAgilityBookOptions::CalendarOpeningNear();
-						ICalendar* iCalendar = ICalendar::iCalendarBegin(output, (WIZ_EXPORT_CALENDAR_VCAL == data) ? 1 : 2);
-						for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
-						{
-							ARBCalendarPtr pCal = *iterCal;
-							pCal->iCalendar(iCalendar, nWarning);
-						}
-						iCalendar->Release();
-						rawOut.Close();
+						ARBCalendarPtr pCal = *iterCal;
+						pCal->iCalendar(iCalendar, nWarning);
+					}
+					iCalendar->Release();
+					wxFFileOutputStream output(file.GetPath(), L"wb");
+					if (output.IsOk())
+					{
+						std::string const& str = outData.str();
+						output.Write(str.c_str(), str.length());
+						output.Close();
 					}
 					bOk = true;
 				}

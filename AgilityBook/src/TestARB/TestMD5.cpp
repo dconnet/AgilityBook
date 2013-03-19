@@ -34,18 +34,8 @@ SUITE(TestMsgDigest)
 	{
 		if (!g_bMicroTest)
 		{
-			std::wstring digest = ARBMsgDigest::ComputeBuffer(RawString, strlen(RawString));
-			CHECK(digest == DigestString);
-		}
-	}
-
-
-	TEST(RawDecodeStream)
-	{
-		if (!g_bMicroTest)
-		{
-			std::stringstream str(RawString);
-			std::wstring digest = ARBMsgDigest::ComputeFile(str);
+			std::stringstream buffer(RawString);
+			std::wstring digest = ARBMsgDigest::Compute(buffer);
 			CHECK(digest == DigestString);
 		}
 	}

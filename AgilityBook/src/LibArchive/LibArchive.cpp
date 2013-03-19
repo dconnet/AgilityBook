@@ -35,10 +35,9 @@
 bool ExtractFile(
 		std::wstring const& zipFile,
 		wxString const& archiveFile,
-		std::string& outData)
+		std::iostream& ioData)
 {
 	bool rc = false;
-	outData.erase();
 
 	wxString zipfile = wxFileSystem::FileNameToURL(wxString(zipFile.c_str()));
 	zipfile += L"#zip:" + archiveFile;
@@ -53,7 +52,7 @@ bool ExtractFile(
 			char buffer[BUFFER_SIZE];
 			size_t num = BUFFER_SIZE;
 			input->Read(buffer, num);
-			outData.append(buffer, input->LastRead());
+			ioData.write(buffer, input->LastRead());
 			size += input->LastRead();
 		}
 		delete file;
@@ -72,10 +71,9 @@ bool ExtractFile(
 bool ExtractFile(
 		std::string const& zipFile,
 		std::string const& archiveFile,
-		std::string& outData)
+		std::iostream& ioData)
 {
 	bool rc = false;
-	outData.erase();
 
 #ifdef USEWIN32IOAPI
 	zlib_filefunc64_def ffunc;
@@ -105,7 +103,7 @@ bool ExtractFile(
 							break;
 						else if (err > 0)
 						{
-							outData.append(buf, err);
+							ioData.write(buf, err);
 						}
 					} while (err > 0);
 				}
