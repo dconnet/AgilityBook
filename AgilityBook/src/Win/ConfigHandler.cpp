@@ -34,9 +34,8 @@
 bool CConfigHandler::LoadWxFile(
 		std::wstring const& zipFile,
 		std::wstring const& archiveFile,
-		std::string& outData)
+		std::iostream& ioData)
 {
-	outData.erase();
 	wxString zipfile = wxFileSystem::FileNameToURL(wxString(zipFile.c_str()));
 	zipfile += L"#zip:" + StringUtil::stringWX(archiveFile);
 	wxFileSystem filesys;
@@ -50,7 +49,7 @@ bool CConfigHandler::LoadWxFile(
 			char buffer[1024];
 			size_t num = 1024;
 			input->Read(buffer, num);
-			outData.append(buffer, input->LastRead());
+			ioData.write(buffer, input->LastRead());
 			size += input->LastRead();
 		}
 		delete file;
@@ -74,9 +73,9 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
-	std::string data;
+	std::stringstream data;
 	if (LoadWxFile(StringUtil::stringW(datafile), L"DefaultConfig.xml", data))
-		bOk = tree->LoadXML(data.c_str(), data.length(), errMsg);
+		bOk = tree->LoadXML(data, errMsg);
 
 	return bOk ? tree : ElementNodePtr();
 }
@@ -87,8 +86,9 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 
-	std::string dtd;
-	LoadWxFile(StringUtil::stringW(datafile), L"AgilityRecordBook.dtd", dtd);
+	std::stringstream data;
+	LoadWxFile(StringUtil::stringW(datafile), L"AgilityRecordBook.dtd", data);
+	std::string dtd(data.str());
 
 	if (bNormalizeCRNL)
 		dtd = StringUtil::Replace(dtd, "\r\n", "\n");

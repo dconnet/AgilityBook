@@ -37,7 +37,6 @@
 #include "ARBTypes.h"
 #include "Element.h"
 #include "StringUtil.h"
-#include <wx/mstream.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -63,7 +62,7 @@ class ARBiCal : public ICalendar
 {
 public:
 	ARBiCal(
-			wxOutputStream& ioStream,
+			std::ostream& ioStream,
 			int inVersion);
 	virtual ~ARBiCal()
 	{
@@ -141,7 +140,7 @@ private:
 			std::wstring const& inText,
 			bool bQuotedPrint);
 
-	wxOutputStream& m_ioStream;
+	std::ostream& m_ioStream;
 	int m_Version;
 	// Not implemented
 	ARBiCal(ARBiCal const& rhs);
@@ -150,7 +149,7 @@ private:
 
 
 ARBiCal::ARBiCal(
-		wxOutputStream& ioStream,
+		std::ostream& ioStream,
 		int inVersion)
 	: m_ioStream(ioStream)
 	, m_Version(inVersion)
@@ -174,7 +173,7 @@ ARBiCal::ARBiCal(
 
 void ARBiCal::Write(char inVal)
 {
-	m_ioStream.Write(&inVal, 1);
+	m_ioStream.write(&inVal, 1);
 }
 
 
@@ -183,7 +182,7 @@ void ARBiCal::Write(char const* const inVal)
 	if (inVal && *inVal)
 	{
 		size_t len = strlen(inVal);
-		m_ioStream.Write(inVal, len);
+		m_ioStream.write(inVal, len);
 	}
 }
 
@@ -191,7 +190,7 @@ void ARBiCal::Write(char const* const inVal)
 void ARBiCal::Write(std::string const& inVal)
 {
 	if (!inVal.empty())
-		m_ioStream.Write(inVal.c_str(), inVal.length());
+		m_ioStream.write(inVal.c_str(), inVal.length());
 }
 
 
@@ -337,7 +336,7 @@ ICalendar::~ICalendar()
 
 
 ICalendar* ICalendar::iCalendarBegin(
-		wxOutputStream& ioStream,
+		std::ostream& ioStream,
 		int inVersion)
 {
 	ICalendar* pCal = NULL;

@@ -383,7 +383,7 @@ static void MD5Final(
 
 /////////////////////////////////////////////////////////////////////////////
 
-static std::wstring ConvertBuffer(const unsigned char digest[16])
+static std::wstring ConvertDigest(const unsigned char digest[16])
 {
 	std::wostringstream str;
 	for (int i = 0; i < 16; ++i)
@@ -396,27 +396,7 @@ static std::wstring ConvertBuffer(const unsigned char digest[16])
 }
 
 
-std::wstring ARBMsgDigest::ComputeBuffer(std::wstring const& inData)
-{
-	std::string data(StringUtil::stringA(inData));
-	return ComputeBuffer(data.c_str(), data.length());
-}
-
-
-std::wstring ARBMsgDigest::ComputeBuffer(
-		char const* inData,
-		size_t nData)
-{
-	MD5_CTX context;
-	MD5Init(&context); 
-	MD5Update(&context, reinterpret_cast<unsigned char const*>(inData), static_cast<unsigned int>(nData));
-	unsigned char digest[16];
-	MD5Final(digest, &context);
-	return ConvertBuffer(digest);
-}
-
-
-std::wstring ARBMsgDigest::ComputeFile(
+std::wstring ARBMsgDigest::Compute(
 		wchar_t const* const inFileName,
 		size_t* outSize)
 {
@@ -437,13 +417,39 @@ std::wstring ARBMsgDigest::ComputeFile(
 	}
 	unsigned char digest[16];
 	MD5Final(digest, &context);
-	return ConvertBuffer(digest);
+	return ConvertDigest(digest);
 }
 
 
-std::wstring ARBMsgDigest::ComputeFile(
+std::wstring ARBMsgDigest::Compute(
 		std::wstring const& inFileName,
 		size_t* outSize)
 {
-	return ComputeFile(inFileName.c_str(), outSize);
+	return Compute(inFileName.c_str(), outSize);
+}
+
+std::wstring ARBMsgDigest::Compute(
+		std::istream& inFile,
+		size_t* outSize)
+{
+	if (outSize)
+		*outSize = 0;
+	if (!inFile.good())
+		return std::wstring();
+	MD5_CTX context;
+	MD5Init(&context); 
+	while (inFile.good())
+	{
+		unsigned char buffer[1024];
+		inFile.read(reinterpret_cast<char*>(buffer), sizeof(buffer));
+		std::streamsize bytes = inFile.gcount();
+		if (0 >= bytes)
+			break;
+		if (outSize)
+			*outSize += static_cast<size_t>(bytes);
+		MD5Update(&context, buffer, bytes);
+	}
+	unsigned char digest[16];
+	MD5Final(digest, &context);
+	return ConvertDigest(digest);
 }

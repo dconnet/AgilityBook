@@ -240,10 +240,10 @@ ElementNodePtr LoadXMLData(size_t id)
 	std::wstring datafile = L"./testarb.dat";
 #endif
 	assert(id < gc_NumConfigs);
-	std::string data;
+	std::stringstream data;
 	bool bOk = CConfigHandler::LoadWxFile(datafile, gc_Configs[id], data);
 	assert(bOk);
-	if (!bOk || !tree->LoadXML(data.c_str(), data.length(), errMsg))
+	if (!bOk || !tree->LoadXML(data, errMsg))
 	{
 		std::wcout << errMsg.str() << std::endl;
 		tree.reset();

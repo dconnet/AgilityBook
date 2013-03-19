@@ -514,7 +514,7 @@ bool CUpdateInfo::CheckProgram(
 						if (!bGotoWeb && !m_md5.empty())
 						{
 							progress->SetCaption(StringUtil::stringW(_("IDS_VALIDATING")));
-							if (ARBMsgDigest::ComputeFile(filename) != m_md5)
+							if (ARBMsgDigest::Compute(filename) != m_md5)
 							{
 								bGotoWeb = true;
 								if (!errMsg.empty())

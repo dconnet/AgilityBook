@@ -16,21 +16,20 @@
  */
 
 #include <string>
+#include <istream>
 
 
 class ARBMsgDigest
 {
 	ARBMsgDigest();
 public:
-	static std::wstring ComputeBuffer(
-			std::wstring const& inData);
-	static std::wstring ComputeBuffer(
-			char const* inData,
-			size_t nData);
-	static std::wstring ComputeFile(
+	static std::wstring Compute(
 			wchar_t const* const inFileName,
 			size_t* outSize = NULL);
-	static std::wstring ComputeFile(
+	static std::wstring Compute(
 			std::wstring const& inFileName,
+			size_t* outSize = NULL);
+	static std::wstring Compute(
+			std::istream& inFile,
 			size_t* outSize = NULL);
 };

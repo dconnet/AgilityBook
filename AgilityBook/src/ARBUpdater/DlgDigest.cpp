@@ -125,7 +125,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	{
 		wxBusyCursor wait;
 		size_t size;
-		m_MD5 = ARBMsgDigest::ComputeFile(m_File.wx_str(), &size);
+		m_MD5 = ARBMsgDigest::Compute(m_File.wx_str(), &size);
 		if (m_MD5.empty())
 			m_File.erase();
 		else
@@ -178,7 +178,7 @@ void CDlgDigest::OnOk(wxCommandEvent& evt)
 		wxBusyCursor wait;
 		m_File = dlg.GetPath();
 		size_t size;
-		m_MD5 = ARBMsgDigest::ComputeFile(m_File, &size);
+		m_MD5 = ARBMsgDigest::Compute(m_File, &size);
 		m_Size = static_cast<long>(size);
 		TransferDataToWindow();
 	}

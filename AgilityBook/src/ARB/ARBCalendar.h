@@ -25,7 +25,6 @@
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
-class wxOutputStream;
 
 /**
  * iCalendar interface
@@ -43,7 +42,7 @@ public:
 	 * @param inVersion Either 1 (vCal) or 2 (iCal).
 	 */
 	static ICalendar* iCalendarBegin(
-			wxOutputStream& ioStream,
+			std::ostream& ioStream,
 			int inVersion);
 
 	/**
