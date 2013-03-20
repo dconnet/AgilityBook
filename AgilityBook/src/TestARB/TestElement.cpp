@@ -318,7 +318,7 @@ SUITE(TestElement)
 			CHECK(tree2->LoadXML(tmpFile.c_str(), errs));
 
 #if defined(__WXWINDOWS__)
-			wxRemoveFile(tmpFile);
+			wxRemoveFile(tmpFile.c_str());
 #else
 #pragma PRAGMA_TODO(remove file)
 #endif
