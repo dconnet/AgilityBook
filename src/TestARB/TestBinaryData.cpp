@@ -24,6 +24,10 @@
 #endif
 
 
+#if !defined(__WXWINDOWS__)
+#pragma PRAGMA_TODO(need non-wx support in libarb - currently it asserts)
+#else
+
 SUITE(TestBinaryData)
 {
 	// This is an small gif file.
@@ -111,3 +115,4 @@ SUITE(TestBinaryData)
 		}
 	}
 }
+#endif

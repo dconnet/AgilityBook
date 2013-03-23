@@ -13,6 +13,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * @li 2013-03-23 DRC Implement libxml LoadXML stream api.
  * @li 2012-11-25 DRC Add libxml support back in.
  * @li 2012-09-29 DRC Trap wx generated xml parsing errors into our buffer.
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
@@ -1166,11 +1167,43 @@ bool ElementNode::LoadXML(
 		std::wostringstream& ioErrMsg)
 {
 #if USE_LIBXML2
-	assert(0);
-	// TODO: Read into buffer
-	char* pData = NULL;
-	size_t nData = 0;
-	return LoadXML(pData, nData, ioErrMsg);
+	if (!inStream.good())
+		return false;
+
+	char buffer[1024];
+	inStream.read(buffer, ARRAYSIZE(buffer));
+	int res = static_cast<int>(inStream.gcount());
+	if (0 >= res)
+		return false;
+
+	xmlParserCtxtPtr ctxt = xmlCreatePushParserCtxt(NULL, NULL, buffer, res, NULL);
+	if (!ctxt)
+		return false;
+
+	for (;;)
+	{
+		inStream.read(buffer, ARRAYSIZE(buffer));
+		res = static_cast<int>(inStream.gcount());
+		if (0 >= res)
+			break;
+		xmlParseChunk(ctxt, buffer, res, 0);
+	}
+	xmlParseChunk(ctxt, buffer, 0, 1);
+
+	xmlDocPtr source = NULL;
+	if (ctxt->wellFormed)
+		source = ctxt->myDoc;
+	xmlFreeParserCtxt(ctxt);
+	ctxt = NULL;
+
+	bool rc = false;
+	if (source)
+	{
+		rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+		xmlFreeDoc(source);
+	}
+	return rc;
+
 #else
 	wxLogBuffer* log = new wxLogBuffer();
 	// wxLogChain will delete the log given to it.
