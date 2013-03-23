@@ -276,6 +276,8 @@ SUITE(TestConfig)
 			{
 				ARBConfigTitlePtr configTitle;
 				CHECK(config.GetVenues().FindTitle(sc_Titles[i].pVenue, sc_Titles[i].pTitle, &configTitle));
+				if (!configTitle)
+					continue;
 
 				std::wstring name = configTitle->GetCompleteName(-1);
 				CHECK(name == sc_Titles[i].pResult);
