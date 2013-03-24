@@ -230,10 +230,12 @@ public:
 	 * Find the maximum instance of a title
 	 * @param inVenue Venue name.
 	 * @param inTitle Name of title.
+	 * @param outMissing Return a list of missing instances.
 	 */
 	short FindMaxInstance(
 			std::wstring const& inVenue,
-			std::wstring const& inTitle) const;
+			std::wstring const& inTitle,
+			std::vector<short>* outMissing = NULL) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
