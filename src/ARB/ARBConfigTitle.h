@@ -178,6 +178,13 @@ public:
 	}
 
 	/**
+	 * Get the title name (name + instance).
+	 * @param inInstance Instance of the title to allow for multiple.
+	 * @return The title name.
+	 */
+	std::wstring GetTitleName(short inInstance = 0) const;
+
+	/**
 	 * Get the complete name (name + nicename).
 	 * @param inInstance Instance of the title to allow for multiple.
 	 * @param bAbbrevFirst Name is before or after Longname.

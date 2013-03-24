@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-03-24 DRC Show title in caption to aid with repeating titles.
  * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-08-17 DRC Add support to get newly created title.
@@ -283,14 +284,45 @@ void CDlgTitle::FillTitles(bool bIniting)
 
 void CDlgTitle::FillTitleInfo()
 {
+	wxString caption(_("IDD_TITLE"));
+	wxString desc;
+
 	int index = m_ctrlTitles->GetSelection();
-	wxString str;
 	if (wxNOT_FOUND != index)
 	{
 		ARBConfigTitlePtr pTitle = GetTitleData(index);
-		str = StringUtil::stringWX(pTitle->GetDescription());
+		desc = StringUtil::stringWX(pTitle->GetDescription());
+
+		caption << wxT(": ");
+		if (m_pTitle)
+			caption << m_pTitle->GetGenericName().c_str();
+		else
+			caption << pTitle->GetTitleName(GetInstance(pTitle)).c_str();
 	}
-	m_ctrlDesc->SetValue(str);
+
+	SetTitle(caption);
+	m_ctrlDesc->SetValue(desc);
+}
+
+
+short CDlgTitle::GetInstance(ARBConfigTitlePtr pTitle) const
+{
+	short instance = 0;
+	int index = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		ARBConfigVenuePtr pVenue = m_ctrlVenues->GetVenue(index);
+		if (pVenue && pTitle->IsRecurring())
+		{
+			if (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
+				instance = m_pTitle->GetInstance();
+			else
+			{
+				instance = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName()) + 1;
+			}
+		}
+	}
+	return instance;
 }
 
 
@@ -367,16 +399,7 @@ void CDlgTitle::OnOk(wxCommandEvent& evt)
 		m_bReceived = false;
 	}
 
-	short instance = 0;
-	if (pTitle->IsRecurring())
-	{
-		if (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
-			instance = m_pTitle->GetInstance();
-		else
-		{
-			instance = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName()) + 1;
-		}
-	}
+	short instance = GetInstance(pTitle);
 
 	ARBDogTitlePtr title(ARBDogTitle::New());
 	title->SetDate(date);
