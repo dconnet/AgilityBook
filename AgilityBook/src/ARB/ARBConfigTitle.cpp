@@ -527,6 +527,14 @@ bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
 }
 
 
+std::wstring ARBConfigTitle::GetTitleName(short inInstance) const
+{
+	std::wostringstream buffer;
+	buffer << m_Name << TitleInstance(0 > inInstance ? false : m_MultipleOnFirst, inInstance, m_MultipleStartAt, m_MultipleIncrement, m_MultipleStyle, m_MultipleSeparator);
+	return buffer.str();
+}
+
+
 std::wstring ARBConfigTitle::GetCompleteName(
 		short inInstance,
 		bool bAbbrevFirst,
@@ -544,22 +552,22 @@ std::wstring ARBConfigTitle::GetCompleteName(
 	{
 		if (bAbbrevFirst)
 		{
-			name << L"[" << m_Name;
-			name << buffer.str();
-			name << L"] ";
+			name << L"[" << m_Name
+				<< buffer.str()
+				<< L"] ";
 		}
 		name << m_LongName;
 		if (!bAbbrevFirst)
 		{
-			name << L" [" << m_Name;
-			name << buffer.str();
-			name << L"]";
+			name << L" [" << m_Name
+				<< buffer.str()
+				<< L"]";
 		}
 	}
 	else
 	{
-		name << m_Name;
-		name << buffer.str();
+		name << m_Name
+			<< buffer.str();
 	}
 	if (bAddDates)
 	{

@@ -43,6 +43,7 @@ private:
 	ARBDate GetDate();
 	void FillTitles(bool bIniting = false);
 	void FillTitleInfo();
+	short GetInstance(ARBConfigTitlePtr pTitle) const;
 
 	ARBDogTitleList& m_Titles;
 	ARBDogTitlePtr m_pTitle;

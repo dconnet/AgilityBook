@@ -6,6 +6,7 @@
 3/12/2013: v2.3.12.<in development>
 - New features / Enhancements:
   - Autosave modified file when user logs out or reboots system.
+  - Show title in dialog caption to aid with repeating titles.
 - Bug fixes:
   - Require dog/handler in Partner dialog (otherwise data is silently lost).
 
