@@ -390,16 +390,33 @@ bool ARBDogTitleList::FindTitle(
 
 short ARBDogTitleList::FindMaxInstance(
 		std::wstring const& inVenue,
-		std::wstring const& inTitle) const
+		std::wstring const& inTitle,
+		std::vector<short>* outMissing) const
 {
+	std::set<short> instances;
 	short inst = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetVenue() == inVenue
-		&& (*iter)->GetRawName() == inTitle
-		&& (*iter)->GetInstance() > inst)
+		&& (*iter)->GetRawName() == inTitle)
 		{
-			inst = (*iter)->GetInstance();
+			if ((*iter)->GetInstance() > inst)
+			{
+				inst = (*iter)->GetInstance();
+			}
+			if (outMissing)
+			{
+				instances.insert((*iter)->GetInstance());
+			}
+		}
+	}
+	if (outMissing && static_cast<short>(instances.size()) < inst)
+	{
+		outMissing->clear();
+		for (short i = 1; i <= inst; ++i)
+		{
+			if (instances.end() == instances.find(i))
+				outMissing->push_back(i);
 		}
 	}
 	return inst;

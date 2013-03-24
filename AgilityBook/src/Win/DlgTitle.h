@@ -43,7 +43,9 @@ private:
 	ARBDate GetDate();
 	void FillTitles(bool bIniting = false);
 	void FillTitleInfo();
-	short GetInstance(ARBConfigTitlePtr pTitle) const;
+	short GetInstance(
+			ARBConfigTitlePtr pTitle,
+			std::vector<short>* outMissing = NULL) const;
 
 	ARBDogTitleList& m_Titles;
 	ARBDogTitlePtr m_pTitle;

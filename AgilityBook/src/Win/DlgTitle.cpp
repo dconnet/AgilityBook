@@ -305,7 +305,9 @@ void CDlgTitle::FillTitleInfo()
 }
 
 
-short CDlgTitle::GetInstance(ARBConfigTitlePtr pTitle) const
+short CDlgTitle::GetInstance(
+		ARBConfigTitlePtr pTitle,
+		std::vector<short>* outMissing) const
 {
 	short instance = 0;
 	int index = m_ctrlVenues->GetSelection();
@@ -318,7 +320,7 @@ short CDlgTitle::GetInstance(ARBConfigTitlePtr pTitle) const
 				instance = m_pTitle->GetInstance();
 			else
 			{
-				instance = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName()) + 1;
+				instance = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName(), outMissing) + 1;
 			}
 		}
 	}
@@ -399,7 +401,15 @@ void CDlgTitle::OnOk(wxCommandEvent& evt)
 		m_bReceived = false;
 	}
 
-	short instance = GetInstance(pTitle);
+	std::vector<short> instances;
+	short instance = GetInstance(pTitle, &instances);
+	if (0 < instances.size())
+	{
+		// Note: This will only trigger on a new title.
+#pragma PRAGMA_TODO(Ask user about missing titles)
+		// Possible option to not ask again - this should be per-dog, hence
+		// saved into file - do not have support for that yet.
+	}
 
 	ARBDogTitlePtr title(ARBDogTitle::New());
 	title->SetDate(date);
