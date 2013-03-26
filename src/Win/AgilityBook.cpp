@@ -275,7 +275,7 @@ bool CAgilityBookApp::OnInit()
 
 	wxImage::AddHandler(new wxGIFHandler);
 	wxFileSystem::AddHandler(new wxZipFSHandler);
-	wxXmlResource::Get()->InitAllHandlers();
+
 	m_LangMgr = new CLanguageManager();
 
 	wxCmdLineParser cmdline(argc, argv);
