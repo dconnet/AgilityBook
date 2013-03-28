@@ -28,6 +28,7 @@ Note: !(bind.fileVersion._AgilityBook.exe) could replace $(var.CURRENT_VERSION)
       Only difference is bind is all 4 parts, the var is only 3.
 
 Revision History
+2013-03-28 DRC Added MSIFASTINSTALL.
 2012-08-03 DRC Set INSTALLDIR properly during upgrade and maintenance.
 2012-04-08 DRC Fix min OS conditions (using VC10 now)
 2011-11-23 DRC Add internet shortcut to start menu
@@ -138,6 +139,7 @@ Revision History
 
 	<!-- Used in WindowsInstaller 5.0 -->
 	<Property Id="MSIINSTALLPERUSER" Value="1" />
+	<Property Id="MSIFASTINSTALL" Value="1" /> <!-- Turn off system restore point -->
 	<Property Id="ARBAllUsers" Value="1" />
 
 	<Property Id="INSTALLDESKTOPSHORTCUT" Value="1" />
