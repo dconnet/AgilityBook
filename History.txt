@@ -1,4 +1,6 @@
-3/24/2013: v2.3.12.<in development>
+4/10/2013: v2.3.12.<in development>
+- Bumped Configuration v43:
+  - Added Preferred to AKC National Rounds (missing).
 - New features / Enhancements:
   - Autosave modified file when user logs out or reboots system.
   - Show title in dialog caption to aid with repeating titles.
