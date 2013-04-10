@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2013-04-10 DRC Configuration version 43.
+               Added Preferred to AKC National Rounds (missing).
 2013-01-13 DRC Configuration version 42.
                Added new NADAC extended titles.
                Added new USDAA Diamond LAA titles.
@@ -135,7 +137,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="42">
+  <Configuration version="43">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -468,7 +470,7 @@ Revision History:
       <Titles LongName="Open JWW" Name="OAJ">3 Qs</Titles>
       <Titles LongName="Agility Excellent JWW" Name="AXJ">3 Qs</Titles>
       <Titles LongName="Master Excellent JWW" Name="MXJ">10 Qs</Titles>
-      <Titles LongName="Master Agility Champion" Name="MACH" StartAt="1" Prefix="y">20 Double Qs, 750 championship points</Titles>
+      <Titles LongName="Master Agility Champion" Name="MACH" Prefix="y" StartAt="1">20 Double Qs, 750 championship points</Titles>
       <Titles LongName="Novice Agility Preferred" Name="NAP">3 Qs</Titles>
       <Titles LongName="Open Agility Preferred" Name="OAP">3 Qs</Titles>
       <Titles LongName="Agility Excellent Preferred" Name="AXP">3 Qs</Titles>
@@ -625,6 +627,9 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
       <Event Name="National Rounds">
         <Desc>Hybrid, Challenger and Final Rounds</Desc>
         <Scoring Division="Regular" Level="Master" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+        </Scoring>
+        <Scoring Division="Preferred" Level="Master" dropFractions="y" timeFault="3" type="Faults100ThenTime">
           <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
         </Scoring>
       </Event>
@@ -2488,20 +2493,20 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
     </Venue>
     <Venue LongName="North American Dog Agility Council" Name="NADAC" URL="http://www.nadac.com/" icon="9">
       <Desc>Note: As of 12/10/2005, NADAC no longer tracks points in different divisions. All of the -V and -JH titles are gone. For simplicity, the new Categories are being treated as Divisions.</Desc>
-      <Titles LongName="Novice Agility Certificate" Inc="200" Name="NAC" Sep="h" StartAt="200">30 points
+      <Titles Inc="200" LongName="Novice Agility Certificate" Name="NAC" Sep="h" StartAt="200">30 points
 Extended title at 400 points (repeats every 200)</Titles>
-      <Titles LongName="Novice Chances Certificate" Inc="100" Name="NCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
+      <Titles Inc="100" LongName="Novice Chances Certificate" Name="NCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Gamblers Certificate" Name="NGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
-      <Titles LongName="Novice Jumpers Certificate" Inc="100" Name="NJC" Sep="h" StartAt="100">30 points (20 pts before 8/1/2005)
+      <Titles Inc="100" LongName="Novice Jumpers Certificate" Name="NJC" Sep="h" StartAt="100">30 points (20 pts before 8/1/2005)
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Novice Tunnelers Certificate" Inc="100" Name="TN-N" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Novice Tunnelers Certificate" Name="TN-N" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Novice Touch N Go Certificate" Inc="100" Name="TG-N" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Novice Touch N Go Certificate" Name="TG-N" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Novice Weavers Certificate" Inc="100" Name="WV-N" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Novice Weavers Certificate" Name="WV-N" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Novice Hoopers Certificate" Inc="100" Name="HP-N" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Novice Hoopers Certificate" Name="HP-N" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Agility Certificate Outstanding Performance" Name="O-NAC">100 points</Titles>
       <Titles LongName="Novice Chances Certificate Outstanding Performance" Name="O-NCC" ValidFrom="2004-1-1">60 points</Titles>
@@ -2519,20 +2524,20 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Touch N Go Certificate Superior Performance" Name="S-TG-N">100 points</Titles>
       <Titles LongName="Novice Weavers Certificate Superior Performance" Name="S-WV-N">100 points</Titles>
       <Titles LongName="Novice Hoopers Certificate Superior Performance" Name="S-HP-N">100 points</Titles>
-      <Titles LongName="Open Agility Certificate" Inc="200" Name="OAC" Sep="h" StartAt="200">30 points
+      <Titles Inc="200" LongName="Open Agility Certificate" Name="OAC" Sep="h" StartAt="200">30 points
 Extended title at 400 points (repeats every 200)</Titles>
-      <Titles LongName="Open Chances Certificate" Inc="100" Name="OCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
+      <Titles Inc="100" LongName="Open Chances Certificate" Name="OCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Gamblers Certificate" Name="OGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
-      <Titles LongName="Open Jumpers Certificate" Inc="100" Name="OJC" Sep="h" StartAt="100">30 points (20 pts before 8/1/2005)
+      <Titles Inc="100" LongName="Open Jumpers Certificate" Name="OJC" Sep="h" StartAt="100">30 points (20 pts before 8/1/2005)
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Open Tunnelers Certificate" Inc="100" Name="TN-O" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Open Tunnelers Certificate" Name="TN-O" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Open Touch N Go Certificate" Inc="100" Name="TG-O" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Open Touch N Go Certificate" Name="TG-O" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Open Weavers Certificate" Inc="100" Name="WV-O" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Open Weavers Certificate" Name="WV-O" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Open Hoopers Certificate" Inc="100" Name="HP-O" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Open Hoopers Certificate" Name="HP-O" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Agility Certificate Outstanding Performance" Name="O-OAC">100 points</Titles>
       <Titles LongName="Open Chances Certificate Outstanding Performance" Name="O-OCC" ValidFrom="2004-1-1">60 points</Titles>
@@ -2550,20 +2555,20 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Touch N Go Certificate Superior Performance" Name="S-TG-O">100 points</Titles>
       <Titles LongName="Open Weavers Certificate Superior Performance" Name="S-WV-O">100 points</Titles>
       <Titles LongName="Open Hoopers Certificate Superior Performance" Name="S-HP-O">100 points</Titles>
-      <Titles LongName="Elite Agility Certificate" Inc="200" Name="EAC" Sep="h" StartAt="400">30 points
+      <Titles Inc="200" LongName="Elite Agility Certificate" Name="EAC" Sep="h" StartAt="400">30 points
 Extended title at 600 points (repeats every 200)</Titles>
-      <Titles LongName="Elite Chances Certificate" Inc="100" Name="ECC" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
+      <Titles Inc="100" LongName="Elite Chances Certificate" Name="ECC" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Gamblers Certificate" Name="EGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
-      <Titles LongName="Elite Jumpers Certificate" Inc="100" Name="EJC" Sep="h" StartAt="200">30 points (20 pts before 8/1/2005)
+      <Titles Inc="100" LongName="Elite Jumpers Certificate" Name="EJC" Sep="h" StartAt="200">30 points (20 pts before 8/1/2005)
 Extended title at 300 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Tunnelers Certificate" Inc="100" Name="TN-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Tunnelers Certificate" Name="TN-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Touch N Go Certificate" Inc="100" Name="TG-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Touch N Go Certificate" Name="TG-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Weavers Certificate" Inc="100" Name="WV-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Weavers Certificate" Name="WV-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Hoopers Certificate" Inc="100" Name="HP-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Hoopers Certificate" Name="HP-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Certificate Outstanding Performance" Name="O-EAC">200 points</Titles>
       <Titles LongName="Elite Chances Certificate Outstanding Performance" Name="O-ECC" ValidFrom="2004-1-1">100 points</Titles>
@@ -2581,20 +2586,20 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Touch N Go Certificate Superior Performance" Name="S-TG-E">200 points</Titles>
       <Titles LongName="Elite Weavers Certificate Superior Performance" Name="S-WV-E">200 points</Titles>
       <Titles LongName="Elite Hoopers Certificate Superior Performance" Name="S-HP-E">200 points</Titles>
-      <Titles LongName="Elite Agility Skilled" Inc="200" Name="EAS" Sep="h" StartAt="400">30 points
+      <Titles Inc="200" LongName="Elite Agility Skilled" Name="EAS" Sep="h" StartAt="400">30 points
 Extended title at 600 points (repeats every 200)</Titles>
-      <Titles LongName="Elite Chances Skilled" Inc="100" Name="ECS" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
+      <Titles Inc="100" LongName="Elite Chances Skilled" Name="ECS" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Elite Gamblers Skilled" Name="EGS" ValidTo="2006-1-1">30 points</Titles>
-      <Titles LongName="Elite Jumpers Skilled" Inc="100" Name="EJS" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Jumpers Skilled" Name="EJS" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Tunnelers Skilled" Inc="100" Name="TNS-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Tunnelers Skilled" Name="TNS-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Touch N Go Skilled" Inc="100" Name="TGS-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Touch N Go Skilled" Name="TGS-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Weavers Skilled" Inc="100" Name="WVS-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Weavers Skilled" Name="WVS-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Hoopers Skilled" Inc="100" Name="HPS-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Hoopers Skilled" Name="HPS-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Skilled Outstanding Performance" Name="O-EAS">200 points</Titles>
       <Titles LongName="Elite Chances Skilled Outstanding Performance" Name="O-ECS" ValidFrom="2004-1-1">100 points</Titles>
