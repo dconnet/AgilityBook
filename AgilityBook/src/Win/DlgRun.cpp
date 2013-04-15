@@ -102,6 +102,7 @@
 #include "CheckLink.h"
 #include "ClipBoard.h"
 #include "ComboBoxes.h"
+#include "ComboBoxQ.h"
 #include "DlgCRCDViewer.h"
 #include "DlgInfoNote.h"
 #include "DlgListCtrl.h"

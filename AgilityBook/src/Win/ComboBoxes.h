@@ -20,10 +20,6 @@
  * @li 2006-02-12 DRC Created
  */
 
-#include "ARB/ARB_Q.h"
-#include "ARB/ARBTypes.h"
-
-
 /// Enable autofill (wx2.9+) API on wx2.8.
 class CAutoFillComboBox : public wxComboBox
 {
@@ -63,49 +59,4 @@ public:
 		return false;
 	}
 #endif
-};
-
-
-/// Combobox specifically for listing venues
-class CVenueComboBox : public wxComboBox
-{
-DECLARE_CLASS(CVenueComboBox)
-public:
-	CVenueComboBox(
-			wxWindow* parent,
-			ARBConfigVenueList const& inVenues,
-			wxString const& inSelectVenue,
-			bool useLongName = false,
-			wxValidator const& validator = wxDefaultValidator,
-			bool bEditable = false);
-
-	ARBConfigVenuePtr GetVenue(int index) const;
-};
-
-
-/// Combobox for Qs
-class CQualifyingComboBox : public wxChoice
-{
-DECLARE_CLASS(CQualifyingComboBox)
-public:
-	CQualifyingComboBox(
-			wxWindow* parent,
-			ARBDogReferenceRunPtr refRun,
-			wxValidator const& validator = wxDefaultValidator);
-	CQualifyingComboBox(
-			wxWindow* parent,
-			ARBDogRunPtr run,
-			wxValidator const& validator = wxDefaultValidator);
-	CQualifyingComboBox(
-			wxWindow* parent,
-			ARBDogRunPtr run,
-			ARBConfigScoringPtr scoring,
-			wxValidator const& validator = wxDefaultValidator);
-
-	void ResetContent(ARBConfigScoringPtr scoring);
-	ARB_Q GetQ(int index) const;
-
-private:
-	ARBDogReferenceRunPtr m_refRun;
-	ARBDogRunPtr m_Run;
 };

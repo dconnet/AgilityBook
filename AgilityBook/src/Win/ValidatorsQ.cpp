@@ -17,7 +17,7 @@
 #include "stdafx.h"
 #include "ValidatorsQ.h"
 
-#include "ComboBoxes.h"
+#include "ComboBoxQ.h"
 
 #include "ARB/StringUtil.h"
 
