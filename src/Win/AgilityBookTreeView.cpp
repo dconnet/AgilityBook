@@ -206,8 +206,6 @@ BEGIN_EVENT_TABLE(CAgilityBookTreeView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_EDIT_FIND_PREVIOUS, CAgilityBookTreeView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_EDIT_DOG, CAgilityBookTreeView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_EDIT_DOG, CAgilityBookTreeView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_DOG, CAgilityBookTreeView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_NEW_DOG, CAgilityBookTreeView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_DELETE_DOG, CAgilityBookTreeView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_DELETE_DOG, CAgilityBookTreeView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_NEW_TITLE, CAgilityBookTreeView::OnViewUpdateCmd)
@@ -1073,9 +1071,8 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 			}
 			else
 			{
-				if (ID_AGILITY_NEW_DOG == evt.GetId()
-				|| (wxID_PASTE == evt.GetId()
-				&& CClipboardDataReader::IsFormatAvailable(eFormatDog)))
+				if (wxID_PASTE == evt.GetId()
+				&& CClipboardDataReader::IsFormatAvailable(eFormatDog))
 				{
 					bEnable = true;
 				}
@@ -1156,20 +1153,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 				bHandled = pData->OnCmd(id, bModified, NULL);
 				if (bModified)
 					GetDocument()->Modify(true);
-			}
-			else if (ID_AGILITY_NEW_DOG == id)
-			{
-				ARBDogPtr dog(ARBDog::New());
-				CDlgDog dlg(GetDocument(), dog);
-				if (wxID_OK == dlg.ShowModal())
-				{
-					if (GetDocument()->Book().GetDogs().AddDog(dog))
-						InsertDog(dog, true);
-					// For some reason, the first dog isn't showing up.
-					if (1 == GetDocument()->Book().GetDogs().size())
-						LoadData();
-				}
-				bHandled = true;
 			}
 			else if (wxID_PASTE == id)
 			{

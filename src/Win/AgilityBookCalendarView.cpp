@@ -1161,8 +1161,6 @@ BEGIN_EVENT_TABLE(CAgilityBookCalendarView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_EDIT_FIND_PREVIOUS, CAgilityBookCalendarView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_EDIT_CALENDAR, CAgilityBookCalendarView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_EDIT_CALENDAR, CAgilityBookCalendarView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_CALENDAR, CAgilityBookCalendarView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_NEW_CALENDAR, CAgilityBookCalendarView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_DELETE_CALENDAR, CAgilityBookCalendarView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_DELETE_CALENDAR, CAgilityBookCalendarView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_EXPORT_CALENDAR, CAgilityBookCalendarView::OnViewUpdateCmd)
@@ -1239,6 +1237,12 @@ void CAgilityBookCalendarView::DetachView()
 {
 	// The control is actually owned by the panel, the view is not.
 	m_Ctrl = NULL;
+}
+
+
+ARBDate CAgilityBookCalendarView::GetCurrentDate() const
+{
+	return m_Ctrl ? m_Ctrl->CurrentDate() : ARBDate();
 }
 
 
@@ -1567,9 +1571,6 @@ void CAgilityBookCalendarView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		case ID_AGILITY_EDIT_CALENDAR:
 			bEnable = m_Ctrl->CanEdit();
 			break;
-		case ID_AGILITY_NEW_CALENDAR:
-			bEnable = true;
-			break;
 		case ID_AGILITY_DELETE_CALENDAR:
 			bEnable = m_Ctrl->CanDelete();
 			break;
@@ -1598,30 +1599,6 @@ void CAgilityBookCalendarView::OnViewCmd(wxCommandEvent& evt)
 		break;
 	case ID_AGILITY_EDIT_CALENDAR:
 		m_Ctrl->OnEdit(GetDocument());
-		break;
-	case ID_AGILITY_NEW_CALENDAR:
-		{
-			ARBCalendarPtr cal(ARBCalendar::New());
-			if (m_Ctrl->CurrentDate().IsValid())
-			{
-				cal->SetStartDate(m_Ctrl->CurrentDate());
-				cal->SetEndDate(m_Ctrl->CurrentDate() + 1);
-			}
-			CDlgCalendar dlg(cal, GetDocument());
-			if (wxID_OK == dlg.ShowModal())
-			{
-				if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
-				{
-					m_Ctrl->SetCurrentDate(cal->GetStartDate(), false);
-					GetDocument()->Book().GetCalendar().AddCalendar(cal);
-					GetDocument()->Book().GetCalendar().sort();
-					LoadData();
-					GetDocument()->Modify(true);
-					CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-					GetDocument()->UpdateAllViews(this, &hint);
-				}
-			}
-		}
 		break;
 	case ID_AGILITY_DELETE_CALENDAR:
 		m_Ctrl->OnDelete(GetDocument());

@@ -504,7 +504,6 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(int id, bool& ioEnable) const
 		bEnable = CanPaste();
 		break;
 	case ID_AGILITY_EDIT_DOG:
-	case ID_AGILITY_NEW_DOG:
 	case ID_AGILITY_NEW_TITLE:
 	case ID_AGILITY_NEW_TRIAL:
 	case ID_AGILITY_DELETE_DOG:
@@ -551,12 +550,6 @@ bool CAgilityBookTreeDataDog::OnCmd(
 	default:
 		bHandled = false;
 		break;
-	case wxID_PREFERENCES:
-		{
-			CDlgOptions options(m_pTree->GetDocument(), wxGetApp().GetTopWindow(), CDlgOptions::GetFilterPage());
-			options.ShowModal();
-		}
-		break;
 	case wxID_DUPLICATE:
 		if (GetDog())
 		{
@@ -594,9 +587,6 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		break;
 	case ID_AGILITY_EDIT_DOG:
 		EditDog(this, m_pTree, bTreeSelectionSet);
-		break;
-	case ID_AGILITY_NEW_DOG:
-		EditDog(NULL, m_pTree, bTreeSelectionSet);
 		break;
 	case ID_AGILITY_NEW_TRIAL:
 		if (EditTrial(this, NULL, m_pTree, bTreeSelectionSet))
@@ -809,7 +799,6 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(int id, bool& ioEnable) const
 		bEnable = CanPaste();
 		break;
 	case ID_AGILITY_EDIT_TRIAL:
-	case ID_AGILITY_NEW_DOG:
 	case ID_AGILITY_NEW_TRIAL:
 		bEnable = true;
 		break;
@@ -846,12 +835,6 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 	{
 	default:
 		bHandled = false;
-		break;
-	case wxID_PREFERENCES:
-		{
-			CDlgOptions options(m_pTree->GetDocument(), wxGetApp().GetTopWindow(), CDlgOptions::GetFilterPage());
-			options.ShowModal();
-		}
 		break;
 	case wxID_DUPLICATE:
 		if (GetTrial())
@@ -893,9 +876,6 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 	case ID_AGILITY_EDIT_TRIAL:
 		if (EditTrial(GetDataDog(), this, m_pTree, bTreeSelectionSet))
 			bModified = true;
-		break;
-	case ID_AGILITY_NEW_DOG:
-		EditDog(NULL, m_pTree, bTreeSelectionSet);
 		break;
 	case ID_AGILITY_NEW_TRIAL:
 		if (EditTrial(GetDataDog(), NULL, m_pTree, bTreeSelectionSet))
@@ -1181,7 +1161,6 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(int id, bool& ioEnable) const
 		bEnable = CanPaste();
 		break;
 	case ID_AGILITY_EDIT_RUN:
-	case ID_AGILITY_NEW_DOG:
 	case ID_AGILITY_NEW_TRIAL:
 		bEnable = true;
 		break;
@@ -1217,12 +1196,6 @@ bool CAgilityBookTreeDataRun::OnCmd(
 	{
 	default:
 		bHandled = false;
-		break;
-	case wxID_PREFERENCES:
-		{
-			CDlgOptions options(m_pTree->GetDocument(), wxGetApp().GetTopWindow(), CDlgOptions::GetFilterPage());
-			options.ShowModal();
-		}
 		break;
 	case wxID_DUPLICATE:
 		if (GetRun())
@@ -1263,9 +1236,6 @@ bool CAgilityBookTreeDataRun::OnCmd(
 	case ID_AGILITY_EDIT_RUN:
 		if (EditRun(GetDataDog(), GetDataTrial(), this, m_pTree, bTreeSelectionSet))
 			bModified = true;
-		break;
-	case ID_AGILITY_NEW_DOG:
-		EditDog(NULL, m_pTree, bTreeSelectionSet);
 		break;
 	case ID_AGILITY_NEW_TRIAL:
 		if (EditTrial(GetDataDog(), NULL, m_pTree, bTreeSelectionSet))
