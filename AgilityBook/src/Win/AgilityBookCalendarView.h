@@ -56,6 +56,7 @@ public:
 	virtual bool NextPane();
 	virtual void DetachView();
 
+	ARBDate GetCurrentDate() const;
 	bool SetCurrentDate(
 			ARBDate const& date,
 			bool bEnsureVisible);

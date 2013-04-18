@@ -498,8 +498,6 @@ BEGIN_EVENT_TABLE(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_EDIT_FIND_PREVIOUS, CAgilityBookCalendarListView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_EDIT_CALENDAR, CAgilityBookCalendarListView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_EDIT_CALENDAR, CAgilityBookCalendarListView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_CALENDAR, CAgilityBookCalendarListView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_NEW_CALENDAR, CAgilityBookCalendarListView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_DELETE_CALENDAR, CAgilityBookCalendarListView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_DELETE_CALENDAR, CAgilityBookCalendarListView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_EXPORT_CALENDAR, CAgilityBookCalendarListView::OnViewUpdateCmd)
@@ -952,9 +950,6 @@ void CAgilityBookCalendarListView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_AGILITY_EDIT_CALENDAR:
 		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
 		break;
-	case ID_AGILITY_NEW_CALENDAR:
-		evt.Enable(true);
-		break;
 	case ID_AGILITY_DELETE_CALENDAR:
 		{
 			bool bEnable = false;
@@ -1196,25 +1191,6 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 						CAgilityBookCalendarView* pCalView = GetDocument()->GetCalendarView();
 						pCalView->SetCurrentDate(pData->GetCalendar()->GetStartDate(), true);
 					}
-					LoadData();
-					GetDocument()->Modify(true);
-					CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-					GetDocument()->UpdateAllViews(this, &hint);
-				}
-			}
-		}
-		break;
-
-	case ID_AGILITY_NEW_CALENDAR:
-		{
-			ARBCalendarPtr cal(ARBCalendar::New());
-			CDlgCalendar dlg(cal, GetDocument());
-			if (wxID_OK == dlg.ShowModal())
-			{
-				if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
-				{
-					GetDocument()->Book().GetCalendar().AddCalendar(cal);
-					GetDocument()->Book().GetCalendar().sort();
 					LoadData();
 					GetDocument()->Modify(true);
 					CUpdateHint hint(UPDATE_CALENDAR_VIEW);
