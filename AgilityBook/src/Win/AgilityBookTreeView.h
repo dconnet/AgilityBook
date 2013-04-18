@@ -178,6 +178,14 @@ private:
 	bool DoEdit(
 			wxDataViewItem const& item,
 			CTreeDataType type);
+	wxDataViewItem LoadData(
+			ARBDogPtr pDog);
+	wxDataViewItem LoadData(
+			ARBDogTrialPtr pTrial,
+			wxDataViewItem parent);
+	wxDataViewItem LoadData(
+			ARBDogRunPtr pRun,
+			wxDataViewItem parent);
 	void LoadData(bool bColumns);
 	void PrintLine(
 			std::wostringstream& data,

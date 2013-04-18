@@ -265,6 +265,7 @@ static bool EditRun(
 			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 			pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
 		}
+
 		// We have to update the tree even when we add above as it may have
 		// caused the trial to be reordered.
 		if (bOk)
@@ -768,7 +769,7 @@ wxDataViewItem CAgilityBookTreeView::InsertDog(
 	wxDataViewItem item;
 	if (pDog && m_Ctrl)
 	{
-		item = m_Ctrl->GetStore()->LoadData(pDog);
+		item = LoadData(pDog);
 		if (bSelect)
 		{
 			ChangeSelection(item);
@@ -786,7 +787,7 @@ wxDataViewItem CAgilityBookTreeView::InsertTrial(
 	wxDataViewItem trial;
 	if (pTrial && !pTrial->IsFiltered() && m_Ctrl)
 	{
-		trial = m_Ctrl->GetStore()->LoadData(pTrial, parent);
+		trial = LoadData(pTrial, parent);
 	}
 	return trial;
 }
@@ -800,7 +801,7 @@ wxDataViewItem CAgilityBookTreeView::InsertRun(
 	wxDataViewItem run;
 	if (pRun && !pRun->IsFiltered() && m_Ctrl)
 	{
-		run = m_Ctrl->GetStore()->LoadData(pRun, parent);
+		run = LoadData(pRun, parent);
 	}
 	return run;
 }
@@ -916,6 +917,9 @@ bool CAgilityBookTreeView::DoEdit(
 			}
 			break;
 		}
+
+		if (m_Ctrl->IsShownOnScreen())
+			UpdateMessages();
 	}
 	return bHandled;
 }
@@ -930,6 +934,40 @@ void CAgilityBookTreeView::DoSelectionChange(wxDataViewItem const& item)
 }
 
 
+wxDataViewItem CAgilityBookTreeView::LoadData(
+		ARBDogPtr pDog)
+{
+	wxDataViewItem item = m_Ctrl->GetStore()->LoadData(pDog);
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
+	return item;
+}
+
+
+wxDataViewItem CAgilityBookTreeView::LoadData(
+		ARBDogTrialPtr pTrial,
+		wxDataViewItem parent)
+{
+	wxDataViewItem item = m_Ctrl->GetStore()->LoadData(pTrial, parent);
+	m_Ctrl->GetStore()->ItemAdded(parent, item);
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
+	return item;
+}
+
+
+wxDataViewItem CAgilityBookTreeView::LoadData(
+		ARBDogRunPtr pRun,
+		wxDataViewItem parent)
+{
+	wxDataViewItem item = m_Ctrl->GetStore()->LoadData(pRun, parent);
+	m_Ctrl->GetStore()->ItemAdded(parent, item);
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
+	return item;
+}
+
+
 void CAgilityBookTreeView::LoadData(bool bColumns)
 {
 	if (!m_Ctrl)
@@ -937,6 +975,8 @@ void CAgilityBookTreeView::LoadData(bool bColumns)
 	if (bColumns)
 		m_Ctrl->GetStore()->UpdateColumns();
 	m_Ctrl->GetStore()->LoadData();
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
 }
 
 
@@ -1459,6 +1499,7 @@ void CAgilityBookTreeView::OnDelete(wxCommandEvent& evt)
 {
 	if (m_Ctrl)
 	{
+		bool bDeleted = false;
 		wxDataViewItem item = m_Ctrl->GetSelection();
 		switch (m_Ctrl->GetStore()->Type(item))
 		{
@@ -1471,6 +1512,7 @@ void CAgilityBookTreeView::OnDelete(wxCommandEvent& evt)
 				ARBDogPtr pDog = m_Ctrl->GetStore()->GetDog(item);
 				if (GetDocument()->Book().GetDogs().DeleteDog(pDog))
 				{
+					bDeleted = true;
 					m_Ctrl->GetStore()->Delete(item);
 					GetDocument()->Modify(true);
 					CUpdateHint hint(UPDATE_POINTS_VIEW);
@@ -1487,6 +1529,7 @@ void CAgilityBookTreeView::OnDelete(wxCommandEvent& evt)
 				ARBDogTrialPtr pTrial = m_Ctrl->GetStore()->GetTrial(item);
 				if (pDog->GetTrials().DeleteTrial(pTrial))
 				{
+					bDeleted = true;
 					m_Ctrl->GetStore()->Delete(item);
 					GetDocument()->Modify(true);
 					CUpdateHint hint(UPDATE_POINTS_VIEW);
@@ -1503,6 +1546,7 @@ void CAgilityBookTreeView::OnDelete(wxCommandEvent& evt)
 				ARBDogRunPtr pRun = m_Ctrl->GetStore()->GetRun(item);
 				if (pTrial->GetRuns().DeleteRun(pRun))
 				{
+					bDeleted = true;
 					m_Ctrl->GetStore()->Delete(item);
 					pTrial->SetMultiQs(GetDocument()->Book().GetConfig());
 					GetDocument()->Modify(true);
@@ -1512,6 +1556,8 @@ void CAgilityBookTreeView::OnDelete(wxCommandEvent& evt)
 			}
 			break;
 		}
+		if (bDeleted && m_Ctrl->IsShownOnScreen())
+			UpdateMessages();
 	}
 }
 
@@ -1717,7 +1763,7 @@ void CAgilityBookTreeView::OnNewTrial(wxCommandEvent& evt)
 					wxDataViewItem itemTrial = InsertTrial(pTrial, FindData(pDog));
 					if (itemTrial.IsOk())
 					{
-						Select(itemTrial);
+						m_Ctrl->Select(itemTrial);
 					}
 					else
 					{
