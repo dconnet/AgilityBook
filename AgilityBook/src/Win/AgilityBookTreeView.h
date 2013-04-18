@@ -220,8 +220,6 @@ private:
 	void OnFind(wxCommandEvent& evt);
 	void OnFindNext(wxCommandEvent& evt);
 	void OnFindPrevious(wxCommandEvent& evt);
-	void OnUpdateNewDog(wxUpdateUIEvent& evt);
-	void OnNewDog(wxCommandEvent& evt);
 	void OnUpdateEditDog(wxUpdateUIEvent& evt);
 	void OnEditDog(wxCommandEvent& evt);
 	void OnUpdateNewTitle(wxUpdateUIEvent& evt);
@@ -241,7 +239,6 @@ private:
 	void OnViewRunsByTrial(wxCommandEvent& evt);
 	void OnViewTableInYPS(wxCommandEvent& evt);
 	void OnViewRuntimeInOPS(wxCommandEvent& evt);
-	void OnViewPreferences(wxCommandEvent& evt);
 	void OnUpdateExpand(wxUpdateUIEvent& evt);
 	void OnExpand(wxCommandEvent& evt);
 	void OnUpdateCollapse(wxUpdateUIEvent& evt);

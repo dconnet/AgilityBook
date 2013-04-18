@@ -424,8 +424,6 @@ bool CAgilityBookTreeView::Create(
 	BIND_OR_CONNECT_ID(ID_EDIT_FIND_NEXT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnFindNext);
 	BIND_OR_CONNECT_ID(ID_EDIT_FIND_PREVIOUS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
 	BIND_OR_CONNECT_ID(ID_EDIT_FIND_PREVIOUS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnFindPrevious);
-	BIND_OR_CONNECT_ID(ID_AGILITY_NEW_DOG, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateNewDog);
-	BIND_OR_CONNECT_ID(ID_AGILITY_NEW_DOG, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnNewDog);
 	BIND_OR_CONNECT_ID(ID_AGILITY_EDIT_DOG, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEditDog);
 	BIND_OR_CONNECT_ID(ID_AGILITY_EDIT_DOG, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnEditDog);
 	BIND_OR_CONNECT_ID(ID_AGILITY_DELETE_DOG, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateDelete);
@@ -456,8 +454,6 @@ bool CAgilityBookTreeView::Create(
 	BIND_OR_CONNECT_ID(ID_VIEW_TABLE_IN_YPS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewTableInYPS);
 	BIND_OR_CONNECT_ID(ID_VIEW_RUNTIME_IN_OPS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
 	BIND_OR_CONNECT_ID(ID_VIEW_RUNTIME_IN_OPS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewRuntimeInOPS);
-	BIND_OR_CONNECT_ID(wxID_PREFERENCES, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
-	BIND_OR_CONNECT_ID(wxID_PREFERENCES, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewPreferences);
 	BIND_OR_CONNECT_ID(ID_EXPAND, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateExpand);
 	BIND_OR_CONNECT_ID(ID_EXPAND, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnExpand);
 	BIND_OR_CONNECT_ID(ID_COLLAPSE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateCollapse);
@@ -1109,8 +1105,6 @@ void CAgilityBookTreeView::OnUpdateDisable(wxUpdateUIEvent& evt)
 }
 
 
-
-
 void CAgilityBookTreeView::OnUpdateDuplicate(wxUpdateUIEvent& evt)
 {
 	bool bEnable = false;
@@ -1653,28 +1647,6 @@ void CAgilityBookTreeView::OnFindPrevious(wxCommandEvent& evt)
 }
 
 
-void CAgilityBookTreeView::OnUpdateNewDog(wxUpdateUIEvent& evt)
-{
-	evt.Enable(true);
-}
-
-
-void CAgilityBookTreeView::OnNewDog(wxCommandEvent& evt)
-{
-	ARBDogPtr dog(ARBDog::New());
-	CDlgDog dlg(GetDocument(), dog);
-	if (wxID_OK == dlg.ShowModal())
-	{
-		if (GetDocument()->Book().GetDogs().AddDog(dog))
-			InsertDog(dog, true);
-#pragma PRAGMA_TODO("Test")
-		// For some reason, the first dog isn't showing up.
-		//if (1 == GetDocument()->Book().GetDogs().size())
-		//	LoadData(false);
-	}
-}
-
-
 void CAgilityBookTreeView::OnUpdateEditDog(wxUpdateUIEvent& evt)
 {
 	bool bEnable = false;
@@ -1923,13 +1895,6 @@ void CAgilityBookTreeView::OnViewTableInYPS(wxCommandEvent& evt)
 void CAgilityBookTreeView::OnViewRuntimeInOPS(wxCommandEvent& evt)
 {
 	CAgilityBookOptions::SetRunTimeInOPS(!CAgilityBookOptions::GetRunTimeInOPS());
-}
-
-
-void CAgilityBookTreeView::OnViewPreferences(wxCommandEvent& evt)
-{
-	CDlgOptions options(GetDocument(), wxGetApp().GetTopWindow(), CDlgOptions::GetFilterPage());
-	options.ShowModal();
 }
 
 

@@ -322,8 +322,6 @@ BEGIN_EVENT_TABLE(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_EDIT_FIND_PREVIOUS, CAgilityBookTrainingView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_EDIT_TRAINING, CAgilityBookTrainingView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_EDIT_TRAINING, CAgilityBookTrainingView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_TRAINING, CAgilityBookTrainingView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_NEW_TRAINING, CAgilityBookTrainingView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_DELETE_TRAINING, CAgilityBookTrainingView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_DELETE_TRAINING, CAgilityBookTrainingView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookTrainingView::OnViewUpdateCmd)
@@ -670,9 +668,6 @@ void CAgilityBookTrainingView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_AGILITY_EDIT_TRAINING:
 		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
 		break;
-	case ID_AGILITY_NEW_TRAINING:
-		evt.Enable(true);
-		break;
 	case ID_AGILITY_DELETE_TRAINING:
 		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
 		break;
@@ -868,24 +863,6 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 					for (int i = 0; i < nColumnCount; ++i)
 						m_Ctrl->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 				}
-			}
-		}
-		break;
-
-	case ID_AGILITY_NEW_TRAINING:
-		{
-			ARBTrainingPtr training(ARBTraining::New());
-			CDlgTraining dlg(training, GetDocument());
-			if (wxID_OK == dlg.ShowModal())
-			{
-				GetDocument()->Book().GetTraining().AddTraining(training);
-				GetDocument()->Book().GetTraining().sort();
-				LoadData();
-				GetDocument()->Modify(true);
-				SetCurrentDate(training->GetDate());
-				int nColumnCount = m_Ctrl->GetColumnCount();
-				for (int i = 0; i < nColumnCount; ++i)
-					m_Ctrl->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 			}
 		}
 		break;

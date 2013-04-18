@@ -1817,6 +1817,18 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	case ID_AGILITY_NEW_CALENDAR:
 		{
 			ARBCalendarPtr cal(ARBCalendar::New());
+			wxView* pView = GetDocumentManager()->GetCurrentView();
+			if (pView)
+			{
+				CAgilityBookCalendarView* pCalView = GetCalendarView();
+				CAgilityBookCalendarListView* pCalListView = GetCalendarListView();
+				if ((pCalView == pView || pCalListView == pView) &&
+					pCalView->GetCurrentDate().IsValid())
+				{
+					cal->SetStartDate(pCalView->GetCurrentDate());
+					cal->SetEndDate(pCalView->GetCurrentDate() + 1);
+				}
+			}
 			CDlgCalendar dlg(cal, this, wxGetApp().GetTopWindow());
 			if (wxID_OK == dlg.ShowModal())
 			{
