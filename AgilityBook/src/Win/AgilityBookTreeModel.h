@@ -29,9 +29,12 @@ public:
 	wxDataViewItem LoadData(
 			ARBDogPtr pDog);
 	wxDataViewItem LoadData(
+			ARBDogPtr pDog,
 			ARBDogTrialPtr pTrial,
 			wxDataViewItem parent);
 	wxDataViewItem LoadData(
+			ARBDogPtr pDog,
+			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
 			wxDataViewItem parent);
 	void LoadData();
@@ -79,6 +82,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	wxDataViewCtrl* m_Ctrl;
 	std::vector<long> m_Columns[3];
+	mutable bool m_bInCompare;
 
 	std::vector<CAgilityBookTreeData*> m_roots;
 };

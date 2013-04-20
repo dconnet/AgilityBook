@@ -243,7 +243,7 @@ static bool EditRun(
 				// Even though we will reset the tree, go ahead and add/select
 				// the item into the tree here. That will make sure when the
 				// tree is reloaded, that the new item is selected.
-				wxDataViewItem item = pTree->InsertRun(pRun, pTree->FindData(pTrial));
+				wxDataViewItem item = pTree->InsertRun(pDog, pTrial, pRun, pTree->FindData(pTrial));
 				if (item.IsOk())
 				{
 					pTree->Select(item);
@@ -320,6 +320,22 @@ bool CAgilityBookTreeCtrl::Create(
 	store->DecRef();
 
 	return true;
+}
+
+
+bool CAgilityBookTreeCtrl::Unsort()
+{
+	bool bChanged = false;
+
+	int oldSortKey = GetSortingColumnIndex();
+    if (oldSortKey != wxNOT_FOUND)
+    {
+		bChanged = true;
+        GetColumn(oldSortKey)->UnsetAsSortKey();
+		SetSortingColumnIndex(wxNOT_FOUND);
+    }
+
+	return bChanged;
 }
 
 
@@ -446,6 +462,8 @@ bool CAgilityBookTreeView::Create(
 	BIND_OR_CONNECT_ID(ID_AGILITY_DELETE_RUN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnDelete);
 	BIND_OR_CONNECT_ID(ID_VIEW_CUSTOMIZE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
 	BIND_OR_CONNECT_ID(ID_VIEW_CUSTOMIZE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewCustomize);
+	BIND_OR_CONNECT_ID(ID_UNSORT, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateUnsort);
+	BIND_OR_CONNECT_ID(ID_UNSORT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnUnsort);
 	BIND_OR_CONNECT_ID(ID_VIEW_SORTRUNS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
 	BIND_OR_CONNECT_ID(ID_VIEW_SORTRUNS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewSortRuns);
 	BIND_OR_CONNECT_ID(ID_VIEW_RUNS_BY_TRIAL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
@@ -776,6 +794,7 @@ wxDataViewItem CAgilityBookTreeView::InsertDog(
 
 
 wxDataViewItem CAgilityBookTreeView::InsertTrial(
+		ARBDogPtr pDog,
 		ARBDogTrialPtr pTrial,
 		wxDataViewItem parent)
 {
@@ -783,13 +802,15 @@ wxDataViewItem CAgilityBookTreeView::InsertTrial(
 	wxDataViewItem trial;
 	if (pTrial && !pTrial->IsFiltered() && m_Ctrl)
 	{
-		trial = LoadData(pTrial, parent);
+		trial = LoadData(pDog, pTrial, parent);
 	}
 	return trial;
 }
 
 
 wxDataViewItem CAgilityBookTreeView::InsertRun(
+		ARBDogPtr pDog,
+		ARBDogTrialPtr pTrial,
 		ARBDogRunPtr pRun,
 		wxDataViewItem parent)
 {
@@ -797,7 +818,7 @@ wxDataViewItem CAgilityBookTreeView::InsertRun(
 	wxDataViewItem run;
 	if (pRun && !pRun->IsFiltered() && m_Ctrl)
 	{
-		run = LoadData(pRun, parent);
+		run = LoadData(pDog, pTrial, pRun, parent);
 	}
 	return run;
 }
@@ -941,10 +962,11 @@ wxDataViewItem CAgilityBookTreeView::LoadData(
 
 
 wxDataViewItem CAgilityBookTreeView::LoadData(
+		ARBDogPtr pDog,
 		ARBDogTrialPtr pTrial,
 		wxDataViewItem parent)
 {
-	wxDataViewItem item = m_Ctrl->GetStore()->LoadData(pTrial, parent);
+	wxDataViewItem item = m_Ctrl->GetStore()->LoadData(pDog, pTrial, parent);
 	m_Ctrl->GetStore()->ItemAdded(parent, item);
 	if (m_Ctrl->IsShownOnScreen())
 		UpdateMessages();
@@ -953,10 +975,12 @@ wxDataViewItem CAgilityBookTreeView::LoadData(
 
 
 wxDataViewItem CAgilityBookTreeView::LoadData(
+		ARBDogPtr pDog,
+		ARBDogTrialPtr pTrial,
 		ARBDogRunPtr pRun,
 		wxDataViewItem parent)
 {
-	wxDataViewItem item = m_Ctrl->GetStore()->LoadData(pRun, parent);
+	wxDataViewItem item = m_Ctrl->GetStore()->LoadData(pDog, pTrial, pRun, parent);
 	m_Ctrl->GetStore()->ItemAdded(parent, item);
 	if (m_Ctrl->IsShownOnScreen())
 		UpdateMessages();
@@ -1384,7 +1408,7 @@ void CAgilityBookTreeView::OnPaste(wxCommandEvent& evt)
 					for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 					{
 						ARBDogRunPtr pRun = *iter;
-						itemRun = InsertRun(pRun, itemParent);
+						itemRun = InsertRun(pDog, pTrial, pRun, itemParent);
 					}
 					m_Ctrl->Thaw();
 					m_Ctrl->Refresh();
@@ -1435,7 +1459,7 @@ void CAgilityBookTreeView::OnPaste(wxCommandEvent& evt)
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						GetDocument()->ResetVisibility(venues, pNewTrial);
 						m_Ctrl->Freeze();
-						wxDataViewItem itemTrial = InsertTrial(pNewTrial, FindData(pDog));
+						wxDataViewItem itemTrial = InsertTrial(pDog, pNewTrial, FindData(pDog));
 						m_Ctrl->Thaw();
 						m_Ctrl->Refresh();
 						bool bOk = true;
@@ -1732,7 +1756,7 @@ void CAgilityBookTreeView::OnNewTrial(wxCommandEvent& evt)
 					// Even though we will reset the tree, go ahead and add/select
 					// the item into the tree here. That will make sure when the
 					// tree is reloaded, that the new item is selected.
-					wxDataViewItem itemTrial = InsertTrial(pTrial, FindData(pDog));
+					wxDataViewItem itemTrial = InsertTrial(pDog, pTrial, FindData(pDog));
 					if (itemTrial.IsOk())
 					{
 						m_Ctrl->Select(itemTrial);
@@ -1872,6 +1896,20 @@ void CAgilityBookTreeView::OnViewCustomize(wxCommandEvent& evt)
 }
 
 
+void CAgilityBookTreeView::OnUpdateUnsort(wxUpdateUIEvent& evt)
+{
+	wxDataViewColumn* pCol = m_Ctrl->GetSortingColumn();
+	evt.Enable(pCol != NULL);
+}
+
+
+void CAgilityBookTreeView::OnUnsort(wxCommandEvent& evt)
+{
+	if (m_Ctrl->Unsort())
+		LoadData(false);
+}
+
+
 void CAgilityBookTreeView::OnViewSortRuns(wxCommandEvent& evt)
 {
 	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
@@ -1883,6 +1921,7 @@ void CAgilityBookTreeView::OnViewSortRuns(wxCommandEvent& evt)
 void CAgilityBookTreeView::OnViewRunsByTrial(wxCommandEvent& evt)
 {
 	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
+	LoadData(false);
 }
 
 

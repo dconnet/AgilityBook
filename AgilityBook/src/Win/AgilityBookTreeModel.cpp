@@ -23,6 +23,7 @@ CAgilityBookTreeModel::CAgilityBookTreeModel()
 	: m_pDoc(NULL)
 	, m_Ctrl(NULL)
 	, m_Columns()
+	, m_bInCompare(false)
 	, m_roots()
 {
 }
@@ -94,17 +95,21 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 
 	if (pDog)
 	{
-		CAgilityBookTreeDataDog* nodeDog = new CAgilityBookTreeDataDog(this, pDog);
-		itemDog = wxDataViewItem(nodeDog);
+		wxDataViewItem trialParent = wxDataViewItem(0);
+		if (CAgilityBookOptions::GetViewRunsByTrial())
+		{ 
+			CAgilityBookTreeDataDog* nodeDog = new CAgilityBookTreeDataDog(this, pDog);
+			trialParent = wxDataViewItem(nodeDog);
 
-		m_roots.push_back(nodeDog);
-		ItemAdded(wxDataViewItem(0), wxDataViewItem(nodeDog));
+			m_roots.push_back(nodeDog);
+			ItemAdded(wxDataViewItem(0), wxDataViewItem(nodeDog));
+		}
 
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			LoadData(*iterTrial, itemDog);
+			LoadData(pDog, *iterTrial, trialParent);
 		}
 	}
 	return itemDog;
@@ -112,38 +117,66 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 
 
 wxDataViewItem CAgilityBookTreeModel::LoadData(
+		ARBDogPtr pDog,
 		ARBDogTrialPtr pTrial,
 		wxDataViewItem parent)
 {
 	wxDataViewItem itemTrial;
-	CAgilityBookTreeData* pParent = GetNode(parent);
-	if (pParent && pTrial && !pTrial->IsFiltered())
+
+	CAgilityBookTreeData* pParent = NULL;
+	if (CAgilityBookOptions::GetViewRunsByTrial())
+		pParent = GetNode(parent);
+
+	if (((CAgilityBookOptions::GetViewRunsByTrial() && pParent)
+	|| !CAgilityBookOptions::GetViewRunsByTrial())
+	&& pTrial && !pTrial->IsFiltered())
 	{
-		CAgilityBookTreeDataTrial* nodeTrial = new CAgilityBookTreeDataTrial(this, pTrial);
-		itemTrial = wxDataViewItem(nodeTrial);
-		pParent->Append(nodeTrial);
+		wxDataViewItem runParent = wxDataViewItem(0);
+		if (CAgilityBookOptions::GetViewRunsByTrial())
+		{
+			CAgilityBookTreeDataTrial* nodeTrial = new CAgilityBookTreeDataTrial(this, pDog, pTrial);
+			runParent = wxDataViewItem(nodeTrial);
+			pParent->Append(nodeTrial);
+		}
 		for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 			iterRun != pTrial->GetRuns().end();
 			++iterRun)
 		{
-			LoadData(*iterRun, itemTrial);
+			LoadData(pDog, pTrial, *iterRun, runParent);
 		}
 	}
+
 	return itemTrial;
 }
 
 
 wxDataViewItem CAgilityBookTreeModel::LoadData(
+		ARBDogPtr pDog,
+		ARBDogTrialPtr pTrial,
 		ARBDogRunPtr pRun,
 		wxDataViewItem parent)
 {
 	wxDataViewItem itemRun;
-	CAgilityBookTreeData* pParent = GetNode(parent);
-	if (pParent && pRun && !pRun->IsFiltered())
+
+	CAgilityBookTreeData* pParent = NULL;
+	if (CAgilityBookOptions::GetViewRunsByTrial())
+		pParent = GetNode(parent);
+
+	if (((CAgilityBookOptions::GetViewRunsByTrial() && pParent)
+	|| !CAgilityBookOptions::GetViewRunsByTrial())
+	&& pRun && !pRun->IsFiltered())
 	{
-		CAgilityBookTreeDataRun* nodeRun = new CAgilityBookTreeDataRun(this, pRun);
+		CAgilityBookTreeDataRun* nodeRun = new CAgilityBookTreeDataRun(this, pDog, pTrial, pRun);
 		itemRun = wxDataViewItem(nodeRun);
-		pParent->Append(nodeRun);
+		if (CAgilityBookOptions::GetViewRunsByTrial())
+		{
+			pParent->Append(nodeRun);
+		}
+		else
+		{
+			m_roots.push_back(nodeRun);
+			ItemAdded(wxDataViewItem(0), itemRun);
+		}
 	}
 	return itemRun;
 }
@@ -183,7 +216,7 @@ void CAgilityBookTreeModel::LoadData()
 			item = itemDog;
 		}
 	}
-	Resort();
+	//Resort(); Not needed - thawing will trigger a resort
 	Expand(m_Ctrl);
 
 	if (item.IsOk() && baseItems.size() > 1)
@@ -214,16 +247,7 @@ void CAgilityBookTreeModel::LoadData()
 		m_Ctrl->EnsureVisible(item);
 	}
 
-#pragma PRAGMA_TODO(cleanup - test context menu operations)
-	// Reset the context menu reset.
-	// We may have reloaded during a context menu operation.
-	//m_bReset = false;
-
-	//if (m_Ctrl->IsShownOnScreen())
-	//	UpdateMessages();
-
 	m_Ctrl->Thaw();
-	//m_bSuppressSelect = false;
 }
 
 
@@ -303,9 +327,11 @@ int CAgilityBookTreeModel::Compare(
 	if (node1->IsContainer() && node2->IsContainer())
 		column = 0;
 
+	m_bInCompare = true;
 	wxVariant value1, value2;
 	GetValue(value1, item1, column);
 	GetValue(value2, item2, column);
+	m_bInCompare = false;
 
 	if (!ascending)
 	{
@@ -326,7 +352,7 @@ int CAgilityBookTreeModel::Compare(
 	{
 		long l1 = value1.GetLong();
 		long l2 = value2.GetLong();
-		long res = l1-l2;
+		long res = l1 - l2;
 		if (res)
 			return res;
 	}
@@ -335,18 +361,18 @@ int CAgilityBookTreeModel::Compare(
 		double d1 = value1.GetDouble();
 		double d2 = value2.GetDouble();
 		if (d1 < d2)
-			return 1;
-		if (d1 > d2)
 			return -1;
+		if (d1 > d2)
+			return 1;
 	}
 	else if (value1.GetType() == wxT("datetime"))
 	{
 		wxDateTime dt1 = value1.GetDateTime();
 		wxDateTime dt2 = value2.GetDateTime();
 		if (dt1.IsEarlierThan(dt2))
-			return 1;
-		if (dt2.IsEarlierThan(dt1))
 			return -1;
+		if (dt2.IsEarlierThan(dt1))
+			return 1;
 	}
 
 	// items must be different
@@ -377,14 +403,14 @@ void CAgilityBookTreeModel::GetValue(
 	wxASSERT(node);
 
 	wxIcon icon = node->GetIcon(col);
-	if (icon.IsOk())
+	if (!m_bInCompare && icon.IsOk())
 	{
-		wxDataViewIconText data(node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col), icon);
+			wxDataViewIconText data(node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col, m_bInCompare), icon);
 		variant << data;
 	}
 	else
 	{
-		variant = node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col);
+		variant = node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col, m_bInCompare);
 	}
 }
 

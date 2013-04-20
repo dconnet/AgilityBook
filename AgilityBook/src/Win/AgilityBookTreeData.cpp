@@ -150,7 +150,8 @@ CAgilityBookTreeDataDog::~CAgilityBookTreeDataDog()
 wxVariant CAgilityBookTreeDataDog::GetColumn(
 		ARBConfig const& config,
 		std::vector<long> const& columns,
-		unsigned int col) const
+		unsigned int col,
+		bool bInCompare) const
 {
 	wxVariant variant;
 	if (0 == col)
@@ -198,8 +199,10 @@ wxVariant CAgilityBookTreeDataDog::GetColumn(
 
 CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 		CAgilityBookTreeModel* pModel,
+		ARBDogPtr dog,
 		ARBDogTrialPtr trial)
 	: CAgilityBookTreeData(pModel)
+	, m_pDog(dog)
 	, m_pTrial(trial)
 {
 	CIconList icons;
@@ -215,7 +218,8 @@ CAgilityBookTreeDataTrial::~CAgilityBookTreeDataTrial()
 wxVariant CAgilityBookTreeDataTrial::GetColumn(
 		ARBConfig const& config,
 		std::vector<long> const& columns,
-		unsigned int col) const
+		unsigned int col,
+		bool bInCompare) const
 {
 	wxVariant variant;
 	if (0 == col)
@@ -320,46 +324,16 @@ wxVariant CAgilityBookTreeDataTrial::GetColumn(
 	return variant;
 }
 
-
-ARBDogPtr CAgilityBookTreeDataTrial::GetDog() const
-{
-	CAgilityBookTreeDataDog const* pDog = GetDataDog();
-	assert(pDog);
-	return pDog->GetDog();
-}
-
-
-ARBDogPtr CAgilityBookTreeDataTrial::GetDog()
-{
-	CAgilityBookTreeDataDog* pDog = GetDataDog();
-	assert(pDog);
-	return pDog->GetDog();
-}
-
-
-CAgilityBookTreeDataDog const* CAgilityBookTreeDataTrial::GetDataDog() const
-{
-	CAgilityBookTreeData const* pData = GetParent();
-	CAgilityBookTreeDataDog const* pDog = dynamic_cast<CAgilityBookTreeDataDog const*>(pData);
-	assert(pDog);
-	return pDog;
-}
-
-
-CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
-{
-	CAgilityBookTreeData* pData = GetParent();
-	CAgilityBookTreeDataDog* pDog = dynamic_cast<CAgilityBookTreeDataDog*>(pData);
-	assert(pDog);
-	return pDog;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(
 		CAgilityBookTreeModel* pModel,
+		ARBDogPtr dog,
+		ARBDogTrialPtr trial,
 		ARBDogRunPtr run)
 	: CAgilityBookTreeData(pModel)
+	, m_pDog(dog)
+	, m_pTrial(trial)
 	, m_pRun(run)
 {
 	if (0 < m_pRun->GetCRCDRawMetaData().length())
@@ -379,31 +353,44 @@ CAgilityBookTreeDataRun::~CAgilityBookTreeDataRun()
 wxVariant CAgilityBookTreeDataRun::GetColumn(
 		ARBConfig const& config,
 		std::vector<long> const& columns,
-		unsigned int col) const
+		unsigned int col,
+		bool bInCompare) const
 {
 	wxVariant variant;
 	if (0 <= col && m_pRun)
 	{
 		ARBDogPtr dog = GetDog();
 		ARBDogTrialPtr trial = GetTrial();
-		std::wostringstream str;
-		short val;
 		switch (columns[col])
 		{
 		default:
 			break;
 
 		case IO_RUNS_REG_NAME:
-			str << dog->GetRegisteredName();
+			variant = dog->GetRegisteredName().c_str();
 			break;
 		case IO_RUNS_CALL_NAME:
-			str << dog->GetCallName();
+			variant = dog->GetCallName().c_str();
 			break;
 		case IO_RUNS_DATE:
-			str << m_pRun->GetDate().GetString();
+			{
+				bool bSet = false;
+				if (bInCompare)
+				{
+					wxDateTime date;
+					if (m_pRun->GetDate().GetDate(date))
+					{
+						bSet = true;
+						variant = date;
+					}
+				}
+				if (!bSet)
+					variant = m_pRun->GetDate().GetString().c_str();
+			}
 			break;
 		case IO_RUNS_VENUE:
 			{
+				std::wostringstream str;
 				int i = 0;
 				for (ARBDogClubList::const_iterator iter = trial->GetClubs().begin();
 					iter != trial->GetClubs().end();
@@ -413,10 +400,12 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 						str << L"/";
 					str << (*iter)->GetVenue();
 				}
+				variant = str.str();
 			}
 			break;
 		case IO_RUNS_CLUB:
 			{
+				std::wostringstream str;
 				int i = 0;
 				for (ARBDogClubList::const_iterator iter = trial->GetClubs().begin();
 					iter != trial->GetClubs().end();
@@ -426,168 +415,232 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 						str << L"/";
 					str << (*iter)->GetName();
 				}
+				variant = str.str();
 			}
 			break;
 		case IO_RUNS_LOCATION:
-			str << trial->GetLocation();
+			variant = trial->GetLocation().c_str();
 			break;
 		case IO_RUNS_TRIAL_NOTES:
-			str << trial->GetNote();
+			variant = trial->GetNote().c_str();
 			break;
 		case IO_RUNS_DIVISION:
-			str << m_pRun->GetDivision();
+			variant = m_pRun->GetDivision().c_str();
 			break;
 		case IO_RUNS_LEVEL:
-			str << m_pRun->GetLevel();
+			variant = m_pRun->GetLevel().c_str();
 			break;
 		case IO_RUNS_EVENT:
-			str << m_pRun->GetEvent();
+			variant = m_pRun->GetEvent().c_str();
 			break;
 		case IO_RUNS_HEIGHT:
-			str << m_pRun->GetHeight();
+			variant = m_pRun->GetHeight().c_str();
 			break;
 		case IO_RUNS_JUDGE:
-			str << m_pRun->GetJudge();
+			variant = m_pRun->GetJudge().c_str();
 			break;
 		case IO_RUNS_HANDLER:
-			str << m_pRun->GetHandler();
+			variant = m_pRun->GetHandler().c_str();
 			break;
 		case IO_RUNS_CONDITIONS:
-			str << m_pRun->GetConditions();
+			variant = m_pRun->GetConditions().c_str();
 			break;
 		case IO_RUNS_COURSE_FAULTS:
-			str << m_pRun->GetScoring().GetCourseFaults();
+			variant = long(m_pRun->GetScoring().GetCourseFaults());
 			break;
 		case IO_RUNS_TIME:
-			str << ARBDouble::ToString(m_pRun->GetScoring().GetTime());
+			if (bInCompare)
+				variant = m_pRun->GetScoring().GetTime();
+			else
+				variant = ARBDouble::ToString(m_pRun->GetScoring().GetTime());
 			break;
 		case IO_RUNS_YARDS:
-			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
-			&& 0.0 < m_pRun->GetScoring().GetYards())
 			{
-				str << ARBDouble::ToString(m_pRun->GetScoring().GetYards(), 0);
+				bool bSet = false;
+				double yds = 0.0;
+				if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
+				{
+					yds = m_pRun->GetScoring().GetYards();
+					if (0.0 < yds)
+					{
+						bSet = true;
+					}
+				}
+				else if (bInCompare)
+					yds = -1.0;
+				if (bInCompare)
+					variant = yds;
+				else if (bSet)
+					variant = ARBDouble::ToString(yds, 0);
 			}
 			break;
 		case IO_RUNS_MIN_YPS:
 			{
-				double yps;
-				if (m_pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
-				{
-					str << ARBDouble::ToString(yps, 3);
-				}
+				double yps = 0.0;
+				bool bSet = m_pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps);
+				if (bInCompare)
+					variant = yps;
+				else if (bSet)
+					variant = ARBDouble::ToString(yps, 3);
 			}
 			break;
 		case IO_RUNS_YPS:
 			{
-				double yps;
-				if (m_pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
-				{
-					str << ARBDouble::ToString(yps, 3);
-				}
+				double yps = 0.0;
+				bool bSet = m_pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps);
+				if (bInCompare)
+					variant = yps;
+				else if (bSet)
+					variant = ARBDouble::ToString(yps, 3);
 			}
 			break;
 		case IO_RUNS_OBSTACLES:
 			{
-				short obstacles = m_pRun->GetScoring().GetObstacles();
-				if (0 < obstacles)
-					str << obstacles;
+				long obstacles = m_pRun->GetScoring().GetObstacles();
+				if (bInCompare || 0 < obstacles)
+					variant = obstacles;
 			}
 			break;
 		case IO_RUNS_OPS:
 			{
-				double ops;
-				if (m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops))
-				{
-					str << ARBDouble::ToString(ops, 3);
-				}
+				double ops = 0.0;
+				bool bSet = m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops);
+				if (bInCompare)
+					variant = ops;
+				else if (bSet)
+					variant = ARBDouble::ToString(ops, 3);
 			}
 			break;
 		case IO_RUNS_SCT:
-			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
-			&& 0.0 < m_pRun->GetScoring().GetSCT())
 			{
-				str << ARBDouble::ToString(m_pRun->GetScoring().GetSCT());
+				bool bSet = false;
+				double sct = 0.0;
+				if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
+				{
+					sct = m_pRun->GetScoring().GetSCT();
+					if (0.0 < sct)
+					{
+						bSet = true;
+					}
+				}
+				else if (bInCompare)
+					sct = -1.0;
+				if (bInCompare)
+					variant = sct;
+				else if (bSet)
+					variant = ARBDouble::ToString(sct);
 			}
 			break;
 		case IO_RUNS_TOTAL_FAULTS:
-			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
 			{
-				ARBConfigScoringPtr pScoring;
-				if (trial->GetClubs().GetPrimaryClub())
-					config.GetVenues().FindEvent(
-						trial->GetClubs().GetPrimaryClubVenue(),
-						m_pRun->GetEvent(),
-						m_pRun->GetDivision(),
-						m_pRun->GetLevel(),
-						m_pRun->GetDate(),
-						NULL,
-						&pScoring);
-				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
-				str << ARBDouble::ToString(faults, 0);
+				bool bSet = false;
+				double faults = 0.0;
+				if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
+				{
+					ARBConfigScoringPtr pScoring;
+					if (trial->GetClubs().GetPrimaryClub())
+					{
+						config.GetVenues().FindEvent(
+							trial->GetClubs().GetPrimaryClubVenue(),
+							m_pRun->GetEvent(),
+							m_pRun->GetDivision(),
+							m_pRun->GetLevel(),
+							m_pRun->GetDate(),
+							NULL,
+							&pScoring);
+					}
+					bSet = true;
+					faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
+				}
+				else if (bInCompare)
+					faults = -1.0;
+				if (bInCompare)
+					variant = faults;
+				else if (bSet)
+					variant = ARBDouble::ToString(faults, 0);
 			}
 			break;
 		case IO_RUNS_REQ_OPENING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetNeedOpenPts();
+				variant = long(m_pRun->GetScoring().GetNeedOpenPts());
 			}
+			else if (bInCompare)
+				variant = -1L;
 			break;
 		case IO_RUNS_REQ_CLOSING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetNeedClosePts();
+				variant = long(m_pRun->GetScoring().GetNeedClosePts());
 			}
+			else if (bInCompare)
+				variant = -1L;
 			break;
 		case IO_RUNS_OPENING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetOpenPts();
+				variant = long(m_pRun->GetScoring().GetOpenPts());
 			}
+			else if (bInCompare)
+				variant = -1L;
 			break;
 		case IO_RUNS_CLOSING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetClosePts();
+				variant = long(m_pRun->GetScoring().GetClosePts());
 			}
+			else if (bInCompare)
+				variant = -1L;
 			break;
 		case IO_RUNS_REQ_POINTS:
 			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetNeedOpenPts();
+				variant = long(m_pRun->GetScoring().GetNeedOpenPts());
 			}
+			else if (bInCompare)
+				variant = -1L;
 			break;
 		case IO_RUNS_POINTS:
 			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetOpenPts();
+				variant = long(m_pRun->GetScoring().GetOpenPts());
 			}
+			else if (bInCompare)
+				variant = -1L;
 			break;
 		case IO_RUNS_PLACE:
-			val = m_pRun->GetPlace();
-			if (0 > val)
-				str << L"?";
-			else if (0 == val)
-				str << L"-";
-			else
-				str << val;
+			{
+				long val = m_pRun->GetPlace();
+				if (bInCompare || 0 < val)
+					variant = val;
+				else if (0 == val)
+					variant = L"-";
+				else if (0 > val)
+					variant = L"?";
+			}
 			break;
 		case IO_RUNS_IN_CLASS:
-			val = m_pRun->GetInClass();
-			if (0 >= val)
-				str << L"?";
-			else
-				str << val;
+			{
+				long val = m_pRun->GetInClass();
+				if (bInCompare || 0 < val)
+					variant = val;
+				else
+					variant = L"?";
+			}
 			break;
 		case IO_RUNS_DOGSQD:
-			val = m_pRun->GetDogsQd();
-			if (0 > val)
-				str << L"?";
-			else
-				str << m_pRun->GetDogsQd();
+			{
+				long val = m_pRun->GetDogsQd();
+				if (bInCompare || 0 <= val)
+					variant = long(m_pRun->GetDogsQd());
+				else
+					variant = L"?";
+			}
 			break;
 		case IO_RUNS_Q:
 			{
 				bool bSet = false;
+				std::wostringstream str;
 				if (m_pRun->GetQ().Qualified())
 				{
 					std::wstring q;
@@ -617,28 +670,45 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 						}
 					}
 				}
-				if (!bSet)
-					str << m_pRun->GetQ().str();
+				if (bSet)
+					variant = str.str();
+				else
+					variant = m_pRun->GetQ().str();
 			}
 			break;
 		case IO_RUNS_SCORE:
-			if (m_pRun->GetQ().Qualified()
-			|| ARB_Q::eQ_NQ == m_pRun->GetQ())
 			{
-				ARBConfigScoringPtr pScoring;
-				if (trial->GetClubs().GetPrimaryClub())
-					config.GetVenues().FindEvent(
-						trial->GetClubs().GetPrimaryClubVenue(),
-						m_pRun->GetEvent(),
-						m_pRun->GetDivision(),
-						m_pRun->GetLevel(),
-						m_pRun->GetDate(),
-						NULL,
-						&pScoring);
-				if (pScoring)
+				bool bSet = false;
+				double score = 0.0;
+				if (m_pRun->GetQ().Qualified()
+				|| ARB_Q::eQ_NQ == m_pRun->GetQ())
 				{
-					str << ARBDouble::ToString(m_pRun->GetScore(pScoring));
+					ARBConfigScoringPtr pScoring;
+					if (trial->GetClubs().GetPrimaryClub())
+					{
+						config.GetVenues().FindEvent(
+							trial->GetClubs().GetPrimaryClubVenue(),
+							m_pRun->GetEvent(),
+							m_pRun->GetDivision(),
+							m_pRun->GetLevel(),
+							m_pRun->GetDate(),
+							NULL,
+							&pScoring);
+					}
+					if (pScoring)
+					{
+						bSet = true;
+						score = m_pRun->GetScore(pScoring);
+					}
+					else if (bInCompare)
+						score = -1.0;
 				}
+				else if (bInCompare)
+					score = -2.0;
+				if (bInCompare)
+					variant = score;
+				else if (bSet)
+					variant = ARBDouble::ToString(score);
 			}
 			break;
 		case IO_RUNS_TITLE_POINTS:
@@ -661,14 +731,15 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 						pts = m_pRun->GetTitlePoints(pScoring);
 					}
 				}
-				str << pts;
+				variant = pts;
 			}
 			break;
 		case IO_RUNS_COMMENTS:
-			str << StringUtil::Replace(m_pRun->GetNote(), L"\n", L" ");
+			variant = StringUtil::Replace(m_pRun->GetNote(), L"\n", L" ");
 			break;
 		case IO_RUNS_FAULTS:
 			{
+				std::wostringstream str;
 				int i = 0;
 				for (ARBDogFaultList::const_iterator iter = m_pRun->GetFaults().begin();
 					iter != m_pRun->GetFaults().end();
@@ -678,10 +749,13 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 						str << L", ";
 					str << (*iter);
 				}
+				variant = str.str();
 			}
 			break;
 		case IO_RUNS_SPEED:
 			{
+				bool bSet = false;
+				long pts = 0;
 				ARBConfigScoringPtr pScoring;
 				if (trial->GetClubs().GetPrimaryClub())
 					config.GetVenues().FindEvent(
@@ -696,82 +770,16 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 				{
 					if (pScoring->HasSpeedPts() && m_pRun->GetQ().Qualified())
 					{
-						str << m_pRun->GetSpeedPoints(pScoring);
+						bSet = true;
+						pts = m_pRun->GetSpeedPoints(pScoring);
 					}
 				}
+				if (bInCompare || bSet)
+					variant = pts;
 			}
 			break;
 		}
-		variant = str.str();
 	}
 
 	return variant;
-}
-
-
-ARBDogPtr CAgilityBookTreeDataRun::GetDog() const
-{
-	CAgilityBookTreeDataDog const* pDog = GetDataDog();
-	assert(pDog);
-	return pDog->GetDog();
-}
-
-
-ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial() const
-{
-	CAgilityBookTreeDataTrial const* pTrial = GetDataTrial();
-	assert(pTrial);
-	return pTrial->GetTrial();
-}
-
-
-ARBDogPtr CAgilityBookTreeDataRun::GetDog()
-{
-	CAgilityBookTreeDataDog* pDog = GetDataDog();
-	assert(pDog);
-	return pDog->GetDog();
-}
-
-
-ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial()
-{
-	CAgilityBookTreeDataTrial* pTrial = GetDataTrial();
-	assert(pTrial);
-	return pTrial->GetTrial();
-}
-
-
-CAgilityBookTreeDataDog const* CAgilityBookTreeDataRun::GetDataDog() const
-{
-	CAgilityBookTreeData const* pData = GetParent();
-	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
-	assert(pTrial);
-	return pTrial->GetDataDog();
-}
-
-
-CAgilityBookTreeDataTrial const* CAgilityBookTreeDataRun::GetDataTrial() const
-{
-	CAgilityBookTreeData const* pData = GetParent();
-	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
-	assert(pTrial);
-	return pTrial;
-}
-
-
-CAgilityBookTreeDataDog* CAgilityBookTreeDataRun::GetDataDog()
-{
-	CAgilityBookTreeData* pData = GetParent();
-	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
-	assert(pTrial);
-	return pTrial->GetDataDog();
-}
-
-
-CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
-{
-	CAgilityBookTreeData* pData = GetParent();
-	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
-	assert(pTrial);
-	return pTrial;
 }

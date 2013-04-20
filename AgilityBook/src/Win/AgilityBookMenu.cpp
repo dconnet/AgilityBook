@@ -138,6 +138,8 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{MENU_ITEM, wxID_PREFERENCES,         wxITEM_NORMAL, 1, NULL, arbT("MenuViewOptions"), arbT("DescViewOptions"), NULL},
 	{MENU_ITEM, ID_VIEW_CUSTOMIZE,        wxITEM_NORMAL, 1, NULL, arbT("MenuViewCustomize"), arbT("DescViewCustomize"), NULL},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
+	{MENU_ITEM, ID_UNSORT,                wxITEM_NORMAL, 1, NULL, arbT("MenuUnsort"), arbT("DescUnsort"), NULL},
+	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, ID_VIEW_SORTRUNS,         wxITEM_CHECK,  1, NULL, arbT("MenuViewNewestTrials"), arbT("DescViewNewestTrials"), NULL},
 	{MENU_ITEM, ID_VIEW_RUNS_BY_TRIAL,    wxITEM_CHECK,  1, NULL, arbT("MenuViewRunsByTrial"), arbT("DescViewRunsByTrial"), NULL},
 	{MENU_ITEM, ID_VIEW_TABLE_IN_YPS,     wxITEM_CHECK,  1, NULL, arbT("MenuViewIncludeTable"), arbT("DescViewIncludeTable"), NULL},

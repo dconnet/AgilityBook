@@ -45,7 +45,8 @@ public:
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
-			unsigned int col) const = 0;
+			unsigned int col,
+			bool bInCompare) const = 0;
 
 	CAgilityBookTreeData* GetParent() const			{return m_parent;}
 	//virtual CAgilityBookTreeData const* GetParent() const {return m_parent;}
@@ -61,6 +62,7 @@ public:
 	virtual ARBDogTrialPtr GetTrial()				{return ARBDogTrialPtr();}
 	virtual ARBDogRunPtr GetRun()					{return ARBDogRunPtr();}
 
+	/*
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const
 	{
 		return NULL;
@@ -85,6 +87,7 @@ public:
 	{
 		return NULL;
 	}
+	*/
 
 	virtual MenuIdentityPopup GetMenuID() const = 0;
 
@@ -114,19 +117,12 @@ public:
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
-			unsigned int col) const;
+			unsigned int col,
+			bool bInCompare) const;
 
 	virtual ARBBasePtr GetARBBase() const			{return m_pDog;}
 	virtual ARBDogPtr GetDog() const				{return m_pDog;}
 	virtual ARBDogPtr GetDog()						{return m_pDog;}
-	virtual CAgilityBookTreeDataDog const* GetDataDog() const
-	{
-		return this;
-	}
-	virtual CAgilityBookTreeDataDog* GetDataDog()
-	{
-		return this;
-	}
 
 	virtual MenuIdentityPopup GetMenuID() const
 	{
@@ -144,6 +140,7 @@ class CAgilityBookTreeDataTrial : public CAgilityBookTreeData
 public:
 	CAgilityBookTreeDataTrial(
 			CAgilityBookTreeModel* pModel,
+			ARBDogPtr dog,
 			ARBDogTrialPtr trial);
 	~CAgilityBookTreeDataTrial();
 	virtual CTreeDataType Type() const
@@ -155,23 +152,14 @@ public:
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
-			unsigned int col) const;
+			unsigned int col,
+			bool bInCompare) const;
 
 	virtual ARBBasePtr GetARBBase() const			{return m_pTrial;}
-	virtual ARBDogPtr GetDog() const;
+	virtual ARBDogPtr GetDog() const				{return m_pDog;}
 	virtual ARBDogTrialPtr GetTrial() const			{return m_pTrial;}
-	virtual ARBDogPtr GetDog();
+	virtual ARBDogPtr GetDog()						{return m_pDog;}
 	virtual ARBDogTrialPtr GetTrial()				{return m_pTrial;}
-	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
-	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const
-	{
-		return this;
-	}
-	virtual CAgilityBookTreeDataDog* GetDataDog();
-	virtual CAgilityBookTreeDataTrial* GetDataTrial()
-	{
-		return this;
-	}
 
 	virtual MenuIdentityPopup GetMenuID() const
 	{
@@ -179,6 +167,7 @@ public:
 	}
 
 private:
+	ARBDogPtr m_pDog;
 	ARBDogTrialPtr m_pTrial;
 };
 
@@ -189,6 +178,8 @@ class CAgilityBookTreeDataRun : public CAgilityBookTreeData
 public:
 	CAgilityBookTreeDataRun(
 			CAgilityBookTreeModel* pModel,
+			ARBDogPtr dog,
+			ARBDogTrialPtr trial,
 			ARBDogRunPtr run);
 	~CAgilityBookTreeDataRun();
 	virtual CTreeDataType Type() const
@@ -200,27 +191,16 @@ public:
 	virtual wxVariant GetColumn(
 			ARBConfig const& config,
 			std::vector<long> const& columns,
-			unsigned int col) const;
+			unsigned int col,
+			bool bInCompare) const;
 
 	virtual ARBBasePtr GetARBBase() const			{return m_pRun;}
-	virtual ARBDogPtr GetDog() const;
-	virtual ARBDogTrialPtr GetTrial() const;
+	virtual ARBDogPtr GetDog() const				{return m_pDog;}
+	virtual ARBDogTrialPtr GetTrial() const			{return m_pTrial;}
 	virtual ARBDogRunPtr GetRun() const				{return m_pRun;}
-	virtual ARBDogPtr GetDog();
-	virtual ARBDogTrialPtr GetTrial();
+	virtual ARBDogPtr GetDog()						{return m_pDog;}
+	virtual ARBDogTrialPtr GetTrial()				{return m_pTrial;}
 	virtual ARBDogRunPtr GetRun()					{return m_pRun;}
-	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
-	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const;
-	virtual CAgilityBookTreeDataRun const* GetDataRun() const
-	{
-		return this;
-	}
-	virtual CAgilityBookTreeDataDog* GetDataDog();
-	virtual CAgilityBookTreeDataTrial* GetDataTrial();
-	virtual CAgilityBookTreeDataRun* GetDataRun()
-	{
-		return this;
-	}
 
 	virtual MenuIdentityPopup GetMenuID() const
 	{
@@ -228,5 +208,7 @@ public:
 	}
 
 private:
+	ARBDogPtr m_pDog;
+	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
 };

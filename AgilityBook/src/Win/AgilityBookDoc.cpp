@@ -209,6 +209,7 @@ BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_MENU(ID_NOTES_SEARCH, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(wxID_PREFERENCES, CAgilityBookDoc::OnUpdateCmd)
 	EVT_MENU(wxID_PREFERENCES, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_UNSORT, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_SORTRUNS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_HIDDEN, CAgilityBookDoc::OnUpdateCmd)
@@ -1654,6 +1655,10 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_NOTES_SEARCH:
 	case wxID_PREFERENCES:
 		evt.Enable(true);
+		break;
+	case ID_UNSORT:
+		evt.Enable(false);
+		evt.Skip();
 		break;
 	case ID_VIEW_SORTRUNS:
 		evt.Check(CAgilityBookOptions::GetNewestDatesFirst() ? 1 : 0);

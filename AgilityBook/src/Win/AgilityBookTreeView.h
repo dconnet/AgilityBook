@@ -34,7 +34,6 @@
 #include "IconList.h"
 #include <vector>
 #include <wx/docview.h>
-class CAgilityBookTreeCtrl;
 class CAgilityBookTreeData;
 class CAgilityBookTreeView;
 
@@ -77,6 +76,8 @@ public:
 			const wxSize& size,
 			long style,
 			const wxValidator& validator);
+
+	bool Unsort();
 
 	void CollapseAllChildren(wxDataViewItem const& item);
 	void ExpandAllChildren(wxDataViewItem const& item);
@@ -160,9 +161,12 @@ public:
 			ARBDogPtr pDog,
 			bool bSelect = false);
 	wxDataViewItem InsertTrial(
+			ARBDogPtr pDog,
 			ARBDogTrialPtr pTrial,
 			wxDataViewItem parent);
 	wxDataViewItem InsertRun(
+			ARBDogPtr pDog,
+			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
 			wxDataViewItem parent);
 	std::wstring GetPrintLine(wxDataViewItem const& item) const;
@@ -181,9 +185,12 @@ private:
 	wxDataViewItem LoadData(
 			ARBDogPtr pDog);
 	wxDataViewItem LoadData(
+			ARBDogPtr pDog,
 			ARBDogTrialPtr pTrial,
 			wxDataViewItem parent);
 	wxDataViewItem LoadData(
+			ARBDogPtr pDog,
+			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
 			wxDataViewItem parent);
 	void LoadData(bool bColumns);
@@ -235,6 +242,8 @@ private:
 	void OnUpdateEditRun(wxUpdateUIEvent& evt);
 	void OnEditRun(wxCommandEvent& evt);
 	void OnViewCustomize(wxCommandEvent& evt);
+	void OnUpdateUnsort(wxUpdateUIEvent& evt);
+	void OnUnsort(wxCommandEvent& evt);
 	void OnViewSortRuns(wxCommandEvent& evt);
 	void OnViewRunsByTrial(wxCommandEvent& evt);
 	void OnViewTableInYPS(wxCommandEvent& evt);
