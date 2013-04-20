@@ -327,13 +327,14 @@ bool CAgilityBookTreeCtrl::Unsort()
 {
 	bool bChanged = false;
 
-	int oldSortKey = GetSortingColumnIndex();
-    if (oldSortKey != wxNOT_FOUND)
-    {
-		bChanged = true;
-        GetColumn(oldSortKey)->UnsetAsSortKey();
+	if (GetSortingColumn())
+	{
+		GetSortingColumn()->UnsetAsSortKey();
+#ifdef wxHAS_GENERIC_DATAVIEWCTRL
 		SetSortingColumnIndex(wxNOT_FOUND);
-    }
+#endif
+		bChanged = true;
+	}
 
 	return bChanged;
 }
