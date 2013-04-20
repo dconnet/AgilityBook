@@ -373,20 +373,14 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 			variant = dog->GetCallName().c_str();
 			break;
 		case IO_RUNS_DATE:
+			if (bInCompare)
 			{
-				bool bSet = false;
-				if (bInCompare)
-				{
-					wxDateTime date;
-					if (m_pRun->GetDate().GetDate(date))
-					{
-						bSet = true;
-						variant = date;
-					}
-				}
-				if (!bSet)
-					variant = m_pRun->GetDate().GetString().c_str();
+				wxDateTime date;
+				m_pRun->GetDate().GetDate(date);
+				variant = date;
 			}
+			else
+				variant = m_pRun->GetDate().GetString().c_str();
 			break;
 		case IO_RUNS_VENUE:
 			{
@@ -446,7 +440,14 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 			variant = m_pRun->GetConditions().c_str();
 			break;
 		case IO_RUNS_COURSE_FAULTS:
-			variant = long(m_pRun->GetScoring().GetCourseFaults());
+			if (bInCompare)
+				variant = long(m_pRun->GetScoring().GetCourseFaults());
+			else
+			{
+				std::wostringstream str;
+				str << m_pRun->GetScoring().GetCourseFaults();
+				variant = str.str();
+			}
 			break;
 		case IO_RUNS_TIME:
 			if (bInCompare)
@@ -456,22 +457,17 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 			break;
 		case IO_RUNS_YARDS:
 			{
-				bool bSet = false;
-				double yds = 0.0;
+				double yds = -1.0;
 				if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
 				{
 					yds = m_pRun->GetScoring().GetYards();
-					if (0.0 < yds)
+					if (!bInCompare && 0.0 < yds)
 					{
-						bSet = true;
+						variant = ARBDouble::ToString(yds, 0);
 					}
 				}
-				else if (bInCompare)
-					yds = -1.0;
 				if (bInCompare)
 					variant = yds;
-				else if (bSet)
-					variant = ARBDouble::ToString(yds, 0);
 			}
 			break;
 		case IO_RUNS_MIN_YPS:
@@ -497,8 +493,14 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 		case IO_RUNS_OBSTACLES:
 			{
 				long obstacles = m_pRun->GetScoring().GetObstacles();
-				if (bInCompare || 0 < obstacles)
+				if (bInCompare)
 					variant = obstacles;
+				else if (0 < obstacles)
+				{
+					std::wostringstream str;
+					str << obstacles;
+					variant = str.str();
+				}
 			}
 			break;
 		case IO_RUNS_OPS:
@@ -513,28 +515,22 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 			break;
 		case IO_RUNS_SCT:
 			{
-				bool bSet = false;
-				double sct = 0.0;
+				double sct = -1.0;
 				if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
 				{
 					sct = m_pRun->GetScoring().GetSCT();
-					if (0.0 < sct)
+					if (!bInCompare && 0.0 < sct)
 					{
-						bSet = true;
+						variant = ARBDouble::ToString(sct);
 					}
 				}
-				else if (bInCompare)
-					sct = -1.0;
 				if (bInCompare)
 					variant = sct;
-				else if (bSet)
-					variant = ARBDouble::ToString(sct);
 			}
 			break;
 		case IO_RUNS_TOTAL_FAULTS:
 			{
-				bool bSet = false;
-				double faults = 0.0;
+				double faults = -1.0;
 				if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
 				{
 					ARBConfigScoringPtr pScoring;
@@ -549,92 +545,172 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 							NULL,
 							&pScoring);
 					}
-					bSet = true;
 					faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
+					if (!bInCompare)
+						variant = ARBDouble::ToString(faults, 0);
 				}
-				else if (bInCompare)
-					faults = -1.0;
 				if (bInCompare)
 					variant = faults;
-				else if (bSet)
-					variant = ARBDouble::ToString(faults, 0);
 			}
 			break;
 		case IO_RUNS_REQ_OPENING:
-			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				variant = long(m_pRun->GetScoring().GetNeedOpenPts());
+				long pts = -1;
+				if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+				{
+					pts = m_pRun->GetScoring().GetNeedOpenPts();
+					if (!bInCompare)
+					{
+						std::wostringstream str;
+						str << pts;
+						variant = str.str();
+					}
+				}
+				if (bInCompare)
+					variant = pts;
 			}
-			else if (bInCompare)
-				variant = -1L;
 			break;
 		case IO_RUNS_REQ_CLOSING:
-			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				variant = long(m_pRun->GetScoring().GetNeedClosePts());
+				long pts = -1;
+				if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+				{
+					pts = m_pRun->GetScoring().GetNeedClosePts();
+					if (!bInCompare)
+					{
+						std::wostringstream str;
+						str << pts;
+						variant = str.str();
+					}
+				}
+				if (bInCompare)
+					variant = pts;
 			}
-			else if (bInCompare)
-				variant = -1L;
 			break;
 		case IO_RUNS_OPENING:
-			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				variant = long(m_pRun->GetScoring().GetOpenPts());
+				long pts = -1;
+				if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+				{
+					pts = m_pRun->GetScoring().GetOpenPts();
+					if (!bInCompare)
+					{
+						std::wostringstream str;
+						str << pts;
+						variant = str.str();
+					}
+				}
+				if (bInCompare)
+					variant = pts;
 			}
-			else if (bInCompare)
-				variant = -1L;
 			break;
 		case IO_RUNS_CLOSING:
-			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				variant = long(m_pRun->GetScoring().GetClosePts());
+				long pts = -1;
+				if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+				{
+					pts = m_pRun->GetScoring().GetClosePts();
+					if (!bInCompare)
+					{
+						std::wostringstream str;
+						str << pts;
+						variant = str.str();
+					}
+				}
+				if (bInCompare)
+					variant = pts;
 			}
-			else if (bInCompare)
-				variant = -1L;
 			break;
 		case IO_RUNS_REQ_POINTS:
-			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
 			{
-				variant = long(m_pRun->GetScoring().GetNeedOpenPts());
+				long pts = -1;
+				if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
+				{
+					pts = m_pRun->GetScoring().GetNeedOpenPts();
+					if (!bInCompare)
+					{
+						std::wostringstream str;
+						str << pts;
+						variant = str.str();
+					}
+				}
+				if (bInCompare)
+					variant = pts;
 			}
-			else if (bInCompare)
-				variant = -1L;
 			break;
 		case IO_RUNS_POINTS:
-			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
 			{
-				variant = long(m_pRun->GetScoring().GetOpenPts());
+				long pts = -1;
+				if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
+				{
+					pts = m_pRun->GetScoring().GetOpenPts();
+					if (!bInCompare)
+					{
+						std::wostringstream str;
+						str << pts;
+						variant = str.str();
+					}
+				}
+				if (bInCompare)
+					variant = pts;
 			}
-			else if (bInCompare)
-				variant = -1L;
 			break;
 		case IO_RUNS_PLACE:
 			{
 				long val = m_pRun->GetPlace();
-				if (bInCompare || 0 < val)
+				if (bInCompare)
+				{
 					variant = val;
-				else if (0 == val)
-					variant = L"-";
-				else if (0 > val)
-					variant = L"?";
+				}
+				else
+				{
+					if (0 > val)
+						variant = L"?";
+					else if (0 == val)
+						variant = L"-";
+					else
+					{
+						std::wostringstream str;
+						str << val;
+						variant = str.str();
+					}
+				}
 			}
 			break;
 		case IO_RUNS_IN_CLASS:
 			{
 				long val = m_pRun->GetInClass();
-				if (bInCompare || 0 < val)
+				if (bInCompare)
 					variant = val;
 				else
-					variant = L"?";
+				{
+					if (0 >= val)
+						variant = L"?";
+					else
+					{
+						std::wostringstream str;
+						str << val;
+						variant = str.str();
+					}
+				}
 			}
 			break;
 		case IO_RUNS_DOGSQD:
 			{
 				long val = m_pRun->GetDogsQd();
-				if (bInCompare || 0 <= val)
-					variant = long(m_pRun->GetDogsQd());
+				if (bInCompare)
+					variant = val;
 				else
-					variant = L"?";
+				{
+					if (0 > val)
+						variant = L"?";
+					else
+					{
+						std::wostringstream str;
+						str << val;
+						variant = str.str();
+					}
+				}
 			}
 			break;
 		case IO_RUNS_Q:
@@ -678,8 +754,7 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 			break;
 		case IO_RUNS_SCORE:
 			{
-				bool bSet = false;
-				double score = 0.0;
+				double score = -2.0;
 				if (m_pRun->GetQ().Qualified()
 				|| ARB_Q::eQ_NQ == m_pRun->GetQ())
 				{
@@ -697,18 +772,15 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 					}
 					if (pScoring)
 					{
-						bSet = true;
 						score = m_pRun->GetScore(pScoring);
+						if (!bInCompare)
+							variant = ARBDouble::ToString(score);
 					}
 					else if (bInCompare)
 						score = -1.0;
 				}
-				else if (bInCompare)
-					score = -2.0;
 				if (bInCompare)
 					variant = score;
-				else if (bSet)
-					variant = ARBDouble::ToString(score);
 			}
 			break;
 		case IO_RUNS_TITLE_POINTS:
@@ -731,7 +803,14 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 						pts = m_pRun->GetTitlePoints(pScoring);
 					}
 				}
-				variant = pts;
+				if (bInCompare)
+					variant = pts;
+				else
+				{
+					std::wostringstream str;
+					str << pts;
+					variant = str.str();
+				}
 			}
 			break;
 		case IO_RUNS_COMMENTS:
@@ -754,8 +833,7 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 			break;
 		case IO_RUNS_SPEED:
 			{
-				bool bSet = false;
-				long pts = 0;
+				long pts = -1;
 				ARBConfigScoringPtr pScoring;
 				if (trial->GetClubs().GetPrimaryClub())
 					config.GetVenues().FindEvent(
@@ -770,11 +848,16 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 				{
 					if (pScoring->HasSpeedPts() && m_pRun->GetQ().Qualified())
 					{
-						bSet = true;
 						pts = m_pRun->GetSpeedPoints(pScoring);
+						if (!bInCompare)
+						{
+							std::wostringstream str;
+							str << pts;
+							variant = str.str();
+						}
 					}
 				}
-				if (bInCompare || bSet)
+				if (bInCompare)
 					variant = pts;
 			}
 			break;
