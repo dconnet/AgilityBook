@@ -249,7 +249,7 @@ CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
 
 bool CAgilityBookApp::OnInit()
 {
-#if defined(__WXMSW__) && wxCHECK_VERSION(2, 9, 4)
+#if defined(__WXMSW__) && wxCHECK_VERSION(2, 9, 5)
 	// By default, the path directories are tweaked to remove debug/release.
 	// I assume my files are in the same location as the binary.
 	// Now I don't need to tweak the wx source!
@@ -318,7 +318,7 @@ bool CAgilityBookApp::OnInit()
 		wxPlatformInfo info;
 		int majVer = info.GetOSMajorVersion();
 		int minVer = info.GetOSMinorVersion();
-#if !wxCHECK_VERSION(2, 9, 4)
+#if !wxCHECK_VERSION(2, 9, 5)
 		majVer = (majVer == 16 ? 10 : majVer);
 		minVer = (minVer >> 4);
 #endif

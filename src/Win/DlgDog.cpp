@@ -219,7 +219,7 @@ void CDlgDogDataTitle::OnNeedListItem(long iCol, wxListItem& info) const
 }
 
 
-#if wxCHECK_VERSION(2, 9, 4)
+#if wxCHECK_VERSION(2, 9, 5)
 int wxCALLBACK CompareTitles(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 #else
 int wxCALLBACK CompareTitles(long item1, long item2, long sortData)
@@ -333,7 +333,7 @@ std::wstring CDlgDogDataRegNum::OnNeedText(long iCol) const
 }
 
 
-#if wxCHECK_VERSION(2, 9, 4)
+#if wxCHECK_VERSION(2, 9, 5)
 int wxCALLBACK CompareRegNums(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 #else
 int wxCALLBACK CompareRegNums(long item1, long item2, long sortData)
@@ -454,7 +454,7 @@ std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
 }
 
 
-#if wxCHECK_VERSION(2, 9, 4)
+#if wxCHECK_VERSION(2, 9, 5)
 int wxCALLBACK ComparePoints(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 #else
 int wxCALLBACK ComparePoints(long item1, long item2, long sortData)
