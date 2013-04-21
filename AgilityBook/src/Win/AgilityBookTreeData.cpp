@@ -864,5 +864,8 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 		}
 	}
 
+	if (variant.IsNull())
+		variant = L"";
+
 	return variant;
 }

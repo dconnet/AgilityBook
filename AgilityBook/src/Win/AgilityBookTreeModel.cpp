@@ -35,6 +35,12 @@ CAgilityBookTreeModel::~CAgilityBookTreeModel()
 }
 
 
+void CAgilityBookTreeModel::OnDestroyControl(wxWindowDestroyEvent& evt)
+{
+	m_Ctrl = NULL;
+}
+
+
 CAgilityBookTreeData* CAgilityBookTreeModel::GetNode(const wxDataViewItem& item) const
 {
 	if (item.IsOk())
@@ -49,6 +55,8 @@ void CAgilityBookTreeModel::CreateColumns(
 {
 	m_pDoc = pDoc;
 	m_Ctrl = ctrl;
+
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_DESTROY, wxWindowDestroyEventHandler, CAgilityBookTreeModel::OnDestroyControl);
 
 	UpdateColumns();
 }
@@ -277,6 +285,19 @@ void CAgilityBookTreeModel::Delete(const wxDataViewItem& item)
 
 void CAgilityBookTreeModel::DeleteAllItems()
 {
+	if (m_Ctrl)
+	{
+		// When deleting everything, turn off autosizing.
+		// DVC is different from list controls. Setting autosize here means the
+		// column resizes itself on data changes. (really not sure I like that)
+		for (unsigned int i = 0; i < m_Ctrl->GetColumnCount(); ++i)
+		{
+			wxDataViewColumn* pCol = m_Ctrl->GetColumn(i);
+			if (pCol)
+				pCol->SetWidth(pCol->GetWidth());
+		}
+	}
+
 	while (m_roots.size() > 0)
 	{
 		std::vector<CAgilityBookTreeData*>::iterator i = m_roots.begin();
@@ -288,6 +309,16 @@ void CAgilityBookTreeModel::DeleteAllItems()
 		delete node;
 
 		ItemDeleted(parent, item);
+	}
+
+	if (m_Ctrl)
+	{
+		for (unsigned int i = 0; i < m_Ctrl->GetColumnCount(); ++i)
+		{
+			wxDataViewColumn* pCol = m_Ctrl->GetColumn(i);
+			if (pCol)
+				pCol->SetWidth(wxCOL_WIDTH_AUTOSIZE);
+		}
 	}
 }
 

@@ -77,6 +77,7 @@ public:
 	MenuIdentityPopup GetMenuID(const wxDataViewItem& item) const;
 
 private:
+	void OnDestroyControl(wxWindowDestroyEvent& evt);
 	CAgilityBookTreeData* GetNode(const wxDataViewItem& item) const;
 
 	CAgilityBookDoc* m_pDoc;

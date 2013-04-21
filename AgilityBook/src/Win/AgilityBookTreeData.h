@@ -62,33 +62,6 @@ public:
 	virtual ARBDogTrialPtr GetTrial()				{return ARBDogTrialPtr();}
 	virtual ARBDogRunPtr GetRun()					{return ARBDogRunPtr();}
 
-	/*
-	virtual CAgilityBookTreeDataDog const* GetDataDog() const
-	{
-		return NULL;
-	}
-	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const
-	{
-		return NULL;
-	}
-	virtual CAgilityBookTreeDataRun const* GetDataRun() const
-	{
-		return NULL;
-	}
-	virtual CAgilityBookTreeDataDog* GetDataDog()
-	{
-		return NULL;
-	}
-	virtual CAgilityBookTreeDataTrial* GetDataTrial()
-	{
-		return NULL;
-	}
-	virtual CAgilityBookTreeDataRun* GetDataRun()
-	{
-		return NULL;
-	}
-	*/
-
 	virtual MenuIdentityPopup GetMenuID() const = 0;
 
 protected:
