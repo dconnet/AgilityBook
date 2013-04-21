@@ -83,8 +83,8 @@
 #include <wx/version.h>
 #include "Platform/arbWarningPop.h"
 
-#if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER < 4
-#error pre-v2.9.4 not supported
+#if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER < 5
+#error pre-v2.9.5 not supported
 #endif
 #if !wxCHECK_VERSION(2, 8, 10)
 #error Unsupported wxWidget version
@@ -130,7 +130,7 @@
  * Bind is only available on wx2.9+.
  * Rather than ifdef each instance of Connect, hide behind an evil macro.
  */
-#if wxCHECK_VERSION(2, 9, 4)
+#if wxCHECK_VERSION(2, 9, 5)
 	#define BIND_OR_CONNECT(evt, cast, func) \
 		Bind(evt, &func, this)
 	#define UNBIND_OR_DISCONNECT(evt, cast, func) \

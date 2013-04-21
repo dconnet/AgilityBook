@@ -51,7 +51,7 @@ bool CARBUpdaterApp::OnInit()
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
-#if wxCHECK_VERSION(2, 9, 4)
+#if wxCHECK_VERSION(2, 9, 5)
 		{wxCMD_LINE_SWITCH, "g", "generate",
 			"Ignore all other options and display a dialog allowing MD5 generation"},
 		{wxCMD_LINE_OPTION, "f", "file",
