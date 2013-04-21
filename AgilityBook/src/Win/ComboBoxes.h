@@ -53,7 +53,7 @@ public:
 	{
 	}
 
-#if !wxCHECK_VERSION(2, 9, 4)
+#if !wxCHECK_VERSION(2, 9, 5)
 	bool AutoComplete(wxArrayString const& choices)
 	{
 		return false;
