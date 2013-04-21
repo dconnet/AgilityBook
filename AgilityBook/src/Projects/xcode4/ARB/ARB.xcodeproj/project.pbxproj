@@ -110,6 +110,7 @@
 		E1CAE56A16B5BF4900B33FE5 /* SetupARBPost.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56416B5BF4900B33FE5 /* SetupARBPost.h */; };
 		E1CAE56B16B5BF4900B33FE5 /* SetupARBPre.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56516B5BF4900B33FE5 /* SetupARBPre.h */; };
 		E1CAE56D16B5BF4900B33FE5 /* SetupWX.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56716B5BF4900B33FE5 /* SetupWX.h */; };
+		E1E1D05017234D9D00D7D1E4 /* ARBTypes2.h in Headers */ = {isa = PBXBuildFile; fileRef = E1E1D04F17234D9D00D7D1E4 /* ARBTypes2.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -217,6 +218,7 @@
 		E1CAE56416B5BF4900B33FE5 /* SetupARBPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPost.h; sourceTree = "<group>"; };
 		E1CAE56516B5BF4900B33FE5 /* SetupARBPre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPre.h; sourceTree = "<group>"; };
 		E1CAE56716B5BF4900B33FE5 /* SetupWX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupWX.h; sourceTree = "<group>"; };
+		E1E1D04F17234D9D00D7D1E4 /* ARBTypes2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBTypes2.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +345,7 @@
 				E19B6344166C090F004DEDA4 /* ARBTraining.h */,
 				E19B6345166C090F004DEDA4 /* ARBTypes.cpp */,
 				E19B6346166C090F004DEDA4 /* ARBTypes.h */,
+				E1E1D04F17234D9D00D7D1E4 /* ARBTypes2.h */,
 				E19B6347166C090F004DEDA4 /* BinaryData.cpp */,
 				E19B6348166C090F004DEDA4 /* BinaryData.h */,
 				E19B6349166C090F004DEDA4 /* BreakLine.cpp */,
@@ -445,6 +448,7 @@
 				E1CAE56A16B5BF4900B33FE5 /* SetupARBPost.h in Headers */,
 				E1CAE56B16B5BF4900B33FE5 /* SetupARBPre.h in Headers */,
 				E1CAE56D16B5BF4900B33FE5 /* SetupWX.h in Headers */,
+				E1E1D05017234D9D00D7D1E4 /* ARBTypes2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,7 +582,7 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-isystem",
-					"$BOOST_ROOT",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -610,7 +614,7 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-isystem",
-					"$BOOST_ROOT",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",

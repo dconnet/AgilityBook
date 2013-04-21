@@ -29,7 +29,6 @@
 		E19B64FF166C09B9004DEDA4 /* CheckTreeCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63FE166C09B9004DEDA4 /* CheckTreeCtrl.cpp */; };
 		E19B6500166C09B9004DEDA4 /* ClipBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6400166C09B9004DEDA4 /* ClipBoard.cpp */; };
 		E19B6501166C09B9004DEDA4 /* ColumnOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6402166C09B9004DEDA4 /* ColumnOrder.cpp */; };
-		E19B6502166C09B9004DEDA4 /* ComboBoxes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6404166C09B9004DEDA4 /* ComboBoxes.cpp */; };
 		E19B6503166C09B9004DEDA4 /* CommonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6406166C09B9004DEDA4 /* CommonView.cpp */; };
 		E19B6504166C09B9004DEDA4 /* ConfigHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */; };
 		E19B6505166C09B9004DEDA4 /* DlgAbout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B640A166C09B9004DEDA4 /* DlgAbout.cpp */; };
@@ -110,12 +109,14 @@
 		E19B65CB166C0E01004DEDA4 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E19B65CA166C0E01004DEDA4 /* AgilityBook.icns */; };
 		E19B65D9166C115F004DEDA4 /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B65D8166C115F004DEDA4 /* libARB.a */; };
 		E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */; };
+		E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */; };
+		E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E1105D36169017DF0067091C /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageManager.cpp; sourceTree = "<group>"; };
 		E1105D37169017DF0067091C /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
-		E124BBB316BD90D0006FBF2D /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libLibArchive.a; path = ../LibArchive/build/Release/libLibArchive.a; sourceTree = "<group>"; };
+		E124BBB316BD90D0006FBF2D /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../LibArchive/build/Release/libLibArchive.a; sourceTree = "<group>"; };
 		E19B63BB166C096E004DEDA4 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B63BF166C096E004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E19B63C2166C096E004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -161,7 +162,6 @@
 		E19B6401166C09B9004DEDA4 /* ClipBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipBoard.h; sourceTree = "<group>"; };
 		E19B6402166C09B9004DEDA4 /* ColumnOrder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColumnOrder.cpp; sourceTree = "<group>"; };
 		E19B6403166C09B9004DEDA4 /* ColumnOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnOrder.h; sourceTree = "<group>"; };
-		E19B6404166C09B9004DEDA4 /* ComboBoxes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxes.cpp; sourceTree = "<group>"; };
 		E19B6405166C09B9004DEDA4 /* ComboBoxes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxes.h; sourceTree = "<group>"; };
 		E19B6406166C09B9004DEDA4 /* CommonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonView.cpp; sourceTree = "<group>"; };
 		E19B6407166C09B9004DEDA4 /* CommonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonView.h; sourceTree = "<group>"; };
@@ -330,6 +330,10 @@
 		E1CAE57516B5BF6E00B33FE5 /* SetupWX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupWX.h; sourceTree = "<group>"; };
 		E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
 		E1CAE57716B5BF8700B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxQ.cpp; sourceTree = "<group>"; };
+		E1E1D05217234DEF00D7D1E4 /* ComboBoxQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxQ.h; sourceTree = "<group>"; };
+		E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxVenue.cpp; sourceTree = "<group>"; };
+		E1E1D05417234DEF00D7D1E4 /* ComboBoxVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxVenue.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -448,8 +452,11 @@
 				E19B6401166C09B9004DEDA4 /* ClipBoard.h */,
 				E19B6402166C09B9004DEDA4 /* ColumnOrder.cpp */,
 				E19B6403166C09B9004DEDA4 /* ColumnOrder.h */,
-				E19B6404166C09B9004DEDA4 /* ComboBoxes.cpp */,
 				E19B6405166C09B9004DEDA4 /* ComboBoxes.h */,
+				E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */,
+				E1E1D05217234DEF00D7D1E4 /* ComboBoxQ.h */,
+				E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */,
+				E1E1D05417234DEF00D7D1E4 /* ComboBoxVenue.h */,
 				E19B6406166C09B9004DEDA4 /* CommonView.cpp */,
 				E19B6407166C09B9004DEDA4 /* CommonView.h */,
 				E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */,
@@ -735,7 +742,6 @@
 				E19B64FF166C09B9004DEDA4 /* CheckTreeCtrl.cpp in Sources */,
 				E19B6500166C09B9004DEDA4 /* ClipBoard.cpp in Sources */,
 				E19B6501166C09B9004DEDA4 /* ColumnOrder.cpp in Sources */,
-				E19B6502166C09B9004DEDA4 /* ComboBoxes.cpp in Sources */,
 				E19B6503166C09B9004DEDA4 /* CommonView.cpp in Sources */,
 				E19B6504166C09B9004DEDA4 /* ConfigHandler.cpp in Sources */,
 				E19B6505166C09B9004DEDA4 /* DlgAbout.cpp in Sources */,
@@ -815,6 +821,8 @@
 				E19B659B166C09B9004DEDA4 /* WizardStart.cpp in Sources */,
 				E1105D38169017DF0067091C /* ImageManager.cpp in Sources */,
 				E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */,
+				E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */,
+				E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,7 +856,7 @@
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../..",
 					"-isystem",
-					"$BOOST_ROOT",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -917,7 +925,7 @@
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../..",
 					"-isystem",
-					"$BOOST_ROOT",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",

@@ -57,7 +57,8 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	CheckTreeCtrl.cpp \
 	ClipBoard.cpp \
 	ColumnOrder.cpp \
-	ComboBoxes.cpp \
+	ComboBoxQ.cpp \
+	ComboBoxVenue.cpp \
 	CommonView.cpp \
 	ConfigHandler.cpp \
 	DlgAbout.cpp \
