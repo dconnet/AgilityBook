@@ -100,8 +100,15 @@ public:
 	static ARBDate::DayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);
 	// Runs/points options
-	static bool GetViewRunsByTrial();
-	static void SetViewRunsByTrial(bool bView);
+	typedef enum
+	{
+		// Fixed values as they are stored in the registry
+		eViewRunsByTrial = 1,
+		eViewRunsByList = 0,
+		eViewAllRunsByList = 2,
+	} ViewRunsStyle;
+	static ViewRunsStyle GetViewRunsStyle();
+	static void SetViewRunsStyle(ViewRunsStyle style);
 	static bool GetNewestDatesFirst();
 	static void SetNewestDatesFirst(bool bNewest);
 	typedef enum

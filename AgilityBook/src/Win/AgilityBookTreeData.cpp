@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-04-22 DRC Converted tree+list into single control.
  * @li 2012-09-29 DRC Strip the Runs View.
  * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2012-03-03 DRC Fixed new unearned titles from showing up in view.

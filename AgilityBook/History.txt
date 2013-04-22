@@ -1,9 +1,9 @@
-4/20/2013: v3.0.0.<in development>
+4/22/2013: v3.0.0.<in development>
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
 [ Note, full functionality is NOT complete ]
 
-4/18/2013: v2.3.12.<in development>
+4/22/2013: v2.3.12.<in development>
 - Bumped Configuration v43:
   - Added Preferred to AKC National Rounds (missing).
 - New features / Enhancements:
@@ -12,6 +12,7 @@
 - Bug fixes:
   - Require dog/handler in Partner dialog (otherwise data is silently lost).
   - Make Calendar context menu create a new entry on the selected date.
+  - When viewing all runs, changing the dog didn't update the runs.
 
 3/9/2013: v2.3.11.85
 - Bumped Configuration v42:

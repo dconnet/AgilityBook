@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-04-22 DRC Converted tree+list into single control.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-08 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added SelectDog()
@@ -133,7 +134,6 @@ public:
 	void Thaw()									{m_Ctrl->Thaw();}
 	void Refresh()								{m_Ctrl->Refresh();}
 	wxDataViewItem GetSelection() const			{return m_Ctrl->GetSelection();}
-	void Select(wxDataViewItem const& item)		{m_Ctrl->Select(item);}
 	void RefreshItem(wxDataViewItem const& item);
 	CAgilityBookTreeModel* GetStore()			{return m_Ctrl->GetStore();}
 	const CAgilityBookTreeModel* GetStore() const	{return m_Ctrl->GetStore();}
@@ -179,6 +179,10 @@ private:
 			wxDataViewItem const& item,
 			bool bEnsureVisible = true);
 	void DoSelectionChange(wxDataViewItem const& item);
+	bool EditRun(
+			ARBDogPtr pDog,
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRun);
 	bool DoEdit(
 			wxDataViewItem const& item,
 			CTreeDataType type);
@@ -246,6 +250,8 @@ private:
 	void OnUnsort(wxCommandEvent& evt);
 	void OnViewSortRuns(wxCommandEvent& evt);
 	void OnViewRunsByTrial(wxCommandEvent& evt);
+	void OnViewRunsByList(wxCommandEvent& evt);
+	void OnViewAllRunsByList(wxCommandEvent& evt);
 	void OnViewTableInYPS(wxCommandEvent& evt);
 	void OnViewRuntimeInOPS(wxCommandEvent& evt);
 	void OnUpdateExpand(wxUpdateUIEvent& evt);

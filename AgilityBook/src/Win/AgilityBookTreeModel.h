@@ -1,5 +1,21 @@
 #pragma once
 
+/*
+ * Copyright (c) David Connet. All Rights Reserved.
+ *
+ * License: See License.txt
+ */
+
+/**
+ * @file
+ *
+ * @brief interface of the CAgilityBookTreeModel class
+ * @author David Connet
+ *
+ * Revision History
+ * @li 2013-04-22 DRC Converted tree+list into single control.
+ */
+
 #include "AgilityBookMenu.h"
 #include "ARB/ARBBase.h"
 class CAgilityBookDoc;

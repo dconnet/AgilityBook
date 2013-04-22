@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-04-22 DRC Converted tree+list into single control.
  * @li 2012-10-03 DRC Fixed a printing problem in the tree.
  * @li 2012-09-29 DRC Strip the Runs View.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
@@ -191,94 +192,6 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-static bool EditRun(
-		ARBDogPtr pDog,
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun,
-		CAgilityBookTreeView* pTree)
-{
-	assert(pDog);
-	assert(pTrial);
-	bool bOk = false;
-	bool bAdd = false;
-	if (!pRun)
-	{
-		ARBDogClubPtr pClub;
-		if (!pTrial->GetClubs().GetPrimaryClub(&pClub))
-		{
-			wxMessageBox(_("IDS_NEED_CLUB"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
-			return false;
-		}
-		if (!pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
-		{
-			wxMessageBox(wxString::Format(_("IDS_VENUE_CONFIG_MISSING"), pClub->GetVenue().c_str()),
-				wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-			return false;
-		}
-		bAdd = true;
-		pRun = ARBDogRunPtr(ARBDogRun::New());
-		ARBDate date = pTrial->GetRuns().GetEndDate();
-		// If this is the first run, the date won't be set.
-		if (!date.IsValid())
-			date.SetToday();
-		pRun->SetDate(date);
-	}
-	CDlgRun dlg(pTree->GetDocument(), pTrial, pRun);
-	if (wxID_OK == dlg.ShowModal())
-	{
-		bOk = true;
-		std::vector<CVenueFilter> venues;
-		CFilterOptions::Options().GetFilterVenue(venues);
-		if (bAdd)
-		{
-			if (pTrial->GetRuns().AddRun(pRun))
-			{
-				// When adding a new trial, we need to reset the multiQs.
-				// The edit dialog does it in OnOK, but we don't add the run
-				// until after the dialog is done.
-				pTrial->SetMultiQs(pTree->GetDocument()->Book().GetConfig());
-				pTrial->GetRuns().sort();
-				pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-				pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
-				// Even though we will reset the tree, go ahead and add/select
-				// the item into the tree here. That will make sure when the
-				// tree is reloaded, that the new item is selected.
-				wxDataViewItem item = pTree->InsertRun(pDog, pTrial, pRun, pTree->FindData(pTrial));
-				if (item.IsOk())
-				{
-					pTree->Select(item);
-				}
-				else
-				{
-					if (CFilterOptions::Options().IsFilterEnabled())
-						wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-				}
-			}
-			else
-			{
-				bOk = false;
-				wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-			}
-		}
-		else
-		{
-			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-			pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
-		}
-
-		// We have to update the tree even when we add above as it may have
-		// caused the trial to be reordered.
-		if (bOk)
-		{
-			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW);
-			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
-		}
-	}
-	return bOk;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
 IMPLEMENT_DYNAMIC_CLASS(CAgilityBookTreeCtrl, wxDataViewCtrl)
 
 
@@ -330,9 +243,6 @@ bool CAgilityBookTreeCtrl::Unsort()
 	if (GetSortingColumn())
 	{
 		GetSortingColumn()->UnsetAsSortKey();
-#ifdef wxHAS_GENERIC_DATAVIEWCTRL
-		SetSortingColumnIndex(wxNOT_FOUND);
-#endif
 		bChanged = true;
 	}
 
@@ -469,6 +379,10 @@ bool CAgilityBookTreeView::Create(
 	BIND_OR_CONNECT_ID(ID_VIEW_SORTRUNS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewSortRuns);
 	BIND_OR_CONNECT_ID(ID_VIEW_RUNS_BY_TRIAL, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
 	BIND_OR_CONNECT_ID(ID_VIEW_RUNS_BY_TRIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewRunsByTrial);
+	BIND_OR_CONNECT_ID(ID_VIEW_RUNS_BY_LIST, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
+	BIND_OR_CONNECT_ID(ID_VIEW_RUNS_BY_LIST, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewRunsByList);
+	BIND_OR_CONNECT_ID(ID_VIEW_ALL_RUNS_BY_LIST, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
+	BIND_OR_CONNECT_ID(ID_VIEW_ALL_RUNS_BY_LIST, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewAllRunsByList);
 	BIND_OR_CONNECT_ID(ID_VIEW_TABLE_IN_YPS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
 	BIND_OR_CONNECT_ID(ID_VIEW_TABLE_IN_YPS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookTreeView::OnViewTableInYPS);
 	BIND_OR_CONNECT_ID(ID_VIEW_RUNTIME_IN_OPS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler, CAgilityBookTreeView::OnUpdateEnable);
@@ -580,16 +494,24 @@ bool CAgilityBookTreeView::GetMessage(std::wstring& msg) const
 
 bool CAgilityBookTreeView::GetMessage2(std::wstring& msg) const
 {
-	if (GetDocument()->GetCurrentDog())
+	bool bSet = false;
+	if (CAgilityBookOptions::eViewAllRunsByList == CAgilityBookOptions::GetViewRunsStyle())
+	{
+		int nDogs = static_cast<int>(GetDocument()->Book().GetDogs().size());
+		if (1 != nDogs || !GetDocument()->GetCurrentDog())
+		{
+			msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_DOGS"), nDogs));
+			bSet = true;
+		}
+	}
+	if (!bSet && GetDocument()->GetCurrentDog())
 	{
 		msg = GetDocument()->GetCurrentDog()->GetCallName();
-		return true;
+		bSet = true;
 	}
-	else
-	{
+	if (!bSet)
 		msg.clear();
-		return false;
-	}
+	return bSet;
 }
 
 
@@ -765,12 +687,20 @@ bool CAgilityBookTreeView::SelectDog(ARBDogPtr dog)
 	bool bSelected = false;
 	if (m_Ctrl)
 	{
-		wxDataViewItem item = FindData(dog);
-		if (item.IsOk())
+		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		{
-			bSelected = true;
-			m_Ctrl->Select(item);
-			m_Ctrl->EnsureVisible(item);
+			wxDataViewItem item = FindData(dog);
+			if (item.IsOk())
+			{
+				bSelected = true;
+				ChangeSelection(item, true);
+			}
+		}
+		else
+		{
+			GetDocument()->SetCurrentDog(dog);
+			if (CAgilityBookOptions::eViewRunsByList == CAgilityBookOptions::GetViewRunsStyle())
+				LoadData(false);
 		}
 	}
 	return bSelected;
@@ -837,24 +767,43 @@ void CAgilityBookTreeView::GetQCount(
 		int& ioCount,
 		int& ioTotal) const
 {
+	CAgilityBookOptions::ViewRunsStyle runStyle = CAgilityBookOptions::GetViewRunsStyle();
+
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
+	if (!pDog && CAgilityBookOptions::eViewAllRunsByList != runStyle)
+		return;
+
 	wxDataViewItem item;
 	wxDataViewItemArray roots;
 	unsigned int nRoots = m_Ctrl->GetStore()->GetChildren(wxDataViewItem(), roots);
 	for (unsigned int iRoot = 0; iRoot < nRoots; ++iRoot)
 	{
-		wxDataViewItemArray trials;
-		unsigned int nTrials = m_Ctrl->GetStore()->GetChildren(roots[iRoot], trials);
-		for (unsigned int iTrial = 0; iTrial < nTrials; ++iTrial)
+		if (CAgilityBookOptions::eViewAllRunsByList != runStyle
+		&& m_Ctrl->GetStore()->GetDog(roots[iRoot]) != pDog)
+			continue;
+		if (CAgilityBookOptions::eViewRunsByTrial == runStyle)
 		{
-			wxDataViewItemArray runs;
-			unsigned int nRuns = m_Ctrl->GetStore()->GetChildren(trials[iTrial], runs);
-			for (unsigned int iRun = 0; iRun < nRuns; ++iRun)
+			wxDataViewItemArray trials;
+			unsigned int nTrials = m_Ctrl->GetStore()->GetChildren(roots[iRoot], trials);
+			for (unsigned int iTrial = 0; iTrial < nTrials; ++iTrial)
 			{
-				ARBDogRunPtr run = m_Ctrl->GetStore()->GetRun(runs[iRun]);
-				if (run && run->GetQ().Qualified())
-					++ioCount;
+				wxDataViewItemArray runs;
+				unsigned int nRuns = m_Ctrl->GetStore()->GetChildren(trials[iTrial], runs);
+				for (unsigned int iRun = 0; iRun < nRuns; ++iRun)
+				{
+					ARBDogRunPtr run = m_Ctrl->GetStore()->GetRun(runs[iRun]);
+					if (run && run->GetQ().Qualified())
+						++ioCount;
+				}
+				ioTotal += static_cast<int>(nRuns);
 			}
-			ioTotal += static_cast<int>(nRuns);
+		}
+		else
+		{
+			ARBDogRunPtr run = m_Ctrl->GetStore()->GetRun(roots[iRoot]);
+			if (run && run->GetQ().Qualified())
+				++ioCount;
+			++ioTotal;
 		}
 	}
 }
@@ -868,6 +817,92 @@ void CAgilityBookTreeView::ChangeSelection(
 	if (bEnsureVisible)
 		m_Ctrl->EnsureVisible(item);
 	DoSelectionChange(item);
+}
+
+
+bool CAgilityBookTreeView::EditRun(
+		ARBDogPtr pDog,
+		ARBDogTrialPtr pTrial,
+		ARBDogRunPtr pRun)
+{
+	assert(pDog);
+	assert(pTrial);
+	bool bOk = false;
+	bool bAdd = false;
+	if (!pRun)
+	{
+		ARBDogClubPtr pClub;
+		if (!pTrial->GetClubs().GetPrimaryClub(&pClub))
+		{
+			wxMessageBox(_("IDS_NEED_CLUB"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			return false;
+		}
+		if (!GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
+		{
+			wxMessageBox(wxString::Format(_("IDS_VENUE_CONFIG_MISSING"), pClub->GetVenue().c_str()),
+				wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+			return false;
+		}
+		bAdd = true;
+		pRun = ARBDogRunPtr(ARBDogRun::New());
+		ARBDate date = pTrial->GetRuns().GetEndDate();
+		// If this is the first run, the date won't be set.
+		if (!date.IsValid())
+			date.SetToday();
+		pRun->SetDate(date);
+	}
+	CDlgRun dlg(GetDocument(), pTrial, pRun);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		bOk = true;
+		std::vector<CVenueFilter> venues;
+		CFilterOptions::Options().GetFilterVenue(venues);
+		if (bAdd)
+		{
+			if (pTrial->GetRuns().AddRun(pRun))
+			{
+				// When adding a new trial, we need to reset the multiQs.
+				// The edit dialog does it in OnOK, but we don't add the run
+				// until after the dialog is done.
+				pTrial->SetMultiQs(GetDocument()->Book().GetConfig());
+				pTrial->GetRuns().sort();
+				pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+				GetDocument()->ResetVisibility(venues, pTrial, pRun);
+				// Even though we will reset the tree, go ahead and add/select
+				// the item into the tree here. That will make sure when the
+				// tree is reloaded, that the new item is selected.
+				wxDataViewItem item = InsertRun(pDog, pTrial, pRun, FindData(pTrial));
+				if (item.IsOk())
+				{
+					m_Ctrl->Select(item);
+				}
+				else
+				{
+					if (CFilterOptions::Options().IsFilterEnabled())
+						wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+				}
+			}
+			else
+			{
+				bOk = false;
+				wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+			}
+		}
+		else
+		{
+			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			GetDocument()->ResetVisibility(venues, pTrial, pRun);
+		}
+
+		// We have to update the tree even when we add above as it may have
+		// caused the trial to be reordered.
+		if (bOk)
+		{
+			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW);
+			GetDocument()->UpdateAllViews(NULL, &hint);
+		}
+	}
+	return bOk;
 }
 
 
@@ -931,7 +966,7 @@ bool CAgilityBookTreeView::DoEdit(
 			if (pRun)
 			{
 				bHandled = true;
-				EditRun(pDog, pTrial, pRun, this);
+				EditRun(pDog, pTrial, pRun);
 			}
 			break;
 		}
@@ -945,10 +980,12 @@ bool CAgilityBookTreeView::DoEdit(
 
 void CAgilityBookTreeView::DoSelectionChange(wxDataViewItem const& item)
 {
-	ARBDogPtr pDog;
-	if (item.IsOk())
-		pDog = m_Ctrl->GetStore()->GetDog(item);
-	GetDocument()->SetCurrentDog(pDog);
+	if (item.IsOk() && CAgilityBookOptions::eViewAllRunsByList != CAgilityBookOptions::GetViewRunsStyle())
+	{
+		ARBDogPtr pDog = m_Ctrl->GetStore()->GetDog(item);
+		GetDocument()->SetCurrentDog(pDog);
+		UpdateMessages();
+	}
 }
 
 
@@ -1422,7 +1459,7 @@ void CAgilityBookTreeView::OnPaste(wxCommandEvent& evt)
 					}
 					else
 					{
-						m_Ctrl->Select(itemRun);
+						ChangeSelection(itemRun);
 					}
 					if (bOk)
 					{
@@ -1471,7 +1508,7 @@ void CAgilityBookTreeView::OnPaste(wxCommandEvent& evt)
 						}
 						else
 						{
-							m_Ctrl->Select(itemTrial);
+							ChangeSelection(itemTrial);
 						}
 						if (bOk)
 						{
@@ -1862,7 +1899,7 @@ void CAgilityBookTreeView::OnNewRun(wxCommandEvent& evt)
 		ARBDogTrialPtr pTrial = m_Ctrl->GetStore()->GetTrial(item);
 		if (pTrial && pTrial->GetClubs().GetPrimaryClub())
 		{
-			EditRun(m_Ctrl->GetStore()->GetDog(item), pTrial, ARBDogRunPtr(), this);
+			EditRun(m_Ctrl->GetStore()->GetDog(item), pTrial, ARBDogRunPtr());
 		}
 	}
 }
@@ -1921,8 +1958,22 @@ void CAgilityBookTreeView::OnViewSortRuns(wxCommandEvent& evt)
 
 void CAgilityBookTreeView::OnViewRunsByTrial(wxCommandEvent& evt)
 {
-	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
-	LoadData(false);
+	CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewRunsByTrial);
+	LoadData(true);
+}
+
+
+void CAgilityBookTreeView::OnViewRunsByList(wxCommandEvent& evt)
+{
+	CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewRunsByList);
+	LoadData(true);
+}
+
+
+void CAgilityBookTreeView::OnViewAllRunsByList(wxCommandEvent& evt)
+{
+	CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewAllRunsByList);
+	LoadData(true);
 }
 
 

@@ -141,7 +141,11 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{MENU_ITEM, ID_UNSORT,                wxITEM_NORMAL, 1, NULL, arbT("MenuUnsort"), arbT("DescUnsort"), NULL},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, ID_VIEW_SORTRUNS,         wxITEM_CHECK,  1, NULL, arbT("MenuViewNewestTrials"), arbT("DescViewNewestTrials"), NULL},
-	{MENU_ITEM, ID_VIEW_RUNS_BY_TRIAL,    wxITEM_CHECK,  1, NULL, arbT("MenuViewRunsByTrial"), arbT("DescViewRunsByTrial"), NULL},
+
+	{MENU_ITEM, 0,                        wxITEM_NORMAL, 1, NULL, arbT("MenuViewRuns"), NULL, NULL},
+	{MENU_ITEM, ID_VIEW_RUNS_BY_TRIAL,    wxITEM_RADIO,  2, NULL, arbT("MenuViewRunsByTrial"), arbT("DescViewRunsByTrial"), NULL},
+	{MENU_ITEM, ID_VIEW_RUNS_BY_LIST,     wxITEM_RADIO,  2, NULL, arbT("MenuViewRunsByList"), arbT("DescViewRunsByList"), NULL},
+	{MENU_ITEM, ID_VIEW_ALL_RUNS_BY_LIST, wxITEM_RADIO,  2, NULL, arbT("MenuViewAllRunsByList"), arbT("DescViewAllRunsByList"), NULL},
 	{MENU_ITEM, ID_VIEW_TABLE_IN_YPS,     wxITEM_CHECK,  1, NULL, arbT("MenuViewIncludeTable"), arbT("DescViewIncludeTable"), NULL},
 	{MENU_ITEM, ID_VIEW_RUNTIME_IN_OPS,   wxITEM_CHECK,  1, NULL, arbT("MenuViewIncludeRunTime"), arbT("DescViewIncludeRunTime"), NULL},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},

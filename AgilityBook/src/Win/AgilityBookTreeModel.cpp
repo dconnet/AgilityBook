@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) David Connet. All Rights Reserved.
+ *
+ * License: See License.txt
+ */
+
+/**
+ * @file
+ *
+ * @brief implementation of the CAgilityBookTreeModel class
+ * @author David Connet
+ *
+ * Revision History
+ * @li 2013-04-22 DRC Converted tree+list into single control.
+ */
+
 #include "stdafx.h"
 #include "AgilityBookTreeModel.h"
 
@@ -101,23 +117,30 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 {
 	wxDataViewItem itemDog;
 
+	if (CAgilityBookOptions::eViewRunsByList == CAgilityBookOptions::GetViewRunsStyle())
+	{
+		ARBDogPtr pCurrentDog = GetDocument()->GetCurrentDog();
+		if (pDog != pCurrentDog)
+			return itemDog;
+	}
+
 	if (pDog)
 	{
-		wxDataViewItem trialParent = wxDataViewItem(0);
-		if (CAgilityBookOptions::GetViewRunsByTrial())
+		itemDog = wxDataViewItem(0);
+		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		{ 
 			CAgilityBookTreeDataDog* nodeDog = new CAgilityBookTreeDataDog(this, pDog);
-			trialParent = wxDataViewItem(nodeDog);
+			itemDog = wxDataViewItem(nodeDog);
 
 			m_roots.push_back(nodeDog);
-			ItemAdded(wxDataViewItem(0), wxDataViewItem(nodeDog));
+			ItemAdded(wxDataViewItem(0), itemDog);
 		}
 
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			LoadData(pDog, *iterTrial, trialParent);
+			LoadData(pDog, *iterTrial, itemDog);
 		}
 	}
 	return itemDog;
@@ -132,25 +155,25 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 	wxDataViewItem itemTrial;
 
 	CAgilityBookTreeData* pParent = NULL;
-	if (CAgilityBookOptions::GetViewRunsByTrial())
+	if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		pParent = GetNode(parent);
 
-	if (((CAgilityBookOptions::GetViewRunsByTrial() && pParent)
-	|| !CAgilityBookOptions::GetViewRunsByTrial())
+	if (((CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle() && parent)
+	|| CAgilityBookOptions::eViewRunsByTrial != CAgilityBookOptions::GetViewRunsStyle())
 	&& pTrial && !pTrial->IsFiltered())
 	{
-		wxDataViewItem runParent = wxDataViewItem(0);
-		if (CAgilityBookOptions::GetViewRunsByTrial())
+		itemTrial = wxDataViewItem(0);
+		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		{
 			CAgilityBookTreeDataTrial* nodeTrial = new CAgilityBookTreeDataTrial(this, pDog, pTrial);
-			runParent = wxDataViewItem(nodeTrial);
+			itemTrial = wxDataViewItem(nodeTrial);
 			pParent->Append(nodeTrial);
 		}
 		for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 			iterRun != pTrial->GetRuns().end();
 			++iterRun)
 		{
-			LoadData(pDog, pTrial, *iterRun, runParent);
+			LoadData(pDog, pTrial, *iterRun, itemTrial);
 		}
 	}
 
@@ -167,16 +190,16 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 	wxDataViewItem itemRun;
 
 	CAgilityBookTreeData* pParent = NULL;
-	if (CAgilityBookOptions::GetViewRunsByTrial())
+	if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		pParent = GetNode(parent);
 
-	if (((CAgilityBookOptions::GetViewRunsByTrial() && pParent)
-	|| !CAgilityBookOptions::GetViewRunsByTrial())
+	if (((CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle() && pParent)
+	|| CAgilityBookOptions::eViewRunsByTrial != CAgilityBookOptions::GetViewRunsStyle())
 	&& pRun && !pRun->IsFiltered())
 	{
 		CAgilityBookTreeDataRun* nodeRun = new CAgilityBookTreeDataRun(this, pDog, pTrial, pRun);
 		itemRun = wxDataViewItem(nodeRun);
-		if (CAgilityBookOptions::GetViewRunsByTrial())
+		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		{
 			pParent->Append(nodeRun);
 		}
@@ -204,10 +227,17 @@ void CAgilityBookTreeModel::LoadData()
 		if (m_pDoc->GetCurrentDog())
 			baseItems.push_back(m_pDoc->GetCurrentDog());
 	}
-	while (node)
+	if (node)
 	{
-		baseItems.push_front(node->GetARBBase());
-		node = node->GetParent();
+		ARBDogPtr pDog = node->GetDog();
+		ARBDogTrialPtr pTrial = node->GetTrial();
+		ARBDogRunPtr pRun = node->GetRun();
+		if (pDog)
+			baseItems.push_back(pDog);
+		if (pTrial && pRun)
+			baseItems.push_back(pTrial);
+		if (pRun)
+			baseItems.push_back(pRun);
 	}
 
 	DeleteAllItems();
@@ -219,7 +249,7 @@ void CAgilityBookTreeModel::LoadData()
 		++iterDog)
 	{
 		wxDataViewItem itemDog = LoadData(*iterDog);
-		if (baseItems.size() > 0 && *iterDog == baseItems.front())
+		if (0 < baseItems.size() && *iterDog == baseItems.front())
 		{
 			item = itemDog;
 		}
@@ -227,7 +257,7 @@ void CAgilityBookTreeModel::LoadData()
 	//Resort(); Not needed - thawing will trigger a resort
 	Expand(m_Ctrl);
 
-	if (item.IsOk() && baseItems.size() > 1)
+	if (item.IsOk() && 1 < baseItems.size())
 	{
 		std::list<ARBBasePtr>::iterator iter = baseItems.begin();
 		for (++iter; item.IsOk() && iter != baseItems.end(); ++iter)
@@ -244,15 +274,38 @@ void CAgilityBookTreeModel::LoadData()
 			}
 		}
 	}
-	if (!item.IsOk() && m_roots.size() > 0)
+	if (!item.IsOk() && 0 < m_roots.size())
 	{
-		item = wxDataViewItem(m_roots.front());
+		if (CAgilityBookOptions::eViewRunsByTrial != CAgilityBookOptions::GetViewRunsStyle()
+		&& 3 == baseItems.size())
+		{
+			ARBBasePtr pRun = *baseItems.rbegin();
+			for (std::vector<CAgilityBookTreeData*>::iterator i = m_roots.begin();
+				i != m_roots.end();
+				++i)
+			{
+				if ((*i)->GetARBBase() == pRun)
+				{
+					item = wxDataViewItem(*i);
+					break;
+				}
+			}
+		}
+		else
+			item = wxDataViewItem(m_roots.front());
 	}
 
 	if (item.IsOk())
 	{
 		m_Ctrl->Select(item);
 		m_Ctrl->EnsureVisible(item);
+		if (CAgilityBookOptions::eViewAllRunsByList != CAgilityBookOptions::GetViewRunsStyle())
+		{
+			// Select does not generate a change event.
+			CAgilityBookTreeData* node = GetNode(item);
+			if (node->GetDog() != GetDocument()->GetCurrentDog())
+				GetDocument()->SetCurrentDog(node->GetDog());
+		}
 	}
 
 	m_Ctrl->Thaw();

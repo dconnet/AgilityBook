@@ -212,6 +212,8 @@ BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_UPDATE_UI(ID_UNSORT, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_SORTRUNS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_LIST, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_VIEW_ALL_RUNS_BY_LIST, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_HIDDEN, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookDoc::OnUpdateCmd)
@@ -311,7 +313,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 					BIND_OR_CONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
 					std::wstring item = StringUtil::Replace((*iDog)->GetGenericName(), L"&", L"&&");
 					wxMenuItem* menuitem = menu->AppendCheckItem(menuId, StringUtil::stringWX(item));
-					if (*(*iDog) == *curDog)
+					if (curDog && *(*iDog) == *curDog)
 						menuitem->Check(true);
 					data.dogs.push_back(*iDog);
 				}
@@ -1666,7 +1668,17 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 		evt.Skip();
 		break;
 	case ID_VIEW_RUNS_BY_TRIAL:
-		evt.Check(CAgilityBookOptions::GetViewRunsByTrial() ? 1 : 0);
+		evt.Check(CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle() ? 1 : 0);
+		evt.Enable(false);
+		evt.Skip();
+		break;
+	case ID_VIEW_RUNS_BY_LIST:
+		evt.Check(CAgilityBookOptions::eViewRunsByList == CAgilityBookOptions::GetViewRunsStyle() ? 1 : 0);
+		evt.Enable(false);
+		evt.Skip();
+		break;
+	case ID_VIEW_ALL_RUNS_BY_LIST:
+		evt.Check(CAgilityBookOptions::eViewAllRunsByList == CAgilityBookOptions::GetViewRunsStyle() ? 1 : 0);
 		evt.Enable(false);
 		evt.Skip();
 		break;

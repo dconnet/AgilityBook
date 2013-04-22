@@ -757,17 +757,15 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 /////////////////////////////////////////////////////////////////////////////
 // Runs/points options
 
-bool CAgilityBookOptions::GetViewRunsByTrial()
+CAgilityBookOptions::ViewRunsStyle CAgilityBookOptions::GetViewRunsStyle()
 {
-	bool val = true;
-	wxConfig::Get()->Read(CFG_COMMON_VIEWRUNSBYTRIAL, &val);
-	return val;
+	return static_cast<ViewRunsStyle>(wxConfig::Get()->Read(CFG_COMMON_VIEWRUNSBYTRIAL, static_cast<long>(eViewRunsByTrial)));
 }
 
 
-void CAgilityBookOptions::SetViewRunsByTrial(bool bView)
+void CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::ViewRunsStyle style)
 {
-	wxConfig::Get()->Write(CFG_COMMON_VIEWRUNSBYTRIAL,bView);
+	wxConfig::Get()->Write(CFG_COMMON_VIEWRUNSBYTRIAL, static_cast<long>(style));
 }
 
 
