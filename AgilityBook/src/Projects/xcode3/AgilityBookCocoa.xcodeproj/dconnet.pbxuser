@@ -56,16 +56,14 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 384482876;
-			PBXWorkspaceStateSaveDate = 384482876;
+			PBXPerProjectTemplateStateSaveDate = 388344102;
+			PBXWorkspaceStateSaveDate = 388344102;
 		};
 		perUserProjectItems = {
-			E115B98516EAC2220045502D /* PBXTextBookmark */ = E115B98516EAC2220045502D /* PBXTextBookmark */;
+			E10DA47E1725A99C00778C4C /* PBXTextBookmark */ = E10DA47E1725A99C00778C4C /* PBXTextBookmark */;
 			E137436416BD9B83006380B5 /* PBXTextBookmark */ = E137436416BD9B83006380B5 /* PBXTextBookmark */;
-			E137436516BD9B83006380B5 /* PBXTextBookmark */ = E137436516BD9B83006380B5 /* PBXTextBookmark */;
 			E137436716BD9B83006380B5 /* PBXTextBookmark */ = E137436716BD9B83006380B5 /* PBXTextBookmark */;
 			E137436816BD9B83006380B5 /* PBXTextBookmark */ = E137436816BD9B83006380B5 /* PBXTextBookmark */;
-			E137436916BD9B83006380B5 /* PBXTextBookmark */ = E137436916BD9B83006380B5 /* PBXTextBookmark */;
 			E19C6CB5166C552A00657355 /* PlistBookmark */ = E19C6CB5166C552A00657355 /* PlistBookmark */;
 			E19C6CB8166C552A00657355 /* PlistBookmark */ = E19C6CB8166C552A00657355 /* PlistBookmark */;
 			E19C6CF4166C588200657355 /* PBXTextBookmark */ = E19C6CF4166C588200657355 /* PBXTextBookmark */;
@@ -97,6 +95,16 @@
 		userBuildSettings = {
 		};
 	};
+	E10DA47E1725A99C00778C4C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E137435316BD9990006380B5 /* AgilityBookTreeModel.cpp */;
+		name = "AgilityBookTreeModel.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 373;
+		vrLoc = 0;
+	};
 	E1144F5C1082880800356F61 /* Widgets.cpp */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {519, 420}}";
@@ -111,19 +119,9 @@
 			sepNavVisRange = "{0, 384}";
 		};
 	};
-	E115B98516EAC2220045502D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E155983310000B1200B7074A /* IconList.h */;
-		name = "IconList.h: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 329;
-		vrLoc = 0;
-	};
 	E137435316BD9990006380B5 /* AgilityBookTreeModel.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {500, 7280}}";
+			sepNavIntBoundsRect = "{{0, 0}, {500, 8232}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 373}";
 		};
@@ -136,16 +134,6 @@
 		rLoc = 0;
 		rType = 0;
 		vrLen = 383;
-		vrLoc = 0;
-	};
-	E137436516BD9B83006380B5 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E137435316BD9990006380B5 /* AgilityBookTreeModel.cpp */;
-		name = "AgilityBookTreeModel.cpp: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 373;
 		vrLoc = 0;
 	};
 	E137436716BD9B83006380B5 /* PBXTextBookmark */ = {
@@ -168,15 +156,12 @@
 		vrLen = 373;
 		vrLoc = 0;
 	};
-	E137436916BD9B83006380B5 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E155983310000B1200B7074A /* IconList.h */;
-		name = "IconList.h: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 329;
-		vrLoc = 0;
+	E15597C410000B1200B7074A /* ComboBoxes.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {500, 938}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 396}";
+		};
 	};
 	E155983310000B1200B7074A /* IconList.h */ = {
 		uiCtxt = {
@@ -232,6 +217,13 @@
 			sepNavIntBoundsRect = "{{0, 0}, {519, 8736}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 601}";
+		};
+	};
+	E15599B110000B3100B7074A /* ARBTypes.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {500, 2268}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 488}";
 		};
 	};
 	E15599F910000CEC00B7074A /* arb_Prefix.pch */ = {
