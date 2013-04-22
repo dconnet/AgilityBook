@@ -309,7 +309,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 					BIND_OR_CONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
 					std::wstring item = StringUtil::Replace((*iDog)->GetGenericName(), L"&", L"&&");
 					wxMenuItem* menuitem = menu->AppendCheckItem(menuId, StringUtil::stringWX(item));
-					if (*(*iDog) == *curDog)
+					if (curDog && *(*iDog) == *curDog)
 						menuitem->Check(true);
 					data.dogs.push_back(*iDog);
 				}

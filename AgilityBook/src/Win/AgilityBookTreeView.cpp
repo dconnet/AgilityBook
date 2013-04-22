@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-04-22 DRC Changing dogs didn't update runs when viewing all runs.
  * @li 2012-10-03 DRC Fixed a printing problem in the tree.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
@@ -773,7 +774,7 @@ void CAgilityBookTreeView::DoSelectionChange(wxTreeItemId hItem)
 			// Set the current dog
 			ARBDogPtr pDog = pData->GetDog();
 			if (!m_pDog || !pDog || m_pDog != pDog)
-				iHint |= UPDATE_POINTS_VIEW;
+				iHint |= UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW;
 			m_pDog = pDog;
 			CAgilityBookRunsView* pView = GetDocument()->GetRunsView();
 			if (CAgilityBookOptions::GetViewRunsByTrial()
