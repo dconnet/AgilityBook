@@ -32,7 +32,7 @@
 #include "DlgTitle.h"
 
 #include "AgilityBook.h"
-#include "ComboBoxes.h"
+#include "ComboBoxVenue.h"
 #include "RichEditCtrl2.h"
 #include "Validators.h"
 

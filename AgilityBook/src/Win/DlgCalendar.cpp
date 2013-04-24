@@ -34,6 +34,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ComboBoxes.h"
+#include "ComboBoxVenue.h"
 #include "DlgInfoNote.h"
 #include "NoteButton.h"
 #include "RichEditCtrl2.h"

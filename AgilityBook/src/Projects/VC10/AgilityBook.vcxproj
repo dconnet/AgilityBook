@@ -142,7 +142,8 @@
     <ClCompile Include="..\..\Win\CheckTreeCtrl.cpp" />
     <ClCompile Include="..\..\Win\ClipBoard.cpp" />
     <ClCompile Include="..\..\Win\ColumnOrder.cpp" />
-    <ClCompile Include="..\..\Win\ComboBoxes.cpp" />
+    <ClCompile Include="..\..\Win\ComboBoxQ.cpp" />
+    <ClCompile Include="..\..\Win\ComboBoxVenue.cpp" />
     <ClCompile Include="..\..\Win\CommonView.cpp" />
     <ClCompile Include="..\..\Win\ConfigHandler.cpp" />
     <ClCompile Include="..\..\Win\DlgAbout.cpp" />
@@ -257,6 +258,8 @@
     <ClInclude Include="..\..\Win\ClipBoard.h" />
     <ClInclude Include="..\..\Win\ColumnOrder.h" />
     <ClInclude Include="..\..\Win\ComboBoxes.h" />
+    <ClInclude Include="..\..\Win\ComboBoxQ.h" />
+    <ClInclude Include="..\..\Win\ComboBoxVenue.h" />
     <ClInclude Include="..\..\Win\CommonView.h" />
     <ClInclude Include="..\..\Win\ConfigHandler.h" />
     <ClInclude Include="..\..\Win\DlgAbout.h" />

@@ -23,7 +23,7 @@
 #include "DlgRegNum.h"
 
 #include "AgilityBook.h"
-#include "ComboBoxes.h"
+#include "ComboBoxVenue.h"
 #include "Validators.h"
 #include "Widgets.h"
 
