@@ -1929,7 +1929,13 @@ void CAgilityBookTreeView::OnEditRun(wxCommandEvent& evt)
 
 void CAgilityBookTreeView::OnViewCustomize(wxCommandEvent& evt)
 {
-	CDlgAssignColumns dlg(CAgilityBookOptions::eView, m_Ctrl, GetDocument(), IO_TYPE_VIEW_TREE_DOG);
+	size_t idxColumn = 0;
+	if (CAgilityBookOptions::eViewAllRunsByList == CAgilityBookOptions::GetViewRunsStyle())
+		idxColumn = IO_TYPE_VIEW_TREE_RUNS_LIST;
+	else
+		idxColumn = IO_TYPE_VIEW_TREE_RUNS;
+
+	CDlgAssignColumns dlg(CAgilityBookOptions::eView, m_Ctrl, GetDocument(), idxColumn);
 	dlg.ShowModal();
 }
 

@@ -33,9 +33,8 @@ Make sure WXWIN is set to wxWidgets root directory.
   - WXWIN_COMPATIBILITY_2_8 0
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
-- Note: as of 8/8/2011, unicode doesn't work on Mac due to positional parameters.
 
-=== wx2.9.x pre.3: Not supported
+=== pre wx2.9.5: Not supported
 -  ARBv3 does not support pre 2.9. It uses new features.
 
 To build for VC, see src/Projects/CompileWX.py

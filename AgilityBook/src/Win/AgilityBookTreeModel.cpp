@@ -84,9 +84,14 @@ void CAgilityBookTreeModel::UpdateColumns()
 
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
-	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUNS, m_Columns[2]);
 
-	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUNS, m_Columns[2]))
+	size_t idxColumn = 0;
+	if (CAgilityBookOptions::eViewAllRunsByList == CAgilityBookOptions::GetViewRunsStyle())
+		idxColumn = IO_TYPE_VIEW_TREE_RUNS_LIST;
+	else
+		idxColumn = IO_TYPE_VIEW_TREE_RUNS;
+
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, idxColumn, m_Columns[2]))
 	{
 		for (unsigned int iCol = 0; iCol < static_cast<unsigned int>(m_Columns[2].size()); ++iCol)
 		{

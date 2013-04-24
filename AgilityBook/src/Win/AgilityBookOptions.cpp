@@ -1496,6 +1496,28 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_COMMENTS);
 				break;
+			case IO_TYPE_VIEW_TREE_RUNS_LIST:
+				outValues.push_back(IO_RUNS_CALL_NAME);
+				outValues.push_back(IO_RUNS_VENUE);
+				outValues.push_back(IO_RUNS_CLUB);
+				outValues.push_back(IO_RUNS_LOCATION);
+				outValues.push_back(IO_RUNS_DATE);
+				outValues.push_back(IO_RUNS_Q);
+				outValues.push_back(IO_RUNS_TITLE_POINTS);
+				outValues.push_back(IO_RUNS_SCORE);
+				outValues.push_back(IO_RUNS_VENUE);
+				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_DIVISION);
+				outValues.push_back(IO_RUNS_LEVEL);
+				outValues.push_back(IO_RUNS_HEIGHT);
+				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_TIME);
+				outValues.push_back(IO_RUNS_YPS);
+				outValues.push_back(IO_RUNS_PLACE);
+				outValues.push_back(IO_RUNS_IN_CLASS);
+				outValues.push_back(IO_RUNS_DOGSQD);
+				outValues.push_back(IO_RUNS_COMMENTS);
+				break;
 			case IO_TYPE_VIEW_CALENDAR_LIST:
 				outValues.push_back(IO_CAL_START_DATE);
 				outValues.push_back(IO_CAL_VENUE);

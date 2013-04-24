@@ -47,7 +47,8 @@
 #define IO_TYPE_VIEW_CALENDAR		14
 #define IO_TYPE_VIEW_TREE_TRIAL		15	// Changed for v3
 #define IO_TYPE_VIEW_TREE_RUNS		16	// Changed for v3
-#define IO_TYPE_MAX					17
+#define IO_TYPE_VIEW_TREE_RUNS_LIST	17	// New for v3
+#define IO_TYPE_MAX					18
 
 #define IO_RUNS_REG_NAME			0
 #define IO_RUNS_CALL_NAME			1
@@ -204,12 +205,12 @@ public:
 			CAgilityBookOptions::ColumnOrder eOrder,
 			wxWindow* pParent = NULL,
 			CAgilityBookDoc* pDoc = NULL,
-			long initSelection = 0); // IO_TYPE list to initially select (if multiple)
+			size_t initSelection = 0); // IO_TYPE list to initially select (if multiple)
 
 private:
 	CAgilityBookDoc* m_pDoc;
 	CNamedColumns m_Configs;
-	long m_initSelection;
+	size_t m_initSelection;
 	bool m_bIncludeBlank;
 	wxString m_ConfigName;
 	CAutoFillComboBox* m_ctrlConfig;

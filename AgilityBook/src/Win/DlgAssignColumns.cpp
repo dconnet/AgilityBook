@@ -150,11 +150,11 @@ static struct
 	{0, IO_TYPE_VIEW_RESERVED3, 0, NULL, NULL},
 
 	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_CALENDAR_LIST, 4,
+		IO_TYPE_VIEW_CALENDAR_LIST, 5,
 		arbT("IDS_ASSCOL_VIEW_CALENDAR_LIST"),
 		arbT("IDS_ASSCOL_VIEW_CALENDAR_LIST_DESC")},
 	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_TRAINING_LIST, 6,
+		IO_TYPE_VIEW_TRAINING_LIST, 7,
 		arbT("IDS_ASSCOL_VIEW_TRAINING_LIST"),
 		arbT("IDS_ASSCOL_VIEW_TRAINING_LIST_DESC")},
 	{CAgilityBookOptions::eCalExportAppt,
@@ -166,7 +166,7 @@ static struct
 		arbT("IDS_ASSCOL_CALENDAR_TASK"),
 		arbT("IDS_ASSCOL_CALENDAR_TASK_DESC")},
 	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_CALENDAR, 5,
+		IO_TYPE_VIEW_CALENDAR, 6,
 		arbT("IDS_ASSCOL_VIEW_CALENDAR"),
 		arbT("IDS_ASSCOL_VIEW_CALENDAR_DESC")},
 	{CAgilityBookOptions::eView,
@@ -177,6 +177,10 @@ static struct
 		IO_TYPE_VIEW_TREE_RUNS, 3,
 		arbT("IDS_ASSCOL_VIEW_TREE_RUN"),
 		arbT("IDS_ASSCOL_VIEW_TREE_RUN_DESC")},
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_TREE_RUNS_LIST, 4,
+		arbT("IDS_ASSCOL_VIEW_TREE_RUN_LIST"),
+		arbT("IDS_ASSCOL_VIEW_TREE_RUN_LIST_DESC")},
 	// Note: Remember to update sc_Fields when adding a type.
 };
 
@@ -765,6 +769,7 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 	idxViewCalendar,
 	idxViewTreeTrial,
 	idxViewTreeRun,
+	idxViewTreeRun,
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -814,7 +819,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 		CAgilityBookOptions::ColumnOrder eOrder,
 		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
-		long initSelection)
+		size_t initSelection)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Configs(eOrder)
@@ -896,13 +901,13 @@ CDlgAssignColumns::CDlgAssignColumns(
 	btnDelete->SetToolTip(_("HIDC_ASSIGN_NAMES_DELETE"));
 
 	m_ctrlType = new CListCtrl(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
+		wxDefaultPosition, wxSize(-1, 150), wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
 	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgAssignColumns::OnItemchanged);
 	m_ctrlType->SetHelpText(_("HIDC_ASSIGN_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_ASSIGN_TYPE"));
 	m_ctrlType->InsertColumn(0, _("IDS_COL_RUNTYPE"));
 	m_ctrlType->InsertColumn(1, _("IDS_COL_DESCRIPTION"));
-	int index;
+	size_t index;
 #ifdef _DEBUG
 	for (index = 0; index < IO_MAX; ++index)
 	{
@@ -915,10 +920,10 @@ CDlgAssignColumns::CDlgAssignColumns(
 		assert(sc_Types[index].index == index);
 		if (!(sc_Types[index].valid & m_Configs.Order()))
 			continue;
-		int idx = m_ctrlType->InsertItem(index, wxGetTranslation(sc_Types[index].name));
+		int idx = m_ctrlType->InsertItem(static_cast<long>(index), wxGetTranslation(sc_Types[index].name));
 		if (0 <= idx)
 		{
-			m_ctrlType->SetItemData(idx, index);
+			m_ctrlType->SetItemData(idx, static_cast<long>(index));
 			wxListItem info;
 			info.SetId(idx);
 			info.SetColumn(1);

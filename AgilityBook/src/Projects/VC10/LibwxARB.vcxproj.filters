@@ -284,6 +284,9 @@
     <ClInclude Include="..\..\ARB\ARBTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBTypes2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\ARB\BinaryData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
