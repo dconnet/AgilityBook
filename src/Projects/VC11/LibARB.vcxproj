@@ -189,6 +189,7 @@
     <ClInclude Include="..\..\ARB\ARBStructure.h" />
     <ClInclude Include="..\..\ARB\ARBTraining.h" />
     <ClInclude Include="..\..\ARB\ARBTypes.h" />
+    <ClInclude Include="..\..\ARB\ARBTypes2.h" />
     <ClInclude Include="..\..\ARB\ARB_Q.h" />
     <ClInclude Include="..\..\ARB\BinaryData.h" />
     <ClInclude Include="..\..\ARB\BreakLine.h" />

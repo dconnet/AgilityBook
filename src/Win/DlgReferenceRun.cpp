@@ -29,6 +29,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ComboBoxes.h"
+#include "ComboBoxQ.h"
 #include "Validators.h"
 #include "ValidatorsQ.h"
 #include "Widgets.h"

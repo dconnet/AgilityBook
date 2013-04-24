@@ -34,9 +34,8 @@ Make sure WXWIN is set to wxWidgets root directory.
   - WXWIN_COMPATIBILITY_2_8 0
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
-- Note: as of 8/8/2011, unicode doesn't work on Mac due to positional parameters.
 
-=== wx2.9.x pre.3: Not supported
+=== pre wx2.9.5: Not supported
 - There were API changes in .3, so I simply don't support .0, .1, or .2.
 
 === Changes to 2.8.12:
