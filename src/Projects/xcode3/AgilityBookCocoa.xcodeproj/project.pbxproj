@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E1144F5F1082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
+		E154B2C917284E7400DD9354 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2C517284E7400DD9354 /* ComboBoxQ.cpp */; };
+		E154B2CA17284E7400DD9354 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2C717284E7400DD9354 /* ComboBoxVenue.cpp */; };
 		E158FC351001371B00735E7F /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
 		E158FC361001371B00735E7F /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */; };
 		E158FC371001371B00735E7F /* AgilityBookCalendarView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A310000B1200B7074A /* AgilityBookCalendarView.cpp */; };
@@ -26,7 +28,6 @@
 		E158FC441001371B00735E7F /* CheckTreeCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597BD10000B1200B7074A /* CheckTreeCtrl.cpp */; };
 		E158FC451001371B00735E7F /* ClipBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597BF10000B1200B7074A /* ClipBoard.cpp */; };
 		E158FC461001371B00735E7F /* ColumnOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C110000B1200B7074A /* ColumnOrder.cpp */; };
-		E158FC471001371B00735E7F /* ComboBoxes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C310000B1200B7074A /* ComboBoxes.cpp */; };
 		E158FC481001371B00735E7F /* CommonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C510000B1200B7074A /* CommonView.cpp */; };
 		E158FC491001371B00735E7F /* ConfigHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C710000B1200B7074A /* ConfigHandler.cpp */; };
 		E158FC4A1001371B00735E7F /* DlgAbout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C910000B1200B7074A /* DlgAbout.cpp */; };
@@ -159,6 +160,11 @@
 /* Begin PBXFileReference section */
 		E1144F5C1082880800356F61 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
 		E1144F5D1082880800356F61 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
+		E154B2C417284E3A00DD9354 /* ARBTypes2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBTypes2.h; sourceTree = "<group>"; };
+		E154B2C517284E7400DD9354 /* ComboBoxQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxQ.cpp; sourceTree = "<group>"; };
+		E154B2C617284E7400DD9354 /* ComboBoxQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxQ.h; sourceTree = "<group>"; };
+		E154B2C717284E7400DD9354 /* ComboBoxVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxVenue.cpp; sourceTree = "<group>"; };
+		E154B2C817284E7400DD9354 /* ComboBoxVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxVenue.h; sourceTree = "<group>"; };
 		E155979E10000B1200B7074A /* AgilityBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBook.cpp; sourceTree = "<group>"; };
 		E155979F10000B1200B7074A /* AgilityBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBook.h; sourceTree = "<group>"; };
 		E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookCalendarListView.cpp; sourceTree = "<group>"; };
@@ -195,7 +201,6 @@
 		E15597C010000B1200B7074A /* ClipBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipBoard.h; sourceTree = "<group>"; };
 		E15597C110000B1200B7074A /* ColumnOrder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColumnOrder.cpp; sourceTree = "<group>"; };
 		E15597C210000B1200B7074A /* ColumnOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnOrder.h; sourceTree = "<group>"; };
-		E15597C310000B1200B7074A /* ComboBoxes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxes.cpp; sourceTree = "<group>"; };
 		E15597C410000B1200B7074A /* ComboBoxes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxes.h; sourceTree = "<group>"; };
 		E15597C510000B1200B7074A /* CommonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonView.cpp; sourceTree = "<group>"; };
 		E15597C610000B1200B7074A /* CommonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonView.h; sourceTree = "<group>"; };
@@ -528,8 +533,6 @@
 		E155979C10000B1200B7074A /* Win */ = {
 			isa = PBXGroup;
 			children = (
-				E171DC2616B5C99D00BE9417 /* ImageManager.cpp */,
-				E171DC2716B5C99D00BE9417 /* ImageManager.h */,
 				E155979E10000B1200B7074A /* AgilityBook.cpp */,
 				E155979F10000B1200B7074A /* AgilityBook.h */,
 				E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */,
@@ -568,8 +571,11 @@
 				E15597C010000B1200B7074A /* ClipBoard.h */,
 				E15597C110000B1200B7074A /* ColumnOrder.cpp */,
 				E15597C210000B1200B7074A /* ColumnOrder.h */,
-				E15597C310000B1200B7074A /* ComboBoxes.cpp */,
 				E15597C410000B1200B7074A /* ComboBoxes.h */,
+				E154B2C517284E7400DD9354 /* ComboBoxQ.cpp */,
+				E154B2C617284E7400DD9354 /* ComboBoxQ.h */,
+				E154B2C717284E7400DD9354 /* ComboBoxVenue.cpp */,
+				E154B2C817284E7400DD9354 /* ComboBoxVenue.h */,
 				E15597C510000B1200B7074A /* CommonView.cpp */,
 				E15597C610000B1200B7074A /* CommonView.h */,
 				E15597C710000B1200B7074A /* ConfigHandler.cpp */,
@@ -680,6 +686,8 @@
 				E155983110000B1200B7074A /* Globals.h */,
 				E155983210000B1200B7074A /* IconList.cpp */,
 				E155983310000B1200B7074A /* IconList.h */,
+				E171DC2616B5C99D00BE9417 /* ImageManager.cpp */,
+				E171DC2716B5C99D00BE9417 /* ImageManager.h */,
 				E155983510000B1200B7074A /* LanguageManager.cpp */,
 				E155983610000B1200B7074A /* LanguageManager.h */,
 				E155983710000B1200B7074A /* ListCtrl.cpp */,
@@ -816,6 +824,7 @@
 				E15599AF10000B3100B7074A /* ARBTraining.h */,
 				E15599B010000B3100B7074A /* ARBTypes.cpp */,
 				E15599B110000B3100B7074A /* ARBTypes.h */,
+				E154B2C417284E3A00DD9354 /* ARBTypes2.h */,
 				E15599B210000B3100B7074A /* BinaryData.cpp */,
 				E15599B310000B3100B7074A /* BinaryData.h */,
 				E1AE409B12873800003BFF9F /* BreakLine.cpp */,
@@ -927,7 +936,6 @@
 				E158FC441001371B00735E7F /* CheckTreeCtrl.cpp in Sources */,
 				E158FC451001371B00735E7F /* ClipBoard.cpp in Sources */,
 				E158FC461001371B00735E7F /* ColumnOrder.cpp in Sources */,
-				E158FC471001371B00735E7F /* ComboBoxes.cpp in Sources */,
 				E158FC481001371B00735E7F /* CommonView.cpp in Sources */,
 				E158FC491001371B00735E7F /* ConfigHandler.cpp in Sources */,
 				E158FC4A1001371B00735E7F /* DlgAbout.cpp in Sources */,
@@ -1054,6 +1062,8 @@
 				E19C6CF2166C584F00657355 /* ValidatorsQ.cpp in Sources */,
 				E171DBFB16B5C14800BE9417 /* stdafx.cpp in Sources */,
 				E171DC2816B5C99D00BE9417 /* ImageManager.cpp in Sources */,
+				E154B2C917284E7400DD9354 /* ComboBoxQ.cpp in Sources */,
+				E154B2CA17284E7400DD9354 /* ComboBoxVenue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
