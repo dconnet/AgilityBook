@@ -190,7 +190,7 @@ void CDlgReorder::Init(wxWindow* pParent)
 			if (dates.end() == dates.find(pRun->GetDate()))
 				dates[pRun->GetDate()] = m_ctrlTree->AppendItem(root, StringUtil::stringWX(pRun->GetDate().GetString()));
 			wxTreeItemId item = m_ctrlTree->AppendItem(dates[pRun->GetDate()], StringUtil::stringWX(pRun->GetGenericName()), -1, 1, new CReorderTreeData(pRun));
-			if (m_Run == pRun)
+			if (m_Run == pRun || (!m_Run && !idSelect.IsOk()))
 				idSelect = item;
 		}
 		for (std::map<ARBDate, wxTreeItemId>::iterator i = dates.begin();

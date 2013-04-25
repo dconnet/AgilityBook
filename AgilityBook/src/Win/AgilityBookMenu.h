@@ -25,6 +25,7 @@ enum MenuIdentityPopup
 	IdMenuDog,
 	IdMenuTrial,
 	IdMenuRun,
+	IdMenuRunDifferent, // in run view, multiple select of different items
 	IdMenuPoints,
 	IdMenuCalendar,
 	IdMenuTraining,

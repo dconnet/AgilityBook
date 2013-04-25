@@ -37,7 +37,21 @@
 class CAgilityBookDoc;
 
 typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
-typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
+
+// See SetupARBPost.h
+#if _MSC_VER < 1700 && (!defined(_HAS_TR1) || !_HAS_TR1)
+#include <boost/tr1/tuple.hpp>
+using boost::tr1::tuple;
+using boost::tr1::get;
+#else
+#include <tuple>
+using std::tuple;
+using std::get;
+#endif
+#define TUPLE_DOG	0
+#define TUPLE_TRIAL	1
+#define TUPLE_RUN	2
+typedef tuple<ARBDogPtr, ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
 
 // Special HTML tag for href's
 #define ARB_PROTOCOL	L"arb:"

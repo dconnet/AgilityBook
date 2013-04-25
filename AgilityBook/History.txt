@@ -1,7 +1,7 @@
-4/22/2013: v3.0.0.<in development>
+4/24/2013: v3.0.0.<in development>
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
-[ Note, full functionality is NOT complete ]
+[ Note, most functionality is now complete ]
 
 4/22/2013: v2.3.12.<in development>
 - Bumped Configuration v43:

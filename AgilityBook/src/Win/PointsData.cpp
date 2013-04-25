@@ -1492,7 +1492,7 @@ void CPointsDataItems::LoadData(
 										// Don't tally NA runs for titling events.
 										if (!pRun->GetQ().AllowTally())
 											continue;
-										matching.push_back(RunInfo(pTrial, pRun));
+										matching.push_back(RunInfo(inDog, pTrial, pRun));
 										judges.insert(pRun->GetJudge());
 										if (pRun->GetQ().Qualified())
 											judgesQ.insert(pRun->GetJudge());
@@ -1561,7 +1561,7 @@ void CPointsDataItems::LoadData(
 									iterRun != matching.end();
 									++iterRun)
 								{
-									ARBDogRunPtr pRun = iterRun->second;
+									ARBDogRunPtr pRun = get<TUPLE_RUN>(*iterRun);
 									if (pRun->GetQ().Qualified())
 									{
 										bool bClean = false;

@@ -404,7 +404,7 @@ void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 void CMainFrame::OnPrintBlankRuns(wxCommandEvent& evt)
 {
 	std::vector<RunInfo> runs;
-	PrintRuns(NULL, ARBDogPtr(), runs);
+	PrintRuns(NULL, runs);
 }
 
 

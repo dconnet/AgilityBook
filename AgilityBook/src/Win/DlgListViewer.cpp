@@ -1108,8 +1108,8 @@ CDlgListViewer::CDlgListViewer(
 	std::list<RunInfo>::const_iterator iterRuns;
 	for (iterRuns = inRuns.begin(); iterRuns != inRuns.end(); ++iterRuns)
 	{
-		if ((iterRuns->second)->GetSubName().length())
-			subNames.insert((iterRuns->second)->GetSubName());
+		if (get<TUPLE_RUN>(*iterRuns)->GetSubName().length())
+			subNames.insert(get<TUPLE_RUN>(*iterRuns)->GetSubName());
 	}
 	if (inData)
 	{
@@ -1161,8 +1161,8 @@ CDlgListViewer::CDlgListViewer(
 	}
 	for (iterRuns = inRuns.begin(); iterRuns != inRuns.end(); ++iterRuns)
 	{
-		ARBDogTrialPtr pTrial = iterRuns->first;
-		ARBDogRunPtr pRun = iterRuns->second;
+		ARBDogTrialPtr pTrial = get<TUPLE_TRIAL>(*iterRuns);
+		ARBDogRunPtr pRun = get<TUPLE_RUN>(*iterRuns);
 		if (CFilterOptions::Options().IsFilterEnabled())
 		{
 			if (pRun->IsFiltered())

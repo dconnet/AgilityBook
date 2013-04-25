@@ -51,12 +51,10 @@ public:
 /**
  * Print blank pages to enter runs on.
  * @param inConfig Configuration
- * @param inDog Dog's runs to print.
  * @param inRuns Runs to print, if empty, print blank pages.
  * @return Printed?
  * @note In Print.cpp
  */
 extern bool PrintRuns(
 		ARBConfig const* inConfig,
-		ARBDogPtr inDog,
 		std::vector<RunInfo> const& inRuns);

@@ -494,7 +494,7 @@ void CAgilityBookTreeModel::GetValue(
 	wxIcon icon = node->GetIcon(col);
 	if (!m_bInCompare && icon.IsOk())
 	{
-			wxDataViewIconText data(node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col, m_bInCompare), icon);
+		wxDataViewIconText data(node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], col, m_bInCompare), icon);
 		variant << data;
 	}
 	else
@@ -566,14 +566,21 @@ wxString CAgilityBookTreeModel::GetPrintLine(const wxDataViewItem& item) const
 	CAgilityBookTreeData* node = GetNode(item);
 	if (node)
 	{
-		unsigned int n = GetColumnCount();
-		for (unsigned int i = 0; i < n; ++i)
+		if (node->IsContainer())
 		{
-			if (0 < i)
-				line << wxT(" ");
-			wxVariant variant;
-			GetValue(variant, item, i);
+			wxVariant variant = node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], 0, m_bInCompare);
 			line << variant.GetString();
+		}
+		else
+		{
+			unsigned int n = GetColumnCount();
+			for (unsigned int i = 0; i < n; ++i)
+			{
+				if (0 < i)
+					line << wxT(" ");
+				wxVariant variant = node->GetColumn(m_pDoc->Book().GetConfig(), m_Columns[node->Type()], i, m_bInCompare);
+				line << variant.GetString();
+			}
 		}
 	}
 	return line;
@@ -631,4 +638,25 @@ MenuIdentityPopup CAgilityBookTreeModel::GetMenuID(const wxDataViewItem& item) c
 	if (pNode)
 		return pNode->GetMenuID();
 	return IdMenuNone;
+}
+
+
+MenuIdentityPopup CAgilityBookTreeModel::GetMenuID(wxDataViewItemArray const& items) const
+{
+	MenuIdentityPopup id = IdMenuNone;
+	for (wxDataViewItemArray::const_iterator i = items.begin(); i != items.end(); ++i)
+	{
+		CAgilityBookTreeData* pNode = GetNode(*i);
+		if (pNode)
+		{
+			if (IdMenuNone == id)
+				id = pNode->GetMenuID();
+			else if (pNode->GetMenuID() != id)
+			{
+				id = IdMenuRunDifferent;
+				break;
+			}
+		}
+	}
+	return id;
 }

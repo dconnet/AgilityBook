@@ -66,7 +66,7 @@ public:
 			wxWindowID id,
 			const wxPoint& pos = wxDefaultPosition,
 			const wxSize& size = wxDefaultSize,
-			long style = wxDV_ROW_LINES,
+			long style = wxDV_MULTIPLE | wxDV_ROW_LINES,
 			const wxValidator& validator = wxDefaultValidator);
 	~CAgilityBookTreeCtrl();
 
@@ -133,7 +133,7 @@ public:
 	void Freeze()								{m_Ctrl->Freeze();}
 	void Thaw()									{m_Ctrl->Thaw();}
 	void Refresh()								{m_Ctrl->Refresh();}
-	wxDataViewItem GetSelection() const			{return m_Ctrl->GetSelection();}
+	wxDataViewItem GetSelection() const;
 	void RefreshItem(wxDataViewItem const& item);
 	CAgilityBookTreeModel* GetStore()			{return m_Ctrl->GetStore();}
 	const CAgilityBookTreeModel* GetStore() const	{return m_Ctrl->GetStore();}
@@ -175,10 +175,22 @@ private:
 	void GetQCount(
 			int& ioCount,
 			int& ioTotal) const;
+	bool GetUnifiedDog(
+			wxDataViewItemArray const& sel,
+			ARBDogPtr& pDog) const;
+	bool GetUnifiedTrial(
+			wxDataViewItemArray const& sel,
+			ARBDogPtr& pDog,
+			ARBDogTrialPtr& pTrial) const;
+	ARBDogRunPtr GetFirstRun(wxDataViewItemArray const& sel);
 	void ChangeSelection(
 			wxDataViewItem const& item,
 			bool bEnsureVisible = true);
 	void DoSelectionChange(wxDataViewItem const& item);
+	bool EditDog(ARBDogPtr pDog);
+	bool EditTrial(
+			ARBDogPtr pDog,
+			ARBDogTrialPtr pTrial);
 	bool EditRun(
 			ARBDogPtr pDog,
 			ARBDogTrialPtr pTrial,
@@ -241,6 +253,8 @@ private:
 	void OnEditTrial(wxCommandEvent& evt);
 	void OnUpdatePrintTrial(wxUpdateUIEvent& evt);
 	void OnPrintTrial(wxCommandEvent& evt);
+	void OnUpdatePrintRuns(wxUpdateUIEvent& evt);
+	void OnPrintRuns(wxCommandEvent& evt);
 	void OnUpdateNewRun(wxUpdateUIEvent& evt);
 	void OnNewRun(wxCommandEvent& evt);
 	void OnUpdateEditRun(wxUpdateUIEvent& evt);

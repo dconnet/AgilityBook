@@ -91,6 +91,7 @@ public:
 	ARBDogTrialPtr GetTrial(const wxDataViewItem& item) const;
 	ARBDogRunPtr GetRun(const wxDataViewItem& item) const;
 	MenuIdentityPopup GetMenuID(const wxDataViewItem& item) const;
+	MenuIdentityPopup GetMenuID(wxDataViewItemArray const& items) const;
 
 private:
 	void OnDestroyControl(wxWindowDestroyEvent& evt);
