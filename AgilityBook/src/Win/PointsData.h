@@ -41,8 +41,8 @@ typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
 // See SetupARBPost.h
 #if _MSC_VER < 1700 && (!defined(_HAS_TR1) || !_HAS_TR1)
 #include <boost/tr1/tuple.hpp>
-using boost::tr1::tuple;
-using boost::tr1::get;
+using std::tr1::tuple;
+using std::tr1::get;
 #else
 #include <tuple>
 using std::tuple;
