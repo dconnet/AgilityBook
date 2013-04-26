@@ -777,8 +777,8 @@ void CUpdateInfo::CheckConfig(
 						}
 						else
 						{
-							pDoc->ImportConfiguration(book.GetConfig());
-							pDoc->Modify(true);
+							if (pDoc->ImportConfiguration(book.GetConfig()))
+								pDoc->Modify(true);
 						}
 					}
 				}

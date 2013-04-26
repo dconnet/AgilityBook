@@ -581,7 +581,7 @@ void CConfigActionCallback::PreDelete(std::wstring const& inMsg)
 	wxString msg(StringUtil::stringWX(inMsg));
 	msg += L"\n\n";
 	msg += _("IDS_ARE_YOU_SURE_CONTINUE");
-	if (wxID_NO == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_WARNING))
+	if (wxNO == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_WARNING))
 	{
 		m_bContinue = false;
 	}
@@ -594,18 +594,18 @@ void CConfigActionCallback::PostDelete(std::wstring const& msg) const
 }
 
 
-void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
+bool CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 {
 	unsigned int iHint = 0;
 	std::wostringstream info;
 	CConfigActionCallback callback;
-	bool bOk = false;
+	bool bChanges = false;
 	{
 		wxBusyCursor wait;
 		short configVersionPreUpdate = m_Records.GetConfig().GetVersion();
-		bOk = m_Records.Update(0, update, info, callback);
+		bChanges = m_Records.Update(0, update, info, callback);
 
-		if (bOk)
+		if (bChanges)
 		{
 			CFilterOptions filterOptions;
 			if (filterOptions.Update(update, configVersionPreUpdate, m_Records.GetConfig()) && ResetVisibility())
@@ -614,7 +614,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 			}
 		}
 	}
-	if (bOk)
+	if (bChanges)
 	{
 		CDlgMessage dlg(info.str(), wxGetApp().GetTopWindow());
 		dlg.ShowModal();
@@ -622,14 +622,15 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		CUpdateHint hint(UPDATE_CONFIG | iHint);
 		UpdateAllViews(NULL, &hint);
 	}
-	else
+	else if (callback.CanContinue())
 		wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+	return bChanges;
 }
 
 
 bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 {
-	bool bOk = false;
+	bool bChanges = false;
 	bool bDoIt = false;
 	CDlgConfigUpdate dlg(wxGetApp().GetTopWindow());
 	if (bUseDefault)
@@ -645,10 +646,9 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 	if (bDoIt)
 	{
 		ARBConfig& update = dlg.GetConfig();
-		ImportConfiguration(update);
-		bOk = true;
+		bChanges = ImportConfiguration(update);
 	}
-	return bOk;
+	return bChanges;
 }
 
 
