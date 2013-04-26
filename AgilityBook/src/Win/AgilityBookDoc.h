@@ -123,7 +123,7 @@ public:
 			ARBCalendar const& cal,
 			CTabView* pTabView);
 	void SortDates();
-	void ImportConfiguration(ARBConfig& update);
+	bool ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
 
 	bool ImportARBCalEntry(
