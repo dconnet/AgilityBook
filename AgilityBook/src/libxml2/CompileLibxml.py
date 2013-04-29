@@ -22,7 +22,7 @@ import time
 import win32api
 import win32con
 
-libxml2Dir = 'libxml2-2.9.0'
+libxml2Dir = 'libxml2-2.9.1'
 
 tmpfile = 'tmpcomp.bat'
 

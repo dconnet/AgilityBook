@@ -1,7 +1,5 @@
-Modifications needed (correct function prototypes [const]):
-libxml2-2.9.0/timsort.h:
-Line 40: int compute_minrun(const uint64_t);
-
-libxml2-2.9.0/include/libxml/tree.h:
-line 121: XMLPUBFUN size_t XMLCALL         xmlBufUse      (const xmlBufPtr buf);
-
+Extract libxml2-2.9.1.tar.gz (in ../../xml) here.
+Update "libxml2Dir" in ComputeLibxml.py
+Run "ComputeLibxml.py -a"
+Copy ...\win32\build\... into the appropriate directories
+Archive lib/* and include/* and add to source control.
