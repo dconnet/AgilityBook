@@ -226,7 +226,7 @@ SUITE(TestConfig)
 			CHECK(0 != dtd2.length());
 			std::string::size_type pos = dtd2.find("\r\n");
 			// Expectations: dtd should be in OS-specific line ending (if SVN is set right)
-#ifdef __WXMSW__
+#ifdef WIN32
 			CHECK(pos != std::string::npos);
 #else
 			CHECK(pos == std::string::npos);
