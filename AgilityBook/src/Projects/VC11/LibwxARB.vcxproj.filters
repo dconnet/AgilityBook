@@ -308,6 +308,9 @@
     <ClInclude Include="..\..\ARB\ARB_Q.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ARB\VersionNum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
@@ -331,9 +334,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\VersionNum.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

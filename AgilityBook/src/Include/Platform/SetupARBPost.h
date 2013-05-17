@@ -43,7 +43,6 @@ namespace std
 {
 	using boost::make_shared;
 };
-
 #endif
 
 #include <assert.h>
