@@ -143,6 +143,8 @@
 		E1144EF210813B4F00356F61 /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B710000B3100B7074A /* VersionNum.cpp */; };
 		E1144F5F1082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
 		E1144F601082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
+		E13144661746A60F00BDFC2E /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E13144641746A60F00BDFC2E /* LibArchive.cpp */; };
+		E13144671746A60F00BDFC2E /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E13144641746A60F00BDFC2E /* LibArchive.cpp */; };
 		E154B2B017284E1500DD9354 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2AC17284E1500DD9354 /* ComboBoxQ.cpp */; };
 		E154B2B117284E1500DD9354 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2AE17284E1500DD9354 /* ComboBoxVenue.cpp */; };
 		E154B2B217284E1500DD9354 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2AC17284E1500DD9354 /* ComboBoxQ.cpp */; };
@@ -308,6 +310,8 @@
 		E1144EF810813B4F00356F61 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1144F5C1082880800356F61 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
 		E1144F5D1082880800356F61 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
+		E13144641746A60F00BDFC2E /* LibArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibArchive.cpp; path = ../../LibArchive/LibArchive.cpp; sourceTree = SOURCE_ROOT; };
+		E13144651746A60F00BDFC2E /* LibArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibArchive.h; path = ../../LibArchive/LibArchive.h; sourceTree = SOURCE_ROOT; };
 		E154B2AB17284DEB00DD9354 /* ARBTypes2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBTypes2.h; sourceTree = "<group>"; };
 		E154B2AC17284E1500DD9354 /* ComboBoxQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxQ.cpp; sourceTree = "<group>"; };
 		E154B2AD17284E1500DD9354 /* ComboBoxQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxQ.h; sourceTree = "<group>"; };
@@ -659,6 +663,7 @@
 			children = (
 				E15599E410000B4700B7074A /* Include */,
 				E155996210000B3100B7074A /* ARB */,
+				E13144631746A5EB00BDFC2E /* LibArchive */,
 				E155979C10000B1200B7074A /* Win */,
 				E15599F910000CEC00B7074A /* arb_Prefix.pch */,
 				E17F8D9416B5B480003C0BF2 /* stdafx.cpp */,
@@ -682,6 +687,15 @@
 				E158FC261001333500735E7F /* Carbon.framework */,
 			);
 			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		E13144631746A5EB00BDFC2E /* LibArchive */ = {
+			isa = PBXGroup;
+			children = (
+				E13144641746A60F00BDFC2E /* LibArchive.cpp */,
+				E13144651746A60F00BDFC2E /* LibArchive.h */,
+			);
+			name = LibArchive;
 			sourceTree = "<group>";
 		};
 		E155979C10000B1200B7074A /* Win */ = {
@@ -1245,6 +1259,7 @@
 				E17F8D9616B5B480003C0BF2 /* stdafx.cpp in Sources */,
 				E154B2B017284E1500DD9354 /* ComboBoxQ.cpp in Sources */,
 				E154B2B117284E1500DD9354 /* ComboBoxVenue.cpp in Sources */,
+				E13144661746A60F00BDFC2E /* LibArchive.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1398,6 +1413,7 @@
 				E171DC2116B5C8B900BE9417 /* ImageManager.cpp in Sources */,
 				E154B2B217284E1500DD9354 /* ComboBoxQ.cpp in Sources */,
 				E154B2B317284E1500DD9354 /* ComboBoxVenue.cpp in Sources */,
+				E13144671746A60F00BDFC2E /* LibArchive.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
