@@ -915,12 +915,13 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 	case ID_AGILITY_PRINT_TRIAL:
 		if (GetTrial() && 0 < GetTrial()->GetRuns().size())
 		{
+			ARBDogPtr dog = GetDog();
 			std::vector<RunInfo> runs;
 			for (ARBDogRunList::iterator iRun = GetTrial()->GetRuns().begin(); iRun != GetTrial()->GetRuns().end(); ++iRun)
 			{
-				runs.push_back(RunInfo(GetTrial(), *iRun));
+				runs.push_back(RunInfo(dog, GetTrial(), *iRun));
 			}
-			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), GetDog(), runs);
+			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), runs);
 		}
 		break;
 	}
@@ -1277,8 +1278,8 @@ bool CAgilityBookTreeDataRun::OnCmd(
 	case ID_AGILITY_PRINT_RUNS:
 		{
 			std::vector<RunInfo> runs;
-			runs.push_back(RunInfo(GetTrial(), m_pRun));
-			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), GetDog(), runs);
+			runs.push_back(RunInfo(GetDog(), GetTrial(), m_pRun));
+			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), runs);
 		}
 		break;
 	}

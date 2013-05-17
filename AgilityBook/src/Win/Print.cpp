@@ -73,7 +73,6 @@ class CPrintRuns : public wxPrintout
 public:
 	CPrintRuns(
 			ARBConfig const* inConfig,
-			ARBDogPtr inDog,
 			std::vector<RunInfo> const& inRuns);
 
 	// Sets SetUserScale and m_OneInch (returns oneinch)
@@ -84,12 +83,11 @@ public:
 	virtual bool OnPrintPage(int pageNum);
 
 private:
-	std::wstring GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code);
+	std::wstring GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDogRunPtr run, int code);
 	void PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect);
 
 	double m_OneInch;
 	ARBConfig const* m_config;
-	ARBDogPtr m_dog;
 	std::vector<RunInfo> m_runs; // can't be const& since we're previewing now and actual vector goes out-of-scope
 	int m_maxPage;
 	int m_nPerSheet;
@@ -100,12 +98,10 @@ private:
 
 CPrintRuns::CPrintRuns(
 		ARBConfig const* inConfig,
-		ARBDogPtr inDog,
 		std::vector<RunInfo> const& inRuns)
 	: wxPrintout(_("IDS_RUNS"))
 	, m_OneInch(0.0)
 	, m_config(inConfig)
-	, m_dog(inDog)
 	, m_runs(inRuns)
 	, m_maxPage(0)
 	, m_nPerSheet(0)
@@ -417,7 +413,7 @@ static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr ref, i
 }
 
 
-std::wstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code)
+std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDogRunPtr run, int code)
 {
 	std::wostringstream text;
 	switch (code)
@@ -425,8 +421,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, in
 	default:
 		break;
 	case CODE_DOG:
-		if (m_dog)
-			text << m_dog->GetCallName();
+		if (dog)
+			text << dog->GetCallName();
 		break;
 	case CODE_DATE:
 		if (run)
@@ -677,6 +673,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 
 	for (int iItem = 0; iItem < 2; ++iItem, ++curRun)
 	{
+		ARBDogPtr dog;
 		ARBDogTrialPtr trial;
 		ARBDogRunPtr run;
 		bool bPoints = false;
@@ -690,8 +687,9 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 		}
 		else
 		{
-			trial = m_runs[curRun].first;
-			run = m_runs[curRun].second;
+			dog = get<TUPLE_DOG>(m_runs[curRun]);
+			trial = get<TUPLE_TRIAL>(m_runs[curRun]);
+			run = get<TUPLE_RUN>(m_runs[curRun]);
 			if (!run)
 				continue;
 			switch (run->GetScoring().GetType())
@@ -727,7 +725,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 					pDC->DrawLine(rect.x, rect.y, rect.x, rect.GetBottom());
 				}
 
-				std::wstring str = GetFieldText(trial, run, sc_lines[j].code);
+				std::wstring str = GetFieldText(dog, trial, run, sc_lines[j].code);
 
 				// Draw horizontal separator lines (on top)
 				if (0 < sc_lines[j].line && (str.empty() || !sc_lines[j].bContinuation))
@@ -981,12 +979,11 @@ bool CHtmlEasyPrinting::DoPrint(wxHtmlPrintout* printout)
 
 bool PrintRuns(
 		ARBConfig const* inConfig,
-		ARBDogPtr inDog,
 		std::vector<RunInfo> const& inRuns)
 {
 	wxPrintPreviewBase *preview = new wxPrintPreview(
-		new CPrintRuns(inConfig, inDog, inRuns), // preview
-		new CPrintRuns(inConfig, inDog, inRuns), // printer
+		new CPrintRuns(inConfig, inRuns), // preview
+		new CPrintRuns(inConfig, inRuns), // printer
 		wxGetApp().GetPrintData());
 	if (!preview->Ok())
 	{

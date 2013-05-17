@@ -137,7 +137,7 @@
     <ClInclude Include="..\..\Win\Widgets.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="LibARB.vcxproj">
+    <ProjectReference Include="LibwxARB.vcxproj">
       <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
     </ProjectReference>
   </ItemGroup>

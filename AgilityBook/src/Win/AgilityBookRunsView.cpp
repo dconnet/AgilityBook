@@ -1916,18 +1916,16 @@ bool CAgilityBookRunsView::OnCmd(int id)
 			std::vector<long> indices;
 			if (0 < m_Ctrl->GetSelection(indices))
 			{
-				ARBDogPtr dog;
 				std::vector<RunInfo> runs;
 				for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 				{
 					CAgilityBookRunsViewDataPtr pData = GetItemRunData(*iter);
 					if (pData)
 					{
-						dog = pData->GetDog();
-						runs.push_back(RunInfo(pData->GetTrial(), pData->GetRun()));
+						runs.push_back(RunInfo(pData->GetDog(), pData->GetTrial(), pData->GetRun()));
 					}
 				}
-				PrintRuns(&(GetDocument()->Book().GetConfig()), dog, runs);
+				PrintRuns(&(GetDocument()->Book().GetConfig()), runs);
 			}
 		}
 		break;

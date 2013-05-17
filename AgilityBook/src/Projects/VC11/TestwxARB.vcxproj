@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}</ProjectGuid>
-    <RootNamespace>TestARB</RootNamespace>
+    <RootNamespace>TestwxARB</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -241,8 +241,11 @@
     <ResourceCompile Include="..\..\TestARB\TestARB.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="LibARB.vcxproj">
+    <ProjectReference Include="LibwxARB.vcxproj">
       <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="LibwxArchive.vcxproj">
+      <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>
     </ProjectReference>
     <ProjectReference Include="LibTidy.vcxproj">
       <Project>{05967875-9726-4f06-8ec8-db6170c00bf3}</Project>

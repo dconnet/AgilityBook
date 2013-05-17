@@ -820,7 +820,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 		CAgilityBookOptions::ColumnOrder eOrder,
 		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
-		long initSelection)
+		size_t initSelection)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Configs(eOrder)
@@ -902,13 +902,13 @@ CDlgAssignColumns::CDlgAssignColumns(
 	btnDelete->SetToolTip(_("HIDC_ASSIGN_NAMES_DELETE"));
 
 	m_ctrlType = new CListCtrl(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
+		wxDefaultPosition, wxSize(-1, 150), wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
 	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgAssignColumns::OnItemchanged);
 	m_ctrlType->SetHelpText(_("HIDC_ASSIGN_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_ASSIGN_TYPE"));
 	m_ctrlType->InsertColumn(0, _("IDS_COL_RUNTYPE"));
 	m_ctrlType->InsertColumn(1, _("IDS_COL_DESCRIPTION"));
-	int index;
+	size_t index;
 #ifdef _DEBUG
 	for (index = 0; index < IO_MAX; ++index)
 	{
@@ -921,10 +921,10 @@ CDlgAssignColumns::CDlgAssignColumns(
 		assert(sc_Types[index].index == index);
 		if (!(sc_Types[index].valid & m_Configs.Order()))
 			continue;
-		int idx = m_ctrlType->InsertItem(index, wxGetTranslation(sc_Types[index].name));
+		int idx = m_ctrlType->InsertItem(static_cast<long>(index), wxGetTranslation(sc_Types[index].name));
 		if (0 <= idx)
 		{
-			m_ctrlType->SetItemData(idx, index);
+			m_ctrlType->SetItemData(idx, static_cast<long>(index));
 			wxListItem info;
 			info.SetId(idx);
 			info.SetColumn(1);

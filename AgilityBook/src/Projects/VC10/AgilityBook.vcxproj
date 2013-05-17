@@ -356,8 +356,11 @@
     <ProjectReference Include="ARBUpdater.vcxproj">
       <Project>{e7cffcf1-c043-4443-9f24-8ccbebfba690}</Project>
     </ProjectReference>
-    <ProjectReference Include="LibARB.vcxproj">
+    <ProjectReference Include="LibwxARB.vcxproj">
       <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="LibwxArchive.vcxproj">
+      <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>
     </ProjectReference>
     <ProjectReference Include="LibTidy.vcxproj">
       <Project>{05967875-9726-4f06-8ec8-db6170c00bf3}</Project>
