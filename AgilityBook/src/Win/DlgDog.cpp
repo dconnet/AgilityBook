@@ -38,6 +38,7 @@
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  * DlgDogTitles
+ * @li 2013-05-18 DRC Modifying titles caused loss of view filtering.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -1563,6 +1564,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	if (!m_IsDeceased)
 		m_Deceased.clear();
 
+	bool refreshTitles = false;
 	bool bModified = false;
 	unsigned int hint = 0;
 
@@ -1602,6 +1604,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	if (m_pDog->GetTitles() != m_Titles)
 	{
 		hint |= UPDATE_POINTS_VIEW;
+		refreshTitles = true;
 		m_pDog->GetTitles() = m_Titles;
 	}
 	if (m_pDog->GetRegNums() != m_RegNums)
@@ -1617,7 +1620,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	if (hint)
 		bModified = true;
 
-	if (m_viewHidden != CAgilityBookOptions::GetViewHiddenTitles())
+	if (refreshTitles || m_viewHidden != CAgilityBookOptions::GetViewHiddenTitles())
 	{
 		std::vector<CVenueFilter> venues;
 		CFilterOptions::Options().GetFilterVenue(venues);
