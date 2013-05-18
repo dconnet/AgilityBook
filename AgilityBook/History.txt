@@ -9,6 +9,7 @@
   - Make Calendar context menu create a new entry on the selected date.
   - When viewing all runs, changing the dog didn't update the runs.
   - Importing configuration did not cancel when answering 'No' to prompt.
+  - All Hidden titles are visible after modifying titles in the Dog Properties.
 
 3/9/2013: v2.3.11.85
 - Bumped Configuration v42:
