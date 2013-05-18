@@ -3,7 +3,7 @@
   - Change Tree/Runs view to a single consolidated view.
 [ Note, most functionality is now complete ]
 
-4/26/2013: v2.3.12.<in development>
+5/18/2013: v2.3.12.86
 - Bumped Configuration v43:
   - Added Preferred to AKC National Rounds (missing).
 - New features / Enhancements:
