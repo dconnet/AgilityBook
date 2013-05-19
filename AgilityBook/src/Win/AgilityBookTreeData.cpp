@@ -237,7 +237,7 @@ static bool EditRun(
 			date.SetToday();
 		pRun->SetDate(date);
 	}
-	CDlgRun dlg(pTree->GetDocument(), pTrialData->GetTrial(), pRun);
+	CDlgRun dlg(pTree->GetDocument(), pTrialData->GetDog(), pTrialData->GetTrial(), pRun);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		bOk = true;
@@ -602,6 +602,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		{
 			if (GetId().IsOk() && m_pTree->GetDocument()->Book().GetDogs().DeleteDog(m_pDog))
 			{
+				CAgilityBookOptions::CleanLastItems(m_pDog->GetCallName());
 				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 				// Delete() will cause this object to be deleted.
 				m_pTree->Delete(GetId());

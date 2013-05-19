@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-05-19 DRC Make last div/level/height/handler dog-aware.
  * @li 2012-12-29 DRC Fix pasting metafiles.
  * @li 2012-11-17 DRC Allow judge to be empty.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
@@ -657,12 +658,14 @@ END_EVENT_TABLE()
 
 CDlgRun::CDlgRun(
 		CAgilityBookDoc* pDoc,
+		ARBDogPtr pDog,
 		ARBDogTrialPtr pTrial,
 		ARBDogRunPtr pRun,
 		wxWindow* pParent,
 		int iSelectPage)
 	: wxDialog()
 	, m_pDoc(pDoc)
+	, m_pDog(pDog)
 	, m_pTrial(pTrial)
 	, m_pRealRun(pRun)
 	, m_Run(pRun->Clone())
@@ -776,7 +779,7 @@ CDlgRun::CDlgRun(
 		m_Date.SetToday();
 	if (m_Height.empty())
 	{
-		std::wstring last = CAgilityBookOptions::GetLastEnteredHeight();
+		std::wstring last = CAgilityBookOptions::GetLastEnteredHeight(m_pDog, m_pVenue);
 		if (!last.empty())
 			m_Height = StringUtil::stringWX(last);
 	}
@@ -788,7 +791,7 @@ CDlgRun::CDlgRun(
 	}
 	if (m_Handler.empty())
 	{
-		std::wstring last = CAgilityBookOptions::GetLastEnteredHandler();
+		std::wstring last = CAgilityBookOptions::GetLastEnteredHandler(m_pDog);
 		if (!last.empty())
 			m_Handler = StringUtil::stringWX(last);
 	}
@@ -1789,7 +1792,7 @@ void CDlgRun::FillDivisions(bool bOnEventChange)
 	// Then try to find the last entered
 	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection())
 	{
-		std::wstring last = CAgilityBookOptions::GetLastEnteredDivision();
+		std::wstring last = CAgilityBookOptions::GetLastEnteredDivision(m_pDog, m_pVenue);
 		if (0 < last.length())
 		{
 			index = m_ctrlDivisions->FindString(StringUtil::stringWX(last), true);
@@ -1863,7 +1866,7 @@ void CDlgRun::FillLevels(bool bOnEventChange)
 		}
 		if (wxNOT_FOUND == m_ctrlLevels->GetSelection())
 		{
-			std::wstring last = CAgilityBookOptions::GetLastEnteredLevel();
+			std::wstring last = CAgilityBookOptions::GetLastEnteredLevel(m_pDog, m_pVenue);
 			if (0 < last.length())
 			{
 				int idx = m_ctrlLevels->FindString(StringUtil::stringWX(last), true);
@@ -3260,11 +3263,11 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 
 	*m_pRealRun = *m_Run;
 	m_pTrial->SetMultiQs(m_pDoc->Book().GetConfig()); // Note, when adding a new run, this is actually too soon to call - the run isn't in the trial yet
-	CAgilityBookOptions::SetLastEnteredDivision(m_Run->GetDivision().c_str());
-	CAgilityBookOptions::SetLastEnteredLevel(m_Run->GetLevel().c_str());
-	CAgilityBookOptions::SetLastEnteredHeight(m_Run->GetHeight().c_str());
+	CAgilityBookOptions::SetLastEnteredDivision(m_pDog, m_pVenue, m_Run->GetDivision().c_str());
+	CAgilityBookOptions::SetLastEnteredLevel(m_pDog, m_pVenue, m_Run->GetLevel().c_str());
+	CAgilityBookOptions::SetLastEnteredHeight(m_pDog, m_pVenue, m_Run->GetHeight().c_str());
 	CAgilityBookOptions::SetLastEnteredJudge(m_Run->GetJudge().c_str());
-	CAgilityBookOptions::SetLastEnteredHandler(m_Run->GetHandler().c_str());
+	CAgilityBookOptions::SetLastEnteredHandler(m_pDog, m_Run->GetHandler().c_str());
 
 	m_pDoc->Modify(true);
 

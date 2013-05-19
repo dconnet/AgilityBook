@@ -278,6 +278,14 @@ inline wxString CFG_KEY_FILTER(int n, bool bIncSep = true)
 //	ST RefHeight
 #define CFG_LAST_REFHEIGHT				L"Last/RefHeight"
 
+//Last: "Last/<item>/dogname/<venue>"
+// See related item above
+#define CFG_LAST_DIVISION_KEY			L"Last/Divisions"
+#define CFG_LAST_HEIGHT_KEY				L"Last/Heights"
+#define CFG_LAST_LEVEL_KEY				L"Last/Levels"
+//Last: "Last/<item>/dogname"
+#define CFG_LAST_HANDLER_KEY			L"Last/Handlers"
+
 //Selection:
 //	DW nDogs (DlgSelectDog.cpp)
 #define CFG_SELECTION_NDOGS				L"Selection/nDogs"
