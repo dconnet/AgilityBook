@@ -69,6 +69,7 @@ class CDlgRun : public wxDialog
 public:
 	CDlgRun(
 			CAgilityBookDoc* pDoc,
+			ARBDogPtr pDog,
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
 			wxWindow* pParent = NULL,
@@ -114,6 +115,7 @@ private:
 	void EditLink();
 
 	CAgilityBookDoc* m_pDoc;
+	ARBDogPtr m_pDog;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRealRun;
 	ARBDogRunPtr m_Run;

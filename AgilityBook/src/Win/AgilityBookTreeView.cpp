@@ -994,7 +994,7 @@ bool CAgilityBookTreeView::EditRun(
 			date.SetToday();
 		pRun->SetDate(date);
 	}
-	CDlgRun dlg(GetDocument(), pTrial, pRun);
+	CDlgRun dlg(GetDocument(), pDog, pTrial, pRun);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		bOk = true;
@@ -1704,6 +1704,7 @@ void CAgilityBookTreeView::OnDelete(wxCommandEvent& evt)
 				if (GetDocument()->Book().GetDogs().DeleteDog(pDog))
 				{
 					bDeleted = true;
+					CAgilityBookOptions::CleanLastItems(pDog->GetCallName());
 					m_Ctrl->GetStore()->Delete(item);
 					GetDocument()->Modify(true);
 					CUpdateHint hint(UPDATE_POINTS_VIEW);

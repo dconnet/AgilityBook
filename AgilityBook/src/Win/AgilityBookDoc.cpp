@@ -612,6 +612,7 @@ bool CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	}
 	if (bChanges)
 	{
+		CAgilityBookOptions::CleanLastItems(m_Records.GetConfig());
 		CDlgMessage dlg(info.str(), wxGetApp().GetTopWindow());
 		dlg.ShowModal();
 		Modify(true);
