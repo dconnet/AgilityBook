@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-05-19 DRC Make last div/level/height/handler context aware.
  * @li 2010-03-28 DRC Added ability to import/export program settings.
  * @li 2009-07-19 DRC Implement proxy support. 
  * @li 2008-12-24 DRC Ported to wxWidgets.
@@ -161,18 +162,38 @@ public:
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options
-	static std::wstring GetLastEnteredDivision();
-	static void SetLastEnteredDivision(wchar_t const* inLast);
-	static std::wstring GetLastEnteredLevel();
-	static void SetLastEnteredLevel(wchar_t const* inLast);
-	static std::wstring GetLastEnteredHeight();
-	static void SetLastEnteredHeight(wchar_t const* inLast);
+	static std::wstring GetLastEnteredDivision(
+			ARBDogPtr pDog,
+			ARBConfigVenuePtr pVenue);
+	static void SetLastEnteredDivision(
+			ARBDogPtr pDog,
+			ARBConfigVenuePtr pVenue,
+			wchar_t const* inLast);
+	static std::wstring GetLastEnteredLevel(
+			ARBDogPtr pDog,
+			ARBConfigVenuePtr pVenue);
+	static void SetLastEnteredLevel(
+			ARBDogPtr pDog,
+			ARBConfigVenuePtr pVenue,
+			wchar_t const* inLast);
+	static std::wstring GetLastEnteredHeight(
+			ARBDogPtr pDog,
+			ARBConfigVenuePtr pVenue);
+	static void SetLastEnteredHeight(
+			ARBDogPtr pDog,
+			ARBConfigVenuePtr pVenue,
+			wchar_t const* inLast);
 	static std::wstring GetLastEnteredRefHeight();
 	static void SetLastEnteredRefHeight(wchar_t const* inLast);
 	static std::wstring GetLastEnteredJudge();
 	static void SetLastEnteredJudge(wchar_t const* inLast);
-	static std::wstring GetLastEnteredHandler();
-	static void SetLastEnteredHandler(wchar_t const* inLast);
+	static std::wstring GetLastEnteredHandler(ARBDogPtr pDog);
+	static void SetLastEnteredHandler(
+			ARBDogPtr pDog,
+			wchar_t const* inLast);
+	static void CleanLastItems(std::wstring const& callName);
+	static void CleanLastItems(std::wstring const& oldCallName, std::wstring const& newCallName);
+	static void CleanLastItems(ARBConfig const& inConfig);
 	// Import/Export options
 	enum
 	{

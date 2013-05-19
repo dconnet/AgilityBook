@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-05-19 DRC Make last div/level/height/handler context aware.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
  * @li 2010-11-07 DRC Merge filters on program settings import also.
  * @li 2010-11-04 DRC Change importing program settings to merge columninfo.
@@ -50,6 +51,7 @@
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBCalendar.h"
+#include "ARB/ARBConfig.h"
 #include "ARB/ARBDate.h"
 #include "ARB/ARBDogTitle.h"
 #include "ARB/ARBDogTrial.h"
@@ -1056,48 +1058,111 @@ void CAgilityBookOptions::SetCalendarFontInfo(CFontInfo const& info)
 /////////////////////////////////////////////////////////////////////////////
 // Last entered options
 
-std::wstring CAgilityBookOptions::GetLastEnteredDivision()
+static wxString GetLastKey(
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue,
+		wchar_t const* keyGroup,
+		wchar_t const* keyDefault,
+		bool bFallback)
 {
-	return StringUtil::stringW(wxConfig::Get()->Read(CFG_LAST_DIVISION, wxString()));
+	assert(keyGroup && keyDefault);
+	wxString key(keyDefault);
+	if (pDog && !pDog->GetCallName().empty())
+	{
+		// The 'Clean' routines below have "knowledge" of
+		//  <key>/<dog>/<venue> order.
+		key = keyGroup;
+		key << L"/" << pDog->GetCallName();
+		if (pVenue && !pVenue->GetName().empty())
+		{
+			key << L"/" << pVenue->GetName();
+		}
+		// Fall back
+		if (bFallback && !wxConfig::Get()->Exists(key))
+			key = keyDefault;
+	}
+	return key;
 }
 
 
-void CAgilityBookOptions::SetLastEnteredDivision(wchar_t const* inLast)
+static std::wstring GetLastValue(
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue,
+		wchar_t const* keyDog,
+		wchar_t const* keyDefault)
 {
+	wxString key = GetLastKey(pDog, pVenue, keyDog, keyDefault, true);
+	return StringUtil::stringW(wxConfig::Get()->Read(key, wxString()));
+}
+
+
+static void WriteLastValue(
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue,
+		wchar_t const* keyDog,
+		wchar_t const* keyDefault,
+		wchar_t const* inLast)
+{
+	wxString key = GetLastKey(pDog, pVenue, keyDog, keyDefault, false);
 	if (inLast)
-		wxConfig::Get()->Write(CFG_LAST_DIVISION, inLast);
+	{
+		wxConfig::Get()->Write(key, inLast);
+		if (key != keyDefault)
+			wxConfig::Get()->Write(keyDefault, inLast);
+	}
 	else
-		wxConfig::Get()->DeleteEntry(CFG_LAST_DIVISION);
+		wxConfig::Get()->DeleteEntry(key);
 }
 
 
-std::wstring CAgilityBookOptions::GetLastEnteredLevel()
+std::wstring CAgilityBookOptions::GetLastEnteredDivision(
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue)
 {
-	return StringUtil::stringW(wxConfig::Get()->Read(CFG_LAST_LEVEL, wxString()));
+	return GetLastValue(pDog, pVenue, CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION);
 }
 
 
-void CAgilityBookOptions::SetLastEnteredLevel(wchar_t const* inLast)
+void CAgilityBookOptions::SetLastEnteredDivision(
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue,
+		wchar_t const* inLast)
 {
-	if (inLast)
-		wxConfig::Get()->Write(CFG_LAST_LEVEL, inLast);
-	else
-		wxConfig::Get()->DeleteEntry(CFG_LAST_LEVEL);
+	WriteLastValue(pDog, pVenue, CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION, inLast);
 }
 
 
-std::wstring CAgilityBookOptions::GetLastEnteredHeight()
+std::wstring CAgilityBookOptions::GetLastEnteredLevel(
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue)
 {
-	return StringUtil::stringW(wxConfig::Get()->Read(CFG_LAST_HEIGHT, wxString()));
+	return GetLastValue(pDog, pVenue, CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL);
 }
 
 
-void CAgilityBookOptions::SetLastEnteredHeight(wchar_t const* inLast)
+void CAgilityBookOptions::SetLastEnteredLevel(
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue,
+		wchar_t const* inLast)
 {
-	if (inLast)
-		wxConfig::Get()->Write(CFG_LAST_HEIGHT, inLast);
-	else
-		wxConfig::Get()->DeleteEntry(CFG_LAST_HEIGHT);
+	WriteLastValue(pDog, pVenue, CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL, inLast);
+}
+
+
+std::wstring CAgilityBookOptions::GetLastEnteredHeight(
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue)
+{
+	return GetLastValue(pDog, pVenue, CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT);
+}
+
+
+void CAgilityBookOptions::SetLastEnteredHeight(
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue,
+		wchar_t const* inLast)
+{
+	WriteLastValue(pDog, pVenue, CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, inLast);
 }
 
 
@@ -1131,18 +1196,129 @@ void CAgilityBookOptions::SetLastEnteredJudge(wchar_t const* inLast)
 }
 
 
-std::wstring CAgilityBookOptions::GetLastEnteredHandler()
+std::wstring CAgilityBookOptions::GetLastEnteredHandler(ARBDogPtr pDog)
 {
-	return StringUtil::stringW(wxConfig::Get()->Read(CFG_LAST_HANDLER, wxString()));
+	return GetLastValue(pDog, ARBConfigVenuePtr(), CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER);
 }
 
 
-void CAgilityBookOptions::SetLastEnteredHandler(wchar_t const* inLast)
+void CAgilityBookOptions::SetLastEnteredHandler(
+		ARBDogPtr pDog,
+		wchar_t const* inLast)
 {
-	if (inLast)
-		wxConfig::Get()->Write(CFG_LAST_HANDLER, inLast);
-	else
-		wxConfig::Get()->DeleteEntry(CFG_LAST_HANDLER);
+	WriteLastValue(pDog, ARBConfigVenuePtr(), CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, inLast);
+}
+
+
+// Note: If name changes, I don't care. Just cleanse.
+// Also, make sure this is updated if any of the 'Last' formats change.
+
+static const struct
+{
+	wchar_t const* key;
+	wchar_t const* def;
+	bool hasVenueKey;
+} sc_Keys[] = {
+	{CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION, true},
+	{CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL, true},
+	{CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, true},
+	{CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, false},
+};
+static const size_t sc_KeysCount = _countof(sc_Keys);
+
+
+void CAgilityBookOptions::CleanLastItems(std::wstring const& callName)
+{
+	CleanLastItems(callName, std::wstring());
+}
+
+
+void CAgilityBookOptions::CleanLastItems(std::wstring const& oldCallName, std::wstring const& newCallName)
+{
+	if (oldCallName.empty())
+		return;
+
+	for (size_t i = 0; i < sc_KeysCount; ++i)
+	{
+		wxString path = wxConfig::Get()->GetPath();
+		wxConfig::Get()->SetPath(sc_Keys[i].key);
+
+		if (sc_Keys[i].hasVenueKey)
+		{
+			if (wxConfig::Get()->HasGroup(oldCallName))
+			{
+				if (newCallName.empty())
+					wxConfig::Get()->DeleteGroup(oldCallName);
+				else
+					wxConfig::Get()->RenameGroup(oldCallName, newCallName);
+			}
+		}
+		else
+		{
+			if (wxConfig::Get()->HasEntry(oldCallName))
+			{
+				if (newCallName.empty())
+					wxConfig::Get()->DeleteEntry(oldCallName);
+				else
+					wxConfig::Get()->RenameEntry(oldCallName, newCallName);
+			}
+		}
+
+		wxConfig::Get()->SetPath(path);
+	}
+}
+
+
+void CAgilityBookOptions::CleanLastItems(ARBConfig const& inConfig)
+{
+	for (size_t i = 0; i < sc_KeysCount; ++i)
+	{
+		if (!sc_Keys[i].hasVenueKey)
+			continue;
+
+		wxString key(sc_Keys[i].key);
+		if (wxConfig::Get()->HasGroup(key))
+		{
+			wxString path = wxConfig::Get()->GetPath();
+			wxConfig::Get()->SetPath(key);
+
+			wxString strDog;
+			long idxDog;
+			if (wxConfig::Get()->GetFirstGroup(strDog, idxDog))
+			{
+				do
+				{
+					wxConfig::Get()->SetPath(strDog);
+
+					std::vector<wxString> deleteVenues;
+					wxString strVenue;
+					long idxVenue;
+					if (wxConfig::Get()->GetFirstEntry(strVenue, idxVenue))
+					{
+						do
+						{
+							if (!inConfig.GetVenues().FindVenue(StringUtil::stringW(strVenue)))
+							{
+								// Not sure if deleting during iteration might
+								// be an issue. So avoiding!
+								deleteVenues.push_back(strVenue);
+							}
+						} while (wxConfig::Get()->GetNextEntry(strVenue, idxVenue));
+					}
+					for (std::vector<wxString>::iterator iter = deleteVenues.begin();
+						iter != deleteVenues.end();
+						++iter)
+					{
+						wxConfig::Get()->DeleteEntry(*iter);
+					}
+
+					wxConfig::Get()->SetPath(L"..");
+				} while (wxConfig::Get()->GetNextGroup(strDog, idxDog));
+			}
+
+			wxConfig::Get()->SetPath(path);
+		}
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
