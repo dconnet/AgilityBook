@@ -1252,16 +1252,24 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		if (!bPrompt
 		|| wxYES == wxMessageBox(_("IDS_DELETE_EVENT_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 		{
-			if (GetId().IsOk() && GetTrial()->GetRuns().DeleteRun(m_pRun))
+			ARBDogTrialPtr pTrial = GetTrial();
+			ARBDate startDate = pTrial->GetStartDate();
+			if (GetId().IsOk() && pTrial->GetRuns().DeleteRun(m_pRun))
 			{
 				m_pTree->RefreshItem(m_pTree->GetItemParent(GetId()));
 				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
-				ARBDogTrialPtr pTrial = GetTrial();
+				ARBDogPtr pDog = GetDog();
 				// Delete() will cause this object to be deleted.
 				m_pTree->Delete(GetId());
-				bModified = true;
 				pTrial->SetMultiQs(pDoc->Book().GetConfig());
-				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+				unsigned int updateHint = UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW;
+				if (pTrial->GetStartDate() != startDate)
+				{
+					updateHint |= UPDATE_TREE_VIEW;
+					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+				}
+				bModified = true;
+				CUpdateHint hint(updateHint);
 				pDoc->UpdateAllViews(NULL, &hint);
 			}
 		}
