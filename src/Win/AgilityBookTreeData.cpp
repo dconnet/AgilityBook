@@ -153,14 +153,13 @@ static bool EditTrial(
 		CFilterOptions::Options().GetFilterVenue(venues);
 		if (bAdd)
 		{
-			if (!pDog->GetTrials().AddTrial(pTrial))
+			if (!pDog->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst()))
 			{
 				bOk = false;
 				wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 			}
 			else
 			{
-				pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 				pTree->GetDocument()->ResetVisibility(venues, pTrial);
 				// Even though we will reset the tree, go ahead and add/select
 				// the item into the tree here. That will make sure when the
@@ -231,7 +230,7 @@ static bool EditRun(
 		}
 		bAdd = true;
 		pRun = ARBDogRunPtr(ARBDogRun::New());
-		ARBDate date = pTrialData->GetTrial()->GetRuns().GetEndDate();
+		ARBDate date = pTrialData->GetTrial()->GetEndDate();
 		// If this is the first run, the date won't be set.
 		if (!date.IsValid())
 			date.SetToday();
@@ -411,14 +410,13 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
 					CFilterOptions::Options().GetFilterVenue(venues);
-					if (!pDog->GetTrials().AddTrial(pNewTrial))
+					if (!pDog->GetTrials().AddTrial(pNewTrial, !CAgilityBookOptions::GetNewestDatesFirst()))
 					{
 						bLoaded = false;
 						wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 					}
 					else
 					{
-						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
 						m_pTree->Freeze();
 						wxTreeItemId hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetId());
@@ -841,9 +839,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 		if (GetTrial())
 		{
 			ARBDogTrialPtr pTrial = GetTrial()->Clone();
-			GetDog()->GetTrials().AddTrial(pTrial);
-			bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
-			GetDog()->GetTrials().sort(bDescending);
+			GetDog()->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst());
 			bModified = true;
 			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
 			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
@@ -939,7 +935,7 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 		switch (GetTrialColumns()[idx])
 		{
 		case IO_TREE_TRIAL_START:
-			if (m_pTrial->GetRuns().GetStartDate().IsValid())
+			if (m_pTrial->GetStartDate().IsValid())
 			{
 				if (bNeedSpace)
 				{
@@ -948,12 +944,12 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 					else
 						str << L" ";
 				}
-				str << m_pTrial->GetRuns().GetStartDate().GetString();
+				str << m_pTrial->GetStartDate().GetString();
 				bNeedSpace = true;
 			}
 			break;
 		case IO_TREE_TRIAL_END:
-			if (m_pTrial->GetRuns().GetEndDate().IsValid())
+			if (m_pTrial->GetEndDate().IsValid())
 			{
 				if (bNeedSpace)
 				{
@@ -962,7 +958,7 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 					else
 						str << L" ";
 				}
-				str << m_pTrial->GetRuns().GetEndDate().GetString();
+				str << m_pTrial->GetEndDate().GetString();
 				bNeedSpace = true;
 			}
 			break;
@@ -1258,6 +1254,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		{
 			if (GetId().IsOk() && GetTrial()->GetRuns().DeleteRun(m_pRun))
 			{
+				m_pTree->RefreshItem(m_pTree->GetItemParent(GetId()));
 				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 				ARBDogTrialPtr pTrial = GetTrial();
 				// Delete() will cause this object to be deleted.

@@ -10,7 +10,14 @@
  * @brief The classes that make up the dog's information.
  * @author David Connet
  *
+ * @note The default date is considered transitory. It is not saved once a
+ * run is created. On load, a trial will set the default date to the first
+ * run date in case the last run is deleted. This does mean that a trial
+ * could end up with a different default date after creating a trial with a
+ * run, saving it, reloading, and deleting that run. This is by-design.
+ *
  * Revision History
+ * @li 2013-05-25 DRC Implement a default date for a trial.
  * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2012-02-16 DRC Fixed an issue in co-sanctioned trial detection.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -78,6 +85,7 @@ ARBDogTrialPtr ARBDogTrial::New(ARBCalendar const& inCal)
 ARBDogTrial::ARBDogTrial()
 	: m_Location()
 	, m_Note()
+	, m_DefaultDate()
 	, m_Verified(false)
 	, m_Clubs()
 	, m_Runs()
@@ -88,6 +96,7 @@ ARBDogTrial::ARBDogTrial()
 ARBDogTrial::ARBDogTrial(ARBCalendar const& inCal)
 	: m_Location(inCal.GetLocation())
 	, m_Note(inCal.GetNote())
+	, m_DefaultDate(inCal.GetStartDate())
 	, m_Verified(false)
 	, m_Clubs()
 	, m_Runs()
@@ -99,6 +108,7 @@ ARBDogTrial::ARBDogTrial(ARBCalendar const& inCal)
 ARBDogTrial::ARBDogTrial(ARBDogTrial const& rhs)
 	: m_Location(rhs.m_Location)
 	, m_Note(rhs.m_Note)
+	, m_DefaultDate(rhs.m_DefaultDate)
 	, m_Verified(rhs.m_Verified)
 	, m_Clubs()
 	, m_Runs()
@@ -125,6 +135,7 @@ ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
 	{
 		m_Location = rhs.m_Location;
 		m_Note = rhs.m_Note;
+		m_DefaultDate = rhs.m_DefaultDate;
 		m_Verified = rhs.m_Verified;
 		rhs.m_Clubs.Clone(m_Clubs);
 		rhs.m_Runs.Clone(m_Runs);
@@ -137,6 +148,7 @@ bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 {
 	return m_Location == rhs.m_Location
 		&& m_Note == rhs.m_Note
+		&& m_DefaultDate == rhs.m_DefaultDate
 		&& m_Verified == rhs.m_Verified
 		&& m_Clubs == rhs.m_Clubs
 		&& m_Runs == rhs.m_Runs;
@@ -187,6 +199,7 @@ bool ARBDogTrial::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_TRIAL)
 		return false;
+	inTree->GetAttrib(ATTRIB_TRIAL_DEFAULT_DATE, m_DefaultDate);
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, Localization()->ValidValuesBool().c_str()));
@@ -221,6 +234,10 @@ bool ARBDogTrial::Load(
 	}
 	SetMultiQs(inConfig);
 	m_Runs.sort();
+	// Default date is only saved when there are no runs. Set this in case
+	// all the runs are deleted.
+	if (0 < m_Runs.size())
+		m_DefaultDate = m_Runs.GetStartDate();
 	return true;
 }
 
@@ -233,6 +250,8 @@ bool ARBDogTrial::Save(
 	if (!ioTree)
 		return false;
 	ElementNodePtr trial = ioTree->AddElementNode(TREE_TRIAL);
+	if (m_DefaultDate.IsValid() && 0 == m_Runs.size())
+		trial->AddAttrib(ATTRIB_TRIAL_DEFAULT_DATE, m_DefaultDate);
 	if (m_Verified) // Default is no
 		trial->AddAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified);
 	if (0 < m_Location.length())
@@ -358,6 +377,24 @@ bool ARBDogTrial::HasVenue(std::wstring const& inVenue) const
 	return false;
 }
 
+
+ARBDate ARBDogTrial::GetStartDate() const
+{
+	ARBDate date(m_DefaultDate);
+	if (0 < m_Runs.size())
+		date = m_Runs.GetStartDate();
+	return date;
+}
+
+
+ARBDate ARBDogTrial::GetEndDate() const
+{
+	ARBDate date(m_DefaultDate);
+	if (0 < m_Runs.size())
+		date = m_Runs.GetEndDate();
+	return date;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogTrialList::Load(
@@ -381,19 +418,18 @@ public:
 	bool operator()(ARBDogTrialPtr one, ARBDogTrialPtr two) const
 	{
 		int iCompare = 0;
-		if (0 < one->GetRuns().size()
-		&& 0 < two->GetRuns().size())
+		ARBDate d1 = one->GetStartDate();
+		ARBDate d2 = two->GetStartDate();
+		if (d1.IsValid() && d2.IsValid())
 		{
-			ARBDate d1 = (*(one->GetRuns().begin()))->GetDate();
-			ARBDate d2 = (*(two->GetRuns().begin()))->GetDate();
 			if (d1 < d2)
 				iCompare = -1;
 			else if (d1 > d2)
 				iCompare = 1;
 		}
-		else if (0 < one->GetRuns().size())
+		else if (d1.IsValid())
 			iCompare = 1;
-		else if (0 < two->GetRuns().size())
+		else if (d2.IsValid())
 			iCompare = -1;
 		if (0 == iCompare)
 		{
@@ -844,6 +880,17 @@ bool ARBDogTrialList::AddTrial(ARBDogTrialPtr inTrial)
 		bAdded = true;
 		push_back(inTrial);
 	}
+	return bAdded;
+}
+
+
+bool ARBDogTrialList::AddTrial(
+		ARBDogTrialPtr inTrial,
+		bool inDescending)
+{
+	bool bAdded = AddTrial(inTrial);
+	if (bAdded)
+		sort(inDescending);
 	return bAdded;
 }
 

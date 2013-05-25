@@ -1,7 +1,8 @@
-5/19/2013: v2.3.13.<in dev>
+5/25/2013: v2.3.13.<in dev>
 - New features / Enhancements:
   - Runs: Make last division/level/height sensitive to dog+venue.
   - Runs: Make last handler sensitive to dog.
+  -  Add a default date for empty trials.
 
 5/18/2013: v2.3.12.86
 - Bumped Configuration v43:

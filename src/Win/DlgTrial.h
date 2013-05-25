@@ -22,6 +22,7 @@
  * @li 2004-12-19 DRC Added Location/Club note information.
  */
 
+#include "ARB/ARBDate.h"
 #include "ARB/ARBTypes.h"
 #include "ARB/ARBDogClub.h"
 class CAgilityBookDoc;
@@ -29,6 +30,7 @@ class CAutoFillComboBox;
 class CNoteButton;
 class CReportListCtrl;
 class CRichEditCtrl2;
+class wxDatePickerCtrl;
 class wxListEvent;
 class wxTextUrlEvent;
 
@@ -44,9 +46,11 @@ public:
 	bool RunsWereDeleted() const		{return m_bRunsDeleted;}
 
 private:
+	wxDatePickerCtrl* m_ctrlStart;
+	ARBDate m_dateStart;
+	bool m_Verified;
 	wxString m_Location;
 	CAutoFillComboBox* m_ctrlLocation;
-	bool m_Verified;
 	wxString m_Notes;
 	CNoteButton* m_ctrlLocationNotes;
 	CRichEditCtrl2* m_ctrlLocationInfo;
