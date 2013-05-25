@@ -556,7 +556,7 @@ bool CFilterOptions::IsTrialVisible(
 		ARBDogTrialPtr pTrial) const
 {
 	// Yes, it seems backwards, but it is correct.
-	if (!IsDateVisible(pTrial->GetRuns().GetEndDate(), pTrial->GetRuns().GetStartDate()))
+	if (!IsDateVisible(pTrial->GetEndDate(), pTrial->GetStartDate()))
 		return false;
 	if (!m_bViewAllVenues)
 	{

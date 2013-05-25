@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2013-05-24 DRC File version 14.1
+               Added 'Date' to 'Trial'.
 2013-01-13 DRC File version 14.0
                Added new recurring title suffix style.
                Titles now are unique with Name+recurring.
@@ -565,9 +567,14 @@ style/sep: See Titles
 		isHidden (y|n) 'n'
 	>
 
-<!-- Entries in the file are grouped by trial. -->
+<!--
+Entries in the file are grouped by trial.
+'Date' is used as the default date for the first run (and sorting when no runs)
+-->
 <!ELEMENT Trial (Location?, Note?, Club+, Run*) >
-	<!ATTLIST Trial Verified (y|n) 'n' >
+	<!ATTLIST Trial
+		Date CDATA #IMPLIED
+		Verified (y|n) 'n' >
 
 <!ELEMENT Location (#PCDATA) >
 

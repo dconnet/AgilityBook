@@ -232,7 +232,7 @@ wxVariant CAgilityBookTreeDataTrial::GetColumn(
 			switch (columns[idx])
 			{
 			case IO_TREE_TRIAL_START:
-				if (m_pTrial->GetRuns().GetStartDate().IsValid())
+				if (m_pTrial->GetStartDate().IsValid())
 				{
 					if (bNeedSpace)
 					{
@@ -241,12 +241,12 @@ wxVariant CAgilityBookTreeDataTrial::GetColumn(
 						else
 							str << L" ";
 					}
-					str << m_pTrial->GetRuns().GetStartDate().GetString();
+					str << m_pTrial->GetStartDate().GetString();
 					bNeedSpace = true;
 				}
 				break;
 			case IO_TREE_TRIAL_END:
-				if (m_pTrial->GetRuns().GetEndDate().IsValid())
+				if (m_pTrial->GetEndDate().IsValid())
 				{
 					if (bNeedSpace)
 					{
@@ -255,7 +255,7 @@ wxVariant CAgilityBookTreeDataTrial::GetColumn(
 						else
 							str << L" ";
 					}
-					str << m_pTrial->GetRuns().GetEndDate().GetString();
+					str << m_pTrial->GetEndDate().GetString();
 					bNeedSpace = true;
 				}
 				break;

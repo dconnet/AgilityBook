@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-05-25 DRC Implement a default date for a trial.
  * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -115,6 +116,18 @@ public:
 	 */
 	bool HasVenue(std::wstring const& inVenue) const;
 
+	/**
+	 * Get the first date of the trial. This is defined by the runs or the default date.
+	 * @return First date, may be invalid.
+	 */
+	ARBDate GetStartDate() const;
+
+	/**
+	 * Get the last date of the trial. This is defined by the runs or the default date.
+	 * @return Last date, may be invalid.
+	 */
+	ARBDate GetEndDate() const;
+
 	/*
 	 * Getters/setters.
 	 */
@@ -133,6 +146,14 @@ public:
 	void SetNote(std::wstring const& inNote)
 	{
 		m_Note = inNote;
+	}
+	ARBDate GetDefaultDate() const
+	{
+		return m_DefaultDate;
+	}
+	void SetDefaultDate(ARBDate date)
+	{
+		m_DefaultDate = date;
 	}
 	bool IsVerified() const
 	{
@@ -162,6 +183,7 @@ public:
 private:
 	std::wstring m_Location;
 	std::wstring m_Note;
+	ARBDate m_DefaultDate;
 	bool m_Verified;
 	ARBDogClubList m_Clubs;
 	ARBDogRunList m_Runs;
@@ -372,6 +394,16 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddTrial(ARBDogTrialPtr inTrial);
+
+	/**
+	 * Add a trial and sort.
+	 * @param inTrial Trial to add.
+	 * @param inDescending Sort in descending or ascending order.
+	 * @return Whether the object was added.
+	 */
+	bool AddTrial(
+			ARBDogTrialPtr inTrial,
+			bool inDescending);
 
 	/**
 	 * Delete a trial.

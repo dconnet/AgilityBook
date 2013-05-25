@@ -215,6 +215,7 @@
 #define ATTRIB_TITLE_INSTANCE_SEP			L"sep"
 #define ATTRIB_TITLE_RECEIVED				L"isReceived"
 #define ATTRIB_TITLE_HIDDEN					L"isHidden"
+#define ATTRIB_TRIAL_DEFAULT_DATE			L"Date"
 #define ATTRIB_TRIAL_VERIFIED				L"Verified"
 #define ATTRIB_CLUB_VENUE					L"Venue"
 #define ATTRIB_RUN_DATE						L"Date"
