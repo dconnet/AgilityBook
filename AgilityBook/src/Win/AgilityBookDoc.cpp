@@ -544,7 +544,7 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 				// for both dogs and all changes will be reflected from one to
 				// the other - until you save, exit and reload the program.
 				ARBDogTrialPtr pNewTrial = pTrial->Clone();
-				pDog->GetTrials().AddTrial(pNewTrial);
+				pDog->GetTrials().AddTrial(pNewTrial, !CAgilityBookOptions::GetNewestDatesFirst());
 				Modify(true);
 				CUpdateHint hint(UPDATE_NEW_TRIAL, pNewTrial);
 				UpdateAllViews(NULL, &hint);

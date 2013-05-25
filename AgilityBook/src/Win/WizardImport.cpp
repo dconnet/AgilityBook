@@ -1191,8 +1191,8 @@ bool CWizardImport::DoWizardFinish()
 							++iterTrial)
 						{
 							ARBDogTrialPtr pTrialTmp = *iterTrial;
-							ARBDate startDate = pTrialTmp->GetRuns().GetStartDate();
-							ARBDate endDate = pTrialTmp->GetRuns().GetEndDate();
+							ARBDate startDate = pTrialTmp->GetStartDate();
+							ARBDate endDate = pTrialTmp->GetEndDate();
 							if (1 == iLoop)
 							{
 								--startDate;
@@ -1232,7 +1232,6 @@ bool CWizardImport::DoWizardFinish()
 						pTrial = ARBDogTrialPtr(ARBDogTrial::New());
 						pDog->GetTrials().AddTrial(pTrial);
 						sortTrials.insert(pDog);
-						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						for (size_t idx = 0; idx < venues.size(); ++idx)
 						{
 							pTrial->GetClubs().AddClub(clubs[idx], venues[idx]);
