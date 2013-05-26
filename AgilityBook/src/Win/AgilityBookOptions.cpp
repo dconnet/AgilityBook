@@ -608,6 +608,8 @@ static wchar_t const* CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 {
 	switch (inItem)
 	{
+	case CAgilityBookOptions::eCalColorPast:
+		return CFG_CAL_ITEM_PASTCOLOR;
 	case CAgilityBookOptions::eCalColorNotEntered:
 		return CFG_CAL_ITEM_NOTENTEREDCOLOR;
 	case CAgilityBookOptions::eCalColorPlanning:
@@ -630,6 +632,8 @@ static wxColour CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
 {
 	switch (inItem)
 	{
+	case CAgilityBookOptions::eCalColorPast:
+		return wxColour(128,128,128); // gray
 	case CAgilityBookOptions::eCalColorNotEntered:
 		return wxColour(0,0,0); // Black
 	case CAgilityBookOptions::eCalColorPlanning:

@@ -73,6 +73,7 @@ void CLocalization::Load()
 	m_ValidValuesBool = m_ValidValues + L"'y', 'n'";
 
 	m_CalendarTentative = _("IDS_CALENDAR_TENTATIVE");
+	m_CalendarPast = _("IDS_CALENDAR_PAST");
 	m_CalendarNotEntered = _("IDS_CALENDAR_NOTENTERED");
 	m_CalendarEntered = _("IDS_CALENDAR_ENTERED");
 	m_CalendarPending = _("IDS_CALENDAR_PENDING");

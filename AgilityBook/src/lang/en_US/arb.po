@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-25 09:19-0800\n"
-"PO-Revision-Date: 2013-05-25 09:19-0800\n"
+"POT-Creation-Date: 2013-05-26 09:50-0800\n"
+"PO-Revision-Date: 2013-05-26 09:50-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -157,309 +157,309 @@ msgstr "Valid values: "
 msgid "IDS_CALENDAR_TENTATIVE"
 msgstr "Information is tentative."
 
-#: TestARB/Local.cpp:76 Win/Localization.cpp:73
+#: TestARB/Local.cpp:76 Win/Localization.cpp:74
 msgid "IDS_CALENDAR_NOTENTERED"
 msgstr "Not entered"
 
-#: TestARB/Local.cpp:77 Win/Localization.cpp:74 Win/WizardImport.cpp:1329
+#: TestARB/Local.cpp:77 Win/Localization.cpp:75 Win/WizardImport.cpp:1329
 msgid "IDS_CALENDAR_ENTERED"
 msgstr "Entered"
 
-#: TestARB/Local.cpp:78 Win/Localization.cpp:75 Win/WizardImport.cpp:1324
+#: TestARB/Local.cpp:78 Win/Localization.cpp:76 Win/WizardImport.cpp:1324
 msgid "IDS_CALENDAR_PENDING"
 msgstr "Pending"
 
-#: TestARB/Local.cpp:79 Win/Localization.cpp:76 Win/WizardImport.cpp:1319
+#: TestARB/Local.cpp:79 Win/Localization.cpp:77 Win/WizardImport.cpp:1319
 msgid "IDS_CALENDAR_PLANNING"
 msgstr "Planning"
 
-#: TestARB/Local.cpp:80 Win/Localization.cpp:77
+#: TestARB/Local.cpp:80 Win/Localization.cpp:78
 msgid "IDS_CALENDAR_STATUS"
 msgstr "Status: "
 
-#: TestARB/Local.cpp:85 Win/Localization.cpp:82
+#: TestARB/Local.cpp:85 Win/Localization.cpp:83
 msgid "IDS_CALENDAR_OPENS"
 msgstr "Trial opens: "
 
-#: TestARB/Local.cpp:86 Win/Localization.cpp:83
+#: TestARB/Local.cpp:86 Win/Localization.cpp:84
 msgid "IDS_CALENDAR_DRAW"
 msgstr "Trial draws: "
 
-#: TestARB/Local.cpp:87 Win/Localization.cpp:84
+#: TestARB/Local.cpp:87 Win/Localization.cpp:85
 msgid "IDS_CALENDAR_CLOSES"
 msgstr "Trial closes: "
 
-#: TestARB/Local.cpp:88 Win/Localization.cpp:85
+#: TestARB/Local.cpp:88 Win/Localization.cpp:86
 msgid "IDS_SCORE_STYLE_UNKNOWN"
 msgstr "Unknown"
 
-#: TestARB/Local.cpp:89 Win/Localization.cpp:86
+#: TestARB/Local.cpp:89 Win/Localization.cpp:87
 msgid "IDS_SCORE_STYLE_FAULTS_TIME"
 msgstr "Faults Then Time"
 
-#: TestARB/Local.cpp:90 Win/Localization.cpp:87
+#: TestARB/Local.cpp:90 Win/Localization.cpp:88
 msgid "IDS_SCORE_STYLE_FAULTS100_TIME"
 msgstr "100 Minus Faults Then Time"
 
-#: TestARB/Local.cpp:91 Win/Localization.cpp:88
+#: TestARB/Local.cpp:91 Win/Localization.cpp:89
 msgid "IDS_SCORE_STYLE_FAULTS200_TIME"
 msgstr "200 Minus Faults Then Time"
 
-#: TestARB/Local.cpp:92 Win/Localization.cpp:89
+#: TestARB/Local.cpp:92 Win/Localization.cpp:90
 msgid "IDS_SCORE_STYLE_OCSCORE_TIME"
 msgstr "Opening/Closing Points Then Time"
 
-#: TestARB/Local.cpp:93 Win/Localization.cpp:90
+#: TestARB/Local.cpp:93 Win/Localization.cpp:91
 msgid "IDS_SCORE_STYLE_SCORE_TIME"
 msgstr "Points Then Time"
 
-#: TestARB/Local.cpp:94 Win/Localization.cpp:91
+#: TestARB/Local.cpp:94 Win/Localization.cpp:92
 msgid "IDS_SCORE_STYLE_TIME_PLUS_FAULTS"
 msgstr "Time Plus Faults"
 
-#: TestARB/Local.cpp:95 Win/Localization.cpp:92
+#: TestARB/Local.cpp:95 Win/Localization.cpp:93
 msgid "IDS_EXISTING_POINTS_OTHER"
 msgstr "OtherPoints"
 
-#: TestARB/Local.cpp:96 Win/Localization.cpp:93
+#: TestARB/Local.cpp:96 Win/Localization.cpp:94
 msgid "IDS_EXISTING_POINTS_RUN"
 msgstr "Run"
 
-#: TestARB/Local.cpp:97 Win/Localization.cpp:94
+#: TestARB/Local.cpp:97 Win/Localization.cpp:95
 msgid "IDS_EXISTING_POINTS_SPEED"
 msgstr "Speed"
 
-#: TestARB/Local.cpp:98 Win/Localization.cpp:95
+#: TestARB/Local.cpp:98 Win/Localization.cpp:96
 msgid "IDS_EXISTING_POINTS_MQ"
 msgstr "Multiple Q"
 
-#: TestARB/Local.cpp:99 Win/Localization.cpp:96
+#: TestARB/Local.cpp:99 Win/Localization.cpp:97
 msgid "IDS_EXISTING_POINTS_SQ"
 msgstr "SuperQ"
 
-#: TestARB/Local.cpp:106 Win/Localization.cpp:103
+#: TestARB/Local.cpp:106 Win/Localization.cpp:104
 msgid "IDS_UPDATE_CALSITES"
 msgstr "Calendar Sites"
 
 #: TestARB/Local.cpp:108 TestARB/Local.cpp:122 TestARB/Local.cpp:134
 #: TestARB/Local.cpp:148 TestARB/Local.cpp:162 TestARB/Local.cpp:186
 #: TestARB/Local.cpp:210 TestARB/Local.cpp:234 TestARB/Local.cpp:258
-#: TestARB/Local.cpp:299 Win/Localization.cpp:105 Win/Localization.cpp:119
-#: Win/Localization.cpp:131 Win/Localization.cpp:145 Win/Localization.cpp:159
-#: Win/Localization.cpp:183 Win/Localization.cpp:207 Win/Localization.cpp:231
-#: Win/Localization.cpp:255 Win/Localization.cpp:296
+#: TestARB/Local.cpp:299 Win/Localization.cpp:106 Win/Localization.cpp:120
+#: Win/Localization.cpp:132 Win/Localization.cpp:146 Win/Localization.cpp:160
+#: Win/Localization.cpp:184 Win/Localization.cpp:208 Win/Localization.cpp:232
+#: Win/Localization.cpp:256 Win/Localization.cpp:297
 msgid "IDS_UPDATE_ADDED"
 msgstr "%1$d added"
 
 #: TestARB/Local.cpp:110 TestARB/Local.cpp:136 TestARB/Local.cpp:150
 #: TestARB/Local.cpp:164 TestARB/Local.cpp:188 TestARB/Local.cpp:236
-#: TestARB/Local.cpp:260 TestARB/Local.cpp:303 Win/Localization.cpp:107
-#: Win/Localization.cpp:133 Win/Localization.cpp:147 Win/Localization.cpp:161
-#: Win/Localization.cpp:185 Win/Localization.cpp:233 Win/Localization.cpp:257
-#: Win/Localization.cpp:300
+#: TestARB/Local.cpp:260 TestARB/Local.cpp:303 Win/Localization.cpp:108
+#: Win/Localization.cpp:134 Win/Localization.cpp:148 Win/Localization.cpp:162
+#: Win/Localization.cpp:186 Win/Localization.cpp:234 Win/Localization.cpp:258
+#: Win/Localization.cpp:301
 msgid "IDS_UPDATE_UPDATED"
 msgstr "%1$d updated"
 
 #: TestARB/Local.cpp:112 TestARB/Local.cpp:124 TestARB/Local.cpp:138
 #: TestARB/Local.cpp:152 TestARB/Local.cpp:166 TestARB/Local.cpp:190
 #: TestARB/Local.cpp:214 TestARB/Local.cpp:238 TestARB/Local.cpp:262
-#: TestARB/Local.cpp:305 Win/Localization.cpp:109 Win/Localization.cpp:121
-#: Win/Localization.cpp:135 Win/Localization.cpp:149 Win/Localization.cpp:163
-#: Win/Localization.cpp:187 Win/Localization.cpp:211 Win/Localization.cpp:235
-#: Win/Localization.cpp:259 Win/Localization.cpp:302
+#: TestARB/Local.cpp:305 Win/Localization.cpp:110 Win/Localization.cpp:122
+#: Win/Localization.cpp:136 Win/Localization.cpp:150 Win/Localization.cpp:164
+#: Win/Localization.cpp:188 Win/Localization.cpp:212 Win/Localization.cpp:236
+#: Win/Localization.cpp:260 Win/Localization.cpp:303
 msgid "IDS_UPDATE_IDENTICAL"
 msgstr "%1$d identical"
 
 #: TestARB/Local.cpp:120 Win/DlgAssignColumns.cpp:297 Win/DlgConfigure.cpp:217
-#: Win/Localization.cpp:117 Win/Print.cpp:258
+#: Win/Localization.cpp:118 Win/Print.cpp:258
 msgid "IDS_COL_FAULTS"
 msgstr "Faults"
 
 #: TestARB/Local.cpp:132 Win/DlgConfigure.cpp:220 Win/DlgDog.cpp:128
-#: Win/DlgListCtrl.cpp:496 Win/Localization.cpp:129 Win/PointsData.cpp:1026
+#: Win/DlgListCtrl.cpp:496 Win/Localization.cpp:130 Win/PointsData.cpp:1026
 #: Win/PointsData.cpp:1094 Win/PointsData.cpp:1162 Win/PointsData.cpp:1236
 #: Win/PointsData.cpp:1897
 msgid "IDS_OTHERPOINTS"
 msgstr "Other Points"
 
-#: TestARB/Local.cpp:146 Win/DlgConfigure.cpp:213 Win/Localization.cpp:143
+#: TestARB/Local.cpp:146 Win/DlgConfigure.cpp:213 Win/Localization.cpp:144
 msgid "IDS_COL_VENUES"
 msgstr "Venues"
 
-#: TestARB/Local.cpp:160 TestARB/Local.cpp:174 Win/Localization.cpp:157
-#: Win/Localization.cpp:171
+#: TestARB/Local.cpp:160 TestARB/Local.cpp:174 Win/Localization.cpp:158
+#: Win/Localization.cpp:172
 msgid "IDS_COL_DIVISIONS"
 msgstr "Divisions"
 
 #: TestARB/Local.cpp:176 TestARB/Local.cpp:200 TestARB/Local.cpp:224
 #: TestARB/Local.cpp:248 TestARB/Local.cpp:272 TestARB/Local.cpp:288
-#: Win/Localization.cpp:173 Win/Localization.cpp:197 Win/Localization.cpp:221
-#: Win/Localization.cpp:245 Win/Localization.cpp:269 Win/Localization.cpp:285
+#: Win/Localization.cpp:174 Win/Localization.cpp:198 Win/Localization.cpp:222
+#: Win/Localization.cpp:246 Win/Localization.cpp:270 Win/Localization.cpp:286
 msgid "IDS_REORDERED"
 msgstr "Reordered"
 
-#: TestARB/Local.cpp:184 TestARB/Local.cpp:198 Win/Localization.cpp:181
-#: Win/Localization.cpp:195
+#: TestARB/Local.cpp:184 TestARB/Local.cpp:198 Win/Localization.cpp:182
+#: Win/Localization.cpp:196
 msgid "IDS_COL_EVENTS"
 msgstr "Events"
 
-#: TestARB/Local.cpp:208 TestARB/Local.cpp:222 Win/Localization.cpp:205
-#: Win/Localization.cpp:219
+#: TestARB/Local.cpp:208 TestARB/Local.cpp:222 Win/Localization.cpp:206
+#: Win/Localization.cpp:220
 msgid "IDS_COL_MULTIQS"
 msgstr "MultiQs"
 
-#: TestARB/Local.cpp:212 TestARB/Local.cpp:301 Win/Localization.cpp:209
-#: Win/Localization.cpp:298
+#: TestARB/Local.cpp:212 TestARB/Local.cpp:301 Win/Localization.cpp:210
+#: Win/Localization.cpp:299
 msgid "IDS_UPDATE_DELETED"
 msgstr "%1$d deleted"
 
 #: TestARB/Local.cpp:232 TestARB/Local.cpp:246 TestARB/Local.cpp:286
-#: Win/Localization.cpp:229 Win/Localization.cpp:243 Win/Localization.cpp:283
+#: Win/Localization.cpp:230 Win/Localization.cpp:244 Win/Localization.cpp:284
 msgid "IDS_COL_LEVELS"
 msgstr "Levels"
 
-#: TestARB/Local.cpp:256 TestARB/Local.cpp:270 Win/Localization.cpp:253
-#: Win/Localization.cpp:267 Win/PointsData.cpp:1353
+#: TestARB/Local.cpp:256 TestARB/Local.cpp:270 Win/Localization.cpp:254
+#: Win/Localization.cpp:268 Win/PointsData.cpp:1353
 msgid "IDS_TITLES"
 msgstr "Titles"
 
-#: TestARB/Local.cpp:279 Win/Localization.cpp:276
+#: TestARB/Local.cpp:279 Win/Localization.cpp:277
 msgid "IDS_UPDATE_NEWSUBLEVELS"
 msgstr "%1$d new sub-levels"
 
-#: TestARB/Local.cpp:297 Win/Localization.cpp:294
+#: TestARB/Local.cpp:297 Win/Localization.cpp:295
 msgid "IDS_UPDATE_RULES"
 msgstr "rules"
 
-#: TestARB/Local.cpp:312 Win/Localization.cpp:309
+#: TestARB/Local.cpp:312 Win/Localization.cpp:310
 msgid "IDS_ACTION_DELETE_CALPLUGIN"
 msgstr "Action: Deleting Plugin [%1$s]"
 
-#: TestARB/Local.cpp:322 Win/Localization.cpp:319
+#: TestARB/Local.cpp:322 Win/Localization.cpp:320
 msgid "IDS_ACTION_RENAME_OTHERPTS"
 msgstr "Action: Renaming OtherPoints [%1$s] to [%2$s]"
 
-#: TestARB/Local.cpp:325 Win/Localization.cpp:322
+#: TestARB/Local.cpp:325 Win/Localization.cpp:323
 msgid "IDS_ACTION_RENAME_OTHERPTS2"
 msgstr ", updating %1$d OtherPoints"
 
-#: TestARB/Local.cpp:335 Win/Localization.cpp:332
+#: TestARB/Local.cpp:335 Win/Localization.cpp:333
 msgid "IDS_ACTION_PREDELETE_OTHERPTS"
 msgstr "DELETING: OtherPoints [%1$s] %2$d items"
 
-#: TestARB/Local.cpp:341 Win/Localization.cpp:338
+#: TestARB/Local.cpp:341 Win/Localization.cpp:339
 msgid "IDS_ACTION_DELETE_OTHERPTS"
 msgstr "Action: Deleting OtherPoints [%1$s]"
 
-#: TestARB/Local.cpp:351 Win/Localization.cpp:348
+#: TestARB/Local.cpp:351 Win/Localization.cpp:349
 msgid "IDS_ACTION_RENAME_VENUE"
 msgstr "Action: Renaming Venue [%1$s] to [%2$s]"
 
-#: TestARB/Local.cpp:354 Win/Localization.cpp:351
+#: TestARB/Local.cpp:354 Win/Localization.cpp:352
 msgid "IDS_ACTION_RENAME_VENUE2"
 msgstr ", updating %1$d related items"
 
-#: TestARB/Local.cpp:364 Win/Localization.cpp:361
+#: TestARB/Local.cpp:364 Win/Localization.cpp:362
 msgid "IDS_ACTION_PREDELETE_VENUE"
 msgstr "DELETING: Venue [%1$s] %2$d items"
 
-#: TestARB/Local.cpp:370 Win/Localization.cpp:367
+#: TestARB/Local.cpp:370 Win/Localization.cpp:368
 msgid "IDS_ACTION_DELETE_VENUE"
 msgstr "Action: Deleting Venue [%1$s]"
 
-#: TestARB/Local.cpp:381 Win/Localization.cpp:378
+#: TestARB/Local.cpp:381 Win/Localization.cpp:379
 msgid "IDS_ACTION_RENAME_MULTIQ"
 msgstr "Action: Renaming %1$s MultiQ [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:384 Win/Localization.cpp:381
+#: TestARB/Local.cpp:384 Win/Localization.cpp:382
 msgid "IDS_ACTION_RENAME_MULTIQ2"
 msgstr ", updating %1$d MultiQs"
 
-#: TestARB/Local.cpp:395 Win/Localization.cpp:392
+#: TestARB/Local.cpp:395 Win/Localization.cpp:393
 msgid "IDS_ACTION_PREDELETE_MULTIQ"
 msgstr "DELETING: %1$s MultiQ [%2$s] %3$d items"
 
-#: TestARB/Local.cpp:403 Win/Localization.cpp:400
+#: TestARB/Local.cpp:403 Win/Localization.cpp:401
 msgid "IDS_ACTION_DELETE_MULTIQ"
 msgstr "Action: Deleting %1$s MultiQ [%2$s]"
 
-#: TestARB/Local.cpp:414 Win/Localization.cpp:411
+#: TestARB/Local.cpp:414 Win/Localization.cpp:412
 msgid "IDS_ACTION_RENAME_DIV"
 msgstr "Action: Renaming %1$s Division [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:417 Win/Localization.cpp:414
+#: TestARB/Local.cpp:417 Win/Localization.cpp:415
 msgid "IDS_ACTION_RENAME_DIV2"
 msgstr ", updating %1$d runs"
 
-#: TestARB/Local.cpp:428 Win/Localization.cpp:425
+#: TestARB/Local.cpp:428 Win/Localization.cpp:426
 msgid "IDS_ACTION_PREDELETE_DIV"
 msgstr "DELETING: %1$s Division [%2$s] %3$d runs and existing points"
 
-#: TestARB/Local.cpp:436 Win/Localization.cpp:433
+#: TestARB/Local.cpp:436 Win/Localization.cpp:434
 msgid "IDS_ACTION_DELETE_DIV"
 msgstr "Action: Deleting %1$s Division [%2$s]"
 
-#: TestARB/Local.cpp:447 Win/Localization.cpp:444
+#: TestARB/Local.cpp:447 Win/Localization.cpp:445
 msgid "IDS_ACTION_RENAME_LEVEL"
 msgstr "Action: Renaming %1$s Level [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:450 Win/Localization.cpp:447
+#: TestARB/Local.cpp:450 Win/Localization.cpp:448
 msgid "IDS_ACTION_RENAME_LEVEL2"
 msgstr ", updating %1$d runs"
 
-#: TestARB/Local.cpp:461 Win/Localization.cpp:458
+#: TestARB/Local.cpp:461 Win/Localization.cpp:459
 msgid "IDS_ACTION_PREDELETE_LEVEL"
 msgstr "DELETING: %1$s Level [%2$s] %3$d runs"
 
-#: TestARB/Local.cpp:469 Win/Localization.cpp:466
+#: TestARB/Local.cpp:469 Win/Localization.cpp:467
 msgid "IDS_ACTION_DELETE_LEVEL"
 msgstr "Action: Deleting %1$s Level [%2$s]"
 
-#: TestARB/Local.cpp:480 Win/Localization.cpp:477
+#: TestARB/Local.cpp:480 Win/Localization.cpp:478
 msgid "IDS_ACTION_RENAME_TITLE"
 msgstr "Action: Renaming %1$s Title [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:483 Win/Localization.cpp:480
+#: TestARB/Local.cpp:483 Win/Localization.cpp:481
 msgid "IDS_ACTION_RENAME_TITLE2"
 msgstr ", updating %1$d titles"
 
-#: TestARB/Local.cpp:494 Win/Localization.cpp:491
+#: TestARB/Local.cpp:494 Win/Localization.cpp:492
 msgid "IDS_ACTION_PREDELETE_TITLE"
 msgstr "DELETING: %1$s Title [%2$s] %3$d titles"
 
-#: TestARB/Local.cpp:502 Win/Localization.cpp:499
+#: TestARB/Local.cpp:502 Win/Localization.cpp:500
 msgid "IDS_ACTION_DELETE_TITLE"
 msgstr "Action: Deleting %1$s Title [%2$s]"
 
-#: TestARB/Local.cpp:513 Win/Localization.cpp:510
+#: TestARB/Local.cpp:513 Win/Localization.cpp:511
 msgid "IDS_ACTION_RENAME_EVENT"
 msgstr "Action: Renaming %1$s Event [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:516 Win/Localization.cpp:513
+#: TestARB/Local.cpp:516 Win/Localization.cpp:514
 msgid "IDS_ACTION_RENAME_EVENT2"
 msgstr ", updating %1$d events"
 
-#: TestARB/Local.cpp:527 Win/Localization.cpp:524
+#: TestARB/Local.cpp:527 Win/Localization.cpp:525
 msgid "IDS_ACTION_PREDELETE_EVENT"
 msgstr "DELETING: %1$s Event [%2$s] %3$d events"
 
-#: TestARB/Local.cpp:535 Win/Localization.cpp:532
+#: TestARB/Local.cpp:535 Win/Localization.cpp:533
 msgid "IDS_ACTION_DELETE_EVENT"
 msgstr "Action: Deleting %1$s Event [%2$s]"
 
-#: TestARB/Local.cpp:543 Win/Localization.cpp:540
+#: TestARB/Local.cpp:543 Win/Localization.cpp:541
 msgid "IDS_TITLEPOINTSNAME"
 msgstr "%1$s points with %2$s faults"
 
-#: TestARB/Local.cpp:551 Win/Localization.cpp:548
+#: TestARB/Local.cpp:551 Win/Localization.cpp:549
 msgid "IDS_LIFETITLEPOINTSNAME"
 msgstr "%1$s lifetime points with %2$s faults"
 
-#: TestARB/Local.cpp:558 Win/Localization.cpp:555
+#: TestARB/Local.cpp:558 Win/Localization.cpp:556
 msgid "IDS_PLACEMENTPOINTSNAME"
 msgstr "%1$s points with place of %2$d"
 
-#: TestARB/Local.cpp:565 Win/Localization.cpp:562
+#: TestARB/Local.cpp:565 Win/Localization.cpp:563
 msgid "IDS_WARN_DELETED_RUNS"
 msgstr ""
 "WARNING\n"
@@ -467,11 +467,11 @@ msgstr ""
 "%1$d run(s) deleted due to configuration changes.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: TestARB/Local.cpp:574 Win/Localization.cpp:571
+#: TestARB/Local.cpp:574 Win/Localization.cpp:572
 msgid "IDS_UPDATE_TEAM_RUNS"
 msgstr "Updated %1$d Team runs."
 
-#: TestARB/Local.cpp:582 Win/Localization.cpp:579
+#: TestARB/Local.cpp:582 Win/Localization.cpp:580
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Table setting updated in %1$d runs."
 
@@ -500,12 +500,12 @@ msgid "IDS_CANNOT_FIND"
 msgstr "Cannot find '%1$s'"
 
 #: Win/AgilityBookCalendarListView.cpp:625
-#: Win/AgilityBookCalendarView.cpp:1272
+#: Win/AgilityBookCalendarView.cpp:1279
 msgid "IDS_NUM_EVENTS"
 msgstr "%1$d events"
 
 #: Win/AgilityBookCalendarListView.cpp:632
-#: Win/AgilityBookCalendarView.cpp:1279 Win/AgilityBookDoc.cpp:1317
+#: Win/AgilityBookCalendarView.cpp:1286 Win/AgilityBookDoc.cpp:1317
 #: Win/AgilityBookHtmlView.cpp:111 Win/AgilityBookPointsView.cpp:226
 #: Win/AgilityBookTrainingView.cpp:428
 msgid "IDS_INDICATOR_BLANK"
@@ -515,28 +515,28 @@ msgstr "          "
 msgid "IDS_NOT_VISIBLE"
 msgstr "Warning: %1$d new entries are not visible due to your viewing options."
 
-#: Win/AgilityBookCalendarView.cpp:613 Win/DlgAssignColumns.cpp:301
+#: Win/AgilityBookCalendarView.cpp:620 Win/DlgAssignColumns.cpp:301
 #: Win/DlgAssignColumns.cpp:358 Win/DlgAssignColumns.cpp:409
 #: Win/DlgAssignColumns.cpp:476 Win/DlgListCtrl.cpp:403
 msgid "IDS_COL_START_DATE"
 msgstr "Start Date"
 
-#: Win/AgilityBookCalendarView.cpp:614 Win/DlgAssignColumns.cpp:304
+#: Win/AgilityBookCalendarView.cpp:621 Win/DlgAssignColumns.cpp:304
 #: Win/DlgAssignColumns.cpp:361 Win/DlgAssignColumns.cpp:415
 #: Win/DlgListCtrl.cpp:404
 msgid "IDS_COL_END_DATE"
 msgstr "End Date"
 
-#: Win/AgilityBookCalendarView.cpp:615 Win/DlgAssignColumns.cpp:207
+#: Win/AgilityBookCalendarView.cpp:622 Win/DlgAssignColumns.cpp:207
 #: Win/DlgAssignColumns.cpp:319 Win/DlgAssignColumns.cpp:367
 #: Win/DlgCalendarQueryDetail.cpp:166 Win/DlgDog.cpp:95 Win/DlgDog.cpp:109
 #: Win/DlgDog.cpp:129 Win/DlgListCtrl.cpp:407 Win/DlgListViewer.cpp:1143
 #: Win/DlgListViewer.cpp:1211 Win/DlgListViewer.cpp:1351
-#: Win/DlgQueryDetail.cpp:80 Win/DlgTrial.cpp:295 Win/Print.cpp:244
+#: Win/DlgQueryDetail.cpp:80 Win/DlgTrial.cpp:305 Win/Print.cpp:244
 msgid "IDS_COL_VENUE"
 msgstr "Venue"
 
-#: Win/AgilityBookCalendarView.cpp:616 Win/DlgAssignColumns.cpp:213
+#: Win/AgilityBookCalendarView.cpp:623 Win/DlgAssignColumns.cpp:213
 #: Win/DlgAssignColumns.cpp:313 Win/DlgAssignColumns.cpp:370
 #: Win/DlgAssignColumns.cpp:454 Win/DlgCalendarQueryDetail.cpp:115
 #: Win/DlgInfoNote.cpp:357 Win/DlgListCtrl.cpp:405 Win/DlgListViewer.cpp:955
@@ -546,104 +546,104 @@ msgstr "Venue"
 msgid "IDS_COL_LOCATION"
 msgstr "Location"
 
-#: Win/AgilityBookCalendarView.cpp:617 Win/DlgAssignColumns.cpp:210
+#: Win/AgilityBookCalendarView.cpp:624 Win/DlgAssignColumns.cpp:210
 #: Win/DlgAssignColumns.cpp:316 Win/DlgAssignColumns.cpp:364
 #: Win/DlgInfoNote.cpp:351 Win/DlgListCtrl.cpp:406 Win/DlgListViewer.cpp:949
 #: Win/DlgListViewer.cpp:989 Win/DlgListViewer.cpp:1001
 #: Win/DlgListViewer.cpp:1150 Win/DlgListViewer.cpp:1218
-#: Win/DlgListViewer.cpp:1272 Win/DlgListViewer.cpp:1350 Win/DlgTrial.cpp:294
+#: Win/DlgListViewer.cpp:1272 Win/DlgListViewer.cpp:1350 Win/DlgTrial.cpp:304
 #: Win/Print.cpp:245
 msgid "IDS_COL_CLUB"
 msgstr "Club"
 
-#: Win/AgilityBookCalendarView.cpp:618 Win/DlgAssignColumns.cpp:322
+#: Win/AgilityBookCalendarView.cpp:625 Win/DlgAssignColumns.cpp:322
 msgid "IDS_COL_OPENS"
 msgstr "Opens"
 
-#: Win/AgilityBookCalendarView.cpp:619 Win/DlgAssignColumns.cpp:325
+#: Win/AgilityBookCalendarView.cpp:626 Win/DlgAssignColumns.cpp:325
 msgid "IDS_COL_CLOSES"
 msgstr "Closes"
 
-#: Win/AgilityBookCalendarView.cpp:620 Win/AgilityBookDoc.cpp:1920
+#: Win/AgilityBookCalendarView.cpp:627 Win/AgilityBookDoc.cpp:1920
 #: Win/DlgAssignColumns.cpp:328 Win/DlgAssignColumns.cpp:338
 #: Win/DlgAssignColumns.cpp:373 Win/DlgAssignColumns.cpp:518
 #: Win/DlgListCtrl.cpp:408
 msgid "IDS_COL_NOTES"
 msgstr "Notes"
 
-#: Win/AgilityBookCalendarView.cpp:918
+#: Win/AgilityBookCalendarView.cpp:925
 msgid "January"
 msgstr "January"
 
-#: Win/AgilityBookCalendarView.cpp:919
+#: Win/AgilityBookCalendarView.cpp:926
 msgid "February"
 msgstr "February"
 
-#: Win/AgilityBookCalendarView.cpp:920
+#: Win/AgilityBookCalendarView.cpp:927
 msgid "March"
 msgstr "March"
 
-#: Win/AgilityBookCalendarView.cpp:921
+#: Win/AgilityBookCalendarView.cpp:928
 msgid "April"
 msgstr "April"
 
-#: Win/AgilityBookCalendarView.cpp:922
+#: Win/AgilityBookCalendarView.cpp:929
 msgid "May"
 msgstr "May"
 
-#: Win/AgilityBookCalendarView.cpp:923
+#: Win/AgilityBookCalendarView.cpp:930
 msgid "June"
 msgstr "June"
 
-#: Win/AgilityBookCalendarView.cpp:924
+#: Win/AgilityBookCalendarView.cpp:931
 msgid "July"
 msgstr "July"
 
-#: Win/AgilityBookCalendarView.cpp:925
+#: Win/AgilityBookCalendarView.cpp:932
 msgid "August"
 msgstr "August"
 
-#: Win/AgilityBookCalendarView.cpp:926
+#: Win/AgilityBookCalendarView.cpp:933
 msgid "September"
 msgstr "September"
 
-#: Win/AgilityBookCalendarView.cpp:927
+#: Win/AgilityBookCalendarView.cpp:934
 msgid "October"
 msgstr "October"
 
-#: Win/AgilityBookCalendarView.cpp:928
+#: Win/AgilityBookCalendarView.cpp:935
 msgid "November"
 msgstr "November"
 
-#: Win/AgilityBookCalendarView.cpp:929
+#: Win/AgilityBookCalendarView.cpp:936
 msgid "December"
 msgstr "December"
 
-#: Win/AgilityBookCalendarView.cpp:930 Win/DlgOptionsCalendar.cpp:173
+#: Win/AgilityBookCalendarView.cpp:937 Win/DlgOptionsCalendar.cpp:174
 msgid "Sunday"
 msgstr "Sunday"
 
-#: Win/AgilityBookCalendarView.cpp:931 Win/DlgOptionsCalendar.cpp:174
+#: Win/AgilityBookCalendarView.cpp:938 Win/DlgOptionsCalendar.cpp:175
 msgid "Monday"
 msgstr "Monday"
 
-#: Win/AgilityBookCalendarView.cpp:932 Win/DlgOptionsCalendar.cpp:175
+#: Win/AgilityBookCalendarView.cpp:939 Win/DlgOptionsCalendar.cpp:176
 msgid "Tuesday"
 msgstr "Tuesday"
 
-#: Win/AgilityBookCalendarView.cpp:933 Win/DlgOptionsCalendar.cpp:176
+#: Win/AgilityBookCalendarView.cpp:940 Win/DlgOptionsCalendar.cpp:177
 msgid "Wednesday"
 msgstr "Wednesday"
 
-#: Win/AgilityBookCalendarView.cpp:934 Win/DlgOptionsCalendar.cpp:177
+#: Win/AgilityBookCalendarView.cpp:941 Win/DlgOptionsCalendar.cpp:178
 msgid "Thursday"
 msgstr "Thursday"
 
-#: Win/AgilityBookCalendarView.cpp:935 Win/DlgOptionsCalendar.cpp:178
+#: Win/AgilityBookCalendarView.cpp:942 Win/DlgOptionsCalendar.cpp:179
 msgid "Friday"
 msgstr "Friday"
 
-#: Win/AgilityBookCalendarView.cpp:936 Win/DlgOptionsCalendar.cpp:179
+#: Win/AgilityBookCalendarView.cpp:943 Win/DlgOptionsCalendar.cpp:180
 msgid "Saturday"
 msgstr "Saturday"
 
@@ -1490,7 +1490,7 @@ msgstr "This panel contains information about upcoming trials."
 msgid "PanelTraining"
 msgstr "This panel contains your training log entries."
 
-#: Win/AgilityBookRunsView.cpp:337 Win/AgilityBookTreeData.cpp:1316
+#: Win/AgilityBookRunsView.cpp:337 Win/AgilityBookTreeData.cpp:1325
 #: Win/WizardExport.cpp:834
 msgid "IDS_SQ"
 msgstr "SQ"
@@ -1954,11 +1954,11 @@ msgstr "Required Opening"
 msgid "IDS_COL_REQ_CLOSING"
 msgstr "Required Closing"
 
-#: Win/DlgAssignColumns.cpp:264 Win/DlgOptionsCalendar.cpp:431
+#: Win/DlgAssignColumns.cpp:264 Win/DlgOptionsCalendar.cpp:443
 msgid "IDS_COL_OPENING"
 msgstr "Opening"
 
-#: Win/DlgAssignColumns.cpp:267 Win/DlgOptionsCalendar.cpp:438
+#: Win/DlgAssignColumns.cpp:267 Win/DlgOptionsCalendar.cpp:450
 msgid "IDS_COL_CLOSING"
 msgstr "Closing"
 
@@ -2633,7 +2633,7 @@ msgstr "&Name"
 #: Win/DlgClub.cpp:93 Win/DlgConfigEvent.cpp:180 Win/DlgConfigMultiQ.cpp:85
 #: Win/DlgConfigTitle.cpp:119 Win/DlgFault.cpp:60 Win/DlgName.cpp:65
 #: Win/DlgPartner.cpp:84 Win/DlgPartner.cpp:97 Win/DlgSelectURL.cpp:51
-#: Win/DlgTrial.cpp:139
+#: Win/DlgTrial.cpp:155
 msgid "IDS_ENTER_NAME"
 msgstr "Please enter a name."
 
@@ -4489,165 +4489,169 @@ msgstr "Calendar"
 msgid "IDD_VIEW_OPTIONS_PRINTING"
 msgstr "Printing"
 
-#: Win/DlgOptionsCalendar.cpp:99
+#: Win/DlgOptionsCalendar.cpp:100
 msgid "IDC_OPT_CAL_LIST"
 msgstr "Calendar List"
 
-#: Win/DlgOptionsCalendar.cpp:102
+#: Win/DlgOptionsCalendar.cpp:103
 msgid "IDC_OPT_CAL_WARN_OPENNEAR"
 msgstr "Warn when Opening date is near"
 
-#: Win/DlgOptionsCalendar.cpp:106 Win/DlgOptionsCalendar.cpp:107
+#: Win/DlgOptionsCalendar.cpp:107 Win/DlgOptionsCalendar.cpp:108
 msgid "HIDC_OPT_CAL_WARN_OPENNEAR"
 msgstr ""
 "Highlight an entry when the current date is near the opening date and you "
 "have indicated that you are planning on entering the trial."
 
-#: Win/DlgOptionsCalendar.cpp:112 Win/DlgOptionsCalendar.cpp:113
+#: Win/DlgOptionsCalendar.cpp:113 Win/DlgOptionsCalendar.cpp:114
 msgid "HIDC_OPT_CAL_OPENNEAR"
 msgstr "Number of dates before the opening date that is considered 'near'."
 
-#: Win/DlgOptionsCalendar.cpp:116
+#: Win/DlgOptionsCalendar.cpp:117
 msgid "IDC_OPT_CAL_OPENNEAR"
 msgstr "days before"
 
-#: Win/DlgOptionsCalendar.cpp:126
+#: Win/DlgOptionsCalendar.cpp:127
 msgid "IDC_OPT_CAL_COLOR_OPENNEAR_SET"
 msgstr "Set Color..."
 
-#: Win/DlgOptionsCalendar.cpp:129 Win/DlgOptionsCalendar.cpp:130
+#: Win/DlgOptionsCalendar.cpp:130 Win/DlgOptionsCalendar.cpp:131
 msgid "HIDC_OPT_CAL_COLOR_OPENNEAR_SET"
 msgstr ""
 "Use this to change the color used for drawing an entry whose opening date is "
 "near."
 
-#: Win/DlgOptionsCalendar.cpp:133
+#: Win/DlgOptionsCalendar.cpp:134
 msgid "IDC_OPT_CAL_WARN_CLOSENEAR"
 msgstr "Warn when Closing date is near"
 
-#: Win/DlgOptionsCalendar.cpp:137 Win/DlgOptionsCalendar.cpp:138
+#: Win/DlgOptionsCalendar.cpp:138 Win/DlgOptionsCalendar.cpp:139
 msgid "HIDC_OPT_CAL_WARN_CLOSENEAR"
 msgstr ""
 "Highlight an entry when the current date is near the closing date and you "
 "have indicated that you are planning on entering the trial."
 
-#: Win/DlgOptionsCalendar.cpp:143 Win/DlgOptionsCalendar.cpp:144
+#: Win/DlgOptionsCalendar.cpp:144 Win/DlgOptionsCalendar.cpp:145
 msgid "HIDC_OPT_CAL_CLOSENEAR"
 msgstr ""
 "Number of dates before the closing (or trial) date that is considered 'near'."
 
-#: Win/DlgOptionsCalendar.cpp:147
+#: Win/DlgOptionsCalendar.cpp:148
 msgid "IDC_OPT_CAL_CLOSENEAR"
 msgstr "days before"
 
-#: Win/DlgOptionsCalendar.cpp:157
+#: Win/DlgOptionsCalendar.cpp:158
 msgid "IDC_OPT_CAL_COLOR_CLOSENEAR_SET"
 msgstr "Set Color..."
 
-#: Win/DlgOptionsCalendar.cpp:160 Win/DlgOptionsCalendar.cpp:161
+#: Win/DlgOptionsCalendar.cpp:161 Win/DlgOptionsCalendar.cpp:162
 msgid "HIDC_OPT_CAL_COLOR_CLOSENEAR_SET"
 msgstr ""
 "Use this to change the color used for drawing an entry whose closing date is "
 "near."
 
-#: Win/DlgOptionsCalendar.cpp:163
+#: Win/DlgOptionsCalendar.cpp:164
 msgid "IDC_OPT_CAL_VIEW"
 msgstr "Calendar View"
 
-#: Win/DlgOptionsCalendar.cpp:166
+#: Win/DlgOptionsCalendar.cpp:167
 msgid "IDC_OPT_CAL_DAY_OF_WEEK"
 msgstr "First day of week"
 
-#: Win/DlgOptionsCalendar.cpp:186 Win/DlgOptionsCalendar.cpp:187
+#: Win/DlgOptionsCalendar.cpp:187 Win/DlgOptionsCalendar.cpp:188
 msgid "HIDC_OPT_CAL_DAY_OF_WEEK"
 msgstr ""
 "Define with day of the week will be displayed as the first day in the "
 "calendar view."
 
-#: Win/DlgOptionsCalendar.cpp:190
+#: Win/DlgOptionsCalendar.cpp:191
 msgid "IDC_OPT_CAL_AUTO_DELETE"
 msgstr "Automatically delete past entries"
 
-#: Win/DlgOptionsCalendar.cpp:193 Win/DlgOptionsCalendar.cpp:194
+#: Win/DlgOptionsCalendar.cpp:194 Win/DlgOptionsCalendar.cpp:195
 msgid "HIDC_OPT_CAL_AUTO_DELETE"
 msgstr "Automatically delete calendar entries that have passed."
 
-#: Win/DlgOptionsCalendar.cpp:197
+#: Win/DlgOptionsCalendar.cpp:198
 msgid "IDC_OPT_CAL_HIDE_OLD"
 msgstr "Hide past entries"
 
-#: Win/DlgOptionsCalendar.cpp:200 Win/DlgOptionsCalendar.cpp:201
+#: Win/DlgOptionsCalendar.cpp:201 Win/DlgOptionsCalendar.cpp:202
 msgid "HIDC_OPT_CAL_HIDE_OLD"
 msgstr "Hide calendar entries that have passed."
 
-#: Win/DlgOptionsCalendar.cpp:204
+#: Win/DlgOptionsCalendar.cpp:205
 msgid "IDC_OPT_CAL_OLD_ENTRY_DAYS"
 msgstr "Past entry is"
 
-#: Win/DlgOptionsCalendar.cpp:211 Win/DlgOptionsCalendar.cpp:212
+#: Win/DlgOptionsCalendar.cpp:212 Win/DlgOptionsCalendar.cpp:213
 msgid "HIDC_OPT_CAL_OLD_ENTRY_DAYS"
 msgstr ""
 "An entry is defined as past when it is older than the specified number of "
 "days."
 
-#: Win/DlgOptionsCalendar.cpp:215
+#: Win/DlgOptionsCalendar.cpp:216
 msgid "IDC_OPT_CAL_OLD_ENTRY_DAYS2"
 msgstr "days after event ends."
 
-#: Win/DlgOptionsCalendar.cpp:220
+#: Win/DlgOptionsCalendar.cpp:221
 msgid "IDC_OPT_CAL_HIDE_OVERLAP"
 msgstr "Hide entries on dates where you've entered a trial"
 
-#: Win/DlgOptionsCalendar.cpp:223 Win/DlgOptionsCalendar.cpp:224
+#: Win/DlgOptionsCalendar.cpp:224 Win/DlgOptionsCalendar.cpp:225
 msgid "HIDC_OPT_CAL_HIDE_OVERLAP"
 msgstr ""
 "Hide calendar entries on days with multiple trials defined where you have "
 "entered a trial."
 
-#: Win/DlgOptionsCalendar.cpp:227
+#: Win/DlgOptionsCalendar.cpp:228
 msgid "IDC_OPT_CAL_OPENING"
 msgstr "View Opening dates"
 
-#: Win/DlgOptionsCalendar.cpp:230 Win/DlgOptionsCalendar.cpp:231
+#: Win/DlgOptionsCalendar.cpp:231 Win/DlgOptionsCalendar.cpp:232
 msgid "HIDC_OPT_CAL_OPENING"
 msgstr ""
 "Display opening dates of calendar entries on entries you are planning on "
 "entering."
 
-#: Win/DlgOptionsCalendar.cpp:234
+#: Win/DlgOptionsCalendar.cpp:235
 msgid "IDC_OPT_CAL_CLOSING"
 msgstr "View Closing dates"
 
-#: Win/DlgOptionsCalendar.cpp:237 Win/DlgOptionsCalendar.cpp:238
+#: Win/DlgOptionsCalendar.cpp:238 Win/DlgOptionsCalendar.cpp:239
 msgid "HIDC_OPT_CAL_CLOSING"
 msgstr ""
 "Display closing dates of calendar entries on entries you are planning on "
 "entering."
 
-#: Win/DlgOptionsCalendar.cpp:241
+#: Win/DlgOptionsCalendar.cpp:242
 msgid "IDC_OPT_CAL_ENTRIES"
 msgstr "Calendar Entries"
 
-#: Win/DlgOptionsCalendar.cpp:249 Win/DlgOptionsCalendar.cpp:250
+#: Win/DlgOptionsCalendar.cpp:250 Win/DlgOptionsCalendar.cpp:251
 msgid "HIDC_OPT_CAL_ENTRIES"
 msgstr "Select a type of calendar entry in order to set its color."
 
-#: Win/DlgOptionsCalendar.cpp:263
+#: Win/DlgOptionsCalendar.cpp:264
 msgid "IDC_OPT_CAL_COLOR_SET"
 msgstr "Set Color..."
 
-#: Win/DlgOptionsCalendar.cpp:266 Win/DlgOptionsCalendar.cpp:267
+#: Win/DlgOptionsCalendar.cpp:267 Win/DlgOptionsCalendar.cpp:268
 msgid "HIDC_OPT_CAL_COLOR_SET"
 msgstr ""
 "Use this to change the color used for drawing the selected calendar entry."
 
-#: Win/DlgOptionsCalendar.cpp:276
+#: Win/DlgOptionsCalendar.cpp:277
 msgid "IDC_OPT_CAL_FONT"
 msgstr "Set Font..."
 
-#: Win/DlgOptionsCalendar.cpp:279 Win/DlgOptionsCalendar.cpp:280
+#: Win/DlgOptionsCalendar.cpp:280 Win/DlgOptionsCalendar.cpp:281
 msgid "HIDC_OPT_CAL_FONT"
 msgstr "Set the font to be used when viewing the dates in the calendar."
+
+#: Win/DlgOptionsCalendar.cpp:414
+msgid "IDS_CALENDAR_DISPLAY_COLOR"
+msgstr "%1$s Text"
 
 #: Win/DlgOptionsFilter.cpp:83
 msgid "IDC_OPT_FILTER_NAMES"
@@ -5911,103 +5915,103 @@ msgid "HIDC_TRAINING_NOTES"
 msgstr "Training Log entry."
 
 # DlgTrial
-#: Win/DlgTrial.cpp:110
+#: Win/DlgTrial.cpp:115
 msgid "IDD_TRIAL"
 msgstr "Trial Properties"
 
-#: Win/DlgTrial.cpp:119
+#: Win/DlgTrial.cpp:127
 msgid "IDC_TRIAL_DATE_START"
 msgstr "&Start Date"
 
-#: Win/DlgTrial.cpp:127 Win/DlgTrial.cpp:128
+#: Win/DlgTrial.cpp:134 Win/DlgTrial.cpp:135
 msgid "HIDC_TRIAL_DATE_START"
 msgstr "Date the trial begins."
 
-#: Win/DlgTrial.cpp:131
+#: Win/DlgTrial.cpp:140
+msgid "IDC_TRIAL_VERIFIED"
+msgstr "&Verified"
+
+#: Win/DlgTrial.cpp:143 Win/DlgTrial.cpp:144
+msgid "HIDC_TRIAL_VERIFIED"
+msgstr "Have the results of this trial been verified?"
+
+#: Win/DlgTrial.cpp:147
 msgid "IDC_TRIAL_LOCATION"
 msgstr "&Location"
 
-#: Win/DlgTrial.cpp:142 Win/DlgTrial.cpp:143
+#: Win/DlgTrial.cpp:158 Win/DlgTrial.cpp:159
 msgid "HIDC_TRIAL_LOCATION"
 msgstr ""
 "Where is this trial located. All previous locations are provided for "
 "convenience."
 
-#: Win/DlgTrial.cpp:146
-msgid "IDC_TRIAL_VERIFIED"
-msgstr "&Verified"
-
-#: Win/DlgTrial.cpp:149 Win/DlgTrial.cpp:150
-msgid "HIDC_TRIAL_VERIFIED"
-msgstr "Have the results of this trial been verified?"
-
-#: Win/DlgTrial.cpp:153
+#: Win/DlgTrial.cpp:162
 msgid "IDC_TRIAL_NOTES"
 msgstr "N&otes"
 
-#: Win/DlgTrial.cpp:160 Win/DlgTrial.cpp:161
+#: Win/DlgTrial.cpp:169 Win/DlgTrial.cpp:170
 msgid "HIDC_TRIAL_NOTES"
 msgstr "General notes about the trial."
 
-#: Win/DlgTrial.cpp:165 Win/DlgTrial.cpp:166
+#: Win/DlgTrial.cpp:174 Win/DlgTrial.cpp:175
 msgid "HIDC_TRIAL_LOCATION_NOTES"
 msgstr "Enter Notes about a location."
 
-#: Win/DlgTrial.cpp:169
+#: Win/DlgTrial.cpp:178
 msgid "IDC_TRIAL_LOCATION_INFO"
 msgstr "Location Notes"
 
-#: Win/DlgTrial.cpp:175 Win/DlgTrial.cpp:176
+#: Win/DlgTrial.cpp:184 Win/DlgTrial.cpp:185
 msgid "HIDC_TRIAL_LOCATION_INFO"
 msgstr "Notes about the selected location."
 
-#: Win/DlgTrial.cpp:179
+#: Win/DlgTrial.cpp:188
 msgid "IDC_TRIAL_CLUBS"
 msgstr "&Club"
 
-#: Win/DlgTrial.cpp:184
+#: Win/DlgTrial.cpp:193
 msgid "IDC_TRIAL_CLUB_NEW"
 msgstr "&New..."
 
-#: Win/DlgTrial.cpp:187 Win/DlgTrial.cpp:188
+#: Win/DlgTrial.cpp:196 Win/DlgTrial.cpp:197
 msgid "HIDC_TRIAL_CLUB_NEW"
 msgstr "Create a new club to associate with this trial."
 
-#: Win/DlgTrial.cpp:191
+#: Win/DlgTrial.cpp:200
 msgid "IDC_TRIAL_CLUB_EDIT"
 msgstr "&Edit..."
 
-#: Win/DlgTrial.cpp:194 Win/DlgTrial.cpp:195
+#: Win/DlgTrial.cpp:203 Win/DlgTrial.cpp:204
 msgid "HIDC_TRIAL_CLUB_EDIT"
 msgstr "Edit the selected club."
 
-#: Win/DlgTrial.cpp:198
+#: Win/DlgTrial.cpp:207
 msgid "IDC_TRIAL_CLUB_DELETE"
 msgstr "&Delete"
 
-#: Win/DlgTrial.cpp:201 Win/DlgTrial.cpp:202
+#: Win/DlgTrial.cpp:210 Win/DlgTrial.cpp:211
 msgid "HIDC_TRIAL_CLUB_DELETE"
 msgstr "Remove the selected club from this trial."
 
-#: Win/DlgTrial.cpp:210 Win/DlgTrial.cpp:211
+#: Win/DlgTrial.cpp:219 Win/DlgTrial.cpp:220
 msgid "HIDC_TRIAL_CLUBS"
 msgstr ""
 "List of clubs associated with this trial. The order of the clubs is very "
 "important."
 
-#: Win/DlgTrial.cpp:215 Win/DlgTrial.cpp:216
+#: Win/DlgTrial.cpp:224 Win/DlgTrial.cpp:225
 msgid "HIDC_TRIAL_CLUB_NOTES"
 msgstr "Enter Notes about a Club."
 
-#: Win/DlgTrial.cpp:219
+#: Win/DlgTrial.cpp:228
 msgid "IDC_TRIAL_CLUB_INFO"
 msgstr "Club Notes"
 
-#: Win/DlgTrial.cpp:225 Win/DlgTrial.cpp:226
+#: Win/DlgTrial.cpp:234 Win/DlgTrial.cpp:235
 msgid "HIDC_TRIAL_CLUB_INFO"
 msgstr "Notes about the selected club."
 
-#: Win/DlgTrial.cpp:591
+#: Win/DlgTrial.cpp:602
 msgid "IDS_CONFIG_DELETE_RUNS"
 msgstr ""
 "Warning!!!\n"
@@ -6039,6 +6043,10 @@ msgstr "Choose a language:"
 #: Win/LanguageManager.cpp:184
 msgid "Select a language to use."
 msgstr "Select a language to use."
+
+#: Win/Localization.cpp:73
+msgid "IDS_CALENDAR_PAST"
+msgstr "Past"
 
 #: Win/MainFrm.cpp:176
 msgid "ID_INDICATOR_DOG"

@@ -30,6 +30,8 @@
 #define CFG_CAL_ITEM_NOTENTEREDCOLOR		L"NotEnteredColor"
 //	DW OpenColor
 #define CFG_CAL_ITEM_OPENCOLOR				L"OpenColor"
+//	DW PastColor
+#define CFG_CAL_ITEM_PASTCOLOR				L"PastColor"
 //	DW PendingColor
 #define CFG_CAL_ITEM_PENDINGCOLOR			L"PendingColor"
 //	DW PlanningColor

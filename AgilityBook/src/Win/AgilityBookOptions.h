@@ -76,6 +76,7 @@ public:
 	static void SetHideOverlappingCalendarEntries(bool bHide);
 	typedef enum
 	{
+		eCalColorPast,
 		eCalColorNotEntered,
 		eCalColorPlanning,
 		eCalColorPending,

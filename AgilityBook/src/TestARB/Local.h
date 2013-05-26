@@ -50,6 +50,7 @@ public:
 	std::wstring ValidValues() const				{return m_ValidValues;}
 	std::wstring ValidValuesBool() const			{return m_ValidValuesBool;}
 	std::wstring CalendarTentative() const			{return m_CalendarTentative;}
+	std::wstring CalendarPast() const				{return m_CalendarPast;}
 	std::wstring CalendarNotEntered() const			{return m_CalendarNotEntered;}
 	std::wstring CalendarEntered() const			{return m_CalendarEntered;}
 	std::wstring CalendarPending() const			{return m_CalendarPending;}
@@ -213,6 +214,7 @@ private:
 	std::wstring m_ValidValues;
 	std::wstring m_ValidValuesBool;
 	std::wstring m_CalendarTentative;
+	std::wstring m_CalendarPast;
 	std::wstring m_CalendarNotEntered;
 	std::wstring m_CalendarEntered;
 	std::wstring m_CalendarPending;
