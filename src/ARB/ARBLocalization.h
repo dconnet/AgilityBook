@@ -58,6 +58,7 @@ public:
 	virtual std::wstring ValidValues() const = 0;
 	virtual std::wstring ValidValuesBool() const = 0;
 	virtual std::wstring CalendarTentative() const = 0;
+	virtual std::wstring CalendarPast() const = 0;
 	virtual std::wstring CalendarNotEntered() const = 0;
 	virtual std::wstring CalendarEntered() const	 = 0;
 	virtual std::wstring CalendarPending() const = 0;
