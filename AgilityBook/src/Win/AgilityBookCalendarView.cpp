@@ -214,6 +214,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		// Colors for current selected date
 		CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 		wxColour clrNotEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered);
+		wxColour clrPast = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPast);
 		wxColour clrPlanning = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning);
 		wxColour clrPending = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPending);
 		wxColour clrEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered);
@@ -288,6 +289,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		}
 
 		// Draw the days
+		ARBDate today = ARBDate::Today();
 		ARBDate day = FirstDayOfWeek(curMonth);
 		int iWeek;
 		for (iWeek = 0; iWeek < WEEKS_PER_PAGE; ++iWeek)
@@ -400,6 +402,11 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 							{
 								bReset = true;
 								pDC->SetTextForeground(clrClosing);
+							}
+							else if (pCal->IsBefore(today))
+							{
+								bReset = true;
+								pDC->SetTextForeground(clrPast);
 							}
 							else switch (pCal->GetEntered())
 							{

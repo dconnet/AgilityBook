@@ -82,6 +82,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 		m_nClosingNear = 0;
 	}
 
+	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorPast, wxColour()));
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorNotEntered, wxColour()));
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorPlanning, wxColour()));
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorOpening, wxColour()));
@@ -408,6 +409,12 @@ void CDlgOptionsCalendar::Save()
 }
 
 
+static std::wstring ForDisplay(std::wstring const& text)
+{
+	return StringUtil::stringW(wxString::Format(_("IDS_CALENDAR_DISPLAY_COLOR"), text.c_str()));
+}
+
+
 std::wstring CDlgOptionsCalendar::GetCalText(
 		CAgilityBookOptions::CalendarColorItem type,
 		bool bForDisplay) const
@@ -415,39 +422,44 @@ std::wstring CDlgOptionsCalendar::GetCalText(
 	std::wstring text;
 	switch (type)
 	{
-	case CAgilityBookOptions::eCalColorNotEntered:
-		text += Localization()->CalendarNotEntered();
+	case CAgilityBookOptions::eCalColorPast:
+		text = Localization()->CalendarPast();
 		if (bForDisplay)
-			text += L" Text";
+			text = ForDisplay(text);
+		break;
+	case CAgilityBookOptions::eCalColorNotEntered:
+		text = Localization()->CalendarNotEntered();
+		if (bForDisplay)
+			text = ForDisplay(text);
 		break;
 	case CAgilityBookOptions::eCalColorPlanning:
 		text += Localization()->CalendarPlanning();
 		if (bForDisplay)
-			text += L" Text";
+			text = ForDisplay(text);
 		break;
 	case CAgilityBookOptions::eCalColorOpening:
 		if (!bForDisplay)
-			text += L"  ";
+			text = L"  ";
 		text += _("IDS_COL_OPENING");
 		if (bForDisplay)
-			text += L" Text";
+			text = ForDisplay(text);
 		break;
 	case CAgilityBookOptions::eCalColorClosing:
 		if (!bForDisplay)
-			text += L"  ";
+			text = L"  ";
 		text += _("IDS_COL_CLOSING");
 		if (bForDisplay)
-			text += L" Text";
+			text = ForDisplay(text);
 		break;
 	case CAgilityBookOptions::eCalColorPending:
-		text += Localization()->CalendarPending();
+		text = Localization()->CalendarPending();
 		if (bForDisplay)
-			text += L" Text";
+			text = ForDisplay(text);
 		break;
 	case CAgilityBookOptions::eCalColorEntered:
-		text += Localization()->CalendarEntered();
+		text = Localization()->CalendarEntered();
 		if (bForDisplay)
-			text += L" Text";
+			text = ForDisplay(text);
 		break;
 	}
 	return text;
@@ -479,7 +491,7 @@ void CDlgOptionsCalendar::SetRichText()
 	m_ctrlCalView->Clear();
 
 	std::vector<long> endLines;
-	endLines.push_back(-1);
+	endLines.push_back(0);
 
 	std::wstring data;
 	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();

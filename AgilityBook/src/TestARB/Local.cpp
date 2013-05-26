@@ -81,6 +81,7 @@ void CLocalization::Load()
 	m_ValidValuesBool = m_ValidValues + L"'y', 'n'";
 
 	m_CalendarTentative = StringUtil::GetTranslation(arbT("IDS_CALENDAR_TENTATIVE"));
+	m_CalendarPast = StringUtil::GetTranslation(arbT("IDS_CALENDAR_PAST"));
 	m_CalendarNotEntered = StringUtil::GetTranslation(arbT("IDS_CALENDAR_NOTENTERED"));
 	m_CalendarEntered = StringUtil::GetTranslation(arbT("IDS_CALENDAR_ENTERED"));
 	m_CalendarPending = StringUtil::GetTranslation(arbT("IDS_CALENDAR_PENDING"));
