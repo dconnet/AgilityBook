@@ -1,4 +1,7 @@
-Last Updated: 9/9/2012
+Last Updated: 5/27/2013
+
+- Add a way to suppress sub-levels. Both NADAC and USDAA have simplified
+  their Novice structure. ARB does not have a way of expressing this (yet).
 
 -Import/Export info:
   Calendar:

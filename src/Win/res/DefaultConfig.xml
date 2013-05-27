@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2013-05-27 DRC Configuration version 44.
+               Added Novice to NADAC (there is no A/B anymore)
 2013-04-10 DRC Configuration version 43.
                Added Preferred to AKC National Rounds (missing).
 2013-01-13 DRC Configuration version 42.
@@ -2743,6 +2745,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Titles LongName="Elite Superior Extreme Barrel Racing" Name="S-XBR-E">2000 points</Titles>
       <Division Name="Std Proficient">
         <Level Name="Novice">
+          <SubLevel Name="Novice"/>
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
         </Level>
@@ -2751,6 +2754,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Division Name="Vet Proficient">
         <Level Name="Novice">
+          <SubLevel Name="Novice"/>
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
         </Level>
@@ -2759,6 +2763,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Division Name="Jr Proficient">
         <Level Name="Novice">
+          <SubLevel Name="Novice"/>
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
         </Level>
@@ -2767,6 +2772,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Division Name="Std Skilled">
         <Level Name="Novice">
+          <SubLevel Name="Novice"/>
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
         </Level>
@@ -2775,6 +2781,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Division Name="Vet Skilled">
         <Level Name="Novice">
+          <SubLevel Name="Novice"/>
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
         </Level>
@@ -2783,6 +2790,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Division Name="Jr Skilled">
         <Level Name="Novice">
+          <SubLevel Name="Novice"/>
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
         </Level>
@@ -2791,6 +2799,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Division Name="Standard">
         <Level Name="Novice">
+          <SubLevel Name="Novice"/>
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
         </Level>
@@ -2799,6 +2808,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Division Name="Veterans">
         <Level Name="Novice">
+          <SubLevel Name="Novice"/>
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
         </Level>
@@ -2807,6 +2817,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       </Division>
       <Division Name="Junior">
         <Level Name="Novice">
+          <SubLevel Name="Novice"/>
           <SubLevel Name="Novice A"/>
           <SubLevel Name="Novice B"/>
         </Level>
