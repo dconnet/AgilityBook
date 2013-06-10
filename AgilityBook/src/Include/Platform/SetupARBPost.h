@@ -54,3 +54,9 @@ namespace std
 #else
 #define arbT(x)	x
 #endif
+
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#define ARRAY_SIZE(buf)	_countof(buf)
+#else
+#define ARRAY_SIZE(buf) (sizeof(buf) / sizeof(buf[0]))
+#endif
