@@ -226,23 +226,25 @@ void CAgilityBookTreeModel::LoadData()
 
 	// Remember the currently selected item.
 	std::list<ARBBasePtr> baseItems;
-	CAgilityBookTreeData* node = GetNode(m_Ctrl->GetSelection());
-	if (!node)
 	{
-		if (m_pDoc->GetCurrentDog())
-			baseItems.push_back(m_pDoc->GetCurrentDog());
-	}
-	if (node)
-	{
-		ARBDogPtr pDog = node->GetDog();
-		ARBDogTrialPtr pTrial = node->GetTrial();
-		ARBDogRunPtr pRun = node->GetRun();
-		if (pDog)
-			baseItems.push_back(pDog);
-		if (pTrial && pRun)
-			baseItems.push_back(pTrial);
-		if (pRun)
-			baseItems.push_back(pRun);
+		CAgilityBookTreeData* node = GetNode(m_Ctrl->GetSelection());
+		if (!node)
+		{
+			if (m_pDoc->GetCurrentDog())
+				baseItems.push_back(m_pDoc->GetCurrentDog());
+		}
+		if (node)
+		{
+			ARBDogPtr pDog = node->GetDog();
+			ARBDogTrialPtr pTrial = node->GetTrial();
+			ARBDogRunPtr pRun = node->GetRun();
+			if (pDog)
+				baseItems.push_back(pDog);
+			if (pTrial && pRun)
+				baseItems.push_back(pTrial);
+			if (pRun)
+				baseItems.push_back(pRun);
+		}
 	}
 
 	DeleteAllItems();

@@ -147,7 +147,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
@@ -156,7 +156,7 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-isystem",
-					"$BOOST_ROOT",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -180,7 +180,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -188,7 +188,7 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-isystem",
-					"$BOOST_ROOT",
+					$BOOST_ROOT,
 					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"-I$WXBASE/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
