@@ -188,12 +188,13 @@ The xcode projects were used as follows:
                 trunk, cocoa, OSX10.5 sdk
 .../xcode4: Xcode 4.6 on OSX10.8
             Recommended: Modify DerivedData to be relative to workspace
-            (under Preferences menu)
+            I set mine to 'build'. (under Preferences menu)
             AgilityBook.xcworkspace
                 trunk, cocoa, OSX10.7 sdk
 
 OSX 10.8:
-- Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME):
+- Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
+  Must reboot after modifying.
 ===
 setenv BOOST_ROOT /Users/dconnet/src/boost_1_53_0
 setenv WXBASE /Users/dconnet/wx
