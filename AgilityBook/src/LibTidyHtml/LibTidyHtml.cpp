@@ -23,6 +23,8 @@
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
+#else
+#include <errno.h>
 #endif
 
 
