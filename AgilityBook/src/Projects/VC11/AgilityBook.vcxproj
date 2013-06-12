@@ -362,7 +362,7 @@
     <ProjectReference Include="LibwxArchive.vcxproj">
       <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>
     </ProjectReference>
-    <ProjectReference Include="LibTidy.vcxproj">
+    <ProjectReference Include="LibTidyHtml.vcxproj">
       <Project>{05967875-9726-4f06-8ec8-db6170c00bf3}</Project>
     </ProjectReference>
   </ItemGroup>
