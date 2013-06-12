@@ -111,6 +111,7 @@
 		E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */; };
 		E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */; };
 		E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */; };
+		E1F07F7417692A9600EE6EE3 /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1F07F7317692A9600EE6EE3 /* libLibTidyHtml.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -334,6 +335,7 @@
 		E1E1D05217234DEF00D7D1E4 /* ComboBoxQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxQ.h; sourceTree = "<group>"; };
 		E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxVenue.cpp; sourceTree = "<group>"; };
 		E1E1D05417234DEF00D7D1E4 /* ComboBoxVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxVenue.h; sourceTree = "<group>"; };
+		E1F07F7317692A9600EE6EE3 /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libLibTidyHtml.a; path = ../LibTidyHtml/build/Release/libLibTidyHtml.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +343,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1F07F7417692A9600EE6EE3 /* libLibTidyHtml.a in Frameworks */,
 				E124BBB416BD90D0006FBF2D /* libLibArchive.a in Frameworks */,
 				E19B65D9166C115F004DEDA4 /* libARB.a in Frameworks */,
 				E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */,
@@ -353,6 +356,7 @@
 		E19B63B0166C096E004DEDA4 = {
 			isa = PBXGroup;
 			children = (
+				E1F07F7317692A9600EE6EE3 /* libLibTidyHtml.a */,
 				E124BBB316BD90D0006FBF2D /* libLibArchive.a */,
 				E19B65D8166C115F004DEDA4 /* libARB.a */,
 				E19B63C5166C096E004DEDA4 /* Source */,
