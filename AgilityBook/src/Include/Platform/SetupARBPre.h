@@ -27,7 +27,6 @@
  * @li 2005-10-30 DRC Added static xerces library support.
  */
 
-
 #if defined(_WIN32)
 
 // _MSC_VER
