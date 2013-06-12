@@ -49,7 +49,6 @@ AC_ARG_PROGRAM
 ################################################################################
 # Add macros to check for library functions here
 # We get these libs from our own src/ directories
-# AC_CHECK_LIB([tidy], [tidyCreate])
 # AC_CHECK_LIB([unittest], [RunAllTests])
 if test "x$BOOST_ROOT" != "x"; then
 	echo "BOOST_ROOT set to: $BOOST_ROOT"
@@ -104,6 +103,6 @@ AC_SUBST_FILE(NAM_RULES)
 # List of files to generate from the corresponding (*.in) files and the        #
 # subsequent command to generate those files.                                  #
 ################################################################################
-AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile src/UnitTest++/Makefile src/LibArchive/Makefile src/ARB/Makefile src/ARBHelp/Makefile src/ARBHelp/Info.plist src/ARBHelp/version.plist src/TestARB/Makefile src/Win/Makefile src/Win/Info.plist src/Win/version.plist])
+AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile src/UnitTest++/Makefile src/LibArchive/Makefile src/LibTidyHtml/Makefile src/ARB/Makefile src/ARBHelp/Makefile src/ARBHelp/Info.plist src/ARBHelp/version.plist src/TestARB/Makefile src/Win/Makefile src/Win/Info.plist src/Win/version.plist])
 
 AC_OUTPUT
