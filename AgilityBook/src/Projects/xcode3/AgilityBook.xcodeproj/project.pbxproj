@@ -1174,7 +1174,6 @@
 					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
-					"-ltidy",
 				);
 				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;
@@ -1254,7 +1253,6 @@
 					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
-					"-ltidy",
 				);
 				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;

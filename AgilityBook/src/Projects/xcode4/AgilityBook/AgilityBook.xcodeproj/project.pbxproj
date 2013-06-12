@@ -899,7 +899,6 @@
 					"-lwxpng-2.9",
 					"-lwxzlib-2.9",
 					"-lpthread",
-					"-ltidy",
 				);
 				SDKROOT = macosx10.7;
 			};
@@ -969,7 +968,6 @@
 					"-lwxpng-2.9",
 					"-lwxzlib-2.9",
 					"-lpthread",
-					"-ltidy",
 				);
 				SDKROOT = macosx10.7;
 			};
