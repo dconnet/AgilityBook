@@ -18,7 +18,6 @@
  * @li 2013-01-27 DRC Created
  */
 
-
 #include "Platform/SetupARBPre.h"
 
 #ifdef _WIN32

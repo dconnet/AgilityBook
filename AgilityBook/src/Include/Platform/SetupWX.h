@@ -27,7 +27,6 @@
  * @li 2005-10-30 DRC Added static xerces library support.
  */
 
-
 #include "Platform/SetupARBPre.h"
 
 #ifndef USE_WXWIDGETS
