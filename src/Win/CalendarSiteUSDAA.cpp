@@ -22,7 +22,6 @@
 #include "stdafx.h"
 #include "CalendarSiteUSDAA.h"
 
-#include "../tidy/include/tidy.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
 #include "ReadHttp.h"
@@ -32,6 +31,7 @@
 #include "ARB/Element.h"
 #include "ARB/StringUtil.h"
 #include "ARB/VersionNum.h"
+#include "LibTidyHtml/LibTidyHtml.h"
 #include <errno.h>
 #include <wx/ffile.h>
 #include <wx/mstream.h>
@@ -188,68 +188,12 @@ wxFFile raw(outTestData.c_str(), L"wb");
 raw.Write(data.c_str(), data.length());
 }
 #endif
-		TidyDoc tdoc = tidyCreate();
-		tidyOptSetBool(tdoc, TidyXhtmlOut, yes);
-		tidyOptSetBool(tdoc, TidyNumEntities, yes);
-		if (0 > tidyParseString(tdoc, data.c_str()))
-		{
-			tidyRelease(tdoc);
-			return tree;
-		}
-		if (0 > tidyCleanAndRepair(tdoc))
-		{
-			tidyRelease(tdoc);
-			return tree;
-		}
-		tidyRunDiagnostics(tdoc);
-		uint len = 0;
-		if (tidySaveString(tdoc, NULL, &len) != -ENOMEM)
-		{
-			tidyRelease(tdoc);
-			return tree;
-		}
-		char* pData = new char[len+1];
-		strncpy(pData, data.c_str(), len);
-		data.erase();
-		if (0 > tidySaveString(tdoc, pData, &len))
-		{
-			tidyRelease(tdoc);
-			delete [] pData;
-			return tree;
-		}
-		tidyRelease(tdoc);
-		// Note, Tidy does not null terminate the buffer.
-		pData[len] = 0;
-#ifdef _DEBUG
-//Test code to look at 'tidy'd data
-//{
-//std::string out(inAddress);
-//out += ".out";
-//wxFFile raw(StringUtil::stringWX(out), L"wb");
-//raw.Write(pData, strlen(pData));
-//}
-#endif
 		std::wostringstream err;
-		tree = ElementNode::New();
-		if (!tree->LoadXML(pData, len, err))
+		tree = TidyHtmlData(data, err);
+		if (!tree)
 		{
-			tree.reset();
 			wxMessageBox(StringUtil::stringWX(err.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 		}
-		else
-		{
-#ifdef _DEBUG
-//Test code to look at xml data
-//{
-//std::string out(inAddress);
-//out += ".tree";
-//wxFFileOutputStream raw(StringUtil::stringWX(out), L"wb");
-//tree->SaveXML(raw);
-//}
-#endif
-		}
-		delete [] pData;
-		pData = NULL;
 	}
 	return tree;
 }
