@@ -171,6 +171,8 @@ end Output of "diff -c" <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     #define wxLIB_SUFFIX _VC90
 #elif _MSC_VER == 1600
     #define wxLIB_SUFFIX _VC100
+#elif _MSC_VER == 1700
+    #define wxLIB_SUFFIX _VC110
 #else
     #define wxLIB_SUFFIX
 #endif
