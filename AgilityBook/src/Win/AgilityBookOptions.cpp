@@ -1147,10 +1147,10 @@ static wxString GetLastKey(
 		// The 'Clean' routines below have "knowledge" of
 		//  <key>/<dog>/<venue> order.
 		key = keyGroup;
-		key << L"/" << pDog->GetCallName();
+		key << L"/" << pDog->GetCallName().c_str();
 		if (pVenue && !pVenue->GetName().empty())
 		{
-			key << L"/" << pVenue->GetName();
+			key << L"/" << pVenue->GetName().c_str();
 		}
 		// Fall back
 		if (bFallback && !wxConfig::Get()->Exists(key))
@@ -1320,22 +1320,22 @@ void CAgilityBookOptions::CleanLastItems(std::wstring const& oldCallName, std::w
 
 		if (sc_Keys[i].hasVenueKey)
 		{
-			if (wxConfig::Get()->HasGroup(oldCallName))
+			if (wxConfig::Get()->HasGroup(oldCallName.c_str()))
 			{
 				if (newCallName.empty())
-					wxConfig::Get()->DeleteGroup(oldCallName);
+					wxConfig::Get()->DeleteGroup(oldCallName.c_str());
 				else
-					wxConfig::Get()->RenameGroup(oldCallName, newCallName);
+					wxConfig::Get()->RenameGroup(oldCallName.c_str(), newCallName.c_str());
 			}
 		}
 		else
 		{
-			if (wxConfig::Get()->HasEntry(oldCallName))
+			if (wxConfig::Get()->HasEntry(oldCallName.c_str()))
 			{
 				if (newCallName.empty())
-					wxConfig::Get()->DeleteEntry(oldCallName);
+					wxConfig::Get()->DeleteEntry(oldCallName.c_str());
 				else
-					wxConfig::Get()->RenameEntry(oldCallName, newCallName);
+					wxConfig::Get()->RenameEntry(oldCallName.c_str(), newCallName.c_str());
 			}
 		}
 
