@@ -44,9 +44,12 @@ CLocalization::CLocalization()
 }
 
 
-void CLocalization::Load()
+bool CLocalization::Load()
 {
 	m_UnknownVersion = StringUtil::GetTranslation(arbT("IDS_ARB_UNKNOWN_VERSION"));
+	if (m_UnknownVersion == L"IDS_ARB_UNKNOWN_VERSION")
+		return false;
+
 	m_WarningNewerDoc = StringUtil::GetTranslation(arbT("IDS_WARNING_NEWER_DOC"));
 	m_InvalidDocStructure = StringUtil::GetTranslation(arbT("IDS_INVALID_DOC_STRUCTURE"));
 	m_InvalidFileFormat = StringUtil::GetTranslation(arbT("IDS_INVALID_FILE_FORMAT"));
@@ -106,6 +109,8 @@ void CLocalization::Load()
 	m_ExistingPointsSpeed = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_SPEED"));
 	m_ExistingPointsMQ = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_MQ"));
 	m_ExistingPointsSQ = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_SQ"));
+
+	return true;
 }
 
 

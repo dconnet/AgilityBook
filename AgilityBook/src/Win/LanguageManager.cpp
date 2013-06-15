@@ -130,7 +130,12 @@ bool CLanguageManager::SetLang(int langId)
 	if (2 < m_dirLoadedLang.length())
 		m_dirLoadedLang = m_dirLoadedLang.substr(0, 2);
 
-	m_Localization.Load();
+	if (!m_Localization.Load())
+	{
+		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), fileName.GetName());
+		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
+		throw std::runtime_error(str.ToAscii());
+	}
 
 	return true;
 }

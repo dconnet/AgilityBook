@@ -25,7 +25,7 @@ class CLocalization : public IARBLocalization
 {
 public:
 	CLocalization();
-	void Load();
+	bool Load();
 
 	std::wstring UnknownVersion() const				{return m_UnknownVersion;}
 	std::wstring WarningNewerDoc() const			{return m_WarningNewerDoc;}
