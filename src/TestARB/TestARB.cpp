@@ -29,6 +29,7 @@
 #include "ARB/StringUtil.h"
 #include "TestReporterStdout.h"
 #include <iostream>
+#include <stdexcept>
 
 #if defined(__WXWINDOWS__)
 #include <wx/app.h>
@@ -140,8 +141,8 @@ bool CLanguageManager::SetLang(int langId)
 
 	if (!m_Localization.Load())
 	{
-		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), fileName.GetName());
-		std::string msg = str.ToAscii();
+		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), fileName.GetName().c_str());
+		std::string msg(str.ToAscii());
 		std::cerr << msg << "\n";
 		throw std::runtime_error(msg);
 	}

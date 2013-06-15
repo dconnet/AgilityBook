@@ -145,6 +145,8 @@
 		E1144F601082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
 		E13144661746A60F00BDFC2E /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E13144641746A60F00BDFC2E /* LibArchive.cpp */; };
 		E13144671746A60F00BDFC2E /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E13144641746A60F00BDFC2E /* LibArchive.cpp */; };
+		E13504EA176CDE1200B73905 /* LibTidyHtml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1350480176CDE1200B73905 /* LibTidyHtml.cpp */; };
+		E1350528176CDE1200B73905 /* LibTidyHtml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1350480176CDE1200B73905 /* LibTidyHtml.cpp */; };
 		E154B2B017284E1500DD9354 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2AC17284E1500DD9354 /* ComboBoxQ.cpp */; };
 		E154B2B117284E1500DD9354 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2AE17284E1500DD9354 /* ComboBoxVenue.cpp */; };
 		E154B2B217284E1500DD9354 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2AC17284E1500DD9354 /* ComboBoxQ.cpp */; };
@@ -312,6 +314,8 @@
 		E1144F5D1082880800356F61 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
 		E13144641746A60F00BDFC2E /* LibArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibArchive.cpp; path = ../../LibArchive/LibArchive.cpp; sourceTree = SOURCE_ROOT; };
 		E13144651746A60F00BDFC2E /* LibArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibArchive.h; path = ../../LibArchive/LibArchive.h; sourceTree = SOURCE_ROOT; };
+		E1350480176CDE1200B73905 /* LibTidyHtml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LibTidyHtml.cpp; sourceTree = "<group>"; };
+		E1350481176CDE1200B73905 /* LibTidyHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibTidyHtml.h; sourceTree = "<group>"; };
 		E154B2AB17284DEB00DD9354 /* ARBTypes2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBTypes2.h; sourceTree = "<group>"; };
 		E154B2AC17284E1500DD9354 /* ComboBoxQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxQ.cpp; sourceTree = "<group>"; };
 		E154B2AD17284E1500DD9354 /* ComboBoxQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxQ.h; sourceTree = "<group>"; };
@@ -664,6 +668,7 @@
 				E15599E410000B4700B7074A /* Include */,
 				E155996210000B3100B7074A /* ARB */,
 				E13144631746A5EB00BDFC2E /* LibArchive */,
+				E135047F176CDE1200B73905 /* LibTidyHtml */,
 				E155979C10000B1200B7074A /* Win */,
 				E15599F910000CEC00B7074A /* arb_Prefix.pch */,
 				E17F8D9416B5B480003C0BF2 /* stdafx.cpp */,
@@ -697,6 +702,16 @@
 			);
 			name = LibArchive;
 			sourceTree = "<group>";
+		};
+		E135047F176CDE1200B73905 /* LibTidyHtml */ = {
+			isa = PBXGroup;
+			children = (
+				E1350480176CDE1200B73905 /* LibTidyHtml.cpp */,
+				E1350481176CDE1200B73905 /* LibTidyHtml.h */,
+			);
+			name = LibTidyHtml;
+			path = ../../LibTidyHtml;
+			sourceTree = SOURCE_ROOT;
 		};
 		E155979C10000B1200B7074A /* Win */ = {
 			isa = PBXGroup;
@@ -1260,6 +1275,7 @@
 				E154B2B017284E1500DD9354 /* ComboBoxQ.cpp in Sources */,
 				E154B2B117284E1500DD9354 /* ComboBoxVenue.cpp in Sources */,
 				E13144661746A60F00BDFC2E /* LibArchive.cpp in Sources */,
+				E13504EA176CDE1200B73905 /* LibTidyHtml.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1414,6 +1430,7 @@
 				E154B2B217284E1500DD9354 /* ComboBoxQ.cpp in Sources */,
 				E154B2B317284E1500DD9354 /* ComboBoxVenue.cpp in Sources */,
 				E13144671746A60F00BDFC2E /* LibArchive.cpp in Sources */,
+				E1350528176CDE1200B73905 /* LibTidyHtml.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
