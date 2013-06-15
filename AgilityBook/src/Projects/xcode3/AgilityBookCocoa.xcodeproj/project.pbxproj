@@ -1180,6 +1180,7 @@
 					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
+					"-ltidy",
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = AgilityBook;
@@ -1260,6 +1261,7 @@
 					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
+					"-ltidy",
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = AgilityBook;
