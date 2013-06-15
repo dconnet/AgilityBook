@@ -44,9 +44,12 @@ CLocalization::CLocalization()
 }
 
 
-void CLocalization::Load()
+bool CLocalization::Load()
 {
 	m_UnknownVersion = _("IDS_ARB_UNKNOWN_VERSION");
+	if (m_UnknownVersion == L"IDS_ARB_UNKNOWN_VERSION")
+		return false;
+
 	m_WarningNewerDoc = _("IDS_WARNING_NEWER_DOC");
 	m_InvalidDocStructure = _("IDS_INVALID_DOC_STRUCTURE");
 	m_InvalidFileFormat = _("IDS_INVALID_FILE_FORMAT");
@@ -98,6 +101,8 @@ void CLocalization::Load()
 	m_ExistingPointsSpeed = _("IDS_EXISTING_POINTS_SPEED");
 	m_ExistingPointsMQ = _("IDS_EXISTING_POINTS_MQ");
 	m_ExistingPointsSQ = _("IDS_EXISTING_POINTS_SQ");
+
+	return true;
 }
 
 

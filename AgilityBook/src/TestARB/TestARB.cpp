@@ -138,7 +138,13 @@ bool CLanguageManager::SetLang(int langId)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	m_locale->AddCatalog(fileName.GetName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 
-	m_Localization.Load();
+	if (!m_Localization.Load())
+	{
+		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), fileName.GetName());
+		std::string msg = str.ToAscii();
+		std::cerr << msg << "\n";
+		throw std::runtime_error(msg);
+	}
 
 	return true;
 
@@ -203,14 +209,26 @@ int main(int argc, char** argv)
 	static CLocalization m_Localization;
 	IARBLocalization::Init(&m_Localization);
 
+	bool bRunTests = true;
 #if defined(__WXWINDOWS__)
 	g_LangMgr = new CLanguageManager(m_Localization);
-	SetLang(wxLANGUAGE_ENGLISH_US);
+	try
+	{
+		SetLang(wxLANGUAGE_ENGLISH_US);
+	}
+	catch (std::runtime_error const&)
+	{
+		bRunTests = false;
+	}
 #endif
 
-	CReporterVerbose reporter(bVerbose);
-	UnitTest::TestRunner runner(reporter);
-	int rc = runner.RunTestsIf(UnitTest::Test::GetTestList(), NULL, UnitTest::True(), 0);
+	int rc = -1;
+	if (bRunTests)
+	{
+		CReporterVerbose reporter(bVerbose);
+		UnitTest::TestRunner runner(reporter);
+		rc = runner.RunTestsIf(UnitTest::Test::GetTestList(), NULL, UnitTest::True(), 0);
+	}
 
 	Element::Terminate();
 	delete g_LangMgr;
