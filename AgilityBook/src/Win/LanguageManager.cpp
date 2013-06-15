@@ -29,6 +29,7 @@
 #include <wx/cshelp.h>
 #include <wx/dir.h>
 #include <wx/stdpaths.h>
+#include <stdexcept>
 #include <vector>
 
 #ifdef __WXMSW__
@@ -132,9 +133,10 @@ bool CLanguageManager::SetLang(int langId)
 
 	if (!m_Localization.Load())
 	{
-		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), fileName.GetName());
+		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), fileName.GetName().c_str());
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
-		throw std::runtime_error(str.ToAscii());
+		std::string msg(str.ToAscii());
+		throw std::runtime_error(msg);
 	}
 
 	return true;
