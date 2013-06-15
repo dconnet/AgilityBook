@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-06-15 DRC Make default for GetNewestDatesFirst true.
  * @li 2013-05-19 DRC Make last div/level/height/handler context aware.
  * @li 2012-12-23 DRC Changed default Runs view columns.
  * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
@@ -64,6 +65,76 @@
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
+
+namespace
+{
+	// Calendar Defaults
+	static const bool sc_AutoDeleteCalEntries = false;
+	static const bool sc_ViewAllCalEntries = true;
+	static const bool sc_ViewAllCalOpening = true;
+	static const bool sc_ViewAllCalClosing = true;
+	static const long sc_DaysTillEntryIsPast = 5;
+	static const bool sc_HideOverlapping = false;
+	static const wxColour sc_CalColorPast(128,128,128); // gray
+	static const wxColour sc_CalColorNotEntered(0,0,0); // Black
+	static const wxColour sc_CalColorPlanning(255,128,0); // Orange
+	static const wxColour sc_CalColorPending(128,0,255); // Blue-ish
+	static const wxColour sc_CalColorEntered(0,0,255); // Blue
+	static const wxColour sc_CalColorOpening(0,128,0); // Dk Green
+	static const wxColour sc_CalColorClosing(255,0,0); // Red
+	static const long sc_CalOpeningNear = 4;
+	static const long sc_CalClosingNear = 10;
+	static const wxColour sc_CalColorOpeningNear(0,0,255);
+	static const wxColour sc_CalColorClosingNear(255,0,0);
+
+	// Common
+	static const ARBDate::DayOfWeek sc_FirstDayOfWeek = ARBDate::eSunday;
+
+	// Runs/points
+	static const CAgilityBookOptions::ViewRunsStyle sc_ViewRunsStyle = CAgilityBookOptions::eViewRunsByTrial;
+	static const bool sc_NewestDatesFirst = true;
+	static const CAgilityBookOptions::PointsViewSort sc_PointsViewSort1 = CAgilityBookOptions::ePointsViewSortDivision;
+	static const CAgilityBookOptions::PointsViewSort sc_PointsViewSort2 = CAgilityBookOptions::ePointsViewSortLevel;
+	static const CAgilityBookOptions::PointsViewSort sc_PointsViewSort3 = CAgilityBookOptions::ePointsViewSortEvent;
+	static const bool sc_ViewHiddenTitles = false;
+	static const bool sc_ViewLifetimePointsByEvent = true;
+	static const bool sc_TableInYPS = false;
+	static const bool sc_RunTimeInOPS = false;
+	static const bool sc_IncludeCRCDImage = false;
+
+	// Font
+	static const wchar_t* const sc_FontPrinterName = L"Times New Roman";
+	static const int sc_FontPrinterSize = 8;
+	static const bool sc_FontPrinterItalic = false;
+	static const bool sc_FontPrinterBold = false;
+	static const bool sc_UnitsAsMM = false;
+	static const bool sc_MarginAsMM = false;
+	static const long sc_MarginLeft = 50;
+	static const long sc_MarginRight = 50;
+	static const long sc_MarginTop = 50;
+	static const long sc_MarginBottom = 50;
+	static const bool sc_RunPageAsMM = false;
+	static const long sc_RunPageWidth = 0;
+	static const long sc_RunPageHeight = 0;
+	static const wchar_t* const sc_FontCalName = L"Times New Roman";
+	static const int sc_FontCalSize = 8;
+	static const bool sc_FontCalItalic = false;
+	static const bool sc_FontCalBold = false;
+
+	// Import/export
+	static const long sc_ImportStartRow = 1;
+	static const long sc_ImportExportDelim = CAgilityBookOptions::eDelimTab;
+	static const ARBDate::DateFormat sc_ImportExportFormat = ARBDate::eISO;
+	// Note: Default column order is defined in GetColumnOrder()
+
+	// Program
+	static const long sc_MRUCount = 4;
+	static const bool sc_AutoUpdateCheck = true;
+	static const long sc_NumBackup = 3;
+	static const bool sc_ShowPropOnNewTitle = false;
+	static const bool sc_ShowHtmlPoints = true;
+	static const bool sc_UseProxy = false;
+};
 
 
 static void ExportConfigItem(wxString const& entry, ElementNodePtr tree)
@@ -520,7 +591,7 @@ void CFontInfo::CreateFont(
 
 bool CAgilityBookOptions::AutoDeleteCalendarEntries()
 {
-	bool val = false;
+	bool val = sc_AutoDeleteCalEntries;
 	wxConfig::Get()->Read(CFG_CAL_AUTODELETE, &val);
 	return val;
 }
@@ -535,7 +606,7 @@ void CAgilityBookOptions::SetAutoDeleteCalendarEntries(bool bAuto)
 // View all or hide old entries
 bool CAgilityBookOptions::ViewAllCalendarEntries()
 {
-	bool val = true;
+	bool val = sc_ViewAllCalEntries;
 	wxConfig::Get()->Read(CFG_CAL_VIEWALL, &val);
 	return val;
 }
@@ -549,7 +620,7 @@ void CAgilityBookOptions::SetViewAllCalendarEntries(bool bView)
 
 bool CAgilityBookOptions::ViewAllCalendarOpening()
 {
-	bool val = true;
+	bool val = sc_ViewAllCalOpening;
 	wxConfig::Get()->Read(CFG_CAL_VIEWOPEN, &val);
 	return val;
 }
@@ -563,7 +634,7 @@ void CAgilityBookOptions::SetViewAllCalendarOpening(bool bView)
 
 bool CAgilityBookOptions::ViewAllCalendarClosing()
 {
-	bool val = true;
+	bool val = sc_ViewAllCalClosing;
 	wxConfig::Get()->Read(CFG_CAL_VIEWCLOSE, &val);
 	return val;
 }
@@ -577,7 +648,7 @@ void CAgilityBookOptions::SetViewAllCalendarClosing(bool bView)
 
 long CAgilityBookOptions::DaysTillEntryIsPast()
 {
-	long val = 5;
+	long val = sc_DaysTillEntryIsPast;
 	wxConfig::Get()->Read(CFG_CAL_PASTENTRY, &val);
 	return val;
 }
@@ -593,7 +664,7 @@ void CAgilityBookOptions::SetDaysTillEntryIsPast(long nDays)
 
 bool CAgilityBookOptions::HideOverlappingCalendarEntries()
 {
-	bool val = false;
+	bool val = sc_HideOverlapping;
 	wxConfig::Get()->Read(CFG_CAL_HIDEOVERLAPPING, &val);
 	return val;
 }
@@ -634,19 +705,19 @@ static wxColour CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
 	switch (inItem)
 	{
 	case CAgilityBookOptions::eCalColorPast:
-		return wxColour(128,128,128); // gray
+		return sc_CalColorPast;
 	case CAgilityBookOptions::eCalColorNotEntered:
-		return wxColour(0,0,0); // Black
+		return sc_CalColorNotEntered;
 	case CAgilityBookOptions::eCalColorPlanning:
-		return wxColour(255,128,0); // Orange
+		return sc_CalColorPlanning;
 	case CAgilityBookOptions::eCalColorPending:
-		return wxColour(128,0,255); // Blue-ish
+		return sc_CalColorPending;
 	case CAgilityBookOptions::eCalColorEntered:
-		return wxColour(0,0,255); // Blue
+		return sc_CalColorEntered;
 	case CAgilityBookOptions::eCalColorOpening:
-		return wxColour(0,128,0); // Dk Green
+		return sc_CalColorOpening;
 	case CAgilityBookOptions::eCalColorClosing:
-		return wxColour(255,0,0); // Red
+		return sc_CalColorClosing;
 	}
 	assert(0);
 	return wxColour(0,0,0);
@@ -693,7 +764,7 @@ void CAgilityBookOptions::SetCalendarColor(CalendarColorItem inItem, wxColour in
 
 long CAgilityBookOptions::CalendarOpeningNear()
 {
-	long val = 4;
+	long val = sc_CalOpeningNear;
 	wxConfig::Get()->Read(CFG_CAL_OPENNEAR, &val);
 	return val;
 }
@@ -707,7 +778,7 @@ void CAgilityBookOptions::SetCalendarOpeningNear(long inDays)
 
 long CAgilityBookOptions::CalendarClosingNear()
 {
-	long val = 10;
+	long val = sc_CalClosingNear;
 	wxConfig::Get()->Read(CFG_CAL_CLOSENEAR, &val);
 	return val;
 }
@@ -721,7 +792,7 @@ void CAgilityBookOptions::SetCalendarClosingNear(long inDays)
 
 wxColour CAgilityBookOptions::CalendarOpeningNearColor()
 {
-	return ReadColor(CFG_CAL_OPENNEARCOLOR, wxColour(0,0,255));
+	return ReadColor(CFG_CAL_OPENNEARCOLOR, sc_CalColorOpeningNear);
 }
 
 
@@ -733,7 +804,7 @@ void CAgilityBookOptions::SetCalendarOpeningNearColor(wxColour inColor)
 
 wxColour CAgilityBookOptions::CalendarClosingNearColor()
 {
-	return ReadColor(CFG_CAL_CLOSENEARCOLOR, wxColour(255,0,0));
+	return ReadColor(CFG_CAL_CLOSENEARCOLOR, sc_CalColorClosingNear);
 }
 
 
@@ -747,7 +818,7 @@ void CAgilityBookOptions::SetCalendarClosingNearColor(wxColour inColor)
 
 ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 {
-	long val = static_cast<long>(ARBDate::eSunday);
+	long val = static_cast<long>(sc_FirstDayOfWeek);
 	wxConfig::Get()->Read(CFG_COMMON_FIRSTDAYOFWEEK, &val);
 	if (val < 0 || val > 6)
 		val = static_cast<long>(ARBDate::eSunday);
@@ -765,7 +836,7 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 
 CAgilityBookOptions::ViewRunsStyle CAgilityBookOptions::GetViewRunsStyle()
 {
-	return static_cast<ViewRunsStyle>(wxConfig::Get()->Read(CFG_COMMON_VIEWRUNSBYTRIAL, static_cast<long>(eViewRunsByTrial)));
+	return static_cast<ViewRunsStyle>(wxConfig::Get()->Read(CFG_COMMON_VIEWRUNSBYTRIAL, static_cast<long>(sc_ViewRunsStyle)));
 }
 
 
@@ -777,7 +848,7 @@ void CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::ViewRunsStyle st
 
 bool CAgilityBookOptions::GetNewestDatesFirst()
 {
-	bool val = false;
+	bool val = sc_NewestDatesFirst;
 	wxConfig::Get()->Read(CFG_COMMON_VIEWNEWESTFIRST, &val);
 	return val;
 }
@@ -794,9 +865,9 @@ void CAgilityBookOptions::GetPointsViewSort(
 		PointsViewSort& outSecondary,
 		PointsViewSort& outTertiary)
 {
-	outPrimary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW1, static_cast<long>(ePointsViewSortDivision)));
-	outSecondary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW2, static_cast<long>(ePointsViewSortLevel)));
-	outTertiary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW3, static_cast<long>(ePointsViewSortEvent)));
+	outPrimary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW1, static_cast<long>(sc_PointsViewSort1)));
+	outSecondary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW2, static_cast<long>(sc_PointsViewSort2)));
+	outTertiary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW3, static_cast<long>(sc_PointsViewSort3)));
 }
 
 
@@ -813,7 +884,7 @@ void CAgilityBookOptions::SetPointsViewSort(
 
 bool CAgilityBookOptions::GetViewHiddenTitles()
 {
-	bool val = false;
+	bool val = sc_ViewHiddenTitles;
 	wxConfig::Get()->Read(CFG_COMMON_VIEWHIDDENTITLES, &val);
 	return val;
 }
@@ -827,7 +898,7 @@ void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
 
 bool CAgilityBookOptions::GetViewLifetimePointsByEvent()
 {
-	bool val = true;
+	bool val = sc_ViewLifetimePointsByEvent;
 	wxConfig::Get()->Read(CFG_COMMON_VIEWLIFETIMEEVENTS, &val);
 	return val;
 }
@@ -841,7 +912,7 @@ void CAgilityBookOptions::SetViewLifetimePointsByEvent(bool bSet)
 
 bool CAgilityBookOptions::GetTableInYPS()
 {
-	bool val = false;
+	bool val = sc_TableInYPS;
 	wxConfig::Get()->Read(CFG_COMMON_TABLEINYPS, &val);
 	return val;
 }
@@ -855,7 +926,7 @@ void CAgilityBookOptions::SetTableInYPS(bool bSet)
 
 bool CAgilityBookOptions::GetRunTimeInOPS()
 {
-	bool val = false;
+	bool val = sc_RunTimeInOPS;
 	wxConfig::Get()->Read(CFG_COMMON_RUNTIMEINOPS, &val);
 	return val;
 }
@@ -869,7 +940,7 @@ void CAgilityBookOptions::SetRunTimeInOPS(bool bSet)
 
 bool CAgilityBookOptions::GetIncludeCRCDImage()
 {
-	bool val = false;
+	bool val = sc_IncludeCRCDImage;
 	wxConfig::Get()->Read(CFG_COMMON_CRCDIMAGE, &val);
 	return val;
 }
@@ -887,10 +958,10 @@ void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
 
 void CAgilityBookOptions::GetPrinterFontInfo(CFontInfo& info)
 {
-	info.name = L"Times New Roman";
-	info.size = 80;
-	info.italic = false;
-	info.bold = false;
+	info.name = sc_FontPrinterName;
+	info.size = sc_FontPrinterSize * 10;
+	info.italic = sc_FontPrinterItalic;
+	info.bold = sc_FontPrinterBold;
 	info.name = StringUtil::stringW(wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTNAME, info.name.c_str()));
 	wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTSIZE, &info.size, info.size);
 	wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTITALIC, &info.italic, info.italic);
@@ -910,7 +981,7 @@ void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 
 bool CAgilityBookOptions::GetUnitsAsMM()
 {
-	bool bAsMM = false;
+	bool bAsMM = sc_UnitsAsMM;
 	wxConfig::Get()->Read(CFG_COMMON_UNITSASMM, &bAsMM);
 	return bAsMM;
 }
@@ -939,12 +1010,12 @@ void CAgilityBookOptions::GetPrinterMargins(
 		long& outBottom,
 		wxDC* pDC)
 {
-	bool bInMM = false;
+	bool bInMM = sc_MarginAsMM;
 	wxConfig::Get()->Read(CFG_COMMON_MARGINS_MM, &bInMM);
-	outLeft = wxConfig::Get()->Read(CFG_COMMON_MARGINS_L, 50L);
-	outRight = wxConfig::Get()->Read(CFG_COMMON_MARGINS_R, 50L);
-	outTop = wxConfig::Get()->Read(CFG_COMMON_MARGINS_T, 50L);
-	outBottom = wxConfig::Get()->Read(CFG_COMMON_MARGINS_B, 50L);
+	outLeft = wxConfig::Get()->Read(CFG_COMMON_MARGINS_L, sc_MarginLeft);
+	outRight = wxConfig::Get()->Read(CFG_COMMON_MARGINS_R, sc_MarginRight);
+	outTop = wxConfig::Get()->Read(CFG_COMMON_MARGINS_T, sc_MarginTop);
+	outBottom = wxConfig::Get()->Read(CFG_COMMON_MARGINS_B, sc_MarginBottom);
 	// Need to convert
 	if (bInMM != bAsMM || (pDC && bInMM))
 	{
@@ -998,10 +1069,10 @@ void CAgilityBookOptions::GetRunPageSize(
 		long& outHeight,
 		wxDC* pDC)
 {
-	bool bInMM = false;
+	bool bInMM = sc_RunPageAsMM;
 	wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_MM, &bInMM);
-	outWidth = wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_W, 0L);
-	outHeight = wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_H, 0L);
+	outWidth = wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_W, sc_RunPageWidth);
+	outHeight = wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_H, sc_RunPageHeight);
 	if (bInMM != bAsMM || (pDC && bInMM))
 	{
 		if (bInMM)
@@ -1038,10 +1109,10 @@ void CAgilityBookOptions::SetRunPageSize(
 
 void CAgilityBookOptions::GetCalendarFontInfo(CFontInfo& info)
 {
-	info.name = L"Times New Roman";
-	info.size = 80;
-	info.italic = false;
-	info.bold = false;
+	info.name = sc_FontCalName;
+	info.size = sc_FontCalSize * 10;
+	info.italic = sc_FontCalItalic;
+	info.bold = sc_FontCalBold;
 	info.name = StringUtil::stringW(wxConfig::Get()->Read(CFG_CAL_FONTTEXTNAME, info.name.c_str()));
 	wxConfig::Get()->Read(CFG_CAL_FONTTEXTSIZE, &info.size, info.size);
 	wxConfig::Get()->Read(CFG_CAL_FONTTEXTITALIC, &info.italic, info.italic);
@@ -1329,7 +1400,7 @@ void CAgilityBookOptions::CleanLastItems(ARBConfig const& inConfig)
 
 long CAgilityBookOptions::GetImportStartRow()
 {
-	long row = wxConfig::Get()->Read(CFG_IMPORT_ROW, 1L);
+	long row = wxConfig::Get()->Read(CFG_IMPORT_ROW, sc_ImportStartRow);
 	if (0 > row)
 		row = 1;
 	return row;
@@ -1352,7 +1423,7 @@ void CAgilityBookOptions::GetImportExportDelimiters(
 		section = CFG_KEY_IMPORT;
 	else
 		section = CFG_KEY_EXPORT;
-	delim = eDelimTab;
+	delim = sc_ImportExportDelim;
 	delimiter.clear();
 	delim = wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIM, delim);
 	delimiter = StringUtil::stringW(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIMITER, delimiter.c_str()));
@@ -1385,7 +1456,7 @@ void CAgilityBookOptions::GetImportExportDateFormat(
 		section = CFG_KEY_IMPORT;
 	else
 		section = CFG_KEY_EXPORT;
-	outFormat = static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(ARBDate::eISO)));
+	outFormat = static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(sc_ImportExportFormat)));
 }
 
 
@@ -1749,7 +1820,7 @@ void CAgilityBookOptions::SetColumnOrder(
 
 long CAgilityBookOptions::GetMRUFileCount()
 {
-	return wxConfig::Get()->Read(L"Settings/MRUsize", 4L);
+	return wxConfig::Get()->Read(L"Settings/MRUsize", sc_MRUCount);
 }
 
 
@@ -1761,13 +1832,13 @@ void CAgilityBookOptions::SetMRUFileCount(long nFiles)
 
 bool CAgilityBookOptions::GetAutoUpdateCheck()
 {
-	bool val = true;
 #ifdef _DEBUG
-	val = false;
+	return false;
 #else
+	bool val = sc_AutoUpdateCheck;
 	wxConfig::Get()->Read(CFG_SETTINGS_AUTOCHECK, &val);
-#endif
 	return val;
+#endif
 }
 
 
@@ -1779,7 +1850,7 @@ void CAgilityBookOptions::SetAutoUpdateCheck(bool bSet)
 
 long CAgilityBookOptions::GetNumBackupFiles()
 {
-	return wxConfig::Get()->Read(CFG_SETTINGS_BACKUPFILES, 3L);
+	return wxConfig::Get()->Read(CFG_SETTINGS_BACKUPFILES, sc_NumBackup);
 }
 
 
@@ -1791,7 +1862,7 @@ void CAgilityBookOptions::SetNumBackupFiles(long nFiles)
 
 bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 {
-	bool val = false;
+	bool val = sc_ShowPropOnNewTitle;
 	wxConfig::Get()->Read(CFG_SETTINGS_AUTOSHOWTITLE, &val);
 	return val;
 }
@@ -1805,7 +1876,7 @@ void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 
 bool CAgilityBookOptions::ShowHtmlPoints()
 {
-	bool val = true;
+	bool val = sc_ShowHtmlPoints;
 	wxConfig::Get()->Read(CFG_SETTINGS_SHOWHTML, &val);
 	return val;
 }
@@ -1841,7 +1912,7 @@ void CAgilityBookOptions::SetUserName(
 
 bool CAgilityBookOptions::GetUseProxy()
 {
-	bool val = false;
+	bool val = sc_UseProxy;
 	wxConfig::Get()->Read(CFG_SETTINGS_USEPROXY, &val);
 	return val;
 }
