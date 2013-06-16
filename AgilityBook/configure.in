@@ -65,10 +65,12 @@ Darwin*)
 
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
 	then
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -mmacosx-version-min=10.7 -arch i386")
+		AC_SUBST(CXX, "$CXX -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -mmacosx-version-min=10.7")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386")
 		AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -arch i386"])
 	else
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -arch i386")
+		AC_SUBST(CXX, "$CXX -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386")
 		AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.5.sdk -arch i386"])
 	fi
 
