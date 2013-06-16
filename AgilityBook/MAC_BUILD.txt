@@ -1,21 +1,5 @@
 		   Universal Binary Build on MacOS
 
----
-Currently, using these instructions to build a 10.4 binary on 10.5 don't quite
-work right. Using 'otool -L', it can be observed that iconv is version 7.0.0.
-If you use xcode, that properly uses iconv 5.0.0. So, to do an official build,
-use these instructions since they will build the supporting files properly.
-Then use xcode to compile agilitybook. Copy that executable into the output
-directory of the previous build:
-From: .../AgilityBook/src/Projects/macos/<build>/Release/agilitybook.app/Contents/MacOS
-To: .../AgilityBook/<build>/AgilityBook.app/Contents/MacOS
-[Note, when compiling in xcode, make sure it compiles both architectures, not
-just the active one. In Debug, it's set to active, in Release, that's now off]
-
--- Recommended configure options now include turning off iconv, so the above
-step shouldn't be necessary anymore. But it is. Something in the makefiles...
----
-
 0. gettext package (from MacPorts): http://gettext.darwinports.com/
    - Also, it's highly recommended to update svn (sudo port install svn)
 
