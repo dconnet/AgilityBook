@@ -747,7 +747,7 @@ bool CWizardStart::DoWizardFinish()
 					if (output.IsOk())
 					{
 						CConfigHandler handler;
-						std::string dtd = ARBConfig::GetDTD(&handler, false);
+						std::string dtd = ARBConfig::GetDTD(&handler);
 						output.Write(dtd.c_str(), dtd.length());
 						output.Close();
 					}

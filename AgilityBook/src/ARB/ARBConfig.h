@@ -41,7 +41,7 @@ public:
 	/// Load the default configuration
 	virtual ElementNodePtr LoadDefaultConfig() const = 0;
 	/// Load the DTD
-	virtual std::string LoadDTD(bool bNormalizeCRNL) const = 0;
+	virtual std::string LoadDTD() const = 0;
 };
 
 
@@ -128,11 +128,8 @@ public:
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)
 	 * @param inHandler Interface to deal with platform specific resource issues
-	 * @param bNormalizeCRNL Normalize CRNL sequence to NL
 	 */
-	static std::string GetDTD(
-			IARBConfigHandler* inHandler,
-			bool bNormalizeCRNL = true);
+	static std::string GetDTD(IARBConfigHandler* inHandler);
 
 	/**
 	 * Convenience function to get the nice name of a title.

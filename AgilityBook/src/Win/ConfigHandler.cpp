@@ -66,16 +66,13 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 }
 
 
-std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
+std::string CConfigHandler::LoadDTD() const
 {
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 
 	std::stringstream data;
 	LoadWxFile(StringUtil::stringW(datafile), L"AgilityRecordBook.dtd", data);
-	std::string dtd(data.str());
 
-	if (bNormalizeCRNL)
-		dtd = StringUtil::Replace(dtd, "\r\n", "\n");
-	return dtd;
+	return data.str();
 }

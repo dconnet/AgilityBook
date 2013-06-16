@@ -249,12 +249,10 @@ void ARBConfig::Default(IARBConfigHandler* inHandler)
 
 
 /* static */
-std::string ARBConfig::GetDTD(
-		IARBConfigHandler* inHandler,
-		bool bNormalizeCRNL)
+std::string ARBConfig::GetDTD(IARBConfigHandler* inHandler)
 {
 	if (inHandler)
-		return inHandler->LoadDTD(bNormalizeCRNL);
+		return inHandler->LoadDTD();
 	return std::string();
 }
 
