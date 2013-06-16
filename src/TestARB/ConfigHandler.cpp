@@ -79,7 +79,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 }
 
 
-std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
+std::string CConfigHandler::LoadDTD() const
 {
 #if defined(__WXWINDOWS__)
 #ifdef __WXMAC__
@@ -96,9 +96,6 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 
 	std::stringstream data;
 	LoadWxFile(datafile, L"AgilityRecordBook.dtd", data);
-	std::string dtd(data.str());
 
-	if (bNormalizeCRNL)
-		dtd = StringUtil::Replace(dtd, "\r\n", "\n");
-	return dtd;
+	return data.str();
 }

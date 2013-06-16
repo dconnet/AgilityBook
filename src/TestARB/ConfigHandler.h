@@ -31,5 +31,5 @@ public:
 	CConfigHandler();
 
 	virtual ElementNodePtr LoadDefaultConfig() const;
-	virtual std::string LoadDTD(bool bNormalizeCRNL) const;
+	virtual std::string LoadDTD() const;
 };
