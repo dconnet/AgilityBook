@@ -17,10 +17,10 @@
  */
 
 #include "stdafx.h"
-#include "BinaryData.h"
+#include "ARBCommon/BinaryData.h"
 
-#include "ARBBase64.h"
-#include "StringUtil.h"
+#include "ARBCommon/ARBBase64.h"
+#include "ARBCommon/StringUtil.h"
 #if defined(__WXWINDOWS__)
 #include <wx/mstream.h>
 #include <wx/wfstream.h>

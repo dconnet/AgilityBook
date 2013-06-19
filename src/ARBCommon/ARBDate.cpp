@@ -27,11 +27,11 @@
  */
 
 #include "stdafx.h"
-#include "ARBDate.h"
+#include "ARBCommon/ARBDate.h"
 #include <sstream>
 #include <time.h>
 
-#include "StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #if defined(__WXWINDOWS__)
 #include <wx/datetime.h>
 #include <wx/intl.h>

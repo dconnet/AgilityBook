@@ -22,9 +22,9 @@
  */
 
 #include "stdafx.h"
-#include "StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 
-#include "ARBTypes.h"
+#include "ARBCommon/ARBTypes.h"
 #include <algorithm>
 #include <locale>
 #include <sstream>

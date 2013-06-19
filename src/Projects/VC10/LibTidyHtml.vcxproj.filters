@@ -12,6 +12,12 @@
     <Filter Include="tidy">
       <UniqueIdentifier>{9e18ef32-05b7-44c6-8493-667fb95dad52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{b43f1775-7c20-4f7b-8a36-b3d3c0992f7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\LibTidyHtml">
+      <UniqueIdentifier>{92dc8cd7-8b5d-4fce-8492-b86b5e12efe1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\access.c">
@@ -163,11 +169,11 @@
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\win32tc.h">
       <Filter>tidy</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\LibTidyHtml.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\stdafx.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibTidyHtml\LibTidyHtml.h">
+      <Filter>Include\LibTidyHtml</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -29,15 +29,14 @@
  */
 
 #include "stdafx.h"
-#include "ARBConfigVenue.h"
-#include <algorithm>
+#include "ARB/ARBConfigVenue.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfig.h"
-#include "ARBConfigDivision.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBConfigDivision.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

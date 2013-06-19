@@ -18,10 +18,9 @@
  */
 
 #include "stdafx.h"
-#include "ARBInfo.h"
+#include "ARB/ARBInfo.h"
 
-#include "ARBAgilityRecordBook.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
