@@ -19,34 +19,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E7CFFCF1-C043-4443-9F24-8CCBEBFBA690}</ProjectGuid>
-    <RootNamespace>ARBUpdater</RootNamespace>
+    <ProjectGuid>{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}</ProjectGuid>
+    <RootNamespace>LibwxARBCommon</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseOfMfc>false</UseOfMfc>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
@@ -77,70 +73,62 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ARBUpdater\ARBUpdater.cpp" />
-    <ClCompile Include="..\..\ARBUpdater\DlgDigest.cpp" />
-    <ClCompile Include="..\..\ARBUpdater\stdafx.cpp">
+    <ClCompile Include="..\..\ARBCommon\ARBBase64.cpp" />
+    <ClCompile Include="..\..\ARBCommon\ARBDate.cpp" />
+    <ClCompile Include="..\..\ARBCommon\ARBMsgDigest.cpp" />
+    <ClCompile Include="..\..\ARBCommon\ARBTypes.cpp" />
+    <ClCompile Include="..\..\ARBCommon\BinaryData.cpp" />
+    <ClCompile Include="..\..\ARBCommon\BreakLine.cpp" />
+    <ClCompile Include="..\..\ARBCommon\Element.cpp" />
+    <ClCompile Include="..\..\ARBCommon\StringUtil.cpp" />
+    <ClCompile Include="..\..\ARBCommon\VersionNum.cpp" />
+    <ClCompile Include="..\..\ARBCommon\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\Win\Globals.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Win\res\AgilityBook.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\..\ARBUpdater\ARBUpdater.rc" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="..\..\ARBCommon\ARBBase64.h" />
+    <ClInclude Include="..\..\ARBCommon\ARBDate.h" />
+    <ClInclude Include="..\..\ARBCommon\ARBMsgDigest.h" />
+    <ClInclude Include="..\..\ARBCommon\ARBTypes.h" />
+    <ClInclude Include="..\..\ARBCommon\BinaryData.h" />
+    <ClInclude Include="..\..\ARBCommon\BreakLine.h" />
+    <ClInclude Include="..\..\ARBCommon\Element.h" />
+    <ClInclude Include="..\..\ARBCommon\StringUtil.h" />
+    <ClInclude Include="..\..\ARBCommon\VersionNum.h" />
+    <ClInclude Include="..\..\ARBCommon\stdafx.h" />
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
     <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
     <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
-    <ClInclude Include="..\..\Include\ICalendarSite.h" />
-    <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
-    <ClInclude Include="..\..\Win\Globals.h" />
-    <ClInclude Include="..\..\ARBUpdater\DlgDigest.h" />
-    <ClInclude Include="..\..\ARBUpdater\stdafx.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="LibwxARB.vcxproj">
-      <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="LibwxARBCommon.vcxproj">
-      <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties RESOURCE_FILE="ARBUpdater.rc" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>
