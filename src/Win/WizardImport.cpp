@@ -51,7 +51,7 @@
 #include "ListCtrl.h"
 #include "Wizard.h"
 
-#include "ARB/BreakLine.h"
+#include "ARBCommon/BreakLine.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

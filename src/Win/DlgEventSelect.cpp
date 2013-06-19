@@ -29,7 +29,7 @@
 #include "ARB/ARBConfigLevel.h"
 #include "ARB/ARBConfigSubLevel.h"
 #include "ARB/ARBConfigVenue.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/valgen.h>
 
 #ifdef __WXMSW__

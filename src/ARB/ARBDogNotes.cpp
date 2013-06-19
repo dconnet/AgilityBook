@@ -27,9 +27,10 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
-#include "ARBBase64.h"
-#include "BinaryData.h"
-#include "Element.h"
+
+#include "ARBCommon/ARBBase64.h"
+#include "ARBCommon/BinaryData.h"
+#include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

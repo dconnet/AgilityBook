@@ -17,7 +17,7 @@
  */
 
 #include "ARB/ARB_Q.h"
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 
 
 /// Combobox for Qs

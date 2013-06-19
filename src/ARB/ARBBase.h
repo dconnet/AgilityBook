@@ -22,7 +22,8 @@
  */
 
 #include <set>
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * @brief Base class for common functionality.

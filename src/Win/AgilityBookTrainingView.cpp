@@ -47,7 +47,7 @@
 #include "RegItems.h"
 
 #include "ARB/ARBTraining.h"
-#include "ARB/Element.h"
+#include "ARBCommon/Element.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__

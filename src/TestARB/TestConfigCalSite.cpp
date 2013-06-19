@@ -19,7 +19,7 @@
 
 #include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigCalSite.h"
-#include "ARB/Element.h"
+#include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -21,7 +21,8 @@
  */
 
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * Sublevel, allows a level to be split into A/B groupings.

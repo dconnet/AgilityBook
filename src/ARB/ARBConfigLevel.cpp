@@ -26,7 +26,8 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
-#include "Element.h"
+
+#include "ARBCommon/Element.h"
 #include <algorithm>
 
 #ifdef __WXMSW__

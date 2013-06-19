@@ -20,7 +20,7 @@
  * @li 2004-01-05 DRC Created.
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 class CTextCtrl;
 class wxDatePickerCtrl;
 

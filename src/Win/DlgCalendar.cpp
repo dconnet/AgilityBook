@@ -42,7 +42,7 @@
 
 #include "ARB/ARBCalendar.h"
 #include "ARB/ARBConfig.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <set>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>

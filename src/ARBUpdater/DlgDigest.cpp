@@ -17,8 +17,8 @@
 #include "stdafx.h"
 #include "DlgDigest.h"
 
-#include "ARB/ARBMsgDigest.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/ARBMsgDigest.h"
+#include "ARBCommon/StringUtil.h"
 #include "Win/Globals.h"
 
 #include <wx/filedlg.h>

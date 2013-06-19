@@ -19,8 +19,8 @@
  * @li 2006-03-02 DRC Separated filter options from main options.
  */
 
-#include "ARB/ARBDate.h"
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
+#include "ARBCommon/ARBDate.h"
 #include <set>
 #include <vector>
 

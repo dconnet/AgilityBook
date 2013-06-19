@@ -19,10 +19,10 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARB/ARBDate.h"
 #include "ARB/ARBStructure.h"
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/ARBDate.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 
 #if defined(__WXWINDOWS__)
 #include <wx/filefn.h>

@@ -22,7 +22,7 @@
 
 #include "Globals.h"
 
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <vector>
 #include <wx/utils.h>
 

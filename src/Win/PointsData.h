@@ -29,8 +29,8 @@
  */
 
 #include "ListData.h"
-#include "ARB/ARBDate.h"
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
+#include "ARBCommon/ARBDate.h"
 #include <list>
 #include <set>
 #include <vector>

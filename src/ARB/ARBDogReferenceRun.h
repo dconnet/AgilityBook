@@ -22,7 +22,8 @@
 
 #include "ARB_Q.h"
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * How did other dogs perform on the run we did?

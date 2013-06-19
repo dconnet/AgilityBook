@@ -17,7 +17,7 @@
  */
 
 #include "PointsData.h"
-#include "ARB/ARBTypes.h"
+#include "ARBCommon/ARBTypes.h"
 #include <vector>
 
 #if wxCHECK_VERSION(2, 9, 5)

@@ -52,7 +52,7 @@
 #include "TabView.h"
 
 #include "ARB/ARBCalendar.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/dcbuffer.h>
 
 #ifdef __WXMSW__

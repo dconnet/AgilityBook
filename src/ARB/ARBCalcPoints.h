@@ -15,7 +15,7 @@
  * @li 2011-07-31 DRC Created
  */
 
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 ARB_TYPEDEF(ARBCalcPoints)
 ARB_TYPEDEF(ARBCalcPointsNormal)
 ARB_TYPEDEF(ARBCalcPointsT2B)

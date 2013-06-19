@@ -23,7 +23,8 @@
  *    Element.cpp (errors due to XML parsing failures)
  */
 
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * This class must be implemented by the user to define some strings ARB

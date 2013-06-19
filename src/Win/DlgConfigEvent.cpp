@@ -54,7 +54,7 @@
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfigEvent.h"
 #include "ARB/ARBConfigVenue.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 #include <wx/statline.h>
 

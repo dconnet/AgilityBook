@@ -30,13 +30,14 @@
 
 #include "stdafx.h"
 #include "ARBCalendar.h"
-#include <algorithm>
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
-#include "ARBTypes.h"
-#include "Element.h"
-#include "StringUtil.h"
+
+#include "ARBCommon/ARBTypes.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

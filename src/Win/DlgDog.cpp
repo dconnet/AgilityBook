@@ -65,7 +65,7 @@
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDog.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/dateevt.h>
 #include <wx/notebook.h>
 

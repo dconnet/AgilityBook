@@ -20,7 +20,7 @@
 
 #include "IconList.h"
 #include "ARB/ARBConfig.h"
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
 class CDlgConfigureDataBase;

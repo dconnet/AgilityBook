@@ -26,11 +26,12 @@
 #include "stdafx.h"
 #include "ARBConfigTitle.h"
 
-#include <algorithm>
-#include <math.h>
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
-#include "Element.h"
+
+#include "ARBCommon/Element.h"
+#include <algorithm>
+#include <math.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

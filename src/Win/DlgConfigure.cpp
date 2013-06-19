@@ -46,7 +46,7 @@
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBConfigVenue.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/artprov.h>
 
 #ifdef __WXMSW__

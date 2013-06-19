@@ -32,7 +32,7 @@
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBLocalization.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/colordlg.h>
 #include <wx/valgen.h>
 

@@ -18,7 +18,7 @@
  * @li 2003-09-21 DRC Created
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 class CAgilityBookDoc;
 class wxDatePickerCtrl;
 

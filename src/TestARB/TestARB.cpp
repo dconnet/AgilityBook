@@ -25,8 +25,8 @@
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBStructure.h"
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include "TestReporterStdout.h"
 #include <iostream>
 #include <stdexcept>
@@ -280,7 +280,7 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 	if (tree->GetName() != L"DefaultConfig")
 		return false;
 	ARBVersion version;
-	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
+	version.GetAttrib(tree, ATTRIB_BOOK_VERSION);
 	int idx = tree->FindElement(TREE_CONFIG);
 	assert(0 <= idx);
 	std::wostringstream errMsg;

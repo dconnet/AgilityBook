@@ -25,8 +25,8 @@
 #include "RegItems.h"
 
 #include "ARB/ARBDog.h"
-#include "ARB/ARBTypes.h"
-#include "ARB/StringUtil.h"
+#include "ARB/ARBTypes2.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 #include <wx/config.h>
 

@@ -22,9 +22,10 @@
 
 #include <set>
 #include <vector>
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 
 typedef std::vector<std::wstring> ARBDogFaultList;
+
 
 class ARBMetaData;
 typedef std::tr1::shared_ptr<ARBMetaData> ARBMetaDataPtr;
@@ -44,6 +45,7 @@ private:
 	size_t m_Bytes;
 	unsigned char* m_Data;
 };
+
 
 /**
  * Various notes about a run.

@@ -41,8 +41,8 @@
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfig.h"
-#include "ARB/Element.h"
-#include "ARB/VersionNum.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/VersionNum.h"
 #include <map>
 #include <vector>
 #include <wx/dir.h>

@@ -38,7 +38,7 @@
 #include "RegItems.h"
 #include "TabView.h"
 
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/config.h>
 #include <wx/dnd.h>
 #include <wx/platinfo.h>

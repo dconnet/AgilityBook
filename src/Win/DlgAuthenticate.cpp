@@ -21,7 +21,7 @@
 
 #include "Widgets.h"
 
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/sizer.h>
 #include <wx/statbox.h>
 #include <wx/valgen.h>

@@ -28,7 +28,7 @@
 #include "DlgAuthenticate.h"
 #include "DlgProgress.h"
 
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/sstream.h>
 #include <wx/url.h>
 #include <wx/wfstream.h>

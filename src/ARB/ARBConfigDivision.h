@@ -24,7 +24,8 @@
 
 #include "ARBBase.h"
 #include "ARBConfigLevel.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * Division configuration information.

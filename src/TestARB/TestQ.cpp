@@ -18,8 +18,8 @@
 #include "TestARB.h"
 
 #include "ARB/ARB_Q.h"
-#include "ARB/ARBTypes.h"
-#include "ARB/Element.h"
+#include "ARBCommon/ARBTypes.h"
+#include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

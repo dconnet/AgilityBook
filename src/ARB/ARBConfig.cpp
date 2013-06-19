@@ -29,7 +29,8 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBDogTitle.h"
 #include "ARBLocalization.h"
-#include "Element.h"
+
+#include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -235,7 +236,7 @@ void ARBConfig::Default(IARBConfigHandler* inHandler)
 		if (tree && tree->GetName() == L"DefaultConfig")
 		{
 			ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
-			tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
+			version.GetAttrib(tree, ATTRIB_BOOK_VERSION);
 			int config = tree->FindElement(TREE_CONFIG);
 			if (0 <= config)
 			{

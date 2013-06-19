@@ -19,7 +19,8 @@
  */
 
 #include "ARBInfoItem.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * General information to be tracked.
