@@ -15,11 +15,10 @@
  */
 
 #include "stdafx.h"
-#include "ARBCalcPoints.h"
+#include "ARB/ARBCalcPoints.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 

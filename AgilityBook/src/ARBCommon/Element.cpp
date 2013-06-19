@@ -43,15 +43,15 @@
  */
 
 #include "stdafx.h"
-#include "Element.h"
+#include "ARBCommon/Element.h"
 #include <fstream>
 #include <list>
 #include <map>
 #include <sstream>
 
-#include "ARBDate.h"
-#include "ARBTypes.h"
-#include "StringUtil.h"
+#include "ARBCommon/ARBDate.h"
+#include "ARBCommon/ARBTypes.h"
+#include "ARBCommon/StringUtil.h"
 
 #if !defined(USE_LIBXML2)
 #if defined(__WXWINDOWS__)

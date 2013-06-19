@@ -36,16 +36,15 @@
  */
 
 #include "stdafx.h"
-#include "ARBDogTrial.h"
-#include <algorithm>
+#include "ARB/ARBDogTrial.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBCalendar.h"
-#include "ARBConfig.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBCalendar.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/Element.h"
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -18,7 +18,7 @@
  */
 
 #include "stdafx.h"
-#include "ARBLocalization.h"
+#include "ARB/ARBLocalization.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

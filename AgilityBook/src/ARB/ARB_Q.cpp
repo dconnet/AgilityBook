@@ -15,10 +15,9 @@
  */
 
 #include "stdafx.h"
-#include "ARB_Q.h"
+#include "ARB/ARB_Q.h"
 
-#include "ARBStructure.h"
-
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 

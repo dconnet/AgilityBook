@@ -22,11 +22,11 @@
  */
 
 #include "stdafx.h"
-#include "VersionNum.h"
+#include "ARBCommon/VersionNum.h"
 
-#include "ARBTypes.h"
-#include "BreakLine.h"
-#include "StringUtil.h"
+#include "ARBCommon/ARBTypes.h"
+#include "ARBCommon/BreakLine.h"
+#include "ARBCommon/StringUtil.h"
 #include "VersionNumber.h"
 #include <sstream>
 

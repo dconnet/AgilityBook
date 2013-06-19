@@ -21,13 +21,12 @@
  */
 
 #include "stdafx.h"
-#include "ARBInfoItem.h"
-#include <algorithm>
+#include "ARB/ARBInfoItem.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

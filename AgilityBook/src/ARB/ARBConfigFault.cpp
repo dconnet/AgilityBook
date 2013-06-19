@@ -19,11 +19,10 @@
  */
 
 #include "stdafx.h"
-#include "ARBConfigFault.h"
+#include "ARB/ARBConfigFault.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__

@@ -9,6 +9,12 @@
       <UniqueIdentifier>{ebe833d8-72f2-431d-85fd-b60c78eca2f9}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
     </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{44685349-4c38-4855-9a58-3ab6cc606b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\LibArchive">
+      <UniqueIdentifier>{16816342-5452-4ae0-ba60-dfaa1d395309}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\LibArchive\LibArchive.cpp">
@@ -22,8 +28,8 @@
     <ClInclude Include="..\..\LibArchive\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LibArchive\LibArchive.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\Include\LibArchive\LibArchive.h">
+      <Filter>Include\LibArchive</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

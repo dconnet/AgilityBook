@@ -27,10 +27,10 @@
  */
 
 #include "stdafx.h"
-#include "ARBTypes.h"
+#include "ARBCommon/ARBTypes.h"
 
-#include "Element.h"
-#include "StringUtil.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <iostream>
 #include <math.h>
 #include <sstream>

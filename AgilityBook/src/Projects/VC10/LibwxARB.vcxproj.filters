@@ -19,6 +19,9 @@
     <Filter Include="Include\Platform">
       <UniqueIdentifier>{8481adbe-eb4b-41f9-991c-e7889ff459ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include\ARB">
+      <UniqueIdentifier>{b6416bb2-9b38-4332-b410-0a98129e99f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ARB\ARBAgilityRecordBook.cpp">
@@ -140,124 +143,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ARB\ARBAgilityRecordBook.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBCalendar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigCalSite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigDivision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigFault.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigLevel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigLifetimePoints.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigMultiQ.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigOtherPoints.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigPlaceInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigScoring.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigSubLevel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigTitle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigTitlePoints.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBConfigVenue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogClub.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogExistingPoints.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogNotes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogReferenceRun.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogRegNum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogRun.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogRunOtherPoints.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogRunPartner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogRunScoring.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogTitle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBDogTrial.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBInfoItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBLocalization.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBStructure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBTraining.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBTypes2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ARB\stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBCalcPoints.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARB_Q.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
@@ -283,6 +169,123 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARB_Q.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBTypes2.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBAgilityRecordBook.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBBase.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBCalcPoints.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBCalendar.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfig.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigAction.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigCalSite.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigDivision.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigEvent.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigFault.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigLevel.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimePoints.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigMultiQ.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigOtherPoints.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigPlaceInfo.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigScoring.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigSubLevel.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigTitle.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigTitlePoints.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBConfigVenue.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDog.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogClub.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogExistingPoints.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogNotes.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogReferenceRun.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogRegNum.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogRun.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogRunOtherPoints.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogRunPartner.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogRunScoring.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogTitle.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBDogTrial.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBInfo.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBInfoItem.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBLocalization.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBStructure.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\ARBTraining.h">
+      <Filter>Include\ARB</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

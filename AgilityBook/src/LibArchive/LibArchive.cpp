@@ -15,7 +15,7 @@
  */
 
 #include "stdafx.h"
-#include "LibArchive.h"
+#include "LibArchive/LibArchive.h"
 
 #if defined(__WXWINDOWS__)
 #include <wx/filesys.h>

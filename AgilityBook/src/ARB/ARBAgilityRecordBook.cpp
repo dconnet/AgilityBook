@@ -90,12 +90,11 @@
  */
 
 #include "stdafx.h"
-#include "ARBAgilityRecordBook.h"
+#include "ARB/ARBAgilityRecordBook.h"
 
-#include "ARBConfig.h"
-#include "ARBDog.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBDog.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"

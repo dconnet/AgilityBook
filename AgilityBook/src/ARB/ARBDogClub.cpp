@@ -21,12 +21,11 @@
  */
 
 #include "stdafx.h"
-#include "ARBDogTrial.h"
+#include "ARB/ARBDogTrial.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfig.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/Element.h"
 
