@@ -19,8 +19,8 @@
  */
 
 #include "Widgets.h"
-#include "ARB/ARBTypes.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/ARBTypes.h"
+#include "ARBCommon/StringUtil.h"
 #include <map>
 #include <vector>
 #include <wx/imaglist.h>

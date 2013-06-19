@@ -27,6 +27,7 @@
 #include "ARBDogClub.h"
 #include "ARBDogRun.h"
 
+
 /**
  * All the information about a trial.
  */

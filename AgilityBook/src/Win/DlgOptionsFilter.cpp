@@ -39,7 +39,7 @@
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBConfigVenue.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/datectrl.h>
 
 #ifdef __WXMSW__

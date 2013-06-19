@@ -17,7 +17,8 @@
  */
 
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * This class is used for 2 purposes:

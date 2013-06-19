@@ -21,7 +21,8 @@
  */
 
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * Other points are accumulated on a per-run basis.

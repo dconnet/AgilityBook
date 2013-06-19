@@ -23,7 +23,8 @@
  */
 
 #include "ARBConfigScoring.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * Keeps track of the scoring for a run.

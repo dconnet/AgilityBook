@@ -42,9 +42,10 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBCalendar.h"
 #include "ARBConfig.h"
-#include "ARBDate.h"
 #include "ARBLocalization.h"
-#include "Element.h"
+
+#include "ARBCommon/ARBDate.h"
+#include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

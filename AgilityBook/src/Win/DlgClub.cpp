@@ -29,7 +29,7 @@
 #include "Validators.h"
 
 #include "ARB/ARBDogClub.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <set>
 
 #ifdef __WXMSW__

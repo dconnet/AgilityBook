@@ -18,7 +18,7 @@
  * @li 2007-10-05 DRC Created
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 #include <map>
 #include <vector>
 #include <wx/listctrl.h>

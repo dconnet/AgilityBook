@@ -32,7 +32,7 @@
 #include "Widgets.h"
 
 #include "ARB/ARBConfigTitle.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/datectrl.h>
 
 #ifdef __WXMSW__

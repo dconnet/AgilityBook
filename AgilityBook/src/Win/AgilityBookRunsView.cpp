@@ -65,8 +65,8 @@
 #include "Print.h"
 #include "RegItems.h"
 
-#include "ARB/ARBTypes.h"
-#include "ARB/Element.h"
+#include "ARB/ARBTypes2.h"
+#include "ARBCommon/Element.h"
 #include <algorithm>
 #include <wx/config.h>
 

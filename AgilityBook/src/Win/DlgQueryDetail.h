@@ -18,7 +18,7 @@
  * @li 2007-12-24 DRC Created
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 class ARBConfig;
 class CTextCtrl;
 class CVenueComboBox;

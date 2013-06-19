@@ -1,0 +1,68 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for the ARBComon subdirectory                                       #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES += -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include `wx-config --cppflags`
+
+##########
+# List of programs and archives to link
+##########
+ARCHIVES = libarbcommon
+
+##########
+# Source files for each target
+##########
+libarbcommon_SRCS = ARBBase64.cpp \
+	ARBDate.cpp \
+	ARBMsgDigest.cpp \
+	ARBTypes.cpp \
+	BinaryData.cpp \
+	BreakLine.cpp \
+	Element.cpp \
+	StringUtil.cpp \
+	VersionNum.cpp
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+#arbcommon_LIBS = `wx-config --libs`
+# prog1_LDFLAGS = -L/path/to/extralib
+
+##########
+# Precompiled headers
+##########
+PRECOMP_HEADER = $(TOPSRCDIR)/src/ARBCommon/stdafx.h
+
+
+##########
+# Stuff to install
+##########
+#INSTALL_BIN = libarbcommon
+#INSTALL_MAN = prog1.5
+
+@NAM_RULES@
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

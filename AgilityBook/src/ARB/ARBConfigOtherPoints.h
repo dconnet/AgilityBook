@@ -21,7 +21,8 @@
  */
 
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * A way to tally points that aren't inheritantly known.

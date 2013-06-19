@@ -27,10 +27,10 @@
 #include "ReadHttp.h"
 
 #include "ARB/ARBStructure.h"
-#include "ARB/BreakLine.h"
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
-#include "ARB/VersionNum.h"
+#include "ARBCommon/BreakLine.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
+#include "ARBCommon/VersionNum.h"
 #include "LibTidyHtml/LibTidyHtml.h"
 #include <errno.h>
 #include <wx/ffile.h>

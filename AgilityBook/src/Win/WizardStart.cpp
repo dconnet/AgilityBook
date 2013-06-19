@@ -43,9 +43,9 @@
 #include "DlgMessage.h"
 #include "Wizard.h"
 
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
-#include "ARB/VersionNum.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
+#include "ARBCommon/VersionNum.h"
 #include <wx/config.h>
 #include <wx/wfstream.h>
 

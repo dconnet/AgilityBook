@@ -75,7 +75,7 @@
 
 #include "ARB/ARBDogClub.h"
 #include "ARB/ARBDogTrial.h"
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -32,8 +32,10 @@
 #include "ARBConfigLifetimePoints.h"
 #include "ARBConfigPlaceInfo.h"
 #include "ARBConfigTitlePoints.h"
-#include "ARBDate.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
+#include "ARBCommon/ARBDate.h"
+
 
 /**
  * Scoring methods for an event.

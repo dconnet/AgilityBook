@@ -40,8 +40,8 @@
 #include "RegItems.h"
 #include "TabView.h"
 
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <vector>
 #include <wx/choicdlg.h>
 #include <wx/cmdline.h>

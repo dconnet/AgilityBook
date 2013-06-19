@@ -16,9 +16,10 @@
  * @li 2007-08-02 DRC Created
  */
 
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 #include <map>
 #include <vector>
+
 
 /**
  * Configuration information for auto-loading calendar entries from the web.

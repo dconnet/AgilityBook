@@ -18,7 +18,7 @@
  * @li 2004-06-06 DRC Separated from AgilityBookTreeData.cpp
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 #include <wx/clipbrd.h>
 
 // Name of root element when writing Elements.

@@ -38,7 +38,7 @@
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogTitle.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 

@@ -27,7 +27,7 @@
 #include "ARBConfigFault.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBConfigVenue.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 
 
 /**

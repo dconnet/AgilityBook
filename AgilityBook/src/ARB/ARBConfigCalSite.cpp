@@ -18,10 +18,11 @@
 #include "stdafx.h"
 #include "ARBConfigCalSite.h"
 
-#include <algorithm>
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
-#include "Element.h"
+
+#include "ARBCommon/Element.h"
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
