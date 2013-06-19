@@ -69,6 +69,7 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBInfo.cpp \
 	ARBInfoItem.cpp \
 	ARBLocalization.cpp \
+	ARBTypes2.cpp \
 	ARBTraining.cpp
 
 ##########
