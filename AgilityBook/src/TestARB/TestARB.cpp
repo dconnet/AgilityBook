@@ -6,7 +6,6 @@
 
 /**
  * @file
- * @brief Main access (in non-mfc dll, we'd have the DllMain here)
  * @author David Connet
  *
  * Revision History
