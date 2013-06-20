@@ -235,7 +235,7 @@ void ARBConfig::Default(IARBConfigHandler* inHandler)
 		if (tree && tree->GetName() == L"DefaultConfig")
 		{
 			ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
-			version.GetAttrib(tree, ATTRIB_BOOK_VERSION);
+			tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 			int config = tree->FindElement(TREE_CONFIG);
 			if (0 <= config)
 			{

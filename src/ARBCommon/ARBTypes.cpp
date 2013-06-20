@@ -188,3 +188,12 @@ bool ARBDouble::equal(
 	double diff = fabs(inVal1 - inVal2);
 	return diff <= epsilon;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+
+std::wstring ARBVersion::str() const
+{
+	std::wostringstream buffer;
+	buffer << Major() << L"." << Minor();
+	return buffer.str();
+}

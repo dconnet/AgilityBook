@@ -764,7 +764,7 @@ void CUpdateInfo::CheckConfig(
 				{
 					strConfig.erase();
 					ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
-					version.GetAttrib(tree, ATTRIB_BOOK_VERSION);
+					tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 					int nConfig = tree->FindElement(TREE_CONFIG);
 					if (0 <= nConfig)
 					{
