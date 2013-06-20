@@ -49,7 +49,7 @@
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
 #include "ARB/ARBLocalization.h"
-#include "ARB/BreakLine.h"
+#include "ARBCommon/BreakLine.h"
 #include <wx/valgen.h>
 #include <wx/wfstream.h>
 

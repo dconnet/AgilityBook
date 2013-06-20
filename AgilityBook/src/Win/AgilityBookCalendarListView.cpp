@@ -55,7 +55,7 @@
 #include "Wizard.h"
 
 #include "ARB/ARBCalendar.h"
-#include "ARB/Element.h"
+#include "ARBCommon/Element.h"
 #include <wx/config.h>
 #include <wx/mstream.h>
 #include <wx/settings.h>

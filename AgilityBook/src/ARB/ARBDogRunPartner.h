@@ -22,7 +22,8 @@
  */
 
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * Keeps track of partners in pairs runs.

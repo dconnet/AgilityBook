@@ -17,7 +17,7 @@
  */
 
 #include "PointsData.h"
-#include "ARB/ARBTypes.h"
+#include "ARBCommon/ARBTypes.h"
 #include <vector>
 #include <wx/html/htmprint.h>
 #include <wx/print.h>

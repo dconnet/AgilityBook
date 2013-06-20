@@ -102,9 +102,9 @@
 #include "ReadHttp.h"
 #include "RegItems.h"
 
-#include "ARB/ARBMsgDigest.h"
-#include "ARB/Element.h"
-#include "ARB/VersionNum.h"
+#include "ARBCommon/ARBMsgDigest.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/VersionNum.h"
 #include <wx/config.h>
 #include <wx/filedlg.h>
 #include <wx/filename.h>
@@ -766,7 +766,7 @@ void CUpdateInfo::CheckConfig(
 				{
 					strConfig.erase();
 					ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
-					tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
+					version.GetAttrib(tree, ATTRIB_BOOK_VERSION);
 					int nConfig = tree->FindElement(TREE_CONFIG);
 					if (0 <= nConfig)
 					{

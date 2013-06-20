@@ -54,12 +54,12 @@
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBCalendar.h"
 #include "ARB/ARBConfig.h"
-#include "ARB/ARBDate.h"
 #include "ARB/ARBDogTitle.h"
 #include "ARB/ARBDogTrial.h"
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
-#include "ARB/VersionNum.h"
+#include "ARBCommon/ARBDate.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
+#include "ARBCommon/VersionNum.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__
@@ -477,7 +477,7 @@ bool CAgilityBookOptions::ImportSettings(ElementNodePtr tree)
 		return false;
 	// Version numbers aren't needed yet.
 	ARBVersion version;
-	if (ElementNode::eFound != tree->GetAttrib(ATTRIB_BOOK_VERSION, version))
+	if (ElementNode::eFound != version.GetAttrib(tree, ATTRIB_BOOK_VERSION))
 		return false;
 	std::wstring pgmVersion;
 	if (ElementNode::eFound != tree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, pgmVersion))
@@ -500,7 +500,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	CVersionNum ver(true);
 	std::wstring verstr = ver.GetVersionString();
 	ElementNodePtr tree(ElementNode::New(L"AgilityBookSettings"));
-	tree->AddAttrib(ATTRIB_BOOK_VERSION, ARBAgilityRecordBook::GetCurrentDocVersion());
+	ARBAgilityRecordBook::GetCurrentDocVersion().AddAttrib(tree, ATTRIB_BOOK_VERSION);
 	tree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, verstr);
 
 	// These sections are copied complete.

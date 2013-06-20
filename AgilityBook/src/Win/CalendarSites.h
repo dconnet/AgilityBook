@@ -17,7 +17,7 @@
  * @li 2007-08-12 DRC Created
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 class CAgilityBookDoc;
 class CCalendarSitesImpl;
 

@@ -35,7 +35,7 @@
 #include "CalendarSites.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
-#include "ARB/ARBTypes.h"
+#include "ARBCommon/ARBTypes.h"
 #include <set>
 #include <wx/docview.h>
 class CAgilityBookCalendarListView;

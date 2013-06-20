@@ -28,10 +28,10 @@
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBCalendar.h"
-#include "ARB/ARBDate.h"
 #include "ARB/ARBDogTitle.h"
 #include "ARB/ARBDogTrial.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/ARBDate.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 #include <wx/config.h>
 

@@ -37,11 +37,11 @@
 #include "FilterOptions.h"
 
 #include "ARB/ARBConfig.h"
-#include "ARB/ARBDate.h"
 #include "ARB/ARBDog.h"
 #include "ARB/ARBDogExistingPoints.h"
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
+#include "ARBCommon/ARBDate.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -644,33 +644,6 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
-		ARBVersion& outValue) const
-{
-	std::wstring value;
-	AttribLookup rc = GetAttrib(inName, value);
-	if (eFound == rc)
-	{
-		unsigned short major = 0;
-		unsigned short minor = 0;
-		std::wstring::size_type pos = value.find('.');
-		if (std::wstring::npos != pos)
-		{
-			major = static_cast<unsigned short>(StringUtil::ToCLong(value));
-			value = value.substr(pos+1);
-			minor = static_cast<unsigned short>(StringUtil::ToCLong(value));
-		}
-		else
-		{
-			major = static_cast<unsigned short>(StringUtil::ToCLong(value));
-		}
-		outValue = ARBVersion(major, minor);
-	}
-	return rc;
-}
-
-
-ElementNode::AttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
 		ARBDate& outValue) const
 {
 	std::wstring value;
@@ -822,14 +795,6 @@ bool ElementNode::AddAttrib(
 	else
 		m_Attribs[inName] = std::wstring();
 	return true;
-}
-
-
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		ARBVersion const& inValue)
-{
-	return AddAttrib(inName, inValue.str());
 }
 
 

@@ -29,8 +29,9 @@
 #include "ARBConfigEvent.h"
 #include "ARBConfigMultiQ.h"
 #include "ARBConfigTitle.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 class ARBDate;
+
 
 /**
  * Venue configuration information.

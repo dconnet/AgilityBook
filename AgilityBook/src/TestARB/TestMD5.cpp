@@ -16,7 +16,7 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARB/ARBMsgDigest.h"
+#include "ARBCommon/ARBMsgDigest.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

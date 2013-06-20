@@ -19,7 +19,8 @@
  */
 
 #include "UnitTest++.h"
-#include <ARB/ARBTypes.h>
+#include <ARBCommon/ARBTypes.h>
+class ARBConfig;
 
 // Set this to 1 to cause TODO_TESTs to fail
 #define FAIL_TODO_TEST	0

@@ -17,7 +17,7 @@
  * @li 2009-03-01 DRC Ported to wxWidgets.
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARBCommon/ARBTypes.h"
 #include <map>
 #include <wx/wizard.h>
 class CDlgPageEncode;

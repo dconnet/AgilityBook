@@ -17,7 +17,7 @@
  * @li 2007-01-02 DRC Created
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARBCommon/ARBTypes.h"
 #include <sstream>
 #include <wx/wizard.h>
 class CDlgARBHelp;

@@ -36,7 +36,6 @@ ARCHIVES = libarb
 libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARB_Q.cpp \
 	ARBBase.cpp \
-	ARBBase64.cpp \
 	ARBCalcPoints.cpp \
 	ARBCalendar.cpp \
 	ARBConfig.cpp \
@@ -55,7 +54,6 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBConfigTitle.cpp \
 	ARBConfigTitlePoints.cpp \
 	ARBConfigVenue.cpp \
-	ARBDate.cpp \
 	ARBDog.cpp \
 	ARBDogClub.cpp \
 	ARBDogExistingPoints.cpp \
@@ -71,14 +69,8 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBInfo.cpp \
 	ARBInfoItem.cpp \
 	ARBLocalization.cpp \
-	ARBMsgDigest.cpp \
-	ARBTraining.cpp \
-	ARBTypes.cpp \
-	BinaryData.cpp \
-	BreakLine.cpp \
-	Element.cpp \
-	StringUtil.cpp \
-	VersionNum.cpp
+	ARBTypes2.cpp \
+	ARBTraining.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)

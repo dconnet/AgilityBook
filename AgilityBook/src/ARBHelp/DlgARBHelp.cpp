@@ -27,8 +27,8 @@
 #include "DlgPageEncodeFiles.h"
 #include "DlgPageEncodeFinish.h"
 
-#include "ARB/BinaryData.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/BinaryData.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
 

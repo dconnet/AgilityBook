@@ -43,8 +43,8 @@
  */
 
 #include "ColumnOrder.h"
-#include "ARB/ARBDate.h"
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
+#include "ARBCommon/ARBDate.h"
 #include <wx/listctrl.h>
 class CAgilityBookDoc;
 class CAutoFillComboBox;

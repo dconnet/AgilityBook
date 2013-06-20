@@ -17,7 +17,7 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

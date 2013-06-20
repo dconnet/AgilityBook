@@ -20,8 +20,8 @@
  * @li 2005-01-21 DRC Added Location/Club info fields.
  */
 
-#include "ARB/ARBDate.h"
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
+#include "ARBCommon/ARBDate.h"
 class CAgilityBookDoc;
 class CAutoFillComboBox;
 class CNoteButton;

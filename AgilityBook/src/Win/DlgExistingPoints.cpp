@@ -35,7 +35,7 @@
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogExistingPoints.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 

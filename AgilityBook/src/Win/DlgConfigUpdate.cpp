@@ -30,8 +30,8 @@
 #include "Widgets.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/filedlg.h>
 
 #ifdef __WXMSW__

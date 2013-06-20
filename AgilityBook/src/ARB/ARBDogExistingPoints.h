@@ -21,8 +21,10 @@
  */
 
 #include "ARBBase.h"
-#include "ARBDate.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
+#include "ARBCommon/ARBDate.h"
+
 
 /**
  * Initializes the titling points a dog has.

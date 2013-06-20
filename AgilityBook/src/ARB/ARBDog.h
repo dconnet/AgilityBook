@@ -26,12 +26,14 @@
  */
 
 #include "ARBBase.h"
-#include "ARBDate.h"
 #include "ARBDogExistingPoints.h"
 #include "ARBDogRegNum.h"
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
+#include "ARBCommon/ARBDate.h"
+
 
 /**
  * Information about a dog, titles, runs, etc.

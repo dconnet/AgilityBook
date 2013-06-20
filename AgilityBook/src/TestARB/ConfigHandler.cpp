@@ -21,8 +21,8 @@
 #include "stdafx.h"
 #include "ConfigHandler.h"
 
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include "LibArchive/LibArchive.h"
 
 #if defined(__WXWINDOWS__)

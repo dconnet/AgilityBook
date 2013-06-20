@@ -34,7 +34,8 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
 #include "ARBLocalization.h"
-#include "Element.h"
+
+#include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

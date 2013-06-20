@@ -22,8 +22,9 @@
  */
 
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 class ARBDate;
+
 
 /**
  * Dog club.

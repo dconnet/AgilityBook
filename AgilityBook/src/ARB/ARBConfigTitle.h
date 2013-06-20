@@ -27,9 +27,10 @@
  */
 
 #include "ARBBase.h"
-#include "ARBDate.h"
-#include "ARBTypes.h"
-#include "Element.h"
+#include "ARBTypes2.h"
+
+#include "ARBCommon/ARBDate.h"
+#include "ARBCommon/Element.h"
 
 
 enum ARBTitleStyle

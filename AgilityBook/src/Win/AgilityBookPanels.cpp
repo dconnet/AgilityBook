@@ -31,7 +31,7 @@
 #include "CommonView.h"
 #include "RegItems.h"
 
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/config.h>
 #include <wx/object.h>
 #include <wx/splitter.h>

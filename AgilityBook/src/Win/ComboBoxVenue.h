@@ -16,7 +16,7 @@
  * @li 2013-04-15 DRC Separated from ComboBoxes.h
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 
 
 /// Combobox specifically for listing venues

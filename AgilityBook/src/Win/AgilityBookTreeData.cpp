@@ -71,8 +71,8 @@
 #include "ARB/ARBDog.h"
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

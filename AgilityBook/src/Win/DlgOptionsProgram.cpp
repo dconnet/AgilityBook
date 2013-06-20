@@ -24,7 +24,7 @@
 #include "AgilityBookOptions.h"
 #include "Widgets.h"
 
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/url.h>
 #include <wx/valgen.h>
 

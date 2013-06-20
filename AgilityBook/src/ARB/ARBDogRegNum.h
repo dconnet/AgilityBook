@@ -22,7 +22,8 @@
  */
 
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * Registration number for a venue.

@@ -47,9 +47,6 @@ ARB_TYPEDEF(Element)
 ARB_TYPEDEF2(ElementNode)
 ARB_TYPEDEF2(ElementText)
 
-#include "ARBTypes2.h"
-
-
 /**
  * Make a string safe for HTML viewing.
  * @param inRawData String to sanitize
@@ -58,79 +55,6 @@ ARB_TYPEDEF2(ElementText)
 std::wstring SanitizeStringForHTML(
 		std::wstring const& inRawData,
 		bool bConvertCR = true);
-
-/////////////////////////////////////////////////////////////////////////////
-/**
- * A version has a major and minor number.
- * Differences between major numbers prevents older versions of the program
- * from reading newer files. Differences in minor numbers allows an older
- * version to read the newer file, but warns that some information may be
- * lost if the file is saved.
- *
- * This class is assuming that a short==16 bits and long==32 bits.
- */
-class ARBVersion
-{
-public:
-	ARBVersion()
-		: m_Version(0)
-	{
-	}
-
-	ARBVersion(
-			unsigned short major,
-			unsigned short minor)
-		: m_Version((major<<16) | minor)
-	{
-	}
-
-	ARBVersion(ARBVersion const& inVer)
-		: m_Version(inVer.m_Version)
-	{
-	}
-
-	ARBVersion& operator=(ARBVersion const& rhs)
-	{
-		if (this != &rhs)
-		{
-			m_Version = rhs.m_Version;
-		}
-		return *this;
-	}
-	bool operator==(ARBVersion const& rhs) const
-	{
-		return m_Version == rhs.m_Version;
-	}
-	bool operator<(ARBVersion const& rhs) const
-	{
-		return m_Version < rhs.m_Version;
-	}
-	bool operator<=(ARBVersion const& rhs) const
-	{
-		return m_Version <= rhs.m_Version;
-	}
-	bool operator>(ARBVersion const& rhs) const
-	{
-		return m_Version > rhs.m_Version;
-	}
-	bool operator>=(ARBVersion const& rhs) const
-	{
-		return m_Version >= rhs.m_Version;
-	}
-
-	unsigned short Major() const
-	{
-		return static_cast<unsigned short>(m_Version >> 16);
-	}
-	unsigned short Minor() const
-	{
-		return static_cast<unsigned short>(m_Version & 0xffff);
-	}
-	std::wstring str() const;
-
-private:
-	unsigned long m_Version;
-};
 
 /////////////////////////////////////////////////////////////////////////////
 /**

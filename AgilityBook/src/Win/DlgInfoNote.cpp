@@ -47,7 +47,7 @@
 #include "ImageManager.h"
 #include "Widgets.h"
 
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 
 #ifdef __WXMSW__

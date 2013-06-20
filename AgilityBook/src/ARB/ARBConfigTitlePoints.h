@@ -25,7 +25,7 @@
 
 #include "ARBBase.h"
 #include "ARBCalcPoints.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 
 
 /**

@@ -19,7 +19,7 @@
  */
 
 #include "ListData.h"
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 class CDlgConfigVenue;
 
 

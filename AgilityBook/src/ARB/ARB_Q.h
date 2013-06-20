@@ -15,9 +15,9 @@
  * @li 2013-08-14 DRC Moved out of ARBTypes.h
  */
 
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 
-/////////////////////////////////////////////////////////////////////////////
+
 /**
  * Qualifying status of a run.
  * In XML/Element, this class is only used as an attribute, never an element.

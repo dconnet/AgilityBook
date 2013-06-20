@@ -18,8 +18,9 @@
 #include "ARB_Q.h"
 
 #include "ARBStructure.h"
-#include "Element.h"
-#include "StringUtil.h"
+
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>

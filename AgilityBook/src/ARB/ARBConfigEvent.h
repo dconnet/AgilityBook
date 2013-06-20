@@ -28,8 +28,9 @@
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigScoring.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 class ARBDate;
+
 
 /**
  * Event configuration information.

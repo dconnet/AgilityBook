@@ -18,7 +18,7 @@
  * @li 2004-06-29 DRC Added Note to regnum.
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 class CVenueComboBox;
 
 

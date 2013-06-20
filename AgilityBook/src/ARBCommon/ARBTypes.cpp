@@ -96,15 +96,6 @@ std::wstring SanitizeStringForHTML(
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::wstring ARBVersion::str() const
-{
-	std::wostringstream buffer;
-	buffer << Major() << L"." << Minor();
-	return buffer.str();
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
 // Trailing zeros are trimmed unless inPrec=2.
 // Then they are only trimmed if all zero (and inPrec=2).
 std::wstring ARBDouble::ToString(

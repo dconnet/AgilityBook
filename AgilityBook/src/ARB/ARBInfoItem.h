@@ -23,7 +23,8 @@
 
 #include <set>
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * Comments about items

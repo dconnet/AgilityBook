@@ -25,8 +25,8 @@
 #include "stdafx.h"
 #include "SpreadSheet.h"
 
-#include "ARB/ARBTypes.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/ARBTypes.h"
+#include "ARBCommon/StringUtil.h"
 #include <sstream>
 
 #if HAS_AUTOMATION

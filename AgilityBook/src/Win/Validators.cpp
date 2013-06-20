@@ -25,9 +25,9 @@
 #include "stdafx.h"
 #include "Validators.h"
 
-#include "ARB/ARBDate.h"
-#include "ARB/ARBTypes.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/ARBDate.h"
+#include "ARBCommon/ARBTypes.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/datectrl.h>
 
 #if defined(__WXMSW__)

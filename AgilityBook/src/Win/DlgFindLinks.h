@@ -21,7 +21,7 @@
  */
 
 #include "ColumnOrder.h"
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 #include <vector>
 class CReportListCtrl;
 class wxListEvent;

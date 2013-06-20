@@ -27,8 +27,10 @@
 
 #include "ARBBase.h"
 #include "ARBConfigTitle.h"
-#include "ARBDate.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
+#include "ARBCommon/ARBDate.h"
+
 
 /**
  * Titles a dog has earned.

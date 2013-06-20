@@ -25,7 +25,7 @@
 
 #include "RegItems.h"
 
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/cshelp.h>
 #include <wx/dir.h>
 #include <wx/stdpaths.h>

@@ -22,7 +22,8 @@
 
 #include "ARBBase.h"
 #include "ARBConfigSubLevel.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * Levels within a division.

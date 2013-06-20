@@ -28,13 +28,15 @@
 #include <set>
 #include "ARB_Q.h"
 #include "ARBBase.h"
-#include "ARBDate.h"
 #include "ARBDogNotes.h"
 #include "ARBDogReferenceRun.h"
 #include "ARBDogRunOtherPoints.h"
 #include "ARBDogRunPartner.h"
 #include "ARBDogRunScoring.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
+#include "ARBCommon/ARBDate.h"
+
 
 class ARBDogRun : public ARBBase
 {

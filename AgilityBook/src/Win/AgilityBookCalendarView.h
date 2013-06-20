@@ -24,7 +24,7 @@
 
 #include "CommonView.h"
 
-#include "ARB/ARBDate.h"
+#include "ARBCommon/ARBDate.h"
 #include <wx/docview.h>
 class CAgilityBookCalendar;
 

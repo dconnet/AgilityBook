@@ -49,8 +49,9 @@
 #include "ARBInfo.h"
 #include "ARBStructure.h"
 #include "ARBTraining.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
 #include <set>
+
 
 /**
  * The main data class.

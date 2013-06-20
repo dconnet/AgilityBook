@@ -36,11 +36,11 @@
  */
 
 #include "ColumnOrder.h"
-#include "ARB/ARBDate.h"
 #include "ARB/ARBDogExistingPoints.h"
 #include "ARB/ARBDogRegNum.h"
 #include "ARB/ARBDogTitle.h"
-#include "ARB/ARBTypes.h"
+#include "ARBCommon/ARBDate.h"
+#include "ARBCommon/ARBTypes.h"
 #include <wx/listctrl.h>
 class CAgilityBookDoc;
 class CDlgDogDataTitle;

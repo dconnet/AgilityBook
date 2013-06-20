@@ -123,7 +123,7 @@
 #include "ARB/ARBDogClub.h"
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <set>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>

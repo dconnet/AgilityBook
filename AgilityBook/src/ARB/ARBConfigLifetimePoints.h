@@ -19,7 +19,8 @@
  */
 
 #include "ARBBase.h"
-#include "ARBTypes.h"
+#include "ARBTypes2.h"
+
 
 /**
  * Number of lifetime points that can be earned based on number of faults.

@@ -23,8 +23,8 @@
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 
-#include "ARB/Element.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <sstream>
 #include <wx/mstream.h>
 

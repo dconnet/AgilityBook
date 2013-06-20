@@ -42,8 +42,8 @@
 #include "DlgTitle.h"
 #include "FilterOptions.h"
 
-#include "ARB/ARBDate.h"
 #include "ARB/ARBDog.h"
+#include "ARBCommon/ARBDate.h"
 #include <algorithm>
 #include <map>
 #include <wx/utils.h>

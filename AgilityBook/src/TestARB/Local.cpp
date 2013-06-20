@@ -28,7 +28,7 @@
 #include "Local.h"
 
 #include "ARB/ARBStructure.h"
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 
 #if defined(__WXWINDOWS__)
 #include <wx/string.h>

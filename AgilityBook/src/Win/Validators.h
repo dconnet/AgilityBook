@@ -18,7 +18,7 @@
  * @li 2009-02-15 DRC Created
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 #include <wx/valgen.h>
 #include <wx/valtext.h>
 class ARBDate;

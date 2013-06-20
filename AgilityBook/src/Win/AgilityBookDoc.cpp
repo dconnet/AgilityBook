@@ -92,8 +92,8 @@
 #include "UpdateInfo.h"
 #include "Wizard.h"
 
-#include "ARB/Element.h"
-#include "ARB/VersionNum.h"
+#include "ARBCommon/Element.h"
+#include "ARBCommon/VersionNum.h"
 #include <algorithm>
 #include <fstream>
 #include <wx/config.h>

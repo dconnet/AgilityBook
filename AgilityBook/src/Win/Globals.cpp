@@ -26,7 +26,7 @@
 #include "ListData.h"
 #include "Widgets.h"
 
-#include "ARB/StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <wx/config.h>
 #include <wx/display.h>
 #include <wx/file.h>

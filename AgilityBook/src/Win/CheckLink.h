@@ -18,7 +18,7 @@
  * @li 2005-09-20 DRC Created
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 
 
 extern bool CheckLink(

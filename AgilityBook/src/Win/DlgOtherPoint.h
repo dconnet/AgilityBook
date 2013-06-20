@@ -17,7 +17,7 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "ARB/ARBTypes.h"
+#include "ARB/ARBTypes2.h"
 class CRichEditCtrl2;
 
 
