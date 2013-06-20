@@ -177,7 +177,7 @@ bool ARBAgilityRecordBook::Load(
 
 	// The version of the document must be something we understand.
 	ARBVersion version;
-	if (ElementNode::eFound != version.GetAttrib(inTree, ATTRIB_BOOK_VERSION))
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_BOOK_VERSION, version))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION));
 		return false;
@@ -340,7 +340,7 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 		return false;
 	outTree->clear();
 	outTree->SetName(TREE_BOOK);
-	GetCurrentDocVersion().AddAttrib(outTree, ATTRIB_BOOK_VERSION);
+	outTree->AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_PLATFORM, GetArch());
 #if defined(__WXWINDOWS__)

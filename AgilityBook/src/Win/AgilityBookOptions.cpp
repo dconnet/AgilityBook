@@ -477,7 +477,7 @@ bool CAgilityBookOptions::ImportSettings(ElementNodePtr tree)
 		return false;
 	// Version numbers aren't needed yet.
 	ARBVersion version;
-	if (ElementNode::eFound != version.GetAttrib(tree, ATTRIB_BOOK_VERSION))
+	if (ElementNode::eFound != tree->GetAttrib(ATTRIB_BOOK_VERSION, version))
 		return false;
 	std::wstring pgmVersion;
 	if (ElementNode::eFound != tree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, pgmVersion))
@@ -500,7 +500,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	CVersionNum ver(true);
 	std::wstring verstr = ver.GetVersionString();
 	ElementNodePtr tree(ElementNode::New(L"AgilityBookSettings"));
-	ARBAgilityRecordBook::GetCurrentDocVersion().AddAttrib(tree, ATTRIB_BOOK_VERSION);
+	tree->AddAttrib(ATTRIB_BOOK_VERSION, ARBAgilityRecordBook::GetCurrentDocVersion());
 	tree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, verstr);
 
 	// These sections are copied complete.
