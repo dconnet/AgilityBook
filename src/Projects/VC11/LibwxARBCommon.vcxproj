@@ -111,22 +111,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ARBCommon\ARBBase64.h" />
-    <ClInclude Include="..\..\ARBCommon\ARBDate.h" />
-    <ClInclude Include="..\..\ARBCommon\ARBMsgDigest.h" />
-    <ClInclude Include="..\..\ARBCommon\ARBTypes.h" />
-    <ClInclude Include="..\..\ARBCommon\BinaryData.h" />
-    <ClInclude Include="..\..\ARBCommon\BreakLine.h" />
-    <ClInclude Include="..\..\ARBCommon\Element.h" />
-    <ClInclude Include="..\..\ARBCommon\StringUtil.h" />
-    <ClInclude Include="..\..\ARBCommon\VersionNum.h" />
-    <ClInclude Include="..\..\ARBCommon\stdafx.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\ARBBase64.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\ARBDate.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\ARBMsgDigest.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\ARBTypes.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\BinaryData.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\BreakLine.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\Element.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\StringUtil.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\VersionNum.h" />
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
     <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
     <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
+    <ClInclude Include="..\..\ARBCommon\stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,6 +19,9 @@
     <Filter Include="Include\Platform">
       <UniqueIdentifier>{76b0837f-9e50-4915-ba18-7b68def3e4b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include\ARBCommon">
+      <UniqueIdentifier>{2eb9c25a-b61f-43d9-8e53-9f402573f675}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ARBCommon\ARBBase64.cpp">
@@ -53,34 +56,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ARBCommon\ARBBase64.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARBCommon\ARBDate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARBCommon\ARBMsgDigest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARBCommon\ARBTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARBCommon\BinaryData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARBCommon\BreakLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARBCommon\Element.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARBCommon\StringUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ARBCommon\stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARBCommon\VersionNum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
@@ -100,6 +76,33 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\ARBBase64.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\VersionNum.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\ARBDate.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\ARBMsgDigest.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\ARBTypes.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\BinaryData.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\BreakLine.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\Element.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\StringUtil.h">
+      <Filter>Include\ARBCommon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
