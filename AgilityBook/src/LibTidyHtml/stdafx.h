@@ -23,11 +23,3 @@
 
 #include "Platform/SetupARBPre.h"
 #include "Platform/SetupARBPost.h"
-/*
-TODO: v2 v trunk diff (above is v2)
-#ifdef USE_WXWIDGETS
-#include "Platform/SetupWX.h"
-#else
-#include "Platform/SetupWinRT.h"
-#endif
-*/
