@@ -130,7 +130,6 @@
     <ClCompile Include="..\..\ARB\ARBInfoItem.cpp" />
     <ClCompile Include="..\..\ARB\ARBLocalization.cpp" />
     <ClCompile Include="..\..\ARB\ARBTraining.cpp" />
-    <ClCompile Include="..\..\ARB\ARBTypes2.cpp" />
     <ClCompile Include="..\..\ARB\ARB_Q.cpp" />
     <ClCompile Include="..\..\ARB\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

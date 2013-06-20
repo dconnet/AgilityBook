@@ -30,6 +30,7 @@
 #include <sstream>
 #include <vector>
 class ARBDate;
+class ARBVersion;
 
 /**
  * Tree-like structure to hold XML data.
@@ -189,6 +190,9 @@ public:
 			std::wstring& outValue) const;
 	AttribLookup GetAttrib(
 			std::wstring const& inName,
+			ARBVersion& outValue) const;
+	AttribLookup GetAttrib(
+			std::wstring const& inName,
 			ARBDate& outValue) const;
 	AttribLookup GetAttrib(
 			std::wstring const& inName,
@@ -222,6 +226,9 @@ public:
 	bool AddAttrib(
 			std::wstring const& inName,
 			wchar_t const* const inValue);
+	bool AddAttrib(
+			std::wstring const& inName,
+			ARBVersion const& inValue);
 	bool AddAttrib(
 			std::wstring const& inName,
 			ARBDate const& inValue);

@@ -280,7 +280,7 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 	if (tree->GetName() != L"DefaultConfig")
 		return false;
 	ARBVersion version;
-	version.GetAttrib(tree, ATTRIB_BOOK_VERSION);
+	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 	int idx = tree->FindElement(TREE_CONFIG);
 	assert(0 <= idx);
 	std::wostringstream errMsg;
