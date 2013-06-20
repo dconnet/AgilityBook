@@ -20,7 +20,7 @@
 
 #include "RegItems.h"
 
-#include "ARB/ARBTypes2.h"
+#include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 #include <wx/config.h>
 
