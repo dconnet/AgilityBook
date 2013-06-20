@@ -19,7 +19,7 @@
 
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/StringUtil.h"
-#include "Win/Globals.h"
+#include "../Win/Globals.h"
 
 #include <wx/filedlg.h>
 #include <wx/valgen.h>

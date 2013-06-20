@@ -28,11 +28,10 @@
  */
 
 #include "stdafx.h"
-#include "ARBConfigEvent.h"
+#include "ARB/ARBConfigEvent.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
 #include <algorithm>
 

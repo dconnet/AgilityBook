@@ -28,14 +28,13 @@
  */
 
 #include "stdafx.h"
-#include <math.h>
-#include "ARBDogRunScoring.h"
+#include "ARB/ARBDogRunScoring.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfig.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
+#include <math.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

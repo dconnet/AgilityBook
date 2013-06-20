@@ -23,11 +23,10 @@
  */
 
 #include "stdafx.h"
-#include "ARBDogNotes.h"
+#include "ARB/ARBDogNotes.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfig.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
 #include "ARBCommon/ARBBase64.h"
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/Element.h"

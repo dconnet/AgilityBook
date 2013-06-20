@@ -17,7 +17,7 @@
  */
 
 #include "stdafx.h"
-#include "BreakLine.h"
+#include "ARBCommon/BreakLine.h"
 
 #include <sstream>
 

@@ -25,9 +25,9 @@
  */
 
 #include "stdafx.h"
-#include "ARBBase64.h"
+#include "ARBCommon/ARBBase64.h"
 
-#include "StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

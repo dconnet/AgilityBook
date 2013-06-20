@@ -27,11 +27,10 @@
  */
 
 #include "stdafx.h"
-#include "ARBConfigAction.h"
+#include "ARB/ARBConfigAction.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__

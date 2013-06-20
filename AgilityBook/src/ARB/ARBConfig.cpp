@@ -24,12 +24,11 @@
  */
 
 #include "stdafx.h"
-#include "ARBConfig.h"
+#include "ARB/ARBConfig.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBDogTitle.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBDogTitle.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__

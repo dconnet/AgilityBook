@@ -15,11 +15,11 @@
  */
 
 #include "stdafx.h"
-#include "LibTidyHtml.h"
+#include "LibTidyHtml/LibTidyHtml.h"
 
-#include "tidy/include/tidy.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "tidy/include/tidy.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

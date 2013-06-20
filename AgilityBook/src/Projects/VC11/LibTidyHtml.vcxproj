@@ -139,7 +139,7 @@
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\win32tc.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\LibTidyHtml\LibTidyHtml.h" />
+    <ClInclude Include="..\..\Include\LibTidyHtml\LibTidyHtml.h" />
     <ClInclude Include="..\..\LibTidyHtml\stdafx.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\access.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrdict.h" />

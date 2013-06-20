@@ -21,9 +21,9 @@
  */
 
 #include "stdafx.h"
-#include "ARBMsgDigest.h"
+#include "ARBCommon/ARBMsgDigest.h"
 
-#include "StringUtil.h"
+#include "ARBCommon/StringUtil.h"
 #include <sstream>
 #if defined(__WXWINDOWS__)
 #include <wx/file.h>

@@ -29,7 +29,7 @@
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
-#include "Win/Widgets.h"
+#include "../Win/Widgets.h"
 #include <algorithm>
 #include <wx/ffile.h>
 #include <wx/filename.h>

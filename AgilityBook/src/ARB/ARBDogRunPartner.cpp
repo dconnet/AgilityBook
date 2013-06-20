@@ -21,12 +21,11 @@
  */
 
 #include "stdafx.h"
-#include "ARBDogRunPartner.h"
+#include "ARB/ARBDogRunPartner.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfig.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__

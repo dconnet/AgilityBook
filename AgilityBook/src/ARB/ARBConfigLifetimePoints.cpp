@@ -17,11 +17,10 @@
  */
 
 #include "stdafx.h"
-#include "ARBConfigLifetimePoints.h"
+#include "ARB/ARBConfigLifetimePoints.h"
 
-#include "ARBAgilityRecordBook.h"
-#include "ARBLocalization.h"
-
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
 #include <algorithm>
 

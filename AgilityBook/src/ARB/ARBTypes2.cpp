@@ -14,7 +14,7 @@
  */
 
 #include "stdafx.h"
-#include "ARBTypes2.h"
+#include "ARB/ARBTypes2.h"
 
 #include "ARBCommon/StringUtil.h"
 
