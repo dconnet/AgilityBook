@@ -70,7 +70,8 @@ else
 	fi
 fi
 
-LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no"
+#LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no"
+LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --without-libiconv --without-liblzma"
 
 echo "../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $MINSDK"
 
