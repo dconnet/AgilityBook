@@ -263,22 +263,33 @@ bool ARBConfigTitlePointsList::Load(
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 class SortConfigTitlePoints
 {
 public:
 	SortConfigTitlePoints() {}
-	bool operator()(ARBConfigTitlePointsPtr one, ARBConfigTitlePointsPtr two) const
+	bool operator()(ARBConfigTitlePointsPtr const& one, ARBConfigTitlePointsPtr const& two) const
 	{
 		return one->GetFaults() < two->GetFaults();
 	}
 };
+#endif
 
 
 void ARBConfigTitlePointsList::sort()
 {
 	if (2 > size())
 		return;
+#ifdef ARB_HAS_LAMBDA
+	std::stable_sort(begin(), end(),
+		[](ARBConfigTitlePointsPtr const& one, ARBConfigTitlePointsPtr const& two)
+		{
+			return one->GetFaults() < two->GetFaults();
+		}
+	);
+#else
 	std::stable_sort(begin(), end(), SortConfigTitlePoints());
+#endif
 }
 
 
