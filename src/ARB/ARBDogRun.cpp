@@ -802,22 +802,33 @@ bool ARBDogRunList::Save(
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 class SortRun
 {
 public:
 	SortRun() {}
-	bool operator()(ARBDogRunPtr one, ARBDogRunPtr two) const
+	bool operator()(ARBDogRunPtr const& one, ARBDogRunPtr const& two) const
 	{
 		return one->GetDate() < two->GetDate();
 	}
 };
+#endif
 
 
 void ARBDogRunList::sort()
 {
 	if (2 > size())
 		return;
+#ifdef ARB_HAS_LAMBDA
+	std::stable_sort(begin(), end(),
+		[](ARBDogRunPtr const& one, ARBDogRunPtr const& two)
+		{
+			return one->GetDate() < two->GetDate();
+		}
+	);
+#else
 	std::stable_sort(begin(), end(), SortRun());
+#endif
 }
 
 

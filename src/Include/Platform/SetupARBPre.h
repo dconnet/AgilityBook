@@ -215,3 +215,9 @@
 #ifdef _MSC_VER
 #define ARB_HAS_OSTREAM_WCHAR
 #endif
+
+// ARB_HAS_LAMBDA
+//  Supports lambda functions
+#if _MSC_VER >= 1600
+#define ARB_HAS_LAMBDA
+#endif

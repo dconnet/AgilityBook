@@ -415,7 +415,7 @@ class SortTrials
 {
 public:
 	SortTrials(bool bDescending) : m_bDescending(bDescending) {}
-	bool operator()(ARBDogTrialPtr one, ARBDogTrialPtr two) const
+	bool operator()(ARBDogTrialPtr const& one, ARBDogTrialPtr const& two) const
 	{
 		int iCompare = 0;
 		ARBDate d1 = one->GetStartDate();

@@ -331,22 +331,33 @@ bool ARBConfigCalSiteList::Load(
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 class SortConfigCalSite
 {
 public:
 	SortConfigCalSite() {}
-	bool operator()(ARBConfigCalSitePtr one, ARBConfigCalSitePtr two) const
+	bool operator()(ARBConfigCalSitePtr const& one, ARBConfigCalSitePtr const& two) const
 	{
 		return one->GetName() < two->GetName();
 	}
 };
+#endif
 
 
 void ARBConfigCalSiteList::sort()
 {
 	if (2 > size())
 		return;
+#ifdef ARB_HAS_LAMBDA
+	std::stable_sort(begin(), end(),
+		[](ARBConfigCalSitePtr const& one, ARBConfigCalSitePtr const& two)
+		{
+			return one->GetName() < two->GetName();
+		}
+	);
+#else
 	std::stable_sort(begin(), end(), SortConfigCalSite());
+#endif
 }
 
 

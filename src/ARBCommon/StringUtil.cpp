@@ -566,58 +566,81 @@ std::wstring TrimRight(std::wstring const& inStr, wchar_t toTrim)
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 static void my_tolower(char& ch)
 {
 	ch = std::tolower(ch, std::locale::classic());
 }
-
+#endif
 
 std::string ToLower(std::string const& inStr)
 {
 	std::string out(inStr);
+#ifdef ARB_HAS_LAMBDA
+	std::for_each(out.begin(), out.end(), [](char& ch) {ch = std::tolower(ch, std::locale::classic());});
+#else
 	std::for_each(out.begin(), out.end(), my_tolower);
+#endif
 	return out;
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 static void my_wtolower(wchar_t& ch)
 {
 	ch = std::tolower(ch, std::locale::classic());
 }
+#endif
 
 
 std::wstring ToLower(std::wstring const& inStr)
 {
 	std::wstring out(inStr);
+#ifdef ARB_HAS_LAMBDA
+	std::for_each(out.begin(), out.end(), [](wchar_t& ch) {ch = std::tolower(ch, std::locale::classic());});
+#else
 	std::for_each(out.begin(), out.end(), my_wtolower);
+#endif
 	return out;
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 static void my_toupper(char& ch)
 {
 	ch = std::toupper(ch, std::locale::classic());
 }
+#endif
 
 
 std::string ToUpper(std::string const& inStr)
 {
 	std::string out(inStr);
+#ifdef ARB_HAS_LAMBDA
+	std::for_each(out.begin(), out.end(), [](char& ch) {ch = std::toupper(ch, std::locale::classic());});
+#else
 	std::for_each(out.begin(), out.end(), my_toupper);
+#endif
 	return out;
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 static void my_wtoupper(wchar_t& ch)
 {
 	ch = std::toupper(ch, std::locale::classic());
 }
+#endif
 
 
 std::wstring ToUpper(std::wstring const& inStr)
 {
 	std::wstring out(inStr);
+#ifdef ARB_HAS_LAMBDA
+	std::for_each(out.begin(), out.end(), [](wchar_t& ch) {ch = std::toupper(ch, std::locale::classic());});
+#else
 	std::for_each(out.begin(), out.end(), my_wtoupper);
+#endif
 	return out;
 }
 

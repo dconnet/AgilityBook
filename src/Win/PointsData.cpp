@@ -1267,7 +1267,7 @@ public:
 	{
 		CAgilityBookOptions::GetPointsViewSort(m_Order[0], m_Order[1], m_Order[2]);
 	}
-	bool operator()(CPointsDataEvent* one, CPointsDataEvent* two) const
+	bool operator()(CPointsDataEvent const* const one, CPointsDataEvent const* const two) const
 	{
 		for (int i = 0; i < 3; ++i)
 		{
