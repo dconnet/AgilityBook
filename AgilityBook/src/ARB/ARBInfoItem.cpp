@@ -211,22 +211,33 @@ bool ARBInfoItemList::Save(ElementNodePtr ioTree) const
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 class SortInfoItem
 {
 public:
 	SortInfoItem() {}
-	bool operator()(ARBInfoItemPtr one, ARBInfoItemPtr two) const
+	bool operator()(ARBInfoItemPtr const& one, ARBInfoItemPtr const& two) const
 	{
 		return one->GetName() < two->GetName();
 	}
 };
+#endif
 
 
 void ARBInfoItemList::sort()
 {
 	if (2 > size())
 		return;
+#ifdef ARB_HAS_LAMBDA
+	std::stable_sort(begin(), end(),
+		[](ARBInfoItemPtr const& one, ARBInfoItemPtr const& two)
+		{
+			return one->GetName() < two->GetName();
+		}
+	);
+#else
 	std::stable_sort(begin(), end(), SortInfoItem());
+#endif
 }
 
 

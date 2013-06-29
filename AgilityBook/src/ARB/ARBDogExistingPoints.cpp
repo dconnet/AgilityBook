@@ -467,7 +467,7 @@ class SortExistingPoints
 {
 public:
 	SortExistingPoints() {}
-	bool operator()(ARBDogExistingPointsPtr one, ARBDogExistingPointsPtr two) const
+	bool operator()(ARBDogExistingPointsPtr const& one, ARBDogExistingPointsPtr const& two) const
 	{
 		if (one->GetOtherPoints() == two->GetOtherPoints())
 		{

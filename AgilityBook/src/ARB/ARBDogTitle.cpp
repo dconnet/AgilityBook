@@ -326,7 +326,7 @@ class SortTitle
 {
 public:
 	SortTitle() {}
-	bool operator()(ARBDogTitlePtr one, ARBDogTitlePtr two) const
+	bool operator()(ARBDogTitlePtr const& one, ARBDogTitlePtr const& two) const
 	{
 		if (one->GetDate() == two->GetDate())
 		{

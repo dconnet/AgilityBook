@@ -168,22 +168,33 @@ bool ARBConfigLifetimePointsList::Load(
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 class SortConfigLifetimePoints
 {
 public:
 	SortConfigLifetimePoints() {}
-	bool operator()(ARBConfigLifetimePointsPtr one, ARBConfigLifetimePointsPtr two) const
+	bool operator()(ARBConfigLifetimePointsPtr const& one, ARBConfigLifetimePointsPtr const& two) const
 	{
 		return one->GetFaults() < two->GetFaults();
 	}
 };
+#endif
 
 
 void ARBConfigLifetimePointsList::sort()
 {
 	if (2 > size())
 		return;
+#ifdef ARB_HAS_LAMBDA
+	std::stable_sort(begin(), end(),
+		[](ARBConfigLifetimePointsPtr const& one, ARBConfigLifetimePointsPtr const& two)
+		{
+			return one->GetFaults() < two->GetFaults();
+		}
+	);
+#else
 	std::stable_sort(begin(), end(), SortConfigLifetimePoints());
+#endif
 }
 
 

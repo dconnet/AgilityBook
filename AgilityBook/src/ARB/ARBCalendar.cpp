@@ -937,22 +937,33 @@ bool ARBCalendarList::Load(
 }
 
 
+#ifndef ARB_HAS_LAMBDA
 class SortCalendar
 {
 public:
 	SortCalendar() {}
-	bool operator()(ARBCalendarPtr one, ARBCalendarPtr two) const
+	bool operator()(ARBCalendarPtr const& one, ARBCalendarPtr const& two) const
 	{
 		return one->GetStartDate() < two->GetStartDate();
 	}
 };
+#endif
 
 
 void ARBCalendarList::sort()
 {
 	if (2 > size())
 		return;
+#ifdef ARB_HAS_LAMBDA
+	std::stable_sort(begin(), end(),
+		[](ARBCalendarPtr const& one, ARBCalendarPtr const& two)
+		{
+			return one->GetStartDate() < two->GetStartDate();
+		}
+	);
+#else
 	std::stable_sort(begin(), end(), SortCalendar());
+#endif
 }
 
 
