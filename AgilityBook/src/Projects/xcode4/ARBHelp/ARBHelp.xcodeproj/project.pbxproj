@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E110B541177FD467004071B5 /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E110B540177FD467004071B5 /* libARBCommon.a */; };
 		E19B6603166C1640004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B6602166C1640004DEDA4 /* Cocoa.framework */; };
 		E19B6633166C166F004DEDA4 /* ARBHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6621166C166F004DEDA4 /* ARBHelp.cpp */; };
 		E19B6635166C166F004DEDA4 /* DlgARBHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6624166C166F004DEDA4 /* DlgARBHelp.cpp */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E110B540177FD467004071B5 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libARBCommon.a; path = ../ARBCommon/build/Release/libARBCommon.a; sourceTree = "<group>"; };
 		E19B65FE166C1640004DEDA4 /* ARBHelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARBHelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B6602166C1640004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E19B6605166C1640004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -53,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E110B541177FD467004071B5 /* libARBCommon.a in Frameworks */,
 				E19B664C166C17C3004DEDA4 /* libARB.a in Frameworks */,
 				E19B6603166C1640004DEDA4 /* Cocoa.framework in Frameworks */,
 			);
@@ -64,6 +67,7 @@
 		E19B65F3166C1640004DEDA4 = {
 			isa = PBXGroup;
 			children = (
+				E110B540177FD467004071B5 /* libARBCommon.a */,
 				E19B664B166C17C3004DEDA4 /* libARB.a */,
 				E19B6608166C1640004DEDA4 /* ARBHelp */,
 				E19B6601166C1640004DEDA4 /* Frameworks */,

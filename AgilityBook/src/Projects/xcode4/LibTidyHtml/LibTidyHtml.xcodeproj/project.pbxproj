@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E110B4FF177FD089004071B5 /* LibTidyHtml.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4FE177FD089004071B5 /* LibTidyHtml.h */; };
 		E1796484176927F0003AE489 /* LibTidyHtml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E179641A176927F0003AE489 /* LibTidyHtml.cpp */; };
-		E1796485176927F0003AE489 /* LibTidyHtml.h in Headers */ = {isa = PBXBuildFile; fileRef = E179641B176927F0003AE489 /* LibTidyHtml.h */; };
 		E1796486176927F0003AE489 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E179641D176927F0003AE489 /* stdafx.h */; };
 		E179648E176927F0003AE489 /* buffio.h in Headers */ = {isa = PBXBuildFile; fileRef = E179644E176927F0003AE489 /* buffio.h */; };
 		E179648F176927F0003AE489 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = E179644F176927F0003AE489 /* platform.h */; };
@@ -65,9 +65,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E110B4FE177FD089004071B5 /* LibTidyHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibTidyHtml.h; sourceTree = "<group>"; };
 		E1796412176927D2003AE489 /* libLibTidyHtml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibTidyHtml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E179641A176927F0003AE489 /* LibTidyHtml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibTidyHtml.cpp; path = ../../../LibTidyHtml/LibTidyHtml.cpp; sourceTree = "<group>"; };
-		E179641B176927F0003AE489 /* LibTidyHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibTidyHtml.h; path = ../../../LibTidyHtml/LibTidyHtml.h; sourceTree = "<group>"; };
 		E179641D176927F0003AE489 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../LibTidyHtml/stdafx.h; sourceTree = "<group>"; };
 		E179644E176927F0003AE489 /* buffio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffio.h; sourceTree = "<group>"; };
 		E179644F176927F0003AE489 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
@@ -134,6 +134,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E110B4FB177FD048004071B5 /* LibTidyHtml */ = {
+			isa = PBXGroup;
+			children = (
+				E179641E176927F0003AE489 /* tidy */,
+				E179641A176927F0003AE489 /* LibTidyHtml.cpp */,
+				E179641D176927F0003AE489 /* stdafx.h */,
+			);
+			name = LibTidyHtml;
+			sourceTree = "<group>";
+		};
+		E110B4FC177FD068004071B5 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				E110B4FD177FD089004071B5 /* LibTidyHtml */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		E110B4FD177FD089004071B5 /* LibTidyHtml */ = {
+			isa = PBXGroup;
+			children = (
+				E110B4FE177FD089004071B5 /* LibTidyHtml.h */,
+			);
+			name = LibTidyHtml;
+			path = ../../../Include/LibTidyHtml;
+			sourceTree = "<group>";
+		};
 		E1796409176927D2003AE489 = {
 			isa = PBXGroup;
 			children = (
@@ -153,10 +180,8 @@
 		E1796419176927DB003AE489 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				E179641A176927F0003AE489 /* LibTidyHtml.cpp */,
-				E179641B176927F0003AE489 /* LibTidyHtml.h */,
-				E179641D176927F0003AE489 /* stdafx.h */,
-				E179641E176927F0003AE489 /* tidy */,
+				E110B4FC177FD068004071B5 /* Include */,
+				E110B4FB177FD048004071B5 /* LibTidyHtml */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -244,7 +269,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1796485176927F0003AE489 /* LibTidyHtml.h in Headers */,
 				E1796486176927F0003AE489 /* stdafx.h in Headers */,
 				E179648E176927F0003AE489 /* buffio.h in Headers */,
 				E179648F176927F0003AE489 /* platform.h in Headers */,
@@ -272,6 +296,7 @@
 				E17964BE176927F0003AE489 /* utf8.h in Headers */,
 				E17964BF176927F0003AE489 /* version.h in Headers */,
 				E17964C1176927F0003AE489 /* win32tc.h in Headers */,
+				E110B4FF177FD089004071B5 /* LibTidyHtml.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

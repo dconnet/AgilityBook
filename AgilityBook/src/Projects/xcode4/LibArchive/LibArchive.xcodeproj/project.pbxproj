@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E110B4F8177FD00C004071B5 /* LibArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4F7177FD00C004071B5 /* LibArchive.h */; };
 		E124BBAF16BD8F10006FBF2D /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E124BBA916BD8F10006FBF2D /* LibArchive.cpp */; };
-		E124BBB016BD8F10006FBF2D /* LibArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = E124BBAA16BD8F10006FBF2D /* LibArchive.h */; };
 		E124BBB116BD8F10006FBF2D /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E124BBAD16BD8F10006FBF2D /* stdafx.cpp */; };
 		E124BBB216BD8F10006FBF2D /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E124BBAE16BD8F10006FBF2D /* stdafx.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E110B4F7177FD00C004071B5 /* LibArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibArchive.h; sourceTree = "<group>"; };
 		E124BBA916BD8F10006FBF2D /* LibArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibArchive.cpp; path = ../../../LibArchive/LibArchive.cpp; sourceTree = "<group>"; };
-		E124BBAA16BD8F10006FBF2D /* LibArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibArchive.h; path = ../../../LibArchive/LibArchive.h; sourceTree = "<group>"; };
 		E124BBAD16BD8F10006FBF2D /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../../LibArchive/stdafx.cpp; sourceTree = "<group>"; };
 		E124BBAE16BD8F10006FBF2D /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../LibArchive/stdafx.h; sourceTree = "<group>"; };
 		E161079516BD89D3006B9BC0 /* libLibArchive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibArchive.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,13 +32,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E124BBA816BD8EE5006FBF2D /* Source */ = {
+		E110B4F6177FD00C004071B5 /* LibArchive */ = {
+			isa = PBXGroup;
+			children = (
+				E110B4F7177FD00C004071B5 /* LibArchive.h */,
+			);
+			name = LibArchive;
+			path = ../../../Include/LibArchive;
+			sourceTree = "<group>";
+		};
+		E110B4F9177FD015004071B5 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				E110B4F6177FD00C004071B5 /* LibArchive */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		E110B4FA177FD02A004071B5 /* LibArchive */ = {
 			isa = PBXGroup;
 			children = (
 				E124BBA916BD8F10006FBF2D /* LibArchive.cpp */,
-				E124BBAA16BD8F10006FBF2D /* LibArchive.h */,
 				E124BBAD16BD8F10006FBF2D /* stdafx.cpp */,
 				E124BBAE16BD8F10006FBF2D /* stdafx.h */,
+			);
+			name = LibArchive;
+			sourceTree = "<group>";
+		};
+		E124BBA816BD8EE5006FBF2D /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E110B4F9177FD015004071B5 /* Include */,
+				E110B4FA177FD02A004071B5 /* LibArchive */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -66,8 +91,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E124BBB016BD8F10006FBF2D /* LibArchive.h in Headers */,
 				E124BBB216BD8F10006FBF2D /* stdafx.h in Headers */,
+				E110B4F8177FD00C004071B5 /* LibArchive.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
