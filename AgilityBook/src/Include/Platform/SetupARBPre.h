@@ -46,6 +46,7 @@
 // 1500: VC9.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.90%29.aspx
 // 1600: VC10.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.100%29.aspx
 // 1700: VC11.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.110%29.aspx
+// 1800: VC12.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.120%29.aspx
 // _M_IX86: Defined for x86 (value specifies processor)
 // _M_X64: Defined for x64 processors
 // _M_IA64: Defined for Itanium processor family
@@ -111,8 +112,13 @@
 // Error checking
 // VC9: Minimum system: x86 - Win2000, x64 - XP, Itanium - Server 2003
 // VC10: Minimum system: x86 - XP SP2, x64 - XP, Itanium - Server 2003 SP1
-// VC11: Minimum system: Vista
-#if _MSC_VER >= 1700
+// VC11: Minimum system: Vista (Can target XP using platform toolset 'v110_xp')
+#if _MSC_VER >= 1800
+	#if WINVER < 0x0600
+		#error VC12 minimum version is 0x0600
+	#endif
+	// Note: VC12 now has true variadic macros.
+#elif _MSC_VER >= 1700
 	#if WINVER < 0x0600
 		#error VC11 minimum version is 0x0600
 	#endif
