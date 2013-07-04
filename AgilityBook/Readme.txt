@@ -39,7 +39,7 @@ Make sure WXWIN is set to wxWidgets root directory.
 - There were API changes in .3, so I simply don't support .0, .1, or .2.
 
 === Changes to 2.8.12:
--[win]- in src/msw/windows.h, the include for "pbt.h" needs to be deleted
+-[win]- in src/msw/windows.cpp, the include for "pbt.h" needs to be deleted
         when using VS2012. This compiler stopped including this header.
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_6 0
