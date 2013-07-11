@@ -205,12 +205,12 @@ public:
 			CAgilityBookOptions::ColumnOrder eOrder,
 			wxWindow* pParent = NULL,
 			CAgilityBookDoc* pDoc = NULL,
-			size_t initSelection = 0); // IO_TYPE list to initially select (if multiple)
+			int initSelection = 0); // IO_TYPE list to initially select (if multiple)
 
 private:
 	CAgilityBookDoc* m_pDoc;
 	CNamedColumns m_Configs;
-	size_t m_initSelection;
+	int m_initSelection;
 	bool m_bIncludeBlank;
 	wxString m_ConfigName;
 	CAutoFillComboBox* m_ctrlConfig;

@@ -843,7 +843,7 @@ bool CAgilityBookTreeView::GetUnifiedDog(
 		}
 	}
 
-	return pDog;
+	return !!pDog;
 }
 
 
@@ -875,7 +875,7 @@ bool CAgilityBookTreeView::GetUnifiedTrial(
 		}
 	}
 
-	return pTrial;
+	return !!pTrial;
 }
 
 
@@ -2160,7 +2160,7 @@ void CAgilityBookTreeView::OnEditRun(wxCommandEvent& evt)
 
 void CAgilityBookTreeView::OnViewCustomize(wxCommandEvent& evt)
 {
-	size_t idxColumn = 0;
+	int idxColumn = 0;
 	if (CAgilityBookOptions::eViewAllRunsByList == CAgilityBookOptions::GetViewRunsStyle())
 		idxColumn = IO_TYPE_VIEW_TREE_RUNS_LIST;
 	else

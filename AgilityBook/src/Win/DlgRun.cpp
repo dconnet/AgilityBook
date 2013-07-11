@@ -124,6 +124,7 @@
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/StringUtil.h"
+#include <algorithm>
 #include <set>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>

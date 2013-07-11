@@ -19,6 +19,7 @@
 #include "DlgCRCDViewer.h"
 
 #include <wx/dcbuffer.h>
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
