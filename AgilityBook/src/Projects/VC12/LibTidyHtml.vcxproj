@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{05967875-9726-4F06-8EC8-DB6170C00BF3}</ProjectGuid>
+    <RootNamespace>LibTidyHtml</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/CommonRelease32.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/CommonDebug32.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/CommonRelease64.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/CommonDebug64.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../LibTidyHtml/tidy/include;../../LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../LibTidyHtml/tidy/include;../../LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../LibTidyHtml/tidy/include;../../LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../LibTidyHtml/tidy/include;../../LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\LibTidyHtml\LibTidyHtml.cpp" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\access.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\alloc.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrask.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrdict.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrget.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrs.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\buffio.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\clean.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\config.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\entities.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\fileio.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\istack.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\lexer.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\localize.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\mappedio.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\parser.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\pprint.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\streamio.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tagask.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tags.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tidylib.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tmbstr.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\utf8.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\win32tc.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Include\LibTidyHtml\LibTidyHtml.h" />
+    <ClInclude Include="..\..\LibTidyHtml\stdafx.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\access.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrdict.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrs.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\buffio.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\clean.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\config.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\entities.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\fileio.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\forward.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\lexer.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\mappedio.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\message.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\parser.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\platform.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\pprint.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\streamio.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\tags.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\tidy-int.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidy.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidyenum.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\tmbstr.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\utf8.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\version.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\win32tc.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

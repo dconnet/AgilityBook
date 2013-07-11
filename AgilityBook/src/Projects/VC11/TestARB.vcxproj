@@ -248,6 +248,9 @@
     <ProjectReference Include="LibARB.vcxproj">
       <Project>{23b8e184-6287-4af6-b7bb-6e1a9d26da89}</Project>
     </ProjectReference>
+    <ProjectReference Include="LibARBCommon.vcxproj">
+      <Project>{c13ffb93-0f55-4675-8bb8-0a8876814a16}</Project>
+    </ProjectReference>
     <ProjectReference Include="LibArchive.vcxproj">
       <Project>{a4b37e95-3d26-47d2-b1a6-2f3d3af3b83c}</Project>
     </ProjectReference>

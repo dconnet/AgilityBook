@@ -52,22 +52,18 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/CommonRelease32.props" />
-    <Import Project="$(SolutionDir)/libxml2.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/CommonDebug32.props" />
-    <Import Project="$(SolutionDir)/libxml2.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/CommonRelease64.props" />
-    <Import Project="$(SolutionDir)/libxml2.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)/CommonDebug64.props" />
-    <Import Project="$(SolutionDir)/libxml2.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -96,7 +92,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\ARB\ARBAgilityRecordBook.cpp" />
     <ClCompile Include="..\..\ARB\ARBBase.cpp" />
-    <ClCompile Include="..\..\ARB\ARBBase64.cpp" />
     <ClCompile Include="..\..\ARB\ARBCalcPoints.cpp" />
     <ClCompile Include="..\..\ARB\ARBCalendar.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfig.cpp" />
@@ -115,7 +110,6 @@
     <ClCompile Include="..\..\ARB\ARBConfigTitle.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigTitlePoints.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigVenue.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDate.cpp" />
     <ClCompile Include="..\..\ARB\ARBDog.cpp" />
     <ClCompile Include="..\..\ARB\ARBDogClub.cpp" />
     <ClCompile Include="..\..\ARB\ARBDogExistingPoints.cpp" />
@@ -131,15 +125,8 @@
     <ClCompile Include="..\..\ARB\ARBInfo.cpp" />
     <ClCompile Include="..\..\ARB\ARBInfoItem.cpp" />
     <ClCompile Include="..\..\ARB\ARBLocalization.cpp" />
-    <ClCompile Include="..\..\ARB\ARBMsgDigest.cpp" />
     <ClCompile Include="..\..\ARB\ARBTraining.cpp" />
-    <ClCompile Include="..\..\ARB\ARBTypes.cpp" />
     <ClCompile Include="..\..\ARB\ARB_Q.cpp" />
-    <ClCompile Include="..\..\ARB\BinaryData.cpp" />
-    <ClCompile Include="..\..\ARB\BreakLine.cpp" />
-    <ClCompile Include="..\..\ARB\Element.cpp" />
-    <ClCompile Include="..\..\ARB\StringUtil.cpp" />
-    <ClCompile Include="..\..\ARB\VersionNum.cpp" />
     <ClCompile Include="..\..\ARB\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -148,63 +135,54 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ARB\ARBAgilityRecordBook.h" />
-    <ClInclude Include="..\..\ARB\ARBBase.h" />
-    <ClInclude Include="..\..\ARB\ARBBase64.h" />
-    <ClInclude Include="..\..\ARB\ARBCalcPoints.h" />
-    <ClInclude Include="..\..\ARB\ARBCalendar.h" />
-    <ClInclude Include="..\..\ARB\ARBConfig.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigAction.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigCalSite.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigDivision.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigEvent.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigFault.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigLevel.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigLifetimePoints.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigMultiQ.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigOtherPoints.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigPlaceInfo.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigScoring.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigSubLevel.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigTitle.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigTitlePoints.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigVenue.h" />
-    <ClInclude Include="..\..\ARB\ARBDate.h" />
-    <ClInclude Include="..\..\ARB\ARBDog.h" />
-    <ClInclude Include="..\..\ARB\ARBDogClub.h" />
-    <ClInclude Include="..\..\ARB\ARBDogExistingPoints.h" />
-    <ClInclude Include="..\..\ARB\ARBDogNotes.h" />
-    <ClInclude Include="..\..\ARB\ARBDogReferenceRun.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRegNum.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRun.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRunOtherPoints.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRunPartner.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRunScoring.h" />
-    <ClInclude Include="..\..\ARB\ARBDogTitle.h" />
-    <ClInclude Include="..\..\ARB\ARBDogTrial.h" />
-    <ClInclude Include="..\..\ARB\ARBInfo.h" />
-    <ClInclude Include="..\..\ARB\ARBInfoItem.h" />
-    <ClInclude Include="..\..\ARB\ARBLocalization.h" />
-    <ClInclude Include="..\..\ARB\ARBMsgDigest.h" />
-    <ClInclude Include="..\..\ARB\ARBStructure.h" />
-    <ClInclude Include="..\..\ARB\ARBTraining.h" />
-    <ClInclude Include="..\..\ARB\ARBTypes.h" />
-    <ClInclude Include="..\..\ARB\ARBTypes2.h" />
-    <ClInclude Include="..\..\ARB\ARB_Q.h" />
-    <ClInclude Include="..\..\ARB\BinaryData.h" />
-    <ClInclude Include="..\..\ARB\BreakLine.h" />
-    <ClInclude Include="..\..\ARB\Element.h" />
-    <ClInclude Include="..\..\ARB\StringUtil.h" />
-    <ClInclude Include="..\..\ARB\VersionNum.h" />
-    <ClInclude Include="..\..\ARB\stdafx.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBAgilityRecordBook.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBBase.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBCalcPoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBCalendar.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfig.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigAction.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigCalSite.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigDivision.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigEvent.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigFault.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigLevel.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimePoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigMultiQ.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigOtherPoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigPlaceInfo.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigScoring.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigSubLevel.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigTitle.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigTitlePoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigVenue.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDog.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogClub.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogExistingPoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogNotes.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogReferenceRun.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRegNum.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRun.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRunOtherPoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRunPartner.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRunScoring.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogTitle.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogTrial.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBInfo.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBInfoItem.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBLocalization.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBStructure.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBTraining.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBTypes2.h" />
+    <ClInclude Include="..\..\Include\ARB\ARB_Q.h" />
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
     <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupWinRT.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\ICalendarSite.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
+    <ClInclude Include="..\..\ARB\stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
