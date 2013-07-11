@@ -634,29 +634,27 @@ bool CUpdateInfo::CheckProgram(
 				if (suffix == L".PHP")
 				{
 #ifdef __WXMSW__
-					OSVERSIONINFO os;
-					os.dwOSVersionInfoSize = sizeof(os);
-					GetVersionEx(&os);
-					switch (os.dwPlatformId)
+					OSVERSIONINFOEX info;
+					ZeroMemory(&info, sizeof(info));
+					info.dwOSVersionInfoSize = sizeof(info);
+					info.dwPlatformId = VER_PLATFORM_WIN32_NT;
+					DWORDLONG dwlConditionMask = 0;
+					VER_SET_CONDITION(dwlConditionMask, VER_PLATFORMID, VER_EQUAL);
+					if (VerifyVersionInfo(&info, VER_PRODUCT_TYPE, dwlConditionMask))
 					{
-					default:
-					case VER_PLATFORM_WIN32_NT: // NT/Win2000/XP/Vista
-						{
 #ifdef ARB_HAS_GETSYSTEMINFO
-							SYSTEM_INFO info;
-							GetSystemInfo(&info);
-							if (PROCESSOR_ARCHITECTURE_AMD64 == info.wProcessorArchitecture)
-								url += L"?os=x64";
-							else
+						SYSTEM_INFO info;
+						GetSystemInfo(&info);
+						if (PROCESSOR_ARCHITECTURE_AMD64 == info.wProcessorArchitecture)
+							url += L"?os=x64";
+						else
 #endif
-								url += L"?os=win";
-							if (!lang.empty())
-							{
-								url += L"-";
-								url += lang;
-							}
+							url += L"?os=win";
+						if (!lang.empty())
+						{
+							url += L"-";
+							url += lang;
 						}
-						break;
 					}
 #elif defined(__WXMAC__)
 // comments from include/wx/platform.h

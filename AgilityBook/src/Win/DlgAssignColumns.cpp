@@ -820,7 +820,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 		CAgilityBookOptions::ColumnOrder eOrder,
 		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
-		size_t initSelection)
+		int initSelection)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Configs(eOrder)
@@ -908,7 +908,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	m_ctrlType->SetToolTip(_("HIDC_ASSIGN_TYPE"));
 	m_ctrlType->InsertColumn(0, _("IDS_COL_RUNTYPE"));
 	m_ctrlType->InsertColumn(1, _("IDS_COL_DESCRIPTION"));
-	size_t index;
+	int index;
 #ifdef _DEBUG
 	for (index = 0; index < IO_MAX; ++index)
 	{
