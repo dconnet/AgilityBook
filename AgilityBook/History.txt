@@ -6,10 +6,11 @@
 5/26/2013: v2.3.13.<in dev>
 - Bumped Configuration v44:
   - Added Novice to NADAC (there is no A/B anymore)
+- Bumped file version to 14.1:
+  - Add a default date for empty trials.
 - New features / Enhancements:
   - Runs: Make last division/level/height sensitive to dog+venue.
   - Runs: Make last handler sensitive to dog.
-  - Add a default date for empty trials.
   - Added Calendar color for past entries.
 - Bug fixes:
   - In Options dialog, fixed color preview of first calendar entry item.
