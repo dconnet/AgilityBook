@@ -17,15 +17,19 @@
 #include "stdafx.h"
 #include "ARBCommon/ARBMisc.h"
 
-#include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include <iostream>
-#include <math.h>
 #include <sstream>
-#include <time.h>
+
+// For testing in ARB
+//#if defined(__WXWINDOWS__)
+//#undef __WXWINDOWS__
+//#endif
 
 #if defined(__WXWINDOWS__)
 #include <wx/string.h>
+#elif defined(_WIN32)
+#pragma comment(lib, "version.lib")
 #endif
 
 #if defined(__WXMSW__)
@@ -102,43 +106,192 @@ bool GetOSInfo(int& verMajor, int& verMinor)
 #endif
 	return true;
 
-#else
-#pragma PRAGMA_TODO(non-wx version)
+#elif defined(_WIN32)
+	std::wstring kernel(L"kernel32.dll");
+	DWORD dwHandle;
+	DWORD dwLen = GetFileVersionInfoSize(kernel.c_str(), &dwHandle);
+	if (!dwLen) 
+		return false;
+
+	void* lpData = malloc(dwLen);
+	if (!lpData) 
+		return false;
+
+	if (!GetFileVersionInfo(kernel.c_str(), dwHandle, dwLen, lpData))
+	{
+		free(lpData);
+		return false;
+	}
+
+	UINT BufLen;
+	VS_FIXEDFILEINFO* pFileInfo = NULL;
+	if (VerQueryValue(lpData, L"\\", (void**)&pFileInfo, &BufLen))
+	{
+		verMajor= HIWORD(pFileInfo->dwFileVersionMS);
+		verMinor = LOWORD(pFileInfo->dwFileVersionMS);
+		//*BuildNumber = HIWORD(pFileInfo->dwFileVersionLS);
+		//*RevisionNumber = LOWORD(pFileInfo->dwFileVersionLS);
+		free(lpData);
+		return true;
+	}
+	free(lpData);
 	return false;
+
+#else
+#error Unknown OS
 #endif
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::wstring GetOSInfo(bool bVerbose)
+static std::wstring GetOSName()
 {
 	std::wostringstream str;
 
-#if defined(__WXWINDOWS__)
 	int majVer;
 	int minVer;
 	if (!GetOSInfo(majVer, minVer))
 		return std::wstring();
 
+#if defined(__WXWINDOWS__)
 	wxPlatformInfo info;
-	str << L"OS: "
-		<< info.GetOperatingSystemIdName()
+	str << StringUtil::stringW(info.GetOperatingSystemIdName())
 		<< L" "
 		<< majVer
 		<< L"."
-		<< minVer
-		<< L"\n";
+		<< minVer;
 
-	str << L"Architecture: "
-		<< info.GetArchName()
-		<< L", "
-		<< info.GetEndiannessName()
-		<< L"\n";
-
+#elif defined(_WIN32)
+	switch (majVer)
+	{
+	default:
+		str << L"Windows " << majVer << L"." << minVer;
+		break;
+	case 6:
+		switch (minVer)
+		{
+		default:
+			str << L"Windows " << majVer << L"." << minVer;
+			break;
+		case 0:
+			str << L"Windows Vista";
+			break;
+		case 1:
+			str << L"Windows 7";
+			break;
+		case 2:
+			str << L"Windows 8";
+			break;
+		case 3:
+			str << L"Windows 8.1";
+			break;
+		}
+		break;
+	case 5:
+		switch (minVer)
+		{
+		default:
+			str << L"Windows " << majVer << L"." << minVer;
+			break;
+		case 2:
+			str << L"Windows XP"; // Not really, 64bitXP, or Server
+			break;
+		case 1:
+			str << L"Windows XP";
+			break;
+		case 0:
+			str << L"Windows 2000";
+			break;
+		}
+		break;
+	}
 
 #else
-#pragma PRAGMA_TODO(non-wx version)
-
+#error Unknown OS
 #endif
+
+	return str.str();
+}
+
+
+static std::wstring GetArchName()
+{
+#if defined(__WXWINDOWS__)
+	wxPlatformInfo info;
+	return StringUtil::stringW(info.GetArchName());
+
+#elif defined(_WIN32)
+	SYSTEM_INFO si;
+	ZeroMemory(&si, sizeof(si));
+	GetNativeSystemInfo(&si);
+	switch (si.wProcessorArchitecture)
+	{
+	default:
+	case PROCESSOR_ARCHITECTURE_UNKNOWN:
+		return L"??";
+	case PROCESSOR_ARCHITECTURE_AMD64:
+		return L"x64";
+	case PROCESSOR_ARCHITECTURE_ARM:
+		return L"ARM";
+	case PROCESSOR_ARCHITECTURE_IA64:
+		return L"ia64";
+	case PROCESSOR_ARCHITECTURE_INTEL:
+		return L"x86";
+	}
+
+#else
+#error Unknown OS
+#endif
+}
+
+
+static std::wstring GetEndiannessName()
+{
+#if defined(__WXWINDOWS__)
+	wxPlatformInfo info;
+	return StringUtil::stringW(info.GetEndiannessName());
+
+#elif defined(_WIN32)
+	// Copied from wxWidgets 2.9.5: utilscmn.cpp: wxIsPlatformLittleEndian
+	// Are we little or big endian? This method is from Harbison & Steele.
+	union
+	{
+		long l;
+		char c[sizeof(long)];
+	} u;
+	u.l = 1;
+
+	bool isLittleEndian = (u.c[0] == 1);
+	if (isLittleEndian)
+		return L"Little endian";
+	else
+		return L"Big endian";
+
+#else
+#error Unknown OS
+#endif
+}
+
+
+std::wstring GetOSInfo(bool bVerbose)
+{
+	std::wostringstream str;
+
+	if (bVerbose)
+		str << L"OS: ";
+
+	str << GetOSName();
+
+	if (bVerbose)
+	{
+		str << L"\n";
+
+		str << L"Architecture: "
+			<< GetArchName()
+			<< L", "
+			<< GetEndiannessName()
+			<< L"\n";
+	}
+
 	return str.str();
 }

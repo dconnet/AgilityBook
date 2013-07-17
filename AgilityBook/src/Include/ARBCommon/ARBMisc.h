@@ -15,6 +15,8 @@
  * @li 2013-07-17 DRC Created
  */
 
+#include <string>
+
 
 /**
  * Make a string safe for HTML viewing.
