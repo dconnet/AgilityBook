@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-07-17 DRC Moved SanitizeStringForHTML to ARBMisc.
  * @li 2012-12-12 DRC Use fabs instead of abs. Works on Mac too.
  * @li 2012-08-13 DRC Moved ARB_Q to separate file.
  * @li 2012-05-04 DRC Add bAlwaysStripZeros to ARBDouble::ToString.
@@ -43,56 +44,6 @@
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
-
-/////////////////////////////////////////////////////////////////////////////
-
-std::wstring SanitizeStringForHTML(
-		std::wstring const& inRawData,
-		bool bConvertCR)
-{
-	std::wstring::size_type pos = inRawData.find_first_of(L"&<>");
-	if (std::wstring::npos == pos && bConvertCR)
-		pos = inRawData.find_first_of(L"\r\n");
-	if (std::wstring::npos == pos)
-		return inRawData;
-	std::wostringstream data;
-	for (size_t nChar = 0; nChar < inRawData.length(); ++nChar)
-	{
-		switch (inRawData[nChar])
-		{
-		case L'&':
-			data << L"&amp;";
-			break;
-		case L'<':
-			data << L"&lt;";
-			break;
-		case L'>':
-			data << L"&gt;";
-			break;
-		case L'\r':
-			if (bConvertCR)
-			{
-				if (nChar + 1 < inRawData.length() && '\n' == inRawData[nChar+1])
-					continue;
-				else
-					data << L"<br/>";
-			}
-			else
-				data << inRawData[nChar];
-			break;
-		case '\n':
-			if (bConvertCR)
-				data << L"<br/>";
-			else
-				data << inRawData[nChar];
-			break;
-		default:
-			data << inRawData[nChar];
-			break;
-		}
-	}
-	return data.str();
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

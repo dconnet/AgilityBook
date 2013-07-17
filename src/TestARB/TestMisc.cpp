@@ -19,6 +19,7 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
+#include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 

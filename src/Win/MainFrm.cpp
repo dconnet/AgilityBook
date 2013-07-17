@@ -38,6 +38,7 @@
 #include "RegItems.h"
 #include "TabView.h"
 
+#include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
 #include <wx/config.h>
 #include <wx/dnd.h>
@@ -461,35 +462,7 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 	wxString str;
 
 	// OS version
-	wxPlatformInfo info;
-	int majVer = info.GetOSMajorVersion();
-	int minVer = info.GetOSMinorVersion();
-#if !wxCHECK_VERSION(2, 9, 5)
-	majVer = (majVer == 16 ? 10 : majVer);
-	minVer = (minVer >> 4);
-#endif
-	str << L"OS: "
-		<< info.GetOperatingSystemIdName()
-		<< L" "
-		<< majVer
-		<< L"."
-		<< minVer
-		<< L"\n";
-	if (wxPORT_BASE != info.GetPortId())
-	{
-		str << L"Port: "
-			<< info.GetPortIdName()
-			<< L" "
-			<< info.GetToolkitMajorVersion()
-			<< L"."
-			<< info.GetToolkitMinorVersion()
-			<< L"\n";
-	}
-	str << L"Architecture: "
-		<< info.GetArchName()
-		<< L", "
-		<< info.GetEndiannessName()
-		<< L"\n";
+	str << GetOSInfo();
 
 	// Me.
 	{
