@@ -237,8 +237,13 @@ ARBDate ARBDate::FromString(
 		(eSlashMMDDYYYY == inFormat || eSlashYYYYMMDD == inFormat || eSlashDDMMYYYY == inFormat
 			|| eSlashMDY == inFormat || eSlashYMD == inFormat || eSlashDMY == inFormat)))
 		{
+			bool bOk = true;
 			switch (inFormat)
 			{
+			default:
+				assert(0);
+				bOk = false;
+				break;
 			case eDashMMDDYYYY:
 			case eDashMDY:
 			case eSlashMMDDYYYY:
@@ -264,7 +269,8 @@ ARBDate ARBDate::FromString(
 				yr = val3;
 				break;
 			}
-			date.SetDate(yr, mon, day);
+			if (bOk)
+				date.SetDate(yr, mon, day);
 		}
 		if (date.IsValid())
 		{
