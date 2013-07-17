@@ -315,13 +315,9 @@ bool CAgilityBookApp::OnInit()
 	{
 		bool useSpellChecker = true;
 #ifndef __WXOSX_COCOA__
-		wxPlatformInfo info;
-		int majVer = info.GetOSMajorVersion();
-		int minVer = info.GetOSMinorVersion();
-#if !wxCHECK_VERSION(2, 9, 5)
-		majVer = (majVer == 16 ? 10 : majVer);
-		minVer = (minVer >> 4);
-#endif
+		int majVer;
+		int minVer;
+		GetOSInfo(majVer, minVer);
 		if (majVer == 10 && minVer < 8)
 		{
 			useSpellChecker = false;

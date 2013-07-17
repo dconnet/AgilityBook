@@ -44,6 +44,7 @@
 
 #include "ARB/ARBDog.h"
 #include "ARBCommon/ARBDate.h"
+#include "ARBCommon/ARBMisc.h"
 #include <algorithm>
 #include <map>
 #include <wx/utils.h>
