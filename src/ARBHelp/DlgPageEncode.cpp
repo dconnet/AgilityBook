@@ -25,6 +25,7 @@
 #include "ARBHelp.h"
 #include "DlgARBHelp.h"
 
+#include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
@@ -200,34 +201,17 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		wxString str;
 
 		// OS version
-		wxPlatformInfo info;
-		str << L"OS: "
-			<< info.GetOperatingSystemIdName()
-			<< ' '
-			<< info.GetOSMajorVersion()
-			<< '.'
-			<< info.GetOSMinorVersion()
-			<< L"\n";
-		if (wxPORT_BASE != info.GetPortId())
-		{
-			str << L"Port: "
-				<< info.GetPortIdName()
-				<< ' '
-				<< info.GetToolkitMajorVersion()
-				<< '.'
-				<< info.GetToolkitMinorVersion()
-				<< L"\n";
-		}
-		str << L"Architecture: "
-			<< info.GetArchName()
-			<< L", "
-			<< info.GetEndiannessName()
-			<< L"\n";
+		str << GetOSInfo();
 
 		// Me.
 		{
 			CVersionNum ver(true);
-			str << wxStandardPaths::Get().GetExecutablePath() << L": ";
+			str << wxStandardPaths::Get().GetExecutablePath()
+#ifdef _WIN64
+				<< L" (64-bit): ";
+#else
+				<< L" (32-bit): ";
+#endif
 			if (ver.Valid())
 				str << ver.GetVersionString().c_str();
 			else
