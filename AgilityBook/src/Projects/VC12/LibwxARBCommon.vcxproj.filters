@@ -54,6 +54,9 @@
     <ClCompile Include="..\..\ARBCommon\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ARBCommon\ARBMisc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ARBCommon\stdafx.h">
@@ -102,6 +105,9 @@
       <Filter>Include\ARBCommon</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\ARBCommon\StringUtil.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\ARBMisc.h">
       <Filter>Include\ARBCommon</Filter>
     </ClInclude>
   </ItemGroup>

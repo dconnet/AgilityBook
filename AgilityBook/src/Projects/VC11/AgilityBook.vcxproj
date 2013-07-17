@@ -109,6 +109,9 @@
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
     </CustomBuildStep>
+    <Manifest>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -121,6 +124,10 @@
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
     </CustomBuildStep>
+    <Manifest>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
+      <AdditionalManifestFiles>..\..\Win\res\compat.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Win\AgilityBook.cpp" />

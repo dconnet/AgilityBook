@@ -96,6 +96,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\ARBCommon\ARBBase64.cpp" />
     <ClCompile Include="..\..\ARBCommon\ARBDate.cpp" />
+    <ClCompile Include="..\..\ARBCommon\ARBMisc.cpp" />
     <ClCompile Include="..\..\ARBCommon\ARBMsgDigest.cpp" />
     <ClCompile Include="..\..\ARBCommon\ARBTypes.cpp" />
     <ClCompile Include="..\..\ARBCommon\BinaryData.cpp" />
@@ -113,6 +114,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Include\ARBCommon\ARBBase64.h" />
     <ClInclude Include="..\..\Include\ARBCommon\ARBDate.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\ARBMisc.h" />
     <ClInclude Include="..\..\Include\ARBCommon\ARBMsgDigest.h" />
     <ClInclude Include="..\..\Include\ARBCommon\ARBTypes.h" />
     <ClInclude Include="..\..\Include\ARBCommon\BinaryData.h" />

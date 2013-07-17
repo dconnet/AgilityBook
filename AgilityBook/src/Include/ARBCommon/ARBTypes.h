@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-07-17 DRC Moved SanitizeStringForHTML to ARBMisc.
  * @li 2012-08-13 DRC Moved ARB_Q to separate file.
  * @li 2012-05-04 DRC Add bAlwaysStripZeros to ARBDouble::ToString.
  * @li 2011-08-22 DRC ARBVersion was only using 16 instead of 32bits.
@@ -48,16 +49,6 @@ ARB_TYPEDEF2(ElementNode)
 ARB_TYPEDEF2(ElementText)
 
 
-/**
- * Make a string safe for HTML viewing.
- * @param inRawData String to sanitize
- * @param bConvertCR Convert \n to html-breaks.
- */
-std::wstring SanitizeStringForHTML(
-		std::wstring const& inRawData,
-		bool bConvertCR = true);
-
-/////////////////////////////////////////////////////////////////////////////
 /**
  * Helper functions for quickly/easily converting doubles to strings.
  */
