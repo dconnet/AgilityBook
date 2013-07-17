@@ -467,7 +467,12 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 	// Me.
 	{
 		CVersionNum ver(true);
-		str << wxStandardPaths::Get().GetExecutablePath() << L": ";
+		str << wxStandardPaths::Get().GetExecutablePath()
+#ifdef _WIN64
+			<< L" (64-bit): ";
+#else
+			<< L" (32-bit): ";
+#endif
 		if (ver.Valid())
 			str << ver.GetVersionString().c_str();
 		else
