@@ -35,6 +35,7 @@ ARCHIVES = libarbcommon
 ##########
 libarbcommon_SRCS = ARBBase64.cpp \
 	ARBDate.cpp \
+	ARBMisc.cpp \
 	ARBMsgDigest.cpp \
 	ARBTypes.cpp \
 	BinaryData.cpp \
