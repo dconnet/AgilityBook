@@ -28,11 +28,12 @@ Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
 
-=== Changes to <trunk> [2.9.4]:
+=== Changes to <trunk> [2.9.5]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
-  - WXWIN_COMPATIBILITY_2_8 0
+  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT (currently 0)
 
 === pre wx2.9.5: Not supported
 -  ARBv3 does not support pre 2.9. It uses new features.
