@@ -24,5 +24,8 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\Include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
     </ResourceCompile>
+    <Manifest>
+      <AdditionalManifestFiles>$(SolutionDir)..\..\Win\res\compat.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
 </Project>
