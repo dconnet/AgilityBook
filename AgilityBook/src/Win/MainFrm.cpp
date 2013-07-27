@@ -462,7 +462,7 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 	wxString str;
 
 	// OS version
-	str << GetOSInfo();
+	str << GetOSInfo().c_str();
 
 	// Me.
 	{

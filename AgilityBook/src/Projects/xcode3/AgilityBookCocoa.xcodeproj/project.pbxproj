@@ -10,6 +10,7 @@
 		E1144F5F1082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
 		E131446A1746A62800BDFC2E /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E13144681746A62800BDFC2E /* LibArchive.cpp */; };
 		E13505DC176CDF0500B73905 /* LibTidyHtml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1350572176CDF0500B73905 /* LibTidyHtml.cpp */; };
+		E14C9B0617A451CC00D1007A /* ARBMisc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E14C9B0517A451CC00D1007A /* ARBMisc.cpp */; };
 		E154B2C917284E7400DD9354 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2C517284E7400DD9354 /* ComboBoxQ.cpp */; };
 		E154B2CA17284E7400DD9354 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2C717284E7400DD9354 /* ComboBoxVenue.cpp */; };
 		E158FC351001371B00735E7F /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
@@ -164,6 +165,8 @@
 		E1144F5D1082880800356F61 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
 		E13144681746A62800BDFC2E /* LibArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibArchive.cpp; path = ../../LibArchive/LibArchive.cpp; sourceTree = SOURCE_ROOT; };
 		E1350572176CDF0500B73905 /* LibTidyHtml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LibTidyHtml.cpp; sourceTree = "<group>"; };
+		E14C9B0417A451B300D1007A /* ARBMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMisc.h; sourceTree = "<group>"; };
+		E14C9B0517A451CC00D1007A /* ARBMisc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMisc.cpp; sourceTree = "<group>"; };
 		E154B2C517284E7400DD9354 /* ComboBoxQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxQ.cpp; sourceTree = "<group>"; };
 		E154B2C617284E7400DD9354 /* ComboBoxQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxQ.h; sourceTree = "<group>"; };
 		E154B2C717284E7400DD9354 /* ComboBoxVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxVenue.cpp; sourceTree = "<group>"; };
@@ -842,6 +845,7 @@
 			children = (
 				E1EBDC4E177FC2F30074E0F7 /* ARBBase64.cpp */,
 				E1EBDC4F177FC2F30074E0F7 /* ARBDate.cpp */,
+				E14C9B0517A451CC00D1007A /* ARBMisc.cpp */,
 				E1EBDC50177FC2F30074E0F7 /* ARBMsgDigest.cpp */,
 				E1EBDC51177FC2F30074E0F7 /* ARBTypes.cpp */,
 				E1EBDC52177FC2F30074E0F7 /* BinaryData.cpp */,
@@ -859,6 +863,7 @@
 			children = (
 				E1EBDC66177FC36C0074E0F7 /* ARBBase64.h */,
 				E1EBDC67177FC36C0074E0F7 /* ARBDate.h */,
+				E14C9B0417A451B300D1007A /* ARBMisc.h */,
 				E1EBDC68177FC36C0074E0F7 /* ARBMsgDigest.h */,
 				E1EBDC69177FC36C0074E0F7 /* ARBTypes.h */,
 				E1EBDC6A177FC36C0074E0F7 /* BinaryData.h */,
@@ -1134,6 +1139,7 @@
 				E1EBDC60177FC2F30074E0F7 /* Element.cpp in Sources */,
 				E1EBDC63177FC2F30074E0F7 /* StringUtil.cpp in Sources */,
 				E1EBDC64177FC2F30074E0F7 /* VersionNum.cpp in Sources */,
+				E14C9B0617A451CC00D1007A /* ARBMisc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
