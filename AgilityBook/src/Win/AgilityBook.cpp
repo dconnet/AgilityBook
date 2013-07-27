@@ -40,6 +40,7 @@
 #include "RegItems.h"
 #include "TabView.h"
 
+#include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include <vector>

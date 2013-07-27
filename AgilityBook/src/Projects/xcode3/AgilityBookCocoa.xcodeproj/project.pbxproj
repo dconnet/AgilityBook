@@ -14,6 +14,7 @@
 		E137434916BD98EF006380B5 /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E137434716BD98EF006380B5 /* LibArchive.cpp */; };
 		E137435516BD9990006380B5 /* AgilityBookTreeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E137435316BD9990006380B5 /* AgilityBookTreeModel.cpp */; };
 		E137435816BD99E7006380B5 /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E137435616BD99E7006380B5 /* ImageManager.cpp */; };
+		E14C9B3317A45C9A00D1007A /* ARBMisc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E14C9B3217A45C9A00D1007A /* ARBMisc.cpp */; };
 		E158FC351001371B00735E7F /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
 		E158FC361001371B00735E7F /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */; };
 		E158FC371001371B00735E7F /* AgilityBookCalendarView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A310000B1200B7074A /* AgilityBookCalendarView.cpp */; };
@@ -172,6 +173,8 @@
 		E137435416BD9990006380B5 /* AgilityBookTreeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeModel.h; sourceTree = "<group>"; };
 		E137435616BD99E7006380B5 /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageManager.cpp; sourceTree = "<group>"; };
 		E137435716BD99E7006380B5 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
+		E14C9B3117A45C8C00D1007A /* ARBMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMisc.h; sourceTree = "<group>"; };
+		E14C9B3217A45C9A00D1007A /* ARBMisc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMisc.cpp; sourceTree = "<group>"; };
 		E155979E10000B1200B7074A /* AgilityBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBook.cpp; sourceTree = "<group>"; };
 		E155979F10000B1200B7074A /* AgilityBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBook.h; sourceTree = "<group>"; };
 		E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookCalendarListView.cpp; sourceTree = "<group>"; };
@@ -842,6 +845,7 @@
 			children = (
 				E1EBDCFF177FC4EC0074E0F7 /* ARBBase64.cpp */,
 				E1EBDD00177FC4EC0074E0F7 /* ARBDate.cpp */,
+				E14C9B3217A45C9A00D1007A /* ARBMisc.cpp */,
 				E1EBDD01177FC4EC0074E0F7 /* ARBMsgDigest.cpp */,
 				E1EBDD02177FC4EC0074E0F7 /* ARBTypes.cpp */,
 				E1EBDD03177FC4EC0074E0F7 /* BinaryData.cpp */,
@@ -875,6 +879,7 @@
 			children = (
 				E1EBDD1B177FC57E0074E0F7 /* ARBBase64.h */,
 				E1EBDD1C177FC57E0074E0F7 /* ARBDate.h */,
+				E14C9B3117A45C8C00D1007A /* ARBMisc.h */,
 				E1EBDD1D177FC57E0074E0F7 /* ARBMsgDigest.h */,
 				E1EBDD1E177FC57E0074E0F7 /* ARBTypes.h */,
 				E1EBDD1F177FC57E0074E0F7 /* BinaryData.h */,
@@ -1134,6 +1139,7 @@
 				E1EBDD11177FC4EC0074E0F7 /* Element.cpp in Sources */,
 				E1EBDD14177FC4EC0074E0F7 /* StringUtil.cpp in Sources */,
 				E1EBDD15177FC4EC0074E0F7 /* VersionNum.cpp in Sources */,
+				E14C9B3317A45C9A00D1007A /* ARBMisc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
