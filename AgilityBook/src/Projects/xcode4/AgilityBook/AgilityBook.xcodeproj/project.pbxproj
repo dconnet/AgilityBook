@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E1105D38169017DF0067091C /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1105D36169017DF0067091C /* ImageManager.cpp */; };
-		E110B53F177FD458004071B5 /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E110B53E177FD458004071B5 /* libARBCommon.a */; };
-		E124BBB416BD90D0006FBF2D /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E124BBB316BD90D0006FBF2D /* libLibArchive.a */; };
+		E1439D0517A44401001E4AC8 /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1439D0417A44401001E4AC8 /* libARBCommon.a */; };
+		E1439D0717A44408001E4AC8 /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1439D0617A44408001E4AC8 /* libLibArchive.a */; };
+		E1439D0917A4440D001E4AC8 /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1439D0817A4440D001E4AC8 /* libLibTidyHtml.a */; };
 		E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B63BF166C096E004DEDA4 /* Cocoa.framework */; };
 		E19B64EE166C09B9004DEDA4 /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */; };
 		E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */; };
@@ -112,14 +113,14 @@
 		E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */; };
 		E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */; };
 		E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */; };
-		E1F07F7417692A9600EE6EE3 /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1F07F7317692A9600EE6EE3 /* libLibTidyHtml.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E1105D36169017DF0067091C /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageManager.cpp; sourceTree = "<group>"; };
 		E1105D37169017DF0067091C /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
-		E110B53E177FD458004071B5 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libARBCommon.a; path = ../ARBCommon/build/Release/libARBCommon.a; sourceTree = "<group>"; };
-		E124BBB316BD90D0006FBF2D /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../LibArchive/build/Release/libLibArchive.a; sourceTree = "<group>"; };
+		E1439D0417A44401001E4AC8 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
+		E1439D0617A44408001E4AC8 /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/AgilityBook/Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
+		E1439D0817A4440D001E4AC8 /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../build/AgilityBook/Build/Products/Debug/libLibTidyHtml.a; sourceTree = "<group>"; };
 		E19B63BB166C096E004DEDA4 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B63BF166C096E004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E19B63C2166C096E004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -337,7 +338,6 @@
 		E1E1D05217234DEF00D7D1E4 /* ComboBoxQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxQ.h; sourceTree = "<group>"; };
 		E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxVenue.cpp; sourceTree = "<group>"; };
 		E1E1D05417234DEF00D7D1E4 /* ComboBoxVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxVenue.h; sourceTree = "<group>"; };
-		E1F07F7317692A9600EE6EE3 /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../LibTidyHtml/build/Release/libLibTidyHtml.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,9 +345,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E110B53F177FD458004071B5 /* libARBCommon.a in Frameworks */,
-				E1F07F7417692A9600EE6EE3 /* libLibTidyHtml.a in Frameworks */,
-				E124BBB416BD90D0006FBF2D /* libLibArchive.a in Frameworks */,
+				E1439D0917A4440D001E4AC8 /* libLibTidyHtml.a in Frameworks */,
+				E1439D0717A44408001E4AC8 /* libLibArchive.a in Frameworks */,
+				E1439D0517A44401001E4AC8 /* libARBCommon.a in Frameworks */,
 				E19B65D9166C115F004DEDA4 /* libARB.a in Frameworks */,
 				E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */,
 			);
@@ -359,9 +359,9 @@
 		E19B63B0166C096E004DEDA4 = {
 			isa = PBXGroup;
 			children = (
-				E110B53E177FD458004071B5 /* libARBCommon.a */,
-				E1F07F7317692A9600EE6EE3 /* libLibTidyHtml.a */,
-				E124BBB316BD90D0006FBF2D /* libLibArchive.a */,
+				E1439D0817A4440D001E4AC8 /* libLibTidyHtml.a */,
+				E1439D0617A44408001E4AC8 /* libLibArchive.a */,
+				E1439D0417A44401001E4AC8 /* libARBCommon.a */,
 				E19B65D8166C115F004DEDA4 /* libARB.a */,
 				E19B63C5166C096E004DEDA4 /* Source */,
 				E19B63BE166C096E004DEDA4 /* Frameworks */,
@@ -988,6 +988,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AgilityBook/AgilityBook-Prefix.pch";
 				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../build/AgilityBook/Build/Products/Debug\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1001,6 +1005,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AgilityBook/AgilityBook-Prefix.pch";
 				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../build/AgilityBook/Build/Products/Debug\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
