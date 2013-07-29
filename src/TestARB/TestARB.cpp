@@ -33,7 +33,7 @@
 #if defined(__WXWINDOWS__)
 #include <wx/app.h>
 #include <wx/filesys.h>
-#include <wx/fs_zip.h>
+#include <wx/fs_arc.h>
 #include <wx/stdpaths.h>
 #endif
 
@@ -182,6 +182,7 @@ int main(int argc, char** argv)
 				continue;
 			}
 			fprintf(stderr, "Usage: %s [micro] [verbose]\n", argv[0]);
+			return -1;
 		}
 	}
 
@@ -202,7 +203,7 @@ int main(int argc, char** argv)
 	}
 
 #if defined(__WXWINDOWS__)
-	wxFileSystem::AddHandler(new wxZipFSHandler);
+	wxFileSystem::AddHandler(new wxArchiveFSHandler);
 #endif
 
 	// Some names are 'funny' since it's cut/paste from ../Win/

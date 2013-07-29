@@ -25,9 +25,20 @@ extern bool ExtractFile(
 		std::wstring const& zipFile,
 		wxString const& archiveFile,
 		std::ostream& outData);
+
+extern bool ReplaceFile(
+		std::wstring const& zipFile,
+		wxString const& archiveFile,
+		std::istream& inData);
+
 #else
 extern bool ExtractFile(
 		std::string const& zipFile,
 		std::string const& archiveFile,
 		std::ostream& outData);
+
+extern bool ReplaceFile(
+		std::string const& zipFile,
+		std::string const& archiveFile,
+		std::istream& inData);
 #endif
