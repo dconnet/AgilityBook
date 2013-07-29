@@ -32,6 +32,7 @@
 #define BUFFER_SIZE	1024
 
 #if defined(__WXWINDOWS__)
+
 bool ExtractFile(
 		std::wstring const& zipFile,
 		wxString const& archiveFile,
@@ -64,6 +65,16 @@ bool ExtractFile(
 		assert(file);
 	}
 	return rc;
+}
+
+
+bool ReplaceFile(
+		std::wstring const& zipFile,
+		wxString const& archiveFile,
+		std::istream& inData)
+{
+#pragma PRAGMA_TODO(ReplaceFile)
+	return false;
 }
 
 #else // __WXWINDOWS__
@@ -115,4 +126,15 @@ bool ExtractFile(
 
 	return rc;
 }
+
+
+bool ReplaceFile(
+		std::string const& zipFile,
+		std::string const& archiveFile,
+		std::istream& inData);
+{
+#pragma PRAGMA_TODO(ReplaceFile)
+	return false;
+}
+
 #endif // __WXWINDOWS__
