@@ -35,7 +35,7 @@
 bool ExtractFile(
 		std::wstring const& zipFile,
 		wxString const& archiveFile,
-		std::iostream& ioData)
+		std::ostream& outData)
 {
 	bool rc = false;
 
@@ -52,7 +52,7 @@ bool ExtractFile(
 			char buffer[BUFFER_SIZE];
 			size_t num = BUFFER_SIZE;
 			input->Read(buffer, num);
-			ioData.write(buffer, input->LastRead());
+			outData.write(buffer, input->LastRead());
 			size += input->LastRead();
 		}
 		delete file;
@@ -71,7 +71,7 @@ bool ExtractFile(
 bool ExtractFile(
 		std::string const& zipFile,
 		std::string const& archiveFile,
-		std::iostream& ioData)
+		std::ostream& outData)
 {
 	bool rc = false;
 
@@ -103,7 +103,7 @@ bool ExtractFile(
 							break;
 						else if (err > 0)
 						{
-							ioData.write(buf, err);
+							outData.write(buf, err);
 						}
 					} while (err > 0);
 				}

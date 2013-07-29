@@ -37,12 +37,12 @@
 bool CConfigHandler::LoadWxFile(
 		std::wstring const& zipFile,
 		std::wstring const& archiveFile,
-		std::iostream& ioData)
+		std::ostream& outData)
 {
 #if defined(__WXWINDOWS__)
-	return ExtractFile(zipFile, StringUtil::stringWX(archiveFile), ioData);
+	return ExtractFile(zipFile, StringUtil::stringWX(archiveFile), outData);
 #else
-	return ExtractFile(StringUtil::stringA(zipFile), StringUtil::stringA(archiveFile), ioData);
+	return ExtractFile(StringUtil::stringA(zipFile), StringUtil::stringA(archiveFile), outData);
 #endif
 }
 
