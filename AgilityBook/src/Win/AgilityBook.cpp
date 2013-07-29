@@ -52,7 +52,7 @@
 #include <wx/docview.h>
 #include <wx/file.h>
 #include <wx/filesys.h>
-#include <wx/fs_zip.h>
+#include <wx/fs_arc.h>
 #include <wx/msgdlg.h>
 #include <wx/settings.h>
 #include <wx/stdpaths.h>
@@ -275,7 +275,7 @@ bool CAgilityBookApp::OnInit()
 	wxConfig::Set(new wxConfig(L"Agility Record Book", L"dcon Software"));
 
 	wxImage::AddHandler(new wxGIFHandler);
-	wxFileSystem::AddHandler(new wxZipFSHandler);
+	wxFileSystem::AddHandler(new wxArchiveFSHandler);
 
 	m_LangMgr = new CLanguageManager();
 
