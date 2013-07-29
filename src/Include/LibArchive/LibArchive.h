@@ -24,10 +24,10 @@
 extern bool ExtractFile(
 		std::wstring const& zipFile,
 		wxString const& archiveFile,
-		std::iostream& ioData);
+		std::ostream& outData);
 #else
 extern bool ExtractFile(
 		std::string const& zipFile,
 		std::string const& archiveFile,
-		std::iostream& ioData);
+		std::ostream& outData);
 #endif

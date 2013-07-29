@@ -26,7 +26,7 @@ public:
 	static bool LoadWxFile(
 			std::wstring const& zipFile, ///< Full path name
 			std::wstring const& archiveFile,
-			std::iostream& ioData);
+			std::ostream& outData);
 
 	CConfigHandler();
 
