@@ -5,6 +5,8 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2013-07-30 DRC Modify tmpfile to allow multiple builds
+#                (a VM can now build vc12 and the same time vc11 builds locally)
 # 2013-07-01 DRC Added VC12 support. Removed _BIND_TO... for VC10+.
 # 2012-07-07 DRC wx2.9 added x64 target - use that instead of amd64
 # 2012-06-01 DRC Added VC11 support.
@@ -39,7 +41,7 @@ import sys
 import win32api
 import win32con
 
-tmpfile = 'tmpcomp.bat'
+tmpfile = 'tmpcomp' + os.environ['USERDOMAIN'] + '.bat'
 
 ProgramFiles = r'c:\Program Files'
 ProgramFiles64 = r'c:\Program Files'
