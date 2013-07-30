@@ -37,6 +37,7 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	Local.cpp \
 	TestAgilityRecordBook.cpp \
 	TestARB.cpp \
+	TestArchive.cpp \
 	TestBinaryData.cpp \
 	TestBreakLine.cpp \
 	TestCalendar.cpp \
