@@ -25,10 +25,29 @@
 
 SUITE(TestArchive)
 {
+#ifndef __WXWINDOWS__
+	static char const* FileData1 = "This is test1\nOk";
+	static char const* FileData2 = "This is test2\r\nOk\r\n";
+	static char const* FileData3 = "This is test3\r\nReplaced\r\n";
+
+	static std::string CreateZip()
+	{
+		return std::string();
+	}
+
 	TEST(ReplaceFile)
 	{
 		if (!g_bMicroTest)
 		{
+			std::string file = CreateZip();
+			CHECK(!file.empty());
+			if (!file.empty())
+			{
+				CLibArchive archive(file);
+				std::istringstream data(FileData3);
+				CHECK(archive.ReplaceFile("test1.txt", data));
+				_unlink(file.c_str());
+			}
 			TODO_TEST
 			// See: http://docs.wxwidgets.org/stable/wx_wxarc.html#wxarcmodify
 		}
@@ -37,9 +56,30 @@ SUITE(TestArchive)
 
 	TEST(ExtractFile)
 	{
-		if (!g_bMicroTest)
+		//if (!g_bMicroTest)
 		{
-			TODO_TEST
+			std::string file = CreateZip();
+			CHECK(!file.empty());
+
+			if (!file.empty())
+			{
+				CLibArchive archive(file);
+
+				{
+					std::ostringstream data;
+					CHECK(archive.ExtractFile("test1.txt", data));
+					CHECK(data.str() == FileData1);
+				}
+
+				{
+					std::ostringstream data;
+					CHECK(archive.ExtractFile("test2.txt", data));
+					CHECK(data.str() == FileData2);
+				}
+
+				_unlink(file.c_str());
+			}
 		}
 	}
+#endif
 }
