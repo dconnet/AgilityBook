@@ -78,9 +78,13 @@ SUITE(TestMisc)
 	{
 		if (!g_bMicroTest)
 		{
+#if defined(__WXWINDOWS__)
 			std::wstring s1(L"IDS_ARB_UNKNOWN_VERSION");
 			std::wstring s2(StringUtil::GetTranslation(arbT("IDS_ARB_UNKNOWN_VERSION")));
 			CHECK(s1 != s2);
+#else
+#pragma PRAGMA_TODO(implement non-wx version)
+#endif
 		}
 	}
 

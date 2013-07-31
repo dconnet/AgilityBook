@@ -56,9 +56,6 @@
     <ClCompile Include="..\..\LibArchive\zlib\ioapi.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\LibArchive\zlib\iowin32.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\LibArchive\zlib\trees.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
@@ -106,9 +103,6 @@
     <ClInclude Include="..\..\LibArchive\zlib\ioapi.h">
       <Filter>Source Files\zlib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LibArchive\zlib\iowin32.h">
-      <Filter>Source Files\zlib</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\LibArchive\zlib\trees.h">
       <Filter>Source Files\zlib</Filter>
     </ClInclude>
@@ -127,7 +121,7 @@
     <ClInclude Include="..\..\LibArchive\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LibArchive\LibArchive.h">
+    <ClInclude Include="..\..\Include\LibArchive\LibArchive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

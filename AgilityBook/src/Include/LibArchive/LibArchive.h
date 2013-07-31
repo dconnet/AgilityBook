@@ -20,25 +20,35 @@
 
 #include <string>
 
+
+class CLibArchive
+{
+public:
 #if defined(__WXWINDOWS__)
-extern bool ExtractFile(
-		std::wstring const& zipFile,
-		wxString const& archiveFile,
-		std::ostream& outData);
-
-extern bool ReplaceFile(
-		std::wstring const& zipFile,
-		wxString const& archiveFile,
-		std::istream& inData);
-
+	CLibArchive(std::wstring const& zipFile);
 #else
-extern bool ExtractFile(
-		std::string const& zipFile,
-		std::string const& archiveFile,
-		std::ostream& outData);
-
-extern bool ReplaceFile(
-		std::string const& zipFile,
-		std::string const& archiveFile,
-		std::istream& inData);
+	CLibArchive(std::string const& zipFile);
 #endif
+	~CLibArchive();
+
+	bool ExtractFile(
+#if defined(__WXWINDOWS__)
+			wxString const& archiveFile,
+#else
+			std::string const& archiveFile,
+#endif
+			std::ostream& outData);
+
+	bool ReplaceFile(
+#if defined(__WXWINDOWS__)
+			wxString const& archiveFile,
+#else
+			std::string const& archiveFile,
+#endif
+			std::istream& inData);
+
+private:
+	class CLibArchiveImpl* m_pImpl;
+	CLibArchive& operator=(CLibArchive const& rhs);
+	CLibArchive(CLibArchive const& rhs);
+};
