@@ -34,11 +34,15 @@ SUITE(TestARBQ)
 		// properly setup.
 		if (!g_bMicroTest)
 		{
+#if defined(__WXWINDOWS__)
 			ARB_Q q;
 			CHECK(L"NA" == q.str());
 
 			ARB_Q q1(ARB_Q::eQ_Q);
 			CHECK(L"Q" == q1.str());
+#else
+#pragma PRAGMA_TODO(implement non-wx version)
+#endif
 		}
 	}
 
@@ -47,6 +51,7 @@ SUITE(TestARBQ)
 	{
 		if (!g_bMicroTest)
 		{
+#if defined(__WXWINDOWS__)
 			CHECK_EQUAL(6, ARB_Q::GetNumValidTypes());
 			CHECK(L"NA, Q, NQ, E, DNR, SQ" == ARB_Q::GetValidTypes());
 			CHECK(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(0));
@@ -59,6 +64,9 @@ SUITE(TestARBQ)
 			std::vector<std::wstring> types;
 			ARB_Q::GetValidTypes(types);
 			CHECK_EQUAL(6u, types.size());
+#else
+#pragma PRAGMA_TODO(implement non-wx version)
+#endif
 		}
 	}
 
@@ -122,12 +130,16 @@ SUITE(TestARBQ)
 	{
 		if (!g_bMicroTest)
 		{
+#if defined(__WXWINDOWS__)
 			ARB_Q q;
 			std::wostringstream errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			CHECK(q.Load(L"SQ", ver, callback));
 			CHECK(L"SQ" == q.str());
+#else
+#pragma PRAGMA_TODO(implement non-wx version)
+#endif
 		}
 	}
 
@@ -136,12 +148,16 @@ SUITE(TestARBQ)
 	{
 		if (!g_bMicroTest)
 		{
+#if defined(__WXWINDOWS__)
 			ARB_Q q(ARB_Q::eQ_Q);
 			std::wostringstream errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			CHECK(!q.Load(L"attrib", ver, callback));
 			CHECK(L"NA" == q.str());
+#else
+#pragma PRAGMA_TODO(implement non-wx version)
+#endif
 		}
 	}
 

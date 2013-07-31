@@ -24,23 +24,58 @@
 #include "unzip.h"
 #endif
 
-
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
 
 #define BUFFER_SIZE	1024
 
+
+class CLibArchiveImpl
+{
+public:
+#if defined(__WXWINDOWS__)
+	CLibArchiveImpl(std::wstring const& zipFile)
+		: m_zipFile(zipFile)
+	{
+		assert(!m_zipFile.empty());
+	}
+	std::wstring m_zipFile;
+#else
+	CLibArchiveImpl(std::string const& zipFile)
+		: m_zipFile(zipFile)
+	{
+		assert(!m_zipFile.empty());
+	}
+	std::string m_zipFile;
+#endif
+};
+
+
+#if defined(__WXWINDOWS__)
+CLibArchive::CLibArchive(std::wstring const& zipFile)
+#else
+CLibArchive::CLibArchive(std::string const& zipFile)
+#endif
+	: m_pImpl(new CLibArchiveImpl(zipFile))
+{
+}
+
+
+CLibArchive::~CLibArchive()
+{
+	delete m_pImpl;
+}
+
 #if defined(__WXWINDOWS__)
 
-bool ExtractFile(
-		std::wstring const& zipFile,
+bool CLibArchive::ExtractFile(
 		wxString const& archiveFile,
 		std::ostream& outData)
 {
 	bool rc = false;
 
-	wxString zipfile = wxFileSystem::FileNameToURL(wxString(zipFile.c_str()));
+	wxString zipfile = wxFileSystem::FileNameToURL(wxString(m_pImpl->m_zipFile.c_str()));
 	zipfile += L"#zip:" + archiveFile;
 	wxFileSystem filesys;
 	wxFSFile* file = filesys.OpenFile(zipfile);
@@ -68,8 +103,7 @@ bool ExtractFile(
 }
 
 
-bool ReplaceFile(
-		std::wstring const& zipFile,
+bool CLibArchive::ReplaceFile(
 		wxString const& archiveFile,
 		std::istream& inData)
 {
@@ -79,20 +113,13 @@ bool ReplaceFile(
 
 #else // __WXWINDOWS__
 
-bool ExtractFile(
-		std::string const& zipFile,
+bool CLibArchive::ExtractFile(
 		std::string const& archiveFile,
 		std::ostream& outData)
 {
 	bool rc = false;
 
-#ifdef USEWIN32IOAPI
-	zlib_filefunc64_def ffunc;
-	fill_win32_filefunc64(&ffunc);
-	unzFile uf = unzOpen2_64(zipFile.c_str(), &ffunc);
-#else
-	unzFile uf = unzOpen(zipFile.c_str());
-#endif
+	unzFile uf = unzOpen(m_pImpl->m_zipFile.c_str());
 	if (uf)
 	{
 		if (UNZ_OK == unzLocateFile(uf, archiveFile.c_str(), 0))
@@ -128,10 +155,9 @@ bool ExtractFile(
 }
 
 
-bool ReplaceFile(
-		std::string const& zipFile,
+bool CLibArchive::ReplaceFile(
 		std::string const& archiveFile,
-		std::istream& inData);
+		std::istream& inData)
 {
 #pragma PRAGMA_TODO(ReplaceFile)
 	return false;

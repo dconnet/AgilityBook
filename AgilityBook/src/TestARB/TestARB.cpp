@@ -256,7 +256,16 @@ ElementNodePtr LoadXMLData(size_t id)
 #endif
 #else
 #pragma PRAGMA_TODO(write LoadXMLData)
+#ifdef WIN32
+	wchar_t fileName[MAX_PATH];
+	GetModuleFileNameW(NULL, fileName, _countof(fileName));
+	std::wstring datafile(fileName);
+	size_t n = datafile.find_last_of('.');
+	datafile = datafile.substr(0, n);
+	datafile += L".dat";
+#else
 	std::wstring datafile = L"./testarb.dat";
+#endif
 #endif
 	assert(id < gc_NumConfigs);
 	std::stringstream data;
