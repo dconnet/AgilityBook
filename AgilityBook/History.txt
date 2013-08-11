@@ -3,7 +3,7 @@
   - Change Tree/Runs view to a single consolidated view.
 [ Note, most functionality is now complete ]
 
-5/26/2013: v2.3.13.<in dev>
+7/11/2013: v2.3.13.87
 - Bumped Configuration v44:
   - Added Novice to NADAC (there is no A/B anymore)
 - Bumped file version to 14.1:

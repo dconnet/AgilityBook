@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: ARB\n"
 "X-Poedit-SearchPath-1: ARBHelp\n"
 "X-Poedit-SearchPath-2: ARBUpdater\n"
@@ -56,15 +56,15 @@ msgstr "DNR"
 msgid "IDS_QTYPE_SQ"
 msgstr "SQ"
 
-#: ARBHelp/DlgPageEncode.cpp:234 Win/MainFrm.cpp:501
+#: ARBHelp/DlgPageEncode.cpp:218 Win/MainFrm.cpp:479
 msgid "IDS_BAD_VERSION"
 msgstr "Unable to determine version information"
 
-#: TestARB/Local.cpp:49 TestARB/TestMisc.cpp:81 Win/Localization.cpp:46
+#: TestARB/Local.cpp:49 TestARB/TestMisc.cpp:83 Win/Localization.cpp:46
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Unknown document version"
 
-#: TestARB/Local.cpp:50 Win/Localization.cpp:47
+#: TestARB/Local.cpp:53 Win/Localization.cpp:50
 msgid "IDS_WARNING_NEWER_DOC"
 msgstr ""
 "WARNING\n"
@@ -75,31 +75,31 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: TestARB/Local.cpp:51 Win/Localization.cpp:48
+#: TestARB/Local.cpp:54 Win/Localization.cpp:51
 msgid "IDS_INVALID_DOC_STRUCTURE"
 msgstr "Invalid document structure"
 
-#: TestARB/Local.cpp:52 Win/Localization.cpp:49
+#: TestARB/Local.cpp:55 Win/Localization.cpp:52
 msgid "IDS_INVALID_FILE_FORMAT"
 msgstr "Invalid file format: '"
 
-#: TestARB/Local.cpp:53 Win/Localization.cpp:50
+#: TestARB/Local.cpp:56 Win/Localization.cpp:53
 msgid "IDS_INVALID_FILE_MISSING_ATTRIB"
 msgstr "' is missing required attribute '"
 
-#: TestARB/Local.cpp:54 Win/Localization.cpp:51
+#: TestARB/Local.cpp:57 Win/Localization.cpp:54
 msgid "IDS_INVALID_FILE_BAD_ATTRIB"
 msgstr "' has an invalid value for the attribute '"
 
-#: TestARB/Local.cpp:55 Win/Localization.cpp:52
+#: TestARB/Local.cpp:58 Win/Localization.cpp:55
 msgid "IDS_INVALID_DATE"
 msgstr "Invalid date: "
 
-#: TestARB/Local.cpp:56 Win/Localization.cpp:53
+#: TestARB/Local.cpp:59 Win/Localization.cpp:56
 msgid "IDS_INVALID_DIV_LEVEL"
 msgstr "Division/level pair has not been defined: "
 
-#: TestARB/Local.cpp:57 Win/Localization.cpp:54
+#: TestARB/Local.cpp:60 Win/Localization.cpp:57
 msgid "IDS_INVALID_EVENT_NAME"
 msgstr "Event has not been defined: "
 
@@ -479,21 +479,21 @@ msgstr "Updated %1$d Team runs."
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Table setting updated in %1$d runs."
 
-#: Win/AgilityBook.cpp:147 Win/Print.cpp:958 Win/Print.cpp:991
+#: Win/AgilityBook.cpp:148 Win/Print.cpp:958 Win/Print.cpp:991
 msgid "Sorry, print preview needs a printer to be installed."
 msgstr "Sorry, print preview needs a printer to be installed."
 
-#: Win/AgilityBook.cpp:150 Win/Print.cpp:961
+#: Win/AgilityBook.cpp:151 Win/Print.cpp:961
 msgid "Print Preview"
 msgstr "Print Preview"
 
-#: Win/AgilityBook.cpp:269
+#: Win/AgilityBook.cpp:270
 msgid "IDS_MIN_RESOLUTION"
 msgstr ""
 "This program requires a screen resolution of at least 800x600. Some dialogs "
 "may not be fully visible. Do you want to continue?"
 
-#: Win/AgilityBook.cpp:282
+#: Win/AgilityBook.cpp:283
 msgid "Agility Record Book file"
 msgstr "Agility Record Book file"
 
@@ -742,7 +742,7 @@ msgid "IDS_NO_LINKED_FILES"
 msgstr "No linked files found."
 
 #: Win/AgilityBookHtmlView.cpp:185 Win/AgilityBookPointsView.cpp:325
-#: Win/PointsData.cpp:269
+#: Win/PointsData.cpp:270
 msgid "IDS_TITLING_POINTS"
 msgstr "Titling Points"
 
@@ -1951,7 +1951,7 @@ msgid "IDS_COL_EVENT"
 msgstr "Event"
 
 #: Win/DlgAssignColumns.cpp:234 Win/DlgAssignColumns.cpp:398
-#: Win/DlgDog.cpp:111 Win/DlgRun.cpp:190 Win/Print.cpp:248 Win/Print.cpp:269
+#: Win/DlgDog.cpp:111 Win/DlgRun.cpp:191 Win/Print.cpp:248 Win/Print.cpp:269
 #: Win/Print.cpp:275 Win/Print.cpp:281 Win/Print.cpp:287
 msgid "IDS_COL_HEIGHT"
 msgstr "Height"
@@ -3574,8 +3574,8 @@ msgstr "Number of points that will be earned."
 msgid "IDS_TITLEPOINT_NORMAL"
 msgstr "Normal"
 
-#: Win/DlgConfigTitlePoints.cpp:108 Win/PointsData.cpp:675
-#: Win/PointsData.cpp:727
+#: Win/DlgConfigTitlePoints.cpp:108 Win/PointsData.cpp:676
+#: Win/PointsData.cpp:728
 msgid "IDS_TITLEPOINT_LIFETIME"
 msgstr "Lifetime"
 
@@ -3875,11 +3875,11 @@ msgid "IDC_CONFIG_VENUE_TITLES"
 msgstr "Titles"
 
 # DlgCRCDViewer
-#: Win/DlgCRCDViewer.cpp:85
+#: Win/DlgCRCDViewer.cpp:86
 msgid "IDD_CRCD_VIEWER"
 msgstr "CRCD Viewer"
 
-#: Win/DlgCRCDViewer.cpp:91
+#: Win/DlgCRCDViewer.cpp:92
 msgid "IDC_VIEWER_CRCD_CLOSE"
 msgstr "Close"
 
@@ -3895,7 +3895,7 @@ msgstr "Number"
 msgid "IDS_COL_RECEIVED"
 msgstr "Received"
 
-#: Win/DlgDog.cpp:113 Win/DlgRun.cpp:192
+#: Win/DlgDog.cpp:113 Win/DlgRun.cpp:193
 msgid "IDS_COL_NOTE"
 msgstr "Note"
 
@@ -4455,15 +4455,15 @@ msgstr ""
 "Create a trial from the selected calendar entry. Only entries with "
 "recognized venues can create a trial directly."
 
-#: Win/DlgListViewer.cpp:203 Win/DlgListViewer.cpp:793
+#: Win/DlgListViewer.cpp:204 Win/DlgListViewer.cpp:794
 msgid "IDS_EXISTING_POINTS"
 msgstr "Existing Points"
 
-#: Win/DlgListViewer.cpp:265
+#: Win/DlgListViewer.cpp:266
 msgid "IDS_DELETED"
 msgstr "Deleted"
 
-#: Win/DlgListViewer.cpp:268
+#: Win/DlgListViewer.cpp:269
 msgid "IDS_CHANGED"
 msgstr "Changed"
 
@@ -6098,60 +6098,60 @@ msgstr "Select a language to use."
 msgid "ID_INDICATOR_DOG"
 msgstr "          "
 
-#: Win/MainFrm.cpp:179
+#: Win/MainFrm.cpp:180
 msgid "ID_INDICATOR_STATUS"
 msgstr "status"
 
-#: Win/MainFrm.cpp:182 Win/MainFrm.cpp:218
+#: Win/MainFrm.cpp:183 Win/MainFrm.cpp:219
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtered"
 
-#: Win/PointsData.cpp:612 Win/PointsData.cpp:1391 Win/Print.cpp:102
+#: Win/PointsData.cpp:613 Win/PointsData.cpp:1392 Win/Print.cpp:102
 #: Win/Print.cpp:994 Win/TabView.cpp:225 Win/TabView.cpp:335
 msgid "IDS_RUNS"
 msgstr "Runs"
 
-#: Win/PointsData.cpp:676 Win/PointsData.cpp:728
+#: Win/PointsData.cpp:677 Win/PointsData.cpp:729
 msgid "IDS_LIFETIME_POINTS"
 msgstr "%1$s Points"
 
-#: Win/PointsData.cpp:679 Win/PointsData.cpp:731
+#: Win/PointsData.cpp:680 Win/PointsData.cpp:732
 msgid "IDS_PLACEMENT_POINTS"
 msgstr "Placement Points"
 
-#: Win/PointsData.cpp:682
+#: Win/PointsData.cpp:683
 msgid "IDS_TOTAL"
 msgstr "Total"
 
-#: Win/PointsData.cpp:926
+#: Win/PointsData.cpp:927
 msgid "IDS_POINTS_SPEED"
 msgstr "%1$d Speed"
 
-#: Win/PointsData.cpp:1587
+#: Win/PointsData.cpp:1588
 msgid "IDS_POINTS_RUNS_JUDGES"
 msgstr "%1$d runs, %2$d judges"
 
-#: Win/PointsData.cpp:1592 Win/PointsData.cpp:1612
+#: Win/PointsData.cpp:1593 Win/PointsData.cpp:1613
 msgid "IDS_POINTS_PARTNERS"
 msgstr ", %1$d partners"
 
-#: Win/PointsData.cpp:1598
+#: Win/PointsData.cpp:1599
 msgid "IDS_POINTS_QS"
 msgstr "%1$d Qs (%2$d%%)"
 
-#: Win/PointsData.cpp:1603
+#: Win/PointsData.cpp:1604
 msgid "IDS_POINTS_CLEAN"
 msgstr ", (%1$d clean)"
 
-#: Win/PointsData.cpp:1607
+#: Win/PointsData.cpp:1608
 msgid "IDS_POINTS_JUDGES"
 msgstr ", %1$d judges"
 
-#: Win/PointsData.cpp:1621
+#: Win/PointsData.cpp:1622
 msgid "IDS_POINTS_SQS"
 msgstr "[%1$d SQ]"
 
-#: Win/PointsData.cpp:1626
+#: Win/PointsData.cpp:1627
 msgid "IDS_POINTS_SPEED_SUBTOTAL"
 msgstr "[%1$d speed]"
 
