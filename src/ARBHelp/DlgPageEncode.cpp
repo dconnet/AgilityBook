@@ -201,7 +201,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		wxString str;
 
 		// OS version
-		str << GetOSInfo();
+		str << GetOSInfo().c_str();
 
 		// Me.
 		{
