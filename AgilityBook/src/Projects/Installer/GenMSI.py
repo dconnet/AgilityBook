@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2013-08-12 DRC Added vc11/12 support, remove pre-10 support.
 # 2012-06-01 DRC Changed VC10 output directory
 # 2011-11-23 DRC Add internet shortcut to start menu
 # 2011-11-14 DRC Treat wix warnings as errors
@@ -40,7 +41,7 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC[8|9|10]]
+"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC[10|11|12]]
 	wix: Override internal wix path (c:\Tools\wix3)
 	user: Create msi as a per-user install (default: per-machine)
 	32: Create 32bit Unicode msi
@@ -347,12 +348,12 @@ def main():
 			tidy = 0
 		elif o == '/test':
 			testing = 1
-		elif o == '/VC8':
-			vcver = '8'
-		elif o == '/VC9':
-			vcver = '9'
 		elif o == '/VC10':
 			vcver = '10'
+		elif o == '/VC11':
+			vcver = '11'
+		elif o == '/VC12':
+			vcver = '12'
 		else:
 			error = 1
 			break
