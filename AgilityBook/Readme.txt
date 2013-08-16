@@ -177,7 +177,10 @@ Microsoft Visual Studio 2010 (VC10)
 
 Microsoft Visual Studio 2012 (VC11)
 ===================================
-   It works, no additional notes.
+   It works, no additional notes. But only on Vista+.
+   If 'vc110_xp' is set as the target platform, it appears to work, but the
+   compilation of WX is not targeted at that platform, so it's not supported.
+
 
 Xcode
 =====
