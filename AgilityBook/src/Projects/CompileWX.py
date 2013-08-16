@@ -4,6 +4,12 @@
 # This is my quick-and-easy way to compile wxWidgets on Windows.
 # It assumes the default install location of c:\progfiles
 #
+# Note: XP is not supported for VS2012+
+# http://blogs.msdn.com/b/vcblog/archive/2012/10/08/10357555.aspx?PageIndex=3
+# (setting up the projects are easy - command line is more involved)
+# However, compiling WX as-is and setting the projects does appear to create
+# an EXE that will run on XP.
+#
 # Revision History
 # 2013-07-30 DRC Modify tmpfile to allow multiple builds
 #                (a VM can now build vc12 and the same time vc11 builds locally)
