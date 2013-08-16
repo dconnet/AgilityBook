@@ -11,7 +11,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-08-16 DRC Add support for standalone app (.info file).
+ * @li 2013-08-16 DRC Add support for standalone app (.info file) on Windows.
  * @li 2012-12-15 DRC Prevent TabView from getting activation.
  * @li 2012-08-28 DRC Rework how wxCmdLineParser is initialized.
  * @li 2012-07-27 DRC Disable spell checking on OSX 10.8. It crashes.
@@ -275,9 +275,10 @@ bool CAgilityBookApp::OnInit()
 
 	SetAppName(L"Agility Record Book");
 
-	// Determine if this is a stand-alone execution.
+	// Determine if this is a stand-alone execution. (Windows only)
 	// If the file AgilityBook.info exists and is writable, we're good.
 	wxConfigBase* pBaseConfig = NULL;
+#ifdef __WXMSW__
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString inifile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".info";
 	if (wxFile::Exists(inifile))
@@ -295,6 +296,7 @@ bool CAgilityBookApp::OnInit()
 			delete pConfig;
 		}
 	}
+#endif
 	if (!pBaseConfig)
 		pBaseConfig = new wxConfig(L"Agility Record Book", L"dcon Software");
 	wxConfig::Set(pBaseConfig);
