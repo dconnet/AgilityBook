@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-08-16 DRC Add support for standalone app (.info file).
  * @li 2012-12-15 DRC Prevent TabView from getting activation.
  * @li 2012-08-28 DRC Rework how wxCmdLineParser is initialized.
  * @li 2012-07-27 DRC Disable spell checking on OSX 10.8. It crashes.
@@ -51,6 +52,7 @@
 #include <wx/display.h>
 #include <wx/docview.h>
 #include <wx/file.h>
+#include <wx/fileconf.h>
 #include <wx/filesys.h>
 #include <wx/fs_arc.h>
 #include <wx/msgdlg.h>
@@ -272,7 +274,30 @@ bool CAgilityBookApp::OnInit()
 	}
 
 	SetAppName(L"Agility Record Book");
-	wxConfig::Set(new wxConfig(L"Agility Record Book", L"dcon Software"));
+
+	// Determine if this is a stand-alone execution.
+	// If the file AgilityBook.info exists and is writable, we're good.
+	wxConfigBase* pBaseConfig = NULL;
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	wxString inifile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".info";
+	if (wxFile::Exists(inifile))
+	{
+		wxLogNull suppress;
+		wxFileConfig* pConfig = new wxFileConfig(L"Agility Record Book", L"dcon Software", inifile, wxEmptyString, wxCONFIG_USE_LOCAL_FILE);
+		pConfig->Write(CFG_SETTINGS_ISLOCAL, true); // Write-only value to test info file viability
+		if (pConfig->Flush())
+			pBaseConfig = pConfig;
+		else
+		{
+			// If Flush failed, we can't write the file. Probably readonly.
+			// Why? (attrib/ProgramFiles/etc) Don't care. Just fall back.
+			//TODO: Warn user?
+			delete pConfig;
+		}
+	}
+	if (!pBaseConfig)
+		pBaseConfig = new wxConfig(L"Agility Record Book", L"dcon Software");
+	wxConfig::Set(pBaseConfig);
 
 	wxImage::AddHandler(new wxGIFHandler);
 	wxFileSystem::AddHandler(new wxArchiveFSHandler);
