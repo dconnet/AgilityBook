@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest++", "UnitTest++.vc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxARBCommon", "LibwxARBCommon.vcxproj", "{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "arbdll", "arbdll.vcxproj", "{206FD8D8-1AB3-48D0-A296-C41262C27E64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -101,6 +103,14 @@ Global
 		{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}.Release|Win32.Build.0 = Release|Win32
 		{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}.Release|x64.ActiveCfg = Release|x64
 		{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}.Release|x64.Build.0 = Release|x64
+		{206FD8D8-1AB3-48D0-A296-C41262C27E64}.Debug|Win32.ActiveCfg = Debug|Win32
+		{206FD8D8-1AB3-48D0-A296-C41262C27E64}.Debug|Win32.Build.0 = Debug|Win32
+		{206FD8D8-1AB3-48D0-A296-C41262C27E64}.Debug|x64.ActiveCfg = Debug|Win32
+		{206FD8D8-1AB3-48D0-A296-C41262C27E64}.Debug|x64.Build.0 = Debug|Win32
+		{206FD8D8-1AB3-48D0-A296-C41262C27E64}.Release|Win32.ActiveCfg = Release|Win32
+		{206FD8D8-1AB3-48D0-A296-C41262C27E64}.Release|Win32.Build.0 = Release|Win32
+		{206FD8D8-1AB3-48D0-A296-C41262C27E64}.Release|x64.ActiveCfg = Release|Win32
+		{206FD8D8-1AB3-48D0-A296-C41262C27E64}.Release|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

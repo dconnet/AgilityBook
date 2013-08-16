@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2013-08-15 DRC Added support for multiple wxs files.
 # 2013-08-12 DRC Added vc11/12 support, remove pre-10 support.
 # 2012-06-01 DRC Changed VC10 output directory
 # 2011-11-23 DRC Add internet shortcut to start menu
@@ -87,6 +88,10 @@ supportedLangs = [
 # List of mo files to be included in installer in xx_YY format.
 # (xx is ISO 639 language code, YY is ISO 3166 country code)
 langNames = 'en_US;fr_FR'
+
+wxsFiles = [
+	('AgilityBook'),
+	('Dialogs')]
 
 
 def errprint(*args):
@@ -239,6 +244,21 @@ def WriteCode(baseMsi, ver4Dot, code, vcver):
 		print >>codes, 'v' + ver4Dot + ',' + d + ',' + prodcode + ',' + UpgradeCode + ',' + installs
 
 
+def GetWxsFiles(extension):
+	files = []
+	for file in wxsFiles:
+		files += [file + extension]
+	return files
+
+
+def GetWxsFilesAsString(extension):
+	str = ''
+	files = GetWxsFiles(extension)
+	for file in files:
+		str += ' ' + file
+	return str
+
+
 def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 	baseDir, outputFile = getoutputvars(code, ver4Line, vcver)
 	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
@@ -259,7 +279,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 		candleCmd += ' -dBASEDIR="' + baseDir + '"'
 		candleCmd += ' -dSUPPORTED_LANGS=' + langNames
 		candleCmd += ' -dINSTALL_SCOPE=' + perUser
-		runcmd(candleCmd + ' AgilityBook.wxs')
+		runcmd(candleCmd + GetWxsFilesAsString('.wxs'))
 		processing = 0
 		baseMsi = ''
 		sumInfoStream = ''
@@ -279,7 +299,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			lightCmd += ' -cultures:' + culture
 			lightCmd += ' -loc AgilityBook_' + culture + '.wxl'
 			lightCmd += ' -out ' + basename + '.msi'
-			runcmd(lightCmd + ' AgilityBook.wixobj')
+			runcmd(lightCmd + GetWxsFilesAsString('.wixobj'))
 			if processing == 1:
 				baseMsi = basename + '.msi'
 				sumInfoStream += langId
@@ -303,8 +323,9 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
 
 	if tidy:
-		if os.access('AgilityBook.wixobj', os.F_OK):
-			os.remove('AgilityBook.wixobj')
+		for file in GetWxsFiles('.wixobj'):
+			if os.access(file, os.F_OK):
+				os.remove(file)
 
 	return 1
 
