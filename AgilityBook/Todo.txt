@@ -1,4 +1,6 @@
-Last Updated: 5/27/2013
+Last Updated: 8/15/2013
+
+- Create a fully standalone version (for USB). Config file too.
 
 - Add a way to suppress sub-levels. Both NADAC and USDAA have simplified
   their Novice structure. ARB does not have a way of expressing this (yet).
@@ -28,16 +30,7 @@ Last Updated: 5/27/2013
     - >10: ((NumDogs - 1) / 10) + 3 [integer truncation]
   - Points: (NumDogs - Place) * 2 + 1
 
-- Detect peruser/permachine installs to prevent 'bad' upgrades from happening.
-  From an email on 'wix-users' list:
-  "Products like InstallShield use an early-scheduled custom action to detect
-  installed products and, if an old version is found, sets ALLUSERS to the
-  correct value before the rest of the installation proceeds. The dialog is
-  also disabled in this case.
-  There's sample code for such a custom action in this thread
-  http://windows-installer-xml-wix-toolset.687559.n2.nabble.com/detecting-previous-version-s-ALLUSERS-property-td695163.html#a695164"
-
-- Make Mac dmg nicer for install (like Firefox)
+- Make Mac dmg nicer for install (DnD app into Application folder)
 
 - Add 'YPS' into Reference Run list
   (currently only in dialog to enter Reference Run data).
