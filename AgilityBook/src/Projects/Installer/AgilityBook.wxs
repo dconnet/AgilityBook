@@ -4,6 +4,14 @@
 Copyright (c) David Connet. All Rights Reserved.
 License: See License.txt
 
+XP Notes:
+Non-admins will default to per-user.
+Admins will default to per-machine.
+In both cases, the default install path will be appropriate.
+Only an admin gets the user/machine option dialog. This dialog will NOT
+update the path. This means it would be easy for an admin to drop a per-user
+install into ProgramFiles. Don't do that.
+
 Command line options
  per-user install:
    XP,Vista: ALLUSERS=""
@@ -15,7 +23,7 @@ Command line options
    XP,Vista: ALLUSERS=1
    Win7: ALLUSERS=2 MSIINSTALLPERUSER=""
  INSTALLDIR: Directory to install to
- - If you run as admin and don't specify INSTALLDIR, it will install a
+ - XP: If you run as admin and don't specify INSTALLDIR, it will install a
    per-user install into ProgFiles. As non-admin, it fails. Be careful!
  INSTALLDESKTOPSHORTCUT: Set to any value to install a desktop shortcut
    ("" to suppress)
@@ -28,6 +36,7 @@ Note: !(bind.fileVersion._AgilityBook.exe) could replace $(var.CURRENT_VERSION)
       Only difference is bind is all 4 parts, the var is only 3.
 
 Revision History
+2013-08-15 DRC Add proper per-user/per-machine upgrade logic and defaults.
 2013-03-28 DRC Added MSIFASTINSTALL.
 2012-08-03 DRC Set INSTALLDIR properly during upgrade and maintenance.
 2012-04-08 DRC Fix min OS conditions (using VC10 now)
@@ -67,7 +76,7 @@ Revision History
 		Description="!(loc.Description)"
 		Comments="!(loc.Comments)"
 		InstallScope="$(var.INSTALL_SCOPE)"
-		InstallerVersion="200"
+		InstallerVersion="301"
 		SummaryCodepage="!(loc.CODEPAGE)"
 		Compressed="yes" />
 
@@ -123,11 +132,17 @@ Revision History
 		Id="SetINSTALLDIR2"
 		Property="INSTALLDIR"
 		Value="[INSTALLDIR_MAINT]" />
+	<CustomAction
+		Id="SetINSTALLDIR_XP"
+		Property="INSTALLDIR"
+		Value="[LocalAppDataFolder]\Apps\dcon Software\$(var.DEFFOLDER)" />
 	<InstallUISequence>
 		<Custom Action="SetINSTALLDIR2" After="CostInitialize">Not INSTALLDIR And Installed And INSTALLDIR_MAINT</Custom>
+		<Custom Action="SetINSTALLDIR_XP" After="SetINSTALLDIR2">Not INSTALLDIR And Not Installed And Not ALLUSERS And VersionNT&lt;600</Custom>
 	</InstallUISequence>
 	<InstallExecuteSequence>
 		<Custom Action="SetINSTALLDIR2" After="CostInitialize">Not INSTALLDIR And Installed And INSTALLDIR_MAINT</Custom>
+		<Custom Action="SetINSTALLDIR_XP" After="SetINSTALLDIR2">Not INSTALLDIR And Not Installed And Not ALLUSERS And VersionNT&lt;600</Custom>
 	</InstallExecuteSequence>
 
 	<Property Id="ARPCOMMENTS" Value="!(loc.Comments)" />
@@ -371,11 +386,16 @@ Revision History
 		Sequence="execute"
 		After="CostFinalize"
 		Value="[INSTALLDIR]" />
-	<SetProperty Id="ARBHasPerUserSupport"
-		Sequence="ui"
-		After="FindRelatedProducts"
-		Value="1">(VersionNT&lt;600 And Privileged) Or VersionNT&gt;=601</SetProperty>
 
+	<CustomAction Id="SetARBHasPerUserSupport"
+		Property="ARBHasPerUserSupport"
+		Value="1" />
+
+	<Binary
+		Id="arbdll.dll"
+		SourceFile="$(var.BASEDIR)\arbdll.dll" />
+
+	<CustomAction Id="ARBSetAllUsers" BinaryKey="arbdll.dll" DllEntry="ARBSetAllUsers" Execute="firstSequence" />
 	<CustomAction Id="ARB_AlreadyUpdated" Error="!(loc.ARB_AlreadyUpdated)" />
 	<CustomAction Id="ARB_NoDowngrade" Error="!(loc.ARB_NoDowngrade)" />
 	<CustomAction Id="ARB_LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
@@ -383,12 +403,16 @@ Revision History
 	<InstallUISequence>
 		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">SAMEVERSIONDETECTED</Custom>
 		<Custom Action="ARB_NoDowngrade" After="ARB_AlreadyUpdated">NEWERVERSIONDETECTED</Custom>
+		<Custom Action="SetARBHasPerUserSupport" Before="FindRelatedProducts">(VersionNT&lt;600 And Privileged) Or VersionNT&gt;=601</Custom>
+		<Custom Action="ARBSetAllUsers" After="SetARBHasPerUserSupport" />
 	</InstallUISequence>
 
 	<InstallExecuteSequence>
 		<RemoveExistingProducts After="InstallInitialize" />
 		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">SAMEVERSIONDETECTED</Custom>
 		<Custom Action="ARB_NoDowngrade" After="ARB_AlreadyUpdated">NEWERVERSIONDETECTED</Custom>
+		<Custom Action="SetARBHasPerUserSupport" Before="FindRelatedProducts">(VersionNT&lt;600 And Privileged) Or VersionNT&gt;=601</Custom>
+		<Custom Action="ARBSetAllUsers" After="SetARBHasPerUserSupport" />
 		<!--
 		START_APP should only be set on the command line during auto-upgrading
 		(hence, it's not documented above). If set during full UI, it will
@@ -397,114 +421,9 @@ Revision History
 		-->
 		<Custom Action="ARB_LaunchApplication" After="InstallFinalize">START_APP And UILevel&lt;4</Custom>
 	</InstallExecuteSequence>
-
+	
 	<UI>
-		<!-- Copied from WixUI_InstallDir.wxs -->
-		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
-
-		<TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
-		<TextStyle Id="WixUI_Font_Emphasized" FaceName="Tahoma" Size="8" Bold="yes" />
-		<TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
-		<TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
-
-		<Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
-		<Property Id="WixUI_Mode" Value="InstallDir" />
-
-		<DialogRef Id="BrowseDlg" />
-		<DialogRef Id="DiskCostDlg" />
-		<DialogRef Id="ErrorDlg" />
-		<DialogRef Id="FatalError" />
-		<DialogRef Id="FilesInUse" />
-		<DialogRef Id="MsiRMFilesInUse" />
-		<DialogRef Id="PrepareDlg" />
-		<DialogRef Id="ProgressDlg" />
-		<DialogRef Id="ResumeDlg" />
-		<DialogRef Id="UserExit" />
-
-		<Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="3">1</Publish>
-		<Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
-
-		<Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
-
-		<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
-
-		<Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
-		<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="MyInstallScopeDlg">LicenseAccepted="1" And ARBHasPerUserSupport</Publish>
-		<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="MyInstallDirDlg">LicenseAccepted="1" And Not ARBHasPerUserSupport</Publish>
-
-		<Publish Dialog="MyInstallScopeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
-		<Publish Dialog="MyInstallScopeDlg" Control="Next" Event="NewDialog" Value="MyInstallDirDlg">1</Publish>
-
-		<Publish Dialog="MyInstallDirDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">Not ARBHasPerUserSupport</Publish>
-		<Publish Dialog="MyInstallDirDlg" Control="Back" Event="NewDialog" Value="MyInstallScopeDlg">ARBHasPerUserSupport</Publish>
-		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
-		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
-		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
-		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
-		<Publish Dialog="MyInstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
-		<Publish Dialog="MyInstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
-		
-		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MyInstallDirDlg" Order="1">NOT Installed</Publish>
-		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed</Publish>
-
-		<Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
-
-		<Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-		<Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-		<Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
-
-		<Dialog Id="MyInstallScopeDlg" Width="370" Height="270" Title="!(loc.InstallScopeDlg_Title)" KeepModeless="yes">
-			<Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.InstallScopeDlgBannerBitmap)" />
-			<Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallScopeDlgTitle)" />
-			<Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
-			<Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallScopeDlgDescription)" />
-			<Control Id="BothScopes" Type="RadioButtonGroup" X="20" Y="55" Width="330" Height="120" Property="ARBAllUsers">
-				<RadioButtonGroup Property="ARBAllUsers">
-					<RadioButton Value="0" X="0" Y="0" Width="295" Height="16" Text="!(loc.InstallScopeDlgPerUser)" />
-					<RadioButton Value="1" X="0" Y="60" Width="295" Height="16" Text="!(loc.InstallScopeDlgPerMachine)" />
-				</RadioButtonGroup>
-			</Control>
-			<Control Id="PerUserDescription" Type="Text" X="33" Y="70" Width="300" Height="36" NoPrefix="yes" Text="!(loc.InstallScopeDlgPerUserDescription)" />
-			<Control Id="PerMachineDescription" Type="Text" X="33" Y="131" Width="300" Height="36" NoPrefix="yes" Text="!(loc.InstallScopeDlgPerMachineDescription)" />
-			<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
-			<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
-			<Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)">
-				<!-- ALLUSERS is set in both cases simply to get the shield to display properly -->
-				<Publish Property="ALLUSERS" Value="1">VersionNT&lt;=600 And ARBAllUsers=1</Publish>
-				<Publish Property="ALLUSERS" Value="2">VersionNT&gt;=601 And ARBAllUsers=1</Publish>
-				<Publish Property="MSIINSTALLPERUSER" Value="{}">VersionNT&gt;=601 And ARBAllUsers=1</Publish>
-				<Publish Property="ALLUSERS" Value="{}">ARBAllUsers&lt;&gt;1</Publish>
-				<Publish Property="MSIINSTALLPERUSER" Value="1">VersionNT&gt;=601 And ARBAllUsers&lt;&gt;1</Publish>
-			</Control>
-			<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
-				<Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
-			</Control>
-		</Dialog>
-
-		<Dialog Id="MyInstallDirDlg" Width="370" Height="270" Title="!(loc.InstallDirDlg_Title)">
-			<Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
-			<Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallDirDlgTitle)" />
-			<Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallDirDlgDescription)" />
-			<Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
-			<Control Id="FolderLabel" Type="Text" X="20" Y="60" Width="290" Height="30" NoPrefix="yes" Text="!(loc.InstallDirDlgFolderLabel)" />
-			<Control Id="Folder" Type="PathEdit" X="20" Y="100" Width="320" Height="18" Property="WIXUI_INSTALLDIR" Indirect="yes" />
-			<Control Id="ChangeFolder" Type="PushButton" X="20" Y="120" Width="56" Height="17" Text="!(loc.InstallDirDlgChange)" />
-			<Control Id="DesktopShortcut" Type="CheckBox" X="20" Y="170" Width="330" Height="16" Property="INSTALLDESKTOPSHORTCUT" CheckBoxValue="1" Text="!(loc.DesktopShortcutText)" />
-			<Control Id="LaunchCheckBox" Type="CheckBox" X="20" Y="200" Width="330" Height="16" Property="LAUNCHPROGRAM" Hidden="yes" CheckBoxValue="1" Text="!(loc.LaunchPgm)">
-				<Condition Action="show">Not START_APP And Not Installed</Condition>
-			</Control>
-			<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
-			<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
-			<Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
-			<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
-				<Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
-			</Control>
-		</Dialog>
-
-		<Publish Dialog="ExitDialog"
-			Control="Finish"
-			Event="DoAction"
-			Value="ARB_LaunchApplication">ACTION&lt;&gt;"ADMIN" And Not START_APP And LAUNCHPROGRAM And Not Installed</Publish>
+		<DialogRef Id="MyWelcomeDlg" />
 	</UI>
 
 </Product>
