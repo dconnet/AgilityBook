@@ -141,6 +141,7 @@
 		E158FCB61001371B00735E7F /* ARBTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599AE10000B3100B7074A /* ARBTraining.cpp */; };
 		E171DBFB16B5C14800BE9417 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E171DBF916B5C14800BE9417 /* stdafx.cpp */; };
 		E171DC2816B5C99D00BE9417 /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E171DC2616B5C99D00BE9417 /* ImageManager.cpp */; };
+		E17E69F717BFFEBD00CD28D8 /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E17E69F417BFFEBD00CD28D8 /* SetupApp.cpp */; };
 		E19C6A3E166C4B8D00657355 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19C6A3C166C4B8D00657355 /* Cocoa.framework */; };
 		E19C6CE4166C57DB00657355 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19C6CE2166C57DB00657355 /* MenuHelper.cpp */; };
 		E19C6CEE166C581400657355 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19C6CEC166C581400657355 /* ARB_Q.cpp */; };
@@ -403,6 +404,9 @@
 		E171DC2C16B5C9AD00BE9417 /* SetupARBPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPost.h; sourceTree = "<group>"; };
 		E171DC2D16B5C9AD00BE9417 /* SetupARBPre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPre.h; sourceTree = "<group>"; };
 		E171DC2E16B5C9AD00BE9417 /* SetupWX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupWX.h; sourceTree = "<group>"; };
+		E17E69F417BFFEBD00CD28D8 /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetupApp.cpp; sourceTree = "<group>"; };
+		E17E69F517BFFEBD00CD28D8 /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupApp.h; sourceTree = "<group>"; };
+		E17E69F617BFFEBD00CD28D8 /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
 		E19C6A3C166C4B8D00657355 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E19C6B04166C4ED300657355 /* InfoCocoa.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InfoCocoa.plist; sourceTree = "<group>"; };
 		E19C6CE2166C57DB00657355 /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuHelper.cpp; sourceTree = "<group>"; };
@@ -742,6 +746,9 @@
 				E1C8D4A515B9AACC00F91623 /* RegItems.h */,
 				E155989D10000B1200B7074A /* RichEditCtrl2.cpp */,
 				E155989E10000B1200B7074A /* RichEditCtrl2.h */,
+				E17E69F417BFFEBD00CD28D8 /* SetupApp.cpp */,
+				E17E69F517BFFEBD00CD28D8 /* SetupApp.h */,
+				E17E69F617BFFEBD00CD28D8 /* SetupAppARB.h */,
 				E15598A810000B1200B7074A /* SpreadSheet.cpp */,
 				E15598A910000B1200B7074A /* SpreadSheet.h */,
 				E155989F10000B1200B7074A /* TabView.cpp */,
@@ -1140,6 +1147,7 @@
 				E1EBDC63177FC2F30074E0F7 /* StringUtil.cpp in Sources */,
 				E1EBDC64177FC2F30074E0F7 /* VersionNum.cpp in Sources */,
 				E14C9B0617A451CC00D1007A /* ARBMisc.cpp in Sources */,
+				E17E69F717BFFEBD00CD28D8 /* SetupApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
