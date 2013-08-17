@@ -11,6 +11,7 @@
 		E1439D0517A44401001E4AC8 /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1439D0417A44401001E4AC8 /* libARBCommon.a */; };
 		E1439D0717A44408001E4AC8 /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1439D0617A44408001E4AC8 /* libLibArchive.a */; };
 		E1439D0917A4440D001E4AC8 /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1439D0817A4440D001E4AC8 /* libLibTidyHtml.a */; };
+		E164622A17BFF255004F12AF /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164622717BFF255004F12AF /* SetupApp.cpp */; };
 		E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B63BF166C096E004DEDA4 /* Cocoa.framework */; };
 		E19B64EE166C09B9004DEDA4 /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */; };
 		E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */; };
@@ -121,6 +122,9 @@
 		E1439D0417A44401001E4AC8 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E1439D0617A44408001E4AC8 /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/AgilityBook/Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
 		E1439D0817A4440D001E4AC8 /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../build/AgilityBook/Build/Products/Debug/libLibTidyHtml.a; sourceTree = "<group>"; };
+		E164622717BFF255004F12AF /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetupApp.cpp; sourceTree = "<group>"; };
+		E164622817BFF255004F12AF /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupApp.h; sourceTree = "<group>"; };
+		E164622917BFF255004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
 		E19B63BB166C096E004DEDA4 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B63BF166C096E004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E19B63C2166C096E004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -602,6 +606,9 @@
 				E19B648C166C09B9004DEDA4 /* RegItems.h */,
 				E19B64D7166C09B9004DEDA4 /* RichEditCtrl2.cpp */,
 				E19B64D8166C09B9004DEDA4 /* RichEditCtrl2.h */,
+				E164622717BFF255004F12AF /* SetupApp.cpp */,
+				E164622817BFF255004F12AF /* SetupApp.h */,
+				E164622917BFF255004F12AF /* SetupAppARB.h */,
 				E19B64D9166C09B9004DEDA4 /* SpreadSheet.cpp */,
 				E19B64DA166C09B9004DEDA4 /* SpreadSheet.h */,
 				E19B64DB166C09B9004DEDA4 /* TabView.cpp */,
@@ -831,6 +838,7 @@
 				E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */,
 				E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */,
 				E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */,
+				E164622A17BFF255004F12AF /* SetupApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
