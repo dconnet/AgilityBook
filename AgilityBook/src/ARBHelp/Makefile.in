@@ -39,6 +39,8 @@ PROGRAMS = @PACKAGE_HLP_SHORTNAME@
 	DlgPageEncode.cpp \
 	DlgPageEncodeFiles.cpp \
 	DlgPageEncodeFinish.cpp \
+	../Win/ImageManager.cpp \
+	../Win/SetupApp.cpp \
 	../Win/Widgets.cpp
 
 ##########
