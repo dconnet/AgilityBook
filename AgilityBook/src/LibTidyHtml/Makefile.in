@@ -56,8 +56,7 @@ libtidyhtml_SRCS = LibTidyHtml.cpp \
 	tidy/src/tags.c \
 	tidy/src/tidylib.c \
 	tidy/src/tmbstr.c \
-	tidy/src/utf8.c \
-	tidy/src/win32tc.c
+	tidy/src/utf8.c
 
 ##########
 # Extra libraries for link stage (only if needed)
