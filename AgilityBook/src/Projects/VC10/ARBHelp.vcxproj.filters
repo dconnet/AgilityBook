@@ -19,8 +19,20 @@
     <Filter Include="Include\Platform">
       <UniqueIdentifier>{63966ad7-9b9c-42fc-b1c7-e904968792ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ARB">
+      <UniqueIdentifier>{e037bd4f-f2a0-4131-9d29-e9cd7a27ef3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Win\ImageManager.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Win\SetupApp.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Win\Widgets.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ARBHelp\ARBHelp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,9 +54,6 @@
     <ClCompile Include="..\..\ARBHelp\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\Widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Win\res\AgilityBook.ico">
@@ -57,6 +66,18 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Win\ImageManager.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\SetupApp.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\SetupAppARB.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\Widgets.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\ARBHelp\ARBHelp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -76,9 +97,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ARBHelp\stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\Widgets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">

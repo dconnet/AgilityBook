@@ -19,6 +19,8 @@
 #include "stdafx.h"
 #include "DlgDigest.h"
 
+#include "../Win/SetupApp.h"
+#include "../Win/SetupAppARB.h"
 #include <wx/cmdline.h>
 #include <wx/config.h>
 
@@ -27,11 +29,12 @@
 #endif
 
 
-class CARBUpdaterApp : public wxApp
+class CARBUpdaterApp : public CBaseApp
 {
 	DECLARE_NO_COPY_CLASS(CARBUpdaterApp)
 public:
 	CARBUpdaterApp();
+	virtual bool InitLocale()	{return true;}
 	virtual bool OnInit();
 };
 
@@ -40,14 +43,16 @@ IMPLEMENT_APP(CARBUpdaterApp)
 
 
 CARBUpdaterApp::CARBUpdaterApp()
+	: CBaseApp(ARB_CONFIG_ENTRY)
 {
+	m_BaseInfoName = ARB_CONFIG_INFO;
 }
 
 
 bool CARBUpdaterApp::OnInit()
 {
-	SetAppName(L"Agility Record Book");
-	wxConfig::Set(new wxConfig(L"Agility Record Book", L"dcon Software"));
+	if (!CBaseApp::OnInit())
+		return false;
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
@@ -60,6 +65,7 @@ bool CARBUpdaterApp::OnInit()
 	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
 	if (0 != cmdline.Parse(true))
 	{
+		BaseAppCleanup();
 		return false;
 	}
 
@@ -103,5 +109,7 @@ bool CARBUpdaterApp::OnInit()
 		// quickly, it could try deleting the file before we exit. ARB will
 		// handle that by sleeping for a moment and trying again.
 	}
+
+	BaseAppCleanup();
 	return false;
 }

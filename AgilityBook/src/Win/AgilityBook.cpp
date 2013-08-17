@@ -39,6 +39,8 @@
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
+#include "SetupApp.h"
+#include "SetupAppARB.h"
 #include "TabView.h"
 
 #include "ARBCommon/ARBMisc.h"
@@ -166,12 +168,14 @@ END_EVENT_TABLE()
 
 
 CAgilityBookApp::CAgilityBookApp()
-	: m_LangMgr(NULL)
+	: CBaseApp(ARB_CONFIG_ENTRY)
+	, m_LangMgr(NULL)
 	, m_UpdateInfo()
 	, m_manager(NULL)
 	, m_printDialogData(NULL)
 	, m_Prn(NULL)
 {
+	m_BaseInfoName = ARB_CONFIG_INFO;
 }
 
 
@@ -250,21 +254,17 @@ CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
 }
 
 
+bool CAgilityBookApp::InitLocale()
+{
+	m_LangMgr = new CLanguageManager();
+	return true;
+}
+
+
 bool CAgilityBookApp::OnInit()
 {
-#if defined(__WXMSW__)
-	// By default, the path directories are tweaked to remove debug/release.
-	// I assume my files are in the same location as the binary.
-	// Now I don't need to tweak the wx source!
-	wxStandardPaths::Get().DontIgnoreAppSubDir();
-#endif
-
-	std::wstring errMsg;
-	if (!Element::Initialize(errMsg))
-	{
-		wxMessageBox(errMsg.c_str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_ERROR);
+	if (!CBaseApp::OnInit())
 		return false;
-	}
 
 	// We need at least 800x600 (the event(run) dialog is big!)
 	if (wxSYS_SCREEN_DESKTOP != wxSystemSettings::GetScreenType())
@@ -273,38 +273,8 @@ bool CAgilityBookApp::OnInit()
 			return false;
 	}
 
-	SetAppName(L"Agility Record Book");
-
-	// Determine if this is a stand-alone execution. (Windows only)
-	// If the file AgilityBook.info exists and is writable, we're good.
-	wxConfigBase* pBaseConfig = NULL;
-#ifdef __WXMSW__
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString inifile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".info";
-	if (wxFile::Exists(inifile))
-	{
-		wxLogNull suppress;
-		wxFileConfig* pConfig = new wxFileConfig(L"Agility Record Book", L"dcon Software", inifile, wxEmptyString, wxCONFIG_USE_LOCAL_FILE);
-		pConfig->Write(CFG_SETTINGS_ISLOCAL, true); // Write-only value to test info file viability
-		if (pConfig->Flush())
-			pBaseConfig = pConfig;
-		else
-		{
-			// If Flush failed, we can't write the file. Probably readonly.
-			// Why? (attrib/ProgramFiles/etc) Don't care. Just fall back.
-			//TODO: Warn user?
-			delete pConfig;
-		}
-	}
-#endif
-	if (!pBaseConfig)
-		pBaseConfig = new wxConfig(L"Agility Record Book", L"dcon Software");
-	wxConfig::Set(pBaseConfig);
-
 	wxImage::AddHandler(new wxGIFHandler);
 	wxFileSystem::AddHandler(new wxArchiveFSHandler);
-
-	m_LangMgr = new CLanguageManager();
 
 	wxCmdLineParser cmdline(argc, argv);
 	cmdline.AddParam(_("Agility Record Book file"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL);
@@ -312,7 +282,7 @@ bool CAgilityBookApp::OnInit()
 	if (0 != cmdline.Parse(false))
 	{
 		cmdline.Usage();
-		Element::Terminate();
+		BaseAppCleanup();
 		delete m_LangMgr;
 		m_LangMgr = NULL;
 		return false;
@@ -489,6 +459,7 @@ bool CAgilityBookApp::OnInit()
 				if (close)
 				{
 					// Must close so installation will work.
+					BaseAppCleanup();
 					return false;
 				}
 			}
@@ -513,9 +484,7 @@ int CAgilityBookApp::OnExit()
 	m_printDialogData = NULL;
 	delete m_Prn;
 	m_Prn = NULL;
-	CImageManager::Delete();
-	Element::Terminate();
-	return wxApp::OnExit();
+	return CBaseApp::OnExit();
 }
 
 

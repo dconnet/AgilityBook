@@ -21,6 +21,8 @@
 
 #include "DlgPageDecode.h"
 
+#include "../Win/SetupApp.h"
+#include "../Win/SetupAppARB.h"
 #include <wx/cmdline.h>
 #include <wx/config.h>
 
@@ -29,11 +31,12 @@
 #endif
 
 
-class CARBHelpApp : public wxApp
+class CARBHelpApp : public CBaseApp
 {
 	DECLARE_NO_COPY_CLASS(CARBHelpApp)
 public:
 	CARBHelpApp();
+	virtual bool InitLocale()	{return true;}
 	virtual bool OnInit();
 };
 
@@ -42,14 +45,16 @@ IMPLEMENT_APP(CARBHelpApp)
 
 
 CARBHelpApp::CARBHelpApp()
+	: CBaseApp(ARB_CONFIG_ENTRY)
 {
+	m_BaseInfoName = ARB_CONFIG_INFO;
 }
 
 
 bool CARBHelpApp::OnInit()
 {
-	SetAppName(L"Agility Record Book");
-	wxConfig::Set(new wxConfig(L"Agility Record Book", L"dcon Software"));
+	if (!CBaseApp::OnInit())
+		return false;
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
@@ -58,7 +63,10 @@ bool CARBHelpApp::OnInit()
 	};
 	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
 	if (0 != cmdline.Parse(true))
+	{
+		BaseAppCleanup();
 		return false;
+	}
 
 	if (cmdline.Found(L"decode"))
 	{

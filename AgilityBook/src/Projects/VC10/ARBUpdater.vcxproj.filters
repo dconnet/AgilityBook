@@ -24,6 +24,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Win\Globals.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Win\ImageManager.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Win\SetupApp.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ARBUpdater\ARBUpdater.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -32,9 +41,6 @@
     </ClCompile>
     <ClCompile Include="..\..\ARBUpdater\stdafx.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\Globals.cpp">
-      <Filter>ARB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +55,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Win\Globals.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\ImageManager.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\SetupApp.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\SetupAppARB.h">
       <Filter>ARB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ARBUpdater\DlgDigest.h">

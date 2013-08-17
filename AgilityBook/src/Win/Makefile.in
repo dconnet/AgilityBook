@@ -127,6 +127,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	Print.cpp \
 	ReadHttp.cpp \
 	RichEditCtrl2.cpp \
+	SetupApp.cpp \
 	SpreadSheet.cpp \
 	TabView.cpp \
 	UpdateInfo.cpp \
