@@ -142,6 +142,7 @@
 		E154B2B117284E1500DD9354 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154B2AE17284E1500DD9354 /* ComboBoxVenue.cpp */; };
 		E1674C1D160FEB0700E6B2B3 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1674C1B160FEB0700E6B2B3 /* ARB_Q.cpp */; };
 		E1674C25160FED3600E6B2B3 /* ValidatorsQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1674C23160FED3600E6B2B3 /* ValidatorsQ.cpp */; };
+		E17E69E617BFFE9A00CD28D8 /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E17E69E317BFFE9A00CD28D8 /* SetupApp.cpp */; };
 		E17F8D9616B5B480003C0BF2 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E17F8D9416B5B480003C0BF2 /* stdafx.cpp */; };
 		E1C8D4A615B9AACC00F91623 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1C8D4A315B9AACC00F91623 /* MenuHelper.cpp */; };
 		E1CBD733169018A50003AD15 /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CBD731169018A50003AD15 /* ImageManager.cpp */; };
@@ -398,6 +399,9 @@
 		E1674C1B160FEB0700E6B2B3 /* ARB_Q.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARB_Q.cpp; sourceTree = "<group>"; };
 		E1674C23160FED3600E6B2B3 /* ValidatorsQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ValidatorsQ.cpp; sourceTree = "<group>"; };
 		E1674C24160FED3600E6B2B3 /* ValidatorsQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidatorsQ.h; sourceTree = "<group>"; };
+		E17E69E317BFFE9A00CD28D8 /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetupApp.cpp; sourceTree = "<group>"; };
+		E17E69E417BFFE9A00CD28D8 /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupApp.h; sourceTree = "<group>"; };
+		E17E69E517BFFE9A00CD28D8 /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
 		E17F8D9416B5B480003C0BF2 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../Win/stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		E17F8D9516B5B480003C0BF2 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../Win/stdafx.h; sourceTree = SOURCE_ROOT; };
 		E17F8DA216B5B7CE003C0BF2 /* arbWarningPop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPop.h; sourceTree = "<group>"; };
@@ -740,6 +744,9 @@
 				E1C8D4A515B9AACC00F91623 /* RegItems.h */,
 				E155989D10000B1200B7074A /* RichEditCtrl2.cpp */,
 				E155989E10000B1200B7074A /* RichEditCtrl2.h */,
+				E17E69E317BFFE9A00CD28D8 /* SetupApp.cpp */,
+				E17E69E417BFFE9A00CD28D8 /* SetupApp.h */,
+				E17E69E517BFFE9A00CD28D8 /* SetupAppARB.h */,
 				E15598A810000B1200B7074A /* SpreadSheet.cpp */,
 				E15598A910000B1200B7074A /* SpreadSheet.h */,
 				E155989F10000B1200B7074A /* TabView.cpp */,
@@ -1138,6 +1145,7 @@
 				E1EBDC36177FC2900074E0F7 /* StringUtil.cpp in Sources */,
 				E1EBDC37177FC2900074E0F7 /* VersionNum.cpp in Sources */,
 				E14C9AF217A44D5B00D1007A /* ARBMisc.cpp in Sources */,
+				E17E69E617BFFE9A00CD28D8 /* SetupApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
