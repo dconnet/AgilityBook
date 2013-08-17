@@ -3,7 +3,15 @@
   - Change Tree/Runs view to a single consolidated view.
 [ Note, most functionality is now complete ]
 
-7/11/2013: v2.3.13.87
+8/17/2013: v2.3.14.<in development>
+- New features / Enhancements:
+  - Added support for AgilityBook.info local config file
+    - On Windows, place next to EXE
+    - On Mac, place inside bundle next to AgilityBook.dat file.
+- Bug fixes:
+  - Fix per-user/per-machine install experience.
+
+8/11/2013: v2.3.13.87
 - Bumped Configuration v44:
   - Added Novice to NADAC (there is no A/B anymore)
 - Bumped file version to 14.1:
