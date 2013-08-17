@@ -365,3 +365,12 @@ The xcode projects were used as follows:
                 trunk, carbon, OSX10.5 sdk
             AgilityBookCocoa.xcodeproj
                 trunk, cocoa, OSX10.5 sdk
+
+OSX 10.8:
+- Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
+  Must reboot after modifying.
+===
+setenv BOOST_ROOT /Users/dconnet/src/boost_1_53_0
+setenv WXBASE /Users/dconnet/wx
+setenv WXWIN /Users/dconnet/wx/trunk
+====

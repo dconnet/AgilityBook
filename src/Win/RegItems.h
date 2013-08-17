@@ -16,7 +16,6 @@
  * DW == dword, ST == string
  *
  * Revision History
- * @li 2013-08-16 DRC Added write-only Settings/isLocal setting.
  * @li 2010-04-11 DRC Separated from AgilityBookOptions.cpp.
  */
 
@@ -305,8 +304,8 @@ inline wxString CFG_SELECTION_DOG(int n)
 #define CFG_SETTINGS_AUTOSHOWTITLE		L"Settings/autoShowTitle"
 //	DW BackupFiles
 #define CFG_SETTINGS_BACKUPFILES		L"Settings/BackupFiles"
-//	DW isLocal (AgilityBook.cpp)
-#define CFG_SETTINGS_ISLOCAL			L"Settings/isLocal"
+//	DW isLocal (defined in SetupApp.cpp)
+//#define CFG_SETTINGS_ISLOCAL			L"Settings/isLocal"
 //	Obsolete(2.0.0.0) DW Lang (LanguageManager.cpp)
 #define CFG_SETTINGS_LANG				L"Settings/Lang"
 //	Obsolete(2.1.0.0) DW Lang2 [added 2.0.0.0] (LanguageManager.cpp)

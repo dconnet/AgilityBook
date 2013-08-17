@@ -1,5 +1,7 @@
 Last Updated: 8/15/2013
 
+- Update per-user/per-machine dialog to adjust default INSTALLDIR.
+
 - Create a fully standalone version (for USB). Config file too.
 
 - Add a way to suppress sub-levels. Both NADAC and USDAA have simplified

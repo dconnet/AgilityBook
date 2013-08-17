@@ -212,6 +212,7 @@
     <ClCompile Include="..\..\Win\Print.cpp" />
     <ClCompile Include="..\..\Win\ReadHttp.cpp" />
     <ClCompile Include="..\..\Win\RichEditCtrl2.cpp" />
+    <ClCompile Include="..\..\Win\SetupApp.cpp" />
     <ClCompile Include="..\..\Win\SpreadSheet.cpp" />
     <ClCompile Include="..\..\Win\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -328,6 +329,8 @@
     <ClInclude Include="..\..\Win\ReadHttp.h" />
     <ClInclude Include="..\..\Win\RegItems.h" />
     <ClInclude Include="..\..\Win\RichEditCtrl2.h" />
+    <ClInclude Include="..\..\Win\SetupApp.h" />
+    <ClInclude Include="..\..\Win\SetupAppARB.h" />
     <ClInclude Include="..\..\Win\SpreadSheet.h" />
     <ClInclude Include="..\..\Win\stdafx.h" />
     <ClInclude Include="..\..\Win\TabView.h" />

@@ -249,6 +249,9 @@
     <ClCompile Include="..\..\Win\IconList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\ImageManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\LanguageManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -285,6 +288,9 @@
     <ClCompile Include="..\..\Win\RichEditCtrl2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\SetupApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -316,9 +322,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\ValidatorsQ.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\ImageManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -554,6 +557,9 @@
     <ClInclude Include="..\..\Win\IconList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Win\ImageManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Win\LanguageManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -590,6 +596,12 @@
     <ClInclude Include="..\..\Win\RichEditCtrl2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Win\SetupApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\SetupAppARB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Win\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -621,9 +633,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\ValidatorsQ.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\ImageManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">

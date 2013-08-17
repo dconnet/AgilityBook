@@ -18,6 +18,7 @@
  * @li 2004-06-02 DRC Moved ShellExecute code here.
  */
 
+#include "SetupApp.h"
 #include "UpdateInfo.h"
 class CAgilityBookDoc;
 class CAgilityBookDocManager;
@@ -26,7 +27,7 @@ class CLanguageManager;
 class wxPrintDialogData;
 
 
-class CAgilityBookApp : public wxApp
+class CAgilityBookApp : public CBaseApp
 {
 	DECLARE_NO_COPY_CLASS(CAgilityBookApp)
 public:
@@ -46,6 +47,8 @@ public:
 	CHtmlEasyPrinting* GetHtmlPrinter();
 
 protected:
+	virtual bool InitLocale();
+
 	virtual bool OnInit();
 	virtual int OnExit();
 
