@@ -146,6 +146,7 @@
 		E19C6CEE166C581400657355 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19C6CEC166C581400657355 /* ARB_Q.cpp */; };
 		E19C6CF2166C584F00657355 /* ValidatorsQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19C6CF0166C584F00657355 /* ValidatorsQ.cpp */; };
 		E1D5510413E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */; };
+		E1E6C62F17BFEE32005D7313 /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E6C62C17BFEE32005D7313 /* SetupApp.cpp */; };
 		E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
 		E1EBDD0B177FC4EC0074E0F7 /* ARBBase64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1EBDCFF177FC4EC0074E0F7 /* ARBBase64.cpp */; };
 		E1EBDD0C177FC4EC0074E0F7 /* ARBDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1EBDD00177FC4EC0074E0F7 /* ARBDate.cpp */; };
@@ -412,6 +413,9 @@
 		E19C6CF1166C584F00657355 /* ValidatorsQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidatorsQ.h; sourceTree = "<group>"; };
 		E1C8D4A515B9AACC00F91623 /* RegItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegItems.h; sourceTree = "<group>"; };
 		E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBCalcPoints.cpp; sourceTree = "<group>"; };
+		E1E6C62C17BFEE32005D7313 /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetupApp.cpp; sourceTree = "<group>"; };
+		E1E6C62D17BFEE32005D7313 /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupApp.h; sourceTree = "<group>"; };
+		E1E6C62E17BFEE32005D7313 /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
 		E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
 		E1EBDCFF177FC4EC0074E0F7 /* ARBBase64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBBase64.cpp; sourceTree = "<group>"; };
 		E1EBDD00177FC4EC0074E0F7 /* ARBDate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDate.cpp; sourceTree = "<group>"; };
@@ -742,6 +746,9 @@
 				E1C8D4A515B9AACC00F91623 /* RegItems.h */,
 				E155989D10000B1200B7074A /* RichEditCtrl2.cpp */,
 				E155989E10000B1200B7074A /* RichEditCtrl2.h */,
+				E1E6C62C17BFEE32005D7313 /* SetupApp.cpp */,
+				E1E6C62D17BFEE32005D7313 /* SetupApp.h */,
+				E1E6C62E17BFEE32005D7313 /* SetupAppARB.h */,
 				E15598A810000B1200B7074A /* SpreadSheet.cpp */,
 				E15598A910000B1200B7074A /* SpreadSheet.h */,
 				E155989F10000B1200B7074A /* TabView.cpp */,
@@ -1140,6 +1147,7 @@
 				E1EBDD14177FC4EC0074E0F7 /* StringUtil.cpp in Sources */,
 				E1EBDD15177FC4EC0074E0F7 /* VersionNum.cpp in Sources */,
 				E14C9B3317A45C9A00D1007A /* ARBMisc.cpp in Sources */,
+				E1E6C62F17BFEE32005D7313 /* SetupApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
