@@ -35,7 +35,6 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ImageManager.h"
-#include "LanguageManager.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
@@ -46,6 +45,7 @@
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include <stdexcept>
 #include <vector>
 #include <wx/choicdlg.h>
 #include <wx/cmdline.h>
@@ -168,8 +168,7 @@ END_EVENT_TABLE()
 
 
 CAgilityBookApp::CAgilityBookApp()
-	: CBaseApp(ARB_CONFIG_ENTRY)
-	, m_LangMgr(NULL)
+	: CBaseApp(ARB_CONFIG_ENTRY, true)
 	, m_UpdateInfo()
 	, m_manager(NULL)
 	, m_printDialogData(NULL)
@@ -179,17 +178,9 @@ CAgilityBookApp::CAgilityBookApp()
 }
 
 
-bool CAgilityBookApp::SelectLanguage(wxWindow* parent)
-{
-	assert(m_LangMgr);
-	return m_LangMgr->SelectLanguage(parent);
-}
-
-
 void CAgilityBookApp::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
 {
-	assert(m_LangMgr);
-	m_UpdateInfo.AutoCheckConfiguration(pDoc, *m_LangMgr);
+	m_UpdateInfo.AutoCheckConfiguration(pDoc);
 }
 
 
@@ -197,8 +188,7 @@ void CAgilityBookApp::UpdateConfiguration(
 		CAgilityBookDoc* pDoc,
 		bool& outClose)
 {
-	assert(m_LangMgr);
-	m_UpdateInfo.UpdateConfiguration(pDoc, *m_LangMgr, outClose);
+	m_UpdateInfo.UpdateConfiguration(pDoc, outClose);
 }
 
 
@@ -254,13 +244,6 @@ CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
 }
 
 
-bool CAgilityBookApp::InitLocale()
-{
-	m_LangMgr = new CLanguageManager();
-	return true;
-}
-
-
 bool CAgilityBookApp::OnInit()
 {
 	if (!CBaseApp::OnInit())
@@ -283,8 +266,6 @@ bool CAgilityBookApp::OnInit()
 	{
 		cmdline.Usage();
 		BaseAppCleanup();
-		delete m_LangMgr;
-		m_LangMgr = NULL;
 		return false;
 	}
 
@@ -455,7 +436,7 @@ bool CAgilityBookApp::OnInit()
 			if (date < today)
 			{
 				bool close = false;
-				m_UpdateInfo.AutoUpdateProgram(NULL, *m_LangMgr, close);
+				m_UpdateInfo.AutoUpdateProgram(NULL, close);
 				if (close)
 				{
 					// Must close so installation will work.
@@ -476,8 +457,6 @@ int CAgilityBookApp::OnExit()
 	wxConfig::Get()->SetPath(L"Recent File List");
 	m_manager->FileHistorySave(*wxConfig::Get());
 	wxConfig::Get()->SetPath(L"..");
-	delete m_LangMgr;
-	m_LangMgr = NULL;
 	delete m_manager;
 	m_manager = NULL;
 	delete m_printDialogData;
@@ -485,6 +464,74 @@ int CAgilityBookApp::OnExit()
 	delete m_Prn;
 	m_Prn = NULL;
 	return CBaseApp::OnExit();
+}
+
+
+int CAgilityBookApp::OnGetLanguage() const
+{
+	int lang = CurrentLanguageId();
+
+	// Introduced in 2.1.
+	wxString langStr = wxConfig::Get()->Read(OnGetLangConfigName(), wxEmptyString);
+	if (langStr.empty())
+	{
+		// Introduced in 2.0 - turns out the wxLANGUAGE enum may change between releases.
+		// (and did between 2.8 and 2.9)
+		long lastLang;
+		if (wxConfig::Get()->Read(CFG_SETTINGS_LANG2, &lastLang, 0) && 0 != lastLang)
+		{
+			// As of 2.0, we only supported 2 languages, so remapping is easy (whew!)
+			if (58 == lastLang)
+				langStr = L"en_US";
+			else if (78 == lastLang)
+				langStr = L"fr_FR";
+		}
+		else if (wxConfig::Get()->Read(CFG_SETTINGS_LANG, &lastLang, 0) && 0 != lastLang)
+		{
+			// Translates v1.10 registry
+			if (0x0409 == lastLang)
+				langStr = L"en_US";
+			else if (0x040c == lastLang)
+				langStr = L"fr_FR";
+		}
+	}
+	if (!langStr.empty())
+	{
+		const wxLanguageInfo* langInfo = wxLocale::FindLanguageInfo(langStr);
+		if (langInfo)
+			lang = langInfo->Language;
+	}
+
+	return lang;
+}
+
+
+wxString CAgilityBookApp::OnGetLangConfigName() const
+{
+	return CFG_SETTINGS_LANG3;
+}
+
+
+bool CAgilityBookApp::InitLocale()
+{
+	IARBLocalization::Init(&m_Localization);
+	return CBaseApp::InitLocale();
+}
+
+
+bool CAgilityBookApp::SetLang(int langId)
+{
+	if (!CBaseApp::SetLang(langId))
+		return false;
+
+	if (!m_Localization.Load())
+	{
+		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), OnGetCatalogName().c_str());
+		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
+		std::string msg(str.ToAscii());
+		throw std::runtime_error(msg);
+	}
+	return true;
 }
 
 

@@ -25,7 +25,6 @@
 #include <map>
 #include <vector>
 class CAgilityBookDoc;
-class CLanguageManager;
 
 
 /**
@@ -38,9 +37,7 @@ protected:
 	friend class CAgilityBookApp;
 
 	CUpdateInfo();
-	bool ReadVersionFile(
-			bool bVerbose,
-			CLanguageManager const& langMgr);
+	bool ReadVersionFile(bool bVerbose);
 	bool IsOutOfDate();
 	bool CheckProgram(
 			CAgilityBookDoc* pDoc,
@@ -48,7 +45,6 @@ protected:
 			bool& outClose);
 	void CheckConfig(
 			CAgilityBookDoc* pDoc,
-			CLanguageManager const& langMgr,
 			bool bVerbose);
 
 public:
@@ -72,12 +68,10 @@ public:
 	 * Called when the program does its monthly auto-check.
 	 * This only checks the program version.
 	 * @param pDoc Document to check configuration against.
-	 * @param langMgr Language Manager
 	 * @param outClose The program must close.
 	 */
 	void AutoUpdateProgram(
 			CAgilityBookDoc* pDoc,
-			CLanguageManager const& langMgr,
 			bool& outClose);
 
 	/**
@@ -85,21 +79,16 @@ public:
 	 * from the internet, it only uses cached data. If it knows the
 	 * program needs updating, it will not update the config.
 	 * @param pDoc Document to check configuration against.
-	 * @param langMgr Language Manager
 	 */
-	void AutoCheckConfiguration(
-			CAgilityBookDoc* pDoc,
-			CLanguageManager const& langMgr);
+	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
 
 	/**
 	 * Check the configuration. This will also check the program version.
 	 * @param pDoc Document to check configuration against.
-	 * @param langMgr Language Manager
 	 * @param outClose The program must close.
 	 */
 	void UpdateConfiguration(
 			CAgilityBookDoc* pDoc,
-			CLanguageManager const& langMgr,
 			bool& outClose);
 
 private:

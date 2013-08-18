@@ -18,12 +18,12 @@
  * @li 2004-06-02 DRC Moved ShellExecute code here.
  */
 
+#include "Localization.h"
 #include "SetupApp.h"
 #include "UpdateInfo.h"
 class CAgilityBookDoc;
 class CAgilityBookDocManager;
 class CHtmlEasyPrinting;
-class CLanguageManager;
 class wxPrintDialogData;
 
 
@@ -33,7 +33,6 @@ class CAgilityBookApp : public CBaseApp
 public:
 	CAgilityBookApp();
 
-	bool SelectLanguage(wxWindow* parent = NULL);
 	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
 	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose);
 
@@ -47,16 +46,20 @@ public:
 	CHtmlEasyPrinting* GetHtmlPrinter();
 
 protected:
-	virtual bool InitLocale();
-
 	virtual bool OnInit();
 	virtual int OnExit();
+
+	virtual int OnGetLanguage() const;
+	virtual wxString OnGetLangConfigName() const;
+
+	virtual bool InitLocale();
+	virtual bool SetLang(int langId);
 
 	DECLARE_EVENT_TABLE()
 	void OnQueryEndSession(wxCloseEvent& evt);
 	void OnEndSession(wxCloseEvent& evt);
 
-	CLanguageManager* m_LangMgr;
+	CLocalization m_Localization;
 	CUpdateInfo m_UpdateInfo;
 	CAgilityBookDocManager* m_manager;
 	wxPrintDialogData* m_printDialogData;

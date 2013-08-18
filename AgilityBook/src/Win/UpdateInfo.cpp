@@ -98,7 +98,6 @@
 #include "AgilityBookOptions.h"
 #include "ConfigHandler.h"
 #include "DlgProgress.h"
-#include "LanguageManager.h"
 #include "ReadHttp.h"
 #include "RegItems.h"
 
@@ -225,11 +224,8 @@ CUpdateInfo::CUpdateInfo()
  * This will read the version2.xml file and cache it.
  * In addition, it will ask to update if a newer version is found.
  * @param bVerbose Show error message.
- * @param langMgr Language manager.
  */
-bool CUpdateInfo::ReadVersionFile(
-		bool bVerbose,
-		CLanguageManager const& langMgr)
+bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 {
 	// Clear everything.
 	m_VersionNum.clear();
@@ -702,7 +698,6 @@ bool CUpdateInfo::IsOutOfDate()
 
 void CUpdateInfo::CheckConfig(
 		CAgilityBookDoc* pDoc,
-		CLanguageManager const& langMgr,
 		bool bVerbose)
 {
 	// If the parse was successful, check for the posted config version.
@@ -714,7 +709,7 @@ void CUpdateInfo::CheckConfig(
 		std::wstring msg;
 		if (0 < m_InfoMsg.size())
 		{
-			std::map<std::wstring, std::wstring>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage());
+			std::map<std::wstring, std::wstring>::iterator iMsg = m_InfoMsg.find(wxGetApp().CurrentLanguage());
 			if (iMsg == m_InfoMsg.end())
 				iMsg = m_InfoMsg.begin();
 			if (iMsg != m_InfoMsg.end() && 0 < iMsg->second.length())
@@ -792,20 +787,17 @@ void CUpdateInfo::CheckConfig(
 
 void CUpdateInfo::AutoUpdateProgram(
 		CAgilityBookDoc* pDoc,
-		CLanguageManager const& langMgr,
 		bool& outClose)
 {
 	outClose = false;
-	if (ReadVersionFile(false, langMgr))
+	if (ReadVersionFile(false))
 	{
-		CheckProgram(pDoc, langMgr.CurrentLanguage(), outClose);
+		CheckProgram(pDoc, wxGetApp().CurrentLanguage(), outClose);
 	}
 }
 
 
-void CUpdateInfo::AutoCheckConfiguration(
-		CAgilityBookDoc* pDoc,
-		CLanguageManager const& langMgr)
+void CUpdateInfo::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
 {
 	// If we're opening a doc and we've checked the internet
 	// and there is a more current version, do not continue
@@ -813,21 +805,20 @@ void CUpdateInfo::AutoCheckConfiguration(
 	// uses a newer file version.
 	if (IsOutOfDate())
 		return;
-	CheckConfig(pDoc, langMgr, false);
+	CheckConfig(pDoc, false);
 }
 
 
 void CUpdateInfo::UpdateConfiguration(
 		CAgilityBookDoc* pDoc,
-		CLanguageManager const& langMgr,
 		bool& outClose)
 {
 	outClose = false;
 	// Only continue if we parsed the version.txt file
 	// AND the version is up-to-date.
-	if (!ReadVersionFile(true, langMgr))
+	if (!ReadVersionFile(true))
 		return;
-	if (CheckProgram(pDoc, langMgr.CurrentLanguage(), outClose))
+	if (CheckProgram(pDoc, wxGetApp().CurrentLanguage(), outClose))
 		return;
-	CheckConfig(pDoc, langMgr, true);
+	CheckConfig(pDoc, true);
 }

@@ -17,10 +17,13 @@
 #include "SetupApp.h"
 
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include "Globals.h"
 #include "ImageManager.h"
+#include "LanguageManager.h"
 
 #include <wx/config.h>
+#include <wx/dir.h>
 #include <wx/fileconf.h>
 #include <wx/stdpaths.h>
 
@@ -29,7 +32,9 @@
 #endif
 
 
-CBaseApp::CBaseApp(wxString const& appName)
+CBaseApp::CBaseApp(
+		wxString const& appName,
+		bool bUseLangCatalog)
 	: m_VendorName(wxT("dcon Software"))
 	, m_BaseAppName(appName)
 	, m_BaseRegName(appName)
@@ -37,14 +42,16 @@ CBaseApp::CBaseApp(wxString const& appName)
 	, m_bReadOnlyInfo(false)
 	, m_ConfigTest(wxT("Settings/isLocal"))
 	, m_bFallback(true)
-	, m_locale(NULL)
+	, m_langMgr(NULL)
 {
+	m_langMgr = new CLanguageManager(bUseLangCatalog ? this : NULL);
 }
 
 
 CBaseApp::CBaseApp(
 		wxString const& appName,
-		wxString const& appRegKey)
+		wxString const& appRegKey,
+		bool bUseLangCatalog)
 	: m_VendorName(wxT("dcon Software"))
 	, m_BaseAppName(appName)
 	, m_BaseRegName(appRegKey)
@@ -52,27 +59,15 @@ CBaseApp::CBaseApp(
 	, m_bReadOnlyInfo(false)
 	, m_ConfigTest(wxT("Settings/isLocal"))
 	, m_bFallback(true)
-	, m_locale(NULL)
+	, m_langMgr(NULL)
 {
+	m_langMgr = new CLanguageManager(bUseLangCatalog ? this : NULL);
 }
 
 
 CBaseApp::~CBaseApp()
 {
-	delete m_locale;
-}
-
-
-void CBaseApp::BaseAppCleanup(bool deleteConfig)
-{
-	if (deleteConfig)
-	{
-		wxConfigBase* pOld = wxConfig::Set(NULL);
-		if (pOld)
-			delete pOld;
-	}
-	CImageManager::Delete();
-	Element::Terminate();
+	delete m_langMgr;
 }
 
 
@@ -135,7 +130,7 @@ bool CBaseApp::OnInit()
 		}
 	}
 
-	return InitLocale();
+	return m_langMgr->InitLocale();
 }
 
 
@@ -146,32 +141,82 @@ int CBaseApp::OnExit()
 }
 
 
-bool CBaseApp::InitDefaultLocale()
+void CBaseApp::BaseAppCleanup(bool deleteConfig)
 {
-	m_locale = new wxLocale();
-	m_locale->Init();
-	return true;
+	if (deleteConfig)
+	{
+		wxConfigBase* pOld = wxConfig::Set(NULL);
+		if (pOld)
+			delete pOld;
+	}
+	delete m_langMgr;
+	m_langMgr = NULL;
+	CImageManager::Delete();
+	Element::Terminate();
 }
 
 
-bool CBaseApp::InitCatalogLocale()
+bool CBaseApp::SelectLanguage(wxWindow* parent)
 {
-	wxString dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+	return m_langMgr->SelectLanguage(parent);
+}
 
-	m_locale = new wxLocale();
-	m_locale->AddCatalogLookupPathPrefix(dirLang);
-#if wxCHECK_VERSION(2, 9, 5)
-	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_DONT_LOAD_DEFAULT);
-#else
-	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_CONV_ENCODING);
-#endif
 
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	bool rc = m_locale->AddCatalog(fileName.GetName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
-	if (!rc)
-	{
-		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), fileName.GetName().c_str());
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
-	}
-	return rc;
+std::wstring CBaseApp::CurrentLanguage() const
+{
+	return m_langMgr->CurrentLanguage();
+}
+
+
+int CBaseApp::CurrentLanguageId() const
+{
+	return m_langMgr->CurrentLanguageId();
+}
+
+
+int CBaseApp::OnGetLanguage() const
+{
+	return m_langMgr->GetDefaultLanguage();
+}
+
+
+wxString CBaseApp::OnGetCatalogName() const
+{
+	return m_langMgr->GetDefaultCatalogName();
+}
+
+
+wxString CBaseApp::OnGetLangConfigName() const
+{
+	return wxEmptyString;
+}
+
+
+wxString CBaseApp::OnGetLanguageDir() const
+{
+	return m_langMgr->GetDefaultLanguageDir();
+}
+
+
+void CBaseApp::OnErrorMessage(wxString const& msg) const
+{
+	wxMessageBox(msg, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
+}
+
+
+bool CBaseApp::InitLocale()
+{
+	return m_langMgr->InitLocale();
+}
+
+
+int CBaseApp::SelectLang(wxWindow* parent)
+{
+	return m_langMgr->SelectLang(parent);
+}
+
+
+bool CBaseApp::SetLang(int langId)
+{
+	return m_langMgr->SetLang(langId);
 }
