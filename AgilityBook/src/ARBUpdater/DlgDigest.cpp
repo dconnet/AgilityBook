@@ -170,6 +170,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	wxSize sz = GetSize();
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	ok->SetFocus();
+	CenterOnParent();
 }
 
 

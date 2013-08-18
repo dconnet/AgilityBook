@@ -1,4 +1,5 @@
 #pragma once
+
 /*
  * Copyright (c) David Connet. All Rights Reserved.
  *
@@ -9,6 +10,7 @@
  * @file
  *
  * Revision History
+ * @li 2013-08-18 DRC Merged language management in.
  * @li 2013-08-17 DRC Added local config file support.
  * @li 2013-06-26 DRC Changed ctors.
  * @li 2013-04-10 DRC Add wxLocale default initialization.
@@ -16,33 +18,56 @@
  * @li 2012-08-13 DRC Moved dconSetupApp out of Globals.cpp
  */
 
-class wxLocale;
+#include "LanguageManager.h"
 
 
-class CBaseApp : public wxApp
+class CBaseApp : public wxApp, public ILanguageCallback
 {
 	DECLARE_NO_COPY_CLASS(CBaseApp)
 protected:
 	// Caption and registry names are the same.
-	CBaseApp(wxString const& appName);
+	CBaseApp(
+			wxString const& appName,
+			bool bUseLangCatalog = false);
 	// If appRegKey is empty, no config will be created.
 	CBaseApp(
 			wxString const& appName,
-			wxString const& appRegKey);
+			wxString const& appRegKey,
+			bool bUseLangCatalog = false);
 	~CBaseApp();
-
-	// CBaseApp virtual
-	virtual bool InitLocale()	{return InitDefaultLocale();}
-	virtual void BaseAppCleanup(bool deleteConfig = false); // So dlg apps can cleanup.
 
 	// wxApp virtual
 	// Will init Element, ImageManager, wxApp::SetAppName and wxConfig::Set.
 	virtual bool OnInit();
 	virtual int OnExit();
 
-	// InitLocale() should call one of these 2 functions to init m_locale.
-	bool InitDefaultLocale();
-	bool InitCatalogLocale();
+	// CBaseApp virtual
+	virtual void BaseAppCleanup(bool deleteConfig = false); // So dlg apps can cleanup.
+
+	// Language control
+
+public:
+	/**
+	 * Display a user interface to select a language.
+	 */
+	virtual bool SelectLanguage(wxWindow* parent = NULL);
+	/**
+	 * Currectly selected language.
+	 */
+	std::wstring CurrentLanguage() const;
+	int CurrentLanguageId() const;
+
+protected:
+	// ILanguageCallback interface
+	virtual int OnGetLanguage() const;
+	virtual wxString OnGetCatalogName() const;
+	virtual wxString OnGetLangConfigName() const;
+	virtual wxString OnGetLanguageDir() const;
+	virtual void OnErrorMessage(wxString const& msg) const;
+
+	virtual bool InitLocale();
+	virtual int SelectLang(wxWindow* parent = NULL);
+	virtual bool SetLang(int langId);
 
 	// Vendor name (default: 'dcon Software')
 	wxString m_VendorName;
@@ -62,5 +87,5 @@ protected:
 	bool m_bFallback;
 
 private:
-	wxLocale* m_locale;
+	CLanguageManager* m_langMgr;
 };

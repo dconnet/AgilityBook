@@ -9,6 +9,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-08-18 DRC Reuse Win/LanguageManager
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-11-17 DRC Add ability to switch languages
  * @li 2011-01-22 DRC Simplified how configs are added (all in TestConfig.cpp).
@@ -31,6 +32,7 @@
 #include <stdexcept>
 
 #if defined(__WXWINDOWS__)
+#include "../Win/LanguageManager.h"
 #include <wx/app.h>
 #include <wx/filesys.h>
 #include <wx/fs_arc.h>
@@ -72,85 +74,100 @@ void CReporterVerbose::ReportTestFinish(UnitTest::TestDetails const& test, float
 bool g_bMicroTest = false;
 
 
-class CLanguageManager
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CLanguageManager)
-public:
-	CLanguageManager(CLocalization& localization)
-		: m_Localization(localization)
-		, m_dirLang()
+class CLangManager
 #if defined(__WXWINDOWS__)
-		, m_CurLang(wxLANGUAGE_DEFAULT)
-		, m_locale(NULL)
+	: public ILanguageCallback
+#endif
+{
+public:
+	CLangManager(CLocalization& localization)
+		: m_Localization(localization)
+#if defined(__WXWINDOWS__)
+		, m_langMgr(NULL)
 #else
 		, m_CurLang(0)
 #endif
 	{
 #if defined(__WXWINDOWS__)
-#ifdef __WXMAC__
-		// Command line programs on Mac are acting like unix. GetResourcesDir
-		// returns /usr/local/share. And GetExecutablePath is returning nothing.
-		m_dirLang = L"./lang";
-#else
-		m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + L"lang";
-#endif
+		m_langMgr = new CLanguageManager(this);
+		m_langMgr->InitLocale();
 #endif
 	}
-	~CLanguageManager()
+	~CLangManager()
 	{
 #if defined(__WXWINDOWS__)
-		delete m_locale;
+		delete m_langMgr;
 #endif
 	}
 
 	bool SetLang(int langId);
 
+private:
 	CLocalization& m_Localization;
-	std::wstring m_dirLang;
-	int m_CurLang;
+
 #if defined(__WXWINDOWS__)
-	wxLocale* m_locale;
+	// ILanguageCallback interface
+	virtual int OnGetLanguage() const
+	{
+		return m_langMgr->GetDefaultLanguage();
+	}
+	virtual wxString OnGetCatalogName() const
+	{
+		return m_langMgr->GetDefaultCatalogName();
+	}
+	virtual wxString OnGetLangConfigName() const
+	{
+		return wxEmptyString;
+	}
+	virtual wxString OnGetLanguageDir() const
+	{
+#ifdef __WXMAC__
+		// Command line programs on Mac are acting like unix. GetResourcesDir
+		// returns /usr/local/share. And GetExecutablePath is returning nothing.
+		return wxT("./lang");
+#else
+		return m_langMgr->GetDefaultLanguageDir();
 #endif
+	}
+	virtual void OnErrorMessage(wxString const& msg) const
+	{
+		std::wcerr << msg.wx_str() << std::endl;
+	}
+	CLanguageManager* m_langMgr;
+#else // __WXWINDOWS__
+	int m_CurLang;
+#endif
+private:
+	CLangManager(CLangManager const&);
+	CLangManager& operator=(CLangManager const&);
 };
-static CLanguageManager* g_LangMgr = NULL;
+static CLangManager* g_LangMgr = NULL;
 
 
-bool CLanguageManager::SetLang(int langId)
+bool CLangManager::SetLang(int langId)
 {
+#if defined(__WXWINDOWS__)
+	if (!m_langMgr->SetLang(langId))
+		return false;
+#else
 	if (langId == m_CurLang)
 		return false;
-
-#if defined(__WXWINDOWS__)
 	m_CurLang = langId;
-	if (m_locale)
-		delete m_locale;
-	m_locale = new wxLocale();
-	m_locale->AddCatalogLookupPathPrefix(StringUtil::stringWX(m_dirLang));
-#if wxCHECK_VERSION(2, 9, 5)
-	if (!m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT))
-#else
-
-	if (!m_locale->Init(m_CurLang, wxLOCALE_CONV_ENCODING))
 #endif
-	{
-		//return false;
-	}
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	m_locale->AddCatalog(fileName.GetName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 
 	if (!m_Localization.Load())
 	{
-		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), fileName.GetName().c_str());
+#if defined(__WXWINDOWS__)
+		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), OnGetCatalogName().c_str());
 		std::string msg(str.ToAscii());
+#else
+		std::string msg("ERROR: Unable to load localization");
+#endif
 		std::cerr << msg << "\n";
 		throw std::runtime_error(msg);
 	}
 
 	return true;
-
-#else
-	return false;
-#endif
 }
 
 
@@ -212,7 +229,7 @@ int main(int argc, char** argv)
 
 	bool bRunTests = true;
 #if defined(__WXWINDOWS__)
-	g_LangMgr = new CLanguageManager(m_Localization);
+	g_LangMgr = new CLangManager(m_Localization);
 	try
 	{
 		SetLang(wxLANGUAGE_ENGLISH_US);

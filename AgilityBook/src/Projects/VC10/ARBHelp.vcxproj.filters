@@ -27,6 +27,9 @@
     <ClCompile Include="..\..\Win\ImageManager.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\LanguageManager.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\SetupApp.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
@@ -67,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Win\ImageManager.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\LanguageManager.h">
       <Filter>ARB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\SetupApp.h">

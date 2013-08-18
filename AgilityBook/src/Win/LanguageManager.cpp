@@ -23,59 +23,45 @@
 #include "stdafx.h"
 #include "LanguageManager.h"
 
-#include "RegItems.h"
-
+#include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
-#include <wx/cshelp.h>
-#include <wx/dir.h>
-#include <wx/stdpaths.h>
-#include <stdexcept>
-#include <vector>
+#include "Globals.h"
+#include "ImageManager.h"
 
-#ifdef __WXMSW__
+#include <wx/config.h>
+#include <wx/dir.h>
+#include <wx/fileconf.h>
+#include <wx/stdpaths.h>
+
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
 
-CLanguageManager::CLanguageManager()
-	: m_dirLang()
+CLanguageManager::CLanguageManager(ILanguageCallback* pCallback)
+	: m_pCallback(pCallback)
+	, m_CurLang(wxLANGUAGE_DEFAULT)
+	, m_dirLang()
 	, m_dirLoadedLang()
 	, m_locale(NULL)
-	, m_CurLang(wxLANGUAGE_DEFAULT)
-	, m_Localization()
 {
-	IARBLocalization::Init(&m_Localization);
+}
 
-	//wxHelpProvider::Set(new wxHelpControllerHelpProvider);
-	wxHelpProvider::Set(new wxSimpleHelpProvider);
 
-	m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + L"lang";
+CLanguageManager::~CLanguageManager()
+{
+	delete m_locale;
+}
+
+
+int CLanguageManager::GetDefaultLanguage() const
+{
+	if (!m_pCallback || m_pCallback->OnGetLangConfigName().empty())
+		return wxLANGUAGE_ENGLISH_US;
 
 	int lang = m_CurLang;
-	// Introduced in 2.1.
-	wxString langStr = wxConfig::Get()->Read(CFG_SETTINGS_LANG3, wxEmptyString);
-	if (langStr.empty())
-	{
-		// Introduced in 2.0 - turns out the wxLANGUAGE enum may change between releases.
-		// (and did between 2.8 and 2.9)
-		long lastLang;
-		if (wxConfig::Get()->Read(CFG_SETTINGS_LANG2, &lastLang, 0) && 0 != lastLang)
-		{
-			// As of 2.0, we only supported 2 languages, so remapping is easy (whew!)
-			if (58 == lastLang)
-				langStr = L"en_US";
-			else if (78 == lastLang)
-				langStr = L"fr_FR";
-		}
-		else if (wxConfig::Get()->Read(CFG_SETTINGS_LANG, &lastLang, 0) && 0 != lastLang)
-		{
-			// Translates v1.10 registry
-			if (0x0409 == lastLang)
-				langStr = L"en_US";
-			else if (0x040c == lastLang)
-				langStr = L"fr_FR";
-		}
-	}
+
+	wxString langStr = wxConfig::Get()->Read(m_pCallback->OnGetLangConfigName(), wxEmptyString);
 	if (!langStr.empty())
 	{
 		const wxLanguageInfo* langInfo = wxLocale::FindLanguageInfo(langStr);
@@ -83,75 +69,76 @@ CLanguageManager::CLanguageManager()
 			lang = langInfo->Language;
 	}
 
-	if (lang == wxLANGUAGE_DEFAULT)
+	return lang;
+}
+
+
+wxString CLanguageManager::GetDefaultCatalogName() const
+{
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	return fileName.GetName();
+}
+
+
+wxString CLanguageManager::GetDefaultLanguageDir() const
+{
+	return wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+}
+
+
+bool CLanguageManager::InitLocale()
+{
+	bool bInit = true;
+	if (m_pCallback)
 	{
-		wxLocale* tmp = new wxLocale(wxLANGUAGE_DEFAULT);
-		lang = tmp->GetLanguage();
-		delete tmp;
-		// Set the initial language to the system default.
-		SetLang(lang);
-		// If we don't support that language (lookup fails)...
-		if (wxString(L"IDD_LANGUAGE") == _("IDD_LANGUAGE"))
+		m_dirLang = m_pCallback->OnGetLanguageDir();
+
+		int lang = m_pCallback->OnGetLanguage();
+		if (wxLANGUAGE_DEFAULT == lang)
 		{
-			// ... force English.
-			SetLang(wxLANGUAGE_ENGLISH_US);
+			wxLocale* tmp = new wxLocale(wxLANGUAGE_DEFAULT);
+			int lang2 = tmp->GetLanguage();
+			delete tmp;
+			// Set the initial language to the system default.
+			SetLang(lang2);
+			// If we don't support that language (lookup fails)...
+			if (wxString(L"IDD_LANGUAGE") == _("IDD_LANGUAGE"))
+			{
+				// ... force English.
+				SetLang(wxLANGUAGE_ENGLISH_US);
+			}
+			bInit = SelectLanguage();
 		}
-		SelectLanguage();
+		else
+			bInit = SetLang(lang);
 	}
 	else
-		SetLang(lang);
+	{
+		m_locale = new wxLocale();
+		m_locale->Init();
+	}
+	return bInit;
 }
 
 
-CLanguageManager::~CLanguageManager()
+bool CLanguageManager::SelectLanguage(wxWindow* parent)
 {
-	delete m_locale;
-	m_locale = NULL;
-}
-
-
-bool CLanguageManager::SetLang(int langId)
-{
-	if (langId == m_CurLang)
-		return false;
-
-	m_CurLang = langId;
-	if (m_locale)
-		delete m_locale;
-	m_locale = new wxLocale();
-	m_locale->AddCatalogLookupPathPrefix(StringUtil::stringWX(m_dirLang));
-	if (!m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT))
-	{
-		//return false;
-	}
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	m_locale->AddCatalog(fileName.GetName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
-
-	m_dirLoadedLang = m_locale->GetCanonicalName();
-	if (2 < m_dirLoadedLang.length())
-		m_dirLoadedLang = m_dirLoadedLang.substr(0, 2);
-
-	if (!m_Localization.Load())
-	{
-		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), fileName.GetName().c_str());
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
-		std::string msg(str.ToAscii());
-		throw std::runtime_error(msg);
-	}
-
-	return true;
+	return SetLang(SelectLang(parent));
 }
 
 
 int CLanguageManager::SelectLang(wxWindow* parent)
 {
+	if (!m_pCallback)
+		return wxLANGUAGE_ENGLISH_US;
+
 	int lang = m_CurLang;
 
 	int idxLang = -1;
 	std::vector<int> langId;
 	wxArrayString choices;
 
-	wxDir dir(StringUtil::stringWX(m_dirLang));
+	wxDir dir(m_dirLang);
 	if (dir.IsOpened())
 	{
 		wxString filename;
@@ -196,15 +183,42 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 				lang = m_CurLang;
 		}
 	}
+
 	wxLanguageInfo const* langInfo = wxLocale::GetLanguageInfo(lang);
-	if (langInfo)
-		wxConfig::Get()->Write(CFG_SETTINGS_LANG3, langInfo->CanonicalName);
+	if (langInfo && m_pCallback && !m_pCallback->OnGetLangConfigName().empty())
+		wxConfig::Get()->Write(m_pCallback->OnGetLangConfigName(), langInfo->CanonicalName);
 
 	return lang;
 }
 
 
-bool CLanguageManager::SelectLanguage(wxWindow* parent)
+bool CLanguageManager::SetLang(int langId)
 {
-	return SetLang(SelectLang(parent));
+	if (!m_pCallback || langId == m_CurLang)
+		return false;
+
+	m_CurLang = langId;
+	if (m_locale)
+		delete m_locale;
+	m_locale = new wxLocale();
+	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
+#if wxCHECK_VERSION(2, 9, 5)
+	m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT);
+#else
+	m_locale->Init(m_CurLang, wxLOCALE_CONV_ENCODING);
+#endif
+	bool rc = m_locale->AddCatalog(m_pCallback->OnGetCatalogName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
+	if (rc)
+	{
+		m_dirLoadedLang = m_locale->GetCanonicalName();
+		if (2 < m_dirLoadedLang.length())
+			m_dirLoadedLang = m_dirLoadedLang.substr(0, 2);
+	}
+	else
+	{
+		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), m_pCallback->OnGetCatalogName().c_str());
+		m_pCallback->OnErrorMessage(str);
+	}
+
+	return rc;
 }
