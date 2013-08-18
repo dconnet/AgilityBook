@@ -21,6 +21,7 @@
 		E19B6650166C18B3004DEDA4 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B664E166C18B3004DEDA4 /* Widgets.cpp */; };
 		E19B6653166C1928004DEDA4 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E19B6652166C1928004DEDA4 /* AgilityBook.icns */; };
 		E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */; };
+		E1DCE95E17C17E8F00F79DFA /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,8 @@
 		E19B6652166C1928004DEDA4 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../AgilityBook/AgilityBook/AgilityBook.icns; sourceTree = "<group>"; };
 		E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
 		E1CAE57B16B5BFA200B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageManager.cpp; path = ../../../../Win/LanguageManager.cpp; sourceTree = "<group>"; };
+		E1DCE95D17C17E8F00F79DFA /* LanguageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageManager.h; path = ../../../../Win/LanguageManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +167,8 @@
 			children = (
 				E164622F17BFF2BE004F12AF /* ImageManager.cpp */,
 				E164623017BFF2BE004F12AF /* ImageManager.h */,
+				E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */,
+				E1DCE95D17C17E8F00F79DFA /* LanguageManager.h */,
 				E164622B17BFF295004F12AF /* SetupApp.cpp */,
 				E164622C17BFF295004F12AF /* SetupApp.h */,
 				E164622D17BFF295004F12AF /* SetupAppARB.h */,
@@ -246,6 +251,7 @@
 				E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */,
 				E164622E17BFF295004F12AF /* SetupApp.cpp in Sources */,
 				E164623117BFF2BE004F12AF /* ImageManager.cpp in Sources */,
+				E1DCE95E17C17E8F00F79DFA /* LanguageManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
