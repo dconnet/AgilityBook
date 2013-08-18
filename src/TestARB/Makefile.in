@@ -79,7 +79,8 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestQ.cpp \
 	TestString.cpp \
 	TestTraining.cpp \
-	TestVersion.cpp
+	TestVersion.cpp \
+	../Win/LanguageManager.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)

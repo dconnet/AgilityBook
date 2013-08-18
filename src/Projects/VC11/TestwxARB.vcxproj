@@ -209,6 +209,7 @@
     <ClCompile Include="..\..\TestARB\TestString.cpp" />
     <ClCompile Include="..\..\TestARB\TestTraining.cpp" />
     <ClCompile Include="..\..\TestARB\TestVersion.cpp" />
+    <ClCompile Include="..\..\Win\LanguageManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
@@ -223,6 +224,7 @@
     <ClInclude Include="..\..\TestARB\Local.h" />
     <ClInclude Include="..\..\TestARB\stdafx.h" />
     <ClInclude Include="..\..\TestARB\TestARB.h" />
+    <ClInclude Include="..\..\Win\LanguageManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\TestARB\res\Config08_v10_2.xml" />
