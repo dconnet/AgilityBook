@@ -45,6 +45,7 @@
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include <stdexcept>
 #include <vector>
 #include <wx/choicdlg.h>
 #include <wx/cmdline.h>
