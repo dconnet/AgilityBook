@@ -168,7 +168,7 @@ END_EVENT_TABLE()
 
 
 CAgilityBookApp::CAgilityBookApp()
-	: CBaseApp(ARB_CONFIG_ENTRY, true)
+	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, true)
 	, m_UpdateInfo()
 	, m_manager(NULL)
 	, m_printDialogData(NULL)
