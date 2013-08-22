@@ -10,6 +10,7 @@
  * @file
  *
  * Revision History
+ * @li 2013-08-22 DRC Fixed issue with ctor auto-cast.
  * @li 2013-08-18 DRC Merged language management in.
  * @li 2013-08-17 DRC Added local config file support.
  * @li 2013-06-26 DRC Changed ctors.
@@ -25,14 +26,10 @@ class CBaseApp : public wxApp, public ILanguageCallback
 {
 	DECLARE_NO_COPY_CLASS(CBaseApp)
 protected:
-	// Caption and registry names are the same.
-	CBaseApp(
-			wxString const& appName,
-			bool bUseLangCatalog = false);
 	// If appRegKey is empty, no config will be created.
 	CBaseApp(
 			wxString const& appName,
-			wxString const& appRegKey,
+			wxString const& appRegKey = wxEmptyString,
 			bool bUseLangCatalog = false);
 	~CBaseApp();
 

@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * @li 2013-08-22 DRC Fixed issue with ctor auto-cast.
  * @li 2013-08-17 DRC Added local config file support.
  * @li 2013-04-10 DRC Add wxLocale default initialization.
  * @li 2012-08-13 DRC Moved dconSetupApp out of Globals.cpp
@@ -30,22 +31,6 @@
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
-
-
-CBaseApp::CBaseApp(
-		wxString const& appName,
-		bool bUseLangCatalog)
-	: m_VendorName(wxT("dcon Software"))
-	, m_BaseAppName(appName)
-	, m_BaseRegName(appName)
-	, m_BaseInfoName()
-	, m_bReadOnlyInfo(false)
-	, m_ConfigTest(wxT("Settings/isLocal"))
-	, m_bFallback(true)
-	, m_langMgr(NULL)
-{
-	m_langMgr = new CLanguageManager(bUseLangCatalog ? this : NULL);
-}
 
 
 CBaseApp::CBaseApp(
