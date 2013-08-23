@@ -22,7 +22,7 @@
 #else
 // Allow non-windows compilation.
 typedef void* HWND;
-enum TBPFLAG
+typedef enum
 {
 	TBPF_NOPROGRESS	= 0,
 	TBPF_INDETERMINATE	= 0x1,
@@ -30,7 +30,7 @@ enum TBPFLAG
 	TBPF_ERROR	= 0x4,
 	TBPF_PAUSED	= 0x8
 } TBPFLAG;
-typedef unsigned __int64 ULONGLONG;
+typedef unsigned int ULONGLONG;
 #endif
 
 class CTaskbarProgress
