@@ -21,6 +21,7 @@
 #include "DlgProgress.h"
 
 #include "Globals.h"
+#include "TaskbarProgress.h"
 
 #include "ARBCommon/StringUtil.h"
 #include <vector>
@@ -81,6 +82,7 @@ private:
 	void ReenableOtherWindows();
 
 	wxWindow* m_parentTop;
+	CTaskbarProgress* m_pTaskbar;
 	wxStaticText* m_ctrlMessage;
 	std::vector<GaugeData> m_ctrlBars;
 	wxButton* m_ctrlCancel;
@@ -94,6 +96,7 @@ private:
 CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	: wxDialog()
 	, m_parentTop(wxGetTopLevelParent(parent))
+	, m_pTaskbar(NULL)
 	, m_ctrlMessage(NULL)
 	, m_ctrlBars()
 	, m_ctrlCancel(NULL)
@@ -104,6 +107,11 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 		nBars = 1;
 	SetExtraStyle(GetExtraStyle() | wxWS_EX_TRANSIENT);
 	Create(parent, wxID_ANY, _("Progress"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+
+	WXWidget handle = m_parentTop ? m_parentTop->GetHandle() : GetHandle();
+	if (wxTheApp && wxTheApp->GetTopWindow())
+		handle = wxTheApp->GetTopWindow()->GetHandle();
+	m_pTaskbar = CTaskbarProgress::Get(handle);
 
 	// Controls (these are done first to control tab order)
 
@@ -150,6 +158,8 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 CDlgProgress::~CDlgProgress()
 {
 	ReenableOtherWindows();
+	delete m_pTaskbar;
+	m_pTaskbar = NULL;
 }
 
 
@@ -157,12 +167,16 @@ bool CDlgProgress::Show(bool show)
 {
 	if (!show)
 		ReenableOtherWindows();
+	else if (m_pTaskbar)
+		m_pTaskbar->SetProgressState(TBPF_NORMAL);
 	return wxDialog::Show(show);
 }
 
 
 void CDlgProgress::ReenableOtherWindows()
 {
+	if (m_pTaskbar)
+		m_pTaskbar->SetProgressState(TBPF_NOPROGRESS);
 	//if (appmodal)
 	{
 		delete m_winDisabler;
@@ -227,6 +241,8 @@ void CDlgProgress::StepIt(short inBar)
 	if (pBar)
 	{
 		m_ctrlBars[inBar-1].pos += m_ctrlBars[inBar-1].step;
+		if (m_pTaskbar)
+			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar-1].pos, m_ctrlBars[inBar-1].gauge->GetRange());
 		pBar->SetValue(m_ctrlBars[inBar-1].pos);
 		Update();
 	}
@@ -239,6 +255,8 @@ void CDlgProgress::OffsetPos(short inBar, int inDelta)
 	if (pBar)
 	{
 		m_ctrlBars[inBar-1].pos += inDelta;
+		if (m_pTaskbar)
+			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar-1].pos, m_ctrlBars[inBar-1].gauge->GetRange());
 		pBar->SetValue(m_ctrlBars[inBar-1].pos);
 		Update();
 	}
@@ -251,6 +269,8 @@ void CDlgProgress::SetPos(short inBar, int inPos)
 	if (pBar)
 	{
 		m_ctrlBars[inBar-1].pos = inPos;
+		if (m_pTaskbar)
+			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar-1].pos, m_ctrlBars[inBar-1].gauge->GetRange());
 		pBar->SetValue(m_ctrlBars[inBar-1].pos);
 		Update();
 	}
