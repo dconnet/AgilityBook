@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 09:41-0800\n"
-"PO-Revision-Date: 2013-08-11 09:42-0800\n"
+"POT-Creation-Date: 2013-08-22 18:30-0800\n"
+"PO-Revision-Date: 2013-08-22 18:30-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -479,21 +479,21 @@ msgstr "Updated %1$d Team runs."
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Table setting updated in %1$d runs."
 
-#: Win/AgilityBook.cpp:148 Win/Print.cpp:958 Win/Print.cpp:991
+#: Win/AgilityBook.cpp:152 Win/Print.cpp:958 Win/Print.cpp:991
 msgid "Sorry, print preview needs a printer to be installed."
 msgstr "Sorry, print preview needs a printer to be installed."
 
-#: Win/AgilityBook.cpp:151 Win/Print.cpp:961
+#: Win/AgilityBook.cpp:155 Win/Print.cpp:961
 msgid "Print Preview"
 msgstr "Print Preview"
 
-#: Win/AgilityBook.cpp:270
+#: Win/AgilityBook.cpp:255
 msgid "IDS_MIN_RESOLUTION"
 msgstr ""
 "This program requires a screen resolution of at least 800x600. Some dialogs "
 "may not be fully visible. Do you want to continue?"
 
-#: Win/AgilityBook.cpp:283
+#: Win/AgilityBook.cpp:263
 msgid "Agility Record Book file"
 msgstr "Agility Record Book file"
 
@@ -726,7 +726,7 @@ msgid "IDS_NONFATAL_MSGS"
 msgstr ""
 "Warning: Some non-fatal messages were generated while loading the file:"
 
-#: Win/AgilityBookDoc.cpp:1502 Win/UpdateInfo.cpp:490
+#: Win/AgilityBookDoc.cpp:1502 Win/UpdateInfo.cpp:486
 msgid "IDS_CANNOT_OPEN"
 msgstr "Unable to open file '%1$s' for writing."
 
@@ -1728,7 +1728,7 @@ msgid "LinkArbDownloadText"
 msgstr "Agility Record Book Downloads"
 
 #: Win/DlgAbout.cpp:208 Win/DlgAbout.cpp:210 Win/DlgAbout.cpp:211
-#: Win/UpdateInfo.cpp:247
+#: Win/UpdateInfo.cpp:243
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
@@ -6026,25 +6026,25 @@ msgstr ""
 "Are you sure you want to continue?"
 
 # DlgLanguage
-#: Win/LanguageManager.cpp:94 Win/LanguageManager.cpp:190
+#: Win/LanguageManager.cpp:105 Win/LanguageManager.cpp:173
 msgid "IDD_LANGUAGE"
 msgstr "Language Selection"
 
 # Description strings returned by wxWidgets wxLocale.
 # Keep each one in the native form (like Win7's display language selection)
-#: Win/LanguageManager.cpp:171
+#: Win/LanguageManager.cpp:154
 msgid "English (U.S.)"
 msgstr "English"
 
-#: Win/LanguageManager.cpp:172
+#: Win/LanguageManager.cpp:155
 msgid "French"
 msgstr "français"
 
-#: Win/LanguageManager.cpp:190
+#: Win/LanguageManager.cpp:173
 msgid "Choose a language:"
 msgstr "Choose a language:"
 
-#: Win/LanguageManager.cpp:191
+#: Win/LanguageManager.cpp:174
 msgid "Select a language to use."
 msgstr "Select a language to use."
 
@@ -6143,56 +6143,56 @@ msgstr "Reading %1$d rows"
 msgid "IDS_TRAINING"
 msgstr "Training Log"
 
-#: Win/UpdateInfo.cpp:167
+#: Win/UpdateInfo.cpp:166
 msgid "IDS_UPDATED_CONFIG"
 msgstr ""
 "The configuration has been updated. Would you like to merge the new one with "
 "your data?"
 
-#: Win/UpdateInfo.cpp:250 Win/UpdateInfo.cpp:734
+#: Win/UpdateInfo.cpp:246 Win/UpdateInfo.cpp:729
 msgid "IDS_HELP_UPDATE"
 msgstr "http://www.agilityrecordbook.com"
 
-#: Win/UpdateInfo.cpp:275 Win/UpdateInfo.cpp:380
+#: Win/UpdateInfo.cpp:271 Win/UpdateInfo.cpp:376
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Unable to determine current released version."
 
-#: Win/UpdateInfo.cpp:333 Win/UpdateInfo.cpp:753
+#: Win/UpdateInfo.cpp:329 Win/UpdateInfo.cpp:748
 msgid "IDS_LOAD_FAILED"
 msgstr "Failed to load '%1$s'."
 
-#: Win/UpdateInfo.cpp:455
+#: Win/UpdateInfo.cpp:451
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version %1$s is available. Would you like to download it?"
 
-#: Win/UpdateInfo.cpp:495
+#: Win/UpdateInfo.cpp:491
 msgid "IDS_DOWNLOADING"
 msgstr "Downloading..."
 
-#: Win/UpdateInfo.cpp:516
+#: Win/UpdateInfo.cpp:512
 msgid "IDS_VALIDATING"
 msgstr "Validating..."
 
-#: Win/UpdateInfo.cpp:522 Win/UpdateInfo.cpp:546 Win/UpdateInfo.cpp:554
-#: Win/UpdateInfo.cpp:562
+#: Win/UpdateInfo.cpp:518 Win/UpdateInfo.cpp:542 Win/UpdateInfo.cpp:550
+#: Win/UpdateInfo.cpp:558
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERROR: The downloaded file is corrupt."
 
-#: Win/UpdateInfo.cpp:538
+#: Win/UpdateInfo.cpp:534
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "%1$s is now downloaded. Agility Record Book will now close so you can "
 "install it."
 
-#: Win/UpdateInfo.cpp:570
+#: Win/UpdateInfo.cpp:566
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERROR: Unexpected file format, expected MSI file."
 
-#: Win/UpdateInfo.cpp:604 Win/UpdateInfo.cpp:622
+#: Win/UpdateInfo.cpp:600 Win/UpdateInfo.cpp:618
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERROR: Internal error during update process. Procedure was cancelled."
 
-#: Win/UpdateInfo.cpp:788
+#: Win/UpdateInfo.cpp:783
 msgid "IDS_UPDATE_CURRENT"
 msgstr "No updates are available at this time."
 
