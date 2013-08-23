@@ -27,6 +27,7 @@
 
 
 #ifdef WIN32
+
 bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op)
 {
 	OSVERSIONINFOEX osvi;
@@ -58,7 +59,6 @@ inline bool IsWin7OrBetter()
 {
 	return CheckOS(6, 1, VER_GREATER_EQUAL);
 }
-#endif
 
 
 class CTaskbarProgressImpl : public CTaskbarProgress
@@ -67,21 +67,16 @@ public:
 	CTaskbarProgressImpl(HWND hwnd) :
 		m_hWnd(hwnd)
 	{
-#ifdef WIN32
 		if (IsWin7OrBetter())
 			m_pTaskbarList.CoCreateInstance(CLSID_TaskbarList);
-#endif
 	}
 
 	virtual ~CTaskbarProgressImpl()
 	{
-#ifdef WIN32
 		if (m_pTaskbarList)
 			m_pTaskbarList.Release();
-#endif
 	}
 	
-#ifdef WIN32
 	virtual bool SetProgressState(TBPFLAG tbpFlags)
 	{
 		return (m_pTaskbarList && SUCCEEDED(m_pTaskbarList->SetProgressState(m_hWnd, tbpFlags)));
@@ -92,20 +87,21 @@ public:
 	}
 
 	CComPtr<ITaskbarList3> m_pTaskbarList;
-
-#else
-	bool SetProgressState(TBPFLAG tbpFlags) {return false;}
-	bool SetProgressValue(ULONGLONG ullCompleted, ULONGLONG ullTotal) {return false;}
-#endif
 	HWND m_hWnd;
 };
+
+#endif // WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 
 CTaskbarProgress* CTaskbarProgress::Get(HWND hwnd)
 {
+#ifdef WIN32
 	CTaskbarProgressImpl* pTaskbar = new CTaskbarProgressImpl(hwnd);
 	return pTaskbar;
+#else
+	return NULL;
+#endif
 }
 
 
