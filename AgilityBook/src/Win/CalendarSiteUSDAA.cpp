@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-08-23 DRC Add error message if tidy error is empty.
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2010-11-05 DRC Bump to 2.2.0: USDAA changed the detail page layout.
  * @li 2009-11-01 DRC Change how initialization is done.
@@ -192,7 +193,10 @@ raw.Write(data.c_str(), data.length());
 		tree = TidyHtmlData(data, err);
 		if (!tree)
 		{
-			wxMessageBox(StringUtil::stringWX(err.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE);
+			wxString msg(StringUtil::stringWX(err.str()));
+			if (msg.empty())
+				msg = wxString::Format(_("IDS_ERR_PARSING_DATA"), inAddress.c_str());
+			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 		}
 	}
 	return tree;
