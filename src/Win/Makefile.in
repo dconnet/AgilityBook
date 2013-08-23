@@ -130,6 +130,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	SetupApp.cpp \
 	SpreadSheet.cpp \
 	TabView.cpp \
+	TaskbarProgress.cpp \
 	UpdateInfo.cpp \
 	Validators.cpp \
 	ValidatorsQ.cpp \

@@ -1,8 +1,9 @@
-8/17/2013: v2.3.14.<in development>
+8/23/2013: v2.3.14.<in development>
 - New features / Enhancements:
   - Added support for AgilityBook.info local config file
     - On Windows, place next to EXE
     - On Mac, place inside bundle next to AgilityBook.dat file.
+  - Add Win7 taskbar progress feedback.
 - Bug fixes:
   - Fix per-user/per-machine install experience.
 
