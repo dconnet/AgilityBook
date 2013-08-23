@@ -117,7 +117,7 @@ bool CBaseApp::OnInit()
 		}
 	}
 
-	return m_langMgr->InitLocale();
+	return InitLocale();
 }
 
 
