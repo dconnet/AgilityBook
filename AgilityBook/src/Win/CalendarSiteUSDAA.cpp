@@ -363,7 +363,7 @@ std::string CCalendarSiteUSDAA::Process(
 		}
 #if GENERATE_TESTDATA || USE_TESTDATA
 		testData = TESTDATANAME;
-		int idxAddr = address.find('=');
+		size_t idxAddr = address.find('=');
 		testData += address.substr(idxAddr+1);
 		testData += L".xml";
 #if USE_TESTDATA

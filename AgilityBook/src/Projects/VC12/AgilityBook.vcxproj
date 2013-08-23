@@ -221,6 +221,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\Win\TabView.cpp" />
+    <ClCompile Include="..\..\Win\TaskbarProgress.cpp" />
     <ClCompile Include="..\..\Win\UpdateInfo.cpp" />
     <ClCompile Include="..\..\Win\Validators.cpp" />
     <ClCompile Include="..\..\Win\ValidatorsQ.cpp" />
@@ -334,6 +335,7 @@
     <ClInclude Include="..\..\Win\SpreadSheet.h" />
     <ClInclude Include="..\..\Win\stdafx.h" />
     <ClInclude Include="..\..\Win\TabView.h" />
+    <ClInclude Include="..\..\Win\TaskbarProgress.h" />
     <ClInclude Include="..\..\Win\UpdateInfo.h" />
     <ClInclude Include="..\..\Win\Validators.h" />
     <ClInclude Include="..\..\Win\ValidatorsQ.h" />
