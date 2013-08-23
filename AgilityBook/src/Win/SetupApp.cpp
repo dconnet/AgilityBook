@@ -46,6 +46,8 @@ CBaseApp::CBaseApp(
 	, m_bFallback(true)
 	, m_langMgr(NULL)
 {
+	if (m_BaseRegName.empty())
+		m_BaseRegName = m_BaseAppName;
 	m_langMgr = new CLanguageManager(bUseLangCatalog ? this : NULL);
 }
 
