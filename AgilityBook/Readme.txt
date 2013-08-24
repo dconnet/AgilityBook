@@ -35,6 +35,21 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT (currently 0)
+- src/msw/bmpcbox.cpp
+====
+ --- src/msw/bmpcbox.cpp (revision 74692)
+ +++ src/msw/bmpcbox.cpp (working copy)
+ @@ -175,7 +175,7 @@
+          if ( !objectClientData.empty() )
+              SetClientObject(i, objectClientData[i]);
+          else if ( !voidClientData.empty() )
+ -            SetClientData(i, objectClientData[i]);
+ +            SetClientData(i, voidClientData[i]);
+      }
+
+      // and make sure it has the same attributes as before
+==== Note, this diff is actually against a post-2.9.5 version in trunk
+==== Once the wx version is bumped, 2.9.5 will not be supported
 
 === pre wx2.9.5: Not supported
 - There were API changes in .3, so I simply don't support .0, .1, or .2.
