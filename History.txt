@@ -1,9 +1,14 @@
-8/23/2013: v2.3.14.<in development>
+9/3/2013: v2.3.14.<in development>
+- Bumped Configuration v45:
+  - Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
+- Bumped file version to 14.2:
+  - Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
 - New features / Enhancements:
   - Added support for AgilityBook.info local config file
     - On Windows, place next to EXE
     - On Mac, place inside bundle next to AgilityBook.dat file.
   - Add Win7 taskbar progress feedback.
+  - Changed printing forms to use short names.
 - Bug fixes:
   - Fix per-user/per-machine install experience.
 

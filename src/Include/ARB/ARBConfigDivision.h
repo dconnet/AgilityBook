@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-03 DRC Added short name.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -119,6 +120,14 @@ public:
 	{
 		m_Name = inName;
 	}
+	std::wstring const& GetShortName() const
+	{
+		return m_ShortName;
+	}
+	void SetShortName(std::wstring const& inName)
+	{
+		m_ShortName = inName;
+	}
 	ARBConfigLevelList const& GetLevels() const
 	{
 		return m_Levels;
@@ -130,6 +139,7 @@ public:
 
 private:
 	std::wstring m_Name;
+	std::wstring m_ShortName;
 	ARBConfigLevelList m_Levels;
 };
 
