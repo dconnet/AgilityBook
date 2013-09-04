@@ -280,15 +280,22 @@ std::wstring CLocalization::UpdateTitlesReordered() const
 
 std::wstring CLocalization::UpdateSubLevels(int nAdded, int nUpdated, int nSkipped) const
 {
-#pragma PRAGMA_TODO(Update string)
-	return StringUtil::stringW(wxString::Format(_("IDS_UPDATE_NEWSUBLEVELS"), nAdded));
+	wxString buffer;
+	buffer << _("IDS_SUBLEVEL_NAME")
+		<< L": "
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded)
+		<< L", "
+		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated)
+		<< L", "
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return StringUtil::stringW(buffer);
 }
 
 
 std::wstring CLocalization::UpdateSubLevelsReordered() const
 {
 	wxString buffer;
-	buffer << _("IDS_COL_LEVELS")
+	buffer << _("IDS_SUBLEVEL_NAME")
 		<< L": "
 		<< _("IDS_REORDERED");
 	return StringUtil::stringW(buffer);
