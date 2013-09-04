@@ -403,9 +403,9 @@ bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 
 void ARBConfigTitle::clear()
 {
-	m_Name.erase();
-	m_LongName.erase();
-	m_Desc.erase();
+	m_Name.clear();
+	m_LongName.clear();
+	m_Desc.clear();
 	m_Prefix = false;
 	m_ValidFrom.clear();
 	m_ValidTo.clear();

@@ -77,7 +77,7 @@ public:
 	std::wstring UpdateLevelsReordered() const;
 	std::wstring UpdateTitles(int nAdded, int nUpdated, int nSkipped) const;
 	std::wstring UpdateTitlesReordered() const;
-	std::wstring UpdateSubLevels(int nAdded) const;
+	std::wstring UpdateSubLevels(int nAdded, int nUpdated, int nSkipped) const;
 	std::wstring UpdateSubLevelsReordered() const;
 	std::wstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const;
 	std::wstring WarnDeletedRuns(int nRuns, std::wstring const& inRunsMsg) const;

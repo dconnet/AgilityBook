@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2013-09-03 DRC File version 14.2
+               Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
 2013-05-24 DRC File version 14.1
                Added 'Date' to 'Trial'.
 2013-01-13 DRC File version 14.0
@@ -363,7 +365,9 @@ meaning it can be entered multiple times. The value in this attribute is
 used to determine the starting point for the first recurance.
 -->
 <!ELEMENT Division (Level+) >
-	<!ATTLIST Division Name CDATA #REQUIRED >
+	<!ATTLIST Division
+		Name CDATA #REQUIRED
+		ShortName CDATA #IMPLIED >
 
 <!--
 Rules for levels are based on the level name. A level may be
@@ -372,9 +376,13 @@ AKC's ExA and ExB should be treated as distinct levels, since
 you title in each one, unlike the novice levels.
 -->
 <!ELEMENT Level (SubLevel*) >
-	<!ATTLIST Level Name CDATA #REQUIRED >
+	<!ATTLIST Level
+		Name CDATA #REQUIRED
+		ShortName CDATA #IMPLIED >
 <!ELEMENT SubLevel EMPTY >
-	<!ATTLIST SubLevel Name CDATA #REQUIRED >
+	<!ATTLIST SubLevel
+		Name CDATA #REQUIRED
+		ShortName CDATA #IMPLIED >
 
 <!--
 The biggest difference in events is in how they are scored. These
@@ -432,6 +440,7 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 <!ELEMENT Event (Desc?, SubName*, Scoring+) >
 	<!ATTLIST Event
 		Name CDATA #REQUIRED
+		ShortName CDATA #IMPLIED
 		hasTable (y|n) 'n'
 		hasPartner (y|n) 'n'
 		hasSubNames (y|n) 'n'

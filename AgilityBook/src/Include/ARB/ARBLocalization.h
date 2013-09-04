@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-03 DRC Changed sub level updating.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-09-13 DRC Move to wxStrings throughout.
  * @li 2007-09-12 DRC Moved hardcoded strings out of ARBAgilityRecordBook.h
@@ -87,7 +88,7 @@ public:
 	virtual std::wstring UpdateLevelsReordered() const = 0;
 	virtual std::wstring UpdateTitles(int nAdded, int nUpdated, int nSkipped) const = 0;
 	virtual std::wstring UpdateTitlesReordered() const = 0;
-	virtual std::wstring UpdateSubLevels(int nAdded) const = 0;
+	virtual std::wstring UpdateSubLevels(int nAdded, int nUpdated, int nSkipped) const = 0;
 	virtual std::wstring UpdateSubLevelsReordered() const = 0;
 	virtual std::wstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const = 0;
 	virtual std::wstring WarnDeletedRuns(int nRuns, std::wstring const& inRunsMsg) const = 0;

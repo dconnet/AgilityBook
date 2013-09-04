@@ -170,7 +170,7 @@ bool ARBDogNotes::Load(
 			if (ARBBase64::Decode(tmp, data, bytes))
 			{
 				if (!BinaryData::Encode(data, bytes, m_CRCDMeta))
-					m_CRCDMeta.erase();
+					m_CRCDMeta.clear();
 			}
 			ARBBase64::Release(data);
 		}
@@ -184,11 +184,11 @@ bool ARBDogNotes::Load(
 	{
 		ARBMetaDataPtr data = ARBMetaData::MetaData();
 		if (!BinaryData::Decode(m_CRCDMeta, data->m_Data, data->m_Bytes))
-			m_CRCDMeta.erase();
+			m_CRCDMeta.clear();
 		else
 		{
 			if (data->m_Bytes == 0 || !*data->m_Data)
-				m_CRCDMeta.erase();
+				m_CRCDMeta.clear();
 		}
 	}
 

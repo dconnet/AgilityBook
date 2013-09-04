@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DefaultConfig Book="14.1">
+<DefaultConfig Book="14.2">
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2013-09-03 DRC Configuration version 45.
+               Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
 2013-05-27 DRC Configuration version 44.
                Added Novice to NADAC (there is no A/B anymore)
 2013-04-10 DRC Configuration version 43.
@@ -139,7 +141,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="43">
+  <Configuration version="45">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -369,22 +371,22 @@ Revision History:
       <Titles LongName="Special Masters Jumpers Dog of Canada" Name="SMJDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
       <Titles LongName="Special Masters Snooker Dog of Canada" Name="SMSDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
       <Titles LongName="Special Agility Trial Champion of Canada" Name="SATChC" Prefix="y" ValidTo="2008-12-31">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
-      <Division Name="Regular">
-        <Level Name="Starters"/>
-        <Level Name="Advanced"/>
-        <Level Name="Masters"/>
+      <Division Name="Regular" ShortName="Reg">
+        <Level Name="Starters" ShortName="St"/>
+        <Level Name="Advanced" ShortName="Adv"/>
+        <Level Name="Masters" ShortName="Mas"/>
       </Division>
-      <Division Name="Veteran">
-        <Level Name="Starters"/>
-        <Level Name="Advanced"/>
-        <Level Name="Masters"/>
+      <Division Name="Veteran" ShortName="Vt">
+        <Level Name="Starters" ShortName="St"/>
+        <Level Name="Advanced" ShortName="Adv"/>
+        <Level Name="Masters" ShortName="Mas"/>
       </Division>
-      <Division Name="Special">
-        <Level Name="Starters"/>
-        <Level Name="Advanced"/>
-        <Level Name="Masters"/>
+      <Division Name="Special" ShortName="Sp">
+        <Level Name="Starters" ShortName="St"/>
+        <Level Name="Advanced" ShortName="Adv"/>
+        <Level Name="Masters" ShortName="Mas"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
+      <Event Name="Standard" ShortName="Std" hasTable="y">
         <Scoring Division="*" Level="Masters" type="FaultsThenTime">
           <Note>E: 3 Rs or 1 wrong course or 1 NC</Note>
           <TitlePoints Faults="0" Points="1"/>
@@ -399,7 +401,7 @@ Revision History:
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Gamblers">
+      <Event Name="Gamblers" ShortName="Gam">
         <Scoring Division="Veteran" Level="Masters" OpeningPts="22" ValidFrom="2005-1-1" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -415,7 +417,7 @@ Revision History:
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Snooker">
+      <Event Name="Snooker" ShortName="Snk">
         <Scoring Division="Veteran" Level="Masters" OpeningPts="34" ValidFrom="2005-1-1" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -431,7 +433,7 @@ Revision History:
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Team Relay" hasPartner="y">
+      <Event Name="Team Relay" ShortName="Team" hasPartner="y">
         <Scoring Division="*" Level="Masters" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -440,7 +442,7 @@ Revision History:
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Jumpers">
+      <Event Name="Jumpers" ShortName="Jmp">
         <Scoring Division="*" Level="Masters" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -449,7 +451,7 @@ Revision History:
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Steeplechase">
+      <Event Name="Steeplechase" ShortName="Stp">
         <Scoring Division="*" Level="Masters" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -542,27 +544,27 @@ Repeat titles are MFPC + 75 Qs</Titles>
       <Division Name="ISC">
         <Level Name="Master"/>
       </Division>
-      <Division Name="Regular">
+      <Division Name="Regular" ShortName="Reg">
         <Level Name="Novice">
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
-        <Level Name="Excellent"/>
-        <Level Name="Master"/>
+        <Level Name="Excellent" ShortName="Ex"/>
+        <Level Name="Master" ShortName="Mas"/>
         <Level Name="T2B"/>
       </Division>
-      <Division Name="Preferred">
+      <Division Name="Preferred" ShortName="Pf">
         <Level Name="Novice">
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
-        <Level Name="Excellent"/>
-        <Level Name="Master"/>
+        <Level Name="Excellent" ShortName="Ex"/>
+        <Level Name="Master" ShortName="Mas"/>
         <Level Name="T2B"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
+      <Event Name="Standard" ShortName="Std" hasTable="y">
         <Scoring Division="ISC" Level="Master" type="FaultsThenTime">
           <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
@@ -626,7 +628,7 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="National Rounds">
+      <Event Name="National Rounds" ShortName="NatRnd">
         <Desc>Hybrid, Challenger and Final Rounds</Desc>
         <Scoring Division="Regular" Level="Master" dropFractions="y" timeFault="3" type="Faults100ThenTime">
           <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
@@ -791,42 +793,42 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Elite Regular Superior Performance" Name="RJ-E-SP">RJ-E plus 400 Points</Titles>
       <Titles LongName="Elite Jumpers Superior Performance" Name="JJ-E-SP">JJ-E plus 200 Points</Titles>
       <Titles LongName="Elite Gamblers Superior Performance" Name="GJ-E-SP">GJ-E plus 200 Points</Titles>
-      <Division Name="Standard">
+      <Division Name="Standard" ShortName="Std">
         <Level Name="Novice">
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Veterans">
+      <Division Name="Veterans" ShortName="Vt">
         <Level Name="Novice">
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Junior">
+      <Division Name="Junior" ShortName="Jr">
         <Level Name="Novice">
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Event Name="Regular">
+      <Event Name="Regular" ShortName="Reg">
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
         </Scoring>
       </Event>
-      <Event Name="Jumpers">
+      <Event Name="Jumpers" ShortName="Jmp">
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
         </Scoring>
       </Event>
-      <Event Name="Gamblers">
+      <Event Name="Gamblers" ShortName="Gam">
         <Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="21" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
@@ -895,22 +897,22 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Agility Intermediate Jumpers Selected" Name="AGIJS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Excellent Jumpers Selected" Name="AGXJS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Master Agility Excellent Jumpers Selected" Name="AGMXJS" StartAt="1">Receive 10 qualifying scores.</Titles>
-      <Division Name="Standard">
+      <Division Name="Standard" ShortName="Std">
         <Level Name="Novice">
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
-        <Level Name="Intermediate"/>
-        <Level Name="Excellent A"/>
-        <Level Name="Excellent B"/>
+        <Level Name="Intermediate" ShortName="Int"/>
+        <Level Name="Excellent A" ShortName="ExA"/>
+        <Level Name="Excellent B" ShortName="ExB"/>
       </Division>
-      <Division Name="Selected">
-        <Level Name="Novice"/>
-        <Level Name="Intermediate"/>
-        <Level Name="Excellent A"/>
-        <Level Name="Excellent B"/>
+      <Division Name="Selected" ShortName="Sel">
+        <Level Name="Novice" ShortName="Nov"/>
+        <Level Name="Intermediate" ShortName="Int"/>
+        <Level Name="Excellent A" ShortName="ExA"/>
+        <Level Name="Excellent B" ShortName="ExB"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
+      <Event Name="Standard" ShortName="Std" hasTable="y">
         <Scoring Division="*" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
@@ -1134,31 +1136,31 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
       <Titles LongName="Ruby" Name="C-40">40000 total points</Titles>
       <Titles LongName="Emerald" Name="C-45">45000 total points</Titles>
       <Titles LongName="Alexandrite" Name="C-50">50000 total points</Titles>
-      <Division Name="Regular">
-        <Level Name="Level 1"/>
-        <Level Name="Level 2"/>
-        <Level Name="Level 3"/>
-        <Level Name="Level 4"/>
-        <Level Name="Level 5"/>
-        <Level Name="Level C"/>
+      <Division Name="Regular" ShortName="Reg">
+        <Level Name="Level 1" ShortName="L1"/>
+        <Level Name="Level 2" ShortName="L2"/>
+        <Level Name="Level 3" ShortName="L3"/>
+        <Level Name="Level 4" ShortName="L4"/>
+        <Level Name="Level 5" ShortName="L5"/>
+        <Level Name="Level C" ShortName="LC"/>
       </Division>
-      <Division Name="Enthusiast">
-        <Level Name="Level 1"/>
-        <Level Name="Level 2"/>
-        <Level Name="Level 3"/>
-        <Level Name="Level 4"/>
-        <Level Name="Level 5"/>
-        <Level Name="Level C"/>
+      <Division Name="Enthusiast" ShortName="Ent">
+        <Level Name="Level 1" ShortName="L1"/>
+        <Level Name="Level 2" ShortName="L2"/>
+        <Level Name="Level 3" ShortName="L3"/>
+        <Level Name="Level 4" ShortName="L4"/>
+        <Level Name="Level 5" ShortName="L5"/>
+        <Level Name="Level C" ShortName="LC"/>
       </Division>
-      <Division Name="Specialist">
-        <Level Name="Level 1"/>
-        <Level Name="Level 2"/>
-        <Level Name="Level 3"/>
-        <Level Name="Level 4"/>
-        <Level Name="Level 5"/>
-        <Level Name="Level C"/>
+      <Division Name="Specialist" ShortName="Sp">
+        <Level Name="Level 1" ShortName="L1"/>
+        <Level Name="Level 2" ShortName="L2"/>
+        <Level Name="Level 3" ShortName="L3"/>
+        <Level Name="Level 4" ShortName="L4"/>
+        <Level Name="Level 5" ShortName="L5"/>
+        <Level Name="Level C" ShortName="LC"/>
       </Division>
-      <Event Name="Standard">
+      <Event Name="Standard" ShortName="Std">
         <Scoring Division="*" Level="Level C" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="25"/>
           <LifeTime Faults="0" Points="25"/>
@@ -1384,7 +1386,7 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
           <LifeTime Faults="4" Points="10"/>
         </Scoring>
       </Event>
-      <Event Name="Wildcard">
+      <Event Name="Wildcard" ShortName="Wild">
         <Desc>Successfully complete the course including enough "wildcards" to qualify!</Desc>
         <Scoring Division="*" Level="Level C" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt</Note>
@@ -1517,7 +1519,7 @@ Faults allowed:
           <LifeTime Faults="9" Points="10"/>
         </Scoring>
       </Event>
-      <Event Name="Snooker">
+      <Event Name="Snooker" ShortName="Snk">
         <Desc>To test the course planning strategies of the handler, and the dog's ability to concentrate on and execute the handlers directions.</Desc>
         <Scoring Division="Regular" Level="Level C" OpeningPts="32" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="25"/>
@@ -1627,7 +1629,7 @@ Faults allowed:
           <LifeTime Faults="0" Points="25"/>
         </Scoring>
       </Event>
-      <Event Name="Jackpot">
+      <Event Name="Jackpot" ShortName="Jack">
         <Desc>To test the course planning strategies of the handler, and the dog's ability to work at a distance.</Desc>
         <Scoring ClosingPts="20" Division="Regular" Level="Level C" OpeningPts="24" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="25"/>
@@ -1737,7 +1739,7 @@ Faults allowed:
           <LifeTime Faults="0" Points="25"/>
         </Scoring>
       </Event>
-      <Event Name="FullHouse">
+      <Event Name="FullHouse" ShortName="FH">
         <Desc>Successfully accumulate required points for your respective level, that includes a pair, three of a kind and a joker, before the whistle.
 3 of a kind: 3 jumps (1 pt each)
 2 of a kind: 2 "circles" (3 pts each)
@@ -1843,7 +1845,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
           <LifeTime Faults="0" Points="20"/>
         </Scoring>
       </Event>
-      <Event Name="Jumpers">
+      <Event Name="Jumpers" ShortName="Jmp">
         <Desc>Successfully complete course within fault limits and course time.</Desc>
         <Scoring Division="*" Level="Level C" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="20"/>
@@ -2338,42 +2340,42 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
       <Titles LongName="Gold Junior Handler Specialist North America Challenge Award" Name="Gold-JH-SNACA">15 Qs</Titles>
       <Titles LongName="Platinum Junior Handler Specialist North America Challenge Award" Name="Platinum-JH-SNACA">20 Qs</Titles>
       <Titles LongName="Double Platinum Junior Handler Specialist North America Challenge Award" Name="Double Platinum-JH-SNACA">25 Qs</Titles>
-      <Division Name="Competition">
-        <Level Name="Beginner"/>
-        <Level Name="Intern"/>
-        <Level Name="Specialist"/>
+      <Division Name="Competition" ShortName="Comp">
+        <Level Name="Beginner" ShortName="Beg"/>
+        <Level Name="Intern" ShortName="Int"/>
+        <Level Name="Specialist" ShortName="Sp"/>
       </Division>
-      <Division Name="Select">
-        <Level Name="Beginner"/>
-        <Level Name="Intern"/>
-        <Level Name="Specialist"/>
+      <Division Name="Select" ShortName="Sel">
+        <Level Name="Beginner" ShortName="Beg"/>
+        <Level Name="Intern" ShortName="Int"/>
+        <Level Name="Specialist" ShortName="Sp"/>
       </Division>
-      <Division Name="Veterans">
-        <Level Name="Beginner"/>
-        <Level Name="Intern"/>
-        <Level Name="Specialist"/>
+      <Division Name="Veterans" ShortName="Vt">
+        <Level Name="Beginner" ShortName="Beg"/>
+        <Level Name="Intern" ShortName="Int"/>
+        <Level Name="Specialist" ShortName="Sp"/>
       </Division>
-      <Division Name="Grand Veterans">
-        <Level Name="Beginner"/>
-        <Level Name="Intern"/>
-        <Level Name="Specialist"/>
+      <Division Name="Grand Veterans" ShortName="GV">
+        <Level Name="Beginner" ShortName="Beg"/>
+        <Level Name="Intern" ShortName="Int"/>
+        <Level Name="Specialist" ShortName="Sp"/>
       </Division>
-      <Division Name="Junior Handler">
-        <Level Name="Beginner"/>
-        <Level Name="Intern"/>
-        <Level Name="Specialist"/>
+      <Division Name="Junior Handler" ShortName="JH">
+        <Level Name="Beginner" ShortName="Beg"/>
+        <Level Name="Intern" ShortName="Int"/>
+        <Level Name="Specialist" ShortName="Sp"/>
       </Division>
-      <Event Name="Standard">
+      <Event Name="Standard" ShortName="Std">
         <Scoring Division="*" Level="*" cleanQ="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Jumpers">
+      <Event Name="Jumpers" ShortName="Jmp">
         <Scoring Division="*" Level="*" cleanQ="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Gamblers">
+      <Event Name="Gamblers" ShortName="Gam">
         <Desc>Traditional</Desc>
         <Scoring Division="*" Level="Specialist" OpeningPts="19" ValidFrom="2006-8-11" cleanQ="y" type="OCScoreThenTime">
           <Note>Opening: 30 seconds</Note>
@@ -2392,7 +2394,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Time Gamble">
+      <Event Name="Time Gamble" ShortName="TimeGam">
         <Desc>Strategic Time</Desc>
         <Scoring Division="*" Level="Specialist" OpeningPts="19" ValidFrom="2006-8-11" cleanQ="y" overTF="y" type="OCScoreThenTime" underTF="y">
           <Note>Opening: 30 seconds. 25 pts earns a time bonus that adds or subtracts 1 second to the advantage of the team</Note>
@@ -2411,12 +2413,12 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
           <TitlePoints Faults="2.5" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Snakes N Ladders">
+      <Event Name="Snakes N Ladders" ShortName="SnL">
         <Scoring Division="*" Level="*" cleanQ="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Trigility" hasPartner="y">
+      <Event Name="Trigility" ShortName="Tri" hasPartner="y">
         <Desc>Team event with 3 parts: Standard, Jumpers, Gamble. Time+Faults, plus successful gamble</Desc>
         <Scoring Division="*" Level="*" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
@@ -2433,12 +2435,12 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
     </Venue>
     <Venue LongName="Fédération Cynologique Internationale" Name="FCI" URL="http://www.fci.be" icon="14">
       <Titles LongName="Agility Certificate" Name="Agility Certificate">Qualified 'Excellent' 3 times, with clear rounds, under 2 different judges in Agility 1 competitions</Titles>
-      <Division Name="Standard">
-        <Level Name="Level 1"/>
-        <Level Name="Level 2"/>
-        <Level Name="Level 3"/>
+      <Division Name="Standard" ShortName="Std">
+        <Level Name="Level 1" ShortName="L1"/>
+        <Level Name="Level 2" ShortName="L2"/>
+        <Level Name="Level 3" ShortName="L3"/>
       </Division>
-      <Event Name="Agility" hasTable="y">
+      <Event Name="Agility" ShortName="Ag" hasTable="y">
         <Scoring Division="*" Level="Level 2" type="FaultsThenTime">
           <Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
@@ -2465,7 +2467,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
           <TitlePoints Faults="25.99" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Jumping">
+      <Event Name="Jumping" ShortName="Jmp">
         <Scoring Division="*" Level="Level 2" type="FaultsThenTime">
           <Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
@@ -2743,88 +2745,88 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Titles LongName="Elite Superior Extreme Hoopers" Name="S-XHP-E">2000 points</Titles>
       <Titles LongName="Elite Superior Extreme Gaters" Name="S-XGT-E">2000 points</Titles>
       <Titles LongName="Elite Superior Extreme Barrel Racing" Name="S-XBR-E">2000 points</Titles>
-      <Division Name="Std Proficient">
+      <Division Name="Std Proficient" ShortName="StdPro">
         <Level Name="Novice">
-          <SubLevel Name="Novice"/>
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Vet Proficient">
+      <Division Name="Vet Proficient" ShortName="VtPro">
         <Level Name="Novice">
-          <SubLevel Name="Novice"/>
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Jr Proficient">
+      <Division Name="Jr Proficient" ShortName="JrPro">
         <Level Name="Novice">
-          <SubLevel Name="Novice"/>
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Std Skilled">
+      <Division Name="Std Skilled" ShortName="StdSk">
         <Level Name="Novice">
-          <SubLevel Name="Novice"/>
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Vet Skilled">
+      <Division Name="Vet Skilled" ShortName="VtSk">
         <Level Name="Novice">
-          <SubLevel Name="Novice"/>
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Jr Skilled">
+      <Division Name="Jr Skilled" ShortName="JrSk">
         <Level Name="Novice">
-          <SubLevel Name="Novice"/>
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Standard">
+      <Division Name="Standard" ShortName="Std">
         <Level Name="Novice">
-          <SubLevel Name="Novice"/>
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Veterans">
+      <Division Name="Veterans" ShortName="Vt">
         <Level Name="Novice">
-          <SubLevel Name="Novice"/>
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Division Name="Junior">
+      <Division Name="Junior" ShortName="Jr">
         <Level Name="Novice">
-          <SubLevel Name="Novice"/>
-          <SubLevel Name="Novice A"/>
-          <SubLevel Name="Novice B"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
-      <Event Name="Regular">
+      <Event Name="Regular" ShortName="Reg">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
@@ -2893,7 +2895,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
           <LifeTime Faults="5" Points="5"/>
         </Scoring>
       </Event>
-      <Event Name="Jumpers">
+      <Event Name="Jumpers" ShortName="Jmp">
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
@@ -2931,7 +2933,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
       </Event>
-      <Event Name="Gamblers" hasSubNames="y">
+      <Event Name="Gamblers" ShortName="Gam" hasSubNames="y">
         <Desc>Gamblers changed in 2005. For specified-type gambles, use one of the pre-defined sub-names.</Desc>
         <SubName>Contacts</SubName>
         <SubName>Jumps</SubName>
@@ -3011,7 +3013,7 @@ Was called Wild Card briefly.</Desc>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
       </Event>
-      <Event Name="Tunnelers">
+      <Event Name="Tunnelers" ShortName="Tun">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
@@ -3034,7 +3036,7 @@ Was called Wild Card briefly.</Desc>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
       </Event>
-      <Event Name="TouchNGo">
+      <Event Name="TouchNGo" ShortName="TnG">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
@@ -3057,7 +3059,7 @@ Was called Wild Card briefly.</Desc>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
       </Event>
-      <Event Name="Weavers">
+      <Event Name="Weavers" ShortName="Wv">
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
@@ -3115,7 +3117,7 @@ Was called Wild Card briefly.</Desc>
           <LifeTime Faults="0" Points="10"/>
         </Scoring>
       </Event>
-      <Event Name="Extreme Chances">
+      <Event Name="Extreme Chances" ShortName="ExChances">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
@@ -3130,7 +3132,7 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Extreme Hoopers">
+      <Event Name="Extreme Hoopers" ShortName="ExHoopers">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
@@ -3145,7 +3147,7 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Extreme Gaters">
+      <Event Name="Extreme Gaters" ShortName="ExGaters">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
@@ -3160,7 +3162,7 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Extreme Barrel Racing">
+      <Event Name="Extreme Barrel Racing" ShortName="ExBarrel">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
@@ -3196,7 +3198,7 @@ Was called Wild Card briefly.</Desc>
         <Level Name="3ème degré"/>
         <Level Name="Sans degré"/>
       </Division>
-      <Event Name="Agility" hasTable="y">
+      <Event Name="Agility" ShortName="Ag" hasTable="y">
         <Scoring Division="*" Level="2ème degré" type="FaultsThenTime">
           <Note>0 - 5.99 pénalités = Excellent
 6 - 15.99 pénalités = Très bon
@@ -3223,7 +3225,7 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="25.99" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Jumping">
+      <Event Name="Jumping" ShortName="Jmp">
         <Scoring Division="*" Level="2ème degré" type="FaultsThenTime">
           <Note>0 - 5.99 pénalités = Excellent
 6 - 15.99 pénalités = Très bon
@@ -3250,7 +3252,7 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="25.99" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Open Royal Canin" hasTable="y">
+      <Event Name="Open Royal Canin" ShortName="ORC" hasTable="y">
         <Scoring Division="*" Level="Sans degré" type="FaultsThenTime">
           <Note>0 - 5.99 pénalités = Excellent
 6 - 15.99 pénalités = Très bon
@@ -3262,7 +3264,7 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="25.99" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Grand Prix France" hasTable="y">
+      <Event Name="Grand Prix France" ShortName="GPF" hasTable="y">
         <Scoring Division="*" Level="Sans degré" type="FaultsThenTime">
           <Note>0 - 5.99 pénalités = Excellent
 6 - 15.99 pénalités = Très bon
@@ -3288,27 +3290,27 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Teacup Master Agility Dog" Name="TMAD" StartAt="1">TSAD + 10 Qs</Titles>
       <Titles LongName="Teacup Master Agility Games Dog" Name="TMAG" StartAt="1">TG3 + 10 Qs</Titles>
       <Titles LongName="TDAA National Agility Championship" Name="TNAC" StartAt="1" Style="0" ValidFrom="2012-10-28">Highest overall score in each jump height at the TDAA Petit Prix.</Titles>
-      <Division Name="Standard">
-        <Level Name="Beginner"/>
-        <Level Name="Intermediate"/>
-        <Level Name="Superior"/>
+      <Division Name="Standard" ShortName="Std">
+        <Level Name="Beginner" ShortName="Beg"/>
+        <Level Name="Intermediate" ShortName="Int"/>
+        <Level Name="Superior" ShortName="Sup"/>
       </Division>
-      <Event Name="Petit Prix">
+      <Event Name="Petit Prix" ShortName="PP">
         <Scoring Division="*" Level="*" type="FaultsThenTime"/>
       </Event>
-      <Event Name="Standard" hasTable="y">
+      <Event Name="Standard" ShortName="Std" hasTable="y">
         <Scoring Division="*" Level="*" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Faults/Time" hasSubNames="y" hasTable="y">
+      <Event Name="Game: Faults/Time" ShortName="G/FT" hasSubNames="y" hasTable="y">
         <Desc>This is for events scored like Standard.</Desc>
         <SubName>Box Game</SubName>
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Faults/Time (2)" hasSubNames="y" hasTable="y">
+      <Event Name="Game: Faults/Time (2)" ShortName="G/FT2" hasSubNames="y" hasTable="y">
         <Desc>This is for events scored like Standard, but allows faults.</Desc>
         <SubName>Colors</SubName>
         <Scoring Division="*" Level="Superior" type="FaultsThenTime">
@@ -3318,7 +3320,7 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="5" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Time+Faults" hasSubNames="y">
+      <Event Name="Game: Time+Faults" ShortName="G/T+F" hasSubNames="y">
         <Desc>This is for Time plus Fault events. Time faults are not added.</Desc>
         <SubName>Chutes and Ladders</SubName>
         <SubName>Louganis</SubName>
@@ -3327,7 +3329,7 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Total Points" hasSubNames="y">
+      <Event Name="Game: Total Points" ShortName="G/Pt" hasSubNames="y">
         <Desc>Points are accumulated in a single time period, like Snooker.</Desc>
         <SubName>12 Tone Row</SubName>
         <SubName>Beat the Clock</SubName>
@@ -3343,27 +3345,27 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Total Points - TimeFaults1" hasSubNames="y">
+      <Event Name="Game: Total Points - TimeFaults1" ShortName="G/Pt-TF1" hasSubNames="y">
         <Desc>Points are accumulated in a single time period, like Snooker. Time over SCT is deducted.</Desc>
         <Scoring Division="*" Level="*" dropFractions="y" overTF="y" subtractTF="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Total Points - TimeFaults2" hasSubNames="y">
+      <Event Name="Game: Total Points - TimeFaults2" ShortName="G/Pt-TF2" hasSubNames="y">
         <Desc>Points are accumulated in a single time period. 2 points are deducted for each second over SCT.</Desc>
         <SubName>Copycat</SubName>
         <Scoring Division="*" Level="*" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Open/Close Points" hasSubNames="y">
+      <Event Name="Game: Open/Close Points" ShortName="G/OCPt" hasSubNames="y">
         <Desc>Points are accumulated separately in the opening and closing, like Gamblers.</Desc>
         <SubName>Gamblers</SubName>
         <Scoring Division="*" Level="*" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Relay" hasPartner="y" hasSubNames="y">
+      <Event Name="Game: Relay" ShortName="G/Relay" hasPartner="y" hasSubNames="y">
         <Desc>This is for events run with one or more partners.</Desc>
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -3376,16 +3378,16 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="United Agility Champion" Name="UACH">100 pts from B, 40 must be from AgI, 40 must be from AgII</Titles>
       <Titles LongName="United Agility Champion Excellent" Name="UACHX">5 Qs from AGIII under at least 3 different judges</Titles>
       <Titles LongName="United Grand Agility Champion" Name="UGRACH" StartAt="1">5 triple-Qs with a combined score of 588 or higher, 2 of the combined wins must be under at least 2 different judges.</Titles>
-      <Division Name="Standard">
+      <Division Name="Standard" ShortName="Std">
         <Level Name="Agility I">
-          <SubLevel Name="Agility I A"/>
-          <SubLevel Name="Agility I B"/>
+          <SubLevel Name="Agility I A" ShortName="Ag1A"/>
+          <SubLevel Name="Agility I B" ShortName="Ag1B"/>
         </Level>
         <Level Name="Agility II">
-          <SubLevel Name="Agility II A"/>
-          <SubLevel Name="Agility II B"/>
+          <SubLevel Name="Agility II A" ShortName="Ag2A"/>
+          <SubLevel Name="Agility II B" ShortName="Ag2B"/>
         </Level>
-        <Level Name="Agility III"/>
+        <Level Name="Agility III" ShortName="Ag3"/>
       </Division>
       <Division Name="UAGI">
         <Level Name="A"/>
@@ -3404,7 +3406,7 @@ TG3 + 10 Qs in at least 5 games
       <Division Name="UGRACH">
         <Level Name="B"/>
       </Division>
-      <Event Name="Agility I">
+      <Event Name="Agility I" ShortName="AgI">
         <Scoring Division="*" Level="Agility I" type="Faults200ThenTime">
           <TitlePoints Faults="30" Points="1"/>
           <LifeTime Faults="0" Points="10"/>
@@ -3445,7 +3447,7 @@ TG3 + 10 Qs in at least 5 games
           <LifeTime Faults="4" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Agility II">
+      <Event Name="Agility II" ShortName="AgII">
         <Scoring Division="*" Level="Agility II" type="Faults200ThenTime">
           <TitlePoints Faults="30" Points="1"/>
           <LifeTime Faults="0" Points="10"/>
@@ -3486,7 +3488,7 @@ TG3 + 10 Qs in at least 5 games
           <LifeTime Faults="4" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Agility III">
+      <Event Name="Agility III" ShortName="AgIII">
         <Scoring Division="*" Level="Agility III" dropFractions="y" type="Faults200ThenTime">
           <TitlePoints Faults="4" Points="1"/>
           <LifeTime Faults="0" Points="10"/>
@@ -3548,71 +3550,71 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Speed Stakes Senior of Select" Name="SSSs">Required points to move from Senior to Champion</Titles>
       <Titles LongName="Champion of Speed Stakes of Select" Name="CSSs" StartAt="1">60 points in Champion</Titles>
       <Titles LongName="Win Champion of Speed Stakes of Select" Name="WCSSs" StartAt="1">60 win points in Champion</Titles>
-      <Division Name="International">
-        <Level Name="Beginners"/>
-        <Level Name="Novice"/>
-        <Level Name="Senior"/>
-        <Level Name="Champion"/>
+      <Division Name="International" ShortName="Int">
+        <Level Name="Beginners" ShortName="Beg"/>
+        <Level Name="Novice" ShortName="Nov"/>
+        <Level Name="Senior" ShortName="Sr"/>
+        <Level Name="Champion" ShortName="Ch"/>
       </Division>
-      <Division Name="International Select">
-        <Level Name="Beginners"/>
-        <Level Name="Novice"/>
-        <Level Name="Senior"/>
-        <Level Name="Champion"/>
+      <Division Name="International Select" ShortName="IntSel">
+        <Level Name="Beginners" ShortName="Beg"/>
+        <Level Name="Novice" ShortName="Nov"/>
+        <Level Name="Senior" ShortName="Sr"/>
+        <Level Name="Champion" ShortName="Ch"/>
       </Division>
-      <Division Name="Speed Stakes">
-        <Level Name="Beginners"/>
-        <Level Name="Novice"/>
-        <Level Name="Senior"/>
-        <Level Name="Champion"/>
+      <Division Name="Speed Stakes" ShortName="SpSt">
+        <Level Name="Beginners" ShortName="Beg"/>
+        <Level Name="Novice" ShortName="Nov"/>
+        <Level Name="Senior" ShortName="Sr"/>
+        <Level Name="Champion" ShortName="Ch"/>
       </Division>
-      <Division Name="Speed Stakes Select">
-        <Level Name="Beginners"/>
-        <Level Name="Novice"/>
-        <Level Name="Senior"/>
-        <Level Name="Champion"/>
+      <Division Name="Speed Stakes Select" ShortName="SpStSel">
+        <Level Name="Beginners" ShortName="Beg"/>
+        <Level Name="Novice" ShortName="Nov"/>
+        <Level Name="Senior" ShortName="Sr"/>
+        <Level Name="Champion" ShortName="Ch"/>
       </Division>
-      <Division Name="Masters">
-        <Level Name="Champion"/>
+      <Division Name="Masters" ShortName="Mas">
+        <Level Name="Champion" ShortName="Ch"/>
       </Division>
-      <Event Name="Agility" hasTable="y">
+      <Event Name="Agility" ShortName="Ag" hasTable="y">
         <Scoring Division="Masters" Level="Champion" type="FaultsThenTime"/>
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>
       </Event>
-      <Event Name="Jumping">
+      <Event Name="Jumping" ShortName="Jmp">
         <Scoring Division="Masters" Level="Champion" type="FaultsThenTime"/>
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>
       </Event>
-      <Event Name="Speed Stakes">
+      <Event Name="Speed Stakes" ShortName="SpSt">
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>
       </Event>
-      <Event Name="Gamblers">
+      <Event Name="Gamblers" ShortName="Gam">
         <Scoring Division="*" Level="*" type="OCScoreThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>
       </Event>
-      <Event Name="Snooker">
+      <Event Name="Snooker" ShortName="Snk">
         <Scoring Division="*" Level="*" type="ScoreThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>
       </Event>
-      <Event Name="Power &amp; Speed">
+      <Event Name="Power &amp; Speed" ShortName="PnS">
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>
       </Event>
-      <Event Name="Snakes &amp; Ladders">
+      <Event Name="Snakes &amp; Ladders" ShortName="SnL">
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>
       </Event>
-      <Event Name="Finals Qualifier">
+      <Event Name="Finals Qualifier" ShortName="Finals">
         <Scoring Division="*" Level="*" type="FaultsThenTime"/>
       </Event>
       <Event Name="Pairs">
@@ -3624,7 +3626,7 @@ TG3 + 10 Qs in at least 5 games
       <Event Name="Knockout">
         <Scoring Division="*" Level="*" type="FaultsThenTime"/>
       </Event>
-      <Event Name="Grand Prix">
+      <Event Name="Grand Prix" ShortName="GP">
         <Scoring Division="*" Level="*" type="FaultsThenTime"/>
       </Event>
       <Event Name="Masters">
@@ -3848,40 +3850,40 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="MC Jumpers Champion" Name="MCJC">10 Jumpers</Titles>
       <Titles LongName="MC Performance Standard Champion" Name="MCPSC">10 Standard</Titles>
       <Titles LongName="MC Performance Jumpers Champion" Name="MCPJC">10 Jumpers</Titles>
-      <Division Name="Championship">
-        <Level Name="International"/>
-        <Level Name="Nationals"/>
-        <Level Name="Tournament"/>
+      <Division Name="Championship" ShortName="Ch">
+        <Level Name="International" ShortName="Int"/>
+        <Level Name="Nationals" ShortName="Nat"/>
+        <Level Name="Tournament" ShortName="Tourn"/>
         <Level Name="Novice">
-          <SubLevel Name="Starters"/>
-          <SubLevel Name="Novice"/>
+          <SubLevel Name="Starters" ShortName="St"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
         </Level>
-        <Level Name="Advanced"/>
-        <Level Name="Masters"/>
-        <Level Name="Masters Challenge"/>
+        <Level Name="Advanced" ShortName="Adv"/>
+        <Level Name="Masters" ShortName="Mas"/>
+        <Level Name="Masters Challenge" ShortName="MC"/>
       </Division>
-      <Division Name="Performance">
-        <Level Name="International"/>
-        <Level Name="Nationals"/>
-        <Level Name="Tournament"/>
+      <Division Name="Performance" ShortName="Pf">
+        <Level Name="International" ShortName="Int"/>
+        <Level Name="Nationals" ShortName="Nat"/>
+        <Level Name="Tournament" ShortName="Tourn"/>
         <Level Name="PI"/>
         <Level Name="PII"/>
         <Level Name="PIII"/>
-        <Level Name="Masters Challenge"/>
+        <Level Name="Masters Challenge" ShortName="MC"/>
       </Division>
-      <Division Name="Junior">
-        <Level Name="Beginners"/>
-        <Level Name="Elementary"/>
-        <Level Name="Intermediate"/>
-        <Level Name="Senior"/>
+      <Division Name="Junior" ShortName="Jr">
+        <Level Name="Beginners" ShortName="Beg"/>
+        <Level Name="Elementary" ShortName="Ele"/>
+        <Level Name="Intermediate" ShortName="Int"/>
+        <Level Name="Senior" ShortName="Sr"/>
       </Division>
-      <Division Name="Veterans">
-        <Level Name="Veterans"/>
+      <Division Name="Veterans" ShortName="Vt">
+        <Level Name="Veterans" ShortName="Vt"/>
       </Division>
       <Division Name="Intro">
         <Level Name="Intro"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
+      <Event Name="Standard" ShortName="Std" hasTable="y">
         <Scoring Division="Championship" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
@@ -3933,7 +3935,7 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Jumpers">
+      <Event Name="Jumpers" ShortName="Jmp">
         <Scoring Division="Championship" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
@@ -3984,7 +3986,7 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Gamblers">
+      <Event Name="Gamblers" ShortName="Gam">
         <Scoring Division="Championship" Level="Nationals" type="OCScoreThenTime"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="OCScoreThenTime">
           <LifeTime Faults="0" Points="1"/>
@@ -4025,7 +4027,7 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Snooker">
+      <Event Name="Snooker" ShortName="Snk">
         <Scoring Division="Championship" Level="Nationals" type="ScoreThenTime"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="ScoreThenTime">
           <LifeTime Faults="0" Points="1"/>
@@ -4136,7 +4138,7 @@ TG3 + 10 Qs in at least 5 games
           <Note>Non-titling event</Note>
         </Scoring>
       </Event>
-      <Event Name="Grand Prix">
+      <Event Name="Grand Prix" ShortName="GP">
         <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="FaultsThenTime">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
@@ -4185,7 +4187,7 @@ In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be m
           <LifeTime Faults="7" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Steeplechase">
+      <Event Name="Steeplechase" ShortName="Stp">
         <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
@@ -4220,7 +4222,7 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
         <Scoring Division="Championship" Level="Nationals" type="ScoreThenTime"/>
         <Scoring Division="Performance" Level="Nationals" type="ScoreThenTime"/>
       </Event>
-      <Event Name="Power &amp; Speed">
+      <Event Name="Power &amp; Speed" ShortName="PnS">
         <Desc>Nationals Event</Desc>
         <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
@@ -4258,21 +4260,21 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
       <Titles LongName="VALOR Exceptional Jumpers" Name="VXJ">10 Qualifying Scores in Expert Jumpers</Titles>
       <Titles LongName="VALOR DICTORIAN Standard" Name="VDS" StartAt="1">20 Qualifying Scores in Expert Standard</Titles>
       <Titles LongName="VALOR DICTORIAN Jumpers" Name="VDJ" StartAt="1">20 Qualifying Scores in Expert Jumpers</Titles>
-      <Division Name="Training">
-        <Level Name="Beginner"/>
-        <Level Name="Intermediate"/>
+      <Division Name="Training" ShortName="Tr">
+        <Level Name="Beginner" ShortName="Beg"/>
+        <Level Name="Intermediate" ShortName="Int"/>
       </Division>
-      <Division Name="Standard">
-        <Level Name="Beginner"/>
-        <Level Name="Intermediate"/>
-        <Level Name="Expert"/>
+      <Division Name="Standard" ShortName="Std">
+        <Level Name="Beginner" ShortName="Beg"/>
+        <Level Name="Intermediate" ShortName="Int"/>
+        <Level Name="Expert" ShortName="Ex"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
+      <Event Name="Standard" ShortName="Std" hasTable="y">
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Jumpers">
+      <Event Name="Jumpers" ShortName="Jmp">
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>

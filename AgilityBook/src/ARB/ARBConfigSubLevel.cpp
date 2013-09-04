@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-03 DRC Added short name.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -54,12 +55,14 @@ ARBConfigSubLevelPtr ARBConfigSubLevel::New()
 
 ARBConfigSubLevel::ARBConfigSubLevel()
 	: m_Name()
+	, m_ShortName()
 {
 }
 
 
 ARBConfigSubLevel::ARBConfigSubLevel(ARBConfigSubLevel const& rhs)
 	: m_Name(rhs.m_Name)
+	, m_ShortName(rhs.m_ShortName)
 {
 }
 
@@ -78,14 +81,18 @@ ARBConfigSubLevelPtr ARBConfigSubLevel::Clone() const
 ARBConfigSubLevel& ARBConfigSubLevel::operator=(ARBConfigSubLevel const& rhs)
 {
 	if (this != &rhs)
+	{
 		m_Name = rhs.m_Name;
+		m_ShortName = rhs.m_ShortName;
+	}
 	return *this;
 }
 
 
 bool ARBConfigSubLevel::operator==(ARBConfigSubLevel const& rhs) const
 {
-	return m_Name == rhs.m_Name;
+	return m_Name == rhs.m_Name
+		&& m_ShortName == rhs.m_ShortName;
 }
 
 
@@ -103,6 +110,7 @@ bool ARBConfigSubLevel::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_SUBLEVEL, ATTRIB_SUBLEVEL_NAME));
 		return false;
 	}
+	inTree->GetAttrib(ATTRIB_SUBLEVEL_SHORTNAME, m_ShortName);
 	return true;
 }
 
@@ -114,7 +122,30 @@ bool ARBConfigSubLevel::Save(ElementNodePtr ioTree) const
 		return false;
 	ElementNodePtr element = ioTree->AddElementNode(TREE_SUBLEVEL);
 	element->AddAttrib(ATTRIB_SUBLEVEL_NAME, m_Name);
+	if (!m_ShortName.empty())
+		element->AddAttrib(ATTRIB_SUBLEVEL_SHORTNAME, m_ShortName);
 	return true;
+}
+
+
+bool ARBConfigSubLevel::Update(
+		int indent,
+		ARBConfigSubLevelPtr inLevelNew,
+		std::wstring& ioInfo)
+{
+	std::wstring info;
+	if (GetName() != inLevelNew->GetName())
+		return false;
+
+	bool bChanges = false;
+
+	if (GetShortName() != inLevelNew->GetShortName())
+	{
+		bChanges = true;
+		SetShortName(inLevelNew->GetShortName());
+	}
+
+	return bChanges;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -120,9 +120,9 @@ bool ARBConfigOtherPoints::operator==(ARBConfigOtherPoints const& rhs) const
 
 void ARBConfigOtherPoints::clear()
 {
-	m_Name.erase();
+	m_Name.clear();
 	m_Tally = ARBConfigOtherPoints::eTallyAll;
-	m_Desc.erase();
+	m_Desc.clear();
 	m_Default = 0.0;
 }
 

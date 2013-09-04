@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-03 DRC Changed to use short names.
  * @li 2009-12-19 DRC Fix blank page layout in landscape.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-19 DRC Fixed printing when page size isn't specified.
@@ -459,9 +460,57 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 	case CODE_DIV:
 		if (run)
 		{
-			text << run->GetDivision()
-				<< L"/" << run->GetLevel()
-				<< L"/" << run->GetEvent();
+			std::wstring div = run->GetDivision();
+			std::wstring lvl = run->GetLevel();
+			std::wstring evt = run->GetEvent();
+			if (m_config && trial)
+			{
+				std::wstring venue = trial->GetClubs().GetPrimaryClubVenue();
+				ARBConfigVenuePtr pVenue;
+				if (m_config->GetVenues().FindVenue(venue, &pVenue))
+				{
+					ARBConfigEventPtr pEvent;
+					if (pVenue->GetEvents().FindEvent(run->GetEvent(), &pEvent))
+					{
+						ARBConfigDivisionPtr pDiv;
+						if (pVenue->GetDivisions().FindDivision(run->GetDivision(), &pDiv))
+						{
+							ARBConfigLevelPtr pLevel;
+							if (pDiv->GetLevels().FindSubLevel(run->GetLevel(), &pLevel))
+							{
+								ARBConfigSubLevelPtr pSubLevel;
+								if (pLevel->GetSubLevels().FindSubLevel(run->GetLevel(), &pSubLevel))
+								{
+									lvl = pSubLevel->GetShortName();
+									if (lvl.empty())
+										lvl = pSubLevel->GetName();
+								}
+								else
+								{
+									lvl = pLevel->GetShortName();
+									if (lvl.empty())
+										lvl = pLevel->GetName();
+								}
+							}
+							else if (pDiv->GetLevels().FindLevel(run->GetLevel(), &pLevel))
+							{
+								lvl = pLevel->GetShortName();
+								if (lvl.empty())
+									lvl = pLevel->GetName();
+							}
+
+							div = pDiv->GetShortName();
+							if (div.empty())
+								div = pDiv->GetName();
+						}
+
+						evt = pEvent->GetShortName();
+						if (evt.empty())
+							evt = pEvent->GetName();
+					}
+				}
+			}
+			text << div << L"/" << lvl << L"/" << evt;
 		}
 		break;
 	case CODE_LOCATION:
