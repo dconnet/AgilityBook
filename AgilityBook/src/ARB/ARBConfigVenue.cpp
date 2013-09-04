@@ -145,11 +145,11 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 
 void ARBConfigVenue::clear()
 {
-	m_Name.erase();
-	m_LongName.erase();
-	m_URL.erase();
-	m_Desc.erase();
-	m_LifetimeName.erase();
+	m_Name.clear();
+	m_LongName.clear();
+	m_URL.clear();
+	m_Desc.clear();
+	m_LifetimeName.clear();
 	m_idxIcon = -1;
 	m_Titles.clear();
 	m_Divisions.clear();

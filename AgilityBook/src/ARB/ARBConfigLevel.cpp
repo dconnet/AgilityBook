@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-03 DRC Added short name.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -57,6 +58,7 @@ ARBConfigLevelPtr ARBConfigLevel::New()
 
 ARBConfigLevel::ARBConfigLevel()
 	: m_Name()
+	, m_ShortName()
 	, m_SubLevels()
 {
 }
@@ -64,6 +66,7 @@ ARBConfigLevel::ARBConfigLevel()
 
 ARBConfigLevel::ARBConfigLevel(ARBConfigLevel const& rhs)
 	: m_Name(rhs.m_Name)
+	, m_ShortName(rhs.m_ShortName)
 	, m_SubLevels()
 {
 	rhs.m_SubLevels.Clone(m_SubLevels);
@@ -86,6 +89,7 @@ ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel const& rhs)
 	if (this != &rhs)
 	{
 		m_Name = rhs.m_Name;
+		m_ShortName = rhs.m_ShortName;
 		rhs.m_SubLevels.Clone(m_SubLevels);
 	}
 	return *this;
@@ -95,13 +99,15 @@ ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel const& rhs)
 bool ARBConfigLevel::operator==(ARBConfigLevel const& rhs) const
 {
 	return m_Name == rhs.m_Name
+		&& m_ShortName == rhs.m_ShortName
 		&& m_SubLevels == rhs.m_SubLevels;
 }
 
 
 void ARBConfigLevel::clear()
 {
-	m_Name.erase();
+	m_Name.clear();
+	m_ShortName.clear();
 	m_SubLevels.clear();
 }
 
@@ -120,6 +126,7 @@ bool ARBConfigLevel::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LEVEL, ATTRIB_LEVEL_NAME));
 		return false;
 	}
+	inTree->GetAttrib(ATTRIB_LEVEL_SHORTNAME, m_ShortName);
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
 		ElementNodePtr element = inTree->GetElementNode(i);
@@ -142,6 +149,8 @@ bool ARBConfigLevel::Save(ElementNodePtr ioTree) const
 		return false;
 	ElementNodePtr level = ioTree->AddElementNode(TREE_LEVEL);
 	level->AddAttrib(ATTRIB_LEVEL_NAME, m_Name);
+	if (!m_ShortName.empty())
+		level->AddAttrib(ATTRIB_LEVEL_SHORTNAME, m_ShortName);
 	if (!m_SubLevels.Save(level))
 		return false;
 	return true;
@@ -163,27 +172,52 @@ bool ARBConfigLevel::Update(
 	indentBuffer = indentName + L"   ";
 	indentName += L"-";
 
+	bool bChanges = false;
+
+	if (GetShortName() != inLevelNew->GetShortName())
+	{
+		bChanges = true;
+		SetShortName(inLevelNew->GetShortName());
+	}
+
 	// If the order is different, we will fall into this...
 	if (GetSubLevels() != inLevelNew->GetSubLevels())
 	{
-		int nAdded = 0;
+		std::wstring info2;
+		int nChanged, nAdded, nSkipped;
+		nChanged = nAdded = nSkipped = 0;
 		for (ARBConfigSubLevelList::const_iterator iterSub = inLevelNew->GetSubLevels().begin();
 			iterSub != inLevelNew->GetSubLevels().end();
 			++iterSub)
 		{
-			// Here, we happen to know a sublevel consists of only a name.
-			if (!GetSubLevels().FindSubLevel((*iterSub)->GetName()))
+			ARBConfigSubLevelPtr pSubLevel;
+			if (GetSubLevels().FindSubLevel((*iterSub)->GetName(), &pSubLevel))
+			{
+				if (*(*iterSub) == *pSubLevel)
+					++nSkipped;
+				else
+				{
+					if (pSubLevel->Update(indent+1, *iterSub, info2))
+						++nChanged;
+				}
+			}
+			else
 			{
 				++nAdded;
 				GetSubLevels().AddSubLevel((*iterSub)->GetName());
+				info2 += indentBuffer;
+				info2 += L"+";
+				info2 += (*iterSub)->GetName();
+				info2 += L"\n";
 			}
 		}
 		GetSubLevels().ReorderBy(inLevelNew->GetSubLevels());
-		if (0 < nAdded)
+		if (0 < nAdded || 0 < nChanged)
 		{
 			info += indentBuffer;
-			info += Localization()->UpdateSubLevels(nAdded);
+			info += Localization()->UpdateSubLevels(nAdded, nChanged, nSkipped);
 			info += L"\n";
+			info += info2;
 		}
 		// Reordered
 		else
@@ -193,7 +227,7 @@ bool ARBConfigLevel::Update(
 			info += L"\n";
 		}
 	}
-	bool bChanges = false;
+
 	if (0 < info.length())
 	{
 		bChanges = true;

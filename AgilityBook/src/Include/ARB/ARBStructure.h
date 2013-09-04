@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-03 DRC Added short name to div/level/event.
  * @li 2013-01-13 DRC Added new recurring title suffix style.
  * @li 2012-09-09 DRC Added 'titlePts','speedPts' to 'Placement'.
  * @li 2007-08-14 DRC Separated from ARBAgilityRecordBook.h
@@ -142,7 +143,9 @@
 #define ATTRIB_OTHERPTS_COUNT				L"Count"
 #define ATTRIB_OTHERPTS_DEFAULT				L"defValue"
 #define ATTRIB_DIVISION_NAME				L"Name"
+#define ATTRIB_DIVISION_SHORTNAME			L"ShortName"
 #define ATTRIB_LEVEL_NAME					L"Name"
+#define ATTRIB_LEVEL_SHORTNAME				L"ShortName"
 #define ATTRIB_TITLES_NAME					L"Name"
 #define ATTRIB_TITLES_LONGNAME				L"LongName"
 #define ATTRIB_TITLES_PREFIX				L"Prefix"
@@ -154,7 +157,9 @@
 #define ATTRIB_TITLES_MULTIPLE_STYLE		L"Style"
 #define ATTRIB_TITLES_MULTIPLE_SEP			L"Sep"
 #define ATTRIB_SUBLEVEL_NAME				L"Name"
+#define ATTRIB_SUBLEVEL_SHORTNAME			L"ShortName"
 #define ATTRIB_EVENT_NAME					L"Name"
+#define ATTRIB_EVENT_SHORTNAME				L"ShortName"
 #define ATTRIB_EVENT_HAS_TABLE				L"hasTable"
 #define ATTRIB_EVENT_HASPARTNER				L"hasPartner"
 #define ATTRIB_EVENT_HASSUBNAMES			L"hasSubNames"

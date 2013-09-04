@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-03 DRC Added short name.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-02 DRC Added subnames to events.
@@ -60,6 +61,7 @@ ARBConfigEventPtr ARBConfigEvent::New()
 
 ARBConfigEvent::ARBConfigEvent()
 	: m_Name()
+	, m_ShortName()
 	, m_Desc()
 	, m_bTable(false)
 	, m_bHasPartner(false)
@@ -72,6 +74,7 @@ ARBConfigEvent::ARBConfigEvent()
 
 ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 	: m_Name(rhs.m_Name)
+	, m_ShortName(rhs.m_ShortName)
 	, m_Desc(rhs.m_Desc)
 	, m_bTable(rhs.m_bTable)
 	, m_bHasPartner(rhs.m_bHasPartner)
@@ -99,6 +102,7 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 	if (this != &rhs)
 	{
 		m_Name = rhs.m_Name;
+		m_ShortName = rhs.m_ShortName;
 		m_Desc = rhs.m_Desc;
 		m_bTable = rhs.m_bTable;
 		m_bHasPartner = rhs.m_bHasPartner;
@@ -113,6 +117,7 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 {
 	return m_Name == rhs.m_Name
+		&& m_ShortName == rhs.m_ShortName
 		&& m_Desc == rhs.m_Desc
 		&& m_bTable == rhs.m_bTable
 		&& m_bHasPartner == rhs.m_bHasPartner
@@ -137,6 +142,7 @@ bool ARBConfigEvent::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME));
 		return false;
 	}
+	inTree->GetAttrib(ATTRIB_EVENT_SHORTNAME, m_ShortName);
 
 	// Introduced in file version 8.6.
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable))
@@ -192,6 +198,8 @@ bool ARBConfigEvent::Save(ElementNodePtr ioTree) const
 		ElementNodePtr desc = evtTree->AddElementNode(TREE_EVENT_DESC);
 		desc->SetValue(m_Desc);
 	}
+	if (!m_ShortName.empty())
+		evtTree->AddAttrib(ATTRIB_EVENT_SHORTNAME, m_ShortName);
 	// No need to write if not set.
 	if (m_bTable)
 		evtTree->AddAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable);

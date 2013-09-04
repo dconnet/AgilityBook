@@ -19,6 +19,7 @@
  * this.
  *
  * Revision History
+ * @li 2013-09-03 DRC Changed sub level updating.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-10-11 DRC Created
@@ -277,8 +278,9 @@ std::wstring CLocalization::UpdateTitlesReordered() const
 }
 
 
-std::wstring CLocalization::UpdateSubLevels(int nAdded) const
+std::wstring CLocalization::UpdateSubLevels(int nAdded, int nUpdated, int nSkipped) const
 {
+#pragma PRAGMA_TODO(Update string)
 	return StringUtil::stringW(wxString::Format(_("IDS_UPDATE_NEWSUBLEVELS"), nAdded));
 }
 

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-03 DRC Added short name.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -86,6 +87,18 @@ public:
 	 */
 	bool Save(ElementNodePtr ioTree) const;
 
+	/**
+	 * Update this configuration from inLevelNew.
+	 * @param indent Indentation level for generating messages.
+	 * @param inLevelNew Level to merge.
+	 * @param ioInfo Accumulated messages about changes that have happened.
+	 * @return Whether or not changes have occurred.
+	 */
+	bool Update(
+			int indent,
+			ARBConfigSubLevelPtr inLevelNew,
+			std::wstring& ioInfo);
+
 	/*
 	 * Getters/setters.
 	 */
@@ -97,9 +110,18 @@ public:
 	{
 		m_Name = inName;
 	}
+	std::wstring const& GetShortName() const
+	{
+		return m_ShortName;
+	}
+	void SetShortName(std::wstring const& inName)
+	{
+		m_ShortName = inName;
+	}
 
 private:
 	std::wstring m_Name;
+	std::wstring m_ShortName;
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-03 DRC Added short name.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -58,6 +59,7 @@ ARBConfigDivisionPtr ARBConfigDivision::New()
 
 ARBConfigDivision::ARBConfigDivision()
 	: m_Name()
+	, m_ShortName()
 	, m_Levels()
 {
 }
@@ -65,6 +67,7 @@ ARBConfigDivision::ARBConfigDivision()
 
 ARBConfigDivision::ARBConfigDivision(ARBConfigDivision const& rhs)
 	: m_Name(rhs.m_Name)
+	, m_ShortName(rhs.m_ShortName)
 	, m_Levels()
 {
 	rhs.m_Levels.Clone(m_Levels);
@@ -87,6 +90,7 @@ ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 	if (this != &rhs)
 	{
 		m_Name = rhs.m_Name;
+		m_ShortName = rhs.m_ShortName;
 		rhs.m_Levels.Clone(m_Levels);
 	}
 	return *this;
@@ -96,13 +100,15 @@ ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 bool ARBConfigDivision::operator==(ARBConfigDivision const& rhs) const
 {
 	return m_Name == rhs.m_Name
+		&& m_ShortName == rhs.m_ShortName
 		&& m_Levels == rhs.m_Levels;
 }
 
 
 void ARBConfigDivision::clear()
 {
-	m_Name.erase();
+	m_Name.clear();
+	m_ShortName.clear();
 	m_Levels.clear();
 }
 
@@ -122,6 +128,7 @@ bool ARBConfigDivision::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME));
 		return false;
 	}
+	inTree->GetAttrib(ATTRIB_DIVISION_SHORTNAME, m_ShortName);
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
 		ElementNodePtr element = inTree->GetElementNode(i);
@@ -151,6 +158,8 @@ bool ARBConfigDivision::Save(ElementNodePtr ioTree) const
 		return false;
 	ElementNodePtr division = ioTree->AddElementNode(TREE_DIVISION);
 	division->AddAttrib(ATTRIB_DIVISION_NAME, m_Name);
+	if (!m_ShortName.empty())
+		division->AddAttrib(ATTRIB_DIVISION_SHORTNAME, m_ShortName);
 	if (!m_Levels.Save(division))
 		return false;
 	return true;
@@ -169,6 +178,14 @@ bool ARBConfigDivision::Update(
 		indentName += L"   ";
 	indentBuffer = indentName + L"   ";
 	indentName += L"-";
+
+	bool bChanges = false;
+
+	if (GetShortName() != inDivNew->GetShortName())
+	{
+		bChanges = true;
+		SetShortName(inDivNew->GetShortName());
+	}
 
 	// If the order is different, we will fall into this...
 	if (GetLevels() != inDivNew->GetLevels())
@@ -219,7 +236,6 @@ bool ARBConfigDivision::Update(
 		}
 	}
 
-	bool bChanges = false;
 	if (0 < info.length())
 	{
 		bChanges = true;
