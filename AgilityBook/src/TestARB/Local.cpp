@@ -280,9 +280,15 @@ std::wstring CLocalization::UpdateTitlesReordered() const
 }
 
 
-std::wstring CLocalization::UpdateSubLevels(int nAdded) const
+std::wstring CLocalization::UpdateSubLevels(int nAdded, int nUpdated, int nSkipped) const
 {
+#pragma PRAGMA_TODO(Update sub level)
+#if defined(__WXWINDOWS__)
 	return StringUtil::stringW(wxString::Format(_("IDS_UPDATE_NEWSUBLEVELS"), nAdded));
+#else
+#pragma PRAGMA_TODO(Write localization)
+	return std::wstring();
+#endif
 }
 
 
