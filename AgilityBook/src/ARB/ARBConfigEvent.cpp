@@ -239,6 +239,11 @@ bool ARBConfigEvent::Update(
 	indentName += L"-";
 
 	bool bChanges = false;
+	if (GetShortName() != inEventNew->GetShortName())
+	{
+		bChanges = true;
+		SetShortName(inEventNew->GetShortName());
+	}
 	if (GetDesc() != inEventNew->GetDesc())
 	{
 		bChanges = true;
