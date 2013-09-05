@@ -2,7 +2,7 @@ Setting up the build environment
 ================================
 Additional software packages required (all free):
 - wxWidgets
-- gettext
+- gettext (MinGW)
 - poedit
 - wxFormBuilder (optional)
 - UnitTest++ [see note below]
@@ -17,8 +17,10 @@ Once the above software is unpacked, the directory structure should look like:
     - src/
     - Readme.txt
     - ...
-  - boost_<ver>/ [BOOST_ROOT points to this]
+  - <some_path>/boost_<ver>/ [BOOST_ROOT points to this]
       - ...(Boost structure)
+
+(note, comments/etc are very Windows-oriented since that's my main platform.)
 
 --------------------
 
@@ -57,9 +59,10 @@ To build for VC, see src/Projects/CompileWX.py
 
 --------------------
 
-gettext: http://gnuwin32.sourceforge.net/packages/gettext.htm
+gettext: [windows] http://sourceforge.net/projects/mingw/files/Installer
+         [mac] Part of MacPorts
 This is required in order to create the language stuff.
-Make sure the "\Program Files\GnuWin32\bin" is added to the PATH. (windows)
+Make sure "C:\MinGW\bin" is added to the PATH. (windows)
 When initially developing:
 - mkdir <lang>
 - cd <lang>
@@ -70,10 +73,14 @@ When initially developing:
    cp ../../locale/wxstd.po .
 This will generate an initial set of strings to translate.
 
+MinGW: After installing the Installation Manager (currently 0.6.0 beta),
+select the mingw32-gettext/bin package. Update. That's all. (Plus anything
+else you might want) Currently using Gettext v0.18.3.1.
+
 --------------------
 
 poedit: http://www.poedit.net
-Cross platform editor for modifying .po files. Currently using 1.5.4.
+Cross platform editor for modifying .po files. Currently using 1.5.7.
 (makes use of gettext)
 Use this to keep the catalog in sync with the source code.
 
@@ -108,7 +115,7 @@ All VC project files have been copied/renamed/modified such that:
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.52.0. There is no need
+ARB has been built and tested using Boost version 1.54.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr,
 weak_ptr and make_shared templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
@@ -124,21 +131,20 @@ Currently using Version 3.5.2519.0 (as of ARB v2.2.6).
 - Install votive [optional]
 - (1), run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
-- Or (2) Unzip binaries.zip into "C:\Tools\wix3'
+- Or (2) Unzip binaries.zip into "C:\Tools\wix3"
   (GenMSI.py assumes WiX is installed here, unless WIX env var is set)
   [I actually have c:\wix\wix<version>\ so I can test multiple versions]
 
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.2.
-This is imcompatible with earlier versions.
+Used to create source code documentation. AgilityBook.dox uses v1.8.3.1.
 [Install to default location]
 
 --------------------
 
 GraphViz: http://www.graphviz.org
-Used to create source code documentation. AgilityBook.dox uses v2.28.0
+Used to create source code documentation. AgilityBook.dox uses v2.32.0
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
@@ -199,6 +205,12 @@ Microsoft Visual Studio 2012 (VC11)
 
 Xcode
 =====
+Install MacPorts: http://www.macports.org
+sudo port -v selfupdate
+sudo port upgrade outdated
+initial: sudo port install autoconf
+         sudo port install subversion
+
 The xcode projects were used as follows:
 .../xcode3: Xcode 3.1 on OSX10.5
             AgilityBookCocoa.xcodeproj
@@ -213,7 +225,7 @@ OSX 10.8:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
-setenv BOOST_ROOT /Users/dconnet/src/boost_1_53_0
+setenv BOOST_ROOT /Users/dconnet/src/boost_1_54_0
 setenv WXBASE /Users/dconnet/wx
 setenv WXWIN /Users/dconnet/wx/trunk
 ====
