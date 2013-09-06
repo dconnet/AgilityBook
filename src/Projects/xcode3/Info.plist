@@ -40,16 +40,16 @@
 		</dict>
 	</array>
 	<key>CFBundleGetInfoString</key>
-	<string>${PRODUCT_NAME} Version ${CURRENT_PROJECT_VERSION}, Copyright (c) 2002-2012 David Connet. All Rights Reserved.</string>
+	<string>${PRODUCT_NAME} Version ${CURRENT_PROJECT_VERSION}, Copyright (c) 2002-2013 David Connet. All Rights Reserved.</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.agilityrecordbook.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleLongVersionString</key>
-	<string>${CURRENT_PROJECT_VERSION}, Copyright (c) 2002-2012 David Connet. All Rights Reserved.</string>
+	<string>${CURRENT_PROJECT_VERSION}, Copyright (c) 2002-2013 David Connet. All Rights Reserved.</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>LSRequiresCarbon</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2002-2012 David Connet. All Rights Reserved.</string>
+	<string>Copyright (c) 2002-2013 David Connet. All Rights Reserved.</string>
 </dict>
 </plist>
