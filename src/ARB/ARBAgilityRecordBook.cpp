@@ -17,8 +17,10 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2013-09-06 DRC File version 14.2
+ *                    Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
  * @li 2013-05-24 DRC File version 14.1
-                      Added 'Date' to 'Trial'.
+ *                    Added 'Date' to 'Trial'.
  * @li 2013-01-13 DRC File version 14.0
  *                    Added new recurring title suffix style.
  * @li 2012-07-30 DRC File version 13.2
@@ -110,7 +112,7 @@
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(14, 1);
+	static ARBVersion const curVersion(14, 2);
 	return curVersion;
 }
 
