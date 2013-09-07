@@ -156,6 +156,7 @@
 		E1EBDC33177FC2900074E0F7 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1EBDC27177FC2900074E0F7 /* Element.cpp */; };
 		E1EBDC36177FC2900074E0F7 /* StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1EBDC2B177FC2900074E0F7 /* StringUtil.cpp */; };
 		E1EBDC37177FC2900074E0F7 /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1EBDC2C177FC2900074E0F7 /* VersionNum.cpp */; };
+		E1F4165417DB97F800ED6070 /* TaskbarProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1F4165217DB97F800ED6070 /* TaskbarProgress.cpp */; };
 		E1FA1A10115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */; };
 		E1FA1B5811602EA300FAFD0F /* NamedColumns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */; };
 /* End PBXBuildFile section */
@@ -475,6 +476,8 @@
 		E1EBDC27177FC2900074E0F7 /* Element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Element.cpp; sourceTree = "<group>"; };
 		E1EBDC2B177FC2900074E0F7 /* StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtil.cpp; sourceTree = "<group>"; };
 		E1EBDC2C177FC2900074E0F7 /* VersionNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VersionNum.cpp; sourceTree = "<group>"; };
+		E1F4165217DB97F800ED6070 /* TaskbarProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TaskbarProgress.cpp; sourceTree = "<group>"; };
+		E1F4165317DB97F800ED6070 /* TaskbarProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskbarProgress.h; sourceTree = "<group>"; };
 		E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CalendarSiteUSDAA.cpp; sourceTree = "<group>"; };
 		E1FA1A0D115FF44200FAFD0F /* CalendarSiteUSDAA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarSiteUSDAA.h; sourceTree = "<group>"; };
 		E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NamedColumns.cpp; sourceTree = "<group>"; };
@@ -751,6 +754,8 @@
 				E15598A910000B1200B7074A /* SpreadSheet.h */,
 				E155989F10000B1200B7074A /* TabView.cpp */,
 				E15598A010000B1200B7074A /* TabView.h */,
+				E1F4165217DB97F800ED6070 /* TaskbarProgress.cpp */,
+				E1F4165317DB97F800ED6070 /* TaskbarProgress.h */,
 				E15598A110000B1200B7074A /* UpdateInfo.cpp */,
 				E15598A210000B1200B7074A /* UpdateInfo.h */,
 				E15598A310000B1200B7074A /* Validators.cpp */,
@@ -1146,6 +1151,7 @@
 				E1EBDC37177FC2900074E0F7 /* VersionNum.cpp in Sources */,
 				E14C9AF217A44D5B00D1007A /* ARBMisc.cpp in Sources */,
 				E17E69E617BFFE9A00CD28D8 /* SetupApp.cpp in Sources */,
+				E1F4165417DB97F800ED6070 /* TaskbarProgress.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
