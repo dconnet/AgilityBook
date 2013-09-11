@@ -93,7 +93,7 @@ wxString stringWX(std::string const& inStr)
 
 std::wstring stringW(wxString const& inStr)
 {
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	return inStr.ToStdWstring();
 #else
 	return std::wstring(inStr.wx_str());
@@ -362,7 +362,7 @@ bool ToCLong(std::wstring const& inStr, long& outValue, bool bRetry)
 {
 #if defined(__WXWINDOWS__) && !USE_CRT
 	wxString s(inStr.c_str());
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	bool bOk = s.ToCLong(&outValue);
 	// The above fails for "123-45" and returns 0. Before it returned 123.
 	// That's the behavior I'm relying on. (Needed when reading dates)
@@ -398,7 +398,7 @@ bool ToCULong(std::wstring const& inStr, unsigned long& outValue, bool bRetry)
 {
 #if defined(__WXWINDOWS__) && !USE_CRT
 	wxString s(inStr.c_str());
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	bool bOk = s.ToCULong(&outValue);
 	// The above fails for "123-45" and returns 0. Before it returned 123.
 	// That's the behavior I'm relying on. (Needed when reading dates)
@@ -433,7 +433,7 @@ unsigned long ToCULong(std::wstring const& inStr)
 bool ToCDouble(std::wstring const& inStr, double& outValue)
 {
 #if defined(__WXWINDOWS__) && !USE_CRT
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	// This will fail on "1.2-3". That's ok. The only time this is used
 	// is for parsing an actual number in Element.
 	return stringWX(inStr).ToCDouble(&outValue);

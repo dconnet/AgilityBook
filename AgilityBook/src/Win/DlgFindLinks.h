@@ -32,7 +32,7 @@ typedef std::tr1::shared_ptr<CDlgFindLinksData> CDlgFindLinksDataPtr;
 
 class CDlgFindLinks : public wxDialog
 {
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	friend int wxCALLBACK CompareLinks(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
 #else
 	friend int wxCALLBACK CompareLinks(long item1, long item2, long sortData);

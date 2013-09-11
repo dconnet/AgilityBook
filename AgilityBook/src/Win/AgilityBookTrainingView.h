@@ -51,7 +51,7 @@ class CAgilityBookTrainingView : public CAgilityBookBaseExtraView
 {
 	friend class CAgilityBookTrainingViewData;
 	friend class CFindTraining;
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	friend int wxCALLBACK CompareTraining(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
 #else
 	friend int wxCALLBACK CompareTraining(long item1, long item2, long sortData);

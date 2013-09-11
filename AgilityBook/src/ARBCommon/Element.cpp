@@ -338,7 +338,7 @@ static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffe
 
 static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 {
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	wxXmlAttribute* attribs = node->GetAttributes();
 #else
 	wxXmlProperty* attribs = node->GetProperties();
@@ -371,7 +371,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 	{
 		std::wstring name, value;
 		toWrite.GetNthAttrib(i, name, value);
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 		node->AddAttribute(name, value);
 #else
 		node->AddProperty(StringUtil::stringWX(name), StringUtil::stringWX(value));
@@ -1209,7 +1209,7 @@ bool ElementNode::LoadXML(
 	// wxLogChain will delete the log given to it.
 	wxLogChain chain(log);
 	chain.PassMessages(false);
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	chain.DisableTimestamp();
 #endif
 

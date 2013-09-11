@@ -202,7 +202,7 @@ bool CLanguageManager::SetLang(int langId)
 		delete m_locale;
 	m_locale = new wxLocale();
 	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT);
 #else
 	m_locale->Init(m_CurLang, wxLOCALE_CONV_ENCODING);

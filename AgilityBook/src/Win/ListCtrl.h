@@ -167,7 +167,7 @@ private:
 	long InsertItem(long index, const wxString& label);
 	long InsertItem(long index, int imageIndex);
 	long InsertItem(long index, const wxString& label, int imageIndex);
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	// 2.9.4 changed this to virtual
 	virtual void SetImageList(wxImageList* imageList, int which) {}
 #else
@@ -217,7 +217,7 @@ private:
 	// these are NOT virtual! Do not implement.
 	long InsertItem(wxListItem& info);
 	long InsertItem(long index, int imageIndex);
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	// 2.9.4 changed this to virtual
 	virtual void SetImageList(wxImageList* imageList, int which) {}
 #else

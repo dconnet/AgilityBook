@@ -49,7 +49,7 @@ private:
 
 class CAgilityBookRunsView : public CAgilityBookBaseExtraView
 {
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	friend int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
 #else
 	friend int wxCALLBACK CompareRuns(long item1, long item2, long sortData);
