@@ -77,12 +77,12 @@
 #include <wx/zipstrm.h>
 #endif
 
-// ARBv3 was developed against v2.9.4+ - anything earlier is not supported.
+// ARBv3 was developed against v3.0.0+ - anything earlier is not supported.
 // It makes use of features not available in earlier versions.
 #include <wx/version.h>
 #include "Platform/arbWarningPop.h"
 
-#if !wxCHECK_VERSION(2, 9, 5)
+#if !wxCHECK_VERSION(3, 0, 0)
 #error Unsupported wxWidget version
 #endif
 // Some sanity checking
@@ -126,7 +126,7 @@
  * Bind is only available on wx2.9+.
  * Rather than ifdef each instance of Connect, hide behind an evil macro.
  */
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 	#define BIND_OR_CONNECT(evt, cast, func) \
 		Bind(evt, &func, this)
 	#define UNBIND_OR_DISCONNECT(evt, cast, func) \

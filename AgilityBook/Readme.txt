@@ -25,34 +25,19 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 2.9.x (trunk).
+I'm currently using version 3.0.x (trunk).
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
 
-=== Changes to <trunk> [2.9.5]:
+=== Changes to <trunk> [3.0.0]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT (currently 0)
-- src/msw/bmpcbox.cpp
-====
- --- src/msw/bmpcbox.cpp (revision 74692)
- +++ src/msw/bmpcbox.cpp (working copy)
- @@ -175,7 +175,7 @@
-          if ( !objectClientData.empty() )
-              SetClientObject(i, objectClientData[i]);
-          else if ( !voidClientData.empty() )
- -            SetClientData(i, objectClientData[i]);
- +            SetClientData(i, voidClientData[i]);
-      }
 
-      // and make sure it has the same attributes as before
-==== Note, this diff is actually against a post-2.9.5 version in trunk
-==== Once the wx version is bumped, 2.9.5 will not be supported
-
-=== pre wx2.9.5: Not supported
+=== wx2.9.x: Not supported
 -  ARBv3 does not support pre 2.9. It uses new features.
 
 To build for VC, see src/Projects/CompileWX.py

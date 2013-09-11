@@ -205,7 +205,7 @@ int main(int argc, char** argv)
 
 #if defined(__WXWINDOWS__)
 	wxInitializer initializer(argc, argv);
-#if defined(__WXMSW__) && wxCHECK_VERSION(2, 9, 5)
+#if defined(__WXMSW__) && wxCHECK_VERSION(3, 0, 0)
 	// By default, the path directories are tweaked to remove debug/release.
 	// I assume my files are in the same location as the binary.
 	// Now I don't need to tweak the wx source!
