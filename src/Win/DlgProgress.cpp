@@ -111,7 +111,7 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	WXWidget handle = m_parentTop ? m_parentTop->GetHandle() : GetHandle();
 	if (wxTheApp && wxTheApp->GetTopWindow())
 		handle = wxTheApp->GetTopWindow()->GetHandle();
-#if !wxCHECK_VERSION(2, 9, 5)
+#if !wxCHECK_VERSION(3, 0, 0)
 	m_pTaskbar = CTaskbarProgress::Get((HWND)handle);
 #else
 	m_pTaskbar = CTaskbarProgress::Get(handle);

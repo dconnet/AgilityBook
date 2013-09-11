@@ -20,7 +20,7 @@
 #include "ARBCommon/ARBTypes.h"
 #include <vector>
 
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 #include <wx/html/htmprint.h>
 #include <wx/print.h>
 #else

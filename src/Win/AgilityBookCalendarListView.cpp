@@ -320,7 +320,7 @@ static struct
 	int nCol;
 } s_SortInfo;
 
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 int wxCALLBACK CompareCalendar(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 #else
 int wxCALLBACK CompareCalendar(long item1, long item2, long sortData)

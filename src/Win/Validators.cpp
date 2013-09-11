@@ -259,7 +259,7 @@ bool CGenericValidator::TransferFromWindow()
 		else if (m_pTime)
 		{
 			textVal.MakeUpper();
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 			return m_pTime->ParseFormat(textVal, s_TimeFormat);
 #else
 			return NULL != m_pTime->ParseFormat(textVal, s_TimeFormat);
@@ -534,7 +534,7 @@ bool CTrimValidator::Validate(wxWindow* parent)
 			textCtrl->ChangeValue(val);
 		else if (comboCtrl)
 		{
-#if wxCHECK_VERSION(2, 9, 5)
+#if wxCHECK_VERSION(3, 0, 0)
 			comboCtrl->ChangeValue(val);
 #else
 			comboCtrl->SetValue(val);
