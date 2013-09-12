@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2013-09-12 DRC Add /m option to msbuild (multiple processor build)
 # 2012-12-30 DRC Drop VC9.
 # 2012-07-25 DRC Only run version include update from here.
 # 2012-07-04 DRC Update to supported compilers (vc9+)
@@ -227,13 +228,13 @@ def main():
 					r'title VC10 Release Win32',
 					r'cd ..\VC10',
 					r'call "' + setvcvars + r'" /Release /x86 /xp',
-					r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
+					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
 			else:
 				cmds = (
 					r'title VC10 Release Win32',
 					r'cd ..\VC10',
 					r'call "' + setvcvars + r'" x86',
-					r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
+					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
 			RunCmds(cmds)
 			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
@@ -245,7 +246,7 @@ def main():
 					r'title VC10 Release x64',
 					r'cd ..\VC10',
 					r'call "' + setvcvars + r'" /Release /x64 /xp',
-					r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64',
+					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64',
 					r'color 07')
 			else:
 				envTarget = 'x86_amd64'
@@ -255,7 +256,7 @@ def main():
 					r'title VC10 Release x64',
 					r'cd ..\VC10',
 					r'call "' + setvcvars + r'" ' + envTarget,
-					r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
+					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
 			RunCmds(cmds)
 			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
@@ -277,7 +278,7 @@ def main():
 				r'title VC11 Release Win32',
 				r'cd ..\VC11',
 				r'call "' + setvcvars + r'" x86',
-				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
+				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
 			RunCmds(cmds)
 			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
@@ -291,7 +292,7 @@ def main():
 				r'title VC11 Release x64',
 				r'cd ..\VC11',
 				r'call "' + setvcvars + r'" ' + envTarget,
-				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
+				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
 			RunCmds(cmds)
 			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
