@@ -11,15 +11,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-12 DRC Remove use of ATL (can now use VC-express to compile)
  * @li 2013-08-23 DRC Created
  */
 
 #include "stdafx.h"
 #include "TaskbarProgress.h"
-
-#ifdef WIN32
-#include <atlcomcli.h>
-#endif
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -64,17 +61,18 @@ inline bool IsWin7OrBetter()
 class CTaskbarProgressImpl : public CTaskbarProgress
 {
 public:
-	CTaskbarProgressImpl(HWND hwnd) :
-		m_hWnd(hwnd)
+	CTaskbarProgressImpl(HWND hwnd)
+		: m_hWnd(hwnd)
+		, m_pTaskbarList(NULL)
 	{
 		if (IsWin7OrBetter())
-			m_pTaskbarList.CoCreateInstance(CLSID_TaskbarList);
+			::CoCreateInstance(CLSID_TaskbarList, NULL, CLSCTX_ALL, __uuidof(ITaskbarList3), (void**)&m_pTaskbarList);
 	}
 
 	virtual ~CTaskbarProgressImpl()
 	{
 		if (m_pTaskbarList)
-			m_pTaskbarList.Release();
+			m_pTaskbarList->Release();
 	}
 	
 	virtual bool SetProgressState(TBPFLAG tbpFlags)
@@ -86,7 +84,7 @@ public:
 		return (m_pTaskbarList && SUCCEEDED(m_pTaskbarList->SetProgressValue(m_hWnd, ullCompleted, ullTotal)));
 	}
 
-	CComPtr<ITaskbarList3> m_pTaskbarList;
+	ITaskbarList3* m_pTaskbarList;
 	HWND m_hWnd;
 };
 
