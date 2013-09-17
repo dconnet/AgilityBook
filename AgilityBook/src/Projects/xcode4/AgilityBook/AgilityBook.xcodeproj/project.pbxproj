@@ -120,10 +120,10 @@
 /* Begin PBXFileReference section */
 		E1105D36169017DF0067091C /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageManager.cpp; sourceTree = "<group>"; };
 		E1105D37169017DF0067091C /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
-		E14C22F617E1056000335C85 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
-		E14C22F717E1056000335C85 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
-		E14C22F817E1056000335C85 /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
-		E14C22F917E1056000335C85 /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../Build/Products/Debug/libLibTidyHtml.a; sourceTree = "<group>"; };
+		E14C22F617E1056000335C85 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/Products/Debug/libARB.a; sourceTree = "<group>"; };
+		E14C22F717E1056000335C85 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
+		E14C22F817E1056000335C85 /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
+		E14C22F917E1056000335C85 /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../build/Products/Debug/libLibTidyHtml.a; sourceTree = "<group>"; };
 		E164622717BFF255004F12AF /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetupApp.cpp; sourceTree = "<group>"; };
 		E164622817BFF255004F12AF /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupApp.h; sourceTree = "<group>"; };
 		E164622917BFF255004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
@@ -1004,8 +1004,7 @@
 				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../Build/Products/Debug\"",
-					"\"$(SRCROOT)/../build/AgilityBook/Build/Products/Debug\"",
+					"\"$(SRCROOT)/../build/Products/Debug\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1022,8 +1021,7 @@
 				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../Build/Products/Debug\"",
-					"\"$(SRCROOT)/../build/AgilityBook/Build/Products/Debug\"",
+					"\"$(SRCROOT)/../build/Products/Debug\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";

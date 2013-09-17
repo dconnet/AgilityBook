@@ -25,8 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E14C22FE17E1057600335C85 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
-		E14C230017E1057C00335C85 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
+		E14C22FE17E1057600335C85 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/Products/Debug/libARB.a; sourceTree = "<group>"; };
+		E14C230017E1057C00335C85 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E164622B17BFF295004F12AF /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SetupApp.cpp; path = ../../../../Win/SetupApp.cpp; sourceTree = "<group>"; };
 		E164622C17BFF295004F12AF /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupApp.h; path = ../../../../Win/SetupApp.h; sourceTree = "<group>"; };
 		E164622D17BFF295004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupAppARB.h; path = ../../../../Win/SetupAppARB.h; sourceTree = "<group>"; };
@@ -411,8 +411,7 @@
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../build/AgilityBook/Build/Products/Debug\"",
-					"\"$(SRCROOT)/../Build/Products/Debug\"",
+					"\"$(SRCROOT)/../build/Products/Debug\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -429,8 +428,7 @@
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../build/AgilityBook/Build/Products/Debug\"",
-					"\"$(SRCROOT)/../Build/Products/Debug\"",
+					"\"$(SRCROOT)/../build/Products/Debug\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
