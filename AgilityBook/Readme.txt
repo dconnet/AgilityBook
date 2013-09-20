@@ -201,8 +201,11 @@ The xcode projects were used as follows:
             AgilityBookCocoa.xcodeproj
                 trunk, cocoa, OSX10.5 sdk
 .../xcode4: Xcode 4.6 on OSX10.8
-            Recommended: Modify DerivedData to be relative to workspace
-            I set mine to 'build'. (under Preferences menu)
+            Recommended (so projects work right):
+            - Set DerivedData to Relative, 'build'
+              Advanced: Custom, Relative to Derived Data:
+              - 'Products'
+              - 'Intermediated'
             AgilityBook.xcworkspace
                 trunk, cocoa, OSX10.7 sdk
 
