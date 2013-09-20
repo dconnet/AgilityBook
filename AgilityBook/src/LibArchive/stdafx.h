@@ -24,5 +24,5 @@
 #ifdef USE_WXWIDGETS
 #include "Platform/SetupWX.h"
 #else
-#include "Platform/SetupWinRT.h"
+#include "Platform/SetupNoWX.h"
 #endif

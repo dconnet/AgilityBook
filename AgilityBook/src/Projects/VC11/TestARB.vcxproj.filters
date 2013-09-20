@@ -203,7 +203,7 @@
     <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\Platform\SetupWinRT.h">
+    <ClInclude Include="..\..\Include\Platform\SetupNoWX.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
   </ItemGroup>

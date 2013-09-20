@@ -11,7 +11,7 @@
 /**
  * @file
  *
- * @brief Precompiled header file when using WinRT.
+ * @brief Precompiled header file when not using wxWidgets.
  * @author David Connet
  *
  * Revision History
