@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E14C22FF17E1057600335C85 /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E14C22FE17E1057600335C85 /* libARB.a */; };
-		E14C230117E1057C00335C85 /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E14C230017E1057C00335C85 /* libARBCommon.a */; };
 		E164622E17BFF295004F12AF /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164622B17BFF295004F12AF /* SetupApp.cpp */; };
 		E164623117BFF2BE004F12AF /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164622F17BFF2BE004F12AF /* ImageManager.cpp */; };
 		E19B6603166C1640004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B6602166C1640004DEDA4 /* Cocoa.framework */; };
@@ -21,12 +19,12 @@
 		E19B6650166C18B3004DEDA4 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B664E166C18B3004DEDA4 /* Widgets.cpp */; };
 		E19B6653166C1928004DEDA4 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E19B6652166C1928004DEDA4 /* AgilityBook.icns */; };
 		E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */; };
+		E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612617ECB2CA0026B41B /* libARB.a */; };
+		E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612717ECB2CA0026B41B /* libARBCommon.a */; };
 		E1DCE95E17C17E8F00F79DFA /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E14C22FE17E1057600335C85 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/Products/Debug/libARB.a; sourceTree = "<group>"; };
-		E14C230017E1057C00335C85 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E164622B17BFF295004F12AF /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SetupApp.cpp; path = ../../../../Win/SetupApp.cpp; sourceTree = "<group>"; };
 		E164622C17BFF295004F12AF /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupApp.h; path = ../../../../Win/SetupApp.h; sourceTree = "<group>"; };
 		E164622D17BFF295004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupAppARB.h; path = ../../../../Win/SetupAppARB.h; sourceTree = "<group>"; };
@@ -56,6 +54,8 @@
 		E19B6652166C1928004DEDA4 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../AgilityBook/AgilityBook/AgilityBook.icns; sourceTree = "<group>"; };
 		E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
 		E1CAE57B16B5BFA200B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		E1CE612617ECB2CA0026B41B /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
+		E1CE612717ECB2CA0026B41B /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageManager.cpp; path = ../../../../Win/LanguageManager.cpp; sourceTree = "<group>"; };
 		E1DCE95D17C17E8F00F79DFA /* LanguageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageManager.h; path = ../../../../Win/LanguageManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,8 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E14C230117E1057C00335C85 /* libARBCommon.a in Frameworks */,
-				E14C22FF17E1057600335C85 /* libARB.a in Frameworks */,
+				E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */,
+				E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */,
 				E19B6603166C1640004DEDA4 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,8 +77,8 @@
 		E19B65F3166C1640004DEDA4 = {
 			isa = PBXGroup;
 			children = (
-				E14C230017E1057C00335C85 /* libARBCommon.a */,
-				E14C22FE17E1057600335C85 /* libARB.a */,
+				E1CE612617ECB2CA0026B41B /* libARB.a */,
+				E1CE612717ECB2CA0026B41B /* libARBCommon.a */,
 				E19B6608166C1640004DEDA4 /* ARBHelp */,
 				E19B6601166C1640004DEDA4 /* Frameworks */,
 				E19B65FF166C1640004DEDA4 /* Products */,
@@ -409,10 +409,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../build/Products/Debug\"",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -426,10 +422,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../build/Products/Debug\"",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

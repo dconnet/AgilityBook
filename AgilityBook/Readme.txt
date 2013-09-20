@@ -203,9 +203,7 @@ The xcode projects were used as follows:
 .../xcode4: Xcode 4.6 on OSX10.8
             Recommended (so projects work right):
             - Set DerivedData to Relative, 'build'
-              Advanced: Custom, Relative to Derived Data:
-              - 'Products'
-              - 'Intermediated'
+              - Advanced: Unique
             AgilityBook.xcworkspace
                 trunk, cocoa, OSX10.7 sdk
 
