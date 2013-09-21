@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		E1105D38169017DF0067091C /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1105D36169017DF0067091C /* ImageManager.cpp */; };
 		E164622A17BFF255004F12AF /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164622717BFF255004F12AF /* SetupApp.cpp */; };
+		E165930917ED2E1D00B86062 /* AgilityBookRunsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */; };
+		E165931017ED2E3000B86062 /* AgilityBookTreeListData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930A17ED2E3000B86062 /* AgilityBookTreeListData.cpp */; };
+		E165931117ED2E3000B86062 /* AgilityBookTreeListModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930C17ED2E3000B86062 /* AgilityBookTreeListModel.cpp */; };
+		E165931217ED2E3000B86062 /* AgilityBookTreeListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930E17ED2E3000B86062 /* AgilityBookTreeListView.cpp */; };
 		E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B63BF166C096E004DEDA4 /* Cocoa.framework */; };
 		E19B64EE166C09B9004DEDA4 /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */; };
 		E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */; };
@@ -21,7 +25,6 @@
 		E19B64F7166C09B9004DEDA4 /* AgilityBookPointsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63EE166C09B9004DEDA4 /* AgilityBookPointsView.cpp */; };
 		E19B64F8166C09B9004DEDA4 /* AgilityBookTrainingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F0166C09B9004DEDA4 /* AgilityBookTrainingView.cpp */; };
 		E19B64F9166C09B9004DEDA4 /* AgilityBookTreeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F2166C09B9004DEDA4 /* AgilityBookTreeData.cpp */; };
-		E19B64FA166C09B9004DEDA4 /* AgilityBookTreeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F4166C09B9004DEDA4 /* AgilityBookTreeModel.cpp */; };
 		E19B64FB166C09B9004DEDA4 /* AgilityBookTreeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F6166C09B9004DEDA4 /* AgilityBookTreeView.cpp */; };
 		E19B64FC166C09B9004DEDA4 /* CalendarSites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F8166C09B9004DEDA4 /* CalendarSites.cpp */; };
 		E19B64FD166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63FA166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp */; };
@@ -123,6 +126,14 @@
 		E164622717BFF255004F12AF /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetupApp.cpp; sourceTree = "<group>"; };
 		E164622817BFF255004F12AF /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupApp.h; sourceTree = "<group>"; };
 		E164622917BFF255004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
+		E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookRunsView.cpp; sourceTree = "<group>"; };
+		E165930817ED2E1D00B86062 /* AgilityBookRunsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookRunsView.h; sourceTree = "<group>"; };
+		E165930A17ED2E3000B86062 /* AgilityBookTreeListData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeListData.cpp; sourceTree = "<group>"; };
+		E165930B17ED2E3000B86062 /* AgilityBookTreeListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeListData.h; sourceTree = "<group>"; };
+		E165930C17ED2E3000B86062 /* AgilityBookTreeListModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeListModel.cpp; sourceTree = "<group>"; };
+		E165930D17ED2E3000B86062 /* AgilityBookTreeListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeListModel.h; sourceTree = "<group>"; };
+		E165930E17ED2E3000B86062 /* AgilityBookTreeListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeListView.cpp; sourceTree = "<group>"; };
+		E165930F17ED2E3000B86062 /* AgilityBookTreeListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeListView.h; sourceTree = "<group>"; };
 		E19B63BB166C096E004DEDA4 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B63BF166C096E004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E19B63C2166C096E004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -152,8 +163,6 @@
 		E19B63F1166C09B9004DEDA4 /* AgilityBookTrainingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTrainingView.h; sourceTree = "<group>"; };
 		E19B63F2166C09B9004DEDA4 /* AgilityBookTreeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeData.cpp; sourceTree = "<group>"; };
 		E19B63F3166C09B9004DEDA4 /* AgilityBookTreeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeData.h; sourceTree = "<group>"; };
-		E19B63F4166C09B9004DEDA4 /* AgilityBookTreeModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeModel.cpp; sourceTree = "<group>"; };
-		E19B63F5166C09B9004DEDA4 /* AgilityBookTreeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeModel.h; sourceTree = "<group>"; };
 		E19B63F6166C09B9004DEDA4 /* AgilityBookTreeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeView.cpp; sourceTree = "<group>"; };
 		E19B63F7166C09B9004DEDA4 /* AgilityBookTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeView.h; sourceTree = "<group>"; };
 		E19B63F8166C09B9004DEDA4 /* CalendarSites.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CalendarSites.cpp; sourceTree = "<group>"; };
@@ -447,12 +456,18 @@
 				E19B63ED166C09B9004DEDA4 /* AgilityBookPanels.h */,
 				E19B63EE166C09B9004DEDA4 /* AgilityBookPointsView.cpp */,
 				E19B63EF166C09B9004DEDA4 /* AgilityBookPointsView.h */,
+				E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */,
+				E165930817ED2E1D00B86062 /* AgilityBookRunsView.h */,
 				E19B63F0166C09B9004DEDA4 /* AgilityBookTrainingView.cpp */,
 				E19B63F1166C09B9004DEDA4 /* AgilityBookTrainingView.h */,
 				E19B63F2166C09B9004DEDA4 /* AgilityBookTreeData.cpp */,
 				E19B63F3166C09B9004DEDA4 /* AgilityBookTreeData.h */,
-				E19B63F4166C09B9004DEDA4 /* AgilityBookTreeModel.cpp */,
-				E19B63F5166C09B9004DEDA4 /* AgilityBookTreeModel.h */,
+				E165930A17ED2E3000B86062 /* AgilityBookTreeListData.cpp */,
+				E165930B17ED2E3000B86062 /* AgilityBookTreeListData.h */,
+				E165930C17ED2E3000B86062 /* AgilityBookTreeListModel.cpp */,
+				E165930D17ED2E3000B86062 /* AgilityBookTreeListModel.h */,
+				E165930E17ED2E3000B86062 /* AgilityBookTreeListView.cpp */,
+				E165930F17ED2E3000B86062 /* AgilityBookTreeListView.h */,
 				E19B63F6166C09B9004DEDA4 /* AgilityBookTreeView.cpp */,
 				E19B63F7166C09B9004DEDA4 /* AgilityBookTreeView.h */,
 				E19B63F8166C09B9004DEDA4 /* CalendarSites.cpp */,
@@ -754,7 +769,6 @@
 				E19B64F7166C09B9004DEDA4 /* AgilityBookPointsView.cpp in Sources */,
 				E19B64F8166C09B9004DEDA4 /* AgilityBookTrainingView.cpp in Sources */,
 				E19B64F9166C09B9004DEDA4 /* AgilityBookTreeData.cpp in Sources */,
-				E19B64FA166C09B9004DEDA4 /* AgilityBookTreeModel.cpp in Sources */,
 				E19B64FB166C09B9004DEDA4 /* AgilityBookTreeView.cpp in Sources */,
 				E19B64FC166C09B9004DEDA4 /* CalendarSites.cpp in Sources */,
 				E19B64FD166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp in Sources */,
@@ -845,6 +859,10 @@
 				E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */,
 				E164622A17BFF255004F12AF /* SetupApp.cpp in Sources */,
 				E1BAB4D817C80B260029A596 /* TaskbarProgress.cpp in Sources */,
+				E165930917ED2E1D00B86062 /* AgilityBookRunsView.cpp in Sources */,
+				E165931017ED2E3000B86062 /* AgilityBookTreeListData.cpp in Sources */,
+				E165931117ED2E3000B86062 /* AgilityBookTreeListModel.cpp in Sources */,
+				E165931217ED2E3000B86062 /* AgilityBookTreeListView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
