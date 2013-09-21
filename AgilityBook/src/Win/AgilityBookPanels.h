@@ -59,6 +59,14 @@ public:
 			wxDocument* doc,
 			long flags,
 			std::vector<CAgilityBookBaseExtraView*> const& inViews);
+#if !USE_TREELIST
+	~CAgilityBookPanelRuns();
+
+private:
+	bool m_bInit;
+	wxSplitterWindow* m_splitter;
+	void SplitterOnIdle(wxIdleEvent&);
+#endif
 };
 
 

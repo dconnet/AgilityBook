@@ -11,8 +11,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-04-22 DRC Converted tree+list into single control.
- * @li 2012-09-29 DRC Strip the Runs View.
  * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
  * @li 2012-03-03 DRC Fixed new unearned titles from showing up in view.
  * @li 2011-10-14 DRC Modify how reorder dialog is invoked.
@@ -50,20 +48,24 @@
  */
 
 #include "stdafx.h"
+#if !USE_TREELIST
 #include "AgilityBookTreeData.h"
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookTreeModel.h"
 #include "AgilityBookTreeView.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
+#include "DlgDog.h"
+#include "DlgOptions.h"
+#include "DlgReorder.h"
+#include "DlgRun.h"
+#include "DlgTitle.h"
+#include "DlgTrial.h"
 #include "FilterOptions.h"
 #include "Globals.h"
-#include "IconList.h"
-#include "ImageManager.h"
 #include "PointsData.h"
 #include "Print.h"
 #include "TabView.h"
@@ -78,68 +80,403 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+static bool EditDog(
+		CAgilityBookTreeDataDog* pDogData,
+		CAgilityBookTreeView* pTree,
+		bool* bTreeSelectionSet,
+		int nPage = 0)
+{
+	bool bAdd = false;
+	ARBDogPtr pDog;
+	if (pDogData)
+		pDog = pDogData->GetDog();
+	if (!pDog)
+	{
+		bAdd = true;
+		pDog = ARBDogPtr(ARBDog::New());
+	}
+	bool bOk = false;
+	CDlgDog dlg(pTree->GetDocument(), pDog, wxGetApp().GetTopWindow(), nPage);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		pDogData = NULL; // Tree may have reloaded.
+		bOk = true;
+		if (bAdd)
+		{
+			if (!pTree->GetDocument()->Book().GetDogs().AddDog(pDog))
+			{
+				bOk = false;
+			}
+			else
+			{
+				wxTreeItemId hItem = pTree->InsertDog(pDog);
+				pTree->SelectItem(hItem);
+				if (bTreeSelectionSet)
+					*bTreeSelectionSet = true;
+			}
+		}
+		// No need to refresh item here - CDlgDog::OnOk will call the document
+		// ResetVisibility which causes a tree load. Note: If the dog dlg gets
+		// more intelligent (reset is only needed if changing titles/etc), then
+		// we may need this. The problem is that pDogData may be deleted.
+		// Need a way to track that pDogData is gone...
+		//else
+		//	pTree->RefreshItem(pDogData->GetId());
+	}
+	return bOk;
+}
+
+
+static bool EditTrial(
+		CAgilityBookTreeDataDog* pDogData,
+		CAgilityBookTreeDataTrial* pTrialData,
+		CAgilityBookTreeView* pTree,
+		bool* bTreeSelectionSet)
+{
+	assert(pDogData && pDogData->GetDog());
+	bool bAdd = false;
+	ARBDogPtr pDog = pDogData->GetDog();
+	ARBDogTrialPtr pTrial;
+	if (pTrialData)
+		pTrial = pTrialData->GetTrial();
+	if (!pTrial)
+	{
+		bAdd = true;
+		pTrial = ARBDogTrialPtr(ARBDogTrial::New());
+	}
+	bool bOk = false;
+	CDlgTrial dlg(pTree->GetDocument(), pTrial, wxGetApp().GetTopWindow());
+	if (wxID_OK == dlg.ShowModal())
+	{
+		bOk = true;
+		std::vector<CVenueFilter> venues;
+		CFilterOptions::Options().GetFilterVenue(venues);
+		if (bAdd)
+		{
+			if (!pDog->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst()))
+			{
+				bOk = false;
+				wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+			}
+			else
+			{
+				pTree->GetDocument()->ResetVisibility(venues, pTrial);
+				// Even though we will reset the tree, go ahead and add/select
+				// the item into the tree here. That will make sure when the
+				// tree is reloaded, that the new item is selected.
+				wxTreeItemId hItem = pTree->InsertTrial(pTrial, pDogData->GetId());
+				if (!hItem.IsOk())
+				{
+					wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+				}
+				else
+				{
+					pTree->SelectItem(hItem);
+					if (bTreeSelectionSet)
+						*bTreeSelectionSet = true;
+				}
+			}
+		}
+		else
+		{
+			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			pTree->GetDocument()->ResetVisibility(venues, pTrial);
+			pTree->RefreshItem(pTrialData->GetId());
+			if (dlg.RunsWereDeleted())
+			{
+				if (bTreeSelectionSet)
+					*bTreeSelectionSet = true;
+			}
+		}
+		// We have to update the tree even when we add above as it may have
+		// caused the trial to be reordered.
+		if (bOk)
+		{
+			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+		}
+	}
+	return bOk;
+}
+
+
+static bool EditRun(
+		CAgilityBookTreeDataDog* pDogData,
+		CAgilityBookTreeDataTrial* pTrialData,
+		CAgilityBookTreeDataRun* pRunData,
+		CAgilityBookTreeView* pTree,
+		bool* bTreeSelectionSet)
+{
+	assert(pDogData && pDogData->GetDog());
+	assert(pTrialData && pTrialData->GetTrial());
+	bool bOk = false;
+	bool bAdd = false;
+	ARBDogRunPtr pRun;
+	if (pRunData)
+		pRun = pRunData->GetRun();
+	if (!pRun)
+	{
+		ARBDogClubPtr pClub;
+		if (!pTrialData->GetTrial()->GetClubs().GetPrimaryClub(&pClub))
+		{
+			wxMessageBox(_("IDS_NEED_CLUB"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			return false;
+		}
+		if (!pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
+		{
+			wxMessageBox(wxString::Format(_("IDS_VENUE_CONFIG_MISSING"), pClub->GetVenue().c_str()),
+				wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+			return false;
+		}
+		bAdd = true;
+		pRun = ARBDogRunPtr(ARBDogRun::New());
+		ARBDate date = pTrialData->GetTrial()->GetEndDate();
+		// If this is the first run, the date won't be set.
+		if (!date.IsValid())
+			date.SetToday();
+		pRun->SetDate(date);
+	}
+	CDlgRun dlg(pTree->GetDocument(), pTrialData->GetDog(), pTrialData->GetTrial(), pRun);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		bOk = true;
+		std::vector<CVenueFilter> venues;
+		CFilterOptions::Options().GetFilterVenue(venues);
+		if (bAdd)
+		{
+			if (!pTrialData->GetTrial()->GetRuns().AddRun(pRun))
+			{
+				bOk = false;
+				wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+			}
+			else
+			{
+				// When adding a new trial, we need to reset the multiQs.
+				// The edit dialog does it in OnOK, but we don't add the run
+				// until after the dialog is done.
+				pTrialData->GetTrial()->SetMultiQs(pTree->GetDocument()->Book().GetConfig());
+				pTrialData->GetTrial()->GetRuns().sort();
+				pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+				pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pRun);
+				// Even though we will reset the tree, go ahead and add/select
+				// the item into the tree here. That will make sure when the
+				// tree is reloaded, that the new item is selected.
+				wxTreeItemId hItem = pTree->InsertRun(pTrialData->GetTrial(), pRun, pTrialData->GetId());
+				if (!hItem.IsOk())
+				{
+					if (CFilterOptions::Options().IsFilterEnabled())
+						wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+				}
+				else
+				{
+					pTree->SelectItem(hItem);
+					if (bTreeSelectionSet)
+						*bTreeSelectionSet = true;
+				}
+			}
+		}
+		else
+		{
+			pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pRun);
+		}
+		// We have to update the tree even when we add above as it may have
+		// caused the trial to be reordered.
+		if (bOk)
+		{
+			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+		}
+	}
+	return bOk;
+}
+
 ////////////////////////////////////////////////////////////////////////////
 
-CAgilityBookTreeData::CAgilityBookTreeData(CAgilityBookTreeModel* pModel)
-	: m_pModel(pModel)
-	, m_icon()
-	, m_parent(NULL)
+bool CAgilityBookTreeData::CanPaste() const
 {
+	bool bEnable = false;
+	if (CClipboardDataReader::IsFormatAvailable(eFormatDog))
+		bEnable = true;
+	else if (GetTrial()
+	&& CClipboardDataReader::IsFormatAvailable(eFormatRun))
+		bEnable = true;
+	else if (GetDog()
+	&& CClipboardDataReader::IsFormatAvailable(eFormatTrial))
+		bEnable = true;
+	return bEnable;
 }
 
 
-CAgilityBookTreeData::~CAgilityBookTreeData()
+bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 {
-	for (std::vector<CAgilityBookTreeData*>::iterator i = m_children.begin();
-		i != m_children.end();
-		++i)
+	bool bLoaded = false;
+	wxBusyCursor wait;
+	ElementNodePtr tree(ElementNode::New());
+	CClipboardDataReader clpData;
+	ARBDogTrialPtr pTrial = GetTrial();
+	ARBDogPtr pDog = GetDog();
+	if (m_pTree->PasteDog(bLoaded))
 	{
-		delete *i;
+		// Done.
 	}
-	m_children.clear();
-}
-
-
-unsigned int CAgilityBookTreeData::GetChildren(
-		wxDataViewItemArray& array) const
-{
-	for (std::vector<CAgilityBookTreeData*>::const_iterator i = m_children.begin();
-		i != m_children.end();
-		++i)
+	else if (pTrial
+	&& clpData.GetData(eFormatRun, tree))
 	{
-		array.Add(wxDataViewItem(*i));
+		if (CLIPDATA == tree->GetName())
+		{
+			CErrorCallback err;
+			std::vector<ARBDogRunPtr> runs;
+			for (int iRun = 0; iRun < tree->GetElementCount(); ++iRun)
+			{
+				ElementNodePtr element = tree->GetElementNode(iRun);
+				if (!element)
+					continue;
+				ARBDogRunPtr pRun(ARBDogRun::New());
+				if (pRun)
+				{
+					if (pRun->Load(m_pTree->GetDocument()->Book().GetConfig(), pTrial->GetClubs(), element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+						runs.push_back(pRun);
+				}
+			}
+			if (0 < runs.size())
+			{
+				size_t nFailed = 0;
+				bLoaded = true;
+				std::vector<CVenueFilter> venues;
+				CFilterOptions::Options().GetFilterVenue(venues);
+				for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+				{
+					ARBDogRunPtr pRun = *iter;
+					if (!pTrial->GetRuns().AddRun(pRun))
+					{
+						++nFailed;
+						wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+					}
+					else
+						m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
+				}
+				if (runs.size() == nFailed)
+					bLoaded = false;
+				else
+				{
+					pTrial->GetRuns().sort();
+					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					m_pTree->Freeze();
+					wxTreeItemId hItem;
+					for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+					{
+						ARBDogRunPtr pRun = *iter;
+						hItem = m_pTree->InsertRun(pTrial, pRun, GetDataTrial()->GetId());
+					}
+					m_pTree->Thaw();
+					m_pTree->Refresh();
+					bool bOk = true;
+					if (!hItem.IsOk())
+					{
+						bOk = false;
+						if (CFilterOptions::Options().IsFilterEnabled())
+							wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+					}
+					else
+					{
+						m_pTree->SelectItem(hItem);
+						if (bTreeSelectionSet)
+							*bTreeSelectionSet = true;
+					}
+					if (bOk)
+					{
+						pTrial->SetMultiQs(m_pTree->GetDocument()->Book().GetConfig());
+						CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+						m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+					}
+				}
+			}
+			if (!bLoaded && 0 < err.m_ErrMsg.str().length())
+				wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+		}
 	}
-	return static_cast<unsigned int>(m_children.size());
-}
-
-
-void CAgilityBookTreeData::Append(CAgilityBookTreeData* child)
-{
-	child->m_parent = this;
-	m_children.push_back(child);
-}
-
-
-void CAgilityBookTreeData::Remove(CAgilityBookTreeData* child)
-{
-	std::vector<CAgilityBookTreeData*>::iterator i = std::find(m_children.begin(), m_children.end(), child);
-	if (i != m_children.end())
+	else if (pDog
+	&& clpData.GetData(eFormatTrial, tree))
 	{
-		CAgilityBookTreeData* node = *i;
-		m_children.erase(i);
-		delete node;
+		if (CLIPDATA == tree->GetName())
+		{
+			ARBDogTrialPtr pNewTrial(ARBDogTrial::New());
+			if (pNewTrial)
+			{
+				CErrorCallback err;
+				if (pNewTrial->Load(m_pTree->GetDocument()->Book().GetConfig(), tree->GetNthElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				{
+					bLoaded = true;
+					std::vector<CVenueFilter> venues;
+					CFilterOptions::Options().GetFilterVenue(venues);
+					if (!pDog->GetTrials().AddTrial(pNewTrial, !CAgilityBookOptions::GetNewestDatesFirst()))
+					{
+						bLoaded = false;
+						wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+					}
+					else
+					{
+						m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
+						m_pTree->Freeze();
+						wxTreeItemId hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetId());
+						m_pTree->Thaw();
+						m_pTree->Refresh();
+						bool bOk = true;
+						if (!hItem.IsOk())
+						{
+							bOk = false;
+							wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+						}
+						else
+						{
+							m_pTree->SelectItem(hItem);
+							if (bTreeSelectionSet)
+								*bTreeSelectionSet = true;
+						}
+						if (bOk)
+						{
+							pNewTrial->SetMultiQs(m_pTree->GetDocument()->Book().GetConfig());
+							CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+							m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+						}
+					}
+				}
+				else if (0 < err.m_ErrMsg.str().length())
+					wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			}
+		}
 	}
+	return bLoaded;
+}
+
+
+std::vector<long> const& CAgilityBookTreeData::GetDogColumns() const
+{
+	return m_pTree->m_Columns[0];
+}
+
+
+std::vector<long> const& CAgilityBookTreeData::GetTrialColumns() const
+{
+	return m_pTree->m_Columns[1];
+}
+
+
+std::vector<long> const& CAgilityBookTreeData::GetRunColumns() const
+{
+	return m_pTree->m_Columns[2];
 }
 
 ////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(
-		CAgilityBookTreeModel* pModel,
-		ARBDogPtr dog)
-	: CAgilityBookTreeData(pModel)
-	, m_pDog(dog)
+		CAgilityBookTreeView* pTree,
+		ARBDogPtr pDog)
+	: CAgilityBookTreeData(pTree)
+	, m_pDog(pDog)
 {
-	m_icon = CImageManager::Get()->Dog();
 }
 
 
@@ -148,201 +485,575 @@ CAgilityBookTreeDataDog::~CAgilityBookTreeDataDog()
 }
 
 
-wxVariant CAgilityBookTreeDataDog::GetColumn(
-		ARBConfig const& config,
-		std::vector<long> const& columns,
-		unsigned int col,
-		bool bInCompare) const
+bool CAgilityBookTreeDataDog::OnUpdateCmd(int id, bool& ioEnable) const
 {
-	wxVariant variant;
-	if (0 == col)
+	bool bHandled = true;
+	bool bEnable = false;
+	switch (id)
 	{
-		std::wostringstream str;
-		for (size_t idx = 0; idx < columns.size(); ++idx)
+	default:
+		bHandled = false;
+		break;
+	case wxID_DUPLICATE:
+	case wxID_CUT:
+	case wxID_COPY:
+		bEnable = true;
+		break;
+	case wxID_PASTE:
+		bEnable = CanPaste();
+		break;
+	case ID_AGILITY_EDIT_DOG:
+	case ID_AGILITY_NEW_TITLE:
+	case ID_AGILITY_NEW_TRIAL:
+	case ID_AGILITY_DELETE_DOG:
+		bEnable = true;
+		break;
+	case ID_REORDER:
+		if (m_pTree && 1 < m_pTree->GetDocument()->Book().GetDogs().size())
+			bEnable = true;
+		break;
+	case ID_EXPAND:
+		if (GetId().IsOk() && m_pTree && m_pTree->ItemHasChildren(GetId()))
 		{
-			if (0 < idx)
-				str << L" ";
-			switch (columns[idx])
+			if (!m_pTree->IsExpanded(GetId()))
+				bEnable = true;
+		}
+		break;
+	case ID_COLLAPSE:
+		if (GetId().IsOk() && m_pTree && m_pTree->ItemHasChildren(GetId()))
+		{
+			if (m_pTree->IsExpanded(GetId()))
+				bEnable = true;
+		}
+		break;
+	case ID_EXPAND_ALL:
+	case ID_COLLAPSE_ALL:
+		if (GetId().IsOk() && m_pTree && m_pTree->ItemHasChildren(GetId()))
+			bEnable = true;
+		break;
+	}
+	ioEnable = bEnable;
+	return bHandled;
+}
+
+
+bool CAgilityBookTreeDataDog::OnCmd(
+		int id,
+		bool& bModified,
+		bool* bTreeSelectionSet)
+{
+	static bool bPrompt = true;
+	bool bHandled = true;
+	switch (id)
+	{
+	default:
+		bHandled = false;
+		break;
+	case wxID_DUPLICATE:
+		if (GetDog())
+		{
+			ARBDogPtr pDog = GetDog()->Clone();
+			m_pTree->GetDocument()->Book().GetDogs().AddDog(pDog);
+			bModified = true;
+			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
+			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+		}
+		break;
+	case wxID_CUT:
+		OnCmd(wxID_COPY, bModified, bTreeSelectionSet);
+		bPrompt = false;
+		OnCmd(ID_AGILITY_DELETE_DOG, bModified, bTreeSelectionSet);
+		bPrompt = true;
+		bModified = true;
+		break;
+	case wxID_COPY:
+		{
+			CClipboardDataWriter clpData;
+			if (clpData.isOkay())
 			{
-			case IO_TREE_DOG_REGNAME:
-				str << m_pDog->GetRegisteredName();
-				break;
-			case IO_TREE_DOG_CALLNAME:
-				str << m_pDog->GetCallName();
-				break;
-			case IO_TREE_DOG_BREED:
-				str << m_pDog->GetBreed();
-				break;
-			case IO_TREE_DOG_DOB:
-				if (m_pDog->GetDOB().IsValid())
-					str << m_pDog->GetDOB().GetString();
-				break;
-			case IO_TREE_DOG_AGE:
-				if (m_pDog->GetDOB().IsValid())
-				{
-					wxDateTime dob;
-					m_pDog->GetDOB().GetDate(dob);
-					wxDateTime current = wxDateTime::Now();
-					if (m_pDog->GetDeceased().IsValid())
-						m_pDog->GetDeceased().GetDate(current);
-					wxTimeSpan age = current - dob;
-					str << StringUtil::stringW(wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays()/365.0, 1).c_str()));
-				}
-				break;
+				wxBusyCursor wait;
+				ElementNodePtr tree(ElementNode::New(CLIPDATA));
+				GetDog()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
+				clpData.AddData(eFormatDog, tree);
+				clpData.AddData(m_pTree->GetPrintLine(GetId()));
+				clpData.CommitData();
 			}
 		}
-		variant = str.str();
+		break;
+	case wxID_PASTE:
+		if (DoPaste(bTreeSelectionSet))
+			bModified = true;
+		break;
+	case ID_AGILITY_EDIT_DOG:
+		EditDog(this, m_pTree, bTreeSelectionSet);
+		break;
+	case ID_AGILITY_NEW_TRIAL:
+		if (EditTrial(this, NULL, m_pTree, bTreeSelectionSet))
+			bModified = true;
+		break;
+	case ID_AGILITY_NEW_TITLE:
+		assert(GetDog());
+		m_pTree->GetDocument()->AddTitle(GetDog());
+		break;
+	case ID_AGILITY_DELETE_DOG:
+		if (!bPrompt
+		|| wxYES == wxMessageBox(_("IDS_DELETE_DOG_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
+		{
+			if (GetId().IsOk() && m_pTree->GetDocument()->Book().GetDogs().DeleteDog(m_pDog))
+			{
+				CAgilityBookOptions::CleanLastItems(m_pDog->GetCallName());
+				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
+				// Delete() will cause this object to be deleted.
+				m_pTree->Delete(GetId());
+				bModified = true;
+				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+				pDoc->UpdateAllViews(NULL, &hint);
+			}
+		}
+		break;
+
+	case ID_REORDER:
+		if (m_pTree)
+		{
+			CDlgReorder dlg(m_pTree->GetDocument(), &(m_pTree->GetDocument()->Book().GetDogs()));
+			dlg.ShowModal();
+		}
+		break;
+
+	case ID_EXPAND:
+		if (GetId().IsOk())
+		{
+			m_pTree->Expand(GetId());
+			m_pTree->EnsureVisible(GetId());
+		}
+		break;
+
+	case ID_EXPAND_ALL:
+		if (GetId().IsOk())
+		{
+			m_pTree->ExpandAllChildren(GetId());
+			m_pTree->EnsureVisible(GetId());
+		}
+		break;
+
+	case ID_COLLAPSE:
+		if (GetId().IsOk())
+		{
+			m_pTree->Collapse(GetId());
+			m_pTree->EnsureVisible(GetId());
+		}
+		break;
+
+	case ID_COLLAPSE_ALL:
+		if (GetId().IsOk())
+		{
+			m_pTree->CollapseAllChildren(GetId());
+			m_pTree->EnsureVisible(GetId());
+		}
+		break;
 	}
-	return variant;
+	return bHandled;
+}
+
+
+std::wstring CAgilityBookTreeDataDog::OnNeedText() const
+{
+	std::wostringstream str;
+	for (size_t idx = 0; idx < GetDogColumns().size(); ++idx)
+	{
+		if (0 < idx)
+			str << L" ";
+		switch (GetDogColumns()[idx])
+		{
+		case IO_TREE_DOG_REGNAME:
+			str << m_pDog->GetRegisteredName();
+			break;
+		case IO_TREE_DOG_CALLNAME:
+			str << m_pDog->GetCallName();
+			break;
+		case IO_TREE_DOG_BREED:
+			str << m_pDog->GetBreed();
+			break;
+		case IO_TREE_DOG_DOB:
+			if (m_pDog->GetDOB().IsValid())
+				str << m_pDog->GetDOB().GetString();
+			break;
+		case IO_TREE_DOG_AGE:
+			if (m_pDog->GetDOB().IsValid())
+			{
+				wxDateTime dob;
+				m_pDog->GetDOB().GetDate(dob);
+				wxDateTime current = wxDateTime::Now();
+				if (m_pDog->GetDeceased().IsValid())
+					m_pDog->GetDeceased().GetDate(current);
+				wxTimeSpan age = current - dob;
+				str << StringUtil::stringW(wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays()/365.0, 1).c_str()));
+			}
+			break;
+		}
+	}
+	return str.str();
+}
+
+
+int CAgilityBookTreeDataDog::OnNeedIcon() const
+{
+	return m_pTree->GetImageList().IndexDog();
+}
+
+
+void CAgilityBookTreeDataDog::Properties()
+{
+	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
+	// This may delete 'this'.
+	bool bModified = false;
+	if (OnCmd(ID_AGILITY_EDIT_DOG, bModified, NULL))
+	{
+		if (bModified)
+			pDoc->Modify(true);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
-		CAgilityBookTreeModel* pModel,
-		ARBDogPtr dog,
-		ARBDogTrialPtr trial)
-	: CAgilityBookTreeData(pModel)
-	, m_pDog(dog)
-	, m_pTrial(trial)
+		CAgilityBookTreeView* pTree,
+		ARBDogTrialPtr pTrial)
+	: CAgilityBookTreeData(pTree)
+	, m_pTrial(pTrial)
+	, m_idxIcon(-1)
 {
-	CIconList icons;
-	m_icon = icons.GetIcon(icons.Trial(m_pModel->GetDocument()->Book().GetConfig(), m_pTrial));
-}
-
-
-CAgilityBookTreeDataTrial::~CAgilityBookTreeDataTrial()
-{
-}
-
-
-wxVariant CAgilityBookTreeDataTrial::GetColumn(
-		ARBConfig const& config,
-		std::vector<long> const& columns,
-		unsigned int col,
-		bool bInCompare) const
-{
-	wxVariant variant;
-	if (0 == col)
+	m_idxIcon = m_pTree->GetImageList().IndexTrial();
+	if (m_pTrial)
 	{
-		std::wostringstream str;
-		bool bNeedSpace = false;
-		for (size_t idx = 0; idx < columns.size(); ++idx)
+		ARBDogClubPtr pClub;
+		if (m_pTrial->GetClubs().GetPrimaryClub(&pClub))
 		{
-			switch (columns[idx])
+			ARBConfigVenuePtr pVenue;
+			if (pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
 			{
-			case IO_TREE_TRIAL_START:
-				if (m_pTrial->GetStartDate().IsValid())
-				{
-					if (bNeedSpace)
-					{
-						if (IO_TREE_TRIAL_END == columns[idx-1])
-							str << L"-";
-						else
-							str << L" ";
-					}
-					str << m_pTrial->GetStartDate().GetString();
-					bNeedSpace = true;
-				}
-				break;
-			case IO_TREE_TRIAL_END:
-				if (m_pTrial->GetEndDate().IsValid())
-				{
-					if (bNeedSpace)
-					{
-						if (IO_TREE_TRIAL_START == columns[idx-1])
-							str << L"-";
-						else
-							str << L" ";
-					}
-					str << m_pTrial->GetEndDate().GetString();
-					bNeedSpace = true;
-				}
-				break;
-			case IO_TREE_TRIAL_VERIFIED:
-				if (bNeedSpace)
-					str << L" ";
-				if (m_pTrial->IsVerified())
-					str << L"*";
-				else
-					str << L"  "; // 2 spaces due to font (variable spacing)
-				bNeedSpace = true;
-				break;
-			case IO_TREE_TRIAL_CLUB:
-				{
-					if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-						str << L" ";
-					int i = 0;
-					for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
-						iter != m_pTrial->GetClubs().end();
-						++iter, ++i)
-					{
-						if (0 < i)
-							str << L"/";
-						str << (*iter)->GetName();
-						bNeedSpace = true;
-					}
-				}
-				break;
-			case IO_TREE_TRIAL_VENUE:
-				{
-					if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-						str << L" ";
-					int i = 0;
-					for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
-						iter != m_pTrial->GetClubs().end();
-						++iter, ++i)
-					{
-						if (0 < i)
-							str << L"/";
-						str << (*iter)->GetVenue();
-						bNeedSpace = true;
-					}
-				}
-				break;
-			case IO_TREE_TRIAL_LOCATION:
-				if (!m_pTrial->GetLocation().empty())
-				{
-					if (bNeedSpace)
-						str << L" ";
-					str << m_pTrial->GetLocation();
-					bNeedSpace = true;
-				}
-				break;
-			case IO_TREE_TRIAL_NOTES:
-				if (!m_pTrial->GetNote().empty())
-				{
-					if (bNeedSpace)
-						str << L" ";
-					str << StringUtil::Replace(m_pTrial->GetNote(), L"\n", L" ");
-					bNeedSpace = true;
-				}
-				break;
+				short idx = pVenue->GetIcon();
+				if (0 <= idx && idx < m_pTree->GetImageList().GetImageCount())
+					m_idxIcon = idx;
 			}
 		}
-		variant = str.str();
 	}
-	return variant;
+}
+
+
+ARBDogPtr CAgilityBookTreeDataTrial::GetDog() const
+{
+	CAgilityBookTreeDataDog const* pDog = GetDataDog();
+	assert(pDog);
+	return pDog->GetDog();
+}
+
+
+ARBDogPtr CAgilityBookTreeDataTrial::GetDog()
+{
+	CAgilityBookTreeDataDog* pDog = GetDataDog();
+	assert(pDog);
+	return pDog->GetDog();
+}
+
+
+CAgilityBookTreeDataDog const* CAgilityBookTreeDataTrial::GetDataDog() const
+{
+	if (!GetId().IsOk())
+		return NULL;
+	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
+	CAgilityBookTreeData const* pData = m_pTree->GetTreeItem(hParent);
+	CAgilityBookTreeDataDog const* pDog = dynamic_cast<CAgilityBookTreeDataDog const*>(pData);
+	assert(pDog);
+	return pDog;
+}
+
+
+CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
+{
+	if (!GetId().IsOk())
+		return NULL;
+	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
+	CAgilityBookTreeData* pData = m_pTree->GetTreeItem(hParent);
+	CAgilityBookTreeDataDog* pDog = dynamic_cast<CAgilityBookTreeDataDog*>(pData);
+	assert(pDog);
+	return pDog;
+}
+
+
+bool CAgilityBookTreeDataTrial::OnUpdateCmd(int id, bool& ioEnable) const
+{
+	bool bHandled = true;
+	bool bEnable = false;
+	switch (id)
+	{
+	default:
+		bHandled = false;
+		break;
+	case wxID_DUPLICATE:
+	case wxID_CUT:
+	case wxID_COPY:
+		bEnable = true;
+		break;
+	case wxID_PASTE:
+		bEnable = CanPaste();
+		break;
+	case ID_AGILITY_EDIT_TRIAL:
+	case ID_AGILITY_NEW_TRIAL:
+		bEnable = true;
+		break;
+	case ID_AGILITY_NEW_RUN:
+		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
+			bEnable = true;
+		break;
+	case ID_AGILITY_NEW_TITLE:
+	case ID_AGILITY_DELETE_TRIAL:
+		bEnable = true;
+		break;
+	case ID_REORDER:
+		if (GetTrial() && 1 < GetTrial()->GetRuns().size())
+			bEnable = true;
+		break;
+	case ID_AGILITY_PRINT_TRIAL:
+		if (GetTrial() && 0 < GetTrial()->GetRuns().size())
+			bEnable = true;
+		break;
+	}
+	ioEnable = bEnable;
+	return bHandled;
+}
+
+
+bool CAgilityBookTreeDataTrial::OnCmd(
+		int id,
+		bool& bModified,
+		bool* bTreeSelectionSet)
+{
+	static bool bPrompt = true;
+	bool bHandled = true;
+	switch (id)
+	{
+	default:
+		bHandled = false;
+		break;
+	case wxID_DUPLICATE:
+		if (GetTrial())
+		{
+			ARBDogTrialPtr pTrial = GetTrial()->Clone();
+			GetDog()->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst());
+			bModified = true;
+			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
+			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+		}
+		break;
+	case wxID_CUT:
+		OnCmd(wxID_COPY, bModified, bTreeSelectionSet);
+		bPrompt = false;
+		OnCmd(ID_AGILITY_DELETE_TRIAL, bModified, bTreeSelectionSet);
+		bPrompt = true;
+		bModified = true;
+		break;
+	case wxID_COPY:
+		{
+			CClipboardDataWriter clpData;
+			if (clpData.isOkay())
+			{
+				wxBusyCursor wait;
+				ElementNodePtr tree(ElementNode::New(CLIPDATA));
+				GetTrial()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
+				clpData.AddData(eFormatTrial, tree);
+				clpData.AddData(m_pTree->GetPrintLine(GetId()));
+				clpData.CommitData();
+			}
+		}
+		break;
+	case wxID_PASTE:
+		if (DoPaste(bTreeSelectionSet))
+			bModified = true;
+		break;
+	case ID_AGILITY_EDIT_TRIAL:
+		if (EditTrial(GetDataDog(), this, m_pTree, bTreeSelectionSet))
+			bModified = true;
+		break;
+	case ID_AGILITY_NEW_TRIAL:
+		if (EditTrial(GetDataDog(), NULL, m_pTree, bTreeSelectionSet))
+			bModified = true;
+		break;
+	case ID_AGILITY_NEW_RUN:
+		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
+			if (EditRun(GetDataDog(), this, NULL, m_pTree, bTreeSelectionSet))
+				bModified = true;
+		break;
+	case ID_AGILITY_NEW_TITLE:
+		assert(GetDataDog() && GetDataDog()->GetDog());
+		m_pTree->GetDocument()->AddTitle(GetDataDog()->GetDog());
+		break;
+	case ID_AGILITY_DELETE_TRIAL:
+		if (!bPrompt
+		|| wxYES == wxMessageBox(_("IDS_DELETE_TRIAL_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
+		{
+			if (GetId() && GetDog()->GetTrials().DeleteTrial(m_pTrial))
+			{
+				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
+				// Delete() will cause this object to be deleted.
+				m_pTree->Delete(GetId());
+				bModified = true;
+				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+				pDoc->UpdateAllViews(NULL, &hint);
+			}
+		}
+		break;
+	case ID_REORDER:
+		if (GetTrial())
+		{
+			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial(), GetRun());
+			dlg.ShowModal();
+		}
+		break;
+	case ID_AGILITY_PRINT_TRIAL:
+		if (GetTrial() && 0 < GetTrial()->GetRuns().size())
+		{
+			ARBDogPtr dog = GetDog();
+			std::vector<RunInfo> runs;
+			for (ARBDogRunList::iterator iRun = GetTrial()->GetRuns().begin(); iRun != GetTrial()->GetRuns().end(); ++iRun)
+			{
+				runs.push_back(RunInfo(dog, GetTrial(), *iRun));
+			}
+			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), runs);
+		}
+		break;
+	}
+	return bHandled;
+}
+
+
+std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
+{
+	std::wostringstream str;
+	bool bNeedSpace = false;
+	for (size_t idx = 0; idx < GetTrialColumns().size(); ++idx)
+	{
+		switch (GetTrialColumns()[idx])
+		{
+		case IO_TREE_TRIAL_START:
+			if (m_pTrial->GetStartDate().IsValid())
+			{
+				if (bNeedSpace)
+				{
+					if (IO_TREE_TRIAL_END == GetTrialColumns()[idx-1])
+						str << L"-";
+					else
+						str << L" ";
+				}
+				str << m_pTrial->GetStartDate().GetString();
+				bNeedSpace = true;
+			}
+			break;
+		case IO_TREE_TRIAL_END:
+			if (m_pTrial->GetEndDate().IsValid())
+			{
+				if (bNeedSpace)
+				{
+					if (IO_TREE_TRIAL_START == GetTrialColumns()[idx-1])
+						str << L"-";
+					else
+						str << L" ";
+				}
+				str << m_pTrial->GetEndDate().GetString();
+				bNeedSpace = true;
+			}
+			break;
+		case IO_TREE_TRIAL_VERIFIED:
+			if (bNeedSpace)
+				str << L" ";
+			if (m_pTrial->IsVerified())
+				str << L"*";
+			else
+				str << L"  "; // 2 spaces due to font (variable spacing)
+			bNeedSpace = true;
+			break;
+		case IO_TREE_TRIAL_CLUB:
+			{
+				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
+					str << L" ";
+				int i = 0;
+				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
+					iter != m_pTrial->GetClubs().end();
+					++iter, ++i)
+				{
+					if (0 < i)
+						str << L"/";
+					str << (*iter)->GetName();
+					bNeedSpace = true;
+				}
+			}
+			break;
+		case IO_TREE_TRIAL_VENUE:
+			{
+				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
+					str << L" ";
+				int i = 0;
+				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
+					iter != m_pTrial->GetClubs().end();
+					++iter, ++i)
+				{
+					if (0 < i)
+						str << L"/";
+					str << (*iter)->GetVenue();
+					bNeedSpace = true;
+				}
+			}
+			break;
+		case IO_TREE_TRIAL_LOCATION:
+			if (!m_pTrial->GetLocation().empty())
+			{
+				if (bNeedSpace)
+					str << L" ";
+				str << m_pTrial->GetLocation();
+				bNeedSpace = true;
+			}
+			break;
+		case IO_TREE_TRIAL_NOTES:
+			if (!m_pTrial->GetNote().empty())
+			{
+				if (bNeedSpace)
+					str << L" ";
+				str << StringUtil::Replace(m_pTrial->GetNote(), L"\n", L" ");
+				bNeedSpace = true;
+			}
+			break;
+		}
+	}
+	return str.str();
+}
+
+
+int CAgilityBookTreeDataTrial::OnNeedIcon() const
+{
+	return m_idxIcon;
+}
+
+
+void CAgilityBookTreeDataTrial::Properties()
+{
+	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
+	// This may delete 'this'.
+	bool bModified = false;
+	if (OnCmd(ID_AGILITY_EDIT_TRIAL, bModified, NULL))
+	{
+		if (bModified)
+			pDoc->Modify(true);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(
-		CAgilityBookTreeModel* pModel,
-		ARBDogPtr dog,
-		ARBDogTrialPtr trial,
-		ARBDogRunPtr run)
-	: CAgilityBookTreeData(pModel)
-	, m_pDog(dog)
-	, m_pTrial(trial)
-	, m_pRun(run)
+		CAgilityBookTreeView* pTree,
+		ARBDogRunPtr pRun)
+	: CAgilityBookTreeData(pTree)
+	, m_pRun(pRun)
 {
-	if (0 < m_pRun->GetCRCDRawMetaData().length())
-		m_icon = CImageManager::Get()->CRCD();
-	else if (0 < m_pRun->GetCRCD().length())
-		m_icon = CImageManager::Get()->ARB16();
-	else
-		m_icon = CImageManager::Get()->Run();
 }
 
 
@@ -351,376 +1062,255 @@ CAgilityBookTreeDataRun::~CAgilityBookTreeDataRun()
 }
 
 
-wxVariant CAgilityBookTreeDataRun::GetColumn(
-		ARBConfig const& config,
-		std::vector<long> const& columns,
-		unsigned int col,
-		bool bInCompare) const
+ARBDogPtr CAgilityBookTreeDataRun::GetDog() const
 {
-	wxVariant variant;
-	if (0 <= col && m_pRun)
-	{
-		ARBDogPtr dog = GetDog();
-		ARBDogTrialPtr trial = GetTrial();
-		switch (columns[col])
-		{
-		default:
-			break;
+	CAgilityBookTreeDataDog const* pDog = GetDataDog();
+	assert(pDog);
+	return pDog->GetDog();
+}
 
-		case IO_RUNS_REG_NAME:
-			variant = dog->GetRegisteredName().c_str();
-			break;
-		case IO_RUNS_CALL_NAME:
-			variant = dog->GetCallName().c_str();
-			break;
-		case IO_RUNS_DATE:
-			if (bInCompare)
+
+ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial() const
+{
+	CAgilityBookTreeDataTrial const* pTrial = GetDataTrial();
+	assert(pTrial);
+	return pTrial->GetTrial();
+}
+
+
+ARBDogPtr CAgilityBookTreeDataRun::GetDog()
+{
+	CAgilityBookTreeDataDog* pDog = GetDataDog();
+	assert(pDog);
+	return pDog->GetDog();
+}
+
+
+ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial()
+{
+	CAgilityBookTreeDataTrial* pTrial = GetDataTrial();
+	assert(pTrial);
+	return pTrial->GetTrial();
+}
+
+
+CAgilityBookTreeDataDog const* CAgilityBookTreeDataRun::GetDataDog() const
+{
+	if (!GetId().IsOk())
+		return NULL;
+	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
+	CAgilityBookTreeData const* pData = m_pTree->GetTreeItem(hParent);
+	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
+	assert(pTrial);
+	return pTrial->GetDataDog();
+}
+
+
+CAgilityBookTreeDataTrial const* CAgilityBookTreeDataRun::GetDataTrial() const
+{
+	if (!GetId().IsOk())
+		return NULL;
+	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
+	CAgilityBookTreeData const* pData = m_pTree->GetTreeItem(hParent);
+	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
+	assert(pTrial);
+	return pTrial;
+}
+
+
+CAgilityBookTreeDataDog* CAgilityBookTreeDataRun::GetDataDog()
+{
+	if (!GetId().IsOk())
+		return NULL;
+	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
+	CAgilityBookTreeData* pData = m_pTree->GetTreeItem(hParent);
+	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
+	assert(pTrial);
+	return pTrial->GetDataDog();
+}
+
+
+CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
+{
+	if (!GetId().IsOk())
+		return NULL;
+	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
+	CAgilityBookTreeData* pData = m_pTree->GetTreeItem(hParent);
+	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
+	assert(pTrial);
+	return pTrial;
+}
+
+
+bool CAgilityBookTreeDataRun::OnUpdateCmd(int id, bool& ioEnable) const
+{
+	bool bHandled = true;
+	bool bEnable = false;
+	switch (id)
+	{
+	default:
+		bHandled = false;
+		break;
+	case wxID_DUPLICATE:
+	case wxID_CUT:
+	case wxID_COPY:
+		bEnable = true;
+		break;
+	case wxID_PASTE:
+		bEnable = CanPaste();
+		break;
+	case ID_AGILITY_EDIT_RUN:
+	case ID_AGILITY_NEW_TRIAL:
+		bEnable = true;
+		break;
+	case ID_AGILITY_NEW_RUN:
+		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
+			bEnable = true;
+		break;
+	case ID_AGILITY_NEW_TITLE:
+	case ID_AGILITY_DELETE_RUN:
+		bEnable = true;
+		break;
+	case ID_REORDER:
+		if (GetTrial() && 1 < GetTrial()->GetRuns().size())
+			bEnable = true;
+		break;
+	case ID_AGILITY_PRINT_RUNS:
+		bEnable = true;
+		break;
+	}
+	ioEnable = bEnable;
+	return bHandled;
+}
+
+
+bool CAgilityBookTreeDataRun::OnCmd(
+		int id,
+		bool& bModified,
+		bool* bTreeSelectionSet)
+{
+	static bool bPrompt = true;
+	bool bHandled = true;
+	switch (id)
+	{
+	default:
+		bHandled = false;
+		break;
+	case wxID_DUPLICATE:
+		if (GetRun())
+		{
+			ARBDogRunPtr pRun = GetRun()->Clone();
+			GetTrial()->GetRuns().AddRun(pRun);
+			GetTrial()->GetRuns().sort();
+			bModified = true;
+			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
+			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+		}
+		break;
+	case wxID_CUT:
+		OnCmd(wxID_COPY, bModified, bTreeSelectionSet);
+		bPrompt = false;
+		OnCmd(ID_AGILITY_DELETE_RUN, bModified, bTreeSelectionSet);
+		bPrompt = true;
+		bModified = true;
+		break;
+	case wxID_COPY:
+		{
+			CClipboardDataWriter clpData;
+			if (clpData.isOkay())
 			{
-				wxDateTime date;
-				m_pRun->GetDate().GetDate(date);
-				variant = date;
+				wxBusyCursor wait;
+				ElementNodePtr tree(ElementNode::New(CLIPDATA));
+				GetRun()->Save(tree, NULL, m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
+				clpData.AddData(eFormatRun, tree);
+				clpData.AddData(m_pTree->GetPrintLine(GetId()));
+				clpData.CommitData();
 			}
-			else
-				variant = m_pRun->GetDate().GetString().c_str();
-			break;
-		case IO_RUNS_VENUE:
+		}
+		break;
+	case wxID_PASTE:
+		if (DoPaste(bTreeSelectionSet))
+			bModified = true;
+		break;
+	case ID_AGILITY_EDIT_RUN:
+		if (EditRun(GetDataDog(), GetDataTrial(), this, m_pTree, bTreeSelectionSet))
+			bModified = true;
+		break;
+	case ID_AGILITY_NEW_TRIAL:
+		if (EditTrial(GetDataDog(), NULL, m_pTree, bTreeSelectionSet))
+			bModified = true;
+		break;
+	case ID_AGILITY_NEW_RUN:
+		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
+			if (EditRun(GetDataDog(), GetDataTrial(), NULL, m_pTree, bTreeSelectionSet))
+				bModified = true;
+		break;
+	case ID_AGILITY_NEW_TITLE:
+		assert(GetDataDog() && GetDataDog()->GetDog());
+		m_pTree->GetDocument()->AddTitle(GetDataDog()->GetDog());
+		break;
+	case ID_AGILITY_DELETE_RUN:
+		if (!bPrompt
+		|| wxYES == wxMessageBox(_("IDS_DELETE_EVENT_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
+		{
+			ARBDogTrialPtr pTrial = GetTrial();
+			ARBDate startDate = pTrial->GetStartDate();
+			if (GetId().IsOk() && pTrial->GetRuns().DeleteRun(m_pRun))
 			{
-				std::wostringstream str;
-				int i = 0;
-				for (ARBDogClubList::const_iterator iter = trial->GetClubs().begin();
-					iter != trial->GetClubs().end();
-					++iter, ++i)
+				m_pTree->RefreshItem(m_pTree->GetItemParent(GetId()));
+				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
+				ARBDogPtr pDog = GetDog();
+				// Delete() will cause this object to be deleted.
+				m_pTree->Delete(GetId());
+				pTrial->SetMultiQs(pDoc->Book().GetConfig());
+				unsigned int updateHint = UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW;
+				if (pTrial->GetStartDate() != startDate)
 				{
-					if (0 < i)
-						str << L"/";
-					str << (*iter)->GetVenue();
+					updateHint |= UPDATE_TREE_VIEW;
+					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 				}
-				variant = str.str();
+				bModified = true;
+				CUpdateHint hint(updateHint);
+				pDoc->UpdateAllViews(NULL, &hint);
 			}
+		}
+		break;
+	case ID_REORDER:
+		if (GetTrial())
+		{
+			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial(), GetRun());
+			dlg.ShowModal();
+		}
+		break;
+	case ID_AGILITY_PRINT_RUNS:
+		{
+			std::vector<RunInfo> runs;
+			runs.push_back(RunInfo(GetDog(), GetTrial(), m_pRun));
+			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), runs);
+		}
+		break;
+	}
+	return bHandled;
+}
+
+
+std::wstring CAgilityBookTreeDataRun::OnNeedText() const
+{
+	std::wostringstream str;
+	for (size_t idx = 0; idx < GetRunColumns().size(); ++idx)
+	{
+		if (0 < idx)
+			str << L" ";
+		switch (GetRunColumns()[idx])
+		{
+		case IO_TREE_RUN_DATE:
+			str << m_pRun->GetDate().GetString();
 			break;
-		case IO_RUNS_CLUB:
+		case IO_TREE_RUN_Q:
 			{
-				std::wostringstream str;
-				int i = 0;
-				for (ARBDogClubList::const_iterator iter = trial->GetClubs().begin();
-					iter != trial->GetClubs().end();
-					++iter, ++i)
-				{
-					if (0 < i)
-						str << L"/";
-					str << (*iter)->GetName();
-				}
-				variant = str.str();
-			}
-			break;
-		case IO_RUNS_LOCATION:
-			variant = trial->GetLocation().c_str();
-			break;
-		case IO_RUNS_TRIAL_NOTES:
-			variant = trial->GetNote().c_str();
-			break;
-		case IO_RUNS_DIVISION:
-			variant = m_pRun->GetDivision().c_str();
-			break;
-		case IO_RUNS_LEVEL:
-			variant = m_pRun->GetLevel().c_str();
-			break;
-		case IO_RUNS_EVENT:
-			variant = m_pRun->GetEvent().c_str();
-			break;
-		case IO_RUNS_HEIGHT:
-			variant = m_pRun->GetHeight().c_str();
-			break;
-		case IO_RUNS_JUDGE:
-			variant = m_pRun->GetJudge().c_str();
-			break;
-		case IO_RUNS_HANDLER:
-			variant = m_pRun->GetHandler().c_str();
-			break;
-		case IO_RUNS_CONDITIONS:
-			variant = m_pRun->GetConditions().c_str();
-			break;
-		case IO_RUNS_COURSE_FAULTS:
-			if (bInCompare)
-				variant = long(m_pRun->GetScoring().GetCourseFaults());
-			else
-			{
-				std::wostringstream str;
-				str << m_pRun->GetScoring().GetCourseFaults();
-				variant = str.str();
-			}
-			break;
-		case IO_RUNS_TIME:
-			if (bInCompare)
-				variant = m_pRun->GetScoring().GetTime();
-			else
-				variant = ARBDouble::ToString(m_pRun->GetScoring().GetTime());
-			break;
-		case IO_RUNS_YARDS:
-			{
-				double yds = -1.0;
-				if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
-				{
-					yds = m_pRun->GetScoring().GetYards();
-					if (!bInCompare && 0.0 < yds)
-					{
-						variant = ARBDouble::ToString(yds, 0);
-					}
-				}
-				if (bInCompare)
-					variant = yds;
-			}
-			break;
-		case IO_RUNS_MIN_YPS:
-			{
-				double yps = 0.0;
-				bool bSet = m_pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps);
-				if (bInCompare)
-					variant = yps;
-				else if (bSet)
-					variant = ARBDouble::ToString(yps, 3);
-			}
-			break;
-		case IO_RUNS_YPS:
-			{
-				double yps = 0.0;
-				bool bSet = m_pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps);
-				if (bInCompare)
-					variant = yps;
-				else if (bSet)
-					variant = ARBDouble::ToString(yps, 3);
-			}
-			break;
-		case IO_RUNS_OBSTACLES:
-			{
-				long obstacles = m_pRun->GetScoring().GetObstacles();
-				if (bInCompare)
-					variant = obstacles;
-				else if (0 < obstacles)
-				{
-					std::wostringstream str;
-					str << obstacles;
-					variant = str.str();
-				}
-			}
-			break;
-		case IO_RUNS_OPS:
-			{
-				double ops = 0.0;
-				bool bSet = m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops);
-				if (bInCompare)
-					variant = ops;
-				else if (bSet)
-					variant = ARBDouble::ToString(ops, 3);
-			}
-			break;
-		case IO_RUNS_SCT:
-			{
-				double sct = -1.0;
-				if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
-				{
-					sct = m_pRun->GetScoring().GetSCT();
-					if (!bInCompare && 0.0 < sct)
-					{
-						variant = ARBDouble::ToString(sct);
-					}
-				}
-				if (bInCompare)
-					variant = sct;
-			}
-			break;
-		case IO_RUNS_TOTAL_FAULTS:
-			{
-				double faults = -1.0;
-				if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
-				{
-					ARBConfigScoringPtr pScoring;
-					if (trial->GetClubs().GetPrimaryClub())
-					{
-						config.GetVenues().FindEvent(
-							trial->GetClubs().GetPrimaryClubVenue(),
-							m_pRun->GetEvent(),
-							m_pRun->GetDivision(),
-							m_pRun->GetLevel(),
-							m_pRun->GetDate(),
-							NULL,
-							&pScoring);
-					}
-					faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
-					if (!bInCompare)
-						variant = ARBDouble::ToString(faults, 0);
-				}
-				if (bInCompare)
-					variant = faults;
-			}
-			break;
-		case IO_RUNS_REQ_OPENING:
-			{
-				long pts = -1;
-				if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
-				{
-					pts = m_pRun->GetScoring().GetNeedOpenPts();
-					if (!bInCompare)
-					{
-						std::wostringstream str;
-						str << pts;
-						variant = str.str();
-					}
-				}
-				if (bInCompare)
-					variant = pts;
-			}
-			break;
-		case IO_RUNS_REQ_CLOSING:
-			{
-				long pts = -1;
-				if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
-				{
-					pts = m_pRun->GetScoring().GetNeedClosePts();
-					if (!bInCompare)
-					{
-						std::wostringstream str;
-						str << pts;
-						variant = str.str();
-					}
-				}
-				if (bInCompare)
-					variant = pts;
-			}
-			break;
-		case IO_RUNS_OPENING:
-			{
-				long pts = -1;
-				if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
-				{
-					pts = m_pRun->GetScoring().GetOpenPts();
-					if (!bInCompare)
-					{
-						std::wostringstream str;
-						str << pts;
-						variant = str.str();
-					}
-				}
-				if (bInCompare)
-					variant = pts;
-			}
-			break;
-		case IO_RUNS_CLOSING:
-			{
-				long pts = -1;
-				if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
-				{
-					pts = m_pRun->GetScoring().GetClosePts();
-					if (!bInCompare)
-					{
-						std::wostringstream str;
-						str << pts;
-						variant = str.str();
-					}
-				}
-				if (bInCompare)
-					variant = pts;
-			}
-			break;
-		case IO_RUNS_REQ_POINTS:
-			{
-				long pts = -1;
-				if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
-				{
-					pts = m_pRun->GetScoring().GetNeedOpenPts();
-					if (!bInCompare)
-					{
-						std::wostringstream str;
-						str << pts;
-						variant = str.str();
-					}
-				}
-				if (bInCompare)
-					variant = pts;
-			}
-			break;
-		case IO_RUNS_POINTS:
-			{
-				long pts = -1;
-				if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
-				{
-					pts = m_pRun->GetScoring().GetOpenPts();
-					if (!bInCompare)
-					{
-						std::wostringstream str;
-						str << pts;
-						variant = str.str();
-					}
-				}
-				if (bInCompare)
-					variant = pts;
-			}
-			break;
-		case IO_RUNS_PLACE:
-			{
-				long val = m_pRun->GetPlace();
-				if (bInCompare)
-				{
-					variant = val;
-				}
-				else
-				{
-					if (0 > val)
-						variant = L"?";
-					else if (0 == val)
-						variant = L"-";
-					else
-					{
-						std::wostringstream str;
-						str << val;
-						variant = str.str();
-					}
-				}
-			}
-			break;
-		case IO_RUNS_IN_CLASS:
-			{
-				long val = m_pRun->GetInClass();
-				if (bInCompare)
-					variant = val;
-				else
-				{
-					if (0 >= val)
-						variant = L"?";
-					else
-					{
-						std::wostringstream str;
-						str << val;
-						variant = str.str();
-					}
-				}
-			}
-			break;
-		case IO_RUNS_DOGSQD:
-			{
-				long val = m_pRun->GetDogsQd();
-				if (bInCompare)
-					variant = val;
-				else
-				{
-					if (0 > val)
-						variant = L"?";
-					else
-					{
-						std::wostringstream str;
-						str << val;
-						variant = str.str();
-					}
-				}
-			}
-			break;
-		case IO_RUNS_Q:
-			{
-				bool bSet = false;
-				std::wostringstream str;
+				std::wstring q;
 				if (m_pRun->GetQ().Qualified())
 				{
-					std::wstring q;
 					std::vector<ARBConfigMultiQPtr> multiQs;
 					if (0 < m_pRun->GetMultiQs(multiQs))
 					{
@@ -733,140 +1323,51 @@ wxVariant CAgilityBookTreeDataRun::GetColumn(
 					}
 					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
 					{
-						bSet = true;
+						std::wstring tmp(StringUtil::stringW(_("IDS_SQ")));
 						if (!q.empty())
-							str << q << L"/";
-						str << _("IDS_SQ");
-					}
-					else
-					{
-						if (!q.empty())
-						{
-							bSet = true;
-							str << q;
-						}
+							q += L"/";
+						q += tmp;
 					}
 				}
-				if (bSet)
-					variant = str.str();
-				else
-					variant = m_pRun->GetQ().str();
+				if (q.empty())
+					q = m_pRun->GetQ().str();
+				str << q;
 			}
 			break;
-		case IO_RUNS_SCORE:
-			{
-				double score = -2.0;
-				if (m_pRun->GetQ().Qualified()
-				|| ARB_Q::eQ_NQ == m_pRun->GetQ())
-				{
-					ARBConfigScoringPtr pScoring;
-					if (trial->GetClubs().GetPrimaryClub())
-					{
-						config.GetVenues().FindEvent(
-							trial->GetClubs().GetPrimaryClubVenue(),
-							m_pRun->GetEvent(),
-							m_pRun->GetDivision(),
-							m_pRun->GetLevel(),
-							m_pRun->GetDate(),
-							NULL,
-							&pScoring);
-					}
-					if (pScoring)
-					{
-						score = m_pRun->GetScore(pScoring);
-						if (!bInCompare)
-							variant = ARBDouble::ToString(score);
-					}
-					else if (bInCompare)
-						score = -1.0;
-				}
-				if (bInCompare)
-					variant = score;
-			}
+		case IO_TREE_RUN_EVENT:
+			str << m_pRun->GetEvent();
 			break;
-		case IO_RUNS_TITLE_POINTS:
-			{
-				double pts = 0;
-				if (m_pRun->GetQ().Qualified())
-				{
-					ARBConfigScoringPtr pScoring;
-					if (trial->GetClubs().GetPrimaryClub())
-						config.GetVenues().FindEvent(
-							trial->GetClubs().GetPrimaryClubVenue(),
-							m_pRun->GetEvent(),
-							m_pRun->GetDivision(),
-							m_pRun->GetLevel(),
-							m_pRun->GetDate(),
-							NULL,
-							&pScoring);
-					if (pScoring)
-					{
-						pts = m_pRun->GetTitlePoints(pScoring);
-					}
-				}
-				if (bInCompare)
-					variant = pts;
-				else
-				{
-					std::wostringstream str;
-					str << pts;
-					variant = str.str();
-				}
-			}
+		case IO_TREE_RUN_DIVISION:
+			str << m_pRun->GetDivision();
 			break;
-		case IO_RUNS_COMMENTS:
-			variant = StringUtil::Replace(m_pRun->GetNote(), L"\n", L" ");
+		case IO_TREE_RUN_LEVEL:
+			str << m_pRun->GetLevel();
 			break;
-		case IO_RUNS_FAULTS:
-			{
-				std::wostringstream str;
-				int i = 0;
-				for (ARBDogFaultList::const_iterator iter = m_pRun->GetFaults().begin();
-					iter != m_pRun->GetFaults().end();
-					++i, ++iter)
-				{
-					if (0 < i)
-						str << L", ";
-					str << (*iter);
-				}
-				variant = str.str();
-			}
-			break;
-		case IO_RUNS_SPEED:
-			{
-				long pts = -1;
-				ARBConfigScoringPtr pScoring;
-				if (trial->GetClubs().GetPrimaryClub())
-					config.GetVenues().FindEvent(
-						trial->GetClubs().GetPrimaryClubVenue(),
-						m_pRun->GetEvent(),
-						m_pRun->GetDivision(),
-						m_pRun->GetLevel(),
-						m_pRun->GetDate(),
-						NULL,
-						&pScoring);
-				if (pScoring)
-				{
-					if (pScoring->HasSpeedPts() && m_pRun->GetQ().Qualified())
-					{
-						pts = m_pRun->GetSpeedPoints(pScoring);
-						if (!bInCompare)
-						{
-							std::wostringstream str;
-							str << pts;
-							variant = str.str();
-						}
-					}
-				}
-				if (bInCompare)
-					variant = pts;
-			}
+		case IO_TREE_RUN_HEIGHT:
+			str << m_pRun->GetHeight();
 			break;
 		}
 	}
-
-	if (variant.IsNull())
-		variant = L"";
-
-	return variant;
+	return str.str();
 }
+
+
+int CAgilityBookTreeDataRun::OnNeedIcon() const
+{
+	return m_pTree->GetImageList().IndexRun();
+}
+
+
+void CAgilityBookTreeDataRun::Properties()
+{
+	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
+	// This may delete 'this'.
+	bool bModified = false;
+	if (OnCmd(ID_AGILITY_EDIT_RUN, bModified, NULL))
+	{
+		if (bModified)
+			pDoc->Modify(true);
+	}
+}
+
+#endif // USE_TREELIST

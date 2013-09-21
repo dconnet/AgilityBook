@@ -145,9 +145,24 @@ static struct
 		arbT("IDS_ASSCOL_VIEW_TREE_DOG"),
 		arbT("IDS_ASSCOL_VIEW_TREE_DOG_DESC")},
 
+#if USE_TREELIST
 	{0, IO_TYPE_VIEW_RESERVED1, 0, NULL, NULL},
 	{0, IO_TYPE_VIEW_RESERVED2, 0, NULL, NULL},
 	{0, IO_TYPE_VIEW_RESERVED3, 0, NULL, NULL},
+#else
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_TREE_TRIAL, 2,
+		arbT("IDS_ASSCOL_VIEW_TREE_TRIAL"),
+		arbT("IDS_ASSCOL_VIEW_TREE_TRIAL_DESC")},
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_TREE_RUN, 3,
+		arbT("IDS_ASSCOL_VIEW_TREE_RUN"),
+		arbT("IDS_ASSCOL_VIEW_TREE_RUN_DESC")},
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_RUNS_LIST, 4,
+		arbT("IDS_ASSCOL_VIEW_RUNS_LIST"),
+		arbT("IDS_ASSCOL_VIEW_RUNS_LIST_DESC")},
+#endif
 
 	{CAgilityBookOptions::eView,
 		IO_TYPE_VIEW_CALENDAR_LIST, 5,
@@ -169,18 +184,24 @@ static struct
 		IO_TYPE_VIEW_CALENDAR, 6,
 		arbT("IDS_ASSCOL_VIEW_CALENDAR"),
 		arbT("IDS_ASSCOL_VIEW_CALENDAR_DESC")},
+#if USE_TREELIST
 	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_TREE_TRIAL, 2,
-		arbT("IDS_ASSCOL_VIEW_TREE_TRIAL"),
-		arbT("IDS_ASSCOL_VIEW_TREE_TRIAL_DESC")},
+		IO_TYPE_VIEW_TREELIST_TRIAL, 2,
+		arbT("IDS_ASSCOL_VIEW_TREELIST_TRIAL"),
+		arbT("IDS_ASSCOL_VIEW_TREELIST_TRIAL_DESC")},
 	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_TREE_RUNS, 3,
-		arbT("IDS_ASSCOL_VIEW_TREE_RUN"),
-		arbT("IDS_ASSCOL_VIEW_TREE_RUN_DESC")},
+		IO_TYPE_VIEW_TREELIST_RUNS, 3,
+		arbT("IDS_ASSCOL_VIEW_TREELIST_RUN"),
+		arbT("IDS_ASSCOL_VIEW_TREELIST_RUN_DESC")},
 	{CAgilityBookOptions::eView,
-		IO_TYPE_VIEW_TREE_RUNS_LIST, 4,
-		arbT("IDS_ASSCOL_VIEW_TREE_RUN_LIST"),
-		arbT("IDS_ASSCOL_VIEW_TREE_RUN_LIST_DESC")},
+		IO_TYPE_VIEW_TREELIST_RUNS_LIST, 4,
+		arbT("IDS_ASSCOL_VIEW_TREELIST_RUN_LIST"),
+		arbT("IDS_ASSCOL_VIEW_TREELIST_RUN_LIST_DESC")},
+#else
+	{0, IO_TYPE_VIEW_RESERVED1, 0, NULL, NULL},
+	{0, IO_TYPE_VIEW_RESERVED2, 0, NULL, NULL},
+	{0, IO_TYPE_VIEW_RESERVED3, 0, NULL, NULL},
+#endif
 	// Note: Remember to update sc_Fields when adding a type.
 };
 
@@ -702,7 +723,13 @@ static int const idxViewTreeTrial[] = {
 	IO_TREE_TRIAL_CLUB,		IO_TREE_TRIAL_VENUE,	IO_TREE_TRIAL_LOCATION,
 	IO_TREE_TRIAL_NOTES,
 -1};
+#if !USE_TREELIST
 static int const idxViewTreeRun[] = {
+	IO_TREE_RUN_DATE,		IO_TREE_RUN_Q,			IO_TREE_RUN_EVENT,
+	IO_TREE_RUN_DIVISION,	IO_TREE_RUN_LEVEL,		IO_TREE_RUN_HEIGHT,
+-1};
+#endif
+static int const idxViewRunsList[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -761,15 +788,28 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 	idxCalendar,
 	idxTraining,
 	idxViewTreeDog,
-	NULL, NULL, NULL,
+#if USE_TREELIST
+	NULL,
+	NULL,
+	NULL,
+#else
+	idxViewTreeTrial,
+	idxViewTreeRun,
+	idxViewRunsList,
+#endif
 	idxViewCalendarList,
 	idxViewTrainingList,
 	idxCalendarAppt,
 	idxCalendarTask,
 	idxViewCalendar,
 	idxViewTreeTrial,
-	idxViewTreeRun,
-	idxViewTreeRun,
+#if USE_TREELIST
+	idxViewRunsList,
+	idxViewRunsList,
+#else
+	NULL,
+	NULL,
+#endif
 };
 
 /////////////////////////////////////////////////////////////////////////////

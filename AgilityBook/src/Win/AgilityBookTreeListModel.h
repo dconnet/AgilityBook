@@ -1,4 +1,5 @@
 #pragma once
+#if USE_TREELIST
 
 /*
  * Copyright (c) David Connet. All Rights Reserved.
@@ -9,7 +10,7 @@
 /**
  * @file
  *
- * @brief interface of the CAgilityBookTreeModel class
+ * @brief interface of the CAgilityBookTreeListModel class
  * @author David Connet
  *
  * Revision History
@@ -19,10 +20,10 @@
 #include "AgilityBookMenu.h"
 #include "ARB/ARBBase.h"
 class CAgilityBookDoc;
-class CAgilityBookTreeData;
+class CAgilityBookTreeListData;
 
 
-enum CTreeDataType
+enum CTreeListDataType
 {
 	eTreeUnknown = -1,
 	eTreeDog = 0,
@@ -31,11 +32,11 @@ enum CTreeDataType
 };
 
 
-class CAgilityBookTreeModel : public wxDataViewModel
+class CAgilityBookTreeListModel : public wxDataViewModel
 {
 public:
-	CAgilityBookTreeModel();
-	~CAgilityBookTreeModel();
+	CAgilityBookTreeListModel();
+	~CAgilityBookTreeListModel();
 
 	CAgilityBookDoc* GetDocument() const	{return m_pDoc;}
 
@@ -85,7 +86,7 @@ public:
 
 	wxString GetPrintLine(const wxDataViewItem& item) const;
 
-	CTreeDataType Type(const wxDataViewItem& item) const;
+	CTreeListDataType Type(const wxDataViewItem& item) const;
 	ARBBasePtr GetARBBase(const wxDataViewItem& item) const;
 	ARBDogPtr GetDog(const wxDataViewItem& item) const;
 	ARBDogTrialPtr GetTrial(const wxDataViewItem& item) const;
@@ -95,12 +96,14 @@ public:
 
 private:
 	void OnDestroyControl(wxWindowDestroyEvent& evt);
-	CAgilityBookTreeData* GetNode(const wxDataViewItem& item) const;
+	CAgilityBookTreeListData* GetNode(const wxDataViewItem& item) const;
 
 	CAgilityBookDoc* m_pDoc;
 	wxDataViewCtrl* m_Ctrl;
 	std::vector<long> m_Columns[3];
 	mutable bool m_bInCompare;
 
-	std::vector<CAgilityBookTreeData*> m_roots;
+	std::vector<CAgilityBookTreeListData*> m_roots;
 };
+
+#endif // USE_TREELIST

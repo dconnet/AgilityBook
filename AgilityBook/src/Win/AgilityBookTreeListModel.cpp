@@ -7,7 +7,7 @@
 /**
  * @file
  *
- * @brief implementation of the CAgilityBookTreeModel class
+ * @brief implementation of the CAgilityBookTreeListModel class
  * @author David Connet
  *
  * Revision History
@@ -15,10 +15,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBookTreeModel.h"
+#if USE_TREELIST
+#include "AgilityBookTreeListModel.h"
 
 #include "AgilityBookDoc.h"
-#include "AgilityBookTreeData.h"
+#include "AgilityBookTreeListData.h"
 #include "DlgAssignColumns.h"
 #include "RegItems.h"
 
@@ -35,7 +36,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-CAgilityBookTreeModel::CAgilityBookTreeModel()
+CAgilityBookTreeListModel::CAgilityBookTreeListModel()
 	: m_pDoc(NULL)
 	, m_Ctrl(NULL)
 	, m_Columns()
@@ -45,51 +46,51 @@ CAgilityBookTreeModel::CAgilityBookTreeModel()
 }
 
 
-CAgilityBookTreeModel::~CAgilityBookTreeModel()
+CAgilityBookTreeListModel::~CAgilityBookTreeListModel()
 {
 	DeleteAllItems();
 }
 
 
-void CAgilityBookTreeModel::OnDestroyControl(wxWindowDestroyEvent& evt)
+void CAgilityBookTreeListModel::OnDestroyControl(wxWindowDestroyEvent& evt)
 {
 	m_Ctrl = NULL;
 }
 
 
-CAgilityBookTreeData* CAgilityBookTreeModel::GetNode(const wxDataViewItem& item) const
+CAgilityBookTreeListData* CAgilityBookTreeListModel::GetNode(const wxDataViewItem& item) const
 {
 	if (item.IsOk())
-		return reinterpret_cast<CAgilityBookTreeData*>(item.GetID());
+		return reinterpret_cast<CAgilityBookTreeListData*>(item.GetID());
 	return NULL;
 }
 
 
-void CAgilityBookTreeModel::CreateColumns(
+void CAgilityBookTreeListModel::CreateColumns(
 		wxDataViewCtrl* ctrl,
 		CAgilityBookDoc* pDoc)
 {
 	m_pDoc = pDoc;
 	m_Ctrl = ctrl;
 
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_DESTROY, wxWindowDestroyEventHandler, CAgilityBookTreeModel::OnDestroyControl);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_DESTROY, wxWindowDestroyEventHandler, CAgilityBookTreeListModel::OnDestroyControl);
 
 	UpdateColumns();
 }
 
 
-void CAgilityBookTreeModel::UpdateColumns()
+void CAgilityBookTreeListModel::UpdateColumns()
 {
 	m_Ctrl->ClearColumns();
 
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
-	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREELIST_TRIAL, m_Columns[1]);
 
 	size_t idxColumn = 0;
 	if (CAgilityBookOptions::eViewAllRunsByList == CAgilityBookOptions::GetViewRunsStyle())
-		idxColumn = IO_TYPE_VIEW_TREE_RUNS_LIST;
+		idxColumn = IO_TYPE_VIEW_TREELIST_RUNS_LIST;
 	else
-		idxColumn = IO_TYPE_VIEW_TREE_RUNS;
+		idxColumn = IO_TYPE_VIEW_TREELIST_RUNS;
 
 	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, idxColumn, m_Columns[2]))
 	{
@@ -117,7 +118,7 @@ void CAgilityBookTreeModel::UpdateColumns()
 }
 
 
-wxDataViewItem CAgilityBookTreeModel::LoadData(
+wxDataViewItem CAgilityBookTreeListModel::LoadData(
 		ARBDogPtr pDog)
 {
 	wxDataViewItem itemDog;
@@ -134,7 +135,7 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 		itemDog = wxDataViewItem(0);
 		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		{ 
-			CAgilityBookTreeDataDog* nodeDog = new CAgilityBookTreeDataDog(this, pDog);
+			CAgilityBookTreeListDataDog* nodeDog = new CAgilityBookTreeListDataDog(this, pDog);
 			itemDog = wxDataViewItem(nodeDog);
 
 			m_roots.push_back(nodeDog);
@@ -152,14 +153,14 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 }
 
 
-wxDataViewItem CAgilityBookTreeModel::LoadData(
+wxDataViewItem CAgilityBookTreeListModel::LoadData(
 		ARBDogPtr pDog,
 		ARBDogTrialPtr pTrial,
 		wxDataViewItem parent)
 {
 	wxDataViewItem itemTrial;
 
-	CAgilityBookTreeData* pParent = NULL;
+	CAgilityBookTreeListData* pParent = NULL;
 	if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		pParent = GetNode(parent);
 
@@ -170,7 +171,7 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 		itemTrial = wxDataViewItem(0);
 		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		{
-			CAgilityBookTreeDataTrial* nodeTrial = new CAgilityBookTreeDataTrial(this, pDog, pTrial);
+			CAgilityBookTreeListDataTrial* nodeTrial = new CAgilityBookTreeListDataTrial(this, pDog, pTrial);
 			itemTrial = wxDataViewItem(nodeTrial);
 			pParent->Append(nodeTrial);
 		}
@@ -186,7 +187,7 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 }
 
 
-wxDataViewItem CAgilityBookTreeModel::LoadData(
+wxDataViewItem CAgilityBookTreeListModel::LoadData(
 		ARBDogPtr pDog,
 		ARBDogTrialPtr pTrial,
 		ARBDogRunPtr pRun,
@@ -194,7 +195,7 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 {
 	wxDataViewItem itemRun;
 
-	CAgilityBookTreeData* pParent = NULL;
+	CAgilityBookTreeListData* pParent = NULL;
 	if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		pParent = GetNode(parent);
 
@@ -202,7 +203,7 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 	|| CAgilityBookOptions::eViewRunsByTrial != CAgilityBookOptions::GetViewRunsStyle())
 	&& pRun && !pRun->IsFiltered())
 	{
-		CAgilityBookTreeDataRun* nodeRun = new CAgilityBookTreeDataRun(this, pDog, pTrial, pRun);
+		CAgilityBookTreeListDataRun* nodeRun = new CAgilityBookTreeListDataRun(this, pDog, pTrial, pRun);
 		itemRun = wxDataViewItem(nodeRun);
 		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		{
@@ -218,7 +219,7 @@ wxDataViewItem CAgilityBookTreeModel::LoadData(
 }
 
 
-void CAgilityBookTreeModel::LoadData()
+void CAgilityBookTreeListModel::LoadData()
 {
 	wxBusyCursor wait;
 
@@ -227,7 +228,7 @@ void CAgilityBookTreeModel::LoadData()
 	// Remember the currently selected item.
 	std::list<ARBBasePtr> baseItems;
 	{
-		CAgilityBookTreeData* node = GetNode(m_Ctrl->GetSelection());
+		CAgilityBookTreeListData* node = GetNode(m_Ctrl->GetSelection());
 		if (!node)
 		{
 			if (m_pDoc->GetCurrentDog())
@@ -287,7 +288,7 @@ void CAgilityBookTreeModel::LoadData()
 		&& 3 == baseItems.size())
 		{
 			ARBBasePtr pRun = *baseItems.rbegin();
-			for (std::vector<CAgilityBookTreeData*>::iterator i = m_roots.begin();
+			for (std::vector<CAgilityBookTreeListData*>::iterator i = m_roots.begin();
 				i != m_roots.end();
 				++i)
 			{
@@ -309,7 +310,7 @@ void CAgilityBookTreeModel::LoadData()
 		if (CAgilityBookOptions::eViewAllRunsByList != CAgilityBookOptions::GetViewRunsStyle())
 		{
 			// Select does not generate a change event.
-			CAgilityBookTreeData* node = GetNode(item);
+			CAgilityBookTreeListData* node = GetNode(item);
 			if (node->GetDog() != GetDocument()->GetCurrentDog())
 				GetDocument()->SetCurrentDog(node->GetDog());
 		}
@@ -319,16 +320,16 @@ void CAgilityBookTreeModel::LoadData()
 }
 
 
-void CAgilityBookTreeModel::Delete(const wxDataViewItem& item)
+void CAgilityBookTreeListModel::Delete(const wxDataViewItem& item)
 {
-	CAgilityBookTreeData* node = GetNode(item);
+	CAgilityBookTreeListData* node = GetNode(item);
 	if (!node) // happens if item.IsOk()==false
 		return;
 
 	wxDataViewItem parent(node->GetParent());
 	if (!parent.IsOk())
 	{
-		std::vector<CAgilityBookTreeData*>::iterator i = std::find(m_roots.begin(), m_roots.end(), node);
+		std::vector<CAgilityBookTreeListData*>::iterator i = std::find(m_roots.begin(), m_roots.end(), node);
 		wxASSERT(i != m_roots.end());
 		m_roots.erase(i);
 		delete node;
@@ -343,7 +344,7 @@ void CAgilityBookTreeModel::Delete(const wxDataViewItem& item)
 }
 
 
-void CAgilityBookTreeModel::DeleteAllItems()
+void CAgilityBookTreeListModel::DeleteAllItems()
 {
 	if (m_Ctrl)
 	{
@@ -360,8 +361,8 @@ void CAgilityBookTreeModel::DeleteAllItems()
 
 	while (m_roots.size() > 0)
 	{
-		std::vector<CAgilityBookTreeData*>::iterator i = m_roots.begin();
-		CAgilityBookTreeData* node = *i;
+		std::vector<CAgilityBookTreeListData*>::iterator i = m_roots.begin();
+		CAgilityBookTreeListData* node = *i;
 		m_roots.erase(i);
 
 		wxDataViewItem parent(0);
@@ -383,9 +384,9 @@ void CAgilityBookTreeModel::DeleteAllItems()
 }
 
 
-void CAgilityBookTreeModel::Expand(wxDataViewCtrl* list)
+void CAgilityBookTreeListModel::Expand(wxDataViewCtrl* list)
 {
-	for (std::vector<CAgilityBookTreeData*>::iterator i = m_roots.begin();
+	for (std::vector<CAgilityBookTreeListData*>::iterator i = m_roots.begin();
 		i != m_roots.end();
 		++i)
 	{
@@ -405,15 +406,15 @@ void CAgilityBookTreeModel::Expand(wxDataViewCtrl* list)
 }
 
 
-int CAgilityBookTreeModel::Compare(
+int CAgilityBookTreeListModel::Compare(
 		const wxDataViewItem& item1,
 		const wxDataViewItem& item2,
 		unsigned int column,
 		bool ascending) const
 {
 	wxASSERT(item1.IsOk() && item2.IsOk()); // should never happen
-	CAgilityBookTreeData* node1 = GetNode(item1);
-	CAgilityBookTreeData* node2 = GetNode(item2);
+	CAgilityBookTreeListData* node1 = GetNode(item1);
+	CAgilityBookTreeListData* node2 = GetNode(item2);
 
 	if (node1->IsContainer() && node2->IsContainer())
 		column = 0;
@@ -473,24 +474,24 @@ int CAgilityBookTreeModel::Compare(
 }
 
 
-unsigned int CAgilityBookTreeModel::GetColumnCount() const
+unsigned int CAgilityBookTreeListModel::GetColumnCount() const
 {
 	return static_cast<unsigned int>(m_Columns[2].size());
 }
 
 
-wxString CAgilityBookTreeModel::GetColumnType(unsigned int col) const
+wxString CAgilityBookTreeListModel::GetColumnType(unsigned int col) const
 {
 	return wxT("string");
 }
 
 
-void CAgilityBookTreeModel::GetValue(
+void CAgilityBookTreeListModel::GetValue(
 		wxVariant& variant,
 		const wxDataViewItem& item,
 		unsigned int col) const
 {
-	CAgilityBookTreeData* node = GetNode(item);
+	CAgilityBookTreeListData* node = GetNode(item);
 	wxASSERT(node);
 
 	wxIcon icon = node->GetIcon(col);
@@ -506,7 +507,7 @@ void CAgilityBookTreeModel::GetValue(
 }
 
 
-bool CAgilityBookTreeModel::SetValue(
+bool CAgilityBookTreeListModel::SetValue(
 		const wxVariant& variant,
 		const wxDataViewItem& item,
 		unsigned int col)
@@ -515,18 +516,18 @@ bool CAgilityBookTreeModel::SetValue(
 }
 
 
-wxDataViewItem CAgilityBookTreeModel::GetParent(const wxDataViewItem& item) const
+wxDataViewItem CAgilityBookTreeListModel::GetParent(const wxDataViewItem& item) const
 {
 	// the invisible root node has no parent
 	if (!item.IsOk())
 		return wxDataViewItem(0);
 
-	CAgilityBookTreeData* node = GetNode(item);
+	CAgilityBookTreeListData* node = GetNode(item);
 	return wxDataViewItem(node->GetParent());
 }
 
 
-bool CAgilityBookTreeModel::IsContainer(const wxDataViewItem& item) const
+bool CAgilityBookTreeListModel::IsContainer(const wxDataViewItem& item) const
 {
 	// the invisble root node can have children
 	if (!item.IsOk())
@@ -535,11 +536,11 @@ bool CAgilityBookTreeModel::IsContainer(const wxDataViewItem& item) const
 }
 
 
-unsigned int CAgilityBookTreeModel::GetChildren(
+unsigned int CAgilityBookTreeListModel::GetChildren(
 		const wxDataViewItem& parent,
 		wxDataViewItemArray& array) const
 {
-	CAgilityBookTreeData* node = GetNode(parent);
+	CAgilityBookTreeListData* node = GetNode(parent);
 	if (!node)
 	{
 		/*
@@ -549,7 +550,7 @@ unsigned int CAgilityBookTreeModel::GetChildren(
 			return 1;
 		}
 		*/
-		for (std::vector<CAgilityBookTreeData*>::const_iterator i = m_roots.begin();
+		for (std::vector<CAgilityBookTreeListData*>::const_iterator i = m_roots.begin();
 			i != m_roots.end();
 			++i)
 		{
@@ -562,10 +563,10 @@ unsigned int CAgilityBookTreeModel::GetChildren(
 }
 
 
-wxString CAgilityBookTreeModel::GetPrintLine(const wxDataViewItem& item) const
+wxString CAgilityBookTreeListModel::GetPrintLine(const wxDataViewItem& item) const
 {
 	wxString line;
-	CAgilityBookTreeData* node = GetNode(item);
+	CAgilityBookTreeListData* node = GetNode(item);
 	if (node)
 	{
 		if (node->IsContainer())
@@ -589,66 +590,66 @@ wxString CAgilityBookTreeModel::GetPrintLine(const wxDataViewItem& item) const
 }
 
 
-CTreeDataType CAgilityBookTreeModel::Type(const wxDataViewItem& item) const
+CTreeListDataType CAgilityBookTreeListModel::Type(const wxDataViewItem& item) const
 {
-	CAgilityBookTreeData* pNode = GetNode(item);
+	CAgilityBookTreeListData* pNode = GetNode(item);
 	if (pNode)
 		return pNode->Type();
 	return eTreeUnknown;
 }
 
 
-ARBBasePtr CAgilityBookTreeModel::GetARBBase(const wxDataViewItem& item) const
+ARBBasePtr CAgilityBookTreeListModel::GetARBBase(const wxDataViewItem& item) const
 {
-	CAgilityBookTreeData* pNode = GetNode(item);
+	CAgilityBookTreeListData* pNode = GetNode(item);
 	if (pNode)
 		return pNode->GetARBBase();
 	return ARBBasePtr();
 }
 
 
-ARBDogPtr CAgilityBookTreeModel::GetDog(const wxDataViewItem& item) const
+ARBDogPtr CAgilityBookTreeListModel::GetDog(const wxDataViewItem& item) const
 {
-	CAgilityBookTreeData* pNode = GetNode(item);
+	CAgilityBookTreeListData* pNode = GetNode(item);
 	if (pNode)
 		return pNode->GetDog();
 	return ARBDogPtr();
 }
 
 
-ARBDogTrialPtr CAgilityBookTreeModel::GetTrial(const wxDataViewItem& item) const
+ARBDogTrialPtr CAgilityBookTreeListModel::GetTrial(const wxDataViewItem& item) const
 {
-	CAgilityBookTreeData* pNode = GetNode(item);
+	CAgilityBookTreeListData* pNode = GetNode(item);
 	if (pNode)
 		return pNode->GetTrial();
 	return ARBDogTrialPtr();
 }
 
 
-ARBDogRunPtr CAgilityBookTreeModel::GetRun(const wxDataViewItem& item) const
+ARBDogRunPtr CAgilityBookTreeListModel::GetRun(const wxDataViewItem& item) const
 {
-	CAgilityBookTreeData* pNode = GetNode(item);
+	CAgilityBookTreeListData* pNode = GetNode(item);
 	if (pNode)
 		return pNode->GetRun();
 	return ARBDogRunPtr();
 }
 
 
-MenuIdentityPopup CAgilityBookTreeModel::GetMenuID(const wxDataViewItem& item) const
+MenuIdentityPopup CAgilityBookTreeListModel::GetMenuID(const wxDataViewItem& item) const
 {
-	CAgilityBookTreeData* pNode = GetNode(item);
+	CAgilityBookTreeListData* pNode = GetNode(item);
 	if (pNode)
 		return pNode->GetMenuID();
 	return IdMenuNone;
 }
 
 
-MenuIdentityPopup CAgilityBookTreeModel::GetMenuID(wxDataViewItemArray const& items) const
+MenuIdentityPopup CAgilityBookTreeListModel::GetMenuID(wxDataViewItemArray const& items) const
 {
 	MenuIdentityPopup id = IdMenuNone;
 	for (wxDataViewItemArray::const_iterator i = items.begin(); i != items.end(); ++i)
 	{
-		CAgilityBookTreeData* pNode = GetNode(*i);
+		CAgilityBookTreeListData* pNode = GetNode(*i);
 		if (pNode)
 		{
 			if (IdMenuNone == id)
@@ -662,3 +663,5 @@ MenuIdentityPopup CAgilityBookTreeModel::GetMenuID(wxDataViewItemArray const& it
 	}
 	return id;
 }
+
+#endif // USE_TREELIST

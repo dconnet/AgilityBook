@@ -41,7 +41,12 @@
 class CAgilityBookCalendarListView;
 class CAgilityBookCalendarView;
 class CAgilityBookTrainingView;
+#if USE_TREELIST
+class CAgilityBookTreeListView;
+#else
+class CAgilityBookRunsView;
 class CAgilityBookTreeView;
+#endif
 class CStatusHandler;
 class CTabView;
 struct CVenueFilter;
@@ -53,8 +58,10 @@ struct CVenueFilter;
 #define UPDATE_CALENDAR_VIEW		0x0001
 #define UPDATE_TRAINING_VIEW		0x0002
 #define UPDATE_POINTS_VIEW			0x0004
-#define UPDATE_TREE_VIEW			0x0008
-#define UPDATE_ALL_VIEW				(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_TREE_VIEW)
+#define UPDATE_RUNS_VIEW			0x0008
+#define UPDATE_RUNS_SELECTION_VIEW	0x0010
+#define UPDATE_TREE_VIEW			0x0020
+#define UPDATE_ALL_VIEW				(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
 #define UPDATE_CONFIG				0x0100
 #define UPDATE_OPTIONS				0x0200
 #define UPDATE_NEW_TRIAL			0x0300
@@ -169,15 +176,24 @@ public:
 			ARBTrainingPtr pTraining);
 
 	bool ShowPointsAsHtml(bool bHtml);
-	CTabView* GetTabView() const;
-	CAgilityBookTreeView* GetTreeView() const;
-	CAgilityBookCalendarListView* GetCalendarListView() const;
-	CAgilityBookCalendarView* GetCalendarView() const;
-	CAgilityBookTrainingView* GetTrainingView() const;
-
 	void BackupFile(wxString const& lpszPathName);
 
+	CTabView* GetTabView() const;
+
+#if USE_TREELIST
 private:
+	CAgilityBookTreeListView* GetTreeListView() const;
+#else
+	CAgilityBookTreeView* GetTreeView() const;
+	CAgilityBookRunsView* GetRunsView() const;
+private:
+#endif
+	CAgilityBookCalendarListView* GetCalendarListView() const;
+public: // TODO
+	CAgilityBookCalendarView* GetCalendarView() const;
+private:
+	CAgilityBookTrainingView* GetTrainingView() const;
+
 	ARBAgilityRecordBook m_Records; ///< The real records.
 	CCalendarSites m_CalSites;
 	CStatusHandler* m_StatusData;

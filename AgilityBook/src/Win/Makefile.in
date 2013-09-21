@@ -47,9 +47,12 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	AgilityBookOptions.cpp \
 	AgilityBookPanels.cpp \
 	AgilityBookPointsView.cpp \
+	AgilityBookRunsView.cpp \
 	AgilityBookTrainingView.cpp \
 	AgilityBookTreeData.cpp \
-	AgilityBookTreeModel.cpp \
+	AgilityBookTreeListData.cpp \
+	AgilityBookTreeListModel.cpp \
+	AgilityBookTreeListView.cpp \
 	AgilityBookTreeView.cpp \
 	CalendarSites.cpp \
 	CalendarSiteUSDAA.cpp \

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-04 06:54-0800\n"
-"PO-Revision-Date: 2013-09-04 06:54-0800\n"
+"POT-Creation-Date: 2013-09-20 18:16-0800\n"
+"PO-Revision-Date: 2013-09-20 18:16-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -276,7 +276,7 @@ msgstr "%1$d updated"
 msgid "IDS_UPDATE_IDENTICAL"
 msgstr "%1$d identical"
 
-#: TestARB/Local.cpp:140 Win/DlgAssignColumns.cpp:303 Win/DlgConfigure.cpp:217
+#: TestARB/Local.cpp:140 Win/DlgAssignColumns.cpp:324 Win/DlgConfigure.cpp:217
 #: Win/Localization.cpp:124 Win/Print.cpp:259
 msgid "IDS_COL_FAULTS"
 msgstr "Faults"
@@ -501,8 +501,9 @@ msgstr ""
 msgid "Agility Record Book file"
 msgstr "Agility Record Book file"
 
-#: Win/AgilityBookCalendarListView.cpp:466 Win/AgilityBookDoc.cpp:1570
-#: Win/AgilityBookTrainingView.cpp:294 Win/AgilityBookTreeView.cpp:187
+#: Win/AgilityBookCalendarListView.cpp:466 Win/AgilityBookDoc.cpp:1681
+#: Win/AgilityBookRunsView.cpp:1187 Win/AgilityBookTrainingView.cpp:294
+#: Win/AgilityBookTreeListView.cpp:188 Win/AgilityBookTreeView.cpp:178
 msgid "IDS_CANNOT_FIND"
 msgstr "Cannot find '%1$s'"
 
@@ -512,7 +513,7 @@ msgid "IDS_NUM_EVENTS"
 msgstr "%1$d events"
 
 #: Win/AgilityBookCalendarListView.cpp:628
-#: Win/AgilityBookCalendarView.cpp:1286 Win/AgilityBookDoc.cpp:1298
+#: Win/AgilityBookCalendarView.cpp:1286 Win/AgilityBookDoc.cpp:1409
 #: Win/AgilityBookHtmlView.cpp:111 Win/AgilityBookPointsView.cpp:226
 #: Win/AgilityBookTrainingView.cpp:424
 msgid "IDS_INDICATOR_BLANK"
@@ -522,20 +523,20 @@ msgstr "          "
 msgid "IDS_NOT_VISIBLE"
 msgstr "Warning: %1$d new entries are not visible due to your viewing options."
 
-#: Win/AgilityBookCalendarView.cpp:620 Win/DlgAssignColumns.cpp:307
-#: Win/DlgAssignColumns.cpp:364 Win/DlgAssignColumns.cpp:415
-#: Win/DlgAssignColumns.cpp:482 Win/DlgListCtrl.cpp:403
+#: Win/AgilityBookCalendarView.cpp:620 Win/DlgAssignColumns.cpp:328
+#: Win/DlgAssignColumns.cpp:385 Win/DlgAssignColumns.cpp:436
+#: Win/DlgAssignColumns.cpp:503 Win/DlgListCtrl.cpp:403
 msgid "IDS_COL_START_DATE"
 msgstr "Start Date"
 
-#: Win/AgilityBookCalendarView.cpp:621 Win/DlgAssignColumns.cpp:310
-#: Win/DlgAssignColumns.cpp:367 Win/DlgAssignColumns.cpp:421
+#: Win/AgilityBookCalendarView.cpp:621 Win/DlgAssignColumns.cpp:331
+#: Win/DlgAssignColumns.cpp:388 Win/DlgAssignColumns.cpp:442
 #: Win/DlgListCtrl.cpp:404
 msgid "IDS_COL_END_DATE"
 msgstr "End Date"
 
-#: Win/AgilityBookCalendarView.cpp:622 Win/DlgAssignColumns.cpp:213
-#: Win/DlgAssignColumns.cpp:325 Win/DlgAssignColumns.cpp:373
+#: Win/AgilityBookCalendarView.cpp:622 Win/DlgAssignColumns.cpp:234
+#: Win/DlgAssignColumns.cpp:346 Win/DlgAssignColumns.cpp:394
 #: Win/DlgCalendarQueryDetail.cpp:166 Win/DlgDog.cpp:95 Win/DlgDog.cpp:109
 #: Win/DlgDog.cpp:129 Win/DlgListCtrl.cpp:407 Win/DlgListViewer.cpp:1140
 #: Win/DlgListViewer.cpp:1208 Win/DlgListViewer.cpp:1348
@@ -543,9 +544,9 @@ msgstr "End Date"
 msgid "IDS_COL_VENUE"
 msgstr "Venue"
 
-#: Win/AgilityBookCalendarView.cpp:623 Win/DlgAssignColumns.cpp:219
-#: Win/DlgAssignColumns.cpp:319 Win/DlgAssignColumns.cpp:376
-#: Win/DlgAssignColumns.cpp:460 Win/DlgCalendarQueryDetail.cpp:115
+#: Win/AgilityBookCalendarView.cpp:623 Win/DlgAssignColumns.cpp:240
+#: Win/DlgAssignColumns.cpp:340 Win/DlgAssignColumns.cpp:397
+#: Win/DlgAssignColumns.cpp:481 Win/DlgCalendarQueryDetail.cpp:115
 #: Win/DlgInfoNote.cpp:357 Win/DlgListCtrl.cpp:405 Win/DlgListViewer.cpp:956
 #: Win/DlgListViewer.cpp:996 Win/DlgListViewer.cpp:1008
 #: Win/DlgListViewer.cpp:1146 Win/DlgListViewer.cpp:1214
@@ -553,8 +554,8 @@ msgstr "Venue"
 msgid "IDS_COL_LOCATION"
 msgstr "Location"
 
-#: Win/AgilityBookCalendarView.cpp:624 Win/DlgAssignColumns.cpp:216
-#: Win/DlgAssignColumns.cpp:322 Win/DlgAssignColumns.cpp:370
+#: Win/AgilityBookCalendarView.cpp:624 Win/DlgAssignColumns.cpp:237
+#: Win/DlgAssignColumns.cpp:343 Win/DlgAssignColumns.cpp:391
 #: Win/DlgInfoNote.cpp:351 Win/DlgListCtrl.cpp:406 Win/DlgListViewer.cpp:950
 #: Win/DlgListViewer.cpp:990 Win/DlgListViewer.cpp:1002
 #: Win/DlgListViewer.cpp:1147 Win/DlgListViewer.cpp:1215
@@ -563,17 +564,17 @@ msgstr "Location"
 msgid "IDS_COL_CLUB"
 msgstr "Club"
 
-#: Win/AgilityBookCalendarView.cpp:625 Win/DlgAssignColumns.cpp:328
+#: Win/AgilityBookCalendarView.cpp:625 Win/DlgAssignColumns.cpp:349
 msgid "IDS_COL_OPENS"
 msgstr "Opens"
 
-#: Win/AgilityBookCalendarView.cpp:626 Win/DlgAssignColumns.cpp:331
+#: Win/AgilityBookCalendarView.cpp:626 Win/DlgAssignColumns.cpp:352
 msgid "IDS_COL_CLOSES"
 msgstr "Closes"
 
-#: Win/AgilityBookCalendarView.cpp:627 Win/AgilityBookDoc.cpp:1935
-#: Win/DlgAssignColumns.cpp:334 Win/DlgAssignColumns.cpp:344
-#: Win/DlgAssignColumns.cpp:379 Win/DlgAssignColumns.cpp:524
+#: Win/AgilityBookCalendarView.cpp:627 Win/AgilityBookDoc.cpp:2048
+#: Win/DlgAssignColumns.cpp:355 Win/DlgAssignColumns.cpp:365
+#: Win/DlgAssignColumns.cpp:400 Win/DlgAssignColumns.cpp:545
 #: Win/DlgListCtrl.cpp:408
 msgid "IDS_COL_NOTES"
 msgstr "Notes"
@@ -654,94 +655,94 @@ msgstr "Friday"
 msgid "Saturday"
 msgstr "Saturday"
 
-#: Win/AgilityBookDoc.cpp:579
+#: Win/AgilityBookDoc.cpp:661
 msgid "IDS_ARE_YOU_SURE_CONTINUE"
 msgstr "Are you sure you want to continue?"
 
-#: Win/AgilityBookDoc.cpp:623 Win/DlgConfigure.cpp:782
+#: Win/AgilityBookDoc.cpp:705 Win/DlgConfigure.cpp:782
 msgid "IDS_CONFIG_NO_UPDATE"
 msgstr "No updates were performed. The configurations are the same."
 
-#: Win/AgilityBookDoc.cpp:920
+#: Win/AgilityBookDoc.cpp:1002
 msgid "IDS_ADDED"
 msgstr "Added "
 
-#: Win/AgilityBookDoc.cpp:927
+#: Win/AgilityBookDoc.cpp:1009
 msgid "IDS_ADDED_DOGS"
 msgstr "%1$d dogs"
 
-#: Win/AgilityBookDoc.cpp:934 Win/AgilityBookDoc.cpp:989
+#: Win/AgilityBookDoc.cpp:1016 Win/AgilityBookDoc.cpp:1071
 msgid "IDS_ADDED_REGNUMS"
 msgstr "%1$d registration numbers"
 
-#: Win/AgilityBookDoc.cpp:941
+#: Win/AgilityBookDoc.cpp:1023
 msgid "IDS_ADDED_EXISTINGPTS"
 msgstr "%1$d existing points"
 
-#: Win/AgilityBookDoc.cpp:948 Win/AgilityBookDoc.cpp:1001
+#: Win/AgilityBookDoc.cpp:1030 Win/AgilityBookDoc.cpp:1083
 msgid "IDS_ADDED_TITLES"
 msgstr "%1$d titles"
 
-#: Win/AgilityBookDoc.cpp:955
+#: Win/AgilityBookDoc.cpp:1037
 msgid "IDS_ADDED_TRIALS"
 msgstr "%1$d trials"
 
-#: Win/AgilityBookDoc.cpp:962
+#: Win/AgilityBookDoc.cpp:1044
 msgid "IDS_ADDED_CLUBS"
 msgstr "%1$d clubs"
 
-#: Win/AgilityBookDoc.cpp:969
+#: Win/AgilityBookDoc.cpp:1051
 msgid "IDS_ADDED_JUDGES"
 msgstr "%1$d judges"
 
-#: Win/AgilityBookDoc.cpp:976
+#: Win/AgilityBookDoc.cpp:1058
 msgid "IDS_ADDED_LOCATIONS"
 msgstr "%1$d locations"
 
-#: Win/AgilityBookDoc.cpp:986 Win/AgilityBookDoc.cpp:998
+#: Win/AgilityBookDoc.cpp:1068 Win/AgilityBookDoc.cpp:1080
 msgid "IDS_UPDATED"
 msgstr "Updated "
 
-#: Win/AgilityBookDoc.cpp:1035 Win/CalendarSites.cpp:1101
+#: Win/AgilityBookDoc.cpp:1117 Win/CalendarSites.cpp:1101
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "Added %1$d new calendar items, %2$d updated items."
 
-#: Win/AgilityBookDoc.cpp:1068
+#: Win/AgilityBookDoc.cpp:1150
 msgid "IDS_UPDATED_TRAINING_ITEMS"
 msgstr "Added %1$d new Training Log items, %2$d updated items."
 
-#: Win/AgilityBookDoc.cpp:1322 Win/DlgDog.cpp:593 Win/DlgFindLinks.cpp:118
+#: Win/AgilityBookDoc.cpp:1433 Win/DlgDog.cpp:593 Win/DlgFindLinks.cpp:118
 #: Win/DlgListCtrl.cpp:458 Win/DlgListViewer.cpp:1203 Win/Print.cpp:243
 msgid "IDS_COL_DOG"
 msgstr "Dog"
 
-#: Win/AgilityBookDoc.cpp:1354
+#: Win/AgilityBookDoc.cpp:1465
 msgid "Sorry, could not open this file."
 msgstr "Sorry, could not open this file."
 
-#: Win/AgilityBookDoc.cpp:1369 Win/AgilityBookDoc.cpp:1382
+#: Win/AgilityBookDoc.cpp:1480 Win/AgilityBookDoc.cpp:1493
 #, c-format
 msgid "Cannot open file '%s'."
 msgstr "Cannot open file '%s'."
 
-#: Win/AgilityBookDoc.cpp:1392
+#: Win/AgilityBookDoc.cpp:1503
 msgid "IDS_NONFATAL_MSGS"
 msgstr ""
 "Warning: Some non-fatal messages were generated while loading the file:"
 
-#: Win/AgilityBookDoc.cpp:1503 Win/UpdateInfo.cpp:486
+#: Win/AgilityBookDoc.cpp:1614 Win/UpdateInfo.cpp:486
 msgid "IDS_CANNOT_OPEN"
 msgstr "Unable to open file '%1$s' for writing."
 
-#: Win/AgilityBookDoc.cpp:1509
+#: Win/AgilityBookDoc.cpp:1620
 msgid "IDS_INTERNAL_ERROR"
 msgstr "Internal error: File not saved."
 
-#: Win/AgilityBookDoc.cpp:1532
+#: Win/AgilityBookDoc.cpp:1643
 msgid "IDS_SEARCH_NOTES"
 msgstr "Search Notes"
 
-#: Win/AgilityBookDoc.cpp:1728
+#: Win/AgilityBookDoc.cpp:1841
 msgid "IDS_NO_LINKED_FILES"
 msgstr "No linked files found."
 
@@ -850,87 +851,87 @@ msgstr "Quit the application; prompts to save documents"
 msgid "MenuEdit"
 msgstr "&Edit"
 
-#: Win/AgilityBookMenu.cpp:75 Win/AgilityBookMenu.cpp:274
-#: Win/AgilityBookMenu.cpp:293 Win/AgilityBookMenu.cpp:312
-#: Win/AgilityBookMenu.cpp:328 Win/AgilityBookMenu.cpp:356
-#: Win/AgilityBookMenu.cpp:373
+#: Win/AgilityBookMenu.cpp:75 Win/AgilityBookMenu.cpp:277
+#: Win/AgilityBookMenu.cpp:296 Win/AgilityBookMenu.cpp:315
+#: Win/AgilityBookMenu.cpp:332 Win/AgilityBookMenu.cpp:360
+#: Win/AgilityBookMenu.cpp:377
 msgid "MenuEditDuplicate"
 msgstr "&Duplicate"
 
-#: Win/AgilityBookMenu.cpp:75 Win/AgilityBookMenu.cpp:274
-#: Win/AgilityBookMenu.cpp:293 Win/AgilityBookMenu.cpp:312
-#: Win/AgilityBookMenu.cpp:328 Win/AgilityBookMenu.cpp:356
-#: Win/AgilityBookMenu.cpp:373
+#: Win/AgilityBookMenu.cpp:75 Win/AgilityBookMenu.cpp:277
+#: Win/AgilityBookMenu.cpp:296 Win/AgilityBookMenu.cpp:315
+#: Win/AgilityBookMenu.cpp:332 Win/AgilityBookMenu.cpp:360
+#: Win/AgilityBookMenu.cpp:377
 msgid "DescEditDuplicate"
 msgstr "Duplicate the current selection"
 
-#: Win/AgilityBookMenu.cpp:76 Win/AgilityBookMenu.cpp:275
-#: Win/AgilityBookMenu.cpp:294 Win/AgilityBookMenu.cpp:313
-#: Win/AgilityBookMenu.cpp:329 Win/AgilityBookMenu.cpp:357
-#: Win/AgilityBookMenu.cpp:374
+#: Win/AgilityBookMenu.cpp:76 Win/AgilityBookMenu.cpp:278
+#: Win/AgilityBookMenu.cpp:297 Win/AgilityBookMenu.cpp:316
+#: Win/AgilityBookMenu.cpp:333 Win/AgilityBookMenu.cpp:361
+#: Win/AgilityBookMenu.cpp:378
 msgid "MenuEditCut"
 msgstr "Cu&t\tCtrl+X"
 
-#: Win/AgilityBookMenu.cpp:76 Win/AgilityBookMenu.cpp:275
-#: Win/AgilityBookMenu.cpp:294 Win/AgilityBookMenu.cpp:313
-#: Win/AgilityBookMenu.cpp:329 Win/AgilityBookMenu.cpp:357
-#: Win/AgilityBookMenu.cpp:374
+#: Win/AgilityBookMenu.cpp:76 Win/AgilityBookMenu.cpp:278
+#: Win/AgilityBookMenu.cpp:297 Win/AgilityBookMenu.cpp:316
+#: Win/AgilityBookMenu.cpp:333 Win/AgilityBookMenu.cpp:361
+#: Win/AgilityBookMenu.cpp:378
 msgid "DescEditCut"
 msgstr "Cut the selection and put it on the Clipboard"
 
-#: Win/AgilityBookMenu.cpp:77 Win/AgilityBookMenu.cpp:276
-#: Win/AgilityBookMenu.cpp:295 Win/AgilityBookMenu.cpp:314
-#: Win/AgilityBookMenu.cpp:330 Win/AgilityBookMenu.cpp:358
-#: Win/AgilityBookMenu.cpp:375
+#: Win/AgilityBookMenu.cpp:77 Win/AgilityBookMenu.cpp:279
+#: Win/AgilityBookMenu.cpp:298 Win/AgilityBookMenu.cpp:317
+#: Win/AgilityBookMenu.cpp:334 Win/AgilityBookMenu.cpp:362
+#: Win/AgilityBookMenu.cpp:379
 msgid "MenuEditCopy"
 msgstr "&Copy\tCtrl+C"
 
-#: Win/AgilityBookMenu.cpp:77 Win/AgilityBookMenu.cpp:276
-#: Win/AgilityBookMenu.cpp:295 Win/AgilityBookMenu.cpp:314
-#: Win/AgilityBookMenu.cpp:330 Win/AgilityBookMenu.cpp:345
-#: Win/AgilityBookMenu.cpp:358 Win/AgilityBookMenu.cpp:375
+#: Win/AgilityBookMenu.cpp:77 Win/AgilityBookMenu.cpp:279
+#: Win/AgilityBookMenu.cpp:298 Win/AgilityBookMenu.cpp:317
+#: Win/AgilityBookMenu.cpp:334 Win/AgilityBookMenu.cpp:349
+#: Win/AgilityBookMenu.cpp:362 Win/AgilityBookMenu.cpp:379
 msgid "DescEditCopy"
 msgstr "Copy the selection and put it on the Clipboard"
 
-#: Win/AgilityBookMenu.cpp:78 Win/AgilityBookMenu.cpp:277
-#: Win/AgilityBookMenu.cpp:296 Win/AgilityBookMenu.cpp:315
-#: Win/AgilityBookMenu.cpp:331 Win/AgilityBookMenu.cpp:359
-#: Win/AgilityBookMenu.cpp:376
+#: Win/AgilityBookMenu.cpp:78 Win/AgilityBookMenu.cpp:280
+#: Win/AgilityBookMenu.cpp:299 Win/AgilityBookMenu.cpp:318
+#: Win/AgilityBookMenu.cpp:335 Win/AgilityBookMenu.cpp:363
+#: Win/AgilityBookMenu.cpp:380
 msgid "MenuEditPaste"
 msgstr "&Paste\tCtrl+V"
 
-#: Win/AgilityBookMenu.cpp:78 Win/AgilityBookMenu.cpp:277
-#: Win/AgilityBookMenu.cpp:296 Win/AgilityBookMenu.cpp:315
-#: Win/AgilityBookMenu.cpp:331 Win/AgilityBookMenu.cpp:359
-#: Win/AgilityBookMenu.cpp:376
+#: Win/AgilityBookMenu.cpp:78 Win/AgilityBookMenu.cpp:280
+#: Win/AgilityBookMenu.cpp:299 Win/AgilityBookMenu.cpp:318
+#: Win/AgilityBookMenu.cpp:335 Win/AgilityBookMenu.cpp:363
+#: Win/AgilityBookMenu.cpp:380
 msgid "DescEditPaste"
 msgstr "Insert Clipboard contents"
 
-#: Win/AgilityBookMenu.cpp:80 Win/AgilityBookMenu.cpp:348
+#: Win/AgilityBookMenu.cpp:80 Win/AgilityBookMenu.cpp:352
 msgid "MenuEditSelectAll"
 msgstr "Select &All\tCtrl+A"
 
-#: Win/AgilityBookMenu.cpp:80 Win/AgilityBookMenu.cpp:348
+#: Win/AgilityBookMenu.cpp:80 Win/AgilityBookMenu.cpp:352
 msgid "DescEditSelectAll"
 msgstr "Select all items"
 
-#: Win/AgilityBookMenu.cpp:82 Win/AgilityBookMenu.cpp:346
+#: Win/AgilityBookMenu.cpp:82 Win/AgilityBookMenu.cpp:350
 msgid "MenuEditCopyTitles"
 msgstr "Cop&y Titles"
 
-#: Win/AgilityBookMenu.cpp:82 Win/AgilityBookMenu.cpp:346
+#: Win/AgilityBookMenu.cpp:82 Win/AgilityBookMenu.cpp:350
 msgid "DescEditCopyTitles"
 msgstr "Copy titles"
 
-#: Win/AgilityBookMenu.cpp:83 Win/AgilityBookMenu.cpp:280
-#: Win/AgilityBookMenu.cpp:299 Win/AgilityBookMenu.cpp:318
-#: Win/AgilityBookMenu.cpp:334
+#: Win/AgilityBookMenu.cpp:83 Win/AgilityBookMenu.cpp:283
+#: Win/AgilityBookMenu.cpp:302 Win/AgilityBookMenu.cpp:321
+#: Win/AgilityBookMenu.cpp:338
 msgid "MenuEditReorder"
 msgstr "&Reorder..."
 
-#: Win/AgilityBookMenu.cpp:83 Win/AgilityBookMenu.cpp:280
-#: Win/AgilityBookMenu.cpp:299 Win/AgilityBookMenu.cpp:318
-#: Win/AgilityBookMenu.cpp:334
+#: Win/AgilityBookMenu.cpp:83 Win/AgilityBookMenu.cpp:283
+#: Win/AgilityBookMenu.cpp:302 Win/AgilityBookMenu.cpp:321
+#: Win/AgilityBookMenu.cpp:338
 msgid "DescEditReorder"
 msgstr "Reorder items"
 
@@ -974,29 +975,29 @@ msgstr "&Agility"
 msgid "MenuDog"
 msgstr "&Dog"
 
-#: Win/AgilityBookMenu.cpp:93 Win/AgilityBookMenu.cpp:270
+#: Win/AgilityBookMenu.cpp:93 Win/AgilityBookMenu.cpp:273
 msgid "MenuDogProperties"
 msgstr "&Properties..."
 
 #: Win/AgilityBookMenu.cpp:93 Win/AgilityBookMenu.cpp:95
-#: Win/AgilityBookMenu.cpp:270
+#: Win/AgilityBookMenu.cpp:273
 msgid "DescDogProperties"
 msgstr "Edit a Dog's information"
 
 #: Win/AgilityBookMenu.cpp:95 Win/AgilityBookMenu.cpp:100
 #: Win/AgilityBookMenu.cpp:105 Win/AgilityBookMenu.cpp:119
-#: Win/AgilityBookMenu.cpp:129 Win/AgilityBookMenu.cpp:273
-#: Win/AgilityBookMenu.cpp:292 Win/AgilityBookMenu.cpp:311
-#: Win/AgilityBookMenu.cpp:327 Win/AgilityBookMenu.cpp:355
-#: Win/AgilityBookMenu.cpp:372
+#: Win/AgilityBookMenu.cpp:129 Win/AgilityBookMenu.cpp:276
+#: Win/AgilityBookMenu.cpp:295 Win/AgilityBookMenu.cpp:314
+#: Win/AgilityBookMenu.cpp:331 Win/AgilityBookMenu.cpp:359
+#: Win/AgilityBookMenu.cpp:376
 msgid "MenuNew"
 msgstr "&New..."
 
-#: Win/AgilityBookMenu.cpp:96 Win/AgilityBookMenu.cpp:278
+#: Win/AgilityBookMenu.cpp:96 Win/AgilityBookMenu.cpp:281
 msgid "MenuDogDelete"
 msgstr "De&lete..."
 
-#: Win/AgilityBookMenu.cpp:96 Win/AgilityBookMenu.cpp:278
+#: Win/AgilityBookMenu.cpp:96 Win/AgilityBookMenu.cpp:281
 msgid "DescDogDelete"
 msgstr "Delete a Dog and all its information"
 
@@ -1012,7 +1013,7 @@ msgstr "&Properties..."
 msgid "DescTitleProperties"
 msgstr "Edit a Title's information"
 
-#: Win/AgilityBookMenu.cpp:100 Win/AgilityBookMenu.cpp:244
+#: Win/AgilityBookMenu.cpp:100 Win/AgilityBookMenu.cpp:247
 msgid "DescTitleNew"
 msgstr "Create a new Title"
 
@@ -1028,33 +1029,33 @@ msgstr "Delete a Title"
 msgid "MenuTrial"
 msgstr "Tr&ial"
 
-#: Win/AgilityBookMenu.cpp:103 Win/AgilityBookMenu.cpp:289
+#: Win/AgilityBookMenu.cpp:103 Win/AgilityBookMenu.cpp:292
 msgid "MenuTrialProperties"
 msgstr "&Properties..."
 
-#: Win/AgilityBookMenu.cpp:103 Win/AgilityBookMenu.cpp:289
+#: Win/AgilityBookMenu.cpp:103 Win/AgilityBookMenu.cpp:292
 msgid "DescTrialProperties"
 msgstr "Edit a Trial's information"
 
-#: Win/AgilityBookMenu.cpp:105 Win/AgilityBookMenu.cpp:246
+#: Win/AgilityBookMenu.cpp:105 Win/AgilityBookMenu.cpp:249
 msgid "DescTrialNew"
 msgstr "Create a new Trial"
 
-#: Win/AgilityBookMenu.cpp:106 Win/AgilityBookMenu.cpp:297
+#: Win/AgilityBookMenu.cpp:106 Win/AgilityBookMenu.cpp:300
 msgid "MenuTrialDelete"
 msgstr "De&lete..."
 
-#: Win/AgilityBookMenu.cpp:106 Win/AgilityBookMenu.cpp:297
+#: Win/AgilityBookMenu.cpp:106 Win/AgilityBookMenu.cpp:300
 msgid "DescTrialDelete"
 msgstr "Delete a Trial"
 
-#: Win/AgilityBookMenu.cpp:108 Win/AgilityBookMenu.cpp:304
-#: Win/AgilityBookMenu.cpp:320 Win/AgilityBookMenu.cpp:336
+#: Win/AgilityBookMenu.cpp:108 Win/AgilityBookMenu.cpp:307
+#: Win/AgilityBookMenu.cpp:323 Win/AgilityBookMenu.cpp:340
 msgid "MenuTrialPrintRuns"
 msgstr "Print Trial's &Runs..."
 
-#: Win/AgilityBookMenu.cpp:108 Win/AgilityBookMenu.cpp:304
-#: Win/AgilityBookMenu.cpp:320 Win/AgilityBookMenu.cpp:336
+#: Win/AgilityBookMenu.cpp:108 Win/AgilityBookMenu.cpp:307
+#: Win/AgilityBookMenu.cpp:323 Win/AgilityBookMenu.cpp:340
 msgid "DescTrialPrintRuns"
 msgstr "Print all the runs for the selected trial"
 
@@ -1062,11 +1063,11 @@ msgstr "Print all the runs for the selected trial"
 msgid "MenuRun"
 msgstr "&Run"
 
-#: Win/AgilityBookMenu.cpp:110 Win/AgilityBookMenu.cpp:308
+#: Win/AgilityBookMenu.cpp:110 Win/AgilityBookMenu.cpp:311
 msgid "MenuRunProperties"
 msgstr "&Properties..."
 
-#: Win/AgilityBookMenu.cpp:110 Win/AgilityBookMenu.cpp:308
+#: Win/AgilityBookMenu.cpp:110 Win/AgilityBookMenu.cpp:311
 msgid "DescRunProperties"
 msgstr "Edit a Run's information"
 
@@ -1074,27 +1075,27 @@ msgstr "Edit a Run's information"
 msgid "MenuNewRun"
 msgstr "&New...\tCtrl+R"
 
-#: Win/AgilityBookMenu.cpp:112 Win/AgilityBookMenu.cpp:249
+#: Win/AgilityBookMenu.cpp:112 Win/AgilityBookMenu.cpp:252
 msgid "DescRunNew"
 msgstr "Create a new Run"
 
-#: Win/AgilityBookMenu.cpp:113 Win/AgilityBookMenu.cpp:316
-#: Win/AgilityBookMenu.cpp:332
+#: Win/AgilityBookMenu.cpp:113 Win/AgilityBookMenu.cpp:319
+#: Win/AgilityBookMenu.cpp:336
 msgid "MenuRunDelete"
 msgstr "De&lete..."
 
-#: Win/AgilityBookMenu.cpp:113 Win/AgilityBookMenu.cpp:316
-#: Win/AgilityBookMenu.cpp:332
+#: Win/AgilityBookMenu.cpp:113 Win/AgilityBookMenu.cpp:319
+#: Win/AgilityBookMenu.cpp:336
 msgid "DescRunDelete"
 msgstr "Delete a Run"
 
-#: Win/AgilityBookMenu.cpp:115 Win/AgilityBookMenu.cpp:321
-#: Win/AgilityBookMenu.cpp:337
+#: Win/AgilityBookMenu.cpp:115 Win/AgilityBookMenu.cpp:324
+#: Win/AgilityBookMenu.cpp:341
 msgid "MenuRunPrintRuns"
 msgstr "Print &Runs..."
 
-#: Win/AgilityBookMenu.cpp:115 Win/AgilityBookMenu.cpp:321
-#: Win/AgilityBookMenu.cpp:337
+#: Win/AgilityBookMenu.cpp:115 Win/AgilityBookMenu.cpp:324
+#: Win/AgilityBookMenu.cpp:341
 msgid "DescRunPrintRuns"
 msgstr "Print all the selected runs"
 
@@ -1102,47 +1103,47 @@ msgstr "Print all the selected runs"
 msgid "MenuCalendar"
 msgstr "&Calendar"
 
-#: Win/AgilityBookMenu.cpp:117 Win/AgilityBookMenu.cpp:352
+#: Win/AgilityBookMenu.cpp:117 Win/AgilityBookMenu.cpp:356
 msgid "MenuCalendarProperties"
 msgstr "&Properties..."
 
-#: Win/AgilityBookMenu.cpp:117 Win/AgilityBookMenu.cpp:352
+#: Win/AgilityBookMenu.cpp:117 Win/AgilityBookMenu.cpp:356
 msgid "DescCalendarProperties"
 msgstr "Edit an upcoming Calendar entry"
 
-#: Win/AgilityBookMenu.cpp:119 Win/AgilityBookMenu.cpp:355
+#: Win/AgilityBookMenu.cpp:119 Win/AgilityBookMenu.cpp:359
 msgid "DescCalendarNew"
 msgstr "Create an upcoming Calendar entry"
 
-#: Win/AgilityBookMenu.cpp:120 Win/AgilityBookMenu.cpp:360
+#: Win/AgilityBookMenu.cpp:120 Win/AgilityBookMenu.cpp:364
 msgid "MenuCalendarDelete"
 msgstr "De&lete..."
 
-#: Win/AgilityBookMenu.cpp:120 Win/AgilityBookMenu.cpp:360
+#: Win/AgilityBookMenu.cpp:120 Win/AgilityBookMenu.cpp:364
 msgid "DescCalendarDelete"
 msgstr "Delete an upcoming Calendar entry"
 
-#: Win/AgilityBookMenu.cpp:122 Win/AgilityBookMenu.cpp:362
+#: Win/AgilityBookMenu.cpp:122 Win/AgilityBookMenu.cpp:366
 msgid "MenuCalendarUpdate"
 msgstr "&Update..."
 
-#: Win/AgilityBookMenu.cpp:122 Win/AgilityBookMenu.cpp:362
+#: Win/AgilityBookMenu.cpp:122 Win/AgilityBookMenu.cpp:366
 msgid "DescCalendarUpdate"
 msgstr "Update Calendar entries from Online sources"
 
-#: Win/AgilityBookMenu.cpp:123 Win/AgilityBookMenu.cpp:363
+#: Win/AgilityBookMenu.cpp:123 Win/AgilityBookMenu.cpp:367
 msgid "MenuCalendarExport"
 msgstr "&Export..."
 
-#: Win/AgilityBookMenu.cpp:123 Win/AgilityBookMenu.cpp:363
+#: Win/AgilityBookMenu.cpp:123 Win/AgilityBookMenu.cpp:367
 msgid "DescCalendarExport"
 msgstr "Export Calendar entries"
 
-#: Win/AgilityBookMenu.cpp:125 Win/AgilityBookMenu.cpp:365
+#: Win/AgilityBookMenu.cpp:125 Win/AgilityBookMenu.cpp:369
 msgid "MenuCalendarTrialEntry"
 msgstr "&Create Trial Entry..."
 
-#: Win/AgilityBookMenu.cpp:125 Win/AgilityBookMenu.cpp:365
+#: Win/AgilityBookMenu.cpp:125 Win/AgilityBookMenu.cpp:369
 msgid "DescCalendarTrialEntry"
 msgstr "Create a Trial entry"
 
@@ -1150,23 +1151,23 @@ msgstr "Create a Trial entry"
 msgid "MenuTraining"
 msgstr "Tr&aining"
 
-#: Win/AgilityBookMenu.cpp:127 Win/AgilityBookMenu.cpp:369
+#: Win/AgilityBookMenu.cpp:127 Win/AgilityBookMenu.cpp:373
 msgid "MenuTrainingProperties"
 msgstr "&Properties..."
 
-#: Win/AgilityBookMenu.cpp:127 Win/AgilityBookMenu.cpp:369
+#: Win/AgilityBookMenu.cpp:127 Win/AgilityBookMenu.cpp:373
 msgid "DescTrainingProperties"
 msgstr "Edit a Training Log entry"
 
-#: Win/AgilityBookMenu.cpp:129 Win/AgilityBookMenu.cpp:372
+#: Win/AgilityBookMenu.cpp:129 Win/AgilityBookMenu.cpp:376
 msgid "DescTrainingNew"
 msgstr "Create a new Training Log entry"
 
-#: Win/AgilityBookMenu.cpp:130 Win/AgilityBookMenu.cpp:377
+#: Win/AgilityBookMenu.cpp:130 Win/AgilityBookMenu.cpp:381
 msgid "MenuTrainingDelete"
 msgstr "De&lete..."
 
-#: Win/AgilityBookMenu.cpp:130 Win/AgilityBookMenu.cpp:377
+#: Win/AgilityBookMenu.cpp:130 Win/AgilityBookMenu.cpp:381
 msgid "DescTrainingDelete"
 msgstr "Delete a Training Log entry"
 
@@ -1210,17 +1211,17 @@ msgstr "Search Note Information"
 msgid "MenuView"
 msgstr "&View"
 
-#: Win/AgilityBookMenu.cpp:140 Win/AgilityBookMenu.cpp:271
-#: Win/AgilityBookMenu.cpp:290 Win/AgilityBookMenu.cpp:309
-#: Win/AgilityBookMenu.cpp:325 Win/AgilityBookMenu.cpp:343
-#: Win/AgilityBookMenu.cpp:353 Win/AgilityBookMenu.cpp:370
+#: Win/AgilityBookMenu.cpp:140 Win/AgilityBookMenu.cpp:274
+#: Win/AgilityBookMenu.cpp:293 Win/AgilityBookMenu.cpp:312
+#: Win/AgilityBookMenu.cpp:329 Win/AgilityBookMenu.cpp:347
+#: Win/AgilityBookMenu.cpp:357 Win/AgilityBookMenu.cpp:374
 msgid "MenuViewOptions"
 msgstr "&Options...\tF7"
 
-#: Win/AgilityBookMenu.cpp:140 Win/AgilityBookMenu.cpp:271
-#: Win/AgilityBookMenu.cpp:290 Win/AgilityBookMenu.cpp:309
-#: Win/AgilityBookMenu.cpp:325 Win/AgilityBookMenu.cpp:343
-#: Win/AgilityBookMenu.cpp:353 Win/AgilityBookMenu.cpp:370
+#: Win/AgilityBookMenu.cpp:140 Win/AgilityBookMenu.cpp:274
+#: Win/AgilityBookMenu.cpp:293 Win/AgilityBookMenu.cpp:312
+#: Win/AgilityBookMenu.cpp:329 Win/AgilityBookMenu.cpp:347
+#: Win/AgilityBookMenu.cpp:357 Win/AgilityBookMenu.cpp:374
 msgid "DescViewOptions"
 msgstr "Change viewing options"
 
@@ -1249,350 +1250,351 @@ msgid "DescViewNewestTrials"
 msgstr "Sort newest trials first"
 
 #: Win/AgilityBookMenu.cpp:147
+msgid "MenuViewRunsByTrial"
+msgstr "Show &Runs By Trial"
+
+#: Win/AgilityBookMenu.cpp:147
+msgid "DescViewRunsByTrial"
+msgstr "Show runs by selected trial"
+
+#: Win/AgilityBookMenu.cpp:149
 msgid "MenuViewRuns"
 msgstr "Show &Runs"
 
-#: Win/AgilityBookMenu.cpp:148
-msgid "MenuViewRunsByTrial"
+#: Win/AgilityBookMenu.cpp:150
+msgid "MenuViewRunsListByTrial"
 msgstr "By &Trial"
 
-#: Win/AgilityBookMenu.cpp:148
-msgid "DescViewRunsByTrial"
+#: Win/AgilityBookMenu.cpp:150
+msgid "DescViewRunsListByTrial"
 msgstr "Show runs by trial"
 
-#: Win/AgilityBookMenu.cpp:149
+#: Win/AgilityBookMenu.cpp:151
 msgid "MenuViewRunsByList"
 msgstr "By &List"
 
-#: Win/AgilityBookMenu.cpp:149
+#: Win/AgilityBookMenu.cpp:151
 msgid "DescViewRunsByList"
 msgstr "Show runs by list"
 
-#: Win/AgilityBookMenu.cpp:150
+#: Win/AgilityBookMenu.cpp:152
 msgid "MenuViewAllRunsByList"
 msgstr "&All Dogs By List"
 
-#: Win/AgilityBookMenu.cpp:150
+#: Win/AgilityBookMenu.cpp:152
 msgid "DescViewAllRunsByList"
 msgstr "Show all runs by list"
 
-#: Win/AgilityBookMenu.cpp:151
+#: Win/AgilityBookMenu.cpp:154
 msgid "MenuViewIncludeTable"
 msgstr "Include Table in &YPS"
 
-#: Win/AgilityBookMenu.cpp:151
+#: Win/AgilityBookMenu.cpp:154
 msgid "DescViewIncludeTable"
 msgstr "Include the table in the YPS"
 
-#: Win/AgilityBookMenu.cpp:152
+#: Win/AgilityBookMenu.cpp:155
 msgid "MenuViewIncludeRunTime"
 msgstr "Use Run &Time in OPS"
 
-#: Win/AgilityBookMenu.cpp:152
+#: Win/AgilityBookMenu.cpp:155
 msgid "DescViewIncludeRunTime"
 msgstr "Use the dog's time in the OPS computation for gambles"
 
-#: Win/AgilityBookMenu.cpp:154
+#: Win/AgilityBookMenu.cpp:157
 msgid "MenuViewSortPoints"
 msgstr "Sort &Points View..."
 
-#: Win/AgilityBookMenu.cpp:154
+#: Win/AgilityBookMenu.cpp:157
 msgid "DescViewSortPoints"
 msgstr "Sort the Points View by the specified order"
 
-#: Win/AgilityBookMenu.cpp:155
+#: Win/AgilityBookMenu.cpp:158
 msgid "MenuViewHiddenTitles"
 msgstr "Show &Hidden Titles"
 
-#: Win/AgilityBookMenu.cpp:155
+#: Win/AgilityBookMenu.cpp:158
 msgid "DescViewHiddenTitles"
 msgstr "Show Titles that have been hidden"
 
-#: Win/AgilityBookMenu.cpp:156
+#: Win/AgilityBookMenu.cpp:159
 msgid "MenuViewLifePoints"
 msgstr "&Lifetime Points by Event"
 
-#: Win/AgilityBookMenu.cpp:156
+#: Win/AgilityBookMenu.cpp:159
 msgid "DescViewLifePoints"
 msgstr "View Lifetime Point details by Level or Event"
 
-#: Win/AgilityBookMenu.cpp:158 Win/AgilityBookMenu.cpp:282
-#: Win/AgilityBookMenu.cpp:301
+#: Win/AgilityBookMenu.cpp:161 Win/AgilityBookMenu.cpp:285
+#: Win/AgilityBookMenu.cpp:304
 msgid "MenuViewExpand"
 msgstr "Expand"
 
-#: Win/AgilityBookMenu.cpp:158 Win/AgilityBookMenu.cpp:282
-#: Win/AgilityBookMenu.cpp:301
+#: Win/AgilityBookMenu.cpp:161 Win/AgilityBookMenu.cpp:285
+#: Win/AgilityBookMenu.cpp:304
 msgid "DescViewExpand"
 msgstr "Expand"
 
-#: Win/AgilityBookMenu.cpp:159 Win/AgilityBookMenu.cpp:283
-#: Win/AgilityBookMenu.cpp:302
+#: Win/AgilityBookMenu.cpp:162 Win/AgilityBookMenu.cpp:286
+#: Win/AgilityBookMenu.cpp:305
 msgid "MenuViewCollapse"
 msgstr "Collapse"
 
-#: Win/AgilityBookMenu.cpp:159 Win/AgilityBookMenu.cpp:283
-#: Win/AgilityBookMenu.cpp:302
+#: Win/AgilityBookMenu.cpp:162 Win/AgilityBookMenu.cpp:286
+#: Win/AgilityBookMenu.cpp:305
 msgid "DescViewCollapse"
 msgstr "Collapse"
 
-#: Win/AgilityBookMenu.cpp:160 Win/AgilityBookMenu.cpp:284
+#: Win/AgilityBookMenu.cpp:163 Win/AgilityBookMenu.cpp:287
 msgid "MenuViewExpandAll"
 msgstr "Expand All"
 
-#: Win/AgilityBookMenu.cpp:160 Win/AgilityBookMenu.cpp:284
+#: Win/AgilityBookMenu.cpp:163 Win/AgilityBookMenu.cpp:287
 msgid "DescViewExpandAll"
 msgstr "Expand All"
 
-#: Win/AgilityBookMenu.cpp:161 Win/AgilityBookMenu.cpp:285
+#: Win/AgilityBookMenu.cpp:164 Win/AgilityBookMenu.cpp:288
 msgid "MenuViewCollapseAll"
 msgstr "Collapse All"
 
-#: Win/AgilityBookMenu.cpp:161 Win/AgilityBookMenu.cpp:285
+#: Win/AgilityBookMenu.cpp:164 Win/AgilityBookMenu.cpp:288
 msgid "DescViewCollapseAll"
 msgstr "Collapse All"
 
-#: Win/AgilityBookMenu.cpp:163
+#: Win/AgilityBookMenu.cpp:166
 msgid "MenuViewType"
 msgstr "Type"
 
-#: Win/AgilityBookMenu.cpp:165
+#: Win/AgilityBookMenu.cpp:168
 msgid "MenuViewNotebook"
 msgstr "&Notebook\tCtrl-1"
 
-#: Win/AgilityBookMenu.cpp:165
+#: Win/AgilityBookMenu.cpp:168
 msgid "DescViewNotebook"
 msgstr "Notebook"
 
-#: Win/AgilityBookMenu.cpp:168
+#: Win/AgilityBookMenu.cpp:171
 msgid "MenuViewListbook"
 msgstr "&Listbook\tCtrl-2"
 
-#: Win/AgilityBookMenu.cpp:168
+#: Win/AgilityBookMenu.cpp:171
 msgid "DescViewListbook"
 msgstr "Listbook"
 
-#: Win/AgilityBookMenu.cpp:171
+#: Win/AgilityBookMenu.cpp:174
 msgid "MenuViewChoicebook"
 msgstr "&Choicebook\tCtrl-3"
 
-#: Win/AgilityBookMenu.cpp:171
+#: Win/AgilityBookMenu.cpp:174
 msgid "DescViewChoicebook"
 msgstr "Choicebook"
 
-#: Win/AgilityBookMenu.cpp:174
+#: Win/AgilityBookMenu.cpp:177
 msgid "MenuViewTreebook"
 msgstr "&Treebook\tCtrl-4"
 
-#: Win/AgilityBookMenu.cpp:174
+#: Win/AgilityBookMenu.cpp:177
 msgid "DescViewTreebook"
 msgstr "Treebook"
 
-#: Win/AgilityBookMenu.cpp:177
+#: Win/AgilityBookMenu.cpp:180
 msgid "MenuViewToolbook"
 msgstr "T&oolbook\tCtrl-5"
 
-#: Win/AgilityBookMenu.cpp:177
+#: Win/AgilityBookMenu.cpp:180
 msgid "DescViewToolbook"
 msgstr "Toolbook"
 
-#: Win/AgilityBookMenu.cpp:179
+#: Win/AgilityBookMenu.cpp:182
 msgid "MenuViewOrientation"
 msgstr "Orientation"
 
-#: Win/AgilityBookMenu.cpp:180
+#: Win/AgilityBookMenu.cpp:183
 msgid "MenuViewTop"
 msgstr "&Top"
 
-#: Win/AgilityBookMenu.cpp:180
+#: Win/AgilityBookMenu.cpp:183
 msgid "DescViewTop"
 msgstr "Top"
 
-#: Win/AgilityBookMenu.cpp:181
+#: Win/AgilityBookMenu.cpp:184
 msgid "MenuViewBottom"
 msgstr "&Bottom"
 
-#: Win/AgilityBookMenu.cpp:181
+#: Win/AgilityBookMenu.cpp:184
 msgid "DescViewBottom"
 msgstr "Bottom"
 
-#: Win/AgilityBookMenu.cpp:182
+#: Win/AgilityBookMenu.cpp:185
 msgid "MenuViewLeft"
 msgstr "&Left"
 
-#: Win/AgilityBookMenu.cpp:182
+#: Win/AgilityBookMenu.cpp:185
 msgid "DescViewLeft"
 msgstr "Left"
 
-#: Win/AgilityBookMenu.cpp:183
+#: Win/AgilityBookMenu.cpp:186
 msgid "MenuViewRight"
 msgstr "&Right"
 
-#: Win/AgilityBookMenu.cpp:183
+#: Win/AgilityBookMenu.cpp:186
 msgid "DescViewRight"
 msgstr "Right"
 
-#: Win/AgilityBookMenu.cpp:185
+#: Win/AgilityBookMenu.cpp:188
 msgid "MenuWindow"
 msgstr "&Window"
 
-#: Win/AgilityBookMenu.cpp:186
+#: Win/AgilityBookMenu.cpp:189
 msgid "MenuWindowSplitter"
 msgstr "Adjust &Splitter"
 
-#: Win/AgilityBookMenu.cpp:186
+#: Win/AgilityBookMenu.cpp:189
 msgid "DescWindowSplitter"
 msgstr "Split the active window into panes"
 
-#: Win/AgilityBookMenu.cpp:188
+#: Win/AgilityBookMenu.cpp:191
 msgid "MenuWindowNext"
 msgstr "&Next Pane\tF6"
 
-#: Win/AgilityBookMenu.cpp:188
+#: Win/AgilityBookMenu.cpp:191
 msgid "DescWindowNext"
 msgstr "Switch to the next window pane"
 
-#: Win/AgilityBookMenu.cpp:189
+#: Win/AgilityBookMenu.cpp:192
 msgid "MenuWindowPrev"
 msgstr "&Previous Pane\tShift+F6"
 
-#: Win/AgilityBookMenu.cpp:189
+#: Win/AgilityBookMenu.cpp:192
 msgid "DescWindowPrev"
 msgstr "Switch back to the previous window pane"
 
-#: Win/AgilityBookMenu.cpp:191
+#: Win/AgilityBookMenu.cpp:194
 msgid "MenuHelp"
 msgstr "&Help"
 
-#: Win/AgilityBookMenu.cpp:192
+#: Win/AgilityBookMenu.cpp:195
 msgid "MenuHelpUpdates"
 msgstr "Check for &Updates..."
 
-#: Win/AgilityBookMenu.cpp:192
+#: Win/AgilityBookMenu.cpp:195
 msgid "DescHelpUpdates"
 msgstr "Check for Updates"
 
-#: Win/AgilityBookMenu.cpp:193
+#: Win/AgilityBookMenu.cpp:196
 msgid "MenuHelpSysInfo"
 msgstr "&System Information..."
 
-#: Win/AgilityBookMenu.cpp:193
+#: Win/AgilityBookMenu.cpp:196
 msgid "DescHelpSysInfo"
 msgstr "Display information about the system"
 
-#: Win/AgilityBookMenu.cpp:197
+#: Win/AgilityBookMenu.cpp:200
 msgid "MenuHelpAbout"
 msgstr "&About Agility Record Book..."
 
-#: Win/AgilityBookMenu.cpp:197
+#: Win/AgilityBookMenu.cpp:200
 msgid "DescHelpAbout"
 msgstr "Display program information, version number and copyright"
 
-#: Win/AgilityBookMenu.cpp:243
+#: Win/AgilityBookMenu.cpp:246
 msgid "MenuDogNew"
 msgstr "&Dog..."
 
-#: Win/AgilityBookMenu.cpp:243
+#: Win/AgilityBookMenu.cpp:246
 msgid "DescDogNew"
 msgstr "Create a new Dog"
 
-#: Win/AgilityBookMenu.cpp:244
+#: Win/AgilityBookMenu.cpp:247
 msgid "MenuTitleNew"
 msgstr "&Title..."
 
-#: Win/AgilityBookMenu.cpp:246
+#: Win/AgilityBookMenu.cpp:249
 msgid "MenuTrialNew"
 msgstr "Tr&ial..."
 
-#: Win/AgilityBookMenu.cpp:249
+#: Win/AgilityBookMenu.cpp:252
 msgid "MenuRunNew"
 msgstr "&Run...\tCtrl+R"
 
-#: Win/AgilityBookMenu.cpp:342
+#: Win/AgilityBookMenu.cpp:346
 msgid "MenuDetails"
 msgstr "&Details..."
 
-#: Win/AgilityBookMenu.cpp:342
+#: Win/AgilityBookMenu.cpp:346
 msgid "DescDetails"
 msgstr "Display details"
 
-#: Win/AgilityBookMenu.cpp:345
+#: Win/AgilityBookMenu.cpp:349
 msgid "MenuEditCopySelection"
 msgstr "&Copy Selection\tCtrl+C"
 
-#: Win/AgilityBookPanels.cpp:123
+#: Win/AgilityBookPanels.cpp:128
 msgid "PanelRuns"
 msgstr ""
 "This panel contains all the information about your runs. This is where you "
 "create dogs, trials and runs."
 
-#: Win/AgilityBookPanels.cpp:148
+#: Win/AgilityBookPanels.cpp:219
 msgid "PanelPoints"
 msgstr ""
 "This panel shows some simple statistics about your runs for the current dog. "
 "If this file contains more than one dog, you can easily switch the current "
 "dog by right-clicking on the dogs name in the status bar."
 
-#: Win/AgilityBookPanels.cpp:177
+#: Win/AgilityBookPanels.cpp:248
 msgid "PanelCal"
 msgstr "This panel contains information about upcoming trials."
 
-#: Win/AgilityBookPanels.cpp:248
+#: Win/AgilityBookPanels.cpp:319
 msgid "PanelTraining"
 msgstr "This panel contains your training log entries."
+
+#: Win/AgilityBookRunsView.cpp:338 Win/AgilityBookTreeData.cpp:1326
+#: Win/AgilityBookTreeListData.cpp:740 Win/WizardExport.cpp:834
+msgid "IDS_SQ"
+msgstr "SQ"
+
+#: Win/AgilityBookRunsView.cpp:1334 Win/AgilityBookTreeListView.cpp:493
+msgid "IDS_NUM_RUNS_QS"
+msgstr "%1$d runs, %2$d Qs"
 
 #: Win/AgilityBookTrainingView.cpp:417
 msgid "IDS_NUM_TRAINING"
 msgstr "%1$d entries"
 
-#: Win/AgilityBookTreeData.cpp:189
-msgid "IDS_YEARS"
-msgstr "%1$s yrs"
-
-#: Win/AgilityBookTreeData.cpp:739 Win/WizardExport.cpp:834
-msgid "IDS_SQ"
-msgstr "SQ"
-
-#: Win/AgilityBookTreeView.cpp:492
-msgid "IDS_NUM_RUNS_QS"
-msgstr "%1$d runs, %2$d Qs"
-
-#: Win/AgilityBookTreeView.cpp:505
-msgid "IDS_NUM_DOGS"
-msgstr "%1$d dogs"
-
-#: Win/AgilityBookTreeView.cpp:981
-msgid "IDS_NEED_CLUB"
-msgstr "You must create a hosting club before creating any events."
-
-#: Win/AgilityBookTreeView.cpp:986
-msgid "IDS_VENUE_CONFIG_MISSING"
-msgstr "Unable to locate configuration information for the venue '%1$s'."
-
-#: Win/AgilityBookTreeView.cpp:1027 Win/AgilityBookTreeView.cpp:1591
-msgid "IDS_CREATERUN_FILTERED"
-msgstr ""
-"Warning: The run you have just created cannot be shown due to filter options."
-
-#: Win/AgilityBookTreeView.cpp:1033 Win/AgilityBookTreeView.cpp:1565
-msgid "IDS_CREATERUN_FAILED"
-msgstr "Error: Failed to create run."
-
-#: Win/AgilityBookTreeView.cpp:1515
-msgid "IDS_CREATEDOG_FAILED"
-msgstr "Error: Failed to create dog."
-
-#: Win/AgilityBookTreeView.cpp:1626 Win/AgilityBookTreeView.cpp:1992
+#: Win/AgilityBookTreeData.cpp:160 Win/AgilityBookTreeData.cpp:417
+#: Win/AgilityBookTreeListView.cpp:1627 Win/AgilityBookTreeListView.cpp:1993
 msgid "IDS_CREATETRIAL_FAILED"
 msgstr "Error: Failed to create trial."
 
-#: Win/AgilityBookTreeView.cpp:1639 Win/AgilityBookTreeView.cpp:1986
+#: Win/AgilityBookTreeData.cpp:171 Win/AgilityBookTreeData.cpp:430
+#: Win/AgilityBookTreeListView.cpp:1640 Win/AgilityBookTreeListView.cpp:1987
 msgid "IDS_CREATETRIAL_FILTERED"
 msgstr ""
 "Warning: The trial you have just created cannot be shown due to filter "
 "options."
 
-#: Win/AgilityBookTreeView.cpp:1700
+#: Win/AgilityBookTreeData.cpp:223 Win/AgilityBookTreeListView.cpp:982
+msgid "IDS_NEED_CLUB"
+msgstr "You must create a hosting club before creating any events."
+
+#: Win/AgilityBookTreeData.cpp:228 Win/AgilityBookTreeListView.cpp:987
+msgid "IDS_VENUE_CONFIG_MISSING"
+msgstr "Unable to locate configuration information for the venue '%1$s'."
+
+#: Win/AgilityBookTreeData.cpp:251 Win/AgilityBookTreeData.cpp:355
+#: Win/AgilityBookTreeListView.cpp:1034 Win/AgilityBookTreeListView.cpp:1566
+msgid "IDS_CREATERUN_FAILED"
+msgstr "Error: Failed to create run."
+
+#: Win/AgilityBookTreeData.cpp:269 Win/AgilityBookTreeData.cpp:380
+#: Win/AgilityBookTreeListView.cpp:1028 Win/AgilityBookTreeListView.cpp:1592
+msgid "IDS_CREATERUN_FILTERED"
+msgstr ""
+"Warning: The run you have just created cannot be shown due to filter options."
+
+#: Win/AgilityBookTreeData.cpp:600 Win/AgilityBookTreeListView.cpp:1701
 msgid "IDS_DELETE_DOG_DATA"
 msgstr ""
 "WARNING\n"
@@ -1602,7 +1604,11 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: Win/AgilityBookTreeView.cpp:1717
+#: Win/AgilityBookTreeData.cpp:690 Win/AgilityBookTreeListData.cpp:190
+msgid "IDS_YEARS"
+msgstr "%1$s yrs"
+
+#: Win/AgilityBookTreeData.cpp:893 Win/AgilityBookTreeListView.cpp:1718
 msgid "IDS_DELETE_TRIAL_DATA"
 msgstr ""
 "WARNING\n"
@@ -1612,7 +1618,7 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: Win/AgilityBookTreeView.cpp:1734
+#: Win/AgilityBookTreeData.cpp:1254 Win/AgilityBookTreeListView.cpp:1735
 msgid "IDS_DELETE_EVENT_DATA"
 msgstr ""
 "WARNING\n"
@@ -1620,6 +1626,14 @@ msgstr ""
 "Deleting an event cannot be un-done.\n"
 "\n"
 "Are you sure you want to continue?"
+
+#: Win/AgilityBookTreeListView.cpp:506
+msgid "IDS_NUM_DOGS"
+msgstr "%1$d dogs"
+
+#: Win/AgilityBookTreeListView.cpp:1516 Win/AgilityBookTreeView.cpp:694
+msgid "IDS_CREATEDOG_FAILED"
+msgstr "Error: Failed to create dog."
 
 #: Win/CalendarSites.cpp:605 Win/CalendarSites.cpp:619
 msgid "IDS_DISABLED"
@@ -1848,105 +1862,129 @@ msgstr "Runs - Dog"
 msgid "IDS_ASSCOL_VIEW_TREE_DOG_DESC"
 msgstr "Display of dogs in the Runs tree"
 
-#: Win/DlgAssignColumns.cpp:154
+#: Win/DlgAssignColumns.cpp:155
+msgid "IDS_ASSCOL_VIEW_TREE_TRIAL"
+msgstr "Tree - Trial"
+
+#: Win/DlgAssignColumns.cpp:156
+msgid "IDS_ASSCOL_VIEW_TREE_TRIAL_DESC"
+msgstr "Display of trials in the Runs tree"
+
+#: Win/DlgAssignColumns.cpp:159
+msgid "IDS_ASSCOL_VIEW_TREE_RUN"
+msgstr "Tree - Run"
+
+#: Win/DlgAssignColumns.cpp:160
+msgid "IDS_ASSCOL_VIEW_TREE_RUN_DESC"
+msgstr "Display of runs in the Runs tree"
+
+#: Win/DlgAssignColumns.cpp:163
+msgid "IDS_ASSCOL_VIEW_RUNS_LIST"
+msgstr "Runs"
+
+#: Win/DlgAssignColumns.cpp:164
+msgid "IDS_ASSCOL_VIEW_RUNS_LIST_DESC"
+msgstr "Display of runs in the Runs view"
+
+#: Win/DlgAssignColumns.cpp:169
 msgid "IDS_ASSCOL_VIEW_CALENDAR_LIST"
 msgstr "Calendar List"
 
-#: Win/DlgAssignColumns.cpp:155
+#: Win/DlgAssignColumns.cpp:170
 msgid "IDS_ASSCOL_VIEW_CALENDAR_LIST_DESC"
 msgstr "Display of entries in the Calendar List view"
 
-#: Win/DlgAssignColumns.cpp:158
+#: Win/DlgAssignColumns.cpp:173
 msgid "IDS_ASSCOL_VIEW_TRAINING_LIST"
 msgstr "Training Log"
 
-#: Win/DlgAssignColumns.cpp:159
+#: Win/DlgAssignColumns.cpp:174
 msgid "IDS_ASSCOL_VIEW_TRAINING_LIST_DESC"
 msgstr "Display of entries in the Training Log"
 
-#: Win/DlgAssignColumns.cpp:162
+#: Win/DlgAssignColumns.cpp:177
 msgid "IDS_ASSCOL_CALENDAR_APPT"
 msgstr "Calendar (MS Outlook Appointment)"
 
-#: Win/DlgAssignColumns.cpp:163
+#: Win/DlgAssignColumns.cpp:178
 msgid "IDS_ASSCOL_CALENDAR_APPT_DESC"
 msgstr ""
 "Exporting Calendar entries for importing into MS Outlook as Appointments"
 
-#: Win/DlgAssignColumns.cpp:166
+#: Win/DlgAssignColumns.cpp:181
 msgid "IDS_ASSCOL_CALENDAR_TASK"
 msgstr "Calendar (MS Outlook Task)"
 
-#: Win/DlgAssignColumns.cpp:167
+#: Win/DlgAssignColumns.cpp:182
 msgid "IDS_ASSCOL_CALENDAR_TASK_DESC"
 msgstr "Exporting Calendar entries for importing into MS Outlook as Tasks"
 
-#: Win/DlgAssignColumns.cpp:170
+#: Win/DlgAssignColumns.cpp:185
 msgid "IDS_ASSCOL_VIEW_CALENDAR"
 msgstr "Calendar"
 
-#: Win/DlgAssignColumns.cpp:171
+#: Win/DlgAssignColumns.cpp:186
 msgid "IDS_ASSCOL_VIEW_CALENDAR_DESC"
 msgstr "Display of entries in the Calendar view"
 
-#: Win/DlgAssignColumns.cpp:174
-msgid "IDS_ASSCOL_VIEW_TREE_TRIAL"
+#: Win/DlgAssignColumns.cpp:190
+msgid "IDS_ASSCOL_VIEW_TREELIST_TRIAL"
 msgstr "Runs - Trial"
 
-#: Win/DlgAssignColumns.cpp:175
-msgid "IDS_ASSCOL_VIEW_TREE_TRIAL_DESC"
+#: Win/DlgAssignColumns.cpp:191
+msgid "IDS_ASSCOL_VIEW_TREELIST_TRIAL_DESC"
 msgstr "Display of trials in the Runs tree"
 
-#: Win/DlgAssignColumns.cpp:178
-msgid "IDS_ASSCOL_VIEW_TREE_RUN"
+#: Win/DlgAssignColumns.cpp:194
+msgid "IDS_ASSCOL_VIEW_TREELIST_RUN"
 msgstr "Runs - Run"
 
-#: Win/DlgAssignColumns.cpp:179
-msgid "IDS_ASSCOL_VIEW_TREE_RUN_DESC"
+#: Win/DlgAssignColumns.cpp:195
+msgid "IDS_ASSCOL_VIEW_TREELIST_RUN_DESC"
 msgstr "Display of runs in the Runs tree"
 
-#: Win/DlgAssignColumns.cpp:182
-msgid "IDS_ASSCOL_VIEW_TREE_RUN_LIST"
+#: Win/DlgAssignColumns.cpp:198
+msgid "IDS_ASSCOL_VIEW_TREELIST_RUN_LIST"
 msgstr "Runs - List"
 
-#: Win/DlgAssignColumns.cpp:183
-msgid "IDS_ASSCOL_VIEW_TREE_RUN_LIST_DESC"
+#: Win/DlgAssignColumns.cpp:199
+msgid "IDS_ASSCOL_VIEW_TREELIST_RUN_LIST_DESC"
 msgstr "Display of runs in the Runs view"
 
-#: Win/DlgAssignColumns.cpp:204 Win/DlgAssignColumns.cpp:348
+#: Win/DlgAssignColumns.cpp:225 Win/DlgAssignColumns.cpp:369
 msgid "IDS_COL_REG_NAME"
 msgstr "Registered Name"
 
-#: Win/DlgAssignColumns.cpp:207 Win/DlgAssignColumns.cpp:351
+#: Win/DlgAssignColumns.cpp:228 Win/DlgAssignColumns.cpp:372
 msgid "IDS_COL_CALLNAME"
 msgstr "Call Name"
 
-#: Win/DlgAssignColumns.cpp:210 Win/DlgAssignColumns.cpp:338
-#: Win/DlgAssignColumns.cpp:383 Win/DlgDog.cpp:94 Win/DlgDog.cpp:125
+#: Win/DlgAssignColumns.cpp:231 Win/DlgAssignColumns.cpp:359
+#: Win/DlgAssignColumns.cpp:404 Win/DlgDog.cpp:94 Win/DlgDog.cpp:125
 #: Win/DlgListViewer.cpp:1136 Win/DlgListViewer.cpp:1204
 #: Win/DlgListViewer.cpp:1265 Win/DlgListViewer.cpp:1344 Win/Print.cpp:244
 msgid "IDS_COL_DATE"
 msgstr "Date"
 
-#: Win/DlgAssignColumns.cpp:222
+#: Win/DlgAssignColumns.cpp:243
 msgid "IDS_COL_TRIALNOTES"
 msgstr "Trial Notes"
 
-#: Win/DlgAssignColumns.cpp:225 Win/DlgAssignColumns.cpp:392
+#: Win/DlgAssignColumns.cpp:246 Win/DlgAssignColumns.cpp:413
 #: Win/DlgConfigMultiQ.cpp:135 Win/DlgDog.cpp:131 Win/DlgListViewer.cpp:1141
 #: Win/DlgListViewer.cpp:1209 Win/DlgListViewer.cpp:1313
 #: Win/DlgListViewer.cpp:1349 Win/DlgPointsViewSort.cpp:171
 msgid "IDS_COL_DIVISION"
 msgstr "Division"
 
-#: Win/DlgAssignColumns.cpp:228 Win/DlgAssignColumns.cpp:395
+#: Win/DlgAssignColumns.cpp:249 Win/DlgAssignColumns.cpp:416
 #: Win/DlgConfigMultiQ.cpp:136 Win/DlgDog.cpp:132 Win/DlgListViewer.cpp:1142
 #: Win/DlgListViewer.cpp:1210 Win/DlgListViewer.cpp:1314
 #: Win/DlgListViewer.cpp:1350 Win/DlgPointsViewSort.cpp:176
 msgid "IDS_COL_LEVEL"
 msgstr "Level"
 
-#: Win/DlgAssignColumns.cpp:231 Win/DlgAssignColumns.cpp:389
+#: Win/DlgAssignColumns.cpp:252 Win/DlgAssignColumns.cpp:410
 #: Win/DlgConfigMultiQ.cpp:137 Win/DlgDog.cpp:133 Win/DlgFindLinks.cpp:120
 #: Win/DlgListViewer.cpp:1143 Win/DlgListViewer.cpp:1211
 #: Win/DlgListViewer.cpp:1309 Win/DlgListViewer.cpp:1351
@@ -1954,390 +1992,390 @@ msgstr "Level"
 msgid "IDS_COL_EVENT"
 msgstr "Event"
 
-#: Win/DlgAssignColumns.cpp:234 Win/DlgAssignColumns.cpp:398
+#: Win/DlgAssignColumns.cpp:255 Win/DlgAssignColumns.cpp:419
 #: Win/DlgDog.cpp:111 Win/DlgRun.cpp:191 Win/Print.cpp:249 Win/Print.cpp:270
 #: Win/Print.cpp:276 Win/Print.cpp:282 Win/Print.cpp:288
 msgid "IDS_COL_HEIGHT"
 msgstr "Height"
 
-#: Win/DlgAssignColumns.cpp:237 Win/DlgInfoNote.cpp:354
+#: Win/DlgAssignColumns.cpp:258 Win/DlgInfoNote.cpp:354
 #: Win/DlgListViewer.cpp:953 Win/DlgListViewer.cpp:993
 #: Win/DlgListViewer.cpp:1005 Win/DlgListViewer.cpp:1148
 #: Win/DlgListViewer.cpp:1216 Win/Print.cpp:250
 msgid "IDS_COL_JUDGE"
 msgstr "Judge"
 
-#: Win/DlgAssignColumns.cpp:240 Win/DlgListCtrl.cpp:460 Win/Print.cpp:251
+#: Win/DlgAssignColumns.cpp:261 Win/DlgListCtrl.cpp:460 Win/Print.cpp:251
 msgid "IDS_COL_HANDLER"
 msgstr "Handler"
 
-#: Win/DlgAssignColumns.cpp:243 Win/Print.cpp:252
+#: Win/DlgAssignColumns.cpp:264 Win/Print.cpp:252
 msgid "IDS_COL_CONDITIONS"
 msgstr "Conditions"
 
-#: Win/DlgAssignColumns.cpp:246
+#: Win/DlgAssignColumns.cpp:267
 msgid "IDS_COL_COURSEFAULTS"
 msgstr "Course Faults"
 
-#: Win/DlgAssignColumns.cpp:249 Win/DlgRun.cpp:189 Win/Print.cpp:257
+#: Win/DlgAssignColumns.cpp:270 Win/DlgRun.cpp:189 Win/Print.cpp:257
 #: Win/Print.cpp:268 Win/Print.cpp:274 Win/Print.cpp:280 Win/Print.cpp:286
 msgid "IDS_COL_TIME"
 msgstr "Time"
 
-#: Win/DlgAssignColumns.cpp:252 Win/Print.cpp:255
+#: Win/DlgAssignColumns.cpp:273 Win/Print.cpp:255
 msgid "IDS_COL_YARDS"
 msgstr "Yards"
 
-#: Win/DlgAssignColumns.cpp:255
+#: Win/DlgAssignColumns.cpp:276
 msgid "IDS_COL_YPS"
 msgstr "YPS"
 
-#: Win/DlgAssignColumns.cpp:258 Win/Print.cpp:254
+#: Win/DlgAssignColumns.cpp:279 Win/Print.cpp:254
 msgid "IDS_COL_SCT"
 msgstr "SCT"
 
-#: Win/DlgAssignColumns.cpp:261
+#: Win/DlgAssignColumns.cpp:282
 msgid "IDS_COL_TOTAL_FAULTS"
 msgstr "Total Faults"
 
-#: Win/DlgAssignColumns.cpp:264
+#: Win/DlgAssignColumns.cpp:285
 msgid "IDS_COL_REQ_OPENING"
 msgstr "Required Opening"
 
-#: Win/DlgAssignColumns.cpp:267
+#: Win/DlgAssignColumns.cpp:288
 msgid "IDS_COL_REQ_CLOSING"
 msgstr "Required Closing"
 
-#: Win/DlgAssignColumns.cpp:270 Win/DlgOptionsCalendar.cpp:443
+#: Win/DlgAssignColumns.cpp:291 Win/DlgOptionsCalendar.cpp:443
 msgid "IDS_COL_OPENING"
 msgstr "Opening"
 
-#: Win/DlgAssignColumns.cpp:273 Win/DlgOptionsCalendar.cpp:450
+#: Win/DlgAssignColumns.cpp:294 Win/DlgOptionsCalendar.cpp:450
 msgid "IDS_COL_CLOSING"
 msgstr "Closing"
 
-#: Win/DlgAssignColumns.cpp:276
+#: Win/DlgAssignColumns.cpp:297
 msgid "IDS_COL_REQ_POINTS"
 msgstr "Required Points"
 
-#: Win/DlgAssignColumns.cpp:279 Win/DlgDog.cpp:127 Win/DlgListCtrl.cpp:500
+#: Win/DlgAssignColumns.cpp:300 Win/DlgDog.cpp:127 Win/DlgListCtrl.cpp:500
 #: Win/DlgListViewer.cpp:1316 Win/DlgListViewer.cpp:1352
 msgid "IDS_COL_POINTS"
 msgstr "Points"
 
-#: Win/DlgAssignColumns.cpp:282 Win/DlgConfigEventMethod.cpp:353
+#: Win/DlgAssignColumns.cpp:303 Win/DlgConfigEventMethod.cpp:353
 #: Win/DlgListViewer.cpp:1149 Win/DlgListViewer.cpp:1217 Win/DlgRun.cpp:187
 #: Win/Print.cpp:261 Win/Print.cpp:266 Win/Print.cpp:272 Win/Print.cpp:278
 #: Win/Print.cpp:284
 msgid "IDS_COL_PLACE"
 msgstr "Place"
 
-#: Win/DlgAssignColumns.cpp:285 Win/DlgListViewer.cpp:1150
+#: Win/DlgAssignColumns.cpp:306 Win/DlgListViewer.cpp:1150
 #: Win/DlgListViewer.cpp:1218 Win/Print.cpp:262
 msgid "IDS_COL_IN_CLASS"
 msgstr "In Class"
 
-#: Win/DlgAssignColumns.cpp:288 Win/DlgListViewer.cpp:1151
+#: Win/DlgAssignColumns.cpp:309 Win/DlgListViewer.cpp:1151
 #: Win/DlgListViewer.cpp:1219 Win/Print.cpp:263
 msgid "IDS_COL_Q_D"
 msgstr "Q'd"
 
-#: Win/DlgAssignColumns.cpp:291 Win/DlgAssignColumns.cpp:386
+#: Win/DlgAssignColumns.cpp:312 Win/DlgAssignColumns.cpp:407
 #: Win/DlgListViewer.cpp:1138 Win/DlgListViewer.cpp:1206 Win/DlgRun.cpp:186
 #: Win/Print.cpp:253 Win/Print.cpp:267 Win/Print.cpp:273 Win/Print.cpp:279
 #: Win/Print.cpp:285
 msgid "IDS_COL_Q"
 msgstr "Q"
 
-#: Win/DlgAssignColumns.cpp:294 Win/DlgListViewer.cpp:1353 Win/DlgRun.cpp:188
+#: Win/DlgAssignColumns.cpp:315 Win/DlgListViewer.cpp:1353 Win/DlgRun.cpp:188
 #: Win/Print.cpp:260 Win/Print.cpp:269 Win/Print.cpp:275 Win/Print.cpp:281
 #: Win/Print.cpp:287
 msgid "IDS_COL_SCORE"
 msgstr "Score"
 
-#: Win/DlgAssignColumns.cpp:297 Win/DlgListViewer.cpp:1139
+#: Win/DlgAssignColumns.cpp:318 Win/DlgListViewer.cpp:1139
 #: Win/DlgListViewer.cpp:1207 Win/DlgListViewer.cpp:1267
 msgid "IDS_COL_TITLE_PTS"
 msgstr "Title Points"
 
-#: Win/DlgAssignColumns.cpp:300 Win/DlgDog.cpp:135 Win/DlgListViewer.cpp:1383
+#: Win/DlgAssignColumns.cpp:321 Win/DlgDog.cpp:135 Win/DlgListViewer.cpp:1383
 #: Win/Print.cpp:265
 msgid "IDS_COL_COMMENTS"
 msgstr "Comments"
 
-#: Win/DlgAssignColumns.cpp:313
+#: Win/DlgAssignColumns.cpp:334
 msgid "IDS_COL_TENTATIVE"
 msgstr "Tentative"
 
-#: Win/DlgAssignColumns.cpp:316
+#: Win/DlgAssignColumns.cpp:337
 msgid "IDS_COL_ENTERED"
 msgstr "Entered"
 
-#: Win/DlgAssignColumns.cpp:341 Win/DlgDog.cpp:97 Win/DlgFindLinks.cpp:117
+#: Win/DlgAssignColumns.cpp:362 Win/DlgDog.cpp:97 Win/DlgFindLinks.cpp:117
 #: Win/DlgListCtrl.cpp:499 Win/DlgListViewer.cpp:1382 Win/DlgRun.cpp:190
 msgid "IDS_COL_NAME"
 msgstr "Name"
 
-#: Win/DlgAssignColumns.cpp:354 Win/DlgRun.cpp:192
+#: Win/DlgAssignColumns.cpp:375 Win/DlgRun.cpp:192
 msgid "IDS_COL_BREED"
 msgstr "Breed"
 
-#: Win/DlgAssignColumns.cpp:357
+#: Win/DlgAssignColumns.cpp:378
 msgid "IDS_COL_DOB"
 msgstr "Birthday"
 
-#: Win/DlgAssignColumns.cpp:360
+#: Win/DlgAssignColumns.cpp:381
 msgid "IDS_COL_AGE"
 msgstr "Age"
 
-#: Win/DlgAssignColumns.cpp:402 Win/DlgAssignColumns.cpp:560
+#: Win/DlgAssignColumns.cpp:423 Win/DlgAssignColumns.cpp:581
 #: Win/DlgDog.cpp:134 Win/DlgListViewer.cpp:1145 Win/DlgListViewer.cpp:1213
 msgid "IDS_COL_SUBNAME"
 msgstr "SubName"
 
-#: Win/DlgAssignColumns.cpp:405
+#: Win/DlgAssignColumns.cpp:426
 msgid "IDS_COL_VERIFIED"
 msgstr "Verified"
 
-#: Win/DlgAssignColumns.cpp:408
+#: Win/DlgAssignColumns.cpp:429
 msgid "IDS_COL_SPEED"
 msgstr "Speed"
 
-#: Win/DlgAssignColumns.cpp:412 Win/DlgAssignColumns.cpp:479
+#: Win/DlgAssignColumns.cpp:433 Win/DlgAssignColumns.cpp:500
 msgid "IDS_COL_SUBJECT"
 msgstr "Subject"
 
-#: Win/DlgAssignColumns.cpp:418
+#: Win/DlgAssignColumns.cpp:439
 msgid "IDS_COL_START_TIME"
 msgstr "Start Time"
 
-#: Win/DlgAssignColumns.cpp:424
+#: Win/DlgAssignColumns.cpp:445
 msgid "IDS_COL_END_TIME"
 msgstr "End Time"
 
-#: Win/DlgAssignColumns.cpp:427
+#: Win/DlgAssignColumns.cpp:448
 msgid "IDS_COL_ALL_DAY_EVENT"
 msgstr "All day event"
 
-#: Win/DlgAssignColumns.cpp:430 Win/DlgAssignColumns.cpp:488
+#: Win/DlgAssignColumns.cpp:451 Win/DlgAssignColumns.cpp:509
 msgid "IDS_COL_REMINDER"
 msgstr "Reminder on/off"
 
-#: Win/DlgAssignColumns.cpp:433 Win/DlgAssignColumns.cpp:491
+#: Win/DlgAssignColumns.cpp:454 Win/DlgAssignColumns.cpp:512
 msgid "IDS_COL_REMINDER_DATE"
 msgstr "Reminder Date"
 
-#: Win/DlgAssignColumns.cpp:436 Win/DlgAssignColumns.cpp:494
+#: Win/DlgAssignColumns.cpp:457 Win/DlgAssignColumns.cpp:515
 msgid "IDS_COL_REMINDER_TIME"
 msgstr "Reminder Time"
 
-#: Win/DlgAssignColumns.cpp:439
+#: Win/DlgAssignColumns.cpp:460
 msgid "IDS_COL_ORGANIZER"
 msgstr "Meeting Organizer"
 
-#: Win/DlgAssignColumns.cpp:442
+#: Win/DlgAssignColumns.cpp:463
 msgid "IDS_COL_REQ_ATTENDEES"
 msgstr "Required Attendees"
 
-#: Win/DlgAssignColumns.cpp:445
+#: Win/DlgAssignColumns.cpp:466
 msgid "IDS_COL_OPT_ATTENDEES"
 msgstr "Optional Attendees"
 
-#: Win/DlgAssignColumns.cpp:448
+#: Win/DlgAssignColumns.cpp:469
 msgid "IDS_COL_RESOURCES"
 msgstr "Meeting Resources"
 
-#: Win/DlgAssignColumns.cpp:451 Win/DlgAssignColumns.cpp:509
+#: Win/DlgAssignColumns.cpp:472 Win/DlgAssignColumns.cpp:530
 msgid "IDS_COL_BILLING"
 msgstr "Billing Information"
 
-#: Win/DlgAssignColumns.cpp:454 Win/DlgAssignColumns.cpp:512
+#: Win/DlgAssignColumns.cpp:475 Win/DlgAssignColumns.cpp:533
 msgid "IDS_COL_CATEGORIES"
 msgstr "Categories"
 
-#: Win/DlgAssignColumns.cpp:457 Win/DlgAssignColumns.cpp:909
+#: Win/DlgAssignColumns.cpp:478 Win/DlgAssignColumns.cpp:949
 msgid "IDS_COL_DESCRIPTION"
 msgstr "Description"
 
-#: Win/DlgAssignColumns.cpp:463 Win/DlgAssignColumns.cpp:521
+#: Win/DlgAssignColumns.cpp:484 Win/DlgAssignColumns.cpp:542
 msgid "IDS_COL_MILEAGE"
 msgstr "Mileage"
 
-#: Win/DlgAssignColumns.cpp:466 Win/DlgAssignColumns.cpp:527
+#: Win/DlgAssignColumns.cpp:487 Win/DlgAssignColumns.cpp:548
 msgid "IDS_COL_PRIORITY"
 msgstr "Priority"
 
-#: Win/DlgAssignColumns.cpp:469 Win/DlgAssignColumns.cpp:530
+#: Win/DlgAssignColumns.cpp:490 Win/DlgAssignColumns.cpp:551
 msgid "IDS_COL_PRIVATE"
 msgstr "Private"
 
-#: Win/DlgAssignColumns.cpp:472 Win/DlgAssignColumns.cpp:539
+#: Win/DlgAssignColumns.cpp:493 Win/DlgAssignColumns.cpp:560
 msgid "IDS_COL_SENSITIVITY"
 msgstr "Sensitivity"
 
-#: Win/DlgAssignColumns.cpp:475
+#: Win/DlgAssignColumns.cpp:496
 msgid "IDS_COL_SHOW_TIME_AS"
 msgstr "Show time as"
 
-#: Win/DlgAssignColumns.cpp:485
+#: Win/DlgAssignColumns.cpp:506
 msgid "IDS_COL_DUE_DATE"
 msgstr "Due Date"
 
-#: Win/DlgAssignColumns.cpp:497
+#: Win/DlgAssignColumns.cpp:518
 msgid "IDS_COL_COMPLETED_DATE"
 msgstr "Date Completed"
 
-#: Win/DlgAssignColumns.cpp:500
+#: Win/DlgAssignColumns.cpp:521
 msgid "IDS_COL_COMPLETE"
 msgstr "% Complete"
 
-#: Win/DlgAssignColumns.cpp:503
+#: Win/DlgAssignColumns.cpp:524
 msgid "IDS_COL_TOTAL_WORK"
 msgstr "Total Work"
 
 # Begin Columns
-#: Win/DlgAssignColumns.cpp:506
+#: Win/DlgAssignColumns.cpp:527
 msgid "IDS_COL_ACTUAL_WORK"
 msgstr "Actual Work"
 
-#: Win/DlgAssignColumns.cpp:515
+#: Win/DlgAssignColumns.cpp:536
 msgid "IDS_COL_COMPANIES"
 msgstr "Companies"
 
-#: Win/DlgAssignColumns.cpp:518
+#: Win/DlgAssignColumns.cpp:539
 msgid "IDS_COL_CONTACTS"
 msgstr "Contacts"
 
-#: Win/DlgAssignColumns.cpp:533
+#: Win/DlgAssignColumns.cpp:554
 msgid "IDS_COL_ROLE"
 msgstr "Role"
 
-#: Win/DlgAssignColumns.cpp:536
+#: Win/DlgAssignColumns.cpp:557
 msgid "IDS_COL_SCH_PRIORITY"
 msgstr "Schedule+ Priority"
 
-#: Win/DlgAssignColumns.cpp:542 Win/DlgListViewer.cpp:1202
+#: Win/DlgAssignColumns.cpp:563 Win/DlgListViewer.cpp:1202
 msgid "IDS_COL_STATUS"
 msgstr "Status"
 
-#: Win/DlgAssignColumns.cpp:546
+#: Win/DlgAssignColumns.cpp:567
 msgid "IDS_COL_MIN_YPS"
 msgstr "MinYPS"
 
-#: Win/DlgAssignColumns.cpp:550
+#: Win/DlgAssignColumns.cpp:571
 msgid "IDS_COL_DRAWS"
 msgstr "Draws"
 
-#: Win/DlgAssignColumns.cpp:554 Win/Print.cpp:258
+#: Win/DlgAssignColumns.cpp:575 Win/Print.cpp:258
 msgid "IDS_COL_OBSTACLES"
 msgstr "Obstacles"
 
-#: Win/DlgAssignColumns.cpp:557
+#: Win/DlgAssignColumns.cpp:578
 msgid "IDS_COL_OPS"
 msgstr "OPS"
 
-#: Win/DlgAssignColumns.cpp:841
+#: Win/DlgAssignColumns.cpp:881
 msgid "IDD_ASSIGN_COLUMNS"
 msgstr "Assign Columns"
 
 # DlgAssignColumns
-#: Win/DlgAssignColumns.cpp:860
+#: Win/DlgAssignColumns.cpp:900
 msgid "IDC_ASSIGN_NAMES"
 msgstr "Named Settings"
 
-#: Win/DlgAssignColumns.cpp:869 Win/DlgAssignColumns.cpp:870
+#: Win/DlgAssignColumns.cpp:909 Win/DlgAssignColumns.cpp:910
 msgid "HIDC_ASSIGN_NAMES"
 msgstr "List of pre-defined settings."
 
-#: Win/DlgAssignColumns.cpp:890
+#: Win/DlgAssignColumns.cpp:930
 msgid "IDC_ASSIGN_NAMES_SAVE"
 msgstr "Save"
 
-#: Win/DlgAssignColumns.cpp:893 Win/DlgAssignColumns.cpp:894
+#: Win/DlgAssignColumns.cpp:933 Win/DlgAssignColumns.cpp:934
 msgid "HIDC_ASSIGN_NAMES_SAVE"
 msgstr ""
 "Save the current settings as the specified name. Note, you must press the "
 "save button to save a setting."
 
-#: Win/DlgAssignColumns.cpp:897
+#: Win/DlgAssignColumns.cpp:937
 msgid "IDC_ASSIGN_NAMES_DELETE"
 msgstr "Delete"
 
-#: Win/DlgAssignColumns.cpp:900 Win/DlgAssignColumns.cpp:901
+#: Win/DlgAssignColumns.cpp:940 Win/DlgAssignColumns.cpp:941
 msgid "HIDC_ASSIGN_NAMES_DELETE"
 msgstr "Delete the selected setting."
 
-#: Win/DlgAssignColumns.cpp:906 Win/DlgAssignColumns.cpp:907
+#: Win/DlgAssignColumns.cpp:946 Win/DlgAssignColumns.cpp:947
 msgid "HIDC_ASSIGN_TYPE"
 msgstr "Run type (scoring style) these fields are being assigned for."
 
-#: Win/DlgAssignColumns.cpp:908
+#: Win/DlgAssignColumns.cpp:948
 msgid "IDS_COL_RUNTYPE"
 msgstr "Run Type"
 
-#: Win/DlgAssignColumns.cpp:941
+#: Win/DlgAssignColumns.cpp:981
 msgid "IDC_ASSIGN_AVAILABLE"
 msgstr "Available &fields:"
 
-#: Win/DlgAssignColumns.cpp:948 Win/DlgAssignColumns.cpp:949
+#: Win/DlgAssignColumns.cpp:988 Win/DlgAssignColumns.cpp:989
 msgid "HIDC_ASSIGN_AVAILABLE"
 msgstr "Fields that are available for assigning as import or export."
 
-#: Win/DlgAssignColumns.cpp:955
+#: Win/DlgAssignColumns.cpp:995
 msgid "IDC_ASSIGN_ADD"
 msgstr "&Add ->"
 
-#: Win/DlgAssignColumns.cpp:958 Win/DlgAssignColumns.cpp:959
+#: Win/DlgAssignColumns.cpp:998 Win/DlgAssignColumns.cpp:999
 msgid "HIDC_ASSIGN_ADD"
 msgstr "Add the selected available field to the end of the field order items."
 
-#: Win/DlgAssignColumns.cpp:961
+#: Win/DlgAssignColumns.cpp:1001
 msgid "IDC_ASSIGN_DELETE"
 msgstr "<- &Remove"
 
-#: Win/DlgAssignColumns.cpp:964 Win/DlgAssignColumns.cpp:965
+#: Win/DlgAssignColumns.cpp:1004 Win/DlgAssignColumns.cpp:1005
 msgid "HIDC_ASSIGN_DELETE"
 msgstr ""
 "Remove the selected field from the field order. This will place the field "
 "back into the available fields."
 
-#: Win/DlgAssignColumns.cpp:967
+#: Win/DlgAssignColumns.cpp:1007
 msgid "IDC_ASSIGN_MOVE_UP"
 msgstr "Move &Up"
 
-#: Win/DlgAssignColumns.cpp:970 Win/DlgAssignColumns.cpp:971
+#: Win/DlgAssignColumns.cpp:1010 Win/DlgAssignColumns.cpp:1011
 msgid "HIDC_ASSIGN_MOVE_UP"
 msgstr "Move the selected field up in the order."
 
-#: Win/DlgAssignColumns.cpp:973
+#: Win/DlgAssignColumns.cpp:1013
 msgid "IDC_ASSIGN_MOVE_DOWN"
 msgstr "Move &Down"
 
-#: Win/DlgAssignColumns.cpp:976 Win/DlgAssignColumns.cpp:977
+#: Win/DlgAssignColumns.cpp:1016 Win/DlgAssignColumns.cpp:1017
 msgid "HIDC_ASSIGN_MOVE_DOWN"
 msgstr "Move the selected field down in the order."
 
-#: Win/DlgAssignColumns.cpp:979
+#: Win/DlgAssignColumns.cpp:1019
 msgid "IDC_ASSIGN_RESET"
 msgstr "Reset"
 
-#: Win/DlgAssignColumns.cpp:982 Win/DlgAssignColumns.cpp:983
+#: Win/DlgAssignColumns.cpp:1022 Win/DlgAssignColumns.cpp:1023
 msgid "HIDC_ASSIGN_RESET"
 msgstr "Reset the current selection's fields to the program's defaults."
 
-#: Win/DlgAssignColumns.cpp:986
+#: Win/DlgAssignColumns.cpp:1026
 msgid "IDC_ASSIGN_COLUMNS"
 msgstr "Field &order:"
 
-#: Win/DlgAssignColumns.cpp:993 Win/DlgAssignColumns.cpp:994
+#: Win/DlgAssignColumns.cpp:1033 Win/DlgAssignColumns.cpp:1034
 msgid "HIDC_ASSIGN_COLUMNS"
 msgstr "Fields that are currently assigned for importing and exporting."
 
-#: Win/DlgAssignColumns.cpp:1075
+#: Win/DlgAssignColumns.cpp:1115
 msgid "IDS_BLANK_COLUMN"
 msgstr "<Blank Column>"
 
-#: Win/DlgAssignColumns.cpp:1181 Win/DlgOptionsFilter.cpp:632
+#: Win/DlgAssignColumns.cpp:1221 Win/DlgOptionsFilter.cpp:632
 msgid "IDS_NAME_FILTER"
 msgstr "You must name a filter in order to save it."
 
@@ -2956,8 +2994,8 @@ msgstr "Compute time faults under SCT"
 msgid "IDS_CONFIGEVENT_TF_OVER"
 msgstr "Compute time faults over SCT"
 
-#: Win/DlgConfigEvent.cpp:670 Win/DlgRun.cpp:2360 Win/TabView.cpp:228
-#: Win/TabView.cpp:270 Win/TabView.cpp:336
+#: Win/DlgConfigEvent.cpp:670 Win/DlgRun.cpp:2360 Win/TabView.cpp:227
+#: Win/TabView.cpp:269 Win/TabView.cpp:335
 msgid "IDS_POINTS"
 msgstr "Points"
 
@@ -4384,7 +4422,7 @@ msgstr "Show or hide this item in various selection lists."
 msgid "HIDC_INFONOTE_COMMENTS"
 msgstr "Comments about the club, judge or location."
 
-#: Win/DlgListCtrl.cpp:398 Win/TabView.cpp:231 Win/TabView.cpp:337
+#: Win/DlgListCtrl.cpp:398 Win/TabView.cpp:230 Win/TabView.cpp:336
 msgid "IDS_CALENDAR"
 msgstr "Calendar"
 
@@ -6107,7 +6145,7 @@ msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtered"
 
 #: Win/PointsData.cpp:613 Win/PointsData.cpp:1392 Win/Print.cpp:103
-#: Win/Print.cpp:1043 Win/TabView.cpp:225 Win/TabView.cpp:335
+#: Win/Print.cpp:1043 Win/TabView.cpp:224 Win/TabView.cpp:334
 msgid "IDS_RUNS"
 msgstr "Runs"
 
@@ -6185,7 +6223,7 @@ msgstr "Reading %1$d rows and %2$d columns"
 msgid "Reading %1$d rows"
 msgstr "Reading %1$d rows"
 
-#: Win/TabView.cpp:234 Win/TabView.cpp:338
+#: Win/TabView.cpp:233 Win/TabView.cpp:337
 msgid "IDS_TRAINING"
 msgstr "Training Log"
 
@@ -6929,12 +6967,6 @@ msgstr ""
 
 #~ msgid "IDS_UPDATE_NEWSUBLEVELS"
 #~ msgstr "%1$d new sub-levels"
-
-#~ msgid "IDS_ASSCOL_VIEW_RUNS_LIST"
-#~ msgstr "Runs"
-
-#~ msgid "IDS_ASSCOL_VIEW_RUNS_LIST_DESC"
-#~ msgstr "Display of runs in the Runs view"
 
 #~ msgid "IDS_SELECT_JUDGE"
 #~ msgstr "Please select a Judge."

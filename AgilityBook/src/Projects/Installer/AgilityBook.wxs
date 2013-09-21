@@ -180,13 +180,17 @@ Revision History
 			IncludeMaximum="no"
 			Property="OLDVERSIONFOUND_V1" />
 	</Upgrade>
-	<!-- During beta, do not remove. -->
 <?ifndef var.BETA?>
-	<!-- TODO: For next beta, create new upgradecode then modify the v2 one
-	to be similar to above and move the endif to the bottom of this block -->
+	<Upgrade Id="$(var.UPGRADECODEbeta)">
+		<UpgradeVersion
+			OnlyDetect="no"
+			Minimum="0.0.0"
+			IncludeMinimum="no"
+			Property="OLDVERSIONFOUND_BETA" />
+	</Upgrade>
 <?endif?>
 	<!-- For current guid, include ["2.0.0" <= ver <= CurVer] -->
-	<Upgrade Id="$(var.UPGRADECODEv2)">
+	<Upgrade Id="$(var.UPGRADECODE)">
 		<UpgradeVersion
 			OnlyDetect="no"
 			Minimum="2.0.0"

@@ -1572,7 +1572,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	{
 		std::wstring newCallName = StringUtil::stringW(m_CallName);
 		CAgilityBookOptions::CleanLastItems(m_pDog->GetCallName(), newCallName);
-		hint |= UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW;
+		hint |= UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW;
 		m_pDog->SetCallName(newCallName);
 	}
 	if (m_pDog->GetDOB() != m_DOB)

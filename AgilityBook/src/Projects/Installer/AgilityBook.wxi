@@ -9,8 +9,7 @@
 		(Note, now handled automatically below)
 
 		When a beta ends, undef BETA. That will then include the V1 upgrade 
-		ode. To start a beta, define BETA, define a new upgrade code and new
-		default folder. Also adjust the wxs code to support another code.
+		code. To start a beta, define BETA.
 		Non-betas will upgrade all other codes, BETAs will only upgrade itself.
 	-->
 
@@ -19,22 +18,26 @@
 	<?endif?>
 
 	<!-- v1 upgrade code [used thru v1.10.10] -->
-	<?define DEFFOLDERv1=Agility Record Book?>
 	<?define UPGRADECODEv1=DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB?>
 	<!-- v2+ upgrade code [started with v2.0.0] -->
-	<?define DEFFOLDERv2=Agility Record Book v2?>
 	<?define UPGRADECODEv2=4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4?>
+	<!-- upgrade code for all future betas -->
+	<?define UPGRADECODEbeta=5080C9BF-BF0F-4429-BB83-FD0A80B08D4D?>
 
 	<?define DEFFOLDERbase=Agility Record Book?>
 
 	<?ifdef BETA?>
-		<?define DEFFOLDER=$(var.DEFFOLDERbase) v($var.CURRENT_VERSION)?>
+		<?define DEFFOLDER=$(var.DEFFOLDERbase) Beta v($var.CURRENT_VERSION)?>
 	<?else?>
 		<?define DEFFOLDER=$(var.DEFFOLDERbase)?>
 	<?endif?>
 
 	<!-- Make sure this is the same as in GenMSI.py -->
-	<?define UPGRADECODE=$(var.UPGRADECODEv2)?>
+	<?ifdef BETA?>
+		<?define UPGRADECODE=$(var.UPGRADECODEbeta)?>
+	<?else?>
+		<?define UPGRADECODE=$(var.UPGRADECODEv2)?>
+	<?endif?>
 
 	<?if $(sys.BUILDARCH) = x64 ?>
 		<?define Win64=yes?>

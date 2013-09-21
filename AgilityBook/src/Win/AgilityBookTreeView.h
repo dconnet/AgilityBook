@@ -1,4 +1,5 @@
 #pragma once
+#if !USE_TREEVIEW
 
 /*
  * Copyright (c) David Connet. All Rights Reserved.
@@ -13,7 +14,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-04-22 DRC Converted tree+list into single control.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-08 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added SelectDog()
@@ -29,10 +29,12 @@
  *                    prevent constant re-evaluation.
  */
 
-#include "AgilityBookTreeModel.h"
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "IconList.h"
+#include "Widgets.h"
+
+#include "ARB/ARBBase.h"
 #include <vector>
 #include <wx/docview.h>
 class CAgilityBookTreeData;
@@ -48,43 +50,11 @@ public:
 	}
 	virtual bool Search(CDlgFind* pDlg) const;
 private:
-	void FillTree(wxDataViewItem item) const;
-	wxDataViewItem GetNextItem() const;
+	void FillTree(wxTreeItemId hItem) const;
+	wxTreeItemId GetNextItem() const;
 	CAgilityBookTreeView* m_pView;
-	mutable std::vector<wxDataViewItem> m_Items;
-	mutable std::vector<wxDataViewItem>::const_iterator m_Iter;
-};
-
-
-class CAgilityBookTreeCtrl : public wxDataViewCtrl
-{
-	DECLARE_DYNAMIC_CLASS_NO_ASSIGN(CAgilityBookTreeCtrl)
-public:
-	CAgilityBookTreeCtrl();
-	CAgilityBookTreeCtrl(
-			wxWindow* parent,
-			wxWindowID id,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize,
-			long style = wxDV_MULTIPLE | wxDV_ROW_LINES,
-			const wxValidator& validator = wxDefaultValidator);
-	~CAgilityBookTreeCtrl();
-
-	bool Create(
-			wxWindow *parent,
-			wxWindowID id,
-			const wxPoint& pos,
-			const wxSize& size,
-			long style,
-			const wxValidator& validator);
-
-	bool Unsort();
-
-	void CollapseAllChildren(wxDataViewItem const& item);
-	void ExpandAllChildren(wxDataViewItem const& item);
-
-	CAgilityBookTreeModel* GetStore();
-	const CAgilityBookTreeModel* GetStore() const;
+	mutable std::vector<wxTreeItemId> m_Items;
+	mutable std::vector<wxTreeItemId>::const_iterator m_Iter;
 };
 
 
@@ -109,7 +79,11 @@ public:
 			int proportion = 0,
 			int sizerFlags = 0,
 			int border = 0);
-	virtual wxWindow* GetControl();
+	virtual wxWindow* GetControl()		{return m_Ctrl;}
+	virtual bool HasNextPane() const	{return true;}
+	virtual bool NextPane();
+	virtual bool HasPrevPane() const	{return true;}
+	virtual bool PrevPane();
 	virtual void DetachView();
 
 	virtual bool IsFiltered() const;
@@ -133,147 +107,116 @@ public:
 	void Freeze()								{m_Ctrl->Freeze();}
 	void Thaw()									{m_Ctrl->Thaw();}
 	void Refresh()								{m_Ctrl->Refresh();}
-	wxDataViewItem GetSelection() const;
-	void RefreshItem(wxDataViewItem const& item);
-	CAgilityBookTreeModel* GetStore()			{return m_Ctrl->GetStore();}
-	const CAgilityBookTreeModel* GetStore() const	{return m_Ctrl->GetStore();}
-	wxEvtHandler* GetEventHandler() const		{return m_Ctrl;}
+	void RefreshItem(wxTreeItemId item, bool bRecurse = false);
+	bool IsExpanded(wxTreeItemId item) const	{return m_Ctrl->IsExpanded(item);}
+	void Expand(wxTreeItemId item)				{m_Ctrl->Expand(item);}
+	void ExpandAllChildren(wxTreeItemId item)	{m_Ctrl->ExpandAllChildren(item);}
+	void Collapse(wxTreeItemId item)			{m_Ctrl->Collapse(item);}
+	void CollapseAllChildren(wxTreeItemId item)	{m_Ctrl->CollapseAllChildren(item);}
+	void SelectItem(wxTreeItemId item)			{ChangeSelection(item, true);}
+	void EnsureVisible(wxTreeItemId item)		{m_Ctrl->EnsureVisible(item);}
+	bool ItemHasChildren(wxTreeItemId item) const
+		{return m_Ctrl->ItemHasChildren(item);}
+	void Delete(wxTreeItemId item)				{m_Ctrl->Delete(item);}
+	wxTreeItemId GetItemParent(wxTreeItemId item) const
+		{return m_Ctrl->GetItemParent(item);}
 
-	wxDataViewItem FindData(ARBBasePtr pBase) const;
-	wxDataViewItem FindData(
-			wxDataViewItem const& inItem,
+	CIconList const& GetImageList() const	{return m_ImageList;}
+	CAgilityBookTreeData* GetCurrentTreeItem() const;
+	CAgilityBookTreeData* GetTreeItem(wxTreeItemId hItem) const;
+	bool SelectDog(ARBDogPtr);
+
+	CAgilityBookTreeData* FindData(ARBBasePtr pBase) const
+	{
+		return FindData(m_Ctrl->GetRootItem(), pBase);
+	}
+	CAgilityBookTreeData* FindData(
+			wxTreeItemId hItem,
 			ARBBasePtr pBase) const;
-	wxDataViewItem FindData(ARBDogPtr pDog) const;
-	wxDataViewItem FindData(
-			wxDataViewItem const& inItem,
+	CAgilityBookTreeData* FindData(ARBDogPtr pDog) const
+	{
+		return FindData(m_Ctrl->GetRootItem(), pDog);
+	}
+	CAgilityBookTreeData* FindData(
+			wxTreeItemId hItem,
 			ARBDogPtr pDog) const;
-	wxDataViewItem FindData(ARBDogTrialPtr pTrial) const;
-	wxDataViewItem FindData(
-			wxDataViewItem const& inItem,
+	CAgilityBookTreeData* FindData(ARBDogTrialPtr pTrial) const
+	{
+		return FindData(m_Ctrl->GetRootItem(), pTrial);
+	}
+	CAgilityBookTreeData* FindData(
+			wxTreeItemId hItem,
 			ARBDogTrialPtr pTrial) const;
-	wxDataViewItem FindData(ARBDogRunPtr pRun) const;
-	wxDataViewItem FindData(
-			wxDataViewItem const& inItem,
+	CAgilityBookTreeData* FindData(ARBDogRunPtr pRun) const
+	{
+		return FindData(m_Ctrl->GetRootItem(), pRun);
+	}
+	CAgilityBookTreeData* FindData(
+			wxTreeItemId hItem,
 			ARBDogRunPtr pRun) const;
 
-	bool SelectDog(ARBDogPtr);
-	wxDataViewItem InsertDog(
+	wxTreeItemId InsertDog(
 			ARBDogPtr pDog,
 			bool bSelect = false);
-	wxDataViewItem InsertTrial(
-			ARBDogPtr pDog,
+	wxTreeItemId InsertTrial(
 			ARBDogTrialPtr pTrial,
-			wxDataViewItem parent);
-	wxDataViewItem InsertRun(
-			ARBDogPtr pDog,
+			wxTreeItemId hParent);
+	wxTreeItemId InsertRun(
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
-			wxDataViewItem parent);
-	std::wstring GetPrintLine(wxDataViewItem const& item) const;
+			wxTreeItemId hParent);
+	bool PasteDog(bool& bLoaded);
+	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
+
+	std::wstring GetPrintLine(wxTreeItemId hItem) const;
 
 private:
-	void GetQCount(
-			int& ioCount,
-			int& ioTotal) const;
-	bool GetUnifiedDog(
-			wxDataViewItemArray const& sel,
-			ARBDogPtr& pDog) const;
-	bool GetUnifiedTrial(
-			wxDataViewItemArray const& sel,
-			ARBDogPtr& pDog,
-			ARBDogTrialPtr& pTrial) const;
-	ARBDogRunPtr GetFirstRun(wxDataViewItemArray const& sel);
+	void UpdateData(wxTreeItemId hItem);
 	void ChangeSelection(
-			wxDataViewItem const& item,
+			wxTreeItemId hItem,
 			bool bEnsureVisible = true);
-	void DoSelectionChange(wxDataViewItem const& item);
-	bool EditDog(ARBDogPtr pDog);
-	bool EditTrial(
-			ARBDogPtr pDog,
-			ARBDogTrialPtr pTrial);
-	bool EditRun(
-			ARBDogPtr pDog,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun);
-	bool DoEdit(
-			wxDataViewItem const& item,
-			CTreeDataType type);
-	wxDataViewItem LoadData(
-			ARBDogPtr pDog);
-	wxDataViewItem LoadData(
-			ARBDogPtr pDog,
-			ARBDogTrialPtr pTrial,
-			wxDataViewItem parent);
-	wxDataViewItem LoadData(
-			ARBDogPtr pDog,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun,
-			wxDataViewItem parent);
-	void LoadData(bool bColumns);
+	void DoSelectionChange(wxTreeItemId hItem);
+	void LoadData();
 	void PrintLine(
 			std::wostringstream& data,
-			wxDataViewItem item,
+			wxTreeItemId id,
 			int indent) const;
 	std::wstring GetPrintDataAsHtmlTable() const;
+	bool OnCmd(int id);
+	//void PrintLine(
+	//		CDC* pDC,
+	//		CTreePrintData *pData,
+	//		wxTreeItemId hItem,
+	//		int indent) const;
 
-	CAgilityBookTreeCtrl* m_Ctrl;
+	CTreeCtrl* m_Ctrl;
+	CIconList m_ImageList;
+#ifdef WX_TREE_HAS_STATE
+	wxImageList m_ImageListStates;
+	int m_idxEmpty;
+	int m_idxChecked;
+#endif
+	std::vector<long> m_Columns[3];
+	bool m_bReset;
+	bool m_bSuppressSelect;
+	bool m_bInPopup;
+	bool m_bInDelete;
+	bool m_bDeleteChanged; // Used with m_itemPopup
+	wxTreeItemId m_itemPopup; // Tried to select item during menu - delay
 	CFindTree m_Callback;
-	bool m_bSuppressPrompt;
+	ARBDogPtr m_pDog;
 
-	void OnContextMenu(wxDataViewEvent& evt);
-	void OnSelectionChanged(wxDataViewEvent& evt);
-	void OnItemActivated(wxDataViewEvent& evt);
-	void OnKeyDown(wxKeyEvent& evt);
+	DECLARE_EVENT_TABLE()
+	void OnCtrlSetFocus(wxFocusEvent& evt);
+	void OnCtrlContextMenu(wxTreeEvent& evt);
+	void OnCtrlSelectionChanged(wxTreeEvent& evt);
+	void OnCtrlItemActivated(wxTreeEvent& evt);
+	void OnCtrlKeyDown(wxKeyEvent& evt);
+	void OnViewContextMenu(wxContextMenuEvent& evt);
+	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
+	void OnViewCmd(wxCommandEvent& evt);
 	void OnPrint(wxCommandEvent& evt);
 	void OnPreview(wxCommandEvent& evt);
-	void OnUpdateEnable(wxUpdateUIEvent& evt);
-	void OnUpdateDisable(wxUpdateUIEvent& evt);
-	void OnUpdateDuplicate(wxUpdateUIEvent& evt);
-	void OnDuplicate(wxCommandEvent& evt);
-	void OnUpdateCut(wxUpdateUIEvent& evt);
-	void OnCut(wxCommandEvent& evt);
-	void OnUpdateCopy(wxUpdateUIEvent& evt);
-	void OnCopy(wxCommandEvent& evt);
-	void OnUpdatePaste(wxUpdateUIEvent& evt);
-	void OnPaste(wxCommandEvent& evt);
-	void OnUpdateDelete(wxUpdateUIEvent& evt);
-	void OnDelete(wxCommandEvent& evt);
-	void OnUpdateReorder(wxUpdateUIEvent& evt);
-	void OnReorder(wxCommandEvent& evt);
-	void OnFind(wxCommandEvent& evt);
-	void OnFindNext(wxCommandEvent& evt);
-	void OnFindPrevious(wxCommandEvent& evt);
-	void OnUpdateEditDog(wxUpdateUIEvent& evt);
-	void OnEditDog(wxCommandEvent& evt);
-	void OnUpdateNewTitle(wxUpdateUIEvent& evt);
-	void OnNewTitle(wxCommandEvent& evt);
-	void OnUpdateNewTrial(wxUpdateUIEvent& evt);
-	void OnNewTrial(wxCommandEvent& evt);
-	void OnUpdateEditTrial(wxUpdateUIEvent& evt);
-	void OnEditTrial(wxCommandEvent& evt);
-	void OnUpdatePrintTrial(wxUpdateUIEvent& evt);
-	void OnPrintTrial(wxCommandEvent& evt);
-	void OnUpdatePrintRuns(wxUpdateUIEvent& evt);
-	void OnPrintRuns(wxCommandEvent& evt);
-	void OnUpdateNewRun(wxUpdateUIEvent& evt);
-	void OnNewRun(wxCommandEvent& evt);
-	void OnUpdateEditRun(wxUpdateUIEvent& evt);
-	void OnEditRun(wxCommandEvent& evt);
-	void OnViewCustomize(wxCommandEvent& evt);
-	void OnUpdateUnsort(wxUpdateUIEvent& evt);
-	void OnUnsort(wxCommandEvent& evt);
-	void OnViewSortRuns(wxCommandEvent& evt);
-	void OnViewRunsByTrial(wxCommandEvent& evt);
-	void OnViewRunsByList(wxCommandEvent& evt);
-	void OnViewAllRunsByList(wxCommandEvent& evt);
-	void OnViewTableInYPS(wxCommandEvent& evt);
-	void OnViewRuntimeInOPS(wxCommandEvent& evt);
-	void OnUpdateExpand(wxUpdateUIEvent& evt);
-	void OnExpand(wxCommandEvent& evt);
-	void OnUpdateCollapse(wxUpdateUIEvent& evt);
-	void OnCollapse(wxCommandEvent& evt);
-	void OnUpdateExpandAll(wxUpdateUIEvent& evt);
-	void OnExpandAll(wxCommandEvent& evt);
-	void OnUpdateCollapseAll(wxUpdateUIEvent& evt);
-	void OnCollapseAll(wxCommandEvent& evt);
 };
+
+#endif // USE_TREELIST

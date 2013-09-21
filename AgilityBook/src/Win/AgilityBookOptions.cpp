@@ -1146,10 +1146,10 @@ static wxString GetLastKey(
 		// The 'Clean' routines below have "knowledge" of
 		//  <key>/<dog>/<venue> order.
 		key = keyGroup;
-		key << L"/" << pDog->GetCallName();
+		key << L"/" << pDog->GetCallName().c_str();
 		if (pVenue && !pVenue->GetName().empty())
 		{
-			key << L"/" << pVenue->GetName();
+			key << L"/" << pVenue->GetName().c_str();
 		}
 		// Fall back
 		if (bFallback && !wxConfig::Get()->Exists(key))
@@ -1319,22 +1319,22 @@ void CAgilityBookOptions::CleanLastItems(std::wstring const& oldCallName, std::w
 
 		if (sc_Keys[i].hasVenueKey)
 		{
-			if (wxConfig::Get()->HasGroup(oldCallName))
+			if (wxConfig::Get()->HasGroup(oldCallName.c_str()))
 			{
 				if (newCallName.empty())
-					wxConfig::Get()->DeleteGroup(oldCallName);
+					wxConfig::Get()->DeleteGroup(oldCallName.c_str());
 				else
-					wxConfig::Get()->RenameGroup(oldCallName, newCallName);
+					wxConfig::Get()->RenameGroup(oldCallName.c_str(), newCallName.c_str());
 			}
 		}
 		else
 		{
-			if (wxConfig::Get()->HasEntry(oldCallName))
+			if (wxConfig::Get()->HasEntry(oldCallName.c_str()))
 			{
 				if (newCallName.empty())
-					wxConfig::Get()->DeleteEntry(oldCallName);
+					wxConfig::Get()->DeleteEntry(oldCallName.c_str());
 				else
-					wxConfig::Get()->RenameEntry(oldCallName, newCallName);
+					wxConfig::Get()->RenameEntry(oldCallName.c_str(), newCallName.c_str());
 			}
 		}
 
@@ -1722,14 +1722,20 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_TREE_DOG_CALLNAME);
 				outValues.push_back(IO_TREE_DOG_AGE);
 				break;
+#if USE_TREELIST
+			case IO_TYPE_VIEW_TREELIST_TRIAL:
+#else
 			case IO_TYPE_VIEW_TREE_TRIAL:
+				outValues.push_back(IO_TREE_TRIAL_START);
+#endif
 #ifndef __WXMSW__
 				outValues.push_back(IO_TREE_TRIAL_VERIFIED);
 #endif
 				outValues.push_back(IO_TREE_TRIAL_VENUE);
 				outValues.push_back(IO_TREE_TRIAL_LOCATION);
 				break;
-			case IO_TYPE_VIEW_TREE_RUNS:
+#if USE_TREELIST
+			case IO_TYPE_VIEW_TREELIST_RUNS:
 				outValues.push_back(IO_RUNS_DATE);
 				outValues.push_back(IO_RUNS_Q);
 				outValues.push_back(IO_RUNS_TITLE_POINTS);
@@ -1747,7 +1753,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_COMMENTS);
 				break;
-			case IO_TYPE_VIEW_TREE_RUNS_LIST:
+			case IO_TYPE_VIEW_TREELIST_RUNS_LIST:
 				outValues.push_back(IO_RUNS_CALL_NAME);
 				outValues.push_back(IO_RUNS_VENUE);
 				outValues.push_back(IO_RUNS_CLUB);
@@ -1769,6 +1775,30 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_COMMENTS);
 				break;
+#else
+			case IO_TYPE_VIEW_TREE_RUN:
+				outValues.push_back(IO_TREE_RUN_DATE);
+				outValues.push_back(IO_TREE_RUN_EVENT);
+				break;
+			case IO_TYPE_VIEW_RUNS_LIST:
+				outValues.push_back(IO_RUNS_Q);
+				outValues.push_back(IO_RUNS_TITLE_POINTS);
+				outValues.push_back(IO_RUNS_SCORE);
+				outValues.push_back(IO_RUNS_DATE);
+				outValues.push_back(IO_RUNS_VENUE);
+				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_DIVISION);
+				outValues.push_back(IO_RUNS_LEVEL);
+				outValues.push_back(IO_RUNS_HEIGHT);
+				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_TIME);
+				outValues.push_back(IO_RUNS_YPS);
+				outValues.push_back(IO_RUNS_PLACE);
+				outValues.push_back(IO_RUNS_IN_CLASS);
+				outValues.push_back(IO_RUNS_DOGSQD);
+				outValues.push_back(IO_RUNS_COMMENTS);
+				break;
+#endif
 			case IO_TYPE_VIEW_CALENDAR_LIST:
 				outValues.push_back(IO_CAL_START_DATE);
 				outValues.push_back(IO_CAL_VENUE);

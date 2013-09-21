@@ -30,25 +30,37 @@
  * If a column is removed, then the number must be reserved.
  * (types are stored as a key name "colN", the others are the value of the key)
  */
-#define IO_TYPE_RUNS_FAULTS_TIME	0
-#define IO_TYPE_RUNS_TIME_FAULTS	1
-#define IO_TYPE_RUNS_OPEN_CLOSE		2
-#define IO_TYPE_RUNS_POINTS			3
-#define IO_TYPE_CALENDAR			4
-#define IO_TYPE_TRAINING			5
-#define IO_TYPE_VIEW_TREE_DOG		6
-#define IO_TYPE_VIEW_RESERVED1		7	// IO_TYPE_VIEW_TREE_TRIAL
-#define IO_TYPE_VIEW_RESERVED2		8	// IO_TYPE_VIEW_TREE_RUN
-#define IO_TYPE_VIEW_RESERVED3		9	// IO_TYPE_VIEW_RUNS_LIST
-#define IO_TYPE_VIEW_CALENDAR_LIST	10
-#define IO_TYPE_VIEW_TRAINING_LIST	11
-#define IO_TYPE_CALENDAR_APPT		12
-#define IO_TYPE_CALENDAR_TASK		13
-#define IO_TYPE_VIEW_CALENDAR		14
-#define IO_TYPE_VIEW_TREE_TRIAL		15	// Changed for v3
-#define IO_TYPE_VIEW_TREE_RUNS		16	// Changed for v3
-#define IO_TYPE_VIEW_TREE_RUNS_LIST	17	// New for v3
-#define IO_TYPE_MAX					18
+#define IO_TYPE_RUNS_FAULTS_TIME		0
+#define IO_TYPE_RUNS_TIME_FAULTS		1
+#define IO_TYPE_RUNS_OPEN_CLOSE			2
+#define IO_TYPE_RUNS_POINTS				3
+#define IO_TYPE_CALENDAR				4
+#define IO_TYPE_TRAINING				5
+#define IO_TYPE_VIEW_TREE_DOG			6	// Tree/Run and TreeList
+#if USE_TREELIST
+#define IO_TYPE_VIEW_RESERVED1			7	// IO_TYPE_VIEW_TREE_TRIAL
+#define IO_TYPE_VIEW_RESERVED2			8	// IO_TYPE_VIEW_TREE_RUN
+#define IO_TYPE_VIEW_RESERVED3			9	// IO_TYPE_VIEW_RUNS_LIST
+#else
+#define IO_TYPE_VIEW_TREE_TRIAL			7
+#define IO_TYPE_VIEW_TREE_RUN			8
+#define IO_TYPE_VIEW_RUNS_LIST			9
+#endif
+#define IO_TYPE_VIEW_CALENDAR_LIST		10
+#define IO_TYPE_VIEW_TRAINING_LIST		11
+#define IO_TYPE_CALENDAR_APPT			12
+#define IO_TYPE_CALENDAR_TASK			13
+#define IO_TYPE_VIEW_CALENDAR			14
+#if USE_TREELIST
+#define IO_TYPE_VIEW_TREELIST_TRIAL		15	// TreeList
+#define IO_TYPE_VIEW_TREELIST_RUNS		16	// TreeList
+#define IO_TYPE_VIEW_TREELIST_RUNS_LIST	17	// TreeList
+#else
+#define IO_TYPE_VIEW_RESERVED1			15
+#define IO_TYPE_VIEW_RESERVED2			16
+#define IO_TYPE_VIEW_RESERVED3			17
+#endif
+#define IO_TYPE_MAX						18
 
 #define IO_RUNS_REG_NAME			0
 #define IO_RUNS_CALL_NAME			1
