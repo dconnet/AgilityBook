@@ -27,7 +27,6 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookPanels.h"
-#include "AgilityBookTreeView.h"
 #include "ImageManager.h"
 #include "MainFrm.h"
 #include "RegItems.h"
