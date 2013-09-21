@@ -49,7 +49,7 @@ cd $BUILDDIR
 if test "x$1" = "xtrunk"; then
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
 	then
-		MINSDK="--with-macosx-version-min=10.7 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk --enable-macosx_arch=i386"
+		MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk --enable-macosx_arch=i386"
 	else
 		COMPILERS="CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2"
 		MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Developer/SDKs/MacOSX10.5.sdk --enable-macosx_arch=i386"
@@ -63,15 +63,14 @@ if test "x$1" = "xtrunk"; then
 else
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
 	then
-		MINSDK="--with-macosx-version-min=10.7 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk --enable-macosx_arch=i386"
+		MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk --enable-macosx_arch=i386"
 	else
 		COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
 		MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk --enable-macosx_arch=i386"
 	fi
 fi
 
-#LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no"
-LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --without-libiconv --without-liblzma"
+LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no"
 
 echo "../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $MINSDK"
 
