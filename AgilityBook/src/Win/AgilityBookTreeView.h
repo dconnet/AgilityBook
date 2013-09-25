@@ -1,5 +1,5 @@
 #pragma once
-#if !USE_TREEVIEW
+#if !USE_TREELIST
 
 /*
  * Copyright (c) David Connet. All Rights Reserved.
