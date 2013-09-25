@@ -20,6 +20,7 @@
 
 #include "AgilityBookMenu.h"
 #include "ARB/ARBBase.h"
+#include <list>
 class CAgilityBookDoc;
 class CAgilityBookTreeListData;
 
