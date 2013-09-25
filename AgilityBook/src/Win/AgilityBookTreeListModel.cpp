@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-25 DRC Remember collapsed state when reloading tree.
  * @li 2013-04-22 DRC Converted tree+list into single control.
  */
 
@@ -219,6 +220,28 @@ wxDataViewItem CAgilityBookTreeListModel::LoadData(
 }
 
 
+void CAgilityBookTreeListModel::GetCollapsedItems(
+		std::list<ARBBasePtr>& collapsedItems,
+		CAgilityBookTreeListData* pData)
+{
+	if (!pData || !pData->IsContainer())
+		return;
+	if (!m_Ctrl->IsExpanded(wxDataViewItem(pData)))
+	{
+		collapsedItems.push_back(pData->GetARBBase());
+		return;
+	}
+	wxDataViewItemArray array;
+	pData->GetChildren(array);
+	for (wxDataViewItemArray::iterator iArray = array.begin();
+		iArray != array.end();
+		++iArray)
+	{
+		GetCollapsedItems(collapsedItems, GetNode(*iArray));
+	}
+}
+
+
 void CAgilityBookTreeListModel::LoadData()
 {
 	wxBusyCursor wait;
@@ -234,7 +257,7 @@ void CAgilityBookTreeListModel::LoadData()
 			if (m_pDoc->GetCurrentDog())
 				baseItems.push_back(m_pDoc->GetCurrentDog());
 		}
-		if (node)
+		else
 		{
 			ARBDogPtr pDog = node->GetDog();
 			ARBDogTrialPtr pTrial = node->GetTrial();
@@ -246,6 +269,15 @@ void CAgilityBookTreeListModel::LoadData()
 			if (pRun)
 				baseItems.push_back(pRun);
 		}
+	}
+
+	// Remember currently collapsed items
+	std::list<ARBBasePtr> collapsedItems;
+	for (std::vector<CAgilityBookTreeListData*>::iterator i = m_roots.begin();
+		i != m_roots.end();
+		++i)
+	{
+		GetCollapsedItems(collapsedItems, *i);
 	}
 
 	DeleteAllItems();
@@ -263,7 +295,7 @@ void CAgilityBookTreeListModel::LoadData()
 		}
 	}
 	//Resort(); Not needed - thawing will trigger a resort
-	Expand(m_Ctrl);
+	Expand(m_Ctrl, &collapsedItems);
 
 	if (item.IsOk() && 1 < baseItems.size())
 	{
@@ -384,13 +416,16 @@ void CAgilityBookTreeListModel::DeleteAllItems()
 }
 
 
-void CAgilityBookTreeListModel::Expand(wxDataViewCtrl* list)
+void CAgilityBookTreeListModel::Expand(
+		wxDataViewCtrl* list,
+		std::list<ARBBasePtr> const* pCollapsedItems)
 {
 	for (std::vector<CAgilityBookTreeListData*>::iterator i = m_roots.begin();
 		i != m_roots.end();
 		++i)
 	{
-		list->Expand(wxDataViewItem(*i));
+		if (!pCollapsedItems || pCollapsedItems->end() == std::find(pCollapsedItems->begin(), pCollapsedItems->end(), (*i)->GetARBBase()))
+			list->Expand(wxDataViewItem(*i));
 		if ((*i)->IsContainer())
 		{
 			wxDataViewItemArray array;
@@ -399,7 +434,8 @@ void CAgilityBookTreeListModel::Expand(wxDataViewCtrl* list)
 				iArray != array.end();
 				++iArray)
 			{
-				list->Expand(*iArray);
+				if (!pCollapsedItems || pCollapsedItems->end() == std::find(pCollapsedItems->begin(), pCollapsedItems->end(), GetNode(*iArray)->GetARBBase()))
+					list->Expand(*iArray);
 			}
 		}
 	}

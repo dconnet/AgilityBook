@@ -1,4 +1,4 @@
-9/20/2013: v3.0.0.<in development>
+9/25/2013: v3.0.0.<in development>
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
     [Still not decided - compile option now allows toggling back to old format]

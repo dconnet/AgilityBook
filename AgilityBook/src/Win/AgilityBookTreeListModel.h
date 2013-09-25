@@ -14,6 +14,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-25 DRC Remember collapsed state when reloading tree.
  * @li 2013-04-22 DRC Converted tree+list into single control.
  */
 
@@ -58,7 +59,9 @@ public:
 
 	void Delete(const wxDataViewItem& item);
 	void DeleteAllItems();
-	void Expand(wxDataViewCtrl* list);
+	void Expand(
+			wxDataViewCtrl* list,
+			std::list<ARBBasePtr> const* pCollapsedItems = NULL);
 
 	virtual int Compare(
 			const wxDataViewItem& item1,
@@ -97,6 +100,9 @@ public:
 private:
 	void OnDestroyControl(wxWindowDestroyEvent& evt);
 	CAgilityBookTreeListData* GetNode(const wxDataViewItem& item) const;
+	void GetCollapsedItems(
+			std::list<ARBBasePtr>& collapsedItems,
+			CAgilityBookTreeListData* pData);
 
 	CAgilityBookDoc* m_pDoc;
 	wxDataViewCtrl* m_Ctrl;
