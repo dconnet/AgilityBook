@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-09-26 DRC Fix autosizing columns (don't use wxCOL_WIDTH_AUTOSIZE)
  * @li 2013-09-25 DRC Remember collapsed state when reloading tree.
  * @li 2013-04-22 DRC Converted tree+list into single control.
  */
@@ -110,7 +111,7 @@ void CAgilityBookTreeListModel::UpdateColumns()
 				StringUtil::stringWX(str),
 				renderer,
 				iCol,
-				wxCOL_WIDTH_AUTOSIZE,
+				wxDVC_DEFAULT_WIDTH,
 				wxALIGN_LEFT,
 				wxDATAVIEW_COL_RESIZABLE | wxDATAVIEW_COL_SORTABLE);
 			m_Ctrl->AppendColumn(column);
@@ -280,6 +281,20 @@ void CAgilityBookTreeListModel::LoadData()
 		GetCollapsedItems(collapsedItems, *i);
 	}
 
+	// Remember column widths
+	std::vector<int> colWidths;
+	if (m_roots.size() > 0)
+	{
+		for (unsigned int i = 0; i < m_Ctrl->GetColumnCount(); ++i)
+		{
+			wxDataViewColumn* pCol = m_Ctrl->GetColumn(i);
+			int width = 0;
+			if (pCol)
+				width = pCol->GetWidth();
+			colWidths.push_back(width);
+		}
+	}
+
 	DeleteAllItems();
 
 	// Load the data
@@ -294,8 +309,22 @@ void CAgilityBookTreeListModel::LoadData()
 			item = itemDog;
 		}
 	}
+
 	//Resort(); Not needed - thawing will trigger a resort
 	Expand(m_Ctrl, &collapsedItems);
+
+	// Autosize or restore widths
+	for (unsigned int i = 0; i < m_Ctrl->GetColumnCount(); ++i)
+	{
+		int width = 0;
+		if (colWidths.size() > static_cast<size_t>(i))
+			width = colWidths[i];
+		if (0 >= width)
+			width = m_Ctrl->GetBestColumnWidth(i);
+		wxDataViewColumn* pCol = m_Ctrl->GetColumn(i);
+		if (pCol)
+			pCol->SetWidth(width);
+	}
 
 	if (item.IsOk() && 1 < baseItems.size())
 	{
@@ -378,19 +407,6 @@ void CAgilityBookTreeListModel::Delete(const wxDataViewItem& item)
 
 void CAgilityBookTreeListModel::DeleteAllItems()
 {
-	if (m_Ctrl)
-	{
-		// When deleting everything, turn off autosizing.
-		// DVC is different from list controls. Setting autosize here means the
-		// column resizes itself on data changes. (really not sure I like that)
-		for (unsigned int i = 0; i < m_Ctrl->GetColumnCount(); ++i)
-		{
-			wxDataViewColumn* pCol = m_Ctrl->GetColumn(i);
-			if (pCol)
-				pCol->SetWidth(pCol->GetWidth());
-		}
-	}
-
 	while (m_roots.size() > 0)
 	{
 		std::vector<CAgilityBookTreeListData*>::iterator i = m_roots.begin();
@@ -402,16 +418,6 @@ void CAgilityBookTreeListModel::DeleteAllItems()
 		delete node;
 
 		ItemDeleted(parent, item);
-	}
-
-	if (m_Ctrl)
-	{
-		for (unsigned int i = 0; i < m_Ctrl->GetColumnCount(); ++i)
-		{
-			wxDataViewColumn* pCol = m_Ctrl->GetColumn(i);
-			if (pCol)
-				pCol->SetWidth(wxCOL_WIDTH_AUTOSIZE);
-		}
 	}
 }
 
