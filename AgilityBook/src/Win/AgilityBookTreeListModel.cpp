@@ -11,7 +11,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-09-26 DRC Fix autosizing columns (don't use wxCOL_WIDTH_AUTOSIZE)
+ * @li 2013-09-26 DRC Fix autosizing columns.
  * @li 2013-09-25 DRC Remember collapsed state when reloading tree.
  * @li 2013-04-22 DRC Converted tree+list into single control.
  */
@@ -319,11 +319,16 @@ void CAgilityBookTreeListModel::LoadData()
 		int width = 0;
 		if (colWidths.size() > static_cast<size_t>(i))
 			width = colWidths[i];
-		if (0 >= width)
-			width = m_Ctrl->GetBestColumnWidth(i);
 		wxDataViewColumn* pCol = m_Ctrl->GetColumn(i);
 		if (pCol)
+		{
+			if (0 >= width)
+			{
+				pCol->SetWidth(wxCOL_WIDTH_AUTOSIZE);
+				width = pCol->GetWidth();
+			}
 			pCol->SetWidth(width);
+		}
 	}
 
 	if (item.IsOk() && 1 < baseItems.size())
