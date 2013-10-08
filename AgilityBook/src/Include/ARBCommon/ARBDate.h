@@ -273,7 +273,7 @@ public:
 	bool isLeap() const ///< Is this a leap year?
 	{
 		int yr = GetYear();
-		return (yr & 3) == 0 && yr % 100 != 0 || yr % 400 == 0;
+		return ((yr & 3) == 0 && yr % 100 != 0) || yr % 400 == 0;
 	}
 
 	/**

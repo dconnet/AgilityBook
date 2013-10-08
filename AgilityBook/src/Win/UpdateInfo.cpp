@@ -13,6 +13,7 @@
  * File Format: See below.
  *
  * Revision History
+ * @li 2013-10-07 DRC Added 'minOS' for Mac.
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-07-26 DRC Moved 'Arch' to ARBAgilityRecordBook.
  * @li 2010-05-07 DRC Removed 'lang' from 'Platform'. (Finally figured out how
@@ -101,6 +102,7 @@
 #include "ReadHttp.h"
 #include "RegItems.h"
 
+#include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
@@ -284,8 +286,13 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		/*
 		 * <!ELEMENT Data (Platform, Config, Download*, DisableCalPlugin*) >
 		 * <!ELEMENT Platform (EMPTY) >
+		 *   <!--
+		 *   Important: 'arch=osx' elements for must be ordered in decending
+		 *   order on 'minOS'.
+		 *   -->
 		 *   <!ATTLIST Platform
-		 *     arch CDATA (x86,x64,mac)
+		 *     arch CDATA (x86,x64,mac,osx)
+		 *     minOS CDATA #IMPLIED
 		 *     ver CDATA #REQUIRED
 		 *     config CDATA #REQUIRED
 		 *     md5 CDATA #REQUIRED
@@ -351,6 +358,23 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 						if (ARBAgilityRecordBook::GetArch() == value)
 						{
 							bSkip = false;
+#if defined(__WXMAC__)
+							ARBVersion minOS;
+							if (ElementNode::eFound == node->GetAttrib(L"minOS", minOS))
+							{
+								int majVer;
+								int minVer;
+								GetOSInfo(majVer, minVer);
+								ARBVersion ver(static_cast<unsigned short>(majVer), static_cast<unsigned short>(minVer));
+								if (ver > minOS)
+									bSkip = true;
+							}
+							else
+							{
+								// It's an error, but don't expose this to the user.
+								bSkip = true;
+							}
+#endif
 						}
 					}
 					// Wrong architecture

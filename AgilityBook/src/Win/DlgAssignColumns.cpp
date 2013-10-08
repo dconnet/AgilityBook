@@ -620,7 +620,7 @@ bool CDlgAssignColumns::GetColumnOrder(
 		bool bDefaultValues)
 {
 	bool bOk = false;
-	if (0 <= idxColumn && idxColumn < IO_TYPE_MAX)
+	if (idxColumn < IO_TYPE_MAX)
 	{
 		if (sc_Types[idxColumn].valid & eOrder)
 		{
@@ -639,7 +639,7 @@ bool CDlgAssignColumns::SetColumnOrder(
 		std::vector<long> const& values)
 {
 	bool bOk = false;
-	if (0 <= idxColumn && idxColumn < IO_TYPE_MAX)
+	if (idxColumn < IO_TYPE_MAX)
 	{
 		if (sc_Types[idxColumn].valid & eOrder)
 		{
@@ -1293,7 +1293,7 @@ void CDlgAssignColumns::OnAdd(wxCommandEvent& evt)
 
 void CDlgAssignColumns::OnRemove(wxCommandEvent& evt)
 {
-	unsigned int idxCol = m_ctrlColumns->GetSelection();
+	int idxCol = m_ctrlColumns->GetSelection();
 	if (0 <= idxCol)
 	{
 		wxString str = m_ctrlColumns->GetString(idxCol);
@@ -1322,7 +1322,7 @@ void CDlgAssignColumns::OnRemove(wxCommandEvent& evt)
 			{
 				m_ctrlAvailable->SetClientObject(idxAvail, new ColumnData(*pData));
 				m_ctrlColumns->Delete(idxCol);
-				if (idxCol == m_ctrlColumns->GetCount())
+				if (idxCol == static_cast<int>(m_ctrlColumns->GetCount()))
 					--idxCol;
 				m_ctrlColumns->SetSelection(idxCol);
 			}
@@ -1330,7 +1330,7 @@ void CDlgAssignColumns::OnRemove(wxCommandEvent& evt)
 		else
 		{
 			m_ctrlColumns->Delete(idxCol);
-			if (idxCol == m_ctrlColumns->GetCount())
+			if (idxCol == static_cast<int>(m_ctrlColumns->GetCount()))
 				--idxCol;
 			m_ctrlColumns->SetSelection(idxCol);
 		}
@@ -1359,8 +1359,9 @@ void CDlgAssignColumns::OnMoveUp(wxCommandEvent& evt)
 
 void CDlgAssignColumns::OnMoveDown(wxCommandEvent& evt)
 {
-	unsigned int idxCol = m_ctrlColumns->GetSelection();
-	if (0 <= idxCol && 1 < m_ctrlColumns->GetCount() && m_ctrlColumns->GetCount() - 1 != idxCol)
+	int idxCol = m_ctrlColumns->GetSelection();
+	if (0 <= idxCol && 1 < m_ctrlColumns->GetCount()
+		&& static_cast<int>(m_ctrlColumns->GetCount()) - 1 != idxCol)
 	{
 		wxString str = m_ctrlColumns->GetString(idxCol);
 		ColumnData* pData = new ColumnData(*GetInUseData(idxCol));

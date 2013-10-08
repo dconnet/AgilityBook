@@ -17,6 +17,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2013-10-07 DRC Change Mac arch signature to allow killing 10.4 support.
  * @li 2013-09-06 DRC File version 14.2
  *                    Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
  * @li 2013-05-24 DRC File version 14.1
@@ -128,7 +129,7 @@ std::wstring ARBAgilityRecordBook::GetArch()
 #elif defined(_WIN32)
 	return L"x86";
 #elif defined(__WXMAC__)
-	return L"mac";
+	return L"osx";
 #else
 #pragma PRAGMA_TODO("Define platform arch in version file for download")
 	return std::wstring();

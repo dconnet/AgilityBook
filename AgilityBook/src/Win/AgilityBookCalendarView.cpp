@@ -212,7 +212,6 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		pDC->SetBackgroundMode(wxTRANSPARENT);
 
 		// Colors for current selected date
-		CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 		wxColour clrNotEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered);
 		wxColour clrPast = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPast);
 		wxColour clrPlanning = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning);
