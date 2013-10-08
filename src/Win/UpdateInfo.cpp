@@ -366,7 +366,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 								int minVer;
 								GetOSInfo(majVer, minVer);
 								ARBVersion ver(static_cast<unsigned short>(majVer), static_cast<unsigned short>(minVer));
-								if (ver > minOS)
+								if (ver < minOS)
 									bSkip = true;
 							}
 							else
