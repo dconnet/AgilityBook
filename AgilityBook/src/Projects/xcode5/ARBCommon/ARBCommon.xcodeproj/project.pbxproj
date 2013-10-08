@@ -1,0 +1,344 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E110B51C177FD146004071B5 /* ARBBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B513177FD146004071B5 /* ARBBase64.h */; };
+		E110B51D177FD146004071B5 /* ARBDate.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B514177FD146004071B5 /* ARBDate.h */; };
+		E110B51E177FD146004071B5 /* ARBMsgDigest.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B515177FD146004071B5 /* ARBMsgDigest.h */; };
+		E110B51F177FD146004071B5 /* ARBTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B516177FD146004071B5 /* ARBTypes.h */; };
+		E110B520177FD146004071B5 /* BinaryData.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B517177FD146004071B5 /* BinaryData.h */; };
+		E110B521177FD146004071B5 /* BreakLine.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B518177FD146004071B5 /* BreakLine.h */; };
+		E110B522177FD146004071B5 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B519177FD146004071B5 /* Element.h */; };
+		E110B523177FD146004071B5 /* StringUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B51A177FD146004071B5 /* StringUtil.h */; };
+		E110B524177FD146004071B5 /* VersionNum.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B51B177FD146004071B5 /* VersionNum.h */; };
+		E110B533177FD16A004071B5 /* ARBBase64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B527177FD16A004071B5 /* ARBBase64.cpp */; };
+		E110B534177FD16A004071B5 /* ARBDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B528177FD16A004071B5 /* ARBDate.cpp */; };
+		E110B535177FD16A004071B5 /* ARBMsgDigest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B529177FD16A004071B5 /* ARBMsgDigest.cpp */; };
+		E110B536177FD16A004071B5 /* ARBTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B52A177FD16A004071B5 /* ARBTypes.cpp */; };
+		E110B537177FD16A004071B5 /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B52B177FD16A004071B5 /* BinaryData.cpp */; };
+		E110B538177FD16A004071B5 /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B52C177FD16A004071B5 /* BreakLine.cpp */; };
+		E110B539177FD16A004071B5 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B52D177FD16A004071B5 /* Element.cpp */; };
+		E110B53A177FD16A004071B5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B52F177FD16A004071B5 /* stdafx.cpp */; };
+		E110B53B177FD16A004071B5 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B530177FD16A004071B5 /* stdafx.h */; };
+		E110B53C177FD16A004071B5 /* StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B531177FD16A004071B5 /* StringUtil.cpp */; };
+		E110B53D177FD16A004071B5 /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E110B532177FD16A004071B5 /* VersionNum.cpp */; };
+		E1B8965A17971A96009FB430 /* ARBMisc.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B8965917971A96009FB430 /* ARBMisc.h */; };
+		E1B8965C17971AAD009FB430 /* ARBMisc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1B8965B17971AAD009FB430 /* ARBMisc.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E110B509177FD120004071B5 /* libARBCommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libARBCommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E110B513177FD146004071B5 /* ARBBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBBase64.h; sourceTree = "<group>"; };
+		E110B514177FD146004071B5 /* ARBDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBDate.h; sourceTree = "<group>"; };
+		E110B515177FD146004071B5 /* ARBMsgDigest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMsgDigest.h; sourceTree = "<group>"; };
+		E110B516177FD146004071B5 /* ARBTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBTypes.h; sourceTree = "<group>"; };
+		E110B517177FD146004071B5 /* BinaryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryData.h; sourceTree = "<group>"; };
+		E110B518177FD146004071B5 /* BreakLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakLine.h; sourceTree = "<group>"; };
+		E110B519177FD146004071B5 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
+		E110B51A177FD146004071B5 /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
+		E110B51B177FD146004071B5 /* VersionNum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNum.h; sourceTree = "<group>"; };
+		E110B527177FD16A004071B5 /* ARBBase64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBBase64.cpp; path = ../../../ARBCommon/ARBBase64.cpp; sourceTree = "<group>"; };
+		E110B528177FD16A004071B5 /* ARBDate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDate.cpp; path = ../../../ARBCommon/ARBDate.cpp; sourceTree = "<group>"; };
+		E110B529177FD16A004071B5 /* ARBMsgDigest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMsgDigest.cpp; path = ../../../ARBCommon/ARBMsgDigest.cpp; sourceTree = "<group>"; };
+		E110B52A177FD16A004071B5 /* ARBTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBTypes.cpp; path = ../../../ARBCommon/ARBTypes.cpp; sourceTree = "<group>"; };
+		E110B52B177FD16A004071B5 /* BinaryData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../../ARBCommon/BinaryData.cpp; sourceTree = "<group>"; };
+		E110B52C177FD16A004071B5 /* BreakLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BreakLine.cpp; path = ../../../ARBCommon/BreakLine.cpp; sourceTree = "<group>"; };
+		E110B52D177FD16A004071B5 /* Element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Element.cpp; path = ../../../ARBCommon/Element.cpp; sourceTree = "<group>"; };
+		E110B52F177FD16A004071B5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../../ARBCommon/stdafx.cpp; sourceTree = "<group>"; };
+		E110B530177FD16A004071B5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../ARBCommon/stdafx.h; sourceTree = "<group>"; };
+		E110B531177FD16A004071B5 /* StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StringUtil.cpp; path = ../../../ARBCommon/StringUtil.cpp; sourceTree = "<group>"; };
+		E110B532177FD16A004071B5 /* VersionNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VersionNum.cpp; path = ../../../ARBCommon/VersionNum.cpp; sourceTree = "<group>"; };
+		E1B8965917971A96009FB430 /* ARBMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMisc.h; sourceTree = "<group>"; };
+		E1B8965B17971AAD009FB430 /* ARBMisc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMisc.cpp; path = ../../../ARBCommon/ARBMisc.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E110B506177FD120004071B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E110B500177FD120004071B5 = {
+			isa = PBXGroup;
+			children = (
+				E110B510177FD12A004071B5 /* Source */,
+				E110B50A177FD120004071B5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E110B50A177FD120004071B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E110B509177FD120004071B5 /* libARBCommon.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E110B510177FD12A004071B5 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E110B511177FD131004071B5 /* Include */,
+				E110B525177FD14C004071B5 /* ARBCommon */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		E110B511177FD131004071B5 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				E110B512177FD146004071B5 /* ARBCommon */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		E110B512177FD146004071B5 /* ARBCommon */ = {
+			isa = PBXGroup;
+			children = (
+				E110B513177FD146004071B5 /* ARBBase64.h */,
+				E110B514177FD146004071B5 /* ARBDate.h */,
+				E1B8965917971A96009FB430 /* ARBMisc.h */,
+				E110B515177FD146004071B5 /* ARBMsgDigest.h */,
+				E110B516177FD146004071B5 /* ARBTypes.h */,
+				E110B517177FD146004071B5 /* BinaryData.h */,
+				E110B518177FD146004071B5 /* BreakLine.h */,
+				E110B519177FD146004071B5 /* Element.h */,
+				E110B51A177FD146004071B5 /* StringUtil.h */,
+				E110B51B177FD146004071B5 /* VersionNum.h */,
+			);
+			name = ARBCommon;
+			path = ../../../Include/ARBCommon;
+			sourceTree = "<group>";
+		};
+		E110B525177FD14C004071B5 /* ARBCommon */ = {
+			isa = PBXGroup;
+			children = (
+				E110B527177FD16A004071B5 /* ARBBase64.cpp */,
+				E110B528177FD16A004071B5 /* ARBDate.cpp */,
+				E1B8965B17971AAD009FB430 /* ARBMisc.cpp */,
+				E110B529177FD16A004071B5 /* ARBMsgDigest.cpp */,
+				E110B52A177FD16A004071B5 /* ARBTypes.cpp */,
+				E110B52B177FD16A004071B5 /* BinaryData.cpp */,
+				E110B52C177FD16A004071B5 /* BreakLine.cpp */,
+				E110B52D177FD16A004071B5 /* Element.cpp */,
+				E110B52F177FD16A004071B5 /* stdafx.cpp */,
+				E110B530177FD16A004071B5 /* stdafx.h */,
+				E110B531177FD16A004071B5 /* StringUtil.cpp */,
+				E110B532177FD16A004071B5 /* VersionNum.cpp */,
+			);
+			name = ARBCommon;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E110B507177FD120004071B5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E110B51C177FD146004071B5 /* ARBBase64.h in Headers */,
+				E110B51D177FD146004071B5 /* ARBDate.h in Headers */,
+				E110B51E177FD146004071B5 /* ARBMsgDigest.h in Headers */,
+				E110B51F177FD146004071B5 /* ARBTypes.h in Headers */,
+				E110B520177FD146004071B5 /* BinaryData.h in Headers */,
+				E110B521177FD146004071B5 /* BreakLine.h in Headers */,
+				E110B522177FD146004071B5 /* Element.h in Headers */,
+				E110B523177FD146004071B5 /* StringUtil.h in Headers */,
+				E110B524177FD146004071B5 /* VersionNum.h in Headers */,
+				E110B53B177FD16A004071B5 /* stdafx.h in Headers */,
+				E1B8965A17971A96009FB430 /* ARBMisc.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E110B508177FD120004071B5 /* ARBCommon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E110B50D177FD120004071B5 /* Build configuration list for PBXNativeTarget "ARBCommon" */;
+			buildPhases = (
+				E110B505177FD120004071B5 /* Sources */,
+				E110B506177FD120004071B5 /* Frameworks */,
+				E110B507177FD120004071B5 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ARBCommon;
+			productName = ARBCommon;
+			productReference = E110B509177FD120004071B5 /* libARBCommon.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E110B501177FD120004071B5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "David Connet";
+			};
+			buildConfigurationList = E110B504177FD120004071B5 /* Build configuration list for PBXProject "ARBCommon" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E110B500177FD120004071B5;
+			productRefGroup = E110B50A177FD120004071B5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E110B508177FD120004071B5 /* ARBCommon */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E110B505177FD120004071B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E110B533177FD16A004071B5 /* ARBBase64.cpp in Sources */,
+				E110B534177FD16A004071B5 /* ARBDate.cpp in Sources */,
+				E110B535177FD16A004071B5 /* ARBMsgDigest.cpp in Sources */,
+				E110B536177FD16A004071B5 /* ARBTypes.cpp in Sources */,
+				E110B537177FD16A004071B5 /* BinaryData.cpp in Sources */,
+				E110B538177FD16A004071B5 /* BreakLine.cpp in Sources */,
+				E110B539177FD16A004071B5 /* Element.cpp in Sources */,
+				E110B53A177FD16A004071B5 /* stdafx.cpp in Sources */,
+				E110B53C177FD16A004071B5 /* StringUtil.cpp in Sources */,
+				E110B53D177FD16A004071B5 /* VersionNum.cpp in Sources */,
+				E1B8965C17971AAD009FB430 /* ARBMisc.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E110B50B177FD120004071B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/trunk/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				SDKROOT = macosx10.8;
+			};
+			name = Debug;
+		};
+		E110B50C177FD120004071B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/trunk/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				SDKROOT = macosx10.8;
+			};
+			name = Release;
+		};
+		E110B50E177FD120004071B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E110B50F177FD120004071B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E110B504177FD120004071B5 /* Build configuration list for PBXProject "ARBCommon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E110B50B177FD120004071B5 /* Debug */,
+				E110B50C177FD120004071B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E110B50D177FD120004071B5 /* Build configuration list for PBXNativeTarget "ARBCommon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E110B50E177FD120004071B5 /* Debug */,
+				E110B50F177FD120004071B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E110B501177FD120004071B5 /* Project object */;
+}

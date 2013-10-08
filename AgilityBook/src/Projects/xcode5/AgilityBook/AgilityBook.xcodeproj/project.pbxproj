@@ -1,0 +1,1066 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E1105D38169017DF0067091C /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1105D36169017DF0067091C /* ImageManager.cpp */; };
+		E164622A17BFF255004F12AF /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164622717BFF255004F12AF /* SetupApp.cpp */; };
+		E165930917ED2E1D00B86062 /* AgilityBookRunsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */; };
+		E165931017ED2E3000B86062 /* AgilityBookTreeListData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930A17ED2E3000B86062 /* AgilityBookTreeListData.cpp */; };
+		E165931117ED2E3000B86062 /* AgilityBookTreeListModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930C17ED2E3000B86062 /* AgilityBookTreeListModel.cpp */; };
+		E165931217ED2E3000B86062 /* AgilityBookTreeListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930E17ED2E3000B86062 /* AgilityBookTreeListView.cpp */; };
+		E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B63BF166C096E004DEDA4 /* Cocoa.framework */; };
+		E19B64EE166C09B9004DEDA4 /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */; };
+		E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */; };
+		E19B64F1166C09B9004DEDA4 /* AgilityBookCalendarView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E2166C09B9004DEDA4 /* AgilityBookCalendarView.cpp */; };
+		E19B64F2166C09B9004DEDA4 /* AgilityBookDoc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E4166C09B9004DEDA4 /* AgilityBookDoc.cpp */; };
+		E19B64F3166C09B9004DEDA4 /* AgilityBookHtmlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E6166C09B9004DEDA4 /* AgilityBookHtmlView.cpp */; };
+		E19B64F4166C09B9004DEDA4 /* AgilityBookMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E8166C09B9004DEDA4 /* AgilityBookMenu.cpp */; };
+		E19B64F5166C09B9004DEDA4 /* AgilityBookOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63EA166C09B9004DEDA4 /* AgilityBookOptions.cpp */; };
+		E19B64F6166C09B9004DEDA4 /* AgilityBookPanels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63EC166C09B9004DEDA4 /* AgilityBookPanels.cpp */; };
+		E19B64F7166C09B9004DEDA4 /* AgilityBookPointsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63EE166C09B9004DEDA4 /* AgilityBookPointsView.cpp */; };
+		E19B64F8166C09B9004DEDA4 /* AgilityBookTrainingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F0166C09B9004DEDA4 /* AgilityBookTrainingView.cpp */; };
+		E19B64F9166C09B9004DEDA4 /* AgilityBookTreeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F2166C09B9004DEDA4 /* AgilityBookTreeData.cpp */; };
+		E19B64FB166C09B9004DEDA4 /* AgilityBookTreeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F6166C09B9004DEDA4 /* AgilityBookTreeView.cpp */; };
+		E19B64FC166C09B9004DEDA4 /* CalendarSites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F8166C09B9004DEDA4 /* CalendarSites.cpp */; };
+		E19B64FD166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63FA166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp */; };
+		E19B64FE166C09B9004DEDA4 /* CheckLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63FC166C09B9004DEDA4 /* CheckLink.cpp */; };
+		E19B64FF166C09B9004DEDA4 /* CheckTreeCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63FE166C09B9004DEDA4 /* CheckTreeCtrl.cpp */; };
+		E19B6500166C09B9004DEDA4 /* ClipBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6400166C09B9004DEDA4 /* ClipBoard.cpp */; };
+		E19B6501166C09B9004DEDA4 /* ColumnOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6402166C09B9004DEDA4 /* ColumnOrder.cpp */; };
+		E19B6503166C09B9004DEDA4 /* CommonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6406166C09B9004DEDA4 /* CommonView.cpp */; };
+		E19B6504166C09B9004DEDA4 /* ConfigHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */; };
+		E19B6505166C09B9004DEDA4 /* DlgAbout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B640A166C09B9004DEDA4 /* DlgAbout.cpp */; };
+		E19B6506166C09B9004DEDA4 /* DlgAssignColumns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B640C166C09B9004DEDA4 /* DlgAssignColumns.cpp */; };
+		E19B6507166C09B9004DEDA4 /* DlgAuthenticate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B640E166C09B9004DEDA4 /* DlgAuthenticate.cpp */; };
+		E19B6508166C09B9004DEDA4 /* DlgCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6410166C09B9004DEDA4 /* DlgCalendar.cpp */; };
+		E19B6509166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6412166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp */; };
+		E19B650A166C09B9004DEDA4 /* DlgClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6414166C09B9004DEDA4 /* DlgClub.cpp */; };
+		E19B650B166C09B9004DEDA4 /* DlgConfigEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6416166C09B9004DEDA4 /* DlgConfigEvent.cpp */; };
+		E19B650C166C09B9004DEDA4 /* DlgConfigEventMethod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6418166C09B9004DEDA4 /* DlgConfigEventMethod.cpp */; };
+		E19B650D166C09B9004DEDA4 /* DlgConfigMultiQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B641A166C09B9004DEDA4 /* DlgConfigMultiQ.cpp */; };
+		E19B650E166C09B9004DEDA4 /* DlgConfigOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B641C166C09B9004DEDA4 /* DlgConfigOtherPoints.cpp */; };
+		E19B650F166C09B9004DEDA4 /* DlgConfigPlaceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B641E166C09B9004DEDA4 /* DlgConfigPlaceInfo.cpp */; };
+		E19B6510166C09B9004DEDA4 /* DlgConfigTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6420166C09B9004DEDA4 /* DlgConfigTitle.cpp */; };
+		E19B6511166C09B9004DEDA4 /* DlgConfigTitlePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6422166C09B9004DEDA4 /* DlgConfigTitlePoints.cpp */; };
+		E19B6512166C09B9004DEDA4 /* DlgConfigUpdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6424166C09B9004DEDA4 /* DlgConfigUpdate.cpp */; };
+		E19B6513166C09B9004DEDA4 /* DlgConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6426166C09B9004DEDA4 /* DlgConfigure.cpp */; };
+		E19B6514166C09B9004DEDA4 /* DlgConfigureData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6428166C09B9004DEDA4 /* DlgConfigureData.cpp */; };
+		E19B6515166C09B9004DEDA4 /* DlgConfigVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B642A166C09B9004DEDA4 /* DlgConfigVenue.cpp */; };
+		E19B6516166C09B9004DEDA4 /* DlgCRCDViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B642C166C09B9004DEDA4 /* DlgCRCDViewer.cpp */; };
+		E19B6517166C09B9004DEDA4 /* DlgDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B642E166C09B9004DEDA4 /* DlgDog.cpp */; };
+		E19B6518166C09B9004DEDA4 /* DlgEventSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6430166C09B9004DEDA4 /* DlgEventSelect.cpp */; };
+		E19B6519166C09B9004DEDA4 /* DlgExistingPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6432166C09B9004DEDA4 /* DlgExistingPoints.cpp */; };
+		E19B651A166C09B9004DEDA4 /* DlgFault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6434166C09B9004DEDA4 /* DlgFault.cpp */; };
+		E19B651B166C09B9004DEDA4 /* DlgFind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6436166C09B9004DEDA4 /* DlgFind.cpp */; };
+		E19B651C166C09B9004DEDA4 /* DlgFindLinks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6438166C09B9004DEDA4 /* DlgFindLinks.cpp */; };
+		E19B651D166C09B9004DEDA4 /* DlgInfoNote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B643A166C09B9004DEDA4 /* DlgInfoNote.cpp */; };
+		E19B651E166C09B9004DEDA4 /* DlgListCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B643C166C09B9004DEDA4 /* DlgListCtrl.cpp */; };
+		E19B651F166C09B9004DEDA4 /* DlgListViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B643E166C09B9004DEDA4 /* DlgListViewer.cpp */; };
+		E19B6520166C09B9004DEDA4 /* DlgMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6440166C09B9004DEDA4 /* DlgMessage.cpp */; };
+		E19B6521166C09B9004DEDA4 /* DlgMessageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6442166C09B9004DEDA4 /* DlgMessageBox.cpp */; };
+		E19B6522166C09B9004DEDA4 /* DlgName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6444166C09B9004DEDA4 /* DlgName.cpp */; };
+		E19B6523166C09B9004DEDA4 /* DlgOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6446166C09B9004DEDA4 /* DlgOptions.cpp */; };
+		E19B6524166C09B9004DEDA4 /* DlgOptionsCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6448166C09B9004DEDA4 /* DlgOptionsCalendar.cpp */; };
+		E19B6525166C09B9004DEDA4 /* DlgOptionsFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B644A166C09B9004DEDA4 /* DlgOptionsFilter.cpp */; };
+		E19B6526166C09B9004DEDA4 /* DlgOptionsPrint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B644C166C09B9004DEDA4 /* DlgOptionsPrint.cpp */; };
+		E19B6527166C09B9004DEDA4 /* DlgOptionsProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B644E166C09B9004DEDA4 /* DlgOptionsProgram.cpp */; };
+		E19B6528166C09B9004DEDA4 /* DlgOtherPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6450166C09B9004DEDA4 /* DlgOtherPoint.cpp */; };
+		E19B6529166C09B9004DEDA4 /* DlgPartner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6452166C09B9004DEDA4 /* DlgPartner.cpp */; };
+		E19B652A166C09B9004DEDA4 /* DlgPluginDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6454166C09B9004DEDA4 /* DlgPluginDetails.cpp */; };
+		E19B652B166C09B9004DEDA4 /* DlgPointsViewSort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6456166C09B9004DEDA4 /* DlgPointsViewSort.cpp */; };
+		E19B652C166C09B9004DEDA4 /* DlgProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6458166C09B9004DEDA4 /* DlgProgress.cpp */; };
+		E19B652D166C09B9004DEDA4 /* DlgQueryDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B645A166C09B9004DEDA4 /* DlgQueryDetail.cpp */; };
+		E19B652E166C09B9004DEDA4 /* DlgReferenceRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B645C166C09B9004DEDA4 /* DlgReferenceRun.cpp */; };
+		E19B652F166C09B9004DEDA4 /* DlgRegNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B645E166C09B9004DEDA4 /* DlgRegNum.cpp */; };
+		E19B6530166C09B9004DEDA4 /* DlgReorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6460166C09B9004DEDA4 /* DlgReorder.cpp */; };
+		E19B6531166C09B9004DEDA4 /* DlgRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6462166C09B9004DEDA4 /* DlgRun.cpp */; };
+		E19B6532166C09B9004DEDA4 /* DlgSelectDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6464166C09B9004DEDA4 /* DlgSelectDog.cpp */; };
+		E19B6533166C09B9004DEDA4 /* DlgSelectURL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6466166C09B9004DEDA4 /* DlgSelectURL.cpp */; };
+		E19B6534166C09B9004DEDA4 /* DlgTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6468166C09B9004DEDA4 /* DlgTitle.cpp */; };
+		E19B6535166C09B9004DEDA4 /* DlgTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B646A166C09B9004DEDA4 /* DlgTraining.cpp */; };
+		E19B6536166C09B9004DEDA4 /* DlgTrial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B646C166C09B9004DEDA4 /* DlgTrial.cpp */; };
+		E19B6537166C09B9004DEDA4 /* FilterOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B646E166C09B9004DEDA4 /* FilterOptions.cpp */; };
+		E19B6538166C09B9004DEDA4 /* Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6470166C09B9004DEDA4 /* Globals.cpp */; };
+		E19B6539166C09B9004DEDA4 /* IconList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6472166C09B9004DEDA4 /* IconList.cpp */; };
+		E19B653B166C09B9004DEDA4 /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6475166C09B9004DEDA4 /* LanguageManager.cpp */; };
+		E19B653C166C09B9004DEDA4 /* ListCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6477166C09B9004DEDA4 /* ListCtrl.cpp */; };
+		E19B653D166C09B9004DEDA4 /* ListData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6479166C09B9004DEDA4 /* ListData.cpp */; };
+		E19B653E166C09B9004DEDA4 /* Localization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B647B166C09B9004DEDA4 /* Localization.cpp */; };
+		E19B653F166C09B9004DEDA4 /* MainFrm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B647D166C09B9004DEDA4 /* MainFrm.cpp */; };
+		E19B6541166C09B9004DEDA4 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6480166C09B9004DEDA4 /* MenuHelper.cpp */; };
+		E19B6542166C09B9004DEDA4 /* NamedColumns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6482166C09B9004DEDA4 /* NamedColumns.cpp */; };
+		E19B6543166C09B9004DEDA4 /* NoteButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6484166C09B9004DEDA4 /* NoteButton.cpp */; };
+		E19B6544166C09B9004DEDA4 /* PointsData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6486166C09B9004DEDA4 /* PointsData.cpp */; };
+		E19B6545166C09B9004DEDA4 /* Print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6488166C09B9004DEDA4 /* Print.cpp */; };
+		E19B6546166C09B9004DEDA4 /* ReadHttp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B648A166C09B9004DEDA4 /* ReadHttp.cpp */; };
+		E19B6590166C09B9004DEDA4 /* RichEditCtrl2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64D7166C09B9004DEDA4 /* RichEditCtrl2.cpp */; };
+		E19B6591166C09B9004DEDA4 /* SpreadSheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64D9166C09B9004DEDA4 /* SpreadSheet.cpp */; };
+		E19B6592166C09B9004DEDA4 /* TabView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64DB166C09B9004DEDA4 /* TabView.cpp */; };
+		E19B6593166C09B9004DEDA4 /* UpdateInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64DD166C09B9004DEDA4 /* UpdateInfo.cpp */; };
+		E19B6594166C09B9004DEDA4 /* Validators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64DF166C09B9004DEDA4 /* Validators.cpp */; };
+		E19B6595166C09B9004DEDA4 /* ValidatorsQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64E1166C09B9004DEDA4 /* ValidatorsQ.cpp */; };
+		E19B6597166C09B9004DEDA4 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64E4166C09B9004DEDA4 /* Widgets.cpp */; };
+		E19B6598166C09B9004DEDA4 /* Wizard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64E6166C09B9004DEDA4 /* Wizard.cpp */; };
+		E19B6599166C09B9004DEDA4 /* WizardExport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64E8166C09B9004DEDA4 /* WizardExport.cpp */; };
+		E19B659A166C09B9004DEDA4 /* WizardImport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64EA166C09B9004DEDA4 /* WizardImport.cpp */; };
+		E19B659B166C09B9004DEDA4 /* WizardStart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B64EC166C09B9004DEDA4 /* WizardStart.cpp */; };
+		E19B65CB166C0E01004DEDA4 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E19B65CA166C0E01004DEDA4 /* AgilityBook.icns */; };
+		E1BAB4D817C80B260029A596 /* TaskbarProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BAB4D617C80B260029A596 /* TaskbarProgress.cpp */; };
+		E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */; };
+		E1CE612217ECB2BF0026B41B /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE611E17ECB2BF0026B41B /* libARB.a */; };
+		E1CE612317ECB2BF0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE611F17ECB2BF0026B41B /* libARBCommon.a */; };
+		E1CE612417ECB2BF0026B41B /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612017ECB2BF0026B41B /* libLibArchive.a */; };
+		E1CE612517ECB2BF0026B41B /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612117ECB2BF0026B41B /* libLibTidyHtml.a */; };
+		E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */; };
+		E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E1105D36169017DF0067091C /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageManager.cpp; sourceTree = "<group>"; };
+		E1105D37169017DF0067091C /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
+		E164622717BFF255004F12AF /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetupApp.cpp; sourceTree = "<group>"; };
+		E164622817BFF255004F12AF /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupApp.h; sourceTree = "<group>"; };
+		E164622917BFF255004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
+		E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookRunsView.cpp; sourceTree = "<group>"; };
+		E165930817ED2E1D00B86062 /* AgilityBookRunsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookRunsView.h; sourceTree = "<group>"; };
+		E165930A17ED2E3000B86062 /* AgilityBookTreeListData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeListData.cpp; sourceTree = "<group>"; };
+		E165930B17ED2E3000B86062 /* AgilityBookTreeListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeListData.h; sourceTree = "<group>"; };
+		E165930C17ED2E3000B86062 /* AgilityBookTreeListModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeListModel.cpp; sourceTree = "<group>"; };
+		E165930D17ED2E3000B86062 /* AgilityBookTreeListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeListModel.h; sourceTree = "<group>"; };
+		E165930E17ED2E3000B86062 /* AgilityBookTreeListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeListView.cpp; sourceTree = "<group>"; };
+		E165930F17ED2E3000B86062 /* AgilityBookTreeListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeListView.h; sourceTree = "<group>"; };
+		E19B63BB166C096E004DEDA4 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E19B63BF166C096E004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		E19B63C2166C096E004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		E19B63C3166C096E004DEDA4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E19B63C4166C096E004DEDA4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E19B63C7166C096E004DEDA4 /* AgilityBook-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AgilityBook-Info.plist"; sourceTree = "<group>"; };
+		E19B63CD166C096E004DEDA4 /* AgilityBook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AgilityBook-Prefix.pch"; sourceTree = "<group>"; };
+		E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBook.cpp; sourceTree = "<group>"; };
+		E19B63DE166C09B9004DEDA4 /* AgilityBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBook.h; sourceTree = "<group>"; };
+		E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookCalendarListView.cpp; sourceTree = "<group>"; };
+		E19B63E1166C09B9004DEDA4 /* AgilityBookCalendarListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookCalendarListView.h; sourceTree = "<group>"; };
+		E19B63E2166C09B9004DEDA4 /* AgilityBookCalendarView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookCalendarView.cpp; sourceTree = "<group>"; };
+		E19B63E3166C09B9004DEDA4 /* AgilityBookCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookCalendarView.h; sourceTree = "<group>"; };
+		E19B63E4166C09B9004DEDA4 /* AgilityBookDoc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookDoc.cpp; sourceTree = "<group>"; };
+		E19B63E5166C09B9004DEDA4 /* AgilityBookDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookDoc.h; sourceTree = "<group>"; };
+		E19B63E6166C09B9004DEDA4 /* AgilityBookHtmlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookHtmlView.cpp; sourceTree = "<group>"; };
+		E19B63E7166C09B9004DEDA4 /* AgilityBookHtmlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookHtmlView.h; sourceTree = "<group>"; };
+		E19B63E8166C09B9004DEDA4 /* AgilityBookMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookMenu.cpp; sourceTree = "<group>"; };
+		E19B63E9166C09B9004DEDA4 /* AgilityBookMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookMenu.h; sourceTree = "<group>"; };
+		E19B63EA166C09B9004DEDA4 /* AgilityBookOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookOptions.cpp; sourceTree = "<group>"; };
+		E19B63EB166C09B9004DEDA4 /* AgilityBookOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookOptions.h; sourceTree = "<group>"; };
+		E19B63EC166C09B9004DEDA4 /* AgilityBookPanels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookPanels.cpp; sourceTree = "<group>"; };
+		E19B63ED166C09B9004DEDA4 /* AgilityBookPanels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookPanels.h; sourceTree = "<group>"; };
+		E19B63EE166C09B9004DEDA4 /* AgilityBookPointsView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookPointsView.cpp; sourceTree = "<group>"; };
+		E19B63EF166C09B9004DEDA4 /* AgilityBookPointsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookPointsView.h; sourceTree = "<group>"; };
+		E19B63F0166C09B9004DEDA4 /* AgilityBookTrainingView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTrainingView.cpp; sourceTree = "<group>"; };
+		E19B63F1166C09B9004DEDA4 /* AgilityBookTrainingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTrainingView.h; sourceTree = "<group>"; };
+		E19B63F2166C09B9004DEDA4 /* AgilityBookTreeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeData.cpp; sourceTree = "<group>"; };
+		E19B63F3166C09B9004DEDA4 /* AgilityBookTreeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeData.h; sourceTree = "<group>"; };
+		E19B63F6166C09B9004DEDA4 /* AgilityBookTreeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeView.cpp; sourceTree = "<group>"; };
+		E19B63F7166C09B9004DEDA4 /* AgilityBookTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeView.h; sourceTree = "<group>"; };
+		E19B63F8166C09B9004DEDA4 /* CalendarSites.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CalendarSites.cpp; sourceTree = "<group>"; };
+		E19B63F9166C09B9004DEDA4 /* CalendarSites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarSites.h; sourceTree = "<group>"; };
+		E19B63FA166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CalendarSiteUSDAA.cpp; sourceTree = "<group>"; };
+		E19B63FB166C09B9004DEDA4 /* CalendarSiteUSDAA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarSiteUSDAA.h; sourceTree = "<group>"; };
+		E19B63FC166C09B9004DEDA4 /* CheckLink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckLink.cpp; sourceTree = "<group>"; };
+		E19B63FD166C09B9004DEDA4 /* CheckLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckLink.h; sourceTree = "<group>"; };
+		E19B63FE166C09B9004DEDA4 /* CheckTreeCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckTreeCtrl.cpp; sourceTree = "<group>"; };
+		E19B63FF166C09B9004DEDA4 /* CheckTreeCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckTreeCtrl.h; sourceTree = "<group>"; };
+		E19B6400166C09B9004DEDA4 /* ClipBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClipBoard.cpp; sourceTree = "<group>"; };
+		E19B6401166C09B9004DEDA4 /* ClipBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipBoard.h; sourceTree = "<group>"; };
+		E19B6402166C09B9004DEDA4 /* ColumnOrder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColumnOrder.cpp; sourceTree = "<group>"; };
+		E19B6403166C09B9004DEDA4 /* ColumnOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnOrder.h; sourceTree = "<group>"; };
+		E19B6405166C09B9004DEDA4 /* ComboBoxes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxes.h; sourceTree = "<group>"; };
+		E19B6406166C09B9004DEDA4 /* CommonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonView.cpp; sourceTree = "<group>"; };
+		E19B6407166C09B9004DEDA4 /* CommonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonView.h; sourceTree = "<group>"; };
+		E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigHandler.cpp; sourceTree = "<group>"; };
+		E19B6409166C09B9004DEDA4 /* ConfigHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigHandler.h; sourceTree = "<group>"; };
+		E19B640A166C09B9004DEDA4 /* DlgAbout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgAbout.cpp; sourceTree = "<group>"; };
+		E19B640B166C09B9004DEDA4 /* DlgAbout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgAbout.h; sourceTree = "<group>"; };
+		E19B640C166C09B9004DEDA4 /* DlgAssignColumns.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgAssignColumns.cpp; sourceTree = "<group>"; };
+		E19B640D166C09B9004DEDA4 /* DlgAssignColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgAssignColumns.h; sourceTree = "<group>"; };
+		E19B640E166C09B9004DEDA4 /* DlgAuthenticate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgAuthenticate.cpp; sourceTree = "<group>"; };
+		E19B640F166C09B9004DEDA4 /* DlgAuthenticate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgAuthenticate.h; sourceTree = "<group>"; };
+		E19B6410166C09B9004DEDA4 /* DlgCalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgCalendar.cpp; sourceTree = "<group>"; };
+		E19B6411166C09B9004DEDA4 /* DlgCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgCalendar.h; sourceTree = "<group>"; };
+		E19B6412166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgCalendarQueryDetail.cpp; sourceTree = "<group>"; };
+		E19B6413166C09B9004DEDA4 /* DlgCalendarQueryDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgCalendarQueryDetail.h; sourceTree = "<group>"; };
+		E19B6414166C09B9004DEDA4 /* DlgClub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgClub.cpp; sourceTree = "<group>"; };
+		E19B6415166C09B9004DEDA4 /* DlgClub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgClub.h; sourceTree = "<group>"; };
+		E19B6416166C09B9004DEDA4 /* DlgConfigEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigEvent.cpp; sourceTree = "<group>"; };
+		E19B6417166C09B9004DEDA4 /* DlgConfigEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigEvent.h; sourceTree = "<group>"; };
+		E19B6418166C09B9004DEDA4 /* DlgConfigEventMethod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigEventMethod.cpp; sourceTree = "<group>"; };
+		E19B6419166C09B9004DEDA4 /* DlgConfigEventMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigEventMethod.h; sourceTree = "<group>"; };
+		E19B641A166C09B9004DEDA4 /* DlgConfigMultiQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigMultiQ.cpp; sourceTree = "<group>"; };
+		E19B641B166C09B9004DEDA4 /* DlgConfigMultiQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigMultiQ.h; sourceTree = "<group>"; };
+		E19B641C166C09B9004DEDA4 /* DlgConfigOtherPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigOtherPoints.cpp; sourceTree = "<group>"; };
+		E19B641D166C09B9004DEDA4 /* DlgConfigOtherPoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigOtherPoints.h; sourceTree = "<group>"; };
+		E19B641E166C09B9004DEDA4 /* DlgConfigPlaceInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigPlaceInfo.cpp; sourceTree = "<group>"; };
+		E19B641F166C09B9004DEDA4 /* DlgConfigPlaceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigPlaceInfo.h; sourceTree = "<group>"; };
+		E19B6420166C09B9004DEDA4 /* DlgConfigTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigTitle.cpp; sourceTree = "<group>"; };
+		E19B6421166C09B9004DEDA4 /* DlgConfigTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigTitle.h; sourceTree = "<group>"; };
+		E19B6422166C09B9004DEDA4 /* DlgConfigTitlePoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigTitlePoints.cpp; sourceTree = "<group>"; };
+		E19B6423166C09B9004DEDA4 /* DlgConfigTitlePoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigTitlePoints.h; sourceTree = "<group>"; };
+		E19B6424166C09B9004DEDA4 /* DlgConfigUpdate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigUpdate.cpp; sourceTree = "<group>"; };
+		E19B6425166C09B9004DEDA4 /* DlgConfigUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigUpdate.h; sourceTree = "<group>"; };
+		E19B6426166C09B9004DEDA4 /* DlgConfigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigure.cpp; sourceTree = "<group>"; };
+		E19B6427166C09B9004DEDA4 /* DlgConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigure.h; sourceTree = "<group>"; };
+		E19B6428166C09B9004DEDA4 /* DlgConfigureData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigureData.cpp; sourceTree = "<group>"; };
+		E19B6429166C09B9004DEDA4 /* DlgConfigureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigureData.h; sourceTree = "<group>"; };
+		E19B642A166C09B9004DEDA4 /* DlgConfigVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigVenue.cpp; sourceTree = "<group>"; };
+		E19B642B166C09B9004DEDA4 /* DlgConfigVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigVenue.h; sourceTree = "<group>"; };
+		E19B642C166C09B9004DEDA4 /* DlgCRCDViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgCRCDViewer.cpp; sourceTree = "<group>"; };
+		E19B642D166C09B9004DEDA4 /* DlgCRCDViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgCRCDViewer.h; sourceTree = "<group>"; };
+		E19B642E166C09B9004DEDA4 /* DlgDog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgDog.cpp; sourceTree = "<group>"; };
+		E19B642F166C09B9004DEDA4 /* DlgDog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgDog.h; sourceTree = "<group>"; };
+		E19B6430166C09B9004DEDA4 /* DlgEventSelect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgEventSelect.cpp; sourceTree = "<group>"; };
+		E19B6431166C09B9004DEDA4 /* DlgEventSelect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgEventSelect.h; sourceTree = "<group>"; };
+		E19B6432166C09B9004DEDA4 /* DlgExistingPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgExistingPoints.cpp; sourceTree = "<group>"; };
+		E19B6433166C09B9004DEDA4 /* DlgExistingPoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgExistingPoints.h; sourceTree = "<group>"; };
+		E19B6434166C09B9004DEDA4 /* DlgFault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgFault.cpp; sourceTree = "<group>"; };
+		E19B6435166C09B9004DEDA4 /* DlgFault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgFault.h; sourceTree = "<group>"; };
+		E19B6436166C09B9004DEDA4 /* DlgFind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgFind.cpp; sourceTree = "<group>"; };
+		E19B6437166C09B9004DEDA4 /* DlgFind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgFind.h; sourceTree = "<group>"; };
+		E19B6438166C09B9004DEDA4 /* DlgFindLinks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgFindLinks.cpp; sourceTree = "<group>"; };
+		E19B6439166C09B9004DEDA4 /* DlgFindLinks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgFindLinks.h; sourceTree = "<group>"; };
+		E19B643A166C09B9004DEDA4 /* DlgInfoNote.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgInfoNote.cpp; sourceTree = "<group>"; };
+		E19B643B166C09B9004DEDA4 /* DlgInfoNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgInfoNote.h; sourceTree = "<group>"; };
+		E19B643C166C09B9004DEDA4 /* DlgListCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgListCtrl.cpp; sourceTree = "<group>"; };
+		E19B643D166C09B9004DEDA4 /* DlgListCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgListCtrl.h; sourceTree = "<group>"; };
+		E19B643E166C09B9004DEDA4 /* DlgListViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgListViewer.cpp; sourceTree = "<group>"; };
+		E19B643F166C09B9004DEDA4 /* DlgListViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgListViewer.h; sourceTree = "<group>"; };
+		E19B6440166C09B9004DEDA4 /* DlgMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgMessage.cpp; sourceTree = "<group>"; };
+		E19B6441166C09B9004DEDA4 /* DlgMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgMessage.h; sourceTree = "<group>"; };
+		E19B6442166C09B9004DEDA4 /* DlgMessageBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgMessageBox.cpp; sourceTree = "<group>"; };
+		E19B6443166C09B9004DEDA4 /* DlgMessageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgMessageBox.h; sourceTree = "<group>"; };
+		E19B6444166C09B9004DEDA4 /* DlgName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgName.cpp; sourceTree = "<group>"; };
+		E19B6445166C09B9004DEDA4 /* DlgName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgName.h; sourceTree = "<group>"; };
+		E19B6446166C09B9004DEDA4 /* DlgOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgOptions.cpp; sourceTree = "<group>"; };
+		E19B6447166C09B9004DEDA4 /* DlgOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgOptions.h; sourceTree = "<group>"; };
+		E19B6448166C09B9004DEDA4 /* DlgOptionsCalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgOptionsCalendar.cpp; sourceTree = "<group>"; };
+		E19B6449166C09B9004DEDA4 /* DlgOptionsCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgOptionsCalendar.h; sourceTree = "<group>"; };
+		E19B644A166C09B9004DEDA4 /* DlgOptionsFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgOptionsFilter.cpp; sourceTree = "<group>"; };
+		E19B644B166C09B9004DEDA4 /* DlgOptionsFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgOptionsFilter.h; sourceTree = "<group>"; };
+		E19B644C166C09B9004DEDA4 /* DlgOptionsPrint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgOptionsPrint.cpp; sourceTree = "<group>"; };
+		E19B644D166C09B9004DEDA4 /* DlgOptionsPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgOptionsPrint.h; sourceTree = "<group>"; };
+		E19B644E166C09B9004DEDA4 /* DlgOptionsProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgOptionsProgram.cpp; sourceTree = "<group>"; };
+		E19B644F166C09B9004DEDA4 /* DlgOptionsProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgOptionsProgram.h; sourceTree = "<group>"; };
+		E19B6450166C09B9004DEDA4 /* DlgOtherPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgOtherPoint.cpp; sourceTree = "<group>"; };
+		E19B6451166C09B9004DEDA4 /* DlgOtherPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgOtherPoint.h; sourceTree = "<group>"; };
+		E19B6452166C09B9004DEDA4 /* DlgPartner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPartner.cpp; sourceTree = "<group>"; };
+		E19B6453166C09B9004DEDA4 /* DlgPartner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPartner.h; sourceTree = "<group>"; };
+		E19B6454166C09B9004DEDA4 /* DlgPluginDetails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPluginDetails.cpp; sourceTree = "<group>"; };
+		E19B6455166C09B9004DEDA4 /* DlgPluginDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPluginDetails.h; sourceTree = "<group>"; };
+		E19B6456166C09B9004DEDA4 /* DlgPointsViewSort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPointsViewSort.cpp; sourceTree = "<group>"; };
+		E19B6457166C09B9004DEDA4 /* DlgPointsViewSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPointsViewSort.h; sourceTree = "<group>"; };
+		E19B6458166C09B9004DEDA4 /* DlgProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgProgress.cpp; sourceTree = "<group>"; };
+		E19B6459166C09B9004DEDA4 /* DlgProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgProgress.h; sourceTree = "<group>"; };
+		E19B645A166C09B9004DEDA4 /* DlgQueryDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgQueryDetail.cpp; sourceTree = "<group>"; };
+		E19B645B166C09B9004DEDA4 /* DlgQueryDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgQueryDetail.h; sourceTree = "<group>"; };
+		E19B645C166C09B9004DEDA4 /* DlgReferenceRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgReferenceRun.cpp; sourceTree = "<group>"; };
+		E19B645D166C09B9004DEDA4 /* DlgReferenceRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgReferenceRun.h; sourceTree = "<group>"; };
+		E19B645E166C09B9004DEDA4 /* DlgRegNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRegNum.cpp; sourceTree = "<group>"; };
+		E19B645F166C09B9004DEDA4 /* DlgRegNum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgRegNum.h; sourceTree = "<group>"; };
+		E19B6460166C09B9004DEDA4 /* DlgReorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgReorder.cpp; sourceTree = "<group>"; };
+		E19B6461166C09B9004DEDA4 /* DlgReorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgReorder.h; sourceTree = "<group>"; };
+		E19B6462166C09B9004DEDA4 /* DlgRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRun.cpp; sourceTree = "<group>"; };
+		E19B6463166C09B9004DEDA4 /* DlgRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgRun.h; sourceTree = "<group>"; };
+		E19B6464166C09B9004DEDA4 /* DlgSelectDog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgSelectDog.cpp; sourceTree = "<group>"; };
+		E19B6465166C09B9004DEDA4 /* DlgSelectDog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgSelectDog.h; sourceTree = "<group>"; };
+		E19B6466166C09B9004DEDA4 /* DlgSelectURL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgSelectURL.cpp; sourceTree = "<group>"; };
+		E19B6467166C09B9004DEDA4 /* DlgSelectURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgSelectURL.h; sourceTree = "<group>"; };
+		E19B6468166C09B9004DEDA4 /* DlgTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgTitle.cpp; sourceTree = "<group>"; };
+		E19B6469166C09B9004DEDA4 /* DlgTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgTitle.h; sourceTree = "<group>"; };
+		E19B646A166C09B9004DEDA4 /* DlgTraining.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgTraining.cpp; sourceTree = "<group>"; };
+		E19B646B166C09B9004DEDA4 /* DlgTraining.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgTraining.h; sourceTree = "<group>"; };
+		E19B646C166C09B9004DEDA4 /* DlgTrial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgTrial.cpp; sourceTree = "<group>"; };
+		E19B646D166C09B9004DEDA4 /* DlgTrial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgTrial.h; sourceTree = "<group>"; };
+		E19B646E166C09B9004DEDA4 /* FilterOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterOptions.cpp; sourceTree = "<group>"; };
+		E19B646F166C09B9004DEDA4 /* FilterOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterOptions.h; sourceTree = "<group>"; };
+		E19B6470166C09B9004DEDA4 /* Globals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Globals.cpp; sourceTree = "<group>"; };
+		E19B6471166C09B9004DEDA4 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
+		E19B6472166C09B9004DEDA4 /* IconList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IconList.cpp; sourceTree = "<group>"; };
+		E19B6473166C09B9004DEDA4 /* IconList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconList.h; sourceTree = "<group>"; };
+		E19B6475166C09B9004DEDA4 /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LanguageManager.cpp; sourceTree = "<group>"; };
+		E19B6476166C09B9004DEDA4 /* LanguageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageManager.h; sourceTree = "<group>"; };
+		E19B6477166C09B9004DEDA4 /* ListCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListCtrl.cpp; sourceTree = "<group>"; };
+		E19B6478166C09B9004DEDA4 /* ListCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListCtrl.h; sourceTree = "<group>"; };
+		E19B6479166C09B9004DEDA4 /* ListData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListData.cpp; sourceTree = "<group>"; };
+		E19B647A166C09B9004DEDA4 /* ListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListData.h; sourceTree = "<group>"; };
+		E19B647B166C09B9004DEDA4 /* Localization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Localization.cpp; sourceTree = "<group>"; };
+		E19B647C166C09B9004DEDA4 /* Localization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Localization.h; sourceTree = "<group>"; };
+		E19B647D166C09B9004DEDA4 /* MainFrm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainFrm.cpp; sourceTree = "<group>"; };
+		E19B647E166C09B9004DEDA4 /* MainFrm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainFrm.h; sourceTree = "<group>"; };
+		E19B6480166C09B9004DEDA4 /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuHelper.cpp; sourceTree = "<group>"; };
+		E19B6481166C09B9004DEDA4 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
+		E19B6482166C09B9004DEDA4 /* NamedColumns.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NamedColumns.cpp; sourceTree = "<group>"; };
+		E19B6483166C09B9004DEDA4 /* NamedColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NamedColumns.h; sourceTree = "<group>"; };
+		E19B6484166C09B9004DEDA4 /* NoteButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoteButton.cpp; sourceTree = "<group>"; };
+		E19B6485166C09B9004DEDA4 /* NoteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteButton.h; sourceTree = "<group>"; };
+		E19B6486166C09B9004DEDA4 /* PointsData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointsData.cpp; sourceTree = "<group>"; };
+		E19B6487166C09B9004DEDA4 /* PointsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointsData.h; sourceTree = "<group>"; };
+		E19B6488166C09B9004DEDA4 /* Print.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Print.cpp; sourceTree = "<group>"; };
+		E19B6489166C09B9004DEDA4 /* Print.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Print.h; sourceTree = "<group>"; };
+		E19B648A166C09B9004DEDA4 /* ReadHttp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReadHttp.cpp; sourceTree = "<group>"; };
+		E19B648B166C09B9004DEDA4 /* ReadHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadHttp.h; sourceTree = "<group>"; };
+		E19B648C166C09B9004DEDA4 /* RegItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegItems.h; sourceTree = "<group>"; };
+		E19B64D7166C09B9004DEDA4 /* RichEditCtrl2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RichEditCtrl2.cpp; sourceTree = "<group>"; };
+		E19B64D8166C09B9004DEDA4 /* RichEditCtrl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichEditCtrl2.h; sourceTree = "<group>"; };
+		E19B64D9166C09B9004DEDA4 /* SpreadSheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpreadSheet.cpp; sourceTree = "<group>"; };
+		E19B64DA166C09B9004DEDA4 /* SpreadSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadSheet.h; sourceTree = "<group>"; };
+		E19B64DB166C09B9004DEDA4 /* TabView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabView.cpp; sourceTree = "<group>"; };
+		E19B64DC166C09B9004DEDA4 /* TabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabView.h; sourceTree = "<group>"; };
+		E19B64DD166C09B9004DEDA4 /* UpdateInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UpdateInfo.cpp; sourceTree = "<group>"; };
+		E19B64DE166C09B9004DEDA4 /* UpdateInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateInfo.h; sourceTree = "<group>"; };
+		E19B64DF166C09B9004DEDA4 /* Validators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Validators.cpp; sourceTree = "<group>"; };
+		E19B64E0166C09B9004DEDA4 /* Validators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Validators.h; sourceTree = "<group>"; };
+		E19B64E1166C09B9004DEDA4 /* ValidatorsQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ValidatorsQ.cpp; sourceTree = "<group>"; };
+		E19B64E2166C09B9004DEDA4 /* ValidatorsQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidatorsQ.h; sourceTree = "<group>"; };
+		E19B64E4166C09B9004DEDA4 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
+		E19B64E5166C09B9004DEDA4 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
+		E19B64E6166C09B9004DEDA4 /* Wizard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wizard.cpp; sourceTree = "<group>"; };
+		E19B64E7166C09B9004DEDA4 /* Wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wizard.h; sourceTree = "<group>"; };
+		E19B64E8166C09B9004DEDA4 /* WizardExport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WizardExport.cpp; sourceTree = "<group>"; };
+		E19B64E9166C09B9004DEDA4 /* WizardExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardExport.h; sourceTree = "<group>"; };
+		E19B64EA166C09B9004DEDA4 /* WizardImport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WizardImport.cpp; sourceTree = "<group>"; };
+		E19B64EB166C09B9004DEDA4 /* WizardImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardImport.h; sourceTree = "<group>"; };
+		E19B64EC166C09B9004DEDA4 /* WizardStart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WizardStart.cpp; sourceTree = "<group>"; };
+		E19B64ED166C09B9004DEDA4 /* WizardStart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardStart.h; sourceTree = "<group>"; };
+		E19B659D166C09C4004DEDA4 /* ICalendarSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICalendarSite.h; sourceTree = "<group>"; };
+		E19B659E166C09C4004DEDA4 /* IProgressMeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IProgressMeter.h; sourceTree = "<group>"; };
+		E19B65A0166C09C4004DEDA4 /* VersionNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNumber.h; sourceTree = "<group>"; };
+		E19B65CA166C0E01004DEDA4 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AgilityBook.icns; sourceTree = "<group>"; };
+		E1BAB4D617C80B260029A596 /* TaskbarProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TaskbarProgress.cpp; sourceTree = "<group>"; };
+		E1BAB4D717C80B260029A596 /* TaskbarProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskbarProgress.h; sourceTree = "<group>"; };
+		E1CAE57016B5BF6E00B33FE5 /* arbWarningPop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPop.h; sourceTree = "<group>"; };
+		E1CAE57116B5BF6E00B33FE5 /* arbWarningPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPush.h; sourceTree = "<group>"; };
+		E1CAE57216B5BF6E00B33FE5 /* SetupARBPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPost.h; sourceTree = "<group>"; };
+		E1CAE57316B5BF6E00B33FE5 /* SetupARBPre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPre.h; sourceTree = "<group>"; };
+		E1CAE57516B5BF6E00B33FE5 /* SetupWX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupWX.h; sourceTree = "<group>"; };
+		E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
+		E1CAE57716B5BF8700B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		E1CE611E17ECB2BF0026B41B /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
+		E1CE611F17ECB2BF0026B41B /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
+		E1CE612017ECB2BF0026B41B /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/AgilityBook/Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
+		E1CE612117ECB2BF0026B41B /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../build/AgilityBook/Build/Products/Debug/libLibTidyHtml.a; sourceTree = "<group>"; };
+		E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxQ.cpp; sourceTree = "<group>"; };
+		E1E1D05217234DEF00D7D1E4 /* ComboBoxQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxQ.h; sourceTree = "<group>"; };
+		E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxVenue.cpp; sourceTree = "<group>"; };
+		E1E1D05417234DEF00D7D1E4 /* ComboBoxVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxVenue.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E19B63B8166C096E004DEDA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1CE612217ECB2BF0026B41B /* libARB.a in Frameworks */,
+				E1CE612317ECB2BF0026B41B /* libARBCommon.a in Frameworks */,
+				E1CE612417ECB2BF0026B41B /* libLibArchive.a in Frameworks */,
+				E1CE612517ECB2BF0026B41B /* libLibTidyHtml.a in Frameworks */,
+				E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E19B63B0166C096E004DEDA4 = {
+			isa = PBXGroup;
+			children = (
+				E1CE611E17ECB2BF0026B41B /* libARB.a */,
+				E1CE611F17ECB2BF0026B41B /* libARBCommon.a */,
+				E1CE612017ECB2BF0026B41B /* libLibArchive.a */,
+				E1CE612117ECB2BF0026B41B /* libLibTidyHtml.a */,
+				E19B63C5166C096E004DEDA4 /* Source */,
+				E19B63BE166C096E004DEDA4 /* Frameworks */,
+				E19B63BC166C096E004DEDA4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E19B63BC166C096E004DEDA4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E19B63BB166C096E004DEDA4 /* AgilityBook.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E19B63BE166C096E004DEDA4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E19B63BF166C096E004DEDA4 /* Cocoa.framework */,
+				E19B63C1166C096E004DEDA4 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E19B63C1166C096E004DEDA4 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E19B63C2166C096E004DEDA4 /* AppKit.framework */,
+				E19B63C3166C096E004DEDA4 /* CoreData.framework */,
+				E19B63C4166C096E004DEDA4 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		E19B63C5166C096E004DEDA4 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E19B659C166C09C4004DEDA4 /* Include */,
+				E19B63DC166C09B9004DEDA4 /* Win */,
+				E19B63C6166C096E004DEDA4 /* Supporting Files */,
+			);
+			name = Source;
+			path = AgilityBook;
+			sourceTree = "<group>";
+		};
+		E19B63C6166C096E004DEDA4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E19B65CA166C0E01004DEDA4 /* AgilityBook.icns */,
+				E19B63C7166C096E004DEDA4 /* AgilityBook-Info.plist */,
+				E19B63CD166C096E004DEDA4 /* AgilityBook-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E19B63DC166C09B9004DEDA4 /* Win */ = {
+			isa = PBXGroup;
+			children = (
+				E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */,
+				E1CAE57716B5BF8700B33FE5 /* stdafx.h */,
+				E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */,
+				E19B63DE166C09B9004DEDA4 /* AgilityBook.h */,
+				E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */,
+				E19B63E1166C09B9004DEDA4 /* AgilityBookCalendarListView.h */,
+				E19B63E2166C09B9004DEDA4 /* AgilityBookCalendarView.cpp */,
+				E19B63E3166C09B9004DEDA4 /* AgilityBookCalendarView.h */,
+				E19B63E4166C09B9004DEDA4 /* AgilityBookDoc.cpp */,
+				E19B63E5166C09B9004DEDA4 /* AgilityBookDoc.h */,
+				E19B63E6166C09B9004DEDA4 /* AgilityBookHtmlView.cpp */,
+				E19B63E7166C09B9004DEDA4 /* AgilityBookHtmlView.h */,
+				E19B63E8166C09B9004DEDA4 /* AgilityBookMenu.cpp */,
+				E19B63E9166C09B9004DEDA4 /* AgilityBookMenu.h */,
+				E19B63EA166C09B9004DEDA4 /* AgilityBookOptions.cpp */,
+				E19B63EB166C09B9004DEDA4 /* AgilityBookOptions.h */,
+				E19B63EC166C09B9004DEDA4 /* AgilityBookPanels.cpp */,
+				E19B63ED166C09B9004DEDA4 /* AgilityBookPanels.h */,
+				E19B63EE166C09B9004DEDA4 /* AgilityBookPointsView.cpp */,
+				E19B63EF166C09B9004DEDA4 /* AgilityBookPointsView.h */,
+				E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */,
+				E165930817ED2E1D00B86062 /* AgilityBookRunsView.h */,
+				E19B63F0166C09B9004DEDA4 /* AgilityBookTrainingView.cpp */,
+				E19B63F1166C09B9004DEDA4 /* AgilityBookTrainingView.h */,
+				E19B63F2166C09B9004DEDA4 /* AgilityBookTreeData.cpp */,
+				E19B63F3166C09B9004DEDA4 /* AgilityBookTreeData.h */,
+				E165930A17ED2E3000B86062 /* AgilityBookTreeListData.cpp */,
+				E165930B17ED2E3000B86062 /* AgilityBookTreeListData.h */,
+				E165930C17ED2E3000B86062 /* AgilityBookTreeListModel.cpp */,
+				E165930D17ED2E3000B86062 /* AgilityBookTreeListModel.h */,
+				E165930E17ED2E3000B86062 /* AgilityBookTreeListView.cpp */,
+				E165930F17ED2E3000B86062 /* AgilityBookTreeListView.h */,
+				E19B63F6166C09B9004DEDA4 /* AgilityBookTreeView.cpp */,
+				E19B63F7166C09B9004DEDA4 /* AgilityBookTreeView.h */,
+				E19B63F8166C09B9004DEDA4 /* CalendarSites.cpp */,
+				E19B63F9166C09B9004DEDA4 /* CalendarSites.h */,
+				E19B63FA166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp */,
+				E19B63FB166C09B9004DEDA4 /* CalendarSiteUSDAA.h */,
+				E19B63FC166C09B9004DEDA4 /* CheckLink.cpp */,
+				E19B63FD166C09B9004DEDA4 /* CheckLink.h */,
+				E19B63FE166C09B9004DEDA4 /* CheckTreeCtrl.cpp */,
+				E19B63FF166C09B9004DEDA4 /* CheckTreeCtrl.h */,
+				E19B6400166C09B9004DEDA4 /* ClipBoard.cpp */,
+				E19B6401166C09B9004DEDA4 /* ClipBoard.h */,
+				E19B6402166C09B9004DEDA4 /* ColumnOrder.cpp */,
+				E19B6403166C09B9004DEDA4 /* ColumnOrder.h */,
+				E19B6405166C09B9004DEDA4 /* ComboBoxes.h */,
+				E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */,
+				E1E1D05217234DEF00D7D1E4 /* ComboBoxQ.h */,
+				E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */,
+				E1E1D05417234DEF00D7D1E4 /* ComboBoxVenue.h */,
+				E19B6406166C09B9004DEDA4 /* CommonView.cpp */,
+				E19B6407166C09B9004DEDA4 /* CommonView.h */,
+				E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */,
+				E19B6409166C09B9004DEDA4 /* ConfigHandler.h */,
+				E19B640A166C09B9004DEDA4 /* DlgAbout.cpp */,
+				E19B640B166C09B9004DEDA4 /* DlgAbout.h */,
+				E19B640C166C09B9004DEDA4 /* DlgAssignColumns.cpp */,
+				E19B640D166C09B9004DEDA4 /* DlgAssignColumns.h */,
+				E19B640E166C09B9004DEDA4 /* DlgAuthenticate.cpp */,
+				E19B640F166C09B9004DEDA4 /* DlgAuthenticate.h */,
+				E19B6410166C09B9004DEDA4 /* DlgCalendar.cpp */,
+				E19B6411166C09B9004DEDA4 /* DlgCalendar.h */,
+				E19B6412166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp */,
+				E19B6413166C09B9004DEDA4 /* DlgCalendarQueryDetail.h */,
+				E19B6414166C09B9004DEDA4 /* DlgClub.cpp */,
+				E19B6415166C09B9004DEDA4 /* DlgClub.h */,
+				E19B6416166C09B9004DEDA4 /* DlgConfigEvent.cpp */,
+				E19B6417166C09B9004DEDA4 /* DlgConfigEvent.h */,
+				E19B6418166C09B9004DEDA4 /* DlgConfigEventMethod.cpp */,
+				E19B6419166C09B9004DEDA4 /* DlgConfigEventMethod.h */,
+				E19B641A166C09B9004DEDA4 /* DlgConfigMultiQ.cpp */,
+				E19B641B166C09B9004DEDA4 /* DlgConfigMultiQ.h */,
+				E19B641C166C09B9004DEDA4 /* DlgConfigOtherPoints.cpp */,
+				E19B641D166C09B9004DEDA4 /* DlgConfigOtherPoints.h */,
+				E19B641E166C09B9004DEDA4 /* DlgConfigPlaceInfo.cpp */,
+				E19B641F166C09B9004DEDA4 /* DlgConfigPlaceInfo.h */,
+				E19B6420166C09B9004DEDA4 /* DlgConfigTitle.cpp */,
+				E19B6421166C09B9004DEDA4 /* DlgConfigTitle.h */,
+				E19B6422166C09B9004DEDA4 /* DlgConfigTitlePoints.cpp */,
+				E19B6423166C09B9004DEDA4 /* DlgConfigTitlePoints.h */,
+				E19B6424166C09B9004DEDA4 /* DlgConfigUpdate.cpp */,
+				E19B6425166C09B9004DEDA4 /* DlgConfigUpdate.h */,
+				E19B6426166C09B9004DEDA4 /* DlgConfigure.cpp */,
+				E19B6427166C09B9004DEDA4 /* DlgConfigure.h */,
+				E19B6428166C09B9004DEDA4 /* DlgConfigureData.cpp */,
+				E19B6429166C09B9004DEDA4 /* DlgConfigureData.h */,
+				E19B642A166C09B9004DEDA4 /* DlgConfigVenue.cpp */,
+				E19B642B166C09B9004DEDA4 /* DlgConfigVenue.h */,
+				E19B642C166C09B9004DEDA4 /* DlgCRCDViewer.cpp */,
+				E19B642D166C09B9004DEDA4 /* DlgCRCDViewer.h */,
+				E19B642E166C09B9004DEDA4 /* DlgDog.cpp */,
+				E19B642F166C09B9004DEDA4 /* DlgDog.h */,
+				E19B6430166C09B9004DEDA4 /* DlgEventSelect.cpp */,
+				E19B6431166C09B9004DEDA4 /* DlgEventSelect.h */,
+				E19B6432166C09B9004DEDA4 /* DlgExistingPoints.cpp */,
+				E19B6433166C09B9004DEDA4 /* DlgExistingPoints.h */,
+				E19B6434166C09B9004DEDA4 /* DlgFault.cpp */,
+				E19B6435166C09B9004DEDA4 /* DlgFault.h */,
+				E19B6436166C09B9004DEDA4 /* DlgFind.cpp */,
+				E19B6437166C09B9004DEDA4 /* DlgFind.h */,
+				E19B6438166C09B9004DEDA4 /* DlgFindLinks.cpp */,
+				E19B6439166C09B9004DEDA4 /* DlgFindLinks.h */,
+				E19B643A166C09B9004DEDA4 /* DlgInfoNote.cpp */,
+				E19B643B166C09B9004DEDA4 /* DlgInfoNote.h */,
+				E19B643C166C09B9004DEDA4 /* DlgListCtrl.cpp */,
+				E19B643D166C09B9004DEDA4 /* DlgListCtrl.h */,
+				E19B643E166C09B9004DEDA4 /* DlgListViewer.cpp */,
+				E19B643F166C09B9004DEDA4 /* DlgListViewer.h */,
+				E19B6440166C09B9004DEDA4 /* DlgMessage.cpp */,
+				E19B6441166C09B9004DEDA4 /* DlgMessage.h */,
+				E19B6442166C09B9004DEDA4 /* DlgMessageBox.cpp */,
+				E19B6443166C09B9004DEDA4 /* DlgMessageBox.h */,
+				E19B6444166C09B9004DEDA4 /* DlgName.cpp */,
+				E19B6445166C09B9004DEDA4 /* DlgName.h */,
+				E19B6446166C09B9004DEDA4 /* DlgOptions.cpp */,
+				E19B6447166C09B9004DEDA4 /* DlgOptions.h */,
+				E19B6448166C09B9004DEDA4 /* DlgOptionsCalendar.cpp */,
+				E19B6449166C09B9004DEDA4 /* DlgOptionsCalendar.h */,
+				E19B644A166C09B9004DEDA4 /* DlgOptionsFilter.cpp */,
+				E19B644B166C09B9004DEDA4 /* DlgOptionsFilter.h */,
+				E19B644C166C09B9004DEDA4 /* DlgOptionsPrint.cpp */,
+				E19B644D166C09B9004DEDA4 /* DlgOptionsPrint.h */,
+				E19B644E166C09B9004DEDA4 /* DlgOptionsProgram.cpp */,
+				E19B644F166C09B9004DEDA4 /* DlgOptionsProgram.h */,
+				E19B6450166C09B9004DEDA4 /* DlgOtherPoint.cpp */,
+				E19B6451166C09B9004DEDA4 /* DlgOtherPoint.h */,
+				E19B6452166C09B9004DEDA4 /* DlgPartner.cpp */,
+				E19B6453166C09B9004DEDA4 /* DlgPartner.h */,
+				E19B6454166C09B9004DEDA4 /* DlgPluginDetails.cpp */,
+				E19B6455166C09B9004DEDA4 /* DlgPluginDetails.h */,
+				E19B6456166C09B9004DEDA4 /* DlgPointsViewSort.cpp */,
+				E19B6457166C09B9004DEDA4 /* DlgPointsViewSort.h */,
+				E19B6458166C09B9004DEDA4 /* DlgProgress.cpp */,
+				E19B6459166C09B9004DEDA4 /* DlgProgress.h */,
+				E19B645A166C09B9004DEDA4 /* DlgQueryDetail.cpp */,
+				E19B645B166C09B9004DEDA4 /* DlgQueryDetail.h */,
+				E19B645C166C09B9004DEDA4 /* DlgReferenceRun.cpp */,
+				E19B645D166C09B9004DEDA4 /* DlgReferenceRun.h */,
+				E19B645E166C09B9004DEDA4 /* DlgRegNum.cpp */,
+				E19B645F166C09B9004DEDA4 /* DlgRegNum.h */,
+				E19B6460166C09B9004DEDA4 /* DlgReorder.cpp */,
+				E19B6461166C09B9004DEDA4 /* DlgReorder.h */,
+				E19B6462166C09B9004DEDA4 /* DlgRun.cpp */,
+				E19B6463166C09B9004DEDA4 /* DlgRun.h */,
+				E19B6464166C09B9004DEDA4 /* DlgSelectDog.cpp */,
+				E19B6465166C09B9004DEDA4 /* DlgSelectDog.h */,
+				E19B6466166C09B9004DEDA4 /* DlgSelectURL.cpp */,
+				E19B6467166C09B9004DEDA4 /* DlgSelectURL.h */,
+				E19B6468166C09B9004DEDA4 /* DlgTitle.cpp */,
+				E19B6469166C09B9004DEDA4 /* DlgTitle.h */,
+				E19B646A166C09B9004DEDA4 /* DlgTraining.cpp */,
+				E19B646B166C09B9004DEDA4 /* DlgTraining.h */,
+				E19B646C166C09B9004DEDA4 /* DlgTrial.cpp */,
+				E19B646D166C09B9004DEDA4 /* DlgTrial.h */,
+				E19B646E166C09B9004DEDA4 /* FilterOptions.cpp */,
+				E19B646F166C09B9004DEDA4 /* FilterOptions.h */,
+				E19B6470166C09B9004DEDA4 /* Globals.cpp */,
+				E19B6471166C09B9004DEDA4 /* Globals.h */,
+				E19B6472166C09B9004DEDA4 /* IconList.cpp */,
+				E19B6473166C09B9004DEDA4 /* IconList.h */,
+				E1105D36169017DF0067091C /* ImageManager.cpp */,
+				E1105D37169017DF0067091C /* ImageManager.h */,
+				E19B6475166C09B9004DEDA4 /* LanguageManager.cpp */,
+				E19B6476166C09B9004DEDA4 /* LanguageManager.h */,
+				E19B6477166C09B9004DEDA4 /* ListCtrl.cpp */,
+				E19B6478166C09B9004DEDA4 /* ListCtrl.h */,
+				E19B6479166C09B9004DEDA4 /* ListData.cpp */,
+				E19B647A166C09B9004DEDA4 /* ListData.h */,
+				E19B647B166C09B9004DEDA4 /* Localization.cpp */,
+				E19B647C166C09B9004DEDA4 /* Localization.h */,
+				E19B647D166C09B9004DEDA4 /* MainFrm.cpp */,
+				E19B647E166C09B9004DEDA4 /* MainFrm.h */,
+				E19B6480166C09B9004DEDA4 /* MenuHelper.cpp */,
+				E19B6481166C09B9004DEDA4 /* MenuHelper.h */,
+				E19B6482166C09B9004DEDA4 /* NamedColumns.cpp */,
+				E19B6483166C09B9004DEDA4 /* NamedColumns.h */,
+				E19B6484166C09B9004DEDA4 /* NoteButton.cpp */,
+				E19B6485166C09B9004DEDA4 /* NoteButton.h */,
+				E19B6486166C09B9004DEDA4 /* PointsData.cpp */,
+				E19B6487166C09B9004DEDA4 /* PointsData.h */,
+				E19B6488166C09B9004DEDA4 /* Print.cpp */,
+				E19B6489166C09B9004DEDA4 /* Print.h */,
+				E19B648A166C09B9004DEDA4 /* ReadHttp.cpp */,
+				E19B648B166C09B9004DEDA4 /* ReadHttp.h */,
+				E19B648C166C09B9004DEDA4 /* RegItems.h */,
+				E19B64D7166C09B9004DEDA4 /* RichEditCtrl2.cpp */,
+				E19B64D8166C09B9004DEDA4 /* RichEditCtrl2.h */,
+				E164622717BFF255004F12AF /* SetupApp.cpp */,
+				E164622817BFF255004F12AF /* SetupApp.h */,
+				E164622917BFF255004F12AF /* SetupAppARB.h */,
+				E19B64D9166C09B9004DEDA4 /* SpreadSheet.cpp */,
+				E19B64DA166C09B9004DEDA4 /* SpreadSheet.h */,
+				E19B64DB166C09B9004DEDA4 /* TabView.cpp */,
+				E19B64DC166C09B9004DEDA4 /* TabView.h */,
+				E1BAB4D617C80B260029A596 /* TaskbarProgress.cpp */,
+				E1BAB4D717C80B260029A596 /* TaskbarProgress.h */,
+				E19B64DD166C09B9004DEDA4 /* UpdateInfo.cpp */,
+				E19B64DE166C09B9004DEDA4 /* UpdateInfo.h */,
+				E19B64DF166C09B9004DEDA4 /* Validators.cpp */,
+				E19B64E0166C09B9004DEDA4 /* Validators.h */,
+				E19B64E1166C09B9004DEDA4 /* ValidatorsQ.cpp */,
+				E19B64E2166C09B9004DEDA4 /* ValidatorsQ.h */,
+				E19B64E4166C09B9004DEDA4 /* Widgets.cpp */,
+				E19B64E5166C09B9004DEDA4 /* Widgets.h */,
+				E19B64E6166C09B9004DEDA4 /* Wizard.cpp */,
+				E19B64E7166C09B9004DEDA4 /* Wizard.h */,
+				E19B64E8166C09B9004DEDA4 /* WizardExport.cpp */,
+				E19B64E9166C09B9004DEDA4 /* WizardExport.h */,
+				E19B64EA166C09B9004DEDA4 /* WizardImport.cpp */,
+				E19B64EB166C09B9004DEDA4 /* WizardImport.h */,
+				E19B64EC166C09B9004DEDA4 /* WizardStart.cpp */,
+				E19B64ED166C09B9004DEDA4 /* WizardStart.h */,
+			);
+			name = Win;
+			path = ../../../../Win;
+			sourceTree = "<group>";
+		};
+		E19B659C166C09C4004DEDA4 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				E1CAE56F16B5BF6E00B33FE5 /* Platform */,
+				E19B659D166C09C4004DEDA4 /* ICalendarSite.h */,
+				E19B659E166C09C4004DEDA4 /* IProgressMeter.h */,
+				E19B65A0166C09C4004DEDA4 /* VersionNumber.h */,
+			);
+			name = Include;
+			path = ../../../../Include;
+			sourceTree = "<group>";
+		};
+		E1CAE56F16B5BF6E00B33FE5 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				E1CAE57016B5BF6E00B33FE5 /* arbWarningPop.h */,
+				E1CAE57116B5BF6E00B33FE5 /* arbWarningPush.h */,
+				E1CAE57216B5BF6E00B33FE5 /* SetupARBPost.h */,
+				E1CAE57316B5BF6E00B33FE5 /* SetupARBPre.h */,
+				E1CAE57516B5BF6E00B33FE5 /* SetupWX.h */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E19B63BA166C096E004DEDA4 /* AgilityBook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E19B63D9166C096E004DEDA4 /* Build configuration list for PBXNativeTarget "AgilityBook" */;
+			buildPhases = (
+				E19B63B7166C096E004DEDA4 /* Sources */,
+				E19B63B8166C096E004DEDA4 /* Frameworks */,
+				E19B63B9166C096E004DEDA4 /* Resources */,
+				E19B65A2166C0A0C004DEDA4 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AgilityBook;
+			productName = AgilityBook;
+			productReference = E19B63BB166C096E004DEDA4 /* AgilityBook.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E19B63B2166C096E004DEDA4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = ARB;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "David Connet";
+			};
+			buildConfigurationList = E19B63B5166C096E004DEDA4 /* Build configuration list for PBXProject "AgilityBook" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E19B63B0166C096E004DEDA4;
+			productRefGroup = E19B63BC166C096E004DEDA4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E19B63BA166C096E004DEDA4 /* AgilityBook */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E19B63B9166C096E004DEDA4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E19B65CB166C0E01004DEDA4 /* AgilityBook.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E19B65A2166C0A0C004DEDA4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython \"${LANGDIR}/CompileDataFile.py\" -x -f \"${LANGDIR}/CompileDatList.txt\" ${LANGDIR} arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E19B63B7166C096E004DEDA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E19B64EE166C09B9004DEDA4 /* AgilityBook.cpp in Sources */,
+				E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */,
+				E19B64F1166C09B9004DEDA4 /* AgilityBookCalendarView.cpp in Sources */,
+				E19B64F2166C09B9004DEDA4 /* AgilityBookDoc.cpp in Sources */,
+				E19B64F3166C09B9004DEDA4 /* AgilityBookHtmlView.cpp in Sources */,
+				E19B64F4166C09B9004DEDA4 /* AgilityBookMenu.cpp in Sources */,
+				E19B64F5166C09B9004DEDA4 /* AgilityBookOptions.cpp in Sources */,
+				E19B64F6166C09B9004DEDA4 /* AgilityBookPanels.cpp in Sources */,
+				E19B64F7166C09B9004DEDA4 /* AgilityBookPointsView.cpp in Sources */,
+				E19B64F8166C09B9004DEDA4 /* AgilityBookTrainingView.cpp in Sources */,
+				E19B64F9166C09B9004DEDA4 /* AgilityBookTreeData.cpp in Sources */,
+				E19B64FB166C09B9004DEDA4 /* AgilityBookTreeView.cpp in Sources */,
+				E19B64FC166C09B9004DEDA4 /* CalendarSites.cpp in Sources */,
+				E19B64FD166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp in Sources */,
+				E19B64FE166C09B9004DEDA4 /* CheckLink.cpp in Sources */,
+				E19B64FF166C09B9004DEDA4 /* CheckTreeCtrl.cpp in Sources */,
+				E19B6500166C09B9004DEDA4 /* ClipBoard.cpp in Sources */,
+				E19B6501166C09B9004DEDA4 /* ColumnOrder.cpp in Sources */,
+				E19B6503166C09B9004DEDA4 /* CommonView.cpp in Sources */,
+				E19B6504166C09B9004DEDA4 /* ConfigHandler.cpp in Sources */,
+				E19B6505166C09B9004DEDA4 /* DlgAbout.cpp in Sources */,
+				E19B6506166C09B9004DEDA4 /* DlgAssignColumns.cpp in Sources */,
+				E19B6507166C09B9004DEDA4 /* DlgAuthenticate.cpp in Sources */,
+				E19B6508166C09B9004DEDA4 /* DlgCalendar.cpp in Sources */,
+				E19B6509166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp in Sources */,
+				E19B650A166C09B9004DEDA4 /* DlgClub.cpp in Sources */,
+				E19B650B166C09B9004DEDA4 /* DlgConfigEvent.cpp in Sources */,
+				E19B650C166C09B9004DEDA4 /* DlgConfigEventMethod.cpp in Sources */,
+				E19B650D166C09B9004DEDA4 /* DlgConfigMultiQ.cpp in Sources */,
+				E19B650E166C09B9004DEDA4 /* DlgConfigOtherPoints.cpp in Sources */,
+				E19B650F166C09B9004DEDA4 /* DlgConfigPlaceInfo.cpp in Sources */,
+				E19B6510166C09B9004DEDA4 /* DlgConfigTitle.cpp in Sources */,
+				E19B6511166C09B9004DEDA4 /* DlgConfigTitlePoints.cpp in Sources */,
+				E19B6512166C09B9004DEDA4 /* DlgConfigUpdate.cpp in Sources */,
+				E19B6513166C09B9004DEDA4 /* DlgConfigure.cpp in Sources */,
+				E19B6514166C09B9004DEDA4 /* DlgConfigureData.cpp in Sources */,
+				E19B6515166C09B9004DEDA4 /* DlgConfigVenue.cpp in Sources */,
+				E19B6516166C09B9004DEDA4 /* DlgCRCDViewer.cpp in Sources */,
+				E19B6517166C09B9004DEDA4 /* DlgDog.cpp in Sources */,
+				E19B6518166C09B9004DEDA4 /* DlgEventSelect.cpp in Sources */,
+				E19B6519166C09B9004DEDA4 /* DlgExistingPoints.cpp in Sources */,
+				E19B651A166C09B9004DEDA4 /* DlgFault.cpp in Sources */,
+				E19B651B166C09B9004DEDA4 /* DlgFind.cpp in Sources */,
+				E19B651C166C09B9004DEDA4 /* DlgFindLinks.cpp in Sources */,
+				E19B651D166C09B9004DEDA4 /* DlgInfoNote.cpp in Sources */,
+				E19B651E166C09B9004DEDA4 /* DlgListCtrl.cpp in Sources */,
+				E19B651F166C09B9004DEDA4 /* DlgListViewer.cpp in Sources */,
+				E19B6520166C09B9004DEDA4 /* DlgMessage.cpp in Sources */,
+				E19B6521166C09B9004DEDA4 /* DlgMessageBox.cpp in Sources */,
+				E19B6522166C09B9004DEDA4 /* DlgName.cpp in Sources */,
+				E19B6523166C09B9004DEDA4 /* DlgOptions.cpp in Sources */,
+				E19B6524166C09B9004DEDA4 /* DlgOptionsCalendar.cpp in Sources */,
+				E19B6525166C09B9004DEDA4 /* DlgOptionsFilter.cpp in Sources */,
+				E19B6526166C09B9004DEDA4 /* DlgOptionsPrint.cpp in Sources */,
+				E19B6527166C09B9004DEDA4 /* DlgOptionsProgram.cpp in Sources */,
+				E19B6528166C09B9004DEDA4 /* DlgOtherPoint.cpp in Sources */,
+				E19B6529166C09B9004DEDA4 /* DlgPartner.cpp in Sources */,
+				E19B652A166C09B9004DEDA4 /* DlgPluginDetails.cpp in Sources */,
+				E19B652B166C09B9004DEDA4 /* DlgPointsViewSort.cpp in Sources */,
+				E19B652C166C09B9004DEDA4 /* DlgProgress.cpp in Sources */,
+				E19B652D166C09B9004DEDA4 /* DlgQueryDetail.cpp in Sources */,
+				E19B652E166C09B9004DEDA4 /* DlgReferenceRun.cpp in Sources */,
+				E19B652F166C09B9004DEDA4 /* DlgRegNum.cpp in Sources */,
+				E19B6530166C09B9004DEDA4 /* DlgReorder.cpp in Sources */,
+				E19B6531166C09B9004DEDA4 /* DlgRun.cpp in Sources */,
+				E19B6532166C09B9004DEDA4 /* DlgSelectDog.cpp in Sources */,
+				E19B6533166C09B9004DEDA4 /* DlgSelectURL.cpp in Sources */,
+				E19B6534166C09B9004DEDA4 /* DlgTitle.cpp in Sources */,
+				E19B6535166C09B9004DEDA4 /* DlgTraining.cpp in Sources */,
+				E19B6536166C09B9004DEDA4 /* DlgTrial.cpp in Sources */,
+				E19B6537166C09B9004DEDA4 /* FilterOptions.cpp in Sources */,
+				E19B6538166C09B9004DEDA4 /* Globals.cpp in Sources */,
+				E19B6539166C09B9004DEDA4 /* IconList.cpp in Sources */,
+				E19B653B166C09B9004DEDA4 /* LanguageManager.cpp in Sources */,
+				E19B653C166C09B9004DEDA4 /* ListCtrl.cpp in Sources */,
+				E19B653D166C09B9004DEDA4 /* ListData.cpp in Sources */,
+				E19B653E166C09B9004DEDA4 /* Localization.cpp in Sources */,
+				E19B653F166C09B9004DEDA4 /* MainFrm.cpp in Sources */,
+				E19B6541166C09B9004DEDA4 /* MenuHelper.cpp in Sources */,
+				E19B6542166C09B9004DEDA4 /* NamedColumns.cpp in Sources */,
+				E19B6543166C09B9004DEDA4 /* NoteButton.cpp in Sources */,
+				E19B6544166C09B9004DEDA4 /* PointsData.cpp in Sources */,
+				E19B6545166C09B9004DEDA4 /* Print.cpp in Sources */,
+				E19B6546166C09B9004DEDA4 /* ReadHttp.cpp in Sources */,
+				E19B6590166C09B9004DEDA4 /* RichEditCtrl2.cpp in Sources */,
+				E19B6591166C09B9004DEDA4 /* SpreadSheet.cpp in Sources */,
+				E19B6592166C09B9004DEDA4 /* TabView.cpp in Sources */,
+				E19B6593166C09B9004DEDA4 /* UpdateInfo.cpp in Sources */,
+				E19B6594166C09B9004DEDA4 /* Validators.cpp in Sources */,
+				E19B6595166C09B9004DEDA4 /* ValidatorsQ.cpp in Sources */,
+				E19B6597166C09B9004DEDA4 /* Widgets.cpp in Sources */,
+				E19B6598166C09B9004DEDA4 /* Wizard.cpp in Sources */,
+				E19B6599166C09B9004DEDA4 /* WizardExport.cpp in Sources */,
+				E19B659A166C09B9004DEDA4 /* WizardImport.cpp in Sources */,
+				E19B659B166C09B9004DEDA4 /* WizardStart.cpp in Sources */,
+				E1105D38169017DF0067091C /* ImageManager.cpp in Sources */,
+				E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */,
+				E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */,
+				E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */,
+				E164622A17BFF255004F12AF /* SetupApp.cpp in Sources */,
+				E1BAB4D817C80B260029A596 /* TaskbarProgress.cpp in Sources */,
+				E165930917ED2E1D00B86062 /* AgilityBookRunsView.cpp in Sources */,
+				E165931017ED2E3000B86062 /* AgilityBookTreeListData.cpp in Sources */,
+				E165931117ED2E3000B86062 /* AgilityBookTreeListModel.cpp in Sources */,
+				E165931217ED2E3000B86062 /* AgilityBookTreeListView.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E19B63D7166C096E004DEDA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../..",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/trunk/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				OTHER_LDFLAGS = (
+					"-L$WXBASE/trunk/build-cocoa-debug/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					OpenGL,
+					"-framework",
+					QuickTime,
+					"-framework",
+					WebKit,
+					"-lwx_osx_cocoau_xrc-3.0",
+					"-lwx_osx_cocoau_webview-3.0",
+					"-lwx_osx_cocoau_qa-3.0",
+					"-lwx_baseu_net-3.0",
+					"-lwx_osx_cocoau_html-3.0",
+					"-lwx_osx_cocoau_adv-3.0",
+					"-lwx_osx_cocoau_core-3.0",
+					"-lwx_baseu_xml-3.0",
+					"-lwx_baseu-3.0",
+					"-lwxregexu-3.0",
+					"-lwxexpat-3.0",
+					"-lwxtiff-3.0",
+					"-lwxjpeg-3.0",
+					"-lwxpng-3.0",
+					"-lwxzlib-3.0",
+					"-lpthread",
+				);
+				SDKROOT = macosx10.8;
+			};
+			name = Debug;
+		};
+		E19B63D8166C096E004DEDA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../..",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/trunk/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				OTHER_LDFLAGS = (
+					"-L$WXBASE/trunk/build-cocoa/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					OpenGL,
+					"-framework",
+					QuickTime,
+					"-framework",
+					WebKit,
+					"-lwx_osx_cocoau_xrc-3.0",
+					"-lwx_osx_cocoau_webview-3.0",
+					"-lwx_osx_cocoau_qa-3.0",
+					"-lwx_baseu_net-3.0",
+					"-lwx_osx_cocoau_html-3.0",
+					"-lwx_osx_cocoau_adv-3.0",
+					"-lwx_osx_cocoau_core-3.0",
+					"-lwx_baseu_xml-3.0",
+					"-lwx_baseu-3.0",
+					"-lwxregexu-3.0",
+					"-lwxexpat-3.0",
+					"-lwxtiff-3.0",
+					"-lwxjpeg-3.0",
+					"-lwxpng-3.0",
+					"-lwxzlib-3.0",
+					"-lpthread",
+				);
+				SDKROOT = macosx10.8;
+			};
+			name = Release;
+		};
+		E19B63DA166C096E004DEDA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AgilityBook/AgilityBook-Prefix.pch";
+				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E19B63DB166C096E004DEDA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AgilityBook/AgilityBook-Prefix.pch";
+				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E19B63B5166C096E004DEDA4 /* Build configuration list for PBXProject "AgilityBook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E19B63D7166C096E004DEDA4 /* Debug */,
+				E19B63D8166C096E004DEDA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E19B63D9166C096E004DEDA4 /* Build configuration list for PBXNativeTarget "AgilityBook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E19B63DA166C096E004DEDA4 /* Debug */,
+				E19B63DB166C096E004DEDA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E19B63B2166C096E004DEDA4 /* Project object */;
+}
