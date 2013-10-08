@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-10-07 DRC Added leap year tests.
  * @li 2012-10-26 DRC Changed ARBDate::GetTime to avoid time_t when possible.
  * @li 2009-10-30 DRC Add support for localized dates.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -306,5 +307,24 @@ SUITE(TestDate)
 		d2.GetDate(t2);
 		CHECK(d1 == ARBDate(t1));
 		CHECK(d2 == ARBDate(t2));
+	}
+
+	TEST(LeapYear)
+	{
+		static struct
+		{
+			int yr;
+			bool isLeep;
+		} sDates[] = {
+			{1900, false},
+			{2000, true},
+			{2001, false},
+			{2004, true},
+		};
+		for (size_t i = 0; i < _countof(sDates); ++i)
+		{
+			ARBDate d1(sDates[i].yr, 1, 1);
+			CHECK(d1.isLeap() == sDates[i].isLeep);
+		}
 	}
 }
