@@ -63,11 +63,11 @@ case `uname` in
 Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
 
-	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 	then
-		AC_SUBST(CXX, "$CXX -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -mmacosx-version-min=10.5")
+		AC_SUBST(CXX, "$CXX -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -mmacosx-version-min=10.5")
 		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386")
-		AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -arch i386"])
+		AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -arch i386"])
 	else
 		AC_SUBST(CXX, "$CXX -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5")
 		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386")
