@@ -1265,11 +1265,11 @@ void CDlgAssignColumns::OnRemove(wxCommandEvent& evt)
 		ColumnData* pData = GetInUseData(idxCol);
 		if (pData->m_Data >= 0)
 		{
-			unsigned int idxAvail = 0;
+			int idxAvail = 0;
 			if (m_bIncludeBlank)
 				++idxAvail; // Skip special "blank column"
 			bool bDone = false;
-			for (; idxAvail < m_ctrlAvailable->GetCount(); ++idxAvail)
+			for (; idxAvail < static_cast<int>(m_ctrlAvailable->GetCount()); ++idxAvail)
 			{
 				ColumnData* pData2 = GetAvailableData(idxAvail);
 				if (pData->m_Index < pData2->m_Index)
