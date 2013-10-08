@@ -278,6 +278,8 @@ bool ARBDogRun::Load(
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{
+	default:
+		break;
 	case ElementNode::eNotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE));
 		return false;

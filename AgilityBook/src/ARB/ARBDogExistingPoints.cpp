@@ -46,6 +46,8 @@ std::wstring ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointT
 	std::wstring str;
 	switch (inType)
 	{
+	default:
+		break;
 	case eOtherPoints:
 		str = Localization()->ExistingPointsOther();
 		break;

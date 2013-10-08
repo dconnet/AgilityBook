@@ -578,6 +578,8 @@ bool ARBCalendar::Load(
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_CAL_START, m_DateStart))
 	{
+	default:
+		break;
 	case ElementNode::eNotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_START));
 		return false;
@@ -594,6 +596,8 @@ bool ARBCalendar::Load(
 
 	switch (inTree->GetAttrib(ATTRIB_CAL_END, m_DateEnd))
 	{
+	default:
+		break;
 	case ElementNode::eNotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_END));
 		return false;

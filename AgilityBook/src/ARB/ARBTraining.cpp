@@ -147,6 +147,8 @@ bool ARBTraining::Load(
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
 	{
+	default:
+		break;
 	case ElementNode::eNotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE));
 		return false;

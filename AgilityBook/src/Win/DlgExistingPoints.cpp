@@ -833,6 +833,8 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 	std::wstring multiQ;
 	switch (type)
 	{
+	default:
+		break;
 	//  OtherPts Venue    Division Level Event
 	case ARBDogExistingPoints::eOtherPoints:
 		other = m_TextOther;

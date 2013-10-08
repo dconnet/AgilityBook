@@ -205,10 +205,7 @@ bool ARBDogClubList::GetPrimaryClub(ARBDogClubPtr* outClub) const
 std::wstring ARBDogClubList::GetPrimaryClubName() const
 {
 	if (0 < size())
-	{
-		const_iterator iter = begin();
 		return (*begin())->GetName();
-	}
 	else
 		return std::wstring();
 }
@@ -217,10 +214,7 @@ std::wstring ARBDogClubList::GetPrimaryClubName() const
 std::wstring ARBDogClubList::GetPrimaryClubVenue() const
 {
 	if (0 < size())
-	{
-		const_iterator iter = begin();
 		return (*begin())->GetVenue();
-	}
 	else
 		return std::wstring();
 }

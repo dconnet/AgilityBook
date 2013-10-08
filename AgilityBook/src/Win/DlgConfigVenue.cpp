@@ -83,6 +83,8 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 	std::wstring name;
 	switch (m_Action)
 	{
+	default:
+		break;
 	case CDlgConfigVenue::eDivisions:
 		while (!done)
 		{
@@ -376,7 +378,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin(); iterDiv != m_pVenue->GetDivisions().end(); ++iterDiv)
 	{
 		CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(this, *iterDiv);
-		wxTreeItemId div = m_ctrlItems->AppendItem(divs, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		m_ctrlItems->AppendItem(divs, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		pData->AddSubItems();
 	}
 	m_ctrlItems->Expand(divs);
