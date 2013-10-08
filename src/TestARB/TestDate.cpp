@@ -326,7 +326,7 @@ SUITE(TestDate)
 				{2001, false},
 				{2004, true},
 			};
-			for (size_t i = 0; i < _countof(sDates); ++i)
+			for (size_t i = 0; i < ARRAY_SIZE(sDates); ++i)
 			{
 				ARBDate d1(sDates[i].yr, 1, 1);
 				CHECK(d1.isLeap() == sDates[i].isLeep);
