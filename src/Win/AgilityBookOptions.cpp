@@ -74,17 +74,18 @@ namespace
 	static const bool sc_ViewAllCalClosing = true;
 	static const long sc_DaysTillEntryIsPast = 5;
 	static const bool sc_HideOverlapping = false;
-	static const wxColour sc_CalColorPast(128,128,128); // gray
-	static const wxColour sc_CalColorNotEntered(0,0,0); // Black
-	static const wxColour sc_CalColorPlanning(255,128,0); // Orange
-	static const wxColour sc_CalColorPending(128,0,255); // Blue-ish
-	static const wxColour sc_CalColorEntered(0,0,255); // Blue
-	static const wxColour sc_CalColorOpening(0,128,0); // Dk Green
-	static const wxColour sc_CalColorClosing(255,0,0); // Red
+	// xcode5 dies on any static wx objects
+	static const wxColour sc_CalColorPast() {return wxColour(128,128,128);} // gray
+	static const wxColour sc_CalColorNotEntered() {return wxColour(0,0,0);} // Black
+	static const wxColour sc_CalColorPlanning() {return wxColour(255,128,0);} // Orange
+	static const wxColour sc_CalColorPending() {return wxColour(128,0,255);} // Blue-ish
+	static const wxColour sc_CalColorEntered() {return wxColour(0,0,255);} // Blue
+	static const wxColour sc_CalColorOpening() {return wxColour(0,128,0);} // Dk Green
+	static const wxColour sc_CalColorClosing() {return wxColour(255,0,0);} // Red
 	static const long sc_CalOpeningNear = 4;
 	static const long sc_CalClosingNear = 10;
-	static const wxColour sc_CalColorOpeningNear(0,0,255);
-	static const wxColour sc_CalColorClosingNear(255,0,0);
+	static const wxColour sc_CalColorOpeningNear() {return wxColour(0,0,255);}
+	static const wxColour sc_CalColorClosingNear() {return wxColour(255,0,0);}
 
 	// Common
 	static const ARBDate::DayOfWeek sc_FirstDayOfWeek = ARBDate::eSunday;
@@ -704,19 +705,19 @@ static wxColour CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
 	switch (inItem)
 	{
 	case CAgilityBookOptions::eCalColorPast:
-		return sc_CalColorPast;
+		return sc_CalColorPast();
 	case CAgilityBookOptions::eCalColorNotEntered:
-		return sc_CalColorNotEntered;
+		return sc_CalColorNotEntered();
 	case CAgilityBookOptions::eCalColorPlanning:
-		return sc_CalColorPlanning;
+		return sc_CalColorPlanning();
 	case CAgilityBookOptions::eCalColorPending:
-		return sc_CalColorPending;
+		return sc_CalColorPending();
 	case CAgilityBookOptions::eCalColorEntered:
-		return sc_CalColorEntered;
+		return sc_CalColorEntered();
 	case CAgilityBookOptions::eCalColorOpening:
-		return sc_CalColorOpening;
+		return sc_CalColorOpening();
 	case CAgilityBookOptions::eCalColorClosing:
-		return sc_CalColorClosing;
+		return sc_CalColorClosing();
 	}
 	assert(0);
 	return wxColour(0,0,0);
@@ -791,7 +792,7 @@ void CAgilityBookOptions::SetCalendarClosingNear(long inDays)
 
 wxColour CAgilityBookOptions::CalendarOpeningNearColor()
 {
-	return ReadColor(CFG_CAL_OPENNEARCOLOR, sc_CalColorOpeningNear);
+	return ReadColor(CFG_CAL_OPENNEARCOLOR, sc_CalColorOpeningNear());
 }
 
 
@@ -803,7 +804,7 @@ void CAgilityBookOptions::SetCalendarOpeningNearColor(wxColour inColor)
 
 wxColour CAgilityBookOptions::CalendarClosingNearColor()
 {
-	return ReadColor(CFG_CAL_CLOSENEARCOLOR, sc_CalColorClosingNear);
+	return ReadColor(CFG_CAL_CLOSENEARCOLOR, sc_CalColorClosingNear());
 }
 
 
