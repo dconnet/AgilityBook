@@ -299,32 +299,38 @@ SUITE(TestDate)
 
 	TEST(DSTDate)
 	{
-		ARBDate d1(2010, 6, 1); // A date in DST
-		ARBDate d2(2010, 12, 1); // A date not.
-		time_t t1;
-		d1.GetDate(t1);
-		time_t t2;
-		d2.GetDate(t2);
-		CHECK(d1 == ARBDate(t1));
-		CHECK(d2 == ARBDate(t2));
+		if (!g_bMicroTest)
+		{
+			ARBDate d1(2010, 6, 1); // A date in DST
+			ARBDate d2(2010, 12, 1); // A date not.
+			time_t t1;
+			d1.GetDate(t1);
+			time_t t2;
+			d2.GetDate(t2);
+			CHECK(d1 == ARBDate(t1));
+			CHECK(d2 == ARBDate(t2));
+		}
 	}
 
 	TEST(LeapYear)
 	{
-		static struct
+		if (!g_bMicroTest)
 		{
-			int yr;
-			bool isLeep;
-		} sDates[] = {
-			{1900, false},
-			{2000, true},
-			{2001, false},
-			{2004, true},
-		};
-		for (size_t i = 0; i < _countof(sDates); ++i)
-		{
-			ARBDate d1(sDates[i].yr, 1, 1);
-			CHECK(d1.isLeap() == sDates[i].isLeep);
+			static struct
+			{
+				int yr;
+				bool isLeep;
+			} sDates[] = {
+				{1900, false},
+				{2000, true},
+				{2001, false},
+				{2004, true},
+			};
+			for (size_t i = 0; i < _countof(sDates); ++i)
+			{
+				ARBDate d1(sDates[i].yr, 1, 1);
+				CHECK(d1.isLeap() == sDates[i].isLeep);
+			}
 		}
 	}
 }
