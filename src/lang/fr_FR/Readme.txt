@@ -2,5 +2,4 @@
 in poedit to change charset to utf8 and set the catalog language properly.
 Also changed 'plural-forms' to 'Plural-Forms' to make poedit happy.
 
-trunk\fr.po is from <wx>/locale/fr.po, copied here and modified plural-forms.
-
+trunk\fr.po is from <wx>/locale/fr.po, copied here and converted to unix-eol.
