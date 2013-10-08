@@ -225,10 +225,10 @@ void CAgilityBookHtmlView::LoadData()
 
 void CAgilityBookHtmlView::OnCtrlLinkClicked(wxHtmlLinkEvent& evt)
 {
-	static const wxString ProtocolABOUT(L"about:");
-	static const wxString ProtocolHTTP(L"http:");
-	static const wxString ProtocolHTTPS(L"https:");
-	static const wxString ProtocolARB(ARB_PROTOCOL);
+	const wxString ProtocolABOUT(L"about:");
+	const wxString ProtocolHTTP(L"http:");
+	const wxString ProtocolHTTPS(L"https:");
+	const wxString ProtocolARB(ARB_PROTOCOL);
 
 	wxString url = evt.GetLinkInfo().GetHref();
 

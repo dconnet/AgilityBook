@@ -359,7 +359,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 		bool bInCompare) const
 {
 	wxVariant variant;
-	if (0 <= col && m_pRun)
+	if (m_pRun)
 	{
 		ARBDogPtr dog = GetDog();
 		ARBDogTrialPtr trial = GetTrial();

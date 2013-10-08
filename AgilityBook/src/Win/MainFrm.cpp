@@ -54,7 +54,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #if defined(__WXMAC__)
-static wxString m_idleOpen;
+static std::wstring m_idleOpen;
 #endif
 
 bool CFileDropTarget::OnDropFiles(
@@ -65,7 +65,7 @@ bool CFileDropTarget::OnDropFiles(
 	if (1 != filenames.size())
 		return false;
 #if defined(__WXMAC__)
-	m_idleOpen = filenames[0];
+	m_idleOpen = StringUtil::stringW(filenames[0]);
 #else
 	// Doing this on the Mac causes a crash. On Mac, registering this on the
 	// mainframe doesn't work. If has to be registered on the topmost window.
@@ -319,7 +319,7 @@ void CMainFrame::OnIdle(wxIdleEvent& evt)
 {
 	if (!m_idleOpen.empty())
 	{
-		wxString file(m_idleOpen);
+		wxString file(m_idleOpen.c_str());
 		m_idleOpen.clear();
 		m_manager->CreateDocument(file, wxDOC_SILENT);
 	}
