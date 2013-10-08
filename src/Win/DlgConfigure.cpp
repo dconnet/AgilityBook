@@ -295,6 +295,8 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 	wxTreeItemId hParent;
 	switch (dataToLoad)
 	{
+	default:
+		break;
 	case eVenues:
 		hParent = m_hItemVenues;
 		break;
@@ -313,6 +315,8 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 
 	switch (dataToLoad)
 	{
+	default:
+		break;
 	case eVenues:
 		{ // Scoped because of VC6's scoping of for-variables.
 			for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin(); iterVenue != m_Config.GetVenues().end(); ++iterVenue)
@@ -369,6 +373,9 @@ void CDlgConfigure::DoEdit()
 
 	switch (GetAction())
 	{
+	default:
+		break;
+
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
@@ -531,6 +538,9 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 {
 	switch (GetAction())
 	{
+	default:
+		break;
+
 	case eVenues:
 		{
 			ARBConfigVenuePtr pVenue(ARBConfigVenue::New());
@@ -615,6 +625,9 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 
 	switch (GetAction())
 	{
+	default:
+		break;
+
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
@@ -669,6 +682,9 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 
 	switch (GetAction())
 	{
+	default:
+		break;
+
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);

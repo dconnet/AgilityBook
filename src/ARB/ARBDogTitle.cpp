@@ -199,6 +199,8 @@ bool ARBDogTitle::Load(
 
 	switch (inTree->GetAttrib(ATTRIB_TITLE_DATE, m_Date))
 	{
+	default:
+		break;
 	case ElementNode::eNotFound:
 		// As of version 8.5, no date infers this is an unearned title
 		// that we're hiding.

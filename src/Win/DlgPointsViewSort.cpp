@@ -167,6 +167,8 @@ static int AddItem(
 	wxString str;
 	switch (item)
 	{
+	default:
+		break;
 	case CAgilityBookOptions::ePointsViewSortDivision:
 		str = _("IDS_COL_DIVISION");
 		idx = ctrl->Append(str);

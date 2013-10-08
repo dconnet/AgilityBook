@@ -875,6 +875,8 @@ bool CWizardImport::DoWizardFinish()
 				i = -1;
 				switch (pScoring->GetScoringStyle())
 				{
+				default:
+					break;
 				case ARBConfigScoring::eFaultsThenTime:
 				case ARBConfigScoring::eFaults100ThenTime:
 				case ARBConfigScoring::eFaults200ThenTime:
