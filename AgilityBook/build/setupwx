@@ -49,6 +49,7 @@ cd $BUILDDIR
 if test "x$1" = "xtrunk"; then
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 	then
+		COMPILERS="CC=clang CXX=clang++ LD=clang++"
 		MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk --enable-macosx_arch=i386"
 	else
 		COMPILERS="CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2"
@@ -63,6 +64,7 @@ if test "x$1" = "xtrunk"; then
 else
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 	then
+		COMPILERS="CC=clang CXX=clang++ LD=clang++"
 		MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk --enable-macosx_arch=i386"
 	else
 		COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
