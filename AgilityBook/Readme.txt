@@ -40,7 +40,8 @@ Make sure WXWIN is set to wxWidgets root directory.
 === wx2.9.x: Not supported
 -  ARBv3 does not support pre 2.9. It uses new features.
 
-To build for VC, see src/Projects/CompileWX.py
+To build for VC, see ./src/Projects/CompileWX.py
+To build for Mac, see ./build/setupwx
 
 --------------------
 
@@ -205,7 +206,13 @@ The xcode projects were used as follows:
             - Set DerivedData to Relative, 'build'
               - Advanced: Unique
             AgilityBook.xcworkspace
-                trunk, cocoa, OSX10.7 sdk
+                trunk, cocoa, OSX10.8 sdk, OSX10.5 deployment target
+.../xcode5: Xcode 5.0 on OSX10.8
+            Recommended (so projects work right):
+            - Set DerivedData to Relative, 'build'
+              - Advanced: Unique
+            AgilityBook.xcworkspace
+                trunk, cocoa, OSX10.8 sdk, OSX10.5 deployment target
 
 OSX 10.8:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)

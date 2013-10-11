@@ -29,9 +29,9 @@ Run Doxygen and fix any warnings/errors it reports.
 
 Do a full rebuild and verify it.
 - cd src\Projects\Installer
-- 'BuildAll.py -w %WXBASE%\wxWidgets-2.8.12 -b fullupdate' [runs VC10 compile]
+- 'BuildAll.py -w %WXBASE%\trunk -b fullupdate' [runs VC10 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
-      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-2.8.12'
+      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.0.0'
 	            Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
@@ -59,7 +59,7 @@ On Mac10.8:
 - rm -rf build-cocoa
 - mkdir build-cocoa
 - cd build-cocoa
-- ../configure
+- ../configure CC=clang CXX=clang++ LD=clang++
 Both:
 - make dist
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
