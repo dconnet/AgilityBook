@@ -620,7 +620,7 @@ void CDlgCalendar::ListLocations()
 			UpdateLocationInfo(itLoc);
 		}
 	}
-	if (!m_ctrlLocation->AutoComplete(choices)) wxMessageBox(L"Damn");
+	m_ctrlLocation->AutoComplete(choices);
 }
 
 
