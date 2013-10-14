@@ -1280,8 +1280,8 @@ bool CAgilityBookRunsView::Create(
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CAgilityBookRunsView::OnCtrlItemSelected);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CAgilityBookRunsView::OnCtrlItemActivated);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookRunsView::OnCtrlKeyDown);
-	m_imgCourse = m_Ctrl->AddIcon(CImageManager::Get()->ARB16());
-	m_imgMap = m_Ctrl->AddIcon(CImageManager::Get()->CRCD());
+	m_imgCourse = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrARB));
+	m_imgMap = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCRCD));
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif

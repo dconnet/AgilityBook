@@ -112,10 +112,10 @@ CDlgInfoNote::CDlgInfoNote(
 	, m_ctrlDelete(NULL)
 	, m_ctrlVisible(NULL)
 	, m_ctrlNotes(NULL)
-	, m_None(CImageManager::Get()->InfoEmpty())
-	, m_Note(CImageManager::Get()->InfoNote())
-	, m_Added(CImageManager::Get()->InfoNoteAdded())
-	, m_NoteAdded(CImageManager::Get()->InfoNoteNoteAdded())
+	, m_None(CImageManager::Get()->GetBitmap(ImageMgrBlank))
+	, m_Note(CImageManager::Get()->GetBitmap(ImageMgrInfoNote))
+	, m_Added(CImageManager::Get()->GetBitmap(ImageMgrInfoNoteAdded))
+	, m_NoteAdded(CImageManager::Get()->GetBitmap(ImageMgrInfoNoteNoteAdded))
 {
 	std::wstring caption = L"?";
 	std::set<std::wstring> names;

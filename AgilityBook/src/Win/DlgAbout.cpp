@@ -169,7 +169,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	// Controls (these are done first to control tab order)
 
 	wxStaticBitmap* icon = new wxStaticBitmap(this, wxID_ANY,
-		CImageManager::Get()->ARB16(),
+		CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX),
 		wxPoint(5, 5), wxDefaultSize, 0);
 
 	wxStaticText* version = new wxStaticText(this, wxID_ANY,

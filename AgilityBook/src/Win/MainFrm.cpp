@@ -136,12 +136,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	, m_manager(manager)
 	, m_menus()
 {
-	wxIconBundle icons;
-	icons.AddIcon(CImageManager::Get()->ARB16());
-	icons.AddIcon(CImageManager::Get()->ARB32());
-	icons.AddIcon(CImageManager::Get()->ARB48());
-	icons.AddIcon(CImageManager::Get()->ARB256());
-	SetIcons(icons);
+	SetIcons(CImageManager::Get()->GetIconBundle(ImageMgrAppBundle));
 //#if wxUSE_HELP
 // Note: do not set help on the frame. Help will disable the min/max buttons.
 //	SetExtraStyle(wxFRAME_EX_CONTEXTHELP | GetExtraStyle());

@@ -1361,9 +1361,9 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize,
 		wxLC_NO_HEADER|wxLC_REPORT|wxLC_SINGLE_SEL);
 	m_ctrlLinks->SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
-	m_imgEmpty = m_ImageList.Add(CImageManager::Get()->Blank());
-	m_imgOk = m_ImageList.Add(CImageManager::Get()->Check());
-	m_imgMissing = m_ImageList.Add(CImageManager::Get()->Question());
+	m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
+	m_imgOk = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrCheck));
+	m_imgMissing = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrQuestion));
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgRun::OnLinksItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgRun::OnLinksItemActivated);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgRun::OnLinksKeyDown);

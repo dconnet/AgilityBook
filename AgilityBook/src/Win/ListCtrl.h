@@ -106,7 +106,7 @@ public:
 			bool bSetFocus = true);
 
 	/// Return listdata using data value
-	CListDataPtr GetDataByData(long data) const;
+	CListDataPtr GetDataByData(wxUIntPtr data) const;
 	/// Return listdata by list id
 	CListDataPtr GetData(long item) const;
 	bool SetData(
@@ -156,7 +156,7 @@ protected:
 	// in a long. This has a nice side benefit that we don't have to do
 	// memory management of objects within list items!
 	int m_NextId;
-	typedef std::map<int, CListDataPtr> DataMap;
+	typedef std::map<wxUIntPtr, CListDataPtr> DataMap;
 	DataMap m_OwnerData;
 
 private:

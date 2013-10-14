@@ -13,10 +13,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-10-13 DRC Changed to using an art provider.
  * @li 2012-07-13 DRC Created
  */
 
 #include <vector>
+#include <wx/artprov.h>
 class wxFrame;
 
 
@@ -38,7 +40,7 @@ public:
 		wchar_t const* toolbar;	///< Toolbar text
 		wchar_t const* menu;	///< Menu text
 		wchar_t const* help;	///< Tooltip help (and status help)
-		const char** bitmap;	///< Toolbar/menu bitmap
+		char const* artId;		///< Toolbar/menu bitmap artid (wxArtId/wxString)
 	};
 
 	CMenuHelper();
@@ -68,7 +70,7 @@ public:
 			int id,
 			wxString const& label,
 			wxString const& desc,
-			const char* const* pBitmap = NULL);
+			wxArtID const& artId = wxArtID());
 
 	static void DoMenuItem(
 			wxMenu* menu,
@@ -77,7 +79,7 @@ public:
 			wxString const& desc,
 			wxItemKind kind,
 			wxMenu* subMenu,
-			const char* const* pBitmap);
+			wxArtID const& artId = wxArtID());
 
 private:
 	struct TranslationData

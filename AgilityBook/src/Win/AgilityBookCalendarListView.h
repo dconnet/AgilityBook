@@ -101,7 +101,7 @@ public:
 
 private:
 	CAgilityBookCalendarListViewDataPtr GetItemCalData(long index) const;
-	CAgilityBookCalendarListViewDataPtr GetItemCalDataByData(long data) const;
+	CAgilityBookCalendarListViewDataPtr GetItemCalDataByData(wxUIntPtr data) const;
 	void SetupColumns();
 	void LoadData();
 	bool OnCmd(int id);

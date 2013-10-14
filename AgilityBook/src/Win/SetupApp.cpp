@@ -20,7 +20,6 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "Globals.h"
-#include "ImageManager.h"
 #include "LanguageManager.h"
 
 #include <wx/config.h>
@@ -138,7 +137,6 @@ void CBaseApp::BaseAppCleanup(bool deleteConfig)
 	}
 	delete m_langMgr;
 	m_langMgr = NULL;
-	CImageManager::Delete();
 	Element::Terminate();
 }
 

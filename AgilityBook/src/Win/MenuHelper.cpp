@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-10-13 DRC Changed to using an art provider.
  * @li 2012-07-28 DRC Fix About menu insertion.
  * @li 2012-07-13 DRC Created
  */
@@ -18,7 +19,8 @@
 #include "stdafx.h"
 #include "MenuHelper.h"
 
-#include "wx/frame.h"
+#include <wx/artprov.h>
+#include <wx/frame.h>
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -45,9 +47,9 @@ void CMenuHelper::DoMenuItem(
 		int id,
 		wxString const& label,
 		wxString const& desc,
-		const char* const* pBitmap)
+		wxArtID const& artId)
 {
-	DoMenuItem(menu, id, label, desc, wxITEM_NORMAL, NULL, pBitmap);
+	DoMenuItem(menu, id, label, desc, wxITEM_NORMAL, NULL, artId);
 }
 
 
@@ -58,13 +60,14 @@ void CMenuHelper::DoMenuItem(
 		wxString const& desc,
 		wxItemKind kind,
 		wxMenu* subMenu,
-		const char* const* pBitmap)
+		wxArtID const& artId)
 {
 	wxMenuItem* item = new wxMenuItem(menu, id, label, desc, kind, subMenu);
-	if (pBitmap && kind == wxITEM_NORMAL)
+	if (!artId.empty() && kind == wxITEM_NORMAL)
 	{
-		wxBitmap bmp(pBitmap);
-		item->SetBitmap(bmp);
+		wxBitmap bmp = wxArtProvider::GetBitmap(artId, wxART_MENU);
+		if (bmp.IsOk())
+			item->SetBitmap(bmp);
 	}
 	menu->Append(item);
 }
@@ -107,7 +110,7 @@ void CMenuHelper::Menu(
 					wxString(),
 					wxITEM_NORMAL,
 					mruMenu,
-					items[index].bitmap);
+					items[index].artId);
 				handle.subMenus.push_back(subhandle);
 			}
 			else if (0 == items[index].id)
@@ -130,7 +133,7 @@ void CMenuHelper::Menu(
 					wxString(),
 					wxITEM_NORMAL,
 					subhandle.pMenu,
-					items[idxMenu].bitmap);
+					items[idxMenu].artId);
 				--index;
 				handle.subMenus.push_back(subhandle);
 			}
@@ -154,7 +157,7 @@ void CMenuHelper::Menu(
 					help,
 					items[index].kind,
 					NULL,
-					items[index].bitmap);
+					items[index].artId);
 			}
 		}
 	}
@@ -266,9 +269,11 @@ void CMenuHelper::CreateMenu(
 					name = menuItems[idxItem].toolbar;
 					desc = menuItems[idxItem].help;
 				}
+				wxBitmap bmp = wxArtProvider::GetBitmap(menuItems[idxItem].artId, wxART_TOOLBAR, wxSize(16,16));
+				assert(bmp.IsOk());
 				toolbar->AddTool(menuItems[idxItem].id,
 					name,
-					menuItems[idxItem].bitmap,
+					bmp,
 					desc,
 					menuItems[idxItem].kind);
 			}

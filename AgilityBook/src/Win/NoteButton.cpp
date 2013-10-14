@@ -28,5 +28,5 @@
 CNoteButton::CNoteButton(wxWindow* parent)
 	: wxBitmapButton()
 {
-	wxBitmapButton::Create(parent, wxID_ANY, CImageManager::Get()->NoteButton(), wxDefaultPosition, wxSize(20, 20));
+	wxBitmapButton::Create(parent, wxID_ANY, CImageManager::Get()->GetBitmap(ImageMgrNoteButton), wxDefaultPosition, wxSize(20, 20));
 }

@@ -33,26 +33,23 @@
 CIconList::CIconList()
 	: wxImageList(16, 16)
 {
-	CImageManager* pMgr = CImageManager::Get();
-	assert(pMgr);
-
-	m_idxDog = Add(pMgr->Dog());
-	m_idxTrial = Add(pMgr->Trial());
-	m_idxRun = Add(pMgr->Run());
-	m_idxVenueAAC = Add(pMgr->AAC());
-	m_idxVenueAKC = Add(pMgr->AKC());
-	m_idxVenueASCA = Add(pMgr->ASCA());
-	m_idxVenueCKC = Add(pMgr->CKC());
-	m_idxVenueCPE = Add(pMgr->CPE());
-	m_idxVenueDOCNA = Add(pMgr->DOCNA());
-	m_idxVenueNADAC = Add(pMgr->NADAC());
-	m_idxVenueSweep = Add(pMgr->Sweepstakes());
-	m_idxVenueTDAA = Add(pMgr->TDAA());
-	m_idxVenueUKC = Add(pMgr->UKC());
-	m_idxVenueUSDAA = Add(pMgr->USDAA());
-	m_idxVenueFCI = Add(pMgr->FCI());
-	m_idxVenueSCC = Add(pMgr->SCC());
-	m_idxARB = Add(pMgr->ARB16());
+	m_idxDog = Add(CImageManager::Get()->GetIcon(ImageMgrDog));
+	m_idxTrial = Add(CImageManager::Get()->GetIcon(ImageMgrTrial));
+	m_idxRun = Add(CImageManager::Get()->GetIcon(ImageMgrRuns));
+	m_idxVenueAAC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueAAC));
+	m_idxVenueAKC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueAKC));
+	m_idxVenueASCA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueASCA));
+	m_idxVenueCKC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueCKC));
+	m_idxVenueCPE = Add(CImageManager::Get()->GetIcon(ImageMgrVenueCPE));
+	m_idxVenueDOCNA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueDOCNA));
+	m_idxVenueNADAC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueNADAC));
+	m_idxVenueSweep = Add(CImageManager::Get()->GetIcon(ImageMgrVenueSweepstakes));
+	m_idxVenueTDAA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueTDAA));
+	m_idxVenueUKC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueUKC));
+	m_idxVenueUSDAA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueUSDAA));
+	m_idxVenueFCI = Add(CImageManager::Get()->GetIcon(ImageMgrVenueFCI));
+	m_idxVenueSCC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueSCC));
+	m_idxARB = Add(CImageManager::Get()->GetIcon(ImageMgrApp));
 
 #ifdef _DEBUG
 	struct

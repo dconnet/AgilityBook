@@ -59,9 +59,9 @@ CCheckTreeCtrl::CCheckTreeCtrl(
 	BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckTreeCtrl::OnClick);
 	BIND_OR_CONNECT(wxEVT_KEY_DOWN, wxKeyEventHandler, CCheckTreeCtrl::OnKeyDown);
 
-	m_stateNone = m_stateList.Add(CImageManager::Get()->Blank());
-	m_stateUnChecked = m_stateList.Add(CImageManager::Get()->UnChecked());
-	m_stateChecked = m_stateList.Add(CImageManager::Get()->Checked());
+	m_stateNone = m_stateList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
+	m_stateUnChecked = m_stateList.Add(CImageManager::Get()->GetIcon(ImageMgrUnChecked));
+	m_stateChecked = m_stateList.Add(CImageManager::Get()->GetIcon(ImageMgrChecked));
 #ifdef WX_TREE_HAS_STATE
 	SetStateImageList(&m_stateList);
 #else

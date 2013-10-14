@@ -102,9 +102,9 @@ bool CReportListCtrl::Create(
 	// it will use this by default
 	if (bHasImageList || sortHeader == eSortHeader)
 	{
-		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->Blank());
-		m_imgSortUp = m_ImageList.Add(CImageManager::Get()->HeaderUp());
-		m_imgSortDn = m_ImageList.Add(CImageManager::Get()->HeaderDown());
+		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
+		m_imgSortUp = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrHeaderUp));
+		m_imgSortDn = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrHeaderDown));
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 	return true;
@@ -230,7 +230,7 @@ void CReportListCtrl::SetSelection(
 }
 
 
-CListDataPtr CReportListCtrl::GetDataByData(long data) const
+CListDataPtr CReportListCtrl::GetDataByData(wxUIntPtr data) const
 {
 	CListDataPtr ptr;
 	if (0 < data)
@@ -347,7 +347,7 @@ void CReportListCtrl::RefreshItem(long item)
 
 void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 {
-	long data = evt.GetData();
+	wxUIntPtr data = evt.GetData();
 	if (0 < data)
 	{
 		DataMap::iterator iter = m_OwnerData.find(data);
@@ -381,9 +381,9 @@ CCheckListCtrl::CCheckListCtrl(
 	{
 		BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckListCtrl::OnClick);
 		BIND_OR_CONNECT(wxEVT_KEY_DOWN, wxKeyEventHandler, CCheckListCtrl::OnKeyDown);
-		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->Blank());
-		m_imgNoCheck = m_ImageList.Add(CImageManager::Get()->UnChecked());
-		m_imgChecked = m_ImageList.Add(CImageManager::Get()->Checked());
+		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
+		m_imgNoCheck = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrUnChecked));
+		m_imgChecked = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrChecked));
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 }

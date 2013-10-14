@@ -27,55 +27,41 @@
 #include "stdafx.h"
 #include "AgilityBookMenu.h"
 
+#include "ImageManager.h"
 #include "MainFrm.h"
+#include <wx/artprov.h>
 #include <wx/config.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
 
-#include "res/toolbarNew.xpm"
-#include "res/toolbarOpen.xpm"
-#include "res/toolbarSave.xpm"
-#include "res/toolbarDog.xpm"
-#include "res/toolbarTitle.xpm"
-#include "res/toolbarTrial.xpm"
-#include "res/toolbarRun.xpm"
-#include "res/toolbarCalendar.xpm"
-#include "res/toolbarTraining.xpm"
-#include "res/toolbarCut.xpm"
-#include "res/toolbarCopy.xpm"
-#include "res/toolbarPaste.xpm"
-#include "res/toolbarPreview.xpm"
-#include "res/toolbarPrint.xpm"
-#include "res/toolbarAbout.xpm"
-
 
 static const CMenuHelper::ItemData sc_Items[] =
 {
 	{MENU_ITEM, 0,                        wxITEM_NORMAL, 0, NULL, arbT("MenuFile"), NULL, NULL},
-	{MENU_ITEM, wxID_NEW,                 wxITEM_NORMAL, 1, arbT("MenuFileNew"), arbT("MenuFileNew"), arbT("DescFileNew"), toolbarNew_xpm},
-	{MENU_ITEM, wxID_OPEN,                wxITEM_NORMAL, 1, arbT("MenuFileOpen"), arbT("MenuFileOpen"), arbT("DescFileOpen"), toolbarOpen_xpm},
-	{MENU_ITEM, wxID_SAVE,                wxITEM_NORMAL, 1, arbT("MenuFileOpen"), arbT("MenuFileSave"), arbT("DescFileSave"), toolbarSave_xpm},
-	{MENU_ITEM, wxID_SAVEAS,              wxITEM_NORMAL, 1, NULL, arbT("MenuFileSaveAs"), arbT("DescFileSaveAs"), NULL},
+	{MENU_ITEM, wxID_NEW,                 wxITEM_NORMAL, 1, arbT("MenuFileNew"), arbT("MenuFileNew"), arbT("DescFileNew"), ImageMgrNew},
+	{MENU_ITEM, wxID_OPEN,                wxITEM_NORMAL, 1, arbT("MenuFileOpen"), arbT("MenuFileOpen"), arbT("DescFileOpen"), ImageMgrOpen},
+	{MENU_ITEM, wxID_SAVE,                wxITEM_NORMAL, 1, arbT("MenuFileOpen"), arbT("MenuFileSave"), arbT("DescFileSave"), ImageMgrSave},
+	{MENU_ITEM, wxID_SAVEAS,              wxITEM_NORMAL, 1, NULL, arbT("MenuFileSaveAs"), arbT("DescFileSaveAs"), wxART_FILE_SAVE_AS},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, ID_FILE_LANGUAGE_CHOOSE,  wxITEM_NORMAL, 1, NULL, arbT("MenuFileLanguage"), arbT("DescFileLanguage"), NULL},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, ID_FILE_EXPORT_WIZARD,    wxITEM_NORMAL, 1, NULL, arbT("MenuFileImportExport"), arbT("DescFileImportExport"), NULL},
 	{MENU_ITEM, ID_FILE_LINKED,           wxITEM_NORMAL, 1, NULL, arbT("MenuFileLinkedFiles"), arbT("DescFileLinkedFiles"), NULL},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
-	{MENU_ITEM, wxID_PRINT,               wxITEM_NORMAL, 1, arbT("MenuFilePrint"), arbT("MenuFilePrint"), arbT("DescFilePrint"), toolbarPrint_xpm},
+	{MENU_ITEM, wxID_PRINT,               wxITEM_NORMAL, 1, arbT("MenuFilePrint"), arbT("MenuFilePrint"), arbT("DescFilePrint"), ImageMgrPrint},
 	{MENU_ITEM, ID_FILE_PRINT_BLANK_RUNS, wxITEM_NORMAL, 1, NULL, arbT("MenuFilePrintBlank"), arbT("DescFilePrintBlank"), NULL},
-	{MENU_ITEM, wxID_PREVIEW,             wxITEM_NORMAL, 1, arbT("MenuFilePrintPreview"), arbT("MenuFilePrintPreview"), arbT("DescFilePrintPreview"), toolbarPreview_xpm},
+	{MENU_ITEM, wxID_PREVIEW,             wxITEM_NORMAL, 1, arbT("MenuFilePrintPreview"), arbT("MenuFilePrintPreview"), arbT("DescFilePrintPreview"), ImageMgrPreview},
 	{MENU_MRU,  0,                        wxITEM_NORMAL, 1, NULL, arbT("MenuFileRecent"), NULL, NULL},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, wxID_EXIT,                wxITEM_NORMAL, 1, NULL, arbT("MenuFileExit"), arbT("DescFileExit"), NULL},
 
 	{MENU_ITEM, 0,                        wxITEM_NORMAL, 0, NULL, arbT("MenuEdit"), NULL, NULL},
 	{MENU_ITEM, wxID_DUPLICATE,           wxITEM_NORMAL, 1, NULL, arbT("MenuEditDuplicate"), arbT("DescEditDuplicate"), NULL},
-	{MENU_ITEM, wxID_CUT,                 wxITEM_NORMAL, 1, arbT("MenuEditCut"), arbT("MenuEditCut"), arbT("DescEditCut"), toolbarCut_xpm},
-	{MENU_ITEM, wxID_COPY,                wxITEM_NORMAL, 1, arbT("MenuEditCopy"), arbT("MenuEditCopy"), arbT("DescEditCopy"), toolbarCopy_xpm},
-	{MENU_ITEM, wxID_PASTE,               wxITEM_NORMAL, 1, arbT("MenuEditPaste"), arbT("MenuEditPaste"), arbT("DescEditPaste"), toolbarPaste_xpm},
+	{MENU_ITEM, wxID_CUT,                 wxITEM_NORMAL, 1, arbT("MenuEditCut"), arbT("MenuEditCut"), arbT("DescEditCut"), ImageMgrCut},
+	{MENU_ITEM, wxID_COPY,                wxITEM_NORMAL, 1, arbT("MenuEditCopy"), arbT("MenuEditCopy"), arbT("DescEditCopy"), ImageMgrCopy},
+	{MENU_ITEM, wxID_PASTE,               wxITEM_NORMAL, 1, arbT("MenuEditPaste"), arbT("MenuEditPaste"), arbT("DescEditPaste"), ImageMgrPaste},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, wxID_SELECTALL,           wxITEM_NORMAL, 1, NULL, arbT("MenuEditSelectAll"), arbT("DescEditSelectAll"), NULL},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
@@ -89,44 +75,44 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{MENU_ITEM, ID_EDIT_CONFIGURATION,    wxITEM_NORMAL, 1, NULL, arbT("MenuEditConfig"), arbT("DescEditConfig"), NULL},
 
 	{MENU_ITEM, 0,                               wxITEM_NORMAL, 0, NULL, arbT("MenuAgility"), NULL, NULL},
-	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuDog"), NULL, toolbarDog_xpm},
-	{MENU_ITEM, ID_AGILITY_EDIT_DOG,             wxITEM_NORMAL, 2, NULL, arbT("MenuDogProperties"), arbT("DescDogProperties"), toolbarDog_xpm},
+	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuDog"), NULL, ImageMgrDog},
+	{MENU_ITEM, ID_AGILITY_EDIT_DOG,             wxITEM_NORMAL, 2, NULL, arbT("MenuDogProperties"), arbT("DescDogProperties"), ImageMgrDog},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
-	{MENU_ITEM, ID_AGILITY_NEW_DOG,              wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescDogProperties"), toolbarDog_xpm},
+	{MENU_ITEM, ID_AGILITY_NEW_DOG,              wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescDogProperties"), ImageMgrDog},
 	{MENU_ITEM, ID_AGILITY_DELETE_DOG,           wxITEM_NORMAL, 2, NULL, arbT("MenuDogDelete"), arbT("DescDogDelete"), NULL},
-	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuTitle"), NULL, toolbarTitle_xpm},
-	{MENU_ITEM, ID_AGILITY_EDIT_TITLE,           wxITEM_NORMAL, 2, NULL, arbT("MenuTitleProperties"), arbT("DescTitleProperties"), toolbarTitle_xpm},
+	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuTitle"), NULL, ImageMgrTitle},
+	{MENU_ITEM, ID_AGILITY_EDIT_TITLE,           wxITEM_NORMAL, 2, NULL, arbT("MenuTitleProperties"), arbT("DescTitleProperties"), ImageMgrTitle},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
-	{MENU_ITEM, ID_AGILITY_NEW_TITLE,            wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescTitleNew"), toolbarTitle_xpm},
+	{MENU_ITEM, ID_AGILITY_NEW_TITLE,            wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescTitleNew"), ImageMgrTitle},
 	{MENU_ITEM, ID_AGILITY_DELETE_TITLE,         wxITEM_NORMAL, 2, NULL, arbT("MenuTitleDelete"), arbT("DescTitleDelete"), NULL},
-	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuTrial"), NULL, toolbarTrial_xpm},
-	{MENU_ITEM, ID_AGILITY_EDIT_TRIAL,           wxITEM_NORMAL, 2, NULL, arbT("MenuTrialProperties"), arbT("DescTrialProperties"), toolbarTrial_xpm},
+	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuTrial"), NULL, ImageMgrTrial},
+	{MENU_ITEM, ID_AGILITY_EDIT_TRIAL,           wxITEM_NORMAL, 2, NULL, arbT("MenuTrialProperties"), arbT("DescTrialProperties"), ImageMgrTrial},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
-	{MENU_ITEM, ID_AGILITY_NEW_TRIAL,            wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescTrialNew"), toolbarTrial_xpm},
+	{MENU_ITEM, ID_AGILITY_NEW_TRIAL,            wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescTrialNew"), ImageMgrTrial},
 	{MENU_ITEM, ID_AGILITY_DELETE_TRIAL,         wxITEM_NORMAL, 2, NULL, arbT("MenuTrialDelete"), arbT("DescTrialDelete"), NULL},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, ID_AGILITY_PRINT_TRIAL,          wxITEM_NORMAL, 2, NULL, arbT("MenuTrialPrintRuns"), arbT("DescTrialPrintRuns"), NULL},
-	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuRun"), NULL, toolbarRun_xpm},
-	{MENU_ITEM, ID_AGILITY_EDIT_RUN,             wxITEM_NORMAL, 2, NULL, arbT("MenuRunProperties"), arbT("DescRunProperties"), toolbarRun_xpm},
+	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuRun"), NULL, ImageMgrRuns},
+	{MENU_ITEM, ID_AGILITY_EDIT_RUN,             wxITEM_NORMAL, 2, NULL, arbT("MenuRunProperties"), arbT("DescRunProperties"), ImageMgrRuns},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
-	{MENU_ITEM, ID_AGILITY_NEW_RUN,              wxITEM_NORMAL, 2, arbT("MenuNewRun"), arbT("MenuNewRun"), arbT("DescRunNew"), toolbarRun_xpm},
+	{MENU_ITEM, ID_AGILITY_NEW_RUN,              wxITEM_NORMAL, 2, arbT("MenuNewRun"), arbT("MenuNewRun"), arbT("DescRunNew"), ImageMgrRuns},
 	{MENU_ITEM, ID_AGILITY_DELETE_RUN,           wxITEM_NORMAL, 2, NULL, arbT("MenuRunDelete"), arbT("DescRunDelete"), NULL},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, ID_AGILITY_PRINT_RUNS,           wxITEM_NORMAL, 2, NULL, arbT("MenuRunPrintRuns"), arbT("DescRunPrintRuns"), NULL},
-	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuCalendar"), NULL, toolbarCalendar_xpm},
-	{MENU_ITEM, ID_AGILITY_EDIT_CALENDAR,        wxITEM_NORMAL, 2, NULL, arbT("MenuCalendarProperties"), arbT("DescCalendarProperties"), toolbarCalendar_xpm},
+	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuCalendar"), NULL, ImageMgrCalendar},
+	{MENU_ITEM, ID_AGILITY_EDIT_CALENDAR,        wxITEM_NORMAL, 2, NULL, arbT("MenuCalendarProperties"), arbT("DescCalendarProperties"), ImageMgrCalendar},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
-	{MENU_ITEM, ID_AGILITY_NEW_CALENDAR,         wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescCalendarNew"), toolbarCalendar_xpm},
+	{MENU_ITEM, ID_AGILITY_NEW_CALENDAR,         wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescCalendarNew"), ImageMgrCalendar},
 	{MENU_ITEM, ID_AGILITY_DELETE_CALENDAR,      wxITEM_NORMAL, 2, NULL, arbT("MenuCalendarDelete"), arbT("DescCalendarDelete"), NULL},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, ID_AGILITY_UPDATE_CALENDAR,      wxITEM_NORMAL, 2, NULL, arbT("MenuCalendarUpdate"), arbT("DescCalendarUpdate"), NULL},
 	{MENU_ITEM, ID_AGILITY_EXPORT_CALENDAR,      wxITEM_NORMAL, 2, NULL, arbT("MenuCalendarExport"), arbT("DescCalendarExport"), NULL},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
 	{MENU_ITEM, ID_AGILITY_CREATEENTRY_CALENDAR, wxITEM_NORMAL, 2, NULL, arbT("MenuCalendarTrialEntry"), arbT("DescCalendarTrialEntry"), NULL},
-	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuTraining"), NULL, toolbarTraining_xpm},
-	{MENU_ITEM, ID_AGILITY_EDIT_TRAINING,        wxITEM_NORMAL, 2, NULL, arbT("MenuTrainingProperties"), arbT("DescTrainingProperties"), toolbarTraining_xpm},
+	{MENU_ITEM, 0,                               wxITEM_NORMAL, 1, NULL, arbT("MenuTraining"), NULL, ImageMgrTraining},
+	{MENU_ITEM, ID_AGILITY_EDIT_TRAINING,        wxITEM_NORMAL, 2, NULL, arbT("MenuTrainingProperties"), arbT("DescTrainingProperties"), ImageMgrTraining},
 	{MENU_SEP,  0,                               wxITEM_NORMAL, 2, NULL, NULL, NULL, NULL},
-	{MENU_ITEM, ID_AGILITY_NEW_TRAINING,         wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescTrainingNew"), toolbarTraining_xpm},
+	{MENU_ITEM, ID_AGILITY_NEW_TRAINING,         wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescTrainingNew"), ImageMgrTraining},
 	{MENU_ITEM, ID_AGILITY_DELETE_TRAINING,      wxITEM_NORMAL, 2, NULL, arbT("MenuTrainingDelete"), arbT("DescTrainingDelete"), NULL},
 
 	{MENU_ITEM, 0,                        wxITEM_NORMAL, 0, NULL, arbT("MenuNotes"), NULL, NULL},
@@ -197,7 +183,7 @@ static const CMenuHelper::ItemData sc_Items[] =
 #ifndef __WXMAC__
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, NULL, NULL, NULL, NULL},
 #endif
-	{MENU_HELP, wxID_ABOUT,               wxITEM_NORMAL, 1, arbT("MenuHelpAbout"), arbT("MenuHelpAbout"), arbT("DescHelpAbout"), toolbarAbout_xpm},
+	{MENU_HELP, wxID_ABOUT,               wxITEM_NORMAL, 1, arbT("MenuHelpAbout"), arbT("MenuHelpAbout"), arbT("DescHelpAbout"), ImageMgrAbout},
 };
 static const size_t sc_ItemsCount = sizeof(sc_Items) / sizeof(sc_Items[0]);
 
@@ -243,13 +229,13 @@ void CreateMainMenu(
 static wxMenu* CreateNewMenu(bool incRun)
 {
 	wxMenu* menu = new wxMenu;
-	CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_DOG, _("MenuDogNew"), _("DescDogNew"), toolbarDog_xpm);
-	CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_TITLE, _("MenuTitleNew"), _("DescTitleNew"), toolbarTitle_xpm);
+	CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_DOG, _("MenuDogNew"), _("DescDogNew"), ImageMgrDog);
+	CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_TITLE, _("MenuTitleNew"), _("DescTitleNew"), ImageMgrTitle);
 	menu->AppendSeparator();
-	CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_TRIAL, _("MenuTrialNew"), _("DescTrialNew"), toolbarTrial_xpm);
+	CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_TRIAL, _("MenuTrialNew"), _("DescTrialNew"), ImageMgrTrial);
 	if (incRun)
 	{
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_RUN, _("MenuRunNew"), _("DescRunNew"), toolbarRun_xpm);
+		CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_RUN, _("MenuRunNew"), _("DescRunNew"), ImageMgrRuns);
 	}
 	return menu;
 }
@@ -270,14 +256,14 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 		break;
 
 	case IdMenuDog:
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_DOG, _("MenuDogProperties"), _("DescDogProperties"), toolbarDog_xpm);
+		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_DOG, _("MenuDogProperties"), _("DescDogProperties"), ImageMgrDog);
 		CMenuHelper::DoMenuItem(menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
 		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(false));
 		CMenuHelper::DoMenuItem(menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), toolbarCut_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), toolbarCopy_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), toolbarPaste_xpm);
+		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_DELETE_DOG, _("MenuDogDelete"), _("DescDogDelete"));
 		menu->AppendSeparator();
 		CMenuHelper::DoMenuItem(menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
@@ -289,14 +275,14 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 		break;
 
 	case IdMenuTrial:
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_TRIAL, _("MenuTrialProperties"), _("DescTrialProperties"), toolbarTrial_xpm);
+		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_TRIAL, _("MenuTrialProperties"), _("DescTrialProperties"), ImageMgrTrial);
 		CMenuHelper::DoMenuItem(menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
 		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(true));
 		CMenuHelper::DoMenuItem(menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), toolbarCut_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), toolbarCopy_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), toolbarPaste_xpm);
+		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_DELETE_TRIAL, _("MenuTrialDelete"), _("DescTrialDelete"));
 		menu->AppendSeparator();
 		CMenuHelper::DoMenuItem(menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
@@ -308,14 +294,14 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 		break;
 
 	case IdMenuRun:
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_RUN, _("MenuRunProperties"), _("DescRunProperties"), toolbarRun_xpm);
+		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_RUN, _("MenuRunProperties"), _("DescRunProperties"), ImageMgrRuns);
 		CMenuHelper::DoMenuItem(menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
 		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(true));
 		CMenuHelper::DoMenuItem(menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), toolbarCut_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), toolbarCopy_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), toolbarPaste_xpm);
+		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_DELETE_RUN, _("MenuRunDelete"), _("DescRunDelete"));
 		menu->AppendSeparator();
 		CMenuHelper::DoMenuItem(menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
@@ -330,9 +316,9 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 		menu->AppendSeparator();
 		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(true));
 		CMenuHelper::DoMenuItem(menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), toolbarCut_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), toolbarCopy_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), toolbarPaste_xpm);
+		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_DELETE_RUN, _("MenuRunDelete"), _("DescRunDelete"));
 		menu->AppendSeparator();
 		CMenuHelper::DoMenuItem(menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
@@ -346,21 +332,21 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 		CMenuHelper::DoMenuItem(menu, ID_DETAILS, _("MenuDetails"), _("DescDetails"));
 		CMenuHelper::DoMenuItem(menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopySelection"), _("DescEditCopy"), toolbarCopy_xpm);
+		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopySelection"), _("DescEditCopy"), ImageMgrCopy);
 		CMenuHelper::DoMenuItem(menu, ID_COPY_TITLES_LIST, _("MenuEditCopyTitles"), _("DescEditCopyTitles"));
 		menu->AppendSeparator();
 		CMenuHelper::DoMenuItem(menu, wxID_SELECTALL, _("MenuEditSelectAll"), _("DescEditSelectAll"));
 		break;
 
 	case IdMenuCalendar:
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_CALENDAR, _("MenuCalendarProperties"), _("DescCalendarProperties"), toolbarCalendar_xpm);
+		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_CALENDAR, _("MenuCalendarProperties"), _("DescCalendarProperties"), ImageMgrCalendar);
 		CMenuHelper::DoMenuItem(menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_CALENDAR, _("MenuNew"), _("DescCalendarNew"), toolbarCalendar_xpm);
+		CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_CALENDAR, _("MenuNew"), _("DescCalendarNew"), ImageMgrCalendar);
 		CMenuHelper::DoMenuItem(menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), toolbarCut_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), toolbarCopy_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), toolbarPaste_xpm);
+		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_DELETE_CALENDAR, _("MenuCalendarDelete"), _("DescCalendarDelete"));
 		menu->AppendSeparator();
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_UPDATE_CALENDAR, _("MenuCalendarUpdate"), _("DescCalendarUpdate"));
@@ -370,14 +356,14 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 		break;
 
 	case IdMenuTraining:
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_TRAINING, _("MenuTrainingProperties"), _("DescTrainingProperties"), toolbarTraining_xpm);
+		CMenuHelper::DoMenuItem(menu, ID_AGILITY_EDIT_TRAINING, _("MenuTrainingProperties"), _("DescTrainingProperties"), ImageMgrTraining);
 		CMenuHelper::DoMenuItem(menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_TRAINING, _("MenuNew"), _("DescTrainingNew"), toolbarTraining_xpm);
+		CMenuHelper::DoMenuItem(menu, ID_AGILITY_NEW_TRAINING, _("MenuNew"), _("DescTrainingNew"), ImageMgrTraining);
 		CMenuHelper::DoMenuItem(menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), toolbarCut_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), toolbarCopy_xpm);
-		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), toolbarPaste_xpm);
+		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_DELETE_TRAINING, _("MenuTrainingDelete"), _("DescTrainingDelete"));
 		break;
 	}

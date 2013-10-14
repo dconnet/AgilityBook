@@ -275,9 +275,9 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 {
 #ifdef WX_TREE_HAS_STATE
 	// Note: Position 0 cannot be used.
-	m_ImageListStates.Add(CImageManager::Get()->Blank());
-	m_idxEmpty = m_ImageListStates.Add(CImageManager::Get()->Blank());
-	m_idxChecked = m_ImageListStates.Add(CImageManager::Get()->Check());
+	m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
+	m_idxEmpty = m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
+	m_idxChecked = m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrCheck));
 #endif
 
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);

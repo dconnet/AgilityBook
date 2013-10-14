@@ -34,7 +34,6 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ImageManager.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"

@@ -707,12 +707,12 @@ CDlgDog::CDlgDog(
 	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgDog::OnTitleKeyDown);
 	m_ctrlTitles->SetHelpText(_("HIDC_DOG_TITLE_TITLES"));
 	m_ctrlTitles->SetToolTip(_("HIDC_DOG_TITLE_TITLES"));
-	m_imgTitlesEmpty = m_ctrlTitles->AddIcon(CImageManager::Get()->Blank());
-	m_imgTitlesTitled = m_ctrlTitles->AddIcon(CImageManager::Get()->TitleTitled());
-	m_imgTitlesTitledReceived = m_ctrlTitles->AddIcon(CImageManager::Get()->TitleTitledHave());
-	m_imgTitlesHidden = m_ctrlTitles->AddIcon(CImageManager::Get()->TitleHidden());
-	m_imgTitlesTitledHidden = m_ctrlTitles->AddIcon(CImageManager::Get()->TitleTitledHidden());
-	m_imgTitlesTitledHiddenReceived = m_ctrlTitles->AddIcon(CImageManager::Get()->TitleTitledHiddenHave());
+	m_imgTitlesEmpty = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrBlank));
+	m_imgTitlesTitled = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitled));
+	m_imgTitlesTitledReceived = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHave));
+	m_imgTitlesHidden = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleHidden));
+	m_imgTitlesTitledHidden = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHidden));
+	m_imgTitlesTitledHiddenReceived = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHiddenHave));
 	int i;
 	for (i = 0; i < nColTitleInfo; ++i)
 	{

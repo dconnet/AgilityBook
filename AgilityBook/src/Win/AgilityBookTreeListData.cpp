@@ -140,7 +140,7 @@ CAgilityBookTreeListDataDog::CAgilityBookTreeListDataDog(
 	: CAgilityBookTreeListData(pModel)
 	, m_pDog(dog)
 {
-	m_icon = CImageManager::Get()->Dog();
+	m_icon = CImageManager::Get()->GetIcon(ImageMgrDog);
 }
 
 
@@ -339,11 +339,11 @@ CAgilityBookTreeListDataRun::CAgilityBookTreeListDataRun(
 	, m_pRun(run)
 {
 	if (0 < m_pRun->GetCRCDRawMetaData().length())
-		m_icon = CImageManager::Get()->CRCD();
+		m_icon = CImageManager::Get()->GetIcon(ImageMgrCRCD);
 	else if (0 < m_pRun->GetCRCD().length())
-		m_icon = CImageManager::Get()->ARB16();
+		m_icon = CImageManager::Get()->GetIcon(ImageMgrApp);
 	else
-		m_icon = CImageManager::Get()->Run();
+		m_icon = CImageManager::Get()->GetIcon(ImageMgrRuns);
 }
 
 
