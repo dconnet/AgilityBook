@@ -19,10 +19,13 @@
  * @li 2012-08-13 DRC Moved dconSetupApp out of Globals.cpp
  */
 
+#include "ImageManager.h"
 #include "LanguageManager.h"
 
 
-class CBaseApp : public wxApp, public ILanguageCallback
+class CBaseApp : public wxApp
+				, public ILanguageCallback
+				, public IImageManagerCallback
 {
 	DECLARE_NO_COPY_CLASS(CBaseApp)
 protected:
@@ -61,6 +64,17 @@ protected:
 	virtual wxString OnGetLangConfigName() const;
 	virtual wxString OnGetLanguageDir() const;
 	virtual void OnErrorMessage(wxString const& msg) const;
+
+	// IImageManagerCallback interface
+	virtual bool OnCreateBitmap(
+			const wxArtID& id,
+			const wxArtClient& client,
+			const wxSize& size,
+			wxBitmap& outBmp);
+	virtual bool OnCreateIconBundle(
+			const wxArtID& id,
+			const wxArtClient& client,
+			wxIconBundle& outIcon);
 
 	virtual bool InitLocale();
 	virtual int SelectLang(wxWindow* parent = NULL);

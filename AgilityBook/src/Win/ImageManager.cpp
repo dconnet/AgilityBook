@@ -7,7 +7,7 @@
 /**
  * @file
  *
- * @brief List of icons
+ * @brief Image Manager
  * @author David Connet
  *
  * Revision History
@@ -25,8 +25,6 @@
 #include "res/AccTodo.xpm"
 #include "res/AgilityBook16.xpm"
 #include "res/AgilityBook32.xpm"
-#include "res/AgilityBook48.xpm"
-#include "res/AgilityBook256.xpm"
 #include "res/CalEmpty.xpm"
 #include "res/calendar.xpm"
 #include "res/CalEntered.xpm"
@@ -104,6 +102,7 @@ CImageManager* CImageManager::Get()
 
 
 CImageManager::CImageManager()
+	: m_Callback(NULL)
 {
 }
 
@@ -118,6 +117,13 @@ wxBitmap CImageManager::CreateBitmap(
 		const wxArtClient& client,
 		const wxSize& size)
 {
+	if (m_Callback)
+	{
+		wxBitmap bmp;
+		if (m_Callback->OnCreateBitmap(id, client, size, bmp))
+			return bmp;
+	}
+
 	if (id == ImageMgrApp)
 	{
 		if (client == wxART_MESSAGE_BOX)
@@ -279,15 +285,11 @@ wxIconBundle CImageManager::CreateIconBundle(
 		const wxArtID& id,
 		const wxArtClient& client)
 {
-	if (id == ImageMgrAppBundle)
+	if (m_Callback)
 	{
 		wxIconBundle icons;
-		icons.AddIcon(wxIcon(AgilityBook16_xpm));
-		icons.AddIcon(wxIcon(AgilityBook32_xpm));
-		icons.AddIcon(wxIcon(AgilityBook48_xpm));
-		icons.AddIcon(wxIcon(AgilityBook256_xpm));
-		return icons;
+		if (m_Callback->OnCreateIconBundle(id, client, icons))
+			return icons;
 	}
-	else
-		return wxArtProvider::CreateIconBundle(id, client);
+	return wxArtProvider::CreateIconBundle(id, client);
 }

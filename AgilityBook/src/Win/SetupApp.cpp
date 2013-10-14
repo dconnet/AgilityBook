@@ -20,6 +20,7 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "Globals.h"
+#include "ImageManager.h"
 #include "LanguageManager.h"
 
 #include <wx/config.h>
@@ -72,6 +73,8 @@ bool CBaseApp::OnInit()
 		wxMessageBox(errMsg.c_str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_ERROR);
 		return false;
 	}
+
+	CImageManager::Get()->SetCallback(this);
 
 	if (!m_BaseAppName.empty())
 	{
@@ -137,6 +140,8 @@ void CBaseApp::BaseAppCleanup(bool deleteConfig)
 	}
 	delete m_langMgr;
 	m_langMgr = NULL;
+
+	CImageManager::Get()->SetCallback(NULL);
 	Element::Terminate();
 }
 
@@ -186,6 +191,25 @@ wxString CBaseApp::OnGetLanguageDir() const
 void CBaseApp::OnErrorMessage(wxString const& msg) const
 {
 	wxMessageBox(msg, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
+}
+
+
+bool CBaseApp::OnCreateBitmap(
+		const wxArtID& id,
+		const wxArtClient& client,
+		const wxSize& size,
+		wxBitmap& outBmp)
+{
+	return false;
+}
+
+
+bool CBaseApp::OnCreateIconBundle(
+		const wxArtID& id,
+		const wxArtClient& client,
+		wxIconBundle& outIcon)
+{
+	return false;
 }
 
 

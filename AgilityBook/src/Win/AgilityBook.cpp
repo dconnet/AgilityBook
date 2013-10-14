@@ -64,6 +64,9 @@
 #include <wx/utils.h>
 #include <wx/xrc/xmlres.h>	// XRC XML resources
 
+#include "res/AgilityBook48.xpm"
+#include "res/AgilityBook256.xpm"
+
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
@@ -508,6 +511,33 @@ int CAgilityBookApp::OnGetLanguage() const
 wxString CAgilityBookApp::OnGetLangConfigName() const
 {
 	return CFG_SETTINGS_LANG3;
+}
+
+
+bool CAgilityBookApp::OnCreateBitmap(
+		const wxArtID& id,
+		const wxArtClient& client,
+		const wxSize& size,
+		wxBitmap& outBmp)
+{
+	return false;
+}
+
+
+bool CAgilityBookApp::OnCreateIconBundle(
+		const wxArtID& id,
+		const wxArtClient& client,
+		wxIconBundle& outIcon)
+{
+	if (id == ImageMgrAppBundle)
+	{
+		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp));
+		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX));
+		outIcon.AddIcon(wxIcon(AgilityBook48_xpm));
+		outIcon.AddIcon(wxIcon(AgilityBook256_xpm));
+		return true;
+	}
+	return false;
 }
 
 

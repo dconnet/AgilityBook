@@ -52,6 +52,17 @@ protected:
 	virtual int OnGetLanguage() const;
 	virtual wxString OnGetLangConfigName() const;
 
+	// IImageManagerCallback interface
+	virtual bool OnCreateBitmap(
+			const wxArtID& id,
+			const wxArtClient& client,
+			const wxSize& size,
+			wxBitmap& outBmp);
+	virtual bool OnCreateIconBundle(
+			const wxArtID& id,
+			const wxArtClient& client,
+			wxIconBundle& outIcon);
+
 	virtual bool InitLocale();
 	virtual bool SetLang(int langId);
 

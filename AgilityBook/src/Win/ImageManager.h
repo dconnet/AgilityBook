@@ -9,8 +9,11 @@
 /**
  * @file
  *
- * @brief List of icons
+ * @brief Image Manager
  * @author David Connet
+ *
+ * Usage: 
+ * Users of this can extend by associating a callback class.
  *
  * Revision History
  * @li 2013-10-13 DRC Changed ImageManager to an art provider.
@@ -23,6 +26,15 @@
 
 #define ImageMgrAppBundle			wxART_MAKE_ART_ID(ImageMgrAppBundle)
 #define ImageMgrApp					wxART_MAKE_ART_ID(ImageMgrApp)
+
+#define ImageMgrBlank				wxART_MAKE_ART_ID(ImageMgrBlank)
+#define ImageMgrChecked				wxART_MAKE_ART_ID(ImageMgrChecked)
+#define ImageMgrUnChecked			wxART_MAKE_ART_ID(ImageMgrUnChecked)
+#define ImageMgrCheck				wxART_MAKE_ART_ID(ImageMgrCheck)
+#define ImageMgrQuestion			wxART_MAKE_ART_ID(ImageMgrQuestion)
+
+#define ImageMgrHeaderDown			wxART_MAKE_ART_ID(ImageMgrHeaderDown)
+#define ImageMgrHeaderUp			wxART_MAKE_ART_ID(ImageMgrHeaderUp)
 
 #define ImageMgrRuns 				wxART_MAKE_ART_ID(ImageMgrRuns)
 #define ImageMgrPoints				wxART_MAKE_ART_ID(ImageMgrPoints)
@@ -44,11 +56,6 @@
 #define ImageMgrVenueFCI			wxART_MAKE_ART_ID(ImageMgrVenueFCI)
 #define ImageMgrVenueSCC			wxART_MAKE_ART_ID(ImageMgrVenueSCC)
 #define ImageMgrCRCD				wxART_MAKE_ART_ID(ImageMgrCRCD)
-#define ImageMgrBlank				wxART_MAKE_ART_ID(ImageMgrBlank)
-#define ImageMgrChecked				wxART_MAKE_ART_ID(ImageMgrChecked)
-#define ImageMgrUnChecked			wxART_MAKE_ART_ID(ImageMgrUnChecked)
-#define ImageMgrCheck				wxART_MAKE_ART_ID(ImageMgrCheck)
-#define ImageMgrQuestion			wxART_MAKE_ART_ID(ImageMgrQuestion)
 #define ImageMgrAccomConfirm		wxART_MAKE_ART_ID(ImageMgrAccomConfirm)
 #define ImageMgrAccomNone			wxART_MAKE_ART_ID(ImageMgrAccomNone)
 #define ImageMgrAccomTodo			wxART_MAKE_ART_ID(ImageMgrAccomTodo)
@@ -57,8 +64,6 @@
 #define ImageMgrCalPending			wxART_MAKE_ART_ID(ImageMgrCalPending)
 #define ImageMgrCalPendingTentative	wxART_MAKE_ART_ID(ImageMgrCalPendingTentative)
 #define ImageMgrCalPlanTentative	wxART_MAKE_ART_ID(ImageMgrCalPlanTentative)
-#define ImageMgrHeaderDown			wxART_MAKE_ART_ID(ImageMgrHeaderDown)
-#define ImageMgrHeaderUp			wxART_MAKE_ART_ID(ImageMgrHeaderUp)
 
 // Hidden: !
 // Titled: ribbon
@@ -88,6 +93,25 @@
 #define ImageMgrSave				wxART_MAKE_ART_ID(ImageMgrSave)
 
 
+// Allow projects to extend without deriving which makes using the same
+// class unchanged in multiple projects possible.
+class IImageManagerCallback
+{
+public:
+	// Return code indicates image has handled.
+	virtual bool OnCreateBitmap(
+			const wxArtID& id,
+			const wxArtClient& client,
+			const wxSize& size,
+			wxBitmap& outBmp) = 0;
+
+	virtual bool OnCreateIconBundle(
+			const wxArtID& id,
+			const wxArtClient& client,
+			wxIconBundle& outIcon) = 0;
+};
+
+
 class CImageManager : public wxArtProvider
 {
 private:
@@ -96,6 +120,7 @@ private:
 
 public:
 	static CImageManager* Get();
+	void SetCallback(IImageManagerCallback* pCallback) {m_Callback = pCallback;}
 
 	virtual wxBitmap CreateBitmap(
 			const wxArtID& id,
@@ -105,4 +130,7 @@ public:
 	virtual wxIconBundle CreateIconBundle(
 			const wxArtID& id,
 			const wxArtClient& client);
+
+private:
+	IImageManagerCallback* m_Callback;
 };
