@@ -269,7 +269,7 @@ void CMenuHelper::CreateMenu(
 					name = menuItems[idxItem].toolbar;
 					desc = menuItems[idxItem].help;
 				}
-				wxBitmap bmp = wxArtProvider::GetBitmap(menuItems[idxItem].artId, wxART_TOOLBAR, wxSize(16,16));
+				wxBitmap bmp = wxArtProvider::GetBitmap(menuItems[idxItem].artId, wxART_TOOLBAR);
 				assert(bmp.IsOk());
 				toolbar->AddTool(menuItems[idxItem].id,
 					name,
