@@ -11,6 +11,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2013-10-14 DRC Allow x64-on-x64 compilation to fall back to x86_amd (VCExpress)
 # 2013-07-30 DRC Modify tmpfile to allow multiple builds
 #                (a VM can now build vc12 and the same time vc11 builds locally)
 # 2013-07-01 DRC Added VC12 support. Removed _BIND_TO... for VC10+.
@@ -228,6 +229,14 @@ def getversion(file):
 	return version
 
 
+def GetX64Target(vcBase, bit64on64):
+	target = 'x86_amd64'
+	if bit64on64:
+		if os.access(vcBase + r'VC\bin\amd64', os.F_OK):
+			target = 'amd64'
+	return target
+
+
 def main():
 	global ProgramFiles, ProgramFiles64
 	global compileIt, hasPrefix, useStatic, useUnicode
@@ -365,10 +374,7 @@ def main():
 
 		elif compiler == 'vc9x64':
 			setenv_rel = 'call "' + vc9Base + r'\VC\vcvarsall.bat" '
-			if not bit64on64:
-				setenv_rel += 'x86_amd64'
-			else:
-				setenv_rel += 'amd64'
+			setenv_rel += GetX64Target(vc9Base, bit64on64)
 			target_cpu = ' TARGET_CPU=' + x64Target
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc90'
@@ -391,10 +397,7 @@ def main():
 				setenv_dbg = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /debug /x64 /xp'
 			else:
 				setenv_rel = 'call "' + vc10Base + r'\VC\vcvarsall.bat" '
-				if not bit64on64:
-					setenv_rel += 'x86_amd64'
-				else:
-					setenv_rel += 'amd64'
+				setenv_rel += GetX64Target(vc10Base, bit64on64)
 			target_cpu = ' TARGET_CPU=' + x64Target
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc100'
@@ -412,10 +415,7 @@ def main():
 
 		elif compiler == 'vc11x64':
 			setenv_rel = 'call "' + vc11Base + r'\VC\vcvarsall.bat" '
-			if not bit64on64:
-				setenv_rel += 'x86_amd64'
-			else:
-				setenv_rel += 'amd64'
+			setenv_rel += GetX64Target(vc11Base, bit64on64)
 			target_cpu = ' TARGET_CPU=' + x64Target
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc110'
@@ -433,10 +433,7 @@ def main():
 
 		elif compiler == 'vc12x64':
 			setenv_rel = 'call "' + vc12Base + r'\VC\vcvarsall.bat" '
-			if not bit64on64:
-				setenv_rel += 'x86_amd64'
-			else:
-				setenv_rel += 'amd64'
+			setenv_rel += GetX64Target(vc12Base, bit64on64)
 			target_cpu = ' TARGET_CPU=' + x64Target
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc120'
