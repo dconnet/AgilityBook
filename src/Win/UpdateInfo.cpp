@@ -13,7 +13,7 @@
  * File Format: See below.
  *
  * Revision History
- * @li 2013-10-07 DRC Added 'minOS' for Mac.
+ * @li 2013-10-23 DRC Added 'minOS'.
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-07-26 DRC Moved 'Arch' to ARBAgilityRecordBook.
  * @li 2010-05-07 DRC Removed 'lang' from 'Platform'. (Finally figured out how
@@ -287,12 +287,18 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		 * <!ELEMENT Data (Platform, Config, Download*, DisableCalPlugin*) >
 		 * <!ELEMENT Platform (EMPTY) >
 		 *   <!--
-		 *   Important: 'arch=osx' elements for must be ordered in decending
-		 *   order on 'minOS'.
+		 *   Important: 'arch' elements for must be ordered in decending
+		 *   order on 'minOS'. On Windows, this is just a coarse check.
+		 *   If there is an SP requirement, the installer will catch it. Not
+		 *   a good UI experience, but there's only so much that can be done!
+		 *   Right now, XP has the SP requirements. The only issue is if a future
+		 *   version (let's say 8.1sp3). If that happens, then I can rename the
+		 *   'arch' tags again and deal with it then (like adding support for
+		 *   'minOS' is happening now).
 		 *   -->
 		 *   <!ATTLIST Platform
 		 *     arch CDATA (x86,x64,mac,osx)
-		 *     minOS CDATA #IMPLIED
+		 *     minOS CDATA #IMPLIED (maj.min)
 		 *     ver CDATA #REQUIRED
 		 *     config CDATA #REQUIRED
 		 *     md5 CDATA #REQUIRED
@@ -358,7 +364,6 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 						if (ARBAgilityRecordBook::GetArch() == value)
 						{
 							bSkip = false;
-#if defined(__WXMAC__)
 							ARBVersion minOS;
 							if (ElementNode::eFound == node->GetAttrib(L"minOS", minOS))
 							{
@@ -374,7 +379,6 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 								// It's an error, but don't expose this to the user.
 								bSkip = true;
 							}
-#endif
 						}
 					}
 					// Wrong architecture

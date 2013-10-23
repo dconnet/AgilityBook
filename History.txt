@@ -1,4 +1,4 @@
-10/7/2013: v2.4.0.<in development>
+10/23/2013: v2.4.0.<in development>
 - Bumped Configuration v45:
   - Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
 - Bumped file version to 14.2:
@@ -9,7 +9,7 @@
     - On Mac, place inside bundle next to AgilityBook.dat file.
   - Add Win7 taskbar progress feedback.
   - Changed printing forms to use short names.
-  - Change Mac config lookup to 'osx' to allow deprecating old systems.
+  - Change 'arch' config lookup to allow deprecating old systems.
 - Bug fixes:
   - Fix per-user/per-machine install experience.
 
