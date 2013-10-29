@@ -37,6 +37,9 @@ libarbcommon_SRCS = ARBBase64.cpp \
 	ARBDate.cpp \
 	ARBMisc.cpp \
 	ARBMsgDigest.cpp \
+	ARBMsgDigestMD5.cpp \
+	ARBMsgDigestSHA1.cpp \
+	ARBMsgDigestSHA256.cpp \
 	ARBTypes.cpp \
 	BinaryData.cpp \
 	BreakLine.cpp \
