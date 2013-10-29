@@ -33,6 +33,15 @@
     <ClCompile Include="..\..\ARBCommon\ARBMsgDigest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ARBCommon\ARBMsgDigestMD5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARBCommon\ARBMsgDigestSHA1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARBCommon\ARBMsgDigestSHA256.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ARBCommon\ARBTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ARBCommon\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARBCommon\ARBMsgDigestImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
