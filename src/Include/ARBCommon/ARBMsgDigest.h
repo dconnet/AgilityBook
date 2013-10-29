@@ -8,7 +8,7 @@
 
 /**
  * @file
- * @brief MD5 algorithm, based on RSA Data Security, Inc.
+ * @brief File hashing algorithms
  *
  * Revision History
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
@@ -23,13 +23,23 @@ class ARBMsgDigest
 {
 	ARBMsgDigest();
 public:
+	typedef enum
+	{
+		ARBDigestMD5,
+		ARBDigestSha1,
+		ARBDigestSha2,
+	} ARBDigest;
+
 	static std::wstring Compute(
 			wchar_t const* const inFileName,
-			size_t* outSize = NULL);
+			size_t* outSize = NULL,
+			ARBDigest type = ARBDigestMD5);
 	static std::wstring Compute(
 			std::wstring const& inFileName,
-			size_t* outSize = NULL);
+			size_t* outSize = NULL,
+			ARBDigest type = ARBDigestMD5);
 	static std::wstring Compute(
 			std::istream& inFile,
-			size_t* outSize = NULL);
+			size_t* outSize = NULL,
+			ARBDigest type = ARBDigestMD5);
 };

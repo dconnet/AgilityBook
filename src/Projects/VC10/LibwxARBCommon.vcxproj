@@ -98,6 +98,9 @@
     <ClCompile Include="..\..\ARBCommon\ARBDate.cpp" />
     <ClCompile Include="..\..\ARBCommon\ARBMisc.cpp" />
     <ClCompile Include="..\..\ARBCommon\ARBMsgDigest.cpp" />
+    <ClCompile Include="..\..\ARBCommon\ARBMsgDigestMD5.cpp" />
+    <ClCompile Include="..\..\ARBCommon\ARBMsgDigestSHA1.cpp" />
+    <ClCompile Include="..\..\ARBCommon\ARBMsgDigestSHA256.cpp" />
     <ClCompile Include="..\..\ARBCommon\ARBTypes.cpp" />
     <ClCompile Include="..\..\ARBCommon\BinaryData.cpp" />
     <ClCompile Include="..\..\ARBCommon\BreakLine.cpp" />
@@ -129,6 +132,7 @@
     <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
     <ClInclude Include="..\..\ARBCommon\stdafx.h" />
+    <ClInclude Include="..\..\ARBCommon\ARBMsgDigestImpl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
