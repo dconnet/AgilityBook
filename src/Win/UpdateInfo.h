@@ -21,6 +21,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/VersionNum.h"
 #include <map>
 #include <vector>
@@ -95,7 +96,8 @@ private:
 	CVersionNum m_VersionNum;
 	short m_VerConfig;
 	long m_size;
-	std::wstring m_md5;
+	std::wstring m_hash;
+	ARBMsgDigest::ARBDigest m_hashType;
 	std::wstring m_NewFile;
 	std::wstring m_ConfigFileName;
 	std::map<std::wstring, std::wstring> m_InfoMsg;

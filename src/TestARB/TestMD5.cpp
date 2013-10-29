@@ -27,7 +27,9 @@ SUITE(TestMsgDigest)
 {
 	// String
 	static char const* RawString = "This is a test of a string";
-	static std::wstring DigestString(L"b36b52c4835d88fdb548087b9a829bf1");
+	static std::wstring DigestStringMD5(L"b36b52c4835d88fdb548087b9a829bf1");
+	static std::wstring DigestStringSHA1(L"7d56b53d54b141cb77e465abcfe63436a35ae222");
+	static std::wstring DigestStringSHA256(L"5d2819684143b99d8b9c9a254e1b5584529a3fe947862e8ae15e246eda292c37");
 
 
 	TEST(RawDecode)
@@ -35,8 +37,30 @@ SUITE(TestMsgDigest)
 		if (!g_bMicroTest)
 		{
 			std::stringstream buffer(RawString);
-			std::wstring digest = ARBMsgDigest::Compute(buffer);
-			CHECK(digest == DigestString);
+			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigestMD5);
+			CHECK(digest == DigestStringMD5);
+		}
+	}
+
+
+	TEST(RawDecodeSha1)
+	{
+		if (!g_bMicroTest)
+		{
+			std::stringstream buffer(RawString);
+			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigestSHA1);
+			CHECK(digest == DigestStringSHA1);
+		}
+	}
+
+
+	TEST(RawDecodeSha256)
+	{
+		if (!g_bMicroTest)
+		{
+			std::stringstream buffer(RawString);
+			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigestSHA256);
+			CHECK(digest == DigestStringSHA256);
 		}
 	}
 }

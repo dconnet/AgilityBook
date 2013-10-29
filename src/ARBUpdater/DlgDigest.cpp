@@ -117,24 +117,28 @@ END_EVENT_TABLE()
 CDlgDigest::CDlgDigest(wxString const& inFile)
 	: m_File(inFile)
 	, m_MD5()
+	, m_SHA1()
+	, m_SHA256()
 	, m_Size(0)
 {
-	Create(NULL, wxID_ANY, L"MD5 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(NULL, wxID_ANY, L"MD5/SHA1/SHA256 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (!m_File.empty())
 	{
 		wxBusyCursor wait;
 		size_t size;
-		m_MD5 = ARBMsgDigest::Compute(m_File.wx_str(), &size);
+		m_MD5 = ARBMsgDigest::Compute(m_File.wx_str(), ARBMsgDigest::ARBDigestMD5, &size);
 		if (m_MD5.empty())
 			m_File.erase();
 		else
 			m_Size = static_cast<long>(size);
+		m_SHA1 = ARBMsgDigest::Compute(m_File.wx_str(), ARBMsgDigest::ARBDigestSHA1);
+		m_SHA256 = ARBMsgDigest::Compute(m_File.wx_str(), ARBMsgDigest::ARBDigestSHA256);
 	}
 
 	wxTextCtrl* ctrlFile = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(300, -1), 0,
+		wxDefaultPosition, wxSize(450, -1), 0,
 		wxTextValidator(wxFILTER_NONE, &m_File));
 
 	wxTextCtrl* ctrlMD5 = new wxTextCtrl(this, wxID_ANY,
@@ -142,6 +146,18 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		wxDefaultPosition, wxDefaultSize, wxTE_READONLY,
 		wxTextValidator(wxFILTER_NONE, &m_MD5));
 	ctrlMD5->SetBackgroundColour(GetBackgroundColour());
+
+	wxTextCtrl* ctrlSHA1 = new wxTextCtrl(this, wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, wxTE_READONLY,
+		wxTextValidator(wxFILTER_NONE, &m_SHA1));
+	ctrlSHA1->SetBackgroundColour(GetBackgroundColour());
+
+	wxTextCtrl* ctrlSHA256 = new wxTextCtrl(this, wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, wxTE_READONLY,
+		wxTextValidator(wxFILTER_NONE, &m_SHA256));
+	ctrlSHA256->SetBackgroundColour(GetBackgroundColour());
 
 	wxTextCtrl* ctrlSize = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
@@ -152,6 +168,8 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(ctrlFile, 0, wxALL|wxEXPAND, 5);
 	bSizer->Add(ctrlMD5, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(ctrlSHA1, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(ctrlSHA256, 0, wxALL|wxEXPAND, 5);
 	bSizer->Add(ctrlSize, 0, wxALL, 5);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
@@ -179,7 +197,9 @@ void CDlgDigest::OnOk(wxCommandEvent& evt)
 		wxBusyCursor wait;
 		m_File = dlg.GetPath();
 		size_t size;
-		m_MD5 = ARBMsgDigest::Compute(m_File, &size);
+		m_MD5 = ARBMsgDigest::Compute(m_File.wx_str(), ARBMsgDigest::ARBDigestMD5, &size);
+		m_SHA1 = ARBMsgDigest::Compute(m_File.wx_str(), ARBMsgDigest::ARBDigestSHA1);
+		m_SHA256 = ARBMsgDigest::Compute(m_File.wx_str(), ARBMsgDigest::ARBDigestSHA256);
 		m_Size = static_cast<long>(size);
 		TransferDataToWindow();
 	}

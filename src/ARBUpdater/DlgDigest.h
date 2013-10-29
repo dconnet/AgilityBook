@@ -25,6 +25,8 @@ public:
 private:
 	wxString m_File;
 	wxString m_MD5;
+	wxString m_SHA1;
+	wxString m_SHA256;
 	long m_Size;
 
 	DECLARE_EVENT_TABLE()

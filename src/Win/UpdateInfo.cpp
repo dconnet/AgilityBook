@@ -211,7 +211,8 @@ CUpdateInfo::CUpdateInfo()
 	: m_VersionNum(false)
 	, m_VerConfig(0)
 	, m_size(0)
-	, m_md5()
+	, m_hash()
+	, m_hashType(ARBMsgDigest::ARBDigestUnknown)
 	, m_NewFile()
 	, m_ConfigFileName()
 	, m_InfoMsg()
@@ -233,7 +234,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	m_VersionNum.clear();
 	m_VerConfig = 0;
 	m_size = 0;
-	m_md5.erase();
+	m_hash.erase();
+	m_hashType = ARBMsgDigest::ARBDigestUnknown;
 	m_NewFile.erase();
 	m_ConfigFileName.erase();
 	m_InfoMsg.clear();
@@ -301,7 +303,9 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		 *     minOS CDATA #IMPLIED (maj.min)
 		 *     ver CDATA #REQUIRED
 		 *     config CDATA #REQUIRED
-		 *     md5 CDATA #REQUIRED
+		 *     md5 CDATA #REQUIRED [one of md5/sha1/sha256 is required]
+		 *     sha1 CDATA #REQUIRED [one of md5/sha1/sha256 is required]
+		 *     sha256 CDATA #REQUIRED [one of md5/sha1/sha256 is required]
 		 *     file CDATA #REQUIRED >
 		 * <!ELEMENT Config (Lang+) >
 		 *   <!ATTLIST Config
@@ -392,11 +396,22 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					}
 					if (ElementNode::eFound != node->GetAttrib(L"config", m_VerConfig)
 					|| ElementNode::eFound != node->GetAttrib(L"size", m_size)
-					|| ElementNode::eFound != node->GetAttrib(L"md5", m_md5)
 					|| ElementNode::eFound != node->GetAttrib(L"file", m_NewFile))
 					{
 						bLoadedVersion = false;
 					}
+					else
+					{
+						if (ElementNode::eFound == node->GetAttrib(L"sha256", m_hash))
+							m_hashType = ARBMsgDigest::ARBDigestSHA256;
+						else if (ElementNode::eFound == node->GetAttrib(L"sha1", m_hash))
+							m_hashType = ARBMsgDigest::ARBDigestSHA1;
+						else if (ElementNode::eFound == node->GetAttrib(L"md5", m_hash))
+							m_hashType = ARBMsgDigest::ARBDigestMD5;
+						else
+							bLoadedVersion = false;
+					}
+
 					if (!bLoadedVersion)
 					{
 						if (bVerbose)
@@ -535,10 +550,10 @@ bool CUpdateInfo::CheckProgram(
 							}
 						}
 						output.Close();
-						if (!bGotoWeb && !m_md5.empty())
+						if (!bGotoWeb && !m_hash.empty())
 						{
 							progress->SetCaption(StringUtil::stringW(_("IDS_VALIDATING")));
-							if (ARBMsgDigest::Compute(filename) != m_md5)
+							if (ARBMsgDigest::Compute(filename, m_hashType) != m_hash)
 							{
 								bGotoWeb = true;
 								if (!errMsg.empty())
