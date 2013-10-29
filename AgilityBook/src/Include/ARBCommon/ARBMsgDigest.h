@@ -11,6 +11,7 @@
  * @brief File hashing algorithms
  *
  * Revision History
+ * @li 2013-10-29 DRC Added sha1/sha256
  * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2010-02-07 DRC Created
  */
@@ -25,21 +26,22 @@ class ARBMsgDigest
 public:
 	typedef enum
 	{
+		ARBDigestUnknown,
 		ARBDigestMD5,
-		ARBDigestSha1,
-		ARBDigestSha2,
+		ARBDigestSHA1,
+		ARBDigestSHA256,
 	} ARBDigest;
 
 	static std::wstring Compute(
 			wchar_t const* const inFileName,
-			size_t* outSize = NULL,
-			ARBDigest type = ARBDigestMD5);
+			ARBDigest type,
+			size_t* outSize = NULL);
 	static std::wstring Compute(
 			std::wstring const& inFileName,
-			size_t* outSize = NULL,
-			ARBDigest type = ARBDigestMD5);
+			ARBDigest type,
+			size_t* outSize = NULL);
 	static std::wstring Compute(
 			std::istream& inFile,
-			size_t* outSize = NULL,
-			ARBDigest type = ARBDigestMD5);
+			ARBDigest type,
+			size_t* outSize = NULL);
 };

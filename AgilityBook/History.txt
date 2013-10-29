@@ -1,4 +1,4 @@
-10/23/2013: v2.4.0.<in development>
+10/29/2013: v2.4.0.<in development>
 - Bumped Configuration v45:
   - Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
 - Bumped file version to 14.2:
@@ -10,6 +10,7 @@
   - Add Win7 taskbar progress feedback.
   - Changed printing forms to use short names.
   - Change 'arch' config lookup to allow deprecating old systems.
+  - Added sha1/sha256 file hashing
 - Bug fixes:
   - Fix per-user/per-machine install experience.
 

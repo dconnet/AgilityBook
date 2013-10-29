@@ -29,8 +29,8 @@
 
 std::wstring ARBMsgDigest::Compute(
 		wchar_t const* const inFileName,
-		size_t* outSize,
-		ARBDigest type)
+		ARBDigest type,
+		size_t* outSize)
 {
 	if (outSize)
 		*outSize = 0;
@@ -42,10 +42,10 @@ std::wstring ARBMsgDigest::Compute(
 	case ARBDigestMD5:
 		return ARBMsgDigestComputeMD5(inFileName, outSize);
 
-	case ARBDigestSha1:
+	case ARBDigestSHA1:
 		return ARBMsgDigestComputeSHA1(inFileName, outSize);
 
-	case ARBDigestSha2:
+	case ARBDigestSHA256:
 		return ARBMsgDigestComputeSHA256(inFileName, outSize);
 
 	default:
@@ -57,17 +57,17 @@ std::wstring ARBMsgDigest::Compute(
 
 std::wstring ARBMsgDigest::Compute(
 		std::wstring const& inFileName,
-		size_t* outSize,
-		ARBDigest type)
+		ARBDigest type,
+		size_t* outSize)
 {
-	return Compute(inFileName.c_str(), outSize, type);
+	return Compute(inFileName.c_str(), type, outSize);
 }
 
 
 std::wstring ARBMsgDigest::Compute(
 		std::istream& inFile,
-		size_t* outSize,
-		ARBDigest type)
+		ARBDigest type,
+		size_t* outSize)
 {
 	if (outSize)
 		*outSize = 0;
@@ -79,10 +79,10 @@ std::wstring ARBMsgDigest::Compute(
 	case ARBDigestMD5:
 		return ARBMsgDigestComputeMD5(inFile, outSize);
 
-	case ARBDigestSha1:
+	case ARBDigestSHA1:
 		return ARBMsgDigestComputeSHA1(inFile, outSize);
 
-	case ARBDigestSha2:
+	case ARBDigestSHA256:
 		return ARBMsgDigestComputeSHA256(inFile, outSize);
 
 	default:
