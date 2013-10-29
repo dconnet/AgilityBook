@@ -16,6 +16,7 @@
   - Add Win7 taskbar progress feedback.
   - Changed printing forms to use short names.
   - Change 'arch' config lookup to allow deprecating old systems.
+  - Added sha1/sha256 file hashing
 - Bug fixes:
   - Fix per-user/per-machine install experience.
 

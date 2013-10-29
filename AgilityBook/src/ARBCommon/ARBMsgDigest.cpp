@@ -29,8 +29,8 @@
 
 std::wstring ARBMsgDigest::Compute(
 		std::istream& inFile,
-		size_t* outSize,
-		ARBDigest type)
+		ARBDigest type,
+		size_t* outSize)
 {
 	if (outSize)
 		*outSize = 0;
@@ -42,10 +42,10 @@ std::wstring ARBMsgDigest::Compute(
 	case ARBDigestMD5:
 		return ARBMsgDigestComputeMD5(inFile, outSize);
 
-	case ARBDigestSha1:
+	case ARBDigestSHA1:
 		return ARBMsgDigestComputeSHA1(inFile, outSize);
 
-	case ARBDigestSha2:
+	case ARBDigestSHA256:
 		return ARBMsgDigestComputeSHA256(inFile, outSize);
 
 	default:

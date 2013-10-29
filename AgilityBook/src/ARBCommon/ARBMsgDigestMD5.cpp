@@ -403,6 +403,7 @@ std::wstring ARBMsgDigestComputeMD5(
 {
 	MD5_CTX context;
 	MD5Init(&context); 
+
 	while (inFile.good())
 	{
 		unsigned char buffer[1024];
@@ -414,7 +415,9 @@ std::wstring ARBMsgDigestComputeMD5(
 			*outSize += static_cast<size_t>(bytes);
 		MD5Update(&context, buffer, bytes);
 	}
+
 	unsigned char digest[16];
 	MD5Final(digest, &context);
+
 	return ConvertDigest(digest);
 }
