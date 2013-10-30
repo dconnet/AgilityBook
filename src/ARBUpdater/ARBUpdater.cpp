@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-10-30 DRC Fixed a problem where msi was spawned hidden.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-02-08 DRC Created
@@ -101,6 +102,7 @@ bool CARBUpdaterApp::OnInit()
 		info.lpVerb = _T("open");
 		info.lpFile = file.wx_str();
 		info.lpParameters = _T("/qb START_APP=1");
+		info.nShow = SW_SHOWNORMAL;
 		if (ShellExecuteEx(&info))
 		{
 			WaitForSingleObject(info.hProcess, INFINITE);
