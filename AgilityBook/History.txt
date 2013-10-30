@@ -4,7 +4,7 @@
     [Still not decided - compile option now allows toggling back to old format]
 [ Note, most functionality is now complete ]
 
-10/23/2013: v2.4.0.<in development>
+10/30/2013: v2.4.0.<in development>
 - Bumped Configuration v45:
   - Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
 - Bumped file version to 14.2:
@@ -19,6 +19,7 @@
   - Added sha1/sha256 file hashing
 - Bug fixes:
   - Fix per-user/per-machine install experience.
+  - Fixed a problem where processes were spawned hidden.
 
 8/11/2013: v2.3.13.87
 - Bumped Configuration v44:
