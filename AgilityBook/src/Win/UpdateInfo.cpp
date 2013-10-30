@@ -13,6 +13,7 @@
  * File Format: See below.
  *
  * Revision History
+ * @li 2013-10-30 DRC Fixed a problem where arbupdater was spawned hidden.
  * @li 2013-10-23 DRC Added 'minOS'.
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-07-26 DRC Moved 'Arch' to ARBAgilityRecordBook.
@@ -652,6 +653,7 @@ bool CUpdateInfo::CheckProgram(
 							info.lpVerb = _T("open");
 							info.lpFile = updater.wx_str();
 							info.lpParameters = args.wx_str();
+							info.nShow = SW_SHOWNORMAL;
 							if (ShellExecuteEx(&info))
 								outClose = true;
 							else
