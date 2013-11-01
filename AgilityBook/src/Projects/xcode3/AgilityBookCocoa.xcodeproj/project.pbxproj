@@ -142,6 +142,9 @@
 		E171DBFB16B5C14800BE9417 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E171DBF916B5C14800BE9417 /* stdafx.cpp */; };
 		E171DC2816B5C99D00BE9417 /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E171DC2616B5C99D00BE9417 /* ImageManager.cpp */; };
 		E17E69F717BFFEBD00CD28D8 /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E17E69F417BFFEBD00CD28D8 /* SetupApp.cpp */; };
+		E197A97118233E0500789028 /* ARBMsgDigestMD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E197A96E18233E0500789028 /* ARBMsgDigestMD5.cpp */; };
+		E197A97218233E0500789028 /* ARBMsgDigestSHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E197A96F18233E0500789028 /* ARBMsgDigestSHA1.cpp */; };
+		E197A97318233E0500789028 /* ARBMsgDigestSHA256.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E197A97018233E0500789028 /* ARBMsgDigestSHA256.cpp */; };
 		E19C6A3E166C4B8D00657355 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19C6A3C166C4B8D00657355 /* Cocoa.framework */; };
 		E19C6CE4166C57DB00657355 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19C6CE2166C57DB00657355 /* MenuHelper.cpp */; };
 		E19C6CEE166C581400657355 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19C6CEC166C581400657355 /* ARB_Q.cpp */; };
@@ -407,6 +410,10 @@
 		E17E69F417BFFEBD00CD28D8 /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetupApp.cpp; sourceTree = "<group>"; };
 		E17E69F517BFFEBD00CD28D8 /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupApp.h; sourceTree = "<group>"; };
 		E17E69F617BFFEBD00CD28D8 /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
+		E197A96D18233E0500789028 /* ARBMsgDigestImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMsgDigestImpl.h; sourceTree = "<group>"; };
+		E197A96E18233E0500789028 /* ARBMsgDigestMD5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMsgDigestMD5.cpp; sourceTree = "<group>"; };
+		E197A96F18233E0500789028 /* ARBMsgDigestSHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMsgDigestSHA1.cpp; sourceTree = "<group>"; };
+		E197A97018233E0500789028 /* ARBMsgDigestSHA256.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMsgDigestSHA256.cpp; sourceTree = "<group>"; };
 		E19C6A3C166C4B8D00657355 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E19C6B04166C4ED300657355 /* InfoCocoa.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InfoCocoa.plist; sourceTree = "<group>"; };
 		E19C6CE2166C57DB00657355 /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuHelper.cpp; sourceTree = "<group>"; };
@@ -854,6 +861,10 @@
 				E1EBDC4F177FC2F30074E0F7 /* ARBDate.cpp */,
 				E14C9B0517A451CC00D1007A /* ARBMisc.cpp */,
 				E1EBDC50177FC2F30074E0F7 /* ARBMsgDigest.cpp */,
+				E197A96D18233E0500789028 /* ARBMsgDigestImpl.h */,
+				E197A96E18233E0500789028 /* ARBMsgDigestMD5.cpp */,
+				E197A96F18233E0500789028 /* ARBMsgDigestSHA1.cpp */,
+				E197A97018233E0500789028 /* ARBMsgDigestSHA256.cpp */,
 				E1EBDC51177FC2F30074E0F7 /* ARBTypes.cpp */,
 				E1EBDC52177FC2F30074E0F7 /* BinaryData.cpp */,
 				E1EBDC53177FC2F30074E0F7 /* BreakLine.cpp */,
@@ -1148,6 +1159,9 @@
 				E1EBDC64177FC2F30074E0F7 /* VersionNum.cpp in Sources */,
 				E14C9B0617A451CC00D1007A /* ARBMisc.cpp in Sources */,
 				E17E69F717BFFEBD00CD28D8 /* SetupApp.cpp in Sources */,
+				E197A97118233E0500789028 /* ARBMsgDigestMD5.cpp in Sources */,
+				E197A97218233E0500789028 /* ARBMsgDigestSHA1.cpp in Sources */,
+				E197A97318233E0500789028 /* ARBMsgDigestSHA256.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

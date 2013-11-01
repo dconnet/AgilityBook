@@ -31,8 +31,10 @@
 #endif
 
 #define SHA2_USE_MYTYPES_H
+#ifndef BYTE_ORDER
 #define BYTE_ORDER LITTLE_ENDIAN
 //#define BYTE_ORDER BIG_ENDIAN
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // From README
