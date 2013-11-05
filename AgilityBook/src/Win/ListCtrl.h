@@ -106,7 +106,11 @@ public:
 			bool bSetFocus = true);
 
 	/// Return listdata using data value
+#if wxCHECK_VERSION(3, 0, 0)
+	CListDataPtr GetDataByData(wxUIntPtr data) const;
+#else
 	CListDataPtr GetDataByData(long data) const;
+#endif
 	/// Return listdata by list id
 	CListDataPtr GetData(long item) const;
 	bool SetData(
@@ -156,7 +160,11 @@ protected:
 	// in a long. This has a nice side benefit that we don't have to do
 	// memory management of objects within list items!
 	int m_NextId;
-	typedef std::map<int, CListDataPtr> DataMap;
+#if wxCHECK_VERSION(3, 0, 0)
+	typedef std::map<wxUIntPtr, CListDataPtr> DataMap;
+#else
+	typedef std::map<long, CListDataPtr> DataMap;
+#endif
 	DataMap m_OwnerData;
 
 private:

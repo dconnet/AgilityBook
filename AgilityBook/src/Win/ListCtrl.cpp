@@ -230,7 +230,11 @@ void CReportListCtrl::SetSelection(
 }
 
 
+#if wxCHECK_VERSION(3, 0, 0)
+CListDataPtr CReportListCtrl::GetDataByData(wxUIntPtr data) const
+#else
 CListDataPtr CReportListCtrl::GetDataByData(long data) const
+#endif
 {
 	CListDataPtr ptr;
 	if (0 < data)
@@ -347,7 +351,11 @@ void CReportListCtrl::RefreshItem(long item)
 
 void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 {
+#if wxCHECK_VERSION(3, 0, 0)
+	wxUIntPtr data = evt.GetData();
+#else
 	long data = evt.GetData();
+#endif
 	if (0 < data)
 	{
 		DataMap::iterator iter = m_OwnerData.find(data);

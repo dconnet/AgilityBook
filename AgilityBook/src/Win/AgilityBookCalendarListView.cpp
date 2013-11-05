@@ -701,7 +701,11 @@ CAgilityBookCalendarListViewDataPtr CAgilityBookCalendarListView::GetItemCalData
 }
 
 
+#if wxCHECK_VERSION(3, 0, 0)
+CAgilityBookCalendarListViewDataPtr CAgilityBookCalendarListView::GetItemCalDataByData(wxUIntPtr data) const
+#else
 CAgilityBookCalendarListViewDataPtr CAgilityBookCalendarListView::GetItemCalDataByData(long data) const
+#endif
 {
 	if (!m_Ctrl)
 		return CAgilityBookCalendarListViewDataPtr();
