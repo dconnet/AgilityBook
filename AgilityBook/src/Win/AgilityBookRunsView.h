@@ -101,7 +101,7 @@ public:
 
 private:
 	CAgilityBookRunsViewDataPtr GetItemRunData(long index) const;
-	CAgilityBookRunsViewDataPtr GetItemRunDataByData(long data) const;
+	CAgilityBookRunsViewDataPtr GetItemRunDataByData(wxUIntPtr data) const;
 	void SetupColumns();
 	void LoadData();
 	bool OnCmd(int id);
