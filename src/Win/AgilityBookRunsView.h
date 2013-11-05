@@ -104,7 +104,11 @@ public:
 
 private:
 	CAgilityBookRunsViewDataPtr GetItemRunData(long index) const;
+#if wxCHECK_VERSION(3, 0, 0)
+	CAgilityBookRunsViewDataPtr GetItemRunDataByData(wxUIntPtr data) const;
+#else
 	CAgilityBookRunsViewDataPtr GetItemRunDataByData(long data) const;
+#endif
 	void SetupColumns();
 	void LoadData();
 	bool OnCmd(int id);

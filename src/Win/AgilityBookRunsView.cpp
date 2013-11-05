@@ -1473,7 +1473,11 @@ CAgilityBookRunsViewDataPtr CAgilityBookRunsView::GetItemRunData(long index) con
 }
 
 
+#if wxCHECK_VERSION(3, 0, 0)
+CAgilityBookRunsViewDataPtr CAgilityBookRunsView::GetItemRunDataByData(wxUIntPtr data) const
+#else
 CAgilityBookRunsViewDataPtr CAgilityBookRunsView::GetItemRunDataByData(long data) const
+#endif
 {
 	if (!m_Ctrl)
 		return CAgilityBookRunsViewDataPtr();
