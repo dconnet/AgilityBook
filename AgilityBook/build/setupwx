@@ -5,19 +5,30 @@
 # This will clean and configure the build directory for a wxWidget build.
 # (I put this script in my home dir)
 
-export BUILDDIR
-export DEBUG
-export LIBRARIES
+export BUILDDIR=
+export DEBUG=
+export LIBRARIES=
+export SUPPORT104=
+export TARGETARCH=
+export TARGETSDK=
 export VERSION=
 export WXWIN=
-USAGE="Usage $0 trunk|2.8 [debug|release] [carbon]"
 
+USAGE="Usage $0 trunk|2.8|3.0 [debug|release] [carbon]"
+
+# Note, 3.0/trunk no longer supports 10.4
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
 	VERSION="--disable-compat28"
+	SUPPORT104=n
+elif test "x$1" = "x3.0"; then
+	WXWIN=~/wx/wxWidgets-3.0
+	VERSION="--disable-compat28"
+	SUPPORT104=n
 elif test "x$1" = "x2.8"; then
 	WXWIN=~/wx/wxWidgets-2.8.12
 	VERSION="--disable-compat26"
+	SUPPORT104=y
 else
 	echo $USAGE
 	exit
@@ -26,8 +37,10 @@ BUILDDIR="$WXWIN/build"
 
 if test "x$3" = "xcarbon"; then
 	BUILDDIR+="-carbon"
+	CONFIG_PARAMS+=" --with-osx_carbon"
 else
 	BUILDDIR+="-cocoa"
+	CONFIG_PARAMS+=" --with-osx_cocoa"
 fi
 
 if test "x$2" = "xdebug"; then
@@ -45,35 +58,45 @@ rm -rf $BUILDDIR
 mkdir $BUILDDIR
 cd $BUILDDIR
 
-# Note, trunk no longer supports 10.4
-if test "x$1" = "xtrunk"; then
-	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
-	then
-		COMPILERS="CC=clang CXX=clang++ LD=clang++"
-		MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk --enable-macosx_arch=i386"
-	else
-		COMPILERS="CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2"
-		MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Developer/SDKs/MacOSX10.5.sdk --enable-macosx_arch=i386"
-	fi
+if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk; then
+	COMPILERS="CC=clang CXX=clang++ LD=clang++"
+	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
+	MINSDK=10.5
+	TARGETARCH="--enable-macosx_arch=i386"
 
-	if test "x$3" = "xcarbon"; then
-		MINSDK+=" --with-osx_carbon"
-	else
-		MINSDK+=" --with-osx_cocoa"
-	fi
+elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk; then
+	COMPILERS="CC=clang CXX=clang++ LD=clang++"
+	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
+	MINSDK=10.5
+	TARGETARCH="--enable-macosx_arch=i386"
+
 else
-	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
-	then
-		COMPILERS="CC=clang CXX=clang++ LD=clang++"
-		MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk --enable-macosx_arch=i386"
+	if test "x$SUPPORT104" = "xn"; then
+		if test -d /Developer/SDKs/MacOSX10.5.sdk; then
+			COMPILERS="CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2"
+			TARGETSDK=/Developer/SDKs/MacOSX10.5.sdk
+			MINSDK=10.5
+			TARGETARCH="--enable-macosx_arch=i386"
+		fi
 	else
-		COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
-		MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk --enable-macosx_arch=i386"
+		if test -d /Developer/SDKs/MacOSX10.4u.sdk; then
+			COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
+			TARGETSDK=/Developer/SDKs/MacOSX10.4u.sdk
+			MINSDK=10.4
+			TARGETARCH="--enable-macosx_arch=i386"
+		fi
 	fi
 fi
 
+if test "x$TARGETSDK" = "x"; then
+	echo "ERROR: Can't find an SDK"
+	exit
+fi
+
+CONFIG_PARAMS+=" --with-macosx-version-min=$MINSDK --with-macosx-sdk=$TARGETSDK $TARGETARCH"
+
 LIBRARIES="--with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no"
 
-echo "../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $MINSDK"
+echo "../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 
-../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $MINSDK
+../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS
