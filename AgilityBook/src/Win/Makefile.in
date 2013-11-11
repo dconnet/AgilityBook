@@ -27,7 +27,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include `wx-config --cppflags`
+INCLUDES += -I$(TOPSRCDIR)/src/Include `wx-config --cxxflags`
 
 ##########
 # List of programs and archives to link
