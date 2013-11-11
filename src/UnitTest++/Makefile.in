@@ -23,7 +23,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -I$(TOPSRCDIR)/src/UnitTest++/src/Posix `wx-config --cppflags`
+INCLUDES = -I$(TOPSRCDIR)/src/UnitTest++/src/Posix `wx-config --cxxflags`
 
 ##########
 # List of programs and archives to link
