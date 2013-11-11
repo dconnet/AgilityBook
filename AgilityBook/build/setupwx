@@ -89,7 +89,7 @@ fi
 
 CONFIG_PARAMS+=" --with-macosx-version-min=$MINSDK --with-macosx-sdk=$TARGETSDK $TARGETARCH"
 
-LIBRARIES+=" --with-expat=builtin --with-regex=builtin --with-zlib=builtin --with-libiconv=no"
+LIBRARIES+=" --with-expat=builtin --with-regex=builtin --with-zlib=builtin --without-libiconv --without-liblzma"
 
 echo "../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 
