@@ -1294,7 +1294,7 @@
 				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-trunk-cocoa";
+				SYMROOT = "build-cocoa";
 			};
 			name = Debug;
 		};
@@ -1375,7 +1375,7 @@
 				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-trunk-cocoa";
+				SYMROOT = "build-cocoa";
 			};
 			name = Release;
 		};

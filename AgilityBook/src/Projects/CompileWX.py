@@ -448,7 +448,7 @@ def main():
 			build_dbg += 'echo '
 		build_rel += 'nmake -f makefile.vc BUILD=release'
 		build_dbg += 'nmake -f makefile.vc BUILD=debug'
-		# In 2.9, DEBUG_FLAG defaults to 1 (hasprefix infers the active wx
+		# In 2.9, DEBUG_FLAG defaults to 1 (hasprefix infers wx3.0 or active
 		# trunk) Set to '2' for more debugging (datepicker asserts alot tho)
 		# Note: Setting DEBUG_FLAG here sets wxDEBUG_LEVEL during the library
 		# compile but has no effect on users of the library - make sure

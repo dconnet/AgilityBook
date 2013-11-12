@@ -30,7 +30,7 @@ Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
 
-=== Changes to <trunk> [3.0.0]:
+=== Changes to 3.0.0:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
@@ -200,19 +200,19 @@ initial: sudo port install autoconf
 The xcode projects were used as follows:
 .../xcode3: Xcode 3.1 on OSX10.5
             AgilityBookCocoa.xcodeproj
-                trunk, cocoa, OSX10.5 sdk
+                wx3.0, cocoa, OSX10.5 sdk
 .../xcode4: Xcode 4.6 on OSX10.8
             Recommended (so projects work right):
             - Set DerivedData to Relative, 'build'
               - Advanced: Unique
             AgilityBook.xcworkspace
-                trunk, cocoa, OSX10.8 sdk, OSX10.5 deployment target
+                wx3.0, cocoa, OSX10.8 sdk, OSX10.5 deployment target
 .../xcode5: Xcode 5.0 on OSX10.8
             Recommended (so projects work right):
             - Set DerivedData to Relative, 'build'
               - Advanced: Unique
             AgilityBook.xcworkspace
-                trunk, cocoa, OSX10.8 sdk, OSX10.5 deployment target
+                wx3.0, cocoa, OSX10.8 sdk, OSX10.5 deployment target
 
 OSX 10.8:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
