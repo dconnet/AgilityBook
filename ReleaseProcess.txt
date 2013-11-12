@@ -51,7 +51,7 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 - mkdir build-carbon
 - cd build-carbon
 - ../configure CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0
--   If using wx-trunk, ../configure CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2
+  - If using wx3.0, ../configure CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2
     But first, tweak configure.in to set 10.5 sdk and no ppc.
 - make dist
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
