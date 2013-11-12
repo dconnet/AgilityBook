@@ -1221,8 +1221,8 @@
 					"-I../../Include",
 					"-isystem",
 					$BOOST_ROOT,
-					"-I$WXBASE/trunk/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
-					"-I$WXBASE/trunk/include",
+					"-I$WXBASE/wxWidgets-3.0.0/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/wxWidgets-3.0.0/include",
 					"-DUSE_WXWIDGETS",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
@@ -1230,7 +1230,7 @@
 					"-D__WXOSX_COCOA__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXBASE/trunk/build-cocoa-debug/lib",
+					"-L$WXBASE/wxWidgets-3.0.0/build-cocoa-debug/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1270,7 +1270,7 @@
 				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-trunk-cocoa";
+				SYMROOT = "build-cocoa";
 			};
 			name = Debug;
 		};
@@ -1301,8 +1301,8 @@
 					"-I../../Include",
 					"-isystem",
 					$BOOST_ROOT,
-					"-I$WXBASE/trunk/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
-					"-I$WXBASE/trunk/include",
+					"-I$WXBASE/wxWidgets-3.0.0/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/wxWidgets-3.0.0/include",
 					"-DUSE_WXWIDGETS",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
@@ -1311,7 +1311,7 @@
 					"-D__WXOSX_COCOA__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXBASE/trunk/build-cocoa/lib",
+					"-L$WXBASE/wxWidgets-3.0.0/build-cocoa/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1351,7 +1351,7 @@
 				PRODUCT_NAME = AgilityBook;
 				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-trunk-cocoa";
+				SYMROOT = "build-cocoa";
 			};
 			name = Release;
 		};
