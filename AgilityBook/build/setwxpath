@@ -6,7 +6,7 @@ USAGE="Usage $0 trunk|2.8|3.0 [release|debug] [carbon]"
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
 elif test "x$1" = "x3.0"; then
-	WXWIN=~/wx/wxWidgets-3.0
+	WXWIN=~/wx/wxWidgets-3.0.0
 elif test "x$1" = "x2.8"; then
 	WXWIN=~/wx/wxWidgets-2.8.12
 else

@@ -25,7 +25,7 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.0.x (trunk).
+I'm currently using version 3.0.0.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
@@ -35,7 +35,7 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
-  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT (currently 0)
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
 
 === wx2.9.x: Not supported
 -  ARBv3 does not support pre 2.9. It uses new features.
@@ -220,5 +220,5 @@ OSX 10.8:
 ===
 setenv BOOST_ROOT /Users/dconnet/src/boost_1_54_0
 setenv WXBASE /Users/dconnet/wx
-setenv WXWIN /Users/dconnet/wx/trunk
+setenv WXWIN /Users/dconnet/wx/wxWidgets-3.0.0
 ====

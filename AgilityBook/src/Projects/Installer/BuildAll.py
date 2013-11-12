@@ -34,7 +34,7 @@ ProgramFiles = r'c:\Program Files'
 useVC10SDK = False
 
 # ARB is officially released using this branch. This is located under $WXBASE.
-wxBranch = r'\wxWidgets-3.0'
+wxBranch = r'\wxWidgets-3.0.0'
 
 testing = False
 
