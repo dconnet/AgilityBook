@@ -36,6 +36,28 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+-[win]- src/msw/combobox.cpp
+    http://trac.wxwidgets.org/changeset/75196
+c:\wx\wxWidgets-3.0.0\src\msw>diff -c combobox.cpp.orig combobox.cpp
+*** combobox.cpp.orig   Fri Nov 15 08:20:58 2013
+--- combobox.cpp        Fri Nov 15 08:21:19 2013
+***************
+*** 683,689 ****
+      // our own one. So we must explicitly check the HWND value too here and
+      // avoid eating the events from the listbox as otherwise it is rendered
+      // inoperative, see #15647.
+!     if ( id == GetId() && hWnd != GetHWND() )
+      {
+          // Must be the case described above.
+          return NULL;
+--- 683,689 ----
+      // our own one. So we must explicitly check the HWND value too here and
+      // avoid eating the events from the listbox as otherwise it is rendered
+      // inoperative, see #15647.
+!     if ( id == GetId() && hWnd && hWnd != GetHWND() )
+      {
+          // Must be the case described above.
+          return NULL;
 
 === wx2.9.x: Not supported
 -  ARBv3 does not support pre 2.9. It uses new features.
