@@ -49,6 +49,8 @@ protected:
 	virtual bool OnInit();
 	virtual int OnExit();
 
+	virtual void BaseAppCleanup(bool deleteConfig = false);
+
 	virtual int OnGetLanguage() const;
 	virtual wxString OnGetLangConfigName() const;
 
@@ -70,6 +72,7 @@ protected:
 	void OnQueryEndSession(wxCloseEvent& evt);
 	void OnEndSession(wxCloseEvent& evt);
 
+	bool m_bShutdownSocket;
 	CLocalization m_Localization;
 	CUpdateInfo m_UpdateInfo;
 	CAgilityBookDocManager* m_manager;

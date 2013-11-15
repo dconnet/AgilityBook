@@ -171,6 +171,8 @@ END_EVENT_TABLE()
 
 CAgilityBookApp::CAgilityBookApp()
 	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, true)
+	, m_bShutdownSocket(false)
+	, m_Localization()
 	, m_UpdateInfo()
 	, m_manager(NULL)
 	, m_printDialogData(NULL)
@@ -250,6 +252,9 @@ bool CAgilityBookApp::OnInit()
 {
 	if (!CBaseApp::OnInit())
 		return false;
+	if (!wxSocketBase::Initialize())
+		return false;
+	m_bShutdownSocket = true;
 
 	// We need at least 800x600 (the event(run) dialog is big!)
 	if (wxSYS_SCREEN_DESKTOP != wxSystemSettings::GetScreenType())
@@ -466,6 +471,17 @@ int CAgilityBookApp::OnExit()
 	delete m_Prn;
 	m_Prn = NULL;
 	return CBaseApp::OnExit();
+}
+
+
+void CAgilityBookApp::BaseAppCleanup(bool deleteConfig)
+{
+	if (m_bShutdownSocket)
+	{
+		m_bShutdownSocket = false;
+		wxSocketBase::Shutdown();
+	}
+	CBaseApp::BaseAppCleanup(deleteConfig);
 }
 
 
