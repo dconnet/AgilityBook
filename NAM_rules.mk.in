@@ -167,7 +167,7 @@ clean-default:
 ##########
 .c.o:
 	$(NICE_ECHO) "  Compiling:\t`echo $< | sed 's|$(SRCDIR)/||'`"
-	$(CXX) -x c $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPDEPFLAGS) -c -o $@ $<
+	$(CC) -x c $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPDEPFLAGS) -c -o $@ $<
 
 ##########
 # Generic rule to generate the compiled object file.
