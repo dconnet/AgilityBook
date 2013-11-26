@@ -4,9 +4,10 @@
     [Still not decided - compile option now allows toggling back to old format]
 [ Note, most functionality is now complete ]
 
-10/30/2013: v2.4.0.<in development>
+11/26/2013: v2.4.0.<in development>
 - Bumped Configuration v45:
   - Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
+  - Updated USDAA Performance Tournament Master title descriptions.
 - Bumped file version to 14.2:
   - Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
 - New features / Enhancements:
