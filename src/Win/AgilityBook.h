@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-11-26 DRC Fixed language initialization structure.
  * @li 2008-12-14 DRC Ported to wxWidgets.
  * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2004-06-02 DRC Moved ShellExecute code here.
@@ -53,9 +54,9 @@ protected:
 
 	virtual int OnGetLanguage() const;
 	virtual wxString OnGetLangConfigName() const;
+	virtual void OnSetLanguage(int langId);
 
 	virtual bool InitLocale();
-	virtual bool SetLang(int langId);
 
 	DECLARE_EVENT_TABLE()
 	void OnQueryEndSession(wxCloseEvent& evt);

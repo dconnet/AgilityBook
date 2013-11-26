@@ -129,6 +129,20 @@ private:
 		return m_langMgr->GetDefaultLanguageDir();
 #endif
 	}
+	virtual void OnSetLanguage(int langId)
+	{
+		if (!m_Localization.Load())
+		{
+#if defined(__WXWINDOWS__)
+			wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), OnGetCatalogName().c_str());
+			std::string msg(str.ToAscii());
+#else
+			std::string msg("ERROR: Unable to load localization");
+#endif
+			std::cerr << msg << "\n";
+			throw std::runtime_error(msg);
+		}
+	}
 	virtual void OnErrorMessage(wxString const& msg) const
 	{
 		std::wcerr << msg.wx_str() << std::endl;
@@ -147,27 +161,14 @@ static CLangManager* g_LangMgr = NULL;
 bool CLangManager::SetLang(int langId)
 {
 #if defined(__WXWINDOWS__)
-	if (!m_langMgr->SetLang(langId))
-		return false;
+	return m_langMgr->SetLang(langId);
 #else
 	if (langId == m_CurLang)
 		return false;
 	m_CurLang = langId;
-#endif
-
-	if (!m_Localization.Load())
-	{
-#if defined(__WXWINDOWS__)
-		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), OnGetCatalogName().c_str());
-		std::string msg(str.ToAscii());
-#else
-		std::string msg("ERROR: Unable to load localization");
-#endif
-		std::cerr << msg << "\n";
-		throw std::runtime_error(msg);
-	}
-
+	OnSetLanguage(m_CurLang);
 	return true;
+#endif
 }
 
 
