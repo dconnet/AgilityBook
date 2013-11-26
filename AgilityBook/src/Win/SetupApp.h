@@ -10,6 +10,7 @@
  * @file
  *
  * Revision History
+ * @li 2013-11-26 DRC Fixed language initialization structure.
  * @li 2013-08-22 DRC Fixed issue with ctor auto-cast.
  * @li 2013-08-18 DRC Merged language management in.
  * @li 2013-08-17 DRC Added local config file support.
@@ -60,11 +61,11 @@ protected:
 	virtual wxString OnGetCatalogName() const;
 	virtual wxString OnGetLangConfigName() const;
 	virtual wxString OnGetLanguageDir() const;
+	virtual void OnSetLanguage(int langId);
 	virtual void OnErrorMessage(wxString const& msg) const;
 
 	virtual bool InitLocale();
 	virtual int SelectLang(wxWindow* parent = NULL);
-	virtual bool SetLang(int langId);
 
 	// Vendor name (default: 'dcon Software')
 	wxString m_VendorName;
