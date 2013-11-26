@@ -6,6 +6,7 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 Revision History:
 2013-09-03 DRC Configuration version 45.
                Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
+               Updated USDAA Performance Tournament Master title descriptions.
 2013-05-27 DRC Configuration version 44.
                Added Novice to NADAC (there is no A/B anymore)
 2013-04-10 DRC Configuration version 43.
@@ -3789,12 +3790,18 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Performance Relay Champion - Gold" Name="PRCHG">35 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Platinum" Name="PRCHP">50 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Diamond" Name="PRCHD">100 qualifying scores in PRM</Titles>
-      <Titles LongName="Performance Tournament Master" Name="PTM">10 qualifying scores in Performance Grand Prix of Dog Agility® tournament.</Titles>
-      <Titles LongName="Performance Tournament Master - Bronze" Name="PTMB">15 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Performance Tournament Master - Silver" Name="PTMS">25 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Performance Tournament Master - Gold" Name="PTMG">35 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Performance Tournament Master - Platinum" Name="PTMP">50 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Performance Tournament Master - Diamond" Name="PTMD">100 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master" Name="PTM">10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.
+[Before 9/22/2006] 10 qualifying scores in Performance Grand Prix of Dog Agility® tournament.</Titles>
+      <Titles LongName="Performance Tournament Master - Bronze" Name="PTMB">15 qualifying scores in tournament competition with at least 3 qualifying scores in each tournament.
+[Before 9/22/2006] 15 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Silver" Name="PTMS">25 qualifying scores in tournament competition with at least 5 qualifying scores in each tournament.
+[Before 9/22/2006] 25 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Gold" Name="PTMG">35 qualifying scores in tournament competition with at least 7 qualifying scores in each tournament.
+[Before 9/22/2006] 35 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Platinum" Name="PTMP">50 qualifying scores in tournament competition with at least 10 qualifying scores in each tournament.
+[Before 9/22/2006] 50 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Diamond" Name="PTMD">100 qualifying scores in tournament competition with at least 20 qualifying scores in each tournament.
+[Before 9/22/2006] 100 qualifying scores in Performance Grand Prix</Titles>
       <Titles LongName="JH - Beginners Agility" Name="Beginners Agility"/>
       <Titles LongName="JH - Elementary Agility" Name="Elementary Agility"/>
       <Titles LongName="JH - Intermediate Agility" Name="Intermediate Agility"/>
