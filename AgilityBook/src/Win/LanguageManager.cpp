@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-11-26 DRC Fixed language initialization structure.
  * @li 2011-11-14 DRC Fix canceling language selection (in Fr, it reset to En)
  * @li 2011-11-11 DRC Make .mo name same as exe name.
  * @li 2009-09-20 DRC wxLANGUAGE is not consistent between releases.
@@ -213,6 +214,7 @@ bool CLanguageManager::SetLang(int langId)
 		m_dirLoadedLang = m_locale->GetCanonicalName();
 		if (2 < m_dirLoadedLang.length())
 			m_dirLoadedLang = m_dirLoadedLang.substr(0, 2);
+		m_pCallback->OnSetLanguage(m_CurLang);
 	}
 	else
 	{

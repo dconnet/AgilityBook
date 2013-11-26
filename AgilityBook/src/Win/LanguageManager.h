@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-11-26 DRC Fixed language initialization structure.
  * @li 2013-08-18 DRC Reworked for easier reuse.
  * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2007-09-22 DRC Created
@@ -28,6 +29,7 @@ public:
 	virtual wxString OnGetCatalogName() const = 0;
 	virtual wxString OnGetLangConfigName() const = 0;
 	virtual wxString OnGetLanguageDir() const = 0;
+	virtual void OnSetLanguage(int langId) = 0;
 	virtual void OnErrorMessage(wxString const& msg) const = 0;
 };
 

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2013-11-26 DRC Fixed language initialization structure.
  * @li 2013-08-16 DRC Add support for standalone app (.info file) on Windows.
  * @li 2012-12-15 DRC Prevent TabView from getting activation.
  * @li 2012-08-28 DRC Rework how wxCmdLineParser is initialized.
@@ -530,6 +531,18 @@ wxString CAgilityBookApp::OnGetLangConfigName() const
 }
 
 
+void CAgilityBookApp::OnSetLanguage(int langId)
+{
+	if (!m_Localization.Load())
+	{
+		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), OnGetCatalogName().c_str());
+		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
+		std::string msg(str.ToAscii());
+		throw std::runtime_error(msg);
+	}
+}
+
+
 bool CAgilityBookApp::OnCreateBitmap(
 		const wxArtID& id,
 		const wxArtClient& client,
@@ -561,22 +574,6 @@ bool CAgilityBookApp::InitLocale()
 {
 	IARBLocalization::Init(&m_Localization);
 	return CBaseApp::InitLocale();
-}
-
-
-bool CAgilityBookApp::SetLang(int langId)
-{
-	if (!CBaseApp::SetLang(langId))
-		return false;
-
-	if (!m_Localization.Load())
-	{
-		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), OnGetCatalogName().c_str());
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
-		std::string msg(str.ToAscii());
-		throw std::runtime_error(msg);
-	}
-	return true;
 }
 
 

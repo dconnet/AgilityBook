@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * @li 2013-11-26 DRC Fixed language initialization structure.
  * @li 2013-08-22 DRC Fixed issue with ctor auto-cast.
  * @li 2013-08-17 DRC Added local config file support.
  * @li 2013-04-10 DRC Add wxLocale default initialization.
@@ -188,6 +189,11 @@ wxString CBaseApp::OnGetLanguageDir() const
 }
 
 
+void CBaseApp::OnSetLanguage(int langId)
+{
+}
+
+
 void CBaseApp::OnErrorMessage(wxString const& msg) const
 {
 	wxMessageBox(msg, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
@@ -222,10 +228,4 @@ bool CBaseApp::InitLocale()
 int CBaseApp::SelectLang(wxWindow* parent)
 {
 	return m_langMgr->SelectLang(parent);
-}
-
-
-bool CBaseApp::SetLang(int langId)
-{
-	return m_langMgr->SetLang(langId);
 }
