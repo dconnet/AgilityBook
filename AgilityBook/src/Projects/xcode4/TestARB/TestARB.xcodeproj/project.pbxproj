@@ -416,6 +416,10 @@
 					"-D__WXOSX_COCOA__",
 					"-DUSE_WXWIDGETS",
 				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
+				);
 				OTHER_LDFLAGS = (
 					"-L$WXBASE/wxWidgets-3.0.0/build-cocoa-debug/lib",
 					"-framework",
@@ -486,6 +490,10 @@
 					"-D__WXOSX__",
 					"-D__WXOSX_COCOA__",
 					"-DUSE_WXWIDGETS",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
 				);
 				OTHER_LDFLAGS = (
 					"-L$WXBASE/wxWidgets-3.0.0/build-cocoa/lib",
