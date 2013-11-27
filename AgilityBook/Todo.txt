@@ -1,6 +1,4 @@
-Last Updated: 8/23/2013
-
-- Update per-user/per-machine dialog to adjust default INSTALLDIR.
+Last Updated: 11/27/2013
 
 - Create a fully standalone version (for USB). Config file too.
   (supported by existence of AgilityBook.info, no way to auto-create yet)

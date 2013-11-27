@@ -398,7 +398,7 @@ Revision History
 
 	<Binary
 		Id="arbdll.dll"
-		SourceFile="$(var.BASEDIR)\arbdll.dll" />
+		SourceFile="arbdll.dll" />
 
 	<CustomAction Id="ARBSetAllUsers" BinaryKey="arbdll.dll" DllEntry="ARBSetAllUsers" Execute="firstSequence" />
 	<CustomAction Id="ARB_AlreadyUpdated" Error="!(loc.ARB_AlreadyUpdated)" />
