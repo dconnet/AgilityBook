@@ -1349,7 +1349,7 @@ std::wstring ARBMsgDigestComputeSHA256(
 	{
 		if (outSize)
 			*outSize += static_cast<size_t>(bytes);
-		SHA256_Update(&ctx256, buffer, bytes);
+		SHA256_Update(&ctx256, buffer, static_cast<size_t>(bytes));
 	}
 
 	char buf[1024];
