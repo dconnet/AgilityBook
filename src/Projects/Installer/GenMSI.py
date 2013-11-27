@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2013-11-27 DRC Fix arbdll.dll access when building x64.
 # 2013-08-15 DRC Added support for multiple wxs files.
 # 2013-08-12 DRC Added vc11/12 support, remove pre-10 support.
 # 2012-06-01 DRC Changed VC10 output directory
@@ -57,6 +58,7 @@ import datetime
 import glob
 import msilib
 import os
+import shutil
 import stat
 import string
 import sys
@@ -92,6 +94,8 @@ langNames = 'en_US;fr_FR'
 wxsFiles = [
 	('AgilityBook'),
 	('Dialogs')]
+
+CA_dll = 'arbdll.dll'
 
 
 def errprint(*args):
@@ -259,6 +263,16 @@ def GetWxsFilesAsString(extension):
 	return str
 
 
+def CopyCAdll(ver4Line, vcver):
+	baseDir, outputFile = getoutputvars(code32, ver4Line, vcver)
+	arbdll = baseDir + '\\' + CA_dll
+	if not os.access(arbdll, os.F_OK):
+		print arbdll + r' does not exist, MSI skipped'
+		return 0
+	shutil.copy(arbdll, '.')
+	return 1
+
+
 def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 	baseDir, outputFile = getoutputvars(code, ver4Line, vcver)
 	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
@@ -392,10 +406,14 @@ def main():
 
 	# Wix
 	os.environ['PATH'] += ';' + WiXdir
+	if not CopyCAdll(ver4Line, vcver):
+		return 1
 	if b32:
 		genWiX(ver3Dot, ver4Dot, ver4Line, code32, tidy, perUser, testing, vcver)
 	if b64:
 		genWiX(ver3Dot, ver4Dot, ver4Line, code64, tidy, perUser, testing, vcver)
+	if os.access(CA_dll, os.W_OK):
+		os.remove(CA_dll)
 
 	return 0
 
