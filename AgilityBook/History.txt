@@ -1,4 +1,4 @@
-11/26/2013: v2.4.0.<in development>
+11/27/2013: v2.4.0.88
 - Bumped Configuration v45:
   - Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
   - Updated USDAA Performance Tournament Master title descriptions.
