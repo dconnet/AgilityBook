@@ -13,6 +13,7 @@
  * File Format: See below.
  *
  * Revision History
+ * @li 2013-12-05 DRC Remove "?os=..." from url (website redesign)
  * @li 2013-10-30 DRC Fixed a problem where arbupdater was spawned hidden.
  * @li 2013-10-23 DRC Added 'minOS'.
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
@@ -671,52 +672,7 @@ bool CUpdateInfo::CheckProgram(
 			}
 			if (bGotoWeb)
 			{
-				wxString url(StringUtil::stringWX(m_UpdateDownload));
-				wxString suffix = url.Right(4);
-				suffix.MakeUpper();
-				if (suffix == L".PHP")
-				{
-#ifdef __WXMSW__
-					OSVERSIONINFOEX info;
-					ZeroMemory(&info, sizeof(info));
-					info.dwOSVersionInfoSize = sizeof(info);
-					info.dwPlatformId = VER_PLATFORM_WIN32_NT;
-					DWORDLONG dwlConditionMask = 0;
-					VER_SET_CONDITION(dwlConditionMask, VER_PLATFORMID, VER_EQUAL);
-					if (VerifyVersionInfo(&info, VER_PRODUCT_TYPE, dwlConditionMask))
-					{
-#ifdef ARB_HAS_GETSYSTEMINFO
-						SYSTEM_INFO info;
-						GetSystemInfo(&info);
-						if (PROCESSOR_ARCHITECTURE_AMD64 == info.wProcessorArchitecture)
-							url += L"?os=x64";
-						else
-#endif
-							url += L"?os=win";
-						if (!lang.empty())
-						{
-							url += L"-";
-							url += lang;
-						}
-					}
-#elif defined(__WXMAC__)
-// comments from include/wx/platform.h
-//__WXMAC__
-//    __WXMAC_CLASSIC__ means ppc non-carbon builds,
-//    __WXMAC_CARBON__ means carbon API available (mach or cfm builds),
-//    __WXMAC_OSX__ means mach-o builds, running under 10.2 + only
-//
-//__WXOSX__ is a common define to wxMac (Carbon) and wxCocoa ports under OS X.
-					// We currently compile for Universal OSX 10.4. At this time,
-					// there's no need to further determine the OS.
-					url += L"?os=mac";
-#else
-#pragma PRAGMA_TODO("Add 'os' tag for URL download")
-					// @todo Add appropriate 'os' tag for other OS's
-					// Must agree with website's download.php
-#endif
-				}
-				wxLaunchDefaultBrowser(url);
+				wxLaunchDefaultBrowser(StringUtil::stringWX(m_UpdateDownload));
 			}
 		}
 	}
