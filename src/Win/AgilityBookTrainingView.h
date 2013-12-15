@@ -8,20 +8,19 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookTrainingView class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-04 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-01-25 DRC Remember the sort column between program invocations.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2004-06-24 DRC Added a sort header image.
- * @li 2004-04-15 DRC Added Duplicate menu item.
- * @li 2004-04-06 DRC Added simple sorting by column.
- * @li 2003-12-27 DRC Implemented Find/FindNext.
- * @li 2003-09-21 DRC Created
+ * 2009-02-04 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-01-25 Remember the sort column between program invocations.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2004-06-24 Added a sort header image.
+ * 2004-04-15 Added Duplicate menu item.
+ * 2004-04-06 Added simple sorting by column.
+ * 2003-12-27 Implemented Find/FindNext.
+ * 2003-09-21 Created
  */
 
 #include "CommonView.h"

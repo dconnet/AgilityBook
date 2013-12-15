@@ -6,24 +6,22 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgListCtrl class
  * @author David Connet
  *
  * Revision History
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-12-26 DRC Made dialog resizable.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-12-24 DRC Adding a new calendar item didn't set the icon properly.
- * @li 2003-09-08 DRC In Partners, the dog's number wasn't being saved.
- * @li 2003-08-25 DRC Set listctrl selection when adding/deleting items.
- * @li 2003-07-14 DRC Fixed bug where a new faulttype didn't show up until the
- *                    run was actually saved.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-12-26 Made dialog resizable.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-12-24 Adding a new calendar item didn't set the icon properly.
+ * 2003-09-08 In Partners, the dog's number wasn't being saved.
+ * 2003-08-25 Set listctrl selection when adding/deleting items.
+ * 2003-07-14 Fixed bug where a new faulttype didn't show up until the
+ *            run was actually saved.
  */
 
 #include "stdafx.h"

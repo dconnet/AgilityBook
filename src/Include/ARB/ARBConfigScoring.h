@@ -12,20 +12,20 @@
  * @author David Connet
  *
  * Revision History
- * @li 2011-07-31 DRC Allow a time fault multipler of 0.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-12-18 DRC Added a time fault multiplier.
- * @li 2004-11-15 DRC Added time fault computation on T+F.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-02-02 DRC Added VerifyEvent.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-12-27 DRC Added ValidTo, changed ValidFrom dtd name (was 'Date').
- * @li 2003-12-11 DRC Added ValidFrom, not fully implemented yet.
- * @li 2003-11-26 DRC Changed version number to a complex value.
+ * 2011-07-31 Allow a time fault multipler of 0.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-04 Added support for NADAC bonus titling points.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-12-18 Added a time fault multiplier.
+ * 2004-11-15 Added time fault computation on T+F.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-02-02 Added VerifyEvent.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-12-27 Added ValidTo, changed ValidFrom dtd name (was 'Date').
+ * 2003-12-11 Added ValidFrom, not fully implemented yet.
+ * 2003-11-26 Changed version number to a complex value.
  */
 
 #include "ARB/ARBBase.h"

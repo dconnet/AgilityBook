@@ -8,7 +8,6 @@
 
 /**
  * @file
- *
  * @brief Change certain default wxWidget behaviors.
  * @author David Connet
  *
@@ -17,9 +16,9 @@
  * Text Controls: Turn off tabstops on multiline readonly controls.
  *
  * Revision History
- * @li 2010-03-28 DRC Moved SetColumnWidth override from CReportListCtrl.
- *                    Removed wx2.9 kludges (was causing problems on Mac).
- * @li 2009-10-11 DRC Created.
+ * 2010-03-28 Moved SetColumnWidth override from CReportListCtrl.
+ *            Removed wx2.9 kludges (was causing problems on Mac).
+ * 2009-10-11 Created.
  */
 
 #include <wx/listctrl.h>

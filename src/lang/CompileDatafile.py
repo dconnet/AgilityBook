@@ -4,15 +4,15 @@
 # Requires gettext (msgcat/msgfmt) in PATH
 #
 # Revision History
-# 2012-05-16 DRC Add multiprocessing awareness. Kind of.
-# 2012-03-03 DRC Fixed writing file into dat file.
-# 2012-02-19 DRC Remove --use-fuzzy option, reoganized how po files.
-# 2012-01-29 DRC Change msgfmt options to not do header checks
-# 2011-12-17 DRC Add -x option.
-# 2011-11-11 DRC Made generic for easy use in other projects.
-# 2009-03-05 DRC Fixed some parameter passing issues (spaces/hyphens in names)
-# 2009-03-01 DRC Support multiple po files (by using msgcat)
-# 2009-01-02 DRC Updated to support creation of data files
+# 2012-05-16 Add multiprocessing awareness. Kind of.
+# 2012-03-03 Fixed writing file into dat file.
+# 2012-02-19 Remove --use-fuzzy option, reoganized how po files.
+# 2012-01-29 Change msgfmt options to not do header checks
+# 2011-12-17 Add -x option.
+# 2011-11-11 Made generic for easy use in other projects.
+# 2009-03-05 Fixed some parameter passing issues (spaces/hyphens in names)
+# 2009-03-01 Support multiple po files (by using msgcat)
+# 2009-01-02 Updated to support creation of data files
 """CompileDatafile.py [-x] [-d] [-f filelist] sourceDir firstFile executableDir targetname
 -x: Exclude ARBUpdater (not needed in test program)
 -d: Debugging mode (does not delete generated autogen.po file)

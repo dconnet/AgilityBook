@@ -6,15 +6,14 @@
 
 /**
  * @file
- *
  * @brief Use CInternetSession to access files.
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-20 DRC Ported to wxWidgets.
- * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
- * @li 2005-09-20 DRC Created, fixed a problem with GetStatus throwing.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-20 Ported to wxWidgets.
+ * 2005-10-19 Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
+ * 2005-09-20 Created, fixed a problem with GetStatus throwing.
  */
 
 #include "stdafx.h"

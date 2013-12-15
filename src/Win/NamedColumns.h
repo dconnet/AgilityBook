@@ -8,12 +8,11 @@
 
 /**
  * @file
- *
  * @brief interface of the CNamedColumns class
  * @author David Connet
  *
  * Revision History
- * @li 2010-03-28 DRC Created.
+ * 2010-03-28 Created.
  */
 
 #include "AgilityBookOptions.h"

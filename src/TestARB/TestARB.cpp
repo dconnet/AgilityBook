@@ -9,12 +9,12 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-08-18 DRC Reuse Win/LanguageManager
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2011-11-17 DRC Add ability to switch languages
- * @li 2011-01-22 DRC Simplified how configs are added (all in TestConfig.cpp).
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2008-01-11 DRC Created
+ * 2013-08-18 Reuse Win/LanguageManager
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2011-11-17 Add ability to switch languages
+ * 2011-01-22 Simplified how configs are added (all in TestConfig.cpp).
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2008-01-11 Created
  */
 
 #include "stdafx.h"

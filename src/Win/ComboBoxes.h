@@ -8,16 +8,15 @@
 
 /**
  * @file
- *
  * @brief Special comboboxes
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-07 DRC Added CAutoFillComboBox
- * @li 2009-02-20 DRC Ported to wxWidgets.
- * @li 2008-01-05 DRC Added CVenueComboBox
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2006-02-12 DRC Created
+ * 2012-05-07 Added CAutoFillComboBox
+ * 2009-02-20 Ported to wxWidgets.
+ * 2008-01-05 Added CVenueComboBox
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2006-02-12 Created
  */
 
 /// Enable autofill (wx2.9+) API on wx2.8.

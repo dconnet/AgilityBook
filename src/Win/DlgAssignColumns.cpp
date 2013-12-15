@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief Assign columns for import/export.
  * @author David Connet
 
@@ -72,20 +71,20 @@ Training Log:
 
  *
  * Revision History
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2010-11-04 DRC When adding items, add after the current selection.
- * @li 2010-02-17 DRC Added SubName to runs view.
- * @li 2009-03-12 DRC Fixed a bug that assumed items in sc_Fields lists had ids
- *                that were in ascending order. Adding verified broke that.
- *                (Only issue was 'remove' would put item into wrong place in
- *                available list)
- * @li 2009-01-26 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-08-11 DRC Added verified column to trial in tree.
- * @li 2003-12-30 DRC Implemented customized text in tree.
- * @li 2003-12-10 DRC Created
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2010-11-04 When adding items, add after the current selection.
+ * 2010-02-17 Added SubName to runs view.
+ * 2009-03-12 Fixed a bug that assumed items in sc_Fields lists had ids
+ *            that were in ascending order. Adding verified broke that.
+ *            (Only issue was 'remove' would put item into wrong place in
+ *            available list)
+ * 2009-01-26 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-08-11 Added verified column to trial in tree.
+ * 2003-12-30 Implemented customized text in tree.
+ * 2003-12-10 Created
  */
 
 #include "stdafx.h"

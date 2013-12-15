@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief Localization
  * @author David Connet
  *
@@ -14,7 +13,7 @@
  * changed. It makes use of CStrings and resources.
  *
  * Revision History
- * @li 2007-09-12 DRC Moved hardcoded strings out of ARBAgilityRecordBook.h
+ * 2007-09-12 Moved hardcoded strings out of ARBAgilityRecordBook.h
  */
 
 #include "stdafx.h"

@@ -6,15 +6,15 @@
 
 /**
  * @file
- *
  * @brief Panels in tab control (views go in these)
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-02-12 DRC Don't save sash position if it hasn't been initialized.
- * @li 2009-07-25 DRC Set a minimum splitter width.
- * @li 2008-12-14 DRC Created
+ * 2012-09-29 Strip the Runs View.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-02-12 Don't save sash position if it hasn't been initialized.
+ * 2009-07-25 Set a minimum splitter width.
+ * 2008-12-14 Created
  */
 
 #include "stdafx.h"

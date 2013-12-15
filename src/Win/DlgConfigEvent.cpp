@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgConfigEvent class
  * @author David Connet
  *
@@ -19,24 +18,24 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
- * @li 2012-06-16 DRC Display number of faults for each time fault.
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-14 DRC Fixed group box creation order.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2008-07-29 DRC Method overlap detection was wrong.
- * @li 2007-05-08 DRC Fixed bug when deleting a method.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-12-18 DRC Added a time fault multiplier.
- * @li 2004-12-10 DRC Changes weren't saved when lifetime pts were modified.
- * @li 2004-11-15 DRC Added time fault computation option on T+F.
- * @li 2004-04-01 DRC Fixed? the memory access fault.
- * @li 2003-12-27 DRC Added support for from/to dates for the scoring method.
+ * 2012-06-16 Display number of faults for each time fault.
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-14 Fixed group box creation order.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2008-07-29 Method overlap detection was wrong.
+ * 2007-05-08 Fixed bug when deleting a method.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-04 Added support for NADAC bonus titling points.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-02 Added subnames to events.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-12-18 Added a time fault multiplier.
+ * 2004-12-10 Changes weren't saved when lifetime pts were modified.
+ * 2004-11-15 Added time fault computation option on T+F.
+ * 2004-04-01 Fixed? the memory access fault.
+ * 2003-12-27 Added support for from/to dates for the scoring method.
  */
 
 #include "stdafx.h"

@@ -12,11 +12,11 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-08-12 DRC Moved FormatBytes to StringUtil
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-30 DRC Remove Convert and replaced with stringA/etc
- * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
- * @li 2008-06-29 DRC Moved string stuff out of ARBTypes.
+ * 2012-08-12 Moved FormatBytes to StringUtil
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-03-30 Remove Convert and replaced with stringA/etc
+ * 2009-03-12 Converting all TCHAR stuff to wxWidgets
+ * 2008-06-29 Moved string stuff out of ARBTypes.
  */
 
 #include <string>

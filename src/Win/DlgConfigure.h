@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgConfigure class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2007-08-19 DRC Simplified UI layout into a single tree.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2009-02-10 Ported to wxWidgets.
+ * 2007-08-19 Simplified UI layout into a single tree.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include "IconList.h"

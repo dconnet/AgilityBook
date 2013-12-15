@@ -6,20 +6,19 @@
 
 /**
  * @file
- *
  * @brief Spreadsheet interface
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-16 Fixed Calc format strings.
- * @li 2012-02-18 Added eSpreadSheetNumberNoZero
- * @li 2012-02-05 Added alignment and formatting.
- * @li 2012-02-04 Clear data in GetRowCol. Fix writing formulas.
- * @li 2012-01-14 DRC Change creation to only create one worksheet.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-24 DRC Removed option to export by array, completed wx port.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2004-09-30 DRC Created
+ * 2012-05-16 Fixed Calc format strings.
+ * 2012-02-18 Added eSpreadSheetNumberNoZero
+ * 2012-02-05 Added alignment and formatting.
+ * 2012-02-04 Clear data in GetRowCol. Fix writing formulas.
+ * 2012-01-14 Change creation to only create one worksheet.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-24 Removed option to export by array, completed wx port.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2004-09-30 Created
  */
 
 #include "stdafx.h"

@@ -6,45 +6,48 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgDog class
  * @author David Connet
  *
  * Revision History
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-14 DRC Merged DlgRun* into here.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-10-17 DRC Points view didn't update 'View Hidden' after canceling.
- * @li 2004-02-03 DRC Broke dialog up into pages.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-03-14 Merged DlgRun* into here.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-10-17 Points view didn't update 'View Hidden' after canceling.
+ * 2004-02-03 Broke dialog up into pages.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-08-18 Added a deceased date for a dog.
+ *
  * DlgDogNumbers
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-02-03 DRC Broke dialog up into pages.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-02-03 Broke dialog up into pages.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-08-18 Added a deceased date for a dog.
+ *
  * DlgDogPoints
- * @li 2006-07-15 DRC Only adjust column widths the first time.
- *                    Add a selected-item total.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-02-03 DRC Created.
+ * 2006-07-15 Only adjust column widths the first time.
+ *            Add a selected-item total.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-02-03 Created.
+ *
  * DlgDogProp
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-05-30 DRC DOB/Deceased were not initialized in ctor.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-05-30 DOB/Deceased were not initialized in ctor.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-08-18 Added a deceased date for a dog.
+ *
  * DlgDogTitles
- * @li 2013-05-18 DRC Modifying titles caused loss of view filtering.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-02-03 DRC Broke dialog up into pages.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * 2013-05-18 Modifying titles caused loss of view filtering.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-01-10 Allow titles to be optionally entered multiple times.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-02-03 Broke dialog up into pages.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-08-18 Added a deceased date for a dog.
  */
 
 #include "stdafx.h"

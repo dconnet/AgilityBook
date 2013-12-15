@@ -6,32 +6,31 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookCalendarListView class
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-04 DRC Ported to wxWidgets.
- * @li 2006-05-29 DRC Sync cal view when item date changes.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-27 DRC Add color coding to calendar for entries that need attention.
- * @li 2005-01-25 DRC Remember the sort column between program invocations.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-06-24 DRC Added a sort header image.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-06-06 DRC Added cut/copy/paste support.
- * @li 2004-04-15 DRC Added Duplicate menu item.
- * @li 2004-04-06 DRC Added simple sorting by column.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-12-27 DRC Implemented Find/FindNext.
- * @li 2003-11-22 DRC Update the view when creating or editing an entry.
- * @li 2003-11-21 DRC Enabled consistent copy and select all (old copy moved).
- * @li 2003-08-30 DRC Fixed bug when copying list to clipboard.
- * @li 2003-08-27 DRC Cleaned up selection synchronization.
- * @li 2003-07-24 DRC Calendar view didn't update when item deleted from list.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-04 Ported to wxWidgets.
+ * 2006-05-29 Sync cal view when item date changes.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-27 Add color coding to calendar for entries that need attention.
+ * 2005-01-25 Remember the sort column between program invocations.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-06-24 Added a sort header image.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-06-06 Added cut/copy/paste support.
+ * 2004-04-15 Added Duplicate menu item.
+ * 2004-04-06 Added simple sorting by column.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-12-27 Implemented Find/FindNext.
+ * 2003-11-22 Update the view when creating or editing an entry.
+ * 2003-11-21 Enabled consistent copy and select all (old copy moved).
+ * 2003-08-30 Fixed bug when copying list to clipboard.
+ * 2003-08-27 Cleaned up selection synchronization.
+ * 2003-07-24 Calendar view didn't update when item deleted from list.
  */
 
 #include "stdafx.h"

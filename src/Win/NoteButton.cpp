@@ -6,13 +6,12 @@
 
 /**
  * @file
- *
  * @brief Special button for invoking notes.
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2005-12-12 DRC Created
+ * 2009-02-11 Ported to wxWidgets.
+ * 2005-12-12 Created
  */
 
 #include "stdafx.h"

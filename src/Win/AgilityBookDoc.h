@@ -8,27 +8,27 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookDoc class
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-05 DRC Ported to wxWidgets.
- * @li 2008-11-19 DRC Added context menus to status bar.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2003-12-10 DRC Moved import/export into a wizard.
- * @li 2003-10-31 DRC Added import/export calendar, export config.
- * @li 2003-10-22 DRC Added export dtd/xml menu options.
- * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
- * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
- *                    I don't have to use UpdateAllViews. Added methods to allow
- *                    creating titles/trials/runs from the Run view.
- * @li 2003-08-25 DRC Added GetCurrentRun().
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
+ * 2012-09-29 Strip the Runs View.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-05 Ported to wxWidgets.
+ * 2008-11-19 Added context menus to status bar.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-01-02 Added subnames to events.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2003-12-10 Moved import/export into a wizard.
+ * 2003-10-31 Added import/export calendar, export config.
+ * 2003-10-22 Added export dtd/xml menu options.
+ * 2003-10-09 Added option to not filter runs by selected trial.
+ * 2003-08-27 Added view accessors for calendar, made them public so
+ *            I don't have to use UpdateAllViews. Added methods to allow
+ *            creating titles/trials/runs from the Run view.
+ * 2003-08-25 Added GetCurrentRun().
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
  */
 
 #include "CalendarSites.h"

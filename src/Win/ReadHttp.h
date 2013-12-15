@@ -8,15 +8,14 @@
 
 /**
  * @file
- *
  * @brief Read HTTP from the net.
  * @author David Connet
  *
  * Revision History
- * @li 2010-02-08 DRC Added new interfaces to support streaming to a file.
- * @li 2009-07-19 DRC Changed from wxHTTP to wxURL to handle proxies.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
+ * 2010-02-08 Added new interfaces to support streaming to a file.
+ * 2009-07-19 Changed from wxHTTP to wxURL to handle proxies.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2007-08-03 Separated HTTP reading code from UpdateInfo.cpp
  */
 
 #include "ARBCommon/StringUtil.h"

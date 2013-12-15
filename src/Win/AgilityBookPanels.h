@@ -8,12 +8,12 @@
 
 /**
  * @file
- *
  * @brief Panels in tab control (views go in these)
  * @author David Connet
  *
  * Revision History
- * @li 2008-12-14 DRC Created
+ * 2012-09-29 Strip the Runs View.
+ * 2008-12-14 Created
  */
 
 #include <vector>

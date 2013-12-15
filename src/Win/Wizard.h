@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief Import/Export Wizard
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2003-12-10 DRC Created
+ * 2009-02-10 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2003-12-10 Created
  */
 
 #include "SpreadSheet.h"

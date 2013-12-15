@@ -8,12 +8,11 @@
 
 /**
  * @file
- *
  * @brief Configuration updater
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-10 DRC Ported to wxWidgets.
+ * 2009-02-10 Ported to wxWidgets.
  */
 
 #include "ARB/ARBAgilityRecordBook.h"

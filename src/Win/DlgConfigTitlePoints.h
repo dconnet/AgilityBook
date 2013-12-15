@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgConfigTitlePoints class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-10-06 DRC Removed ARB classes so it could be used to lifetime pts.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-10-06 Removed ARB classes so it could be used to lifetime pts.
  */
 
 #include "ARB/ARBTypes2.h"

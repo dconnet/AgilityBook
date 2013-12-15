@@ -8,16 +8,15 @@
 
 /**
  * @file
- *
  * @brief interface of the VersionNum class
  * @author David Connet
  *
  * Revision History
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2009-01-28 DRC Removed Windows VERSIONNUM support (use VersionNumber.h)
- * @li 2009-01-01 DRC Ported to wxWidgets.
- * @li 2007-10-24 DRC Changed ctor and added <= operators
- * @li 2004-03-04 DRC Created
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2009-01-28 Removed Windows VERSIONNUM support (use VersionNumber.h)
+ * 2009-01-01 Ported to wxWidgets.
+ * 2007-10-24 Changed ctor and added <= operators
+ * 2004-03-04 Created
  */
 
 #include <string>

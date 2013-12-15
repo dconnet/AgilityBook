@@ -8,12 +8,11 @@
 
 /**
  * @file
- *
- * @brief List of icons
+ * @brief Image Manager
  * @author David Connet
  *
  * Revision History
- * @li 2012-12-29 DRC Created.
+ * 2012-12-29 Created.
  */
 
 #include <wx/icon.h>

@@ -12,12 +12,12 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-03-03 DRC Added CRCDMetaFile, string of Windows Enhanced Metafile.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-03-03 Added CRCDMetaFile, string of Windows Enhanced Metafile.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-11-26 Changed version number to a complex value.
  */
 
 #include "ARB/ARBTypes2.h"

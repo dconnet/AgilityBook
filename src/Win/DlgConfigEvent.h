@@ -8,18 +8,17 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgConfigEvent class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-12-18 DRC Added a time fault multiplier.
- * @li 2004-11-15 DRC Added time fault computation option on T+F.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-04 Added support for NADAC bonus titling points.
+ * 2005-01-02 Added subnames to events.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-12-18 Added a time fault multiplier.
+ * 2004-11-15 Added time fault computation option on T+F.
  */
 
 #include "ARB/ARBConfigScoring.h"

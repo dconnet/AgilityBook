@@ -12,10 +12,10 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-09-03 DRC Changed sub level updating.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-09-13 DRC Move to wxStrings throughout.
- * @li 2007-09-12 DRC Moved hardcoded strings out of ARBAgilityRecordBook.h
+ * 2013-09-03 Changed sub level updating.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-09-13 Move to wxStrings throughout.
+ * 2007-09-12 Moved hardcoded strings out of ARBAgilityRecordBook.h
  */
 
 /*

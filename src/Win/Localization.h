@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief Implementation of IARBLocalization
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2007-10-11 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2007-10-11 Created
  */
 
 #include "ARB/ARBLocalization.h"

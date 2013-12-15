@@ -12,17 +12,17 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-02-02 DRC Added ExistingPoints.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-08-18 DRC Added a deceased date.
- * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
+ * 2012-09-09 Added 'titlePts' to 'Placement'.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-14 Moved 'Titles' to 'Venue'.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-02-02 Added ExistingPoints.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-08-18 Added a deceased date.
+ * 2003-07-24 Removed built-in sort on dogs. Dogs are user-sorted now.
  */
 
 #include "ARB/ARBBase.h"

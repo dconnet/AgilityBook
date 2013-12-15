@@ -12,7 +12,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-07-17 DRC Created
+ * 2013-07-17 Created
  */
 
 #include <string>

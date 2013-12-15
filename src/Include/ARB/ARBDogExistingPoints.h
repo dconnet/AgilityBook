@@ -12,12 +12,12 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2003-02-02 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2003-02-02 Created
  */
 
 #include "ARB/ARBBase.h"

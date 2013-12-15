@@ -8,17 +8,16 @@
 
 /**
  * @file
- *
  * @brief Import Wizard
  * @author David Connet
  *
  * Revision History
- * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
- *                    _after_ the dialog is destroyed).
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-01-04 DRC Implemented import, except for trials/runs.
- * @li 2003-12-10 DRC Created
+ * 2009-06-14 Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
+ *            _after_ the dialog is destroyed).
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-01-04 Implemented import, except for trials/runs.
+ * 2003-12-10 Created
  */
 
 #include "AgilityBookOptions.h"

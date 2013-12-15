@@ -12,13 +12,13 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-12-27 DRC Changed FindEvent to take a date.
- * @li 2003-11-26 DRC Changed version number to a complex value.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-12-27 Changed FindEvent to take a date.
+ * 2003-11-26 Changed version number to a complex value.
  */
 
 #include "ARB/ARBBase.h"

@@ -6,15 +6,14 @@
 
 /**
  * @file
- *
  * @brief Defines the class behaviors for the application.
  * @author David Connet
  *
  * Revision History
- * @li 2013-10-30 DRC Fixed a problem where msi was spawned hidden.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-01 DRC Ported to wxWidgets.
- * @li 2007-02-08 DRC Created
+ * 2013-10-30 Fixed a problem where msi was spawned hidden.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-03-01 Ported to wxWidgets.
+ * 2007-02-08 Created
  */
 
 #include "stdafx.h"

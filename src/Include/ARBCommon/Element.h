@@ -12,16 +12,16 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-11-25 DRC Add libxml support back in.
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
- * @li 2007-09-06 DRC Added GetNthElementNode
- * @li 2007-08-15 DRC Modified to support mixed text/nodes.
- * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
+ * 2012-11-25 Add libxml support back in.
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-03-12 Converting all TCHAR stuff to wxWidgets
+ * 2007-09-06 Added GetNthElementNode
+ * 2007-08-15 Modified to support mixed text/nodes.
+ * 2007-08-08 Moved initialization here, so all XML usage is contained.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-10-22 Added a DTD parameter to SaveXML.
  */
 
 #include "ARBTypes.h"

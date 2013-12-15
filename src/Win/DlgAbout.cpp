@@ -6,23 +6,22 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgAbout class
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-13 DRC Fix text wrapping on Mac.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-04-26 DRC wx2.9.2 added native hyperlinks and generic support.
- * @li 2010-09-30 DRC Allow 'space' to activate a hyperlink.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2008-12-14 DRC Ported to wxWidgets.
- * @li 2006-12-10 DRC Simplified download links.
- * @li 2005-02-08 DRC Added another link.
- * @li 2004-07-20 DRC This now takes a Doc ptr so the update feature works.
- * @li 2004-03-05 DRC Moved versioninfo into new class, added new links/buttons.
- * @li 2004-03-02 DRC Added %VERSION% keyword in hotlinks.
- * @li 2003-09-17 DRC Added a 'check for updates' control.
+ * 2012-07-13 Fix text wrapping on Mac.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-04-26 wx2.9.2 added native hyperlinks and generic support.
+ * 2010-09-30 Allow 'space' to activate a hyperlink.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2008-12-14 Ported to wxWidgets.
+ * 2006-12-10 Simplified download links.
+ * 2005-02-08 Added another link.
+ * 2004-07-20 This now takes a Doc ptr so the update feature works.
+ * 2004-03-05 Moved versioninfo into new class, added new links/buttons.
+ * 2004-03-02 Added %VERSION% keyword in hotlinks.
+ * 2003-09-17 Added a 'check for updates' control.
  */
 
 #include "stdafx.h"

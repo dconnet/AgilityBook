@@ -12,18 +12,18 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-13 DRC Added new recurring title suffix style.
- * @li 2012-07-30 DRC Added new recurring title style (none).
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2008-08-05 DRC Added Roman numbers
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-10-14 DRC Added option to prefix a title.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-01-05 DRC Added LongName.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
+ * 2013-01-13 Added new recurring title suffix style.
+ * 2012-07-30 Added new recurring title style (none).
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2008-08-05 Added Roman numbers
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-10-14 Added option to prefix a title.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-11 Allow titles to be optionally entered multiple times.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-01-05 Added LongName.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-11-26 Changed version number to a complex value.
  */
 
 #include "ARB/ARBBase.h"

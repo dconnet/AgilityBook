@@ -6,92 +6,95 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgRun class
  * @author David Connet
  *
  * Revision History
- * @li 2013-05-19 DRC Make last div/level/height/handler dog-aware.
- * @li 2012-12-29 DRC Fix pasting metafiles.
- * @li 2012-11-17 DRC Allow judge to be empty.
- * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2012-01-03 DRC Fix field updating (some fields didn't have validator
- *                    associated variables tied to them)
- * @li 2012-01-02 DRC Change validator to support default value on empty field.
- * @li 2012-01-01 DRC Add validation dialogs, page change vetoing.
- * @li 2011-12-30 DRC Fixed CGenericValidator.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-02-12 DRC Add DnD support for linked files.
- * @li 2010-01-02 DRC Fix setting of required points with level changes.
- * @li 2009-10-18 DRC Fix prepending of '0' to title points.
- * @li 2009-10-14 DRC Add dog's name to dialog caption.
- * @li 2009-10-14 DRC Fix initialization of opening pts in eScoreThenTime.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-12 DRC Fixed division/level initialization.
- * @li 2009-03-16 DRC Merged DlgRun* into here.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
+ * 2013-05-19 Make last div/level/height/handler dog-aware.
+ * 2012-12-29 Fix pasting metafiles.
+ * 2012-11-17 Allow judge to be empty.
+ * 2012-07-04 Add option to use run time or opening time in gamble OPS.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2012-02-16 Fix initial focus.
+ * 2012-01-03 Fix field updating (some fields didn't have validator
+ *            associated variables tied to them)
+ * 2012-01-02 Change validator to support default value on empty field.
+ * 2012-01-01 Add validation dialogs, page change vetoing.
+ * 2011-12-30 Fixed CGenericValidator.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-02-12 Add DnD support for linked files.
+ * 2010-01-02 Fix setting of required points with level changes.
+ * 2009-10-18 Fix prepending of '0' to title points.
+ * 2009-10-14 Add dog's name to dialog caption.
+ * 2009-10-14 Fix initialization of opening pts in eScoreThenTime.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-12 Fixed division/level initialization.
+ * 2009-03-16 Merged DlgRun* into here.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2003-10-13 Make ref run dlg default to perfect score.
+ *
  * DlgRunCRCD
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-05-04 DRC Added ability to suppress metafile.
- * @li 2004-04-27 DRC Added some error recovery.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-05-04 Added ability to suppress metafile.
+ * 2004-04-27 Added some error recovery.
+ *
  * DlgRunComments
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ *
  * DlgRunLink
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-06-02 DRC Moved ShellExecute code to AgilityBook.cpp, added icons.
- * @li 2004-03-30 DRC Created
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-06-02 Moved ShellExecute code to AgilityBook.cpp, added icons.
+ * 2004-03-30 Created
+ *
  * DlgRunReference
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-09-20 DRC Added yourself was not getting up-to-date scoring info.
- * @li 2005-07-10 DRC Add button to add yourself to ref-runs.
- *                    Make default ref-run a 'Q'.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2004-09-28 DRC Accumulate all heights for refrun dlg.
- * @li 2003-12-27 DRC Changed FindEvent to take a date.
- * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-09-20 Added yourself was not getting up-to-date scoring info.
+ * 2005-07-10 Add button to add yourself to ref-runs.
+ *            Make default ref-run a 'Q'.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2004-09-28 Accumulate all heights for refrun dlg.
+ * 2003-12-27 Changed FindEvent to take a date.
+ * 2003-10-13 Make ref run dlg default to perfect score.
+ *
  * DlgRunScore
- * @li 2008-02-01 DRC Make 'Notes' button change selection.
- * @li 2008-11-21 DRC Enable tallying runs that have only lifetime points.
- * @li 2007-12-03 DRC Refresh judge list after invoking 'notes' button.
- * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
- * @li 2006-11-05 DRC Trim Divisions/Levels if no events are available on date.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-13 DRC Added direct access to Notes dialog.
- * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
- * @li 2005-11-20 DRC Allow 'E's on non-titling runs.
- * @li 2005-08-11 DRC Removed QQ checkbox.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-11-13 DRC Also compute score for NA runs that have no titling pts.
- * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
- * @li 2004-03-20 DRC The date never got set if the initial entry had no date
- *                    and we didn't change it (first run in a trial).
- *                    Plus, the table-in-yps flag was backwards and didn't
- *                    properly initialize when the event type changed.
- * @li 2004-02-14 DRC Added Table-in-YPS flag.
- * @li 2004-02-09 DRC Update YPS when the time is changed.
- *                    When date changes, update controls.
- * @li 2004-01-19 DRC Total faults weren't updated when course faults changed.
- * @li 2004-01-18 DRC Calling UpdateData during data entry causes way too much
- *                    validation. Only call during OnOK (from dlgsheet)
- * @li 2003-12-27 DRC Changed FindEvent to take a date. Also, update the
- *                    controls when the date changes as the scoring config may
- *                    change.
- * @li 2003-12-09 DRC Fixed a bug where the QQ checkbox didn't get set right.
- * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
- *                    This allows faults for things like language!
- * @li 2003-09-29 DRC Required pts were being overwriten with default values
- *                    during dialog initialization.
- * @li 2003-09-01 DRC Total faults weren't being shown when there was no SCT.
- * @li 2003-08-17 DRC Title points were being computed on 'NQ' and the score was
- *                    always being computed. Fixed both.
- * @li 2003-07-14 DRC Changed 'Score' to show data on 'Q' and 'NQ'.
+ * 2008-02-01 Make 'Notes' button change selection.
+ * 2008-11-21 Enable tallying runs that have only lifetime points.
+ * 2007-12-03 Refresh judge list after invoking 'notes' button.
+ * 2007-07-01 Fixed a problem with table flag on a run.
+ * 2006-11-05 Trim Divisions/Levels if no events are available on date.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-13 Added direct access to Notes dialog.
+ * 2005-12-04 Added support for NADAC bonus titling points.
+ * 2005-11-20 Allow 'E's on non-titling runs.
+ * 2005-08-11 Removed QQ checkbox.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-02 Added subnames to events.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-11-13 Also compute score for NA runs that have no titling pts.
+ * 2004-09-07 Time+Fault scoring shouldn't include time faults.
+ * 2004-03-20 The date never got set if the initial entry had no date
+ *            and we didn't change it (first run in a trial).
+ *            Plus, the table-in-yps flag was backwards and didn't
+ *            properly initialize when the event type changed.
+ * 2004-02-14 Added Table-in-YPS flag.
+ * 2004-02-09 Update YPS when the time is changed.
+ *            When date changes, update controls.
+ * 2004-01-19 Total faults weren't updated when course faults changed.
+ * 2004-01-18 Calling UpdateData during data entry causes way too much
+ *            validation. Only call during OnOK (from dlgsheet)
+ * 2003-12-27 Changed FindEvent to take a date. Also, update the controls
+ *            when the date changes as the scoring config may change.
+ * 2003-12-09 Fixed a bug where the QQ checkbox didn't get set right.
+ * 2003-10-13 Made Time/CourseFaults common to all scoring methods.
+ *            This allows faults for things like language!
+ * 2003-09-29 Required pts were being overwriten with default values
+ *            during dialog initialization.
+ * 2003-09-01 Total faults weren't being shown when there was no SCT.
+ * 2003-08-17 Title points were being computed on 'NQ' and the score was
+ *            always being computed. Fixed both.
+ * 2003-07-14 Changed 'Score' to show data on 'Q' and 'NQ'.
  */
 
 #include "stdafx.h"

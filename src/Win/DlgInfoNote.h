@@ -8,17 +8,16 @@
 
 /**
  * @file
- *
  * @brief Dialog for adding notes to ARBInfo items.
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2008-02-01 DRC Add ability to see what was last selected.
- * @li 2008-01-01 DRC Added visible flag.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2003-12-07 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-10 Ported to wxWidgets.
+ * 2008-02-01 Add ability to see what was last selected.
+ * 2008-01-01 Added visible flag.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2003-12-07 Created
  */
 
 #include "ARB/ARBInfo.h"

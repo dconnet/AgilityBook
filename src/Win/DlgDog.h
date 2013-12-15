@@ -8,31 +8,34 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgDog class
  * @author David Connet
  *
  * Revision History
- * @li 2009-03-14 DRC Merged DlgRun* into here.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-02-03 DRC Broke dialog up into pages.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * 2009-03-14 Merged DlgRun* into here.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-02-03 Broke dialog up into pages.
+ * 2003-08-18 Added a deceased date for a dog.
+ *
  * DlgDogNumbers
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-02-03 DRC Broke dialog up into pages.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-02-03 Broke dialog up into pages.
+ * 2003-08-18 Added a deceased date for a dog.
+ *
  * DlgDogPoints
- * @li 2006-07-15 DRC Add a selected-item total.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-02-03 DRC Created.
+ * 2006-07-15 Add a selected-item total.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-02-03 Created.
+ *
  * DlgDogProp
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2003-08-18 Added a deceased date for a dog.
+ *
  * DlgDogTitles
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-02-03 DRC Broke dialog up into pages.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-02-03 Broke dialog up into pages.
+ * 2003-08-18 Added a deceased date for a dog.
  */
 
 #include "ColumnOrder.h"

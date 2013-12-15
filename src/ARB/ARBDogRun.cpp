@@ -6,34 +6,33 @@
 
 /**
  * @file
- *
  * @brief The classes that make up the dog's information.
  * @author David Connet
  *
  * Revision History
- * @li 2012-09-09 DRC Added 'titlePts','speedPts' to 'Placement'.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2008-06-11 DRC Still not right - runs with 0 SCT should allow title pts.
- * @li 2008-03-03 DRC Title point computation on T+F runs was wrong.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
- * @li 2005-10-31 DRC Time+Fault runs didn't compute titling points right.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-10-04 DRC Only compute MACH points if time and SCT are >0. Also, do
- *                    not allow negative mach points.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-03-30 DRC Added links.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-12-27 DRC Changed FindEvent to take a date.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-10-13 DRC Allow course faults on point runs.
- * @li 2003-09-01 DRC Fixed problem with Score and TitlePts in time+faults.
+ * 2012-09-09 Added 'titlePts','speedPts' to 'Placement'.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2008-06-11 Still not right - runs with 0 SCT should allow title pts.
+ * 2008-03-03 Title point computation on T+F runs was wrong.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-04 Added support for NADAC bonus titling points.
+ * 2005-10-31 Time+Fault runs didn't compute titling points right.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-10 Only sort runs one way, the UI handles everything else.
+ * 2005-01-02 Added subnames to events.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-10-04 Only compute MACH points if time and SCT are >0. Also, do
+ *            not allow negative mach points.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-09-07 Time+Fault scoring shouldn't include time faults.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-03-30 Added links.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-12-27 Changed FindEvent to take a date.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-10-13 Allow course faults on point runs.
+ * 2003-09-01 Fixed problem with Score and TitlePts in time+faults.
  */
 
 #include "stdafx.h"

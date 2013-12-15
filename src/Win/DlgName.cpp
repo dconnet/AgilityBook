@@ -6,13 +6,12 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgName class
  * @author David Connet
  *
  * Revision History
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2009-02-11 DRC Ported to wxWidgets.
+ * 2012-02-16 Fix initial focus.
+ * 2009-02-11 Ported to wxWidgets.
  */
 
 #include "stdafx.h"

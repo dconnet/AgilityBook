@@ -8,7 +8,6 @@
 
 /**
  * @file
- *
  * @brief Progress dialog
  * @author David Connet
  *
@@ -17,8 +16,8 @@
  * and the factory method will remain behind.
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2004-10-01 DRC Created
+ * 2009-02-11 Ported to wxWidgets.
+ * 2004-10-01 Created
  */
 
 class IDlgProgress

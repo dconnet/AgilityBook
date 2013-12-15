@@ -6,54 +6,54 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookDoc class
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-11 DRC Reset filters on configuration import.
- * @li 2012-07-11 DRC After importing an ARB file, sort it.
- * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-25 DRC Refresh properly after changing filter in context menu.
- * @li 2009-08-19 DRC Create a 'fake' dog when creating a new file.
- * @li 2009-02-05 DRC Ported to wxWidgets.
- * @li 2008-11-19 DRC Added context menus to status bar.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2006-02-08 DRC Added 'RenameEvent' action.
- * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
- * @li 2005-10-26 DRC Added option to prevent auto-update user query.
- * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2004-12-19 DRC Changed sort-newest to only do trials, not runs.
- * @li 2004-12-18 DRC Added an extra check before posting the new dog msg.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-07-23 DRC Auto-check the config version on document open.
- * @li 2004-07-20 DRC Moved the user-request updates here so it can check if
- *                    a new configuration is available.
- * @li 2004-06-29 DRC Set filtering on runs that are in hidden trials.
- * @li 2004-04-29 DRC Use default config during auto-update (no file prompt).
- * @li 2004-03-31 DRC Only prompt to merge config if config version number is
- *                    greater (was simply checking for not-equal)
- * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
- *                    Added menu handlers for 'Show Hidden Titles' (oops)
- * @li 2004-02-26 DRC Moved config update here, test doc for current config.
- * @li 2004-01-26 DRC Display errors on non-fatal load.
- * @li 2003-12-10 DRC Moved import/export into a wizard.
- * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
- * @li 2003-10-31 DRC Added import/export calendar, export config.
- * @li 2003-10-22 DRC Added export dtd/xml menu options.
- * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
- * @li 2003-09-15 DRC Fixed a bug where a trial created for more than one dog
- *                    at the same time actually only created one linked entry.
- * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
- *                    I don't have to use UpdateAllViews. Added methods to allow
- *                    creating titles/trials/runs from the Run view.
- * @li 2003-08-25 DRC Added GetCurrentRun().
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
+ * 2013-01-11 Reset filters on configuration import.
+ * 2012-09-29 Strip the Runs View.
+ * 2012-07-11 After importing an ARB file, sort it.
+ * 2012-07-04 Add option to use run time or opening time in gamble OPS.
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-25 Refresh properly after changing filter in context menu.
+ * 2009-08-19 Create a 'fake' dog when creating a new file.
+ * 2009-02-05 Ported to wxWidgets.
+ * 2008-11-19 Added context menus to status bar.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2006-02-08 Added 'RenameEvent' action.
+ * 2005-12-14 Moved 'Titles' to 'Venue'.
+ * 2005-10-26 Added option to prevent auto-update user query.
+ * 2005-10-19 Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2004-12-19 Changed sort-newest to only do trials, not runs.
+ * 2004-12-18 Added an extra check before posting the new dog msg.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-07-23 Auto-check the config version on document open.
+ * 2004-07-20 Moved the user-request updates here so it can check if
+ *            a new configuration is available.
+ * 2004-06-29 Set filtering on runs that are in hidden trials.
+ * 2004-04-29 Use default config during auto-update (no file prompt).
+ * 2004-03-31 Only prompt to merge config if config version number is
+ *            greater (was simply checking for not-equal)
+ * 2004-03-26 Added code to migrate runs to the new table-in-run form.
+ *            Added menu handlers for 'Show Hidden Titles' (oops)
+ * 2004-02-26 Moved config update here, test doc for current config.
+ * 2004-01-26 Display errors on non-fatal load.
+ * 2003-12-10 Moved import/export into a wizard.
+ * 2003-12-07 Changed Load/Save api to support new info section.
+ * 2003-10-31 Added import/export calendar, export config.
+ * 2003-10-22 Added export dtd/xml menu options.
+ * 2003-10-09 Added option to not filter runs by selected trial.
+ * 2003-09-15 Fixed a bug where a trial created for more than one dog
+ *            at the same time actually only created one linked entry.
+ * 2003-08-27 Added view accessors for calendar, made them public so
+ *            I don't have to use UpdateAllViews. Added methods to allow
+ *            creating titles/trials/runs from the Run view.
+ * 2003-08-25 Added GetCurrentRun().
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
  */
 
 #include "stdafx.h"

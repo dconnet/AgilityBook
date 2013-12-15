@@ -8,12 +8,11 @@
 
 /**
  * @file
- *
  * @brief Interface for plug-in to update progress.
  * @author David Connet
  *
  * Revision History
- * @li 2007-08-19 DRC Created
+ * 2007-08-19 Created
  */
 
 class IProgressMeter

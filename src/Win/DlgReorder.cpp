@@ -6,17 +6,16 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgReorder class
  * @author David Connet
  *
  * Revision History
- * @li 2012-12-31 DRC Select run on startup.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-10-14 DRC Changed how reorder dlg is used, made run reorder a tree.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2012-12-31 Select run on startup.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-10-14 Changed how reorder dlg is used, made run reorder a tree.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"

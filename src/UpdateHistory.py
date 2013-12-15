@@ -7,8 +7,8 @@
 #   Help\html\History.html
 #
 # Revision History
-# 2010-01-05 DRC Updated comments and www directory.
-# 2005-01-23 DRC Created
+# 2010-01-05 Updated comments and www directory.
+# 2005-01-23 Created
 
 """UpdateHistory -h -w -p path
 -h      Generate Help file History.html (Help\\html\\History.html)

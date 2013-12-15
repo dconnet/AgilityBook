@@ -6,14 +6,13 @@
 
 /**
  * @file
- *
  * @brief Base class for common functionality.
  * @author David Connet
  *
  * Revision History
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
  */
 
 #include "stdafx.h"

@@ -6,25 +6,24 @@
 
 /**
  * @file
- *
  * @brief Utility classes
  * @author David Connet
  *
  * Revision History
- * @li 2013-07-17 DRC Moved SanitizeStringForHTML to ARBMisc.
- * @li 2012-12-12 DRC Use fabs instead of abs. Works on Mac too.
- * @li 2012-08-13 DRC Moved ARB_Q to separate file.
- * @li 2012-05-04 DRC Add bAlwaysStripZeros to ARBDouble::ToString.
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
- * @li 2009-09-28 DRC Fix abs() on Mac.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9.
- * @li 2008-06-29 DRC Moved string stuff to ARBString.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Removed ARBDouble.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2003-11-26 DRC Changed version number to a complex value.
+ * 2013-07-17 Moved SanitizeStringForHTML to ARBMisc.
+ * 2012-12-12 Use fabs instead of abs. Works on Mac too.
+ * 2012-08-13 Moved ARB_Q to separate file.
+ * 2012-05-04 Add bAlwaysStripZeros to ARBDouble::ToString.
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2009-11-24 Optimize locale usage when reading/writing the ARB file.
+ * 2009-09-28 Fix abs() on Mac.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-09-13 Add support for wxWidgets 2.9.
+ * 2008-06-29 Moved string stuff to ARBString.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Removed ARBDouble.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2003-11-26 Changed version number to a complex value.
  */
 
 #include "stdafx.h"

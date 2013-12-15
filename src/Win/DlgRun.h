@@ -8,38 +8,42 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgRun class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-16 DRC Merged DlgRun* into here.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-03-16 Merged DlgRun* into here.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ *
  * DlgRunCRCD
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ *
  * DlgRunComments
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ *
  * DlgRunLink
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-06-02 DRC Moved ShellExecute code to AgilityBook.cpp, added icons.
- * @li 2004-03-30 DRC Created
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-06-02 Moved ShellExecute code to AgilityBook.cpp, added icons.
+ * 2004-03-30 Created
+ *
  * DlgRunReference
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-07-10 DRC Add button to add yourself to ref-runs.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-07-10 Add button to add yourself to ref-runs.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2003-10-13 Make ref run dlg default to perfect score.
+ *
  * DlgRunScore
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-13 DRC Added direct access to Notes dialog.
- * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
- * @li 2004-02-14 DRC Added Table-in-YPS flag.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-13 Added direct access to Notes dialog.
+ * 2005-12-04 Added support for NADAC bonus titling points.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-02 Added subnames to events.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-09-07 Time+Fault scoring shouldn't include time faults.
+ * 2004-02-14 Added Table-in-YPS flag.
  */
 
 #include "ColumnOrder.h"

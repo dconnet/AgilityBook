@@ -10,11 +10,11 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-10-07 DRC Added leap year tests.
- * @li 2012-10-26 DRC Changed ARBDate::GetTime to avoid time_t when possible.
- * @li 2009-10-30 DRC Add support for localized dates.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2008-01-11 DRC Created
+ * 2013-10-07 Added leap year tests.
+ * 2012-10-26 Changed ARBDate::GetTime to avoid time_t when possible.
+ * 2009-10-30 Add support for localized dates.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2008-01-11 Created
  */
 
 #include "stdafx.h"

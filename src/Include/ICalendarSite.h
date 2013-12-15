@@ -8,7 +8,6 @@
 
 /**
  * @file
- *
  * @brief Interface for CalendarSite "plug-in"s to read data.
  * @author David Connet
  *
@@ -21,9 +20,9 @@
  * of all the classes in ARB and not need extra interfaces.
  *
  * Revision History
- * @li 2010-03-05 DRC Removed IReadHttpData interface, dynamic DLL loading
- * @li 2009-04-01 DRC Added IReadHttpData interface
- * @li 2007-08-12 DRC Created
+ * 2010-03-05 Removed IReadHttpData interface, dynamic DLL loading
+ * 2009-04-01 Added IReadHttpData interface
+ * 2007-08-12 Created
  */
 
 #include <map>

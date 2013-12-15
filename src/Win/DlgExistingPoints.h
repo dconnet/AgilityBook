@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgExistingPoints class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-02-03 DRC Created
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-02-03 Created
  */
 
 #include "ARB/ARBDogExistingPoints.h"

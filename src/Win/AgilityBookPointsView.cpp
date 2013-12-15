@@ -6,57 +6,56 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookPointsView class
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-04 DRC Ported to wxWidgets.
- * @li 2006-07-16 DRC Let user specify how to sort events within a venue.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
- * @li 2005-10-18 DRC Remember last selected item when reloading data.
- * @li 2005-10-14 DRC Added a context menu.
- * @li 2005-09-15 DRC Added code to filter multi-Qs by date (forgot it - oops!)
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
- * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
- * @li 2005-01-11 DRC Mark the document dirty when creating a title.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2004-12-03 DRC Show all lifetime points when filtering.
- * @li 2004-10-20 DRC Do not accumulate NA titling runs.
- * @li 2004-08-25 DRC Existing other pts were included in all other points.
- * @li 2004-08-12 DRC Allow creating a new title.
- * @li 2004-06-23 DRC Fixed a problem when getting the Q/NQ ratio when a filter
- *                    was in place. Trials that were hidden also removed any
- *                    runs that might have been applicable to the ratio.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- *                    Fix filtering on co-sanctioned trials.
- * @li 2004-05-27 DRC Lifetime point accumulation did not display the points
- *                    for existing runs.
- * @li 2004-05-20 DRC Add Dogs name and current date to report. Oops, just
- *                    realized the only thing that shouldn't be filtered on
- *                    runs is the Q-status (resets the last 2 changes).
- * @li 2004-05-16 DRC Do filter levels.
- * @li 2004-05-03 DRC Do not filter runs, only venues and titles.
- *                    Added percent qualifying.
- * @li 2004-02-02 DRC Added ExistingPoints accumulation.
- * @li 2004-01-05 DRC Header didn't generate properly if there were no titles.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-12-27 DRC Changed FindEvent to take a date.
- * @li 2003-12-09 DRC Fixed problem tallying QQs when a 3rd run is present.
- * @li 2003-11-22 DRC Added more dog information into the report.
- * @li 2003-11-21 DRC Enabled copy and select all.
- * @li 2003-10-28 DRC Added '*' to Title if it has been received.
- * @li 2003-10-14 DRC Fixed problem inserting other point lines.
- * @li 2003-10-13 DRC Don't tally runs that have no titling points.
- * @li 2003-08-28 DRC Completed Other Points tallying
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
- * @li 2003-06-11 DRC Accumulate points based on level, not sublevel, name.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-04 Ported to wxWidgets.
+ * 2006-07-16 Let user specify how to sort events within a venue.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-14 Moved 'Titles' to 'Venue'.
+ * 2005-10-18 Remember last selected item when reloading data.
+ * 2005-10-14 Added a context menu.
+ * 2005-09-15 Added code to filter multi-Qs by date (forgot it - oops!)
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-05-04 Added subtotaling by division to lifetime points.
+ * 2005-03-14 Show a summary of lifetime points in the list viewer.
+ * 2005-01-11 Mark the document dirty when creating a title.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2004-12-03 Show all lifetime points when filtering.
+ * 2004-10-20 Do not accumulate NA titling runs.
+ * 2004-08-25 Existing other pts were included in all other points.
+ * 2004-08-12 Allow creating a new title.
+ * 2004-06-23 Fixed a problem when getting the Q/NQ ratio when a filter
+ *            was in place. Trials that were hidden also removed any
+ *            runs that might have been applicable to the ratio.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ *            Fix filtering on co-sanctioned trials.
+ * 2004-05-27 Lifetime point accumulation did not display the points
+ *            for existing runs.
+ * 2004-05-20 Add Dogs name and current date to report. Oops, just
+ *            realized the only thing that shouldn't be filtered on
+ *            runs is the Q-status (resets the last 2 changes).
+ * 2004-05-16 Do filter levels.
+ * 2004-05-03 Do not filter runs, only venues and titles.
+ *            Added percent qualifying.
+ * 2004-02-02 Added ExistingPoints accumulation.
+ * 2004-01-05 Header didn't generate properly if there were no titles.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-12-27 Changed FindEvent to take a date.
+ * 2003-12-09 Fixed problem tallying QQs when a 3rd run is present.
+ * 2003-11-22 Added more dog information into the report.
+ * 2003-11-21 Enabled copy and select all.
+ * 2003-10-28 Added '*' to Title if it has been received.
+ * 2003-10-14 Fixed problem inserting other point lines.
+ * 2003-10-13 Don't tally runs that have no titling points.
+ * 2003-08-28 Completed Other Points tallying
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
+ * 2003-06-11 Accumulate points based on level, not sublevel, name.
  */
 
 #include "stdafx.h"

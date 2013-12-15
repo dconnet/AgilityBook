@@ -8,16 +8,15 @@
 
 /**
  * @file
- *
  * @brief Parse and cache "version.txt" on www.agilityrecordbook.com
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-10-26 DRC Added option to prevent auto-update user query.
- * @li 2004-08-03 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-10-26 Added option to prevent auto-update user query.
+ * 2004-08-03 Created
  */
 
 #include "ARB/ARBTypes2.h"

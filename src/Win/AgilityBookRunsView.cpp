@@ -6,40 +6,39 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookRunsView class
  * @author David Connet
  *
  * Revision History
- * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
- * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-10-14 DRC Add run reordering support.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-11 DRC Change how runs are synced with tree to reduce reloading.
- * @li 2009-02-04 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-06-02 DRC OnNeedText was quietly referencing m_Columns[-1]. Oops.
- * @li 2005-01-25 DRC Remember the sort column between program invocations.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
- * @li 2004-06-24 DRC Added a sort header image.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-04-06 DRC Added simple sorting by column.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-12-30 DRC Implemented full column reordering.
- * @li 2003-12-27 DRC Implemented Find/FindNext.
- * @li 2003-12-27 DRC Changed FindEvent to take a date.
- * @li 2003-11-21 DRC Enabled copy and select all.
- * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
- * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
- * @li 2003-08-27 DRC Cleaned up selection synchronization.
- *                    Added creating titles/trials/runs from the Run view.
- * @li 2003-08-25 DRC Mirror the selection in the tree.
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
+ * 2012-09-09 Added 'titlePts' to 'Placement'.
+ * 2012-07-04 Add option to use run time or opening time in gamble OPS.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-10-14 Add run reordering support.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-11 Change how runs are synced with tree to reduce reloading.
+ * 2009-02-04 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-06-02 OnNeedText was quietly referencing m_Columns[-1]. Oops.
+ * 2005-01-25 Remember the sort column between program invocations.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2004-09-07 Time+Fault scoring shouldn't include time faults.
+ * 2004-06-24 Added a sort header image.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-04-06 Added simple sorting by column.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-12-30 Implemented full column reordering.
+ * 2003-12-27 Implemented Find/FindNext.
+ * 2003-12-27 Changed FindEvent to take a date.
+ * 2003-11-21 Enabled copy and select all.
+ * 2003-10-09 Added option to not filter runs by selected trial.
+ * 2003-08-30 Added the ability to copy entries to the clipboard.
+ * 2003-08-27 Cleaned up selection synchronization.
+ *            Added creating titles/trials/runs from the Run view.
+ * 2003-08-25 Mirror the selection in the tree.
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
  */
 
 #include "stdafx.h"

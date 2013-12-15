@@ -6,15 +6,14 @@
 
 /**
  * @file
- *
  * @brief Clipboard functions for copying data to/from clipboard.
  * @author David Connet
  *
  * Revision History
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-26 DRC Ported to wxWidgets.
- * @li 2004-06-06 DRC Separated from AgilityBookTreeData.cpp
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-26 Ported to wxWidgets.
+ * 2004-06-06 Separated from AgilityBookTreeData.cpp
  */
 
 #include "stdafx.h"

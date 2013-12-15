@@ -8,19 +8,18 @@
 
 /**
  * @file
- *
  * @brief Assign columns for import/export.
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2010-02-17 DRC Added SubName to runs view.
- * @li 2009-01-26 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-08-11 DRC Added verified column to trial in tree.
- * @li 2003-12-30 DRC Implemented customized text in tree.
- * @li 2003-12-10 DRC Created
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2010-02-17 Added SubName to runs view.
+ * 2009-01-26 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-08-11 Added verified column to trial in tree.
+ * 2003-12-30 Implemented customized text in tree.
+ * 2003-12-10 Created
  */
 
 /*

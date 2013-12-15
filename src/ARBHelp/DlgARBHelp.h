@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief Main propertysheet
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-01 DRC Ported to wxWidgets.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-03-01 Ported to wxWidgets.
  */
 
 #include "ARBCommon/ARBTypes.h"

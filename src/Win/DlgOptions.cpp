@@ -6,18 +6,17 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgOptions class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2005-08-18 DRC Separated options and filters into two dialogs.
- * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
- * @li 2004-08-31 DRC Added option to disable splash screen.
- * @li 2004-07-23 DRC Auto-check the config version on document open.
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2005-08-18 Separated options and filters into two dialogs.
+ * 2004-12-18 Added Opening/Closing dates to view, plus color.
+ * 2004-08-31 Added option to disable splash screen.
+ * 2004-07-23 Auto-check the config version on document open.
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
  */
 
 #include "stdafx.h"

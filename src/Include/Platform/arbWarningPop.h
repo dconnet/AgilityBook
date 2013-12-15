@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief Restore warnings (see arbWarningPush.h)
  * @author David Connet
  *

@@ -8,15 +8,14 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgClub class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2008-02-01 DRC Only modify existing club, don't add a new one (caller does).
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2008-02-01 Only modify existing club, don't add a new one (caller does).
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include "ARB/ARBTypes2.h"

@@ -8,7 +8,6 @@
 
 /**
  * @file
- *
  * @brief Definitions of all configuration (registry) entries.
  * @author David Connet
  *
@@ -16,7 +15,7 @@
  * DW == dword, ST == string
  *
  * Revision History
- * @li 2010-04-11 DRC Separated from AgilityBookOptions.cpp.
+ * 2010-04-11 Separated from AgilityBookOptions.cpp.
  */
 
 

@@ -6,23 +6,22 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgOptionsCalendar class
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2010-01-21 DRC Fixed calendar font selection.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-14 DRC Fixed group box creation order.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2009-01-11 DRC Fixed a bug that added an 8th day to week.
- * @li 2006-11-22 DRC Turned this into Calendar only, created new Print page.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
- * @li 2003-08-09 DRC Moved fonts to new page.
- * @li 2003-07-31 DRC Allow screen fonts for printer font selection. Also, the
- *                    wrong font was created for the printer date font.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2010-01-21 Fixed calendar font selection.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-14 Fixed group box creation order.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2009-01-11 Fixed a bug that added an 8th day to week.
+ * 2006-11-22 Turned this into Calendar only, created new Print page.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-12-18 Added Opening/Closing dates to view, plus color.
+ * 2003-08-09 Moved fonts to new page.
+ * 2003-07-31 Allow screen fonts for printer font selection. Also, the
+ *            wrong font was created for the printer date font.
  */
 
 #include "stdafx.h"

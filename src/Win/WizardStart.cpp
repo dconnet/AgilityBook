@@ -6,32 +6,31 @@
 
 /**
  * @file
- *
  * @brief Import/Export Wizard
  * @author David Connet
  *
  * Revision History
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2010-03-28 DRC Added ability to import/export program settings.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-14 DRC Fixed group box creation order.
- * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
- *                    _after_ the dialog is destroyed).
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-08-09 DRC When importing ARB files, update regnum and titles
- *                    that are different.
- * @li 2005-07-14 DRC Remember selected export item.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-08-21 DRC Added ability to import dog/trial/run/judge info.
- * @li 2004-02-26 DRC Moved configuration update logic to the doc.
- * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
- * @li 2004-01-26 DRC Display errors on non-fatal load.
- * @li 2004-01-21 DRC Implemented Action items in configuration update.
- * @li 2003-12-10 DRC Created
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2010-03-28 Added ability to import/export program settings.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-14 Fixed group box creation order.
+ * 2009-06-14 Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
+ *            _after_ the dialog is destroyed).
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-08-09 When importing ARB files, update regnum and titles
+ *            that are different.
+ * 2005-07-14 Remember selected export item.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-10 Allow titles to be optionally entered multiple times.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-08-21 Added ability to import dog/trial/run/judge info.
+ * 2004-02-26 Moved configuration update logic to the doc.
+ * 2004-02-18 Added 'DeleteTitle' configuration action.
+ * 2004-01-26 Display errors on non-fatal load.
+ * 2004-01-21 Implemented Action items in configuration update.
+ * 2003-12-10 Created
  */
 
 #include "stdafx.h"

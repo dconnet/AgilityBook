@@ -12,18 +12,18 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-10-26 DRC Changed ARBDate::GetTime to avoid time_t when possible.
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2009-10-30 DRC Add support for localized dates.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-25 DRC Make time_t ctors explicit to prevent casts from bools.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-07-13 DRC Added inForceOutput to GetString.
- * @li 2005-07-05 DRC Added a new formatting option.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-03-21 DRC Fixed up some operators.
- * @li 2004-01-04 DRC Added FromString().
+ * 2012-10-26 Changed ARBDate::GetTime to avoid time_t when possible.
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2009-10-30 Add support for localized dates.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-25 Make time_t ctors explicit to prevent casts from bools.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-07-13 Added inForceOutput to GetString.
+ * 2005-07-05 Added a new formatting option.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-03-21 Fixed up some operators.
+ * 2004-01-04 Added FromString().
  */
 
 #include "ARBTypes.h"

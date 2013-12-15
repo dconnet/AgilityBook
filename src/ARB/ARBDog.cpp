@@ -6,28 +6,27 @@
 
 /**
  * @file
- *
  * @brief The classes that make up the dog's information.
  * @author David Connet
  *
  * Revision History
- * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-02-02 DRC Added ExistingPoints.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-08-18 DRC Added a deceased date. While this does change the format
- *                of the file, it's backwards compatible, so it doesn't warrant
- *                a file version change.
- * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
- * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
+ * 2012-09-09 Added 'titlePts' to 'Placement'.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-14 Moved 'Titles' to 'Venue'.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-10 Allow titles to be optionally entered multiple times.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-02-02 Added ExistingPoints.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-08-18 Added a deceased date. While this does change the format
+ *            of the file, it's backwards compatible, so it doesn't warrant
+ *            a file version change.
+ * 2003-07-24 Removed built-in sort on dogs. Dogs are user-sorted now.
+ * 2003-07-16 Allow the code to keep processing after errors are found.
  */
 
 #include "stdafx.h"

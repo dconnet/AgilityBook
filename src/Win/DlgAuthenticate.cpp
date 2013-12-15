@@ -6,14 +6,13 @@
 
 /**
  * @file
- *
  * @brief Web authentication
  * @author David Connet
  *
  * Revision History
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2007-08-03 DRC Created
+ * 2012-02-16 Fix initial focus.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2007-08-03 Created
  */
 
 #include "stdafx.h"
@@ -39,7 +38,7 @@ CDlgAuthenticate::CDlgAuthenticate(
 	: wxDialog()
 {
 	if (caption.empty())
-		caption = StringUtil::stringW(_("IDD_AUTHENTICATE"));
+		caption = StringUtil::stringW(_("Authentication"));
 	Create(parent, wxID_ANY, caption.c_str(), wxDefaultPosition, wxDefaultSize);
 	// Controls (these are done first to control tab order)
 
@@ -62,7 +61,7 @@ CDlgAuthenticate::CDlgAuthenticate(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPassword->Wrap(-1);
 
-	CTextCtrl* ctrlPassword = new CTextCtrl(this, wxID_ANY, wxString(),
+	CTextCtrl* ctrlPassword = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(180, -1), wxTE_PASSWORD,
 		wxGenericValidator(&m_Password));
 

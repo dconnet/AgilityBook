@@ -8,12 +8,11 @@
 
 /**
  * @file
- *
  * @brief BreakLine and CSV handling.
  * @author David Connet
  *
  * Revision History
- * @li 2010-10-30 DRC Moved BreakLine from Globals.h, added CSV routines.
+ * 2010-10-30 Moved BreakLine from Globals.h, added CSV routines.
  */
 
 #include <string>

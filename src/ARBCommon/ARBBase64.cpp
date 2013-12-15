@@ -16,12 +16,12 @@
  * Note: The original code wrote lines with "\r\n". We don't.
  *
  * Revision History
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-12 DRC Encoding/decoding 0 bytes should fail.
- * @li 2004-04-27 DRC Decoding: Did not properly compute the data length.
- *                    Encoding: Problem encoding 1 and 2 byte buffers.
- * @li 2004-03-06 DRC Created
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-12 Encoding/decoding 0 bytes should fail.
+ * 2004-04-27 Decoding: Did not properly compute the data length.
+ *            Encoding: Problem encoding 1 and 2 byte buffers.
+ * 2004-03-06 Created
  */
 
 #include "stdafx.h"

@@ -10,9 +10,9 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-30 DRC Add CVersionNum tests.
- * @li 2011-08-22 DRC ARBVersion was only using 16 instead of 32bits.
- * @li 2008-01-12 DRC Created
+ * 2012-07-30 Add CVersionNum tests.
+ * 2011-08-22 ARBVersion was only using 16 instead of 32bits.
+ * 2008-01-12 Created
  */
 
 #include "stdafx.h"

@@ -8,16 +8,15 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgConfigTitle class
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-13 DRC Added new recurring title suffix style.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-01-05 DRC Created.
+ * 2013-01-13 Added new recurring title suffix style.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-01-11 Allow titles to be optionally entered multiple times.
+ * 2004-01-05 Created.
  */
 
 #include "ARB/ARBTypes2.h"

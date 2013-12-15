@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief Identifying strings
  * @author David Connet
  *
  * Revision History
- * @li 2009-03-01 DRC Ported to wxWidgets.
- * @li 2007-02-08 DRC Created
+ * 2009-03-01 Ported to wxWidgets.
+ * 2007-02-08 Created
  */
 
 #define STREAM_DATA_BEGIN		L"ARB Begin Data"
