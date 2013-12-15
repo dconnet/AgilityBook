@@ -8,28 +8,27 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookOptions class
  * @author David Connet
  *
  * Revision History
- * @li 2013-05-19 DRC Make last div/level/height/handler context aware.
- * @li 2010-03-28 DRC Added ability to import/export program settings.
- * @li 2009-07-19 DRC Implement proxy support. 
- * @li 2008-12-24 DRC Ported to wxWidgets.
- * @li 2007-08-03 DRC Added UserNames
- * @li 2006-07-16 DRC Added PointsViewSort
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-05-04 DRC Added IncludeCRCDImage
- * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
- * @li 2004-08-31 DRC Added AutoShowSplashScreen
- * @li 2004-06-16 DRC Added options to remember date formats.
- * @li 2004-06-06 DRC Added additional clipboard formats.
- * @li 2004-05-16 DRC Added IsLevelVisible.
- * @li 2004-04-08 DRC Added general program options.
- * @li 2004-03-13 DRC Added GetViewHiddenTitles.
- * @li 2004-01-04 DRC Added GetImportExportDateFormat.
- * @li 2003-12-11 DRC Added options for import/export wizard.
+ * 2013-05-19 Make last div/level/height/handler context aware.
+ * 2010-03-28 Added ability to import/export program settings.
+ * 2009-07-19 Implement proxy support. 
+ * 2008-12-24 Ported to wxWidgets.
+ * 2007-08-03 Added UserNames
+ * 2006-07-16 Added PointsViewSort
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-05-04 Added IncludeCRCDImage
+ * 2004-12-18 Added Opening/Closing dates to view, plus color.
+ * 2004-08-31 Added AutoShowSplashScreen
+ * 2004-06-16 Added options to remember date formats.
+ * 2004-06-06 Added additional clipboard formats.
+ * 2004-05-16 Added IsLevelVisible.
+ * 2004-04-08 Added general program options.
+ * 2004-03-13 Added GetViewHiddenTitles.
+ * 2004-01-04 Added GetImportExportDateFormat.
+ * 2003-12-11 Added options for import/export wizard.
  */
 
 #include "ARB/ARBTypes2.h"

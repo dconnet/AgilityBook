@@ -8,22 +8,21 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookCalendarListView class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-04 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-27 DRC Add color coding to calendar for entries that need attention.
- * @li 2005-01-25 DRC Remember the sort column between program invocations.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2004-06-24 DRC Added a sort header image.
- * @li 2004-04-15 DRC Added Duplicate menu item.
- * @li 2004-04-06 DRC Added simple sorting by column.
- * @li 2003-12-27 DRC Implemented Find/FindNext.
- * @li 2003-11-21 DRC Enabled copy and select all.
- * @li 2003-08-27 DRC Cleaned up selection synchronization.
+ * 2009-02-04 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-27 Add color coding to calendar for entries that need attention.
+ * 2005-01-25 Remember the sort column between program invocations.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2004-06-24 Added a sort header image.
+ * 2004-04-15 Added Duplicate menu item.
+ * 2004-04-06 Added simple sorting by column.
+ * 2003-12-27 Implemented Find/FindNext.
+ * 2003-11-21 Enabled copy and select all.
+ * 2003-08-27 Cleaned up selection synchronization.
  */
 
 #include "CommonView.h"

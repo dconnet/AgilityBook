@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief Various validators.
  * @author David Connet
  *
  * Revision History
- * @li 2012-08-13 DRC Moved CQualifyingValidator to separate file.
- * @li 2009-02-15 DRC Created
+ * 2012-08-13 Moved CQualifyingValidator to separate file.
+ * 2009-02-15 Created
  */
 
 #include "ARB/ARB_Q.h"

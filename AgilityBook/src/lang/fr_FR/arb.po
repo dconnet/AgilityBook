@@ -2395,7 +2395,7 @@ msgstr "Il faut donner un nom pour enregistrer le filtre."
 
 # DlgAuthenticate
 #: Win/DlgAuthenticate.cpp:42
-msgid "IDD_AUTHENTICATE"
+msgid "Authentication"
 msgstr "Authentification"
 
 #: Win/DlgAuthenticate.cpp:53

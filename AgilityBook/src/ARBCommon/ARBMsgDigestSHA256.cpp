@@ -14,7 +14,7 @@
  * Added SHA2_USE_MYTYPES_H since SHA2_USE_INTTYPES_H doesn't work.
  *
  * Revision History
- * @li 2013-10-29 DRC Created
+ * 2013-10-29 Created
  */
 
 #include "stdafx.h"

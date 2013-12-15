@@ -8,7 +8,6 @@
 
 /**
  * @file
- *
  * @brief EXE/DLL version number
  * @author David Connet
  *
@@ -27,8 +26,8 @@
  * (The actual version number is auto-updated, but the copyright is not)
  *
  * Revision History
- * @li 2008-01-10 DRC Added note
- * @li 2007-12-25 DRC Created
+ * 2008-01-10 Added note
+ * 2007-12-25 Created
  */
 
 

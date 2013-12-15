@@ -6,19 +6,18 @@
 
 /**
  * @file
- *
  * @brief Configuration updater
  * @author David Connet
  *
  * Revision History
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-01-26 DRC Display errors on non-fatal load.
- * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-10 Ported to wxWidgets.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-01-26 Display errors on non-fatal load.
+ * 2003-12-07 Changed Load/Save api to support new info section.
  */
 
 #include "stdafx.h"

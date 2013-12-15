@@ -6,12 +6,11 @@
 
 /**
  * @file
- *
  * @brief Utility classes
  * @author David Connet
  *
  * Revision History
- * @li 2013-08-14 DRC Moved out of ARBTypes.cpp
+ * 2013-08-14 Moved out of ARBTypes.cpp
  */
 
 #include "stdafx.h"

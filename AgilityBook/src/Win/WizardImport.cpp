@@ -6,37 +6,35 @@
 
 /**
  * @file
- *
  * @brief Import Wizard
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-25 DRC Importing runs with multiple clubs didn't parse venue correctly.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-01-22 DRC Defer sorting of imported items until the end.
- * @li 2011-01-08 DRC Fix importing dates directly from Excel (time was
- *                    included). Fix importing to group runs into one trial.
- *                    Fix trial sorting (honor user selection).
- * @li 2010-12-05 DRC Fixed crash on Mac when more columns in import data than
- *                    configured columns. Also, set DOB for a new dog.
- * @li 2010-10-30 DRC Implemented proper CSV exporting. Fix init radio check.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-14 DRC Fixed group box creation order.
- * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
- *                    _after_ the dialog is destroyed).
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-08-08 DRC Added validation during import to make sure names are
- *                    correct.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-05-10 DRC Process quoted fields in input (like Excel).
- * @li 2004-04-15 DRC If imported data contained a header that we parsed as
- *                    data, the program faulted trying to release a null ptr.
- * @li 2004-03-22 DRC Fixed line/col number reporting (off by one)
- * @li 2004-01-04 DRC Implemented import, except for trials/runs.
- * @li 2003-12-10 DRC Created
+ * 2012-07-25 Importing runs with multiple clubs didn't parse venue correctly.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-01-22 Defer sorting of imported items until the end.
+ * 2011-01-08 Fix importing dates directly from Excel (time was
+ *            included). Fix importing to group runs into one trial.
+ *            Fix trial sorting (honor user selection).
+ * 2010-12-05 Fixed crash on Mac when more columns in import data than
+ *            configured columns. Also, set DOB for a new dog.
+ * 2010-10-30 Implemented proper CSV exporting. Fix init radio check.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-14 Fixed group box creation order.
+ * 2009-06-14 Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
+ *            _after_ the dialog is destroyed).
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-08-08 Added validation during import to make sure names are correct.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-10 Only sort runs one way, the UI handles everything else.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-05-10 Process quoted fields in input (like Excel).
+ * 2004-04-15 If imported data contained a header that we parsed as
+ *            data, the program faulted trying to release a null ptr.
+ * 2004-03-22 Fixed line/col number reporting (off by one)
+ * 2004-01-04 Implemented import, except for trials/runs.
+ * 2003-12-10 Created
  */
 
 #include "stdafx.h"

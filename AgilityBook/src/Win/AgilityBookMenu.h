@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief Wrapper for menus to ease i18n and menu ids
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-13 DRC Reworked menu creation to use a generic reusable helper.
- * @li 2008-12-14 DRC Created
+ * 2012-07-13 Reworked menu creation to use a generic reusable helper.
+ * 2008-12-14 Created
  */
 
 class CMenuHelper;

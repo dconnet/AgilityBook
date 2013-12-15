@@ -8,12 +8,11 @@
 
 /**
  * @file
- *
  * @brief Printing
  * @author David Connet
  *
  * Revision History
- * @li 2009-04-19 DRC Moved from Globals.h
+ * 2009-04-19 Moved from Globals.h
  */
 
 #include "PointsData.h"

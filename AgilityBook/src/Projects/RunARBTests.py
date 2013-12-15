@@ -9,8 +9,8 @@
 # run via the post-build. So we pad a blank in the quotes and strip it here.
 #
 # Revision History
-# 2011-01-22 DRC Allow 32bit to run on 64bit.
-# 2009-03-05 DRC Moved bat file to python (removes dependency on wzzip)
+# 2011-01-22 Allow 32bit to run on 64bit.
+# 2009-03-05 Moved bat file to python (removes dependency on wzzip)
 """RunARBTests.py SourceDir TargetDirectory TargetName PlatformName
 SourceDir = .../AgilityBook/src
 PlatformName = Win32 x64 Mac"""

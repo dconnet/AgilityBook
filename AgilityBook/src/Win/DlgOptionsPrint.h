@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgOptionsPrint class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-11-22 DRC Moved printing to new page.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-11-22 Moved printing to new page.
  */
 
 #include "AgilityBookOptions.h"

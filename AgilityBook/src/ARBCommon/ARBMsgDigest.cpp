@@ -9,9 +9,9 @@
  * @brief File hashing algorithms
  *
  * Revision History
- * @li 2013-10-29 DRC Added more hash algorithms
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2010-02-07 DRC Created
+ * 2013-10-29 Added more hash algorithms
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2010-02-07 Created
  */
 
 #include "stdafx.h"

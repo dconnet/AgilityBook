@@ -6,18 +6,17 @@
 
 /**
  * @file
- *
  * @brief Special comboboxes
  * @author David Connet
  *
  * Revision History
- * @li 2012-06-16 DRC Do not enable autocomplete on readonly combos.
- * @li 2012-05-07 DRC Added autocompletion.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-20 DRC Ported to wxWidgets.
- * @li 2008-01-05 DRC Added CVenueComboBox
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2006-02-12 DRC Created
+ * 2012-06-16 Do not enable autocomplete on readonly combos.
+ * 2012-05-07 Added autocompletion.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-20 Ported to wxWidgets.
+ * 2008-01-05 Added CVenueComboBox
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2006-02-12 Created
  */
 
 #include "stdafx.h"

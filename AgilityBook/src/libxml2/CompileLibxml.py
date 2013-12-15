@@ -4,10 +4,10 @@
 # This is my quick-and-easy way to compile libxml2
 #
 # Revision History
-# 2012-06-15 DRC Fixed multiple compile problem
-# 2012-06-01 DRC Added vc11 switches, removed VC9 from all
-# 2011-03-08 DRC /MD/MT was not being specified properly.
-# 2010-07-17 DRC Created
+# 2012-06-15 Fixed multiple compile problem
+# 2012-06-01 Added vc11 switches, removed VC9 from all
+# 2011-03-08 /MD/MT was not being specified properly.
+# 2010-07-17 Created
 """CompileLibxml.py [-a] compiler*
 	[-a]: All compilers (vc10/vc10x64)
 	compiler: vc9, vc9x64, vc10, vc10x64, vc11, vc11x64

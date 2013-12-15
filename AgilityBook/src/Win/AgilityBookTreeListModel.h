@@ -9,13 +9,12 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookTreeListModel class
  * @author David Connet
  *
  * Revision History
- * @li 2013-09-25 DRC Remember collapsed state when reloading tree.
- * @li 2013-04-22 DRC Converted tree+list into single control.
+ * 2013-09-25 Remember collapsed state when reloading tree.
+ * 2013-04-22 Converted tree+list into single control.
  */
 
 #include "AgilityBookMenu.h"

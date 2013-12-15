@@ -12,17 +12,17 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-09-03 DRC Added short name.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-03-26 DRC Added 'hasTable'. Used to set default when creating a run.
- * @li 2004-02-02 DRC Added VerifyEvent.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-12-27 DRC Changed FindEvent to take a date.
- * @li 2003-11-26 DRC Changed version number to a complex value.
+ * 2013-09-03 Added short name.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-02 Added subnames to events.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-03-26 Added 'hasTable'. Used to set default when creating a run.
+ * 2004-02-02 Added VerifyEvent.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-12-27 Changed FindEvent to take a date.
+ * 2003-11-26 Changed version number to a complex value.
  */
 
 #include "ARB/ARBBase.h"

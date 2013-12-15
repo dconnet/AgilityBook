@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgFind class
  * @author David Connet
  *
  * Revision History
- * @li 2009-01-26 DRC Ported to wxWidgets.
- * @li 2003-12-27 DRC Created
+ * 2009-01-26 Ported to wxWidgets.
+ * 2003-12-27 Created
  */
 
 class CDlgFind;

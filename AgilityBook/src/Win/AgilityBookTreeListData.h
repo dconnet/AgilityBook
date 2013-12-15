@@ -9,16 +9,15 @@
 
 /**
  * @file
- *
  * @brief Data classes to support AgilityBookTreeList operations.
  * @author David Connet
  *
  * Revision History
- * @li 2013-04-22 DRC Converted tree+list into single control.
- * @li 2009-07-11 DRC Added GetType()
- * @li 2009-02-02 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2003-12-30 DRC Implemented customized text in tree.
+ * 2013-04-22 Converted tree+list into single control.
+ * 2009-07-11 Added GetType()
+ * 2009-02-02 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2003-12-30 Implemented customized text in tree.
  */
 
 #include "AgilityBookMenu.h"

@@ -6,19 +6,18 @@
 
 /**
  * @file
- *
  * @brief Tab view
  * @author David Connet
  *
  * Revision History
- * @li 2012-01-07 DRC Fix tab type/orientation persistence.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-08-03 DRC Fix tab setting so view is properly activated.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2007-11-27 DRC Check that the html view was actually created.
- * @li 2004-06-24 DRC Removed sending initialupdate messages (redundant)
- * @li 2003-12-07 DRC Fixed a crash when opening a bad ARB file version.
- * @li 2003-09-21 DRC Added training log.
+ * 2012-01-07 Fix tab type/orientation persistence.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-08-03 Fix tab setting so view is properly activated.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2007-11-27 Check that the html view was actually created.
+ * 2004-06-24 Removed sending initialupdate messages (redundant)
+ * 2003-12-07 Fixed a crash when opening a bad ARB file version.
+ * 2003-09-21 Added training log.
  */
 
 #include "stdafx.h"

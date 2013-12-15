@@ -8,16 +8,15 @@
 
 /**
  * @file
- *
  * @brief Spreadsheet interface
  * @author David Connet
  *
  * Revision History
- * @li 2012-02-18 Added eSpreadSheetNumberNoZero
- * @li 2012-02-05 Added alignment and formatting.
- * @li 2009-07-24 DRC Removed option to export by array.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2004-09-30 DRC Created
+ * 2012-02-18 Added eSpreadSheetNumberNoZero
+ * 2012-02-05 Added alignment and formatting.
+ * 2009-07-24 Removed option to export by array.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2004-09-30 Created
  */
 
 #if defined(__WXMSW__) && wxUSE_OLE_AUTOMATION

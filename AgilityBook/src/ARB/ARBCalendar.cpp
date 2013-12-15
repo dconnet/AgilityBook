@@ -6,26 +6,25 @@
 
 /**
  * @file
- *
  * @brief The calendar cribsheet.
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2007-08-11 DRC Changed usage of FindCalendar.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-07-13 DRC Added vCalendar support, finished iCalendar.
- * @li 2005-07-05 DRC Added iCalendar support.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-10-31 DRC Added FindCalendar.
- * @li 2003-07-09 DRC IsRangeOverlapped test was wrong. It was actually a 'is
- *                    range contained in' test.
- * @li 2003-01-23 DRC DocVer 2: Replaced 'PlanOn' attribute and with 'Entered'.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2007-08-11 Changed usage of FindCalendar.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-07-13 Added vCalendar support, finished iCalendar.
+ * 2005-07-05 Added iCalendar support.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-10-31 Added FindCalendar.
+ * 2003-07-09 IsRangeOverlapped test was wrong. It was actually a 'is
+ *            range contained in' test.
+ * 2003-01-23 DocVer 2: Replaced 'PlanOn' attribute and with 'Entered'.
  */
 
 #include "stdafx.h"

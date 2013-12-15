@@ -6,33 +6,32 @@
 
 /**
  * @file
- *
  * @brief Parse and cache "version2.xml" on www.agilityrecordbook.com
  * @author David Connet
  *
  * File Format: See below.
  *
  * Revision History
- * @li 2013-12-05 DRC Remove "?os=..." from url (website redesign)
- * @li 2013-10-30 DRC Fixed a problem where arbupdater was spawned hidden.
- * @li 2013-10-23 DRC Added 'minOS'.
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2011-07-26 DRC Moved 'Arch' to ARBAgilityRecordBook.
- * @li 2010-05-07 DRC Removed 'lang' from 'Platform'. (Finally figured out how
- *                    to create transforms and embed in msi.)
- * @li 2010-02-07 DRC Changed to version2.xml.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-26 DRC Removed Win98 support.
- * @li 2009-07-18 DRC Updated version.txt to support different versions/platforms.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2008-06-29 DRC When looking for language ids, it was searching the wrong node.
- * @li 2008-01-01 DRC Fix a bug parsing Element data (GetElementNode may return null)
- * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
- * @li 2005-10-26 DRC Added option to prevent auto-update user query.
- * @li 2005-09-09 DRC Modified URL parsing to handle redirection.
- *                    I can now advertise the url as "www.agilityrecordbook.com"
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-08-03 DRC Created
+ * 2013-12-05 Remove "?os=..." from url (website redesign)
+ * 2013-10-30 Fixed a problem where arbupdater was spawned hidden.
+ * 2013-10-23 Added 'minOS'.
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2011-07-26 Moved 'Arch' to ARBAgilityRecordBook.
+ * 2010-05-07 Removed 'lang' from 'Platform'. (Finally figured out how
+ *            to create transforms and embed in msi.)
+ * 2010-02-07 Changed to version2.xml.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-26 Removed Win98 support.
+ * 2009-07-18 Updated version.txt to support different versions/platforms.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2008-06-29 When looking for language ids, it was searching the wrong node.
+ * 2008-01-01 Fix a bug parsing Element data (GetElementNode may return null)
+ * 2007-08-03 Separated HTTP reading code from UpdateInfo.cpp
+ * 2005-10-26 Added option to prevent auto-update user query.
+ * 2005-09-09 Modified URL parsing to handle redirection.
+ *            I can now advertise the url as "www.agilityrecordbook.com"
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-08-03 Created
  */
 
 /*

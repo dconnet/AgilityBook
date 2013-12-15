@@ -12,19 +12,19 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-07-17 DRC Moved SanitizeStringForHTML to ARBMisc.
- * @li 2012-08-13 DRC Moved ARB_Q to separate file.
- * @li 2012-05-04 DRC Add bAlwaysStripZeros to ARBDouble::ToString.
- * @li 2011-08-22 DRC ARBVersion was only using 16 instead of 32bits.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-04-20 DRC Added DNR.
- * @li 2008-06-29 DRC Moved string stuff to ARBString.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Removed ARBDouble.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-04-06 DRC Added op< to ARB_Q.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-09-01 DRC Added 'operator+=' and 'operator-=' to ARBDouble.
+ * 2013-07-17 Moved SanitizeStringForHTML to ARBMisc.
+ * 2012-08-13 Moved ARB_Q to separate file.
+ * 2012-05-04 Add bAlwaysStripZeros to ARBDouble::ToString.
+ * 2011-08-22 ARBVersion was only using 16 instead of 32bits.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-04-20 Added DNR.
+ * 2008-06-29 Moved string stuff to ARBString.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Removed ARBDouble.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-04-06 Added op< to ARB_Q.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-09-01 Added 'operator+=' and 'operator-=' to ARBDouble.
  */
 
 #include <set>

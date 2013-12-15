@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief Make selection in a listctrl easier.
  * @author David Connet
  *
  * Revision History
- * @li 2010-03-28 DRC Moved SetColumnWidth override to CListCtrl.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2008-12-14 DRC Created
+ * 2010-03-28 Moved SetColumnWidth override to CListCtrl.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2008-12-14 Created
  */
 
 #include "Widgets.h"

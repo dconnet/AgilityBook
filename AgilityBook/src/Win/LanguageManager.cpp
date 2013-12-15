@@ -6,19 +6,18 @@
 
 /**
  * @file
- *
  * @brief implementation of the CLanguageManager class
  * @author David Connet
  *
  * Revision History
- * @li 2013-11-26 DRC Fixed language initialization structure.
- * @li 2011-11-14 DRC Fix canceling language selection (in Fr, it reset to En)
- * @li 2011-11-11 DRC Make .mo name same as exe name.
- * @li 2009-09-20 DRC wxLANGUAGE is not consistent between releases.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-19 DRC Make sure the catalog is intialized before calling dlg.
- * @li 2009-01-01 DRC Ported to wxWidgets.
- * @li 2007-09-22 DRC Created
+ * 2013-11-26 Fixed language initialization structure.
+ * 2011-11-14 Fix canceling language selection (in Fr, it reset to En)
+ * 2011-11-11 Make .mo name same as exe name.
+ * 2009-09-20 wxLANGUAGE is not consistent between releases.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-03-19 Make sure the catalog is intialized before calling dlg.
+ * 2009-01-01 Ported to wxWidgets.
+ * 2007-09-22 Created
  */
 
 #include "stdafx.h"

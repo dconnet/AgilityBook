@@ -6,12 +6,11 @@
 
 /**
  * @file
- *
  * @brief Extract a file from a zip archive
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-30 DRC Created
+ * 2013-01-30 Created
  */
 
 #include "stdafx.h"

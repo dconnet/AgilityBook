@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief Suppress warnings
  * @author David Connet
  *

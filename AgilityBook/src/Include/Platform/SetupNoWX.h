@@ -10,12 +10,11 @@
 
 /**
  * @file
- *
  * @brief Precompiled header file when not using wxWidgets.
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-27 DRC Created
+ * 2013-01-27 Created
  */
 
 #include "Platform/SetupARBPre.h"

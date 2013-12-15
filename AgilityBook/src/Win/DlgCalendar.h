@@ -8,16 +8,15 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgCalendar class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-13 DRC Added direct access to Notes dialog.
- * @li 2005-01-21 DRC Added Location/Club info fields.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-13 Added direct access to Notes dialog.
+ * 2005-01-21 Added Location/Club info fields.
  */
 
 #include "ARB/ARBTypes2.h"

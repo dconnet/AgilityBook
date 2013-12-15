@@ -6,25 +6,24 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgConfigure class
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2007-08-19 DRC Simplified UI layout into a single tree.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2006-02-08 DRC Added 'RenameEvent' action.
- * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
- * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
- * @li 2004-01-21 DRC Implemented Action items in configuration update.
- * @li 2004-01-14 DRC Use complete title name instead of nice name.
- * @li 2003-12-27 DRC Changed the scoring method to show the valid date range.
- * @li 2003-02-04 DRC Changed dbl-click to edit an item.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-10 Ported to wxWidgets.
+ * 2007-08-19 Simplified UI layout into a single tree.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2006-02-08 Added 'RenameEvent' action.
+ * 2005-12-14 Moved 'Titles' to 'Venue'.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2004-03-26 Added code to migrate runs to the new table-in-run form.
+ * 2004-02-18 Added 'DeleteTitle' configuration action.
+ * 2004-01-21 Implemented Action items in configuration update.
+ * 2004-01-14 Use complete title name instead of nice name.
+ * 2003-12-27 Changed the scoring method to show the valid date range.
+ * 2003-02-04 Changed dbl-click to edit an item.
  */
 
 #include "stdafx.h"

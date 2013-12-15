@@ -12,8 +12,8 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-04-15 DRC Moved ARB specific things out of ARBTypes.h
- * @li 2012-09-09 DRC Added ARBVectorNoSave.
+ * 2013-04-15 Moved ARB specific things out of ARBTypes.h
+ * 2012-09-09 Added ARBVectorNoSave.
  */
 
 #include "ARBCommon/ARBTypes.h"

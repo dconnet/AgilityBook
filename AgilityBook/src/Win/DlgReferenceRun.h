@@ -8,15 +8,14 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgReferenceRun class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2012-05-22 Change KillFocus handler to text change handler.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include "ARB/ARB_Q.h"

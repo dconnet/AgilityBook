@@ -6,47 +6,46 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookTreeListData classes
  * @author David Connet
  *
  * Revision History
- * @li 2013-04-22 DRC Converted tree+list into single control.
- * @li 2012-09-29 DRC Strip the Runs View.
- * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
- * @li 2012-03-03 DRC Fixed new unearned titles from showing up in view.
- * @li 2011-10-14 DRC Modify how reorder dialog is invoked.
- * @li 2010-12-30 DRC After copying/deleting runs, update multi-Q status.
- * @li 2010-12-05 DRC DOB can be invalid (on import). Don't show in tree.
- * @li 2010-01-02 DRC Fix initialization of date for a new run.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-14 DRC Fixed crash (on Mac) when editing dog.
- * @li 2009-02-02 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
- * @li 2004-10-21 DRC When an item is inserted in the tree, the text callback
- *                    can actually occur BEFORE we set the HTREEITEM.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-08-11 DRC Added verified-trial info to listing
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-06-06 DRC Added duplicate/cut/paste support for dogs.
- * @li 2004-05-09 DRC After adding a title, display dog property dlg.
- * @li 2004-04-15 DRC Added Duplicate menu item.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-12-30 DRC Implemented customized text in tree.
- * @li 2003-09-04 DRC When pasting, set document modified flag. Clean up some
- *                    warning messages when creating/pasting items and a filter
- *                    is set. (It was saying they weren't added - they were,
- *                    they just weren't visible.) Also, after adding/editing
- *                    trials/runs, make sure the items get sorted properly.
- * @li 2003-09-03 DRC When pasting trials/runs, select the new item.
- * @li 2003-08-30 DRC Copy a trial/run in the tree to the clipboard in dual
- *                    form. The internal form allows copying of the entry.
- *                    The text form copies what is printed.
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
- * @li 2003-07-24 DRC Added reorder support on all items. Made dogs user-sorted.
+ * 2013-04-22 Converted tree+list into single control.
+ * 2012-09-29 Strip the Runs View.
+ * 2012-09-09 Added 'titlePts' to 'Placement'.
+ * 2012-03-03 Fixed new unearned titles from showing up in view.
+ * 2011-10-14 Modify how reorder dialog is invoked.
+ * 2010-12-30 After copying/deleting runs, update multi-Q status.
+ * 2010-12-05 DOB can be invalid (on import). Don't show in tree.
+ * 2010-01-02 Fix initialization of date for a new run.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-14 Fixed crash (on Mac) when editing dog.
+ * 2009-02-02 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-10 Only sort runs one way, the UI handles everything else.
+ * 2004-10-21 When an item is inserted in the tree, the text callback
+ *            can actually occur BEFORE we set the HTREEITEM.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-08-11 Added verified-trial info to listing
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-06-06 Added duplicate/cut/paste support for dogs.
+ * 2004-05-09 After adding a title, display dog property dlg.
+ * 2004-04-15 Added Duplicate menu item.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-12-30 Implemented customized text in tree.
+ * 2003-09-04 When pasting, set document modified flag. Clean up some
+ *            warning messages when creating/pasting items and a filter
+ *            is set. (It was saying they weren't added - they were,
+ *            they just weren't visible.) Also, after adding/editing
+ *            trials/runs, make sure the items get sorted properly.
+ * 2003-09-03 When pasting trials/runs, select the new item.
+ * 2003-08-30 Copy a trial/run in the tree to the clipboard in dual
+ *            form. The internal form allows copying of the entry.
+ *            The text form copies what is printed.
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
+ * 2003-07-24 Added reorder support on all items. Made dogs user-sorted.
  */
 
 #include "stdafx.h"

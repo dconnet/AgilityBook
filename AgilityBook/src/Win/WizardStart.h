@@ -8,15 +8,14 @@
 
 /**
  * @file
- *
  * @brief Import/Export Wizard
  * @author David Connet
  *
  * Revision History
- * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
- *                    _after_ the dialog is destroyed).
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2003-12-10 DRC Created
+ * 2009-06-14 Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
+ *            _after_ the dialog is destroyed).
+ * 2009-02-11 Ported to wxWidgets.
+ * 2003-12-10 Created
  */
 
 #include <wx/wizard.h>

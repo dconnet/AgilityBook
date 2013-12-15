@@ -6,14 +6,13 @@
 
 /**
  * @file
- *
  * @brief Make selection in a listctrl easier.
  * @author David Connet
  *
  * Revision History
- * @li 2009-01-01 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2006-02-12 DRC Created
+ * 2009-01-01 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2006-02-12 Created
  */
 
 #include "stdafx.h"

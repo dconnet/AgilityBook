@@ -12,13 +12,13 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-15 DRC Added IsAnyFiltered.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-05-20 DRC Added different types of filtering.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-15 Added IsAnyFiltered.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-05-20 Added different types of filtering.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
  */
 
 #include "ARB/ARBTypes2.h"

@@ -6,13 +6,12 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgCRCDViewer class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2004-03-06 DRC Created
+ * 2009-02-11 Ported to wxWidgets.
+ * 2004-03-06 Created
  */
 
 #include "stdafx.h"

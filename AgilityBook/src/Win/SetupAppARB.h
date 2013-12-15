@@ -1,4 +1,5 @@
 #pragma once
+
 /*
  * Copyright (c) David Connet. All Rights Reserved.
  *
@@ -7,11 +8,10 @@
 
 /**
  * @file
- *
  * @brief Enable same registry settings across multiple programs.
  *
  * Revision History
- * @li 2013-08-17 DRC Created
+ * 2013-08-17 Created
  */
 
 

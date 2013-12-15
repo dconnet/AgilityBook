@@ -6,14 +6,13 @@
 
 /**
  * @file
- *
  * @brief The classes that make up the configuration information.
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-22 DRC Added wildcard placement points (for UK Warrant points)
- * @li 2006-11-03 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-22 Added wildcard placement points (for UK Warrant points)
+ * 2006-11-03 Created
  */
 
 #include "stdafx.h"

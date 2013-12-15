@@ -8,12 +8,11 @@
 
 /**
  * @file
- *
  * @brief Display progress in Win7 taskbar
  * @author David Connet
  *
  * Revision History
- * @li 2013-08-23 DRC Created
+ * 2013-08-23 Created
  */
 
 #ifdef WIN32

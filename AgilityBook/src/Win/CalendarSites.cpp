@@ -6,19 +6,18 @@
 
 /**
  * @file
- *
  * @brief Manage the direct download of calendar data from the web.
  * @author David Connet
  *
  * Revision History
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2010-03-05 DRC Changed architecture of ICalendarSite.
- * @li 2009-11-01 DRC Fixed canonical parsing of dll names on unix.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-06 DRC Fix plugin enabling (full path was being stored in map)
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2007-08-12 DRC Created
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2010-03-05 Changed architecture of ICalendarSite.
+ * 2009-11-01 Fixed canonical parsing of dll names on unix.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-06 Fix plugin enabling (full path was being stored in map)
+ * 2009-02-10 Ported to wxWidgets.
+ * 2007-08-12 Created
  */
 
 #include "stdafx.h"

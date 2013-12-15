@@ -8,16 +8,15 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgOptionsFilter class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
- * @li 2003-08-09 DRC Moved fonts to new page.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-12-18 Added Opening/Closing dates to view, plus color.
+ * 2003-08-09 Moved fonts to new page.
  */
 
 #include "FilterOptions.h"

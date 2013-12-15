@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief Various validators.
  * @author David Connet
  *
  * Revision History
- * @li 2012-08-13 DRC Moved CQualifyingValidator to separate file.
- * @li 2012-01-02 DRC Change validator to support default value on empty field.
- * @li 2009-02-15 DRC Created
+ * 2012-08-13 Moved CQualifyingValidator to separate file.
+ * 2012-01-02 Change validator to support default value on empty field.
+ * 2009-02-15 Created
  */
 
 #include "ARBCommon/ARBTypes.h"

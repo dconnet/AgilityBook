@@ -10,8 +10,8 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-25 DRC Add 2 multiline CSV tests.
- * @li 2010-10-17 DRC Created
+ * 2012-07-25 Add 2 multiline CSV tests.
+ * 2010-10-17 Created
  */
 
 #include "stdafx.h"

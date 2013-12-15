@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgReorder class
  * @author David Connet
  *
  * Revision History
- * @li 2011-10-14 DRC Changed how reorder dlg is used.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2011-10-14 Changed how reorder dlg is used.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include "ARB/ARBBase.h"

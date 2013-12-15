@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgName class
  * @author David Connet
  *
  * Revision History
- * @li 2012-02-24 DRC Changed GetName to Name (GetName is wxDialog api)
- * @li 2009-02-11 DRC Ported to wxWidgets.
+ * 2012-02-24 Changed GetName to Name (GetName is wxDialog api)
+ * 2009-02-11 Ported to wxWidgets.
  */
 
 

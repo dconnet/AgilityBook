@@ -12,17 +12,17 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-09-09 DRC Added 'titlePts' to 'Placement'.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-03-30 DRC Added links.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
+ * 2012-09-09 Added 'titlePts' to 'Placement'.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-10 Only sort runs one way, the UI handles everything else.
+ * 2005-01-02 Added subnames to events.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-03-30 Added links.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-11-26 Changed version number to a complex value.
  */
 
 #include "ARB/ARB_Q.h"

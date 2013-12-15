@@ -6,26 +6,25 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgTrial class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-08-16 DRC Make trial notes multi-line.
- * @li 2009-10-14 DRC Add dog's name to dialog caption.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-12 DRC Fix killfocus handling.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2008-02-01 DRC Make 'Notes' button change selection.
- * @li 2007-12-03 DRC Refresh location list after invoking 'notes' button.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-13 DRC Added direct access to Notes dialog.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2004-12-19 DRC Added Location/Club note information.
- * @li 2003-12-27 DRC Changed FindEvent to take a date.
+ * 2012-05-22 Change KillFocus handler to text change handler.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-08-16 Make trial notes multi-line.
+ * 2009-10-14 Add dog's name to dialog caption.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-12 Fix killfocus handling.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2008-02-01 Make 'Notes' button change selection.
+ * 2007-12-03 Refresh location list after invoking 'notes' button.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-13 Added direct access to Notes dialog.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2004-12-19 Added Location/Club note information.
+ * 2003-12-27 Changed FindEvent to take a date.
  */
 
 #include "stdafx.h"

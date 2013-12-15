@@ -8,12 +8,11 @@
 
 /**
  * @file
- *
  * @brief Special comboboxes
  * @author David Connet
  *
  * Revision History
- * @li 2013-04-15 DRC Separated from ComboBoxes.h
+ * 2013-04-15 Separated from ComboBoxes.h
  */
 
 #include "ARB/ARBTypes2.h"

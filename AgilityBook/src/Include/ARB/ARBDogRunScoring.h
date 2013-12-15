@@ -12,14 +12,14 @@
  * @author David Connet
  *
  * Revision History
- * @li 2006-04-04 DRC Added GetMinYPS.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
- * @li 2004-03-26 DRC Changed Table-in-YPS to hasTable.
- * @li 2004-02-14 DRC Added Table-in-YPS flag.
- * @li 2003-11-26 DRC Changed version number to a complex value.
+ * 2006-04-04 Added GetMinYPS.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-04 Added support for NADAC bonus titling points.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-09-07 Time+Fault scoring shouldn't include time faults.
+ * 2004-03-26 Changed Table-in-YPS to hasTable.
+ * 2004-02-14 Added Table-in-YPS flag.
+ * 2003-11-26 Changed version number to a complex value.
  */
 
 #include "ARB/ARBConfigScoring.h"

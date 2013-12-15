@@ -8,16 +8,15 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgFindLinks class
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-06-02 DRC Added 'Open' button.
- * @li 2004-03-31 DRC Created.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-10 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-06-02 Added 'Open' button.
+ * 2004-03-31 Created.
  */
 
 #include "ColumnOrder.h"

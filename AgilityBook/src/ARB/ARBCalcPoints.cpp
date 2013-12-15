@@ -6,12 +6,11 @@
 
 /**
  * @file
- *
  * @brief General information to be tracked.
  * @author David Connet
  *
  * Revision History
- * @li 2011-07-31 DRC Created
+ * 2011-07-31 Created
  */
 
 #include "stdafx.h"

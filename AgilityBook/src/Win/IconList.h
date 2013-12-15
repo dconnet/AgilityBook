@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief List of icons
  * @author David Connet
  *
  * Revision History
- * @li 2012-12-29 DRC Move icon management to global list.
- * @li 2009-01-27 DRC Ported to wxWidgets.
- * @li 2007-04-22 DRC Created.
+ * 2012-12-29 Move icon management to global list.
+ * 2009-01-27 Ported to wxWidgets.
+ * 2007-04-22 Created.
  */
 
 #include "ARB/ARBTypes2.h"

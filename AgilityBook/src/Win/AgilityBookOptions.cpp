@@ -6,42 +6,41 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookOptions class
  * @author David Connet
  *
  * Revision History
- * @li 2013-06-15 DRC Make default for GetNewestDatesFirst true.
- * @li 2013-05-19 DRC Make last div/level/height/handler context aware.
- * @li 2012-12-23 DRC Changed default Runs view columns.
- * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
- * @li 2010-11-07 DRC Merge filters on program settings import also.
- * @li 2010-11-04 DRC Change importing program settings to merge columninfo.
- * @li 2010-03-28 DRC Added ability to import/export program settings (v2.2.0).
- * @li 2010-01-21 DRC Fixed font flag parsing.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-26 DRC Changed auto update check to false in debug mode.
- * @li 2009-08-08 DRC Changed default setting for proxy and show dog after title
- * @li 2009-07-19 DRC Implement proxy support. 
- * @li 2008-12-24 DRC Ported to wxWidgets.
- * @li 2008-01-14 DRC Make ViewLifetimeEvents default to true.
- * @li 2007-08-03 DRC Added UserNames
- * @li 2006-07-16 DRC Added PointsViewSort
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-08-18 DRC Changed how filter options are done.
- * @li 2005-05-04 DRC Added IncludeCRCDImage
- * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
- * @li 2004-08-31 DRC Added AutoShowSplashScreen
- * @li 2004-06-16 DRC Added options to remember date formats.
- * @li 2004-06-06 DRC Added additional clipboard formats.
- * @li 2004-06-01 DRC Venue filtering could allow filtered runs thru at times.
- * @li 2004-04-08 DRC Added general program options.
- * @li 2004-03-13 DRC Added GetViewHiddenTitles, updated IsTitleVisible.
- * @li 2004-01-04 DRC Added GetImportExportDateFormat.
- * @li 2003-12-30 DRC Implemented customized text in tree.
- * @li 2003-12-29 DRC Created default column orders.
- * @li 2003-12-11 DRC Added options for import/export wizard.
- * @li 2003-10-09 DRC Added *etViewRunsByTrial.
+ * 2013-06-15 Make default for GetNewestDatesFirst true.
+ * 2013-05-19 Make last div/level/height/handler context aware.
+ * 2012-12-23 Changed default Runs view columns.
+ * 2012-07-04 Add option to use run time or opening time in gamble OPS.
+ * 2010-11-07 Merge filters on program settings import also.
+ * 2010-11-04 Change importing program settings to merge columninfo.
+ * 2010-03-28 Added ability to import/export program settings (v2.2.0).
+ * 2010-01-21 Fixed font flag parsing.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-26 Changed auto update check to false in debug mode.
+ * 2009-08-08 Changed default setting for proxy and show dog after title
+ * 2009-07-19 Implement proxy support. 
+ * 2008-12-24 Ported to wxWidgets.
+ * 2008-01-14 Make ViewLifetimeEvents default to true.
+ * 2007-08-03 Added UserNames
+ * 2006-07-16 Added PointsViewSort
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-08-18 Changed how filter options are done.
+ * 2005-05-04 Added IncludeCRCDImage
+ * 2004-12-18 Added Opening/Closing dates to view, plus color.
+ * 2004-08-31 Added AutoShowSplashScreen
+ * 2004-06-16 Added options to remember date formats.
+ * 2004-06-06 Added additional clipboard formats.
+ * 2004-06-01 Venue filtering could allow filtered runs thru at times.
+ * 2004-04-08 Added general program options.
+ * 2004-03-13 Added GetViewHiddenTitles, updated IsTitleVisible.
+ * 2004-01-04 Added GetImportExportDateFormat.
+ * 2003-12-30 Implemented customized text in tree.
+ * 2003-12-29 Created default column orders.
+ * 2003-12-11 Added options for import/export wizard.
+ * 2003-10-09 Added *etViewRunsByTrial.
  */
 
 #include "stdafx.h"

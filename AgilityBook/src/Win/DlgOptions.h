@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgOptions class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-08-18 DRC Separated options and filters into two dialogs.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-08-18 Separated options and filters into two dialogs.
  */
 
 class CAgilityBookDoc;

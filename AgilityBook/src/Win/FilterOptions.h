@@ -8,15 +8,14 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookOptions class
  * @author David Connet
  *
  * Revision History
- * @li 2011-08-10 DRC Added builtin support for an 'all' filter.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-01 DRC Ported to wxWidgets.
- * @li 2006-03-02 DRC Separated filter options from main options.
+ * 2011-08-10 Added builtin support for an 'all' filter.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-01 Ported to wxWidgets.
+ * 2006-03-02 Separated filter options from main options.
  */
 
 #include "ARB/ARBTypes2.h"

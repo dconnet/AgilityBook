@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief The main data class.
  * @author David Connet
  *
@@ -17,79 +16,79 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
- * @li 2013-10-23 DRC Change arch signature to allow deprecating platforms.
- * @li 2013-09-06 DRC File version 14.2
- *                    Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
- * @li 2013-05-24 DRC File version 14.1
- *                    Added 'Date' to 'Trial'.
- * @li 2013-01-13 DRC File version 14.0
- *                    Added new recurring title suffix style.
- * @li 2012-07-30 DRC File version 13.2
- *                    Added new title style (eTitleNone).
- *                    Added 'titlePts' to 'Placement'.
- * @li 2012-07-08 DRC Fix title instance when a title is changed to recurring.
- * @li 2011-07-31 DRC File version 13.1
- *                    Added 'platform','os' to 'AgilityBook', modified
- *                    TitlePoints (see ARBConfigTitlePoints.cpp).
- * @li 2011-06-09 DRC File version 12.11
- *                    Added 'Config' to 'Action'.
- * @li 2009-12-18 DRC File version 12.11
- *                    Added 'O' to 'Entry'.
- * @li 2009-07-26 DRC File version 12.10
- *                    Added 'DNR' to 'Placement' and 'ReferenceRun'
- * @li 2008-02-12 DRC File version 12.9
- *                    Fix metadata bug in dognotes.
- * @li 2008-08-05 DRC File version 12.8
- *                    Added 'style' to Title, 'Style' to 'Titles'
- * @li 2008-01-01 DRC File version 12.7. Added 'Visible' to InfoItem,
- *                    'obstacles' to 'Scoring'
- * @li 2007-07-03 DRC File version 12.6. Added 'show' to 'Title',
- *                    'timestamp' to 'AgilityBook'
- * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
- * @li 2007-02-27 DRC File version 12.5. Added 'defValue' to 'OtherPts'.
- * @li 2007-01-03 DRC File version 12.4. Added 'DateDraw' to Calendar.
- *                    Changed 'CRCDMeta' to 'CRCDMeta2'.
- * @li 2006-11-03 DRC File version 12.3. Added 'SpdMult'.
- * @li 2006-07-02 DRC File version 12.2. Added 'subtractTF'.
- * @li 2006-02-16 DRC File version 12.1. Added 'RenameEvent'.
- *                    Allow fractional faults in title points.
- *                    Cleaned up memory usage with smart pointers.
- * @li 2005-12-14 DRC File version 12.0. Moved 'Titles' to 'Venue'.
- * @li 2005-10-14 DRC File version 11.1. Added 'Prefix' to 'Titles'.
- * @li 2005-07-15 DRC File version 11.0. Changed how Double-Qs are done.
- * @li 2005-04-26 DRC File version 10.2. Added 'ver' to 'AgilityBook'
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2004-11-15 DRC File version 10.1. Added 'underTF'/'overTF' to 'Scoring'.
- * @li 2004-10-06 DRC File version 10. Added 'Height' to 'ReferenceRun'
- *                    GetAllHeights now accumulates these too. Changed
- *                    lifetime points.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-06-29 DRC File version 9.0. Added 'SubName' to 'Training'. Changed
- *                    structure of 'RegNum'.
- * @li 2004-03-26 DRC File version 8.6. Changed Table-in-YPS to hasTable.
- * @li 2004-03-13 DRC File version 8.5. Added 'isHidden' to 'Title'.
- * @li 2004-02-15 DRC Cleaned up newline in warning msg.
- * @li 2004-02-14 DRC File version 8.4. Added Table-in-YPS flag.
- * @li 2004-02-02 DRC File version 8.3. Added ARBDogExistingPoints items.
- * @li 2004-01-21 DRC File version 8.2. Added ConfigTitles LongName. Added
- *                    ARBConfigAction.
- * @li 2003-12-29 DRC GetAllClubs/Locations now includes calendar entries.
- * @li 2003-12-27 DRC File version 8.1. Changed ARBConfigScoring.
- * @li 2003-12-07 DRC File version 8.0. Added Info section.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- *                    Added warning check when minor versions are different.
- * @li 2003-10-31 DRC Added options to Save() to allow partial saves.
- * @li 2003-10-13 DRC File version 7. Added course faults to ByScore/etc.
- * @li 2003-09-21 DRC File version 6. Added training log.
- * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
- * @li 2003-06-23 DRC File version 5. Added 'Note' and 'Verified' to trials.
- *                    Changed how title points are configured.
- * @li 2003-06-11 DRC File version 4. Added 'dropFractions' to config scoring.
- *                    Added 'Desc' to config venue and event.
- * @li 2003-04-21 DRC File version 3. Added notes to config events. Moved
- *                    faulttypes and otherpoints from venue to main config.
- *                    Added Receieved field to Titles.
- * @li 2003-01-23 DRC Bumped file version to 2: see ARBCalendar.cpp
+ * 2013-10-23 Change arch signature to allow deprecating platforms.
+ * 2013-09-06 File version 14.2
+ *            Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
+ * 2013-05-24 File version 14.1
+ *            Added 'Date' to 'Trial'.
+ * 2013-01-13 File version 14.0
+ *            Added new recurring title suffix style.
+ * 2012-07-30 File version 13.2
+ *            Added new title style (eTitleNone).
+ *            Added 'titlePts' to 'Placement'.
+ * 2012-07-08 Fix title instance when a title is changed to recurring.
+ * 2011-07-31 File version 13.1
+ *            Added 'platform','os' to 'AgilityBook', modified
+ *            TitlePoints (see ARBConfigTitlePoints.cpp).
+ * 2011-06-09 File version 12.11
+ *            Added 'Config' to 'Action'.
+ * 2009-12-18 File version 12.11
+ *            Added 'O' to 'Entry'.
+ * 2009-07-26 File version 12.10
+ *            Added 'DNR' to 'Placement' and 'ReferenceRun'
+ * 2008-02-12 File version 12.9
+ *            Fix metadata bug in dognotes.
+ * 2008-08-05 File version 12.8
+ *            Added 'style' to Title, 'Style' to 'Titles'
+ * 2008-01-01 File version 12.7. Added 'Visible' to InfoItem,
+ *            'obstacles' to 'Scoring'
+ * 2007-07-03 File version 12.6. Added 'show' to 'Title',
+ *            'timestamp' to 'AgilityBook'
+ * 2007-04-22 Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
+ * 2007-02-27 File version 12.5. Added 'defValue' to 'OtherPts'.
+ * 2007-01-03 File version 12.4. Added 'DateDraw' to Calendar.
+ *            Changed 'CRCDMeta' to 'CRCDMeta2'.
+ * 2006-11-03 File version 12.3. Added 'SpdMult'.
+ * 2006-07-02 File version 12.2. Added 'subtractTF'.
+ * 2006-02-16 File version 12.1. Added 'RenameEvent'.
+ *            Allow fractional faults in title points.
+ *            Cleaned up memory usage with smart pointers.
+ * 2005-12-14 File version 12.0. Moved 'Titles' to 'Venue'.
+ * 2005-10-14 File version 11.1. Added 'Prefix' to 'Titles'.
+ * 2005-07-15 File version 11.0. Changed how Double-Qs are done.
+ * 2005-04-26 File version 10.2. Added 'ver' to 'AgilityBook'
+ * 2005-01-02 Added subnames to events.
+ * 2004-11-15 File version 10.1. Added 'underTF'/'overTF' to 'Scoring'.
+ * 2004-10-06 File version 10. Added 'Height' to 'ReferenceRun'
+ *            GetAllHeights now accumulates these too. Changed
+ *            lifetime points.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-06-29 File version 9.0. Added 'SubName' to 'Training'. Changed
+ *            structure of 'RegNum'.
+ * 2004-03-26 File version 8.6. Changed Table-in-YPS to hasTable.
+ * 2004-03-13 File version 8.5. Added 'isHidden' to 'Title'.
+ * 2004-02-15 Cleaned up newline in warning msg.
+ * 2004-02-14 File version 8.4. Added Table-in-YPS flag.
+ * 2004-02-02 File version 8.3. Added ARBDogExistingPoints items.
+ * 2004-01-21 File version 8.2. Added ConfigTitles LongName. Added
+ *            ARBConfigAction.
+ * 2003-12-29 GetAllClubs/Locations now includes calendar entries.
+ * 2003-12-27 File version 8.1. Changed ARBConfigScoring.
+ * 2003-12-07 File version 8.0. Added Info section.
+ * 2003-11-26 Changed version number to a complex value.
+ *            Added warning check when minor versions are different.
+ * 2003-10-31 Added options to Save() to allow partial saves.
+ * 2003-10-13 File version 7. Added course faults to ByScore/etc.
+ * 2003-09-21 File version 6. Added training log.
+ * 2003-07-24 Removed built-in sort on dogs. Dogs are user-sorted now.
+ * 2003-06-23 File version 5. Added 'Note' and 'Verified' to trials.
+ *            Changed how title points are configured.
+ * 2003-06-11 File version 4. Added 'dropFractions' to config scoring.
+ *            Added 'Desc' to config venue and event.
+ * 2003-04-21 File version 3. Added notes to config events. Moved
+ *            faulttypes and otherpoints from venue to main config.
+ *            Added Receieved field to Titles.
+ * 2003-01-23 Bumped file version to 2: see ARBCalendar.cpp
  */
 
 #include "stdafx.h"

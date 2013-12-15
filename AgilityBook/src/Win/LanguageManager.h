@@ -8,15 +8,14 @@
 
 /**
  * @file
- *
  * @brief interface of the CLanguageManager class
  * @author David Connet
  *
  * Revision History
- * @li 2013-11-26 DRC Fixed language initialization structure.
- * @li 2013-08-18 DRC Reworked for easier reuse.
- * @li 2009-01-01 DRC Ported to wxWidgets.
- * @li 2007-09-22 DRC Created
+ * 2013-11-26 Fixed language initialization structure.
+ * 2013-08-18 Reworked for easier reuse.
+ * 2009-01-01 Ported to wxWidgets.
+ * 2007-09-22 Created
  */
 
 class wxLocale;

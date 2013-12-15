@@ -6,22 +6,21 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgConfigTitle class
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-13 DRC Added new recurring title suffix style.
- * @li 2012-05-07 DRC Fixed some comboboxes that should have been readonly.
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2008-09-06 DRC Added roman numeral support
- * @li 2007-06-25 DRC Allow "1" as the start for recurring titles.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-01-05 DRC Created.
+ * 2013-01-13 Added new recurring title suffix style.
+ * 2012-05-07 Fixed some comboboxes that should have been readonly.
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2008-09-06 Added roman numeral support
+ * 2007-06-25 Allow "1" as the start for recurring titles.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-01-11 Allow titles to be optionally entered multiple times.
+ * 2004-01-05 Created.
  */
 
 #include "stdafx.h"

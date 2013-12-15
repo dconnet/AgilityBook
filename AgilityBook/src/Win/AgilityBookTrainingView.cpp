@@ -6,27 +6,26 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookTrainingView class
  * @author David Connet
  *
  * Revision History
- * @li 2012-12-29 DRC Update training view properly after a paste.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-04 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-01-25 DRC Remember the sort column between program invocations.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-06-24 DRC Added a sort header image.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-04-15 DRC Added Duplicate menu item.
- * @li 2004-04-06 DRC Added simple sorting by column.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-12-27 DRC Implemented Find/FindNext.
- * @li 2003-12-14 DRC Re-sort items after editing an existing one.
- * @li 2003-09-21 DRC Created
+ * 2012-12-29 Update training view properly after a paste.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-04 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-01-25 Remember the sort column between program invocations.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-06-24 Added a sort header image.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-04-15 Added Duplicate menu item.
+ * 2004-04-06 Added simple sorting by column.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-12-27 Implemented Find/FindNext.
+ * 2003-12-14 Re-sort items after editing an existing one.
+ * 2003-09-21 Created
  */
 
 #include "stdafx.h"

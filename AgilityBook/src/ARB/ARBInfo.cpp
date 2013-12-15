@@ -6,15 +6,14 @@
 
 /**
  * @file
- *
  * @brief General information to be tracked.
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2003-12-07 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2003-12-07 Created
  */
 
 #include "stdafx.h"

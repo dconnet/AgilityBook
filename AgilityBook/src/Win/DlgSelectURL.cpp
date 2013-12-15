@@ -6,16 +6,15 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgSelectURL class
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-12 DRC Clean up spacing.
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2004-03-30 DRC Created.
+ * 2013-01-12 Clean up spacing.
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2004-03-30 Created.
  */
 
 #include "stdafx.h"

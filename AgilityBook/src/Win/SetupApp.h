@@ -10,14 +10,14 @@
  * @file
  *
  * Revision History
- * @li 2013-11-26 DRC Fixed language initialization structure.
- * @li 2013-08-22 DRC Fixed issue with ctor auto-cast.
- * @li 2013-08-18 DRC Merged language management in.
- * @li 2013-08-17 DRC Added local config file support.
- * @li 2013-06-26 DRC Changed ctors.
- * @li 2013-04-10 DRC Add wxLocale default initialization.
- * @li 2012-12-30 DRC Created base app to derive from.
- * @li 2012-08-13 DRC Moved dconSetupApp out of Globals.cpp
+ * 2013-11-26 Fixed language initialization structure.
+ * 2013-08-22 Fixed issue with ctor auto-cast.
+ * 2013-08-18 Merged language management in.
+ * 2013-08-17 Added local config file support.
+ * 2013-06-26 Changed ctors.
+ * 2013-04-10 Add wxLocale default initialization.
+ * 2012-12-30 Created base app to derive from.
+ * 2012-08-13 Moved dconSetupApp out of Globals.cpp
  */
 
 #include "ImageManager.h"

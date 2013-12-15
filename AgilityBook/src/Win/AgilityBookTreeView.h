@@ -9,24 +9,23 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookTree class
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-08 DRC Ported to wxWidgets.
- * @li 2008-11-19 DRC Added SelectDog()
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2003-12-30 DRC Implemented customized text in tree.
- * @li 2003-12-28 DRC Implemented Find/FindNext.
- * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
- *                    printing and viewing (already in the listctrl)
- * @li 2003-08-28 DRC Added printing.
- * @li 2003-08-27 DRC Cleaned up selection synchronization.
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-08 Ported to wxWidgets.
+ * 2008-11-19 Added SelectDog()
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2003-12-30 Implemented customized text in tree.
+ * 2003-12-28 Implemented Find/FindNext.
+ * 2003-08-30 Added GetPrintLine to allow future differences between
+ *            printing and viewing (already in the listctrl)
+ * 2003-08-28 Added printing.
+ * 2003-08-27 Cleaned up selection synchronization.
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
  */
 
 #include "CommonView.h"

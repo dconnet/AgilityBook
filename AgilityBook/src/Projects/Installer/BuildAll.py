@@ -2,17 +2,17 @@
 # Above line is for python
 #
 # Revision History
-# 2013-09-12 DRC Add /m option to msbuild (multiple processor build)
-# 2012-12-30 DRC Drop VC9.
-# 2012-09-23 DRC Migrate to wx2.9 for ARBv3.
-# 2012-07-25 DRC Only run version include update from here.
-# 2012-07-04 DRC Update to supported compilers (vc9+)
-#                Specifically set WXWIN to official release branch.
-#                Changed program options.
-# 2012-06-01 DRC Changed VC10 output directory
-# 2010-11-07 DRC Updated to use vc10pro or sdk
-# 2010-06-11 DRC Support building on x64 OS
-# 2010-05-30 DRC Converted .bat to .py (keeps environment clean!)
+# 2013-09-12 Add /m option to msbuild (multiple processor build)
+# 2012-12-30 Drop VC9.
+# 2012-09-23 Migrate to wx2.9 for ARBv3.
+# 2012-07-25 Only run version include update from here.
+# 2012-07-04 Update to supported compilers (vc9+)
+#            Specifically set WXWIN to official release branch.
+#            Changed program options.
+# 2012-06-01 Changed VC10 output directory
+# 2010-11-07 Updated to use vc10pro or sdk
+# 2010-06-11 Support building on x64 OS
+# 2010-05-30 Converted .bat to .py (keeps environment clean!)
 """BuildAll.py -w wxwin [-b type] compiler*
    -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.0.0)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)

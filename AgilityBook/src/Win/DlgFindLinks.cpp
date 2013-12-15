@@ -6,20 +6,19 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgFindLinks class
  * @author David Connet
  *
  * Revision History
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-08-31 DRC Column headings were wrong.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-08 DRC Fixed data index lookup when editing an item.
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-06-02 DRC Added 'Open' button.
- * @li 2004-03-31 DRC Created.
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-08-31 Column headings were wrong.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-08 Fixed data index lookup when editing an item.
+ * 2009-02-10 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-06-02 Added 'Open' button.
+ * 2004-03-31 Created.
  */
 
 #include "stdafx.h"

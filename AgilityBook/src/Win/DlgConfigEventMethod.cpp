@@ -6,20 +6,19 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgConfigEventMethod class
  * @author David Connet
  *
  * Revision History
- * @li 2012-06-16 DRC Show time fault multiplier in point games.
- *                Fixed initial layout with speed points.
- * @li 2012-05-07 DRC Fixed some comboboxes that should have been readonly.
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-12 DRC Fix dates on save.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-11-04 DRC Created.
+ * 2012-06-16 Show time fault multiplier in point games.
+ *            Fixed initial layout with speed points.
+ * 2012-05-07 Fixed some comboboxes that should have been readonly.
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-12 Fix dates on save.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-11-04 Created.
  */
 
 #include "stdafx.h"

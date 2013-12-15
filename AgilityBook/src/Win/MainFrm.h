@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief interface of the CMainFrame class
  * @author David Connet
  *
  * Revision History
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2008-11-19 DRC Added context menus to status bar.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2008-11-19 Added context menus to status bar.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include "AgilityBookMenu.h"

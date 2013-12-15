@@ -8,15 +8,14 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgOptionsProgram class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2004-08-31 DRC Added option to disable splash screen.
- * @li 2004-07-23 DRC Auto-check the config version on document open.
- * @li 2004-04-08 DRC Created
+ * 2009-02-11 Ported to wxWidgets.
+ * 2004-08-31 Added option to disable splash screen.
+ * 2004-07-23 Auto-check the config version on document open.
+ * 2004-04-08 Created
  */
 
 class CTextCtrl;

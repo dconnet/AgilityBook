@@ -10,12 +10,12 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-13 DRC Added more recurring tests for new style.
- * @li 2012-07-30 DRC Added tests for checking recurring title styles.
- * @li 2011-01-22 DRC Simplified how configs are added.
- * @li 2010-08-13 DRC Updated for config 29.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2008-01-18 DRC Created empty file
+ * 2013-01-13 Added more recurring tests for new style.
+ * 2012-07-30 Added tests for checking recurring title styles.
+ * 2011-01-22 Simplified how configs are added.
+ * 2010-08-13 Updated for config 29.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2008-01-18 Created empty file
  */
 
 #include "stdafx.h"

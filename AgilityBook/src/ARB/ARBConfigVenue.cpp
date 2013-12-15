@@ -6,26 +6,25 @@
 
 /**
  * @file
- *
  * @brief The classes that make up the configuration information.
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-13 DRC Added new recurring title suffix style.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2007-10-10 DRC Added 'LifetimeName'
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
- * @li 2005-01-01 DRC Added a long name to the venue.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-03-26 DRC Update didn't save desc changes if nothing else changed.
- * @li 2004-02-02 DRC Added VerifyEvent.
- * @li 2004-01-27 DRC Updating could cause some false-positive messages because
- *                    the ordering was different.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-12-27 DRC Changed FindEvent to take a date.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
+ * 2013-01-13 Added new recurring title suffix style.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2007-10-10 Added 'LifetimeName'
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-14 Moved 'Titles' to 'Venue'.
+ * 2005-01-01 Added a long name to the venue.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-03-26 Update didn't save desc changes if nothing else changed.
+ * 2004-02-02 Added VerifyEvent.
+ * 2004-01-27 Updating could cause some false-positive messages because
+ *            the ordering was different.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-12-27 Changed FindEvent to take a date.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-07-16 Allow the code to keep processing after errors are found.
  */
 
 #include "stdafx.h"

@@ -11,24 +11,24 @@
 # an EXE that will run on XP.
 #
 # Revision History
-# 2013-10-14 DRC Allow x64-on-x64 compilation to fall back to x86_amd (VCExpress)
-# 2013-07-30 DRC Modify tmpfile to allow multiple builds
-#                (a VM can now build vc12 and the same time vc11 builds locally)
-# 2013-07-01 DRC Added VC12 support. Removed _BIND_TO... for VC10+.
-# 2012-07-07 DRC wx2.9 added x64 target - use that instead of amd64
-# 2012-06-01 DRC Added VC11 support.
-# 2011-07-30 DRC Require -w option.
-# 2010-11-20 DRC Automatically determine hasprefix support.
-# 2010-11-07 DRC Removed DEBUG_FLAG from build - set in setup.h instead.
-# 2010-10-19 DRC Remove all debug info from release build
-# 2010-10-16 DRC Added -w option
-# 2010-07-17 DRC Convert to VC10Pro (no need for SDK now)
-# 2010-05-30 DRC Add '/xp' option to vc10 setenv.cmd
-# 2010-05-29 DRC Converted .bat to .py
-# 2009-12-31 DRC Changed 'hasprefix' to 'noprefix'.
-#                (2.8 is rarely rebuilt, default to the active build)
-# 2009-09-26 DRC Tweak compile options
-# 2009-09-12 DRC Fix dll creation
+# 2013-10-14 Allow x64-on-x64 compilation to fall back to x86_amd (VCExpress)
+# 2013-07-30 Modify tmpfile to allow multiple builds
+#            (a VM can now build vc12 and the same time vc11 builds locally)
+# 2013-07-01 Added VC12 support. Removed _BIND_TO... for VC10+.
+# 2012-07-07 wx2.9 added x64 target - use that instead of amd64
+# 2012-06-01 Added VC11 support.
+# 2011-07-30 Require -w option.
+# 2010-11-20 Automatically determine hasprefix support.
+# 2010-11-07 Removed DEBUG_FLAG from build - set in setup.h instead.
+# 2010-10-19 Remove all debug info from release build
+# 2010-10-16 Added -w option
+# 2010-07-17 Convert to VC10Pro (no need for SDK now)
+# 2010-05-30 Add '/xp' option to vc10 setenv.cmd
+# 2010-05-29 Converted .bat to .py
+# 2009-12-31 Changed 'hasprefix' to 'noprefix'.
+#            (2.8 is rarely rebuilt, default to the active build)
+# 2009-09-26 Tweak compile options
+# 2009-09-12 Fix dll creation
 """CompileWX.py -w wxwin [-e] [-a] [-p] [-d] [-m] [-s name]* compiler*
 	-w wxwin: Root of wx tree, normally %WXWIN%
 	-e:       Just show the environment, don't do it

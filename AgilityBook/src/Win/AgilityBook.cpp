@@ -6,28 +6,27 @@
 
 /**
  * @file
- *
  * @brief Defines the class behaviors for the application.
  * @author David Connet
  *
  * Revision History
- * @li 2013-11-26 DRC Fixed language initialization structure.
- * @li 2013-08-16 DRC Add support for standalone app (.info file) on Windows.
- * @li 2012-12-15 DRC Prevent TabView from getting activation.
- * @li 2012-08-28 DRC Rework how wxCmdLineParser is initialized.
- * @li 2012-07-27 DRC Disable spell checking on OSX 10.8. It crashes.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-26 DRC Fix file autoload failure so it opens new document.
- * @li 2008-12-14 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
- * @li 2005-02-10 DRC There was a problem initializing RICHED*.DLL on Win98.
- * @li 2004-07-20 DRC Changed the updating to auto-update configurations also.
- *                    Moved the user-request updates to the document.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-06-02 DRC Moved ShellExecute code here.
- * @li 2004-03-05 DRC Added check-for-updates feature.
- * @li 2003-12-07 DRC When opening the last opened file fails, open a new doc.
+ * 2013-11-26 Fixed language initialization structure.
+ * 2013-08-16 Add support for standalone app (.info file) on Windows.
+ * 2012-12-15 Prevent TabView from getting activation.
+ * 2012-08-28 Rework how wxCmdLineParser is initialized.
+ * 2012-07-27 Disable spell checking on OSX 10.8. It crashes.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-26 Fix file autoload failure so it opens new document.
+ * 2008-12-14 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-10-19 Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
+ * 2005-02-10 There was a problem initializing RICHED*.DLL on Win98.
+ * 2004-07-20 Changed the updating to auto-update configurations also.
+ *            Moved the user-request updates to the document.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-06-02 Moved ShellExecute code here.
+ * 2004-03-05 Added check-for-updates feature.
+ * 2003-12-07 When opening the last opened file fails, open a new doc.
  */
 
 #include "stdafx.h"

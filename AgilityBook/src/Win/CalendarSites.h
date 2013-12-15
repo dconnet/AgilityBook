@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief Manage the direct download of calendar data from the web.
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2007-08-12 DRC Created
+ * 2009-02-10 Ported to wxWidgets.
+ * 2007-08-12 Created
  */
 
 #include "ARB/ARBTypes2.h"

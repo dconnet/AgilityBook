@@ -6,17 +6,16 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgPageEncode class
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-10 DRC Fix serialization. Broken in 4/15 wxString checkin.
- * @li 2011-10-19 DRC Wrap '/' with wxT() so it's not output as int.
- * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
- * @li 2009-03-01 DRC Ported to wxWidgets.
- * @li 2008-01-12 DRC Dump reg data in .reg format
- * @li 2007-01-02 DRC Created
+ * 2012-07-10 Fix serialization. Broken in 4/15 wxString checkin.
+ * 2011-10-19 Wrap '/' with wxT() so it's not output as int.
+ * 2009-08-26 Fixed streaming wxString to otstringstream.
+ * 2009-03-01 Ported to wxWidgets.
+ * 2008-01-12 Dump reg data in .reg format
+ * 2007-01-02 Created
  */
 
 #include "stdafx.h"

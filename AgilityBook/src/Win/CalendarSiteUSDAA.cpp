@@ -6,18 +6,17 @@
 
 /**
  * @file
- *
  * @brief Implementation of ICalendarSite
  * @author David Connet
  *
  * Revision History
- * @li 2013-08-23 DRC Add error message if tidy error is empty.
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2010-11-05 DRC Bump to 2.2.0: USDAA changed the detail page layout.
- * @li 2009-11-01 DRC Change how initialization is done.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-25 DRC Ported to wxWidgets.
- * @li 2007-08-12 DRC Created
+ * 2013-08-23 Add error message if tidy error is empty.
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2010-11-05 Bump to 2.2.0: USDAA changed the detail page layout.
+ * 2009-11-01 Change how initialization is done.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-25 Ported to wxWidgets.
+ * 2007-08-12 Created
  */
 
 #include "stdafx.h"

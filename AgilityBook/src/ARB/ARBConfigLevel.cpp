@@ -6,20 +6,19 @@
 
 /**
  * @file
- *
  * @brief The classes that make up the configuration information.
  * @author David Connet
  *
  * Revision History
- * @li 2013-09-03 DRC Added short name.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-01-27 DRC Updating could cause some false-positive messages because
- *                    the ordering was different.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
+ * 2013-09-03 Added short name.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-01-27 Updating could cause some false-positive messages because
+ *            the ordering was different.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-07-16 Allow the code to keep processing after errors are found.
  */
 
 #include "stdafx.h"

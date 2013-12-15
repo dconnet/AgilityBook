@@ -6,14 +6,13 @@
 
 /**
  * @file
- *
  * @brief Data-driven helper to create menus and toolbar items.
  * @author David Connet
  *
  * Revision History
- * @li 2013-10-13 DRC Changed to using an art provider.
- * @li 2012-07-28 DRC Fix About menu insertion.
- * @li 2012-07-13 DRC Created
+ * 2013-10-13 Changed to using an art provider.
+ * 2012-07-28 Fix About menu insertion.
+ * 2012-07-13 Created
  */
 
 #include "stdafx.h"

@@ -6,25 +6,24 @@
 
 /**
  * @file
- *
  * @brief The classes that make up the dog's information.
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
- * @li 2007-02-14 DRC Fixed a problem in YPS table file conversion.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
- * @li 2004-11-15 DRC Changed time fault computation on T+F events.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
- * @li 2004-09-01 DRC Fix a file that may have been corrupted (see history.txt)
- * @li 2004-03-26 DRC File version 8.6. Changed Table-in-YPS to hasTable.
- * @li 2004-02-14 DRC Added Table-in-YPS flag.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
+ * 2012-07-04 Add option to use run time or opening time in gamble OPS.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2007-07-01 Fixed a problem with table flag on a run.
+ * 2007-02-14 Fixed a problem in YPS table file conversion.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-04 Added support for NADAC bonus titling points.
+ * 2004-11-15 Changed time fault computation on T+F events.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-09-07 Time+Fault scoring shouldn't include time faults.
+ * 2004-09-01 Fix a file that may have been corrupted (see history.txt)
+ * 2004-03-26 File version 8.6. Changed Table-in-YPS to hasTable.
+ * 2004-02-14 Added Table-in-YPS flag.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-10-13 Made Time/CourseFaults common to all scoring methods.
  */
 
 #include "stdafx.h"

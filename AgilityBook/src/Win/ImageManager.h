@@ -8,7 +8,6 @@
 
 /**
  * @file
- *
  * @brief Image Manager
  * @author David Connet
  *
@@ -16,8 +15,8 @@
  * Users of this can extend by associating a callback class.
  *
  * Revision History
- * @li 2013-10-13 DRC Changed ImageManager to an art provider.
- * @li 2012-12-29 DRC Created.
+ * 2013-10-13 Changed ImageManager to an art provider.
+ * 2012-12-29 Created.
  */
 
 #include <wx/artprov.h>

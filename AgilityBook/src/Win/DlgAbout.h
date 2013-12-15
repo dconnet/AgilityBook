@@ -8,16 +8,15 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgAbout class
  * @author David Connet
  *
  * Revision History
- * @li 2008-12-14 DRC Ported to wxWidgets.
- * @li 2006-12-10 DRC Simplified download links.
- * @li 2005-02-08 DRC Added another link.
- * @li 2004-07-20 DRC Added a note for updating information.
- * @li 2003-09-17 DRC Added a 'check for updates' control.
+ * 2008-12-14 Ported to wxWidgets.
+ * 2006-12-10 Simplified download links.
+ * 2005-02-08 Added another link.
+ * 2004-07-20 Added a note for updating information.
+ * 2003-09-17 Added a 'check for updates' control.
  */
 
 #include <wx/hyperlink.h>

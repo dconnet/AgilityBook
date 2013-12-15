@@ -6,20 +6,19 @@
 
 /**
  * @file
- *
  * @brief Various validators.
  * @author David Connet
  *
  * Revision History
- * @li 2012-10-26 DRC Changed ARBDate::GetTime to avoid time_t when possible.
- * @li 2012-08-13 DRC Moved CQualifyingValidator to separate file.
- * @li 2012-03-15 DRC Missed upper casing the Validate() method.
- * @li 2012-03-01 DRC Change time to upper case before parsing.
- * @li 2012-01-02 DRC Change validator to support default value on empty field.
- * @li 2011-12-30 DRC Use ChangeValue on textctrl to prevent change message.
- * @li 2010-12-07 DRC Added wxDateTime support.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-15 DRC Created
+ * 2012-10-26 Changed ARBDate::GetTime to avoid time_t when possible.
+ * 2012-08-13 Moved CQualifyingValidator to separate file.
+ * 2012-03-15 Missed upper casing the Validate() method.
+ * 2012-03-01 Change time to upper case before parsing.
+ * 2012-01-02 Change validator to support default value on empty field.
+ * 2011-12-30 Use ChangeValue on textctrl to prevent change message.
+ * 2010-12-07 Added wxDateTime support.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-15 Created
  */
 
 #include "stdafx.h"
