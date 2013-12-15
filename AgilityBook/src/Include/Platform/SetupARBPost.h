@@ -10,7 +10,6 @@
 
 /**
  * @file
- *
  * @brief Precompiled header file for system headers.
  * @author David Connet
  *
@@ -18,7 +17,7 @@
  * before include wx headers causes issues in msvc)
  *
  * Revision History
- * @li 2013-01-27 DRC Split/moved stdafx.h.
+ * 2013-01-27 Split/moved stdafx.h.
  */
 
 // VC9/VC10 defines _HAS_TR1 if tr1 is present (via yvals.h).

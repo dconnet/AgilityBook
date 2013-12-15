@@ -6,12 +6,11 @@
 
 /**
  * @file
- *
  * @brief Tidy html
  * @author David Connet
  *
  * Revision History
- * @li 2013-06-10 DRC Separated from Win/CalendarSiteUSDAA.cpp
+ * 2013-06-10 Separated from Win/CalendarSiteUSDAA.cpp
  */
 
 #include "stdafx.h"

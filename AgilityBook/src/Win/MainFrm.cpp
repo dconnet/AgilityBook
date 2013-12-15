@@ -6,21 +6,20 @@
 
 /**
  * @file
- *
  * @brief implementation of the CMainFrame class
  * @author David Connet
  *
  * Revision History
- * @li 2012-11-14 DRC "Filtered" was truncated in wx2.8 status bar.
- * @li 2012-01-07 DRC Fix tab type/orientation persistence.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-25 DRC Fix status width on Mac.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2008-11-19 DRC Added context menus to status bar.
- * @li 2006-09-01 DRC Added multi-monitor support.
- * @li 2003-05-18 DRC Obsoleted registry settings "Calendar"/"List" (bool)
- *                    "Settings"/"View" (int) changed (see TabView.cpp)
+ * 2012-11-14 "Filtered" was truncated in wx2.8 status bar.
+ * 2012-01-07 Fix tab type/orientation persistence.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-25 Fix status width on Mac.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2008-11-19 Added context menus to status bar.
+ * 2006-09-01 Added multi-monitor support.
+ * 2003-05-18 Obsoleted registry settings "Calendar"/"List" (bool)
+ *            "Settings"/"View" (int) changed (see TabView.cpp)
  */
 
 #include "stdafx.h"

@@ -6,23 +6,21 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgListViewer class
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-12-12 DRC Added Score to Other points list.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-28 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
- * @li 2005-01-02 DRC Show existing points in the list viewer.
- *                    Added subnames to events.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-08-26 DRC Completed.
- * @li 2004-07-29 DRC Created
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-12-12 Added Score to Other points list.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-28 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-03-14 Show a summary of lifetime points in the list viewer.
+ * 2005-01-02 Show existing points in the list viewer. Added subnames to events.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-08-26 Completed.
+ * 2004-07-29 Created
  */
 
 #include "stdafx.h"

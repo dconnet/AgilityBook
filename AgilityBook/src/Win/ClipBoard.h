@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief Clipboard functions for copying data to/from clipboard.
  * @author David Connet
  *
  * Revision History
- * @li 2009-01-26 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-06-06 DRC Separated from AgilityBookTreeData.cpp
+ * 2009-01-26 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-06-06 Separated from AgilityBookTreeData.cpp
  */
 
 #include "ARB/ARBTypes2.h"

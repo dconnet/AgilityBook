@@ -6,14 +6,13 @@
 
 /**
  * @file
- *
  * @brief Message box with a details button.
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-02-25 DRC Ported to wxWidgets.
- * @li 2004-09-11 DRC Created
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-02-25 Ported to wxWidgets.
+ * 2004-09-11 Created
  */
 
 #include "stdafx.h"

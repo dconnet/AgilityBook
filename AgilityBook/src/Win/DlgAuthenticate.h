@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief Web authentication
  * @author David Connet
  *
  * Revision History
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2007-08-03 DRC Created
+ * 2009-01-06 Ported to wxWidgets.
+ * 2007-08-03 Created
  */
 
 class CDlgAuthenticate : public wxDialog

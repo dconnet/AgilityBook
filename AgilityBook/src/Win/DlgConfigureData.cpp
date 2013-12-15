@@ -6,19 +6,18 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgConfigure class
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-04-02 DRC Up the ref count to prevent problems. See comments below.
- * @li 2004-01-14 DRC Use complete title name instead of nice name. When
- *                    renaming a title and that name is in use, prompt to merge.
- * @li 2003-02-23 DRC Modifying the scoring methods wasn't updated in the tree.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-01-10 Allow titles to be optionally entered multiple times.
+ * 2004-04-02 Up the ref count to prevent problems. See comments below.
+ * 2004-01-14 Use complete title name instead of nice name. When
+ *            renaming a title and that name is in use, prompt to merge.
+ * 2003-02-23 Modifying the scoring methods wasn't updated in the tree.
  */
 
 #include "stdafx.h"

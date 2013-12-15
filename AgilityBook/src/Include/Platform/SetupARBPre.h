@@ -10,7 +10,6 @@
 
 /**
  * @file
- *
  * @brief Base Precompiled header file for ARB.
  * @author David Connet
  *
@@ -18,13 +17,13 @@
  * framework, then include SetupARBPost.h
  *
  * Revision History
- * @li 2013-01-27 DRC Split/moved stdafx.h.
- * @li 2013-01-01 DRC Added _VARIADIC_MAX for vc11.
- * @li 2012-01-29 DRC Add macro to ease selecting all text on dialog init.
- * @li 2011-12-22 DRC Add a macro to make using Bind() easier.
- * @li 2009-05-30 DRC Tweaked pragma message macro.
- * @li 2009-03-09 DRC Added ARB_SET_ERASE_RETURNS_ITERATOR.
- * @li 2005-10-30 DRC Added static xerces library support.
+ * 2013-01-27 Split/moved stdafx.h.
+ * 2013-01-01 Added _VARIADIC_MAX for vc11.
+ * 2012-01-29 Add macro to ease selecting all text on dialog init.
+ * 2011-12-22 Add a macro to make using Bind() easier.
+ * 2009-05-30 Tweaked pragma message macro.
+ * 2009-03-09 Added ARB_SET_ERASE_RETURNS_ITERATOR.
+ * 2005-10-30 Added static xerces library support.
  */
 
 #if defined(_WIN32)

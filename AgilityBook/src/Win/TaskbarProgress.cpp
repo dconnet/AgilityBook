@@ -6,13 +6,12 @@
 
 /**
  * @file
- *
  * @brief Display progress in Win7 taskbar
  * @author David Connet
  *
  * Revision History
- * @li 2013-09-12 DRC Remove use of ATL (can now use VC-express to compile)
- * @li 2013-08-23 DRC Created
+ * 2013-09-12 Remove use of ATL (can now use VC-express to compile)
+ * 2013-08-23 Created
  */
 
 #include "stdafx.h"

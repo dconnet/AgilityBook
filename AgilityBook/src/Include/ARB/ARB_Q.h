@@ -12,7 +12,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-08-14 DRC Moved out of ARBTypes.h
+ * 2013-08-14 Moved out of ARBTypes.h
  */
 
 #include "ARB/ARBTypes2.h"

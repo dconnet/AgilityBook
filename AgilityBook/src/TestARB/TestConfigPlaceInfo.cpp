@@ -10,8 +10,8 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2008-01-18 DRC Created empty file
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2008-01-18 Created empty file
  */
 
 #include "stdafx.h"

@@ -6,12 +6,11 @@
 
 /**
  * @file
- *
  * @brief Change certain default wxWidget behaviors.
  * @author David Connet
  *
  * Revision History
- * @li 2009-10-11 DRC Created.
+ * 2009-10-11 Created.
  */
 
 #include "stdafx.h"

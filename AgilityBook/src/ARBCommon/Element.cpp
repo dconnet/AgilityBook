@@ -6,40 +6,39 @@
 
 /**
  * @file
- *
  * @brief Tree structure to store XML.
  * @author David Connet
  *
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
- * @li 2013-03-23 DRC Implement libxml LoadXML stream api.
- * @li 2012-11-25 DRC Add libxml support back in.
- * @li 2012-09-29 DRC Trap wx generated xml parsing errors into our buffer.
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
- * @li 2009-02-08 DRC Fix wxWidget xml creation
- * @li 2009-01-05 DRC Added libxml2 support
- * @li 2008-12-27 DRC Added wxWidget support (xml)
- * @li 2008-11-02 DRC Added xerces 3.0 support
- * @li 2007-09-06 DRC Added GetNthElementNode
- * @li 2007-08-15 DRC Modified to support mixed text/nodes.
- * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
- * @li 2007-03-37 DRC Fixed a problem releasing transcoded data.
- * @li 2005-06-09 DRC Numbers were being stored/shown in scientific notation.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-01-04 DRC Moved date parsing code to ARBDate::FromString.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
- * @li Code evolved to AgilityRecordBook Element
- * @li 2002-11-27 DRC Added additional SetValue methods.
- * @li 2002-11-22 DRC Fixed a problem between unicode/mbcs compiles.
- * @li 2002-11-19 DRC Simplified to Element/Tree to a single class.
- * @li 2002-07-24 DRC Convert to Xerces 2.0.0. Takeadvantage that
- *                    XMLCh == wchar_t and MFC7's CString[AW]
- * @li 2001-09-13 DRC Created CStringTree
+ * 2013-03-23 Implement libxml LoadXML stream api.
+ * 2012-11-25 Add libxml support back in.
+ * 2012-09-29 Trap wx generated xml parsing errors into our buffer.
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-03-12 Converting all TCHAR stuff to wxWidgets
+ * 2009-02-08 Fix wxWidget xml creation
+ * 2009-01-05 Added libxml2 support
+ * 2008-12-27 Added wxWidget support (xml)
+ * 2008-11-02 Added xerces 3.0 support
+ * 2007-09-06 Added GetNthElementNode
+ * 2007-08-15 Modified to support mixed text/nodes.
+ * 2007-08-08 Moved initialization here, so all XML usage is contained.
+ * 2007-03-37 Fixed a problem releasing transcoded data.
+ * 2005-06-09 Numbers were being stored/shown in scientific notation.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-01-04 Moved date parsing code to ARBDate::FromString.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-10-22 Added a DTD parameter to SaveXML.
+ * Code evolved to AgilityRecordBook Element
+ * 2002-11-27 Added additional SetValue methods.
+ * 2002-11-22 Fixed a problem between unicode/mbcs compiles.
+ * 2002-11-19 Simplified to Element/Tree to a single class.
+ * 2002-07-24 Convert to Xerces 2.0.0. Takeadvantage that
+ *            XMLCh == wchar_t and MFC7's CString[AW]
+ * 2001-09-13 Created CStringTree
  */
 
 #include "stdafx.h"

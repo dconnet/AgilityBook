@@ -19,9 +19,9 @@
  * The actual contained data is still 8bit chars.
  *
  * Revision History
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2004-03-06 DRC Created
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2004-03-06 Created
  */
 
 #include "ARBTypes.h"

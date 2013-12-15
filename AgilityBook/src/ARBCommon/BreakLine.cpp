@@ -6,14 +6,13 @@
 
 /**
  * @file
- *
  * @brief BreakLine and CSV handling.
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-25 DRC Fix a CSV read problem with multiline continuation data.
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2010-10-30 DRC Moved BreakLine from Globals.cpp, added CSV routines.
+ * 2012-07-25 Fix a CSV read problem with multiline continuation data.
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2010-10-30 Moved BreakLine from Globals.cpp, added CSV routines.
  */
 
 #include "stdafx.h"

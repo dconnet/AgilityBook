@@ -5,14 +5,14 @@
 # project is defined in.
 #
 # Revision History
-# 2012-07-04 DRC This file is wildly out of date. Just return an error now.
-#                (above comments are wrong too)
-# 2007-11-21 DRC Add VC9 support. VC9 is Unicode-only, for win98 (non-unicode)
-#                builds, use VC8. VC9 config no longer has 'unicode' in name
-# 2006-12-15 DRC Translated BuildHelp.bat to python, add Unicode support.
-# 2005-06-24 DRC Add better support for multiple compilers
-# 2005-01-23 DRC Added History.html creation from a template.
-# 2004-05-20 DRC Created
+# 2012-07-04 This file is wildly out of date. Just return an error now.
+#            (above comments are wrong too)
+# 2007-11-21 Add VC9 support. VC9 is Unicode-only, for win98 (non-unicode)
+#            builds, use VC8. VC9 config no longer has 'unicode' in name
+# 2006-12-15 Translated BuildHelp.bat to python, add Unicode support.
+# 2005-06-24 Add better support for multiple compilers
+# 2005-01-23 Added History.html creation from a template.
+# 2004-05-20 Created
 
 """BuildHelp configuration compiler [wx/win]
 configuration:

@@ -6,14 +6,13 @@
 
 /**
  * @file
- *
  * @brief Let user specify how to sort events within a venue.
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-07-16 DRC Created
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-07-16 Created
  */
 
 #include "stdafx.h"

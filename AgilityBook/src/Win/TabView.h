@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief Tab view
  * @author David Connet
  *
  * Revision History
- * @li 2012-01-07 DRC Fix tab type/orientation persistence.
- * @li 2009-01-06 DRC Ported to wxWidgets.
+ * 2012-01-07 Fix tab type/orientation persistence.
+ * 2009-01-06 Ported to wxWidgets.
  */
 
 #include "CommonView.h"

@@ -6,29 +6,28 @@
 
 /**
  * @file
- *
  * @brief Data classes behind the points view items.
  * @author David Connet
  *
  * Revision History
- * @li 2011-10-27 DRC Add the MultiQ name to the Points view, span columns.
- * @li 2011-08-13 DRC Don't copy internal url links to the clipboard.
- * @li 2010-12-24 DRC Accumulate speed points by division.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-26 DRC Ported to wxWidgets.
- * @li 2007-03-14 DRC Change accumulation to work by event, not method.
- *                    This removes the multiple listings in the view.
- * @li 2006-07-15 DRC Add option to sort by event instead of division.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-10-18 DRC Remember last selected item when reloading data.
- * @li 2005-10-14 DRC Added a context menu.
- * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
- * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
- * @li 2005-01-02 DRC Show existing points in the list viewer.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-12-03 DRC Show all lifetime points when filtering.
- * @li 2004-08-06 DRC Created
+ * 2011-10-27 Add the MultiQ name to the Points view, span columns.
+ * 2011-08-13 Don't copy internal url links to the clipboard.
+ * 2010-12-24 Accumulate speed points by division.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-26 Ported to wxWidgets.
+ * 2007-03-14 Change accumulation to work by event, not method.
+ *            This removes the multiple listings in the view.
+ * 2006-07-15 Add option to sort by event instead of division.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-10-18 Remember last selected item when reloading data.
+ * 2005-10-14 Added a context menu.
+ * 2005-05-04 Added subtotaling by division to lifetime points.
+ * 2005-03-14 Show a summary of lifetime points in the list viewer.
+ * 2005-01-10 Allow titles to be optionally entered multiple times.
+ * 2005-01-02 Show existing points in the list viewer.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-12-03 Show all lifetime points when filtering.
+ * 2004-08-06 Created
  */
 
 #include "stdafx.h"

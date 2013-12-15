@@ -6,20 +6,19 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgReferenceRun class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2010-05-22 DRC Fix initialization of Q.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-12 DRC Fix killfocus handling.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2012-05-22 Change KillFocus handler to text change handler.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2010-05-22 Fix initialization of Q.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-12 Fix killfocus handling.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"

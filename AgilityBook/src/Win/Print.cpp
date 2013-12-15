@@ -6,19 +6,18 @@
 
 /**
  * @file
- *
  * @brief Support for direct printing of runs.
  * @author David Connet
  *
  * Revision History
- * @li 2013-09-03 DRC Changed to use short names.
- * @li 2009-12-19 DRC Fix blank page layout in landscape.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-19 DRC Fixed printing when page size isn't specified.
- * @li 2009-05-31 DRC Added support for creating pages of a specific size.
- * @li 2009-01-27 DRC Ported to wxWidgets.
- * @li 2009-01-21 DRC Leave gray separator line in when text in run is empty.
- * @li 2007-07-13 DRC Created
+ * 2013-09-03 Changed to use short names.
+ * 2009-12-19 Fix blank page layout in landscape.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-19 Fixed printing when page size isn't specified.
+ * 2009-05-31 Added support for creating pages of a specific size.
+ * 2009-01-27 Ported to wxWidgets.
+ * 2009-01-21 Leave gray separator line in when text in run is empty.
+ * 2007-07-13 Created
  */
 
 #include "stdafx.h"

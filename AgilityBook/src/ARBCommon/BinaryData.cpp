@@ -10,10 +10,10 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-12 DRC Encoding/decoding 0 bytes should fail.
- * @li 2008-12-13 DRC Added wxWidget support (zlib)
- * @li 2007-01-03 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-12 Encoding/decoding 0 bytes should fail.
+ * 2008-12-13 Added wxWidget support (zlib)
+ * 2007-01-03 Created
  */
 
 #include "stdafx.h"

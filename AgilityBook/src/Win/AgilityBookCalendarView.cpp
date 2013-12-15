@@ -6,33 +6,32 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookViewCalendar class
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-01 DRC Allow the mouse wheel to scroll beyond last entry.
- *                    Add better keyboard navigation on Mac.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-14 DRC Removed wxScrollWindow - scroll wasn't used.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2007-12-21 DRC Localize months/days (because of static link CRT)
- * @li 2007-01-13 DRC Fixed a problem with scroll bar not appearing.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2004-10-04 DRC Added div-by-0 tests.
- * @li 2004-09-28 DRC Set the page scrolling size to 4 weeks.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
- * @li 2003-11-22 DRC Update the list when creating an entry.
- * @li 2003-11-21 DRC Enabled copy and select all.
- * @li 2003-10-31 DRC Cleaned up pagedown scrolling.
- * @li 2003-10-29 DRC Support the mouse wheel for scrolling.
- * @li 2003-10-22 DRC Right click sets the current date.
- * @li 2003-08-27 DRC Cleaned up selection synchronization.
- * @li 2003-08-09 DRC When dbl-clicking on a date, make sure all entries are
- *                    visible - even if 'hide on entered' option is on.
+ * 2013-01-01 Allow the mouse wheel to scroll beyond last entry.
+ *            Add better keyboard navigation on Mac.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-14 Removed wxScrollWindow - scroll wasn't used.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-10 Ported to wxWidgets.
+ * 2007-12-21 Localize months/days (because of static link CRT)
+ * 2007-01-13 Fixed a problem with scroll bar not appearing.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2004-10-04 Added div-by-0 tests.
+ * 2004-09-28 Set the page scrolling size to 4 weeks.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-01-04 Changed ARBDate::GetString to take a format code.
+ * 2003-11-22 Update the list when creating an entry.
+ * 2003-11-21 Enabled copy and select all.
+ * 2003-10-31 Cleaned up pagedown scrolling.
+ * 2003-10-29 Support the mouse wheel for scrolling.
+ * 2003-10-22 Right click sets the current date.
+ * 2003-08-27 Cleaned up selection synchronization.
+ * 2003-08-09 When dbl-clicking on a date, make sure all entries are
+ *            visible - even if 'hide on entered' option is on.
  */
 
 #include "stdafx.h"

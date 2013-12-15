@@ -9,7 +9,7 @@
  * @brief File hashing algorithms
  *
  * Revision History
- * @li 2013-10-29 DRC Added more hash algorithms
+ * 2013-10-29 Added more hash algorithms
  */
 
 extern std::wstring ARBMsgDigestComputeMD5(

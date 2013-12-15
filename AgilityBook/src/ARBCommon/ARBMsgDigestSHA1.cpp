@@ -19,7 +19,7 @@
  * This file combines license.txt, sha1.h, sha1.cpp
  *
  * Revision History
- * @li 2013-10-29 DRC Created
+ * 2013-10-29 Created
  */
 
 #include "stdafx.h"

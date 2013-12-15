@@ -6,18 +6,17 @@
 
 /**
  * @file
- *
  * @brief Global functions
  * @author David Connet
  *
  * Revision History
- * @li 2012-10-06 DRC Moved backup function from doc to here.
- * @li 2012-08-12 DRC Moved FormatBytes to StringUtil
- * @li 2012-05-04 DRC Added FormatBytes
- * @li 2011-04-16 DRC Added GetFileTimes
- * @li 2010-10-30 DRC Moved BreakLine to a separate file.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-14 DRC Separated from AgilityBook.cpp
+ * 2012-10-06 Moved backup function from doc to here.
+ * 2012-08-12 Moved FormatBytes to StringUtil
+ * 2012-05-04 Added FormatBytes
+ * 2011-04-16 Added GetFileTimes
+ * 2010-10-30 Moved BreakLine to a separate file.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-14 Separated from AgilityBook.cpp
  */
 
 #include "stdafx.h"

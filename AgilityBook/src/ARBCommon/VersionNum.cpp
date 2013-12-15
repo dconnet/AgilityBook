@@ -6,19 +6,18 @@
 
 /**
  * @file
- *
  * @brief implementation of the CVersionNum class
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-28 DRC Crap, v2.3.6 was hosed. Fix version parsing.
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-28 DRC Removed Windows VERSIONNUM support (use VersionNumber.h)
- * @li 2009-01-01 DRC Ported to wxWidgets.
- * @li 2007-10-24 DRC Changed ctor and added <= operators
- * @li 2006-12-10 DRC Fixed operator< and operator>.
- * @li 2004-03-04 DRC Created
+ * 2012-07-28 Crap, v2.3.6 was hosed. Fix version parsing.
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-28 Removed Windows VERSIONNUM support (use VersionNumber.h)
+ * 2009-01-01 Ported to wxWidgets.
+ * 2007-10-24 Changed ctor and added <= operators
+ * 2006-12-10 Fixed operator< and operator>.
+ * 2004-03-04 Created
  */
 
 #include "stdafx.h"

@@ -10,10 +10,10 @@
  * @author David Connet
  *
  * Revision History
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2008-12-27 DRC Replace local LoadTree with LoadXMLData
- * @li 2008-01-11 DRC Created
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2008-12-27 Replace local LoadTree with LoadXMLData
+ * 2008-01-11 Created
  */
 
 #include "stdafx.h"

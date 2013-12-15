@@ -12,35 +12,35 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2007-08-14 DRC Separated DTD defines into ARBStructure.h
- * @li 2007-08-02 DRC Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
- *                    Added 'CalSite' to config. 'SecEmail'/etc to 'Calendar'
- * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
- * @li 2007-02-27 DRC Added 'defValue'.
- * @li 2007-01-03 DRC Changed 'CRCDMeta' to 'CRCDMeta2'.
- * @li 2006-07-02 DRC Added 'subtractTF'.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2006-02-08 DRC Added 'RenameEvent'.
- * @li 2005-12-04 DRC Added 'bonusPts' to 'Scoring','Run'(scoring)
- * @li 2005-10-26 DRC Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
- * @li 2005-04-26 DRC Added 'ver' to 'AgilityBook'
- * @li 2005-01-11 DRC Added 'Multiple' to 'Titles', 'instance' to 'Title'.
- * @li 2005-01-02 DRC Added subnames to events.
- * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
- * @li 2004-11-15 DRC Added TimeFaults for T+F, ClubInfo, LocationInfo
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
- * @li 2004-03-30 DRC Changed Table-in-YPS to hasTable, added to ConfigScoring.
- *                    Added Link to runs.
- * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
- * @li 2004-02-14 DRC Added TableInYPS in run scoring.
- * @li 2004-02-02 DRC Added ARBDogExistingPoints items.
- * @li 2004-01-21 DRC Added ARBConfigAction items.
- * @li 2003-12-07 DRC Added Info section.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-10-31 DRC Added options to Save() to allow partial saves.
- * @li 2003-10-13 DRC Made Time/CourseFaults common for all types of scoring.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2007-08-14 Separated DTD defines into ARBStructure.h
+ * 2007-08-02 Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
+ *            Added 'CalSite' to config. 'SecEmail'/etc to 'Calendar'
+ * 2007-04-22 Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
+ * 2007-02-27 Added 'defValue'.
+ * 2007-01-03 Changed 'CRCDMeta' to 'CRCDMeta2'.
+ * 2006-07-02 Added 'subtractTF'.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2006-02-08 Added 'RenameEvent'.
+ * 2005-12-04 Added 'bonusPts' to 'Scoring','Run'(scoring)
+ * 2005-10-26 Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
+ * 2005-04-26 Added 'ver' to 'AgilityBook'
+ * 2005-01-11 Added 'Multiple' to 'Titles', 'instance' to 'Title'.
+ * 2005-01-02 Added subnames to events.
+ * 2005-01-01 Renamed MachPts to SpeedPts.
+ * 2004-11-15 Added TimeFaults for T+F, ClubInfo, LocationInfo
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-03-31 Started adding auto-lifetime point accumulation.
+ * 2004-03-30 Changed Table-in-YPS to hasTable, added to ConfigScoring.
+ *            Added Link to runs.
+ * 2004-02-18 Added 'DeleteTitle' configuration action.
+ * 2004-02-14 Added TableInYPS in run scoring.
+ * 2004-02-02 Added ARBDogExistingPoints items.
+ * 2004-01-21 Added ARBConfigAction items.
+ * 2003-12-07 Added Info section.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-10-31 Added options to Save() to allow partial saves.
+ * 2003-10-13 Made Time/CourseFaults common for all types of scoring.
  */
 
 #include "ARB/ARBCalendar.h"

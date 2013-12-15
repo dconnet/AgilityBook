@@ -6,16 +6,15 @@
 
 /**
  * @file
- *
  * @brief Implementation of IARBConfigHandler
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-30 DRC Moved zip code into LibArchive.
- * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-03 DRC Ported to wxWidgets.
- * @li 2008-10-31 DRC Created
+ * 2013-01-30 Moved zip code into LibArchive.
+ * 2012-03-16 Renamed LoadXML functions, added stream version.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-03 Ported to wxWidgets.
+ * 2008-10-31 Created
  */
 
 #include "stdafx.h"

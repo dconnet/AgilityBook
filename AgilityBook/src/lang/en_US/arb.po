@@ -2297,7 +2297,7 @@ msgstr "You must name a filter in order to save it."
 
 # DlgAuthenticate
 #: Win/DlgAuthenticate.cpp:42
-msgid "IDD_AUTHENTICATE"
+msgid "Authentication"
 msgstr "Authentication"
 
 #: Win/DlgAuthenticate.cpp:53

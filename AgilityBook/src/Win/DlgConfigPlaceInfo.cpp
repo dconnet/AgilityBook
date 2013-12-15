@@ -6,14 +6,13 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgConfigPlaceInfo class
  * @author David Connet
  *
  * Revision History
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-11-04 DRC Created.
+ * 2012-02-16 Fix initial focus.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-11-04 Created.
  */
 
 #include "stdafx.h"

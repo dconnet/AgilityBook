@@ -6,17 +6,16 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookOptions class
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-11 DRC Fix filters on configuration import.
- * @li 2011-10-12 DRC Added better filter change detection.
- * @li 2011-08-10 DRC Added builtin support for an 'all' filter.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-01 DRC Ported to wxWidgets.
- * @li 2006-03-02 DRC Separated filter options from main options.
+ * 2013-01-11 Fix filters on configuration import.
+ * 2011-10-12 Added better filter change detection.
+ * 2011-08-10 Added builtin support for an 'all' filter.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-01 Ported to wxWidgets.
+ * 2006-03-02 Separated filter options from main options.
  */
 
 #include "stdafx.h"

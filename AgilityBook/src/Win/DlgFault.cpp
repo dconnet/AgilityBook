@@ -6,16 +6,15 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgFault class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2012-02-16 Fix initial focus.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"

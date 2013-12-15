@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookViewHtml class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-09-10 DRC Created
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-09-10 Created
  */
 
 #include "CommonView.h"

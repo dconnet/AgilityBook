@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgConfigVenue class
  * @author David Connet
  *
@@ -19,20 +18,20 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-12-10 DRC Enable duplication of a title.
- * @li 2004-08-14 DRC Fixed a problem dbl-clicking when nothing was selected.
- * @li 2004-04-29 DRC Changed the way events are displayed (from tree to list).
- * @li 2004-02-09 DRC Fixed some bugs when creating/modifying venues.
- * @li 2004-02-02 DRC Added ExistingPoints.
- * @li 2004-01-24 DRC Created
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-14 Moved 'Titles' to 'Venue'.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-11 Allow titles to be optionally entered multiple times.
+ * 2004-12-10 Enable duplication of a title.
+ * 2004-08-14 Fixed a problem dbl-clicking when nothing was selected.
+ * 2004-04-29 Changed the way events are displayed (from tree to list).
+ * 2004-02-09 Fixed some bugs when creating/modifying venues.
+ * 2004-02-02 Added ExistingPoints.
+ * 2004-01-24 Created
  */
 
 #include "stdafx.h"

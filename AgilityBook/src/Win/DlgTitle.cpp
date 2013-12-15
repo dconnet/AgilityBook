@@ -6,26 +6,25 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgTitle class
  * @author David Connet
  *
  * Revision History
- * @li 2013-03-24 DRC Show title in caption to aid with repeating titles.
- * @li 2013-01-13 DRC Added new recurring title suffix style.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-08-17 DRC Add support to get newly created title.
- * @li 2010-01-10 DRC Forcing hidden title didn't update internal flags.
- *                    Unearned titles didn't disable Hide Checkbox.
- * @li 2009-12-19 DRC Make side effects of an unearned title more obvious.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2007-06-25 DRC Allow "1" as the start for recurring titles.
- * @li 2006-05-08 DRC Changing the date unselected a title.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
- * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-01-26 DRC The wrong name was saved into the ARBDogTitle object.
+ * 2013-03-24 Show title in caption to aid with repeating titles.
+ * 2013-01-13 Added new recurring title suffix style.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-08-17 Add support to get newly created title.
+ * 2010-01-10 Forcing hidden title didn't update internal flags.
+ *            Unearned titles didn't disable Hide Checkbox.
+ * 2009-12-19 Make side effects of an unearned title more obvious.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2007-06-25 Allow "1" as the start for recurring titles.
+ * 2006-05-08 Changing the date unselected a title.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-14 Moved 'Titles' to 'Venue'.
+ * 2005-01-11 Allow titles to be optionally entered multiple times.
+ * 2004-01-26 The wrong name was saved into the ARBDogTitle object.
  */
 
 #include "stdafx.h"

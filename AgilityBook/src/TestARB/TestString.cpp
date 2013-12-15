@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2008-06-29 DRC Created
+ * 2008-06-29 Created
  */
 
 #include "stdafx.h"

@@ -6,12 +6,11 @@
 
 /**
  * @file
- *
  * @brief Common interface for all views.
  * @author David Connet
  *
  * Revision History
- * @li 2009-01-01 DRC Ported to wxWidgets.
+ * 2009-01-01 Ported to wxWidgets.
  */
 
 #include "stdafx.h"

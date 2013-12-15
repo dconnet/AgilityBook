@@ -12,10 +12,10 @@
  * @author David Connet
  *
  * Revision History
- * @li 2011-11-17 DRC Add ability to switch languages
- * @li 2009-09-20 DRC Default TODO_TEST to non-failure
- * @li 2008-12-11 DRC Made TODO_TEST have a better failure message
- * @li 2008-01-11 DRC Created
+ * 2011-11-17 Add ability to switch languages
+ * 2009-09-20 Default TODO_TEST to non-failure
+ * 2008-12-11 Made TODO_TEST have a better failure message
+ * 2008-01-11 Created
  */
 
 #include "UnitTest++.h"

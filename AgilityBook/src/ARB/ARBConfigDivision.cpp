@@ -6,24 +6,23 @@
 
 /**
  * @file
- *
  * @brief The classes that make up the configuration information.
  * @author David Connet
  *
  * Revision History
- * @li 2013-09-03 DRC Added short name.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
- * @li 2005-10-14 DRC Added option to prefix a title.
- * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-01-27 DRC Updating could cause some false-positive messages because
- *                    the ordering was different.
- * @li 2004-01-21 DRC Added DeleteTitle.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
+ * 2013-09-03 Added short name.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-14 Moved 'Titles' to 'Venue'.
+ * 2005-10-14 Added option to prefix a title.
+ * 2005-01-11 Allow titles to be optionally entered multiple times.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-01-27 Updating could cause some false-positive messages because
+ *            the ordering was different.
+ * 2004-01-21 Added DeleteTitle.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-07-16 Allow the code to keep processing after errors are found.
  */
 
 #include "stdafx.h"

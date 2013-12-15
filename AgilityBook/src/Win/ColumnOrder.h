@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief interface of the CColumnOrder class
  * @author David Connet
  *
  * Revision History
- * @li 2009-01-28 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2009-01-28 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include <assert.h>

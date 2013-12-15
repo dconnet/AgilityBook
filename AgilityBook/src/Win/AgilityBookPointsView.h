@@ -8,19 +8,18 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookPointsView class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-04 DRC Ported to wxWidgets.
- * @li 2006-07-16 DRC Let user specify how to sort events within a venue.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-10-14 DRC Added a context menu.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2004-12-03 DRC Show all lifetime points when filtering.
- * @li 2004-08-12 DRC Allow creating a new title.
- * @li 2004-05-27 DRC Changed lifetime points structure to take a string.
+ * 2009-02-04 Ported to wxWidgets.
+ * 2006-07-16 Let user specify how to sort events within a venue.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-10-14 Added a context menu.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2004-12-03 Show all lifetime points when filtering.
+ * 2004-08-12 Allow creating a new title.
+ * 2004-05-27 Changed lifetime points structure to take a string.
  */
 
 #include "CommonView.h"

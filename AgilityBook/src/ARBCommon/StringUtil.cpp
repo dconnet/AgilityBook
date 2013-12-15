@@ -6,19 +6,18 @@
 
 /**
  * @file
- *
  * @brief Utility classes
  * @author David Connet
  *
  * Revision History
- * @li 2013-01-25 DRC Better non-wx support.
- * @li 2012-08-12 DRC Moved FormatBytes to StringUtil
- * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
- * @li 2010-12-30 DRC Fix a memory leak when transforming a stream.
- * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-30 DRC Remove Convert and replaced with stringA/etc
- * @li 2008-06-29 DRC Moved string stuff out of ARBTypes.
+ * 2013-01-25 Better non-wx support.
+ * 2012-08-12 Moved FormatBytes to StringUtil
+ * 2012-04-10 Based on wx-group thread, use std::string for internal use
+ * 2010-12-30 Fix a memory leak when transforming a stream.
+ * 2009-11-24 Optimize locale usage when reading/writing the ARB file.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-03-30 Remove Convert and replaced with stringA/etc
+ * 2008-06-29 Moved string stuff out of ARBTypes.
  */
 
 #include "stdafx.h"

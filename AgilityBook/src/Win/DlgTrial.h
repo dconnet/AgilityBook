@@ -8,18 +8,17 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgTrial class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2008-02-01 DRC Make 'Notes' button change selection.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-13 DRC Added direct access to Notes dialog.
- * @li 2004-12-19 DRC Added Location/Club note information.
+ * 2012-05-22 Change KillFocus handler to text change handler.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2008-02-01 Make 'Notes' button change selection.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-13 Added direct access to Notes dialog.
+ * 2004-12-19 Added Location/Club note information.
  */
 
 #include "ARB/ARBTypes2.h"

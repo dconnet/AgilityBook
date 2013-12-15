@@ -12,10 +12,10 @@
  * @author David Connet
  *
  * Revision History
- * @li 2013-09-03 DRC Added short name to div/level/event.
- * @li 2013-01-13 DRC Added new recurring title suffix style.
- * @li 2012-09-09 DRC Added 'titlePts','speedPts' to 'Placement'.
- * @li 2007-08-14 DRC Separated from ARBAgilityRecordBook.h
+ * 2013-09-03 Added short name to div/level/event.
+ * 2013-01-13 Added new recurring title suffix style.
+ * 2012-09-09 Added 'titlePts','speedPts' to 'Placement'.
+ * 2007-08-14 Separated from ARBAgilityRecordBook.h
  */
 
 /*

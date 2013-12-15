@@ -12,14 +12,14 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-10-26 DRC Added option to prevent auto-update user query.
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-02-26 DRC Added version number to configuration.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-10-22 DRC Added static GetDTD() method.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-10-26 Added option to prevent auto-update user query.
+ * 2005-01-10 Allow titles to be optionally entered multiple times.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-02-26 Added version number to configuration.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-10-22 Added static GetDTD() method.
  */
 
 #include "ARB/ARBConfigAction.h"

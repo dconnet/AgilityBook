@@ -6,12 +6,11 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgMessage class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-09 DRC Ported to wxWidgets.
+ * 2009-02-09 Ported to wxWidgets.
  */
 
 #include "stdafx.h"

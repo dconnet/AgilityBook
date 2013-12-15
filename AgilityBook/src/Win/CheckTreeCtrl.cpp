@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief A tree control with checkboxes.
  * @author David Connet
  *
@@ -24,8 +23,8 @@
  * [wxWidgets] The above comments are still pertinent.
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  */
 
 #include "stdafx.h"

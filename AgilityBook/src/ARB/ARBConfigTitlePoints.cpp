@@ -6,19 +6,18 @@
 
 /**
  * @file
- *
  * @brief The classes that make up the configuration information.
  * @author David Connet
  *
  * Revision History
- * @li 2011-07-31 DRC Added 'Type' to configuration.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-07-12 DRC Added as part of file version 5.
+ * 2011-07-31 Added 'Type' to configuration.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-03-31 Started adding auto-lifetime point accumulation.
+ * 2003-12-28 Added GetSearchStrings.
+ * 2003-11-26 Changed version number to a complex value.
+ * 2003-07-12 Added as part of file version 5.
  */
 
 #include "stdafx.h"

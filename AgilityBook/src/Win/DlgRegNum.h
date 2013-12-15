@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgRegNum class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-06-29 DRC Added Note to regnum.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-06-29 Added Note to regnum.
  */
 
 #include "ARB/ARBTypes2.h"

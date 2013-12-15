@@ -6,29 +6,28 @@
 
 /**
  * @file
- *
  * @brief Export Wizard
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-25 DRC Adhere to RFC4180 and use CRLF between records.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-01-08 DRC Fixed export (was writing unicode instead of utf8)
- *                    Also columns didn't always line up.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-24 DRC Removed (unused) define to export by array.
- * @li 2009-07-14 DRC Fixed group box creation order.
- * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
- *                    _after_ the dialog is destroyed).
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
- * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
- * @li 2004-05-10 DRC Place quotes are field on output as needed.
- * @li 2004-01-04 DRC Added date format specification.
- * @li 2003-12-30 DRC Fixed a bug exporting the training log.
- * @li 2003-12-10 DRC Created
+ * 2012-07-25 Adhere to RFC4180 and use CRLF between records.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-01-08 Fixed export (was writing unicode instead of utf8)
+ *            Also columns didn't always line up.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-24 Removed (unused) define to export by array.
+ * 2009-07-14 Fixed group box creation order.
+ * 2009-06-14 Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
+ *            _after_ the dialog is destroyed).
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2004-09-07 Time+Fault scoring shouldn't include time faults.
+ * 2004-06-16 Changed ARBDate::GetString to put leadingzero into format.
+ * 2004-05-10 Place quotes are field on output as needed.
+ * 2004-01-04 Added date format specification.
+ * 2003-12-30 Fixed a bug exporting the training log.
+ * 2003-12-10 Created
  */
 
 #include "stdafx.h"

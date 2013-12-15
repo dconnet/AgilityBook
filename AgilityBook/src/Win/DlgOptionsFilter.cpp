@@ -6,25 +6,24 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgOptionsFilter class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-25 DRC Fixed dates (again). Damn bool->time_t autoconversion.
- * @li 2009-08-10 DRC One group box was still off, dates are not stored
- *                correctly, and saving named filters is duplicating names.
- * @li 2009-07-14 DRC Fixed group box creation order.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-09-01 DRC Fix setting of 'After' (start) date filter.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
- * @li 2003-08-09 DRC Moved fonts to new page.
- * @li 2003-07-31 DRC Allow screen fonts for printer font selection. Also, the
- *                    wrong font was created for the printer date font.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-25 Fixed dates (again). Damn bool->time_t autoconversion.
+ * 2009-08-10 One group box was still off, dates are not stored
+ *            correctly, and saving named filters is duplicating names.
+ * 2009-07-14 Fixed group box creation order.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-09-01 Fix setting of 'After' (start) date filter.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-12-18 Added Opening/Closing dates to view, plus color.
+ * 2003-08-09 Moved fonts to new page.
+ * 2003-07-31 Allow screen fonts for printer font selection. Also, the
+ *            wrong font was created for the printer date font.
  */
 
 #include "stdafx.h"

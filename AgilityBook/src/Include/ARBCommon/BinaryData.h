@@ -15,8 +15,8 @@
  * The actual contained data is still 8bit chars.
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2007-01-03 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2007-01-03 Created
  */
 
 #include "ARBTypes.h"

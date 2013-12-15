@@ -8,14 +8,13 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgCalendarQueryDetail class
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2007-10-05 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2007-10-05 Created
  */
 
 #include "ARB/ARBTypes2.h"

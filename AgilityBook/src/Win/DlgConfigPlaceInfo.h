@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgConfigPlaceInfo class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-11-04 DRC Created.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-11-04 Created.
  */
 
 #include <vector>

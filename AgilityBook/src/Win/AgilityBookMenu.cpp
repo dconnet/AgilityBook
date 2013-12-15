@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief Wrapper for menus to ease i18n and menu ids
  * @author David Connet
  *
@@ -14,14 +13,14 @@
  * If they are only in a context menu, the accelerator will not work.
  *
  * Revision History
- * @li 2012-07-28 DRC Fixed extra separator on Mac, removed Update menu icon.
- * @li 2012-07-13 DRC Reworked menu creation to use a generic reusable helper.
- * @li 2012-07-08 DRC Put images into menu.
- * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
- * @li 2009-09-19 DRC Fix IdMenuRecentFiles on language switch.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-09-09 DRC Fix Ctrl+R. See note above.
- * @li 2008-12-14 DRC Created
+ * 2012-07-28 Fixed extra separator on Mac, removed Update menu icon.
+ * 2012-07-13 Reworked menu creation to use a generic reusable helper.
+ * 2012-07-08 Put images into menu.
+ * 2012-07-04 Add option to use run time or opening time in gamble OPS.
+ * 2009-09-19 Fix IdMenuRecentFiles on language switch.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-09-09 Fix Ctrl+R. See note above.
+ * 2008-12-14 Created
  */
 
 #include "stdafx.h"

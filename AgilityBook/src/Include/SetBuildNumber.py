@@ -3,15 +3,15 @@
 #
 # This assumes the current directory is 'Include'
 #
-# @li 2012-09-24 DRC Sync copyright in configure.in with VersionNumber.h
-# @li 2012-07-18 DRC Change build number from days-since-birth to sequential.
-# @li 2011-08-20 DRC Added a nicer file lock.
-# @li 2010-03-05 DRC Removed CalVerNum
-# @li 2009-12-20 DRC Added -x argument
-# @li 2009-10-06 DRC Add multiprocessing awareness. Kind of.
-# @li 2009-08-12 DRC Make sure full version is the same in configure.in
-# @li 2009-04-12 DRC Added CalVerNum.h to be autoincremented.
-#                Check to see if file actually changed before re-writing
+# 2012-09-24 Sync copyright in configure.in with VersionNumber.h
+# 2012-07-18 Change build number from days-since-birth to sequential.
+# 2011-08-20 Added a nicer file lock.
+# 2010-03-05 Removed CalVerNum
+# 2009-12-20 Added -x argument
+# 2009-10-06 Add multiprocessing awareness. Kind of.
+# 2009-08-12 Make sure full version is the same in configure.in
+# 2009-04-12 Added CalVerNum.h to be autoincremented.
+#            Check to see if file actually changed before re-writing
 
 import datetime
 import os

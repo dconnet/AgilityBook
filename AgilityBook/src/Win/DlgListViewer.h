@@ -8,17 +8,16 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgListViewer class
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-28 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
- * @li 2005-01-02 DRC Show existing points in the list viewer.
- * @li 2004-07-29 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-28 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-03-14 Show a summary of lifetime points in the list viewer.
+ * 2005-01-02 Show existing points in the list viewer.
+ * 2004-07-29 Created
  */
 
 #include "PointsData.h"

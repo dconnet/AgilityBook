@@ -8,18 +8,17 @@
 
 /**
  * @file
- *
  * @brief interface of the CAgilityBookViewCalendar class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2003-11-21 DRC Enabled copy and select all.
- * @li 2003-10-29 DRC Support the mouse wheel for scrolling.
- * @li 2003-10-22 DRC Right click sets the current date.
- * @li 2003-08-27 DRC Cleaned up selection synchronization.
+ * 2009-02-10 Ported to wxWidgets.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2003-11-21 Enabled copy and select all.
+ * 2003-10-29 Support the mouse wheel for scrolling.
+ * 2003-10-22 Right click sets the current date.
+ * 2003-08-27 Cleaned up selection synchronization.
  */
 
 #include "CommonView.h"

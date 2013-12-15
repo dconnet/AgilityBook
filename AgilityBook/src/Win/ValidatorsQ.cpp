@@ -6,12 +6,11 @@
 
 /**
  * @file
- *
  * @brief Various validators.
  * @author David Connet
  *
  * Revision History
- * @li 2012-08-13 DRC Moved CQualifyingValidator to separate file.
+ * 2012-08-13 Moved CQualifyingValidator to separate file.
  */
 
 #include "stdafx.h"

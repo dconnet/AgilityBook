@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief Implementation of IARBConfigHandler
  * @author David Connet
  *
  * Revision History
- * @li 2009-01-03 DRC Ported to wxWidgets.
- * @li 2008-10-31 DRC Created
+ * 2009-01-03 Ported to wxWidgets.
+ * 2008-10-31 Created
  */
 
 #include "ARB/ARBConfig.h"

@@ -6,37 +6,36 @@
 
 /**
  * @file
- *
  * @brief implementation of the CAgilityBookTree class
  * @author David Connet
  *
  * Revision History
- * @li 2013-04-22 DRC Changing dogs didn't update runs when viewing all runs.
- * @li 2012-10-03 DRC Fixed a printing problem in the tree.
- * @li 2012-07-04 DRC Add option to use run time or opening time in gamble OPS.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2011-10-11 DRC Fixed bug on Mac when deleting via context menu.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-17 DRC Fix r-click selection issues.
- * @li 2009-07-13 DRC Changing language didn't update dog's age.
- * @li 2009-07-11 DRC Change how runs are synced with list to reduce reloading.
- * @li 2009-02-08 DRC Ported to wxWidgets.
- * @li 2008-11-19 DRC Added SelectDog()
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-22 DRC Support pasting a dog when no dogs exist in file.
- * @li 2005-08-31 DRC The wrong item in the tree was selected after reordering.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2004-12-31 DRC Make F1 invoke context help.
- * @li 2004-10-04 DRC Added div-by-0 tests.
- * @li 2004-04-15 DRC Added Duplicate menu item.
- * @li 2003-12-30 DRC Implemented customized text in tree.
- * @li 2003-12-28 DRC Implemented Find/FindNext.
- * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
- *                    printing and viewing (already in the listctrl)
- * @li 2003-08-28 DRC Added printing.
- * @li 2003-08-27 DRC Cleaned up selection synchronization.
- * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
- *                    prevent constant re-evaluation.
+ * 2013-04-22 Changing dogs didn't update runs when viewing all runs.
+ * 2012-10-03 Fixed a printing problem in the tree.
+ * 2012-07-04 Add option to use run time or opening time in gamble OPS.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2011-10-11 Fixed bug on Mac when deleting via context menu.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-17 Fix r-click selection issues.
+ * 2009-07-13 Changing language didn't update dog's age.
+ * 2009-07-11 Change how runs are synced with list to reduce reloading.
+ * 2009-02-08 Ported to wxWidgets.
+ * 2008-11-19 Added SelectDog()
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-22 Support pasting a dog when no dogs exist in file.
+ * 2005-08-31 The wrong item in the tree was selected after reordering.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2004-12-31 Make F1 invoke context help.
+ * 2004-10-04 Added div-by-0 tests.
+ * 2004-04-15 Added Duplicate menu item.
+ * 2003-12-30 Implemented customized text in tree.
+ * 2003-12-28 Implemented Find/FindNext.
+ * 2003-08-30 Added GetPrintLine to allow future differences between
+ *            printing and viewing (already in the listctrl)
+ * 2003-08-28 Added printing.
+ * 2003-08-27 Cleaned up selection synchronization.
+ * 2003-08-24 Optimized filtering by adding boolean into ARBBase to
+ *            prevent constant re-evaluation.
  */
 
 #include "stdafx.h"

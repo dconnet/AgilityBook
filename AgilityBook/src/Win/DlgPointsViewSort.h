@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief interface of the CDlgPointsViewSort class
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2006-07-16 DRC Created
+ * 2009-02-09 Ported to wxWidgets.
+ * 2006-07-16 Created
  */
 
 #include "AgilityBookOptions.h"

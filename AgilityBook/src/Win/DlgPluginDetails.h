@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief Configure plugins for direct download of calendar data.
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2007-12-24 DRC Created
+ * 2009-02-11 Ported to wxWidgets.
+ * 2007-12-24 Created
  */
 
 #include "ARB/ARBConfigCalSite.h"

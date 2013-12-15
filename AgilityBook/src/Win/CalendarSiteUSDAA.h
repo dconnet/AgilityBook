@@ -8,12 +8,11 @@
 
 /**
  * @file
- *
  * @brief CCalendarSiteUSDAA
  * @author David Connet
  *
  * Revision History
- * @li 2010-03-05 DRC Created
+ * 2010-03-05 Created
  */
 
 #include "ICalendarSite.h"

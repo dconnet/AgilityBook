@@ -6,25 +6,24 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgCalendar class
  * @author David Connet
  *
  * Revision History
- * @li 2012-05-22 DRC Removed killfocus handlers, not needed.
- * @li 2012-05-07 DRC Added autocompletion to combo boxes.
- * @li 2012-02-16 DRC Set focus to first control.
- * @li 2011-12-30 DRC Fixed CGenericValidator.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-12 DRC Fix killfocus handling.
- * @li 2009-07-14 DRC Fixed group box creation order.
- * @li 2009-02-09 DRC Ported to wxWidgets.
- * @li 2008-02-01 DRC Make 'Notes' button change selection.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-13 DRC Added direct access to Notes dialog.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-01-21 DRC Added Location/Club info fields.
+ * 2012-05-22 Removed killfocus handlers, not needed.
+ * 2012-05-07 Added autocompletion to combo boxes.
+ * 2012-02-16 Set focus to first control.
+ * 2011-12-30 Fixed CGenericValidator.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-12 Fix killfocus handling.
+ * 2009-07-14 Fixed group box creation order.
+ * 2009-02-09 Ported to wxWidgets.
+ * 2008-02-01 Make 'Notes' button change selection.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-13 Added direct access to Notes dialog.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-01-21 Added Location/Club info fields.
  */
 
 #include "stdafx.h"

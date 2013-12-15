@@ -6,27 +6,26 @@
 
 /**
  * @file
- *
  * @brief Make selection in a listctrl easier.
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2010-03-28 DRC Moved SetColumnWidth override to CListCtrl.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2008-02-20 DRC Added subitem editing to lists.
- * @li 2007-02-26 DRC Fix a problem redrawing list columns.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-06-30 DRC Allow restricted selection in multi-select lists.
- * @li 2004-10-04 DRC Added div-by-0 tests.
- * @li 2004-09-16 DRC Override SetColumnWidth to auto-fix tooltip rectangles.
- * @li 2004-09-09 DRC Added tooltips to header control.
- * @li 2004-09-03 DRC Using the sort icon forced alignment to left.
- * @li 2004-08-26 DRC Added GetPrintLine to CListCtrl2.
- * @li 2003-11-22 DRC When copying, only create a header if more than 1 line
- *                    is selected (or if only one line exists).
- * @li 2003-11-21 DRC Added multi-select and copy/selectall support.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2010-03-28 Moved SetColumnWidth override to CListCtrl.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-01-06 Ported to wxWidgets.
+ * 2008-02-20 Added subitem editing to lists.
+ * 2007-02-26 Fix a problem redrawing list columns.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-06-30 Allow restricted selection in multi-select lists.
+ * 2004-10-04 Added div-by-0 tests.
+ * 2004-09-16 Override SetColumnWidth to auto-fix tooltip rectangles.
+ * 2004-09-09 Added tooltips to header control.
+ * 2004-09-03 Using the sort icon forced alignment to left.
+ * 2004-08-26 Added GetPrintLine to CListCtrl2.
+ * 2003-11-22 When copying, only create a header if more than 1 line
+ *            is selected (or if only one line exists).
+ * 2003-11-21 Added multi-select and copy/selectall support.
  */
 
 #include "stdafx.h"

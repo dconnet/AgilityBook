@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief Implementation of IARBLocalization
  * @author David Connet
  *
@@ -19,9 +18,9 @@
  * this.
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-19 DRC Ported to wxWidgets.
- * @li 2008-01-13 DRC Created
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-07-19 Ported to wxWidgets.
+ * 2008-01-13 Created
  */
 
 #include "stdafx.h"

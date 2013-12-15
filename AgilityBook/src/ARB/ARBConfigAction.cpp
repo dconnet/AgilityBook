@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief The classes that make up the configuration information.
  * @author David Connet
  *
@@ -16,14 +15,14 @@
  * maintain our data integrity, we need to update things to deal with this.
  *
  * Revision History
- * @li 2013-01-11 DRC Fix filters on configuration import.
- * @li 2012-11-21 DRC Add RenameLevel action verb.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-12-03 DRC Complete re-write of action class.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-10-26 DRC Added optional 'Div' to DeleteTitle.
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-01-21 DRC Created
+ * 2013-01-11 Fix filters on configuration import.
+ * 2012-11-21 Add RenameLevel action verb.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-12-03 Complete re-write of action class.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-10-26 Added optional 'Div' to DeleteTitle.
+ * 2004-09-28 Changed how error reporting is done when loading.
+ * 2004-01-21 Created
  */
 
 #include "stdafx.h"

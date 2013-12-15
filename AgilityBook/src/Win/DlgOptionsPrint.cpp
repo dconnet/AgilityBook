@@ -6,16 +6,15 @@
 
 /**
  * @file
- *
  * @brief implementation of the CDlgOptionsPrint class
  * @author David Connet
  *
  * Revision History
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-07-14 DRC Fixed group box creation order.
- * @li 2009-05-31 DRC Added options for print page size.
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-11-22 DRC Moved printing to new page.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-07-14 Fixed group box creation order.
+ * 2009-05-31 Added options for print page size.
+ * 2009-02-11 Ported to wxWidgets.
+ * 2006-11-22 Moved printing to new page.
  */
 
 #include "stdafx.h"

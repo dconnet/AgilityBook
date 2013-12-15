@@ -8,13 +8,12 @@
 
 /**
  * @file
- *
  * @brief interface of the CCheckTreeCtrl class
  * @author David Connet
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
 #include "Widgets.h"

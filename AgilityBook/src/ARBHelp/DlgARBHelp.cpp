@@ -6,17 +6,16 @@
 
 /**
  * @file
- *
  * @brief Main propertysheet
  * @author David Connet
  *
  * Revision History
- * @li 2012-07-10 DRC Fix serialization. Broken in 4/15 wxString checkin.
- * @li 2011-10-19 DRC Add timestamp info on skipped files. Add file size.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
- *                    Fixed reading binary files. Added some timestamps.
- * @li 2009-03-01 DRC Ported to wxWidgets.
+ * 2012-07-10 Fix serialization. Broken in 4/15 wxString checkin.
+ * 2011-10-19 Add timestamp info on skipped files. Add file size.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-26 Fixed streaming wxString to otstringstream.
+ *            Fixed reading binary files. Added some timestamps.
+ * 2009-03-01 Ported to wxWidgets.
  */
 
 #include "stdafx.h"

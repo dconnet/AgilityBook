@@ -6,7 +6,6 @@
 
 /**
  * @file
- *
  * @brief Dialog for adding notes to ARBInfo items.
  * @author David Connet
  *
@@ -16,26 +15,26 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
- * @li 2012-05-22 DRC Change KillFocus handler to text change handler.
- * @li 2012-02-16 DRC Fix initial focus.
- * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-08-12 DRC Fix killfocus handling.
- * @li 2009-02-10 DRC Ported to wxWidgets.
- * @li 2008-02-01 DRC Add ability to see what was last selected.
- * @li 2008-01-01 DRC Added visible flag.
- * @li 2007-12-03 DRC SelectString was still used in OnNew.
- *                    Fix a drawing problem in the drop list.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-12-13 DRC SelectString doesn't work in ownerdraw combo. Changed
- *                    ctor interface for more versatility.
- * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
- * @li 2005-24-05 DRC If there were 0 items in the list, it crashed.
- *                    Allow saving an entry with no comment.
- * @li 2004-12-11 DRC Added indicators if item is added and/or has comments.
- *                    Merged in club/location support (was in separate files
- *                    that were added 11/18/04.
- * @li 2003-12-07 DRC Created
+ * 2012-05-22 Change KillFocus handler to text change handler.
+ * 2012-02-16 Fix initial focus.
+ * 2011-12-22 Switch to using Bind on wx2.9+.
+ * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
+ * 2009-08-12 Fix killfocus handling.
+ * 2009-02-10 Ported to wxWidgets.
+ * 2008-02-01 Add ability to see what was last selected.
+ * 2008-01-01 Added visible flag.
+ * 2007-12-03 SelectString was still used in OnNew.
+ *            Fix a drawing problem in the drop list.
+ * 2006-02-16 Cleaned up memory usage with smart pointers.
+ * 2005-12-13 SelectString doesn't work in ownerdraw combo. Changed
+ *            ctor interface for more versatility.
+ * 2005-06-25 Cleaned up reference counting when returning a pointer.
+ * 2005-24-05 If there were 0 items in the list, it crashed.
+ *            Allow saving an entry with no comment.
+ * 2004-12-11 Added indicators if item is added and/or has comments.
+ *            Merged in club/location support (was in separate files
+ *            that were added 11/18/04.
+ * 2003-12-07 Created
  */
 
 #include "stdafx.h"

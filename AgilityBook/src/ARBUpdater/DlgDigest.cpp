@@ -6,12 +6,11 @@
 
 /**
  * @file
- *
  * @brief Generate a checksum for the given file.
  * @author David Connet
  *
  * Revision History
- * @li 2010-02-09 DRC Created
+ * 2010-02-09 Created
  */
 
 #include "stdafx.h"
