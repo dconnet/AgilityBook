@@ -23,7 +23,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include `wx-config --cxxflags`
+INCLUDES += -I$(TOPSRCDIR)/src/Include
 
 ##########
 # List of programs and archives to link
@@ -74,7 +74,7 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-#arb_LIBS = `wx-config --libs`
+#arb_LIBS =
 # prog1_LDFLAGS = -L/path/to/extralib
 
 ##########

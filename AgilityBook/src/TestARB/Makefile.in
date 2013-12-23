@@ -23,7 +23,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/UnitTest++/src `wx-config --cxxflags`
+INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/UnitTest++/src
 
 ##########
 # List of programs and archives to link
@@ -85,7 +85,7 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon/ -larbcommon -L$(TOPBUILDDIR)/src/ARB/ -larb -L$(TOPBUILDDIR)/src/LibArchive/ -larchive -L$(TOPBUILDDIR)/src/UnitTest++ -lUnitTest `wx-config --libs`
+@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon/ -larbcommon -L$(TOPBUILDDIR)/src/ARB/ -larb -L$(TOPBUILDDIR)/src/LibArchive/ -larchive -L$(TOPBUILDDIR)/src/UnitTest++ -lUnitTest
 
 ##########
 # Precompiled headers

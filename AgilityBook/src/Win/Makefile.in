@@ -27,7 +27,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include `wx-config --cxxflags`
+INCLUDES += -I$(TOPSRCDIR)/src/Include
 
 ##########
 # List of programs and archives to link
@@ -147,7 +147,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 # Extra libraries for link stage (only if needed)
 ##########
 @PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/src/LibArchive -larchive
-@PACKAGE_ARB_SHORTNAME@_LDFLAGS = -L$(TOPSRCDIR) `wx-config --libs`
 
 ##########
 # Precompiled headers
