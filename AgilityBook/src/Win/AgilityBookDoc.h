@@ -128,6 +128,7 @@ public:
 	bool CreateTrialFromCalendar(
 			ARBCalendar const& cal,
 			CTabView* pTabView);
+	bool SetCalenderDate(ARBDate const& date);
 	void SortDates();
 	bool ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
@@ -188,9 +189,7 @@ private:
 private:
 #endif
 	CAgilityBookCalendarListView* GetCalendarListView() const;
-public: // TODO
 	CAgilityBookCalendarView* GetCalendarView() const;
-private:
 	CAgilityBookTrainingView* GetTrainingView() const;
 
 	ARBAgilityRecordBook m_Records; ///< The real records.

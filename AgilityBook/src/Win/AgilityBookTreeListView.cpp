@@ -1943,11 +1943,11 @@ void CAgilityBookTreeListView::OnNewTitle(wxCommandEvent& evt)
 void CAgilityBookTreeListView::OnUpdateNewTrial(wxUpdateUIEvent& evt)
 {
 	bool bEnable = false;
-#pragma PRAGMA_TODO(handle new item on multiple selection better)
-	if (m_Ctrl && 1 == m_Ctrl->GetSelectedItemsCount())
+	wxDataViewItemArray sel;
+	if (m_Ctrl && 0 < m_Ctrl->GetSelections(sel))
 	{
-		wxDataViewItem item = m_Ctrl->GetSelection();
-		if (m_Ctrl->GetStore()->GetDog(item))
+		ARBDogPtr pDog;
+		if (GetUnifiedDog(sel, pDog) && pDog)
 			bEnable = true;
 	}
 	evt.Enable(bEnable);
@@ -1956,12 +1956,11 @@ void CAgilityBookTreeListView::OnUpdateNewTrial(wxUpdateUIEvent& evt)
 
 void CAgilityBookTreeListView::OnNewTrial(wxCommandEvent& evt)
 {
-#pragma PRAGMA_TODO(handle new item on multiple selection better)
-	if (m_Ctrl && 1 == m_Ctrl->GetSelectedItemsCount())
+	wxDataViewItemArray sel;
+	if (m_Ctrl && 0 < m_Ctrl->GetSelections(sel))
 	{
-		wxDataViewItem item = m_Ctrl->GetSelection();
-		ARBDogPtr pDog = m_Ctrl->GetStore()->GetDog(item);
-		if (pDog)
+		ARBDogPtr pDog;
+		if (GetUnifiedDog(sel, pDog) && pDog)
 		{
 			ARBDogTrialPtr pTrial = ARBDogTrialPtr(ARBDogTrial::New());
 			bool bOk = false;
@@ -2111,13 +2110,14 @@ void CAgilityBookTreeListView::OnPrintRuns(wxCommandEvent& evt)
 void CAgilityBookTreeListView::OnUpdateNewRun(wxUpdateUIEvent& evt)
 {
 	bool bEnable = false;
-#pragma PRAGMA_TODO(handle new item on multiple selection better)
-	if (m_Ctrl && 1 == m_Ctrl->GetSelectedItemsCount())
+	wxDataViewItemArray sel;
+	if (m_Ctrl && 0 < m_Ctrl->GetSelections(sel))
 	{
-		wxDataViewItem item = m_Ctrl->GetSelection();
-		ARBDogTrialPtr pTrial = m_Ctrl->GetStore()->GetTrial(item);
-		if (pTrial && pTrial->GetClubs().GetPrimaryClub())
-			bEnable = true;
+		ARBDogPtr pDog;
+		ARBDogTrialPtr pTrial;
+		if (GetUnifiedTrial(sel, pDog, pTrial) && pTrial)
+			if (pTrial->GetClubs().GetPrimaryClub())
+				bEnable = true;
 	}
 	evt.Enable(bEnable);
 }
@@ -2125,15 +2125,14 @@ void CAgilityBookTreeListView::OnUpdateNewRun(wxUpdateUIEvent& evt)
 
 void CAgilityBookTreeListView::OnNewRun(wxCommandEvent& evt)
 {
-#pragma PRAGMA_TODO(handle new item on multiple selection better)
-	if (m_Ctrl && 1 == m_Ctrl->GetSelectedItemsCount())
+	wxDataViewItemArray sel;
+	if (m_Ctrl && 0 < m_Ctrl->GetSelections(sel))
 	{
-		wxDataViewItem item = m_Ctrl->GetSelection();
-		ARBDogTrialPtr pTrial = m_Ctrl->GetStore()->GetTrial(item);
-		if (pTrial && pTrial->GetClubs().GetPrimaryClub())
-		{
-			EditRun(m_Ctrl->GetStore()->GetDog(item), pTrial, ARBDogRunPtr());
-		}
+		ARBDogPtr pDog;
+		ARBDogTrialPtr pTrial;
+		if (GetUnifiedTrial(sel, pDog, pTrial) && pTrial)
+			if (pTrial->GetClubs().GetPrimaryClub())
+				EditRun(pDog, pTrial, ARBDogRunPtr());
 	}
 }
 

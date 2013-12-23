@@ -872,8 +872,7 @@ void CAgilityBookCalendarListView::OnCtrlItemSelected(wxListEvent& evt)
 		CAgilityBookCalendarListViewDataPtr pData = GetItemCalDataByData(evt.GetData());
 		if (pData && pData->GetCalendar() && pData->GetCalendar()->GetStartDate().IsValid())
 		{
-			CAgilityBookCalendarView* pCalView = GetDocument()->GetCalendarView();
-			pCalView->SetCurrentDate(pData->GetCalendar()->GetStartDate(), true);
+			GetDocument()->SetCalenderDate(pData->GetCalendar()->GetStartDate());
 		}
 	}
 }
@@ -1183,8 +1182,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 					GetDocument()->Book().GetCalendar().sort();
 					if (oldDate != pData->GetCalendar()->GetStartDate())
 					{
-						CAgilityBookCalendarView* pCalView = GetDocument()->GetCalendarView();
-						pCalView->SetCurrentDate(pData->GetCalendar()->GetStartDate(), true);
+						GetDocument()->SetCalenderDate(pData->GetCalendar()->GetStartDate());
 					}
 					LoadData();
 					GetDocument()->Modify(true);

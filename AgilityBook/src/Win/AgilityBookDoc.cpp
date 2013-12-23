@@ -633,6 +633,13 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 }
 
 
+bool CAgilityBookDoc::SetCalenderDate(ARBDate const& date)
+{
+	CAgilityBookCalendarView* pCalView = GetCalendarView();
+	return pCalView->SetCurrentDate(date, true);
+}
+
+
 void CAgilityBookDoc::SortDates()
 {
 	bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
