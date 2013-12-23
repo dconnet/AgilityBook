@@ -209,7 +209,9 @@ private:
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
 			wxDataViewItem parent);
-	void LoadData(bool bColumns);
+	void LoadData(
+			bool bColumns,
+			bool bPreserveColWidths);
 	void PrintLine(
 			std::wostringstream& data,
 			wxDataViewItem item,

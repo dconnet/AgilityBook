@@ -242,7 +242,7 @@ void CAgilityBookTreeListModel::GetCollapsedItems(
 }
 
 
-void CAgilityBookTreeListModel::LoadData()
+void CAgilityBookTreeListModel::LoadData(bool bPreserveColWidths)
 {
 	wxBusyCursor wait;
 
@@ -282,7 +282,7 @@ void CAgilityBookTreeListModel::LoadData()
 
 	// Remember column widths
 	std::vector<int> colWidths;
-	if (m_roots.size() > 0)
+	if (bPreserveColWidths && m_roots.size() > 0)
 	{
 		for (unsigned int i = 0; i < m_Ctrl->GetColumnCount(); ++i)
 		{

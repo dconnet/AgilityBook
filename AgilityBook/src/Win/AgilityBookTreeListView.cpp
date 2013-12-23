@@ -455,11 +455,11 @@ void CAgilityBookTreeListView::OnUpdate(
 	if (!hint || hint->IsSet(UPDATE_TREE_VIEW)
 	|| hint->IsEqual(UPDATE_CONFIG) || hint->IsEqual(UPDATE_OPTIONS))
 	{
-		LoadData(false);
+		LoadData(false, true);
 	}
 	else if (hint && hint->IsEqual(UPDATE_NEW_TRIAL))
 	{
-		LoadData(false);
+		LoadData(false, true);
 		ARBDogTrialPtr pTrial = std::tr1::dynamic_pointer_cast<ARBDogTrial, ARBBase>(hint->GetObj());
 		assert(pTrial);
 		wxDataViewItem pData = FindData(pTrial);
@@ -467,11 +467,11 @@ void CAgilityBookTreeListView::OnUpdate(
 	}
 	else if (hint && hint->IsEqual(UPDATE_CUSTOMIZE))
 	{
-		LoadData(true);
+		LoadData(true, true);
 	}
 	else if (hint && hint->IsEqual(UPDATE_LANG_CHANGE))
 	{
-		LoadData(true);
+		LoadData(true, true);
 	}
 }
 
@@ -709,7 +709,7 @@ bool CAgilityBookTreeListView::SelectDog(ARBDogPtr dog)
 		{
 			GetDocument()->SetCurrentDog(dog);
 			if (CAgilityBookOptions::eViewRunsByList == CAgilityBookOptions::GetViewRunsStyle())
-				LoadData(false);
+				LoadData(false, true);
 		}
 	}
 	return bSelected;
@@ -1147,7 +1147,9 @@ wxDataViewItem CAgilityBookTreeListView::LoadData(
 }
 
 
-void CAgilityBookTreeListView::LoadData(bool bColumns)
+void CAgilityBookTreeListView::LoadData(
+		bool bColumns,
+		bool bPreserveColWidths)
 {
 	if (!m_Ctrl)
 		return;
@@ -1156,7 +1158,7 @@ void CAgilityBookTreeListView::LoadData(bool bColumns)
 		m_Ctrl->Unsort();
 		m_Ctrl->GetStore()->UpdateColumns();
 	}
-	m_Ctrl->GetStore()->LoadData();
+	m_Ctrl->GetStore()->LoadData(bPreserveColWidths);
 	if (m_Ctrl->IsShownOnScreen())
 		UpdateMessages();
 }
@@ -2181,7 +2183,7 @@ void CAgilityBookTreeListView::OnUpdateUnsort(wxUpdateUIEvent& evt)
 void CAgilityBookTreeListView::OnUnsort(wxCommandEvent& evt)
 {
 	if (m_Ctrl->Unsort())
-		LoadData(false);
+		LoadData(false, true);
 }
 
 
@@ -2189,28 +2191,28 @@ void CAgilityBookTreeListView::OnViewSortRuns(wxCommandEvent& evt)
 {
 	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
 	GetDocument()->SortDates();
-	LoadData(false);
+	LoadData(false, true);
 }
 
 
 void CAgilityBookTreeListView::OnViewRunsByTrial(wxCommandEvent& evt)
 {
 	CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewRunsByTrial);
-	LoadData(true);
+	LoadData(true, false);
 }
 
 
 void CAgilityBookTreeListView::OnViewRunsByList(wxCommandEvent& evt)
 {
 	CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewRunsByList);
-	LoadData(true);
+	LoadData(true, false);
 }
 
 
 void CAgilityBookTreeListView::OnViewAllRunsByList(wxCommandEvent& evt)
 {
 	CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewAllRunsByList);
-	LoadData(true);
+	LoadData(true, false);
 }
 
 

@@ -55,7 +55,7 @@ public:
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
 			wxDataViewItem parent);
-	void LoadData();
+	void LoadData(bool bPreserveColWidths);
 
 	void Delete(const wxDataViewItem& item);
 	void DeleteAllItems();
