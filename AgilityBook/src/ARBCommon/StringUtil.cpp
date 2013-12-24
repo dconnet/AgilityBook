@@ -92,7 +92,7 @@ wxString stringWX(std::string const& inStr)
 
 std::wstring stringW(wxString const& inStr)
 {
-#if wxCHECK_VERSION(3, 0, 0)
+#if wxCHECK_VERSION(3, 0, 0) && defined(wxUSE_STD_STRING)
 	return inStr.ToStdWstring();
 #else
 	return std::wstring(inStr.wx_str());
