@@ -335,7 +335,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-isystem $(BOOST_ROOT)";
+				OTHER_CFLAGS = (
+					"-isystem",
+					"$(BOOST_ROOT)",
+				);
 				SDKROOT = macosx10.8;
 			};
 			name = Debug;
@@ -357,7 +360,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				OTHER_CFLAGS = "-isystem $(BOOST_ROOT)";
+				OTHER_CFLAGS = (
+					"-isystem",
+					"$(BOOST_ROOT)",
+				);
 				SDKROOT = macosx10.8;
 			};
 			name = Release;
@@ -397,6 +403,7 @@
 				E10A1B5818088B5300697325 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
