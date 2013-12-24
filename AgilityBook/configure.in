@@ -74,13 +74,16 @@ Darwin*)
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch i386")
 		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386 -D_GLIBCXX_EXTERN_TEMPLATE=0")
-		#AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -arch i386"])
-		AC_SUBST(LDFLAGS, "$LDFLAGS -arch i386")
+		#AC_SUBST(LDFLAGS, ["$LDFLAGS -W1,syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -arch i386"])
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch i386"])
+	elif test -d /Developer/SDKs/MacOSX10.4u.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch ppc -arch i386")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch ppc -arch i386")
+		#AC_SUBST(LDFLAGS, ["$LDFLAGS -W1,syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386"])
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch ppc -arch i386"])
 	else
-		AC_SUBST(CFLAGS, "$CFLAGS -arch i386")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386")
-		#AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.5.sdk -arch i386"])
-		AC_SUBST(LDFLAGS, "$LDFLAGS -arch i386")
+		AC_MSG_ERROR(Cannot determine SDK)
 	fi
 
 	# dependency generation not supported for g++ for universal binaries
