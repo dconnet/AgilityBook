@@ -23,7 +23,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(SRCDIR)/tidy/include -I$(SRCDIR)/tidy/src -DSUPPORT_UTF16_ENCODINGS -DSUPPORT_ASIAN_ENCODINGS -DSUPPORT_ACCESSIBILITY_CHECKS `wx-config --cxxflags`
+INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(SRCDIR)/tidy/include -I$(SRCDIR)/tidy/src -DSUPPORT_UTF16_ENCODINGS -DSUPPORT_ASIAN_ENCODINGS -DSUPPORT_ACCESSIBILITY_CHECKS
 
 ##########
 # List of programs and archives to link
@@ -61,7 +61,7 @@ libtidyhtml_SRCS = LibTidyHtml.cpp \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-#tidyhtml_LIBS = `wx-config --libs`
+#tidyhtml_LIBS =
 # prog1_LDFLAGS = -L/path/to/extralib
 
 ##########
