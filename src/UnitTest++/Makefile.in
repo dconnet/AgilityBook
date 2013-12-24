@@ -23,7 +23,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -I$(TOPSRCDIR)/src/UnitTest++/src/Posix `wx-config --cxxflags`
+INCLUDES = -I$(TOPSRCDIR)/src/UnitTest++/src/Posix
 
 ##########
 # List of programs and archives to link
@@ -55,7 +55,7 @@ libUnitTest_SRCS = src/AssertException.cpp \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-#UnitTest_LIBS = `wx-config --libs`
+#UnitTest_LIBS =
 # prog1_LDFLAGS = -L/path/to/extralib
 
 ##########

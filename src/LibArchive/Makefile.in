@@ -23,7 +23,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include `wx-config --cxxflags`
+INCLUDES += -I$(TOPSRCDIR)/src/Include
 
 ##########
 # List of programs and archives to link
@@ -38,7 +38,7 @@ libarchive_SRCS = LibArchive.cpp
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-#archive_LIBS = `wx-config --libs`
+#archive_LIBS =
 # prog1_LDFLAGS = -L/path/to/extralib
 
 ##########
