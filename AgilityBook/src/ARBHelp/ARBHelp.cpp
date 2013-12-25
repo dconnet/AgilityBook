@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2013-12-24 Fix modeless wizard. Now works correctly on Mac.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-03-01 Ported to wxWidgets.
  * 2007-02-08 Created
@@ -71,15 +72,19 @@ bool CARBHelpApp::OnInit()
 		return false;
 	}
 
+	wxDialog* dlg;
 	if (cmdline.Found(L"decode"))
 	{
-		CDlgPageDecode* dlg = new CDlgPageDecode();
-		dlg->Show();
+		dlg = new CDlgPageDecode();
 	}
 	else
 	{
-		new CDlgARBHelp();
+		CDlgARBHelp* wiz = new CDlgARBHelp();
+		dlg = wiz;
+		wiz->ShowPage(wiz->GetFirstPage());
 	}
+	dlg->Show();
+	SetTopWindow(dlg);
 
 	return true;
 }
