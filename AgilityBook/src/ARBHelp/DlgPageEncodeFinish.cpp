@@ -31,18 +31,18 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	: wxWizardPageSimple(pParent)
 	, m_Parent(pParent)
 {
-	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
-		L"Now that the information is gathered, send an email to help@agilityrecordbook.com with this data.",
-		wxDefaultPosition, wxDefaultSize, 0);
-	text1->Wrap(600);
-
-#pragma PRAGMA_TODO("Add option to create a compressed file")
-
 	wxFont font = GetFont();
 	wxFont fontFixed(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight());
 	wxClientDC dc(this);
 	dc.SetFont(fontFixed);
 	wxSize sz(dc.GetCharWidth()*80, wxDefaultCoord);
+
+	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
+		L"Now that the information is gathered, send an email to help@agilityrecordbook.com with this data.",
+		wxDefaultPosition, wxDefaultSize, 0);
+	text1->Wrap(sz.x);
+
+#pragma PRAGMA_TODO("Add option to create a compressed file")
 
 	m_ctrlText = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
