@@ -204,7 +204,7 @@ bool CFilterOptions::Update(
 void CFilterOptions::Load()
 {
 	wxString val;
-	std::wstring all(StringUtil::stringW(_("IDS_ALL")));
+	std::wstring all(StringUtil::GetTranslation(arbT("IDS_ALL")));
 
 	m_calView.m_Filter = static_cast<unsigned short>(wxConfig::Get()->Read(CFG_CAL_FILTER, static_cast<long>(CCalendarViewFilter::eViewNormal)));
 	wxConfig::Get()->Read(CFG_COMMON_VIEWALLDATES, &m_bAllDates, true);
@@ -288,7 +288,7 @@ void CFilterOptions::Save()
 		if (IsFilterEnabled())
 			m_curFilter.clear();
 		else
-			m_curFilter = _("IDS_ALL");
+			m_curFilter = StringUtil::GetTranslation(arbT("IDS_ALL"));
 	}
 
 	wxConfig::Get()->Write(CFG_CAL_FILTER, static_cast<long>(m_calView.m_Filter));
@@ -365,7 +365,7 @@ size_t CFilterOptions::GetAllFilterNames(
 	if (!bForEditing)
 	{
 		if (0 < outNames.size() || IsFilterEnabled())
-			outNames.insert(outNames.begin(), StringUtil::stringW(_("IDS_ALL")));
+			outNames.insert(outNames.begin(), StringUtil::GetTranslation(arbT("IDS_ALL")));
 	}
 	return outNames.size();
 }
@@ -373,7 +373,7 @@ size_t CFilterOptions::GetAllFilterNames(
 
 bool CFilterOptions::SetCurrentFilter(std::wstring const& inName)
 {
-	std::wstring all(StringUtil::stringW(_("IDS_ALL")));
+	std::wstring all(StringUtil::GetTranslation(arbT("IDS_ALL")));
 	CFilterOptions::CFilterOptionData data;
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
 	if (inName.empty() || inName == all)
@@ -404,7 +404,7 @@ bool CFilterOptions::SetCurrentFilter(std::wstring const& inName)
 
 bool CFilterOptions::AddFilter(std::wstring const& inName)
 {
-	if (inName == _("IDS_ALL"))
+	if (inName == StringUtil::GetTranslation(arbT("IDS_ALL")))
 		return false;
 	bool bAdded = false;
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);

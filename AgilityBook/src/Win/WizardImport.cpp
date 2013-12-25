@@ -922,7 +922,7 @@ bool CWizardImport::DoWizardFinish()
 								// [Not sure if OOcalc mangles too, leave this]
 								wxDateTime d;
 								wxString::const_iterator end;
-								if (d.ParseDateTime(entry[iCol], &end))
+								if (d.ParseDateTime(entry[iCol].c_str(), &end))
 									date.SetDate(d.GetYear(), d.GetMonth() + 1, d.GetDay());
 							}
 							if (date.IsValid())
@@ -1312,17 +1312,17 @@ bool CWizardImport::DoWizardFinish()
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eNot);
 						}
-						else if (L"P" == entry[iCol] || _("IDS_CALENDAR_PLANNING") == entry[iCol])
+						else if (L"P" == entry[iCol] || entry[iCol] == StringUtil::GetTranslation(arbT("IDS_CALENDAR_PLANNING")))
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::ePlanning);
 						}
-						else if (L"O" == entry[iCol] || _("IDS_CALENDAR_PENDING") == entry[iCol])
+						else if (L"O" == entry[iCol] || entry[iCol] == StringUtil::GetTranslation(arbT("IDS_CALENDAR_PENDING")))
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::ePending);
 						}
-						else if (L"E" == entry[iCol] || _("IDS_CALENDAR_ENTERED") == entry[iCol])
+						else if (L"E" == entry[iCol] || entry[iCol] == StringUtil::GetTranslation(arbT("IDS_CALENDAR_ENTERED")))
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eEntered);

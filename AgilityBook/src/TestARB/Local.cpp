@@ -117,7 +117,7 @@ std::wstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped)
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_UPDATE_CALSITES"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_UPDATE_CALSITES")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nNew)
 		<< L", "
@@ -136,7 +136,7 @@ std::wstring CLocalization::UpdateFaults(int nNew, int nSkipped) const
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_FAULTS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_FAULTS")).c_str()
 		<< L": "
 		<<wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nNew)
 		<< L", "
@@ -153,7 +153,7 @@ std::wstring CLocalization::UpdateOtherPts(int nNew, int nUpdated, int nSkipped)
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_OTHERPOINTS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_OTHERPOINTS")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nNew)
 		<< L", "
@@ -172,7 +172,7 @@ std::wstring CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) c
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_VENUES"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_VENUES")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nNew)
 		<< L", "
@@ -191,7 +191,7 @@ std::wstring CLocalization::UpdateDivisions(int nAdded, int nUpdated, int nSkipp
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_DIVISIONS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_DIVISIONS")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nAdded)
 		<< L", "
@@ -210,9 +210,9 @@ std::wstring CLocalization::UpdateDivisionsReordered() const
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_DIVISIONS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_DIVISIONS")).c_str()
 		<< L": "
-		<< StringUtil::GetTranslation(arbT("IDS_REORDERED"));
+		<< StringUtil::GetTranslation(arbT("IDS_REORDERED")).c_str();
 	return StringUtil::stringW(buffer);
 #else
 #pragma PRAGMA_TODO(Write localization)
@@ -225,7 +225,7 @@ std::wstring CLocalization::UpdateEvents(int nAdded, int nUpdated, int nSkipped)
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_EVENTS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_EVENTS")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nAdded)
 		<< L", "
@@ -244,9 +244,9 @@ std::wstring CLocalization::UpdateEventsReordered() const
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_EVENTS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_EVENTS")).c_str()
 		<< L": "
-		<< StringUtil::GetTranslation(arbT("IDS_REORDERED"));
+		<< StringUtil::GetTranslation(arbT("IDS_REORDERED")).c_str();
 	return StringUtil::stringW(buffer);
 #else
 #pragma PRAGMA_TODO(Write localization)
@@ -259,7 +259,7 @@ std::wstring CLocalization::UpdateMultiqs(int nAdded, int nDeleted, int nSkipped
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_MULTIQS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_MULTIQS")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nAdded)
 		<< L", "
@@ -278,9 +278,9 @@ std::wstring CLocalization::UpdateMultiqsReordered() const
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_MULTIQS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_MULTIQS")).c_str()
 		<< L": "
-		<< StringUtil::GetTranslation(arbT("IDS_REORDERED"));
+		<< StringUtil::GetTranslation(arbT("IDS_REORDERED")).c_str();
 	return StringUtil::stringW(buffer);
 #else
 #pragma PRAGMA_TODO(Write localization)
@@ -293,7 +293,7 @@ std::wstring CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped)
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_LEVELS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_LEVELS")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nAdded)
 		<< L", "
@@ -312,9 +312,9 @@ std::wstring CLocalization::UpdateLevelsReordered() const
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_COL_LEVELS"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_COL_LEVELS")).c_str()
 		<< L": "
-		<< StringUtil::GetTranslation(arbT("IDS_REORDERED"));
+		<< StringUtil::GetTranslation(arbT("IDS_REORDERED")).c_str();
 	return StringUtil::stringW(buffer);
 #else
 #pragma PRAGMA_TODO(Write localization)
@@ -327,7 +327,7 @@ std::wstring CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped)
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_TITLES"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_TITLES")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nAdded)
 		<< L", "
@@ -346,9 +346,9 @@ std::wstring CLocalization::UpdateTitlesReordered() const
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_TITLES"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_TITLES")).c_str()
 		<< L": "
-		<< StringUtil::GetTranslation(arbT("IDS_REORDERED"));
+		<< StringUtil::GetTranslation(arbT("IDS_REORDERED")).c_str();
 	return StringUtil::stringW(buffer);
 #else
 #pragma PRAGMA_TODO(Write localization)
@@ -361,7 +361,7 @@ std::wstring CLocalization::UpdateSubLevels(int nAdded, int nUpdated, int nSkipp
 #if defined(__WXWINDOWS__)
 {
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_SUBLEVEL_NAME"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_SUBLEVEL_NAME")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nAdded)
 		<< L", "
@@ -380,9 +380,9 @@ std::wstring CLocalization::UpdateSubLevelsReordered() const
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-	buffer << StringUtil::GetTranslation(arbT("IDS_SUBLEVEL_NAME"))
+	buffer << StringUtil::GetTranslation(arbT("IDS_SUBLEVEL_NAME")).c_str()
 		<< L": "
-		<< StringUtil::GetTranslation(arbT("IDS_REORDERED"));
+		<< StringUtil::GetTranslation(arbT("IDS_REORDERED")).c_str();
 	return StringUtil::stringW(buffer);
 #else
 #pragma PRAGMA_TODO(Write localization)
@@ -396,7 +396,7 @@ std::wstring CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, 
 #if defined(__WXWINDOWS__)
 	wxString buffer;
 	buffer << L" "
-		<< StringUtil::GetTranslation(arbT("IDS_UPDATE_RULES"))
+		<< StringUtil::GetTranslation(arbT("IDS_UPDATE_RULES")).c_str()
 		<< L": "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nAdded)
 		<< L", "

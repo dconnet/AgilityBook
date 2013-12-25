@@ -371,7 +371,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 		std::wstring name, value;
 		toWrite.GetNthAttrib(i, name, value);
 #if wxCHECK_VERSION(3, 0, 0)
-		node->AddAttribute(name, value);
+		node->AddAttribute(StringUtil::stringWX(name), StringUtil::stringWX(value));
 #else
 		node->AddProperty(StringUtil::stringWX(name), StringUtil::stringWX(value));
 #endif

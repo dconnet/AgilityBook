@@ -192,7 +192,7 @@ wxVariant CAgilityBookTreeListDataDog::GetColumn(
 				break;
 			}
 		}
-		variant = str.str();
+		variant = str.str().c_str();
 	}
 	return variant;
 }
@@ -321,7 +321,7 @@ wxVariant CAgilityBookTreeListDataTrial::GetColumn(
 				break;
 			}
 		}
-		variant = str.str();
+		variant = str.str().c_str();
 	}
 	return variant;
 }
@@ -396,7 +396,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 						str << L"/";
 					str << (*iter)->GetVenue();
 				}
-				variant = str.str();
+				variant = str.str().c_str();
 			}
 			break;
 		case IO_RUNS_CLUB:
@@ -411,7 +411,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 						str << L"/";
 					str << (*iter)->GetName();
 				}
-				variant = str.str();
+				variant = str.str().c_str();
 			}
 			break;
 		case IO_RUNS_LOCATION:
@@ -448,14 +448,14 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 			{
 				std::wostringstream str;
 				str << m_pRun->GetScoring().GetCourseFaults();
-				variant = str.str();
+				variant = str.str().c_str();
 			}
 			break;
 		case IO_RUNS_TIME:
 			if (bInCompare)
 				variant = m_pRun->GetScoring().GetTime();
 			else
-				variant = ARBDouble::ToString(m_pRun->GetScoring().GetTime());
+				variant = ARBDouble::ToString(m_pRun->GetScoring().GetTime()).c_str();
 			break;
 		case IO_RUNS_YARDS:
 			{
@@ -465,7 +465,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					yds = m_pRun->GetScoring().GetYards();
 					if (!bInCompare && 0.0 < yds)
 					{
-						variant = ARBDouble::ToString(yds, 0);
+						variant = ARBDouble::ToString(yds, 0).c_str();
 					}
 				}
 				if (bInCompare)
@@ -479,7 +479,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 				if (bInCompare)
 					variant = yps;
 				else if (bSet)
-					variant = ARBDouble::ToString(yps, 3);
+					variant = ARBDouble::ToString(yps, 3).c_str();
 			}
 			break;
 		case IO_RUNS_YPS:
@@ -489,7 +489,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 				if (bInCompare)
 					variant = yps;
 				else if (bSet)
-					variant = ARBDouble::ToString(yps, 3);
+					variant = ARBDouble::ToString(yps, 3).c_str();
 			}
 			break;
 		case IO_RUNS_OBSTACLES:
@@ -501,7 +501,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 				{
 					std::wostringstream str;
 					str << obstacles;
-					variant = str.str();
+					variant = str.str().c_str();
 				}
 			}
 			break;
@@ -512,7 +512,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 				if (bInCompare)
 					variant = ops;
 				else if (bSet)
-					variant = ARBDouble::ToString(ops, 3);
+					variant = ARBDouble::ToString(ops, 3).c_str();
 			}
 			break;
 		case IO_RUNS_SCT:
@@ -523,7 +523,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					sct = m_pRun->GetScoring().GetSCT();
 					if (!bInCompare && 0.0 < sct)
 					{
-						variant = ARBDouble::ToString(sct);
+						variant = ARBDouble::ToString(sct).c_str();
 					}
 				}
 				if (bInCompare)
@@ -549,7 +549,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					}
 					faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
 					if (!bInCompare)
-						variant = ARBDouble::ToString(faults, 0);
+						variant = ARBDouble::ToString(faults, 0).c_str();
 				}
 				if (bInCompare)
 					variant = faults;
@@ -565,7 +565,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						std::wostringstream str;
 						str << pts;
-						variant = str.str();
+						variant = str.str().c_str();
 					}
 				}
 				if (bInCompare)
@@ -582,7 +582,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						std::wostringstream str;
 						str << pts;
-						variant = str.str();
+						variant = str.str().c_str();
 					}
 				}
 				if (bInCompare)
@@ -599,7 +599,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						std::wostringstream str;
 						str << pts;
-						variant = str.str();
+						variant = str.str().c_str();
 					}
 				}
 				if (bInCompare)
@@ -616,7 +616,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						std::wostringstream str;
 						str << pts;
-						variant = str.str();
+						variant = str.str().c_str();
 					}
 				}
 				if (bInCompare)
@@ -633,7 +633,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						std::wostringstream str;
 						str << pts;
-						variant = str.str();
+						variant = str.str().c_str();
 					}
 				}
 				if (bInCompare)
@@ -650,7 +650,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						std::wostringstream str;
 						str << pts;
-						variant = str.str();
+						variant = str.str().c_str();
 					}
 				}
 				if (bInCompare)
@@ -674,7 +674,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						std::wostringstream str;
 						str << val;
-						variant = str.str();
+						variant = str.str().c_str();
 					}
 				}
 			}
@@ -692,7 +692,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						std::wostringstream str;
 						str << val;
-						variant = str.str();
+						variant = str.str().c_str();
 					}
 				}
 			}
@@ -710,7 +710,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						std::wostringstream str;
 						str << val;
-						variant = str.str();
+						variant = str.str().c_str();
 					}
 				}
 			}
@@ -749,9 +749,9 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					}
 				}
 				if (bSet)
-					variant = str.str();
+					variant = str.str().c_str();
 				else
-					variant = m_pRun->GetQ().str();
+					variant = m_pRun->GetQ().str().c_str();
 			}
 			break;
 		case IO_RUNS_SCORE:
@@ -776,7 +776,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 					{
 						score = m_pRun->GetScore(pScoring);
 						if (!bInCompare)
-							variant = ARBDouble::ToString(score);
+							variant = ARBDouble::ToString(score).c_str();
 					}
 					else if (bInCompare)
 						score = -1.0;
@@ -811,12 +811,12 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 				{
 					std::wostringstream str;
 					str << pts;
-					variant = str.str();
+					variant = str.str().c_str();
 				}
 			}
 			break;
 		case IO_RUNS_COMMENTS:
-			variant = StringUtil::Replace(m_pRun->GetNote(), L"\n", L" ");
+			variant = StringUtil::Replace(m_pRun->GetNote(), L"\n", L" ").c_str();
 			break;
 		case IO_RUNS_FAULTS:
 			{
@@ -830,7 +830,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 						str << L", ";
 					str << (*iter);
 				}
-				variant = str.str();
+				variant = str.str().c_str();
 			}
 			break;
 		case IO_RUNS_SPEED:
@@ -855,7 +855,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 						{
 							std::wostringstream str;
 							str << pts;
-							variant = str.str();
+							variant = str.str().c_str();
 						}
 					}
 				}

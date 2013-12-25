@@ -409,12 +409,12 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
+					"-I$WXBASE/wxWidgets-3.0.0/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/wxWidgets-3.0.0/include",
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,
-					"-I$WXBASE/wxWidgets-3.0.0/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
-					"-I$WXBASE/wxWidgets-3.0.0/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
 					"-D__WXOSX__",
@@ -443,12 +443,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = (
+					"-I$WXBASE/wxWidgets-3.0.0/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/wxWidgets-3.0.0/include",
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,
-					"-I$WXBASE/wxWidgets-3.0.0/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
-					"-I$WXBASE/wxWidgets-3.0.0/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
 					"-D__WXMAC__",
