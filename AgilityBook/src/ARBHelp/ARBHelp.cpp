@@ -67,15 +67,19 @@ bool CARBHelpApp::OnInit()
 		return false;
 	}
 
+	wxDialog* dlg;
 	if (cmdline.Found(L"decode"))
 	{
-		CDlgPageDecode* dlg = new CDlgPageDecode();
-		dlg->Show();
+		dlg = new CDlgPageDecode();
 	}
 	else
 	{
-		new CDlgARBHelp();
+		CDlgARBHelp* wiz = new CDlgARBHelp();
+		dlg = wiz;
+		wiz->ShowPage(wiz->GetFirstPage());
 	}
+	dlg->Show();
+	SetTopWindow(dlg);
 
 	return true;
 }
