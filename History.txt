@@ -1,4 +1,6 @@
-12/21/2013: v2.4.1.<in process>
+12/24/2013: v2.4.1.<in process>
+- Bug fixes:
+  - ARBHelp now runs correctly on a Mac.
 
 11/27/2013: v2.4.0.88
 - Bumped Configuration v45:

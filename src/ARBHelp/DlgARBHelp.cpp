@@ -51,19 +51,16 @@ CDlgARBHelp::CDlgARBHelp()
 	icons.AddIcon(wxIcon(AgilityBook256_xpm));
 	SetIcons(icons);
 
-	CDlgPageEncode* m_pageEncode = new CDlgPageEncode(this);
+	m_firstPage = new CDlgPageEncode(this);
 	CDlgPageEncodeFiles* page2 = new CDlgPageEncodeFiles(this);
 	CDlgPageEncodeFinish* page3 = new CDlgPageEncodeFinish(this);
 
-	wxWizardPageSimple::Chain(m_pageEncode, page2);
+	wxWizardPageSimple::Chain(m_firstPage, page2);
 	wxWizardPageSimple::Chain(page2, page3);
 
-	GetPageAreaSizer()->Add(m_pageEncode);
+	GetPageAreaSizer()->Add(m_firstPage);
 	GetPageAreaSizer()->Add(page2);
 	GetPageAreaSizer()->Add(page3);
-
-	RunWizard(m_pageEncode);
-	Destroy();
 }
 
 

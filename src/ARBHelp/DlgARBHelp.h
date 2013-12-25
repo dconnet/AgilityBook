@@ -27,6 +27,8 @@ class CDlgARBHelp : public wxWizard
 public:
 	CDlgARBHelp();
 
+	wxWizardPageSimple* GetFirstPage() const	{return m_firstPage;}
+
 	void AddSysInfo(std::wstring const& inData);
 	void AddRegistryInfo(wchar_t const* inData);
 	void SetARBFileStatus(std::wstring const& inFileName, bool bInclude = true);
@@ -40,4 +42,5 @@ protected:
 	std::wstring m_SysInfo;
 	std::wstring m_RegInfo;
 	FileMap m_IncFile;
+	wxWizardPageSimple* m_firstPage;
 };

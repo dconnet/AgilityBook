@@ -48,7 +48,6 @@ PROGRAMS = @PACKAGE_HLP_SHORTNAME@
 # Extra libraries for link stage (only if needed)
 ##########
 @PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon/ -larbcommon -L$(TOPBUILDDIR)/src/ARB/ -larb
-#@PACKAGE_HLP_SHORTNAME@_LDFLAGS =
 
 ##########
 # Precompiled headers

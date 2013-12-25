@@ -34,7 +34,6 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
 		L"Check the files you would like to be sent",
 		wxDefaultPosition, wxDefaultSize, 0);
-	text1->Wrap(-1);
 
 	m_ctrlList = new wxCheckListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
