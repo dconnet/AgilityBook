@@ -60,7 +60,7 @@ AC_SUBST(LDFLAGS, "`wx-config --libs`")
 
 if test "x$BOOST_ROOT" != "x"; then
 	echo "BOOST_ROOT set to: $BOOST_ROOT"
-	AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$BOOST_ROOT")
+	AC_SUBST(CXXFLAGS,"$CXXFLAGS -isystem $BOOST_ROOT")
 fi
 AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not found. export BOOST_ROOT=fullpath to boost install])])
 
