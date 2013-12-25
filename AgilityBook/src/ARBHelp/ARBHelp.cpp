@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2013-12-24 Fix modeless wizard. Now works correctly on Mac.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-03-01 Ported to wxWidgets.
  * 2007-02-08 Created
