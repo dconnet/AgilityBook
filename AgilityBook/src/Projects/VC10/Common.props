@@ -25,7 +25,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Manifest>
-      <AdditionalManifestFiles>$(SolutionDir)..\..\Win\res\compat.manifest</AdditionalManifestFiles>
+      <AdditionalManifestFiles>$(SolutionDir)..\..\Win\res\compat.manifest;$(SolutionDir)..\..\Win\res\dpi.manifest</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
 </Project>
