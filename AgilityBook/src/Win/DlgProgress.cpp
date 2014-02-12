@@ -298,7 +298,8 @@ bool CDlgProgress::EnableCancel(bool bEnable)
 	bool bCancelEnabled = m_ctrlCancel ? m_ctrlCancel->IsEnabled() : false;
 	if (!m_HasCanceled)
 	{
-		m_ctrlCancel->Enable(bEnable);
+		if (m_ctrlCancel)
+			m_ctrlCancel->Enable(bEnable);
 		Update();
 	}
 	return bCancelEnabled;
