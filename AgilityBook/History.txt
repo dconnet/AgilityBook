@@ -4,7 +4,9 @@
     [Still not decided - compile option now allows toggling back to old format]
 [ Note, most functionality is now complete ]
 
-1/11/2014: v2.4.1.<in process>
+2/12/2014: v2.4.1.<in process>
+- Bumped file version to 14.3:
+  - Added 'scorePts' to 'Placement'.
 - Bug fixes:
   - ARBHelp now runs correctly on a Mac.
   - Specifically set dpi-awareness to false on Windows (manifest).
