@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-02-12 Added 'scorePts' to 'Placement'.
  * 2012-09-09 Added 'titlePts','speedPts' to 'Placement'.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-06-11 Still not right - runs with 0 SCT should allow title pts.
@@ -445,7 +446,8 @@ bool ARBDogRun::Save(
 		if (0 <= m_DogsQd)
 			element->AddAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
 
-		if (pTrial && m_Q.Qualified())
+		// This data is exclusively for other programs to use. ARB does not.
+		if (pTrial)
 		{
 			ARBConfigScoringPtr pScoring;
 			if (pTrial->GetClubs().GetPrimaryClub())
@@ -459,9 +461,13 @@ bool ARBDogRun::Save(
 					&pScoring);
 			if (pScoring)
 			{
-				element->AddAttrib(ATTRIB_PLACEMENT_TITLE_POINTS, GetTitlePoints(pScoring));
-				if (pScoring->HasSpeedPts())
-					element->AddAttrib(ATTRIB_PLACEMENT_SPEED_POINTS, GetSpeedPoints(pScoring));
+				element->AddAttrib(ATTRIB_PLACEMENT_SCORE_POINTS, GetScore(pScoring));
+				if (m_Q.Qualified())
+				{
+					element->AddAttrib(ATTRIB_PLACEMENT_TITLE_POINTS, GetTitlePoints(pScoring));
+					if (pScoring->HasSpeedPts())
+						element->AddAttrib(ATTRIB_PLACEMENT_SPEED_POINTS, GetSpeedPoints(pScoring));
+				}
 			}
 		}
 
