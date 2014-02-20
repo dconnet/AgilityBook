@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-02-20 Fix GetUnifiedTrial to not care about number of runs.
  * 2013-04-22 Converted tree+list into single control.
  * 2012-10-03 Fixed a printing problem in the tree.
  * 2012-09-29 Strip the Runs View.
@@ -860,7 +861,7 @@ bool CAgilityBookTreeListView::GetUnifiedTrial(
 		++i)
 	{
 		ARBDogTrialPtr pCurrentTrial = m_Ctrl->GetStore()->GetTrial(*i);
-		if (pCurrentTrial && 0 < pCurrentTrial->GetRuns().size())
+		if (pCurrentTrial)
 		{
 			if (!pTrial)
 			{
@@ -1795,7 +1796,7 @@ void CAgilityBookTreeListView::OnUpdateReorder(wxUpdateUIEvent& evt)
 			ARBDogPtr pDog;
 			ARBDogTrialPtr pTrial;
 			bEnable = (GetUnifiedTrial(sel, pDog, pTrial)
-				&& 1 < pTrial->GetRuns().size());
+				&& pTrial && 1 < pTrial->GetRuns().size());
 		}
 	}
 
@@ -1841,7 +1842,7 @@ void CAgilityBookTreeListView::OnReorder(wxCommandEvent& evt)
 			ARBDogPtr pDog;
 			ARBDogTrialPtr pTrial;
 			if (GetUnifiedTrial(sel, pDog, pTrial)
-			&& 1 < pTrial->GetRuns().size())
+			&& pTrial && 1 < pTrial->GetRuns().size())
 			{
 				CDlgReorder dlg(GetDocument(), pTrial, GetFirstRun(sel));
 				dlg.ShowModal();
@@ -2035,7 +2036,7 @@ void CAgilityBookTreeListView::OnUpdatePrintTrial(wxUpdateUIEvent& evt)
 	{
 		ARBDogPtr pDog;
 		ARBDogTrialPtr pTrial;
-		bEnable = GetUnifiedTrial(sel, pDog, pTrial);
+		bEnable = GetUnifiedTrial(sel, pDog, pTrial) && pTrial && 0 < pTrial->GetRuns().size();
 	}
 
 	evt.Enable(bEnable);
@@ -2049,7 +2050,7 @@ void CAgilityBookTreeListView::OnPrintTrial(wxCommandEvent& evt)
 	{
 		ARBDogPtr pDog;
 		ARBDogTrialPtr pPrintTrial;
-		if (GetUnifiedTrial(sel, pDog, pPrintTrial))
+		if (GetUnifiedTrial(sel, pDog, pPrintTrial) && pPrintTrial && 0 < pPrintTrial->GetRuns().size())
 		{
 			std::vector<RunInfo> runs;
 			for (ARBDogRunList::iterator iRun = pPrintTrial->GetRuns().begin(); iRun != pPrintTrial->GetRuns().end(); ++iRun)
