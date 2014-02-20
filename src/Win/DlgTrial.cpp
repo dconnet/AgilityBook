@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-02-20 Trial start date was not properly saved.
  * 2012-05-22 Change KillFocus handler to text change handler.
  * 2012-05-07 Added autocompletion to combo boxes.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -608,8 +609,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 		}
 	}
 
-	if (0 < m_pTrial->GetRuns().size())
-		m_pTrial->SetDefaultDate(m_dateStart);
+	m_pTrial->SetDefaultDate(m_dateStart);
 	m_pTrial->SetLocation(StringUtil::stringW(m_Location));
 	m_pTrial->SetNote(StringUtil::stringW(m_Notes));
 	m_pTrial->SetVerified(m_Verified);
