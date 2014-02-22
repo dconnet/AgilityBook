@@ -12,6 +12,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * 2014-02-21 Add support for PoCo xml.
  * 2013-03-23 Implement libxml LoadXML stream api.
  * 2012-11-25 Add libxml support back in.
  * 2012-09-29 Trap wx generated xml parsing errors into our buffer.
@@ -52,12 +53,15 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 
-#if !defined(USE_LIBXML2)
+#if !defined(USE_LIBXML2) && !defined(USE_POCO)
 #if defined(__WXWINDOWS__)
 #define USE_LIBXML2		0
+#define USE_POCO		0
 #else
 #error No idea what XML parser you want!
 #endif
+#elif defined(USE_LIBXML2) && defined(USE_POCO)
+#error Pick a parser!
 #endif
 
 #if USE_LIBXML2
@@ -76,13 +80,27 @@
 #pragma message ( "Compiling with libxml2 " LIBXML_DOTTED_VERSION )
 #endif
 
-#else // USE_LIBXML2
+#elif USE_POCO
+#include "Poco/DOM/AutoPtr.h"
+#include "Poco/DOM/Document.h"
+#include "Poco/DOM/DOMParser.h"
+#include "Poco/DOM/Element.h"
+#include "Poco/DOM/NamedNodeMap.h"
+#include "Poco/DOM/Node.h"
+#include "Poco/DOM/Text.h"
+#include "Poco/DOM/TreeWalker.h"
+#include "Poco/DOM/DOMWriter.h"
+#include "Poco/SAX/InputSource.h"
+#include "Poco/XML/XMLWriter.h"
+#include "Poco/UTF8Encoding.h"
+
+#else
 #include <wx/mstream.h>
 #include <wx/stream.h>
 #include <wx/wfstream.h>
 #include <wx/xml/xml.h>
 #pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
-#endif // USE_LIBXML2
+#endif
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -333,7 +351,83 @@ static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffe
 	}
 }
 
-#else // USE_LIBXML2
+#elif USE_POCO
+
+static void ReadDoc(Poco::XML::Document* pDoc, Poco::XML::Node* inNode, ElementNodePtr tree)
+{
+	if (!inNode)
+		return;
+
+	Poco::XML::AutoPtr<Poco::XML::NamedNodeMap> attribs = inNode->attributes();
+	if (attribs)
+	{
+		for (unsigned long i = 0; i < attribs->length(); ++i)
+		{
+			Poco::XML::Node* pItem = attribs->item(i);
+			tree->AddAttrib(StringUtil::stringW(pItem->nodeName()), StringUtil::stringW(pItem->nodeValue()));
+		}
+	}
+
+	for (Poco::XML::Node* pChild = inNode->firstChild(); pChild; pChild = pChild->nextSibling())
+	{
+		switch (pChild->nodeType())
+		{
+		case Poco::XML::Node::ELEMENT_NODE:
+			{
+				if (tree->HasTextNodes())
+					tree->RemoveAllElements();
+				ElementNodePtr subtree = tree->AddElementNode(StringUtil::stringW(pChild->nodeName()));
+				ReadDoc(pDoc, pChild, subtree);
+			}
+			break;
+		case Poco::XML::Node::TEXT_NODE:
+			if (tree->HasTextNodes() || 0 == tree->GetElementCount())
+			{
+				std::wstring content = StringUtil::stringW(pChild->nodeValue());
+				if (!content.empty())
+					tree->SetValue(content);
+			}
+			break;
+		}
+	}
+}
+
+static void CreateDoc(Poco::XML::Document* pDoc, Poco::XML::Element* node, ElementNode const& toWrite)
+{
+	int i;
+	for (i = 0; i < toWrite.GetAttribCount(); ++i)
+	{
+		std::wstring name, value;
+		toWrite.GetNthAttrib(i, name, value);
+		node->setAttributeNS("", StringUtil::stringA(name), StringUtil::stringA(value));
+	}
+
+	int count = toWrite.GetElementCount();
+	for (i = 0; i < count; ++i)
+	{
+		ElementPtr element = toWrite.GetElement(i);
+		switch (element->GetType())
+		{
+		case Element::Element_Node:
+			{
+				Poco::XML::XMLString name(StringUtil::stringA(element->GetName()));
+				Poco::XML::AutoPtr<Poco::XML::Element> pChild = pDoc->createElement(name);
+				node->appendChild(pChild);
+				CreateDoc(pDoc, pChild, *(dynamic_cast<ElementNode*>(element.get())));
+			}
+			break;
+		case Element::Element_Text:
+			{
+				Poco::XML::XMLString value(StringUtil::stringA(element->GetValue()));
+				Poco::XML::AutoPtr<Poco::XML::Text> pText = pDoc->createTextNode(value);
+				node->appendChild(pText);
+			}
+			break;
+		}
+	}
+}
+
+#else
 
 static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 {
@@ -371,7 +465,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 		std::wstring name, value;
 		toWrite.GetNthAttrib(i, name, value);
 #if wxCHECK_VERSION(3, 0, 0)
-		node->AddAttribute(name, value);
+		node->AddAttribute(StringUtil::stringWX(name), StringUtil::stringWX(value));
 #else
 		node->AddProperty(StringUtil::stringWX(name), StringUtil::stringWX(value));
 #endif
@@ -404,7 +498,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 	}
 }
 
-#endif // USE_LIBXML2
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1128,6 +1222,7 @@ bool ElementNode::FindElementDeep(
 
 
 #if USE_LIBXML2
+
 static bool LoadXMLNode(
 		ElementNodePtr node,
 		xmlDocPtr inSource,
@@ -1140,6 +1235,27 @@ static bool LoadXMLNode(
 		return false;
 	node->SetName(StringDOM(root->name));
 	ReadDoc(root, node);
+	return true;
+}
+
+#elif USE_POCO
+
+static bool LoadXMLNode(
+		ElementNodePtr node,
+		Poco::XML::Document* pDoc,
+		std::wostringstream& ioErrMsg)
+{
+	node->clear();
+
+	if (!pDoc)
+		return false;
+
+	Poco::XML::Node* pNode = pDoc->firstChild();
+	if (!pNode)
+		return false;
+
+	node->SetName(StringUtil::stringW(pNode->nodeName()));
+	ReadDoc(pDoc, pNode, node);
 	return true;
 }
 
@@ -1165,10 +1281,10 @@ bool ElementNode::LoadXML(
 		std::istream& inStream,
 		std::wostringstream& ioErrMsg)
 {
-#if USE_LIBXML2
 	if (!inStream.good())
 		return false;
 
+#if USE_LIBXML2
 	char buffer[1024];
 	inStream.read(buffer, ARRAYSIZE(buffer));
 	int res = static_cast<int>(inStream.gcount());
@@ -1202,6 +1318,23 @@ bool ElementNode::LoadXML(
 		xmlFreeDoc(source);
 	}
 	return rc;
+
+#elif USE_POCO
+
+	try
+	{
+		Poco::XML::InputSource source(inStream);
+		Poco::XML::DOMParser parser;
+		Poco::XML::AutoPtr<Poco::XML::Document> pDoc = parser.parse(&source);
+		pDoc->normalize();
+		return LoadXMLNode(m_Me.lock(), pDoc, ioErrMsg);
+	}
+	catch (Poco::Exception& e)
+	{
+		std::wstring str = StringUtil::stringW(e.displayText());
+		ioErrMsg << str;
+		return false;
+	}
 
 #else
 	wxLogBuffer* log = new wxLogBuffer();
@@ -1327,6 +1460,40 @@ bool ElementNode::SaveXML(
 	xmlOutputBufferFlush(outputBuffer);
 	xmlFreeTextWriter(formatter);
 	return true;
+
+#elif USE_POCO
+	int optionsWriter = Poco::XML::XMLWriter::PRETTY_PRINT;
+	if (inDTD.empty())
+	{
+		optionsWriter |= Poco::XML::XMLWriter::WRITE_XML_DECLARATION;
+	}
+	else
+	{
+		outOutput << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+#ifdef UNICODE
+		std::string rootName = StringUtil::stringA(GetName());
+#else
+		std::string rootName = GetName();
+#endif
+		outOutput << "<!DOCTYPE " << rootName << " [\n";
+		outOutput << inDTD;
+		outOutput << "\n]>\n";
+	}
+
+	Poco::XML::DOMWriter writer;
+	Poco::UTF8Encoding encoding;
+	writer.setEncoding("utf-8", encoding);
+	writer.setNewLine("\n");
+	writer.setIndent("  ");
+	writer.setOptions(optionsWriter);
+
+	Poco::XML::AutoPtr<Poco::XML::Document> pDoc = new Poco::XML::Document();
+	Poco::XML::AutoPtr<Poco::XML::Element> pRoot = pDoc->createElement(StringUtil::stringA(GetName()));
+	pDoc->appendChild(pRoot);
+	CreateDoc(pDoc, pRoot, *this);
+	writer.writeNode(outOutput, pDoc);
+	return true;
+
 #else
 	wxXmlDocument doc;
 	doc.SetVersion(L"1.0");
