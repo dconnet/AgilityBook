@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-02-19 Added some error logging.
  * 2010-04-19 Calling Yield (for cancel dlg) results in corrupted downloads.
  * 2010-03-05 Workaround a memory leak in wxURL with proxies.
  * 2010-02-08 Added new interfaces to support streaming to a file.
@@ -123,6 +124,8 @@ bool CReadHttp::ReadHttpFile(
 		if (!stream || !stream->IsOk())
 		*/
 		{
+			outErrMsg += _T("Error reading ");
+			outErrMsg += m_address;
 			delete stream;
 			return false;
 		}
@@ -145,8 +148,11 @@ bool CReadHttp::ReadHttpFile(
 			{
 				stream->Read(buffer, sizeof(buffer));
 				size_t read = stream->LastRead();
-				m_pProgress->OffsetPos(1, static_cast<int>(read));
-				m_Stream->Write(buffer, read);
+				if (0 < read)
+				{
+					m_pProgress->OffsetPos(1, static_cast<int>(read));
+					m_Stream->Write(buffer, read);
+				}
 			}
 			m_pProgress->EnableCancel(bCancelEnable);
 		}
@@ -154,6 +160,11 @@ bool CReadHttp::ReadHttpFile(
 		{
 			stream->Read(*m_Stream);
 		}
+	}
+	if (stream->GetLastError() == wxSTREAM_READ_ERROR)
+	{
+		outErrMsg += _T("Error reading ");
+		outErrMsg += m_address;
 	}
 	delete stream;
 	if (m_Data)
