@@ -10,11 +10,14 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-02-27 Add support for POCO xml.
  * 2013-01-30 Created
  */
 
 #include "stdafx.h"
 #include "LibArchive/LibArchive.h"
+
+#include "ARBCommon/StringUtil.h"
 
 #if defined(USE_POCO)
 #include "Poco/Zip/ZipArchive.h"
@@ -25,6 +28,7 @@
 #elif defined(__WXWINDOWS__)
 #include <wx/filesys.h>
 #include <wx/mstream.h>
+#include <wx/string.h>
 
 #else
 #include "unzip.h"
@@ -40,29 +44,24 @@
 class CLibArchiveImpl
 {
 public:
-#if defined(__WXWINDOWS__) && !defined(USE_POCO)
 	CLibArchiveImpl(std::wstring const& zipFile)
-		: m_zipFile(zipFile)
-	{
-		assert(!m_zipFile.empty());
-	}
-	std::wstring m_zipFile;
+#if defined(__WXWINDOWS__) && !defined(USE_POCO)
+		: m_zipFile(StringUtil::stringWX(zipFile))
 #else
-	CLibArchiveImpl(std::string const& zipFile)
-		: m_zipFile(zipFile)
+		: m_zipFile(StringUtil::stringA(zipFile))
+#endif
 	{
 		assert(!m_zipFile.empty());
 	}
+#if defined(__WXWINDOWS__) && !defined(USE_POCO)
+	wxString m_zipFile;
+#else
 	std::string m_zipFile;
 #endif
 };
 
 
-#if defined(__WXWINDOWS__) && !defined(USE_POCO)
 CLibArchive::CLibArchive(std::wstring const& zipFile)
-#else
-CLibArchive::CLibArchive(std::string const& zipFile)
-#endif
 	: m_pImpl(new CLibArchiveImpl(zipFile))
 {
 }
@@ -73,16 +72,27 @@ CLibArchive::~CLibArchive()
 	delete m_pImpl;
 }
 
-#if defined(__WXWINDOWS__) && !defined(USE_POCO)
-
 bool CLibArchive::ExtractFile(
-		wxString const& archiveFile,
+		std::wstring const& inArchiveFile,
 		std::ostream& outData)
 {
 	bool rc = false;
 
+#if defined(USE_POCO)
+	std::string archiveFile = StringUtil::stringA(inArchiveFile);
+	std::ifstream in(m_pImpl->m_zipFile, std::ios::binary);
+	Poco::Zip::ZipArchive arch(in);
+	Poco::Zip::ZipArchive::FileHeaders::const_iterator it = arch.findHeader(archiveFile);
+	if (it != arch.headerEnd())
+	{
+		Poco::Zip::ZipInputStream zipin(in, it->second);
+		Poco::StreamCopier::copyStream(zipin, outData);
+		rc = true;
+	}
+
+#elif defined(__WXWINDOWS__)
 	wxString zipfile = wxFileSystem::FileNameToURL(wxString(m_pImpl->m_zipFile.c_str()));
-	zipfile += L"#zip:" + archiveFile;
+	zipfile += L"#zip:" + wxString(inArchiveFile.c_str());
 	wxFileSystem filesys;
 	wxFSFile* file = filesys.OpenFile(zipfile);
 	if (file)
@@ -105,38 +115,9 @@ bool CLibArchive::ExtractFile(
 		wxLogMessage(zipfile);
 		assert(file);
 	}
-	return rc;
-}
-
-
-bool CLibArchive::ReplaceFile(
-		wxString const& archiveFile,
-		std::istream& inData)
-{
-#pragma PRAGMA_TODO(ReplaceFile)
-	return false;
-}
 
 #else
-
-bool CLibArchive::ExtractFile(
-		std::string const& archiveFile,
-		std::ostream& outData)
-{
-	bool rc = false;
-
-#if defined(USE_POCO)
-	std::ifstream in(m_pImpl->m_zipFile, std::ios::binary);
-	Poco::Zip::ZipArchive arch(in);
-	Poco::Zip::ZipArchive::FileHeaders::const_iterator it = arch.findHeader(archiveFile);
-	if (it != arch.headerEnd())
-	{
-		Poco::Zip::ZipInputStream zipin(in, it->second);
-		Poco::StreamCopier::copyStream(zipin, outData);
-		rc = true;
-	}
-
-#else
+	std::string archiveFile = StringUtil::stringA(inArchiveFile);
 	unzFile uf = unzOpen(m_pImpl->m_zipFile.c_str());
 	if (uf)
 	{
@@ -175,11 +156,9 @@ bool CLibArchive::ExtractFile(
 
 
 bool CLibArchive::ReplaceFile(
-		std::string const& archiveFile,
+		std::wstring const& archiveFile,
 		std::istream& inData)
 {
 #pragma PRAGMA_TODO(ReplaceFile)
 	return false;
 }
-
-#endif
