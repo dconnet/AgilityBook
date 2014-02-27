@@ -16,9 +16,16 @@
 #include "stdafx.h"
 #include "LibArchive/LibArchive.h"
 
-#if defined(__WXWINDOWS__)
+#if defined(USE_POCO)
+#include "Poco/Zip/ZipArchive.h"
+#include "Poco/Zip/ZipStream.h"
+#include "Poco/StreamCopier.h"
+#include <fstream>
+
+#elif defined(__WXWINDOWS__)
 #include <wx/filesys.h>
 #include <wx/mstream.h>
+
 #else
 #include "unzip.h"
 #endif
@@ -33,7 +40,7 @@
 class CLibArchiveImpl
 {
 public:
-#if defined(__WXWINDOWS__)
+#if defined(__WXWINDOWS__) && !defined(USE_POCO)
 	CLibArchiveImpl(std::wstring const& zipFile)
 		: m_zipFile(zipFile)
 	{
@@ -51,7 +58,7 @@ public:
 };
 
 
-#if defined(__WXWINDOWS__)
+#if defined(__WXWINDOWS__) && !defined(USE_POCO)
 CLibArchive::CLibArchive(std::wstring const& zipFile)
 #else
 CLibArchive::CLibArchive(std::string const& zipFile)
@@ -66,7 +73,7 @@ CLibArchive::~CLibArchive()
 	delete m_pImpl;
 }
 
-#if defined(__WXWINDOWS__)
+#if defined(__WXWINDOWS__) && !defined(USE_POCO)
 
 bool CLibArchive::ExtractFile(
 		wxString const& archiveFile,
@@ -110,7 +117,7 @@ bool CLibArchive::ReplaceFile(
 	return false;
 }
 
-#else // __WXWINDOWS__
+#else
 
 bool CLibArchive::ExtractFile(
 		std::string const& archiveFile,
@@ -118,6 +125,18 @@ bool CLibArchive::ExtractFile(
 {
 	bool rc = false;
 
+#if defined(USE_POCO)
+	std::ifstream in(m_pImpl->m_zipFile, std::ios::binary);
+	Poco::Zip::ZipArchive arch(in);
+	Poco::Zip::ZipArchive::FileHeaders::const_iterator it = arch.findHeader(archiveFile);
+	if (it != arch.headerEnd())
+	{
+		Poco::Zip::ZipInputStream zipin(in, it->second);
+		Poco::StreamCopier::copyStream(zipin, outData);
+		rc = true;
+	}
+
+#else
 	unzFile uf = unzOpen(m_pImpl->m_zipFile.c_str());
 	if (uf)
 	{
@@ -149,6 +168,7 @@ bool CLibArchive::ExtractFile(
 		}
 		unzClose(uf);
 	}
+#endif
 
 	return rc;
 }
@@ -162,4 +182,4 @@ bool CLibArchive::ReplaceFile(
 	return false;
 }
 
-#endif // __WXWINDOWS__
+#endif
