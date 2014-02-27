@@ -12,7 +12,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
- * 2014-02-21 Add support for PoCo xml.
+ * 2014-02-26 Add support for POCO xml.
  * 2013-03-23 Implement libxml LoadXML stream api.
  * 2012-11-25 Add libxml support back in.
  * 2012-09-29 Trap wx generated xml parsing errors into our buffer.
@@ -93,6 +93,8 @@
 #include "Poco/SAX/InputSource.h"
 #include "Poco/XML/XMLWriter.h"
 #include "Poco/UTF8Encoding.h"
+#include "Poco/Version.h"
+#pragma message ( "Compiling with POCO " STRING(POCO_VERSION) )
 
 #else
 #include <wx/mstream.h>
