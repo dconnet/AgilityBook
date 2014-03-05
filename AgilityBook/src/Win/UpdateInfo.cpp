@@ -12,6 +12,7 @@
  * File Format: See below.
  *
  * Revision History
+ * 2014-03-05 Change wxFileSystem usage to CLibArchive.
  * 2013-12-05 Remove "?os=..." from url (website redesign)
  * 2013-10-30 Fixed a problem where arbupdater was spawned hidden.
  * 2013-10-23 Added 'minOS'.
@@ -102,24 +103,21 @@
 #include "DlgProgress.h"
 #include "ReadHttp.h"
 #include "RegItems.h"
+#include <fstream>
 
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
+#include "LibArchive/LibArchive.h"
 #include <wx/config.h>
 #include <wx/filedlg.h>
 #include <wx/filename.h>
-#include <wx/filesys.h>
 #include <wx/stdpaths.h>
 #include <wx/wfstream.h>
 
 #ifdef _DEBUG
 #define USE_LOCAL
-#endif
-
-#ifdef USE_LOCAL
-#include <wx/stdpaths.h>
 #endif
 
 #ifdef __WXMSW__
@@ -626,19 +624,19 @@ bool CUpdateInfo::CheckProgram(
 					{
 						wxString updater = UpdateFile();
 						{
-							wxFileOutputStream output(updater);
+							std::wstring outFile(StringUtil::stringW(updater));
+#if defined(ARB_HAS_OSTREAM_WCHAR)
+							std::ofstream output(outFile.c_str(), std::ios::out | std::ios::binary);
+#else
+							char const* pFile = NULL;
+							std::string filename = StringUtil::stringA(outFile);
+							pFile = filename.c_str();
+							std::ofstream output(pFile, std::ios::out | std::ios::binary);
+#endif
 							wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-							wxString zipfile = wxFileSystem::FileNameToURL(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
-							zipfile += L"#zip:" + ARBUpdater();
-							wxFileSystem filesys;
-							wxFSFile* file = filesys.OpenFile(zipfile);
-							if (file)
-							{
-								wxInputStream* input = file->GetStream();
-								input->Read(output);
-								delete file;
-							}
-							else
+							wxString zipfile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
+							CLibArchive filesys(StringUtil::stringW(zipfile));
+							if (!filesys.ExtractFile(StringUtil::stringW(ARBUpdater()), output))
 							{
 								bGotoWeb = true;
 								wxMessageBox(_("IDS_ERROR_AUTOUPDATE"));

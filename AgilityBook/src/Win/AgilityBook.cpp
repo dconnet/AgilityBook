@@ -55,7 +55,6 @@
 #include <wx/docview.h>
 #include <wx/file.h>
 #include <wx/fileconf.h>
-#include <wx/filesys.h>
 #include <wx/fs_arc.h>
 #include <wx/msgdlg.h>
 #include <wx/settings.h>
@@ -63,7 +62,6 @@
 #include <wx/sysopt.h>
 #include <wx/url.h>
 #include <wx/utils.h>
-#include <wx/xrc/xmlres.h>	// XRC XML resources
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

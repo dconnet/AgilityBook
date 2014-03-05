@@ -47,7 +47,6 @@
 #include <wx/dir.h>
 #include <wx/dynlib.h>
 #include <wx/file.h>
-#include <wx/filesys.h>
 #include <wx/statline.h>
 #include <wx/stdpaths.h>
 
