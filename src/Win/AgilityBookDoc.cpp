@@ -95,7 +95,6 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
 #include <algorithm>
-#include <fstream>
 #include <wx/config.h>
 #include <wx/file.h>
 #include <wx/filefn.h>

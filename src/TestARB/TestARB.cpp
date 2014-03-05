@@ -34,7 +34,6 @@
 #if defined(__WXWINDOWS__)
 #include "../Win/LanguageManager.h"
 #include <wx/app.h>
-#include <wx/filesys.h>
 #include <wx/fs_arc.h>
 #include <wx/stdpaths.h>
 #endif
