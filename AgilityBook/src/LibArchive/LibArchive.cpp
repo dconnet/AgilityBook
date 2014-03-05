@@ -20,6 +20,7 @@
 #include "ARBCommon/StringUtil.h"
 
 #if defined(USE_POCO)
+#pragma warning(disable : 4244)
 #include "Poco/Zip/ZipArchive.h"
 #include "Poco/Zip/ZipStream.h"
 #include "Poco/StreamCopier.h"
