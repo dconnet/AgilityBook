@@ -250,7 +250,7 @@ static std::wstring GetEndiannessName()
 	wxPlatformInfo info;
 	return StringUtil::stringW(info.GetEndiannessName());
 
-#elif defined(_WIN32)
+#elif
 	// Copied from wxWidgets 2.9.5: utilscmn.cpp: wxIsPlatformLittleEndian
 	// Are we little or big endian? This method is from Harbison & Steele.
 	union
@@ -266,8 +266,6 @@ static std::wstring GetEndiannessName()
 	else
 		return L"Big endian";
 
-#else
-#error Unknown OS
 #endif
 }
 

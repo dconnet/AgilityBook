@@ -22,9 +22,6 @@
 
 #include "ARBCommon/StringUtil.h"
 #include <sstream>
-#if defined(__WXWINDOWS__)
-#include <wx/file.h>
-#endif
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
