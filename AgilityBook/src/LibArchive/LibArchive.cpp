@@ -20,11 +20,15 @@
 #include "ARBCommon/StringUtil.h"
 
 #if defined(USE_POCO)
+#include "Platform/arbWarningPush.h"
 #pragma warning(disable : 4244)
+
 #include "Poco/Zip/ZipArchive.h"
 #include "Poco/Zip/ZipStream.h"
 #include "Poco/StreamCopier.h"
 #include <fstream>
+
+#include "Platform/arbWarningPop.h"
 
 #elif defined(__WXWINDOWS__)
 #include <wx/filesys.h>
@@ -48,6 +52,8 @@ public:
 	CLibArchiveImpl(std::wstring const& zipFile)
 #if defined(__WXWINDOWS__) && !defined(USE_POCO)
 		: m_zipFile(StringUtil::stringWX(zipFile))
+#elif defined(USE_POCO) && defined(ARB_HAS_ISTREAM_WCHAR)
+		: m_zipFile(zipFile)
 #else
 		: m_zipFile(StringUtil::stringA(zipFile))
 #endif
@@ -56,6 +62,8 @@ public:
 	}
 #if defined(__WXWINDOWS__) && !defined(USE_POCO)
 	wxString m_zipFile;
+#elif defined(USE_POCO) && defined(ARB_HAS_ISTREAM_WCHAR)
+	std::wstring m_zipFile;
 #else
 	std::string m_zipFile;
 #endif
@@ -82,13 +90,16 @@ bool CLibArchive::ExtractFile(
 #if defined(USE_POCO)
 	std::string archiveFile = StringUtil::stringA(inArchiveFile);
 	std::ifstream in(m_pImpl->m_zipFile, std::ios::binary);
-	Poco::Zip::ZipArchive arch(in);
-	Poco::Zip::ZipArchive::FileHeaders::const_iterator it = arch.findHeader(archiveFile);
-	if (it != arch.headerEnd())
+	if (in.good())
 	{
-		Poco::Zip::ZipInputStream zipin(in, it->second);
-		Poco::StreamCopier::copyStream(zipin, outData);
-		rc = true;
+		Poco::Zip::ZipArchive arch(in);
+		Poco::Zip::ZipArchive::FileHeaders::const_iterator it = arch.findHeader(archiveFile);
+		if (it != arch.headerEnd())
+		{
+			Poco::Zip::ZipInputStream zipin(in, it->second);
+			Poco::StreamCopier::copyStream(zipin, outData);
+			rc = true;
+		}
 	}
 
 #elif defined(__WXWINDOWS__)

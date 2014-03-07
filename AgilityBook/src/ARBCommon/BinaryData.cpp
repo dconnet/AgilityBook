@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-03-07 Add support for Poco's compression.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-12 Encoding/decoding 0 bytes should fail.
  * 2008-12-13 Added wxWidget support (zlib)
@@ -21,10 +22,23 @@
 
 #include "ARBCommon/ARBBase64.h"
 #include "ARBCommon/StringUtil.h"
-#if defined(__WXWINDOWS__)
+
+#if defined(USE_POCO)
+#include "Poco/Buffer.h"
+#include "Poco/DeflatingStream.h"
+#include "Poco/InflatingStream.h"
+#include "Poco/MemoryStream.h"
+#include "Poco/StreamCopier.h"
+#include <fstream>
+
+#elif defined(__WXWINDOWS__)
 #include <wx/mstream.h>
 #include <wx/wfstream.h>
 #include <wx/zstream.h>
+#include <fstream>
+
+#else
+#error Need Poco or wxWidgets
 #endif
 
 #ifdef __WXMSW__
@@ -48,31 +62,37 @@ bool BinaryData::Decode(
 	if (inBase64.empty())
 		return false;
 
-#if !defined(__WXWINDOWS__)
-#pragma PRAGMA_TODO(implement non-wx version)
-	return false;
-
-#else
-
 	unsigned char* pData;
 	size_t len;
-	if (!ARBBase64::Decode(inBase64, pData, len))
-		return false;
-
-	wxMemoryOutputStream output;
+	if (ARBBase64::Decode(inBase64, pData, len))
 	{
-		wxZlibInputStream strm(new wxMemoryInputStream(pData, len), wxZLIB_ZLIB);
-		output.Write(strm);
-		output.Close();
-	}
-	outBytes = output.GetSize();
-	outBinData = new unsigned char[outBytes];
-	output.CopyTo(outBinData, outBytes);
+#if defined(USE_POCO)
+		Poco::MemoryInputStream input(reinterpret_cast<char*>(pData), len);
+		Poco::InflatingInputStream inflater(input);
+		std::stringstream output;
+		Poco::StreamCopier::copyStream(inflater, output);
+		std::string const& data = output.str();
+		outBytes = data.size();
+		outBinData = new unsigned char[outBytes];
+		memcpy(outBinData, data.data(), outBytes);
 
-	ARBBase64::Release(pData);
+#elif defined(__WXWINDOWS__)
+		wxMemoryOutputStream output;
+		{
+			wxZlibInputStream strm(new wxMemoryInputStream(pData, len), wxZLIB_ZLIB);
+			output.Write(strm);
+			output.Close();
+		}
+		outBytes = output.GetSize();
+		outBinData = new unsigned char[outBytes];
+		output.CopyTo(outBinData, outBytes);
+
+#endif
+
+		ARBBase64::Release(pData);
+	}
 
 	return true;
-#endif
 }
 
 
@@ -91,14 +111,20 @@ bool BinaryData::Encode(
 	if (0 == inBytes)
 		return false;
 
-#if !defined(__WXWINDOWS__)
-#pragma PRAGMA_TODO(implement non-wx version)
-	return false;
-
-#else
-
 	size_t nData = 0;
 	unsigned char* pData = NULL;
+
+#if defined(USE_POCO)
+	Poco::MemoryInputStream input(reinterpret_cast<char const*>(inBinData), inBytes);
+	Poco::DeflatingInputStream deflater(input);
+	std::stringstream output;
+	Poco::StreamCopier::copyStream(deflater, output);
+	std::string const& data = output.str();
+	nData = data.size();
+	pData = new unsigned char[nData];
+	memcpy(pData, data.data(), nData);
+
+#elif defined(__WXWINDOWS__)
 
 	wxMemoryOutputStream output;
 	{
@@ -110,13 +136,14 @@ bool BinaryData::Encode(
 	pData = new unsigned char[nData];
 	output.CopyTo(pData, nData);
 
+#endif
+
 	std::wstring tmp;
 	bool bOk = ARBBase64::Encode(pData, nData, tmp);
 	outBase64 = tmp;
 	delete [] pData;
 
 	return bOk;
-#endif
 }
 
 
@@ -126,18 +153,31 @@ bool BinaryData::EncodeFile(
 {
 	outBase64.erase();
 
-#if !defined(__WXWINDOWS__)
-#pragma PRAGMA_TODO(implement non-wx version)
-	return false;
-#endif
+	size_t nData = 0;
+	unsigned char* pData = NULL;
 
-#if defined(__WXWINDOWS__)
+#if defined(USE_POCO)
+#ifdef ARB_HAS_ISTREAM_WCHAR
+	std::ifstream file(inFileName, std::ios::binary);
+#else
+	std::string filename(StringUtil::stringA(inFileName));
+	std::ifstream file(filename.c_str(), std::ios::binary);
+#endif
+	if (!file.good())
+		return false;
+
+	Poco::DeflatingInputStream deflater(file);
+	std::stringstream output;
+	Poco::StreamCopier::copyStream(deflater, output);
+	std::string const& data = output.str();
+	nData = data.size();
+	pData = new unsigned char[nData];
+	memcpy(pData, data.data(), nData);
+
+#elif defined(__WXWINDOWS__)
 	wxFFile file;
 	if (!file.Open(inFileName.c_str(), L"rb"))
 		return false;
-
-	size_t nData = 0;
-	unsigned char* pData = NULL;
 
 	wxMemoryOutputStream output;
 	{
@@ -150,13 +190,14 @@ bool BinaryData::EncodeFile(
 	pData = new unsigned char[nData];
 	output.CopyTo(pData, nData);
 
+#endif
+
 	std::wstring tmp;
 	bool bOk = ARBBase64::Encode(pData, nData, tmp);
 	outBase64 = tmp;
 	delete [] pData;
 
 	return bOk;
-#endif
 }
 
 
