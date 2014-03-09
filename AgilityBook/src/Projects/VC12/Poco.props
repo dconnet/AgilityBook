@@ -3,7 +3,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(POCO_BASE)\Foundation\include;$(POCO_BASE)\Data\include;$(POCO_BASE)\Data\SQLite\include; $(POCO_BASE)\Net\include;$(POCO_BASE)\Util\include;$(POCO_BASE)\Zip\include;$(POCO_BASE)\XML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>USE_POCO=1;POCO_STATIC;POCO_NO_AUTOMATIC_LIBS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_POCO;POCO_STATIC;POCO_NO_AUTOMATIC_LIBS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 </Project>

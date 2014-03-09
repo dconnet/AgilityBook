@@ -53,18 +53,26 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 
-#if !defined(USE_LIBXML2) && !defined(USE_POCO)
-#if defined(__WXWINDOWS__)
-#define USE_LIBXML2		0
-#define USE_POCO		0
+#if defined(USE_LIBXML2)
+#define __USE_LIBXML2	1
+#define __USE_POCO		0
+#define __USE_WX		0
+
+#elif defined(USE_POCO)
+#define __USE_LIBXML2	0
+#define __USE_POCO		1
+#define __USE_WX		0
+
+#elif defined(__WXWINDOWS__)
+#define __USE_POCO		0
+#define __USE_LIBXML2	0
+#define __USE_WX		1
+
 #else
 #error No idea what XML parser you want!
 #endif
-#elif defined(USE_LIBXML2) && defined(USE_POCO)
-#error Pick a parser!
-#endif
 
-#if USE_LIBXML2
+#if __USE_LIBXML2
 #include "libxml/encoding.h"
 #include "libxml/parser.h"
 #include "libxml/xmlIO.h"
@@ -80,7 +88,7 @@
 #pragma message ( "Compiling with libxml2 " LIBXML_DOTTED_VERSION )
 #endif
 
-#elif USE_POCO
+#elif __USE_POCO
 #include "Poco/DOM/AutoPtr.h"
 #include "Poco/DOM/Document.h"
 #include "Poco/DOM/DOMParser.h"
@@ -203,7 +211,7 @@ protected:
 bool Element::Initialize(std::wstring& outMsg)
 {
 	outMsg.erase();
-#if USE_LIBXML2
+#if __USE_LIBXML2
 	xmlInitParser();
 	xmlSubstituteEntitiesDefault(1);
 #endif
@@ -213,7 +221,7 @@ bool Element::Initialize(std::wstring& outMsg)
 
 void Element::Terminate()
 {
-#if USE_LIBXML2
+#if __USE_LIBXML2
 	xmlCleanupParser();
 #endif
 }
@@ -231,7 +239,7 @@ Element::~Element()
 
 ////////////////////////////////////////////////////////////////////////////
 
-#if USE_LIBXML2
+#if __USE_LIBXML2
 
 class XMLstring : public std::basic_string<xmlChar>
 {
@@ -353,7 +361,7 @@ static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffe
 	}
 }
 
-#elif USE_POCO
+#elif __USE_POCO
 
 static void ReadDoc(Poco::XML::Document* pDoc, Poco::XML::Node* inNode, ElementNodePtr tree)
 {
@@ -1223,7 +1231,7 @@ bool ElementNode::FindElementDeep(
 }
 
 
-#if USE_LIBXML2
+#if __USE_LIBXML2
 
 static bool LoadXMLNode(
 		ElementNodePtr node,
@@ -1240,7 +1248,7 @@ static bool LoadXMLNode(
 	return true;
 }
 
-#elif USE_POCO
+#elif __USE_POCO
 
 static bool LoadXMLNode(
 		ElementNodePtr node,
@@ -1286,7 +1294,7 @@ bool ElementNode::LoadXML(
 	if (!inStream.good())
 		return false;
 
-#if USE_LIBXML2
+#if __USE_LIBXML2
 	char buffer[1024];
 	inStream.read(buffer, ARRAYSIZE(buffer));
 	int res = static_cast<int>(inStream.gcount());
@@ -1321,7 +1329,7 @@ bool ElementNode::LoadXML(
 	}
 	return rc;
 
-#elif USE_POCO
+#elif __USE_POCO
 
 	try
 	{
@@ -1368,7 +1376,7 @@ bool ElementNode::LoadXML(
 {
 	if (!inData || 0 == nData)
 		return false;
-#if USE_LIBXML2
+#if __USE_LIBXML2
 	xmlDocPtr source = xmlReadMemory(inData, static_cast<int>(nData), NULL, NULL, 0);
 	bool rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
 	if (source)
@@ -1387,7 +1395,7 @@ bool ElementNode::LoadXML(
 {
 	if (!inFileName)
 		return false;
-#if USE_LIBXML2
+#if __USE_LIBXML2
 	std::string filename = StringUtil::stringA(inFileName);
 	xmlDocPtr source = xmlReadFile(filename.c_str(), NULL, 0);
 	bool rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
@@ -1415,7 +1423,7 @@ bool ElementNode::SaveXML(std::ostream& outOutput) const
 }
 
 
-#if USE_LIBXML2
+#if __USE_LIBXML2
 static int BufferWriteCallback(void* context, const char* buffer, int len)
 {
 	if (!context)
@@ -1436,7 +1444,7 @@ bool ElementNode::SaveXML(
 		std::ostream& outOutput,
 		std::string const& inDTD) const
 {
-#if USE_LIBXML2
+#if __USE_LIBXML2
 	// On Win32, an XMLCh is a UNICODE character.
 	outOutput << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 	if (!inDTD.empty())
@@ -1463,7 +1471,7 @@ bool ElementNode::SaveXML(
 	xmlFreeTextWriter(formatter);
 	return true;
 
-#elif USE_POCO
+#elif __USE_POCO
 	int optionsWriter = Poco::XML::XMLWriter::PRETTY_PRINT;
 	if (inDTD.empty())
 	{
