@@ -131,7 +131,7 @@ private:
 
 	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
-	void OnPageChanging(wxNotebookEvent& evt);
+	void OnPageChanging(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 	// Properties
 	void OnDateChanged(wxDateEvent& evt);
