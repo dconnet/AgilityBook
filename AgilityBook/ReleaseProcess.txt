@@ -51,7 +51,7 @@ On Mac10.5:
 - rm -rf build-carbon
 - mkdir build-carbon
 - cd build-carbon
-- ../configure CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2
+- ../configure
 On Mac10.8:
 - export PATH=$WXWIN/build-cocoa:$PATH
 - cd .../AgilityBook
@@ -59,7 +59,7 @@ On Mac10.8:
 - rm -rf build-cocoa
 - mkdir build-cocoa
 - cd build-cocoa
-- ../configure CC=clang CXX=clang++ LD=clang++
+- ../configure
 Both:
 - make dist
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
