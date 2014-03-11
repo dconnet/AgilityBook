@@ -25,6 +25,7 @@
 #include "LibArchive/LibArchive.h"
 
 #if defined(__WXWINDOWS__)
+#include <wx/filename.h>
 #include <wx/stdpaths.h>
 #endif
 

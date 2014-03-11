@@ -83,7 +83,7 @@ CDlgOptions::CDlgOptions(
 }
 
 
-void CDlgOptions::OnPageChanging(wxNotebookEvent& evt)
+void CDlgOptions::OnPageChanging(wxBookCtrlEvent& evt)
 {
 	if (wxNOT_FOUND != evt.GetOldSelection())
 	{

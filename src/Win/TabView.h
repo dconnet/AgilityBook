@@ -60,20 +60,20 @@ private:
 	wxImageList m_imageList;
 	bool m_bIgnoreEvents;
 
-	void OnBookCtrlChanged(wxBookCtrlBaseEvent& evt);
+	void OnBookCtrlChanged(wxBookCtrlEvent& evt);
 #if wxUSE_NOTEBOOK
-	void OnNotebookChanged(wxNotebookEvent& evt)		{OnBookCtrlChanged(evt);}
+	void OnNotebookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
 #endif
 #if wxUSE_CHOICEBOOK
-	void OnChoicebookChanged(wxChoicebookEvent& evt)	{OnBookCtrlChanged(evt);}
+	void OnChoicebookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
 #endif
 #if wxUSE_LISTBOOK
-	void OnListbookChanged(wxListbookEvent& evt)		{OnBookCtrlChanged(evt);}
+	void OnListbookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
 #endif
 #if wxUSE_TREEBOOK
-	void OnTreebookChanged(wxTreebookEvent& evt)		{OnBookCtrlChanged(evt);}
+	void OnTreebookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
 #endif
 #if wxUSE_TOOLBOOK
-	void OnToolbookChanged(wxToolbookEvent& evt)		{OnBookCtrlChanged(evt);}
+	void OnToolbookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
 #endif
 };

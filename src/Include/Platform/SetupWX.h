@@ -71,7 +71,6 @@
 #include <wx/treectrl.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>
-#include <wx/zipstrm.h>
 #endif
 
 // ARB was developed against v2.8.10 - anything earlier is not supported.
