@@ -50,6 +50,8 @@
 #include "Wizard.h"
 
 #include "ARBCommon/BreakLine.h"
+#include <wx/spinctrl.h>
+#include <wx/textfile.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

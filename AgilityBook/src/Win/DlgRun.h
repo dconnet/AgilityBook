@@ -231,8 +231,8 @@ private:
 
 	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
-	void OnPageChanging(wxNotebookEvent& evt);
-	void OnPageChanged(wxNotebookEvent& evt);
+	void OnPageChanging(wxBookCtrlEvent& evt);
+	void OnPageChanged(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 	// Score
 	void OnScoreDateChanged(wxDateEvent& evt);

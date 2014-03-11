@@ -73,7 +73,6 @@
 #include <wx/treectrl.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>
-#include <wx/zipstrm.h>
 #endif
 
 // ARBv3 was developed against v3.0.0+ - anything earlier is not supported.

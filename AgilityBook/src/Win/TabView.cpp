@@ -31,6 +31,10 @@
 #include "RegItems.h"
 #include <wx/choicebk.h>
 #include <wx/config.h>
+#include <wx/listbook.h>
+#include <wx/notebook.h>
+#include <wx/treebook.h>
+#include <wx/toolbook.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -338,7 +342,7 @@ void CTabView::OnUpdate(wxView* sender, wxObject* inHint)
 }
 
 
-void CTabView::OnBookCtrlChanged(wxBookCtrlBaseEvent& evt)
+void CTabView::OnBookCtrlChanged(wxBookCtrlEvent& evt)
 {
 	if (!m_bIgnoreEvents)
 	{

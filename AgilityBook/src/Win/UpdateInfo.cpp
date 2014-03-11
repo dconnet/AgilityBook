@@ -114,7 +114,9 @@
 #include <wx/filedlg.h>
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
+#include <wx/textfile.h>
 #include <wx/wfstream.h>
+#include <wx/zipstrm.h>
 
 #ifdef _DEBUG
 #define USE_LOCAL

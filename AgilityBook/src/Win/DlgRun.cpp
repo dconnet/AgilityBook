@@ -3151,7 +3151,7 @@ void CDlgRun::OnLinksOpen(wxCommandEvent& evt)
 }
 
 
-void CDlgRun::OnPageChanging(wxNotebookEvent& evt)
+void CDlgRun::OnPageChanging(wxBookCtrlEvent& evt)
 {
 	if (wxNOT_FOUND != evt.GetOldSelection())
 	{
@@ -3165,7 +3165,7 @@ void CDlgRun::OnPageChanging(wxNotebookEvent& evt)
 }
 
 
-void CDlgRun::OnPageChanged(wxNotebookEvent& evt)
+void CDlgRun::OnPageChanged(wxBookCtrlEvent& evt)
 {
 	if (wxNOT_FOUND != evt.GetOldSelection())
 		TransferDataFromWindow();

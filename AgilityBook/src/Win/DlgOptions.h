@@ -45,6 +45,6 @@ protected:
 	CDlgOptionsPrint* m_pagePrint;
 
 	DECLARE_EVENT_TABLE()
-	void OnPageChanging(wxNotebookEvent& evt);
+	void OnPageChanging(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

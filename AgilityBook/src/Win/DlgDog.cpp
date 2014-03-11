@@ -961,7 +961,7 @@ CDlgDog::~CDlgDog()
 }
 
 
-void CDlgDog::OnPageChanging(wxNotebookEvent& evt)
+void CDlgDog::OnPageChanging(wxBookCtrlEvent& evt)
 {
 	if (wxNOT_FOUND != evt.GetOldSelection())
 	{

@@ -23,6 +23,7 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibArchive/LibArchive.h"
+#include <wx/filename.h>
 #include <wx/stdpaths.h>
 
 #ifdef __WXMSW__
