@@ -61,6 +61,7 @@ private:
 	bool m_bIgnoreEvents;
 
 	void OnBookCtrlChanged(wxBookCtrlEvent& evt);
+#if wxCHECK_VERSION(3, 0, 0)
 #if wxUSE_NOTEBOOK
 	void OnNotebookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
 #endif
@@ -75,5 +76,22 @@ private:
 #endif
 #if wxUSE_TOOLBOOK
 	void OnToolbookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
+#endif
+#else
+#if wxUSE_NOTEBOOK
+	void OnNotebookChanged(wxNotebookEvent& evt)		{OnBookCtrlChanged(evt);}
+#endif
+#if wxUSE_CHOICEBOOK
+	void OnChoicebookChanged(wxChoicebookEvent& evt)	{OnBookCtrlChanged(evt);}
+#endif
+#if wxUSE_LISTBOOK
+	void OnListbookChanged(wxListbookEvent& evt)		{OnBookCtrlChanged(evt);}
+#endif
+#if wxUSE_TREEBOOK
+	void OnTreebookChanged(wxTreebookEvent& evt)		{OnBookCtrlChanged(evt);}
+#endif
+#if wxUSE_TOOLBOOK
+	void OnToolbookChanged(wxToolbookEvent& evt)		{OnBookCtrlChanged(evt);}
+#endif
 #endif
 };
