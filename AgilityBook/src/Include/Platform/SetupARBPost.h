@@ -50,8 +50,9 @@ namespace std
 	using boost::make_shared;
 	using boost::shared_ptr;
 	using boost::weak_ptr;
-	using boost::tuple;
-	using boost::get;
+	using boost::dynamic_pointer_cast;
+	using tr1::tuple;
+	using tr1::get;
 };
 
 #else
