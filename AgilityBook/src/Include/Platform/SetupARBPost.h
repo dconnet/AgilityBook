@@ -24,8 +24,12 @@
 #include <memory>
 // If not present, pick up boost's. Now we can use std::tr1::shared_ptr
 #if _MSC_VER < 1700 && (!defined(_HAS_TR1) || !_HAS_TR1)
+#if defined(__WXMAC__) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_9
+#define __USE_BOOST	0
+#else //mac
 #define __USE_BOOST	1
-#else
+#endif
+#else //vc
 #define __USE_BOOST	0
 #endif
 
