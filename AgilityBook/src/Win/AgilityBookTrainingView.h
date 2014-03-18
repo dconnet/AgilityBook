@@ -30,7 +30,7 @@
 class CAgilityBookTrainingView;
 class CAgilityBookTrainingViewData;
 
-typedef std::tr1::shared_ptr<CAgilityBookTrainingViewData> CAgilityBookTrainingViewDataPtr;
+typedef std::shared_ptr<CAgilityBookTrainingViewData> CAgilityBookTrainingViewDataPtr;
 
 
 class CFindTraining : public IFindCallback

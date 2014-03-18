@@ -137,7 +137,7 @@ private:
 	std::map<std::wstring, std::wstring> m_VenueCodes;
 };
 
-typedef std::tr1::shared_ptr<CalSiteData> CalSiteDataPtr;
+typedef std::shared_ptr<CalSiteData> CalSiteDataPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 

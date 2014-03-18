@@ -2420,13 +2420,13 @@ void CDlgRun::SetFaultsText()
 
 CDlgDogRefRunDataPtr CDlgRun::GetReferenceDataByData(long index) const
 {
-	return std::tr1::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(m_ctrlRefRuns->GetDataByData(index));
+	return std::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(m_ctrlRefRuns->GetDataByData(index));
 }
 
 
 CDlgDogRefRunDataPtr CDlgRun::GetReferenceData(long index) const
 {
-	return std::tr1::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(m_ctrlRefRuns->GetData(index));
+	return std::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(m_ctrlRefRuns->GetData(index));
 }
 
 

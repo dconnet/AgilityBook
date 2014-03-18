@@ -33,7 +33,7 @@ class CAgilityBookCalendarListView;
 class CAgilityBookCalendarListViewData;
 class CTabView;
 
-typedef std::tr1::shared_ptr<CAgilityBookCalendarListViewData> CAgilityBookCalendarListViewDataPtr;
+typedef std::shared_ptr<CAgilityBookCalendarListViewData> CAgilityBookCalendarListViewDataPtr;
 
 
 class CFindCalendar : public IFindCallback

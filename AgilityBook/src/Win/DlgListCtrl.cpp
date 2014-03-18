@@ -103,7 +103,7 @@ private:
 	CDlgListCtrl* m_Parent;
 	ARBCalendarPtr m_pCal;
 };
-typedef std::tr1::shared_ptr<CDlgListCtrlDataCalendar> CDlgListCtrlDataCalendarPtr;
+typedef std::shared_ptr<CDlgListCtrlDataCalendar> CDlgListCtrlDataCalendarPtr;
 
 
 int CDlgListCtrlDataCalendar::OnNeedIcon() const
@@ -191,7 +191,7 @@ private:
 	ARBDogRunPtr m_pRun;
 	std::wstring m_Fault;
 };
-typedef std::tr1::shared_ptr<CDlgListCtrlDataFaults> CDlgListCtrlDataFaultsPtr;
+typedef std::shared_ptr<CDlgListCtrlDataFaults> CDlgListCtrlDataFaultsPtr;
 
 
 void CDlgListCtrlDataFaults::GetAllFaults(
@@ -268,7 +268,7 @@ private:
 	ARBDogRunPtr m_pRun;
 	ARBDogRunOtherPointsPtr m_Other;
 };
-typedef std::tr1::shared_ptr<CDlgListCtrlDataOtherPoints> CDlgListCtrlDataOtherPointsPtr;
+typedef std::shared_ptr<CDlgListCtrlDataOtherPoints> CDlgListCtrlDataOtherPointsPtr;
 
 
 std::wstring CDlgListCtrlDataOtherPoints::OnNeedText(long iCol) const
@@ -324,7 +324,7 @@ private:
 	ARBDogRunPtr m_pRun;
 	ARBDogRunPartnerPtr m_Partner;
 };
-typedef std::tr1::shared_ptr<CDlgListCtrlDataPartners> CDlgListCtrlDataPartnersPtr;
+typedef std::shared_ptr<CDlgListCtrlDataPartners> CDlgListCtrlDataPartnersPtr;
 
 
 std::wstring CDlgListCtrlDataPartners::OnNeedText(long iCol) const
@@ -643,7 +643,7 @@ void CDlgListCtrl::FinishCreate(
 
 CDlgListCtrlDataPtr CDlgListCtrl::GetItemListData(long item) const
 {
-	return std::tr1::dynamic_pointer_cast<CDlgListCtrlData, CListData>(m_ctrlList->GetData(item));
+	return std::dynamic_pointer_cast<CDlgListCtrlData, CListData>(m_ctrlList->GetData(item));
 }
 
 

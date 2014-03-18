@@ -24,6 +24,12 @@
 #include <memory>
 // If not present, pick up boost's. Now we can use std::tr1::shared_ptr
 #if _MSC_VER < 1700 && (!defined(_HAS_TR1) || !_HAS_TR1)
+#define __USE_BOOST	1
+#else
+#define __USE_BOOST	0
+#endif
+
+#if __USE_BOOST
 // Boost can also be included by tweaking the include path and
 // including <memory>:
 //  boost-root/boost/tr1/tr1
@@ -37,11 +43,20 @@
 #error Minimum supported version of Boost: 1.38.0
 #endif
 #include <boost/tr1/memory.hpp>
+#include <boost/tr1/tuple.hpp>
 #include <boost/make_shared.hpp>
 namespace std
 {
 	using boost::make_shared;
+	using boost::shared_ptr;
+	using boost::weak_ptr;
+	using boost::tuple;
+	using boost::get;
 };
+
+#else
+#include <tuple>
+
 #endif
 
 #include <assert.h>

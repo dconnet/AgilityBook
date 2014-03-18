@@ -1405,7 +1405,7 @@ void CAgilityBookRunsView::OnUpdate(
 		}
 		else if (hint->IsSet(UPDATE_RUNS_SELECTION_VIEW))
 		{
-			ARBDogRunPtr pRun = std::tr1::dynamic_pointer_cast<ARBDogRun, ARBBase>(hint->GetObj());
+			ARBDogRunPtr pRun = std::dynamic_pointer_cast<ARBDogRun, ARBBase>(hint->GetObj());
 			if (pRun)
 			{
 				for (int i = 0; i < m_Ctrl->GetItemCount(); ++i)
@@ -1465,7 +1465,7 @@ CAgilityBookRunsViewDataPtr CAgilityBookRunsView::GetItemRunData(long index) con
 {
 	if (!m_Ctrl)
 		return CAgilityBookRunsViewDataPtr();
-	return std::tr1::dynamic_pointer_cast<CAgilityBookRunsViewData, CListData>(m_Ctrl->GetData(index));
+	return std::dynamic_pointer_cast<CAgilityBookRunsViewData, CListData>(m_Ctrl->GetData(index));
 }
 
 
@@ -1473,7 +1473,7 @@ CAgilityBookRunsViewDataPtr CAgilityBookRunsView::GetItemRunDataByData(wxUIntPtr
 {
 	if (!m_Ctrl)
 		return CAgilityBookRunsViewDataPtr();
-	return std::tr1::dynamic_pointer_cast<CAgilityBookRunsViewData, CListData>(m_Ctrl->GetDataByData(data));
+	return std::dynamic_pointer_cast<CAgilityBookRunsViewData, CListData>(m_Ctrl->GetDataByData(data));
 }
 
 

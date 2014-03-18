@@ -38,15 +38,9 @@ class CAgilityBookDoc;
 typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
 
 // See SetupARBPost.h
-#if _MSC_VER < 1700 && (!defined(_HAS_TR1) || !_HAS_TR1)
-#include <boost/tr1/tuple.hpp>
-using std::tr1::tuple;
-using std::tr1::get;
-#else
-#include <tuple>
 using std::tuple;
 using std::get;
-#endif
+
 #define TUPLE_DOG	0
 #define TUPLE_TRIAL	1
 #define TUPLE_RUN	2
@@ -59,7 +53,7 @@ typedef tuple<ARBDogPtr, ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
  * Used to accumulate lifetime info. Also for Placement totals.
  */
 class LifeTimePointInfo;
-typedef std::tr1::shared_ptr<LifeTimePointInfo> LifeTimePointInfoPtr;
+typedef std::shared_ptr<LifeTimePointInfo> LifeTimePointInfoPtr;
 class LifeTimePointInfo
 {
 protected:
@@ -113,7 +107,7 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 
 class CPointsDataBase;
-typedef std::tr1::shared_ptr<CPointsDataBase> CPointsDataBasePtr;
+typedef std::shared_ptr<CPointsDataBase> CPointsDataBasePtr;
 class CPointsDataBase
 {
 public:
@@ -177,7 +171,7 @@ private:
 	std::wstring m_Col1;
 	std::wstring m_Col2;
 };
-typedef std::tr1::shared_ptr<CPointsDataText> CPointsDataTextPtr;
+typedef std::shared_ptr<CPointsDataText> CPointsDataTextPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -200,7 +194,7 @@ public:
 protected:
 	ARBDogPtr m_pDog;
 };
-typedef std::tr1::shared_ptr<CPointsDataDog> CPointsDataDogPtr;
+typedef std::shared_ptr<CPointsDataDog> CPointsDataDogPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -225,7 +219,7 @@ protected:
 	ARBDogPtr m_pDog;
 	ARBConfigVenuePtr m_pVenue;
 };
-typedef std::tr1::shared_ptr<CPointsDataVenue> CPointsDataVenuePtr;
+typedef std::shared_ptr<CPointsDataVenue> CPointsDataVenuePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -250,7 +244,7 @@ protected:
 	ARBDogPtr m_pDog;
 	ARBDogTitlePtr m_pTitle;
 };
-typedef std::tr1::shared_ptr<CPointsDataTitle> CPointsDataTitlePtr;
+typedef std::shared_ptr<CPointsDataTitle> CPointsDataTitlePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -300,7 +294,7 @@ protected:
 	std::wstring m_SuperQ;
 	std::wstring m_Speed;
 };
-typedef std::tr1::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
+typedef std::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -338,7 +332,7 @@ protected:
 	double m_Lifetime;	///< Total lifetime points.
 	double m_Filtered;	///< Points that are filtered out.
 };
-typedef std::tr1::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
+typedef std::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
 
 /**
  * Subtotal lifetime points by division.
@@ -366,7 +360,7 @@ public:
 protected:
 	std::wstring m_Name;
 };
-typedef std::tr1::shared_ptr<CPointsDataLifetimeByName> CPointsDataLifetimeByNamePtr;
+typedef std::shared_ptr<CPointsDataLifetimeByName> CPointsDataLifetimeByNamePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -396,7 +390,7 @@ protected:
 	std::set<MultiQdata> m_MQs;
 	double m_ExistingDblQs;
 };
-typedef std::tr1::shared_ptr<CPointsDataMultiQs> CPointsDataMultiQsPtr;
+typedef std::shared_ptr<CPointsDataMultiQs> CPointsDataMultiQsPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -421,7 +415,7 @@ protected:
 	ARBConfigDivisionPtr m_Div;
 	int m_Pts;
 };
-typedef std::tr1::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
+typedef std::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -439,7 +433,7 @@ protected:
 	double m_Points;
 	std::list<OtherPtInfo> m_RunList;
 };
-typedef std::tr1::shared_ptr<CPointsDataOtherPoints> CPointsDataOtherPointsPtr;
+typedef std::shared_ptr<CPointsDataOtherPoints> CPointsDataOtherPointsPtr;
 
 class CPointsDataOtherPointsTallyAll : public CPointsDataOtherPoints
 {
@@ -458,7 +452,7 @@ public:
 protected:
 	std::wstring m_Name;
 };
-typedef std::tr1::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
+typedef std::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
 
 class CPointsDataOtherPointsTallyAllByEvent : public CPointsDataOtherPoints
 {
@@ -477,7 +471,7 @@ public:
 protected:
 	std::wstring m_Event;
 };
-typedef std::tr1::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
+typedef std::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
 
 class CPointsDataOtherPointsTallyLevel : public CPointsDataOtherPoints
 {
@@ -496,7 +490,7 @@ public:
 protected:
 	std::wstring m_Level;
 };
-typedef std::tr1::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
+typedef std::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
 
 class CPointsDataOtherPointsTallyLevelByEvent : public CPointsDataOtherPoints
 {
@@ -517,7 +511,7 @@ protected:
 	std::wstring m_Level;
 	std::wstring m_Event;
 };
-typedef std::tr1::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
+typedef std::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 

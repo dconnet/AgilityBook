@@ -461,7 +461,7 @@ void CAgilityBookTreeListView::OnUpdate(
 	else if (hint && hint->IsEqual(UPDATE_NEW_TRIAL))
 	{
 		LoadData(false, true);
-		ARBDogTrialPtr pTrial = std::tr1::dynamic_pointer_cast<ARBDogTrial, ARBBase>(hint->GetObj());
+		ARBDogTrialPtr pTrial = std::dynamic_pointer_cast<ARBDogTrial, ARBBase>(hint->GetObj());
 		assert(pTrial);
 		wxDataViewItem pData = FindData(pTrial);
 		ChangeSelection(pData);

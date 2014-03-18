@@ -301,7 +301,7 @@ void CPointsDataDog::Details() const
 
 bool CPointsDataDog::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataDogPtr inDog = std::tr1::dynamic_pointer_cast<CPointsDataDog, CPointsDataBase>(inData);
+	CPointsDataDogPtr inDog = std::dynamic_pointer_cast<CPointsDataDog, CPointsDataBase>(inData);
 	if (inDog)
 		return m_pDog->GetCallName() == inDog->m_pDog->GetCallName();
 	else
@@ -411,7 +411,7 @@ void CPointsDataVenue::Details() const
 
 bool CPointsDataVenue::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataVenuePtr inVenue = std::tr1::dynamic_pointer_cast<CPointsDataVenue, CPointsDataBase>(inData);
+	CPointsDataVenuePtr inVenue = std::dynamic_pointer_cast<CPointsDataVenue, CPointsDataBase>(inData);
 	if (inVenue)
 		return m_pVenue->GetName() == inVenue->m_pVenue->GetName();
 	else
@@ -495,7 +495,7 @@ void CPointsDataTitle::Details() const
 
 bool CPointsDataTitle::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataTitlePtr inTitle = std::tr1::dynamic_pointer_cast<CPointsDataTitle, CPointsDataBase>(inData);
+	CPointsDataTitlePtr inTitle = std::dynamic_pointer_cast<CPointsDataTitle, CPointsDataBase>(inData);
 	if (inTitle)
 		return m_pTitle->GetVenue() == inTitle->m_pTitle->GetVenue()
 			&& m_pTitle->GetRawName() == inTitle->m_pTitle->GetRawName();
@@ -623,7 +623,7 @@ void CPointsDataEvent::Details() const
 
 bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataEventPtr inEvent = std::tr1::dynamic_pointer_cast<CPointsDataEvent, CPointsDataBase>(inData);
+	CPointsDataEventPtr inEvent = std::dynamic_pointer_cast<CPointsDataEvent, CPointsDataBase>(inData);
 	if (inEvent)
 		return m_Venue->GetName() == inEvent->m_Venue->GetName()
 			&& m_Div->GetName() == inEvent->m_Div->GetName()
@@ -737,7 +737,7 @@ void CPointsDataLifetime::Details() const
 
 bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataLifetimePtr inLife = std::tr1::dynamic_pointer_cast<CPointsDataLifetime, CPointsDataBase>(inData);
+	CPointsDataLifetimePtr inLife = std::dynamic_pointer_cast<CPointsDataLifetime, CPointsDataBase>(inData);
 	if (inLife)
 		return m_Venue == inLife->m_Venue;
 	else
@@ -804,7 +804,7 @@ std::wstring CPointsDataLifetimeByName::GetHtml(
 
 bool CPointsDataLifetimeByName::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataLifetimeByNamePtr inLife = std::tr1::dynamic_pointer_cast<CPointsDataLifetimeByName, CPointsDataBase>(inData);
+	CPointsDataLifetimeByNamePtr inLife = std::dynamic_pointer_cast<CPointsDataLifetimeByName, CPointsDataBase>(inData);
 	if (inLife)
 		return CPointsDataLifetimeByName::IsEqual(inData)
 			&& m_Name == inLife->m_Name;
@@ -891,7 +891,7 @@ void CPointsDataMultiQs::Details() const
 
 bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataMultiQsPtr inMulti = std::tr1::dynamic_pointer_cast<CPointsDataMultiQs, CPointsDataBase>(inData);
+	CPointsDataMultiQsPtr inMulti = std::dynamic_pointer_cast<CPointsDataMultiQs, CPointsDataBase>(inData);
 	if (inMulti)
 		return m_Venue->GetName() == inMulti->m_Venue->GetName()
 			&& m_MultiQ->GetName() == inMulti->m_MultiQ->GetName();
@@ -946,7 +946,7 @@ std::wstring CPointsDataSpeedPts::GetHtml(
 
 bool CPointsDataSpeedPts::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataSpeedPtsPtr inPts = std::tr1::dynamic_pointer_cast<CPointsDataSpeedPts, CPointsDataBase>(inData);
+	CPointsDataSpeedPtsPtr inPts = std::dynamic_pointer_cast<CPointsDataSpeedPts, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Venue->GetName() == inPts->m_Venue->GetName();
 	else
@@ -1030,7 +1030,7 @@ void CPointsDataOtherPointsTallyAll::Details() const
 
 bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataOtherPointsTallyAllPtr inPts = std::tr1::dynamic_pointer_cast<CPointsDataOtherPointsTallyAll, CPointsDataBase>(inData);
+	CPointsDataOtherPointsTallyAllPtr inPts = std::dynamic_pointer_cast<CPointsDataOtherPointsTallyAll, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Name == inPts->m_Name;
 	else
@@ -1098,7 +1098,7 @@ void CPointsDataOtherPointsTallyAllByEvent::Details() const
 
 bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataOtherPointsTallyAllByEventPtr inPts = std::tr1::dynamic_pointer_cast<CPointsDataOtherPointsTallyAllByEvent, CPointsDataBase>(inData);
+	CPointsDataOtherPointsTallyAllByEventPtr inPts = std::dynamic_pointer_cast<CPointsDataOtherPointsTallyAllByEvent, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Event == inPts->m_Event;
 	else
@@ -1166,7 +1166,7 @@ void CPointsDataOtherPointsTallyLevel::Details() const
 
 bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataOtherPointsTallyLevelPtr inPts = std::tr1::dynamic_pointer_cast<CPointsDataOtherPointsTallyLevel, CPointsDataBase>(inData);
+	CPointsDataOtherPointsTallyLevelPtr inPts = std::dynamic_pointer_cast<CPointsDataOtherPointsTallyLevel, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Level == inPts->m_Level;
 	else
@@ -1240,7 +1240,7 @@ void CPointsDataOtherPointsTallyLevelByEvent::Details() const
 
 bool CPointsDataOtherPointsTallyLevelByEvent::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataOtherPointsTallyLevelByEventPtr inPts = std::tr1::dynamic_pointer_cast<CPointsDataOtherPointsTallyLevelByEvent, CPointsDataBase>(inData);
+	CPointsDataOtherPointsTallyLevelByEventPtr inPts = std::dynamic_pointer_cast<CPointsDataOtherPointsTallyLevelByEvent, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Level == inPts->m_Level
 			&& m_Event == inPts->m_Event;

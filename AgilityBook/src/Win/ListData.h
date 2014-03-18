@@ -32,7 +32,7 @@ public:
 	/// By default, just uses OnNeedText to fill in text.
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 };
-typedef std::tr1::shared_ptr<CListData> CListDataPtr;
+typedef std::shared_ptr<CListData> CListDataPtr;
 
 
 /// Provide a way to refresh items easily by using a common tree data class

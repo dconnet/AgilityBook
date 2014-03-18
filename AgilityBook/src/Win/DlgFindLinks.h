@@ -26,7 +26,7 @@ class CReportListCtrl;
 class wxListEvent;
 
 class CDlgFindLinksData;
-typedef std::tr1::shared_ptr<CDlgFindLinksData> CDlgFindLinksDataPtr;
+typedef std::shared_ptr<CDlgFindLinksData> CDlgFindLinksDataPtr;
 
 
 class CDlgFindLinks : public wxDialog
