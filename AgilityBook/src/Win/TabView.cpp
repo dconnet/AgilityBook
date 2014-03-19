@@ -342,7 +342,11 @@ void CTabView::OnUpdate(wxView* sender, wxObject* inHint)
 }
 
 
+#if wxCHECK_VERSION(3, 0, 0)
 void CTabView::OnBookCtrlChanged(wxBookCtrlEvent& evt)
+#else
+void CTabView::OnBookCtrlChanged(wxBookCtrlBaseEvent& evt)
+#endif
 {
 	if (!m_bIgnoreEvents)
 	{

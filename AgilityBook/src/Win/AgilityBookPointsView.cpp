@@ -305,7 +305,7 @@ CAgilityBookPointsViewDataPtr CAgilityBookPointsView::GetItemPointsData(long ind
 {
 	if (!m_Ctrl)
 		return CAgilityBookPointsViewDataPtr();
-	return std::tr1::dynamic_pointer_cast<CAgilityBookPointsViewData, CListData>(m_Ctrl->GetData(index));
+	return std::dynamic_pointer_cast<CAgilityBookPointsViewData, CListData>(m_Ctrl->GetData(index));
 }
 
 

@@ -696,7 +696,7 @@ CAgilityBookCalendarListViewDataPtr CAgilityBookCalendarListView::GetItemCalData
 {
 	if (!m_Ctrl)
 		return CAgilityBookCalendarListViewDataPtr();
-	return std::tr1::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(m_Ctrl->GetData(index));
+	return std::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(m_Ctrl->GetData(index));
 }
 
 
@@ -708,7 +708,7 @@ CAgilityBookCalendarListViewDataPtr CAgilityBookCalendarListView::GetItemCalData
 {
 	if (!m_Ctrl)
 		return CAgilityBookCalendarListViewDataPtr();
-	return std::tr1::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(m_Ctrl->GetDataByData(data));
+	return std::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(m_Ctrl->GetDataByData(data));
 }
 
 

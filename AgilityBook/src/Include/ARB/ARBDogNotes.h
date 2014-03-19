@@ -28,7 +28,7 @@ typedef std::vector<std::wstring> ARBDogFaultList;
 
 
 class ARBMetaData;
-typedef std::tr1::shared_ptr<ARBMetaData> ARBMetaDataPtr;
+typedef std::shared_ptr<ARBMetaData> ARBMetaDataPtr;
 class ARBMetaData
 {
 	friend class ARBDogNotes;

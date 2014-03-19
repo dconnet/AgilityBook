@@ -25,7 +25,7 @@ class wxDatePickerCtrl;
 class wxListEvent;
 
 class CDlgConfigureDataPlacement;
-typedef std::tr1::shared_ptr<CDlgConfigureDataPlacement> CDlgConfigureDataPlacementPtr;
+typedef std::shared_ptr<CDlgConfigureDataPlacement> CDlgConfigureDataPlacementPtr;
 
 
 class CDlgConfigEventMethod : public wxDialog

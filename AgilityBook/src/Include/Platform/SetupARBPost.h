@@ -24,6 +24,16 @@
 #include <memory>
 // If not present, pick up boost's. Now we can use std::tr1::shared_ptr
 #if _MSC_VER < 1700 && (!defined(_HAS_TR1) || !_HAS_TR1)
+#if defined(__WXMAC__) && defined(MAC_OS_X_VERSION_10_9) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_9
+#define __USE_BOOST	0
+#else //mac
+#define __USE_BOOST	1
+#endif
+#else //vc
+#define __USE_BOOST	0
+#endif
+
+#if __USE_BOOST
 // Boost can also be included by tweaking the include path and
 // including <memory>:
 //  boost-root/boost/tr1/tr1
@@ -37,11 +47,21 @@
 #error Minimum supported version of Boost: 1.38.0
 #endif
 #include <boost/tr1/memory.hpp>
+#include <boost/tr1/tuple.hpp>
 #include <boost/make_shared.hpp>
 namespace std
 {
 	using boost::make_shared;
+	using boost::shared_ptr;
+	using boost::weak_ptr;
+	using boost::dynamic_pointer_cast;
+	using tr1::tuple;
+	using tr1::get;
 };
+
+#else
+#include <tuple>
+
 #endif
 
 #include <assert.h>

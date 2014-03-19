@@ -60,8 +60,8 @@ private:
 	wxImageList m_imageList;
 	bool m_bIgnoreEvents;
 
-	void OnBookCtrlChanged(wxBookCtrlEvent& evt);
 #if wxCHECK_VERSION(3, 0, 0)
+	void OnBookCtrlChanged(wxBookCtrlEvent& evt);
 #if wxUSE_NOTEBOOK
 	void OnNotebookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
 #endif
@@ -78,6 +78,7 @@ private:
 	void OnToolbookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
 #endif
 #else
+	void OnBookCtrlChanged(wxBookCtrlBaseEvent& evt);
 #if wxUSE_NOTEBOOK
 	void OnNotebookChanged(wxNotebookEvent& evt)		{OnBookCtrlChanged(evt);}
 #endif

@@ -305,13 +305,13 @@ CDlgFindLinks::CDlgFindLinks(
 
 CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkData(long item)
 {
-	return std::tr1::dynamic_pointer_cast<CDlgFindLinksData, CListData>(m_ctrlLinks->GetData(item));
+	return std::dynamic_pointer_cast<CDlgFindLinksData, CListData>(m_ctrlLinks->GetData(item));
 }
 
 
 CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkDataByData(long data)
 {
-	return std::tr1::dynamic_pointer_cast<CDlgFindLinksData, CListData>(m_ctrlLinks->GetDataByData(data));
+	return std::dynamic_pointer_cast<CDlgFindLinksData, CListData>(m_ctrlLinks->GetDataByData(data));
 }
 
 

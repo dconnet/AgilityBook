@@ -27,7 +27,7 @@
 #include <wx/docview.h>
 class CAgilityBookPointsViewData;
 
-typedef std::tr1::shared_ptr<CAgilityBookPointsViewData> CAgilityBookPointsViewDataPtr;
+typedef std::shared_ptr<CAgilityBookPointsViewData> CAgilityBookPointsViewDataPtr;
 
 
 class CAgilityBookPointsView : public CAgilityBookBaseExtraView

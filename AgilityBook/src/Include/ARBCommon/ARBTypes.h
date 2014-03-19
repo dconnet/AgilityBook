@@ -34,15 +34,15 @@
 
 #define ARB_TYPEDEF(name) \
 	class name;\
-	typedef std::tr1::shared_ptr<name> name##Ptr;
+	typedef std::shared_ptr<name> name##Ptr;
 #define ARB_TYPEDEF2(name) \
 	class name;\
-	typedef std::tr1::weak_ptr<name> name##WPtr;\
-	typedef std::tr1::shared_ptr<name> name##Ptr;
+	typedef std::weak_ptr<name> name##WPtr;\
+	typedef std::shared_ptr<name> name##Ptr;
 #define ARB_TYPEDEF_LIST(name) \
 	class name;\
 	class name##List;\
-	typedef std::tr1::shared_ptr<name> name##Ptr;
+	typedef std::shared_ptr<name> name##Ptr;
 
 ARB_TYPEDEF(Element)
 ARB_TYPEDEF2(ElementNode)
