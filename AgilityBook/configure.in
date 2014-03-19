@@ -70,18 +70,24 @@ case `uname` in
 Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
 
-	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch i386")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++0x -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch i386"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch i386")
 		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386 -D_GLIBCXX_EXTERN_TEMPLATE=0")
-		#AC_SUBST(LDFLAGS, ["$LDFLAGS -W1,syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -arch i386"])
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch i386"])
+
 	elif test -d /Developer/SDKs/MacOSX10.5.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch i386")
 		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386")
-		#AC_SUBST(LDFLAGS, ["$LDFLAGS -W1,syslibroot,/Developer/SDKs/MacOSX10.5.sdk -arch i386"])
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch i386"])
+
 	else
 		AC_MSG_ERROR(Cannot determine SDK)
 	fi
