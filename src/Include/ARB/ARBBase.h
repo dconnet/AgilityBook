@@ -112,4 +112,4 @@ public:
 protected:
 	bool m_bFiltered[eNumFilters];
 };
-typedef std::tr1::shared_ptr<ARBBase> ARBBasePtr;
+typedef std::shared_ptr<ARBBase> ARBBasePtr;

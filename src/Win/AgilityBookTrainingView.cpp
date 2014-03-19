@@ -200,8 +200,8 @@ int wxCALLBACK CompareTraining(long item1, long item2, long sortData)
 		return 0;
 	CListDataPtr pRawItem1 = s_SortInfo.pThis->m_Ctrl->GetDataByData(static_cast<long>(item1));
 	CListDataPtr pRawItem2 = s_SortInfo.pThis->m_Ctrl->GetDataByData(static_cast<long>(item2));
-	CAgilityBookTrainingViewDataPtr pItem1 = std::tr1::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem1);
-	CAgilityBookTrainingViewDataPtr pItem2 = std::tr1::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem2);
+	CAgilityBookTrainingViewDataPtr pItem1 = std::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem1);
+	CAgilityBookTrainingViewDataPtr pItem2 = std::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem2);
 	int nRet = 0;
 	int iCol = abs(s_SortInfo.nCol);
 	switch (s_SortInfo.pThis->m_Columns[iCol-1])
@@ -494,7 +494,7 @@ CAgilityBookTrainingViewDataPtr CAgilityBookTrainingView::GetItemTrainingData(lo
 {
 	if (!m_Ctrl)
 		return CAgilityBookTrainingViewDataPtr();
-	return std::tr1::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(m_Ctrl->GetData(index));
+	return std::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(m_Ctrl->GetData(index));
 }
 
 

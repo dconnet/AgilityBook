@@ -570,13 +570,13 @@ ARBConfigScoring::ScoringStyle CDlgConfigEventMethod::GetType(int index) const
 
 CDlgConfigureDataPlacementPtr CDlgConfigEventMethod::GetPlacementData(int index) const
 {
-	return std::tr1::dynamic_pointer_cast<CDlgConfigureDataPlacement, CListData>(m_ctrlPlacement->GetData(index));
+	return std::dynamic_pointer_cast<CDlgConfigureDataPlacement, CListData>(m_ctrlPlacement->GetData(index));
 }
 
 
 CDlgConfigureDataPlacementPtr CDlgConfigEventMethod::GetPlacementDataByData(int index) const
 {
-	return std::tr1::dynamic_pointer_cast<CDlgConfigureDataPlacement, CListData>(m_ctrlPlacement->GetDataByData(index));
+	return std::dynamic_pointer_cast<CDlgConfigureDataPlacement, CListData>(m_ctrlPlacement->GetDataByData(index));
 }
 
 
