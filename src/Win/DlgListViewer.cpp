@@ -392,9 +392,9 @@ int CDlgListViewerDataExisting::Compare(
 		CDlgListViewerDataPtr pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = std::tr1::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataRunPtr pDataRun = std::tr1::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataMultiQPtr pDataMultiQ = std::tr1::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataRunPtr pDataRun = std::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataMultiQPtr pDataMultiQ = std::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
 	if (!pDataExisting && !pDataRun && !pDataMultiQ)
 		return 0;
 	std::wstring str1, str2;
@@ -477,8 +477,8 @@ int CDlgListViewerDataRun::Compare(
 		CDlgListViewerDataPtr pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = std::tr1::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataRunPtr pDataRun = std::tr1::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataRunPtr pDataRun = std::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
 	if (!pDataExisting && !pDataRun)
 		return 0;
 	std::wstring str1, str2;
@@ -622,8 +622,8 @@ int CDlgListViewerDataMultiQ::Compare(
 		CDlgListViewerDataPtr pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = std::tr1::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataMultiQPtr pData = std::tr1::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataMultiQPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
 	if (!pDataExisting && !pData)
 		return 0;
 	std::wstring str1, str2;
