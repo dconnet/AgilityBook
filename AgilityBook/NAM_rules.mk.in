@@ -26,6 +26,7 @@
 ##########
 # Compiler default parameters.
 #  CXX              - Compiler to use as determined by running "configure".
+#  CFLAGS           - Compiler flags as determined by running "configure".
 #  CXXFLAGS         - Compiler flags as determined by running "configure".
 #  DEFS             - Pre-processor macros as defined by running "configure".
 #  DEPDIR           - Subdirectory of where to place the dependency file
@@ -33,6 +34,7 @@
 #  DEFAULT_INCLUDES - Default include directories to specify during build
 ##########
 CXX              = @CXX@
+CFLAGS           = @CFLAGS@
 CXXFLAGS         = @CXXFLAGS@
 DEFS             = @DEFS@
 DEPDIR           = @DEPDIR@
@@ -167,7 +169,7 @@ clean-default:
 ##########
 .c.o:
 	$(NICE_ECHO) "  Compiling:\t`echo $< | sed 's|$(SRCDIR)/||'`"
-	$(CC) -x c $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPDEPFLAGS) -c -o $@ $<
+	$(CC) -x c $(CFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPDEPFLAGS) -c -o $@ $<
 
 ##########
 # Generic rule to generate the compiled object file.
