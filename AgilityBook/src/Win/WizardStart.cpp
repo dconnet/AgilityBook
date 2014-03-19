@@ -65,19 +65,6 @@
 // in v1)
 
 
-static struct
-{
-	long regValue;
-	wchar_t const* id;
-} s_ImportExportChoices[] =
-{
-	{WIZARD_RADIO_EXCEL, L"IDC_WIZARD_START_EXCEL"},
-	{WIZARD_RADIO_CALC, L"IDC_WIZARD_START_CALC"},
-	{WIZARD_RADIO_SPREADSHEET, L"IDC_WIZARD_START_SPREADSHEET"},
-	{WIZARD_RADIO_ARB, L"IDC_WIZARD_START_ARB"}
-};
-static const long s_numImportExportChoices = sizeof(s_ImportExportChoices) / sizeof(s_ImportExportChoices[0]);
-
 /////////////////////////////////////////////////////////////////////////////
 // CWizardStart property page
 
