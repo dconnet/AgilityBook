@@ -116,7 +116,13 @@
 #include <wx/stdpaths.h>
 #include <wx/textfile.h>
 #include <wx/wfstream.h>
+
+#include "Platform/arbWarningPush.h"
+#pragma warning(disable : 4355)
+
 #include <wx/zipstrm.h>
+
+#include "Platform/arbWarningPop.h"
 
 #ifdef _DEBUG
 #define USE_LOCAL
