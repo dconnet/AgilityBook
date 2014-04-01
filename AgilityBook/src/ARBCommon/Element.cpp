@@ -12,6 +12,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * 2014-03-31 Fixed POCO xml load.
  * 2014-02-26 Add support for POCO xml.
  * 2013-03-23 Implement libxml LoadXML stream api.
  * 2012-11-25 Add libxml support back in.
@@ -1260,7 +1261,7 @@ static bool LoadXMLNode(
 	if (!pDoc)
 		return false;
 
-	Poco::XML::Node* pNode = pDoc->firstChild();
+	Poco::XML::Node* pNode = pDoc->documentElement();
 	if (!pNode)
 		return false;
 
