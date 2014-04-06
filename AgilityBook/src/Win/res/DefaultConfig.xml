@@ -4,6 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2014-04-06 DRC Configuration version 46.
+               Added ASCA ACE program
+               Added NADAC Beginners Agility
 2013-11-26 DRC Configuration version 45.
                Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
                Updated USDAA Performance Tournament Master title descriptions.
@@ -142,7 +145,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="45">
+  <Configuration version="46">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -794,6 +797,61 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Elite Regular Superior Performance" Name="RJ-E-SP">RJ-E plus 400 Points</Titles>
       <Titles LongName="Elite Jumpers Superior Performance" Name="JJ-E-SP">JJ-E plus 200 Points</Titles>
       <Titles LongName="Elite Gamblers Superior Performance" Name="GJ-E-SP">GJ-E plus 200 Points</Titles>
+      <Titles LongName="Novice Regular" Name="RSA-N">30 Points</Titles>
+      <Titles LongName="Novice Jumpers" Name="JSA-N">20 Points</Titles>
+      <Titles LongName="Novice Gamblers" Name="GSA-N">20 Points</Titles>
+      <Titles LongName="Novice Regular Outstanding Performance" Name="RSA-N-OP">RSA-N plus 100 Points</Titles>
+      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JSA-N-OP">JSA-N plus 50 Points</Titles>
+      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GSA-N-OP">GSA-N plus 50 Points</Titles>
+      <Titles LongName="Novice Regular Superior Performance" Name="RSA-N-SP">RSA-N plus 200 Points</Titles>
+      <Titles LongName="Novice Jumpers Superior Performance" Name="JSA-N-SP">JSA-N plus 100 Points</Titles>
+      <Titles LongName="Novice Gamblers Superior Performance" Name="GSA-N-SP">GSA-N plus 100 Points</Titles>
+      <Titles LongName="Open Regular" Name="RSA-O">30 Points</Titles>
+      <Titles LongName="Open Jumpers" Name="JSA-O">20 Points</Titles>
+      <Titles LongName="Open Gamblers" Name="GSA-O">20 Points</Titles>
+      <Titles LongName="Open Regular Outstanding Performance" Name="RSA-O-OP">RSA-O plus 100 Points</Titles>
+      <Titles LongName="Open Jumpers Outstanding Performance" Name="JSA-O-OP">JSA-O plus 50 Points</Titles>
+      <Titles LongName="Open Gamblers Outstanding Performance" Name="GSA-O-OP">GSA-O plus 50 Points</Titles>
+      <Titles LongName="Open Regular Superior Performance" Name="RSA-O-SP">RSA-O plus 200 Points</Titles>
+      <Titles LongName="Open Jumpers Superior Performance" Name="JSA-O-SP">JSA-O plus 100 Points</Titles>
+      <Titles LongName="Open Gamblers Superior Performance" Name="GSA-O-SP">GSA-O plus 100 Points</Titles>
+      <Titles LongName="Elite Regular" Name="RSA-E">30 Points</Titles>
+      <Titles LongName="Elite Jumpers" Name="JSA-E">20 Points</Titles>
+      <Titles LongName="Elite Gamblers" Name="GSA-E">20 Points</Titles>
+      <Titles LongName="Elite Regular Outstanding Performance" Name="RSA-E-OP">RSA-E plus 200 Points</Titles>
+      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JSA-E-OP">JSA-E plus 100 Points</Titles>
+      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GSA-E-OP">GSA-E plus 100 Points</Titles>
+      <Titles LongName="Elite Regular Superior Performance" Name="RSA-E-SP">RSA-E plus 400 Points</Titles>
+      <Titles LongName="Elite Jumpers Superior Performance" Name="JSA-E-SP">JSA-E plus 200 Points</Titles>
+      <Titles LongName="Elite Gamblers Superior Performance" Name="GSA-E-SP">GSA-E plus 200 Points</Titles>
+      <Titles LongName="Agility Competitor Extraordinaire" Name="ACE" Prefix="y" Sep="h" StartAt="1" Style="r">R*A-E plus 200 pts, G*A-E plus 100 pts, J*A-E plus 100 pts</Titles>
+      <Titles LongName="Novice Regular" Name="RVA-N">30 Points</Titles>
+      <Titles LongName="Novice Jumpers" Name="JVA-N">20 Points</Titles>
+      <Titles LongName="Novice Gamblers" Name="GVA-N">20 Points</Titles>
+      <Titles LongName="Novice Regular Outstanding Performance" Name="RVA-N-OP">RVA-N plus 100 Points</Titles>
+      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JVA-N-OP">JVA-N plus 50 Points</Titles>
+      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GVA-N-OP">GVA-N plus 50 Points</Titles>
+      <Titles LongName="Novice Regular Superior Performance" Name="RVA-N-SP">RVA-N plus 200 Points</Titles>
+      <Titles LongName="Novice Jumpers Superior Performance" Name="JVA-N-SP">JVA-N plus 100 Points</Titles>
+      <Titles LongName="Novice Gamblers Superior Performance" Name="GVA-N-SP">GVA-N plus 100 Points</Titles>
+      <Titles LongName="Open Regular" Name="RVA-O">30 Points</Titles>
+      <Titles LongName="Open Jumpers" Name="JVA-O">20 Points</Titles>
+      <Titles LongName="Open Gamblers" Name="GVA-O">20 Points</Titles>
+      <Titles LongName="Open Regular Outstanding Performance" Name="RVA-O-OP">RVA-O plus 100 Points</Titles>
+      <Titles LongName="Open Jumpers Outstanding Performance" Name="JVA-O-OP">JVA-O plus 50 Points</Titles>
+      <Titles LongName="Open Gamblers Outstanding Performance" Name="GVA-O-OP">GVA-O plus 50 Points</Titles>
+      <Titles LongName="Open Regular Superior Performance" Name="RVA-O-SP">RVA-O plus 200 Points</Titles>
+      <Titles LongName="Open Jumpers Superior Performance" Name="JVA-O-SP">JVA-O plus 100 Points</Titles>
+      <Titles LongName="Open Gamblers Superior Performance" Name="GVA-O-SP">GVA-O plus 100 Points</Titles>
+      <Titles LongName="Elite Regular" Name="RVA-E">30 Points</Titles>
+      <Titles LongName="Elite Jumpers" Name="JVA-E">20 Points</Titles>
+      <Titles LongName="Elite Gamblers" Name="GVA-E">20 Points</Titles>
+      <Titles LongName="Elite Regular Outstanding Performance" Name="RVA-E-OP">RVA-E plus 200 Points</Titles>
+      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JVA-E-OP">JVA-E plus 100 Points</Titles>
+      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GVA-E-OP">GVA-E plus 100 Points</Titles>
+      <Titles LongName="Elite Regular Superior Performance" Name="RVA-E-SP">RVA-E plus 400 Points</Titles>
+      <Titles LongName="Elite Jumpers Superior Performance" Name="JVA-E-SP">JVA-E plus 200 Points</Titles>
+      <Titles LongName="Elite Gamblers Superior Performance" Name="GVA-E-SP">GVA-E plus 200 Points</Titles>
       <Division Name="Standard" ShortName="Std">
         <Level Name="Novice">
           <SubLevel Name="Novice A" ShortName="NovA"/>
@@ -811,6 +869,22 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         <Level Name="Elite"/>
       </Division>
       <Division Name="Junior" ShortName="Jr">
+        <Level Name="Novice">
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
+        </Level>
+        <Level Name="Open"/>
+        <Level Name="Elite"/>
+      </Division>
+      <Division Name="ACE">
+        <Level Name="Novice">
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
+        </Level>
+        <Level Name="Open"/>
+        <Level Name="Elite"/>
+      </Division>
+      <Division Name="ACE Senior">
         <Level Name="Novice">
           <SubLevel Name="Novice A" ShortName="NovA"/>
           <SubLevel Name="Novice B" ShortName="NovB"/>
@@ -2827,6 +2901,11 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         <Level Name="Open"/>
         <Level Name="Elite"/>
       </Division>
+      <Division Name="Beginners">
+        <Level Name="Level 1"/>
+        <Level Name="Level 2"/>
+        <Level Name="Level 3"/>
+      </Division>
       <Event Name="Regular">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
@@ -3177,6 +3256,9 @@ Was called Wild Card briefly.</Desc>
         <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
+      </Event>
+      <Event Name="Beginners Agility">
+        <Scoring Division="Beginners" Level="*" type="FaultsThenTime"/>
       </Event>
     </Venue>
     <Venue LongName="Société Centrale Canine" Name="SCC" URL="http://www.france-agility.com/agility/reglts.htm" icon="15">

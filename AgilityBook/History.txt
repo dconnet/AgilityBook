@@ -4,7 +4,10 @@
     [Still not decided - compile option now allows toggling back to old format]
 [ Note, most functionality is now complete ]
 
-2/20/2014: v2.4.1.<in process>
+4/6/2014: v2.4.1.<in process>
+- Bumped Configuration v46:
+  - Added ASCA ACE program
+  - Added NADAC Beginners Agility
 - Bumped file version to 14.3:
   - Added 'scorePts' to 'Placement'.
 - Bug fixes:
