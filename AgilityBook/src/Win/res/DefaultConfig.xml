@@ -893,13 +893,41 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         <Level Name="Elite"/>
       </Division>
       <Event Name="Regular">
-        <Scoring Division="*" Level="*" type="FaultsThenTime">
+        <Scoring Division="Standard" Level="*" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <TitlePoints Faults="5" Points="5"/>
+        </Scoring>
+        <Scoring Division="Veterans" Level="*" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <TitlePoints Faults="5" Points="5"/>
+        </Scoring>
+        <Scoring Division="Junior" Level="*" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <TitlePoints Faults="5" Points="5"/>
+        </Scoring>
+        <Scoring Division="ACE" Level="*" ValidFrom="2014-6-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <TitlePoints Faults="5" Points="5"/>
+        </Scoring>
+        <Scoring Division="ACE Senior" Level="*" ValidFrom="2014-6-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
         </Scoring>
       </Event>
       <Event Name="Jumpers">
-        <Scoring Division="*" Level="*" type="FaultsThenTime">
+        <Scoring Division="Standard" Level="*" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Veterans" Level="*" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="Junior" Level="*" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="ACE" Level="*" ValidFrom="2014-6-8" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring Division="ACE Senior" Level="*" ValidFrom="2014-6-8" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
         </Scoring>
       </Event>
@@ -950,6 +978,30 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring ClosingPts="20" Division="ACE" Level="Elite" OpeningPts="21" ValidFrom="2014-6-1" type="OCScoreThenTime">
+          <Note>Opening time: 30 seconds</Note>
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring ClosingPts="20" Division="ACE" Level="Open" OpeningPts="18" ValidFrom="2014-6-1" type="OCScoreThenTime">
+          <Note>Opening time: 30 seconds</Note>
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring ClosingPts="20" Division="ACE" Level="Novice" OpeningPts="15" ValidFrom="2014-6-1" type="OCScoreThenTime">
+          <Note>Opening time: 30 seconds</Note>
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring ClosingPts="20" Division="ACE Senior" Level="Elite" OpeningPts="21" ValidFrom="2014-6-1" type="OCScoreThenTime">
+          <Note>Opening time: 30 seconds</Note>
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring ClosingPts="20" Division="ACE Senior" Level="Open" OpeningPts="18" ValidFrom="2014-6-1" type="OCScoreThenTime">
+          <Note>Opening time: 30 seconds</Note>
+          <TitlePoints Faults="0" Points="10"/>
+        </Scoring>
+        <Scoring ClosingPts="20" Division="ACE Senior" Level="Novice" OpeningPts="15" ValidFrom="2014-6-1" type="OCScoreThenTime">
+          <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
         </Scoring>
       </Event>
