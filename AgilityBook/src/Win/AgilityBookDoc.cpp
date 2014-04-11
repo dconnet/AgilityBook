@@ -402,14 +402,17 @@ ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 }
 
 
-void CAgilityBookDoc::SetCurrentDog(ARBDogPtr pDog)
+void CAgilityBookDoc::SetCurrentDog(ARBDogPtr pDog, bool bSuppressHints)
 {
 	if (m_pCurrentDog != pDog)
 	{
 		m_pCurrentDog = pDog;
 
-		CUpdateHint hint(UPDATE_POINTS_VIEW);
-		UpdateAllViews(NULL, &hint);
+		if (!bSuppressHints)
+		{
+			CUpdateHint hint(UPDATE_POINTS_VIEW);
+			UpdateAllViews(NULL, &hint);
+		}
 	}
 }
 

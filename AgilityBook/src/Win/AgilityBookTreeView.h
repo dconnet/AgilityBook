@@ -203,7 +203,6 @@ private:
 	bool m_bDeleteChanged; // Used with m_itemPopup
 	wxTreeItemId m_itemPopup; // Tried to select item during menu - delay
 	CFindTree m_Callback;
-	ARBDogPtr m_pDog;
 
 	DECLARE_EVENT_TABLE()
 	void OnCtrlSetFocus(wxFocusEvent& evt);

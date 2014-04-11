@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-04-11 Fix switching dogs (hidden since new TreeList was being used)
  * 2013-04-22 Changing dogs didn't update runs when viewing all runs.
  * 2012-10-03 Fixed a printing problem in the tree.
  * 2012-07-04 Add option to use run time or opening time in gamble OPS.
@@ -270,7 +271,6 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	, m_bDeleteChanged(false)
 	, m_itemPopup()
 	, m_Callback(this)
-	, m_pDog()
 {
 #ifdef WX_TREE_HAS_STATE
 	// Note: Position 0 cannot be used.
@@ -772,10 +772,11 @@ void CAgilityBookTreeView::DoSelectionChange(wxTreeItemId hItem)
 		if (pData)
 		{
 			// Set the current dog
+			ARBDogPtr pDogCurrent = GetDocument()->GetCurrentDog();
 			ARBDogPtr pDog = pData->GetDog();
-			if (!m_pDog || !pDog || m_pDog != pDog)
+			if (!pDogCurrent || !pDog || pDogCurrent != pDog)
 				iHint |= UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW;
-			m_pDog = pDog;
+			GetDocument()->SetCurrentDog(pDog, true);
 			CAgilityBookRunsView* pView = GetDocument()->GetRunsView();
 			if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle()
 			&& !pView->IsTrial(pData->GetTrial()))
@@ -789,8 +790,6 @@ void CAgilityBookTreeView::DoSelectionChange(wxTreeItemId hItem)
 				iHint |= UPDATE_RUNS_SELECTION_VIEW;
 			}
 		}
-		else
-			m_pDog.reset();
 		if (iHint)
 		{
 			CUpdateHint hint(iHint, pBase);

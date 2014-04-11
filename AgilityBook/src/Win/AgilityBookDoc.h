@@ -113,7 +113,7 @@ public:
 
 	// Data
 	ARBDogPtr GetCurrentDog() const;
-	void SetCurrentDog(ARBDogPtr pDog);
+	void SetCurrentDog(ARBDogPtr pDog, bool bSuppressHints = false);
 	ARBDogTrialPtr GetCurrentTrial() const;
 	ARBDogRunPtr GetCurrentRun() const;
 	ARBAgilityRecordBook& Book()			{return m_Records;}
