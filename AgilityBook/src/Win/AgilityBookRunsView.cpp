@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-04-12 Implement unsorting.
  * 2012-09-09 Added 'titlePts' to 'Placement'.
  * 2012-07-04 Add option to use run time or opening time in gamble OPS.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -463,12 +464,15 @@ void CAgilityBookRunsViewData::OnNeedListItem(long iCol, wxListItem& info) const
 CAgilityBookRunsView::CSortColumn::CSortColumn(std::vector<long>& inColumns)
 	: m_Columns(inColumns)
 	, m_iCol(1)
+	, m_bIsSorted(false)
 {
 }
 
 
 void CAgilityBookRunsView::CSortColumn::Initialize()
 {
+	wxConfig::Get()->Read(CFG_SORTING_RUNS_ENABLED, &m_bIsSorted);
+
 	long realCol = IO_RUNS_DATE;
 	realCol = wxConfig::Get()->Read(CFG_SORTING_RUNS, realCol);
 	long neg = 1;
@@ -477,10 +481,18 @@ void CAgilityBookRunsView::CSortColumn::Initialize()
 		neg = -1;
 		realCol *= -1;
 	}
+
 	long col = LookupColumn(realCol);
 	if (0 > m_iCol)
 		col = LookupColumn(IO_RUNS_DATE);
 	m_iCol = col * neg;
+}
+
+
+void CAgilityBookRunsView::CSortColumn::SetSorted(bool bSorted)
+{
+	m_bIsSorted = bSorted;
+	wxConfig::Get()->Write(CFG_SORTING_RUNS_ENABLED, m_bIsSorted);
 }
 
 
@@ -489,6 +501,8 @@ void CAgilityBookRunsView::CSortColumn::SetColumn(long iCol)
 	m_iCol = iCol;
 	if (0 == iCol)
 		return;
+
+	SetSorted(true);
 	long neg = 1;
 	long col = iCol;
 	if (0 > iCol)
@@ -496,6 +510,7 @@ void CAgilityBookRunsView::CSortColumn::SetColumn(long iCol)
 		neg = -1;
 		col = iCol * -1;
 	}
+
 	long realCol = m_Columns[col-1] * neg;
 	wxConfig::Get()->Write(CFG_SORTING_RUNS, realCol);
 }
@@ -1229,6 +1244,8 @@ BEGIN_EVENT_TABLE(CAgilityBookRunsView, CAgilityBookBaseExtraView)
 	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_SORTRUNS, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_UNSORT, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_UNSORT, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_SORTRUNS, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookRunsView::OnViewCmd)
@@ -1575,13 +1592,19 @@ void CAgilityBookRunsView::LoadData()
 	if (m_Ctrl->IsShownOnScreen())
 		UpdateMessages();
 
-	s_SortInfo.pThis = this;
-	s_SortInfo.nCol = m_SortColumn.GetColumn();
-	m_Ctrl->SortItems(CompareRuns, 0);
-	if (0 == m_SortColumn.GetColumn())
-		m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), 0);
+	if (m_SortColumn.IsSorted())
+	{
+		s_SortInfo.pThis = this;
+		s_SortInfo.nCol = m_SortColumn.GetColumn();
+		m_Ctrl->SortItems(CompareRuns, 0);
+		if (0 == m_SortColumn.GetColumn())
+			m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), 0);
+		else
+			m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
+	}
 	else
-		m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
+		m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), 0);
+
 	// Now make sure the selected item is visible.
 	if (0 <= m_Ctrl->GetFirstSelected())
 		m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
@@ -1733,6 +1756,9 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case ID_VIEW_CUSTOMIZE:
 		evt.Enable(true);
+		break;
+	case ID_UNSORT:
+		evt.Enable(m_SortColumn.IsSorted());
 		break;
 	case ID_VIEW_SORTRUNS:
 		evt.Enable(true);
@@ -1933,12 +1959,30 @@ bool CAgilityBookRunsView::OnCmd(int id)
 		}
 		break;
 
+	case ID_UNSORT:
+		m_SortColumn.SetSorted(!m_SortColumn.IsSorted());
+		if (m_SortColumn.IsSorted())
+		{
+			s_SortInfo.pThis = this;
+			s_SortInfo.nCol = m_SortColumn.GetColumn();
+			m_Ctrl->SortItems(CompareRuns, 0);
+			m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
+		}
+		else
+		{
+			m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), 0);
+			LoadData();
+		}
+		break;
+
 	case ID_VIEW_SORTRUNS:
 		{
 			CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
 			GetDocument()->SortDates();
-			// Note, sorting the trials doesn't affect this view.
-			CUpdateHint hint(UPDATE_TREE_VIEW);
+			unsigned int flags = UPDATE_TREE_VIEW;
+			if (!m_SortColumn.IsSorted())
+				flags |= UPDATE_RUNS_VIEW;
+			CUpdateHint hint(flags);
 			GetDocument()->UpdateAllViews(NULL, &hint);
 		}
 		break;

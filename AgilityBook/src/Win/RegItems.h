@@ -372,6 +372,8 @@ inline wxString CFG_SORTING_SORT(wxString const& item)
 #define CFG_SORTING_CALENDAR			L"Sorting/Calendar"
 //	DW Runs (AgilityBookRunsView.cpp)
 #define CFG_SORTING_RUNS				L"Sorting/Runs"
+//	DW RunsEnabled (AgilityBookRunsView.cpp)
+#define CFG_SORTING_RUNS_ENABLED		L"Sorting/RunsEnabled"
 //	DW Training (AgilityBookTrainingView.cpp)
 #define CFG_SORTING_TRAINING			L"Sorting/Training"
 

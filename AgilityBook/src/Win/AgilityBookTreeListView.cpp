@@ -1160,6 +1160,12 @@ void CAgilityBookTreeListView::LoadData(
 		m_Ctrl->GetStore()->UpdateColumns();
 	}
 	m_Ctrl->GetStore()->LoadData(bPreserveColWidths);
+
+// Note, do not use CFG_SORTING_RUNS (CFG_SORTING_RUNS_ENABLED is ok)
+// Keep this view and the RunsListView separate.
+// Handle wxEVT_DATAVIEW_COLUMN_SORTED in CAgilityBookTreeCtrl to remember.
+#pragma PRAGMA_TODO(Remember sort order)
+
 	if (m_Ctrl->IsShownOnScreen())
 		UpdateMessages();
 }

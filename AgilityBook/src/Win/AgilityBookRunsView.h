@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-04-12 Implement unsorting.
  * 2009-02-04 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-01-25 Remember the sort column between program invocations.
@@ -118,12 +119,15 @@ private:
 	public:
 		CSortColumn(std::vector<long>& inColumns);
 		void Initialize();
-		long GetColumn() const		{return m_iCol;}
+		bool IsSorted() const			{return m_bIsSorted;}
+		long GetColumn() const			{return m_iCol;}
+		void SetSorted(bool bSorted);
 		void SetColumn(long iCol);
 	private:
 		long LookupColumn(long iCol) const;
 		std::vector<long>& m_Columns;
 		long m_iCol;
+		bool m_bIsSorted;
 	} m_SortColumn;
 
 	DECLARE_EVENT_TABLE()
