@@ -5,12 +5,14 @@
 	[currently set on old format]
 [ Note, most functionality is now complete ]
 
-4/22/2014: v2.4.1.<in process>
+4/23/2014: v2.4.1.<in process>
 - Bumped Configuration v46:
   - Added ASCA ACE program
   - Added NADAC Beginners Agility
 - Bumped file version to 14.3:
   - Added 'scorePts' to 'Placement'.
+- New features / Enhancements:
+  - In Points view, scroll to clicked link when page is reloaded.
 - Bug fixes:
   - ARBHelp now runs correctly on a Mac.
   - Specifically set dpi-awareness to false on Windows (manifest).
