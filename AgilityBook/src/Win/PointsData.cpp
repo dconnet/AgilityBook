@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-04-23 Add anchors to all hrefs.
  * 2011-10-27 Add the MultiQ name to the Points view, span columns.
  * 2011-08-13 Don't copy internal url links to the clipboard.
  * 2010-12-24 Accumulate speed points by division.
@@ -274,6 +275,8 @@ std::wstring CPointsDataDog::GetHtml(
 		{
 			data << L"<a href=\"" << ARB_PROTOCOL
 				<< nCurLine
+				<< L"\" name=\"ref"
+				<< nCurLine
 				<< L"\">";
 		}
 		data << Sanitize(m_pDog->GetCallName());
@@ -377,6 +380,8 @@ std::wstring CPointsDataVenue::GetHtml(
 				{
 					data << L"<a href=\"" << ARB_PROTOCOL
 						<< nCurLine
+						<< L"\" name=\"ref"
+						<< nCurLine
 						<< L"\">";
 				}
 				data << Sanitize(pRegNum->GetNumber());
@@ -465,6 +470,8 @@ std::wstring CPointsDataTitle::GetHtml(
 		if (!bNoInternalLinks)
 		{
 			data << L"<a href=\"" << ARB_PROTOCOL
+				<< nCurLine
+				<< L"\" name=\"ref"
 				<< nCurLine
 				<< L"\">";
 		}
@@ -591,6 +598,8 @@ std::wstring CPointsDataEvent::GetHtml(
 	{
 		data << L"<a href=\"" << ARB_PROTOCOL
 			<< nCurLine
+			<< L"\" name=\"ref"
+			<< nCurLine
 			<< L"\">";
 	}
 	data << Sanitize(OnNeedText(4));
@@ -702,6 +711,8 @@ std::wstring CPointsDataLifetime::GetHtml(
 	if (!bNoInternalLinks)
 	{
 		data << L"<a href=\"" << ARB_PROTOCOL
+			<< nCurLine
+			<< L"\" name=\"ref"
 			<< nCurLine
 			<< L"\">";
 	}
@@ -870,6 +881,8 @@ std::wstring CPointsDataMultiQs::GetHtml(
 	{
 		data << L"<a href=\"" << ARB_PROTOCOL
 			<< nCurLine
+			<< L"\" name=\"ref"
+			<< nCurLine
 			<< L"\">";
 	}
 	data << Sanitize(OnNeedText(7));
@@ -1010,6 +1023,8 @@ std::wstring CPointsDataOtherPointsTallyAll::GetHtml(
 	{
 		data << L"<a href=\"" << ARB_PROTOCOL
 			<< nCurLine
+			<< L"\" name=\"ref"
+			<< nCurLine
 			<< L"\">";
 	}
 	data << Sanitize(OnNeedText(2));
@@ -1078,6 +1093,8 @@ std::wstring CPointsDataOtherPointsTallyAllByEvent::GetHtml(
 	{
 		data << L"<a href=\"" << ARB_PROTOCOL
 			<< nCurLine
+			<< L"\" name=\"ref"
+			<< nCurLine
 			<< L"\">";
 	}
 	data << Sanitize(OnNeedText(3));
@@ -1145,6 +1162,8 @@ std::wstring CPointsDataOtherPointsTallyLevel::GetHtml(
 	if (!bNoInternalLinks)
 	{
 		data << L"<a href=\"" << ARB_PROTOCOL
+			<< nCurLine
+			<< L"\" name=\"ref"
 			<< nCurLine
 			<< L"\">";
 	}
@@ -1219,6 +1238,8 @@ std::wstring CPointsDataOtherPointsTallyLevelByEvent::GetHtml(
 	if (!bNoInternalLinks)
 	{
 		data << L"<a href=\"" << ARB_PROTOCOL
+			<< nCurLine
+			<< L"\" name=\"ref"
 			<< nCurLine
 			<< L"\">";
 	}

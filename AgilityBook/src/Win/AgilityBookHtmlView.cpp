@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-04-23 Scroll to position of clicked link on page load.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-09 Ported to wxWidgets.
@@ -34,6 +35,80 @@
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+bool CHtmlWindow::SetPage(const wxString& source)
+{
+	bool rc = wxHtmlWindow::SetPage(source);
+
+	if (rc && !m_tag.empty())
+		ScrollToAnchor(m_tag);
+
+	return rc;
+}
+
+void CHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
+{
+	const wxString ProtocolABOUT(L"about:");
+	const wxString ProtocolHTTP(L"http:");
+	const wxString ProtocolHTTPS(L"https:");
+	const wxString ProtocolARB(ARB_PROTOCOL);
+
+	wxString url = link.GetHref();
+
+	bool bOpen = false;
+
+	if (url.length() > ProtocolABOUT.length()
+	&& 0 == ProtocolABOUT.CmpNoCase(url.substr(0, ProtocolABOUT.length())))
+	{
+		// Let About thru (for "about:blank")
+		bOpen = true;
+	}
+	else if (url.length() > ProtocolARB.length()
+	&& 0 == ProtocolARB.CmpNoCase(url.substr(0, ProtocolARB.length())))
+	{
+		// Our special internal link
+		// Remember, spaces are now %20. Other special chars may
+		// need fixing too. Just don't use those in our links.
+		bool bDidIt = false;
+		std::wstring index(StringUtil::stringW(url.substr(ProtocolARB.length())));
+		if (!index.empty())
+		{
+			long nItem;
+			if (StringUtil::ToCLong(index, nItem) && nItem < static_cast<long>(m_pView->m_Items->NumLines()))
+			{
+				bDidIt = true;
+				CPointsDataBasePtr item = m_pView->m_Items->GetLine(nItem);
+				m_tag << L"ref" << index;
+				item->Details();
+				m_tag.clear();
+			}
+		}
+		if (!bDidIt)
+		{
+			wxBell();
+		}
+	}
+	else if ((url.length() > ProtocolHTTP.length()
+	&& 0 == ProtocolHTTP.CmpNoCase(url.substr(0, ProtocolHTTP.length())))
+	|| (url.length() > ProtocolHTTPS.length()
+	&& 0 == ProtocolHTTPS.CmpNoCase(url.substr(0, ProtocolHTTPS.length()))))
+	{
+		// Don't allow links to replace us.
+		wxLaunchDefaultBrowser(url);
+		// Note, using 'target="new"' in the html href tag will cause the new
+		// window to open in IE, which is not necessarily the default browser.
+	}
+	else
+	{
+		// Don't allow any other types of links.
+		//TRACE("Preventing navigation to '%s'\n", lpszURL);
+		wxBell();
+	}
+	if (bOpen)
+		wxHtmlWindow::OnLinkClicked(link);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -83,8 +158,7 @@ bool CAgilityBookHtmlView::Create(
 		int sizerFlags,
 		int border)
 {
-	m_Ctrl = new wxHtmlWindow(parentCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxHW_SCROLLBAR_AUTO);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_HTML_LINK_CLICKED, wxHtmlLinkEventHandler, CAgilityBookHtmlView::OnCtrlLinkClicked);
+	m_Ctrl = new CHtmlWindow(this, parentCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxHW_SCROLLBAR_AUTO);
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif
@@ -219,67 +293,6 @@ void CAgilityBookHtmlView::LoadData()
 
 	if (m_Ctrl->IsShownOnScreen())
 		UpdateMessages();
-}
-
-
-void CAgilityBookHtmlView::OnCtrlLinkClicked(wxHtmlLinkEvent& evt)
-{
-	const wxString ProtocolABOUT(L"about:");
-	const wxString ProtocolHTTP(L"http:");
-	const wxString ProtocolHTTPS(L"https:");
-	const wxString ProtocolARB(ARB_PROTOCOL);
-
-	wxString url = evt.GetLinkInfo().GetHref();
-
-	bool bOpen = false;
-
-	if (url.length() > ProtocolABOUT.length()
-	&& 0 == ProtocolABOUT.CmpNoCase(url.substr(0, ProtocolABOUT.length())))
-	{
-		// Let About thru (for "about:blank")
-		bOpen = true;
-	}
-	else if (url.length() > ProtocolARB.length()
-	&& 0 == ProtocolARB.CmpNoCase(url.substr(0, ProtocolARB.length())))
-	{
-		// Our special internal link
-		// Remember, spaces are now %20. Other special chars may
-		// need fixing too. Just don't use those in our links.
-		bool bDidIt = false;
-		std::wstring index(StringUtil::stringW(url.substr(ProtocolARB.length())));
-		if (!index.empty())
-		{
-			long nItem;
-			if (StringUtil::ToCLong(index, nItem) && nItem < static_cast<long>(m_Items->NumLines()))
-			{
-				bDidIt = true;
-				CPointsDataBasePtr item = m_Items->GetLine(nItem);
-				item->Details();
-			}
-		}
-		if (!bDidIt)
-		{
-			wxBell();
-		}
-	}
-	else if ((url.length() > ProtocolHTTP.length()
-	&& 0 == ProtocolHTTP.CmpNoCase(url.substr(0, ProtocolHTTP.length())))
-	|| (url.length() > ProtocolHTTPS.length()
-	&& 0 == ProtocolHTTPS.CmpNoCase(url.substr(0, ProtocolHTTPS.length()))))
-	{
-		// Don't allow links to replace us.
-		wxLaunchDefaultBrowser(url);
-		// Note, using 'target="new"' in the html href tag will cause the new
-		// window to open in IE, which is not necessarily the default browser.
-	}
-	else
-	{
-		// Don't allow any other types of links.
-		//TRACE("Preventing navigation to '%s'\n", lpszURL);
-		wxBell();
-	}
-	if (bOpen)
-		evt.Skip();
 }
 
 
