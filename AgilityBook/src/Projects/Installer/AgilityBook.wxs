@@ -36,6 +36,8 @@ Note: !(bind.fileVersion._AgilityBook.exe) could replace $(var.CURRENT_VERSION)
       Only difference is bind is all 4 parts, the var is only 3.
 
 Revision History
+2014-04-22 DRC Change REP to after InstallFinalize.
+               Added feature that user pinned shortcuts are not broken.
 2013-08-15 DRC Add proper per-user/per-machine upgrade logic and defaults.
 2013-03-28 DRC Added MSIFASTINSTALL.
 2012-08-03 DRC Set INSTALLDIR properly during upgrade and maintenance.
@@ -413,18 +415,18 @@ Revision History
 	</InstallUISequence>
 
 	<InstallExecuteSequence>
-		<RemoveExistingProducts After="InstallInitialize" />
 		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">SAMEVERSIONDETECTED</Custom>
 		<Custom Action="ARB_NoDowngrade" After="ARB_AlreadyUpdated">NEWERVERSIONDETECTED</Custom>
 		<Custom Action="SetARBHasPerUserSupport" Before="FindRelatedProducts">(VersionNT&lt;600 And Privileged) Or VersionNT&gt;=601</Custom>
 		<Custom Action="ARBSetAllUsers" After="SetARBHasPerUserSupport" />
+		<RemoveExistingProducts After="InstallFinalize" />
 		<!--
 		START_APP should only be set on the command line during auto-upgrading
 		(hence, it's not documented above). If set during full UI, it will
 		cause ARB to be launched before the installer is done. So, only allow
 		on silent and basic UI.
 		-->
-		<Custom Action="ARB_LaunchApplication" After="InstallFinalize">START_APP And UILevel&lt;4</Custom>
+		<Custom Action="ARB_LaunchApplication" After="RemoveExistingProducts">START_APP And UILevel&lt;4</Custom>
 	</InstallExecuteSequence>
 	
 	<UI>

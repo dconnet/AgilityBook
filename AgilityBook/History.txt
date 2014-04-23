@@ -5,7 +5,7 @@
 	[currently set on old format]
 [ Note, most functionality is now complete ]
 
-4/6/2014: v2.4.1.<in process>
+4/22/2014: v2.4.1.<in process>
 - Bumped Configuration v46:
   - Added ASCA ACE program
   - Added NADAC Beginners Agility
@@ -15,6 +15,7 @@
   - ARBHelp now runs correctly on a Mac.
   - Specifically set dpi-awareness to false on Windows (manifest).
   - Trial start date was wrong on a new or edited trial (create from Calendar was ok).
+  - Changed MSI to uninstall after install. User-pinned shortcuts remain okay.
 
 11/27/2013: v2.4.0.88
 - Bumped Configuration v45:
