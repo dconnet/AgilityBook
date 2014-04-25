@@ -909,7 +909,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
         </Scoring>
-        <Scoring Division="ACE Senior" Level="*" ValidFrom="2014-6-1" type="FaultsThenTime">
+        <Scoring Division="ACE Senior" Level="*" ValidFrom="2015-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
         </Scoring>
@@ -927,7 +927,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         <Scoring Division="ACE" Level="*" ValidFrom="2014-6-8" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
         </Scoring>
-        <Scoring Division="ACE Senior" Level="*" ValidFrom="2014-6-8" type="FaultsThenTime">
+        <Scoring Division="ACE Senior" Level="*" ValidFrom="2015-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
         </Scoring>
       </Event>
@@ -992,15 +992,15 @@ You must enter the SCT (1st place) and your placement to generate the titling po
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
         </Scoring>
-        <Scoring ClosingPts="20" Division="ACE Senior" Level="Elite" OpeningPts="21" ValidFrom="2014-6-1" type="OCScoreThenTime">
+        <Scoring ClosingPts="20" Division="ACE Senior" Level="Elite" OpeningPts="21" ValidFrom="2015-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
         </Scoring>
-        <Scoring ClosingPts="20" Division="ACE Senior" Level="Open" OpeningPts="18" ValidFrom="2014-6-1" type="OCScoreThenTime">
+        <Scoring ClosingPts="20" Division="ACE Senior" Level="Open" OpeningPts="18" ValidFrom="2015-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
         </Scoring>
-        <Scoring ClosingPts="20" Division="ACE Senior" Level="Novice" OpeningPts="15" ValidFrom="2014-6-1" type="OCScoreThenTime">
+        <Scoring ClosingPts="20" Division="ACE Senior" Level="Novice" OpeningPts="15" ValidFrom="2015-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
         </Scoring>
