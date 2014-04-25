@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-04-25 Don't prompt to update config if file is readonly.
  * 2013-01-11 Reset filters on configuration import.
  * 2012-09-29 Strip the Runs View.
  * 2012-07-11 After importing an ARB file, sort it.
@@ -1435,19 +1436,23 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	}
 
 	// Check our internal config.
-	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
-	&& m_Records.GetConfig().GetUpdateStatus())
+	// But only if the file can be modified.
+	if (wxFileName::IsFileWritable(filename))
 	{
-		if (CUpdateInfo::UpdateConfig(this))
+		if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
+		&& m_Records.GetConfig().GetUpdateStatus())
 		{
-			if (ImportConfiguration(true))
-				Modify(true);
+			if (CUpdateInfo::UpdateConfig(this))
+			{
+				if (ImportConfiguration(true))
+					Modify(true);
+			}
 		}
-	}
-	// Then check the external config.
-	else
-	{
-		wxGetApp().AutoCheckConfiguration(this);
+		// Then check the external config.
+		else
+		{
+			wxGetApp().AutoCheckConfiguration(this);
+		}
 	}
 
 // The old MFC code would prompt to create a new dog if this was a new file.
