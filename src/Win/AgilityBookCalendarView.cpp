@@ -193,8 +193,8 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 {
 	if (m_First.IsValid() && m_Last.IsValid())
 	{
-		// If it's not a wxBufferedPaintDC, then assume we're printing (preview or printer)
-		bool bIsPrinting = wxDynamicCast(pDC, wxBufferedPaintDC) ? false : true;
+		// If it's not a wxAutoBufferedPaintDC, then assume we're printing (preview or printer)
+		bool bIsPrinting = wxDynamicCast(pDC, wxAutoBufferedPaintDC) ? false : true;
 
 		wxPen penNull(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW), 1, wxTRANSPARENT);
 		wxPen penFrame(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT), 1);
@@ -1112,7 +1112,7 @@ void CAgilityBookCalendar::GetDateFromPoint(
 
 void CAgilityBookCalendar::OnPaint(wxPaintEvent& evt)
 {
-	wxBufferedPaintDC dc(this);
+	wxAutoBufferedPaintDC dc(this);
 	PrepareDC(dc);
 	dc.SetBackground(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 	dc.Clear();
