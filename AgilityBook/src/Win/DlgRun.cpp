@@ -627,7 +627,7 @@ void CMetaDataDisplay::OnPaint(wxPaintEvent& evt)
 		evt.Skip(true);
 	else
 	{
-		wxBufferedPaintDC dc(this);
+		wxAutoBufferedPaintDC dc(this);
 		dc.SetBackground(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 		dc.Clear();
 #ifdef HAS_ENHMETAFILE
