@@ -61,7 +61,7 @@ CMetaDataStatic::CMetaDataStatic(
 
 void CMetaDataStatic::OnPaint(wxPaintEvent& evt)
 {
-	wxBufferedPaintDC dc(this);
+	wxAutoBufferedPaintDC dc(this);
 	dc.SetBackground(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 	dc.Clear();
 	if (m_MetaFile)

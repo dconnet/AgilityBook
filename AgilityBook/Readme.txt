@@ -81,9 +81,12 @@ When initially developing:
    cp ../../locale/wxstd.po .
 This will generate an initial set of strings to translate.
 
-MinGW: After installing the Installation Manager (currently 0.6.0 beta),
-select the mingw32-gettext/bin package. Update. That's all. (Plus anything
-else you might want) Currently using Gettext v0.18.3.1.
+MinGW: After installing the Installation Manager (currently 0.6.2 beta),
+select the mingw32-gettext package (bin [gettext] and dev [msgcat/etc]).
+Update. That's all. (Plus anything else you might want)
+Note: Sometimes, after applying an update, MinGW seems to lose packages.
+The only work around I found is to delete C:\MinGW and reinstall.
+Currently using Gettext v0.18.3.2.
 
 --------------------
 
