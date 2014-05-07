@@ -36,30 +36,31 @@ Note: !(bind.fileVersion._AgilityBook.exe) could replace $(var.CURRENT_VERSION)
       Only difference is bind is all 4 parts, the var is only 3.
 
 Revision History
-2014-04-22 DRC Change REP to after InstallFinalize.
-               Added feature that user pinned shortcuts are not broken.
-2013-08-15 DRC Add proper per-user/per-machine upgrade logic and defaults.
-2013-03-28 DRC Added MSIFASTINSTALL.
-2012-08-03 DRC Set INSTALLDIR properly during upgrade and maintenance.
-2012-04-08 DRC Fix min OS conditions (using VC10 now)
-2011-11-23 DRC Add internet shortcut to start menu
-2011-11-12 DRC Update .mo file name.
-2011-08-19 DRC Fix System.AppUserModel.ID name. Still doesn't fix uninstall.
-2011-05-11 DRC Add System.AppUserModel.ID to desktop shortcut too.
-2011-04-27 DRC Generate unique prodcodes for each architecture.
-2011-04-14 DRC Add System.AppUserModel.ID to support recent used files.
-2011-01-18 DRC Update VersionNT checks to agree with how code is compiled.
-2010-12-24 DRC Oops, Using NeverOverwrite breaks on upgrade.
-2010-12-23 DRC Minor tweak to change type51CA+Seq to SetProperty element.
-2010-11-19 DRC Added NeverOverwrite to Lang3 registry setting.
-2010-11-16 DRC Put supported languages into a foreach loop.
-2010-11-01 DRC No, don't. (Detect same version as old in upgrade table.)
-2010-08-25 DRC Detect same version as old in upgrade table.
-2010-05-22 DRC Added comment block!
-               Added a user/machine install option. Default to per-machine
-               install. The INSTALL_SCOPE macro is _not_ used for this.
-               That is for creating a totally separate installer that will
-               be marked as not requiring UAC.
+2014-05-07 Minor tweak to support Wix 3.8.
+2014-04-22 Change REP to after InstallFinalize.
+           Added feature that user pinned shortcuts are not broken.
+2013-08-15 Add proper per-user/per-machine upgrade logic and defaults.
+2013-03-28 Added MSIFASTINSTALL.
+2012-08-03 Set INSTALLDIR properly during upgrade and maintenance.
+2012-04-08 Fix min OS conditions (using VC10 now)
+2011-11-23 Add internet shortcut to start menu
+2011-11-12 Update .mo file name.
+2011-08-19 Fix System.AppUserModel.ID name. Still doesn't fix uninstall.
+2011-05-11 Add System.AppUserModel.ID to desktop shortcut too.
+2011-04-27 Generate unique prodcodes for each architecture.
+2011-04-14 Add System.AppUserModel.ID to support recent used files.
+2011-01-18 Update VersionNT checks to agree with how code is compiled.
+2010-12-24 Oops, Using NeverOverwrite breaks on upgrade.
+2010-12-23 Minor tweak to change type51CA+Seq to SetProperty element.
+2010-11-19 Added NeverOverwrite to Lang3 registry setting.
+2010-11-16 Put supported languages into a foreach loop.
+2010-11-01 No, don't. (Detect same version as old in upgrade table.)
+2010-08-25 Detect same version as old in upgrade table.
+2010-05-22 Added comment block!
+           Added a user/machine install option. Default to per-machine
+           install. The INSTALL_SCOPE macro is _not_ used for this.
+           That is for creating a totally separate installer that will
+           be marked as not requiring UAC.
 -->
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
@@ -275,7 +276,6 @@ Revision History
 			just added here to remove an initial language selection dialog)
 			-->
 			<RegistryKey
-				Action="create"
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings">
 				<RegistryValue

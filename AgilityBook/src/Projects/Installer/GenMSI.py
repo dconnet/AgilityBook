@@ -397,6 +397,10 @@ def main():
 		print 'Usage:', __doc__
 		return 1
 
+	if not os.access(WiXdir, os.W_OK):
+		print 'ERROR: "' + WiXdir + '" does not exist!'
+		return 1
+
 	if b32 + b64 == 0:
 		b32 = 1
 		b64 = 1
