@@ -6,42 +6,42 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
-# 2013-11-27 DRC Fix arbdll.dll access when building x64.
-# 2013-08-15 DRC Added support for multiple wxs files.
-# 2013-08-12 DRC Added vc11/12 support, remove pre-10 support.
-# 2012-06-01 DRC Changed VC10 output directory
-# 2011-11-23 DRC Add internet shortcut to start menu
-# 2011-11-14 DRC Treat wix warnings as errors
-# 2011-09-23 DRC Allow support of admin installs "msiexec /a msi"
-# 2011-08-19 DRC Fixed /test option (it was always writing the csv file)
-# 2011-08-13 DRC Change to vc10 for default.
-# 2011-04-27 DRC Generate unique prodcodes for each architecture.
+# 2013-11-27 Fix arbdll.dll access when building x64.
+# 2013-08-15 Added support for multiple wxs files.
+# 2013-08-12 Added vc11/12 support, remove pre-10 support.
+# 2012-06-01 Changed VC10 output directory
+# 2011-11-23 Add internet shortcut to start menu
+# 2011-11-14 Treat wix warnings as errors
+# 2011-09-23 Allow support of admin installs "msiexec /a msi"
+# 2011-08-19 Fixed /test option (it was always writing the csv file)
+# 2011-08-13 Change to vc10 for default.
+# 2011-04-27 Generate unique prodcodes for each architecture.
 #            Also discovered script wasn't writing the cvs file correctly.
-# 2010-11-18 DRC Optimize the build by caching the cab file.
-# 2010-11-16 DRC Turned on pedantic warnings, changed how languages are handled.
-# 2010-10-08 DRC Suppress wixpdb creation.
+# 2010-11-18 Optimize the build by caching the cab file.
+# 2010-11-16 Turned on pedantic warnings, changed how languages are handled.
+# 2010-10-08 Suppress wixpdb creation.
 #            Allow packaging to pull from specified VC build (8/9/10)
-# 2010-08-25 DRC Stop using old prodcode. Detect same version as old.
-# 2010-06-11 DRC Convert vbs scripts to python
-# 2010-05-22 DRC Added /test2 option.
-# 2010-05-07 DRC Added /user option (default: perMachine)
+# 2010-08-25 Stop using old prodcode. Detect same version as old.
+# 2010-06-11 Convert vbs scripts to python
+# 2010-05-22 Added /test2 option.
+# 2010-05-07 Added /user option (default: perMachine)
 #            Merge languages into one msi.
-# 2009-12-23 DRC Auto-detect current WiX installation (%WIX%)
-# 2009-10-19 DRC Added 'create' option.
-# 2009-08-08 DRC Tweaked code to remove ICE61 warning.
+# 2009-12-23 Auto-detect current WiX installation (%WIX%)
+# 2009-10-19 Added 'create' option.
+# 2009-08-08 Tweaked code to remove ICE61 warning.
 #            Allow user specification of where WiX is (/wix)
-# 2009-07-26 DRC Removed Win98 support.
-# 2009-05-02 DRC Upgraded to wix3.
-# 2009-04-16 DRC Enable v2 to upgrade v1 when the beta period ends.
+# 2009-07-26 Removed Win98 support.
+# 2009-05-02 Upgraded to wix3.
+# 2009-04-16 Enable v2 to upgrade v1 when the beta period ends.
 #            Removed Inno support since I don't maintain it anymore.
-# 2009-03-01 DRC Made v2 coexist with v1, updated for wxWidgets
+# 2009-03-01 Made v2 coexist with v1, updated for wxWidgets
 #            Fixed bug where french and arbhelp would always be installed
-# 2008-10-14 DRC Added x64 specific tags
-# 2007-11-14 DRC Wix works! (it's now the default)
-# 2007-11-05 DRC Add WiX back (addition)
+# 2008-10-14 Added x64 specific tags
+# 2007-11-14 Wix works! (it's now the default)
+# 2007-11-05 Add WiX back (addition)
 #            Note, WiX doesn't work yet, that's why I added Inno
-# 2007-10-31 DRC Changed from WiX to InnoSetup
-# 2007-03-07 DRC Created
+# 2007-10-31 Changed from WiX to InnoSetup
+# 2007-03-07 Created
 
 """GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC[10|11|12]]
 	wix: Override internal wix path (c:\Tools\wix3)
@@ -395,6 +395,10 @@ def main():
 		i += 1
 	if error:
 		print 'Usage:', __doc__
+		return 1
+
+	if not os.access(WiXdir, os.W_OK):
+		print 'ERROR: "' + WiXdir + '" does not exist!'
 		return 1
 
 	if b32 + b64 == 0:
