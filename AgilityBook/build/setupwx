@@ -58,7 +58,15 @@ rm -rf $BUILDDIR
 mkdir $BUILDDIR
 cd $BUILDDIR
 
-if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk; then
+if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk; then
+	export CXXFLAGS="-std=c++11 -stdlib=libc++"
+	export CPPFLAGS="-stdlib=libc++"
+	export LIBS="-lc++"
+	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
+	MINSDK=10.7
+	TARGETARCH="--enable-macosx_arch=i386"
+
+elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk; then
 	COMPILERS="CC=clang CXX=clang++ LD=clang++"
 	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 	MINSDK=10.5
