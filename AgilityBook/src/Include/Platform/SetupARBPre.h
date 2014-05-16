@@ -17,6 +17,7 @@
  * framework, then include SetupARBPost.h
  *
  * Revision History
+ * 2014-05-16 Updated to reflect non-support for VC9, moved HAS macros to Post.
  * 2013-01-27 Split/moved stdafx.h.
  * 2013-01-01 Added _VARIADIC_MAX for vc11.
  * 2012-01-29 Add macro to ease selecting all text on dialog init.
@@ -131,16 +132,8 @@
 	#elif WINVER < 0x0501
 		#error VC10 minimum version is 0x0501
 	#endif
-#elif _MSC_VER >= 1500
-	#if defined(_M_IA64) && WINVER < 0x0502
-		#error Itanium minimum version is 0x0502
-	#elif defined(_M_X64) && WINVER < 0x0501
-		#error x64 minimum version is 0x0501
-	#elif WINVER < 0x0500
-		#error VC9 minimum version is 0x0500
-	#endif
 #else
-	#error Go away. Only VC9+ supported.
+	#error Go away. Only VC10+ supported.
 #endif
 
 #else // _WIN32
@@ -165,64 +158,4 @@
 		cls& operator=(cls const&);
 
 
-// Compiler configuration
-
-// ARB_HAS_32_AND_64_BIT_TIMET
-// This define means the compiler has 2 time_ts
-// time_t: 32bits
-// __time64_t: 64bits
-#if _MSC_VER >= 1300 && _MSC_VER < 1400
-// VC6: time_t is 32bits
-// VC7: time_t is 32bits, and __time64_t is 64
-// VC8+: time_t is 64bit
-#define ARB_HAS_32_AND_64_BIT_TIMET
-#endif
-
-// ARB_HAS_SECURE_LOCALTIME
-//  _localtime64_s(struct tm*, time_t*)
-#if _MSC_VER >= 1400
-#define ARB_HAS_SECURE_LOCALTIME
-#endif
-
-// ARB_HAS_SECURE_MBS_WCS
-//  _wcstombs_s(size_t*, char*, size_t, const wchar_t*, size_t)
-#if _MSC_VER >= 1400
-#define ARB_HAS_SECURE_MBS_WCS
-#endif
-
-// ARB_HAS_SECURE_SPRINTF
-//  sprintf_s(char*, size_t, const char*, ...)
-#if _MSC_VER >= 1400
-#define ARB_HAS_SECURE_SPRINTF
-#endif
-
-// ARB_SET_ERASE_RETURNS_ITERATOR
-//  std::set<x>::iterator i = var.begin()...; i = var.erase(i); ...
-//  If not defined, will use "var.erase(i++);" construct
-#ifdef _MSC_VER
-#define ARB_SET_ERASE_RETURNS_ITERATOR
-#endif
-
-// ARB_HAS_GETSYSTEMINFO
-//  Has GetSystemInfo in order to check for x64.
-#if !defined(_MSC_VER) || _MSC_VER >= 1300
-#define ARB_HAS_GETSYSTEMINFO
-#endif
-
-// ARB_HAS_ISTREAM_WCHAR
-//  Supports ifstream(wchar_t*) (MS does, xcode 4.5 doesn't)
-#ifdef _MSC_VER
-#define ARB_HAS_ISTREAM_WCHAR
-#endif
-
-// ARB_HAS_OSTREAM_WCHAR
-//  Supports ofstream(wchar_t*) (MS does, xcode 4.5 doesn't)
-#ifdef _MSC_VER
-#define ARB_HAS_OSTREAM_WCHAR
-#endif
-
-// ARB_HAS_LAMBDA
-//  Supports lambda functions
-#if _MSC_VER >= 1600
-#define ARB_HAS_LAMBDA
-#endif
+// Compiler configuration (moved to SetupARBPost.h)
