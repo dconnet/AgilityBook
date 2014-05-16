@@ -91,7 +91,7 @@ Currently using Gettext v0.18.3.2.
 --------------------
 
 poedit: http://www.poedit.net
-Cross platform editor for modifying .po files. Currently using 1.5.7.
+Cross platform editor for modifying .po files. Currently using 1.6.5.
 (makes use of gettext)
 Use this to keep the catalog in sync with the source code.
 
@@ -126,12 +126,12 @@ All VC project files have been copied/renamed/modified such that:
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.54.0. There is no need
+ARB has been built and tested using Boost version 1.55.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr,
 weak_ptr and make_shared templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
-above. The default directory when unpacked is boost_1_52_0 (of course,
+above. The default directory when unpacked is boost_1_55_0 (of course,
 this will vary based on boost version). Set BOOST_ROOT to point to this
 directory. The projects use this environment variable.
 
@@ -149,13 +149,13 @@ Currently using Version 3.5.2519.0 (as of ARB v2.2.6).
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.5.
+Used to create source code documentation. AgilityBook.dox uses v1.8.7.
 [Install to default location]
 
 --------------------
 
 GraphViz: http://www.graphviz.org
-Used to create source code documentation. AgilityBook.dox uses v2.32.0
+Used to create source code documentation. AgilityBook.dox uses v2.38.0
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
@@ -209,8 +209,14 @@ Microsoft Visual Studio 2010 (VC10)
 
 Microsoft Visual Studio 2012 (VC11)
 ===================================
-   It works, no additional notes. But only on Vista+.
+   It works, no additional notes. But only targets Vista+.
    If 'vc110_xp' is set as the target platform, it appears to work, but the
+   compilation of WX is not targeted at that platform, so it's not supported.
+
+Microsoft Visual Studio 2013 (VC12)
+===================================
+   It works, no additional notes. But only targets Vista+.
+   If 'vc120_xp' is set as the target platform, it appears to work, but the
    compilation of WX is not targeted at that platform, so it's not supported.
 
 
@@ -232,18 +238,20 @@ The xcode projects were used as follows:
               - Advanced: Unique
             AgilityBook.xcworkspace
                 wx3.0, cocoa, OSX10.8 sdk, OSX10.5 deployment target
-.../xcode5: Xcode 5.0 on OSX10.8
+.../xcode5: Xcode 5.0 on OSX10.9
             Recommended (so projects work right):
             - Set DerivedData to Relative, 'build'
               - Advanced: Unique
             AgilityBook.xcworkspace
-                wx3.0, cocoa, OSX10.8 sdk, OSX10.5 deployment target
+                wx3.0, cocoa, OSX10.9 sdk, OSX10.7 deployment target
+                C++ Language Dialect: c++11 (-std=c++11)
+                C++ Std Lib: libc++
 
-OSX 10.8:
+OSX 10.8+:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
-setenv BOOST_ROOT /Users/dconnet/src/boost_1_54_0
+setenv BOOST_ROOT /Users/dconnet/src/boost_1_55_0
 setenv WXBASE /Users/dconnet/wx
 setenv WXWIN /Users/dconnet/wx/wxWidgets-3.0.0
 ====
