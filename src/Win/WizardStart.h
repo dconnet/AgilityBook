@@ -31,7 +31,7 @@ public:
 			CWizard* pSheet,
 			CAgilityBookDoc* pDoc);
 
-	wxWizardPage* GetPrev() const	{return NULL;}
+	wxWizardPage* GetPrev() const	{return nullptr;}
 	wxWizardPage* GetNext() const	{return m_Next;}
 
 private:

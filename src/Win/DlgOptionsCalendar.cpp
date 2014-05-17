@@ -57,16 +57,16 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	, m_bHideOverlapping(CAgilityBookOptions::HideOverlappingCalendarEntries())
 	, m_bOpening(CAgilityBookOptions::ViewAllCalendarOpening())
 	, m_bClosing(CAgilityBookOptions::ViewAllCalendarClosing())
-	, m_ctrlOpeningNear(NULL)
-	, m_ctrlOpeningNearColor(NULL)
-	, m_ctrlOpeningNearSet(NULL)
-	, m_ctrlClosingNear(NULL)
-	, m_ctrlClosingNearColor(NULL)
-	, m_ctrlClosingNearSet(NULL)
-	, m_ctrlDayOfWeek(NULL)
-	, m_ctrlCalEntries(NULL)
-	, m_ctrlColor(NULL)
-	, m_ctrlCalView(NULL)
+	, m_ctrlOpeningNear(nullptr)
+	, m_ctrlOpeningNearColor(nullptr)
+	, m_ctrlOpeningNearSet(nullptr)
+	, m_ctrlClosingNear(nullptr)
+	, m_ctrlClosingNearColor(nullptr)
+	, m_ctrlClosingNearSet(nullptr)
+	, m_ctrlDayOfWeek(nullptr)
+	, m_ctrlCalEntries(nullptr)
+	, m_ctrlColor(nullptr)
+	, m_ctrlCalView(nullptr)
 {
 	CAgilityBookOptions::GetCalendarFontInfo(m_fontCalViewInfo);
 	m_fontCalViewInfo.CreateFont(m_fontCalView);
@@ -244,7 +244,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 
 	m_ctrlCalEntries = new wxChoice(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, 0);
+		0, nullptr, 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlCalEntries, wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler, CDlgOptionsCalendar::OnSelchangeCalEntries);
 	m_ctrlCalEntries->SetHelpText(_("HIDC_OPT_CAL_ENTRIES"));
 	m_ctrlCalEntries->SetToolTip(_("HIDC_OPT_CAL_ENTRIES"));

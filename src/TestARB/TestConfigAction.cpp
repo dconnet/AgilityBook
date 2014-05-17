@@ -53,7 +53,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(L"name");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -64,7 +64,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(L"name");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -89,7 +89,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(0, L"oldname", L"newname");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -100,7 +100,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(0, L"oldname", L"newname");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -125,7 +125,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(0, L"name");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -136,7 +136,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(0, L"name");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -161,7 +161,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(0, L"oldname", L"newname");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -172,7 +172,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(0, L"oldname", L"newname");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -197,7 +197,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(0, L"name");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -208,7 +208,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(0, L"name");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -233,7 +233,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(0, L"venue", L"oldname", L"newname");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -244,7 +244,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(0, L"venue", L"oldname", L"newname");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -269,7 +269,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(0, L"venue", L"name");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -280,7 +280,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(0, L"venue", L"name");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -305,7 +305,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(0, L"venue", L"oldname", L"newname");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -316,7 +316,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(0, L"venue", L"oldname", L"newname");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -341,7 +341,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(0, L"venue", L"name");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -352,7 +352,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(0, L"venue", L"name");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -377,9 +377,9 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(0, L"venue", L"div", L"oldname", L"newname");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 			obj = ARBConfigActionRenameLevel::NewSubLevel(0, L"venue", L"div", L"level", L"oldname", L"newname");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -390,12 +390,12 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(0, L"venue", L"div", L"oldname", L"newname");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 
 			obj = ARBConfigActionRenameLevel::NewSubLevel(0, L"venue", L"div", L"level", L"oldname", L"newname");
 			obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -420,9 +420,9 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(0, L"venue", L"div", L"name");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 			obj = ARBConfigActionDeleteLevel::NewSubLevel(0, L"venue", L"div", L"level", L"name");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -433,12 +433,12 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(0, L"venue", L"div", L"name");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 
 			obj = ARBConfigActionDeleteLevel::NewSubLevel(0, L"venue", L"div", L"level", L"name");
 			obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -463,7 +463,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(0, L"venue", L"oldname", L"newname");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -474,7 +474,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(0, L"venue", L"oldname", L"newname");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -499,7 +499,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(0, L"venue", L"div", L"oldname", L"newname");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -510,7 +510,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(0, L"venue", L"div", L"oldname", L"newname");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -535,7 +535,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(0, L"venue", L"oldname", L"newname");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -546,7 +546,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(0, L"venue", L"oldname", L"newname");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}
@@ -571,7 +571,7 @@ SUITE(TestConfigAction)
 		if (!g_bMicroTest)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(0, L"venue", L"name");
-			CHECK(NULL != obj.get());
+			CHECK(!!obj.get());
 		}
 	}
 
@@ -582,7 +582,7 @@ SUITE(TestConfigAction)
 		{
 			ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(0, L"venue", L"name");
 			ARBConfigActionPtr obj2 = obj->Clone();
-			CHECK(NULL != obj2.get());
+			CHECK(!!obj2.get());
 			CHECK(obj.get() != obj2.get());
 		}
 	}

@@ -48,7 +48,7 @@ public:
 	CReadHttp(
 			std::wstring const& inURL,
 			wxOutputStream& outStream,
-			IDlgProgress* pProgress = NULL);
+			IDlgProgress* pProgress = nullptr);
 
 	~CReadHttp();
 
@@ -63,15 +63,15 @@ public:
 	bool ReadHttpFile(
 			std::wstring& userName,
 			std::wstring& outErrMsg,
-			wxWindow* pParent = NULL,
+			wxWindow* pParent = nullptr,
 			bool bCheckOnly = false);
 
 	bool ReadHttpFile(
 			std::wstring& outErrMsg,
-			wxWindow* pParent = NULL,
+			wxWindow* pParent = nullptr,
 			bool bCheckOnly = false);
 
-	bool CheckHttpFile(wxWindow* pParent = NULL);
+	bool CheckHttpFile(wxWindow* pParent = nullptr);
 
 private:
 	std::wstring m_address;

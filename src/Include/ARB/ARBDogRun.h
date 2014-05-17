@@ -141,9 +141,9 @@ public:
 	 */
 	double GetTitlePoints(
 			ARBConfigScoringPtr inScoring,
-			bool* outClean = NULL,
-			double* outLifeTime = NULL,
-			double* outPlacement = NULL) const;
+			bool* outClean = nullptr,
+			double* outLifeTime = nullptr,
+			double* outPlacement = nullptr) const;
 
 	/**
 	 * Get the score for this run.

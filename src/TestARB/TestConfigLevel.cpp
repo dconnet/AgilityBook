@@ -160,7 +160,7 @@ SUITE(TestConfigLevelList)
 			TODO_TEST
 		//	bool FindLevel(
 		//			std::wstring const& inName,
-		//			ARBConfigLevelPtr* outLevel = NULL);
+		//			ARBConfigLevelPtr* outLevel = nullptr);
 		}
 	}
 
@@ -172,7 +172,7 @@ SUITE(TestConfigLevelList)
 			TODO_TEST
 		//	bool FindSubLevel(
 		//			std::wstring const& inName,
-		//			ARBConfigLevelPtr* outLevel = NULL) const;
+		//			ARBConfigLevelPtr* outLevel = nullptr) const;
 		}
 	}
 
@@ -184,7 +184,7 @@ SUITE(TestConfigLevelList)
 			TODO_TEST
 		//	bool AddLevel(
 		//			std::wstring const& inName,
-		//			ARBConfigLevelPtr* outLevel = NULL);
+		//			ARBConfigLevelPtr* outLevel = nullptr);
 		//	bool AddLevel(ARBConfigLevelPtr inLevel);
 		//	bool DeleteLevel(
 		//			std::wstring const& inDiv,

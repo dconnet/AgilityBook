@@ -30,7 +30,7 @@ public:
 			std::wstring const& inDivision,
 			std::wstring const& inLevel,
 			std::wstring const& inEvent,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	std::wstring GetDivision() const;
 	std::wstring GetLevel() const;

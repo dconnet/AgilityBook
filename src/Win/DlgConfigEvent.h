@@ -36,7 +36,7 @@ public:
 			bool bNewEntry,
 			ARBConfigVenuePtr pVenue,
 			ARBConfigEventPtr pEvent,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	~CDlgConfigEvent();
 
 	void GetFixups(std::vector<ARBConfigActionPtr>& ioFixups);

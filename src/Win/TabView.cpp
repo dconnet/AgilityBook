@@ -63,11 +63,11 @@ static long GetDefaultBook()
 
 
 CTabView::CTabView()
-	: m_frame(NULL)
+	: m_frame(nullptr)
 	, m_type(GetDefaultBook() - ID_BOOK_FIRST)
 	, m_orient(ID_ORIENT_TOP - ID_ORIENT_FIRST)
-	, m_sizerFrame(NULL)
-	, m_ctrlBook(NULL)
+	, m_sizerFrame(nullptr)
+	, m_ctrlBook(nullptr)
 	, m_imageList(16,16)
 	, m_bIgnoreEvents(false)
 {
@@ -102,12 +102,12 @@ CTabView::~CTabView()
 		wxConfig::Get()->Write(CFG_SETTINGS_VIEWORIENT, m_orient - ID_ORIENT_FIRST);
 		wxConfig::Get()->Write(CFG_SETTINGS_VIEW, m_ctrlBook->GetSelection());
 		m_ctrlBook->Destroy();
-		m_ctrlBook = NULL;
+		m_ctrlBook = nullptr;
 	}
 	if (m_frame && m_sizerFrame)
 	{
-		m_frame->SetSizer(NULL);
-		m_sizerFrame = NULL;
+		m_frame->SetSizer(nullptr);
+		m_sizerFrame = nullptr;
 	}
 }
 
@@ -163,7 +163,7 @@ void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 
 	wxBookCtrlBase *oldBook = m_ctrlBook;
 
-	m_ctrlBook = NULL;
+	m_ctrlBook = nullptr;
 	CIgnore ignore(m_bIgnoreEvents);
 
 	switch (m_type)
@@ -329,7 +329,7 @@ void CTabView::OnDraw(wxDC* dc)
 
 void CTabView::OnUpdate(wxView* sender, wxObject* inHint)
 {
-	CUpdateHint* hint = NULL;
+	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (hint && hint->IsEqual(UPDATE_LANG_CHANGE))

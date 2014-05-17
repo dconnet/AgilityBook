@@ -34,7 +34,7 @@ public:
 
 	CDlgOptions(
 			CAgilityBookDoc* pDoc,
-			wxWindow* pParentWnd = NULL,
+			wxWindow* pParentWnd = nullptr,
 			size_t iSelectPage = 0);
 
 protected:

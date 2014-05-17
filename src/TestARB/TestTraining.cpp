@@ -71,7 +71,7 @@ SUITE(TestTraining)
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
-			CHECK(NULL != train.get());
+			CHECK(!!train.get());
 		}
 	}
 
@@ -83,7 +83,7 @@ SUITE(TestTraining)
 			ARBTrainingPtr train = ARBTraining::New();
 			train->SetDate(ARBDate(2007, 9, 1));
 			ARBTrainingPtr train2 = train->Clone();
-			CHECK(NULL != train2.get());
+			CHECK(!!train2.get());
 			CHECK(train.get() != train2.get());
 			CHECK(*train == *train2);
 			CHECK(train->GetDate() == train2->GetDate());

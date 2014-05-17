@@ -385,7 +385,7 @@ public:
 	bool HasMetafile()
 	{
 #ifdef HAS_ENHMETAFILE
-		return NULL != m_metaFile;
+		return !!m_metaFile;
 #else
 		return false;
 #endif
@@ -424,8 +424,8 @@ CMetaDataDisplay::CMetaDataDisplay(
 		ARBDogRunPtr pRun)
 	: m_Run(pRun)
 #ifdef HAS_ENHMETAFILE
-	, m_metaFile(NULL)
-	, m_metaFileBack(NULL)
+	, m_metaFile(nullptr)
+	, m_metaFileBack(nullptr)
 #endif
 	, m_ViewText(true)
 	, m_Insert(pRun->GetCRCD().empty())
@@ -466,8 +466,8 @@ void CMetaDataDisplay::DeleteMetaFile()
 	if (m_metaFile)
 	{
 		DeleteEnhMetaFile(m_metaFile);
-		m_metaFile = NULL;
-		m_metaFileBack = NULL;
+		m_metaFile = nullptr;
+		m_metaFileBack = nullptr;
 	}
 #endif
 }
@@ -480,7 +480,7 @@ void CMetaDataDisplay::SetCRCDData()
 	{
 		ENHMETAHEADER header;
 		GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
-		UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, NULL);
+		UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, nullptr);
 		LPBYTE bits = new BYTE[nSize+1];
 		GetEnhMetaFileBits(m_metaFile, nSize, bits);
 		assert(sizeof(BYTE) == sizeof(char));
@@ -489,7 +489,7 @@ void CMetaDataDisplay::SetCRCDData()
 	}
 	else
 #endif
-		m_Run->SetCRCDMetaData(NULL, 0);
+		m_Run->SetCRCDMetaData(nullptr, 0);
 }
 
 
@@ -549,7 +549,7 @@ void CMetaDataDisplay::OnCopy()
 						// which doesn't actually open the windows one.
 						wxOpenClipboard();
 						HENHMETAFILE hData = reinterpret_cast<HENHMETAFILE>(GetClipboardData(CF_ENHMETAFILE));
-						m_metaFile = CopyEnhMetaFile(hData, NULL);
+						m_metaFile = CopyEnhMetaFile(hData, nullptr);
 						m_metaFileBack = m_metaFile;
 						SetCRCDData();
 						if (m_metaFile)
@@ -571,7 +571,7 @@ void CMetaDataDisplay::OnCopy()
 		SetLabel(L"");
 		DeleteMetaFile();
 		m_Run->SetCRCD(L"");
-		m_Run->SetCRCDMetaData(NULL, 0);
+		m_Run->SetCRCDMetaData(nullptr, 0);
 	}
 	Enable(m_ViewText);
 	Refresh();
@@ -592,7 +592,7 @@ void CMetaDataDisplay::OnCRCDImage(bool checked)
 		if (m_metaFile)
 		{
 			m_metaFileBack = m_metaFile;
-			m_metaFile = NULL;
+			m_metaFile = nullptr;
 		}
 	}
 	SetCRCDData();
@@ -676,91 +676,91 @@ CDlgRun::CDlgRun(
 	, m_pRefRunMe()
 	, m_Club()
 	, m_pVenue()
-	, m_panelScore(NULL)
+	, m_panelScore(nullptr)
 	, m_Date(pRun->GetDate())
-	, m_ctrlDivisions(NULL)
-	, m_ctrlLevels(NULL)
-	, m_ctrlEvents(NULL)
-	, m_ctrlSubNamesText(NULL)
-	, m_ctrlSubNames(NULL)
+	, m_ctrlDivisions(nullptr)
+	, m_ctrlLevels(nullptr)
+	, m_ctrlEvents(nullptr)
+	, m_ctrlSubNamesText(nullptr)
+	, m_ctrlSubNames(nullptr)
 	, m_SubName(StringUtil::stringWX(pRun->GetSubName()))
-	, m_ctrlTable(NULL)
+	, m_ctrlTable(nullptr)
 	, m_Table(false)
-	, m_ctrlHeight(NULL)
+	, m_ctrlHeight(nullptr)
 	, m_Height(StringUtil::stringWX(pRun->GetHeight()))
-	, m_ctrlJudge(NULL)
+	, m_ctrlJudge(nullptr)
 	, m_Judge(StringUtil::stringWX(pRun->GetJudge()))
-	, m_ctrlHandler(NULL)
+	, m_ctrlHandler(nullptr)
 	, m_Handler(StringUtil::stringWX(pRun->GetHandler()))
-	, m_ctrlConditions(NULL)
+	, m_ctrlConditions(nullptr)
 	, m_Conditions(StringUtil::stringWX(pRun->GetConditions()))
-	, m_ctrlDesc(NULL)
-	, m_ctrlPartnerEdit(NULL)
-	, m_ctrlPartner(NULL)
-	, m_ctrlSCTText(NULL)
-	, m_ctrlSCT(NULL)
+	, m_ctrlDesc(nullptr)
+	, m_ctrlPartnerEdit(nullptr)
+	, m_ctrlPartner(nullptr)
+	, m_ctrlSCTText(nullptr)
+	, m_ctrlSCT(nullptr)
 	, m_SCT(0.0)
-	, m_textYardsReqOpeningPts(NULL)
-	, m_ctrlYardsReqOpeningPts(NULL)
+	, m_textYardsReqOpeningPts(nullptr)
+	, m_ctrlYardsReqOpeningPts(nullptr)
 	, m_Opening(0)
 	, m_Yards(0.0)
-	, m_textMinYPSClosingTime(NULL)
-	, m_ctrlMinYPSClosingTime(NULL)
+	, m_textMinYPSClosingTime(nullptr)
+	, m_ctrlMinYPSClosingTime(nullptr)
 	, m_SCT2(0.0)
-	, m_ctrlClosingText(NULL)
-	, m_ctrlClosing(NULL)
+	, m_ctrlClosingText(nullptr)
+	, m_ctrlClosing(nullptr)
 	, m_Closing(0)
-	, m_ctrlObstacles(NULL)
+	, m_ctrlObstacles(nullptr)
 	, m_Obstacles(pRun->GetScoring().GetObstacles())
-	, m_ctrlTimeText(NULL)
-	, m_ctrlTime(NULL)
+	, m_ctrlTimeText(nullptr)
+	, m_ctrlTime(nullptr)
 	, m_Time(0.0)
-	, m_ctrlFaultsText(NULL)
-	, m_ctrlFaults(NULL)
+	, m_ctrlFaultsText(nullptr)
+	, m_ctrlFaults(nullptr)
 	, m_Faults(0)
-	, m_textYPSOpeningPts(NULL)
-	, m_ctrlYPSOpeningPts(NULL)
+	, m_textYPSOpeningPts(nullptr)
+	, m_ctrlYPSOpeningPts(nullptr)
 	, m_Open(0)
-	, m_textClosingPtsTotalFaults(NULL)
-	, m_ctrlClosingPtsTotalFaults(NULL)
+	, m_textClosingPtsTotalFaults(nullptr)
+	, m_ctrlClosingPtsTotalFaults(nullptr)
 	, m_Close(0)
-	, m_ctrlObstaclesPS(NULL)
-	, m_ctrlPlace(NULL)
+	, m_ctrlObstaclesPS(nullptr)
+	, m_ctrlPlace(nullptr)
 	, m_Place(pRun->GetPlace())
-	, m_ctrlInClass(NULL)
+	, m_ctrlInClass(nullptr)
 	, m_InClass(pRun->GetInClass())
-	, m_ctrlDogsQd(NULL)
+	, m_ctrlDogsQd(nullptr)
 	, m_DogsQd(pRun->GetDogsQd())
-	, m_ctrlQ(NULL)
-	, m_ctrlBonusPtsText(NULL)
-	, m_ctrlBonusPts(NULL)
+	, m_ctrlQ(nullptr)
+	, m_ctrlBonusPtsText(nullptr)
+	, m_ctrlBonusPts(nullptr)
 	, m_BonusPts(pRun->GetScoring().GetBonusPts())
-	, m_ctrlSpeedPtsText(NULL)
-	, m_ctrlSpeedPts(NULL)
-	, m_ctrlTitlePointsText(NULL)
-	, m_ctrlTitlePoints(NULL)
-	, m_ctrlScore(NULL)
+	, m_ctrlSpeedPtsText(nullptr)
+	, m_ctrlSpeedPts(nullptr)
+	, m_ctrlTitlePointsText(nullptr)
+	, m_ctrlTitlePoints(nullptr)
+	, m_ctrlScore(nullptr)
 	, m_Comments(StringUtil::stringWX(pRun->GetNote()))
 	, m_sortRefRuns(L"RefRuns")
 	, m_idxRefRunPage(-1)
-	, m_ctrlFaultsList(NULL)
-	, m_ctrlRefRuns(NULL)
-	, m_ctrlRefAddMe(NULL)
-	, m_ctrlRefEdit(NULL)
-	, m_ctrlRefDelete(NULL)
-	, m_CRCDDisplay(NULL)
-	, m_ctrlCourse(NULL)
-	, m_ctrlCRCDView(NULL)
-	, m_ctrlCRCDCopy(NULL)
-	, m_ctrlIncImage(NULL)
-	, m_ctrlLinks(NULL)
+	, m_ctrlFaultsList(nullptr)
+	, m_ctrlRefRuns(nullptr)
+	, m_ctrlRefAddMe(nullptr)
+	, m_ctrlRefEdit(nullptr)
+	, m_ctrlRefDelete(nullptr)
+	, m_CRCDDisplay(nullptr)
+	, m_ctrlCourse(nullptr)
+	, m_ctrlCRCDView(nullptr)
+	, m_ctrlCRCDCopy(nullptr)
+	, m_ctrlIncImage(nullptr)
+	, m_ctrlLinks(nullptr)
 	, m_ImageList(16,16)
 	, m_imgEmpty(-1)
 	, m_imgOk(-1)
 	, m_imgMissing(-1)
-	, m_ctrlLinkEdit(NULL)
-	, m_ctrlLinkDelete(NULL)
-	, m_ctrlLinkOpen(NULL)
+	, m_ctrlLinkEdit(nullptr)
+	, m_ctrlLinkDelete(nullptr)
+	, m_ctrlLinkOpen(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)
@@ -773,9 +773,9 @@ CDlgRun::CDlgRun(
 	m_clrBack = GetBackgroundColour();
 
 	pTrial->GetClubs().GetPrimaryClub(&m_Club);
-	assert(NULL != m_Club.get());
+	assert(!!m_Club.get());
 	pDoc->Book().GetConfig().GetVenues().FindVenue(m_Club->GetVenue(), &m_pVenue);
-	assert(NULL != m_pVenue.get());
+	assert(!!m_pVenue.get());
 
 	m_sortRefRuns.Initialize(scNumRefRunColumns);
 
@@ -875,7 +875,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlDivisions = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
+		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
 	BIND_OR_CONNECT_CTRL(m_ctrlDivisions, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgRun::OnSelchangeDivision);
 	m_ctrlDivisions->SetHelpText(_("HIDC_RUNSCORE_DIVISION"));
 	m_ctrlDivisions->SetToolTip(_("HIDC_RUNSCORE_DIVISION"));
@@ -887,7 +887,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlLevels = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
+		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
 	BIND_OR_CONNECT_CTRL(m_ctrlLevels, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgRun::OnSelchangeLevel);
 	m_ctrlLevels->SetHelpText(_("HIDC_RUNSCORE_LEVEL"));
 	m_ctrlLevels->SetToolTip(_("HIDC_RUNSCORE_LEVEL"));
@@ -899,7 +899,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlEvents = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
+		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
 	BIND_OR_CONNECT_CTRL(m_ctrlEvents, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgRun::OnSelchangeEvent);
 	m_ctrlEvents->SetHelpText(_("HIDC_RUNSCORE_EVENT"));
 	m_ctrlEvents->SetToolTip(_("HIDC_RUNSCORE_EVENT"));
@@ -911,7 +911,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlSubNames = new CAutoFillComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN,
+		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_SubName, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlSubNames->SetHelpText(_("HIDC_RUNSCORE_SUBNAME"));
 	m_ctrlSubNames->SetToolTip(_("HIDC_RUNSCORE_SUBNAME"));
@@ -936,7 +936,7 @@ CDlgRun::CDlgRun(
 #else
 		wxSize(50, -1),
 #endif
-		0, NULL, wxCB_DROPDOWN,
+		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlHeight->SetHelpText(_("HIDC_RUNSCORE_HEIGHT"));
 	m_ctrlHeight->SetToolTip(_("HIDC_RUNSCORE_HEIGHT"));
@@ -959,7 +959,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlJudge = new CAutoFillComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN,
+		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_Judge, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlJudge->SetHelpText(_("HIDC_RUNSCORE_JUDGE"));
 	m_ctrlJudge->SetToolTip(_("HIDC_RUNSCORE_JUDGE"));
@@ -976,7 +976,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlHandler = new CAutoFillComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN,
+		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_Handler, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlHandler->SetHelpText(_("HIDC_RUNSCORE_HANDLER"));
 	m_ctrlHandler->SetToolTip(_("HIDC_RUNSCORE_HANDLER"));
@@ -1242,7 +1242,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlFaultsList = new wxListBox(panelComments, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, 0);
+		0, nullptr, 0);
 	m_ctrlFaultsList->SetHelpText(_("HIDC_RUNCOMMENT_FAULTS_LIST"));
 	m_ctrlFaultsList->SetToolTip(_("HIDC_RUNCOMMENT_FAULTS_LIST"));
 
@@ -1339,7 +1339,7 @@ CDlgRun::CDlgRun(
 	m_ctrlCRCDCopy->SetHelpText(_("HIDC_RUNCRCD_COPY"));
 	m_ctrlCRCDCopy->SetToolTip(_("HIDC_RUNCRCD_COPY"));
 
-	wxStaticText* textImageDesc = NULL;
+	wxStaticText* textImageDesc = nullptr;
 	if (m_CRCDDisplay->HasMetafileSupport())
 	{
 		m_ctrlIncImage = new wxCheckBox(panelCRCD, wxID_ANY,
@@ -1677,7 +1677,7 @@ CDlgRun::CDlgRun(
 	SetFaultsText();
 	ListRefRuns();
 	UpdateCRCDButtons();
-	ListLinkFiles(NULL);
+	ListLinkFiles(nullptr);
 
 	SetSizer(bSizer);
 	Layout();
@@ -2469,7 +2469,7 @@ void CDlgRun::CreateRefRunMe()
 		m_Run->GetDivision(),
 		m_Run->GetLevel(),
 		m_Run->GetDate(),
-		NULL,
+		nullptr,
 		&pScoring))
 	{
 		m_pRefRunMe->SetScore(ARBDouble::ToString(m_Run->GetScore(pScoring)));
@@ -2976,7 +2976,7 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 			m_Run->GetDivision(),
 			m_Run->GetLevel(),
 			m_Run->GetDate(),
-			NULL,
+			nullptr,
 			&pScoring))
 		{
 			std::wstring nScore;
@@ -3139,7 +3139,7 @@ void CDlgRun::OnLinksDelete(wxCommandEvent& evt)
 	{
 		std::wstring name = GetListColumnText(m_ctrlLinks, nItem, 0);
 		m_Run->RemoveLink(name);
-		ListLinkFiles(NULL);
+		ListLinkFiles(nullptr);
 	}
 }
 
@@ -3257,7 +3257,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	{
 		ARBConfigEventPtr pEvent;
 		m_pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent);
-		assert(NULL != pEvent.get());
+		assert(!!pEvent.get());
 		if (!pEvent->HasTable())
 			if (m_Run->GetScoring().HasTable())
 				wxMessageBox(L"Poof!", wxMessageBoxCaptionStr, wxOK | wxCENTRE);

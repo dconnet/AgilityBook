@@ -42,7 +42,7 @@ CDlgAuthenticate::CDlgAuthenticate(
 	Create(parent, wxID_ANY, caption.c_str(), wxDefaultPosition, wxDefaultSize);
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textMsg = NULL;
+	wxStaticText* textMsg = nullptr;
 	if (!message.empty())
 	{
 		textMsg = new wxStaticText(this, wxID_ANY, message.c_str(), wxDefaultPosition, wxDefaultSize, 0);

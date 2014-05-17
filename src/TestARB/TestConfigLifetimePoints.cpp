@@ -146,7 +146,7 @@ SUITE(TestConfigLifetimePointsList)
 			TODO_TEST
 		//	bool FindLifetimePoints(
 		//			double inFaults,
-		//			ARBConfigLifetimePointsPtr* outPoints = NULL) const;
+		//			ARBConfigLifetimePointsPtr* outPoints = nullptr) const;
 		}
 	}
 
@@ -159,7 +159,7 @@ SUITE(TestConfigLifetimePointsList)
 		//	bool AddLifetimePoints(
 		//			double inPoints,
 		//			double inFaults,
-		//			ARBConfigLifetimePointsPtr* outPoints = NULL);
+		//			ARBConfigLifetimePointsPtr* outPoints = nullptr);
 		//	bool DeleteLifetimePoints(double inFaults);
 		}
 	}

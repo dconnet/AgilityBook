@@ -118,7 +118,7 @@ void CDlgOptions::OnOk(wxCommandEvent& evt)
 		m_pDoc->ShowPointsAsHtml(CAgilityBookOptions::ShowHtmlPoints());
 
 	CUpdateHint hint(UPDATE_OPTIONS);
-	m_pDoc->UpdateAllViews(NULL, &hint);
+	m_pDoc->UpdateAllViews(nullptr, &hint);
 
 	EndDialog(wxID_OK);
 }

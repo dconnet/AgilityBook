@@ -208,13 +208,13 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_URL(StringUtil::stringWX(m_pVenue->GetURL()))
 	, m_LifetimeName(StringUtil::stringWX(m_pVenue->GetLifetimeName()))
 	, m_Desc(StringUtil::stringWX(m_pVenue->GetDesc()))
-	, m_ctrlItems(NULL)
-	, m_ctrlNew(NULL)
-	, m_ctrlEdit(NULL)
-	, m_ctrlDelete(NULL)
-	, m_ctrlCopy(NULL)
-	, m_ctrlMoveUp(NULL)
-	, m_ctrlMoveDown(NULL)
+	, m_ctrlItems(nullptr)
+	, m_ctrlNew(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlDelete(nullptr)
+	, m_ctrlCopy(nullptr)
+	, m_ctrlMoveUp(nullptr)
+	, m_ctrlMoveDown(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -443,7 +443,7 @@ CDlgConfigureDataBase* CDlgConfigVenue::GetData(wxTreeItemId item) const
 {
 	if (item.IsOk())
 		return dynamic_cast<CDlgConfigureDataBase*>(m_ctrlItems->GetItemData(item));
-	return NULL;
+	return nullptr;
 }
 
 

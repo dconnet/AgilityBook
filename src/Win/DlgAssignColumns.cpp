@@ -826,14 +826,14 @@ CDlgAssignColumns::CDlgAssignColumns(
 	, m_initSelection(initSelection)
 	, m_bIncludeBlank(false)
 	, m_ConfigName()
-	, m_ctrlConfig(NULL)
-	, m_ctrlType(NULL)
-	, m_ctrlAvailable(NULL)
-	, m_ctrlColumns(NULL)
-	, m_btnAdd(NULL)
-	, m_btnRemove(NULL)
-	, m_btnUp(NULL)
-	, m_btnDown(NULL)
+	, m_ctrlConfig(nullptr)
+	, m_ctrlType(nullptr)
+	, m_ctrlAvailable(nullptr)
+	, m_ctrlColumns(nullptr)
+	, m_btnAdd(nullptr)
+	, m_btnRemove(nullptr)
+	, m_btnUp(nullptr)
+	, m_btnDown(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -863,7 +863,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 
 	m_ctrlConfig = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
+		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_ConfigName, TRIMVALIDATOR_TRIM_BOTH));
 	BIND_OR_CONNECT_CTRL(m_ctrlConfig, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeNames);
 	m_ctrlConfig->SetHelpText(_("HIDC_ASSIGN_NAMES"));
@@ -943,7 +943,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	textAvail->Wrap(-1);
 
 	m_ctrlAvailable = new wxListBox(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 250), 0, NULL, 0);
+		wxDefaultPosition, wxSize(-1, 250), 0, nullptr, 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlAvailable, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeAvailable);
 	m_ctrlAvailable->SetHelpText(_("HIDC_ASSIGN_AVAILABLE"));
 	m_ctrlAvailable->SetToolTip(_("HIDC_ASSIGN_AVAILABLE"));
@@ -988,7 +988,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	textOrder->Wrap(-1);
 
 	m_ctrlColumns = new wxListBox(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 250), 0, NULL, 0);
+		wxDefaultPosition, wxSize(-1, 250), 0, nullptr, 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlColumns, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeColumns);
 	m_ctrlColumns->SetHelpText(_("HIDC_ASSIGN_COLUMNS"));
 	m_ctrlColumns->SetToolTip(_("HIDC_ASSIGN_COLUMNS"));
@@ -1359,7 +1359,7 @@ void CDlgAssignColumns::OnOk(wxCommandEvent& evt)
 	if (m_pDoc && CAgilityBookOptions::eView == m_Configs.Order())
 	{
 		CUpdateHint hint(UPDATE_CUSTOMIZE);
-		m_pDoc->UpdateAllViews(NULL, &hint);
+		m_pDoc->UpdateAllViews(nullptr, &hint);
 	}
 	EndDialog(wxID_OK);
 }

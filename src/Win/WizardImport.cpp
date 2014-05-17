@@ -72,21 +72,21 @@ CWizardImport::CWizardImport(
 	, m_FileData()
 	, m_ExcelData()
 	, m_Row(CAgilityBookOptions::GetImportStartRow())
-	, m_ctrlRow(NULL)
+	, m_ctrlRow(nullptr)
 	, m_Delim(-1)
 	, m_Delimiter(L":")
-	, m_boxDelimiters(NULL)
-	, m_ctrlTab(NULL)
-	, m_ctrlColon(NULL)
-	, m_ctrlComma(NULL)
-	, m_ctrlSpace(NULL)
-	, m_ctrlSemicolon(NULL)
-	, m_ctrlOther(NULL)
-	, m_ctrlOtherChar(NULL)
-	, m_ctrlAssign(NULL)
-	, m_ctrlDateFormat(NULL)
-	, m_ctrlPreviewFile(NULL)
-	, m_ctrlPreview(NULL)
+	, m_boxDelimiters(nullptr)
+	, m_ctrlTab(nullptr)
+	, m_ctrlColon(nullptr)
+	, m_ctrlComma(nullptr)
+	, m_ctrlSpace(nullptr)
+	, m_ctrlSemicolon(nullptr)
+	, m_ctrlOther(nullptr)
+	, m_ctrlOtherChar(nullptr)
+	, m_ctrlAssign(nullptr)
+	, m_ctrlDateFormat(nullptr)
+	, m_ctrlPreviewFile(nullptr)
+	, m_ctrlPreview(nullptr)
 {
 	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler, CWizardImport::OnWizardChanging);
 	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler, CWizardImport::OnWizardChanged);
@@ -113,7 +113,7 @@ CWizardImport::CWizardImport(
 
 	m_ctrlDateFormat = new wxComboBox(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
+		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY); 
 	static struct
 	{
 		wchar_t const* uFormat;
@@ -858,7 +858,7 @@ bool CWizardImport::DoWizardFinish()
 							entry[idxDiv[i]],
 							entry[idxLevel[i]],
 							ARBDate::FromString(entry[idxDate[i]], format),
-							NULL,
+							nullptr,
 							&pScoring);
 					}
 				}
@@ -1494,7 +1494,7 @@ bool CWizardImport::DoWizardFinish()
 	{
 		m_pDoc->Modify(true);
 		CUpdateHint hint(UPDATE_ALL_VIEW);
-		m_pDoc->UpdateAllViews(NULL, &hint);
+		m_pDoc->UpdateAllViews(nullptr, &hint);
 	}
 	return true;
 }

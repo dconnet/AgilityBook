@@ -185,7 +185,7 @@ public:
 	 */
 	bool FindLevel(
 			std::wstring const& inName,
-			ARBConfigLevelPtr* outLevel = NULL) const;
+			ARBConfigLevelPtr* outLevel = nullptr) const;
 
 	/**
 	 * Find a level, only looks at leaf nodes.
@@ -196,7 +196,7 @@ public:
 	 */
 	bool FindSubLevel(
 			std::wstring const& inName,
-			ARBConfigLevelPtr* outLevel = NULL) const;
+			ARBConfigLevelPtr* outLevel = nullptr) const;
 
 	/**
 	 * Add a level.
@@ -206,7 +206,7 @@ public:
 	 */
 	bool AddLevel(
 			std::wstring const& inName,
-			ARBConfigLevelPtr* outLevel = NULL);
+			ARBConfigLevelPtr* outLevel = nullptr);
 
 	/**
 	 * Add a level.

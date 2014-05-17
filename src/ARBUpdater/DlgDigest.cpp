@@ -120,7 +120,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	, m_SHA256()
 	, m_Size(0)
 {
-	Create(NULL, wxID_ANY, L"MD5/SHA1/SHA256 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(nullptr, wxID_ANY, L"MD5/SHA1/SHA256 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (!m_File.empty())
 	{
@@ -190,12 +190,12 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 void CDlgDigest::OnOk(wxCommandEvent& evt)
 {
-	wxFileDialog dlg(NULL, wxFileSelectorPromptStr, wxEmptyString, m_File);
+	wxFileDialog dlg(nullptr, wxFileSelectorPromptStr, wxEmptyString, m_File);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		wxBusyCursor wait;
 		m_File = dlg.GetPath();
-		size_t size;
+		size_t size = 0;
 		m_MD5 = ARBMsgDigest::Compute(m_File.wx_str(), ARBMsgDigest::ARBDigestMD5, &size);
 		m_SHA1 = ARBMsgDigest::Compute(m_File.wx_str(), ARBMsgDigest::ARBDigestSHA1);
 		m_SHA256 = ARBMsgDigest::Compute(m_File.wx_str(), ARBMsgDigest::ARBDigestSHA256);

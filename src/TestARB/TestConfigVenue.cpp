@@ -214,7 +214,7 @@ SUITE(TestConfigVenueList)
 		//			std::wstring const& inName,
 		//			bool bShowInstance,
 		//			bool bAbbrevFirst = true,
-		//			ARBConfigTitlePtr* outTitle = NULL) const;
+		//			ARBConfigTitlePtr* outTitle = nullptr) const;
 		}
 	}
 
@@ -227,7 +227,7 @@ SUITE(TestConfigVenueList)
 		//	bool FindTitle(
 		//			std::wstring const& inVenue,
 		//			std::wstring const& inTitle,
-		//			ARBConfigTitlePtr* outTitle = NULL) const;
+		//			ARBConfigTitlePtr* outTitle = nullptr) const;
 		}
 	}
 
@@ -249,7 +249,7 @@ SUITE(TestConfigVenueList)
 			TODO_TEST
 		//	bool FindVenue(
 		//			std::wstring const& inVenue,
-		//			ARBConfigVenuePtr* outVenue = NULL) const;
+		//			ARBConfigVenuePtr* outVenue = nullptr) const;
 		}
 	}
 
@@ -265,8 +265,8 @@ SUITE(TestConfigVenueList)
 		//			std::wstring const& inDivision,
 		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
-		//			ARBConfigEventPtr* outEvent = NULL,
-		//			ARBConfigScoringPtr* outScoring = NULL) const;
+		//			ARBConfigEventPtr* outEvent = nullptr,
+		//			ARBConfigScoringPtr* outScoring = nullptr) const;
 		}
 	}
 
@@ -278,7 +278,7 @@ SUITE(TestConfigVenueList)
 			TODO_TEST
 		//	bool AddVenue(
 		//			std::wstring const& inVenue,
-		//			ARBConfigVenuePtr* outVenue = NULL);
+		//			ARBConfigVenuePtr* outVenue = nullptr);
 		//	bool AddVenue(ARBConfigVenuePtr inVenue);
 		//	int DeleteVenue(std::wstring const& inVenue);
 		}

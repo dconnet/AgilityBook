@@ -457,7 +457,7 @@ bool ARBDogRun::Save(
 					GetDivision(),
 					GetLevel(),
 					GetDate(),
-					NULL,
+					nullptr,
 					&pScoring);
 			if (pScoring)
 			{

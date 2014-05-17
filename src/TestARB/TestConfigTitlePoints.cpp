@@ -148,7 +148,7 @@ SUITE(TestConfigTitlePointsList)
 			TODO_TEST
 		//	bool FindTitlePoints(
 		//			double inFaults,
-		//			ARBConfigTitlePointsPtr* outPoints = NULL) const;
+		//			ARBConfigTitlePointsPtr* outPoints = nullptr) const;
 		}
 	}
 
@@ -161,7 +161,7 @@ SUITE(TestConfigTitlePointsList)
 		//	bool AddTitlePoints(
 		//			double inPoints,
 		//			double inFaults,
-		//			ARBConfigTitlePointsPtr* outPoints = NULL);
+		//			ARBConfigTitlePointsPtr* outPoints = nullptr);
 		//	bool DeleteTitlePoints(double inFaults);
 		}
 	}

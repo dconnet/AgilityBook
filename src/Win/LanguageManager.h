@@ -48,8 +48,8 @@ public:
 	wxString GetDefaultCatalogName() const;
 	wxString GetDefaultLanguageDir() const;
 
-	bool SelectLanguage(wxWindow* parent = NULL);
-	int SelectLang(wxWindow* parent = NULL);
+	bool SelectLanguage(wxWindow* parent = nullptr);
+	int SelectLang(wxWindow* parent = nullptr);
 	bool SetLang(int langId);
 
 private:

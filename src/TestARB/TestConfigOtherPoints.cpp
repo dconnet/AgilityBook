@@ -155,7 +155,7 @@ SUITE(TestConfigOtherPointsList)
 			TODO_TEST
 		//	bool FindOtherPoints(
 		//			std::wstring const& inName,
-		//			ARBConfigOtherPointsPtr* outPoints = NULL) const;
+		//			ARBConfigOtherPointsPtr* outPoints = nullptr) const;
 		}
 	}
 

@@ -26,7 +26,7 @@ public:
 			std::vector<short> const& inExistingPlaces,
 			short inPlace,
 			double inValue,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	short GetPlace() const		{return m_Place;}
 	double GetValue() const		{return m_Value;}

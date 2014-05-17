@@ -331,7 +331,7 @@ CWizardExcel* CWizardExcel::Create()
 		if (bKill)
 		{
 			delete pExcel;
-			pExcel = NULL;
+			pExcel = nullptr;
 		}
 	}
 	return pExcel;
@@ -371,7 +371,7 @@ CWizardExcelExport* CWizardExcelExport::Create(wxAutomationObject& ioApp)
 {
 	if (ioApp.GetDispatchPtr())
 		return new CWizardExcelExport(ioApp);
-	return NULL;
+	return nullptr;
 }
 
 
@@ -405,7 +405,7 @@ CWizardExcelExport::CWizardExcelExport(wxAutomationObject& ioApp)
 
 CWizardExcelExport::~CWizardExcelExport()
 {
-	if (NULL != m_Worksheet.GetDispatchPtr() && !m_App.GetProperty(L"Visible").GetBool())
+	if (m_Worksheet.GetDispatchPtr() && !m_App.GetProperty(L"Visible").GetBool())
 		m_App.CallMethod(L"Quit");
 }
 
@@ -689,7 +689,7 @@ CWizardExcelImport* CWizardExcelImport::Create(wxAutomationObject& ioApp)
 {
 	if (ioApp.GetDispatchPtr())
 		return new CWizardExcelImport(ioApp);
-	return NULL;
+	return nullptr;
 }
 
 CWizardExcelImport::CWizardExcelImport(wxAutomationObject& ioApp)
@@ -700,7 +700,7 @@ CWizardExcelImport::CWizardExcelImport(wxAutomationObject& ioApp)
 
 CWizardExcelImport::~CWizardExcelImport()
 {
-	if (NULL != m_Worksheet.GetDispatchPtr())
+	if (m_Worksheet.GetDispatchPtr())
 		m_App.CallMethod(L"Quit");
 }
 
@@ -709,7 +709,7 @@ bool CWizardExcelImport::OpenFile(std::wstring const& inFilename)
 {
 	wxVariant bk = m_App.CallMethod(L"Workbooks.Open", inFilename.c_str());
 	wxAutomationObject book((WXIDISPATCH*)bk.GetVoidPtr());
-	if (NULL == book.GetDispatchPtr())
+	if (!book.GetDispatchPtr())
 		return false;
 	m_FileName = inFilename;
 	// Get the first sheet.
@@ -717,7 +717,7 @@ bool CWizardExcelImport::OpenFile(std::wstring const& inFilename)
 	wxVariant args2[1];
 	args2[0] = wxVariant((short)1);
 	sheets.GetObject(m_Worksheet, L"Item", 1, args2);
-	return NULL != m_Worksheet.GetDispatchPtr();
+	return !!m_Worksheet.GetDispatchPtr();
 }
 
 
@@ -726,7 +726,7 @@ bool CWizardExcelImport::GetData(
 		IDlgProgress* ioProgress)
 {
 	outData.clear();
-	if (NULL == m_Worksheet.GetDispatchPtr())
+	if (!m_Worksheet.GetDispatchPtr())
 		return false;
 	wxAutomationObject range;
 	m_Worksheet.GetObject(range, L"UsedRange");
@@ -803,7 +803,7 @@ CWizardCalc* CWizardCalc::Create()
 		if (bKill)
 		{
 			delete pCalc;
-			pCalc = NULL;
+			pCalc = nullptr;
 		}
 	}
 	return pCalc;
@@ -881,7 +881,7 @@ bool CWizardCalcExport::CreateWorksheet()
 		wxAutomationObject sheets = m_Document.CallMethod(L"getSheets");
 		m_Worksheet.SetDispatchPtr(sheets.CallMethod(L"getByIndex", 0));
 	}
-	return m_Worksheet.GetDispatchPtr() != NULL;
+	return !!m_Worksheet.GetDispatchPtr();
 }
 
 

@@ -45,14 +45,14 @@ CGenericValidator::CGenericValidator(
 		bool bUseDefOnEmpty,
 		wxChar const* errMsg)
 	: m_pUShort(val)
-	, m_pShort(NULL)
-	, m_pLong(NULL)
-	, m_pDouble(NULL)
+	, m_pShort(nullptr)
+	, m_pLong(nullptr)
+	, m_pDouble(nullptr)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
-	, m_pDate(NULL)
-	, m_pTime(NULL)
+	, m_pDate(nullptr)
+	, m_pTime(nullptr)
 	, m_ErrMsg()
 {
 	m_Default.us = defVal;
@@ -66,15 +66,15 @@ CGenericValidator::CGenericValidator(
 		short defVal,
 		bool bUseDefOnEmpty,
 		wxChar const* errMsg)
-	: m_pUShort(NULL)
+	: m_pUShort(nullptr)
 	, m_pShort(val)
-	, m_pLong(NULL)
-	, m_pDouble(NULL)
+	, m_pLong(nullptr)
+	, m_pDouble(nullptr)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
-	, m_pDate(NULL)
-	, m_pTime(NULL)
+	, m_pDate(nullptr)
+	, m_pTime(nullptr)
 	, m_ErrMsg()
 {
 	m_Default.s = defVal;
@@ -88,15 +88,15 @@ CGenericValidator::CGenericValidator(
 		long defVal,
 		bool bUseDefOnEmpty,
 		wxChar const* errMsg)
-	: m_pUShort(NULL)
-	, m_pShort(NULL)
+	: m_pUShort(nullptr)
+	, m_pShort(nullptr)
 	, m_pLong(val)
-	, m_pDouble(NULL)
+	, m_pDouble(nullptr)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
-	, m_pDate(NULL)
-	, m_pTime(NULL)
+	, m_pDate(nullptr)
+	, m_pTime(nullptr)
 	, m_ErrMsg()
 {
 	m_Default.l = defVal;
@@ -111,15 +111,15 @@ CGenericValidator::CGenericValidator(
 		double defVal,
 		bool bUseDefOnEmpty,
 		wxChar const* errMsg)
-	: m_pUShort(NULL)
-	, m_pShort(NULL)
-	, m_pLong(NULL)
+	: m_pUShort(nullptr)
+	, m_pShort(nullptr)
+	, m_pLong(nullptr)
 	, m_pDouble(val)
 	, m_Prec(inPrec)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
-	, m_pDate(NULL)
-	, m_pTime(NULL)
+	, m_pDate(nullptr)
+	, m_pTime(nullptr)
 	, m_ErrMsg()
 {
 	m_Default.dbl = defVal;
@@ -131,15 +131,15 @@ CGenericValidator::CGenericValidator(
 CGenericValidator::CGenericValidator(
 		ARBDate* val,
 		wxChar const* errMsg)
-	: m_pUShort(NULL)
-	, m_pShort(NULL)
-	, m_pLong(NULL)
-	, m_pDouble(NULL)
+	: m_pUShort(nullptr)
+	, m_pShort(nullptr)
+	, m_pLong(nullptr)
+	, m_pDouble(nullptr)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(false)
 	, m_pDate(val)
-	, m_pTime(NULL)
+	, m_pTime(nullptr)
 	, m_ErrMsg()
 {
 	if (errMsg)
@@ -150,14 +150,14 @@ CGenericValidator::CGenericValidator(
 CGenericValidator::CGenericValidator(
 		wxDateTime* val,
 		wxChar const* errMsg)
-	: m_pUShort(NULL)
-	, m_pShort(NULL)
-	, m_pLong(NULL)
-	, m_pDouble(NULL)
+	: m_pUShort(nullptr)
+	, m_pShort(nullptr)
+	, m_pLong(nullptr)
+	, m_pDouble(nullptr)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(false)
-	, m_pDate(NULL)
+	, m_pDate(nullptr)
 	, m_pTime(val)
 	, m_ErrMsg()
 {
@@ -261,7 +261,7 @@ bool CGenericValidator::TransferFromWindow()
 #if wxCHECK_VERSION(3, 0, 0)
 			return m_pTime->ParseFormat(textVal, s_TimeFormat);
 #else
-			return NULL != m_pTime->ParseFormat(textVal, s_TimeFormat);
+			return !!m_pTime->ParseFormat(textVal, s_TimeFormat);
 #endif
 		}
 	}
@@ -368,7 +368,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 		return true;
 
 	wxString errormsg(m_ErrMsg);
-	wxTextCtrl* pTextControl = NULL;
+	wxTextCtrl* pTextControl = nullptr;
 	bool ok = true;
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{

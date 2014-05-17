@@ -188,8 +188,8 @@ CPointsDataText::CPointsDataText(
 	, m_Col1(inCol1)
 	, m_Col2(inCol2)
 {
-	assert(NULL != inCol1);
-	assert(NULL != inCol2);
+	assert(!!inCol1);
+	assert(!!inCol2);
 }
 
 
@@ -297,7 +297,7 @@ std::wstring CPointsDataDog::GetHtml(
 
 void CPointsDataDog::Details() const
 {
-	CDlgDog dlg(m_pDoc, m_pDog, NULL, 0);
+	CDlgDog dlg(m_pDoc, m_pDog, nullptr, 0);
 	dlg.ShowModal();
 }
 
@@ -403,7 +403,7 @@ void CPointsDataVenue::Details() const
 		ARBDogRegNumPtr pRegNum;
 		if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 		{
-			CDlgDog dlg(m_pDoc, m_pDog, NULL, 2);
+			CDlgDog dlg(m_pDoc, m_pDog, nullptr, 2);
 			dlg.ShowModal();
 		}
 		else
@@ -495,7 +495,7 @@ void CPointsDataTitle::Details() const
 		CFilterOptions::Options().GetFilterVenue(venues);
 		m_pDoc->ResetVisibility(venues, m_pTitle);
 		CUpdateHint hint(UPDATE_POINTS_VIEW);
-		m_pDoc->UpdateAllViews(NULL, &hint);
+		m_pDoc->UpdateAllViews(nullptr, &hint);
 	}
 }
 
@@ -625,7 +625,7 @@ void CPointsDataEvent::Details() const
 		<< L"/"
 		<< m_Event->GetName();
 	RunInfoData data(m_Dog, m_Venue, m_Div, m_Level, m_Event);
-	CDlgListViewer dlg(m_pDoc, str.str(), m_Dog ? &data : NULL, m_Matching);
+	CDlgListViewer dlg(m_pDoc, str.str(), m_Dog ? &data : nullptr, m_Matching);
 	dlg.ShowModal();
 }
 
@@ -1547,7 +1547,7 @@ void CPointsDataItems::LoadData(
 									&& pRun->GetQ().Qualified())
 									{
 										double nLifetime, nPlacement;
-										pRun->GetTitlePoints(pScoringMethod, NULL, &nLifetime, &nPlacement);
+										pRun->GetTitlePoints(pScoringMethod, nullptr, &nLifetime, &nPlacement);
 										if (0 < nLifetime)
 										{
 											pts.ptLifetime.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
@@ -1775,7 +1775,7 @@ void CPointsDataItems::LoadData(
 				iter != lifetime.end();
 				++iter)
 			{
-				CPointsDataLifetimeByName* pNameData = NULL;
+				CPointsDataLifetimeByName* pNameData = nullptr;
 				NamedLifetime::iterator it = subgroups.find(iter->pDiv->GetName());
 				if (subgroups.end() != it)
 				{
@@ -1865,7 +1865,7 @@ void CPointsDataItems::LoadData(
 				iter != placement.end();
 				++iter)
 			{
-				CPointsDataLifetimeByName* pNameData = NULL;
+				CPointsDataLifetimeByName* pNameData = nullptr;
 				NamedLifetime::iterator it = subgroups.find(iter->pDiv->GetName());
 				if (subgroups.end() != it)
 				{
@@ -1965,7 +1965,7 @@ void CPointsDataItems::LoadData(
 											pRun->GetDivision(),
 											pRun->GetLevel(),
 											pRun->GetDate(),
-											NULL,
+											nullptr,
 											&pScoring);
 									}
 									if (pScoring)

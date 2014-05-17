@@ -71,27 +71,27 @@ public:
 	}
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const
 	{
-		return NULL;
+		return nullptr;
 	}
 	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const
 	{
-		return NULL;
+		return nullptr;
 	}
 	virtual CAgilityBookTreeDataRun const* GetDataRun() const
 	{
-		return NULL;
+		return nullptr;
 	}
 	virtual CAgilityBookTreeDataDog* GetDataDog()
 	{
-		return NULL;
+		return nullptr;
 	}
 	virtual CAgilityBookTreeDataTrial* GetDataTrial()
 	{
-		return NULL;
+		return nullptr;
 	}
 	virtual CAgilityBookTreeDataRun* GetDataRun()
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	virtual MenuIdentityPopup GetMenuID() const = 0;
@@ -132,7 +132,7 @@ public:
 
 	virtual CAgilityBookTreeData const* GetParent() const
 	{
-		return NULL;
+		return nullptr;
 	}
 	virtual ARBBasePtr GetARBBase() const
 	{

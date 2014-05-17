@@ -262,7 +262,7 @@ SUITE(TestConfig)
 				{L"AKC", L"MX", L"[MX] Master Agility Excellent"},
 				{L"AKC", L"FTC", L"[FTC+] FAST Century Title"},
 				{L"NADAC", L"EAC", L"[EAC+] Elite Agility Certificate"},
-				{NULL, NULL, NULL},
+				{nullptr, nullptr, nullptr},
 			};
 
 			for (size_t i = 0; sc_Titles[i].pVenue; ++i)
@@ -339,7 +339,7 @@ SUITE(TestConfig)
 				{L"NADAC", L"EJC", 1, L"EJC"},
 				{L"NADAC", L"EJC", 2, L"EJC-300"},
 				{L"NADAC", L"EJC", 3, L"EJC-400"},
-				{NULL, NULL, 0, NULL},
+				{nullptr, nullptr, 0, nullptr},
 			};
 
 			for (size_t i = 0; sc_Titles[i].pVenue; ++i)

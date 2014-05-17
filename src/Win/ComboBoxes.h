@@ -30,7 +30,7 @@ public:
 			wxPoint const& pos = wxDefaultPosition,
 			wxSize const& size = wxDefaultSize,
 			int n = 0,
-			wxString const choices[] = NULL,
+			wxString const choices[] = nullptr,
 			long style = 0,
 			wxValidator const& validator = wxDefaultValidator,
 			wxString const& name = wxComboBoxNameStr)

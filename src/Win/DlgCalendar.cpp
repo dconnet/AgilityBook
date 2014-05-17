@@ -81,31 +81,31 @@ CDlgCalendar::CDlgCalendar(
 	, m_Club(StringUtil::stringWX(m_pCal->GetClub()))
 	, m_Location(StringUtil::stringWX(m_pCal->GetLocation()))
 	, m_Notes(StringUtil::stringWX(m_pCal->GetNote()))
-	, m_ctrlEnd(NULL)
-	, m_ctrlOpens(NULL)
-	, m_ctrlDraws(NULL)
-	, m_ctrlCloses(NULL)
-	, m_ctrlEntryNot(NULL)
-	, m_ctrlEntryPlan(NULL)
-	, m_ctrlEntryPending(NULL)
-	, m_ctrlEntryEntered(NULL)
-	, m_ctrlOnlineUrlEntry(NULL)
-	, m_ctrlOnlineUrl(NULL)
-	, m_ctrlAccomNot(NULL)
-	, m_ctrlAccomNeeded(NULL)
-	, m_ctrlAccomMade(NULL)
-	, m_ctrlConfirmation(NULL)
-	, m_ctrlPremiumEntry(NULL)
-	, m_ctrlPremiumUrl(NULL)
-	, m_ctrlEMailSec(NULL)
-	, m_ctrlEMailSecAddr(NULL)
-	, m_ctrlVenue(NULL)
-	, m_ctrlClub(NULL)
-	, m_ctrlClubNotes(NULL)
-	, m_ctrlClubInfo(NULL)
-	, m_ctrlLocation(NULL)
-	, m_ctrlLocationNotes(NULL)
-	, m_ctrlLocationInfo(NULL)
+	, m_ctrlEnd(nullptr)
+	, m_ctrlOpens(nullptr)
+	, m_ctrlDraws(nullptr)
+	, m_ctrlCloses(nullptr)
+	, m_ctrlEntryNot(nullptr)
+	, m_ctrlEntryPlan(nullptr)
+	, m_ctrlEntryPending(nullptr)
+	, m_ctrlEntryEntered(nullptr)
+	, m_ctrlOnlineUrlEntry(nullptr)
+	, m_ctrlOnlineUrl(nullptr)
+	, m_ctrlAccomNot(nullptr)
+	, m_ctrlAccomNeeded(nullptr)
+	, m_ctrlAccomMade(nullptr)
+	, m_ctrlConfirmation(nullptr)
+	, m_ctrlPremiumEntry(nullptr)
+	, m_ctrlPremiumUrl(nullptr)
+	, m_ctrlEMailSec(nullptr)
+	, m_ctrlEMailSecAddr(nullptr)
+	, m_ctrlVenue(nullptr)
+	, m_ctrlClub(nullptr)
+	, m_ctrlClubNotes(nullptr)
+	, m_ctrlClubInfo(nullptr)
+	, m_ctrlLocation(nullptr)
+	, m_ctrlLocationNotes(nullptr)
+	, m_ctrlLocationInfo(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -361,7 +361,7 @@ CDlgCalendar::CDlgCalendar(
 
 	m_ctrlEMailSecAddr = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
+		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_EMailSecAddr, TRIMVALIDATOR_TRIM_BOTH));
 	BIND_OR_CONNECT_CTRL(m_ctrlEMailSecAddr, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgCalendar::OnEnChangeCalEmailSecAddr);
 	m_ctrlEMailSecAddr->SetHelpText(_("HIDC_CAL_EMAIL_SEC_ADDR"));
@@ -402,7 +402,7 @@ CDlgCalendar::CDlgCalendar(
 
 	m_ctrlClub = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
+		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Club, TRIMVALIDATOR_TRIM_BOTH));
 	BIND_OR_CONNECT_CTRL(m_ctrlClub, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgCalendar::OnSelchangeClub);
 	m_ctrlClub->SetHelpText(_("HIDC_CAL_CLUB"));
@@ -425,7 +425,7 @@ CDlgCalendar::CDlgCalendar(
 
 	m_ctrlLocation = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
+		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location, TRIMVALIDATOR_TRIM_BOTH));
 	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgCalendar::OnSelchangeLocation);
 	m_ctrlLocation->SetHelpText(_("HIDC_CAL_LOCATION"));

@@ -349,7 +349,7 @@ public:
 			std::wstring const& inName,
 			short inInstance,
 			bool bAbbrevFirst = true,
-			ARBConfigTitlePtr* outTitle = NULL) const;
+			ARBConfigTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Find a title.
@@ -359,7 +359,7 @@ public:
 	 */
 	bool FindTitle(
 			std::wstring const& inName,
-			ARBConfigTitlePtr* outTitle = NULL) const;
+			ARBConfigTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Add a title.
@@ -369,7 +369,7 @@ public:
 	 */
 	bool AddTitle(
 			std::wstring const& inName,
-			ARBConfigTitlePtr* outTitle = NULL);
+			ARBConfigTitlePtr* outTitle = nullptr);
 
 	/**
 	 * Add a title.

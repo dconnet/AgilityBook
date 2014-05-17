@@ -25,7 +25,7 @@ class CDlgSelectURL : public wxDialog
 public:
 	CDlgSelectURL(
 			std::wstring const& name,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	std::wstring Name() const;
 

@@ -57,7 +57,7 @@ public:
 	 */
 	static bool UpdateConfig(
 			CAgilityBookDoc* ioDoc,
-			wchar_t const* inMsg = NULL);
+			wchar_t const* inMsg = nullptr);
 
 	/**
 	 * Cleanup after auto-update.

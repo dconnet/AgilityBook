@@ -58,7 +58,7 @@ class CDlgConfigureDataRoot : public CDlgConfigureDataBase
 {
 public:
 	CDlgConfigureDataRoot(CDlgConfigure::eAction action)
-		: CDlgConfigureDataBase(NULL)
+		: CDlgConfigureDataBase(nullptr)
 		, m_Action(action)
 	{
 	}
@@ -118,11 +118,11 @@ CDlgConfigure::CDlgConfigure(
 	, m_Config(m_Book.GetConfig())
 	, m_ImageList()
 	, m_idxFaults(-1)
-	, m_ctrlItems(NULL)
-	, m_ctrlNew(NULL)
-	, m_ctrlEdit(NULL)
-	, m_ctrlDelete(NULL)
-	, m_ctrlCopy(NULL)
+	, m_ctrlItems(nullptr)
+	, m_ctrlNew(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlDelete(nullptr)
+	, m_ctrlCopy(nullptr)
 	, m_hItemVenues()
 	, m_hItemFaults()
 	, m_hItemOtherPts()
@@ -263,7 +263,7 @@ CDlgConfigureDataBase* CDlgConfigure::GetData(wxTreeItemId hItem) const
 {
 	if (hItem.IsOk())
 		return dynamic_cast<CDlgConfigureDataBase*>(m_ctrlItems->GetItemData(hItem));
-	return NULL;
+	return nullptr;
 }
 
 
@@ -776,7 +776,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		bool bUpdated = false;
 		std::wostringstream info;
 		CDlgConfigCallback callback;
-		if (0 < update.GetActions().Apply(m_Config, NULL, info, callback))
+		if (0 < update.GetActions().Apply(m_Config, nullptr, info, callback))
 		{
 			bUpdated = true;
 			// Now move the actions into our config so we can fully apply them.

@@ -170,9 +170,9 @@ CAgilityBookApp::CAgilityBookApp()
 	, m_bShutdownSocket(false)
 	, m_Localization()
 	, m_UpdateInfo()
-	, m_manager(NULL)
-	, m_printDialogData(NULL)
-	, m_Prn(NULL)
+	, m_manager(nullptr)
+	, m_printDialogData(nullptr)
+	, m_Prn(nullptr)
 {
 	m_BaseInfoName = ARB_CONFIG_INFO;
 }
@@ -439,7 +439,7 @@ bool CAgilityBookApp::OnInit()
 			if (date < today)
 			{
 				bool close = false;
-				m_UpdateInfo.AutoUpdateProgram(NULL, close);
+				m_UpdateInfo.AutoUpdateProgram(nullptr, close);
 				if (close)
 				{
 					// Must close so installation will work.
@@ -461,11 +461,11 @@ int CAgilityBookApp::OnExit()
 	m_manager->FileHistorySave(*wxConfig::Get());
 	wxConfig::Get()->SetPath(L"..");
 	delete m_manager;
-	m_manager = NULL;
+	m_manager = nullptr;
 	delete m_printDialogData;
-	m_printDialogData = NULL;
+	m_printDialogData = nullptr;
 	delete m_Prn;
-	m_Prn = NULL;
+	m_Prn = nullptr;
 	return CBaseApp::OnExit();
 }
 

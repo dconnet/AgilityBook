@@ -48,7 +48,7 @@ CDlgTraining::CDlgTraining(
 	: wxDialog()
 	, m_pTraining(pTraining)
 	, m_pDoc(pDoc)
-	, m_datePicker(NULL)
+	, m_datePicker(nullptr)
 	, m_Name(StringUtil::stringWX(pTraining->GetName()))
 	, m_SubName(StringUtil::stringWX(pTraining->GetSubName()))
 	, m_Notes(StringUtil::stringWX(pTraining->GetNote()))

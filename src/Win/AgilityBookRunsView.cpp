@@ -247,7 +247,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
 						m_pRun->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring);
 				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
 				str << ARBDouble::ToString(faults, 0);
@@ -360,7 +360,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
 						m_pRun->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring);
 				if (pScoring)
 				{
@@ -381,7 +381,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 							m_pRun->GetDivision(),
 							m_pRun->GetLevel(),
 							m_pRun->GetDate(),
-							NULL,
+							nullptr,
 							&pScoring);
 					if (pScoring)
 					{
@@ -417,7 +417,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
 						m_pRun->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring);
 				if (pScoring)
 				{
@@ -476,6 +476,7 @@ void CAgilityBookRunsView::CSortColumn::Initialize()
 		neg = -1;
 		realCol *= -1;
 	}
+
 	long col = LookupColumn(realCol);
 	if (0 > m_iCol)
 		col = LookupColumn(IO_RUNS_DATE);
@@ -488,6 +489,7 @@ void CAgilityBookRunsView::CSortColumn::SetColumn(long iCol)
 	m_iCol = iCol;
 	if (0 == iCol)
 		return;
+
 	long neg = 1;
 	long col = iCol;
 	if (0 > iCol)
@@ -495,6 +497,7 @@ void CAgilityBookRunsView::CSortColumn::SetColumn(long iCol)
 		neg = -1;
 		col = iCol * -1;
 	}
+
 	long realCol = m_Columns[col-1] * neg;
 	wxConfig::Get()->Write(CFG_SORTING_RUNS, realCol);
 }
@@ -796,7 +799,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 						pRun1->GetRun()->GetDivision(),
 						pRun1->GetRun()->GetLevel(),
 						pRun1->GetRun()->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring1);
 				ARBConfigScoringPtr pScoring2;
 				if (pRun2->GetTrial()->GetClubs().GetPrimaryClub())
@@ -806,7 +809,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 						pRun2->GetRun()->GetDivision(),
 						pRun2->GetRun()->GetLevel(),
 						pRun2->GetRun()->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring2);
 				double faults1 = pRun1->GetRun()->GetScoring().GetCourseFaults() + pRun1->GetRun()->GetScoring().GetTimeFaults(pScoring1);
 				double faults2 = pRun2->GetRun()->GetScoring().GetCourseFaults() + pRun2->GetRun()->GetScoring().GetTimeFaults(pScoring2);
@@ -983,7 +986,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 						pRun1->GetRun()->GetDivision(),
 						pRun1->GetRun()->GetLevel(),
 						pRun1->GetRun()->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring1);
 				ARBConfigScoringPtr pScoring2;
 				if (pRun2->GetTrial()->GetClubs().GetPrimaryClub())
@@ -993,7 +996,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 						pRun2->GetRun()->GetDivision(),
 						pRun2->GetRun()->GetLevel(),
 						pRun2->GetRun()->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring2);
 				if (pScoring1 && pScoring2)
 				{
@@ -1027,7 +1030,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 						pRun1->GetRun()->GetDivision(),
 						pRun1->GetRun()->GetLevel(),
 						pRun1->GetRun()->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring);
 				if (pScoring)
 					pts1 = pRun1->GetRun()->GetTitlePoints(pScoring);
@@ -1042,7 +1045,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 						pRun2->GetRun()->GetDivision(),
 						pRun2->GetRun()->GetLevel(),
 						pRun2->GetRun()->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring);
 				if (pScoring)
 					pts2 = pRun2->GetRun()->GetTitlePoints(pScoring);
@@ -1096,7 +1099,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 					pRun1->GetRun()->GetDivision(),
 					pRun1->GetRun()->GetLevel(),
 					pRun1->GetRun()->GetDate(),
-					NULL,
+					nullptr,
 					&pScoring1);
 			ARBConfigScoringPtr pScoring2;
 			if (pRun2->GetTrial()->GetClubs().GetPrimaryClub())
@@ -1106,7 +1109,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 					pRun2->GetRun()->GetDivision(),
 					pRun2->GetRun()->GetLevel(),
 					pRun2->GetRun()->GetDate(),
-					NULL,
+					nullptr,
 					&pScoring2);
 			int pts1 = -1;
 			int pts2 = -1;
@@ -1249,7 +1252,7 @@ CAgilityBookRunsView::CAgilityBookRunsView(
 		CTabView* pTabView,
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
-	, m_Ctrl(NULL)
+	, m_Ctrl(nullptr)
 	, m_imgCourse(-1)
 	, m_imgMap(-1)
 	, m_bSuppressSelect(false)
@@ -1310,7 +1313,7 @@ bool CAgilityBookRunsView::NextPane()
 void CAgilityBookRunsView::DetachView()
 {
 	// The control is actually owned by the panel, the view is not.
-	m_Ctrl = NULL;
+	m_Ctrl = nullptr;
 	m_imgCourse = -1;
 	m_imgMap = -1;
 }
@@ -1389,7 +1392,7 @@ void CAgilityBookRunsView::OnUpdate(
 {
 	if (!m_Ctrl)
 		return;
-	CUpdateHint* hint = NULL;
+	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	bool bLoad = false;
@@ -1810,7 +1813,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 				{
 					CAgilityBookRunsViewDataPtr pData = GetItemRunData(*iter);
 					if (pData)
-						pData->GetRun()->Save(tree, NULL, GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
+						pData->GetRun()->Save(tree, nullptr, GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
 					std::vector<std::wstring> line;
 					m_Ctrl->GetPrintLine((*iter), line);
 					table.StartLine();
@@ -1860,7 +1863,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
-				m_Callback.Search(NULL);
+				m_Callback.Search(nullptr);
 		}
 		break;
 
@@ -1870,7 +1873,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
-				m_Callback.Search(NULL);
+				m_Callback.Search(nullptr);
 		}
 		break;
 
@@ -1946,7 +1949,7 @@ bool CAgilityBookRunsView::OnCmd(int id)
 			GetDocument()->SortDates();
 			// Note, sorting the trials doesn't affect this view.
 			CUpdateHint hint(UPDATE_TREE_VIEW);
-			GetDocument()->UpdateAllViews(NULL, &hint);
+			GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 		break;
 

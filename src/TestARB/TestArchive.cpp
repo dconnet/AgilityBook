@@ -16,6 +16,7 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
+#include "ARBCommon/StringUtil.h"
 #include "LibArchive/LibArchive.h"
 
 #ifdef __WXMSW__
@@ -30,23 +31,23 @@ SUITE(TestArchive)
 	static char const* FileData2 = "This is test2\r\nOk\r\n";
 	static char const* FileData3 = "This is test3\r\nReplaced\r\n";
 
-	static std::string CreateZip()
+	static std::wstring CreateZip()
 	{
-		return std::string();
+		return std::wstring();
 	}
 
 	TEST(ReplaceFile)
 	{
 		if (!g_bMicroTest)
 		{
-			std::string file = CreateZip();
+			std::wstring file = CreateZip();
 			CHECK(!file.empty());
 			if (!file.empty())
 			{
 				CLibArchive archive(file);
 				std::istringstream data(FileData3);
-				CHECK(archive.ReplaceFile("test1.txt", data));
-				_unlink(file.c_str());
+				CHECK(archive.ReplaceFile(L"test1.txt", data));
+				_unlink(StringUtil::stringA(file).c_str());
 			}
 			TODO_TEST
 			// See: http://docs.wxwidgets.org/stable/wx_wxarc.html#wxarcmodify
@@ -58,7 +59,7 @@ SUITE(TestArchive)
 	{
 		//if (!g_bMicroTest)
 		{
-			std::string file = CreateZip();
+			std::wstring file = CreateZip();
 			CHECK(!file.empty());
 
 			if (!file.empty())
@@ -67,17 +68,17 @@ SUITE(TestArchive)
 
 				{
 					std::ostringstream data;
-					CHECK(archive.ExtractFile("test1.txt", data));
+					CHECK(archive.ExtractFile(L"test1.txt", data));
 					CHECK(data.str() == FileData1);
 				}
 
 				{
 					std::ostringstream data;
-					CHECK(archive.ExtractFile("test2.txt", data));
+					CHECK(archive.ExtractFile(L"test2.txt", data));
 					CHECK(data.str() == FileData2);
 				}
 
-				_unlink(file.c_str());
+				_unlink(StringUtil::stringA(file).c_str());
 			}
 		}
 	}

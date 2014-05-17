@@ -44,7 +44,7 @@ END_EVENT_TABLE()
 
 
 CDlgPageDecode::CDlgPageDecode()
-	: wxDialog(NULL, wxID_ANY, L"Decode", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+	: wxDialog(nullptr, wxID_ANY, L"Decode", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
 {
 	// Controls (these are done first to control tab order)
 
@@ -182,7 +182,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				data = data.substr(posEnd + wcslen(STREAM_FILE_END));
 				data = StringUtil::TrimLeft(data);
 				// Now decode
-				unsigned char* binData = NULL;
+				unsigned char* binData = nullptr;
 				size_t nBytes = 0;
 				BinaryData::Decode(dataIn, binData, nBytes);
 				dataIn.clear();

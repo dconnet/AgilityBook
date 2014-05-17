@@ -134,7 +134,7 @@ SUITE(TestDogClubList)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool GetPrimaryClub(ARBDogClubPtr* outClub = NULL) const;
+		//	bool GetPrimaryClub(ARBDogClubPtr* outClub = nullptr) const;
 		}
 	}
 
@@ -171,8 +171,8 @@ SUITE(TestDogClubList)
 		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
 		//			ARBErrorCallback& ioCallback,
-		//			ARBConfigEventPtr* outEvent = NULL,
-		//			ARBConfigScoringPtr* outScoring = NULL) const;
+		//			ARBConfigEventPtr* outEvent = nullptr,
+		//			ARBConfigScoringPtr* outScoring = nullptr) const;
 		}
 	}
 
@@ -184,7 +184,7 @@ SUITE(TestDogClubList)
 			TODO_TEST
 		//	bool FindVenue(
 		//			std::wstring const& inVenue,
-		//			ARBDogClubPtr* outClub = NULL) const;
+		//			ARBDogClubPtr* outClub = nullptr) const;
 		}
 	}
 
@@ -197,7 +197,7 @@ SUITE(TestDogClubList)
 		//	bool AddClub(
 		//			std::wstring const& inName,
 		//			std::wstring const& inVenue,
-		//			ARBDogClubPtr* outClub = NULL);
+		//			ARBDogClubPtr* outClub = nullptr);
 		//	bool DeleteClub(
 		//			std::wstring const& inName,
 		//			std::wstring const& inVenue);

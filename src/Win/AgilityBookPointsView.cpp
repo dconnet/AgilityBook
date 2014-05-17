@@ -177,7 +177,7 @@ CAgilityBookPointsView::CAgilityBookPointsView(
 		CTabView* pTabView,
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
-	, m_Ctrl(NULL)
+	, m_Ctrl(nullptr)
 {
 }
 
@@ -210,7 +210,7 @@ bool CAgilityBookPointsView::Create(
 void CAgilityBookPointsView::DetachView()
 {
 	// The control is actually owned by the panel, the view is not.
-	m_Ctrl = NULL;
+	m_Ctrl = nullptr;
 }
 
 
@@ -276,7 +276,7 @@ void CAgilityBookPointsView::OnUpdate(
 		wxView* sender,
 		wxObject* inHint)
 {
-	CUpdateHint* hint = NULL;
+	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_POINTS_VIEW)

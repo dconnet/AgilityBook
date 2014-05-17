@@ -49,7 +49,7 @@ CDlgRegNum::CDlgRegNum(
 	: wxDialog()
 	, m_RegNums(regnums)
 	, m_pRegNum(pRegNum)
-	, m_ctrlVenues(NULL)
+	, m_ctrlVenues(nullptr)
 	, m_Venue()
 	, m_RegNum()
 	, m_Height()

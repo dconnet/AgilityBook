@@ -42,10 +42,10 @@ CReadHttp::CReadHttp(
 		std::wstring const& inURL,
 		std::string* outData)
 	: m_address(inURL)
-	, m_URL(NULL)
+	, m_URL(nullptr)
 	, m_Data(outData)
-	, m_Stream(NULL)
-	, m_pProgress(NULL)
+	, m_Stream(nullptr)
+	, m_pProgress(nullptr)
 {
 	// 2.8.10 has a memory leak if you use the static proxy method
 	//TODO: verify that 2.9 is ok
@@ -67,8 +67,8 @@ CReadHttp::CReadHttp(
 		wxOutputStream& outStream,
 		IDlgProgress* pProgress)
 	: m_address(inURL)
-	, m_URL(NULL)
-	, m_Data(NULL)
+	, m_URL(nullptr)
+	, m_Data(nullptr)
 	, m_Stream(&outStream)
 	, m_pProgress(pProgress)
 {

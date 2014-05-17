@@ -39,7 +39,7 @@ class CDlgFindLinks : public wxDialog
 public:
 	CDlgFindLinks(
 			ARBDogList& inDogs,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	size_t GetNumLinks() const		{return m_Data.size();}
 

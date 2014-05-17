@@ -199,7 +199,7 @@ public:
 	 */
 	bool FindItem(
 			std::wstring const& inName,
-			ARBInfoItemPtr* outItem = NULL) const;
+			ARBInfoItemPtr* outItem = nullptr) const;
 
 	/**
 	 * Add a new item.
@@ -209,7 +209,7 @@ public:
 	 */
 	bool AddItem(
 			std::wstring const& inItem,
-			ARBInfoItemPtr* outItem = NULL);
+			ARBInfoItemPtr* outItem = nullptr);
 
 	/**
 	 * Add a new item.

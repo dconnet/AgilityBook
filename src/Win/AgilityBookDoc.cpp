@@ -225,7 +225,7 @@ END_EVENT_TABLE()
 CAgilityBookDoc::CAgilityBookDoc()
 	: m_Records()
 	, m_CalSites()
-	, m_StatusData(NULL)
+	, m_StatusData(nullptr)
 {
 }
 
@@ -277,7 +277,7 @@ void CAgilityBookDoc::OnStatusFilter(wxCommandEvent& evt)
 		if (ResetVisibility())
 		{
 			CUpdateHint hint(UPDATE_ALL_VIEW);
-			UpdateAllViews(NULL, &hint);
+			UpdateAllViews(nullptr, &hint);
 		}
 	}
 }
@@ -428,7 +428,7 @@ bool CAgilityBookDoc::AddTitle(ARBDogPtr pDog)
 			ResetVisibility(venues, dlgTitle.GetNewTitle());
 			UpdateFutureTrials(Book().GetConfig(), pDog, dlgTitle.GetNewTitle());
 			CUpdateHint hint(UPDATE_POINTS_VIEW);
-			UpdateAllViews(NULL, &hint);
+			UpdateAllViews(nullptr, &hint);
 			Modify(true);
 			if (CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
 			{
@@ -457,7 +457,7 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 	{
 		pTree->EnsureVisible(pData->GetId());
 		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_NEW_TRIAL, bModified, NULL))
+		if (pData->OnCmd(ID_AGILITY_NEW_TRIAL, bModified, nullptr))
 		{
 			if (bModified)
 				Modify(true);
@@ -475,7 +475,7 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 	{
 		pTree->EnsureVisible(pData->GetId());
 		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_NEW_RUN, bModified, NULL))
+		if (pData->OnCmd(ID_AGILITY_NEW_RUN, bModified, nullptr))
 		{
 			if (bModified)
 				Modify(true);
@@ -493,7 +493,7 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 	{
 		pTree->EnsureVisible(pData->GetId());
 		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_EDIT_RUN, bModified, NULL))
+		if (pData->OnCmd(ID_AGILITY_EDIT_RUN, bModified, nullptr))
 		{
 			if (bModified)
 				Modify(true);
@@ -511,7 +511,7 @@ void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 	{
 		pTree->EnsureVisible(pData->GetId());
 		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_DELETE_RUN, bModified, NULL))
+		if (pData->OnCmd(ID_AGILITY_DELETE_RUN, bModified, nullptr))
 		{
 			if (bModified)
 				Modify(true);
@@ -547,7 +547,7 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 				pDog->GetTrials().AddTrial(pNewTrial, !CAgilityBookOptions::GetNewestDatesFirst());
 				Modify(true);
 				CUpdateHint hint(UPDATE_NEW_TRIAL, pNewTrial);
-				UpdateAllViews(NULL, &hint);
+				UpdateAllViews(nullptr, &hint);
 			}
 			pTabView->SetCurTab(0);
 		}
@@ -621,7 +621,7 @@ bool CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		dlg.ShowModal();
 		Modify(true);
 		CUpdateHint hint(UPDATE_CONFIG | iHint);
-		UpdateAllViews(NULL, &hint);
+		UpdateAllViews(nullptr, &hint);
 	}
 	else if (callback.CanContinue())
 		wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
@@ -637,7 +637,7 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 	if (bUseDefault)
 	{
 		bDoIt = true;
-		dlg.LoadConfig(NULL);
+		dlg.LoadConfig(nullptr);
 	}
 	else
 	{
@@ -900,7 +900,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 		|| 0 < countTrials)
 		{
 			CUpdateHint hint(UPDATE_ALL_VIEW);
-			UpdateAllViews(NULL, &hint);
+			UpdateAllViews(nullptr, &hint);
 			Modify(true);
 		}
 		if (0 < countClubs)
@@ -1032,7 +1032,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 		{
 			m_Records.GetCalendar().sort();
 			CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-			UpdateAllViews(NULL, &hint);
+			UpdateAllViews(nullptr, &hint);
 			Modify(true);
 		}
 
@@ -1065,7 +1065,7 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
 		{
 			m_Records.GetTraining().sort();
 			CUpdateHint hint(UPDATE_TRAINING_VIEW);
-			UpdateAllViews(NULL, &hint);
+			UpdateAllViews(nullptr, &hint);
 			Modify(true);
 		}
 
@@ -1221,7 +1221,7 @@ CTabView* CAgilityBookDoc::GetTabView() const
 		if (pView)
 			return pView;
 	}
-	return NULL;
+	return nullptr;
 }
 
 
@@ -1236,7 +1236,7 @@ CAgilityBookTreeView* CAgilityBookDoc::GetTreeView() const
 		if (pView)
 			return pView;
 	}
-	return NULL;
+	return nullptr;
 }
 
 
@@ -1251,7 +1251,7 @@ CAgilityBookRunsView* CAgilityBookDoc::GetRunsView() const
 		if (pView)
 			return pView;
 	}
-	return NULL;
+	return nullptr;
 }
 
 
@@ -1268,7 +1268,7 @@ CAgilityBookCalendarListView* CAgilityBookDoc::GetCalendarListView() const
 			return pView;
 	}
 	assert(0);
-	return NULL;
+	return nullptr;
 }
 
 
@@ -1284,7 +1284,7 @@ CAgilityBookCalendarView* CAgilityBookDoc::GetCalendarView() const
 			return pView;
 	}
 	assert(0);
-	return NULL;
+	return nullptr;
 }
 
 
@@ -1300,7 +1300,7 @@ CAgilityBookTrainingView* CAgilityBookDoc::GetTrainingView() const
 			return pView;
 	}
 	assert(0);
-	return NULL;
+	return nullptr;
 }
 
 
@@ -1848,7 +1848,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 					m_Records.GetCalendar().sort();
 					Modify(true);
 					CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-					UpdateAllViews(NULL, &hint);
+					UpdateAllViews(nullptr, &hint);
 					CAgilityBookCalendarView* pCal = GetCalendarView();
 					if (pCal)
 						pCal->SetCurrentDate(cal->GetStartDate(), true);
@@ -1874,7 +1874,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 				m_Records.GetTraining().sort();
 				Modify(true);
 				CUpdateHint hint(UPDATE_TRAINING_VIEW);
-				UpdateAllViews(NULL, &hint);
+				UpdateAllViews(nullptr, &hint);
 				CAgilityBookTrainingView* pView = GetTrainingView();
 				if (pView)
 					pView->SetCurrentDate(training->GetDate());

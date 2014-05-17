@@ -50,7 +50,7 @@ ElementNodePtr TidyHtmlData(
 		}
 		tidyRunDiagnostics(tdoc);
 		uint len = 0;
-		if (tidySaveString(tdoc, NULL, &len) != -ENOMEM)
+		if (tidySaveString(tdoc, nullptr, &len) != -ENOMEM)
 		{
 			tidyRelease(tdoc);
 			return tree;
@@ -95,7 +95,7 @@ ElementNodePtr TidyHtmlData(
 #endif
 		}
 		delete [] pData;
-		pData = NULL;
+		pData = nullptr;
 	}
 	return tree;
 }

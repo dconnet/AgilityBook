@@ -67,7 +67,7 @@ SUITE(TestCalendar)
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			CHECK(NULL != cal.get());
+			CHECK(!!cal.get());
 		}
 	}
 
@@ -80,7 +80,7 @@ SUITE(TestCalendar)
 			cal->SetStartDate(ARBDate(2007, 9, 1));
 			cal->SetLocation(L"Here");
 			ARBCalendarPtr cal2 = cal->Clone();
-			CHECK(NULL != cal2.get());
+			CHECK(!!cal2.get());
 			CHECK(cal.get() != cal2.get());
 			CHECK(*cal == *cal2);
 			CHECK(cal->GetStartDate() == cal2->GetStartDate());
@@ -439,11 +439,11 @@ SUITE(TestCalendarList)
 			callist.sort();
 			ARBCalendarPtr found;
 			CHECK(callist.FindCalendar(cal1, true, &found));
-			CHECK(NULL != found.get());
+			CHECK(!!found.get());
 			CHECK(found.get() == cal1.get());
 			ARBCalendarPtr clone = found->Clone();
 			CHECK(callist.FindCalendar(clone, true, &found));
-			CHECK(NULL != found.get());
+			CHECK(!!found.get());
 			CHECK(found.get() != clone.get());
 			CHECK(*found == *clone);
 		}

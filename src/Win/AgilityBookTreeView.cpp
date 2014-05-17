@@ -96,14 +96,14 @@ wxTreeItemId CFindTree::GetNextItem() const
 	{
 		++m_Iter;
 		if (m_Iter == m_Items.end())
-			hItem = NULL;
+			hItem = nullptr;
 		else
 			hItem = *m_Iter;
 	}
 	else
 	{
 		if (m_Iter == m_Items.begin())
-			hItem = NULL;
+			hItem = nullptr;
 		else
 		{
 			--m_Iter;
@@ -254,7 +254,7 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 		CTabView* pTabView,
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
-	, m_Ctrl(NULL)
+	, m_Ctrl(nullptr)
 	, m_ImageList()
 #ifdef WX_TREE_HAS_STATE
 	, m_ImageListStates(16,16)
@@ -336,7 +336,7 @@ bool CAgilityBookTreeView::NextPane()
 void CAgilityBookTreeView::DetachView()
 {
 	// The control is actually owned by the panel, the view is not.
-	m_Ctrl = NULL;
+	m_Ctrl = nullptr;
 }
 
 
@@ -369,7 +369,7 @@ void CAgilityBookTreeView::OnUpdate(
 {
 	if (!m_Ctrl)
 		return;
-	CUpdateHint* hint = NULL;
+	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_TREE_VIEW)
@@ -449,7 +449,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::GetCurrentTreeItem() const
 {
 	if (m_Ctrl && m_Ctrl->GetSelection().IsOk())
 		return GetTreeItem(m_Ctrl->GetSelection());
-	return NULL;
+	return nullptr;
 }
 
 
@@ -457,7 +457,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::GetTreeItem(wxTreeItemId hItem) cons
 {
 	if (m_Ctrl && hItem.IsOk())
 		return dynamic_cast<CAgilityBookTreeData*>(m_Ctrl->GetItemData(hItem));
-	return NULL;
+	return nullptr;
 }
 
 
@@ -483,8 +483,8 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		ARBBasePtr pBase) const
 {
 	if (!pBase || !m_Ctrl)
-		return NULL;
-	CAgilityBookTreeData* pData = NULL;
+		return nullptr;
+	CAgilityBookTreeData* pData = nullptr;
 	if (m_Ctrl->GetRootItem() != hItem)
 	{
 		CAgilityBookTreeData* pCheck = dynamic_cast<CAgilityBookTreeData*>(m_Ctrl->GetItemData(hItem));
@@ -510,8 +510,8 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		ARBDogPtr pDog) const
 {
 	if (!pDog || !m_Ctrl)
-		return NULL;
-	CAgilityBookTreeData* pData = NULL;
+		return nullptr;
+	CAgilityBookTreeData* pData = nullptr;
 	if (m_Ctrl->GetRootItem() != hItem)
 	{
 		CAgilityBookTreeDataDog* pCheck = dynamic_cast<CAgilityBookTreeDataDog*>(m_Ctrl->GetItemData(hItem));
@@ -539,8 +539,8 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		ARBDogTrialPtr pTrial) const
 {
 	if (!pTrial || !m_Ctrl)
-		return NULL;
-	CAgilityBookTreeData* pData = NULL;
+		return nullptr;
+	CAgilityBookTreeData* pData = nullptr;
 	if (m_Ctrl->GetRootItem() != hItem)
 	{
 		CAgilityBookTreeDataTrial* pCheck = dynamic_cast<CAgilityBookTreeDataTrial*>(m_Ctrl->GetItemData(hItem));
@@ -566,8 +566,8 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		ARBDogRunPtr pRun) const
 {
 	if (!pRun || !m_Ctrl)
-		return NULL;
-	CAgilityBookTreeData* pData = NULL;
+		return nullptr;
+	CAgilityBookTreeData* pData = nullptr;
 	if (m_Ctrl->GetRootItem() != hItem)
 	{
 		CAgilityBookTreeDataRun* pCheck = dynamic_cast<CAgilityBookTreeDataRun*>(m_Ctrl->GetItemData(hItem));
@@ -700,7 +700,7 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 						m_Ctrl->Thaw();
 						m_Ctrl->Refresh();
 						CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-						GetDocument()->UpdateAllViews(NULL, &hint);
+						GetDocument()->UpdateAllViews(nullptr, &hint);
 					}
 				}
 				else if (0 < err.m_ErrMsg.str().length())
@@ -827,7 +827,7 @@ void CAgilityBookTreeView::LoadData()
 
 	// Load the data
 	m_Ctrl->AddRoot(L"Root");
-	wxTreeItemId hItem = NULL;
+	wxTreeItemId hItem = nullptr;
 	for (ARBDogList::const_iterator iterDog = GetDocument()->Book().GetDogs().begin();
 		iterDog != GetDocument()->Book().GetDogs().end();
 		++iterDog)
@@ -1150,7 +1150,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 			if (pData)
 			{
 				bool bModified = false;
-				bHandled = pData->OnCmd(id, bModified, NULL);
+				bHandled = pData->OnCmd(id, bModified, nullptr);
 				if (bModified)
 					GetDocument()->Modify(true);
 			}
@@ -1179,7 +1179,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
-				m_Callback.Search(NULL);
+				m_Callback.Search(nullptr);
 		}
 		break;
 
@@ -1190,7 +1190,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
-				m_Callback.Search(NULL);
+				m_Callback.Search(nullptr);
 		}
 		break;
 
@@ -1271,7 +1271,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		CAgilityBookOptions::SetTableInYPS(!CAgilityBookOptions::GetTableInYPS());
 		{
 			CUpdateHint hint(UPDATE_RUNS_VIEW);
-			GetDocument()->UpdateAllViews(NULL, &hint);
+			GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 		break;
 
@@ -1280,7 +1280,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		CAgilityBookOptions::SetRunTimeInOPS(!CAgilityBookOptions::GetRunTimeInOPS());
 		{
 			CUpdateHint hint(UPDATE_RUNS_VIEW);
-			GetDocument()->UpdateAllViews(NULL, &hint);
+			GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 		break;
 	}

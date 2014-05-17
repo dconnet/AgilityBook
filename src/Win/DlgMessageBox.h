@@ -30,5 +30,5 @@ public:
 extern int AfxMessageBox2(
 		std::wstring const& inText,
 		long inFlags = wxOK, //wxOK, wxCANCEL, wxYES, wxNO, wxHELP, wxNO_DEFAULT
-		IMessageBoxCallback* inCallback = NULL,
-		wxWindow* inParent = NULL);
+		IMessageBoxCallback* inCallback = nullptr,
+		wxWindow* inParent = nullptr);

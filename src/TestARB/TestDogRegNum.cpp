@@ -169,7 +169,7 @@ SUITE(TestDogRegNumList)
 			TODO_TEST
 		//	bool FindRegNum(
 		//			std::wstring const& inVenue,
-		//			ARBDogRegNumPtr* outRegNum = NULL) const;
+		//			ARBDogRegNumPtr* outRegNum = nullptr) const;
 		}
 	}
 
@@ -182,7 +182,7 @@ SUITE(TestDogRegNumList)
 		//	bool AddRegNum(
 		//			std::wstring const& inVenue,
 		//			std::wstring const& inNumber,
-		//			ARBDogRegNumPtr* outRegNum = NULL);
+		//			ARBDogRegNumPtr* outRegNum = nullptr);
 		//	bool AddRegNum(ARBDogRegNumPtr inRegNum);
 		//	int DeleteRegNum(
 		//			std::wstring const& inVenue,

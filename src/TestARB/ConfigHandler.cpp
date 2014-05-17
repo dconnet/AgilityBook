@@ -68,7 +68,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 #else
 #ifdef WIN32
 	wchar_t fileName[MAX_PATH];
-	GetModuleFileNameW(NULL, fileName, _countof(fileName));
+	GetModuleFileNameW(nullptr, fileName, _countof(fileName));
 	std::wstring datafile(fileName);
 	size_t n = datafile.find_last_of('.');
 	datafile = datafile.substr(0, n);
@@ -99,7 +99,7 @@ std::string CConfigHandler::LoadDTD() const
 #else
 #ifdef WIN32
 	wchar_t fileName[MAX_PATH];
-	GetModuleFileNameW(NULL, fileName, _countof(fileName));
+	GetModuleFileNameW(nullptr, fileName, _countof(fileName));
 	std::wstring datafile(fileName);
 	size_t n = datafile.find_last_of('.');
 	datafile = datafile.substr(0, n);

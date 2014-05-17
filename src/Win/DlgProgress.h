@@ -23,7 +23,7 @@
 class IDlgProgress
 {
 public:
-	static IDlgProgress* CreateProgress(short nBars = 1, wxWindow* parent = NULL);
+	static IDlgProgress* CreateProgress(short nBars = 1, wxWindow* parent = nullptr);
 
 	// Setup dialog.
 	/// Set the caption of the dialog.

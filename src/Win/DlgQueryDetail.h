@@ -30,8 +30,8 @@ public:
 			bool bReadOnly,
 			wchar_t const* inCode,
 			wchar_t const* inName,
-			wxWindow* pParent = NULL,
-			ARBConfig const* inConfig = NULL); // Only set when using venues
+			wxWindow* pParent = nullptr,
+			ARBConfig const* inConfig = nullptr); // Only set when using venues
 
 	std::wstring GetDetailCode() const;
 	std::wstring GetDetailName() const;

@@ -211,7 +211,7 @@ ARBDate ARBDate::FromString(
 	if (eLocale == inFormat || eCurrentLocale == inFormat)
 	{
 #if defined(__WXWINDOWS__)
-		wxLocale* locale = NULL;
+		wxLocale* locale = nullptr;
 		if (eLocale == inFormat)
 			locale = new wxLocale(wxLANGUAGE_DEFAULT, 0);
 		wxDateTime dt;
@@ -589,7 +589,7 @@ bool ARBDate::GetDate(time_t& outTime) const
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
 		struct tm tim;
 		// This initializes tm_isdst properly.
-		time_t inTime = time(NULL);
+		time_t inTime = time(nullptr);
 #if defined(ARB_HAS_SECURE_LOCALTIME)
 		_localtime64_s(&tim, &inTime);
 #else

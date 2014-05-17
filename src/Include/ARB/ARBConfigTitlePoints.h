@@ -190,7 +190,7 @@ public:
 	 */
 	bool FindTitlePoints(
 			double inFaults,
-			ARBConfigTitlePointsPtr* outPoints = NULL) const;
+			ARBConfigTitlePointsPtr* outPoints = nullptr) const;
 
 	/**
 	 * Add an object.
@@ -202,7 +202,7 @@ public:
 	bool AddTitlePoints(
 			double inPoints,
 			double inFaults,
-			ARBConfigTitlePointsPtr* outPoints = NULL);
+			ARBConfigTitlePointsPtr* outPoints = nullptr);
 
 	/**
 	 * Delete an object.

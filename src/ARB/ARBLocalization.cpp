@@ -25,7 +25,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-static IARBLocalization const* s_Localization = NULL;
+static IARBLocalization const* s_Localization = nullptr;
 
 void IARBLocalization::Init(IARBLocalization const* pLocalization)
 {
@@ -35,6 +35,6 @@ void IARBLocalization::Init(IARBLocalization const* pLocalization)
 
 IARBLocalization const* Localization()
 {
-	assert(NULL != s_Localization);
+	assert(!!s_Localization);
 	return s_Localization;
 }

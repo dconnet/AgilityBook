@@ -32,7 +32,7 @@ public:
 			ARBConfig const& config,
 			ARBDogTitleList& titles,
 			ARBDogTitlePtr pTitle,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	// Returns existing title or the newly created one.
 	ARBDogTitlePtr GetNewTitle() const	{return m_newTitle;}
@@ -44,7 +44,7 @@ private:
 	void FillTitleInfo();
 	short GetInstance(
 			ARBConfigTitlePtr pTitle,
-			std::vector<short>* outMissing = NULL) const;
+			std::vector<short>* outMissing = nullptr) const;
 
 	ARBDogTitleList& m_Titles;
 	ARBDogTitlePtr m_pTitle;
