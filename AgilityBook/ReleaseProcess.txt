@@ -52,7 +52,7 @@ On Mac10.5:
 - mkdir build-carbon
 - cd build-carbon
 - ../configure
-On Mac10.8:
+On Mac10.9:
 - export PATH=$WXWIN/build-cocoa:$PATH
 - cd .../AgilityBook
 - autoconf

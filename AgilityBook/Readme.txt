@@ -232,12 +232,6 @@ The xcode projects were used as follows:
 .../xcode3: Xcode 3.1 on OSX10.5
             AgilityBookCocoa.xcodeproj
                 wx3.0, cocoa, OSX10.5 sdk
-.../xcode4: Xcode 4.6 on OSX10.8
-            Recommended (so projects work right):
-            - Set DerivedData to Relative, 'build'
-              - Advanced: Unique
-            AgilityBook.xcworkspace
-                wx3.0, cocoa, OSX10.8 sdk, OSX10.5 deployment target
 .../xcode5: Xcode 5.0 on OSX10.9
             Recommended (so projects work right):
             - Set DerivedData to Relative, 'build'
@@ -247,7 +241,7 @@ The xcode projects were used as follows:
                 C++ Language Dialect: c++11 (-std=c++11)
                 C++ Std Lib: libc++
 
-OSX 10.8+:
+OSX 10.9+:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
