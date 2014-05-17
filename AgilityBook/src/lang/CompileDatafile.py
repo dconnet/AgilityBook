@@ -4,6 +4,7 @@
 # Requires gettext (msgcat/msgfmt) in PATH
 #
 # Revision History
+# 2014-05-17 Add exception handling in RunCommand
 # 2012-05-16 Add multiprocessing awareness. Kind of.
 # 2012-03-03 Fixed writing file into dat file.
 # 2012-02-19 Remove --use-fuzzy option, reoganized how po files.
@@ -83,7 +84,12 @@ def RunCommand(command, toastErr):
 		p = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 	else:
 		# Map stderr to stdout
-		p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+		try:
+			p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+		except OSError, msg:
+			print 'ERROR:', command
+			print 'EXCEPTION:', msg
+			raise
 	ReadPipe(sys.stdout, p.stdout)
 
 
