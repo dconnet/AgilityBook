@@ -50,7 +50,7 @@
 CBasePanel::CBasePanel(wxWindow* parent, std::wstring const& helpText)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER)
 	, m_views()
-	, m_lastActiveView(NULL)
+	, m_lastActiveView(nullptr)
 {
 #if wxUSE_HELP
 	if (!helpText.empty())
@@ -108,7 +108,7 @@ void CBasePanel::DetachViews()
 			(*iter)->DetachView();
 		}
 		m_views.clear();
-		m_lastActiveView = NULL;
+		m_lastActiveView = nullptr;
 	}
 }
 
@@ -122,7 +122,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 		std::vector<CAgilityBookBaseExtraView*> const& inViews)
 	: CBasePanel(parent, StringUtil::stringW(_("PanelRuns")))
 	, m_bInit(false)
-	, m_splitter(NULL)
+	, m_splitter(nullptr)
 {
 	m_views = inViews;
 	bool bAttachViews = m_views.empty();
@@ -224,7 +224,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 		std::vector<CAgilityBookBaseExtraView*> const& inViews)
 	: CBasePanel(parent, StringUtil::stringW(_("PanelCal")))
 	, m_bInit(false)
-	, m_splitter(NULL)
+	, m_splitter(nullptr)
 {
 	m_views = inViews;
 	bool bAttachViews = m_views.empty();

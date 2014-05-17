@@ -28,7 +28,7 @@ public:
 	CDlgTraining(
 			ARBTrainingPtr pTraining,
 			CAgilityBookDoc* pDoc,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	ARBTrainingPtr m_pTraining;

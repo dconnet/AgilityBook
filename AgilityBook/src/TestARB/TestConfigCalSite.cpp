@@ -163,7 +163,7 @@ SUITE(TestConfigCalSiteList)
 			TODO_TEST
 			//bool FindSite(
 			//		std::wstring const& inSite,
-			//		ARBConfigCalSitePtr* outSite = NULL) const;
+			//		ARBConfigCalSitePtr* outSite = nullptr) const;
 		}
 	}
 
@@ -175,7 +175,7 @@ SUITE(TestConfigCalSiteList)
 			TODO_TEST
 			//bool AddSite(
 			//		std::wstring const& inSite,
-			//		ARBConfigCalSitePtr* outSite = NULL);
+			//		ARBConfigCalSitePtr* outSite = nullptr);
 			//bool AddSite(ARBConfigCalSitePtr inSite);
 			//int DeleteSite(std::wstring const& inSite);
 		}

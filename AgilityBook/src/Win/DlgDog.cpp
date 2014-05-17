@@ -93,7 +93,7 @@ static struct
 	wchar_t const* idText;
 } const colTitleInfo[] =
 {
-	{wxLIST_FORMAT_LEFT, 10, NULL},
+	{wxLIST_FORMAT_LEFT, 10, nullptr},
 	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_DATE")},
 	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_VENUE")},
 	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_TITLE")},
@@ -582,18 +582,18 @@ CDlgDog::CDlgDog(
 	, m_IsDeceased(pDog->GetDeceased().IsValid())
 	, m_Deceased(pDog->GetDeceased())
 	, m_Notes(StringUtil::stringWX(pDog->GetNote()))
-	, m_ctrlAge(NULL)
-	, m_ctrlDDay(NULL)
-	, m_ctrlTitles(NULL)
-	, m_ctrlTitleEdit(NULL)
-	, m_ctrlTitleDelete(NULL)
-	, m_ctrlRegNums(NULL)
-	, m_ctrlRegEdit(NULL)
-	, m_ctrlRegDelete(NULL)
-	, m_ctrlPoints(NULL)
-	, m_ctrlPointsEdit(NULL)
-	, m_ctrlPointsDelete(NULL)
-	, m_ctrlSelectedPts(NULL)
+	, m_ctrlAge(nullptr)
+	, m_ctrlDDay(nullptr)
+	, m_ctrlTitles(nullptr)
+	, m_ctrlTitleEdit(nullptr)
+	, m_ctrlTitleDelete(nullptr)
+	, m_ctrlRegNums(nullptr)
+	, m_ctrlRegEdit(nullptr)
+	, m_ctrlRegDelete(nullptr)
+	, m_ctrlPoints(nullptr)
+	, m_ctrlPointsEdit(nullptr)
+	, m_ctrlPointsDelete(nullptr)
+	, m_ctrlSelectedPts(nullptr)
 	, m_Titles()
 	, m_sortTitles(L"Titles")
 	, m_ViewHiddenTitles(CAgilityBookOptions::GetViewHiddenTitles())
@@ -1655,7 +1655,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	if (hint)
 	{
 		CUpdateHint updateHint(hint);
-		m_pDoc->UpdateAllViews(NULL, &updateHint);
+		m_pDoc->UpdateAllViews(nullptr, &updateHint);
 	}
 
 	EndDialog(wxID_OK);

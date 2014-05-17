@@ -155,7 +155,7 @@ public:
 			std::wstring const& inDivision,
 			std::wstring const& inLevel,
 			ARBDate const& inDate,
-			ARBConfigScoringPtr* outScoring = NULL) const
+			ARBConfigScoringPtr* outScoring = nullptr) const
 	{
 		return m_Scoring.FindEvent(inDivision, inLevel, inDate, outScoring);
 	}
@@ -291,8 +291,8 @@ public:
 			std::wstring const& inDivision,
 			std::wstring const& inLevel,
 			ARBDate const& inDate,
-			ARBConfigEventPtr* outEvent = NULL,
-			ARBConfigScoringPtr* outScoring = NULL) const;
+			ARBConfigEventPtr* outEvent = nullptr,
+			ARBConfigScoringPtr* outScoring = nullptr) const;
 
 	/**
 	 * Rename a division.
@@ -341,7 +341,7 @@ public:
 	 */
 	bool FindEvent(
 			std::wstring const& inEvent,
-			ARBConfigEventPtr* outEvent = NULL) const;
+			ARBConfigEventPtr* outEvent = nullptr) const;
 
 	/**
 	 * Add an event.

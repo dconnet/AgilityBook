@@ -315,7 +315,7 @@ static std::wstring GetTimeStamp()
 {
 	time_t t;
 	time(&t);
-	struct tm* pTime = NULL;
+	struct tm* pTime = nullptr;
 #if defined(ARB_HAS_SECURE_LOCALTIME)
 	struct tm l;
 	if (0 == _localtime64_s(&l, &t))
@@ -514,7 +514,7 @@ bool ARBAgilityRecordBook::Update(
 					pRun->GetDivision(),
 					pRun->GetLevel(),
 					pRun->GetDate(),
-					NULL,
+					nullptr,
 					&pScoring))
 				{
 					if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())

@@ -47,10 +47,10 @@ END_EVENT_TABLE()
 
 CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlPrimary(NULL)
-	, m_ctrlSecondary(NULL)
-	, m_ctrlTertiary(NULL)
-	, m_ctrlOk(NULL)
+	, m_ctrlPrimary(nullptr)
+	, m_ctrlSecondary(nullptr)
+	, m_ctrlTertiary(nullptr)
+	, m_ctrlOk(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -68,7 +68,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 
 	m_ctrlPrimary = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY);
 	BIND_OR_CONNECT_CTRL(m_ctrlPrimary, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgPointsViewSort::OnSelchangePrimary);
 	m_ctrlPrimary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C1"));
@@ -81,7 +81,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 
 	m_ctrlSecondary = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY);
 	BIND_OR_CONNECT_CTRL(m_ctrlSecondary, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgPointsViewSort::OnSelchangeSecondary);
 	m_ctrlSecondary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C2"));
@@ -94,7 +94,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 
 	m_ctrlTertiary = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY);
 	BIND_OR_CONNECT_CTRL(m_ctrlTertiary, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgPointsViewSort::OnSelchangeTertiary);
 	m_ctrlTertiary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C3"));
@@ -127,7 +127,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
-	assert(m_ctrlOk != NULL);
+	assert(!!m_ctrlOk);
 
 	SetSizer(bSizer);
 	Layout();

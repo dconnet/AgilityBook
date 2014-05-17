@@ -30,12 +30,12 @@ public:
 	CDlgReorder(
 			CAgilityBookDoc* pDoc,
 			ARBDogList* dogs,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	CDlgReorder(
 			CAgilityBookDoc* pDoc,
 			ARBDogTrialPtr trial,
 			ARBDogRunPtr run,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	CAgilityBookDoc* m_pDoc;

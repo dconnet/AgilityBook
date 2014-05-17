@@ -62,10 +62,10 @@ class CTaskbarProgressImpl : public CTaskbarProgress
 public:
 	CTaskbarProgressImpl(HWND hwnd)
 		: m_hWnd(hwnd)
-		, m_pTaskbarList(NULL)
+		, m_pTaskbarList(nullptr)
 	{
 		if (IsWin7OrBetter())
-			::CoCreateInstance(CLSID_TaskbarList, NULL, CLSCTX_ALL, __uuidof(ITaskbarList3), (void**)&m_pTaskbarList);
+			::CoCreateInstance(CLSID_TaskbarList, nullptr, CLSCTX_ALL, __uuidof(ITaskbarList3), (void**)&m_pTaskbarList);
 	}
 
 	virtual ~CTaskbarProgressImpl()
@@ -97,7 +97,7 @@ CTaskbarProgress* CTaskbarProgress::Get(HWND hwnd)
 	CTaskbarProgressImpl* pTaskbar = new CTaskbarProgressImpl(hwnd);
 	return pTaskbar;
 #else
-	return NULL;
+	return nullptr;
 #endif
 }
 

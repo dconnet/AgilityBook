@@ -83,10 +83,10 @@ CDlgEventSelect::CDlgEventSelect(
 		std::wstring const& inEvent,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlDivisions(NULL)
-	, m_ctrlLevels(NULL)
-	, m_ctrlEvents(NULL)
-	, m_ctrlOk(NULL)
+	, m_ctrlDivisions(nullptr)
+	, m_ctrlLevels(nullptr)
+	, m_ctrlEvents(nullptr)
+	, m_ctrlOk(nullptr)
 	, m_Division()
 	, m_Level()
 	, m_Event()
@@ -109,7 +109,7 @@ CDlgEventSelect::CDlgEventSelect(
 
 	m_ctrlDivisions = new wxComboBox(this, wxID_ANY, m_Division,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_Division));
 	BIND_OR_CONNECT_CTRL(m_ctrlDivisions, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgEventSelect::OnSelchangeDivision);
@@ -123,7 +123,7 @@ CDlgEventSelect::CDlgEventSelect(
 
 	m_ctrlLevels = new wxComboBox(this, wxID_ANY, m_Level,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_Level));
 	BIND_OR_CONNECT_CTRL(m_ctrlLevels, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgEventSelect::OnSelchangeLevel);
@@ -135,7 +135,7 @@ CDlgEventSelect::CDlgEventSelect(
 
 	m_ctrlEvents = new wxComboBox(this, wxID_ANY, m_Event,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_Event));
 	BIND_OR_CONNECT_CTRL(m_ctrlEvents, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgEventSelect::OnSelchangeEvent);
@@ -167,7 +167,7 @@ CDlgEventSelect::CDlgEventSelect(
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
-	assert(m_ctrlOk != NULL);
+	assert(!!m_ctrlOk);
 
 	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
 		iterDiv != m_pVenue->GetDivisions().end();

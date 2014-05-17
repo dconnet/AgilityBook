@@ -1181,7 +1181,7 @@ CAgilityBookCalendarView::CAgilityBookCalendarView(
 		CTabView* pTabView,
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
-	, m_Ctrl(NULL)
+	, m_Ctrl(nullptr)
 {
 }
 
@@ -1241,7 +1241,7 @@ bool CAgilityBookCalendarView::NextPane()
 void CAgilityBookCalendarView::DetachView()
 {
 	// The control is actually owned by the panel, the view is not.
-	m_Ctrl = NULL;
+	m_Ctrl = nullptr;
 }
 
 
@@ -1327,7 +1327,7 @@ void CAgilityBookCalendarView::OnUpdate(
 {
 	if (!m_Ctrl)
 		return;
-	CUpdateHint* hint = NULL;
+	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_CALENDAR_VIEW)

@@ -82,7 +82,7 @@ public:
 	CLangManager(CLocalization& localization)
 		: m_Localization(localization)
 #if defined(__WXWINDOWS__)
-		, m_langMgr(NULL)
+		, m_langMgr(nullptr)
 #else
 		, m_CurLang(0)
 #endif
@@ -148,13 +148,16 @@ private:
 	}
 	CLanguageManager* m_langMgr;
 #else // __WXWINDOWS__
+	virtual void OnSetLanguage(int langId)
+	{
+	}
 	int m_CurLang;
 #endif
 private:
 	CLangManager(CLangManager const&);
 	CLangManager& operator=(CLangManager const&);
 };
-static CLangManager* g_LangMgr = NULL;
+static CLangManager* g_LangMgr = nullptr;
 
 
 bool CLangManager::SetLang(int langId)
@@ -245,12 +248,12 @@ int main(int argc, char** argv)
 	{
 		CReporterVerbose reporter(bVerbose);
 		UnitTest::TestRunner runner(reporter);
-		rc = runner.RunTestsIf(UnitTest::Test::GetTestList(), NULL, UnitTest::True(), 0);
+		rc = runner.RunTestsIf(UnitTest::Test::GetTestList(), nullptr, UnitTest::True(), 0);
 	}
 
 	Element::Terminate();
 	delete g_LangMgr;
-	g_LangMgr = NULL;
+	g_LangMgr = nullptr;
 
 	return rc;
 }
@@ -275,7 +278,7 @@ ElementNodePtr LoadXMLData(size_t id)
 #pragma PRAGMA_TODO(write LoadXMLData)
 #ifdef WIN32
 	wchar_t fileName[MAX_PATH];
-	GetModuleFileNameW(NULL, fileName, _countof(fileName));
+	GetModuleFileNameW(nullptr, fileName, _countof(fileName));
 	std::wstring datafile(fileName);
 	size_t n = datafile.find_last_of('.');
 	datafile = datafile.substr(0, n);

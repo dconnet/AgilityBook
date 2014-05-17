@@ -72,7 +72,7 @@
 
 
 bool CImageManager::s_bNoReInit = false;
-CImageManager* CImageManager::s_pImageManager = NULL;
+CImageManager* CImageManager::s_pImageManager = nullptr;
 
 
 CImageManager* CImageManager::Get()
@@ -94,7 +94,7 @@ void CImageManager::Delete()
 {
 	s_bNoReInit = true;
 	delete s_pImageManager;
-	s_pImageManager = NULL;
+	s_pImageManager = nullptr;
 }
 
 

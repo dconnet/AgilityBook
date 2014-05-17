@@ -54,7 +54,7 @@ ARBMetaDataPtr ARBMetaData::MetaData()
 
 ARBMetaData::ARBMetaData()
 	: m_Bytes(0)
-	, m_Data(NULL)
+	, m_Data(nullptr)
 {
 }
 

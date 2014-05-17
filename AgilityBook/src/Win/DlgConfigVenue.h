@@ -40,7 +40,7 @@ public:
 			ARBAgilityRecordBook const& book,
 			ARBConfig const& config,
 			ARBConfigVenuePtr pVenue,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	~CDlgConfigVenue();
 
 	void GetFixups(ARBConfigActionList& ioFixups);
@@ -56,7 +56,7 @@ public:
 
 private:
 	CDlgConfigureDataBase* GetData(wxTreeItemId item) const;
-	CDlgConfigureDataBase* GetCurrentData(wxTreeItemId* pItem = NULL) const;
+	CDlgConfigureDataBase* GetCurrentData(wxTreeItemId* pItem = nullptr) const;
 	void UpdateButtons();
 	/*
 	int FindCurrentDivision(

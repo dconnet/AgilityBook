@@ -130,7 +130,7 @@ wxWindow* FindWindowInSizer(
 			}
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 

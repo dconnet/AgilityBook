@@ -66,7 +66,7 @@ SUITE(TestInfoItem)
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
-			CHECK(NULL != info.get());
+			CHECK(!!info.get());
 		}
 	}
 
@@ -78,7 +78,7 @@ SUITE(TestInfoItem)
 			ARBInfoItemPtr info = ARBInfoItem::New();
 			info->SetName(L"Testing");
 			ARBInfoItemPtr info2 = info->Clone();
-			CHECK(NULL != info2.get());
+			CHECK(!!info2.get());
 			CHECK(info.get() != info2.get());
 			CHECK(*info == *info2);
 			info->SetName(L"Test2");

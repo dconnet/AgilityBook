@@ -113,7 +113,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	, m_Config(config)
 	, m_pOther(pOther)
 	, m_Name(StringUtil::stringWX(pOther->GetName()))
-	, m_ctrlTally(NULL)
+	, m_ctrlTally(nullptr)
 	, m_Default(pOther->GetDefault())
 	, m_Desc(StringUtil::stringWX(pOther->GetDescription()))
 {
@@ -142,7 +142,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 
 	m_ctrlTally = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
 	for (int index = 0; index < sc_numTally; ++index)
 	{

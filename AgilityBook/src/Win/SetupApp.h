@@ -48,7 +48,7 @@ public:
 	/**
 	 * Display a user interface to select a language.
 	 */
-	virtual bool SelectLanguage(wxWindow* parent = NULL);
+	virtual bool SelectLanguage(wxWindow* parent = nullptr);
 	/**
 	 * Currectly selected language.
 	 */
@@ -65,7 +65,7 @@ protected:
 	virtual void OnErrorMessage(wxString const& msg) const;
 
 	virtual bool InitLocale();
-	virtual int SelectLang(wxWindow* parent = NULL);
+	virtual int SelectLang(wxWindow* parent = nullptr);
 
 	// Vendor name (default: 'dcon Software')
 	wxString m_VendorName;

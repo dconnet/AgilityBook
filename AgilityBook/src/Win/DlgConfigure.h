@@ -32,7 +32,7 @@ public:
 	CDlgConfigure(
 			CAgilityBookDoc* pDoc,
 			ARBAgilityRecordBook& book,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	~CDlgConfigure();
 
 	typedef enum

@@ -66,7 +66,7 @@ public:
 private:
 	struct GaugeData
 	{
-		GaugeData() : gauge(NULL), step(1), pos(0) {}
+		GaugeData() : gauge(nullptr), step(1), pos(0) {}
 		GaugeData(wxGauge* inGauge) : gauge(inGauge), step(1), pos(0) {}
 		wxGauge* gauge;
 		int step;
@@ -76,7 +76,7 @@ private:
 	{
 		if (1 <= inBar && static_cast<size_t>(inBar) <= m_ctrlBars.size())
 			return m_ctrlBars[inBar-1].gauge;
-		return NULL;
+		return nullptr;
 	}
 	void ReenableOtherWindows();
 
@@ -95,11 +95,11 @@ private:
 CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	: wxDialog()
 	, m_parentTop(wxGetTopLevelParent(parent))
-	, m_pTaskbar(NULL)
-	, m_ctrlMessage(NULL)
+	, m_pTaskbar(nullptr)
+	, m_ctrlMessage(nullptr)
 	, m_ctrlBars()
-	, m_ctrlCancel(NULL)
-	, m_winDisabler(NULL)
+	, m_ctrlCancel(nullptr)
+	, m_winDisabler(nullptr)
 	, m_HasCanceled(false)
 {
 	if (1 > nBars)
@@ -151,7 +151,7 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	//{
 	//	if (m_parentTop)
 	//		m_parentTop->Disable();
-	//	m_winDisabler = NULL;
+	//	m_winDisabler = nullptr;
 	//}
 	Show();
 	Enable();
@@ -162,7 +162,7 @@ CDlgProgress::~CDlgProgress()
 {
 	ReenableOtherWindows();
 	delete m_pTaskbar;
-	m_pTaskbar = NULL;
+	m_pTaskbar = nullptr;
 }
 
 
@@ -183,7 +183,7 @@ void CDlgProgress::ReenableOtherWindows()
 	//if (appmodal)
 	{
 		delete m_winDisabler;
-		m_winDisabler = NULL;
+		m_winDisabler = nullptr;
 	}
 	//else
 	//{

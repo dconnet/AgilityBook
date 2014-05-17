@@ -22,4 +22,4 @@
 
 extern bool CheckLink(
 		std::wstring const& inLink,
-		wxWindow* parent = NULL);
+		wxWindow* parent = nullptr);

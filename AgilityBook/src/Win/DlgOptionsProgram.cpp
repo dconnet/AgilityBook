@@ -41,7 +41,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	, m_bShowHtml(CAgilityBookOptions::ShowHtmlPoints())
 	, m_UseProxy(CAgilityBookOptions::GetUseProxy())
 	, m_Proxy(StringUtil::stringWX(CAgilityBookOptions::GetProxyServer()))
-	, m_ctrlProxy(NULL)
+	, m_ctrlProxy(nullptr)
 {
 	// Controls (these are done first to control tab order)
 

@@ -60,7 +60,7 @@ CDlgMessageBox::CDlgMessageBox(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticBitmap* ctrlIcon = NULL;
+	wxStaticBitmap* ctrlIcon = nullptr;
 	if (inFlags & (wxICON_EXCLAMATION | wxICON_HAND | wxICON_ERROR
 		| wxICON_QUESTION | wxICON_INFORMATION))
 	{
@@ -81,7 +81,7 @@ CDlgMessageBox::CDlgMessageBox(
 		wxDefaultPosition, wxDefaultSize, 0);
 	ctrlText->Wrap(-1);
 
-	wxButton* ctrlDetails = NULL;
+	wxButton* ctrlDetails = nullptr;
 	if (inCallback)
 	{
 		ctrlDetails = new wxButton(this, wxID_ANY, _("IDC_MESSAGE_BOX_DETAILS"),

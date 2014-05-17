@@ -60,22 +60,22 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	, m_bNotEntered(m_FilterOptions.FilterCalendarView().ViewNotEntered())
 	, m_bPlanning(m_FilterOptions.FilterCalendarView().ViewPlanning())
 	, m_bEntered(m_FilterOptions.FilterCalendarView().ViewEntered())
-	, m_ctrlFilters(NULL)
-	, m_ctrlDatesAll(NULL)
-	, m_ctrlDatesSome(NULL)
-	, m_ctrlDateStartCheck(NULL)
-	, m_ctrlDateStart(NULL)
-	, m_ctrlDateEndCheck(NULL)
-	, m_ctrlDateEnd(NULL)
-	, m_ctrlLogAll(NULL)
-	, m_ctrlLogSome(NULL)
-	, m_ctrlNames(NULL)
-	, m_ctrlQsAll(NULL)
-	, m_ctrlQsQs(NULL)
-	, m_ctrlQsNonQs(NULL)
-	, m_ctrlVenueAll(NULL)
-	, m_ctrlVenueSome(NULL)
-	, m_ctrlVenue(NULL)
+	, m_ctrlFilters(nullptr)
+	, m_ctrlDatesAll(nullptr)
+	, m_ctrlDatesSome(nullptr)
+	, m_ctrlDateStartCheck(nullptr)
+	, m_ctrlDateStart(nullptr)
+	, m_ctrlDateEndCheck(nullptr)
+	, m_ctrlDateEnd(nullptr)
+	, m_ctrlLogAll(nullptr)
+	, m_ctrlLogSome(nullptr)
+	, m_ctrlNames(nullptr)
+	, m_ctrlQsAll(nullptr)
+	, m_ctrlQsQs(nullptr)
+	, m_ctrlQsNonQs(nullptr)
+	, m_ctrlVenueAll(nullptr)
+	, m_ctrlVenueSome(nullptr)
+	, m_ctrlVenue(nullptr)
 {
 	// Controls (these are done first to control tab order)
 
@@ -83,7 +83,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	m_ctrlFilters = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN,
+		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_FilterName, TRIMVALIDATOR_TRIM_BOTH));
 	BIND_OR_CONNECT_CTRL(m_ctrlFilters, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnSelchangeFilterNames);
 	m_ctrlFilters->SetHelpText(_("HIDC_OPT_FILTER_NAMES"));
@@ -203,7 +203,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	m_ctrlNames = new wxCheckListBox(this, wxID_ANY,
 		wxDefaultPosition, wxSize(-1, 80),
-		0, NULL, wxLB_SORT);
+		0, nullptr, wxLB_SORT);
 	BIND_OR_CONNECT_CTRL(m_ctrlNames, wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterLogNames);
 	m_ctrlNames->SetHelpText(_("HIDC_OPT_FILTER_LOG_NAME"));
 	m_ctrlNames->SetToolTip(_("HIDC_OPT_FILTER_LOG_NAME"));

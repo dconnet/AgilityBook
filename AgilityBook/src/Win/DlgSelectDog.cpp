@@ -47,7 +47,7 @@ CDlgSelectDog::CDlgSelectDog(
 	, m_pDoc(pDoc)
 	, m_outDogs(outDogs)
 	, m_Dogs()
-	, m_checkList(NULL)
+	, m_checkList(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)

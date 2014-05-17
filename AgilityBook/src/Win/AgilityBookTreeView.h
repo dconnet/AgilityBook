@@ -99,7 +99,7 @@ public:
 	virtual void OnDraw(wxDC* dc);
 	virtual void OnUpdate(
 			wxView* sender,
-			wxObject* inHint = NULL);
+			wxObject* inHint = nullptr);
 
 	// Allow access to tree control
 	void Freeze()								{m_Ctrl->Freeze();}

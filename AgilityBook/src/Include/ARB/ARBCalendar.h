@@ -436,7 +436,7 @@ public:
 	bool FindCalendar(
 			ARBCalendarPtr inCal,
 			bool inMatchExact,
-			ARBCalendarPtr* outCal = NULL) const;
+			ARBCalendarPtr* outCal = nullptr) const;
 
 	/**
 	 * Add a calendar entry to the list.

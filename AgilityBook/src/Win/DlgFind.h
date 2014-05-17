@@ -63,7 +63,7 @@ class CDlgFind : public wxDialog
 public:
 	CDlgFind(
 			IFindCallback& callback,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	IFindCallback& m_Callback;

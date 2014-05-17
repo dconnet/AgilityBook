@@ -22,7 +22,7 @@ class CTextCtrl;
 class CDlgConfigUpdate : public wxDialog
 {
 public:
-	CDlgConfigUpdate(wxWindow* parent = NULL);
+	CDlgConfigUpdate(wxWindow* parent = nullptr);
 
 	ARBConfig& GetConfig()		{return m_Book.GetConfig();}
 	// This should not be called if the dialog was flown. It is intended

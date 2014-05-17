@@ -42,7 +42,7 @@
 
 
 CDlgARBHelp::CDlgARBHelp()
-	: wxWizard(NULL, wxID_ANY, L"Agility Record Book Helper", wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+	: wxWizard(nullptr, wxID_ANY, L"Agility Record Book Helper", wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
 	wxIconBundle icons;
 	icons.AddIcon(wxIcon(AgilityBook16_xpm));
@@ -120,7 +120,7 @@ std::wstring CDlgARBHelp::GetEncodedData()
 		if (!(*iFile).second)
 			rawdata << L": Skipped";
 		rawdata << L"\n";
-		if (fileName.GetTimes(NULL, &dtMod, &dtCreate))
+		if (fileName.GetTimes(nullptr, &dtMod, &dtCreate))
 		{
 			rawdata << L"Created: " << dtCreate.Format().wx_str() << L"\n"
 				<< L"Modified: " << dtMod.Format().wx_str() << L"\n";

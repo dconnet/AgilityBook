@@ -33,7 +33,7 @@ CAgilityBookBaseExtraView::CAgilityBookBaseExtraView(
 		CTabView* pTabView,
 		wxDocument* doc)
 	: m_pTabView(pTabView)
-	, m_parentPanel(NULL)
+	, m_parentPanel(nullptr)
 	, m_bIgnore(false)
 {
 	SetDocument(doc);

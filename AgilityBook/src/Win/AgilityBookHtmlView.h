@@ -87,7 +87,7 @@ public:
 	virtual void OnDraw(wxDC* dc);
 	virtual void OnUpdate(
 			wxView* sender,
-			wxObject* inHint = NULL);
+			wxObject* inHint = nullptr);
 
 private:
 	wxString RawHtml(

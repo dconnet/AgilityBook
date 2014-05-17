@@ -225,10 +225,10 @@ SUITE(TestConfigMultiQList)
 		//	bool FindMultiQ(
 		//			std::wstring const& inName,
 		//			bool inUseShortName = false,
-		//			ARBConfigMultiQPtr* outMultiQ = NULL) const;
+		//			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
 		//	bool FindMultiQ(
 		//			ARBConfigMultiQ const& inMultiQ,
-		//			ARBConfigMultiQPtr* outMultiQ = NULL) const;
+		//			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
 		}
 	}
 

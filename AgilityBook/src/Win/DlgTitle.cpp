@@ -71,12 +71,12 @@ CDlgTitle::CDlgTitle(
 	, m_Titles(titles)
 	, m_pTitle(pTitle)
 	, m_newTitle()
-	, m_ctrlDate(NULL)
-	, m_ctrlReceived(NULL)
-	, m_ctrlVenues(NULL)
-	, m_ctrlHide(NULL)
-	, m_ctrlTitles(NULL)
-	, m_ctrlDesc(NULL)
+	, m_ctrlDate(nullptr)
+	, m_ctrlReceived(nullptr)
+	, m_ctrlVenues(nullptr)
+	, m_ctrlHide(nullptr)
+	, m_ctrlTitles(nullptr)
+	, m_ctrlDesc(nullptr)
 	, m_Venue()
 	, m_bEarned(true)
 	, m_bHidden(false)
@@ -156,7 +156,7 @@ CDlgTitle::CDlgTitle(
 
 	m_ctrlTitles = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY);
 	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgTitle::OnSelchangeTitles);
 	m_ctrlTitles->SetHelpText(_("HIDC_TITLE_TITLES"));

@@ -27,7 +27,7 @@ public:
 	CDlgSelectDog(
 			CAgilityBookDoc* pDoc,
 			std::vector<ARBDogPtr>& outDogs,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	int ShowModal();
 

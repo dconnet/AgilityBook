@@ -143,7 +143,7 @@ public:
 	 * @param outClub Pointer to first club.
 	 * @return Whether there is a primary club.
 	 */
-	bool GetPrimaryClub(ARBDogClubPtr* outClub = NULL) const;
+	bool GetPrimaryClub(ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
 	 * Get the primary club's name.
@@ -177,8 +177,8 @@ public:
 			std::wstring const& inLevel,
 			ARBDate const& inDate,
 			ARBErrorCallback& ioCallback,
-			ARBConfigEventPtr* outEvent = NULL,
-			ARBConfigScoringPtr* outScoring = NULL) const;
+			ARBConfigEventPtr* outEvent = nullptr,
+			ARBConfigScoringPtr* outScoring = nullptr) const;
 
 	/**
 	 * Find a club that uses the specified venue.
@@ -188,7 +188,7 @@ public:
 	 */
 	bool FindVenue(
 			std::wstring const& inVenue,
-			ARBDogClubPtr* outClub = NULL) const;
+			ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
 	 * Add a club.
@@ -200,7 +200,7 @@ public:
 	bool AddClub(
 			std::wstring const& inName,
 			std::wstring const& inVenue,
-			ARBDogClubPtr* outClub = NULL);
+			ARBDogClubPtr* outClub = nullptr);
 
 	/**
 	 * Delete a club.

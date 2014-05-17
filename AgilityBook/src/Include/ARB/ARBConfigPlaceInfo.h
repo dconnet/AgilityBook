@@ -157,7 +157,7 @@ public:
 	 */
 	bool FindPlaceInfo(
 			short inPlace,
-			ARBConfigPlaceInfoPtr* outPlace = NULL) const;
+			ARBConfigPlaceInfoPtr* outPlace = nullptr) const;
 
 	/**
 	 * Add an object.
@@ -171,7 +171,7 @@ public:
 			short inPlace,
 			double inValue,
 			bool inMustQ,
-			ARBConfigPlaceInfoPtr* outPlace = NULL);
+			ARBConfigPlaceInfoPtr* outPlace = nullptr);
 
 	/**
 	 * Delete an object.

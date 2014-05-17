@@ -37,7 +37,7 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBDogExistingPointsList& points,
 			ARBDogExistingPointsPtr pExistingPoints,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	ARBDogExistingPoints::PointType GetCurrentType() const;

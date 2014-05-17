@@ -152,7 +152,7 @@ public:
 	 */
 	bool FindLifetimePoints(
 			double inFaults,
-			ARBConfigLifetimePointsPtr* outPoints = NULL) const;
+			ARBConfigLifetimePointsPtr* outPoints = nullptr) const;
 
 	/**
 	 * Add an object.
@@ -164,7 +164,7 @@ public:
 	bool AddLifetimePoints(
 			double inPoints,
 			double inFaults,
-			ARBConfigLifetimePointsPtr* outPoints = NULL);
+			ARBConfigLifetimePointsPtr* outPoints = nullptr);
 
 	/**
 	 * Delete an object.

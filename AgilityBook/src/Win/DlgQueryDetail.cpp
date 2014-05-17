@@ -48,9 +48,9 @@ CDlgQueryDetail::CDlgQueryDetail(
 	, m_ReadOnly(bReadOnly)
 	, m_Config(inConfig)
 	, m_strCode(inCode)
-	, m_ctrlCode(NULL)
+	, m_ctrlCode(nullptr)
 	, m_strName(inName)
-	, m_ctrlVenues(NULL)
+	, m_ctrlVenues(nullptr)
 	, m_Code(inCode)
 	, m_Name(inName)
 {
@@ -80,7 +80,7 @@ CDlgQueryDetail::CDlgQueryDetail(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLocation->Wrap(-1);
 
-	wxWindow* ctrlLocationOrVenue = NULL;
+	wxWindow* ctrlLocationOrVenue = nullptr;
 	if (!bReadOnly && m_Config)
 	{
 		if (m_Name.empty())

@@ -40,7 +40,7 @@ public:
 			double inPoints,
 			ETitlePointType inType,
 			ARBPointsType inTypeNormal,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	double Faults() const	{return m_Faults;}
 	short Place() const		{return m_Place;}

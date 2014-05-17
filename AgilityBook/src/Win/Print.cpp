@@ -152,7 +152,7 @@ void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pag
 	int pageW, pageH;
 	GetPageSizeMM(&pageW, &pageH);
 	long width, height;
-	CAgilityBookOptions::GetRunPageSize(true, width, height, NULL);
+	CAgilityBookOptions::GetRunPageSize(true, width, height, nullptr);
 	// This logic should match OnPrintPage
 	if (0 < width && 0 < height)
 	{
@@ -595,7 +595,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 					run->GetDivision(),
 					run->GetLevel(),
 					run->GetDate(),
-					NULL,
+					nullptr,
 					&pScoring);
 			double timeFaults = run->GetScoring().GetTimeFaults(pScoring);
 			if (run->GetQ().AllowTally()
@@ -889,7 +889,7 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 	wxRect rSheet = GetLogicalPaperRect(); // negative x
 
 	long marginL, marginR, marginT, marginB;
-	CAgilityBookOptions::GetPrinterMargins(false, marginL, marginR, marginT, marginB, NULL);
+	CAgilityBookOptions::GetPrinterMargins(false, marginL, marginR, marginT, marginB, nullptr);
 	marginL = static_cast<long>((marginL * m_OneInch) / 100.0);
 	marginR = static_cast<long>((marginR * m_OneInch) / 100.0);
 	marginT = static_cast<long>((marginT * m_OneInch) / 100.0);
@@ -897,7 +897,7 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 
 	bool bPrintBox = false;
 	long width, height;
-	CAgilityBookOptions::GetRunPageSize(false, width, height, NULL);
+	CAgilityBookOptions::GetRunPageSize(false, width, height, nullptr);
 	// This logic should match GetPageInfo
 	if (0 < width && 0 < height)
 	{
@@ -983,7 +983,7 @@ CHtmlEasyPrinting::CHtmlEasyPrinting(wxWindow* parent)
 	//SetFooter(L"<hr/><p align=\"right\">@TITLE@ (@PAGENUM@/@PAGESCNT@)</p>", wxPAGE_ALL);
 
 	long leftMargin, rightMargin, topMargin, bottomMargin;
-	CAgilityBookOptions::GetPrinterMargins(true, leftMargin, rightMargin, topMargin, bottomMargin, NULL);
+	CAgilityBookOptions::GetPrinterMargins(true, leftMargin, rightMargin, topMargin, bottomMargin, nullptr);
 	wxPageSetupDialogData* pSetup = GetPageSetupData();
 	pSetup->SetMarginTopLeft(wxPoint(leftMargin, topMargin));
 	pSetup->SetMarginBottomRight(wxPoint(rightMargin, bottomMargin));

@@ -107,10 +107,10 @@ CDlgInfoNote::CDlgInfoNote(
 	, m_Names()
 	, m_nAdded(0)
 	, m_CurSel()
-	, m_ctrlNames(NULL)
-	, m_ctrlDelete(NULL)
-	, m_ctrlVisible(NULL)
-	, m_ctrlNotes(NULL)
+	, m_ctrlNames(nullptr)
+	, m_ctrlDelete(nullptr)
+	, m_ctrlVisible(nullptr)
+	, m_ctrlNotes(nullptr)
 	, m_None(CImageManager::Get()->InfoEmpty())
 	, m_Note(CImageManager::Get()->InfoNote())
 	, m_Added(CImageManager::Get()->InfoNoteAdded())
@@ -164,7 +164,7 @@ CDlgInfoNote::CDlgInfoNote(
 
 	m_ctrlNames = new wxBitmapComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
 	BIND_OR_CONNECT_CTRL(m_ctrlNames, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgInfoNote::OnSelchangeName);
 	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));

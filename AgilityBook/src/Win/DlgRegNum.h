@@ -28,7 +28,7 @@ public:
 			ARBConfig const& config,
 			ARBDogRegNumList& regnums,
 			ARBDogRegNumPtr pRegNum,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	ARBDogRegNumList& m_RegNums;

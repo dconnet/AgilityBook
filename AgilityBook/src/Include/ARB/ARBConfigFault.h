@@ -131,7 +131,7 @@ public:
 	 */
 	bool FindFault(
 			std::wstring const& inName,
-			ARBConfigFaultPtr* outFault = NULL) const;
+			ARBConfigFaultPtr* outFault = nullptr) const;
 
 	/**
 	 * Add a fault.
@@ -141,7 +141,7 @@ public:
 	 */
 	bool AddFault(
 			std::wstring const& inName,
-			ARBConfigFaultPtr* outFault = NULL);
+			ARBConfigFaultPtr* outFault = nullptr);
 
 	/**
 	 * Delete the fault.

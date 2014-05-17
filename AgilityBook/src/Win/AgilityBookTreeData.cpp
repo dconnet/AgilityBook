@@ -98,7 +98,7 @@ static bool EditDog(
 	CDlgDog dlg(pTree->GetDocument(), pDog, wxGetApp().GetTopWindow(), nPage);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		pDogData = NULL; // Tree may have reloaded.
+		pDogData = nullptr; // Tree may have reloaded.
 		bOk = true;
 		if (bAdd)
 		{
@@ -192,7 +192,7 @@ static bool EditTrial(
 		if (bOk)
 		{
 			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+			pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 	}
 	return bOk;
@@ -284,7 +284,7 @@ static bool EditRun(
 		if (bOk)
 		{
 			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+			pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 	}
 	return bOk;
@@ -387,7 +387,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					{
 						pTrial->SetMultiQs(m_pTree->GetDocument()->Book().GetConfig());
 						CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-						m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+						m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
 					}
 				}
 			}
@@ -437,7 +437,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						{
 							pNewTrial->SetMultiQs(m_pTree->GetDocument()->Book().GetConfig());
 							CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-							m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+							m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
 						}
 					}
 				}
@@ -554,7 +554,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 			m_pTree->GetDocument()->Book().GetDogs().AddDog(pDog);
 			bModified = true;
 			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
-			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+			m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 		break;
 	case wxID_CUT:
@@ -586,7 +586,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		EditDog(this, m_pTree, bTreeSelectionSet);
 		break;
 	case ID_AGILITY_NEW_TRIAL:
-		if (EditTrial(this, NULL, m_pTree, bTreeSelectionSet))
+		if (EditTrial(this, nullptr, m_pTree, bTreeSelectionSet))
 			bModified = true;
 		break;
 	case ID_AGILITY_NEW_TITLE:
@@ -605,7 +605,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 				m_pTree->Delete(GetId());
 				bModified = true;
 				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
-				pDoc->UpdateAllViews(NULL, &hint);
+				pDoc->UpdateAllViews(nullptr, &hint);
 			}
 		}
 		break;
@@ -705,7 +705,7 @@ void CAgilityBookTreeDataDog::Properties()
 	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 	// This may delete 'this'.
 	bool bModified = false;
-	if (OnCmd(ID_AGILITY_EDIT_DOG, bModified, NULL))
+	if (OnCmd(ID_AGILITY_EDIT_DOG, bModified, nullptr))
 	{
 		if (bModified)
 			pDoc->Modify(true);
@@ -758,7 +758,7 @@ ARBDogPtr CAgilityBookTreeDataTrial::GetDog()
 CAgilityBookTreeDataDog const* CAgilityBookTreeDataTrial::GetDataDog() const
 {
 	if (!GetId().IsOk())
-		return NULL;
+		return nullptr;
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData const* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataDog const* pDog = dynamic_cast<CAgilityBookTreeDataDog const*>(pData);
@@ -770,7 +770,7 @@ CAgilityBookTreeDataDog const* CAgilityBookTreeDataTrial::GetDataDog() const
 CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
 {
 	if (!GetId().IsOk())
-		return NULL;
+		return nullptr;
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataDog* pDog = dynamic_cast<CAgilityBookTreeDataDog*>(pData);
@@ -841,7 +841,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 			GetDog()->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst());
 			bModified = true;
 			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
-			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+			m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 		break;
 	case wxID_CUT:
@@ -874,12 +874,12 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 			bModified = true;
 		break;
 	case ID_AGILITY_NEW_TRIAL:
-		if (EditTrial(GetDataDog(), NULL, m_pTree, bTreeSelectionSet))
+		if (EditTrial(GetDataDog(), nullptr, m_pTree, bTreeSelectionSet))
 			bModified = true;
 		break;
 	case ID_AGILITY_NEW_RUN:
 		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
-			if (EditRun(GetDataDog(), this, NULL, m_pTree, bTreeSelectionSet))
+			if (EditRun(GetDataDog(), this, nullptr, m_pTree, bTreeSelectionSet))
 				bModified = true;
 		break;
 	case ID_AGILITY_NEW_TITLE:
@@ -897,7 +897,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 				m_pTree->Delete(GetId());
 				bModified = true;
 				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
-				pDoc->UpdateAllViews(NULL, &hint);
+				pDoc->UpdateAllViews(nullptr, &hint);
 			}
 		}
 		break;
@@ -1037,7 +1037,7 @@ void CAgilityBookTreeDataTrial::Properties()
 	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 	// This may delete 'this'.
 	bool bModified = false;
-	if (OnCmd(ID_AGILITY_EDIT_TRIAL, bModified, NULL))
+	if (OnCmd(ID_AGILITY_EDIT_TRIAL, bModified, nullptr))
 	{
 		if (bModified)
 			pDoc->Modify(true);
@@ -1095,7 +1095,7 @@ ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial()
 CAgilityBookTreeDataDog const* CAgilityBookTreeDataRun::GetDataDog() const
 {
 	if (!GetId().IsOk())
-		return NULL;
+		return nullptr;
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData const* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
@@ -1107,7 +1107,7 @@ CAgilityBookTreeDataDog const* CAgilityBookTreeDataRun::GetDataDog() const
 CAgilityBookTreeDataTrial const* CAgilityBookTreeDataRun::GetDataTrial() const
 {
 	if (!GetId().IsOk())
-		return NULL;
+		return nullptr;
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData const* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
@@ -1119,7 +1119,7 @@ CAgilityBookTreeDataTrial const* CAgilityBookTreeDataRun::GetDataTrial() const
 CAgilityBookTreeDataDog* CAgilityBookTreeDataRun::GetDataDog()
 {
 	if (!GetId().IsOk())
-		return NULL;
+		return nullptr;
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
@@ -1131,7 +1131,7 @@ CAgilityBookTreeDataDog* CAgilityBookTreeDataRun::GetDataDog()
 CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
 {
 	if (!GetId().IsOk())
-		return NULL;
+		return nullptr;
 	wxTreeItemId hParent = m_pTree->GetItemParent(GetId());
 	CAgilityBookTreeData* pData = m_pTree->GetTreeItem(hParent);
 	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
@@ -1202,7 +1202,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			GetTrial()->GetRuns().sort();
 			bModified = true;
 			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
-			m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
+			m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 		break;
 	case wxID_CUT:
@@ -1219,7 +1219,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			{
 				wxBusyCursor wait;
 				ElementNodePtr tree(ElementNode::New(CLIPDATA));
-				GetRun()->Save(tree, NULL, m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
+				GetRun()->Save(tree, nullptr, m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
 				clpData.AddData(eFormatRun, tree);
 				clpData.AddData(m_pTree->GetPrintLine(GetId()));
 				clpData.CommitData();
@@ -1235,12 +1235,12 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			bModified = true;
 		break;
 	case ID_AGILITY_NEW_TRIAL:
-		if (EditTrial(GetDataDog(), NULL, m_pTree, bTreeSelectionSet))
+		if (EditTrial(GetDataDog(), nullptr, m_pTree, bTreeSelectionSet))
 			bModified = true;
 		break;
 	case ID_AGILITY_NEW_RUN:
 		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
-			if (EditRun(GetDataDog(), GetDataTrial(), NULL, m_pTree, bTreeSelectionSet))
+			if (EditRun(GetDataDog(), GetDataTrial(), nullptr, m_pTree, bTreeSelectionSet))
 				bModified = true;
 		break;
 	case ID_AGILITY_NEW_TITLE:
@@ -1269,7 +1269,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 				}
 				bModified = true;
 				CUpdateHint hint(updateHint);
-				pDoc->UpdateAllViews(NULL, &hint);
+				pDoc->UpdateAllViews(nullptr, &hint);
 			}
 		}
 		break;
@@ -1361,7 +1361,7 @@ void CAgilityBookTreeDataRun::Properties()
 	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 	// This may delete 'this'.
 	bool bModified = false;
-	if (OnCmd(ID_AGILITY_EDIT_RUN, bModified, NULL))
+	if (OnCmd(ID_AGILITY_EDIT_RUN, bModified, nullptr))
 	{
 		if (bModified)
 			pDoc->Modify(true);

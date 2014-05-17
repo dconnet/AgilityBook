@@ -54,7 +54,7 @@ CDlgConfigureDataBase::CDlgConfigureDataBase(CDlgConfigVenue* pDlg)
 ////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr venue)
-	: CDlgConfigureDataBase(NULL)
+	: CDlgConfigureDataBase(nullptr)
 	, m_Venue(venue)
 {
 }
@@ -96,7 +96,7 @@ std::wstring CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr fault)
-	: CDlgConfigureDataBase(NULL)
+	: CDlgConfigureDataBase(nullptr)
 	, m_Fault(fault)
 {
 }
@@ -116,7 +116,7 @@ std::wstring CDlgConfigureDataFault::OnNeedText(int iColumn) const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints)
-	: CDlgConfigureDataBase(NULL)
+	: CDlgConfigureDataBase(nullptr)
 	, m_OtherPoints(otherPoints)
 {
 }
@@ -258,7 +258,7 @@ CDlgConfigureDataBase* CDlgConfigureDataDivision::DoMove(bool bUp)
 {
 	if (m_pDlg->m_pVenue->GetDivisions().Move(m_Div, bUp ? -1 : 1))
 		return new CDlgConfigureDataDivision(m_pDlg, m_Div);
-	return NULL;
+	return nullptr;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -422,7 +422,7 @@ CDlgConfigureDataBase* CDlgConfigureDataLevel::DoMove(bool bUp)
 {
 	if (m_Division->GetLevels().Move(m_Level, bUp ? -1 : 1))
 		return new CDlgConfigureDataLevel(m_pDlg, m_Division, m_Level);
-	return NULL;
+	return nullptr;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -523,7 +523,7 @@ CDlgConfigureDataBase* CDlgConfigureDataSubLevel::DoMove(bool bUp)
 {
 	if (m_Level->GetSubLevels().Move(m_SubLevel, bUp ? -1 : 1))
 		return new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, m_SubLevel);
-	return NULL;
+	return nullptr;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -651,7 +651,7 @@ CDlgConfigureDataBase* CDlgConfigureDataTitle::DoMove(bool bUp)
 {
 	if (m_pDlg->m_pVenue->GetTitles().Move(m_Title, bUp ? -1 : 1))
 		return new CDlgConfigureDataTitle(m_pDlg, m_Title);
-	return NULL;
+	return nullptr;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -733,7 +733,7 @@ CDlgConfigureDataBase* CDlgConfigureDataEvent::DoMove(bool bUp)
 {
 	if (m_pDlg->m_pVenue->GetEvents().Move(m_Event, bUp ? -1 : 1))
 		return new CDlgConfigureDataEvent(m_pDlg, m_Event);
-	return NULL;
+	return nullptr;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -820,5 +820,5 @@ CDlgConfigureDataBase* CDlgConfigureDataMultiQ::DoMove(bool bUp)
 {
 	if (m_pDlg->m_pVenue->GetMultiQs().Move(m_MultiQ, bUp ? -1 : 1))
 		return new CDlgConfigureDataMultiQ(m_pDlg, m_MultiQ);
-	return NULL;
+	return nullptr;
 }

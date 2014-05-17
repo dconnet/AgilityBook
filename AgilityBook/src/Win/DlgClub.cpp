@@ -50,8 +50,8 @@ CDlgClub::CDlgClub(
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_pClub(pClub)
-	, m_ctrlClubs(NULL)
-	, m_ctrlVenues(NULL)
+	, m_ctrlClubs(nullptr)
+	, m_ctrlVenues(nullptr)
 	, m_Club()
 	, m_Venue()
 {

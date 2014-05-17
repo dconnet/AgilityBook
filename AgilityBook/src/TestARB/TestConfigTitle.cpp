@@ -184,7 +184,7 @@ SUITE(TestConfigTitleList)
 		//			short inInstance,
 		//			bool bShowInstance,
 		//			bool bAbbrevFirst = true,
-		//			ARBConfigTitlePtr* outTitle = NULL) const;
+		//			ARBConfigTitlePtr* outTitle = nullptr) const;
 		}
 	}
 
@@ -196,7 +196,7 @@ SUITE(TestConfigTitleList)
 			TODO_TEST
 		//	bool FindTitle(
 		//			std::wstring const& inName,
-		//			ARBConfigTitlePtr* outTitle = NULL) const;
+		//			ARBConfigTitlePtr* outTitle = nullptr) const;
 		}
 	}
 
@@ -208,7 +208,7 @@ SUITE(TestConfigTitleList)
 			TODO_TEST
 		//	bool AddTitle(
 		//			std::wstring const& inName,
-		//			ARBConfigTitlePtr* outTitle = NULL);
+		//			ARBConfigTitlePtr* outTitle = nullptr);
 		//	bool AddTitle(ARBConfigTitlePtr inTitle);
 		//	bool DeleteTitle(std::wstring const& inName);
 		}

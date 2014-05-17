@@ -76,7 +76,7 @@ public:
 			ARBDogPtr pDog,
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
-			wxWindow* pParent = NULL,
+			wxWindow* pParent = nullptr,
 			int iSelectPage = 0);
 
 	CDlgDogRefRunDataPtr GetReferenceDataByData(long index) const;

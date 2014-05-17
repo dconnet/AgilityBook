@@ -45,9 +45,9 @@ END_EVENT_TABLE()
 
 CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	: wxDialog()
-	, m_radioDefault(NULL)
-	, m_radioExisting(NULL)
-	, m_btnPick(NULL)
+	, m_radioDefault(nullptr)
+	, m_radioExisting(nullptr)
+	, m_btnPick(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -205,7 +205,7 @@ void CDlgConfigUpdate::OnOk(wxCommandEvent& evt)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
-		wchar_t const* pFile = NULL;
+		wchar_t const* pFile = nullptr;
 		wxString source(m_FileName->GetValue());
 		if (m_radioExisting->GetValue())
 			pFile = source;

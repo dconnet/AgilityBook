@@ -126,45 +126,45 @@ public:
 			std::wstring const& inCaption,
 			RunInfoData const* inData,
 			std::list<RunInfo> const& inRuns,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	// Viewing runs affected by configuration changes
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
 			std::wstring const& inCaption,
 			std::list<ScoringRunInfo> const& inScoringRuns,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	// Viewing multi-Qs
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
 			std::wstring const& inCaption,
 			MultiQInfoData const* inData,
 			std::set<MultiQdata> const& inMQs,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	// Viewing lifetime data
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
 			std::wstring const& inCaption,
 			std::list<LifeTimePointInfoPtr> const& inLifetime,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	// Viewing other points
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
 			std::wstring const& inCaption,
 			std::list<OtherPtInfo> const& inRunList,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	// Viewing Info
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
 			std::wstring const& inCaption,
 			std::vector<CFindItemInfo> const& inItems,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	CDlgListViewerDataPtr GetDataByData(long data) const;
 
 private:
 	bool Create(
 			std::wstring const& inCaption,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	void FinishCreate();
 
 	CReportListCtrl* m_ctrlList;

@@ -48,18 +48,18 @@ public:
 			ARBDate const& date,
 			std::vector<ARBCalendarPtr> const* entries,
 			CTabView* pTabView,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	// Faults, Partners
 	CDlgListCtrl(
 			WhatToList inType,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr run,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	// OtherPoints
 	CDlgListCtrl(
 			ARBConfig& pConfig,
 			ARBDogRunPtr run,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	void GetAllPartners(
 			std::set<std::wstring>& ioPartners,

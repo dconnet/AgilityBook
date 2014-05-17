@@ -25,7 +25,7 @@ class CQualifyingValidator : public wxValidator
 {
 DECLARE_CLASS(CQualifyingValidator)
 public:
-	CQualifyingValidator(ARB_Q* valPtr = NULL, bool bAllowNoSel = false);
+	CQualifyingValidator(ARB_Q* valPtr = nullptr, bool bAllowNoSel = false);
 	CQualifyingValidator(CQualifyingValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CQualifyingValidator(*this);}

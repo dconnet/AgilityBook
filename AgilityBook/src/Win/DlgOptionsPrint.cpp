@@ -42,14 +42,14 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	, m_Right(0.0)
 	, m_Top(0.0)
 	, m_Bottom(0.0)
-	, m_ctrlFontPrint(NULL)
-	, m_Orientation(NULL)
-	, m_Metric(NULL)
+	, m_ctrlFontPrint(nullptr)
+	, m_Orientation(nullptr)
+	, m_Metric(nullptr)
 {
 	CAgilityBookOptions::GetPrinterFontInfo(m_fontPrintInfo);
 	m_fontPrintInfo.CreateFont(m_fontPrint);
 	long l, r, t, b;
-	CAgilityBookOptions::GetPrinterMargins(m_MetricSizes, l, r, t, b, NULL);
+	CAgilityBookOptions::GetPrinterMargins(m_MetricSizes, l, r, t, b, nullptr);
 	m_Left = l;
 	m_Right = r;
 	m_Top = t;
@@ -61,7 +61,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 		m_Top /= 100.0;
 		m_Bottom /= 100.0;
 	}
-	CAgilityBookOptions::GetRunPageSize(m_MetricSizes, l, r, NULL);
+	CAgilityBookOptions::GetRunPageSize(m_MetricSizes, l, r, nullptr);
 	m_PageRunWidth = l;
 	m_PageRunHeight = r;
 	if (!m_MetricSizes)

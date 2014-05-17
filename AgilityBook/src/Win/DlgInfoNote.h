@@ -35,7 +35,7 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBInfo::eInfoType inType,
 			std::wstring const& inSelect,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	std::wstring CurrentSelection() const;
 

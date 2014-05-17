@@ -164,7 +164,7 @@ SUITE(TestConfigScoringList)
 		//			std::wstring const& inDivision,
 		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
-		//			ARBConfigScoringPtr* outEvent = NULL) const;
+		//			ARBConfigScoringPtr* outEvent = nullptr) const;
 		}
 	}
 

@@ -136,25 +136,25 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_bHasPartners(m_pEvent->HasPartner())
 	, m_bHasSubNames(m_pEvent->HasSubNames())
 	, m_Desc(StringUtil::stringWX(m_pEvent->GetDesc()))
-	, m_ctrlName(NULL)
-	, m_ctrlSubNames(NULL)
-	, m_ctrlSubNamesNew(NULL)
-	, m_ctrlSubNamesEdit(NULL)
-	, m_ctrlSubNamesDelete(NULL)
-	, m_ctrlNew(NULL)
-	, m_ctrlEdit(NULL)
-	, m_ctrlDelete(NULL)
-	, m_ctrlCopy(NULL)
-	, m_ctrlUp(NULL)
-	, m_ctrlDown(NULL)
-	, m_ctrlMethods(NULL)
-	, m_ctrlUnused(NULL)
-	, m_ctrlInfo(NULL)
-	, m_ctrlPointsList(NULL)
-	, m_ctrlPointsNew(NULL)
-	, m_ctrlPointsEdit(NULL)
-	, m_ctrlPointsDelete(NULL)
-	, m_ctrlNote(NULL)
+	, m_ctrlName(nullptr)
+	, m_ctrlSubNames(nullptr)
+	, m_ctrlSubNamesNew(nullptr)
+	, m_ctrlSubNamesEdit(nullptr)
+	, m_ctrlSubNamesDelete(nullptr)
+	, m_ctrlNew(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlDelete(nullptr)
+	, m_ctrlCopy(nullptr)
+	, m_ctrlUp(nullptr)
+	, m_ctrlDown(nullptr)
+	, m_ctrlMethods(nullptr)
+	, m_ctrlUnused(nullptr)
+	, m_ctrlInfo(nullptr)
+	, m_ctrlPointsList(nullptr)
+	, m_ctrlPointsNew(nullptr)
+	, m_ctrlPointsEdit(nullptr)
+	, m_ctrlPointsDelete(nullptr)
+	, m_ctrlNote(nullptr)
 	, m_idxMethod(-1)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
@@ -217,7 +217,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	m_ctrlSubNames = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxLB_SINGLE|wxLB_SORT);
+		0, nullptr, wxLB_SINGLE|wxLB_SORT);
 	BIND_OR_CONNECT_CTRL(m_ctrlSubNames, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgConfigEvent::OnLbnSelchangeSubnames);
 	BIND_OR_CONNECT_CTRL(m_ctrlSubNames, wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler, CDlgConfigEvent::OnLbnDblclkSubnames);
 	m_ctrlSubNames->SetHelpText(_("HIDC_CONFIG_EVENT_SUBNAMES"));
@@ -251,7 +251,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	m_ctrlMethods = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, 0);
+		0, nullptr, 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlMethods, wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler, CDlgConfigEvent::OnLbnDblclkMethods);
 	BIND_OR_CONNECT_CTRL(m_ctrlMethods, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgConfigEvent::OnLbnSelchangeMethods);
 	m_ctrlMethods->SetHelpText(_("HIDC_CONFIG_EVENT_METHODS"));
@@ -306,7 +306,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	m_ctrlUnused = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, 0);
+		0, nullptr, 0);
 	m_ctrlUnused->SetHelpText(_("HIDC_CONFIG_EVENT_UNUSED"));
 	m_ctrlUnused->SetToolTip(_("HIDC_CONFIG_EVENT_UNUSED"));
 	m_ctrlUnused->Enable(false);
@@ -325,7 +325,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	m_ctrlPointsList = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxLB_SINGLE);
+		0, nullptr, wxLB_SINGLE);
 	BIND_OR_CONNECT_CTRL(m_ctrlPointsList, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgConfigEvent::OnSelchangePoints);
 	BIND_OR_CONNECT_CTRL(m_ctrlPointsList, wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler, CDlgConfigEvent::OnDblclkPoints);
 	m_ctrlPointsList->SetHelpText(_("HIDC_CONFIG_EVENT_POINTS"));

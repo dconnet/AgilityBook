@@ -27,7 +27,7 @@ public:
 	CDlgPluginDetails(
 			ARBConfig& inConfig,
 			ARBConfigCalSitePtr calSite,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	void SetCodeText();

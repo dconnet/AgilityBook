@@ -115,7 +115,7 @@ public:
 
 	void Connect();
 
-	bool isValid() const					{return NULL != m_pSite;}
+	bool isValid() const					{return !!m_pSite;}
 	void Unload(bool bPermanently = false);
 
 	std::wstring GetID() const				{return m_pSite->GetID();}
@@ -149,7 +149,7 @@ public:
 	CDlgCalendarPlugins(
 			CAgilityBookDoc* pDoc,
 			std::vector<CalSiteDataPtr>& directAccess,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	void UpdateControls();
@@ -182,7 +182,7 @@ private:
 
 CProgressMeter::CProgressMeter(int nEntries, wxWindow* pParent)
 	: m_nEntries(nEntries)
-	, m_pProgress(NULL)
+	, m_pProgress(nullptr)
 {
 	short nBars = 1;
 	if (1 < m_nEntries)
@@ -211,7 +211,7 @@ void CProgressMeter::Dismiss()
 	if (m_pProgress)
 	{
 		m_pProgress->Dismiss();
-		m_pProgress = NULL;
+		m_pProgress = nullptr;
 	}
 }
 
@@ -312,7 +312,7 @@ CalSiteData::~CalSiteData()
 {
 	Unload();
 	delete m_pSite;
-	m_pSite = NULL;
+	m_pSite = nullptr;
 }
 
 
@@ -721,14 +721,14 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 		std::vector<CalSiteDataPtr>& directAccess,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlPlugins(NULL)
-	, m_ctrlDetails(NULL)
-	, m_ctrlRead(NULL)
-	, m_ctrlAdd(NULL)
-	, m_ctrlEnable(NULL)
-	, m_ctrlQuery(NULL)
-	, m_ctrlEdit(NULL)
-	, m_ctrlDelete(NULL)
+	, m_ctrlPlugins(nullptr)
+	, m_ctrlDetails(nullptr)
+	, m_ctrlRead(nullptr)
+	, m_ctrlAdd(nullptr)
+	, m_ctrlEnable(nullptr)
+	, m_ctrlQuery(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlDelete(nullptr)
 	, m_pDoc(pDoc)
 	, m_DirectAccess(directAccess)
 {
@@ -893,15 +893,15 @@ void CDlgCalendarPlugins::UpdateControls()
 	m_ctrlRead->Enable(0 < nChecked);
 	m_ctrlAdd->Enable(0 < nCalItems);
 	hItem = m_ctrlPlugins->GetSelection();
-	CPluginData* pData = NULL;
+	CPluginData* pData = nullptr;
 	if (hItem)
 	{
 		pData = dynamic_cast<CPluginData*>(m_ctrlPlugins->GetItemData(hItem));
 	}
-	m_ctrlEnable->Enable(pData != NULL && !pData->isValid());
-	m_ctrlQuery->Enable(pData != NULL && pData->HasQueryDetails());
-	m_ctrlEdit->Enable(pData != NULL && pData->CanEdit());
-	m_ctrlDelete->Enable(pData != NULL && pData->CanDelete());
+	m_ctrlEnable->Enable(pData && !pData->isValid());
+	m_ctrlQuery->Enable(pData && pData->HasQueryDetails());
+	m_ctrlEdit->Enable(pData && pData->CanEdit());
+	m_ctrlDelete->Enable(pData && pData->CanDelete());
 }
 
 
@@ -927,7 +927,7 @@ void CDlgCalendarPlugins::EditPlugin()
 
 void CDlgCalendarPlugins::OnSelectionChanged(wxTreeEvent& evt)
 {
-	CPluginBase* pData = NULL;
+	CPluginBase* pData = nullptr;
 	if (evt.GetItem().IsOk())
 		pData = dynamic_cast<CPluginBase*>(m_ctrlPlugins->GetItemData(evt.GetItem()));
 	std::wstring desc;
@@ -1093,7 +1093,7 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 	{
 		m_pDoc->Book().GetCalendar().sort();
 		CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-		m_pDoc->UpdateAllViews(NULL, &hint);
+		m_pDoc->UpdateAllViews(nullptr, &hint);
 		m_pDoc->Modify(true);
 	}
 	wxString str = wxString::Format(_("IDS_UPDATED_CAL_ITEMS"), nAdded, nUpdated);

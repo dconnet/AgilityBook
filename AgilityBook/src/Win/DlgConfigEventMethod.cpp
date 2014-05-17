@@ -126,32 +126,32 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_pVenue(pVenue)
 	, m_pScoring(pScoring)
 	, m_PlaceInfo()
-	, m_ctrlDivision(NULL)
-	, m_ctrlLevel(NULL)
-	, m_ctrlValidFrom(NULL)
-	, m_ctrlDateFrom(NULL)
-	, m_ctrlValidTo(NULL)
-	, m_ctrlDateTo(NULL)
-	, m_ctrlType(NULL)
-	, m_ctrlDropFractions(NULL)
-	, m_ctrlBonus(NULL)
-	, m_ctrlSuperQ(NULL)
-	, m_ctrlSpeedPts(NULL)
-	, m_ctrlMultiplyText(NULL)
-	, m_ctrlMultiply(NULL)
-	, m_ctrlPlacementText(NULL)
-	, m_ctrlPlacement(NULL)
-	, m_ctrlPlacementNew(NULL)
-	, m_ctrlPlacementEdit(NULL)
-	, m_ctrlPlacementDelete(NULL)
-	, m_ctrlTimeFaultsCleanQ(NULL)
-	, m_ctrlSubtractTimeFaults(NULL)
-	, m_ctrlTimeFaultsUnder(NULL)
-	, m_ctrlTimeFaultsOver(NULL)
-	, m_ctrlPointsOpeningText(NULL)
-	, m_ctrlPointsOpening(NULL)
-	, m_ctrlPointsClosingText(NULL)
-	, m_ctrlPointsClosing(NULL)
+	, m_ctrlDivision(nullptr)
+	, m_ctrlLevel(nullptr)
+	, m_ctrlValidFrom(nullptr)
+	, m_ctrlDateFrom(nullptr)
+	, m_ctrlValidTo(nullptr)
+	, m_ctrlDateTo(nullptr)
+	, m_ctrlType(nullptr)
+	, m_ctrlDropFractions(nullptr)
+	, m_ctrlBonus(nullptr)
+	, m_ctrlSuperQ(nullptr)
+	, m_ctrlSpeedPts(nullptr)
+	, m_ctrlMultiplyText(nullptr)
+	, m_ctrlMultiply(nullptr)
+	, m_ctrlPlacementText(nullptr)
+	, m_ctrlPlacement(nullptr)
+	, m_ctrlPlacementNew(nullptr)
+	, m_ctrlPlacementEdit(nullptr)
+	, m_ctrlPlacementDelete(nullptr)
+	, m_ctrlTimeFaultsCleanQ(nullptr)
+	, m_ctrlSubtractTimeFaults(nullptr)
+	, m_ctrlTimeFaultsUnder(nullptr)
+	, m_ctrlTimeFaultsOver(nullptr)
+	, m_ctrlPointsOpeningText(nullptr)
+	, m_ctrlPointsOpening(nullptr)
+	, m_ctrlPointsClosingText(nullptr)
+	, m_ctrlPointsClosing(nullptr)
 	, m_dateFrom(m_pScoring->GetValidFrom())
 	, m_dateTo(m_pScoring->GetValidTo())
 	, m_DropFractions(m_pScoring->DropFractions())
@@ -185,7 +185,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	m_ctrlDivision = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
+		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
 	BIND_OR_CONNECT_CTRL(m_ctrlDivision, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgConfigEventMethod::OnSelchangeDivision);
 	m_ctrlDivision->SetHelpText(_("HIDC_CONFIG_EVENT_DIVISION"));
 	m_ctrlDivision->SetToolTip(_("HIDC_CONFIG_EVENT_DIVISION"));
@@ -211,7 +211,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	m_ctrlLevel = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
+		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
 	m_ctrlLevel->SetHelpText(_("HIDC_CONFIG_EVENT_LEVEL"));
 	m_ctrlLevel->SetToolTip(_("HIDC_CONFIG_EVENT_LEVEL"));
 
@@ -276,7 +276,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	m_ctrlType = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
+		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY); 
 	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgConfigEventMethod::OnSelchangeType);
 	m_ctrlType->SetHelpText(_("HIDC_CONFIG_EVENT_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_EVENT_TYPE"));

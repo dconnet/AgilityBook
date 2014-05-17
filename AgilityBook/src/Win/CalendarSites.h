@@ -36,7 +36,7 @@ public:
 	bool FindEntries(
 			CAgilityBookDoc* pDoc,
 			ARBCalendarList& inCalendar,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	CCalendarSitesImpl* m_Impl;

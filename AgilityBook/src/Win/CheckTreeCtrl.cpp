@@ -76,9 +76,9 @@ CCheckTreeCtrl::~CCheckTreeCtrl()
 	// here fixes that. Should note, it only appears to happen with state image
 	// lists, but I'll clear both for safety.
 #ifdef WX_TREE_HAS_STATE
-	SetStateImageList(NULL);
+	SetStateImageList(nullptr);
 #else
-	SetImageList(NULL);
+	SetImageList(nullptr);
 #endif
 }
 

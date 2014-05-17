@@ -205,7 +205,7 @@ void CUpdateInfo::CleanupUpdate()
 			if (!DeleteFile(updateFile.wx_str()))
 			{
 				// Ok, delete failed after 3 seconds. Punt (quietly).
-				MoveFileEx(updateFile.wx_str(), NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
+				MoveFileEx(updateFile.wx_str(), nullptr, MOVEFILE_DELAY_UNTIL_REBOOT);
 			}
 		}
 	}
@@ -636,7 +636,7 @@ bool CUpdateInfo::CheckProgram(
 #if defined(ARB_HAS_OSTREAM_WCHAR)
 							std::ofstream output(outFile.c_str(), std::ios::out | std::ios::binary);
 #else
-							char const* pFile = NULL;
+							char const* pFile = nullptr;
 							std::string filename = StringUtil::stringA(outFile);
 							pFile = filename.c_str();
 							std::ofstream output(pFile, std::ios::out | std::ios::binary);

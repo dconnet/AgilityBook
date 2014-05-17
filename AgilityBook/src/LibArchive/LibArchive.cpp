@@ -137,7 +137,7 @@ bool CLibArchive::ExtractFile(
 		{
 			char filename_inzip[256];
 			unz_file_info64 file_info;
-			if (UNZ_OK == unzGetCurrentFileInfo64(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0))
+			if (UNZ_OK == unzGetCurrentFileInfo64(uf, &file_info, filename_inzip, sizeof(filename_inzip), nullptr, 0, nullptr, 0))
 			{
 				uInt size_buf = BUFFER_SIZE;
 				char* buf = new char[size_buf];

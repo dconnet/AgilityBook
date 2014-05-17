@@ -131,7 +131,7 @@ static void SetStatusBarWidths(
 /////////////////////////////////////////////////////////////////////////////
 
 CMainFrame::CMainFrame(wxDocManager* manager)
-	: wxDocParentFrame(manager, NULL, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
+	: wxDocParentFrame(manager, nullptr, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
 	, m_menus()
 {
@@ -382,7 +382,7 @@ void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 		if (GetDocumentManager()->GetCurrentDocument())
 		{
 			CUpdateHint hint(UPDATE_LANG_CHANGE);
-			GetDocumentManager()->GetCurrentDocument()->UpdateAllViews(NULL, &hint);
+			GetDocumentManager()->GetCurrentDocument()->UpdateAllViews(nullptr, &hint);
 		}
 		m_menus.UpdateMenu();
 
@@ -404,7 +404,7 @@ void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 void CMainFrame::OnPrintBlankRuns(wxCommandEvent& evt)
 {
 	std::vector<RunInfo> runs;
-	PrintRuns(NULL, runs);
+	PrintRuns(nullptr, runs);
 }
 
 

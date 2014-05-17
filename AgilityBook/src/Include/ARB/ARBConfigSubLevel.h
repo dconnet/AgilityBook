@@ -159,7 +159,7 @@ public:
 	 */
 	bool FindSubLevel(
 			std::wstring const& inName,
-			ARBConfigSubLevelPtr* outLevel = NULL) const;
+			ARBConfigSubLevelPtr* outLevel = nullptr) const;
 
 	/**
 	 * Find a sublevel.
@@ -169,7 +169,7 @@ public:
 	 */
 	bool AddSubLevel(
 			std::wstring const& inName,
-			ARBConfigSubLevelPtr* outLevel = NULL);
+			ARBConfigSubLevelPtr* outLevel = nullptr);
 
 	/**
 	 * Delete a sublevel.

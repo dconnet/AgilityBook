@@ -198,7 +198,7 @@ public:
 	 */
 	bool FindRegNum(
 			std::wstring const& inVenue,
-			ARBDogRegNumPtr* outRegNum = NULL) const;
+			ARBDogRegNumPtr* outRegNum = nullptr) const;
 
 	/**
 	 * Add a registration number, duplicates are allowed.
@@ -210,7 +210,7 @@ public:
 	bool AddRegNum(
 			std::wstring const& inVenue,
 			std::wstring const& inNumber,
-			ARBDogRegNumPtr* outRegNum = NULL);
+			ARBDogRegNumPtr* outRegNum = nullptr);
 
 	/**
 	 * Add a registration number, duplicates are allowed.

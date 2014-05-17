@@ -339,7 +339,7 @@ CAgilityBookTrainingView::CAgilityBookTrainingView(
 		CTabView* pTabView,
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
-	, m_Ctrl(NULL)
+	, m_Ctrl(nullptr)
 	, m_Columns()
 	, m_Callback(this)
 	, m_SortColumn(m_Columns)
@@ -377,7 +377,7 @@ bool CAgilityBookTrainingView::Create(
 void CAgilityBookTrainingView::DetachView()
 {
 	// The control is actually owned by the panel, the view is not.
-	m_Ctrl = NULL;
+	m_Ctrl = nullptr;
 }
 
 
@@ -465,7 +465,7 @@ void CAgilityBookTrainingView::OnUpdate(
 {
 	if (!m_Ctrl)
 		return;
-	CUpdateHint* hint = NULL;
+	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_TRAINING_VIEW)
@@ -836,7 +836,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
-				m_Callback.Search(NULL);
+				m_Callback.Search(nullptr);
 		}
 		break;
 
@@ -846,7 +846,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
-				m_Callback.Search(NULL);
+				m_Callback.Search(nullptr);
 		}
 		break;
 
