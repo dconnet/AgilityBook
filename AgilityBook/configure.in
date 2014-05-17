@@ -51,6 +51,10 @@ AC_ARG_PROGRAM
 # We get these libs from our own src/ directories
 # AC_CHECK_LIB([unittest], [RunAllTests])
 
+# TODO: Add config option to enable POCO
+#USE_POCO=yes
+USE_POCO=no
+
 AC_SUBST(CC, "`wx-config --cc`")
 AC_SUBST(CXX, "`wx-config --cxx`")
 AC_SUBST(LD, "`wx-config --ld`")
@@ -58,13 +62,41 @@ AC_SUBST(CFLAGS, "`wx-config --cflags`")
 AC_SUBST(CXXFLAGS, "`wx-config --cxxflags`")
 AC_SUBST(LDFLAGS, "`wx-config --libs`")
 
+AC_SUBST(CXXFLAGS,"$CXXFLAGS -DUSE_WXWIDGETS")
+
+# BOOST settings
+
 if test "x$BOOST_ROOT" != "x"; then
 	echo "BOOST_ROOT set to: $BOOST_ROOT"
 	AC_SUBST(CXXFLAGS,"$CXXFLAGS -isystem $BOOST_ROOT")
 fi
+
 AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not found. export BOOST_ROOT=fullpath to boost install])])
 
-AC_SUBST(CXXFLAGS,"$CXXFLAGS -DUSE_WXWIDGETS")
+# POCO settings
+
+if test "x$USE_POCO" = "xyes"; then
+	if test "x$POCO_BASE" = "x"; then
+		AC_MSG_ERROR(POCO_BASE is not set)
+	else
+		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Foundation/Include")
+		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Data/Include")
+		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Data/SQLite/Include")
+		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Net/Include")
+		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Util/Include")
+		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Zip/Include")
+		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/XML/Include")
+		AC_SUBST(LDFLAGS, "$LDFLAGS -L$POCO_BASE/build-rel/lib/Darwin/i386")
+
+		if text "x`wx-config --cflags | grep DEBUG_LEVEL=0`" = "x"; then
+			AC_SUBST(LDFLAGS, "$LDFLAGS -lPocoData -lPocoDataSQLite -lPocoFoundation -lPocoJSON -lPocoMongoDB -lPocoNet -lPocoUtil -lPocoXML -lPocoZip")
+		else
+			AC_SUBST(LDFLAGS, "$LDFLAGS -lPocoDatad -lPocoDataSQLited -lPocoFoundationd -lPocoJSONd -lPocoMongoDBd -lPocoNetd -lPocoUtild -lPocoXMLd -lPocoZipd")
+		fi
+	fi
+
+	AC_SUBST(CXXFLAGS,"$CXXFLAGS -DUSE_POCO")
+fi
 
 case `uname` in
 Darwin*)
