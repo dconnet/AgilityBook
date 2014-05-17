@@ -1,0 +1,39 @@
+# A script I use on the Mac to help manage Poco configuration options
+#
+# This will clean and configure the build directory for a Poco build.
+# (I put this script in my home dir)
+
+export BUILDDIR=
+export TARGETARCH=
+export TARGETSDK=
+
+if test "x$POCO_BASE" = "x"; then
+	echo "ERROR: POCO_BASE is not set"
+	exit
+fi
+export BUILDDIR="$POCO_BASE/build-rel"
+
+export CONFIG="--config=Darwin32-clang-libc++ --static --no-tests --no-samples --omit=CppUnit/WinTestRunner,Crypto,Data/MySQL,Data/ODBC,NetSSL_OpenSSL,PageCompiler,PageCompiler/File2Page"
+
+rm -rf $BUILDDIR
+mkdir $BUILDDIR
+cd $BUILDDIR
+
+if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk; then
+	#export CXXFLAGS="-std=c++11 -stdlib=libc++"
+	#export CPPFLAGS="-stdlib=libc++"
+	#export LIBS="-lc++"
+	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
+	MINSDK=10.7
+fi
+
+if test "x$TARGETSDK" = "x"; then
+	echo "ERROR: Can't find an SDK"
+	exit
+fi
+
+CONFIG_CFLAGS="-isysroot $TARGETSDK -mmacosx-version-min=$MINSDK"
+
+echo ../configure $CONFIG --cflags="$CONFIG_CFLAGS"
+
+../configure $CONFIG --cflags="$CONFIG_CFLAGS"
