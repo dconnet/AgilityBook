@@ -38,7 +38,11 @@
 #include <fstream>
 
 #else
-#pragma message("Need Poco or wxWidgets")
+#ifdef WIN32
+#pragma PRAGMA_MESSAGE("WARNING: Need Poco or wxWidgets")
+#else
+#pragma message("WARNING: Need Poco or wxWidgets")
+#endif
 #endif
 
 #ifdef __WXMSW__
