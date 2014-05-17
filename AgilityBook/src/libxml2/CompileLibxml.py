@@ -211,7 +211,7 @@ def main():
 				print >>bat, config + prefix_dbg + 'DLL debug=yes cruntime=/MDd'
 				print >>bat, 'nmake -f makefile.msvc rebuild install'
 				print >>bat, 'nmake -f makefile.msvc clean'
-				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\ReleaseDLL\\include\\libxml2\\* ..\\..\\include\\' 
+				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\DebugDLL\\include\\libxml2\\* ..\\..\\include\\' 
 				print >>bat, 'xcopy /y build\\' + prefix + '\\DebugDLL\\bin\\libxml2.dll ..\\..\\lib\\' + prefix + '\\Debug\\'
 				print >>bat, 'xcopy /y build\\' + prefix + '\\DebugDLL\\lib\\libxml2.lib ..\\..\\lib\\' + prefix + '\\Debug\\'
 
@@ -219,14 +219,14 @@ def main():
 				print >>bat, config + prefix_rel + 'LIB cruntime=/MT'
 				print >>bat, 'nmake -f makefile.msvc rebuild install'
 				print >>bat, 'nmake -f makefile.msvc clean'
-				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\ReleaseDLL\\include\\libxml2\\* ..\\..\\include\\' 
+				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\ReleaseLIB\\include\\libxml2\\* ..\\..\\include\\' 
 				print >>bat, 'xcopy /y build\\' + prefix + '\\ReleaseLIB\\lib\\libxml2_a.lib ..\\..\\lib\\' + prefix + '\\Release\\'
 
 			elif i == 4:
 				print >>bat, config + prefix_dbg + 'LIB debug=yes cruntime=/MTd'
 				print >>bat, 'nmake -f makefile.msvc rebuild install'
 				print >>bat, 'nmake -f makefile.msvc clean'
-				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\ReleaseDLL\\include\\libxml2\\* ..\\..\\include\\' 
+				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\DebugLIB\\include\\libxml2\\* ..\\..\\include\\' 
 				print >>bat, 'xcopy /y build\\' + prefix + '\\DebugLIB\\lib\\libxml2_a.lib ..\\..\\lib\\' + prefix + '\\Debug\\'
 
 			bat.close()
