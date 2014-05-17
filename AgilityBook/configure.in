@@ -86,7 +86,7 @@ if test "x$USE_POCO" = "xyes"; then
 		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Util/Include")
 		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Zip/Include")
 		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/XML/Include")
-		AC_SUBST(LDFLAGS, "$LDFLAGS -L$POCO_BASE/build-rel/lib/Darwin/i386")
+		AC_SUBST(LDFLAGS, "$LDFLAGS -L$POCO_BASE/build-libs/lib/Darwin/i386")
 
 		if text "x`wx-config --cflags | grep DEBUG_LEVEL=0`" = "x"; then
 			AC_SUBST(LDFLAGS, "$LDFLAGS -lPocoData -lPocoDataSQLite -lPocoFoundation -lPocoJSON -lPocoMongoDB -lPocoNet -lPocoUtil -lPocoXML -lPocoZip")
