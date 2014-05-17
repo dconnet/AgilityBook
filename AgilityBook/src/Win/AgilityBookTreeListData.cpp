@@ -84,7 +84,7 @@
 CAgilityBookTreeListData::CAgilityBookTreeListData(CAgilityBookTreeListModel* pModel)
 	: m_pModel(pModel)
 	, m_icon()
-	, m_parent(NULL)
+	, m_parent(nullptr)
 {
 }
 
@@ -544,7 +544,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 							m_pRun->GetDivision(),
 							m_pRun->GetLevel(),
 							m_pRun->GetDate(),
-							NULL,
+							nullptr,
 							&pScoring);
 					}
 					faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
@@ -769,7 +769,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 							m_pRun->GetDivision(),
 							m_pRun->GetLevel(),
 							m_pRun->GetDate(),
-							NULL,
+							nullptr,
 							&pScoring);
 					}
 					if (pScoring)
@@ -798,7 +798,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 							m_pRun->GetDivision(),
 							m_pRun->GetLevel(),
 							m_pRun->GetDate(),
-							NULL,
+							nullptr,
 							&pScoring);
 					if (pScoring)
 					{
@@ -844,7 +844,7 @@ wxVariant CAgilityBookTreeListDataRun::GetColumn(
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
 						m_pRun->GetDate(),
-						NULL,
+						nullptr,
 						&pScoring);
 				if (pScoring)
 				{

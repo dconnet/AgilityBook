@@ -145,9 +145,9 @@ static struct
 		arbT("IDS_ASSCOL_VIEW_TREE_DOG_DESC")},
 
 #if USE_TREELIST
-	{0, IO_TYPE_VIEW_RESERVED1, 0, NULL, NULL},
-	{0, IO_TYPE_VIEW_RESERVED2, 0, NULL, NULL},
-	{0, IO_TYPE_VIEW_RESERVED3, 0, NULL, NULL},
+	{0, IO_TYPE_VIEW_RESERVED1, 0, nullptr, nullptr},
+	{0, IO_TYPE_VIEW_RESERVED2, 0, nullptr, nullptr},
+	{0, IO_TYPE_VIEW_RESERVED3, 0, nullptr, nullptr},
 #else
 	{CAgilityBookOptions::eView,
 		IO_TYPE_VIEW_TREE_TRIAL, 2,
@@ -197,9 +197,9 @@ static struct
 		arbT("IDS_ASSCOL_VIEW_TREELIST_RUN_LIST"),
 		arbT("IDS_ASSCOL_VIEW_TREELIST_RUN_LIST_DESC")},
 #else
-	{0, IO_TYPE_VIEW_RESERVED1, 0, NULL, NULL},
-	{0, IO_TYPE_VIEW_RESERVED2, 0, NULL, NULL},
-	{0, IO_TYPE_VIEW_RESERVED3, 0, NULL, NULL},
+	{0, IO_TYPE_VIEW_RESERVED1, 0, nullptr, nullptr},
+	{0, IO_TYPE_VIEW_RESERVED2, 0, nullptr, nullptr},
+	{0, IO_TYPE_VIEW_RESERVED3, 0, nullptr, nullptr},
 #endif
 	// Note: Remember to update sc_Fields when adding a type.
 };
@@ -788,9 +788,9 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 	idxTraining,
 	idxViewTreeDog,
 #if USE_TREELIST
-	NULL,
-	NULL,
-	NULL,
+	nullptr,
+	nullptr,
+	nullptr,
 #else
 	idxViewTreeTrial,
 	idxViewTreeRun,
@@ -806,8 +806,8 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 	idxViewRunsList,
 	idxViewRunsList,
 #else
-	NULL,
-	NULL,
+	nullptr,
+	nullptr,
 #endif
 };
 
@@ -865,14 +865,14 @@ CDlgAssignColumns::CDlgAssignColumns(
 	, m_initSelection(initSelection)
 	, m_bIncludeBlank(false)
 	, m_ConfigName()
-	, m_ctrlConfig(NULL)
-	, m_ctrlType(NULL)
-	, m_ctrlAvailable(NULL)
-	, m_ctrlColumns(NULL)
-	, m_btnAdd(NULL)
-	, m_btnRemove(NULL)
-	, m_btnUp(NULL)
-	, m_btnDown(NULL)
+	, m_ctrlConfig(nullptr)
+	, m_ctrlType(nullptr)
+	, m_ctrlAvailable(nullptr)
+	, m_ctrlColumns(nullptr)
+	, m_btnAdd(nullptr)
+	, m_btnRemove(nullptr)
+	, m_btnUp(nullptr)
+	, m_btnDown(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -902,7 +902,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 
 	m_ctrlConfig = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
+		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_ConfigName, TRIMVALIDATOR_TRIM_BOTH));
 	BIND_OR_CONNECT_CTRL(m_ctrlConfig, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeNames);
 	m_ctrlConfig->SetHelpText(_("HIDC_ASSIGN_NAMES"));
@@ -982,7 +982,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	textAvail->Wrap(-1);
 
 	m_ctrlAvailable = new wxListBox(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 250), 0, NULL, 0);
+		wxDefaultPosition, wxSize(-1, 250), 0, nullptr, 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlAvailable, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeAvailable);
 	m_ctrlAvailable->SetHelpText(_("HIDC_ASSIGN_AVAILABLE"));
 	m_ctrlAvailable->SetToolTip(_("HIDC_ASSIGN_AVAILABLE"));
@@ -1027,7 +1027,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	textOrder->Wrap(-1);
 
 	m_ctrlColumns = new wxListBox(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 250), 0, NULL, 0);
+		wxDefaultPosition, wxSize(-1, 250), 0, nullptr, 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlColumns, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeColumns);
 	m_ctrlColumns->SetHelpText(_("HIDC_ASSIGN_COLUMNS"));
 	m_ctrlColumns->SetToolTip(_("HIDC_ASSIGN_COLUMNS"));
@@ -1394,7 +1394,7 @@ void CDlgAssignColumns::OnOk(wxCommandEvent& evt)
 	if (m_pDoc && CAgilityBookOptions::eView == m_Configs.Order())
 	{
 		CUpdateHint hint(UPDATE_CUSTOMIZE);
-		m_pDoc->UpdateAllViews(NULL, &hint);
+		m_pDoc->UpdateAllViews(nullptr, &hint);
 	}
 	EndDialog(wxID_OK);
 }

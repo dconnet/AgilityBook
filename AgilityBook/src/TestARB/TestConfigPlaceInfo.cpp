@@ -146,7 +146,7 @@ SUITE(TestConfigPlaceInfoList)
 			TODO_TEST
 		//	bool FindPlaceInfo(
 		//			short inPlace,
-		//			ARBConfigPlaceInfoPtr* outPlace = NULL) const;
+		//			ARBConfigPlaceInfoPtr* outPlace = nullptr) const;
 		}
 	}
 
@@ -160,7 +160,7 @@ SUITE(TestConfigPlaceInfoList)
 		//			short inPlace,
 		//			double inValue,
 		//			bool inMustQ,
-		//			ARBConfigPlaceInfoPtr* outPlace = NULL);
+		//			ARBConfigPlaceInfoPtr* outPlace = nullptr);
 		//	bool DeletePlaceInfo(short inPlace);
 		}
 	}

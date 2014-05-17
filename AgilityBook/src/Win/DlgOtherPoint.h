@@ -26,7 +26,7 @@ public:
 	CDlgOtherPoint(
 			ARBConfig& config,
 			ARBDogRunOtherPointsPtr pRunOther,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	void LoadPoints(ARBConfigOtherPointsPtr inOther);

@@ -12,6 +12,9 @@
  * 2013-10-29 Added more hash algorithms
  */
 
+#include <string>
+
+
 extern std::wstring ARBMsgDigestComputeMD5(
 		std::istream& inFile,
 		size_t* outSize);

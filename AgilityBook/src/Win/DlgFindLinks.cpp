@@ -165,9 +165,9 @@ CDlgFindLinks::CDlgFindLinks(
 		ARBDogList& inDogs,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlLinks(NULL)
-	, m_ctrlEdit(NULL)
-	, m_ctrlOpen(NULL)
+	, m_ctrlLinks(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlOpen(nullptr)
 	, m_sortLinks(L"Links")
 	, m_imgOk(-1)
 	, m_imgMissing(-1)

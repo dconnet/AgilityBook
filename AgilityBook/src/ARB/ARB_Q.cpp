@@ -123,7 +123,7 @@ bool ARB_Q::Save(
 {
 	// If, somehow, m_Q is set to a value we don't understand,
 	// it will be written as "NA".
-	assert(inAttribName != NULL);
+	assert(!!inAttribName);
 	bool bOk = false;
 	std::wstring q(L"NA");
 	for (int i = 0; i < sc_nQs; ++i)

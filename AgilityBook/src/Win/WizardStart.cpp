@@ -77,10 +77,10 @@ CWizardStart::CWizardStart(
 	: wxWizardPage(pSheet)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
-	, m_ctrlList(NULL)
-	, m_ctrlDesc(NULL)
+	, m_ctrlList(nullptr)
+	, m_ctrlDesc(nullptr)
 	, m_Style(-1)
-	, m_Next(NULL)
+	, m_Next(nullptr)
 {
 	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler, CWizardStart::OnWizardChanging);
 	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler, CWizardStart::OnWizardChanged);
@@ -97,7 +97,7 @@ CWizardStart::CWizardStart(
 	// Controls (these are done first to control tab order)
 
 	wxStaticBox* boxImportExport = new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_RADIO_BOX"));
-	wxRadioButton* radioExcel = NULL;
+	wxRadioButton* radioExcel = nullptr;
 	if (m_pSheet->ExcelHelper())
 	{
 		radioExcel = new wxRadioButton(this, wxID_ANY,
@@ -108,7 +108,7 @@ CWizardStart::CWizardStart(
 		radioExcel->SetToolTip(_("HIDC_WIZARD_START_EXCEL"));
 	}
 
-	wxRadioButton* radioCalc = NULL;
+	wxRadioButton* radioCalc = nullptr;
 	if (m_pSheet->CalcHelper())
 	{
 		radioCalc = new wxRadioButton(this, wxID_ANY,
@@ -157,7 +157,7 @@ CWizardStart::CWizardStart(
 
 	m_ctrlList = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxSize(200, -1),
-		0, NULL, wxLB_HSCROLL|wxLB_SINGLE);
+		0, nullptr, wxLB_HSCROLL|wxLB_SINGLE);
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CWizardStart::OnSelchangeExportList);
 	m_ctrlList->SetHelpText(_("HIDC_WIZARD_START_LIST"));
 	m_ctrlList->SetToolTip(_("HIDC_WIZARD_START_LIST"));
@@ -233,7 +233,7 @@ static struct
 	{
 		{ePageExport, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_EXCEL")},
 		{ePageExport, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_SPREAD")},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
 		{ePageExport, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_CALC")},
 	} },
 	{WIZ_IMPORT_CALENDAR,
@@ -252,31 +252,31 @@ static struct
 	} },
 	{WIZ_EXPORT_CALENDAR_VCAL,
 	{
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
 		{ePageFinish, arbT("IDS_WIZ_EXPORT_CAL_VCAL"), arbT("IDS_WIZ_EXPORT_CAL_VCAL_SPREAD")},
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_CALENDAR_ICAL,
 	{
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
 		{ePageFinish, arbT("IDS_WIZ_EXPORT_CAL_ICAL"), arbT("IDS_WIZ_EXPORT_CAL_ICAL_SPREAD")},
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_CALENDAR_APPT,
 	{
 		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL_APPT"), arbT("IDS_WIZ_EXPORT_CAL_APPT_EXCEL")},
 		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL_APPT"), arbT("IDS_WIZ_EXPORT_CAL_APPT_SPREAD")},
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_CALENDAR_TASK,
 	{
 		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL_TASK"), arbT("IDS_WIZ_EXPORT_CAL_TASK_EXCEL")},
 		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL_TASK"), arbT("IDS_WIZ_EXPORT_CAL_TASK_SPREAD")},
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 	} },
 	{WIZ_IMPORT_LOG,
 	{
@@ -294,45 +294,45 @@ static struct
 	} },
 	{WIZ_IMPORT_CONFIGURATION,
 	{
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 		{ePageFinish, arbT("IDS_WIZ_IMPORT_CONFIG"), arbT("IDS_WIZ_IMPORT_CONFIG_ARB")},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_CONFIGURATION,
 	{
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 		{ePageFinish, arbT("IDS_WIZ_EXPORT_CONFIG"), arbT("IDS_WIZ_EXPORT_CONFIG_ARB")},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_DTD,
 	{
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 		{ePageFinish, arbT("IDS_WIZ_EXPORT_DTD"), arbT("IDS_WIZ_EXPORT_DTD_ARB")},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_XML,
 	{
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 		{ePageFinish, arbT("IDS_WIZ_EXPORT_XML"), arbT("IDS_WIZ_EXPORT_XML_ARB")},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
 	} },
 	{WIZ_IMPORT_SETTINGS,
 	{
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 		{ePageFinish, arbT("IDS_WIZ_IMPORT_SETTINGS"), arbT("IDS_WIZ_IMPORT_SETTINGS_ARB")},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_SETTINGS,
 	{
-		{ePageNone, NULL, NULL},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
+		{ePageNone, nullptr, nullptr},
 		{ePageFinish, arbT("IDS_WIZ_EXPORT_SETTINGS"), arbT("IDS_WIZ_EXPORT_SETTINGS_ARB")},
-		{ePageNone, NULL, NULL},
+		{ePageNone, nullptr, nullptr},
 	} },
 };
 static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
@@ -391,7 +391,7 @@ void CWizardStart::DoUpdateExportList(bool bInit)
 		bEnableNext = false;
 		// fallthru
 	case ePageFinish:
-		m_Next = NULL;
+		m_Next = nullptr;
 		break;
 	case ePageImport:
 		m_Next = m_pSheet->GetImportPage();

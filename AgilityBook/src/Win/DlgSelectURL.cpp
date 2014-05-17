@@ -36,7 +36,7 @@ CDlgSelectURL::CDlgSelectURL(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Name(StringUtil::stringWX(name))
-	, m_textCtrl(NULL)
+	, m_textCtrl(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)

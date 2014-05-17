@@ -153,7 +153,7 @@ SUITE(TestConfigEvent)
 		//			std::wstring const& inDivision,
 		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
-		//			ARBConfigScoringPtr* outScoring = NULL) const
+		//			ARBConfigScoringPtr* outScoring = nullptr) const
 		}
 	}
 }
@@ -210,11 +210,11 @@ SUITE(TestConfigEventList)
 		//			std::wstring const& inDivision,
 		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
-		//			ARBConfigEventPtr* outEvent = NULL,
-		//			ARBConfigScoringPtr* outScoring = NULL) const;
+		//			ARBConfigEventPtr* outEvent = nullptr,
+		//			ARBConfigScoringPtr* outScoring = nullptr) const;
 		//	bool FindEvent(
 		//			std::wstring const& inEvent,
-		//			ARBConfigEventPtr* outEvent = NULL) const;
+		//			ARBConfigEventPtr* outEvent = nullptr) const;
 		}
 	}
 

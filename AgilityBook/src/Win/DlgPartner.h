@@ -28,7 +28,7 @@ public:
 			ARBDogRunPartnerPtr partner,
 			std::set<std::wstring> const& inHandlers,
 			std::set<std::wstring> const& inDogs,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	wxString m_Handler;

@@ -38,8 +38,8 @@
 /////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookTreeListModel::CAgilityBookTreeListModel()
-	: m_pDoc(NULL)
-	, m_Ctrl(NULL)
+	: m_pDoc(nullptr)
+	, m_Ctrl(nullptr)
 	, m_Columns()
 	, m_bInCompare(false)
 	, m_roots()
@@ -55,7 +55,7 @@ CAgilityBookTreeListModel::~CAgilityBookTreeListModel()
 
 void CAgilityBookTreeListModel::OnDestroyControl(wxWindowDestroyEvent& evt)
 {
-	m_Ctrl = NULL;
+	m_Ctrl = nullptr;
 }
 
 
@@ -63,7 +63,7 @@ CAgilityBookTreeListData* CAgilityBookTreeListModel::GetNode(const wxDataViewIte
 {
 	if (item.IsOk())
 		return reinterpret_cast<CAgilityBookTreeListData*>(item.GetID());
-	return NULL;
+	return nullptr;
 }
 
 
@@ -161,7 +161,7 @@ wxDataViewItem CAgilityBookTreeListModel::LoadData(
 {
 	wxDataViewItem itemTrial;
 
-	CAgilityBookTreeListData* pParent = NULL;
+	CAgilityBookTreeListData* pParent = nullptr;
 	if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		pParent = GetNode(parent);
 
@@ -196,7 +196,7 @@ wxDataViewItem CAgilityBookTreeListModel::LoadData(
 {
 	wxDataViewItem itemRun;
 
-	CAgilityBookTreeListData* pParent = NULL;
+	CAgilityBookTreeListData* pParent = nullptr;
 	if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		pParent = GetNode(parent);
 

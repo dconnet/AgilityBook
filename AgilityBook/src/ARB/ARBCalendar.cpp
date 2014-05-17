@@ -338,7 +338,7 @@ ICalendar* ICalendar::iCalendarBegin(
 		std::ostream& ioStream,
 		int inVersion)
 {
-	ICalendar* pCal = NULL;
+	ICalendar* pCal = nullptr;
 	if (1 == inVersion || 2 == inVersion)
 		pCal = new ARBiCal(ioStream, inVersion);
 	return pCal;

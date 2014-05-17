@@ -38,7 +38,7 @@
 #include <fstream>
 
 #else
-#error Need Poco or wxWidgets
+#pragma message("Need Poco or wxWidgets")
 #endif
 
 #ifdef __WXMSW__
@@ -57,7 +57,7 @@ bool BinaryData::Decode(
 		unsigned char*& outBinData,
 		size_t& outBytes)
 {
-	outBinData = NULL;
+	outBinData = nullptr;
 	outBytes = 0;
 	if (inBase64.empty())
 		return false;
@@ -111,8 +111,9 @@ bool BinaryData::Encode(
 	if (0 == inBytes)
 		return false;
 
+	bool bOk = false;
 	size_t nData = 0;
-	unsigned char* pData = NULL;
+	unsigned char* pData = nullptr;
 
 #if defined(USE_POCO)
 	Poco::MemoryInputStream input(reinterpret_cast<char const*>(inBinData), inBytes);
@@ -138,10 +139,13 @@ bool BinaryData::Encode(
 
 #endif
 
-	std::wstring tmp;
-	bool bOk = ARBBase64::Encode(pData, nData, tmp);
-	outBase64 = tmp;
-	delete [] pData;
+	if (pData)
+	{
+		std::wstring tmp;
+		bOk = ARBBase64::Encode(pData, nData, tmp);
+		outBase64 = tmp;
+		delete[] pData;
+	}
 
 	return bOk;
 }
@@ -153,8 +157,9 @@ bool BinaryData::EncodeFile(
 {
 	outBase64.erase();
 
+	bool bOk = false;
 	size_t nData = 0;
-	unsigned char* pData = NULL;
+	unsigned char* pData = nullptr;
 
 #if defined(USE_POCO)
 #ifdef ARB_HAS_ISTREAM_WCHAR
@@ -192,10 +197,13 @@ bool BinaryData::EncodeFile(
 
 #endif
 
-	std::wstring tmp;
-	bool bOk = ARBBase64::Encode(pData, nData, tmp);
-	outBase64 = tmp;
-	delete [] pData;
+	if (pData)
+	{
+		std::wstring tmp;
+		bOk = ARBBase64::Encode(pData, nData, tmp);
+		outBase64 = tmp;
+		delete[] pData;
+	}
 
 	return bOk;
 }

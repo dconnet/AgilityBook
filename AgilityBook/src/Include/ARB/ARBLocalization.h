@@ -218,7 +218,7 @@ public:
 	virtual std::wstring ErrorMissingAttribute(
 			wchar_t const* const inElement,
 			wchar_t const* const inAttrib,
-			wchar_t const* const inMsg = NULL) const = 0;
+			wchar_t const* const inMsg = nullptr) const = 0;
 
 	/**
 	 * Return an error message about an invalid value in an attribute.
@@ -231,7 +231,7 @@ public:
 	virtual std::wstring ErrorInvalidAttributeValue(
 			wchar_t const* const inElement,
 			wchar_t const* const inAttrib,
-			wchar_t const* const inMsg = NULL) const = 0;
+			wchar_t const* const inMsg = nullptr) const = 0;
 };
 
 

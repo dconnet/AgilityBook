@@ -35,29 +35,29 @@ public:
 			unsigned short* val,
 			unsigned short defVal = 0,
 			bool bUseDefOnEmpty = true,
-			wxChar const* errMsg = NULL);
+			wxChar const* errMsg = nullptr);
 	CGenericValidator(
 			short* val,
 			short defVal = 0,
 			bool bUseDefOnEmpty = true,
-			wxChar const* errMsg = NULL);
+			wxChar const* errMsg = nullptr);
 	CGenericValidator(
 			long* val,
 			long defVal = 0,
 			bool bUseDefOnEmpty = true,
-			wxChar const* errMsg = NULL);
+			wxChar const* errMsg = nullptr);
 	CGenericValidator(
 			double* val,
 			int inPrec = 2,
 			double defVal = 0.0,
 			bool bUseDefOnEmpty = true,
-			wxChar const* errMsg = NULL);
+			wxChar const* errMsg = nullptr);
 	CGenericValidator(
 			ARBDate* val,
-			wxChar const* errMsg = NULL);
+			wxChar const* errMsg = nullptr);
 	CGenericValidator(
 			wxDateTime* val,
-			wxChar const* errMsg = NULL);
+			wxChar const* errMsg = nullptr);
 	CGenericValidator(CGenericValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CGenericValidator(*this);}
@@ -100,9 +100,9 @@ class CTrimValidator : public wxGenericValidator
 DECLARE_CLASS(CTrimValidator)
 public:
 	CTrimValidator(
-			wxString* valPtr = NULL,
+			wxString* valPtr = nullptr,
 			long trimStyle = TRIMVALIDATOR_DEFAULT,
-			wxChar const* errMsg = NULL); // Message to use when validation fails
+			wxChar const* errMsg = nullptr); // Message to use when validation fails
 	CTrimValidator(CTrimValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CTrimValidator(*this);}

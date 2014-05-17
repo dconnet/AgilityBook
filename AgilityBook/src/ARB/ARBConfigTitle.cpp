@@ -82,15 +82,15 @@ static std::wstring ShortToRoman(short value)
 {
 	static const wchar_t* romanDigits[9][4] =
 	{
-		{L"M",   L"C",    L"X",    L"I"   },
-		{L"MM",  L"CC",   L"XX",   L"II"  },
-		{L"MMM", L"CCC",  L"XXX",  L"III" },
-		{NULL,   L"CD",   L"XL",   L"IV"  },
-		{NULL,   L"D",    L"L",    L"V"   },
-		{NULL,   L"DC",   L"LX",   L"VI"  },
-		{NULL,   L"DCC",  L"LXX",  L"VII" },
-		{NULL,   L"DCCC", L"LXXX", L"VIII"},
-		{NULL,   L"CM",   L"XC",   L"IX"  }
+		{L"M",    L"C",    L"X",    L"I"   },
+		{L"MM",   L"CC",   L"XX",   L"II"  },
+		{L"MMM",  L"CCC",  L"XXX",  L"III" },
+		{nullptr, L"CD",   L"XL",   L"IV"  },
+		{nullptr, L"D",    L"L",    L"V"   },
+		{nullptr, L"DC",   L"LX",   L"VI"  },
+		{nullptr, L"DCC",  L"LXX",  L"VII" },
+		{nullptr, L"DCCC", L"LXXX", L"VIII"},
+		{nullptr, L"CM",   L"XC",   L"IX"  }
 	};
 	std::wostringstream result;
 	for (int index = 0; index < 4; ++index)

@@ -50,7 +50,7 @@ CDlgPluginDetails::CDlgPluginDetails(
 	, m_strName()
 	, m_strDesc()
 	, m_strSearch()
-	, m_ctrlCodes(NULL)
+	, m_ctrlCodes(nullptr)
 	, m_strHelp()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());

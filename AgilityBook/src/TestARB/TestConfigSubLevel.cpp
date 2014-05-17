@@ -135,7 +135,7 @@ SUITE(TestConfigSubLevelList)
 			TODO_TEST
 		//	bool AddSubLevel(
 		//			std::wstring const& inName,
-		//			ARBConfigSubLevelPtr* outLevel = NULL);
+		//			ARBConfigSubLevelPtr* outLevel = nullptr);
 		//	bool DeleteSubLevel(std::wstring const& inName);
 		}
 	}

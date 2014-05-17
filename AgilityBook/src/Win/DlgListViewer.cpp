@@ -1071,7 +1071,7 @@ static void InsertRun(
 			pRun->GetDivision(),
 			pRun->GetLevel(),
 			pRun->GetDate(),
-			NULL,
+			nullptr,
 			&pScoring);
 	if (pScoring)
 	{
@@ -1095,7 +1095,7 @@ CDlgListViewer::CDlgListViewer(
 		std::list<RunInfo> const& inRuns,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlList(NULL)
+	, m_ctrlList(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1183,7 +1183,7 @@ CDlgListViewer::CDlgListViewer(
 		std::list<ScoringRunInfo> const& inScoringRuns,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlList(NULL)
+	, m_ctrlList(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1236,7 +1236,7 @@ CDlgListViewer::CDlgListViewer(
 		std::set<MultiQdata> const& inMQs,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlList(NULL)
+	, m_ctrlList(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1295,7 +1295,7 @@ CDlgListViewer::CDlgListViewer(
 		std::list<LifeTimePointInfoPtr> const& inLifetime,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlList(NULL)
+	, m_ctrlList(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1332,7 +1332,7 @@ CDlgListViewer::CDlgListViewer(
 		std::list<OtherPtInfo> const& inRunList,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlList(NULL)
+	, m_ctrlList(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1368,7 +1368,7 @@ CDlgListViewer::CDlgListViewer(
 		std::vector<CFindItemInfo> const& inItems,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlList(NULL)
+	, m_ctrlList(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {

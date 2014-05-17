@@ -88,7 +88,7 @@ public:
 	virtual void OnDraw(wxDC* dc);
 	virtual void OnUpdate(
 			wxView* sender,
-			wxObject* inHint = NULL);
+			wxObject* inHint = nullptr);
 
 	void GetPrintLine(long item, std::vector<std::wstring>& line) const;
 

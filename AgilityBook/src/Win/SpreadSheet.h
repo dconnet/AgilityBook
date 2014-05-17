@@ -118,7 +118,7 @@ public:
 	virtual bool OpenFile(std::wstring const& inFilename) = 0;
 	virtual bool GetData(
 			std::vector< std::vector<std::wstring> >& outData,
-			IDlgProgress* ioProgress = NULL) = 0;
+			IDlgProgress* ioProgress = nullptr) = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////

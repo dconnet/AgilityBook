@@ -55,7 +55,7 @@ CVenueComboBox::CVenueComboBox(
 {
 	wxComboBox::Create(parent, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN | (bEditable ? 0 : wxCB_READONLY) | wxCB_SORT,
 		validator);
 

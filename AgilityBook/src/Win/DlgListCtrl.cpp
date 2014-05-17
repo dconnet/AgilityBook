@@ -378,19 +378,19 @@ CDlgListCtrl::CDlgListCtrl(
 		CTabView* pTabView,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlList(NULL)
-	, m_ctrlNew(NULL)
-	, m_ctrlEdit(NULL)
-	, m_ctrlDelete(NULL)
-	, m_ctrlUp(NULL)
-	, m_ctrlDown(NULL)
-	, m_ctrlCreateTrial(NULL)
+	, m_ctrlList(nullptr)
+	, m_ctrlNew(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlDelete(nullptr)
+	, m_ctrlUp(nullptr)
+	, m_ctrlDown(nullptr)
+	, m_ctrlCreateTrial(nullptr)
 	, m_What(eCalendar)
 	, m_pDoc(pDoc)
 	, m_Date(date)
 	, m_CalEntries(entries)
 	, m_pTabView(pTabView)
-	, m_pConfig(NULL)
+	, m_pConfig(nullptr)
 	, m_pRun()
 {
 	Create(StringUtil::stringW(_("IDS_CALENDAR")), pParent, true);
@@ -421,19 +421,19 @@ CDlgListCtrl::CDlgListCtrl(
 		ARBDogRunPtr run,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlList(NULL)
-	, m_ctrlNew(NULL)
-	, m_ctrlEdit(NULL)
-	, m_ctrlDelete(NULL)
-	, m_ctrlUp(NULL)
-	, m_ctrlDown(NULL)
-	, m_ctrlCreateTrial(NULL)
+	, m_ctrlList(nullptr)
+	, m_ctrlNew(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlDelete(nullptr)
+	, m_ctrlUp(nullptr)
+	, m_ctrlDown(nullptr)
+	, m_ctrlCreateTrial(nullptr)
 	, m_What(inType)
 	, m_pDoc(pDoc)
 	, m_Date()
-	, m_CalEntries(NULL)
-	, m_pTabView(NULL)
-	, m_pConfig(NULL)
+	, m_CalEntries(nullptr)
+	, m_pTabView(nullptr)
+	, m_pConfig(nullptr)
 	, m_pRun(run)
 {
 	int nCols = 0;
@@ -476,18 +476,18 @@ CDlgListCtrl::CDlgListCtrl(
 		ARBDogRunPtr run,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_ctrlList(NULL)
-	, m_ctrlNew(NULL)
-	, m_ctrlEdit(NULL)
-	, m_ctrlDelete(NULL)
-	, m_ctrlUp(NULL)
-	, m_ctrlDown(NULL)
-	, m_ctrlCreateTrial(NULL)
+	, m_ctrlList(nullptr)
+	, m_ctrlNew(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlDelete(nullptr)
+	, m_ctrlUp(nullptr)
+	, m_ctrlDown(nullptr)
+	, m_ctrlCreateTrial(nullptr)
 	, m_What(eOtherPoints)
-	, m_pDoc(NULL)
+	, m_pDoc(nullptr)
 	, m_Date()
-	, m_CalEntries(NULL)
-	, m_pTabView(NULL)
+	, m_CalEntries(nullptr)
+	, m_pTabView(nullptr)
 	, m_pConfig(&pConfig)
 	, m_pRun(run)
 {
@@ -956,7 +956,7 @@ bool CDlgListCtrl::DoOK()
 			}
 			m_pDoc->Book().GetCalendar().sort();
 			CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-			m_pDoc->UpdateAllViews(NULL, &hint);
+			m_pDoc->UpdateAllViews(nullptr, &hint);
 		}
 		break;
 	default:

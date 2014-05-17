@@ -129,11 +129,11 @@ std::string stringA(wchar_t const* const inStr, size_t inLen)
 	if (inStr && *inStr)
 	{
 #if defined(HAS_WIDECHARTOMULTIBYTE)
-		int bytes = ::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), 0, 0, NULL, NULL);
+		int bytes = ::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), 0, 0, nullptr, nullptr);
 		if (bytes > 0)
 		{
 			char* ansistr = new char[bytes + 1];
-			::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), ansistr, bytes, NULL, NULL);
+			::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), ansistr, bytes, nullptr, nullptr);
 			ansistr[bytes] = 0;
 			str = std::string(ansistr, bytes);
 			delete [] ansistr;
@@ -166,19 +166,19 @@ std::string stringA(std::wstring const& inStr)
 #else
 		size_t nNeeded;
 #if defined(ARB_HAS_SECURE_MBS_WCS)
-		wcstombs_s(&nNeeded, (char*)NULL, 0, inStr.c_str(), inStr.length());
+		wcstombs_s(&nNeeded, nullptr, 0, inStr.c_str(), inStr.length());
 #else
-		nNeeded = wcstombs((char*)NULL, inStr.c_str(), inStr.length());
+		nNeeded = wcstombs(nullptr, inStr.c_str(), inStr.length());
 #endif
 		if (0 < nNeeded)
 		{
 			char *ansistr = new char[nNeeded+1];
 #if defined(ARB_HAS_SECURE_MBS_WCS)
-			wcstombs_s(NULL, ansistr, nNeeded+1, inStr.c_str(), _TRUNCATE);
+			wcstombs_s(nullptr, ansistr, nNeeded+1, inStr.c_str(), _TRUNCATE);
 #else
 			wcstombs(ansistr, inStr.c_str(), nNeeded);
 #endif
-			ansistr[nNeeded] = NULL;
+			ansistr[nNeeded] = nullptr;
 			str = ansistr;
 			delete [] ansistr;
 		}
@@ -236,19 +236,19 @@ std::wstring stringW(std::string const& inStr)
 #else
 		size_t nNeeded;
 #if defined(ARB_HAS_SECURE_MBS_WCS)
-		mbstowcs_s(&nNeeded, (wchar_t*)NULL, 0, inStr.c_str(), 0);
+		mbstowcs_s(&nNeeded, nullptr, 0, inStr.c_str(), 0);
 #else
-		nNeeded = mbstowcs((wchar_t*)NULL, inStr.c_str(), 0);
+		nNeeded = mbstowcs(nullptr, inStr.c_str(), 0);
 #endif
 		if (0 < nNeeded)
 		{
 			wchar_t *unicodestr = new wchar_t[nNeeded+1];
 #if defined(ARB_HAS_SECURE_MBS_WCS)
-			mbstowcs_s(NULL, unicodestr, nNeeded+1, inStr.c_str(), _TRUNCATE);
+			mbstowcs_s(nullptr, unicodestr, nNeeded+1, inStr.c_str(), _TRUNCATE);
 #else
 			mbstowcs(unicodestr, inStr.c_str(), nNeeded);
 #endif
-			unicodestr[nNeeded] = NULL;
+			unicodestr[nNeeded] = nullptr;
 			str = unicodestr;
 			delete [] unicodestr;
 		}
@@ -265,7 +265,7 @@ bool ToLong(std::wstring const& inStr, long& outValue)
 	wxString s(inStr.c_str());
 	return s.ToLong(&outValue);
 #else
-	wchar_t* end = NULL;
+	wchar_t* end = nullptr;
 	outValue = wcstol(inStr.c_str(), &end, 10);
 	return !end || !*end;
 #endif
@@ -286,7 +286,7 @@ bool ToULong(std::wstring const& inStr, unsigned long& outValue)
 	wxString s(inStr.c_str());
 	return s.ToULong(&outValue);
 #else
-	wchar_t* end = NULL;
+	wchar_t* end = nullptr;
 	outValue = wcstoul(inStr.c_str(), &end, 10);
 	return !end || !*end;
 #endif
@@ -308,7 +308,7 @@ bool ToDouble(std::wstring const& inStr, double& outValue)
 	wxString s(inStr.c_str());
 	rc = s.ToDouble(&outValue);
 #else
-	wchar_t* end = NULL;
+	wchar_t* end = nullptr;
 	outValue = wcstod(inStr.c_str(), &end);
 	rc = (!end || !*end);
 #endif
@@ -337,7 +337,7 @@ bool ToDouble(std::wstring const& inStr, double& outValue)
 			wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
 			rc = s.ToDouble(&outValue);
 #else
-			wchar_t* end = NULL;
+			wchar_t* end = nullptr;
 			_locale_t locale = _create_locale(LC_NUMERIC, "C");
 			outValue = _wcstod_l(inStr.c_str(), &end, locale);
 			_free_locale(locale);
@@ -376,7 +376,7 @@ bool ToCLong(std::wstring const& inStr, long& outValue, bool bRetry)
 	return s.ToLong(&outValue);
 #endif
 #else
-	wchar_t* end = NULL;
+	wchar_t* end = nullptr;
 	_locale_t locale = _create_locale(LC_NUMERIC, "C");
 	outValue = _wcstol_l(inStr.c_str(), &end, 10, locale);
 	_free_locale(locale);
@@ -412,7 +412,7 @@ bool ToCULong(std::wstring const& inStr, unsigned long& outValue, bool bRetry)
 	return s.ToULong(&outValue);
 #endif
 #else
-	wchar_t* end = NULL;
+	wchar_t* end = nullptr;
 	_locale_t locale = _create_locale(LC_NUMERIC, "C");
 	outValue = _wcstoul_l(inStr.c_str(), &end, 10, locale);
 	_free_locale(locale);
@@ -441,7 +441,7 @@ bool ToCDouble(std::wstring const& inStr, double& outValue)
 	return stringWX(inStr).ToDouble(&outValue);
 #endif
 #else
-	wchar_t* end = NULL;
+	wchar_t* end = nullptr;
 	_locale_t locale = _create_locale(LC_NUMERIC, "C");
 	outValue = _wcstod_l(inStr.c_str(), &end, locale);
 	_free_locale(locale);

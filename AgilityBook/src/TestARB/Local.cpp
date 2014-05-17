@@ -358,8 +358,8 @@ std::wstring CLocalization::UpdateTitlesReordered() const
 
 
 std::wstring CLocalization::UpdateSubLevels(int nAdded, int nUpdated, int nSkipped) const
-#if defined(__WXWINDOWS__)
 {
+#if defined(__WXWINDOWS__)
 	wxString buffer;
 	buffer << StringUtil::GetTranslation(arbT("IDS_SUBLEVEL_NAME")).c_str()
 		<< L": "

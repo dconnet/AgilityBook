@@ -518,7 +518,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 		L"ImportCal",
 		L"ImportLog",
 		L"Sorting",
-		NULL
+		nullptr
 	};
 	for (int i = 0; sections[i]; ++i)
 	{
@@ -547,7 +547,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 		L"View",
 		L"ViewOrient",
 		L"ViewType",
-		NULL
+		nullptr
 	};
 	for (int i = 0; items[i]; ++i)
 	{

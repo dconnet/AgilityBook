@@ -306,7 +306,7 @@ public:
 			std::wstring const& inVenue,
 			std::wstring const& inName,
 			bool bAbbrevFirst = true,
-			ARBConfigTitlePtr* outTitle = NULL) const;
+			ARBConfigTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Find a title.
@@ -318,7 +318,7 @@ public:
 	bool FindTitle(
 			std::wstring const& inVenue,
 			std::wstring const& inTitle,
-			ARBConfigTitlePtr* outTitle = NULL) const;
+			ARBConfigTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Delete a title.
@@ -335,7 +335,7 @@ public:
 	 */
 	bool FindVenue(
 			std::wstring const& inVenue,
-			ARBConfigVenuePtr* outVenue = NULL) const;
+			ARBConfigVenuePtr* outVenue = nullptr) const;
 
 	/**
 	 * Add a venue.
@@ -345,7 +345,7 @@ public:
 	 */
 	bool AddVenue(
 			std::wstring const& inVenue,
-			ARBConfigVenuePtr* outVenue = NULL);
+			ARBConfigVenuePtr* outVenue = nullptr);
 
 	/**
 	 * Add a venue.
@@ -378,6 +378,6 @@ public:
 			std::wstring const& inDivision,
 			std::wstring const& inLevel,
 			ARBDate const& inDate,
-			ARBConfigEventPtr* outEvent = NULL,
-			ARBConfigScoringPtr* outScoring = NULL) const;
+			ARBConfigEventPtr* outEvent = nullptr,
+			ARBConfigScoringPtr* outScoring = nullptr) const;
 };

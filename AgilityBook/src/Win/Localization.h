@@ -183,11 +183,11 @@ public:
 	std::wstring ErrorMissingAttribute(
 			wchar_t const* const inElement,
 			wchar_t const* const inAttrib,
-			wchar_t const* const inMsg = NULL) const;
+			wchar_t const* const inMsg = nullptr) const;
 	std::wstring ErrorInvalidAttributeValue(
 			wchar_t const* const inElement,
 			wchar_t const* const inAttrib,
-			wchar_t const* const inMsg = NULL) const;
+			wchar_t const* const inMsg = nullptr) const;
 
 private:
 	std::wstring m_UnknownVersion;

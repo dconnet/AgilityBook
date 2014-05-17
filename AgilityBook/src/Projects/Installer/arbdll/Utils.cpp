@@ -116,7 +116,7 @@ bool IsUserAdmin()
 	HANDLE hProcess = GetCurrentProcess();
 	CHandle cleanupProcess(hProcess);
 
-	HANDLE hProcessToken = NULL;
+	HANDLE hProcessToken = nullptr;
 	CHandle cleanupProcessToken(hProcessToken);
 
 	if (!OpenProcessToken(hProcess, TOKEN_QUERY, &hProcessToken))
@@ -125,12 +125,12 @@ bool IsUserAdmin()
 	// Get admin SID
 	char AdminSID[SECURITY_MAX_SID_SIZE];
 	DWORD dwLength = _countof(AdminSID);
-	if (!CreateWellKnownSid(WinBuiltinAdministratorsSid, NULL, &AdminSID, &dwLength))
+	if (!CreateWellKnownSid(WinBuiltinAdministratorsSid, nullptr, &AdminSID, &dwLength))
 		return false;
 
 	// Check to see if the current token contains admin SID
 	BOOL bIsAdmin;
-	if (!CheckTokenMembership(NULL, &AdminSID, &bIsAdmin))
+	if (!CheckTokenMembership(nullptr, &AdminSID, &bIsAdmin))
 		return false;
 
 	if (bIsAdmin)
@@ -139,7 +139,7 @@ bool IsUserAdmin()
 	// On Vista+, UAC may be inhibiting the admin SID. Go deeper.
 	if (IsVistaOrBetter())
 	{
-		HANDLE hLinkedToken = NULL;
+		HANDLE hLinkedToken = nullptr;
 		CHandle cleanupToken(hLinkedToken);
 
 		if (GetTokenInformation(hProcessToken, TokenLinkedToken, (void*)&hLinkedToken, sizeof(HANDLE), &dwLength))

@@ -37,8 +37,8 @@ CColumnOrder::CColumnOrder(std::wstring const& pItem)
 	: m_Item(pItem.c_str())
 	, m_nColumns(0)
 	, m_bDefaultDescending(false)
-	, m_order(NULL)
-	, m_bDescending(NULL)
+	, m_order(nullptr)
+	, m_bDescending(nullptr)
 {
 }
 

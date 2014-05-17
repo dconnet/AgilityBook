@@ -29,7 +29,7 @@ class CDlgConfigTitle : public wxDialog
 public:
 	CDlgConfigTitle(
 			ARBConfigTitlePtr inTitle,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	ARBConfigTitlePtr m_Title;

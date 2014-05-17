@@ -31,7 +31,7 @@ public:
 	CDlgConfigMultiQ(
 			ARBConfigVenuePtr inVenue,
 			ARBConfigMultiQPtr inMultiQ,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	void UpdateControls();

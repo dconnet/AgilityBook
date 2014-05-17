@@ -284,7 +284,7 @@ public:
 	bool FindMultiQ(
 			std::wstring const& inName,
 			bool inUseShortName = false,
-			ARBConfigMultiQPtr* outMultiQ = NULL) const;
+			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
 
 	/**
 	 * Find a MultiQ by value.
@@ -293,7 +293,7 @@ public:
 	 */
 	bool FindMultiQ(
 			ARBConfigMultiQ const& inMultiQ,
-			ARBConfigMultiQPtr* outMultiQ = NULL) const;
+			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
 
 	/**
 	 * Rename a division.

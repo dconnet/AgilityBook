@@ -28,7 +28,7 @@ public:
 	CPrintPreview(
 			wxPrintout* printout,
 			wxPrintout* printoutForPrinting,
-			wxPrintDialogData* data = NULL);
+			wxPrintDialogData* data = nullptr);
 	// Override so we can close the frame after printing. That's how MFC did
 	// it (note: MFC closed as soon as you clicked print - we wait for success
 	// so we're not fully implmementing the old mfc behavior)

@@ -37,9 +37,9 @@ CWizard::CWizard(
 	: wxWizard()
 	, m_pDoc(pDoc)
 	, m_CalEntries(pCalEntries)
-	, m_pageStart(NULL)
-	, m_pageImport(NULL)
-	, m_pageExport(NULL)
+	, m_pageStart(nullptr)
+	, m_pageImport(nullptr)
+	, m_pageExport(nullptr)
 	, m_Excel()
 	, m_Calc()
 	, m_ImportExportItem(-1)
@@ -95,7 +95,7 @@ void CWizard::UpdateButtons(bool enableNextOrFinish)
 	bool hasNext = false;
 	wxWizardPage* cur = GetCurrentPage();
 	if (cur)
-		hasNext = (NULL != cur->GetNext());
+		hasNext = !!cur->GetNext();
 	// See <wx>/src/generic/wizard.cpp
 	m_Finish->SetLabel(hasNext ? _("&Next >") : _("&Finish"));
 	m_Finish->Enable(enableNextOrFinish);

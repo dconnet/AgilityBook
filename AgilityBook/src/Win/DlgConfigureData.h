@@ -43,7 +43,7 @@ public:
 	virtual bool DoEdit()						{return false;}
 	virtual bool DoDelete()						{return false;}
 	virtual bool DoCopy()						{return false;}
-	virtual CDlgConfigureDataBase* DoMove(bool bUp)	{return NULL;}
+	virtual CDlgConfigureDataBase* DoMove(bool bUp)	{return nullptr;}
 
 protected:
 	CDlgConfigVenue* m_pDlg;

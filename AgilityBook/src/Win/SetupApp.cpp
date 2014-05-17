@@ -45,11 +45,11 @@ CBaseApp::CBaseApp(
 	, m_bReadOnlyInfo(false)
 	, m_ConfigTest(wxT("Settings/isLocal"))
 	, m_bFallback(true)
-	, m_langMgr(NULL)
+	, m_langMgr(nullptr)
 {
 	if (m_BaseRegName.empty())
 		m_BaseRegName = m_BaseAppName;
-	m_langMgr = new CLanguageManager(bUseLangCatalog ? this : NULL);
+	m_langMgr = new CLanguageManager(bUseLangCatalog ? this : nullptr);
 }
 
 
@@ -91,7 +91,7 @@ bool CBaseApp::OnInit()
 
 			// Important: If this is a dialog-based app, you must delete
 			// the config before returning from OnInit for this will leak.
-			wxConfigBase* pBaseConfig = NULL;
+			wxConfigBase* pBaseConfig = nullptr;
 
 			// Determine if this is a stand-alone execution.
 			if (wxFile::Exists(inifile))
@@ -135,14 +135,14 @@ void CBaseApp::BaseAppCleanup(bool deleteConfig)
 {
 	if (deleteConfig)
 	{
-		wxConfigBase* pOld = wxConfig::Set(NULL);
+		wxConfigBase* pOld = wxConfig::Set(nullptr);
 		if (pOld)
 			delete pOld;
 	}
 	delete m_langMgr;
-	m_langMgr = NULL;
+	m_langMgr = nullptr;
 
-	CImageManager::Get()->SetCallback(NULL);
+	CImageManager::Get()->SetCallback(nullptr);
 	Element::Terminate();
 }
 

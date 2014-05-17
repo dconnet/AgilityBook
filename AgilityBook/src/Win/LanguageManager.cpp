@@ -43,7 +43,7 @@ CLanguageManager::CLanguageManager(ILanguageCallback* pCallback)
 	, m_CurLang(wxLANGUAGE_DEFAULT)
 	, m_dirLang()
 	, m_dirLoadedLang()
-	, m_locale(NULL)
+	, m_locale(nullptr)
 {
 }
 

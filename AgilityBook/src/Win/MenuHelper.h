@@ -50,7 +50,7 @@ public:
 			ItemData const menuItems[],
 			size_t numMenuItems,
 			bool doTranslation,
-			wxMenu* mruMenu = NULL);
+			wxMenu* mruMenu = nullptr);
 
 	// Toolbar array is the 'id' in ItemData, use 0 for separator.
 	void CreateMenu(
@@ -60,7 +60,7 @@ public:
 			int const toolbarItems[],
 			size_t numToolbarItems,
 			bool doTranslation,
-			wxMenu* mruMenu = NULL);
+			wxMenu* mruMenu = nullptr);
 
 	void UpdateMenu();
 

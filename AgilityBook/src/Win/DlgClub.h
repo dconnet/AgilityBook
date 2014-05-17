@@ -31,7 +31,7 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBDogClubList& inClubs,
 			ARBDogClubPtr pClub,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	std::wstring Club() const;
 	std::wstring Venue() const;

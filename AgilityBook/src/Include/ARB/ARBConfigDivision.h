@@ -190,7 +190,7 @@ public:
 	 */
 	bool FindDivision(
 			std::wstring const& inDiv,
-			ARBConfigDivisionPtr* outDiv = NULL) const;
+			ARBConfigDivisionPtr* outDiv = nullptr) const;
 
 	/**
 	 * Add a division.
@@ -200,7 +200,7 @@ public:
 	 */
 	bool AddDivision(
 			std::wstring const& inDiv,
-			ARBConfigDivisionPtr* outDiv = NULL);
+			ARBConfigDivisionPtr* outDiv = nullptr);
 
 	/**
 	 * Add a division.

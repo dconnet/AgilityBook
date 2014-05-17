@@ -37,7 +37,7 @@ public:
 	CDlgCalendar(
 			ARBCalendarPtr pCal,
 			CAgilityBookDoc* pDoc,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	void UpdateLocationInfo(wxString const& location);

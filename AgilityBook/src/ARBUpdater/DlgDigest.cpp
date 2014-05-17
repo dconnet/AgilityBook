@@ -121,7 +121,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	, m_SHA256()
 	, m_Size(0)
 {
-	Create(NULL, wxID_ANY, L"MD5/SHA1/SHA256 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(nullptr, wxID_ANY, L"MD5/SHA1/SHA256 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (!m_File.empty())
 	{
@@ -134,8 +134,8 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 			size_t* pSize;
 		} types[] = {
 			{ARBMsgDigest::ARBDigestMD5, &m_MD5, &size},
-			{ARBMsgDigest::ARBDigestSHA1, &m_SHA1, NULL},
-			{ARBMsgDigest::ARBDigestSHA256, &m_SHA256, NULL},
+			{ARBMsgDigest::ARBDigestSHA1, &m_SHA1, nullptr},
+			{ARBMsgDigest::ARBDigestSHA256, &m_SHA256, nullptr},
 		};
 		for (size_t i = 0; i < _countof(types); ++i)
 		{
@@ -206,7 +206,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 void CDlgDigest::OnOk(wxCommandEvent& evt)
 {
-	wxFileDialog dlg(NULL, wxFileSelectorPromptStr, wxEmptyString, m_File);
+	wxFileDialog dlg(nullptr, wxFileSelectorPromptStr, wxEmptyString, m_File);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		wxBusyCursor wait;
@@ -218,8 +218,8 @@ void CDlgDigest::OnOk(wxCommandEvent& evt)
 			size_t* pSize;
 		} types[] = {
 			{ARBMsgDigest::ARBDigestMD5, &m_MD5, &size},
-			{ARBMsgDigest::ARBDigestSHA1, &m_SHA1, NULL},
-			{ARBMsgDigest::ARBDigestSHA256, &m_SHA256, NULL},
+			{ARBMsgDigest::ARBDigestSHA1, &m_SHA1, nullptr},
+			{ARBMsgDigest::ARBDigestSHA256, &m_SHA256, nullptr},
 		};
 		for (size_t i = 0; i < _countof(types); ++i)
 		{

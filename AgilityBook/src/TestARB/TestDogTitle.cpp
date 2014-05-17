@@ -157,7 +157,7 @@ SUITE(TestDogTitleList)
 		//	bool FindTitle(
 		//			std::wstring const& inVenue,
 		//			std::wstring const& inTitle,
-		//			ARBDogTitlePtr* outTitle = NULL) const;
+		//			ARBDogTitlePtr* outTitle = nullptr) const;
 		}
 	}
 

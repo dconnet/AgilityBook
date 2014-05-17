@@ -511,7 +511,7 @@ CAgilityBookCalendarListView::CAgilityBookCalendarListView(
 		CTabView* pTabView,
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
-	, m_Ctrl(NULL)
+	, m_Ctrl(nullptr)
 	, m_imgTentative(-1)
 	, m_imgPlan(-1)
 	, m_imgPlanTentative(-1)
@@ -588,7 +588,7 @@ bool CAgilityBookCalendarListView::NextPane()
 void CAgilityBookCalendarListView::DetachView()
 {
 	// The control is actually owned by the panel, the view is not.
-	m_Ctrl = NULL;
+	m_Ctrl = nullptr;
 	m_imgTentative = -1;
 	m_imgPlan = -1;
 	m_imgPlanTentative = -1;
@@ -663,7 +663,7 @@ void CAgilityBookCalendarListView::OnUpdate(
 		wxView* sender,
 		wxObject* inHint)
 {
-	CUpdateHint* hint = NULL;
+	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_CALENDAR_VIEW)
@@ -1150,7 +1150,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
-				m_Callback.Search(NULL);
+				m_Callback.Search(nullptr);
 		}
 		break;
 
@@ -1160,7 +1160,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
-				m_Callback.Search(NULL);
+				m_Callback.Search(nullptr);
 		}
 		break;
 
@@ -1239,7 +1239,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 						items.push_back(pCal);
 					}
 				}
-				std::vector<ARBCalendarPtr>* exportItems = NULL;
+				std::vector<ARBCalendarPtr>* exportItems = nullptr;
 				if (0 < items.size())
 					exportItems = &items;
 				new CWizard(GetDocument(), exportItems);

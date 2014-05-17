@@ -225,7 +225,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	}
 
 	std::wostringstream data;
-	DumpGroup(&data, wxEmptyString, NULL);
+	DumpGroup(&data, wxEmptyString, nullptr);
 	m_Parent->AddRegistryInfo(data.str().c_str());
 
 	std::set<wxString> directories;
@@ -240,7 +240,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	// C:\Documents and Settings\username\Local Settings\Application Data\appname
 	directories.insert(wxStandardPaths::Get().GetUserLocalDataDir());
 	std::vector<std::wstring> items;
-	DumpGroup(NULL, L"Recent File List", &items);
+	DumpGroup(nullptr, L"Recent File List", &items);
 	for (std::vector<std::wstring>::iterator iter = items.begin(); iter != items.end(); ++iter)
 	{
 		std::wstring path = *iter;

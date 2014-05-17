@@ -482,7 +482,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 #endif
 	}
 	int count = toWrite.GetElementCount();
-	wxXmlNode* lastChild = NULL;
+	wxXmlNode* lastChild = nullptr;
 	for (i = 0; i < count; ++i)
 	{
 		ElementPtr element = toWrite.GetElement(i);
@@ -490,7 +490,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 		{
 		case Element::Element_Node:
 			{
-				wxXmlNode* child = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, StringUtil::stringWX(element->GetName()));
+				wxXmlNode* child = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, StringUtil::stringWX(element->GetName()));
 				if (lastChild)
 					lastChild->SetNext(child);
 				else
@@ -501,7 +501,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 			break;
 		case Element::Element_Text:
 			{
-				wxXmlNode* child = new wxXmlNode(NULL, wxXML_TEXT_NODE, StringUtil::stringWX(element->GetName()), StringUtil::stringWX(element->GetValue()));
+				wxXmlNode* child = new wxXmlNode(nullptr, wxXML_TEXT_NODE, StringUtil::stringWX(element->GetName()), StringUtil::stringWX(element->GetValue()));
 				node->AddChild(child);
 			}
 			break;
@@ -1302,7 +1302,7 @@ bool ElementNode::LoadXML(
 	if (0 >= res)
 		return false;
 
-	xmlParserCtxtPtr ctxt = xmlCreatePushParserCtxt(NULL, NULL, buffer, res, NULL);
+	xmlParserCtxtPtr ctxt = xmlCreatePushParserCtxt(nullptr, nullptr, buffer, res, nullptr);
 	if (!ctxt)
 		return false;
 
@@ -1316,11 +1316,11 @@ bool ElementNode::LoadXML(
 	}
 	xmlParseChunk(ctxt, buffer, 0, 1);
 
-	xmlDocPtr source = NULL;
+	xmlDocPtr source = nullptr;
 	if (ctxt->wellFormed)
 		source = ctxt->myDoc;
 	xmlFreeParserCtxt(ctxt);
-	ctxt = NULL;
+	ctxt = nullptr;
 
 	bool rc = false;
 	if (source)
@@ -1362,7 +1362,7 @@ bool ElementNode::LoadXML(
 	{
 		ioErrMsg << StringUtil::stringW(log->GetBuffer());
 		// This does not call Flush (which displays a dialog). Yea!
-		chain.SetLog(NULL);
+		chain.SetLog(nullptr);
 		return false;
 	}
 	return LoadXMLNode(m_Me.lock(), source, ioErrMsg);
@@ -1378,7 +1378,7 @@ bool ElementNode::LoadXML(
 	if (!inData || 0 == nData)
 		return false;
 #if __USE_LIBXML2
-	xmlDocPtr source = xmlReadMemory(inData, static_cast<int>(nData), NULL, NULL, 0);
+	xmlDocPtr source = xmlReadMemory(inData, static_cast<int>(nData), nullptr, nullptr, 0);
 	bool rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
 	if (source)
 		xmlFreeDoc(source);
@@ -1398,7 +1398,7 @@ bool ElementNode::LoadXML(
 		return false;
 #if __USE_LIBXML2
 	std::string filename = StringUtil::stringA(inFileName);
-	xmlDocPtr source = xmlReadFile(filename.c_str(), NULL, 0);
+	xmlDocPtr source = xmlReadFile(filename.c_str(), nullptr, 0);
 	bool rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
 	if (source)
 		xmlFreeDoc(source);
@@ -1459,7 +1459,7 @@ bool ElementNode::SaveXML(
 		outOutput << inDTD;
 		outOutput << "\n]>\n";
 	}
-	xmlOutputBufferPtr outputBuffer = xmlOutputBufferCreateIO(BufferWriteCallback, BufferCloseCallback, (void*)(&outOutput), NULL);
+	xmlOutputBufferPtr outputBuffer = xmlOutputBufferCreateIO(BufferWriteCallback, BufferCloseCallback, (void*)(&outOutput), nullptr);
 	xmlTextWriterPtr formatter = xmlNewTextWriter(outputBuffer);
 	xmlTextWriterSetIndent(formatter, 2); // Only puts out 1 space no matter what.
 	xmlTextWriterSetIndentString(formatter, BAD_CAST "\t");
@@ -1509,7 +1509,7 @@ bool ElementNode::SaveXML(
 	wxXmlDocument doc;
 	doc.SetVersion(L"1.0");
 	doc.SetFileEncoding(L"utf-8");
-	wxXmlNode* root = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, StringUtil::stringWX(GetName()));
+	wxXmlNode* root = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, StringUtil::stringWX(GetName()));
 	doc.SetRoot(root);
 	// TODO: Insert DTD
 	CreateDoc(root, *this);
@@ -1537,7 +1537,7 @@ bool ElementNode::SaveXML(
 #if defined(ARB_HAS_OSTREAM_WCHAR)
 	std::ofstream output(outFile.c_str(), std::ios::out | std::ios::binary);
 #else
-	char const* pFile = NULL;
+	char const* pFile = nullptr;
 	std::string filename = StringUtil::stringA(outFile);
 	pFile = filename.c_str();
 	std::ofstream output(pFile, std::ios::out | std::ios::binary);

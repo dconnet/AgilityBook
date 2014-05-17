@@ -35,5 +35,5 @@ public:
 	static std::wstring Compute(
 			std::istream& inFile,
 			ARBDigest type,
-			size_t* outSize = NULL);
+			size_t* outSize = nullptr);
 };

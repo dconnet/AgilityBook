@@ -50,7 +50,7 @@ SUITE(TestConfigFault)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault = ARBConfigFault::New();
-			CHECK(NULL != fault.get());
+			CHECK(!!fault.get());
 		}
 	}
 
@@ -62,7 +62,7 @@ SUITE(TestConfigFault)
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
 			fault1->SetName(L"Fault!");
 			ARBConfigFaultPtr fault2 = fault1->Clone();
-			CHECK(NULL != fault2.get());
+			CHECK(!!fault2.get());
 			CHECK(fault1.get() != fault2.get());
 			CHECK(*fault1 == *fault2);
 			fault1->SetName(L"Here");

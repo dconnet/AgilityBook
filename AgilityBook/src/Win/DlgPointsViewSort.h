@@ -22,7 +22,7 @@
 class CDlgPointsViewSort : public wxDialog
 {
 public:
-	CDlgPointsViewSort(wxWindow* pParent = NULL);
+	CDlgPointsViewSort(wxWindow* pParent = nullptr);
 
 private:
 	wxComboBox* m_ctrlPrimary;

@@ -123,7 +123,7 @@ bool GetOSInfo(int& verMajor, int& verMinor)
 	}
 
 	UINT BufLen;
-	VS_FIXEDFILEINFO* pFileInfo = NULL;
+	VS_FIXEDFILEINFO* pFileInfo = nullptr;
 	if (VerQueryValue(lpData, L"\\", (void**)&pFileInfo, &BufLen))
 	{
 		verMajor= HIWORD(pFileInfo->dwFileVersionMS);
@@ -250,7 +250,7 @@ static std::wstring GetEndiannessName()
 	wxPlatformInfo info;
 	return StringUtil::stringW(info.GetEndiannessName());
 
-#elif
+#else
 	// Copied from wxWidgets 2.9.5: utilscmn.cpp: wxIsPlatformLittleEndian
 	// Are we little or big endian? This method is from Harbison & Steele.
 	union

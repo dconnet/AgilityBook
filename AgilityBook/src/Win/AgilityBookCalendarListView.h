@@ -93,7 +93,7 @@ public:
 	virtual void OnDraw(wxDC* dc);
 	virtual void OnUpdate(
 			wxView* sender,
-			wxObject* inHint = NULL);
+			wxObject* inHint = nullptr);
 
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 	void GetPrintLine(long item, std::vector<std::wstring>& line) const;

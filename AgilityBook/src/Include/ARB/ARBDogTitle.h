@@ -225,7 +225,7 @@ public:
 	bool FindTitle(
 			std::wstring const& inVenue,
 			std::wstring const& inTitle,
-			ARBDogTitlePtr* outTitle = NULL) const;
+			ARBDogTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Find the maximum instance of a title
@@ -236,7 +236,7 @@ public:
 	short FindMaxInstance(
 			std::wstring const& inVenue,
 			std::wstring const& inTitle,
-			std::vector<short>* outMissing = NULL) const;
+			std::vector<short>* outMissing = nullptr) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.

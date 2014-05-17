@@ -63,7 +63,7 @@ public:
 	CDlgDog(
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog,
-			wxWindow* pParent = NULL,
+			wxWindow* pParent = nullptr,
 			int iSelectPage = 0);
 	~CDlgDog();
 

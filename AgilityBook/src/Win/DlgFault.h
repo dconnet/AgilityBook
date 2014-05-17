@@ -27,7 +27,7 @@ public:
 	CDlgFault(
 			std::set<std::wstring>& faults,
 			std::wstring const& fault,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	std::wstring GetFault() const;
 
 private:

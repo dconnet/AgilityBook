@@ -89,7 +89,7 @@
 
 CImageManager* CImageManager::Get()
 {
-	static CImageManager* mgr = NULL;
+	static CImageManager* mgr = nullptr;
 	if (!mgr)
 	{
 		// Note, this is cleanuped in wxWidget code for wxArtProviders
@@ -101,7 +101,7 @@ CImageManager* CImageManager::Get()
 
 
 CImageManager::CImageManager()
-	: m_Callback(NULL)
+	: m_Callback(nullptr)
 {
 }
 

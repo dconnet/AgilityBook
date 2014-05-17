@@ -70,10 +70,10 @@ CDlgReorder::CDlgReorder(
 	, m_Dogs(dogs)
 	, m_Trial()
 	, m_Run()
-	, m_ctrlList(NULL)
-	, m_ctrlTree(NULL)
-	, m_ctrlUp(NULL)
-	, m_ctrlDown(NULL)
+	, m_ctrlList(nullptr)
+	, m_ctrlTree(nullptr)
+	, m_ctrlUp(nullptr)
+	, m_ctrlDown(nullptr)
 {
 	Init(pParent);
 }
@@ -86,13 +86,13 @@ CDlgReorder::CDlgReorder(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
-	, m_Dogs(NULL)
+	, m_Dogs(nullptr)
 	, m_Trial(trial)
 	, m_Run(run)
-	, m_ctrlList(NULL)
-	, m_ctrlTree(NULL)
-	, m_ctrlUp(NULL)
-	, m_ctrlDown(NULL)
+	, m_ctrlList(nullptr)
+	, m_ctrlTree(nullptr)
+	, m_ctrlUp(nullptr)
+	, m_ctrlDown(nullptr)
 {
 	Init(pParent);
 }
@@ -107,12 +107,12 @@ void CDlgReorder::Init(wxWindow* pParent)
 
 	// Controls (these are done first to control tab order)
 
-	wxWindow* ctrl = NULL;
+	wxWindow* ctrl = nullptr;
 	if (m_Dogs)
 	{
 		ctrl = m_ctrlList = new wxListBox(this, wxID_ANY,
 			wxDefaultPosition, wxSize(150, 100),
-			0, NULL,
+			0, nullptr,
 			wxLB_NEEDED_SB|wxLB_SINGLE);
 		BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgReorder::OnListSelected);
 		m_ctrlList->SetHelpText(_("HIDC_REORDER_LIST"));
@@ -379,7 +379,7 @@ void CDlgReorder::OnOk(wxCommandEvent& evt)
 		}
 		m_pDoc->Modify(true);
 		CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW);
-		m_pDoc->UpdateAllViews(NULL, &hint);
+		m_pDoc->UpdateAllViews(nullptr, &hint);
 	}
 	else if (m_Trial && m_ctrlTree)
 	{
@@ -401,7 +401,7 @@ void CDlgReorder::OnOk(wxCommandEvent& evt)
 		m_Trial->GetRuns().sort();
 		m_pDoc->Modify(true);
 		CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW);
-		m_pDoc->UpdateAllViews(NULL, &hint);
+		m_pDoc->UpdateAllViews(nullptr, &hint);
 	}
 
 	EndDialog(wxID_OK);

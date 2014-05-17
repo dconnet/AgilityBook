@@ -208,7 +208,7 @@ bool CClipboardDataTable::Write(CClipboardDataWriter& writer, bool bCommit)
 
 CClipboardDataWriter::CClipboardDataWriter()
 	: CClipboardData(true)
-	, m_Object(NULL)
+	, m_Object(nullptr)
 {
 	if (m_bOkay)
 	{
@@ -332,6 +332,6 @@ bool CClipboardDataWriter::CommitData()
 		bOk = true;
 	else
 		delete m_Object;
-	m_Object = NULL;
+	m_Object = nullptr;
 	return bOk;
 }

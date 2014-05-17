@@ -99,7 +99,7 @@ bool ARBBase64::Decode(
 		unsigned char*& outBinData,
 		size_t& outBytes)
 {
-	outBinData = NULL;
+	outBinData = nullptr;
 	outBytes = 0;
 	if (inBase64.empty())
 		return false;
@@ -121,7 +121,7 @@ bool ARBBase64::Decode(
 			{
 				// error in the encoded data.
 				delete [] outBinData;
-				outBinData = NULL;
+				outBinData = nullptr;
 				return false;
 			}
 			++nChar;
@@ -185,7 +185,7 @@ bool ARBBase64::Decode(
 void ARBBase64::Release(unsigned char*& inBinData)
 {
 	delete [] inBinData;
-	inBinData = NULL;
+	inBinData = nullptr;
 }
 
 
@@ -197,7 +197,7 @@ bool ARBBase64::Encode(
 	outData.erase();
 	if (0 == inBytes || !inBinData || !*inBinData)
 		return false;
-	unsigned char* encoded = NULL;
+	unsigned char* encoded = nullptr;
 	size_t alsize = (inBytes * 4) / 3;
 	encoded = new unsigned char[alsize + ((alsize / 76) * 2) + 10];
 	size_t count = 0;

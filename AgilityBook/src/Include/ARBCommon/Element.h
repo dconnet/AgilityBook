@@ -375,7 +375,7 @@ public:
 			ElementNodePtr& outParentNode,
 			int& outElementIndex,
 			std::wstring const& inName,
-			std::wstring const* inValue = NULL) const;
+			std::wstring const* inValue = nullptr) const;
 
 	/**
 	 * Populate this element from the given stream.

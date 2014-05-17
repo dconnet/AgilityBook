@@ -33,7 +33,7 @@ public:
 			ARBConfig const& inConfig,
 			std::map<std::wstring, std::wstring> const& inLocCodes,
 			std::map<std::wstring, std::wstring> const& inVenueCodes,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 	// For selecting from available list
 	CDlgCalendarQueryDetail(
 			ARBConfig const& inConfig,
@@ -41,7 +41,7 @@ public:
 			std::vector<std::wstring> const& inSelectedLocCodes,
 			std::map<std::wstring, std::wstring> const& inVenueCodes,
 			std::vector<std::wstring> const& inSelectedVenueCodes,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	std::map<std::wstring, std::wstring> const& GetLocationCodes() const
 	{

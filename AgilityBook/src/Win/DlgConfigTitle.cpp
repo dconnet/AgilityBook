@@ -94,12 +94,12 @@ CDlgConfigTitle::CDlgConfigTitle(
 
 	, m_DateFrom(inTitle->GetValidFrom().IsValid())
 	, m_DateTo(inTitle->GetValidTo().IsValid())
-	, m_ctrlMultipleStartAt(NULL)
-	, m_ctrlMultipleInc(NULL)
-	, m_ctrlDateFrom(NULL)
-	, m_ctrlDateTo(NULL)
-	, m_ctrlStyle(NULL)
-	, m_ctrlSep(NULL)
+	, m_ctrlMultipleStartAt(nullptr)
+	, m_ctrlMultipleInc(nullptr)
+	, m_ctrlDateFrom(nullptr)
+	, m_ctrlDateTo(nullptr)
+	, m_ctrlStyle(nullptr)
+	, m_ctrlSep(nullptr)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -191,7 +191,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	textDisplay->Wrap(-1);
 
 	m_ctrlStyle = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
+		wxDefaultPosition, wxDefaultSize, 0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
 	m_ctrlStyle->SetHelpText(_("HIDC_CONFIG_TITLE_STYLE"));
 	m_ctrlStyle->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
 	static struct
@@ -221,7 +221,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	textSep->Wrap(-1);
 
 	m_ctrlSep = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
+		wxDefaultPosition, wxDefaultSize, 0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
 	m_ctrlSep->SetHelpText(_("HIDC_CONFIG_TITLE_SEP"));
 	m_ctrlSep->SetToolTip(_("HIDC_CONFIG_TITLE_SEP"));
 	static struct

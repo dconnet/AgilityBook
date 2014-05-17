@@ -29,7 +29,7 @@
 CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	: wxWizardPageSimple(pParent)
 	, m_Parent(pParent)
-	, m_ctrlList(NULL)
+	, m_ctrlList(nullptr)
 {
 	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
 		L"Check the files you would like to be sent",
@@ -37,7 +37,7 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 
 	m_ctrlList = new wxCheckListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, 0);
+		0, nullptr, 0);
 
 	wxButton* btnAll = new wxButton(this, wxID_ANY, L"Check All",
 		wxDefaultPosition, wxDefaultSize, 0);

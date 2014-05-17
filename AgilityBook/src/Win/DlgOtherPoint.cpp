@@ -62,8 +62,8 @@ CDlgOtherPoint::CDlgOtherPoint(
 	: wxDialog()
 	, m_Config(config)
 	, m_pRunOther(pRunOther)
-	, m_ctrlOtherPoints(NULL)
-	, m_ctrlDesc(NULL)
+	, m_ctrlOtherPoints(nullptr)
+	, m_ctrlDesc(nullptr)
 	, m_Points(pRunOther->GetPoints())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
@@ -75,7 +75,7 @@ CDlgOtherPoint::CDlgOtherPoint(
 
 	m_ctrlOtherPoints = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
 	BIND_OR_CONNECT_CTRL(m_ctrlOtherPoints, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgOtherPoint::OnSelchangeOtherpoints);
 	m_ctrlOtherPoints->SetHelpText(_("HIDC_OTHER_OTHERPOINTS"));

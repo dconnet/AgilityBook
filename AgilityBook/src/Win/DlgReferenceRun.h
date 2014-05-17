@@ -35,7 +35,7 @@ public:
 			std::set<std::wstring> const& inNames,
 			std::set<std::wstring> const& inBreeds,
 			ARBDogReferenceRunPtr ref,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	CAgilityBookDoc* m_pDoc;

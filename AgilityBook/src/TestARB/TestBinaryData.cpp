@@ -56,10 +56,10 @@ SUITE(TestBinaryData)
 	{
 		if (!g_bMicroTest)
 		{
-			unsigned char* outData = NULL;
+			unsigned char* outData = nullptr;
 			size_t bytes;
 			CHECK(BinaryData::Decode(EncodedData, outData, bytes));
-			CHECK(outData != NULL);
+			CHECK(!!outData);
 			CHECK_EQUAL(RawDataSize, bytes);
 			CHECK_EQUAL(0, memcmp(RawData, outData, bytes));
 			BinaryData::Release(outData);

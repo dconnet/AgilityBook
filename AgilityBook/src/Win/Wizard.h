@@ -57,8 +57,8 @@ class CWizard : public wxWizard
 public:
 	CWizard(
 			CAgilityBookDoc* pDoc,
-			std::vector<ARBCalendarPtr>* pCalEntries = NULL,
-			wxWindow* pParent = NULL);
+			std::vector<ARBCalendarPtr>* pCalEntries = nullptr,
+			wxWindow* pParent = nullptr);
 
 	wxWizardPage* GetImportPage() const;
 	wxWizardPage* GetExportPage() const;

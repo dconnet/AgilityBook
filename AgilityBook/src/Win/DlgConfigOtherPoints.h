@@ -25,7 +25,7 @@ public:
 	CDlgConfigOtherPoints(
 			ARBConfig& config,
 			ARBConfigOtherPointsPtr pOther,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	bool IsNameOkay(std::wstring const& name) const;
 

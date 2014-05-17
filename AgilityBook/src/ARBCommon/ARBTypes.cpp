@@ -71,7 +71,7 @@ std::wstring ARBDouble::ToString(
 #if defined(__WXWINDOWS__)
 	else
 	{
-		wxLocale* locale = NULL;
+		wxLocale* locale = nullptr;
 		if (eDefault == eUseDefaultLocale)
 			locale = new wxLocale(wxLANGUAGE_DEFAULT, 0);
 		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);

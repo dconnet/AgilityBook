@@ -99,10 +99,10 @@ CDlgTrial::CDlgTrial(
 	, m_Verified(pTrial->IsVerified())
 	, m_Location(StringUtil::stringWX(pTrial->GetLocation()))
 	, m_Notes(StringUtil::stringWX(pTrial->GetNote()))
-	, m_ctrlLocationInfo(NULL)
-	, m_ctrlEdit(NULL)
-	, m_ctrlDelete(NULL)
-	, m_ctrlClubNotes(NULL)
+	, m_ctrlLocationInfo(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlDelete(nullptr)
+	, m_ctrlClubNotes(nullptr)
 	, m_pDoc(pDoc)
 	, m_pTrial(pTrial)
 	, m_Clubs()
@@ -150,7 +150,7 @@ CDlgTrial::CDlgTrial(
 
 	m_ctrlLocation = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL,
+		0, nullptr,
 		wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location), _("IDS_ENTER_NAME"));
 	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgTrial::OnEnChangeLocation);

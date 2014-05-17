@@ -27,8 +27,8 @@
 
 
 CMenuHelper::CMenuHelper()
-	: m_Frame(NULL)
-	, m_MenuBar(NULL)
+	: m_Frame(nullptr)
+	, m_MenuBar(nullptr)
 	, m_doTranslation(false)
 	, m_MenuData()
 	, m_ToolbarData()
@@ -48,7 +48,7 @@ void CMenuHelper::DoMenuItem(
 		wxString const& desc,
 		wxArtID const& artId)
 {
-	DoMenuItem(menu, id, label, desc, wxITEM_NORMAL, NULL, artId);
+	DoMenuItem(menu, id, label, desc, wxITEM_NORMAL, nullptr, artId);
 }
 
 
@@ -155,7 +155,7 @@ void CMenuHelper::Menu(
 					name,
 					help,
 					items[index].kind,
-					NULL,
+					nullptr,
 					items[index].artId);
 			}
 		}
@@ -311,7 +311,7 @@ void CMenuHelper::UpdateMenu()
 		for (std::vector<MenuHandle>::iterator i = m_MenuData.begin(); i != m_MenuData.end(); ++i)
 		{
 			m_MenuBar->SetMenuLabel(i->idx, wxGetTranslation(i->item.c_str()));
-			DoSubMenu(NULL, *i);
+			DoSubMenu(nullptr, *i);
 		}
 
 		wxToolBar* toolbar = m_Frame->GetToolBar();

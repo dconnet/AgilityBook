@@ -165,7 +165,7 @@ public:
 	 */
 	bool FindSite(
 			std::wstring const& inSite,
-			ARBConfigCalSitePtr* outSite = NULL) const;
+			ARBConfigCalSitePtr* outSite = nullptr) const;
 
 	/**
 	 * Add a site.
@@ -175,7 +175,7 @@ public:
 	 */
 	bool AddSite(
 			std::wstring const& inSite,
-			ARBConfigCalSitePtr* outSite = NULL);
+			ARBConfigCalSitePtr* outSite = nullptr);
 
 	/**
 	 * Add a site.

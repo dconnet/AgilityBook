@@ -173,7 +173,7 @@ SUITE(TestConfigDivisionList)
 			TODO_TEST
 		//	bool FindDivision(
 		//			std::wstring const& inDiv,
-		//			ARBConfigDivisionPtr* outDiv = NULL) const;
+		//			ARBConfigDivisionPtr* outDiv = nullptr) const;
 		}
 	}
 
@@ -185,7 +185,7 @@ SUITE(TestConfigDivisionList)
 			TODO_TEST
 		//	bool AddDivision(
 		//			std::wstring const& inDiv,
-		//			ARBConfigDivisionPtr* outDiv = NULL);
+		//			ARBConfigDivisionPtr* outDiv = nullptr);
 		//	bool AddDivision(ARBConfigDivisionPtr inDiv);
 		//	int DeleteDivision(
 		//			std::wstring const& inDiv,

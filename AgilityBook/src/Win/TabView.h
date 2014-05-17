@@ -40,7 +40,7 @@ public:
 	virtual void OnChangeFilename();
 	virtual bool OnCreate(wxDocument* doc, long flags);
 	virtual void OnDraw(wxDC* dc);
-	virtual void OnUpdate(wxView* sender, wxObject* inHint = NULL);
+	virtual void OnUpdate(wxView* sender, wxObject* inHint = nullptr);
 
 	// Menu ids
 	int GetType() const		{return m_type;}

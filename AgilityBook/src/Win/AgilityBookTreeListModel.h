@@ -61,7 +61,7 @@ public:
 	void DeleteAllItems();
 	void Expand(
 			wxDataViewCtrl* list,
-			std::list<ARBBasePtr> const* pCollapsedItems = NULL);
+			std::list<ARBBasePtr> const* pCollapsedItems = nullptr);
 
 	virtual int Compare(
 			const wxDataViewItem& item1,

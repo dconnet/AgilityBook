@@ -305,7 +305,7 @@ CAgilityBookTreeListView::CAgilityBookTreeListView(
 		CTabView* pTabView,
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
-	, m_Ctrl(NULL)
+	, m_Ctrl(nullptr)
 	, m_Callback(this)
 	, m_bSuppressPrompt(false)
 {
@@ -415,7 +415,7 @@ wxWindow* CAgilityBookTreeListView::GetControl()
 void CAgilityBookTreeListView::DetachView()
 {
 	// The control is actually owned by the panel, the view is not.
-	m_Ctrl = NULL;
+	m_Ctrl = nullptr;
 }
 
 
@@ -450,7 +450,7 @@ void CAgilityBookTreeListView::OnUpdate(
 {
 	if (!m_Ctrl)
 		return;
-	CUpdateHint* hint = NULL;
+	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_TREE_VIEW)
@@ -954,7 +954,7 @@ bool CAgilityBookTreeListView::EditTrial(
 		if (bOk)
 		{
 			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW);
-			GetDocument()->UpdateAllViews(NULL, &hint);
+			GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 
 		if (m_Ctrl->IsShownOnScreen())
@@ -1045,7 +1045,7 @@ bool CAgilityBookTreeListView::EditRun(
 		if (bOk)
 		{
 			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW);
-			GetDocument()->UpdateAllViews(NULL, &hint);
+			GetDocument()->UpdateAllViews(nullptr, &hint);
 		}
 
 		if (m_Ctrl->IsShownOnScreen())
@@ -1368,7 +1368,7 @@ void CAgilityBookTreeListView::OnDuplicate(wxCommandEvent& evt)
 	{
 		GetDocument()->Modify(true);
 		CUpdateHint hint(UPDATE_POINTS_VIEW);
-		GetDocument()->UpdateAllViews(NULL, &hint);
+		GetDocument()->UpdateAllViews(nullptr, &hint);
 	}
 }
 
@@ -1454,7 +1454,7 @@ void CAgilityBookTreeListView::OnCopy(wxCommandEvent& evt)
 				break;
 			case eTreeRun:
 				tree = ElementNode::New(CLIPDATA);
-				m_Ctrl->GetStore()->GetRun(item)->Save(tree, NULL, GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
+				m_Ctrl->GetStore()->GetRun(item)->Save(tree, nullptr, GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
 				format = eFormatRun;
 				break;
 			}
@@ -1532,7 +1532,7 @@ void CAgilityBookTreeListView::OnPaste(wxCommandEvent& evt)
 						m_Ctrl->Thaw();
 						m_Ctrl->Refresh();
 						CUpdateHint hint(UPDATE_POINTS_VIEW);
-						GetDocument()->UpdateAllViews(NULL, &hint);
+						GetDocument()->UpdateAllViews(nullptr, &hint);
 					}
 				}
 				else if (0 < err.m_ErrMsg.str().length())
@@ -1607,7 +1607,7 @@ void CAgilityBookTreeListView::OnPaste(wxCommandEvent& evt)
 					{
 						pTrial->SetMultiQs(GetDocument()->Book().GetConfig());
 						CUpdateHint hint(UPDATE_POINTS_VIEW);
-						GetDocument()->UpdateAllViews(NULL, &hint);
+						GetDocument()->UpdateAllViews(nullptr, &hint);
 					}
 				}
 			}
@@ -1655,7 +1655,7 @@ void CAgilityBookTreeListView::OnPaste(wxCommandEvent& evt)
 						{
 							pNewTrial->SetMultiQs(GetDocument()->Book().GetConfig());
 							CUpdateHint hint(UPDATE_POINTS_VIEW);
-							GetDocument()->UpdateAllViews(NULL, &hint);
+							GetDocument()->UpdateAllViews(nullptr, &hint);
 						}
 					}
 				}
@@ -1716,7 +1716,7 @@ void CAgilityBookTreeListView::OnDelete(wxCommandEvent& evt)
 					m_Ctrl->GetStore()->Delete(item);
 					GetDocument()->Modify(true);
 					CUpdateHint hint(UPDATE_POINTS_VIEW);
-					GetDocument()->UpdateAllViews(NULL, &hint);
+					GetDocument()->UpdateAllViews(nullptr, &hint);
 				}
 			}
 			break;
@@ -1733,7 +1733,7 @@ void CAgilityBookTreeListView::OnDelete(wxCommandEvent& evt)
 					m_Ctrl->GetStore()->Delete(item);
 					GetDocument()->Modify(true);
 					CUpdateHint hint(UPDATE_POINTS_VIEW);
-					GetDocument()->UpdateAllViews(NULL, &hint);
+					GetDocument()->UpdateAllViews(nullptr, &hint);
 				}
 			}
 			break;
@@ -1759,7 +1759,7 @@ void CAgilityBookTreeListView::OnDelete(wxCommandEvent& evt)
 					}
 					GetDocument()->Modify(true);
 					CUpdateHint hint(updateHint);
-					GetDocument()->UpdateAllViews(NULL, &hint);
+					GetDocument()->UpdateAllViews(nullptr, &hint);
 				}
 			}
 			break;
@@ -1874,7 +1874,7 @@ void CAgilityBookTreeListView::OnFindNext(wxCommandEvent& evt)
 		dlg.ShowModal();
 	}
 	else
-		m_Callback.Search(NULL);
+		m_Callback.Search(nullptr);
 }
 
 
@@ -1887,7 +1887,7 @@ void CAgilityBookTreeListView::OnFindPrevious(wxCommandEvent& evt)
 		dlg.ShowModal();
 	}
 	else
-		m_Callback.Search(NULL);
+		m_Callback.Search(nullptr);
 }
 
 
@@ -2004,7 +2004,7 @@ void CAgilityBookTreeListView::OnNewTrial(wxCommandEvent& evt)
 				if (bOk)
 				{
 					CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_POINTS_VIEW);
-					GetDocument()->UpdateAllViews(NULL, &hint);
+					GetDocument()->UpdateAllViews(nullptr, &hint);
 				}
 			}
 		}
@@ -2182,7 +2182,7 @@ void CAgilityBookTreeListView::OnViewCustomize(wxCommandEvent& evt)
 void CAgilityBookTreeListView::OnUpdateUnsort(wxUpdateUIEvent& evt)
 {
 	wxDataViewColumn* pCol = m_Ctrl->GetSortingColumn();
-	evt.Enable(pCol != NULL);
+	evt.Enable(pCol != nullptr);
 }
 
 

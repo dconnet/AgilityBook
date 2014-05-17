@@ -35,7 +35,7 @@ public:
 	CDlgConfigEventMethod(
 			ARBConfigVenuePtr pVenue,
 			ARBConfigScoringPtr pScoring,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 private:
 	ARBConfigScoring::ScoringStyle GetType(int index) const;

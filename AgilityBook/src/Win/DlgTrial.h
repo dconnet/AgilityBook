@@ -40,7 +40,7 @@ public:
 	CDlgTrial(
 			CAgilityBookDoc* pDoc,
 			ARBDogTrialPtr pTrial,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = nullptr);
 
 	bool RunsWereDeleted() const		{return m_bRunsDeleted;}
 
@@ -70,7 +70,7 @@ private:
 			bool bLocation,
 			bool bClub);
 	void ListLocations();
-	void ListClubs(ARBDogClubPtr* inClub = NULL);
+	void ListClubs(ARBDogClubPtr* inClub = nullptr);
 	void EditClub();
 
 	DECLARE_ON_INIT()
