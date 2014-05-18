@@ -8,6 +8,7 @@
 5/18/2014: v2.4.2.<in development>
 - Bug fixes:
   - About dialog in Windows is poorly formatted.
+  - Fixed how Windows does its auto-check at startup in order to fix a crash.
 
 5/18/2014: v2.4.1.89
 - Bumped Configuration v46:

@@ -66,6 +66,11 @@ public:
 private:
 	void SetMessage(std::wstring const& msg, int index, bool bResize);
 
+	class CStartupEvent : public wxTimer
+	{
+	public:
+		virtual void Notify();
+	} m_timerStartup;
 	wxDocManager* m_manager;
 	CMenuHelper m_menus;
 #ifdef __WXMSW__

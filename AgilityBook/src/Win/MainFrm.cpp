@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-05-18 Moved startup version check to a timer.
  * 2012-11-14 "Filtered" was truncated in wx2.8 status bar.
  * 2012-01-07 Fix tab type/orientation persistence.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -74,6 +75,21 @@ bool CFileDropTarget::OnDropFiles(
 	m_docMgr->CreateDocument(filenames[0], wxDOC_SILENT);
 #endif
 	return true;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+// At startup, set a timer and then perform check.
+// Doing the check in app OnInit caused a crash when we downloaded the program.
+// A wxHTTP object was put in the pending delete queue - when that was cleaned
+// up during app tear down, it crashed. Letting the app actually start and then
+// handling upgrade here solved that issue.
+
+void CMainFrame::CStartupEvent::Notify()
+{
+	if (wxGetApp().AutoCheckProgram())
+		wxGetApp().GetTopWindow()->Close();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -195,6 +211,8 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 #if !defined(__WXMAC__)
 	SetDropTarget(new CFileDropTarget(manager));
 #endif
+
+	m_timerStartup.Start(1000, wxTIMER_ONE_SHOT);
 }
 
 
