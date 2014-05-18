@@ -1,6 +1,7 @@
 5/18/2014: v2.4.1.89
 - Bumped Configuration v46:
   - Added ASCA ACE program
+  - Added 'Nationals' level to AKC for tracking of National rounds.
   - Added NADAC Beginners Agility
 - Bumped file version to 14.3:
   - Added 'scorePts' to 'Placement'.
