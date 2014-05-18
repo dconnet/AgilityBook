@@ -173,7 +173,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	wxStaticText* version = new wxStaticText(this, wxID_ANY,
 		wxString::Format(_("AboutVersion"), wxString::From8BitData(ARB_VERSION_STRING).c_str(), _("Agility Record Book")),
 		wxDefaultPosition, wxDefaultSize, 0);
-#if wxCHECK_VERSION(3, 0, 0) || defined(__WXMSW___)
+#if wxCHECK_VERSION(3, 0, 0) || defined(__WXMSW__)
 	// Windows goes full screen width. Mac wraps nicely. And setting this on
 	// Mac causes it to wrap very badly (pre-wx3).
 	version->Wrap(400);

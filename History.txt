@@ -1,4 +1,6 @@
 5/18/2014: v2.4.2.<in development>
+- Bug fixes:
+  - About dialog in Windows is poorly formatted.
 
 5/18/2014: v2.4.1.89
 - Bumped Configuration v46:
