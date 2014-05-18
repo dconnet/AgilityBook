@@ -90,14 +90,8 @@ SourceForge:
 Web Site:
 - Upload msi zip files and dmg to files/
 - Update "$fileversion" and "$fileVerNo" in func.php
-  - Login to php(mysql) http://agilityrecordbook.com/phpAdmin/main.php
-  - Export columns as 'Excel 2000'
-    - Save this into local Excel file for archiving
-	- Copy existing log files from server (delete from server after copying)
-  - Delete old rows (so query returns actual number of downloads for current version)
-    - note, leave last item so next download auto-increments id
 - Update version2.xml and version.txt
-  - Run 'ARBUpdater /g' and generate new size and md5 tags for each file.
+  - Run 'ARBUpdater /g' and generate new size and md5/sha1 tags for each file.
   - Update config file (ConfigN.txt) [if necessary]
 - Make sure things are current (ongoing task!).
   - Update DTD
