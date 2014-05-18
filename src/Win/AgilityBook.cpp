@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-05-18 Moved startup check to AutoCheckProgram
  * 2013-11-26 Fixed language initialization structure.
  * 2013-08-16 Add support for standalone app (.info file) on Windows.
  * 2012-12-15 Prevent TabView from getting activation.
@@ -175,6 +176,28 @@ CAgilityBookApp::CAgilityBookApp()
 	, m_Prn(nullptr)
 {
 	m_BaseInfoName = ARB_CONFIG_INFO;
+}
+
+
+bool CAgilityBookApp::AutoCheckProgram()
+{
+	bool bClose = false;
+	// Check for updates every 30 days.
+	if (CAgilityBookOptions::GetAutoUpdateCheck())
+	{
+		std::wstring ver = StringUtil::stringW(wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, L""));
+		ARBDate date = ARBDate::FromString(ver, ARBDate::eISO);
+		if (date.IsValid())
+		{
+			ARBDate today = ARBDate::Today();
+			date += 30;
+			if (date < today)
+			{
+				m_UpdateInfo.AutoUpdateProgram(nullptr, bClose);
+			}
+		}
+	}
+	return bClose;
 }
 
 
@@ -427,28 +450,7 @@ bool CAgilityBookApp::OnInit()
 	if (!proxy.empty())
 		wxURL::SetDefaultProxy(proxy.c_str());
 
-	// Check for updates every 30 days.
-	if (CAgilityBookOptions::GetAutoUpdateCheck())
-	{
-		std::wstring ver = StringUtil::stringW(wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, L""));
-		ARBDate date = ARBDate::FromString(ver, ARBDate::eISO);
-		if (date.IsValid())
-		{
-			ARBDate today = ARBDate::Today();
-			date += 30;
-			if (date < today)
-			{
-				bool close = false;
-				m_UpdateInfo.AutoUpdateProgram(nullptr, close);
-				if (close)
-				{
-					// Must close so installation will work.
-					BaseAppCleanup();
-					return false;
-				}
-			}
-		}
-	}
+	// Cleanup ARBUpdater.exe from temp directory from previous auto-update.
 	CUpdateInfo::CleanupUpdate();
 
 	return true;

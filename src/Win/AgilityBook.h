@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-05-18 Added AutoCheckProgram
  * 2013-11-26 Fixed language initialization structure.
  * 2008-12-14 Ported to wxWidgets.
  * 2005-10-19 Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
@@ -33,6 +34,7 @@ class CAgilityBookApp : public CBaseApp
 public:
 	CAgilityBookApp();
 
+	bool AutoCheckProgram();
 	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
 	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose);
 

@@ -37,7 +37,7 @@
             </clipPath>
             <rect width="251" x="0" y="0" fill="none" preserveAspectRatio="xMidYMid slice" height="65" xmlns:xlink="http://www.w3.org/1999/xlink" stroke="#ff0000" xlink:href="thumbnails/default.png" id="Text_Item_2_frame"/>
             <text font-family="Times New Roman" fill="#000000" dy="0" text-anchor="middle" stroke="#a0a0a4" font-style="normal" font-weight="bold" text-decoration="none" stroke-width="0" font-size="6">
-                <tspan>v2.4.1.89</tspan>
+                <tspan>v2.4.2.90</tspan>
             </text>
         </g>
         <g id="Text Item 3" clip-path="url('#Text-Item-3-clip')" transform="translate(826,360) rotate(0)">
