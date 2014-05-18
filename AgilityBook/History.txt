@@ -5,6 +5,8 @@
 	[currently set on old format]
 [ Note, most functionality is now complete ]
 
+5/18/2014: v2.4.2.<in development>
+
 5/18/2014: v2.4.1.89
 - Bumped Configuration v46:
   - Added ASCA ACE program
