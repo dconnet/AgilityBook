@@ -1,4 +1,4 @@
-4/25/2014: v2.4.1.<in process>
+5/18/2014: v2.4.1.89
 - Bumped Configuration v46:
   - Added ASCA ACE program
   - Added NADAC Beginners Agility
