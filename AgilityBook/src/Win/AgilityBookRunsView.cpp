@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-05-21 Enable paste of copied runs.
  * 2014-04-12 Implement unsorting.
  * 2012-09-09 Added 'titlePts' to 'Placement'.
  * 2012-07-04 Add option to use run time or opening time in gamble OPS.
@@ -1494,6 +1495,46 @@ CAgilityBookRunsViewDataPtr CAgilityBookRunsView::GetItemRunDataByData(wxUIntPtr
 }
 
 
+bool CAgilityBookRunsView::GetUnifiedTrial(
+		ARBDogPtr& pDog,
+		ARBDogTrialPtr& pTrial,
+		bool bSelectionOnly) const
+{
+	pDog.reset();
+	pTrial.reset();
+
+	std::vector<long> indices;
+	if (0 == m_Ctrl->GetSelection(indices) && !bSelectionOnly)
+	{
+		int items = m_Ctrl->GetItemCount();
+		indices.resize(items);
+		for (int i = 0; i < items; ++i)
+			indices[i] = i;
+	}
+
+	for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+	{
+		CAgilityBookRunsViewDataPtr pData = GetItemRunData(*iter);
+		ARBDogTrialPtr pCurrentTrial = pData->GetTrial();
+		if (pCurrentTrial)
+		{
+			if (!pTrial)
+			{
+				pDog = pData->GetDog();
+				pTrial = pCurrentTrial;
+			}
+			else if (pTrial != pCurrentTrial)
+			{
+				pTrial.reset();
+				break;
+			}
+		}
+	}
+
+	return !!pTrial;
+}
+
+
 void CAgilityBookRunsView::SetupColumns()
 {
 	if (!m_Ctrl)
@@ -1716,6 +1757,15 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case wxID_COPY:
 		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
 		break;
+	case wxID_PASTE:
+		if (CClipboardDataReader::IsFormatAvailable(eFormatRun))
+		{
+			ARBDogPtr pDog;
+			ARBDogTrialPtr pTrial;
+			bool bIsTrial = GetUnifiedTrial(pDog, pTrial, false);
+			evt.Enable(bIsTrial);
+		}
+		break;
 	case wxID_SELECTALL:
 		evt.Enable(m_Ctrl->CanSelectAll());
 		break;
@@ -1843,6 +1893,21 @@ bool CAgilityBookRunsView::OnCmd(int id)
 				clpData.AddData(eFormatRun, tree);
 				clpData.AddData(table);
 				clpData.CommitData();
+			}
+		}
+		break;
+
+	case wxID_PASTE:
+		if (CClipboardDataReader::IsFormatAvailable(eFormatRun))
+		{
+			ARBDogPtr pDog;
+			ARBDogTrialPtr pTrial;
+			if (GetUnifiedTrial(pDog, pTrial, false))
+			{
+				bool bLoaded = false;
+				GetDocument()->GetTreeView()->PasteRuns(pDog, pTrial, bLoaded);
+				if (bLoaded)
+					GetDocument()->Modify(true);
 			}
 		}
 		break;

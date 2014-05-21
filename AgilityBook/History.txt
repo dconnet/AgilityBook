@@ -5,7 +5,9 @@
 	[currently set on old format]
 [ Note, most functionality is now complete ]
 
-5/18/2014: v2.4.2.<in development>
+5/21/2014: v2.4.2.<in development>
+- New features / Enhancements:
+  - Enable paste of copied runs in Runs View.
 - Bug fixes:
   - About dialog in Windows is poorly formatted.
   - Fixed how Windows does its auto-check at startup in order to fix a crash.
