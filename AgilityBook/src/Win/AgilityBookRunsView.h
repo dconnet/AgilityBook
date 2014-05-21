@@ -12,6 +12,8 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-05-21 Enable paste of copied runs.
+ * 2014-04-12 Implement unsorting.
  * 2009-02-04 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-01-25 Remember the sort column between program invocations.
@@ -108,6 +110,10 @@ private:
 #else
 	CAgilityBookRunsViewDataPtr GetItemRunDataByData(long data) const;
 #endif
+	bool GetUnifiedTrial(
+			ARBDogPtr& pDog,
+			ARBDogTrialPtr& pTrial,
+			bool bSelectionOnly = true) const;
 	void SetupColumns();
 	void LoadData();
 	bool OnCmd(int id);
