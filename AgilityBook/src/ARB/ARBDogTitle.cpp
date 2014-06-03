@@ -31,6 +31,7 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 
 #ifdef __WXMSW__
@@ -332,9 +333,9 @@ public:
 		if (one->GetDate() == two->GetDate())
 		{
 			if (one->GetVenue() == two->GetVenue())
-				return one->GetRawName() < two->GetRawName();
+				return StringUtil::Compare(one->GetRawName(), two->GetRawName()) < 0;
 			else
-				return one->GetVenue() < two->GetVenue();
+				return StringUtil::Compare(one->GetVenue(), two->GetVenue()) < 0;
 		}
 		else
 			return one->GetDate() < two->GetDate();

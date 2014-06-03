@@ -43,6 +43,7 @@
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 
 #ifdef __WXMSW__
@@ -432,11 +433,8 @@ public:
 			iCompare = -1;
 		if (0 == iCompare)
 		{
-			if (one->GetGenericName() < two->GetGenericName())
-				iCompare = -1;
-			else if (one->GetGenericName() > two->GetGenericName())
-				iCompare = 1;
-			else
+			iCompare = StringUtil::Compare(one->GetGenericName(), two->GetGenericName());
+			if (0 == iCompare)
 			{
 				ARBDogClubPtr club1;
 				one->GetClubs().GetPrimaryClub(&club1);
@@ -454,14 +452,9 @@ public:
 					name2 = club2->GetName();
 					venue2 = club2->GetVenue();
 				}
-				if (name1 < name2)
-					iCompare = -1;
-				else if (name1 > name2)
-					iCompare = 1;
-				else if (venue1 < venue2)
-					iCompare = -1;
-				else if (venue1 > venue2)
-					iCompare = 1;
+				iCompare = StringUtil::Compare(name1, name2);
+				if (0 == iCompare)
+					iCompare = StringUtil::Compare(venue1, venue2);
 			}
 		}
 		return m_bDescending ? iCompare < 0 : iCompare > 0;

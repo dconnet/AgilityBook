@@ -345,6 +345,18 @@ CFilterOptions::FindFilter(std::wstring const& inName)
 	return m_filters.end();
 }
 
+#ifndef ARB_HAS_LAMBDA
+class SortNames
+{
+public:
+	SortNames() {}
+	bool operator()(std::wstring const& one, std::wstring const& two) const
+	{
+		return StringUtil::Compare(one, two) < 0;
+	}
+};
+#endif
+
 
 size_t CFilterOptions::GetAllFilterNames(
 		std::vector<std::wstring>& outNames,
@@ -361,7 +373,16 @@ size_t CFilterOptions::GetAllFilterNames(
 			outNames.push_back(StringUtil::stringW((*i).filterName));
 		}
 	}
-	std::sort(outNames.begin(), outNames.end());
+#ifdef ARB_HAS_LAMBDA
+	std::stable_sort(outNames.begin(), outNames.end(),
+		[](std::wstring const& one, std::wstring const& two)
+		{
+			return StringUtil::Compare(one, two) < 0;
+		}
+	);
+#else
+	std::stable_sort(outNames.begin(), outNames.end(), SortNames());
+#endif
 	if (!bForEditing)
 	{
 		if (0 < outNames.size() || IsFilterEnabled())

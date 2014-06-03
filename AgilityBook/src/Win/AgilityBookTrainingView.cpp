@@ -198,6 +198,7 @@ int wxCALLBACK CompareTraining(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData
 	CListDataPtr pRawItem2 = s_SortInfo.pThis->m_Ctrl->GetDataByData(static_cast<long>(item2));
 	CAgilityBookTrainingViewDataPtr pItem1 = std::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem1);
 	CAgilityBookTrainingViewDataPtr pItem2 = std::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem2);
+
 	int nRet = 0;
 	int iCol = abs(s_SortInfo.nCol);
 	switch (s_SortInfo.pThis->m_Columns[iCol-1])
@@ -209,22 +210,13 @@ int wxCALLBACK CompareTraining(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData
 			nRet = 1;
 		break;
 	case IO_LOG_NAME:
-		if (pItem1->GetTraining()->GetName() < pItem2->GetTraining()->GetName())
-			nRet = -1;
-		else if (pItem1->GetTraining()->GetName() > pItem2->GetTraining()->GetName())
-			nRet = 1;
+		nRet = StringUtil::Compare(pItem1->GetTraining()->GetName(), pItem2->GetTraining()->GetName());
 		break;
 	case IO_LOG_SUBNAME:
-		if (pItem1->GetTraining()->GetSubName() < pItem2->GetTraining()->GetSubName())
-			nRet = -1;
-		else if (pItem1->GetTraining()->GetSubName() > pItem2->GetTraining()->GetSubName())
-			nRet = 1;
+		nRet = StringUtil::Compare(pItem1->GetTraining()->GetSubName(), pItem2->GetTraining()->GetSubName());
 		break;
 	case IO_LOG_NOTES:
-		if (pItem1->GetTraining()->GetNote() < pItem2->GetTraining()->GetNote())
-			nRet = -1;
-		else if (pItem1->GetTraining()->GetNote() > pItem2->GetTraining()->GetNote())
-			nRet = 1;
+		nRet = StringUtil::Compare(pItem1->GetTraining()->GetNote(), pItem2->GetTraining()->GetNote());
 		break;
 	}
 	if (0 > s_SortInfo.nCol)

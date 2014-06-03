@@ -25,6 +25,7 @@
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 
 #ifdef __WXMSW__
@@ -217,7 +218,7 @@ public:
 	SortInfoItem() {}
 	bool operator()(ARBInfoItemPtr const& one, ARBInfoItemPtr const& two) const
 	{
-		return one->GetName() < two->GetName();
+		return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
 	}
 };
 #endif
@@ -231,7 +232,7 @@ void ARBInfoItemList::sort()
 	std::stable_sort(begin(), end(),
 		[](ARBInfoItemPtr const& one, ARBInfoItemPtr const& two)
 		{
-			return one->GetName() < two->GetName();
+			return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
 		}
 	);
 #else
