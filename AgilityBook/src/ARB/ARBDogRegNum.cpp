@@ -26,6 +26,7 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 
 #ifdef __WXMSW__
@@ -216,7 +217,7 @@ public:
 	SortRegNum() {}
 	bool operator()(ARBDogRegNumPtr const& one, ARBDogRegNumPtr const& two) const
 	{
-		return one->GetVenue() < two->GetVenue();
+		return StringUtil::Compare(one->GetVenue(), two->GetVenue()) < 0;
 	}
 };
 #endif
@@ -230,7 +231,7 @@ void ARBDogRegNumList::sort()
 	std::stable_sort(begin(), end(),
 		[](ARBDogRegNumPtr const& one, ARBDogRegNumPtr const& two)
 		{
-			return one->GetVenue() < two->GetVenue();
+			return StringUtil::Compare(one->GetVenue(), two->GetVenue()) < 0;
 		}
 	);
 #else

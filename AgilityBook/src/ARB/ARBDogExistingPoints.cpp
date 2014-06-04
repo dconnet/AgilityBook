@@ -25,6 +25,7 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 
 #ifdef __WXMSW__
@@ -481,16 +482,16 @@ public:
 						if (one->GetDivision() == two->GetDivision())
 							return one->GetLevel() < two->GetLevel();
 						else
-							return one->GetDivision() < two->GetDivision();
+							return StringUtil::Compare(one->GetDivision(), two->GetDivision()) < 0;
 					}
 					else
 						return one->GetDate() < two->GetDate();
 				}
 				else
-					return one->GetEvent() < two->GetEvent();
+					return StringUtil::Compare(one->GetEvent(), two->GetEvent()) < 0;
 			}
 			else
-				return one->GetVenue() < two->GetVenue();
+				return StringUtil::Compare(one->GetVenue(), two->GetVenue()) < 0;
 		}
 		else
 			return one->GetOtherPoints() < two->GetOtherPoints();

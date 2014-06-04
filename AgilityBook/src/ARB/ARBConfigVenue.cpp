@@ -35,6 +35,7 @@
 #include "ARB/ARBConfigDivision.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 
 #ifdef __WXMSW__
@@ -576,7 +577,7 @@ public:
 	SortConfigVenue() {}
 	bool operator()(ARBConfigVenuePtr const& one, ARBConfigVenuePtr const& two) const
 	{
-		return one->GetName() < two->GetName();
+		return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
 	}
 };
 #endif
@@ -590,7 +591,7 @@ void ARBConfigVenueList::sort()
 	std::stable_sort(begin(), end(),
 		[](ARBConfigVenuePtr const& one, ARBConfigVenuePtr const& two)
 		{
-			return one->GetName() < two->GetName();
+			return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
 		}
 	);
 #else

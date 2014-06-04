@@ -148,9 +148,16 @@ namespace std
 #define ARB_HAS_LAMBDA
 #endif
 
-// nullptr support (see SetupARBPost.h for setting wx-based platforms)
+// ARB_HAS_NULLPTR
+//  nullptr support (see SetupARBPost.h for setting wx-based platforms)
 #if (defined(_MSC_VER) && _MSC_VER >= 1600) || (defined(MAC_OS_X_VERSION_10_9) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_9)
 #define ARB_HAS_NULLPTR
 #else
 #define nullptr NULL
+#endif
+
+// ARB_HAS_COMPARESTRING
+//  Has CompareString[AW]
+#if defined(WIN32)
+#define ARB_HAS_COMPARESTRING
 #endif

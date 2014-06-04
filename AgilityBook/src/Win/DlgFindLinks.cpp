@@ -143,10 +143,7 @@ int wxCALLBACK CompareLinks(long item1, long item2, long sortData)
 		int col = s_SortInfo.pCols->GetColumnAt(i);
 		std::wstring str1 = pData1->OnNeedText(col);
 		std::wstring str2 = pData2->OnNeedText(col);
-		if (str1 < str2)
-			rc = -1;
-		else if (str1 > str2)
-			rc = 1;
+		rc = StringUtil::Compare(str1, str2);
 		if (rc)
 		{
 			if (s_SortInfo.pCols->IsDescending(col))
