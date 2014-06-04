@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-06-03 Added Compare.
  * 2013-01-25 Better non-wx support.
  * 2012-08-12 Moved FormatBytes to StringUtil
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
@@ -491,6 +492,83 @@ template <typename T> T TrimImpl(T const& inStr, T const& toTrim, TrimType type)
 	typename T::size_type posLength = posLast - posFirst + 1;
 	return inStr.substr(posFirst, posLength);
 }
+
+#ifdef ARB_HAS_COMPARESTRING
+// Only defined when: (WINVER >= _WIN32_WINNT_WIN7)
+// Note: Move to CompareStringEx once XP support is dropped
+#ifndef SORT_DIGITSASNUMBERS
+#define SORT_DIGITSASNUMBERS      0x00000008  // use digits as numbers sort method
+#endif
+#endif
+
+int Compare(std::string const& inStr1, std::string const& inStr2, bool bIgnoreCase)
+{
+#ifdef ARB_HAS_COMPARESTRING
+	// SORT_DIGITSASNUMBERS is only supported on Win7+
+	// To support pre-Win7, use StrCmpLogicalW
+	DWORD flags = SORT_DIGITSASNUMBERS;
+	if (bIgnoreCase)
+		flags |= LINGUISTIC_IGNORECASE;
+	else
+		flags |= NORM_LINGUISTIC_CASING;
+	switch (CompareStringA(LOCALE_USER_DEFAULT, flags, inStr1.c_str(), -1, inStr2.c_str(), -1))
+	{
+	case CSTR_LESS_THAN:
+		return -1;
+	case CSTR_EQUAL:
+		return 0;
+	case CSTR_GREATER_THAN:
+		return 1;
+	// Treat an error as equal
+	default:
+		return 0;
+	}
+#else
+	return inStr1.compare(inStr2);
+#endif
+}
+
+int Compare(std::wstring const& inStr1, std::wstring const& inStr2, bool bIgnoreCase)
+{
+#ifdef ARB_HAS_COMPARESTRING
+	// SORT_DIGITSASNUMBERS is only supported on Win7+
+	DWORD flags = SORT_DIGITSASNUMBERS;
+	if (bIgnoreCase)
+		flags |= LINGUISTIC_IGNORECASE;
+	else
+		flags |= NORM_LINGUISTIC_CASING;
+	switch (CompareStringW(LOCALE_USER_DEFAULT, flags, inStr1.c_str(), -1, inStr2.c_str(), -1))
+	{
+	case CSTR_LESS_THAN:
+		return -1;
+	case CSTR_EQUAL:
+		return 0;
+	case CSTR_GREATER_THAN:
+		return 1;
+	// Treat an error as equal
+	default:
+		return 0;
+	}
+#else
+	return inStr1.compare(inStr2);
+#endif
+}
+
+
+#if defined(__WXWINDOWS__)
+int Compare(wxString const& inStr1, wxString const& inStr2, bool bIgnoreCase)
+{
+#ifdef ARB_HAS_COMPARESTRING
+#if wxCHECK_VERSION(3, 0, 0) && defined(wxUSE_STD_STRING) && wxUSE_STD_STRING
+	return Compare(inStr1.ToStdWstring(), inStr2.ToStdWstring(), bIgnoreCase);
+#else
+	return Compare(std::wstring(inStr1.wx_str()), std::wstring(inStr2.wx_str()));
+#endif
+#else
+	return bIgnoreCase ? inStr1.CmpNoCase(inStr2) : inStr1.compare(inStr2);
+#endif
+}
+#endif
 
 
 std::string Trim(std::string const& inStr)

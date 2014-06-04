@@ -24,6 +24,42 @@
 #endif
 
 
+#ifdef WIN32
+
+bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op)
+{
+	OSVERSIONINFOEX osvi;
+	DWORDLONG dwlConditionMask = 0;
+
+	ZeroMemory(&osvi, sizeof(osvi));
+	osvi.dwOSVersionInfoSize = sizeof(osvi);
+	osvi.dwMajorVersion = dwMajor;
+	osvi.dwMinorVersion = dwMinor;
+	osvi.wServicePackMajor = 0;
+	osvi.wServicePackMinor = 0;
+
+#pragma warning (push)
+// warning C4244: 'argument' : conversion from 'int' to 'BYTE', possible loss of data
+#pragma warning (disable : 4244)
+	VER_SET_CONDITION(dwlConditionMask, VER_MAJORVERSION, op);
+	VER_SET_CONDITION(dwlConditionMask, VER_MINORVERSION, op);
+	VER_SET_CONDITION(dwlConditionMask, VER_SERVICEPACKMAJOR, op);
+	VER_SET_CONDITION(dwlConditionMask, VER_SERVICEPACKMINOR, op);
+#pragma warning (pop)
+
+	return !!VerifyVersionInfo(&osvi, 
+			VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR,
+			dwlConditionMask);
+}
+
+
+inline bool IsWin7OrBetter()
+{
+	return CheckOS(6, 1, VER_GREATER_EQUAL);
+}
+
+#endif
+
 SUITE(TestString)
 {
 	TEST(Convert_ToWide)
@@ -252,5 +288,80 @@ SUITE(TestString)
 		CHECK(StringUtil::TrimLeft(str, '"') == L"xyx\"");
 		CHECK(StringUtil::TrimRight(str, '"') == L"\"xyx");
 	}
+
+
+#ifdef ARB_HAS_COMPARESTRING
+	TEST(Sort)
+	{
+		if (IsWin7OrBetter())
+		{
+			std::vector<std::wstring> items;
+			items.push_back(L"1a");
+			items.push_back(L"10a");
+			items.push_back(L"2a");
+
+			std::stable_sort(items.begin(), items.end(),
+				[](std::wstring const& one, std::wstring const& two)
+				{
+					return StringUtil::Compare(one, two) < 0;
+				}
+				);
+
+			CHECK(items[0] == L"1a");
+			CHECK(items[1] == L"2a");
+			CHECK(items[2] == L"10a");
+		}
+	}
+
+
+	TEST(Sort2)
+	{
+		std::vector<std::wstring> items;
+		items.push_back(L"Bob");
+		items.push_back(L"bob");
+		items.push_back(L"Aa");
+		items.push_back(L"2a");
+		items.push_back(L"a");
+
+		std::stable_sort(items.begin(), items.end(),
+			[](std::wstring const& one, std::wstring const& two)
+			{
+				return StringUtil::Compare(one, two, false) < 0;
+			}
+			);
+
+		CHECK(items[0] == L"2a");
+		CHECK(items[1] == L"a");
+		CHECK(items[2] == L"Aa");
+		CHECK(items[3] == L"bob");
+		CHECK(items[4] == L"Bob");
+	}
+
+
+	TEST(Sort3)
+	{
+		std::vector<std::wstring> items;
+		items.push_back(L"Bob");
+		items.push_back(L"bob");
+		items.push_back(L"Aa");
+		items.push_back(L"2a");
+		items.push_back(L"a");
+
+		// Note: Ignore case simply means "bob" == "Bob".
+		// It does not mean that lower case sorts before (or after) upper case.
+		std::stable_sort(items.begin(), items.end(),
+			[](std::wstring const& one, std::wstring const& two)
+			{
+				return StringUtil::Compare(one, two, true) < 0;
+			}
+			);
+
+		CHECK(items[0] == L"2a");
+		CHECK(items[1] == L"a");
+		CHECK(items[2] == L"Aa");
+		CHECK(items[3] == L"Bob");
+		CHECK(items[4] == L"bob");
+	}
+#endif
 
 }
