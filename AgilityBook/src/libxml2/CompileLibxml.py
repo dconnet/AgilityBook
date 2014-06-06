@@ -4,13 +4,15 @@
 # This is my quick-and-easy way to compile libxml2
 #
 # Revision History
+# 2014-06-06 Added vc12
 # 2012-06-15 Fixed multiple compile problem
 # 2012-06-01 Added vc11 switches, removed VC9 from all
 # 2011-03-08 /MD/MT was not being specified properly.
 # 2010-07-17 Created
-"""CompileLibxml.py [-a] compiler*
+"""CompileLibxml.py [-t] [-a] compiler*
+	[-t]: Test, do not run commands
 	[-a]: All compilers (vc10/vc10x64)
-	compiler: vc9, vc9x64, vc10, vc10x64, vc11, vc11x64
+	compiler: vc9, vc9x64, vc10, vc10x64, vc11, vc11x64, vc12, vc12x64
 """
 import getopt
 import glob
@@ -29,6 +31,7 @@ tmpfile = 'tmpcomp.bat'
 vc9Base     = r'\Microsoft Visual Studio 9.0'
 vc10Base    = r'\Microsoft Visual Studio 10.0'
 vc11Base    = r'\Microsoft Visual Studio 11.0'
+vc12Base    = r'\Microsoft Visual Studio 12.0'
 
 
 def GetRegString(hkey, path, value):
@@ -66,9 +69,10 @@ def GetVSDir(version):
 
 
 def AddCompiler(compilers, c):
-	global vc9Base, vc10Base, vc11Base
+	global vc9Base, vc10Base, vc11Base, vc12Base
 	baseDir = ''
 	testFile = ''
+
 	if c == 'vc9':
 		vc9Base = GetVSDir("9.0")
 		baseDir = vc9Base
@@ -77,6 +81,7 @@ def AddCompiler(compilers, c):
 		vc9Base = GetVSDir("9.0")
 		baseDir = vc9Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
+
 	elif c == 'vc10':
 		vc10Base = GetVSDir("10.0")
 		baseDir = vc10Base
@@ -85,6 +90,7 @@ def AddCompiler(compilers, c):
 		vc10Base = GetVSDir("10.0")
 		baseDir = vc10Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
+
 	elif c == 'vc11':
 		vc11Base = GetVSDir("11.0")
 		baseDir = vc11Base
@@ -93,6 +99,16 @@ def AddCompiler(compilers, c):
 		vc11Base = GetVSDir("11.0")
 		baseDir = vc11Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
+
+	elif c == 'vc12':
+		vc12Base = GetVSDir("12.0")
+		baseDir = vc12Base
+		testFile = baseDir + r'\VC\vcvarsall.bat'
+	elif c == 'vc12x64':
+		vc12Base = GetVSDir("12.0")
+		baseDir = vc12Base
+		testFile = baseDir + r'\VC\vcvarsall.bat'
+
 	else:
 		return False
 	if not os.access(baseDir, os.F_OK) or not os.access(testFile, os.F_OK):
@@ -103,6 +119,7 @@ def AddCompiler(compilers, c):
 
 
 def main():
+	echo = ''
 	bit64on64 = False
 	# 64bit on 64bit
 	if os.environ.has_key('PROCESSOR_ARCHITECTURE') and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
@@ -113,7 +130,7 @@ def main():
 
 	compilers = set()
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'a')
+		opts, args = getopt.getopt(sys.argv[1:], 'at')
 	except getopt.error, msg:
 		print msg
 		print 'Usage:', __doc__
@@ -122,6 +139,9 @@ def main():
 		if '-a' == o:
 			AddCompiler(compilers, 'vc10')
 			AddCompiler(compilers, 'vc10x64')
+
+		elif '-t' == o:
+			echo = 'echo '
 
 	for c in args:
 		if not AddCompiler(compilers, c):
@@ -185,6 +205,16 @@ def main():
 			else:
 				setenv_rel += 'amd64'
 
+		elif compiler == 'vc12':
+			prefix = 'VC120-Win32'
+			setenv_rel = 'call "' + vc12Base + r'\VC\vcvarsall.bat" x86'
+
+		elif compiler == 'vc12x64':
+			prefix = 'VC120-x64'
+			setenv_rel = 'call "' + vc12Base + r'\VC\vcvarsall.bat" '
+			# at least for vc12-express, there is no 'amd64' target
+			setenv_rel += 'x86_amd64'
+
 		prefix_rel = ' prefix=build\\' + prefix + r'\Release'
 		prefix_dbg = ' prefix=build\\' + prefix + r'\Debug'
 
@@ -197,37 +227,39 @@ def main():
 		for i in (3,4):
 			bat = open(tmpfile, 'w')
 			print >>bat, 'title ' + compiler
-			print >>bat, setenv_rel
+			if len(echo) > 0:
+				print >>bat, '@echo off'
+			print >>bat, echo + setenv_rel
 
 			if i == 1:
-				print >>bat, config + prefix_rel + 'DLL cruntime=/MD'
-				print >>bat, 'nmake -f makefile.msvc rebuild install'
-				print >>bat, 'nmake -f makefile.msvc clean'
-				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\ReleaseDLL\\include\\libxml2\\* ..\\..\\include\\' 
-				print >>bat, 'xcopy /y build\\' + prefix + '\\ReleaseDLL\\bin\\libxml2.dll ..\\..\\lib\\' + prefix + '\\Release\\'
-				print >>bat, 'xcopy /y build\\' + prefix + '\\ReleaseDLL\\lib\\libxml2.lib ..\\..\\lib\\' + prefix + '\\Release\\'
+				print >>bat, echo + config + prefix_rel + 'DLL cruntime=/MD'
+				print >>bat, echo + 'nmake -f makefile.msvc rebuild install'
+				print >>bat, echo + 'nmake -f makefile.msvc clean'
+				print >>bat, echo + 'xcopy /y/q/s build\\' + prefix + '\\ReleaseDLL\\include\\libxml2\\* ..\\..\\include\\' 
+				print >>bat, echo + 'xcopy /y build\\' + prefix + '\\ReleaseDLL\\bin\\libxml2.dll ..\\..\\lib\\' + prefix + '\\Release\\'
+				print >>bat, echo + 'xcopy /y build\\' + prefix + '\\ReleaseDLL\\lib\\libxml2.lib ..\\..\\lib\\' + prefix + '\\Release\\'
 
 			elif i == 2:
-				print >>bat, config + prefix_dbg + 'DLL debug=yes cruntime=/MDd'
-				print >>bat, 'nmake -f makefile.msvc rebuild install'
-				print >>bat, 'nmake -f makefile.msvc clean'
-				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\DebugDLL\\include\\libxml2\\* ..\\..\\include\\' 
-				print >>bat, 'xcopy /y build\\' + prefix + '\\DebugDLL\\bin\\libxml2.dll ..\\..\\lib\\' + prefix + '\\Debug\\'
-				print >>bat, 'xcopy /y build\\' + prefix + '\\DebugDLL\\lib\\libxml2.lib ..\\..\\lib\\' + prefix + '\\Debug\\'
+				print >>bat, echo + config + prefix_dbg + 'DLL debug=yes cruntime=/MDd'
+				print >>bat, echo + 'nmake -f makefile.msvc rebuild install'
+				print >>bat, echo + 'nmake -f makefile.msvc clean'
+				print >>bat, echo + 'xcopy /y/q/s build\\' + prefix + '\\DebugDLL\\include\\libxml2\\* ..\\..\\include\\' 
+				print >>bat, echo + 'xcopy /y build\\' + prefix + '\\DebugDLL\\bin\\libxml2.dll ..\\..\\lib\\' + prefix + '\\Debug\\'
+				print >>bat, echo + 'xcopy /y build\\' + prefix + '\\DebugDLL\\lib\\libxml2.lib ..\\..\\lib\\' + prefix + '\\Debug\\'
 
 			elif i == 3:
-				print >>bat, config + prefix_rel + 'LIB cruntime=/MT'
-				print >>bat, 'nmake -f makefile.msvc rebuild install'
-				print >>bat, 'nmake -f makefile.msvc clean'
-				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\ReleaseLIB\\include\\libxml2\\* ..\\..\\include\\' 
-				print >>bat, 'xcopy /y build\\' + prefix + '\\ReleaseLIB\\lib\\libxml2_a.lib ..\\..\\lib\\' + prefix + '\\Release\\'
+				print >>bat, echo + config + prefix_rel + 'LIB cruntime=/MT'
+				print >>bat, echo + 'nmake -f makefile.msvc rebuild install'
+				print >>bat, echo + 'nmake -f makefile.msvc clean'
+				print >>bat, echo + 'xcopy /y/q/s build\\' + prefix + '\\ReleaseLIB\\include\\libxml2\\* ..\\..\\include\\' 
+				print >>bat, echo + 'xcopy /y build\\' + prefix + '\\ReleaseLIB\\lib\\libxml2_a.lib ..\\..\\lib\\' + prefix + '\\Release\\'
 
 			elif i == 4:
-				print >>bat, config + prefix_dbg + 'LIB debug=yes cruntime=/MTd'
-				print >>bat, 'nmake -f makefile.msvc rebuild install'
-				print >>bat, 'nmake -f makefile.msvc clean'
-				print >>bat, 'xcopy /y/q/s build\\' + prefix + '\\DebugLIB\\include\\libxml2\\* ..\\..\\include\\' 
-				print >>bat, 'xcopy /y build\\' + prefix + '\\DebugLIB\\lib\\libxml2_a.lib ..\\..\\lib\\' + prefix + '\\Debug\\'
+				print >>bat, echo + config + prefix_dbg + 'LIB debug=yes cruntime=/MTd'
+				print >>bat, echo + 'nmake -f makefile.msvc rebuild install'
+				print >>bat, echo + 'nmake -f makefile.msvc clean'
+				print >>bat, echo + 'xcopy /y/q/s build\\' + prefix + '\\DebugLIB\\include\\libxml2\\* ..\\..\\include\\' 
+				print >>bat, echo + 'xcopy /y build\\' + prefix + '\\DebugLIB\\lib\\libxml2_a.lib ..\\..\\lib\\' + prefix + '\\Debug\\'
 
 			bat.close()
 			proc = subprocess.Popen(tmpfile, env=newenv)
