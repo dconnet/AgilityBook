@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-09 15:30-0800\n"
-"PO-Revision-Date: 2014-06-09 15:31-0800\n"
+"POT-Creation-Date: 2014-06-09 16:07-0800\n"
+"PO-Revision-Date: 2014-06-09 16:07-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -750,35 +750,39 @@ msgstr "No linked files found."
 msgid "IDS_FILEPROP_NAME"
 msgstr "File name: %1$s"
 
-#: Win/AgilityBookDoc.cpp:2121
+#: Win/AgilityBookDoc.cpp:2122
+msgid "IDS_FILEPROP_READONLY"
+msgstr "File name: %1$s [readonly]"
+
+#: Win/AgilityBookDoc.cpp:2124
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: %1$lld bytes"
 
-#: Win/AgilityBookDoc.cpp:2126
+#: Win/AgilityBookDoc.cpp:2129
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: %1$s"
 
-#: Win/AgilityBookDoc.cpp:2127
+#: Win/AgilityBookDoc.cpp:2130
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: %1$s"
 
-#: Win/AgilityBookDoc.cpp:2135
+#: Win/AgilityBookDoc.cpp:2138
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: %1$hd"
 
-#: Win/AgilityBookDoc.cpp:2137
+#: Win/AgilityBookDoc.cpp:2140
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: %1$hd (Current: %2$hd)"
 
-#: Win/AgilityBookDoc.cpp:2143
+#: Win/AgilityBookDoc.cpp:2146
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: %1$s"
 
-#: Win/AgilityBookDoc.cpp:2145
+#: Win/AgilityBookDoc.cpp:2148
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: %1$s (Current: %2$s)"
 
-#: Win/AgilityBookDoc.cpp:2150
+#: Win/AgilityBookDoc.cpp:2157
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
 "File written on:\n"
@@ -787,7 +791,7 @@ msgstr ""
 "Local time: %3$s\n"
 "ARB: %4$s"
 
-#: Win/AgilityBookDoc.cpp:2163
+#: Win/AgilityBookDoc.cpp:2167
 msgid "IDS_FILE_PROPERTIES"
 msgstr "File Properties"
 
