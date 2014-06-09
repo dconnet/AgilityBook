@@ -5,9 +5,10 @@
 	[currently set on old format]
 [ Note, most functionality is now complete ]
 
-5/21/2014: v2.4.3.<in development>
+6/9/2014: v2.4.3.<in development>
 - New features / Enhancements:
   - Enable paste of copied runs in Runs View.
+  - Added a file properties dialog.
 
 5/18/2014: v2.4.2.90
 - Bug fixes:

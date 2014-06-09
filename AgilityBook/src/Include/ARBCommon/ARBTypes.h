@@ -12,6 +12,8 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-06-09 Move string->arbversion parsing to ARBVersion.
+ *            Added missing ARBVersion operator!=.
  * 2013-07-17 Moved SanitizeStringForHTML to ARBMisc.
  * 2012-08-13 Moved ARB_Q to separate file.
  * 2012-05-04 Add bAlwaysStripZeros to ARBDouble::ToString.
@@ -111,6 +113,9 @@ public:
 	{
 	}
 
+	ARBVersion(std::wstring str);
+
+
 	ARBVersion& operator=(ARBVersion const& rhs)
 	{
 		if (this != &rhs)
@@ -122,6 +127,10 @@ public:
 	bool operator==(ARBVersion const& rhs) const
 	{
 		return m_Version == rhs.m_Version;
+	}
+	bool operator!=(ARBVersion const& rhs) const
+	{
+		return m_Version != rhs.m_Version;
 	}
 	bool operator<(ARBVersion const& rhs) const
 	{

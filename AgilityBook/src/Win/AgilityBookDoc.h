@@ -210,6 +210,7 @@ private:
 	void OnStatusFilter(wxCommandEvent& evt);
 	void OnUpdateCmdTrue(wxUpdateUIEvent& evt);
 	void OnUpdateCmd(wxUpdateUIEvent& evt);
-	void OnFileProperties(wxCommandEvent& evt);
 	void OnCmd(wxCommandEvent& evt);
+	void OnUpdateFileProperties(wxUpdateUIEvent& evt);
+	void OnFileProperties(wxCommandEvent& evt);
 };
