@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-06-09 Move string->arbversion parsing to ARBVersion.
  * 2013-07-17 Moved SanitizeStringForHTML to ARBMisc.
  * 2012-12-12 Use fabs instead of abs. Works on Mac too.
  * 2012-08-13 Moved ARB_Q to separate file.
@@ -140,6 +141,25 @@ bool ARBDouble::equal(
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+ARBVersion::ARBVersion(std::wstring str)
+	: m_Version(0)
+{
+	unsigned short major = 0;
+	unsigned short minor = 0;
+	std::wstring::size_type pos = str.find('.');
+	if (std::wstring::npos != pos)
+	{
+		major = static_cast<unsigned short>(StringUtil::ToCLong(str));
+		str = str.substr(pos+1);
+		minor = static_cast<unsigned short>(StringUtil::ToCLong(str));
+	}
+	else
+	{
+		major = static_cast<unsigned short>(StringUtil::ToCLong(str));
+	}
+	m_Version = MakeVersion(major, minor);
+}
 
 std::wstring ARBVersion::str() const
 {

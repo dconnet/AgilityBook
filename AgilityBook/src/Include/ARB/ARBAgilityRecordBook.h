@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-06-09 Add access to write-only data for file-properties purpose.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2007-08-14 Separated DTD defines into ARBStructure.h
  * 2007-08-02 Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
@@ -265,6 +266,24 @@ public:
 	ARBDogList const& GetDogs() const;
 	ARBDogList& GetDogs();
 
+	/*
+	 * Access to write-only data.
+	 */
+	typedef enum {
+		fileInfoBook = 0,		// ARB document version
+		fileInfoOS = 1,			// OS name (with some info)0
+		fileInfoPlatform = 2,	// Platform (arch) 
+		fileInfoTimeStamp = 3,	// File written
+		fileInfoVersion = 4,	// Version of ARB that wrote file
+		fileInfoMax = 5,		// Version of ARB that wrote file
+	} FileInfoType;
+	std::wstring GetFileInfo(FileInfoType type) const
+	{
+		if ((size_t)type < m_FileInfo.size())
+			return m_FileInfo[type];
+		return std::wstring();
+	}
+
 // Intentionally not implemented!
 private:
 	ARBAgilityRecordBook(ARBAgilityRecordBook const&);
@@ -276,4 +295,5 @@ private:
 	ARBConfig m_Config;
 	ARBInfo m_Info;
 	ARBDogList m_Dogs;
+	mutable std::vector<std::wstring> m_FileInfo;
 };

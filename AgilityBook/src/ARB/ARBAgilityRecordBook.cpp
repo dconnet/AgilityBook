@@ -16,6 +16,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2014-06-09 Add access to write-only data for file-properties purpose.
  * 2013-10-23 Change arch signature to allow deprecating platforms.
  * 2013-09-06 File version 14.2
  *            Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
@@ -180,6 +181,13 @@ bool ARBAgilityRecordBook::Load(
 		return false;
 	}
 
+	m_FileInfo.insert(m_FileInfo.end(), (size_t)fileInfoMax, std::wstring());
+	inTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[fileInfoBook]);
+	inTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[fileInfoVersion]);
+	inTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[fileInfoPlatform]);
+	inTree->GetAttrib(ATTRIB_BOOK_PGM_OS, m_FileInfo[fileInfoOS]);
+	inTree->GetAttrib(ATTRIB_BOOK_TIMESTAMP, m_FileInfo[fileInfoTimeStamp]);
+
 	// The version of the document must be something we understand.
 	ARBVersion version;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_BOOK_VERSION, version))
@@ -343,6 +351,7 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 	assert(outTree);
 	if (!outTree)
 		return false;
+
 	outTree->clear();
 	outTree->SetName(TREE_BOOK);
 	outTree->AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
@@ -354,6 +363,14 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, L"TODO");
 #endif
 	outTree->AddAttrib(ATTRIB_BOOK_TIMESTAMP, GetTimeStamp());
+
+	// Refresh cached "write-only" file info
+	outTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[fileInfoBook]);
+	outTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[fileInfoVersion]);
+	outTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[fileInfoPlatform]);
+	outTree->GetAttrib(ATTRIB_BOOK_PGM_OS, m_FileInfo[fileInfoOS]);
+	outTree->GetAttrib(ATTRIB_BOOK_TIMESTAMP, m_FileInfo[fileInfoTimeStamp]);
+
 	if (inCalendar)
 	{
 		if (!m_Calendar.Save(outTree))
@@ -390,6 +407,7 @@ void ARBAgilityRecordBook::clear()
 	m_Config.clear();
 	m_Info.clear();
 	m_Dogs.clear();
+	m_FileInfo.clear();
 }
 
 

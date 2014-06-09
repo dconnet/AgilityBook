@@ -187,7 +187,7 @@ BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_MENU(ID_FILE_EXPORT_WIZARD, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(ID_FILE_LINKED, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_FILE_LINKED, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_FILE_PROPERTIES, CAgilityBookDoc::OnUpdateCmdTrue)
+	EVT_UPDATE_UI(ID_FILE_PROPERTIES, CAgilityBookDoc::OnUpdateFileProperties)
 	EVT_MENU(ID_FILE_PROPERTIES, CAgilityBookDoc::OnFileProperties)
 	EVT_UPDATE_UI(ID_COPY_TITLES_LIST, CAgilityBookDoc::OnUpdateCmd)
 	EVT_MENU(ID_COPY_TITLES_LIST, CAgilityBookDoc::OnCmd)
@@ -1395,6 +1395,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
+
 		// Translate the tree to a class structure.
 		CErrorCallback callback;
 		if (!m_Records.Load(tree, callback))
@@ -1688,25 +1689,6 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 }
 
 
-void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
-{
-	std::wstring properties;
-
-#pragma PRAGMA_TODO(File Properties)
-	// File name/location
-	// size
-	// last modified/created
-	// arb version (to last update file) [running arb version]
-	// config version [running arb config version]
-
-	if (!properties.empty())
-	{
-		CDlgMessage dlg(properties, wxGetApp().GetTopWindow());
-		dlg.ShowModal();
-	}
-}
-
-
 void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 {
 	switch (evt.GetId())
@@ -1978,5 +1960,75 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			}
 		}
 		break;
+	}
+}
+
+
+void CAgilityBookDoc::OnUpdateFileProperties(wxUpdateUIEvent& evt)
+{
+	evt.Enable(!GetFilename().empty());
+}
+
+
+void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
+{
+	wxString str;
+
+	wxString filename = GetFilename();
+	if (!filename.empty())
+	{
+		if (wxFileName::IsFileWritable(filename))
+			str << wxString::Format(_("IDS_FILEPROP_READONLY"), filename) << L"\n";
+		else
+			str << wxString::Format(_("IDS_FILEPROP_NAME"), filename) << L"\n";
+
+		wxFileName file(filename);
+		if (file.IsOk())
+		{
+			str << wxString::Format(_("IDS_FILEPROP_SIZE"), file.GetSize().GetValue()) << L"\n";
+
+			wxDateTime timeCreate, timeMod;
+			if (GetFileTimes(file, nullptr, &timeMod, &timeCreate))
+			{
+				str << wxString::Format(_("IDS_FILEPROP_CREATED"), StringUtil::stringW(timeCreate.FormatISOCombined())) << L"\n";
+				str << wxString::Format(_("IDS_FILEPROP_MODIFIED"), StringUtil::stringW(timeMod.FormatISOCombined())) << L"\n";
+			}
+		}
+	}
+
+	str << L"\n";
+
+	if (Book().GetConfig().GetVersion() == GetCurrentConfigVersion())
+		str << wxString::Format(_("IDS_FILEPROP_CONFIGURATION"), Book().GetConfig().GetVersion()) << L"\n";
+	else
+		str << wxString::Format(_("IDS_FILEPROP_CONFIGURATION_CURRENT"), Book().GetConfig().GetVersion(), GetCurrentConfigVersion()) << L"\n";
+
+	if (!Book().GetFileInfo(ARBAgilityRecordBook::fileInfoBook).empty())
+	{
+		ARBVersion ver(Book().GetFileInfo(ARBAgilityRecordBook::fileInfoBook));
+		if (ver == ARBAgilityRecordBook::GetCurrentDocVersion())
+			str << wxString::Format(_("IDS_FILEPROP_VERSION"), ver.str()) << L"\n";
+		else
+			str << wxString::Format(_("IDS_FILEPROP_VERSION_CURRENT"), ver.str(), ARBAgilityRecordBook::GetCurrentDocVersion().str()) << L"\n";
+	}
+
+	if (!Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS).empty()
+	|| !Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform).empty()
+	|| !Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp).empty()
+	|| !Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion).empty())
+	{
+		str << L"\n"
+			<< wxString::Format(_("IDS_FILEPROP_FILEWRITTEN"),
+				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS),
+				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform),
+				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp),
+				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion))
+			<< L"\n";
+	}
+
+	if (!str.empty())
+	{
+		CDlgMessage dlg(StringUtil::stringW(str), wxGetApp().GetTopWindow(), _("IDS_FILE_PROPERTIES").wc_str());
+		dlg.ShowModal();
 	}
 }

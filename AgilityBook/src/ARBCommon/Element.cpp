@@ -12,6 +12,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * 2014-06-09 Move string->arbversion parsing to ARBVersion.
  * 2014-03-31 Fixed POCO xml load.
  * 2014-02-26 Add support for POCO xml.
  * 2013-03-23 Implement libxml LoadXML stream api.
@@ -754,20 +755,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
-		unsigned short major = 0;
-		unsigned short minor = 0;
-		std::wstring::size_type pos = value.find('.');
-		if (std::wstring::npos != pos)
-		{
-			major = static_cast<unsigned short>(StringUtil::ToCLong(value));
-			value = value.substr(pos+1);
-			minor = static_cast<unsigned short>(StringUtil::ToCLong(value));
-		}
-		else
-		{
-			major = static_cast<unsigned short>(StringUtil::ToCLong(value));
-		}
-		outValue = ARBVersion(major, minor);
+		outValue = ARBVersion(value);
 	}
 	return rc;
 }
