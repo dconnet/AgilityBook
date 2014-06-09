@@ -195,6 +195,8 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnStatusDog(wxCommandEvent& evt);
 	void OnStatusFilter(wxCommandEvent& evt);
+	void OnUpdateCmdTrue(wxUpdateUIEvent& evt);
 	void OnUpdateCmd(wxUpdateUIEvent& evt);
+	void OnFileProperties(wxCommandEvent& evt);
 	void OnCmd(wxCommandEvent& evt);
 };

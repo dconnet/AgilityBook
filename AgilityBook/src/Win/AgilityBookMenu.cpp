@@ -68,6 +68,8 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{MENU_ITEM, wxID_PREVIEW,             wxITEM_NORMAL, 1, arbT("MenuFilePrintPreview"), arbT("MenuFilePrintPreview"), arbT("DescFilePrintPreview"), toolbarPreview_xpm},
 	{MENU_MRU,  0,                        wxITEM_NORMAL, 1, nullptr, arbT("MenuFileRecent"), nullptr, nullptr},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
+	{MENU_ITEM, ID_FILE_PROPERTIES,       wxITEM_NORMAL, 1, nullptr, arbT("MenuFileProperties"), arbT("DescFileProperties"), nullptr},
+	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
 	{MENU_ITEM, wxID_EXIT,                wxITEM_NORMAL, 1, nullptr, arbT("MenuFileExit"), arbT("DescFileExit"), nullptr},
 
 	{MENU_ITEM, 0,                        wxITEM_NORMAL, 0, nullptr, arbT("MenuEdit"), nullptr, nullptr},
