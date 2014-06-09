@@ -183,31 +183,33 @@ bool CErrorCallback::OnError(wchar_t const* const pMsg)
 /////////////////////////////////////////////////////////////////////////////
 
 BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
-	EVT_UPDATE_UI(ID_FILE_EXPORT_WIZARD, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_FILE_EXPORT_WIZARD, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_FILE_EXPORT_WIZARD, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_FILE_LINKED, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_FILE_LINKED, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_FILE_LINKED, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_FILE_PROPERTIES, CAgilityBookDoc::OnUpdateCmdTrue)
+	EVT_MENU(ID_FILE_PROPERTIES, CAgilityBookDoc::OnFileProperties)
 	EVT_UPDATE_UI(ID_COPY_TITLES_LIST, CAgilityBookDoc::OnUpdateCmd)
 	EVT_MENU(ID_COPY_TITLES_LIST, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_EDIT_CONFIGURATION, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_EDIT_CONFIGURATION, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_EDIT_CONFIGURATION, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_DOG, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_AGILITY_NEW_DOG, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_AGILITY_NEW_DOG, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_CALENDAR, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_AGILITY_NEW_CALENDAR, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_AGILITY_NEW_CALENDAR, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_AGILITY_UPDATE_CALENDAR, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_AGILITY_UPDATE_CALENDAR, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_AGILITY_UPDATE_CALENDAR, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_TRAINING, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_AGILITY_NEW_TRAINING, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_AGILITY_NEW_TRAINING, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_NOTES_CLUBS, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_NOTES_CLUBS, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_NOTES_CLUBS, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_NOTES_JUDGES, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_NOTES_JUDGES, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_NOTES_JUDGES, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_NOTES_LOCATIONS, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_NOTES_LOCATIONS, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_NOTES_LOCATIONS, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_NOTES_SEARCH, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_NOTES_SEARCH, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_NOTES_SEARCH, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(wxID_PREFERENCES, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(wxID_PREFERENCES, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(wxID_PREFERENCES, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(ID_VIEW_SORTRUNS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookDoc::OnUpdateCmd)
@@ -215,9 +217,9 @@ BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookDoc::OnUpdateCmd)
-	EVT_UPDATE_UI(wxID_ABOUT, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(wxID_ABOUT, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(wxID_ABOUT, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_HELP_UPDATE, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_HELP_UPDATE, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_HELP_UPDATE, CAgilityBookDoc::OnCmd)
 END_EVENT_TABLE()
 
@@ -1637,30 +1639,20 @@ void CFindInfo::Search(
 }
 
 
+void CAgilityBookDoc::OnUpdateCmdTrue(wxUpdateUIEvent& evt)
+{
+	evt.Enable(true);
+}
+
+
 void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 {
 	switch (evt.GetId())
 	{
-	case ID_FILE_EXPORT_WIZARD:
-	case ID_FILE_LINKED:
-		evt.Enable(true);
-		break;
 	case ID_COPY_TITLES_LIST:
 		// As long as a dog is current, enable. This means the copy may have
 		// only the dog's name.
 		evt.Enable(GetCurrentDog() ? true : false);
-		break;
-	case ID_EDIT_CONFIGURATION:
-	case ID_AGILITY_NEW_DOG:
-	case ID_AGILITY_NEW_CALENDAR:
-	case ID_AGILITY_UPDATE_CALENDAR:
-	case ID_AGILITY_NEW_TRAINING:
-	case ID_NOTES_CLUBS:
-	case ID_NOTES_JUDGES:
-	case ID_NOTES_LOCATIONS:
-	case ID_NOTES_SEARCH:
-	case wxID_PREFERENCES:
-		evt.Enable(true);
 		break;
 	case ID_VIEW_SORTRUNS:
 		evt.Check(CAgilityBookOptions::GetNewestDatesFirst() ? 1 : 0);
@@ -1692,10 +1684,25 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 		evt.Enable(false);
 		evt.Skip();
 		break;
-	case wxID_ABOUT:
-	case ID_HELP_UPDATE:
-		evt.Enable(true);
-		break;
+	}
+}
+
+
+void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
+{
+	std::wstring properties;
+
+#pragma PRAGMA_TODO(File Properties)
+	// File name/location
+	// size
+	// last modified/created
+	// arb version (to last update file) [running arb version]
+	// config version [running arb config version]
+
+	if (!properties.empty())
+	{
+		CDlgMessage dlg(properties, wxGetApp().GetTopWindow());
+		dlg.ShowModal();
 	}
 }
 
