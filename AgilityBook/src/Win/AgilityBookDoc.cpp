@@ -2115,9 +2115,9 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 	if (!filename.empty())
 	{
 		if (wxFileName::IsFileWritable(filename))
-			str << wxString::Format(_("IDS_FILEPROP_READONLY"), filename) << L"\n";
-		else
 			str << wxString::Format(_("IDS_FILEPROP_NAME"), filename) << L"\n";
+		else
+			str << wxString::Format(_("IDS_FILEPROP_READONLY"), filename) << L"\n";
 
 		wxFileName file(filename);
 		if (file.IsOk())
