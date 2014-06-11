@@ -113,7 +113,7 @@ public:
 	{
 	}
 
-	ARBVersion(std::wstring str);
+	ARBVersion(std::wstring inStr);
 
 
 	ARBVersion& operator=(ARBVersion const& rhs)
