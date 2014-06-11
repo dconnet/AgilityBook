@@ -17,6 +17,7 @@
 #include "TestARB.h"
 
 #include "ARBCommon/StringUtil.h"
+#include <algorithm>
 #include <locale>
 
 #ifdef __WXMSW__
