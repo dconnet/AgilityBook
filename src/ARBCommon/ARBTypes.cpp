@@ -142,21 +142,21 @@ bool ARBDouble::equal(
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBVersion::ARBVersion(std::wstring str)
+ARBVersion::ARBVersion(std::wstring inStr)
 	: m_Version(0)
 {
 	unsigned short major = 0;
 	unsigned short minor = 0;
-	std::wstring::size_type pos = str.find('.');
+	std::wstring::size_type pos = inStr.find('.');
 	if (std::wstring::npos != pos)
 	{
-		major = static_cast<unsigned short>(StringUtil::ToCLong(str));
-		str = str.substr(pos+1);
-		minor = static_cast<unsigned short>(StringUtil::ToCLong(str));
+		major = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
+		inStr = inStr.substr(pos+1);
+		minor = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
 	}
 	else
 	{
-		major = static_cast<unsigned short>(StringUtil::ToCLong(str));
+		major = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
 	}
 	m_Version = MakeVersion(major, minor);
 }
