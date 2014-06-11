@@ -1978,9 +1978,9 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 	if (!filename.empty())
 	{
 		if (wxFileName::IsFileWritable(filename))
-			str << wxString::Format(_("IDS_FILEPROP_NAME"), filename) << L"\n";
+			str << wxString::Format(_("IDS_FILEPROP_NAME"), filename.c_str()) << L"\n";
 		else
-			str << wxString::Format(_("IDS_FILEPROP_READONLY"), filename) << L"\n";
+			str << wxString::Format(_("IDS_FILEPROP_READONLY"), filename.c_str()) << L"\n";
 
 		wxFileName file(filename);
 		if (file.IsOk())
@@ -1990,8 +1990,21 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 			wxDateTime timeCreate, timeMod;
 			if (GetFileTimes(file, nullptr, &timeMod, &timeCreate))
 			{
-				str << wxString::Format(_("IDS_FILEPROP_CREATED"), StringUtil::stringW(timeCreate.FormatISOCombined())) << L"\n";
-				str << wxString::Format(_("IDS_FILEPROP_MODIFIED"), StringUtil::stringW(timeMod.FormatISOCombined())) << L"\n";
+#if wxCHECK_VERSION(3, 0, 0)
+				wxString dateCreate = timeCreate.FormatISOCombined();
+				wxString dateMod = timeMod.FormatISOCombined();
+#else
+				wxString dateCreate;
+				dateCreate << timeCreate.FormatISODate()
+					<< L"T"
+					<< timeCreate.FormatISOTime();
+				wxString dateMod;
+				dateMod << timeMod.FormatISODate()
+					<< L"T"
+					<< timeMod.FormatISOTime();
+#endif
+				str << wxString::Format(_("IDS_FILEPROP_CREATED"), dateCreate.c_str()) << L"\n";
+				str << wxString::Format(_("IDS_FILEPROP_MODIFIED"), dateMod.c_str()) << L"\n";
 			}
 		}
 	}
@@ -2007,9 +2020,9 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 	{
 		ARBVersion ver(Book().GetFileInfo(ARBAgilityRecordBook::fileInfoBook));
 		if (ver == ARBAgilityRecordBook::GetCurrentDocVersion())
-			str << wxString::Format(_("IDS_FILEPROP_VERSION"), ver.str()) << L"\n";
+			str << wxString::Format(_("IDS_FILEPROP_VERSION"), ver.str().c_str()) << L"\n";
 		else
-			str << wxString::Format(_("IDS_FILEPROP_VERSION_CURRENT"), ver.str(), ARBAgilityRecordBook::GetCurrentDocVersion().str()) << L"\n";
+			str << wxString::Format(_("IDS_FILEPROP_VERSION_CURRENT"), ver.str().c_str(), ARBAgilityRecordBook::GetCurrentDocVersion().str().c_str()) << L"\n";
 	}
 
 	if (!Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS).empty()
@@ -2019,16 +2032,20 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 	{
 		str << L"\n"
 			<< wxString::Format(_("IDS_FILEPROP_FILEWRITTEN"),
-				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS),
-				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform),
-				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp),
-				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion))
+				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS).c_str(),
+				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform).c_str(),
+				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp).c_str(),
+				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion).c_str())
 			<< L"\n";
 	}
 
 	if (!str.empty())
 	{
+#if wxCHECK_VERSION(3, 0, 0)
 		CDlgMessage dlg(StringUtil::stringW(str), wxGetApp().GetTopWindow(), _("IDS_FILE_PROPERTIES").wc_str());
+#else
+		CDlgMessage dlg(StringUtil::stringW(str), wxGetApp().GetTopWindow(), _("IDS_FILE_PROPERTIES"));
+#endif
 		dlg.ShowModal();
 	}
 }
