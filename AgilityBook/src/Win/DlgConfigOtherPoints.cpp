@@ -117,7 +117,6 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	, m_Default(pOther->GetDefault())
 	, m_Desc(StringUtil::stringWX(pOther->GetDescription()))
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_OTHERPOINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);

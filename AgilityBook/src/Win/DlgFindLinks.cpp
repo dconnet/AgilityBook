@@ -173,7 +173,6 @@ CDlgFindLinks::CDlgFindLinks(
 	, m_imgOk(-1)
 	, m_imgMissing(-1)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_FIND_LINKS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);

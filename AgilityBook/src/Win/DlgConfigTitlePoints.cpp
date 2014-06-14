@@ -54,7 +54,6 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_Place(static_cast<short>(inValue))
 	, m_Points(inPoints)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_TITLE_POINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);

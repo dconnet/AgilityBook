@@ -53,7 +53,6 @@ CDlgTraining::CDlgTraining(
 	, m_SubName(StringUtil::stringWX(pTraining->GetSubName()))
 	, m_Notes(StringUtil::stringWX(pTraining->GetNote()))
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_TRAINING"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);

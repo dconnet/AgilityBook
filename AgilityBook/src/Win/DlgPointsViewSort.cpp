@@ -52,7 +52,6 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 	, m_ctrlTertiary(nullptr)
 	, m_ctrlOk(nullptr)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_POINTS_VIEW_SORT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
