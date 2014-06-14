@@ -1402,7 +1402,6 @@ bool CDlgListViewer::Create(
 		std::wstring const& inCaption,
 		wxWindow* pParent)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	if (!wxDialog::Create(pParent, wxID_ANY, inCaption.c_str(), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))

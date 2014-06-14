@@ -66,7 +66,6 @@ CDlgOtherPoint::CDlgOtherPoint(
 	, m_ctrlDesc(nullptr)
 	, m_Points(pRunOther->GetPoints())
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_OTHER_POINT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);

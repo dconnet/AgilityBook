@@ -758,7 +758,7 @@ CDlgRun::CDlgRun(
 	, m_ctrlLinkDelete(nullptr)
 	, m_ctrlLinkOpen(nullptr)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
+	SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY,

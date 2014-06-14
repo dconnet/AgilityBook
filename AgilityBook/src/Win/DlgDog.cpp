@@ -590,7 +590,7 @@ CDlgDog::CDlgDog(
 	, m_sortRegNums(L"RegNums")
 	, m_ExistingPoints()
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
+	SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDS_COL_DOG"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);

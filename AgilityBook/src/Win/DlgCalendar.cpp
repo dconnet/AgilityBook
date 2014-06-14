@@ -107,7 +107,6 @@ CDlgCalendar::CDlgCalendar(
 	, m_ctrlLocationNotes(nullptr)
 	, m_ctrlLocationInfo(nullptr)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CALENDAR"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
