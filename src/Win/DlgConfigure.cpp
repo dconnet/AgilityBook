@@ -128,7 +128,6 @@ CDlgConfigure::CDlgConfigure(
 	, m_hItemOtherPts()
 {
 	m_idxFaults = m_ImageList.Add(wxArtProvider::GetIcon(wxART_WARNING));
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIGURE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);

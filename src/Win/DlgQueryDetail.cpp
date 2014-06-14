@@ -54,7 +54,6 @@ CDlgQueryDetail::CDlgQueryDetail(
 	, m_Code(inCode)
 	, m_Name(inName)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	wxDialog::Create(pParent, wxID_ANY, _("IDD_QUERY_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);

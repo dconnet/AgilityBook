@@ -44,7 +44,6 @@ CDlgFind::CDlgFind(
 		caption = _("IDD_FIND");
 	wxString text = StringUtil::stringWX(m_Callback.Text());
 
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);

@@ -122,7 +122,6 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	, m_Place(inPlace)
 	, m_Value(inValue)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_PLACEINFO"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);

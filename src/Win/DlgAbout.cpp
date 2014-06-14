@@ -159,7 +159,6 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);

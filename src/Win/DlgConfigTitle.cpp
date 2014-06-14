@@ -101,7 +101,6 @@ CDlgConfigTitle::CDlgConfigTitle(
 	, m_ctrlStyle(nullptr)
 	, m_ctrlSep(nullptr)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_TITLE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);

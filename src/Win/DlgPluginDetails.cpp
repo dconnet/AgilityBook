@@ -53,7 +53,6 @@ CDlgPluginDetails::CDlgPluginDetails(
 	, m_ctrlCodes(nullptr)
 	, m_strHelp()
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CALENDAR_PLUGIN_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);

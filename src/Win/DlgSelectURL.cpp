@@ -38,7 +38,6 @@ CDlgSelectURL::CDlgSelectURL(
 	, m_Name(StringUtil::stringWX(name))
 	, m_textCtrl(nullptr)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_SELECT_URL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
