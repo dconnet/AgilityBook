@@ -25,10 +25,17 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.0.0.
+I'm currently using version 3.0.1.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
+
+=== Changes to 3.0.1:
+-[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
+  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
 
 === Changes to 3.0.0:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
@@ -38,7 +45,7 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
 -[win]- src/msw/combobox.cpp
     http://trac.wxwidgets.org/changeset/75196
-c:\wx\wxWidgets-3.0.0\src\msw>diff -c combobox.cpp.orig combobox.cpp
+c:\devtools\wx\wxWidgets-3.0.0\src\msw>diff -c combobox.cpp.orig combobox.cpp
 *** combobox.cpp.orig   Fri Nov 15 08:20:58 2013
 --- combobox.cpp        Fri Nov 15 08:21:19 2013
 ***************
@@ -246,6 +253,6 @@ OSX 10.9+:
   Must reboot after modifying.
 ===
 setenv BOOST_ROOT /Users/dconnet/src/boost_1_55_0
-setenv WXBASE /Users/dconnet/wx
-setenv WXWIN /Users/dconnet/wx/wxWidgets-3.0.0
+setenv WXBASE /Users/dconnet/devtools/wx
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.1
 ====
