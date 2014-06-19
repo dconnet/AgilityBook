@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-06-19 Added IsWin7OrBetter.
  * 2013-07-17 Created
  */
 
@@ -292,3 +293,41 @@ std::wstring GetOSInfo(bool bVerbose)
 
 	return str.str();
 }
+
+/////////////////////////////////////////////////////////////////////////////
+
+#ifdef WIN32
+
+bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op)
+{
+	OSVERSIONINFOEX osvi;
+	DWORDLONG dwlConditionMask = 0;
+
+	ZeroMemory(&osvi, sizeof(osvi));
+	osvi.dwOSVersionInfoSize = sizeof(osvi);
+	osvi.dwMajorVersion = dwMajor;
+	osvi.dwMinorVersion = dwMinor;
+	osvi.wServicePackMajor = 0;
+	osvi.wServicePackMinor = 0;
+
+#pragma warning (push)
+// warning C4244: 'argument' : conversion from 'int' to 'BYTE', possible loss of data
+#pragma warning (disable : 4244)
+	VER_SET_CONDITION(dwlConditionMask, VER_MAJORVERSION, op);
+	VER_SET_CONDITION(dwlConditionMask, VER_MINORVERSION, op);
+	VER_SET_CONDITION(dwlConditionMask, VER_SERVICEPACKMAJOR, op);
+	VER_SET_CONDITION(dwlConditionMask, VER_SERVICEPACKMINOR, op);
+#pragma warning (pop)
+
+	return !!VerifyVersionInfo(&osvi, 
+			VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR,
+			dwlConditionMask);
+}
+
+
+bool IsWin7OrBetter()
+{
+	return CheckOS(6, 1, VER_GREATER_EQUAL);
+}
+
+#endif
