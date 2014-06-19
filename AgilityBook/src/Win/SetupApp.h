@@ -23,7 +23,8 @@
 #include "LanguageManager.h"
 
 
-class CBaseApp : public wxApp, public ILanguageCallback
+class CBaseApp : public wxApp
+				, public ILanguageCallback
 {
 	DECLARE_NO_COPY_CLASS(CBaseApp)
 protected:

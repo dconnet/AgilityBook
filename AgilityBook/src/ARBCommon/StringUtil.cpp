@@ -24,6 +24,7 @@
 #include "stdafx.h"
 #include "ARBCommon/StringUtil.h"
 
+#include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
 #include <algorithm>
 #include <locale>
@@ -504,13 +505,11 @@ template <typename T> T TrimImpl(T const& inStr, T const& toTrim, TrimType type)
 int Compare(std::string const& inStr1, std::string const& inStr2, bool bIgnoreCase)
 {
 #ifdef ARB_HAS_COMPARESTRING
-	// SORT_DIGITSASNUMBERS is only supported on Win7+
-	// To support pre-Win7, use StrCmpLogicalW
-	DWORD flags = SORT_DIGITSASNUMBERS;
+	DWORD flags = 0;
+	if (IsWin7OrBetter())
+		flags |= SORT_DIGITSASNUMBERS;
 	if (bIgnoreCase)
-		flags |= LINGUISTIC_IGNORECASE;
-	else
-		flags |= NORM_LINGUISTIC_CASING;
+		flags |= NORM_IGNORECASE;
 	switch (CompareStringA(LOCALE_USER_DEFAULT, flags, inStr1.c_str(), -1, inStr2.c_str(), -1))
 	{
 	case CSTR_LESS_THAN:
@@ -531,12 +530,11 @@ int Compare(std::string const& inStr1, std::string const& inStr2, bool bIgnoreCa
 int Compare(std::wstring const& inStr1, std::wstring const& inStr2, bool bIgnoreCase)
 {
 #ifdef ARB_HAS_COMPARESTRING
-	// SORT_DIGITSASNUMBERS is only supported on Win7+
-	DWORD flags = SORT_DIGITSASNUMBERS;
+	DWORD flags = 0;
+	if (IsWin7OrBetter())
+		flags |= SORT_DIGITSASNUMBERS;
 	if (bIgnoreCase)
-		flags |= LINGUISTIC_IGNORECASE;
-	else
-		flags |= NORM_LINGUISTIC_CASING;
+		flags |= NORM_IGNORECASE;
 	switch (CompareStringW(LOCALE_USER_DEFAULT, flags, inStr1.c_str(), -1, inStr2.c_str(), -1))
 	{
 	case CSTR_LESS_THAN:
