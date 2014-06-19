@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-06-19 Added IsWin7OrBetter.
  * 2013-07-17 Created
  */
 
@@ -41,3 +42,16 @@ bool GetOSInfo(int& verMajor, int& verMinor);
  * @param bVerbose Get multi-line info.
  */
 std::wstring GetOSInfo(bool bVerbose = true);
+
+
+/**
+ * Are we running on Win7 or better?
+ */
+bool IsWin7OrBetter()
+#ifdef WIN32
+	;
+#else
+{
+	return false;
+}
+#endif
