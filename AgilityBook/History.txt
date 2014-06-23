@@ -5,7 +5,9 @@
 	[currently set on old format]
 [ Note, most functionality is now complete ]
 
-6/9/2014: v2.4.3.<in development>
+6/22/2014: v2.4.3.<in development>
+- Bumped Configuration v47:
+  - Added CPE C-10 title (added in 2008 rule book)
 - New features / Enhancements:
   - Enable paste of copied runs in Runs View.
   - Added a file properties dialog.

@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2014-06-22 DRC Configuration version 47.
+               Added CPE C-10 title (added in 2008 rule book)
 2014-05-18 DRC Configuration version 46.
                Added ASCA ACE program
                Added 'Nationals' level to AKC for tracking of National rounds.
@@ -146,7 +148,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="46">
+  <Configuration version="47">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -1267,14 +1269,15 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
       <Titles LongName="Specialist Level 4 Point Level Title" Name="L4S-PLT">4000 Level 4 points in Specialist</Titles>
       <Titles LongName="Specialist Level 5 Point Level Title" Name="L5S-PLT">5000 Level 5 points in Specialist</Titles>
       <Titles LongName="Specialist Level C Point Level Title" Name="LCS-PLT">10000 Level C points in Specialist</Titles>
-      <Titles LongName="Tourmaline" Name="C-15">15000 total points</Titles>
-      <Titles LongName="Amethyst" Name="C-20">20000 total points</Titles>
-      <Titles LongName="Garnet" Name="C-25">25000 total points</Titles>
-      <Titles LongName="Aquamarine" Name="C-30">30000 total points</Titles>
-      <Titles LongName="Sapphire" Name="C-35">35000 total points</Titles>
-      <Titles LongName="Ruby" Name="C-40">40000 total points</Titles>
-      <Titles LongName="Emerald" Name="C-45">45000 total points</Titles>
-      <Titles LongName="Alexandrite" Name="C-50">50000 total points</Titles>
+      <Titles Name="C-10">10000 total points</Titles>
+      <Titles Name="C-15">15000 total points</Titles>
+      <Titles Name="C-20">20000 total points</Titles>
+      <Titles Name="C-25">25000 total points</Titles>
+      <Titles Name="C-30">30000 total points</Titles>
+      <Titles Name="C-35">35000 total points</Titles>
+      <Titles Name="C-40">40000 total points</Titles>
+      <Titles Name="C-45">45000 total points</Titles>
+      <Titles Name="C-50">50000 total points</Titles>
       <Division Name="Regular" ShortName="Reg">
         <Level Name="Level 1" ShortName="L1"/>
         <Level Name="Level 2" ShortName="L2"/>
