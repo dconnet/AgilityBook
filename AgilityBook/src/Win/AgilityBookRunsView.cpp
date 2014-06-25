@@ -556,10 +556,10 @@ int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 		break;
 
 	case IO_RUNS_REG_NAME:
-		nRet = StringUtil::Compare(pRun1->GetDog()->GetRegisteredName(), pRun2->GetDog()->GetRegisteredName());
+		nRet = StringUtil::CompareNoCase(pRun1->GetDog()->GetRegisteredName(), pRun2->GetDog()->GetRegisteredName());
 		break;
 	case IO_RUNS_CALL_NAME:
-		nRet = StringUtil::Compare(pRun1->GetDog()->GetCallName(), pRun2->GetDog()->GetCallName());
+		nRet = StringUtil::CompareNoCase(pRun1->GetDog()->GetCallName(), pRun2->GetDog()->GetCallName());
 		break;
 	case IO_RUNS_DATE:
 		if (pRun1->GetRun()->GetDate() < pRun2->GetRun()->GetDate())
@@ -588,7 +588,7 @@ int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 					str2 += L"/";
 				str2 += (*iter)->GetVenue();
 			}
-			nRet = StringUtil::Compare(str1, str2);
+			nRet = StringUtil::CompareNoCase(str1, str2);
 		}
 		break;
 	case IO_RUNS_CLUB:
@@ -612,35 +612,35 @@ int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 					str2 += L"/";
 				str2 += (*iter)->GetName();
 			}
-			nRet = StringUtil::Compare(str1, str2);
+			nRet = StringUtil::CompareNoCase(str1, str2);
 		}
 		break;
 	case IO_RUNS_LOCATION:
-		nRet = StringUtil::Compare(pRun1->GetTrial()->GetLocation(), pRun2->GetTrial()->GetLocation());
+		nRet = StringUtil::CompareNoCase(pRun1->GetTrial()->GetLocation(), pRun2->GetTrial()->GetLocation());
 		break;
 	case IO_RUNS_TRIAL_NOTES:
-		nRet = StringUtil::Compare(pRun1->GetTrial()->GetNote(), pRun2->GetTrial()->GetNote());
+		nRet = StringUtil::CompareNoCase(pRun1->GetTrial()->GetNote(), pRun2->GetTrial()->GetNote());
 		break;
 	case IO_RUNS_DIVISION:
-		nRet = StringUtil::Compare(pRun1->GetRun()->GetDivision(), pRun2->GetRun()->GetDivision());
+		nRet = StringUtil::CompareNoCase(pRun1->GetRun()->GetDivision(), pRun2->GetRun()->GetDivision());
 		break;
 	case IO_RUNS_LEVEL:
-		nRet = StringUtil::Compare(pRun1->GetRun()->GetLevel(), pRun2->GetRun()->GetLevel());
+		nRet = StringUtil::CompareNoCase(pRun1->GetRun()->GetLevel(), pRun2->GetRun()->GetLevel());
 		break;
 	case IO_RUNS_EVENT:
-		nRet = StringUtil::Compare(pRun1->GetRun()->GetEvent(), pRun2->GetRun()->GetEvent());
+		nRet = StringUtil::CompareNoCase(pRun1->GetRun()->GetEvent(), pRun2->GetRun()->GetEvent());
 		break;
 	case IO_RUNS_HEIGHT:
-		nRet = StringUtil::Compare(pRun1->GetRun()->GetHeight(), pRun2->GetRun()->GetHeight());
+		nRet = StringUtil::CompareNoCase(pRun1->GetRun()->GetHeight(), pRun2->GetRun()->GetHeight());
 		break;
 	case IO_RUNS_JUDGE:
-		nRet = StringUtil::Compare(pRun1->GetRun()->GetJudge(), pRun2->GetRun()->GetJudge());
+		nRet = StringUtil::CompareNoCase(pRun1->GetRun()->GetJudge(), pRun2->GetRun()->GetJudge());
 		break;
 	case IO_RUNS_HANDLER:
-		nRet = StringUtil::Compare(pRun1->GetRun()->GetHandler(), pRun2->GetRun()->GetHandler());
+		nRet = StringUtil::CompareNoCase(pRun1->GetRun()->GetHandler(), pRun2->GetRun()->GetHandler());
 		break;
 	case IO_RUNS_CONDITIONS:
-		nRet = StringUtil::Compare(pRun1->GetRun()->GetConditions(), pRun2->GetRun()->GetConditions());
+		nRet = StringUtil::CompareNoCase(pRun1->GetRun()->GetConditions(), pRun2->GetRun()->GetConditions());
 		break;
 	case IO_RUNS_COURSE_FAULTS:
 		if (pRun1->GetRun()->GetScoring().GetCourseFaults() < pRun2->GetRun()->GetScoring().GetCourseFaults())
@@ -1028,7 +1028,7 @@ int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 		}
 		break;
 	case IO_RUNS_COMMENTS:
-		nRet = StringUtil::Compare(pRun1->GetRun()->GetNote(), pRun2->GetRun()->GetNote());
+		nRet = StringUtil::CompareNoCase(pRun1->GetRun()->GetNote(), pRun2->GetRun()->GetNote());
 		break;
 	case IO_RUNS_FAULTS:
 		{

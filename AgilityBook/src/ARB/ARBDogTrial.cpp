@@ -433,7 +433,7 @@ public:
 			iCompare = -1;
 		if (0 == iCompare)
 		{
-			iCompare = StringUtil::Compare(one->GetGenericName(), two->GetGenericName());
+			iCompare = StringUtil::CompareNoCase(one->GetGenericName(), two->GetGenericName());
 			if (0 == iCompare)
 			{
 				ARBDogClubPtr club1;
@@ -452,9 +452,9 @@ public:
 					name2 = club2->GetName();
 					venue2 = club2->GetVenue();
 				}
-				iCompare = StringUtil::Compare(name1, name2);
+				iCompare = StringUtil::CompareNoCase(name1, name2);
 				if (0 == iCompare)
-					iCompare = StringUtil::Compare(venue1, venue2);
+					iCompare = StringUtil::CompareNoCase(venue1, venue2);
 			}
 		}
 		return m_bDescending ? iCompare < 0 : iCompare > 0;

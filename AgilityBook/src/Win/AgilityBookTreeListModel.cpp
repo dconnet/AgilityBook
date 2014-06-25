@@ -482,7 +482,7 @@ int CAgilityBookTreeListModel::Compare(
 	{
 		wxString str1 = value1.GetString();
 		wxString str2 = value2.GetString();
-		int res = StringUtil::Compare(str1, str2, true);
+		int res = StringUtil::CompareNoCase(str1, str2, true);
 		if (res)
 			return res;
 	}

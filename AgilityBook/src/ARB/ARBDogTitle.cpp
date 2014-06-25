@@ -333,9 +333,9 @@ public:
 		if (one->GetDate() == two->GetDate())
 		{
 			if (one->GetVenue() == two->GetVenue())
-				return StringUtil::Compare(one->GetRawName(), two->GetRawName()) < 0;
+				return StringUtil::CompareNoCase(one->GetRawName(), two->GetRawName()) < 0;
 			else
-				return StringUtil::Compare(one->GetVenue(), two->GetVenue()) < 0;
+				return StringUtil::CompareNoCase(one->GetVenue(), two->GetVenue()) < 0;
 		}
 		else
 			return one->GetDate() < two->GetDate();

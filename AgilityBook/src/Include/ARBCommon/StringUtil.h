@@ -12,7 +12,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-06-03 Added Compare.
+ * 2014-06-24 Added CompareNoCase.
  * 2012-08-12 Moved FormatBytes to StringUtil
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-03-30 Remove Convert and replaced with stringA/etc
@@ -75,13 +75,15 @@ namespace StringUtil
 	bool ToCDouble(std::wstring const& inStr, double& outValue);
 	double ToCDouble(std::wstring const& inStr);
 
-	// Comparison (for better lexical comparison)
-	// Note: Ignore case simply means "bob" == "Bob".
+	// The following CompareNoCase functions can compare strings with digits
+	// ("x2" will work before "x10")
+	bool CanCompareDigits();
+
+	// Case insensitive comparison (for better lexical comparison)
 	// It does not mean that lower case sorts before (or after) upper case.
-	int Compare(std::string const& inStr1, std::string const& inStr2, bool bIgnoreCase = false);
-	int Compare(std::wstring const& inStr1, std::wstring const& inStr2, bool bIgnoreCase = false);
+	int CompareNoCase(std::wstring const& inStr1, std::wstring const& inStr2);
 #if defined(__WXWINDOWS__)
-	int Compare(wxString const& inStr1, wxString const& inStr2, bool bIgnoreCase = false);
+	int CompareNoCase(wxString const& inStr1, wxString const& inStr2);
 #endif
 
 	// Some CString-style functions

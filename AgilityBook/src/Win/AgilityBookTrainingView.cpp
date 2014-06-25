@@ -210,13 +210,13 @@ int wxCALLBACK CompareTraining(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData
 			nRet = 1;
 		break;
 	case IO_LOG_NAME:
-		nRet = StringUtil::Compare(pItem1->GetTraining()->GetName(), pItem2->GetTraining()->GetName());
+		nRet = StringUtil::CompareNoCase(pItem1->GetTraining()->GetName(), pItem2->GetTraining()->GetName());
 		break;
 	case IO_LOG_SUBNAME:
-		nRet = StringUtil::Compare(pItem1->GetTraining()->GetSubName(), pItem2->GetTraining()->GetSubName());
+		nRet = StringUtil::CompareNoCase(pItem1->GetTraining()->GetSubName(), pItem2->GetTraining()->GetSubName());
 		break;
 	case IO_LOG_NOTES:
-		nRet = StringUtil::Compare(pItem1->GetTraining()->GetNote(), pItem2->GetTraining()->GetNote());
+		nRet = StringUtil::CompareNoCase(pItem1->GetTraining()->GetNote(), pItem2->GetTraining()->GetNote());
 		break;
 	}
 	if (0 > s_SortInfo.nCol)

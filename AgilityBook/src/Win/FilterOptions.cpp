@@ -352,7 +352,7 @@ public:
 	SortNames() {}
 	bool operator()(std::wstring const& one, std::wstring const& two) const
 	{
-		return StringUtil::Compare(one, two) < 0;
+		return StringUtil::CompareNoCase(one, two) < 0;
 	}
 };
 #endif
@@ -377,7 +377,7 @@ size_t CFilterOptions::GetAllFilterNames(
 	std::stable_sort(outNames.begin(), outNames.end(),
 		[](std::wstring const& one, std::wstring const& two)
 		{
-			return StringUtil::Compare(one, two) < 0;
+			return StringUtil::CompareNoCase(one, two) < 0;
 		}
 	);
 #else

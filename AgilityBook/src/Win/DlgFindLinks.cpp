@@ -139,7 +139,7 @@ int wxCALLBACK CompareLinks(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 		int col = s_SortInfo.pCols->GetColumnAt(i);
 		std::wstring str1 = pData1->OnNeedText(col);
 		std::wstring str2 = pData2->OnNeedText(col);
-		rc = StringUtil::Compare(str1, str2);
+		rc = StringUtil::CompareNoCase(str1, str2);
 		if (rc)
 		{
 			if (s_SortInfo.pCols->IsDescending(col))
