@@ -218,7 +218,7 @@ public:
 	SortInfoItem() {}
 	bool operator()(ARBInfoItemPtr const& one, ARBInfoItemPtr const& two) const
 	{
-		return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
+		return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
 	}
 };
 #endif
@@ -232,7 +232,7 @@ void ARBInfoItemList::sort()
 	std::stable_sort(begin(), end(),
 		[](ARBInfoItemPtr const& one, ARBInfoItemPtr const& two)
 		{
-			return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
+			return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
 		}
 	);
 #else

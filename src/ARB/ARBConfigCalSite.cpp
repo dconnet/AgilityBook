@@ -338,7 +338,7 @@ public:
 	SortConfigCalSite() {}
 	bool operator()(ARBConfigCalSitePtr const& one, ARBConfigCalSitePtr const& two) const
 	{
-		return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
+		return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
 	}
 };
 #endif
@@ -352,7 +352,7 @@ void ARBConfigCalSiteList::sort()
 	std::stable_sort(begin(), end(),
 		[](ARBConfigCalSitePtr const& one, ARBConfigCalSitePtr const& two)
 		{
-			return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
+			return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
 		}
 	);
 #else

@@ -482,16 +482,16 @@ public:
 						if (one->GetDivision() == two->GetDivision())
 							return one->GetLevel() < two->GetLevel();
 						else
-							return StringUtil::Compare(one->GetDivision(), two->GetDivision()) < 0;
+							return StringUtil::CompareNoCase(one->GetDivision(), two->GetDivision()) < 0;
 					}
 					else
 						return one->GetDate() < two->GetDate();
 				}
 				else
-					return StringUtil::Compare(one->GetEvent(), two->GetEvent()) < 0;
+					return StringUtil::CompareNoCase(one->GetEvent(), two->GetEvent()) < 0;
 			}
 			else
-				return StringUtil::Compare(one->GetVenue(), two->GetVenue()) < 0;
+				return StringUtil::CompareNoCase(one->GetVenue(), two->GetVenue()) < 0;
 		}
 		else
 			return one->GetOtherPoints() < two->GetOtherPoints();

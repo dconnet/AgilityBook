@@ -577,7 +577,7 @@ public:
 	SortConfigVenue() {}
 	bool operator()(ARBConfigVenuePtr const& one, ARBConfigVenuePtr const& two) const
 	{
-		return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
+		return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
 	}
 };
 #endif
@@ -591,7 +591,7 @@ void ARBConfigVenueList::sort()
 	std::stable_sort(begin(), end(),
 		[](ARBConfigVenuePtr const& one, ARBConfigVenuePtr const& two)
 		{
-			return StringUtil::Compare(one->GetName(), two->GetName()) < 0;
+			return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
 		}
 	);
 #else

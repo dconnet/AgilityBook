@@ -217,7 +217,7 @@ public:
 	SortRegNum() {}
 	bool operator()(ARBDogRegNumPtr const& one, ARBDogRegNumPtr const& two) const
 	{
-		return StringUtil::Compare(one->GetVenue(), two->GetVenue()) < 0;
+		return StringUtil::CompareNoCase(one->GetVenue(), two->GetVenue()) < 0;
 	}
 };
 #endif
@@ -231,7 +231,7 @@ void ARBDogRegNumList::sort()
 	std::stable_sort(begin(), end(),
 		[](ARBDogRegNumPtr const& one, ARBDogRegNumPtr const& two)
 		{
-			return StringUtil::Compare(one->GetVenue(), two->GetVenue()) < 0;
+			return StringUtil::CompareNoCase(one->GetVenue(), two->GetVenue()) < 0;
 		}
 	);
 #else
