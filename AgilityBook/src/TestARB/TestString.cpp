@@ -256,35 +256,34 @@ SUITE(TestString)
 	}
 
 
-#ifdef ARB_HAS_COMPARESTRING
+#ifdef WIN32
 	TEST(Sort)
 	{
-		if (IsWin7OrBetter())
-		{
-			std::vector<std::wstring> items;
-			items.push_back(L"1a");
-			items.push_back(L"10a");
-			items.push_back(L"2a");
+		CHECK(StringUtil::CanCompareDigits());
 
-			std::stable_sort(items.begin(), items.end(),
-				[](std::wstring const& one, std::wstring const& two)
-				{
-					return StringUtil::Compare(one, two) < 0;
-				}
-				);
+		std::vector<std::wstring> items;
+		items.push_back(L"1a");
+		items.push_back(L"10a");
+		items.push_back(L"2a");
 
-			CHECK(items[0] == L"1a");
-			CHECK(items[1] == L"2a");
-			CHECK(items[2] == L"10a");
-		}
+		std::stable_sort(items.begin(), items.end(),
+			[](std::wstring const& one, std::wstring const& two)
+			{
+				return StringUtil::CompareNoCase(one, two) < 0;
+			}
+			);
+
+		CHECK(items[0] == L"1a");
+		CHECK(items[1] == L"2a");
+		CHECK(items[2] == L"10a");
 	}
 
 
 	TEST(Sort2)
 	{
 		std::vector<std::wstring> items;
-		items.push_back(L"Bob");
 		items.push_back(L"bob");
+		items.push_back(L"Bob");
 		items.push_back(L"Aa");
 		items.push_back(L"2a");
 		items.push_back(L"a");
@@ -292,13 +291,14 @@ SUITE(TestString)
 		std::stable_sort(items.begin(), items.end(),
 			[](std::wstring const& one, std::wstring const& two)
 			{
-				return StringUtil::Compare(one, two, false) < 0;
+				return StringUtil::CompareNoCase(one, two) < 0;
 			}
 			);
 
 		CHECK(items[0] == L"2a");
 		CHECK(items[1] == L"a");
 		CHECK(items[2] == L"Aa");
+		// Case insensitive - so these should be same order as inserted
 		CHECK(items[3] == L"bob");
 		CHECK(items[4] == L"Bob");
 	}
@@ -318,13 +318,14 @@ SUITE(TestString)
 		std::stable_sort(items.begin(), items.end(),
 			[](std::wstring const& one, std::wstring const& two)
 			{
-				return StringUtil::Compare(one, two, true) < 0;
+				return StringUtil::CompareNoCase(one, two) < 0;
 			}
 			);
 
 		CHECK(items[0] == L"2a");
 		CHECK(items[1] == L"a");
 		CHECK(items[2] == L"Aa");
+		// Case insensitive - so these should be same order as inserted
 		CHECK(items[3] == L"Bob");
 		CHECK(items[4] == L"bob");
 	}

@@ -346,13 +346,13 @@ int wxCALLBACK CompareCalendar(long item1, long item2, long sortData)
 			nRet = 1;
 		break;
 	case IO_CAL_LOCATION:
-		nRet = StringUtil::Compare(pItem1->GetCalendar()->GetLocation(), pItem2->GetCalendar()->GetLocation());
+		nRet = StringUtil::CompareNoCase(pItem1->GetCalendar()->GetLocation(), pItem2->GetCalendar()->GetLocation());
 		break;
 	case IO_CAL_CLUB:
-		nRet = StringUtil::Compare(pItem1->GetCalendar()->GetClub(), pItem2->GetCalendar()->GetClub());
+		nRet = StringUtil::CompareNoCase(pItem1->GetCalendar()->GetClub(), pItem2->GetCalendar()->GetClub());
 		break;
 	case IO_CAL_VENUE:
-		nRet = StringUtil::Compare(pItem1->GetCalendar()->GetVenue(), pItem2->GetCalendar()->GetVenue());
+		nRet = StringUtil::CompareNoCase(pItem1->GetCalendar()->GetVenue(), pItem2->GetCalendar()->GetVenue());
 		break;
 	case IO_CAL_OPENS:
 		{
@@ -389,7 +389,7 @@ int wxCALLBACK CompareCalendar(long item1, long item2, long sortData)
 		}
 		break;
 	case IO_CAL_NOTES:
-		nRet = StringUtil::Compare(pItem1->GetCalendar()->GetNote(), pItem2->GetCalendar()->GetNote());
+		nRet = StringUtil::CompareNoCase(pItem1->GetCalendar()->GetNote(), pItem2->GetCalendar()->GetNote());
 		break;
 	}
 	if (0 > s_SortInfo.nCol)

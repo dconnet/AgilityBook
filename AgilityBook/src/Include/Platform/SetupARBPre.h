@@ -83,6 +83,10 @@
 	#define _WIN32_IE 0x0600	// Minimum IE, 6.0
 #endif
 
+#if _WIN32_IE < _WIN32_IE_IE55
+	#error pre-IE5.5 is not supported.
+#endif
+
 // Unless overridden, target XP by default.
 #ifndef WINVER
 	#if _MSC_VER >= 1700

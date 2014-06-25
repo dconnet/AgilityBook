@@ -155,9 +155,3 @@ namespace std
 #else
 #define nullptr NULL
 #endif
-
-// ARB_HAS_COMPARESTRING
-//  Has CompareString[AW]
-#if defined(WIN32)
-#define ARB_HAS_COMPARESTRING
-#endif
