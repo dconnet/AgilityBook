@@ -101,4 +101,4 @@ LIBRARIES+=" --with-expat=builtin --with-regex=builtin --with-zlib=builtin --wit
 
 echo "../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 
-../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS
+../configure $COMPILERS --disable-mediactrl --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS
