@@ -37,6 +37,7 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
 
 === Changes to 3.0.0:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
@@ -44,6 +45,7 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
 -[win]- src/msw/combobox.cpp
     http://trac.wxwidgets.org/changeset/75196
 c:\devtools\wx\wxWidgets-3.0.0\src\msw>diff -c combobox.cpp.orig combobox.cpp
@@ -74,7 +76,8 @@ c:\devtools\wx\wxWidgets-3.0.0\src\msw>diff -c combobox.cpp.orig combobox.cpp
 -[win]- in src/msw/windows.cpp, the include for "pbt.h" needs to be deleted
         when using VS2012. This compiler stopped including this header.
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
-  - WXWIN_COMPATIBILITY_2_6 0
+  - Set WXWIN_COMPATIBILITY_2_6 to 0 (currently 1)
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
 -[win]- include/msvc/wx/setup.h:
   [same as 2.8..10]
 -[win]- src/msw/stdpaths.cpp
