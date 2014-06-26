@@ -35,6 +35,8 @@ else
 fi
 BUILDDIR="$WXWIN/build"
 
+CONFIG_PARAMS=" --disable-mediactrl --disable-shared --enable-unicode"
+
 if test "x$3" = "xcarbon"; then
 	BUILDDIR+="-carbon"
 	CONFIG_PARAMS+=" --with-osx_carbon"
@@ -99,6 +101,6 @@ CONFIG_PARAMS+=" --with-macosx-version-min=$MINSDK --with-macosx-sdk=$TARGETSDK 
 
 LIBRARIES+=" --with-expat=builtin --with-regex=builtin --with-zlib=builtin --without-libiconv --without-liblzma"
 
-echo "../configure $COMPILERS --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
+echo "../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 
-../configure $COMPILERS --disable-mediactrl --disable-shared --enable-unicode $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS
+../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS
