@@ -36,6 +36,7 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
 
 === Changes to 3.0.0:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
@@ -43,6 +44,7 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
 -[win]- src/msw/combobox.cpp
     http://trac.wxwidgets.org/changeset/75196
 c:\devtools\wx\wxWidgets-3.0.0\src\msw>diff -c combobox.cpp.orig combobox.cpp
