@@ -324,10 +324,13 @@ bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op)
 			dwlConditionMask);
 }
 
+#endif
 
 bool IsWin7OrBetter()
 {
+#ifdef WIN32
 	return CheckOS(6, 1, VER_GREATER_EQUAL);
-}
-
+#else
+	return false;
 #endif
+}
