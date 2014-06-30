@@ -1,9 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemDefinitionGroup>
+  <PropertyGroup Label="UserMacros">
+    <Poco1_5>$(POCO_BASE_DIR)\poco-1.5.2-all</Poco1_5>
+    <PocoBase>$(POCO_BASE)</PocoBase>
+  </PropertyGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(POCO_BASE)\Foundation\include;$(POCO_BASE)\Data\include;$(POCO_BASE)\Data\SQLite\include; $(POCO_BASE)\Net\include;$(POCO_BASE)\Util\include;$(POCO_BASE)\Zip\include;$(POCO_BASE)\XML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>USE_POCO;POCO_STATIC;POCO_NO_AUTOMATIC_LIBS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_POCO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="Poco1_5">
+      <Value>$(Poco1_5)</Value>
+    </BuildMacro>
+    <BuildMacro Include="PocoBase">
+      <Value>$(PocoBase)</Value>
+    </BuildMacro>
+  </ItemGroup>
 </Project>
