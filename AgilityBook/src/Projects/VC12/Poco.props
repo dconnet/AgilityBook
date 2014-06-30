@@ -2,7 +2,8 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="UserMacros">
     <Poco1_5>$(POCO_BASE_DIR)\poco-1.5.2-all</Poco1_5>
-    <PocoBase>$(POCO_BASE)</PocoBase>
+    <PocoEnv>$(POCO_BASE)</PocoEnv>
+    <PocoBase>$(PocoEnv)</PocoBase>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -12,6 +13,9 @@
   <ItemGroup>
     <BuildMacro Include="Poco1_5">
       <Value>$(Poco1_5)</Value>
+    </BuildMacro>
+    <BuildMacro Include="PocoEnv">
+      <Value>$(PocoEnv)</Value>
     </BuildMacro>
     <BuildMacro Include="PocoBase">
       <Value>$(PocoBase)</Value>
