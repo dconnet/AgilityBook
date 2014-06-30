@@ -4,9 +4,11 @@
     <Poco1_5>$(POCO_BASE_DIR)\poco-1.5.2-all</Poco1_5>
     <PocoBase>$(POCO_BASE)</PocoBase>
   </PropertyGroup>
+  <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>USE_POCO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="Poco1_5">
       <Value>$(Poco1_5)</Value>
