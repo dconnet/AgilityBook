@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" Condition="'$(OutputPlatform)'==''">
+    <Import Project="CommonMacros.props" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <wxWin2_8>$(WXBASE)\wxWidgets-2.8.12</wxWin2_8>
     <wxWin3_0>$(WXBASE)\wxWidgets-3.0.1</wxWin3_0>
@@ -11,6 +14,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(wxWin)\include;$(wxWin)\include\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>USE_WXWIDGETS;wxMSVC_VERSION_AUTO=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/Zm150 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>comctl32.lib;rpcrt4.lib;winmm.lib;advapi32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
