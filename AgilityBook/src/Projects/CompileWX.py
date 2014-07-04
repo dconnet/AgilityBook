@@ -345,7 +345,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc60'
 			else:
-				cfg = ' CFG=_VC60'
+				cfg = ' CFG=_vc60'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc7':
@@ -353,7 +353,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc71'
 			else:
-				cfg = ' CFG=_VC71'
+				cfg = ' CFG=_vc71'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc8':
@@ -361,7 +361,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc80'
 			else:
-				cfg = ' CFG=_VC80'
+				cfg = ' CFG=_vc80'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc9':
@@ -369,7 +369,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc90'
 			else:
-				cfg = ' CFG=_VC90'
+				cfg = ' CFG=_vc90'
 			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc9x64':
@@ -379,7 +379,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc90'
 			else:
-				cfg = ' CFG=_VC90'
+				cfg = ' CFG=_vc90'
 			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10':
@@ -387,7 +387,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc100'
 			else:
-				cfg = ' CFG=_VC100'
+				cfg = ' CFG=_vc100'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc10x64':
@@ -402,7 +402,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc100'
 			else:
-				cfg = ' CFG=_VC100'
+				cfg = ' CFG=_vc100'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc11':
@@ -410,7 +410,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc110'
 			else:
-				cfg = ' CFG=_VC110'
+				cfg = ' CFG=_vc110'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc11x64':
@@ -420,7 +420,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc110'
 			else:
-				cfg = ' CFG=_VC110'
+				cfg = ' CFG=_vc110'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc12':
@@ -428,7 +428,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc120'
 			else:
-				cfg = ' CFG=_VC120'
+				cfg = ' CFG=_vc120'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc12x64':
@@ -438,7 +438,7 @@ def main():
 			if hasPrefix:
 				cfg = ' COMPILER_PREFIX=vc120'
 			else:
-				cfg = ' CFG=_VC120'
+				cfg = ' CFG=_vc120'
 			cppflags = common_cppflags
 
 		build_rel = ''

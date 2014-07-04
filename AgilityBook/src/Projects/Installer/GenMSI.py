@@ -173,10 +173,10 @@ def getoutputvars(code, version, vcver):
 		vcver = vcver + '0'
 	if code32 == code:
 		outputFile = 'AgilityBook-' + version + '-win'
-		baseDir = AgilityBookDir + r'\bin\VC' + vcver + 'Win32\Release'
+		baseDir = AgilityBookDir + r'\bin\vc' + vcver + 'Win32\Release'
 	elif code64 == code:
 		outputFile = 'AgilityBook-' + version + '-x64'
-		baseDir = AgilityBookDir + r'\bin\VC' + vcver + 'x64\Release'
+		baseDir = AgilityBookDir + r'\bin\vc' + vcver + 'x64\Release'
 	else:
 		raise Exception, 'Invalid code'
 	return baseDir, outputFile

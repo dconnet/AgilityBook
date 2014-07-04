@@ -170,11 +170,11 @@ def main():
 		setenv_rel = ''
 
 		if compiler == 'vc9':
-			prefix = 'VC9-Win32'
+			prefix = 'vc9-Win32'
 			setenv_rel = 'call "' + vc9Base + r'\VC\vcvarsall.bat" x86'
 
 		elif compiler == 'vc9x64':
-			prefix = 'VC9-x64'
+			prefix = 'vc9-x64'
 			setenv_rel = 'call "' + vc9Base + r'\VC\vcvarsall.bat" '
 			if not bit64on64:
 				setenv_rel += 'x86_amd64'
@@ -182,11 +182,11 @@ def main():
 				setenv_rel += 'amd64'
 
 		elif compiler == 'vc10':
-			prefix = 'VC100-Win32'
+			prefix = 'vc100-Win32'
 			setenv_rel = 'call "' + vc10Base + r'\VC\vcvarsall.bat" x86'
 
 		elif compiler == 'vc10x64':
-			prefix = 'VC100-x64'
+			prefix = 'vc100-x64'
 			setenv_rel = 'call "' + vc10Base + r'\VC\vcvarsall.bat" '
 			if not bit64on64:
 				setenv_rel += 'x86_amd64'
@@ -194,11 +194,11 @@ def main():
 				setenv_rel += 'amd64'
 
 		elif compiler == 'vc11':
-			prefix = 'VC110-Win32'
+			prefix = 'vc110-Win32'
 			setenv_rel = 'call "' + vc11Base + r'\VC\vcvarsall.bat" x86'
 
 		elif compiler == 'vc11x64':
-			prefix = 'VC110-x64'
+			prefix = 'vc110-x64'
 			setenv_rel = 'call "' + vc11Base + r'\VC\vcvarsall.bat" '
 			if not bit64on64:
 				setenv_rel += 'x86_amd64'
@@ -206,11 +206,11 @@ def main():
 				setenv_rel += 'amd64'
 
 		elif compiler == 'vc12':
-			prefix = 'VC120-Win32'
+			prefix = 'vc120-Win32'
 			setenv_rel = 'call "' + vc12Base + r'\VC\vcvarsall.bat" x86'
 
 		elif compiler == 'vc12x64':
-			prefix = 'VC120-x64'
+			prefix = 'vc120-x64'
 			setenv_rel = 'call "' + vc12Base + r'\VC\vcvarsall.bat" '
 			# at least for vc12-express, there is no 'amd64' target
 			setenv_rel += 'x86_amd64'

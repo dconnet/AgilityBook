@@ -223,7 +223,7 @@ def main():
 				print 'ERROR: "' + setvcvars + '" does not exist'
 				return 1
 			if clean:
-				RmMinusRF('../../../bin/VC' + PlatformTools + 'Win32')
+				RmMinusRF('../../../bin/vc' + PlatformTools + 'Win32')
 			if useVC10SDK:
 				cmds = (
 					r'title VC10 Release Win32',
@@ -237,11 +237,11 @@ def main():
 					r'call "' + setvcvars + r'" x86',
 					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
 			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
+			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
 				return 1
 			if clean:
-				RmMinusRF('../../../bin/VC' + PlatformTools + 'x64')
+				RmMinusRF('../../../bin/vc' + PlatformTools + 'x64')
 			if useVC10SDK:
 				cmds = (
 					r'title VC10 Release x64',
@@ -259,7 +259,7 @@ def main():
 					r'call "' + setvcvars + r'" ' + envTarget,
 					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
 			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
+			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
 				return 1
 
@@ -274,18 +274,18 @@ def main():
 				print 'ERROR: "' + setvcvars + '" does not exist'
 				return 1
 			if clean:
-				RmMinusRF('../../../bin/VC' + PlatformTools + 'Win32')
+				RmMinusRF('../../../bin/vc' + PlatformTools + 'Win32')
 			cmds = (
 				r'title VC11 Release Win32',
 				r'cd ..\VC11',
 				r'call "' + setvcvars + r'" x86',
 				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
 			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
+			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
 				return 1
 			if clean:
-				RmMinusRF('../../../bin/VC' + PlatformTools + 'x64')
+				RmMinusRF('../../../bin/vc' + PlatformTools + 'x64')
 			envTarget = 'x86_amd64'
 			if bit64on64:
 				envTarget = 'amd64'
@@ -295,7 +295,7 @@ def main():
 				r'call "' + setvcvars + r'" ' + envTarget,
 				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
 			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
+			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
 				return 1
 
