@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-07-07 Fixed SetLang returning failure if the lang was the same.
  * 2013-11-26 Fixed language initialization structure.
  * 2011-11-14 Fix canceling language selection (in Fr, it reset to En)
  * 2011-11-11 Make .mo name same as exe name.
@@ -194,8 +195,12 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 
 bool CLanguageManager::SetLang(int langId)
 {
-	if (!m_pCallback || langId == m_CurLang)
+	if (!m_pCallback)
 		return false;
+
+	// If the same, then we did succeed.
+	if (langId == m_CurLang)
+		return true;
 
 	m_CurLang = langId;
 	if (m_locale)
