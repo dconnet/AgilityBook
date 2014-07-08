@@ -273,10 +273,7 @@ CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
 bool CAgilityBookApp::OnInit()
 {
 	if (!CBaseApp::OnInit())
-	{
-		BaseAppCleanup(true);
 		return false;
-	}
 	if (!wxSocketBase::Initialize())
 	{
 		BaseAppCleanup(true);
