@@ -43,6 +43,7 @@ protected:
 	virtual int OnExit();
 
 	// CBaseApp virtual
+	// Note: If called before creating a frame, config needs to be deleted.
 	virtual void BaseAppCleanup(bool deleteConfig = false); // So dlg apps can cleanup.
 
 	// Language control
