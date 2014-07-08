@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * 2014-07-08 Cleanup config if intialization fails.
  * 2013-11-26 Fixed language initialization structure.
  * 2013-08-22 Fixed issue with ctor auto-cast.
  * 2013-08-17 Added local config file support.
@@ -75,6 +76,7 @@ bool CBaseApp::OnInit()
 		return false;
 	}
 
+	bool bConfigSet = false;
 	if (!m_BaseAppName.empty())
 	{
 		SetAppName(m_BaseAppName);
@@ -115,10 +117,14 @@ bool CBaseApp::OnInit()
 			if (!pBaseConfig)
 				pBaseConfig = new wxConfig(m_BaseRegName, m_VendorName);
 			wxConfig::Set(pBaseConfig);
+			bConfigSet = true;
 		}
 	}
 
-	return InitLocale();
+	bool rc = InitLocale();
+	if (!rc && bConfigSet)
+		BaseAppCleanup(true);
+	return rc;
 }
 
 
