@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-07-08 Properly cleanup on early exit.
  * 2014-05-18 Moved startup check to AutoCheckProgram
  * 2013-11-26 Fixed language initialization structure.
  * 2013-08-16 Add support for standalone app (.info file) on Windows.
@@ -270,16 +271,25 @@ CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
 bool CAgilityBookApp::OnInit()
 {
 	if (!CBaseApp::OnInit())
+	{
+		BaseAppCleanup(true);
 		return false;
+	}
 	if (!wxSocketBase::Initialize())
+	{
+		BaseAppCleanup(true);
 		return false;
+	}
 	m_bShutdownSocket = true;
 
 	// We need at least 800x600 (the event(run) dialog is big!)
 	if (wxSYS_SCREEN_DESKTOP != wxSystemSettings::GetScreenType())
 	{
 		if (wxNO == wxMessageBox(_("IDS_MIN_RESOLUTION"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_ERROR))
+		{
+			BaseAppCleanup(true);
 			return false;
+		}
 	}
 
 	wxImage::AddHandler(new wxGIFHandler);
@@ -291,7 +301,7 @@ bool CAgilityBookApp::OnInit()
 	if (0 != cmdline.Parse(false))
 	{
 		cmdline.Usage();
-		BaseAppCleanup();
+		BaseAppCleanup(true);
 		return false;
 	}
 
