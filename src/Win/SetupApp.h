@@ -37,6 +37,7 @@ protected:
 
 	// wxApp virtual
 	// Will init Element, ImageManager, wxApp::SetAppName and wxConfig::Set.
+	// If OnInit fails, BaseAppCleanup will be called before returning.
 	virtual bool OnInit();
 	virtual int OnExit();
 
