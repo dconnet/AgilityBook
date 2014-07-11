@@ -4,7 +4,7 @@
     <Import Project="CommonMacros.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <Poco1_5>$(POCO_BASE_DIR)\poco-1.5.2-all</Poco1_5>
+    <Poco1_5>$(POCO_BASE_DIR)\poco-1.5.3-all</Poco1_5>
     <PocoEnv>$(POCO_BASE)</PocoEnv>
     <PocoBase>$(PocoEnv)</PocoBase>
   </PropertyGroup>
