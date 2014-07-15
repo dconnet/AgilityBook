@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2014-06-22 DRC Configuration version 47.
+2014-07-15 DRC Configuration version 47.
                Added CPE C-10 title (added in 2008 rule book)
+               Added NADAC Intro level.
 2014-05-18 DRC Configuration version 46.
                Added ASCA ACE program
                Added 'Nationals' level to AKC for tracking of National rounds.
@@ -2639,6 +2640,34 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
     </Venue>
     <Venue LongName="North American Dog Agility Council" Name="NADAC" URL="http://www.nadac.com/" icon="9">
       <Desc>Note: As of 12/10/2005, NADAC no longer tracks points in different divisions. All of the -V and -JH titles are gone. For simplicity, the new Categories are being treated as Divisions.</Desc>
+      <Titles Inc="200" LongName="Intro Agility Certificate" Name="IAC" Sep="h" StartAt="200" ValidFrom="2014-1-1">30 points
+Extended title at 400 points (repeats every 200)</Titles>
+      <Titles Inc="100" LongName="Intro Chances Certificate" Name="ICC" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Intro Jumpers Certificate" Name="IJC" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Intro Tunnelers Certificate" Name="TN-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Intro Touch N Go Certificate" Name="TG-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Intro Weavers Certificate" Name="WV-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Intro Hoopers Certificate" Name="HP-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
+      <Titles LongName="Intro Agility Certificate Outstanding Performance" Name="O-IAC" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Chances Certificate Outstanding Performance" Name="O-ICC" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Jumpers Certificate Outstanding Performance" Name="O-IJC" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Tunnelers Certificate Outstanding Performance" Name="O-TN-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Touch N Go Certificate Outstanding Performance" Name="O-TG-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Weavers Certificate Outstanding Performance" Name="O-WV-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Hoopers Certificate Outstanding Performance" Name="O-HP-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Agility Certificate Superior Performance" Name="S-IAC" ValidFrom="2014-1-1">200 points</Titles>
+      <Titles LongName="Intro Chances Certificate Superior Performance" Name="S-ICC" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Jumpers Certificate Superior Performance" Name="S-IJC" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Tunnelers Certificate Superior Performance" Name="S-TN-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Touch N Go Certificate Superior Performance" Name="S-TG-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Weavers Certificate Superior Performance" Name="S-WV-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Hoopers Certificate Superior Performance" Name="S-HP-I" ValidFrom="2014-1-1">100 points</Titles>
       <Titles Inc="200" LongName="Novice Agility Certificate" Name="NAC" Sep="h" StartAt="200">30 points
 Extended title at 400 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Novice Chances Certificate" Name="NCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
@@ -2771,16 +2800,19 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Purple Versatility NATCH" Name="Purple Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
       <Titles LongName="NADAC Medal" Name="NADAC Medal" StartAt="1">Skilled Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts Chances</Titles>
       <Titles LongName="Versatility Medal" Name="Vers-Medal" StartAt="1">Skilled Elite: 230 Regular, 130 of each other class. Each subsequent Vers-Medal requires an additional 200 Regular, 100 of each other class.</Titles>
+      <Titles LongName="Intro Triple Superior Award" Name="Triple Superior-Intro" ValidFrom="2014-1-1">Proficient/Skilled: Superior Performance titles in Intro Regular, Jumpers, Chances.</Titles>
       <Titles LongName="Novice Triple Superior Award" Name="Triple Superior-Novice">Proficient/Skilled: Superior Performance titles in Novice Regular, Jumpers, Chances.</Titles>
       <Titles LongName="Open Triple Superior Award" Name="Triple Superior-Open">Proficient/Skilled: Superior Performance titles in Open Regular, Jumpers, Chances.</Titles>
       <Titles LongName="Elite Triple Superior Award" Name="Triple Superior-Elite">Proficient: Superior Performance titles in Elite Regular, Jumpers, Chances.</Titles>
       <Titles LongName="Elite Triple Superior Certificate" Name="Triple Superior-Elite Skilled">Skilled: Superior Performance titles in Elite Regular, Jumpers, Chances.</Titles>
       <Titles LongName="Triple Triple Superior Award" Name="Triple Triple">Triple Superior Award in all three levels.</Titles>
       <Titles LongName="Triple Triple Superior Certificate" Name="Triple Triple Skilled">Novice and Open Triple Superior Award and an Elite Triple Superior Certificate.</Titles>
+      <Titles LongName="Intro Versatility Award" Name="Intro Versatility" ValidFrom="2014-1-1">Titled in all six classes at Intro</Titles>
       <Titles LongName="Novice Versatility Award" Name="Novice Versatility">Titled in all six classes at Novice</Titles>
       <Titles LongName="Open Versatility Award" Name="Open Versatility">Titled in all six classes at Open</Titles>
       <Titles LongName="Elite Versatility Award" Name="Elite Versatility">Titled in all six classes at Elite</Titles>
       <Titles LongName="Elite Versatility Certificate" Name="Elite Versatility Skilled">Titled in all six classes at Elite Skilled</Titles>
+      <Titles LongName="Intro Superior Versatility Award" Name="Superior Intro Versatility" ValidFrom="2014-1-1">Superior Performance award in all six classes at Intro level</Titles>
       <Titles LongName="Novice Superior Versatility Award" Name="Superior Novice Versatility">Superior Performance award in all six classes at Novice level</Titles>
       <Titles LongName="Open Superior Versatility Award" Name="Superior Open Versatility">Superior Performance award in all six classes at Open level</Titles>
       <Titles LongName="Elite Superior Versatility Award" Name="Superior Elite Versatility">Superior Performance award in all six classes at Elite level</Titles>
@@ -2788,6 +2820,7 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Triple Superior Versatility Award" Name="Triple Superior Versatility">Superior Versatility Award in all three levels</Titles>
       <Titles LongName="Triple Superior Versatility Certificate" Name="Triple Superior Versatility Skilled">Novice and Open Superior Versatility Award and an Elite Superior Versatility Certificate.</Titles>
       <Titles LongName="Lifetime Point Award" Name="Point Award" StartAt="1">Special certificate earned at 1000. Also at 2500, 5000, etc career pts.</Titles>
+      <Titles LongName="All Around Award Intro" Name="All Around Intro" StartAt="1" ValidFrom="2014-1-1">A Superior Performance title earned in every class offered by NADAC at the Intro level.</Titles>
       <Titles LongName="All Around Award Novice" Name="All Around Novice" StartAt="1">A Superior Performance title earned in every class offered by NADAC at the Novice level.</Titles>
       <Titles LongName="All Around Award Open" Name="All Around Open" StartAt="1">A Superior Performance title earned in every class offered by NADAC at the Novice and Open levels.</Titles>
       <Titles LongName="All Around Award Elite" Name="All Around Elite" StartAt="1">A Superior Performance title earned in every class offered by NADAC at the Novice, Open and Elite levels.</Titles>
@@ -2851,6 +2884,18 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Name="JH-NATCH" Prefix="y" StartAt="4" ValidTo="2005-12-9">Points are the same as NATCH.</Titles>
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH" Prefix="y" ValidTo="2005-12-9"/>
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH" Prefix="y" ValidTo="2005-12-9"/>
+      <Titles LongName="Intro Extreme Chances" Name="XCC-I" ValidFrom="2014-1-1">300 points</Titles>
+      <Titles LongName="Intro Extreme Hoopers" Name="XHP-I" ValidFrom="2014-1-1">300 points</Titles>
+      <Titles LongName="Intro Extreme Gaters" Name="XGT-I" ValidFrom="2014-1-1">300 points</Titles>
+      <Titles LongName="Intro Extreme Barrel Racing" Name="XBR-I" ValidFrom="2014-1-1">300 points</Titles>
+      <Titles LongName="Intro Outstanding Extreme Chances" Name="O-XCC-I" ValidFrom="2014-1-1">600 points</Titles>
+      <Titles LongName="Intro Outstanding Extreme Hoopers" Name="O-XHP-I" ValidFrom="2014-1-1">600 points</Titles>
+      <Titles LongName="Intro Outstanding Extreme Gaters" Name="O-XGT-I" ValidFrom="2014-1-1">600 points</Titles>
+      <Titles LongName="Intro Outstanding Extreme Barrel Racing" Name="O-XBR-I" ValidFrom="2014-1-1">600 points</Titles>
+      <Titles LongName="Intro Superior Extreme Chances" Name="S-XCC-I" ValidFrom="2014-1-1">1000 points</Titles>
+      <Titles LongName="Intro Superior Extreme Hoopers" Name="S-XHP-I" ValidFrom="2014-1-1">1000 points</Titles>
+      <Titles LongName="Intro Superior Extreme Gaters" Name="S-XGT-I" ValidFrom="2014-1-1">1000 points</Titles>
+      <Titles LongName="Intro Superior Extreme Barrel Racing" Name="S-XBR-I" ValidFrom="2014-1-1">1000 points</Titles>
       <Titles LongName="Novice Extreme Chances" Name="XCC-N">300 points</Titles>
       <Titles LongName="Novice Extreme Hoopers" Name="XHP-N">300 points</Titles>
       <Titles LongName="Novice Extreme Gaters" Name="XGT-N">300 points</Titles>
@@ -2888,6 +2933,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Titles LongName="Elite Superior Extreme Gaters" Name="S-XGT-E">2000 points</Titles>
       <Titles LongName="Elite Superior Extreme Barrel Racing" Name="S-XBR-E">2000 points</Titles>
       <Division Name="Std Proficient" ShortName="StdPro">
+        <Level Name="Intro"/>
         <Level Name="Novice">
           <SubLevel Name="Novice" ShortName="Nov"/>
           <SubLevel Name="Novice A" ShortName="NovA"/>
@@ -2897,6 +2943,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         <Level Name="Elite"/>
       </Division>
       <Division Name="Vet Proficient" ShortName="VtPro">
+        <Level Name="Intro"/>
         <Level Name="Novice">
           <SubLevel Name="Novice" ShortName="Nov"/>
           <SubLevel Name="Novice A" ShortName="NovA"/>
@@ -2906,6 +2953,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         <Level Name="Elite"/>
       </Division>
       <Division Name="Jr Proficient" ShortName="JrPro">
+        <Level Name="Intro"/>
         <Level Name="Novice">
           <SubLevel Name="Novice" ShortName="Nov"/>
           <SubLevel Name="Novice A" ShortName="NovA"/>
@@ -2915,6 +2963,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         <Level Name="Elite"/>
       </Division>
       <Division Name="Std Skilled" ShortName="StdSk">
+        <Level Name="Intro"/>
         <Level Name="Novice">
           <SubLevel Name="Novice" ShortName="Nov"/>
           <SubLevel Name="Novice A" ShortName="NovA"/>
@@ -2924,6 +2973,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         <Level Name="Elite"/>
       </Division>
       <Division Name="Vet Skilled" ShortName="VtSk">
+        <Level Name="Intro"/>
         <Level Name="Novice">
           <SubLevel Name="Novice" ShortName="Nov"/>
           <SubLevel Name="Novice A" ShortName="NovA"/>
@@ -2933,6 +2983,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         <Level Name="Elite"/>
       </Division>
       <Division Name="Jr Skilled" ShortName="JrSk">
+        <Level Name="Intro"/>
         <Level Name="Novice">
           <SubLevel Name="Novice" ShortName="Nov"/>
           <SubLevel Name="Novice A" ShortName="NovA"/>
