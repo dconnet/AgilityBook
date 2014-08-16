@@ -5,7 +5,7 @@
 	[currently set on old format]
 [ Note, most functionality is now complete ]
 
-7/15/2014: v2.4.3.<in development>
+8/16/2014: v2.4.3.91
 - Bumped Configuration v47:
   - Added CPE C-10 title (added in 2008 rule book)
   - Added NADAC Intro level.
