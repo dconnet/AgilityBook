@@ -2,16 +2,16 @@
 # Above line is for python
 #
 # Revision History
-# 2013-09-12 DRC Add /m option to msbuild (multiple processor build)
-# 2012-12-30 DRC Drop VC9.
-# 2012-07-25 DRC Only run version include update from here.
-# 2012-07-04 DRC Update to supported compilers (vc9+)
-#                Specifically set WXWIN to official release branch.
-#                Changed program options.
-# 2012-06-01 DRC Changed VC10 output directory
-# 2010-11-07 DRC Updated to use vc10pro or sdk
-# 2010-06-11 DRC Support building on x64 OS
-# 2010-05-30 DRC Converted .bat to .py (keeps environment clean!)
+# 2013-09-12 Add /m option to msbuild (multiple processor build)
+# 2012-12-30 Drop VC9.
+# 2012-07-25 Only run version include update from here.
+# 2012-07-04 Update to supported compilers (vc9+)
+#            Specifically set WXWIN to official release branch.
+#            Changed program options.
+# 2012-06-01 Changed VC10 output directory
+# 2010-11-07 Updated to use vc10pro or sdk
+# 2010-06-11 Support building on x64 OS
+# 2010-05-30 Converted .bat to .py (keeps environment clean!)
 """BuildAll.py -w wxwin [-b type] compiler*
    -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-2.8.12)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
@@ -222,7 +222,7 @@ def main():
 				print 'ERROR: "' + setvcvars + '" does not exist'
 				return 1
 			if clean:
-				RmMinusRF('../../../bin/VC' + PlatformTools + 'Win32')
+				RmMinusRF('../../../bin/vc' + PlatformTools + 'Win32')
 			if useVC10SDK:
 				cmds = (
 					r'title VC10 Release Win32',
@@ -236,11 +236,11 @@ def main():
 					r'call "' + setvcvars + r'" x86',
 					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
 			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
+			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
 				return 1
 			if clean:
-				RmMinusRF('../../../bin/VC' + PlatformTools + 'x64')
+				RmMinusRF('../../../bin/vc' + PlatformTools + 'x64')
 			if useVC10SDK:
 				cmds = (
 					r'title VC10 Release x64',
@@ -258,7 +258,7 @@ def main():
 					r'call "' + setvcvars + r'" ' + envTarget,
 					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
 			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
+			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
 				return 1
 
@@ -273,18 +273,18 @@ def main():
 				print 'ERROR: "' + setvcvars + '" does not exist'
 				return 1
 			if clean:
-				RmMinusRF('../../../bin/VC' + PlatformTools + 'Win32')
+				RmMinusRF('../../../bin/vc' + PlatformTools + 'Win32')
 			cmds = (
 				r'title VC11 Release Win32',
 				r'cd ..\VC11',
 				r'call "' + setvcvars + r'" x86',
 				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
 			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
+			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
 				return 1
 			if clean:
-				RmMinusRF('../../../bin/VC' + PlatformTools + 'x64')
+				RmMinusRF('../../../bin/vc' + PlatformTools + 'x64')
 			envTarget = 'x86_amd64'
 			if bit64on64:
 				envTarget = 'amd64'
@@ -294,7 +294,7 @@ def main():
 				r'call "' + setvcvars + r'" ' + envTarget,
 				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
 			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/VC' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
+			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
 				print 'ERROR: Compile failed, bailing out'
 				return 1
 

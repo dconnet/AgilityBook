@@ -5,7 +5,7 @@
   </ImportGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalLibraryDirectories>$(wxWin)\lib\vc_lib_VC$(PlatformToolsetVersion);$(wxWin)\lib\vc$(PlatformToolsetVersion)_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(wxWin)\lib\vc_lib_vc$(PlatformToolsetVersion);$(wxWin)\lib\vc$(PlatformToolsetVersion)_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
 </Project>

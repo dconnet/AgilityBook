@@ -6,15 +6,6 @@
  * License: See License.txt
  */
 
-/**
- * @file
- *
- * @author David Connet
- *
- * Revision History
- * @li 2013-08-15 DRC Created
- */
-
 // set the _WIN32_WINNT macro to the platform you wish to support before including SDKDDKVer.h.
 #define _WIN32_WINNT 0x0501
 #include <SDKDDKVer.h>
