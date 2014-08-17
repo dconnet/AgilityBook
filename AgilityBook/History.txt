@@ -1,4 +1,6 @@
-8/16/2014: v2.4.4.<in development>
+8/17/2014: v2.4.4.92
+- Bug fixes:
+  - Fixed a crash when saving a new file.
 
 8/16/2014: v2.4.3.91
 - Bumped Configuration v47:

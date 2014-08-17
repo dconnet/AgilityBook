@@ -44,6 +44,7 @@ Commit all changes to SVN.
 
 Pull files onto Mac and build there (see MAC_BUILD.txt)
 - Update Project Version in xcode target properties (x.y.z)
+  (unless this was done as prep for a new release below)
 - export PATH=$WXWIN/build-carbon:$PATH
 - cd .../AgilityBook
 - autoconf
@@ -114,3 +115,5 @@ Prepare for next release:
 - Update version number
   - This is done by editing .../include/VersionNumber.h
 - Update History.txt
+- Update CURRENT_PROJECT_VERSION in xcode 
+  (so it doesn't have to be done as part of the release process)
