@@ -16,6 +16,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2014-08-17 Fix crash when saving a new file.
  * 2014-06-09 Add access to write-only data for file-properties purpose.
  * 2013-10-23 Change arch signature to allow deprecating platforms.
  * 2013-09-06 File version 14.2
@@ -365,6 +366,8 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 	outTree->AddAttrib(ATTRIB_BOOK_TIMESTAMP, GetTimeStamp());
 
 	// Refresh cached "write-only" file info
+	if (m_FileInfo.empty()) // A new file didn't initialize this
+		m_FileInfo.insert(m_FileInfo.end(), (size_t)fileInfoMax, std::wstring());
 	outTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[fileInfoBook]);
 	outTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[fileInfoVersion]);
 	outTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[fileInfoPlatform]);
