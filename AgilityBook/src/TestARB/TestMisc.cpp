@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-08-28 Enhanced FormatBytes
  * 2012-04-03 Added ARBVersion test.
  * 2011-11-17 Add localization test.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -28,6 +29,36 @@
 #endif
 
 #define MAX_LANGS	2
+
+#define NUM_PREC	2
+static const struct
+{
+	double val;
+	int prec[NUM_PREC];
+	wchar_t const* unitSI[NUM_PREC];
+	wchar_t const* unitBinary[NUM_PREC];
+} sc_FormatUnits[] = {
+	{0.0,             {1, 2}, {L"0 B", L"0 B"},            {L"0 B", L"0 B"}},
+	{27.0,            {1, 2}, {L"27 B", L"27 B"},          {L"27 B", L"27 B"}},
+	{999.0,           {1, 2}, {L"999 B", L"999 B"},        {L"999 B", L"999 B"}},
+	{1000.0,          {1, 2}, {L"1 kB", L"1 kB"},          {L"1000 B", L"1000 B"}},
+	{1023.0,          {1, 2}, {L"1 kB", L"1.02 kB"},       {L"1023 B", L"1023 B"}},
+	{1024.0,          {1, 2}, {L"1 kB", L"1.02 kB"},       {L"1 KiB", L"1 KiB"}},
+	{1536.0,          {1, 2}, {L"1.5 kB", L"1.54 kB"},     {L"1.5 KiB", L"1.5 KiB"}},
+	{1600.0,          {1, 2}, {L"1.6 kB", L"1.6 kB"},      {L"1.6 KiB", L"1.56 KiB"}},
+	{1728.0,          {1, 2}, {L"1.7 kB", L"1.73 kB"},     {L"1.7 KiB", L"1.69 KiB"}},
+#ifdef __WXMAC__
+	// Note: On Mac, 15.625 is rounding differently than Windows.
+	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.62 KiB"}},
+#else
+	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.63 KiB"}},
+#endif
+	{110592.0,        {1, 2}, {L"110.6 kB", L"110.59 kB"}, {L"108 KiB", L"108 KiB"}},
+	{7077888.0,       {1, 2}, {L"7.1 MB", L"7.08 MB"},     {L"6.8 MiB", L"6.75 MiB"}},
+	{452984832.0,     {1, 2}, {L"453 MB", L"452.98 MB"},   {L"432 MiB", L"432 MiB"}},
+	{28991029248.0,	  {1, 2}, {L"29 GB", L"28.99 GB"},     {L"27 GiB", L"27 GiB"}},
+	{1855425871872.0, {1, 2}, {L"1.9 TB", L"1.86 TB"},     {L"1.7 TiB", L"1.69 TiB"}}
+};
 
 
 SUITE(TestMisc)
@@ -61,16 +92,17 @@ SUITE(TestMisc)
 
 	TEST(FormatBytes)
 	{
-		CHECK(StringUtil::FormatBytes(1000.0) == L"1000 bytes");
-		CHECK(StringUtil::FormatBytes(1024.0) == L"1 KiB");
-		CHECK(StringUtil::FormatBytes(1536.0) == L"1.5 KiB");
-		CHECK(StringUtil::FormatBytes(1600.0) == L"1.56 KiB");
-#ifdef __WXMAC__
-		// Note: On Mac, 15.625 is rounding differently than Windows.
-		CHECK(StringUtil::FormatBytes(16000.0) == L"15.62 KiB");
-#else
-		CHECK(StringUtil::FormatBytes(16000.0) == L"15.63 KiB");
-#endif
+		if (!g_bMicroTest)
+		{
+			for (size_t i = 0; i < _countof(sc_FormatUnits); ++i)
+			{
+				for (size_t iPrec = 0; iPrec < NUM_PREC; ++iPrec)
+				{
+					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], false) == sc_FormatUnits[i].unitBinary[iPrec]);
+					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], true) == sc_FormatUnits[i].unitSI[iPrec]);
+				}
+			}
+		}
 	}
 
 

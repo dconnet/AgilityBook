@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-08-28 Enhanced FormatBytes
  * 2014-06-24 Added CompareNoCase.
  * 2013-01-25 Better non-wx support.
  * 2012-08-12 Moved FormatBytes to StringUtil
@@ -790,41 +791,34 @@ std::wstring Replace(
 // Using IEC binary prefixes
 std::wstring FormatBytes(
 		double inSize,
-		int inPrec)
+		int inPrec,
+		bool inUseSI)
 {
-	std::wstring form(L" bytes");
-	if (inSize >= 1024)
+	static wchar_t const * const sc_unitsSI[]     = {L" B", L" kB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB"};
+	// byte, kibibyte, mebibyte, gibibyte, tebibyte, pebibyte, exbibyte
+	static wchar_t const * const sc_unitsBinary[] = {L" B", L" KiB", L" MiB", L" GiB", L" TiB", L" PiB", L" EiB"};
+	static const struct
 	{
-		form = L" KiB";
-		inSize /= 1024;
-		if (inSize >= 1024)
-		{
-			form = L" MiB"; // mebibyte
-			inSize /= 1024;
-			if (inSize >= 1024)
-			{
-				form = L" GiB"; // gibibyte
-				inSize /= 1024;
-				if (inSize >= 1024)
-				{
-					form = L" TiB"; // tebibyte
-					inSize /= 1024;
-					if (inSize >= 1024)
-					{
-						form = L" PiB"; // pebibyte
-						inSize /= 1024;
-						if (inSize >= 1024)
-						{
-							form = L" EiB"; // exbibyte
-							inSize /= 1024;
-							// Ok, there's  zebibytes and yobibytes, but really!
-						}
-					}
-				}
-			}
-		}
+		wchar_t const* const* units;
+		size_t numUnits;
+		double base;
+	} sc_units[] = {
+		{sc_unitsSI, _countof(sc_unitsSI), 1000.0},
+		{sc_unitsBinary, _countof(sc_unitsBinary), 1024.0},
+	};
+
+	size_t unitIndex = inUseSI ? 0 : 1;
+
+	size_t index = 0;
+	if (abs(inSize) != 0.0)
+	{
+		index = std::min(static_cast<size_t>(log(inSize) / log(sc_units[unitIndex].base)), sc_units[unitIndex].numUnits - 1);
+		inSize /= pow(sc_units[unitIndex].base, index);
 	}
-	return ARBDouble::ToString(inSize, inPrec, ARBDouble::eDefault, true) + form;
+	std::wstring form(sc_units[unitIndex].units[index]);
+
+	std::wstring val = ARBDouble::ToString(inSize, inPrec, ARBDouble::eDefault, true) + form;
+	return val;
 }
 
 };

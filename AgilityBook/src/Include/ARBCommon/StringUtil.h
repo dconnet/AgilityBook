@@ -121,8 +121,10 @@ namespace StringUtil
 	 * Return a formatted string using IEC binary prefixes.
 	 * @param inSize Number of bytes
 	 * @param inPrec Precision (passed to ARBDouble::ToString)
+	 * @param inUseSI Use SI units or binary units
 	 */
 	std::wstring FormatBytes(
 			double inSize,
-			int inPrec = 2);
+			int inPrec = 2,
+			bool inUseSI = false);
 };
