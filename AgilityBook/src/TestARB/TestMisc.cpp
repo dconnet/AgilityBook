@@ -94,7 +94,7 @@ SUITE(TestMisc)
 	{
 		if (!g_bMicroTest)
 		{
-			for (size_t i = 0; i < _countof(sc_FormatUnits); ++i)
+			for (size_t i = 0; i < ARRAY_SIZE(sc_FormatUnits); ++i)
 			{
 				for (size_t iPrec = 0; iPrec < NUM_PREC; ++iPrec)
 				{
