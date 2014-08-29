@@ -809,10 +809,10 @@ std::wstring FormatBytes(
 
 	size_t unitIndex = inUseSI ? 0 : 1;
 
-	size_t index = 0;
+	int index = 0;
 	if (abs(inSize) != 0.0)
 	{
-		index = std::min(static_cast<size_t>(log(inSize) / log(sc_units[unitIndex].base)), sc_units[unitIndex].numUnits - 1);
+		index = std::min(static_cast<int>(log(inSize) / log(sc_units[unitIndex].base)), static_cast<int>(sc_units[unitIndex].numUnits) - 1);
 		inSize /= pow(sc_units[unitIndex].base, index);
 	}
 	std::wstring form(sc_units[unitIndex].units[index]);
