@@ -5,6 +5,11 @@
 	[currently set on old format]
 [ Note, most functionality is now complete ]
 
+9/2/2014: v2.4.5.<development>
+- Bug fixes:
+  - Fix gambles with no closing required so titling works. (CPE non-traditional
+    and USDAA tournament) Points earned can be properly specified as open/close.
+
 8/17/2014: v2.4.4.92
 - Bug fixes:
   - Fixed a crash when saving a new file.

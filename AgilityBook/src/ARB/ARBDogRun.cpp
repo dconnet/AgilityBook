@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-09-02 Fix gambles with no closing required so titling works.
  * 2014-02-12 Added 'scorePts' to 'Placement'.
  * 2012-09-09 Added 'titlePts','speedPts' to 'Placement'.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -638,8 +639,11 @@ double ARBDogRun::GetTitlePoints(
 		}
 		break;
 	case ARBDogRunScoring::eTypeByOpenClose:
-		if (m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts()
+		if ((m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts()
 		&& m_Scoring.GetNeedClosePts() <= m_Scoring.GetClosePts())
+		// Allows for USDAA tournament gambles
+		|| (0 == m_Scoring.GetNeedClosePts()
+		&& m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts() + m_Scoring.GetClosePts()))
 		{
 			double timeFaults = 0.0;
 			if (inScoring->ComputeTimeFaultsUnder()
