@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-09-02 After sorting by column, make sure selection is visible.
  * 2014-05-21 Enable paste of copied runs.
  * 2014-04-12 Implement unsorting.
  * 2012-09-09 Added 'titlePts' to 'Placement'.
@@ -1631,6 +1632,9 @@ void CAgilityBookRunsView::OnCtrlColumnClick(wxListEvent& evt)
 		s_SortInfo.nCol = m_SortColumn.GetColumn();
 		m_Ctrl->SortItems(CompareRuns, 0);
 		m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
+
+		if (0 <= m_Ctrl->GetFirstSelected())
+			m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
 	}
 }
 
