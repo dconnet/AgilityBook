@@ -486,12 +486,13 @@ Revision History:
       <Titles LongName="Novice Agility Preferred" Name="NAP">3 Qs</Titles>
       <Titles LongName="Open Agility Preferred" Name="OAP">3 Qs</Titles>
       <Titles LongName="Agility Excellent Preferred" Name="AXP">3 Qs</Titles>
-      <Titles LongName="Master Agility Excellent Preferred" Name="MXP" StartAt="1">10 Qs</Titles>
+      <Titles LongName="Master Agility Excellent Preferred" Name="MXP">10 Qs</Titles>
       <Titles LongName="Novice JWW Preferred" Name="NJP">3 Qs</Titles>
       <Titles LongName="Open JWW Preferred" Name="OJP">3 Qs</Titles>
       <Titles LongName="Agility Excellent JWW Preferred" Name="AJP">3 Qs</Titles>
-      <Titles LongName="Master Excellent JWW Preferred" Name="MJP" StartAt="1">10 Qs</Titles>
+      <Titles LongName="Master Excellent JWW Preferred" Name="MJP">10 Qs</Titles>
       <Titles LongName="Preferred Agility Excellent" Name="PAX" StartAt="1">20 Double Qs</Titles>
+      <Titles LongName="Preferred Agility Champion" Name="PACH" Prefix="y" StartAt="1">20 Double Qs, 750 championship points</Titles>
       <Titles LongName="Novice FAST Title" Name="NF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Open FAST Title" Name="OF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Excellent FAST Title" Name="XF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
@@ -548,7 +549,6 @@ Repeat titles are MFPC + 50 Qs</Titles>
       <Titles LongName="Master Gold FAST Preferred Title" Name="MFPG" StartAt="1">75 Qs
 Repeat titles are MFPC + 75 Qs</Titles>
       <Titles LongName="Master Century FAST Preferred Title" Name="MFPC" StartAt="1">100 Qs</Titles>
-      <Titles LongName="Preferred Agility Champion" Name="PACH" Prefix="y" StartAt="1">20 Double Qs, 750 championship points</Titles>
       <Division Name="ISC">
         <Level Name="Master"/>
       </Division>
@@ -1084,6 +1084,88 @@ You must enter the SCT (1st place) and your placement to generate the titling po
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
       </Event>
+    </Venue>
+    <Venue LongName="Cavalier King Charles Spaniel Club" Name="CKCSC" URL="http://www.ckcsc.org//" icon="-1">
+      <Desc>Note: Titles and events generally follow AKC rules, with some differences in the number of qualifying scores for C-MX and C-MXJ.</Desc>
+      <Titles LongName="Cavalier Novice Agility" Name="C-NA">3 Qs</Titles>
+      <Titles LongName="Cavalier Open Agility" Name="C-OA">3 Qs</Titles>
+      <Titles LongName="Cavalier Agility Excellent" Name="C-AX">3 Qs</Titles>
+      <Titles LongName="Cavalier Master Agility" Name="C-MX">6 Qs</Titles>
+      <Titles LongName="Cavalier Novice JWW" Name="C-NAJ">3 Qs</Titles>
+      <Titles LongName="Cavalier Open JWW" Name="C-OAJ">3 Qs</Titles>
+      <Titles LongName="Cavalier Agility Excellent JWW" Name="C-AXJ">3 Qs</Titles>
+      <Titles LongName="Cavalier Master Excellent JWW" Name="C-MXJ">6 Qs</Titles>
+      <Titles LongName="Cavalier Grand Agility Master" Name="C-GAM" StartAt="1" Style="0">Top 5 ranking in a year. Points:
+- Course points (Same as AKC MACH points)
+- 10 pts for each double Q</Titles>
+      <Titles LongName="Cavalier Master Agility Champion" Name="C-MACH" Prefix="y" StartAt="1">6 Double Qs, three C-GAM titles</Titles>
+      <Titles LongName="Cavalier Novice Agility Preferred" Name="C-NAP">3 Qs</Titles>
+      <Titles LongName="Cavalier Open Agility Preferred" Name="C-OAP">3 Qs</Titles>
+      <Titles LongName="Cavalier Agility Excellent Preferred" Name="C-AXP">3 Qs</Titles>
+      <Titles LongName="Cavalier Master Agility Excellent Preferred" Name="C-MXP">6 Qs</Titles>
+      <Titles LongName="Cavalier Novice JWW Preferred" Name="C-NJP">3 Qs</Titles>
+      <Titles LongName="Cavalier Open JWW Preferred" Name="C-OJP">3 Qs</Titles>
+      <Titles LongName="Cavalier Agility Excellent JWW Preferred" Name="C-AJP">3 Qs</Titles>
+      <Titles LongName="Cavalier Master Excellent JWW Preferred" Name="C-MJP">6 Qs</Titles>
+      <Titles LongName="Cavalier Preferred Agility Excellent" Name="C-PAX" StartAt="1">6 Double Qs</Titles>
+      <Division Name="Regular" ShortName="Reg">
+        <Level Name="Novice">
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
+        </Level>
+        <Level Name="Open"/>
+        <Level Name="Excellent" ShortName="Ex"/>
+        <Level Name="Master" ShortName="Mas"/>
+      </Division>
+      <Division Name="Preferred" ShortName="Pf">
+        <Level Name="Novice">
+          <SubLevel Name="Novice A" ShortName="NovA"/>
+          <SubLevel Name="Novice B" ShortName="NovB"/>
+        </Level>
+        <Level Name="Open"/>
+        <Level Name="Excellent" ShortName="Ex"/>
+        <Level Name="Master" ShortName="Mas"/>
+      </Division>
+      <Event Name="Standard" hasTable="y">
+        <Scoring Division="*" Level="Master" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Time Faults only</Note>
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+          <Note>No more than 2R, 1W (before 9/1/2006, 2Ws were allowed)</Note>
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+      </Event>
+      <Event Name="JWW">
+        <Scoring Division="*" Level="Master" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Time Faults only</Note>
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+          <Note>No more than 2R, 1W (before 9/1/2006, 2Ws were allowed)</Note>
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+      </Event>
+      <MultiQ Name="Double Q" SName="QQ">
+        <MultiQItem Div="Regular" Event="JWW" Level="Master"/>
+        <MultiQItem Div="Regular" Event="Standard" Level="Master"/>
+      </MultiQ>
+      <MultiQ Name="Preferred Double Q" SName="QQ">
+        <MultiQItem Div="Preferred" Event="JWW" Level="Master"/>
+        <MultiQItem Div="Preferred" Event="Standard" Level="Master"/>
+      </MultiQ>
     </Venue>
     <Venue LongName="Canine Performance Events" Name="CPE" URL="http://www.k9cpe.com/" icon="7">
       <Titles LongName="Level 1 Standard" Name="CL1-R">2 Qualifying Legs</Titles>
