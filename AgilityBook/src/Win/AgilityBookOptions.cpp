@@ -564,10 +564,10 @@ void CFontInfo::CreateFont(wxFont& font)
 	font = wxFont();
 	font.SetFaceName(name.c_str());
 	font.SetPointSize(size);
-	int style = wxFONTSTYLE_NORMAL;
+	wxFontStyle style = wxFONTSTYLE_NORMAL;
 	if (italic)
 		style = wxFONTSTYLE_ITALIC;
-	int weight = wxFONTWEIGHT_NORMAL;
+	wxFontWeight weight = wxFONTWEIGHT_NORMAL;
 	if (bold)
 		weight = wxFONTWEIGHT_BOLD;
 	font.SetStyle(style);

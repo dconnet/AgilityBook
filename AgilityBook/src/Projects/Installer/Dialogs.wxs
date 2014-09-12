@@ -5,7 +5,7 @@ Copyright (c) David Connet. All Rights Reserved.
 License: See License.txt
 
 Revision History
-2013-08-15 DRC Separated from AgilityBook.wxs
+2013-08-15 Separated from AgilityBook.wxs
 -->
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"

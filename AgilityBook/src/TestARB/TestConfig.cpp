@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-09-12 Add CKCSC.
  * 2013-01-13 Added more recurring tests for new style.
  * 2012-07-30 Added tests for checking recurring title styles.
  * 2011-01-22 Simplified how configs are added.
@@ -201,11 +202,12 @@ SUITE(TestConfig)
 			CHECK_EQUAL(155u, config.GetActions().size());
 			CHECK_EQUAL(0u, config.GetFaults().size());
 			CHECK_EQUAL(5u, config.GetOtherPoints().size());
-			CHECK_EQUAL(14u, config.GetVenues().size());
+			CHECK_EQUAL(15u, config.GetVenues().size());
 			CHECK(config.GetVenues().FindVenue(L"AAC"));
 			CHECK(config.GetVenues().FindVenue(L"AKC"));
 			CHECK(config.GetVenues().FindVenue(L"ASCA"));
 			CHECK(config.GetVenues().FindVenue(L"CKC"));
+			CHECK(config.GetVenues().FindVenue(L"CKCSC"));
 			CHECK(config.GetVenues().FindVenue(L"CPE"));
 			CHECK(config.GetVenues().FindVenue(L"DOCNA"));
 			CHECK(config.GetVenues().FindVenue(L"FCI"));
