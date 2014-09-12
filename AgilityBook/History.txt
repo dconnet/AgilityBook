@@ -1,4 +1,7 @@
-9/2/2014: v2.4.5.<development>
+9/12/2014: v2.4.5.<development>
+- Bumped Configuration v48:
+  - Added CKCSC
+  - Fixed AKC MXP/MJP titles (should not be recurring)
 - Bug fixes:
   - Fix gambles with no closing required so titling works. (CPE non-traditional
     and USDAA tournament) Points earned can be properly specified as open/close.

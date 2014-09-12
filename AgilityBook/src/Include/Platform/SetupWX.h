@@ -84,6 +84,13 @@
 #if !wxCHECK_VERSION(2, 8, 10)
 #error Unsupported wxWidget version
 #endif
+
+// v3.0.0 compatibility
+#if !wxCHECK_VERSION(3, 1, 0)
+#define wxBRUSHSTYLE_TRANSPARENT wxTRANSPARENT
+#define wxPENSTYLE_TRANSPARENT wxTRANSPARENT
+#endif
+
 // Some sanity checking
 #ifndef wxUSE_WCHAR_T
 #error ARB: wxUSE_WCHAR_T must be defined in wxWidgets (include/wx/<platform>/setup.)

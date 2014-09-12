@@ -4,152 +4,154 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2014-07-15 DRC Configuration version 47.
-               Added CPE C-10 title (added in 2008 rule book)
-               Added NADAC Intro level.
-2014-05-18 DRC Configuration version 46.
-               Added ASCA ACE program
-               Added 'Nationals' level to AKC for tracking of National rounds.
-               Added NADAC Beginners Agility
-2013-11-26 DRC Configuration version 45.
-               Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
-               Updated USDAA Performance Tournament Master title descriptions.
-2013-05-27 DRC Configuration version 44.
-               Added Novice to NADAC (there is no A/B anymore)
-2013-04-10 DRC Configuration version 43.
-               Added Preferred to AKC National Rounds (missing).
-2013-01-13 DRC Configuration version 42.
-               Added new NADAC extended titles.
-               Added new USDAA Diamond LAA titles.
-2012-11-30 DRC Configuration version 41.
-               Rename AKC ExcellentA to Excellent. (This has the unfortunate
-               side effect of changing all old trials too)
-2012-11-21 DRC Configuration version 40.
-               Rename AKC ExcellentB to Master. (This has the unfortunate side
-               effect of changing all old trials too)
-2012-07-30 DRC Configuration version 39.
-               Add TDAA TNAC title.
-               Add new recurring title style (none).
-2012-07-27 DRC Configuration version 38.
-               Enable repeating on the new AKC metalic titles.
-               Add NADAC Extreme Barrel Racing.
-               Renamed NADAC divisions to reflect Division and Category.
-2012-07-03 DRC Configuration version 37.
-               Enable 5pt Qs in NADAC Proficient Regular.
-               Add support for multi-point time faults in pointed games.
-               Fixed AKC JWW Century title name.
-               Added VALOR.
-2012-01-06 DRC Configuration version 36.
-               Remove start date from PACH title.
-               Remove start date from AKC lifetime titles.
-               Added USDAA Masters Challenge titles.
-2012-01-03 DRC Configuration version 35.
-               Added USDAA Masters Challenge classes.
-2011-10-03 DRC Configuration version 34.
-               Tweaked some ASCA title comments and AKC T2B description.
-               Fixed start date for T2B titles.
-2011-07-31 DRC Configuration version 33.
-               Changed NADAC Extreme Tunnelers to Extreme Gaters.
-               Set T2B time fault multiplier to 0.
-               Support T2B and UKI title point generation.
-2011-04-18 DRC Configuration version 32.
-               Added USDAA Intro (guess at acronyms)
-               Added USDAA Veteran titles (guess at acronyms)
-               Updated USDAA Performance titles
-               Updated AKC PACH title start.
-               Added NADAC Extreme games.
-               Updated PDCH description (way out of date)
-2011-01-18 DRC Configuration version 31.
-               Added AKC T2B official start date, updated level (only one).
-               Added USDAA Veterans division.
-2010-12-05 DRC Configuration version 30.
-               Added new USDAA International classes (Std/Jmp).
-2010-08-13 DRC Configuration version 29.
-               Added new AKC titles and T2B class.
-               Updated TDAA titles descriptions.
-               Added USDAA Accomplished Relay titles.
-               Added UKI, but no placement point info.
-2010-01-12 DRC Configuration version 28.
-               Removed Sweepstakes (no longer available).
-               Removed ASCA ATCH-OP/SP. Now ATCH-II/ATCH-III.
-2009-08-12 DRC Configuration version 27.
-               Fixed TDAA Standard to be 100-faults.
-2009-07-22 DRC Configuration version 26.
-               Added AKC TQX and TQXP titles.
-2009-02-25 DRC Configuration version 25.
-               Updated AAC titles and Challenge event.
-2008-12-15 DRC Configuration version 24.
-               Updated AAC title comments.
-               Updated USDAA DAM events for LAA points, DAM relay tracking.
-               Updated UKC UGRACH for multiple titles.
-2008-07-29 DRC Configuration version 23.
-               Updated USDAA Grand Prix qualifying points.
-2008-06-29 DRC Configuration version 22.
-               NADAC Chances was missing the Bonus Points option.
-               Updated Platinum Speed Star titles to allow multiple.
-               Added All-Around titles.
-2008-06-04 DRC Configuration version 21.
-               Changed AKC 'standard' division to 'regular'.
-2007-12-24 DRC Configuration version 20.
-               Fixed AKC FAST titles.
-               Added Hoopers/Gaters to NADAC, updated titles.
-               Added PR[123] titles to USDAA
-               Added FCI/SCC venues.
-2007-06-24 DRC Configuration version 19.
-               Updated NADAC to correct points in Skilled categories.
-               Corrected Long name on 2 NATCH titles.
-2007-04-22 DRC Added 'icon' to 'Venue'. (v18)
-2007-02-27 DRC Configuration version 18.
-               Added 'defValue' to 'OtherPts'. Minor wording change in AAC/AGDC
-2006-10-02 DRC Configuration version 17. Updated USDAA Performance Pairs for
-               titling in 2007. Changed TDAA website. Updates ASCA titles desc.
-               More NADAC updates. CPE Updates.
-2006-08-12 DRC Configuration version 16. Removed AMBOR.
-               Updated DOCNA gamble events.
-2006-08-08 DRC Configuration version 15. Added USDAA Performance Tournaments.
-2006-07-01 DRC Configuration version 14. AKC FAST drops time fractions.
-               Update CPE/FullHouse to auto-adjust time faults.
-2006-06-14 DRC Configuration version 13. Restricted NADAC Chances divisions.
-               Cleaned up NADAC titles. Corrected USDAA RM to have 5 partners.
-               Fixed DOCNA Trigility and Challenge scoring rules.
-               Fixed USDAA JH event.
-2006-02-08 DRC Configuration version 12. NADAC Wildcard is now Chances.
-               Extended Gamblers to 1/1 (long weekend).
-2006-01-04 DRC Configuration version 11. Updated CKC.
-2005-11-20 DRC Configuration version 10.
-               Added prefix notation on some titles. Updated NADAC titles.
-               Added DOCNA. Updated CPE title comments.
-2005-07-26 DRC Configuration version 9.
-               Changed how QQs to MultiQs.
-               NADAC: Updated comments in Jumpers/Gambles title requirements.
-               UKC: Fixed up rules. Added new title.
-               USDAA: Updated some comments in GP.
-2005-03-28 DRC Configuration version 8.
-               AAC: Updated 2005 rules.
-2005-02-07 DRC Configuration version 7.
-               AAC: Updated new rules (partial). Added CKC and TDAA.
-               Update AKC/NADAC for recurring titles.
-               Added some long title names to CPE.
-               Also see comments in dtd.
-2004-10-06 DRC Configuration version 6.
-               CPE: Added comment to CL1-4 titles. Accumulate lifetime LevelC
-               points.  Change points in Specialist to be like LevelC.
-2004-07-17 DRC Configuration version 5.
-               Remove titling points from USDAA Tournament Jumper/Snooker.
-               Added non-titling Performance events for Steeplechase and DAM
-               Team since many clubs offer these. (They will typically be
-               offered using different names.)
-2004-07-03 DRC Configuration version 4.
-               CPE 'CADE' changed to 'C-ATE'
-               Include new Gamblers class (changed scoring methods)
-2004-04-30 DRC Configuration version 3.
-               Updated Default Config to contain lifetime information, removed
-               USDAA LAA.
-2004-03-08 DRC Configuration version 2.
-               Added versioning to configuration to allow auto-upgrades.
-               Added new Config/Action: DeleteTitle
+2014-09-12 Configuration version 48.
+           Added CKCSC.
+2014-07-15 Configuration version 47.
+           Added CPE C-10 title (added in 2008 rule book)
+           Added NADAC Intro level.
+2014-05-18 Configuration version 46.
+           Added ASCA ACE program
+           Added 'Nationals' level to AKC for tracking of National rounds.
+           Added NADAC Beginners Agility
+2013-11-26 Configuration version 45.
+           Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
+           Updated USDAA Performance Tournament Master title descriptions.
+2013-05-27 Configuration version 44.
+           Added Novice to NADAC (there is no A/B anymore)
+2013-04-10 Configuration version 43.
+           Added Preferred to AKC National Rounds (missing).
+2013-01-13 Configuration version 42.
+           Added new NADAC extended titles.
+           Added new USDAA Diamond LAA titles.
+2012-11-30 Configuration version 41.
+           Rename AKC ExcellentA to Excellent. (This has the unfortunate
+           side effect of changing all old trials too)
+2012-11-21 Configuration version 40.
+           Rename AKC ExcellentB to Master. (This has the unfortunate side
+           effect of changing all old trials too)
+2012-07-30 Configuration version 39.
+           Add TDAA TNAC title.
+           Add new recurring title style (none).
+2012-07-27 Configuration version 38.
+           Enable repeating on the new AKC metalic titles.
+           Add NADAC Extreme Barrel Racing.
+           Renamed NADAC divisions to reflect Division and Category.
+2012-07-03 Configuration version 37.
+           Enable 5pt Qs in NADAC Proficient Regular.
+           Add support for multi-point time faults in pointed games.
+           Fixed AKC JWW Century title name.
+           Added VALOR.
+2012-01-06 Configuration version 36.
+           Remove start date from PACH title.
+           Remove start date from AKC lifetime titles.
+           Added USDAA Masters Challenge titles.
+2012-01-03 Configuration version 35.
+           Added USDAA Masters Challenge classes.
+2011-10-03 Configuration version 34.
+           Tweaked some ASCA title comments and AKC T2B description.
+           Fixed start date for T2B titles.
+2011-07-31 Configuration version 33.
+           Changed NADAC Extreme Tunnelers to Extreme Gaters.
+           Set T2B time fault multiplier to 0.
+           Support T2B and UKI title point generation.
+2011-04-18 Configuration version 32.
+           Added USDAA Intro (guess at acronyms)
+           Added USDAA Veteran titles (guess at acronyms)
+           Updated USDAA Performance titles
+           Updated AKC PACH title start.
+           Added NADAC Extreme games.
+           Updated PDCH description (way out of date)
+2011-01-18 Configuration version 31.
+           Added AKC T2B official start date, updated level (only one).
+           Added USDAA Veterans division.
+2010-12-05 Configuration version 30.
+           Added new USDAA International classes (Std/Jmp).
+2010-08-13 Configuration version 29.
+           Added new AKC titles and T2B class.
+           Updated TDAA titles descriptions.
+           Added USDAA Accomplished Relay titles.
+           Added UKI, but no placement point info.
+2010-01-12 Configuration version 28.
+           Removed Sweepstakes (no longer available).
+           Removed ASCA ATCH-OP/SP. Now ATCH-II/ATCH-III.
+2009-08-12 Configuration version 27.
+           Fixed TDAA Standard to be 100-faults.
+2009-07-22 Configuration version 26.
+           Added AKC TQX and TQXP titles.
+2009-02-25 Configuration version 25.
+           Updated AAC titles and Challenge event.
+2008-12-15 Configuration version 24.
+           Updated AAC title comments.
+           Updated USDAA DAM events for LAA points, DAM relay tracking.
+           Updated UKC UGRACH for multiple titles.
+2008-07-29 Configuration version 23.
+           Updated USDAA Grand Prix qualifying points.
+2008-06-29 Configuration version 22.
+           NADAC Chances was missing the Bonus Points option.
+           Updated Platinum Speed Star titles to allow multiple.
+           Added All-Around titles.
+2008-06-04 Configuration version 21.
+           Changed AKC 'standard' division to 'regular'.
+2007-12-24 Configuration version 20.
+           Fixed AKC FAST titles.
+           Added Hoopers/Gaters to NADAC, updated titles.
+           Added PR[123] titles to USDAA
+           Added FCI/SCC venues.
+2007-06-24 Configuration version 19.
+           Updated NADAC to correct points in Skilled categories.
+           Corrected Long name on 2 NATCH titles.
+2007-04-22 Added 'icon' to 'Venue'. (v18)
+2007-02-27 Configuration version 18.
+           Added 'defValue' to 'OtherPts'. Minor wording change in AAC/AGDC
+2006-10-02 Configuration version 17. Updated USDAA Performance Pairs for
+           titling in 2007. Changed TDAA website. Updates ASCA titles desc.
+           More NADAC updates. CPE Updates.
+2006-08-12 Configuration version 16. Removed AMBOR.
+           Updated DOCNA gamble events.
+2006-08-08 Configuration version 15. Added USDAA Performance Tournaments.
+2006-07-01 Configuration version 14. AKC FAST drops time fractions.
+           Update CPE/FullHouse to auto-adjust time faults.
+2006-06-14 Configuration version 13. Restricted NADAC Chances divisions.
+           Cleaned up NADAC titles. Corrected USDAA RM to have 5 partners.
+           Fixed DOCNA Trigility and Challenge scoring rules.
+           Fixed USDAA JH event.
+2006-02-08 Configuration version 12. NADAC Wildcard is now Chances.
+           Extended Gamblers to 1/1 (long weekend).
+2006-01-04 Configuration version 11. Updated CKC.
+2005-11-20 Configuration version 10.
+           Added prefix notation on some titles. Updated NADAC titles.
+           Added DOCNA. Updated CPE title comments.
+2005-07-26 Configuration version 9.
+           Changed how QQs to MultiQs.
+           NADAC: Updated comments in Jumpers/Gambles title requirements.
+           UKC: Fixed up rules. Added new title.
+           USDAA: Updated some comments in GP.
+2005-03-28 Configuration version 8.
+           AAC: Updated 2005 rules.
+2005-02-07 Configuration version 7.
+           AAC: Updated new rules (partial). Added CKC and TDAA.
+           Update AKC/NADAC for recurring titles.
+           Added some long title names to CPE.
+           Also see comments in dtd.
+2004-10-06 Configuration version 6.
+           CPE: Added comment to CL1-4 titles. Accumulate lifetime LevelC
+           points.  Change points in Specialist to be like LevelC.
+2004-07-17 Configuration version 5.
+           Remove titling points from USDAA Tournament Jumper/Snooker.
+           Added non-titling Performance events for Steeplechase and DAM
+           Team since many clubs offer these. (They will typically be
+           offered using different names.)
+2004-07-03 Configuration version 4.
+           CPE 'CADE' changed to 'C-ATE'
+           Include new Gamblers class (changed scoring methods)
+2004-04-30 Configuration version 3.
+           Updated Default Config to contain lifetime information, removed
+           USDAA LAA.
+2004-03-08 Configuration version 2.
+           Added versioning to configuration to allow auto-upgrades.
+           Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="47">
+  <Configuration version="48">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>

@@ -196,11 +196,11 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		// If it's not a wxAutoBufferedPaintDC, then assume we're printing (preview or printer)
 		bool bIsPrinting = wxDynamicCast(pDC, wxAutoBufferedPaintDC) ? false : true;
 
-		wxPen penNull(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW), 1, wxTRANSPARENT);
+		wxPen penNull(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW), 1, wxPENSTYLE_TRANSPARENT);
 		wxPen penFrame(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT), 1);
 		wxPen penShadow(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW), 1);
 		wxPen penHilite(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHILIGHT), 1);
-		wxBrush brNull(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW), wxTRANSPARENT);
+		wxBrush brNull(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW), wxBRUSHSTYLE_TRANSPARENT);
 		wxBrush brBtnFace(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 		wxBrush brHighlight(wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
 		wxBrush brMenu(wxSystemSettings::GetColour(wxSYS_COLOUR_MENU));

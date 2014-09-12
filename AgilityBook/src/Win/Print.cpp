@@ -701,7 +701,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 
 void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect)
 {
-	wxBrush brNull(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW), wxTRANSPARENT);
+	wxBrush brNull(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW), wxBRUSHSTYLE_TRANSPARENT);
 	pDC->SetBrush(brNull);
 	pDC->SetBackgroundMode(wxTRANSPARENT);
 
