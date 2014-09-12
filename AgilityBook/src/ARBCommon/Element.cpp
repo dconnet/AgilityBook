@@ -87,7 +87,7 @@
 #pragma comment(lib, "libxml2.lib")
 #else
 #pragma comment(lib, "libxml2_a.lib")
-#pragma message ( "Compiling with libxml2 " LIBXML_DOTTED_VERSION )
+#pragma message ( "Compiling Element with libxml2 " LIBXML_DOTTED_VERSION )
 #endif
 
 #elif __USE_POCO
@@ -104,14 +104,14 @@
 #include "Poco/XML/XMLWriter.h"
 #include "Poco/UTF8Encoding.h"
 #include "Poco/Version.h"
-#pragma message ( "Compiling with POCO " STRING(POCO_VERSION) )
+#pragma message ( "Compiling Element with POCO " STRING(POCO_VERSION) )
 
 #else
 #include <wx/mstream.h>
 #include <wx/stream.h>
 #include <wx/wfstream.h>
 #include <wx/xml/xml.h>
-#pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
+#pragma message ( "Compiling Element with wxWidgets " wxVERSION_NUM_DOT_STRING )
 #endif
 
 #if defined(__WXMSW__)
