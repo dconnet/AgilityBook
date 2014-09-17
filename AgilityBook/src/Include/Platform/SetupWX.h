@@ -80,8 +80,6 @@
 #include <wx/version.h>
 #include "Platform/arbWarningPop.h"
 
-#pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
-
 #if !wxCHECK_VERSION(3, 0, 0)
 #error Unsupported wxWidget version
 #endif

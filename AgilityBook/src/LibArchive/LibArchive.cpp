@@ -15,6 +15,7 @@
  */
 
 #include "stdafx.h"
+#include "Platform/SetupMessages.h"
 #include "LibArchive/LibArchive.h"
 
 #include "ARBCommon/StringUtil.h"

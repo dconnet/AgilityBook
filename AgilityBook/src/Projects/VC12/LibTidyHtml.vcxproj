@@ -140,6 +140,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\LibTidyHtml\LibTidyHtml.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
     <ClInclude Include="..\..\LibTidyHtml\stdafx.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\access.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrdict.h" />

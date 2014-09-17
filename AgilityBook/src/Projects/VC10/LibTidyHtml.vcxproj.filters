@@ -18,6 +18,9 @@
     <Filter Include="Include\LibTidyHtml">
       <UniqueIdentifier>{92dc8cd7-8b5d-4fce-8492-b86b5e12efe1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include\Platform">
+      <UniqueIdentifier>{c0a1c9c3-3a55-4a61-904f-da10c81c0287}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\access.c">
@@ -174,6 +177,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\LibTidyHtml\LibTidyHtml.h">
       <Filter>Include\LibTidyHtml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h">
+      <Filter>Include\Platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

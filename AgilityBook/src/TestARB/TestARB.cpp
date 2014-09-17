@@ -18,6 +18,7 @@
  */
 
 #include "stdafx.h"
+#include "Platform/SetupMessages.h"
 #include "TestARB.h"
 
 #include "ConfigHandler.h"
