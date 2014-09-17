@@ -11,6 +11,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>USE_POCO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(PocoBase)\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
