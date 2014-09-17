@@ -78,8 +78,6 @@
 #include <wx/version.h>
 #include "Platform/arbWarningPop.h"
 
-#pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
-
 #if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9
 #error v2.9.x not supported
 #endif

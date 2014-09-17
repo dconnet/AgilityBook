@@ -32,6 +32,7 @@
  */
 
 #include "stdafx.h"
+#include "Platform/SetupMessages.h"
 #include "AgilityBook.h"
 
 #include "AgilityBookDoc.h"

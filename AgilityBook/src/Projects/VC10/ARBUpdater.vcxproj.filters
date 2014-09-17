@@ -90,6 +90,9 @@
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupMessages.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Include\Platform\SetupWX.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>

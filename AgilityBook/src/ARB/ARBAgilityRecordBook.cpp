@@ -94,6 +94,7 @@
  */
 
 #include "stdafx.h"
+#include "Platform/SetupMessages.h"
 #include "ARB/ARBAgilityRecordBook.h"
 
 #include "ARB/ARBConfig.h"

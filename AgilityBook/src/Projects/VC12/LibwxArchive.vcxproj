@@ -107,6 +107,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\LibArchive\LibArchive.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupMessages.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\LibArchive\stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
