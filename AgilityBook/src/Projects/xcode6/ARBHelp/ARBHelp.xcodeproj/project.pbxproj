@@ -1,0 +1,465 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E164622E17BFF295004F12AF /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164622B17BFF295004F12AF /* SetupApp.cpp */; };
+		E164623117BFF2BE004F12AF /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164622F17BFF2BE004F12AF /* ImageManager.cpp */; };
+		E19B6603166C1640004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B6602166C1640004DEDA4 /* Cocoa.framework */; };
+		E19B6633166C166F004DEDA4 /* ARBHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6621166C166F004DEDA4 /* ARBHelp.cpp */; };
+		E19B6635166C166F004DEDA4 /* DlgARBHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6624166C166F004DEDA4 /* DlgARBHelp.cpp */; };
+		E19B6636166C166F004DEDA4 /* DlgPageDecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6626166C166F004DEDA4 /* DlgPageDecode.cpp */; };
+		E19B6637166C166F004DEDA4 /* DlgPageEncode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6628166C166F004DEDA4 /* DlgPageEncode.cpp */; };
+		E19B6638166C166F004DEDA4 /* DlgPageEncodeFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B662A166C166F004DEDA4 /* DlgPageEncodeFiles.cpp */; };
+		E19B6639166C166F004DEDA4 /* DlgPageEncodeFinish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */; };
+		E19B6650166C18B3004DEDA4 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B664E166C18B3004DEDA4 /* Widgets.cpp */; };
+		E19B6653166C1928004DEDA4 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E19B6652166C1928004DEDA4 /* AgilityBook.icns */; };
+		E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */; };
+		E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612617ECB2CA0026B41B /* libARB.a */; };
+		E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612717ECB2CA0026B41B /* libARBCommon.a */; };
+		E1DCE95E17C17E8F00F79DFA /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E164622B17BFF295004F12AF /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SetupApp.cpp; path = ../../../../Win/SetupApp.cpp; sourceTree = "<group>"; };
+		E164622C17BFF295004F12AF /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupApp.h; path = ../../../../Win/SetupApp.h; sourceTree = "<group>"; };
+		E164622D17BFF295004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupAppARB.h; path = ../../../../Win/SetupAppARB.h; sourceTree = "<group>"; };
+		E164622F17BFF2BE004F12AF /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageManager.cpp; path = ../../../../Win/ImageManager.cpp; sourceTree = "<group>"; };
+		E164623017BFF2BE004F12AF /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageManager.h; path = ../../../../Win/ImageManager.h; sourceTree = "<group>"; };
+		E19B65FE166C1640004DEDA4 /* ARBHelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARBHelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E19B6602166C1640004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		E19B6605166C1640004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		E19B6606166C1640004DEDA4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E19B6607166C1640004DEDA4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E19B660A166C1640004DEDA4 /* ARBHelp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ARBHelp-Info.plist"; sourceTree = "<group>"; };
+		E19B6610166C1640004DEDA4 /* ARBHelp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ARBHelp-Prefix.pch"; sourceTree = "<group>"; };
+		E19B6621166C166F004DEDA4 /* ARBHelp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBHelp.cpp; sourceTree = "<group>"; };
+		E19B6622166C166F004DEDA4 /* ARBHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBHelp.h; sourceTree = "<group>"; };
+		E19B6624166C166F004DEDA4 /* DlgARBHelp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgARBHelp.cpp; sourceTree = "<group>"; };
+		E19B6625166C166F004DEDA4 /* DlgARBHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgARBHelp.h; sourceTree = "<group>"; };
+		E19B6626166C166F004DEDA4 /* DlgPageDecode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPageDecode.cpp; sourceTree = "<group>"; };
+		E19B6627166C166F004DEDA4 /* DlgPageDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageDecode.h; sourceTree = "<group>"; };
+		E19B6628166C166F004DEDA4 /* DlgPageEncode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPageEncode.cpp; sourceTree = "<group>"; };
+		E19B6629166C166F004DEDA4 /* DlgPageEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncode.h; sourceTree = "<group>"; };
+		E19B662A166C166F004DEDA4 /* DlgPageEncodeFiles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPageEncodeFiles.cpp; sourceTree = "<group>"; };
+		E19B662B166C166F004DEDA4 /* DlgPageEncodeFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFiles.h; sourceTree = "<group>"; };
+		E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPageEncodeFinish.cpp; sourceTree = "<group>"; };
+		E19B662D166C166F004DEDA4 /* DlgPageEncodeFinish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFinish.h; sourceTree = "<group>"; };
+		E19B664E166C18B3004DEDA4 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Widgets.cpp; path = ../../../../Win/Widgets.cpp; sourceTree = "<group>"; };
+		E19B664F166C18B3004DEDA4 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Widgets.h; path = ../../../../Win/Widgets.h; sourceTree = "<group>"; };
+		E19B6652166C1928004DEDA4 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../AgilityBook/AgilityBook/AgilityBook.icns; sourceTree = "<group>"; };
+		E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
+		E1CAE57B16B5BFA200B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		E1CE612617ECB2CA0026B41B /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
+		E1CE612717ECB2CA0026B41B /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
+		E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageManager.cpp; path = ../../../../Win/LanguageManager.cpp; sourceTree = "<group>"; };
+		E1DCE95D17C17E8F00F79DFA /* LanguageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageManager.h; path = ../../../../Win/LanguageManager.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E19B65FB166C1640004DEDA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */,
+				E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */,
+				E19B6603166C1640004DEDA4 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E19B65F3166C1640004DEDA4 = {
+			isa = PBXGroup;
+			children = (
+				E1CE612617ECB2CA0026B41B /* libARB.a */,
+				E1CE612717ECB2CA0026B41B /* libARBCommon.a */,
+				E19B6608166C1640004DEDA4 /* ARBHelp */,
+				E19B6601166C1640004DEDA4 /* Frameworks */,
+				E19B65FF166C1640004DEDA4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E19B65FF166C1640004DEDA4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E19B65FE166C1640004DEDA4 /* ARBHelp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E19B6601166C1640004DEDA4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E19B6602166C1640004DEDA4 /* Cocoa.framework */,
+				E19B6604166C1640004DEDA4 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E19B6604166C1640004DEDA4 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E19B6605166C1640004DEDA4 /* AppKit.framework */,
+				E19B6606166C1640004DEDA4 /* CoreData.framework */,
+				E19B6607166C1640004DEDA4 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		E19B6608166C1640004DEDA4 /* ARBHelp */ = {
+			isa = PBXGroup;
+			children = (
+				E19B661F166C165F004DEDA4 /* Source */,
+				E19B6609166C1640004DEDA4 /* Supporting Files */,
+			);
+			path = ARBHelp;
+			sourceTree = "<group>";
+		};
+		E19B6609166C1640004DEDA4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E19B6652166C1928004DEDA4 /* AgilityBook.icns */,
+				E19B660A166C1640004DEDA4 /* ARBHelp-Info.plist */,
+				E19B6610166C1640004DEDA4 /* ARBHelp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E19B661F166C165F004DEDA4 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E19B6620166C166F004DEDA4 /* ARBHelp */,
+				E19B664D166C17F3004DEDA4 /* Win */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		E19B6620166C166F004DEDA4 /* ARBHelp */ = {
+			isa = PBXGroup;
+			children = (
+				E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */,
+				E1CAE57B16B5BFA200B33FE5 /* stdafx.h */,
+				E19B6621166C166F004DEDA4 /* ARBHelp.cpp */,
+				E19B6622166C166F004DEDA4 /* ARBHelp.h */,
+				E19B6624166C166F004DEDA4 /* DlgARBHelp.cpp */,
+				E19B6625166C166F004DEDA4 /* DlgARBHelp.h */,
+				E19B6626166C166F004DEDA4 /* DlgPageDecode.cpp */,
+				E19B6627166C166F004DEDA4 /* DlgPageDecode.h */,
+				E19B6628166C166F004DEDA4 /* DlgPageEncode.cpp */,
+				E19B6629166C166F004DEDA4 /* DlgPageEncode.h */,
+				E19B662A166C166F004DEDA4 /* DlgPageEncodeFiles.cpp */,
+				E19B662B166C166F004DEDA4 /* DlgPageEncodeFiles.h */,
+				E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */,
+				E19B662D166C166F004DEDA4 /* DlgPageEncodeFinish.h */,
+			);
+			name = ARBHelp;
+			path = ../../../../ARBHelp;
+			sourceTree = "<group>";
+		};
+		E19B664D166C17F3004DEDA4 /* Win */ = {
+			isa = PBXGroup;
+			children = (
+				E164622F17BFF2BE004F12AF /* ImageManager.cpp */,
+				E164623017BFF2BE004F12AF /* ImageManager.h */,
+				E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */,
+				E1DCE95D17C17E8F00F79DFA /* LanguageManager.h */,
+				E164622B17BFF295004F12AF /* SetupApp.cpp */,
+				E164622C17BFF295004F12AF /* SetupApp.h */,
+				E164622D17BFF295004F12AF /* SetupAppARB.h */,
+				E19B664E166C18B3004DEDA4 /* Widgets.cpp */,
+				E19B664F166C18B3004DEDA4 /* Widgets.h */,
+			);
+			name = Win;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E19B65FD166C1640004DEDA4 /* ARBHelp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E19B661C166C1640004DEDA4 /* Build configuration list for PBXNativeTarget "ARBHelp" */;
+			buildPhases = (
+				E19B65FA166C1640004DEDA4 /* Sources */,
+				E19B65FB166C1640004DEDA4 /* Frameworks */,
+				E19B65FC166C1640004DEDA4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ARBHelp;
+			productName = ARBHelp;
+			productReference = E19B65FE166C1640004DEDA4 /* ARBHelp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E19B65F5166C1640004DEDA4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = ARB;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "David Connet";
+			};
+			buildConfigurationList = E19B65F8166C1640004DEDA4 /* Build configuration list for PBXProject "ARBHelp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E19B65F3166C1640004DEDA4;
+			productRefGroup = E19B65FF166C1640004DEDA4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E19B65FD166C1640004DEDA4 /* ARBHelp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E19B65FC166C1640004DEDA4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E19B6653166C1928004DEDA4 /* AgilityBook.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E19B65FA166C1640004DEDA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E19B6633166C166F004DEDA4 /* ARBHelp.cpp in Sources */,
+				E19B6635166C166F004DEDA4 /* DlgARBHelp.cpp in Sources */,
+				E19B6636166C166F004DEDA4 /* DlgPageDecode.cpp in Sources */,
+				E19B6637166C166F004DEDA4 /* DlgPageEncode.cpp in Sources */,
+				E19B6638166C166F004DEDA4 /* DlgPageEncodeFiles.cpp in Sources */,
+				E19B6639166C166F004DEDA4 /* DlgPageEncodeFinish.cpp in Sources */,
+				E19B6650166C18B3004DEDA4 /* Widgets.cpp in Sources */,
+				E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */,
+				E164622E17BFF295004F12AF /* SetupApp.cpp in Sources */,
+				E164623117BFF2BE004F12AF /* ImageManager.cpp in Sources */,
+				E1DCE95E17C17E8F00F79DFA /* LanguageManager.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E19B661A166C1640004DEDA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../..",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.0.1/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/wxWidgets-3.0.1/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
+				);
+				OTHER_LDFLAGS = (
+					"-L$WXBASE/wxWidgets-3.0.1/build-cocoa-debug/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					OpenGL,
+					"-framework",
+					WebKit,
+					"-lwx_osx_cocoau_xrc-3.0",
+					"-lwx_osx_cocoau_webview-3.0",
+					"-lwx_osx_cocoau_qa-3.0",
+					"-lwx_baseu_net-3.0",
+					"-lwx_osx_cocoau_html-3.0",
+					"-lwx_osx_cocoau_adv-3.0",
+					"-lwx_osx_cocoau_core-3.0",
+					"-lwx_baseu_xml-3.0",
+					"-lwx_baseu-3.0",
+					"-lwxregexu-3.0",
+					"-lwxexpat-3.0",
+					"-lwxtiff-3.0",
+					"-lwxjpeg-3.0",
+					"-lwxpng-3.0",
+					"-lwxzlib-3.0",
+					"-lpthread",
+				);
+				SDKROOT = macosx10.9;
+			};
+			name = Debug;
+		};
+		E19B661B166C1640004DEDA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../..",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.0.1/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/wxWidgets-3.0.1/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
+				);
+				OTHER_LDFLAGS = (
+					"-L$WXBASE/wxWidgets-3.0.1/build-cocoa/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					OpenGL,
+					"-framework",
+					WebKit,
+					"-lwx_osx_cocoau_xrc-3.0",
+					"-lwx_osx_cocoau_webview-3.0",
+					"-lwx_osx_cocoau_qa-3.0",
+					"-lwx_baseu_net-3.0",
+					"-lwx_osx_cocoau_html-3.0",
+					"-lwx_osx_cocoau_adv-3.0",
+					"-lwx_osx_cocoau_core-3.0",
+					"-lwx_baseu_xml-3.0",
+					"-lwx_baseu-3.0",
+					"-lwxregexu-3.0",
+					"-lwxexpat-3.0",
+					"-lwxtiff-3.0",
+					"-lwxjpeg-3.0",
+					"-lwxpng-3.0",
+					"-lwxzlib-3.0",
+					"-lpthread",
+				);
+				SDKROOT = macosx10.9;
+			};
+			name = Release;
+		};
+		E19B661D166C1640004DEDA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
+				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E19B661E166C1640004DEDA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
+				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E19B65F8166C1640004DEDA4 /* Build configuration list for PBXProject "ARBHelp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E19B661A166C1640004DEDA4 /* Debug */,
+				E19B661B166C1640004DEDA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E19B661C166C1640004DEDA4 /* Build configuration list for PBXNativeTarget "ARBHelp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E19B661D166C1640004DEDA4 /* Debug */,
+				E19B661E166C1640004DEDA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E19B65F5166C1640004DEDA4 /* Project object */;
+}
