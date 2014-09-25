@@ -20,7 +20,8 @@ Once the above software is unpacked, the directory structure should look like:
   - <some_path>/boost_<ver>/ [BOOST_ROOT points to this]
       - ...(Boost structure)
 
-(note, comments/etc are very Windows-oriented since that's my main platform.)
+Note, comments/etc are very Windows-oriented since that's my main platform.
+See the xcode section below for tools needed on Mac
 
 --------------------
 
@@ -234,14 +235,25 @@ Xcode
 Install MacPorts: http://www.macports.org
 sudo port -v selfupdate
 sudo port upgrade outdated
-initial: sudo port install autoconf
-         sudo port install subversion
+initial:
+   sudo port install autoconf
+   sudo port install autoconf-archive
+   sudo port install subversion
+   sudo port install boost
 
 The xcode projects were used as follows:
 .../xcode3: Xcode 3.1 on OSX10.5
             AgilityBookCocoa.xcodeproj
                 wx3.0, cocoa, OSX10.5 sdk
 .../xcode5: Xcode 5.0 on OSX10.9
+            Recommended (so projects work right):
+            - Set DerivedData to Relative, 'build'
+              - Advanced: Unique
+            AgilityBook.xcworkspace
+                wx3.0, cocoa, OSX10.9 sdk, OSX10.7 deployment target
+                C++ Language Dialect: c++11 (-std=c++11)
+                C++ Std Lib: libc++
+.../xcode6: Xcode 6.0 on OSX10.9
             Recommended (so projects work right):
             - Set DerivedData to Relative, 'build'
               - Advanced: Unique
