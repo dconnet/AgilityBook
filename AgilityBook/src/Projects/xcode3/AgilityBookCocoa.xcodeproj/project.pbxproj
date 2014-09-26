@@ -1219,8 +1219,6 @@
 				OTHER_CFLAGS = (
 					"-I../..",
 					"-I../../Include",
-					"-isystem",
-					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.0.1/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
 					"-I$WXBASE/wxWidgets-3.0.1/include",
 					"-DUSE_WXWIDGETS",
@@ -1297,8 +1295,6 @@
 				OTHER_CFLAGS = (
 					"-I../..",
 					"-I../../Include",
-					"-isystem",
-					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.0.1/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
 					"-I$WXBASE/wxWidgets-3.0.1/include",
 					"-DUSE_WXWIDGETS",

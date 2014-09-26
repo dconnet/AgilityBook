@@ -1220,8 +1220,6 @@
 				OTHER_CFLAGS = (
 					"-I../..",
 					"-I../../Include",
-					"-isystem",
-					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-2.8.12/build-carbon-debug/lib/wx/include/mac-unicode-debug-static-2.8",
 					"-I$WXBASE/wxWidgets-2.8.12/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -1296,8 +1294,6 @@
 				OTHER_CFLAGS = (
 					"-I../..",
 					"-I../../Include",
-					"-isystem",
-					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-2.8.12/build-carbon/lib/wx/include/mac-unicode-release-static-2.8",
 					"-I$WXBASE/wxWidgets-2.8.12/include",
 					"-D_FILE_OFFSET_BITS=64",
