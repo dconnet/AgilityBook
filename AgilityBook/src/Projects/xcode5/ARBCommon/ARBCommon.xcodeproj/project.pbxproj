@@ -271,8 +271,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-isystem",
-					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.0.1/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
 					"-I$WXBASE/wxWidgets-3.0.1/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -306,8 +304,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-isystem",
-					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.0.1/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
 					"-I$WXBASE/wxWidgets-3.0.1/include",
 					"-D_FILE_OFFSET_BITS=64",

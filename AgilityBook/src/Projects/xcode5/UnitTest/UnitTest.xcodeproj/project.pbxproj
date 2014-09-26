@@ -337,10 +337,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = (
-					"-isystem",
-					"$(BOOST_ROOT)",
-				);
 				SDKROOT = macosx10.9;
 			};
 			name = Debug;
@@ -364,10 +360,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_CFLAGS = (
-					"-isystem",
-					"$(BOOST_ROOT)",
-				);
 				SDKROOT = macosx10.9;
 			};
 			name = Release;
