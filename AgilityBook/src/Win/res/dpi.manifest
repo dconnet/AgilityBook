@@ -5,9 +5,9 @@
          xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">
       <dpiAware>False</dpiAware>
 	  <!--
-      <dpiAware>True</dpiAware> Win8.1: system dpi-aware
-      <dpiAware>Per-monitor</dpiAware> pre Win8.1: not aware
-      <dpiAware>True/PM</dpiAware> pre Win8.1: aware
+      <dpiAware>True</dpiAware> System dpi-aware
+      <dpiAware>Per-monitor</dpiAware> Win8.1, pre Win8.1: not aware
+      <dpiAware>True/PM</dpiAware> Win8.1, pre Win8.1: aware
 	  -->
     </asmv3:windowsSettings>
   </asmv3:application>
