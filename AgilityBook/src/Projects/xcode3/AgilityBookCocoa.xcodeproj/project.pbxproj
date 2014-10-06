@@ -1219,8 +1219,8 @@
 				OTHER_CFLAGS = (
 					"-I../..",
 					"-I../../Include",
-					"-I$WXBASE/wxWidgets-3.0.1/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
-					"-I$WXBASE/wxWidgets-3.0.1/include",
+					"-I$WXBASE/wxWidgets-3.0.2/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/wxWidgets-3.0.2/include",
 					"-DUSE_WXWIDGETS",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
@@ -1228,7 +1228,7 @@
 					"-D__WXOSX_COCOA__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXBASE/wxWidgets-3.0.1/build-cocoa-debug/lib",
+					"-L$WXBASE/wxWidgets-3.0.2/build-cocoa-debug/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1295,8 +1295,8 @@
 				OTHER_CFLAGS = (
 					"-I../..",
 					"-I../../Include",
-					"-I$WXBASE/wxWidgets-3.0.1/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
-					"-I$WXBASE/wxWidgets-3.0.1/include",
+					"-I$WXBASE/wxWidgets-3.0.2/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
+					"-I$WXBASE/wxWidgets-3.0.2/include",
 					"-DUSE_WXWIDGETS",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
@@ -1305,7 +1305,7 @@
 					"-D__WXOSX_COCOA__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXBASE/wxWidgets-3.0.1/build-cocoa/lib",
+					"-L$WXBASE/wxWidgets-3.0.2/build-cocoa/lib",
 					"-framework",
 					IOKit,
 					"-framework",

@@ -32,7 +32,7 @@ Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
 
-=== Changes to 3.0.1:
+=== Changes to 3.0.1 and 3.0.2:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
