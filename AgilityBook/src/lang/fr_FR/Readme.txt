@@ -7,3 +7,7 @@ copied here and converted to unix-eol.
 
 trunk\fr.po is from <wx>/locale/fr.po (active trunk), copied here
 and converted to unix-eol.
+
+Note: Any future versions of wx:
+The directory name here should be the same as the basename of WXWIN.
+And set svn:eol-style to LF
