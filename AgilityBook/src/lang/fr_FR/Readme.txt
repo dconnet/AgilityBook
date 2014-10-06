@@ -6,3 +6,4 @@ and converted to unix-eol.
 
 Note: Any future versions of wx:
 The directory name here should be the same as the basename of WXWIN.
+And set svn:eol-style to LF
