@@ -5,7 +5,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <wxWin2_8>$(WXBASE)\wxWidgets-2.8.12</wxWin2_8>
-    <wxWin3_0>$(WXBASE)\wxWidgets-3.0.1</wxWin3_0>
+    <wxWin3_0>$(WXBASE)\wxWidgets-3.0.2</wxWin3_0>
     <wxWinTrunk>$(WXBASE)\trunk</wxWinTrunk>
     <wxWinEnv>$(WXWIN)</wxWinEnv>
     <wxWin>$(wxWin3_0)</wxWin>

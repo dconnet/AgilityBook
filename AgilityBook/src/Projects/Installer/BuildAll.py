@@ -14,7 +14,7 @@
 # 2010-06-11 Support building on x64 OS
 # 2010-05-30 Converted .bat to .py (keeps environment clean!)
 """BuildAll.py -w wxwin [-b type] compiler*
-   -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.0.1)'
+   -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.0.2)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -t:       Testing, just print commands to run
    compiler: vc10, vc11 (default: vc10)
@@ -34,7 +34,7 @@ ProgramFiles = r'c:\Program Files'
 useVC10SDK = False
 
 # ARB is officially released using this branch. This is located under $WXBASE.
-wxBranch = r'\wxWidgets-3.0.1'
+wxBranch = r'\wxWidgets-3.0.2'
 
 testing = False
 
