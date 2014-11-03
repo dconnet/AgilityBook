@@ -26,6 +26,7 @@ class CConfigEventDataLifetimePoints;
 class CConfigEventDataPlaceInfo;
 class CConfigEventDataScoring;
 class CConfigEventDataTitlePoints;
+class CSpellCheckCtrl;
 class CTextCtrl;
 
 
@@ -87,7 +88,7 @@ private:
 	wxButton* m_ctrlPointsNew;
 	wxButton* m_ctrlPointsEdit;
 	wxButton* m_ctrlPointsDelete;
-	CTextCtrl* m_ctrlNote;
+	CSpellCheckCtrl* m_ctrlNote;
 	int m_idxMethod;
 
 	DECLARE_ON_INIT()

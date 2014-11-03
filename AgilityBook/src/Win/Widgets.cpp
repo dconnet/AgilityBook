@@ -24,3 +24,6 @@
 IMPLEMENT_CLASS(CListCtrl, wxListView)
 IMPLEMENT_CLASS(CTreeCtrl, wxTreeCtrl)
 IMPLEMENT_CLASS(CTextCtrl, wxTextCtrl)
+#ifdef WIN32
+IMPLEMENT_CLASS(CSpellCheckCtrl, CTextCtrl)
+#endif

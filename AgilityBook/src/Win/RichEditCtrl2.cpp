@@ -39,6 +39,10 @@ CRichEditCtrl2::CRichEditCtrl2(
 	{
 		SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE));
 	}
+	else
+	{
+		EnableSpellChecking();
+	}
 }
 
 

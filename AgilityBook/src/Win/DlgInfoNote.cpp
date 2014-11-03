@@ -190,7 +190,7 @@ CDlgInfoNote::CDlgInfoNote(
 	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
 	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
 
-	m_ctrlNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(300, 100), wxTE_MULTILINE);
 	BIND_OR_CONNECT_CTRL(m_ctrlNotes, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgInfoNote::OnEnChangeComments);
 	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));

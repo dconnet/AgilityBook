@@ -704,7 +704,7 @@ CDlgDog::CDlgDog(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	CTextCtrl* ctrlNotes = new CTextCtrl(panelProp, wxID_ANY, wxEmptyString,
+	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(panelProp, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 180), wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_DOG_NOTES"));

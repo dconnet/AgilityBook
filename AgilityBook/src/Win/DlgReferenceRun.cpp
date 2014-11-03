@@ -206,7 +206,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	CTextCtrl* ctrlNotes = new CTextCtrl(this, wxID_ANY, wxString(),
+	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxSize(-1, 70), 0,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_REFRUN_NOTES"));

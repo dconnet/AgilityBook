@@ -162,7 +162,7 @@ CDlgTrial::CDlgTrial(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	CTextCtrl* ctrlTrialNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CSpellCheckCtrl* ctrlTrialNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, DEF_CTRL_HEIGHT), wxTE_MULTILINE,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlTrialNotes->SetHelpText(_("HIDC_TRIAL_NOTES"));

@@ -445,7 +445,7 @@ CDlgCalendar::CDlgCalendar(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	CTextCtrl* ctrlNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_CAL_NOTES"));

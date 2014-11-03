@@ -995,7 +995,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textConditions->Wrap(-1);
 
-	m_ctrlConditions = new CTextCtrl(m_panelScore, wxID_ANY,
+	m_ctrlConditions = new CSpellCheckCtrl(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxSize(-1, 50),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Conditions, TRIMVALIDATOR_TRIM_BOTH));
@@ -1234,7 +1234,7 @@ CDlgRun::CDlgRun(
 	wxPanel* panelComments = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	CTextCtrl* ctrlComments = new CTextCtrl(panelComments, wxID_ANY, wxEmptyString,
+	CSpellCheckCtrl* ctrlComments = new CSpellCheckCtrl(panelComments, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Comments, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlComments->SetHelpText(_("HIDC_RUNCOMMENT_COMMENTS"));

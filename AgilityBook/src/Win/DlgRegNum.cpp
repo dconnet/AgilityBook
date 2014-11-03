@@ -111,7 +111,7 @@ CDlgRegNum::CDlgRegNum(
 	checkReceived->SetHelpText(_("HIDC_REGNUM_RECEIVED"));
 	checkReceived->SetToolTip(_("HIDC_REGNUM_RECEIVED"));
 
-	CTextCtrl* ctrlDesc = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(350, 100),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Note, TRIMVALIDATOR_TRIM_RIGHT));
