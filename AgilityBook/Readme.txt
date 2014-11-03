@@ -20,8 +20,7 @@ Once the above software is unpacked, the directory structure should look like:
   - <some_path>/boost_<ver>/ [BOOST_ROOT points to this]
       - ...(Boost structure)
 
-Note, comments/etc are very Windows-oriented since that's my main platform.
-See the xcode section below for tools needed on Mac
+(note, comments/etc are very Windows-oriented since that's my main platform.)
 
 --------------------
 
@@ -235,11 +234,8 @@ Xcode
 Install MacPorts: http://www.macports.org
 sudo port -v selfupdate
 sudo port upgrade outdated
-initial:
-   sudo port install autoconf
-   sudo port install autoconf-archive
-   sudo port install subversion
-   sudo port install boost
+initial: sudo port install autoconf
+         sudo port install subversion
 
 The xcode projects were used as follows:
 .../xcode3: Xcode 3.1 on OSX10.5
@@ -253,19 +249,12 @@ The xcode projects were used as follows:
                 wx3.0, cocoa, OSX10.9 sdk, OSX10.7 deployment target
                 C++ Language Dialect: c++11 (-std=c++11)
                 C++ Std Lib: libc++
-.../xcode6: Xcode 6.0 on OSX10.9
-            Recommended (so projects work right):
-            - Set DerivedData to Relative, 'build'
-              - Advanced: Unique
-            AgilityBook.xcworkspace
-                wx3.0, cocoa, OSX10.9 sdk, OSX10.7 deployment target
-                C++ Language Dialect: c++11 (-std=c++11)
-                C++ Std Lib: libc++
 
 OSX 10.9+:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
+setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_56_0
 setenv WXBASE /Users/dconnet/devtools/wx
 setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.2
 ====

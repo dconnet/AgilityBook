@@ -898,6 +898,8 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../..",
+					"-isystem",
+					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.0.2/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.0",
 					"-I$WXBASE/wxWidgets-3.0.2/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -969,6 +971,8 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../..",
+					"-isystem",
+					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.0.2/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.0",
 					"-I$WXBASE/wxWidgets-3.0.2/include",
 					"-D_FILE_OFFSET_BITS=64",

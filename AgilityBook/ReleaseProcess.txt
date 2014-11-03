@@ -48,7 +48,7 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 On Mac10.5:
 - export PATH=$WXWIN/build-carbon:$PATH
 - cd .../AgilityBook
-- autoconf -I /opt/local/share/aclocal
+- autoconf
 - rm -rf build-carbon
 - mkdir build-carbon
 - cd build-carbon
@@ -56,7 +56,7 @@ On Mac10.5:
 On Mac10.9:
 - export PATH=$WXWIN/build-cocoa:$PATH
 - cd .../AgilityBook
-- autoconf -I /opt/local/share/aclocal
+- autoconf
 - rm -rf build-cocoa
 - mkdir build-cocoa
 - cd build-cocoa
