@@ -3,7 +3,17 @@
 0. gettext package (from MacPorts): http://gettext.darwinports.com/
    - Also, it's highly recommended to update svn (sudo port install svn)
 
-1. boost package from MacPorts: sudo port install boost
+1. Install boost from source - download and then extract to a directory
+(i.e. boost_1_56_0)
+> cd boost_1_56_0
+- Optionally, you can build this - don't need to though.
+> bjam toolset=darwin variant=debug threading=multi link=static architecture=combined
+
+If you don't install them in the system directory set the BOOST_ROOT env var
+to the root of the boost directory:
+> export BOOST_ROOT=~/boost_1_56_0
+-- This can also be set in ~/.MacOSX/environment.plist (property manager)
+-- On OSX 10.9+, see notes in Readme.txt
 
 2. Download and install WxMac (wxWidgets) in a local directory
 [see http://wiki.wxwidgets.org/Getting_started_on_OS_X]

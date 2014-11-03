@@ -8,10 +8,6 @@
 ################################################################################
 AC_INIT(Agility Record Book, 2.4.4.92, [help@agilityrecordbook.com])
 
-# call as: autoconf -I /opt/local/share/aclocal
-#m4_include([/opt/local/share/aclocal/ax_boost_base.m4])
-m4_include([ax_boost_base.m4])
-
 AC_CONFIG_SRCDIR(src/Win/stdafx.cpp)
 
 AC_SUBST(PACKAGE_ARB_SHORTNAME, "AgilityBook")
@@ -62,7 +58,12 @@ AC_SUBST(CFLAGS, "`wx-config --cflags`")
 AC_SUBST(CXXFLAGS, "`wx-config --cxxflags`")
 AC_SUBST(LDFLAGS, "`wx-config --libs`")
 
-AX_BOOST_BASE([1.38])
+if test "x$BOOST_ROOT" != "x"; then
+	echo "BOOST_ROOT set to: $BOOST_ROOT"
+	AC_SUBST(CXXFLAGS,"$CXXFLAGS -isystem $BOOST_ROOT")
+fi
+AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not found. export BOOST_ROOT=fullpath to boost install])])
+
 AC_SUBST(CXXFLAGS,"$CXXFLAGS -DUSE_WXWIDGETS")
 
 case `uname` in

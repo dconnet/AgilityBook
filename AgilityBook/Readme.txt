@@ -20,8 +20,7 @@ Once the above software is unpacked, the directory structure should look like:
   - <some_path>/boost_<ver>/ [BOOST_ROOT points to this]
       - ...(Boost structure)
 
-Note, comments/etc are very Windows-oriented since that's my main platform.
-See the xcode section below for tools needed on Mac
+(note, comments/etc are very Windows-oriented since that's my main platform.)
 
 --------------------
 
@@ -409,11 +408,8 @@ Xcode
 Install MacPorts: http://www.macports.org
 sudo port -v selfupdate
 sudo port upgrade outdated
-initial:
-   sudo port install autoconf
-   sudo port install autoconf-archive
-   sudo port install subversion
-   sudo port install boost
+initial: sudo port install autoconf
+         sudo port install subversion
 
 The xcode projects were used as follows:
 .../xcode3: Xcode 3.1 on OSX10.5
@@ -427,6 +423,7 @@ OSX 10.8+:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
+setenv BOOST_ROOT /Users/dconnet/src/boost_1_55_0
 setenv WXBASE /Users/dconnet/devtools/wx
 setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.1
 ====
