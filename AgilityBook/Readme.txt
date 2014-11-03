@@ -423,7 +423,7 @@ OSX 10.8+:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
-setenv BOOST_ROOT /Users/dconnet/src/boost_1_55_0
+setenv BOOST_ROOT /Users/dconnet/src/boost_1_56_0
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.1
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-2.8.12
 ====
