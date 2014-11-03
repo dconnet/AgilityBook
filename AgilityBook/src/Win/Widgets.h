@@ -27,6 +27,9 @@
 
 #ifdef WIN32
 #include <richedit.h>
+#ifndef IMF_SPELLCHECKING
+#define IMF_SPELLCHECKING 0x0800
+#endif
 #endif
 
 
