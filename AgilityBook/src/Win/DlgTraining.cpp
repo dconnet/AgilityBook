@@ -117,7 +117,7 @@ CDlgTraining::CDlgTraining(
 	ctrlSubname->SetToolTip(_("HIDC_TRAINING_SUBNAME"));
 	ctrlSubname->AutoComplete(subnames);
 
-	CTextCtrl* ctrlNote = new CTextCtrl(this, wxID_ANY, m_Notes,
+	CSpellCheckCtrl* ctrlNote = new CSpellCheckCtrl(this, wxID_ANY, m_Notes,
 		wxDefaultPosition, wxSize(370,210),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_RIGHT));

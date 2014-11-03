@@ -206,7 +206,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNote->Wrap(-1);
 
-	CTextCtrl* ctrlNote = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CSpellCheckCtrl* ctrlNote = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNote->SetHelpText(_("HIDC_CONFIG_EVENT_DESC"));
@@ -356,7 +356,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textMethodNote->Wrap(-1);
 
-	m_ctrlNote = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlNote = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
 	m_ctrlNote->SetHelpText(_("HIDC_CONFIG_EVENT_NOTES"));
 	m_ctrlNote->SetToolTip(_("HIDC_CONFIG_EVENT_NOTES"));

@@ -141,7 +141,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDesc->Wrap(-1);
 
-	CTextCtrl* ctrlDesc = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 110), wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlDesc->SetHelpText(_("HIDC_CONFIG_TITLE_DESC"));

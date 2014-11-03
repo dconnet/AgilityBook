@@ -309,7 +309,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 
 	wxStaticBox* boxComment = new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_COMMENTS"));
 
-	CTextCtrl* ctrlNote = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CSpellCheckCtrl* ctrlNote = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(200, 150), wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Comments, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlNote->SetHelpText(_("HIDC_EXISTING_COMMENTS"));

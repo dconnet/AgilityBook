@@ -86,7 +86,7 @@ CDlgPluginDetails::CDlgPluginDetails(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDesc->Wrap(-1);
 
-	CTextCtrl* ctrlDesc = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_strDesc, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlDesc->SetHelpText(_("HIDC_PLUGINDETAIL_DESC"));

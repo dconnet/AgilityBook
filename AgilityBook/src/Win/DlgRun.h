@@ -59,6 +59,7 @@ class CMetaDataDisplay;
 class CQualifyingComboBox;
 class CReportListCtrl;
 class CRichEditCtrl2;
+class CSpellCheckCtrl;
 class CTextCtrl;
 class wxCheckBox;
 class wxDateEvent;
@@ -145,7 +146,7 @@ private:
 	//CNoteButton m_ctrlJudgeNotes;
 	CAutoFillComboBox* m_ctrlHandler;
 	wxString m_Handler;
-	CTextCtrl* m_ctrlConditions;
+	CSpellCheckCtrl* m_ctrlConditions;
 	wxString m_Conditions;
 	CRichEditCtrl2* m_ctrlDesc;
 	wxButton* m_ctrlPartnerEdit;

@@ -24,6 +24,7 @@
 #include <set>
 #include <vector>
 class CAgilityBookDoc;
+class CSpellCheckCtrl;
 class CTextCtrl;
 class wxBitmapComboBox;
 
@@ -72,7 +73,7 @@ private:
 	wxBitmapComboBox* m_ctrlNames;
 	wxButton* m_ctrlDelete;
 	wxCheckBox* m_ctrlVisible;
-	CTextCtrl* m_ctrlNotes;
+	CSpellCheckCtrl* m_ctrlNotes;
 	wxBitmap m_None;
 	wxBitmap m_Note;
 	wxBitmap m_Added;
