@@ -2,10 +2,10 @@
 - New features / Enhancements:
   - Change Tree/Runs view to a single consolidated view.
     [Still not decided - compile option now allows toggling back to old format]
-	[currently set on old format]
+    [currently set on old format]
 [ Note, most functionality is now complete ]
 
-11/2/2014: v2.4.5.<development>
+11/4/2014: v2.4.5.<development>
 - Bumped Configuration v48:
   - Added CKCSC
   - Fixed AKC MXP/MJP titles (should not be recurring)
@@ -14,6 +14,8 @@
 - Bug fixes:
   - Fix gambles with no closing required so titling works. (CPE non-traditional
     and USDAA tournament) Points earned can be properly specified as open/close.
+  - Fixed an issue where clicking (or just mousing over) a URL caused multipe
+    browser pages to open.
 
 8/17/2014: v2.4.4.92
 - Bug fixes:

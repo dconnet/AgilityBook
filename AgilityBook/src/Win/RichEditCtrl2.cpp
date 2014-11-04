@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-11-04 OnUrl was being called on mouseover. Caused nasty multiple-open.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-02-19 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -32,7 +33,7 @@ CRichEditCtrl2::CRichEditCtrl2(
 		const wxSize& size,
 		bool bReadOnly)
 	: CTextCtrl(parent, id, value, pos, size,
-		wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH | (bReadOnly ? wxTE_READONLY : 0))
+		wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH2 | (bReadOnly ? wxTE_READONLY : 0))
 {
 	BIND_OR_CONNECT(wxEVT_COMMAND_TEXT_URL, wxTextUrlEventHandler, CRichEditCtrl2::OnUrl);
 	if (bReadOnly)
@@ -61,6 +62,9 @@ void CRichEditCtrl2::SetEditable(bool editable)
 
 void CRichEditCtrl2::OnUrl(wxTextUrlEvent& evt)
 {
-	wxString url = GetRange(evt.GetURLStart(), evt.GetURLEnd());
-	wxLaunchDefaultBrowser(url);
+	if (evt.GetMouseEvent().LeftDown())
+	{
+		wxString url = GetRange(evt.GetURLStart(), evt.GetURLEnd());
+		wxLaunchDefaultBrowser(url);
+	}
 }
