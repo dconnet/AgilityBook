@@ -16,7 +16,7 @@
  * Text Controls: Turn off tabstops on multiline readonly controls.
  *
  * Revision History
- * 2014-10-31 Enable spellchecking on richedit on Win8+.
+ * 2014-11-03 Enable spellchecking on richedit on Win8+.
  * 2010-03-28 Moved SetColumnWidth override from CReportListCtrl.
  *            Removed wx2.9 kludges (was causing problems on Mac).
  * 2009-10-11 Created.
@@ -24,13 +24,6 @@
 
 #include <wx/listctrl.h>
 #include <wx/treectrl.h>
-
-#ifdef WIN32
-#include <richedit.h>
-#ifndef IMF_SPELLCHECKING
-#define IMF_SPELLCHECKING 0x0800
-#endif
-#endif
 
 
 class CListCtrl : public wxListView
@@ -167,24 +160,7 @@ public:
 			&& wxControl::AcceptsFocus();
 	}
 
-	bool EnableSpellChecking()
-	{
-		bool bChanged = false;
-#ifdef WIN32
-		//#define wxTE_SPELLCHECK     (0x0004 | wxTE_RICH2)
-		// 4 & 8 look like they're available
-		if (!HasFlag(wxTE_READONLY) && IsRich())
-		{
-			bChanged = true;
-			// Note: This only works on Win8+. Thankfully, it has no effect
-			// on lower versions, so we can safely just call it.
-			::SendMessage(GetHWND(), EM_SETLANGOPTIONS, 0, IMF_SPELLCHECKING);
-			LRESULT style = ::SendMessage(GetHWND(), EM_GETEDITSTYLE, 0, 0);
-			::SendMessage(GetHWND(), EM_SETEDITSTYLE, 0, style | SES_USECTF | SES_CTFALLOWEMBED | SES_CTFALLOWSMARTTAG | SES_CTFALLOWPROOFING);
-		}
-#endif
-		return bChanged;
-	}
+	bool EnableSpellChecking(bool bForceRtfAsPlainText = true);
 
 private:
 	bool m_bAllowMultilineTabstop;
