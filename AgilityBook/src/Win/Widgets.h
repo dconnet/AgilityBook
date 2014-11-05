@@ -170,6 +170,7 @@ private:
 class CSpellCheckCtrl : public  CTextCtrl
 {
 	DECLARE_CLASS(CSpellCheckCtrl)
+
 public:
 	CSpellCheckCtrl()
 		: CTextCtrl()
@@ -184,8 +185,19 @@ public:
 			long style = 0,
 			const wxValidator& validator = wxDefaultValidator,
 			const wxString& name = wxTextCtrlNameStr)
-		: CTextCtrl(parent, id, value, pos, size, style | wxTE_RICH2, validator, name)
+		: CTextCtrl()
 	{
-		EnableSpellChecking();
+		Init();
+
+		bool bPlainText = false;
+		if (!(style & (wxTE_RICH | wxTE_RICH2)))
+		{
+			bPlainText = true;
+			style |= wxTE_RICH2;
+		}
+
+		Create(parent, id, value, pos, size, style, validator, name);
+
+		EnableSpellChecking(bPlainText);
 	}
 };

@@ -268,7 +268,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 
 	m_ctrlCalView = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH);
+		wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH2);
 	m_ctrlCalView->SetFont(m_fontCalView);
 	SetRichText();
 
