@@ -34,7 +34,9 @@
 #include <wx/dir.h>
 #include <wx/fileconf.h>
 #include <wx/stdpaths.h>
+#if wxCHECK_VERSION(3, 0, 0)
 #include <wx/translation.h>
+#endif
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -49,7 +51,7 @@ CLanguageManager::CLanguageManager(ILanguageCallback* pCallback)
 	, m_locale(nullptr)
 	, m_bEmbedded(false)
 {
-#ifdef WIN32
+#if defined(WIN32) && wxCHECK_VERSION(3, 0, 0)
 	m_bEmbedded = false;
 #endif
 }
@@ -136,7 +138,7 @@ bool CLanguageManager::SelectLanguage(wxWindow* parent)
 }
 
 
-#ifdef WIN32
+#if defined(WIN32) && wxCHECK_VERSION(3, 0, 0)
 BOOL CALLBACK EnumResourceProc(HMODULE hModule, LPCTSTR lpszType, LPTSTR lpszName, LONG_PTR lParam)
 {
 	std::vector<wxString>* pFiles = reinterpret_cast<std::vector<wxString>*>(lParam);
@@ -158,7 +160,7 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 	wxArrayString choices;
 
 	std::vector<wxString> files;
-#ifdef WIN32
+#if defined(WIN32) && wxCHECK_VERSION(3, 0, 0)
 	if (m_bEmbedded)
 	{
 		// Note: Resource names are the basename+langid.
@@ -263,7 +265,7 @@ bool CLanguageManager::SetLang(int langId)
 	m_locale->Init(m_CurLang, wxLOCALE_CONV_ENCODING);
 #endif
 
-#ifdef WIN32
+#if defined(WIN32) && wxCHECK_VERSION(3, 0, 0)
 	if (m_bEmbedded)
 		wxTranslations::Get()->SetLoader(new wxResourceTranslationsLoader);
 #endif
