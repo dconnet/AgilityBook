@@ -53,6 +53,7 @@ public:
 	bool SetLang(int langId);
 
 private:
+	bool m_bEmbedded; // On Win32, mo files are embedded in rc file
 	ILanguageCallback* m_pCallback;
 	int m_CurLang;
 	wxString m_dirLang; /// Where the en/fr/etc directories are located
