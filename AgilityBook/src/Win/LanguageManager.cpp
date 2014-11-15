@@ -50,7 +50,7 @@ CLanguageManager::CLanguageManager(ILanguageCallback* pCallback)
 	, m_bEmbedded(false)
 {
 #ifdef WIN32
-	m_bEmbedded = true;
+	m_bEmbedded = false;
 #endif
 }
 
