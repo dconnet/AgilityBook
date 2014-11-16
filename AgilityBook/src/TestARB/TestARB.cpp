@@ -89,7 +89,8 @@ public:
 #endif
 	{
 #if defined(__WXWINDOWS__)
-		m_langMgr = new CLanguageManager(this);
+#pragma PRAGMA_TODO(Move MO to RC file)
+		m_langMgr = new CLanguageManager(this, false);
 		m_langMgr->InitLocale();
 #endif
 	}

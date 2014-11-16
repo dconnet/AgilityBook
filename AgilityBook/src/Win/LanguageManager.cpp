@@ -43,17 +43,18 @@
 #endif
 
 
-CLanguageManager::CLanguageManager(ILanguageCallback* pCallback)
+CLanguageManager::CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded)
 	: m_pCallback(pCallback)
 	, m_CurLang(wxLANGUAGE_DEFAULT)
 	, m_dirLang()
 	, m_dirLoadedLang()
 	, m_locale(nullptr)
-	, m_bEmbedded(false)
-{
 #if defined(WIN32) && wxCHECK_VERSION(3, 0, 0)
-	m_bEmbedded = false;
+	, m_bEmbedded(bEmbedded)
+#else
+	, m_bEmbedded(false)
 #endif
+{
 }
 
 

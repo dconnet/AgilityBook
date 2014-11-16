@@ -30,11 +30,18 @@ class CBaseApp : public wxApp
 {
 	DECLARE_NO_COPY_CLASS(CBaseApp)
 protected:
+	typedef enum
+	{
+		eLanguageCatalogNone,      // Not using MO files.
+		eLanguageCatalogDirectory, // Files are in 'lang' directory
+		eLanguageCatalogEmbedded,  // Files are embedded in rc file (win only)
+	} LanguageCatalog;
+
 	// If appRegKey is empty, no config will be created.
 	CBaseApp(
 			wxString const& appName,
 			wxString const& appRegKey = wxEmptyString,
-			bool bUseLangCatalog = false);
+			LanguageCatalog useLangCatalog = eLanguageCatalogNone);
 	~CBaseApp();
 
 	// wxApp virtual

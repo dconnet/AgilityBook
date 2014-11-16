@@ -171,7 +171,7 @@ END_EVENT_TABLE()
 
 
 CAgilityBookApp::CAgilityBookApp()
-	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, true)
+	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, eLanguageCatalogDirectory)
 	, m_bShutdownSocket(false)
 	, m_Localization()
 	, m_UpdateInfo()
@@ -179,6 +179,7 @@ CAgilityBookApp::CAgilityBookApp()
 	, m_printDialogData(nullptr)
 	, m_Prn(nullptr)
 {
+#pragma PRAGMA_TODO(Move MO to RC file)
 	m_BaseInfoName = ARB_CONFIG_INFO;
 }
 

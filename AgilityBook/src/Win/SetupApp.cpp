@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * 2014-11-16 Add support to language initialization for embedding MO files.
  * 2014-07-08 Cleanup config if intialization fails.
  * 2013-11-26 Fixed language initialization structure.
  * 2013-08-22 Fixed issue with ctor auto-cast.
@@ -38,7 +39,7 @@
 CBaseApp::CBaseApp(
 		wxString const& appName,
 		wxString const& appRegKey,
-		bool bUseLangCatalog)
+		LanguageCatalog useLangCatalog)
 	: m_VendorName(wxT("dcon Software"))
 	, m_BaseAppName(appName)
 	, m_BaseRegName(appRegKey)
@@ -50,7 +51,9 @@ CBaseApp::CBaseApp(
 {
 	if (m_BaseRegName.empty())
 		m_BaseRegName = m_BaseAppName;
-	m_langMgr = new CLanguageManager(bUseLangCatalog ? this : nullptr);
+	m_langMgr = new CLanguageManager(
+			eLanguageCatalogDirectory == useLangCatalog ? this : nullptr,
+			eLanguageCatalogEmbedded == useLangCatalog);
 }
 
 

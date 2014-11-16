@@ -37,7 +37,15 @@ class CLanguageManager
 {
 public:
 	// Must use callback to enable catalogs.
-	CLanguageManager(ILanguageCallback* pCallback);
+	// Embedding language MO files is only supported on Windows.
+	CLanguageManager(
+			ILanguageCallback* pCallback,
+#if defined(WIN32) && wxCHECK_VERSION(3, 0, 0)
+			bool bEmbedded
+#else
+			bool bEmbedded = false
+#endif
+			);
 	~CLanguageManager();
 
 	bool InitLocale();
