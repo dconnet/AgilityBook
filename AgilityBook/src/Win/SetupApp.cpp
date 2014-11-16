@@ -52,7 +52,7 @@ CBaseApp::CBaseApp(
 	if (m_BaseRegName.empty())
 		m_BaseRegName = m_BaseAppName;
 	m_langMgr = new CLanguageManager(
-			eLanguageCatalogDirectory == useLangCatalog ? this : nullptr,
+			eLanguageCatalogNone != useLangCatalog ? this : nullptr,
 			eLanguageCatalogEmbedded == useLangCatalog);
 }
 
