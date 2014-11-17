@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-11-17 Added "true" units (nonIEC) to FormatBytes.
  * 2014-08-28 Enhanced FormatBytes
  * 2012-04-03 Added ARBVersion test.
  * 2011-11-17 Add localization test.
@@ -37,27 +38,28 @@ static const struct
 	int prec[NUM_PREC];
 	wchar_t const* unitSI[NUM_PREC];
 	wchar_t const* unitBinary[NUM_PREC];
+	wchar_t const* unitTrue[NUM_PREC];
 } sc_FormatUnits[] = {
-	{0.0,             {1, 2}, {L"0 B", L"0 B"},            {L"0 B", L"0 B"}},
-	{27.0,            {1, 2}, {L"27 B", L"27 B"},          {L"27 B", L"27 B"}},
-	{999.0,           {1, 2}, {L"999 B", L"999 B"},        {L"999 B", L"999 B"}},
-	{1000.0,          {1, 2}, {L"1 kB", L"1 kB"},          {L"1000 B", L"1000 B"}},
-	{1023.0,          {1, 2}, {L"1 kB", L"1.02 kB"},       {L"1023 B", L"1023 B"}},
-	{1024.0,          {1, 2}, {L"1 kB", L"1.02 kB"},       {L"1 KiB", L"1 KiB"}},
-	{1536.0,          {1, 2}, {L"1.5 kB", L"1.54 kB"},     {L"1.5 KiB", L"1.5 KiB"}},
-	{1600.0,          {1, 2}, {L"1.6 kB", L"1.6 kB"},      {L"1.6 KiB", L"1.56 KiB"}},
-	{1728.0,          {1, 2}, {L"1.7 kB", L"1.73 kB"},     {L"1.7 KiB", L"1.69 KiB"}},
+	{0.0,             {1, 2}, {L"0 B", L"0 B"},            {L"0 B", L"0 B"},            {L"0 B", L"0 B"}},
+	{27.0,            {1, 2}, {L"27 B", L"27 B"},          {L"27 B", L"27 B"},          {L"27 B", L"27 B"}},
+	{999.0,           {1, 2}, {L"999 B", L"999 B"},        {L"999 B", L"999 B"},        {L"999 B", L"999 B"}},
+	{1000.0,          {1, 2}, {L"1 kB", L"1 kB"},          {L"1000 B", L"1000 B"},      {L"1000 B", L"1000 B"}},
+	{1023.0,          {1, 2}, {L"1 kB", L"1.02 kB"},       {L"1023 B", L"1023 B"},      {L"1023 B", L"1023 B"}},
+	{1024.0,          {1, 2}, {L"1 kB", L"1.02 kB"},       {L"1 KiB", L"1 KiB"},        {L"1 KB", L"1 KB"}},
+	{1536.0,          {1, 2}, {L"1.5 kB", L"1.54 kB"},     {L"1.5 KiB", L"1.5 KiB"},    {L"1.5 KB", L"1.5 KB"}},
+	{1600.0,          {1, 2}, {L"1.6 kB", L"1.6 kB"},      {L"1.6 KiB", L"1.56 KiB"},   {L"1.6 KB", L"1.56 KB"}},
+	{1728.0,          {1, 2}, {L"1.7 kB", L"1.73 kB"},     {L"1.7 KiB", L"1.69 KiB"},   {L"1.7 KB", L"1.69 KB"}},
 #ifdef __WXMAC__
 	// Note: On Mac, 15.625 is rounding differently than Windows.
-	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.62 KiB"}},
+	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.62 KiB"}, {L"15.6 KB", L"15.62 KB"}},
 #else
-	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.63 KiB"}},
+	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.63 KiB"}, {L"15.6 KB", L"15.63 KB"}},
 #endif
-	{110592.0,        {1, 2}, {L"110.6 kB", L"110.59 kB"}, {L"108 KiB", L"108 KiB"}},
-	{7077888.0,       {1, 2}, {L"7.1 MB", L"7.08 MB"},     {L"6.8 MiB", L"6.75 MiB"}},
-	{452984832.0,     {1, 2}, {L"453 MB", L"452.98 MB"},   {L"432 MiB", L"432 MiB"}},
-	{28991029248.0,	  {1, 2}, {L"29 GB", L"28.99 GB"},     {L"27 GiB", L"27 GiB"}},
-	{1855425871872.0, {1, 2}, {L"1.9 TB", L"1.86 TB"},     {L"1.7 TiB", L"1.69 TiB"}}
+	{110592.0,        {1, 2}, {L"110.6 kB", L"110.59 kB"}, {L"108 KiB", L"108 KiB"},    {L"108 KB", L"108 KB"}},
+	{7077888.0,       {1, 2}, {L"7.1 MB", L"7.08 MB"},     {L"6.8 MiB", L"6.75 MiB"},   {L"6.8 MB", L"6.75 MB"}},
+	{452984832.0,     {1, 2}, {L"453 MB", L"452.98 MB"},   {L"432 MiB", L"432 MiB"},    {L"432 MB", L"432 MB"}},
+	{28991029248.0,	  {1, 2}, {L"29 GB", L"28.99 GB"},     {L"27 GiB", L"27 GiB"},      {L"27 GB", L"27 GB"}},
+	{1855425871872.0, {1, 2}, {L"1.9 TB", L"1.86 TB"},     {L"1.7 TiB", L"1.69 TiB"},   {L"1.7 TB", L"1.69 TB"}}
 };
 
 
@@ -98,8 +100,9 @@ SUITE(TestMisc)
 			{
 				for (size_t iPrec = 0; iPrec < NUM_PREC; ++iPrec)
 				{
-					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], false) == sc_FormatUnits[i].unitBinary[iPrec]);
-					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], true) == sc_FormatUnits[i].unitSI[iPrec]);
+					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesBinary) == sc_FormatUnits[i].unitBinary[iPrec]);
+					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesSI) == sc_FormatUnits[i].unitSI[iPrec]);
+					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesTrue) == sc_FormatUnits[i].unitTrue[iPrec]);
 				}
 			}
 		}

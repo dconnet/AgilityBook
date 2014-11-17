@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-11-17 Enhanced FormatBytes
  * 2014-06-24 Added CompareNoCase.
  * 2012-08-12 Moved FormatBytes to StringUtil
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -117,14 +118,21 @@ namespace StringUtil
 			std::wstring const& inReplace,
 			std::wstring const& inReplaceWith);
 
+	typedef enum
+	{
+		eBytesSI,     // KB == 1000 btyes
+		eBytesBinary, // KiB == 1024 bytes
+		eBytesTrue,   // KB == 1024 bytes (non-IEC)
+	} ByteSizeStyle;
+
 	/**
 	 * Return a formatted string using IEC binary prefixes.
 	 * @param inSize Number of bytes
 	 * @param inPrec Precision (passed to ARBDouble::ToString)
-	 * @param inUseSI Use SI units or binary units
+	 * @param inSizeStyle Use SI, binary, or programmer (true!) units
 	 */
 	std::wstring FormatBytes(
 			double inSize,
 			int inPrec = 2,
-			bool inUseSI = false);
+			ByteSizeStyle inSizeStyle = eBytesBinary);
 };

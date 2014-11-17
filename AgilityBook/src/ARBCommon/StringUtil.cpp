@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-11-17 Enhanced FormatBytes (added true units as they're meant to be!)
  * 2014-08-28 Enhanced FormatBytes
  * 2014-06-24 Added CompareNoCase.
  * 2013-01-25 Better non-wx support.
@@ -792,11 +793,12 @@ std::wstring Replace(
 std::wstring FormatBytes(
 		double inSize,
 		int inPrec,
-		bool inUseSI)
+		ByteSizeStyle inSizeStyle)
 {
-	static wchar_t const * const sc_unitsSI[]     = {L" B", L" kB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB"};
 	// byte, kibibyte, mebibyte, gibibyte, tebibyte, pebibyte, exbibyte
+	static wchar_t const * const sc_unitsSI[]     = {L" B", L" kB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB"};
 	static wchar_t const * const sc_unitsBinary[] = {L" B", L" KiB", L" MiB", L" GiB", L" TiB", L" PiB", L" EiB"};
+	static wchar_t const * const sc_unitsTrue[]   = {L" B", L" KB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB"};
 	static const struct
 	{
 		wchar_t const* const* units;
@@ -805,9 +807,25 @@ std::wstring FormatBytes(
 	} sc_units[] = {
 		{sc_unitsSI, ARRAY_SIZE(sc_unitsSI), 1000.0},
 		{sc_unitsBinary, ARRAY_SIZE(sc_unitsBinary), 1024.0},
+		{sc_unitsTrue, ARRAY_SIZE(sc_unitsTrue), 1024.0},
 	};
 
-	size_t unitIndex = inUseSI ? 0 : 1;
+	size_t unitIndex = 0;
+	switch (inSizeStyle)
+	{
+	default:
+		assert(0);
+		// fall thru
+	case eBytesSI:
+		unitIndex = 0;
+		break;
+	case eBytesBinary:
+		unitIndex = 1;
+		break;
+	case eBytesTrue:
+		unitIndex = 2;
+		break;
+	}
 
 	int index = 0;
 	if (abs(inSize) != 0.0)
