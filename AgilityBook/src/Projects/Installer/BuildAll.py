@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2014-11-17 Add VC12 support, restructured for less code duplication.
 # 2013-09-12 Add /m option to msbuild (multiple processor build)
 # 2012-12-30 Drop VC9.
 # 2012-09-23 Migrate to wx2.9 for ARBv3.
@@ -17,7 +18,7 @@
    -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.0.2)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -t:       Testing, just print commands to run
-   compiler: vc10, vc11 (default: vc10)
+   compiler: vc10, vc11, vc12 (default: vc10)
 """
 
 import getopt
@@ -104,7 +105,7 @@ def GetRegString(hkey, path, value):
 		return ""
 
 
-# 7.1, 8.0, 9.0, 10.0, 11.0 (as observed on my machine)
+# 7.1, 8.0, 9.0, 10.0, 11.0, 12.0 (as observed on my machine)
 def GetVSDir(version):
 	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
@@ -117,19 +118,28 @@ def GetVSDir(version):
 
 
 def AddCompiler(compilers, c):
-	global vc10Base, vc11Base
+	global vc10Base, vc11Base, vc12Base
 	baseDir = ''
 	testFile = ''
+
 	if c == 'vc10':
 		vc10Base = GetVSDir("10.0")
 		baseDir = vc10Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
+
 	elif c == 'vc11':
 		vc11Base = GetVSDir("11.0")
 		baseDir = vc11Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
+
+	elif c == 'vc12':
+		vc12Base = GetVSDir("12.0")
+		baseDir = vc12Base
+		testFile = baseDir + r'\VC\vcvarsall.bat'
+
 	else:
 		return False
+
 	if not os.access(baseDir, os.F_OK) or not os.access(testFile, os.F_OK):
 		print 'ERROR: "' + baseDir + '" does not exist'
 		return False
@@ -203,7 +213,7 @@ def main():
 		RunCmds(cmds)
 
 	# Targets:
-	# VC10/VC11
+	# VC10/VC11/VC12
 	#  Configuration: 'Release'/'Debug'
 	#  Platform: Win32, x64
 	#  Targets: AgilityBook, ARBHelp, ARBUpdater, LibARB, LibTidy, TestARB
@@ -211,93 +221,98 @@ def main():
 	for compiler in compilers:
 		if compiler == 'vc10':
 			vc10Base = GetVSDir("10.0")
-			PlatformTools = '100'
-			if useVC10SDK:
-				setvcvars = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd'
-			else:
-				setvcvars = vc10Base + r'\VC\vcvarsall.bat'
 			if not os.access(vc10Base, os.F_OK):
 				print 'ERROR: "' + vc10Base + '" does not exist'
 				return 1
-			if not os.access(setvcvars, os.F_OK):
-				print 'ERROR: "' + setvcvars + '" does not exist'
-				return 1
-			if clean:
-				RmMinusRF('../../../bin/vc' + PlatformTools + 'Win32')
+			PlatformTools = '100'
 			if useVC10SDK:
-				cmds = (
+				setvcvars = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd'
+				cmds32 = (
 					r'title VC10 Release Win32',
 					r'cd ..\VC10',
 					r'call "' + setvcvars + r'" /Release /x86 /xp',
 					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
-			else:
-				cmds = (
-					r'title VC10 Release Win32',
-					r'cd ..\VC10',
-					r'call "' + setvcvars + r'" x86',
-					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
-			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
-				print 'ERROR: Compile failed, bailing out'
-				return 1
-			if clean:
-				RmMinusRF('../../../bin/vc' + PlatformTools + 'x64')
-			if useVC10SDK:
-				cmds = (
+				cmds64 = (
 					r'title VC10 Release x64',
 					r'cd ..\VC10',
 					r'call "' + setvcvars + r'" /Release /x64 /xp',
 					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64',
 					r'color 07')
 			else:
+				setvcvars = vc10Base + r'\VC\vcvarsall.bat'
+				cmds32 = (
+					r'title VC10 Release Win32',
+					r'cd ..\VC10',
+					r'call "' + setvcvars + r'" x86',
+					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
 				envTarget = 'x86_amd64'
 				if bit64on64:
 					envTarget = 'amd64'
-				cmds = (
+				cmds64 = (
 					r'title VC10 Release x64',
 					r'cd ..\VC10',
 					r'call "' + setvcvars + r'" ' + envTarget,
 					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
-			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
-				print 'ERROR: Compile failed, bailing out'
-				return 1
 
 		elif compiler == 'vc11':
 			vc11Base = GetVSDir("11.0")
-			PlatformTools = '110'
-			setvcvars = vc11Base + r'\VC\vcvarsall.bat'
 			if not os.access(vc11Base, os.F_OK):
 				print 'ERROR: "' + vc11Base + '" does not exist'
 				return 1
-			if not os.access(setvcvars, os.F_OK):
-				print 'ERROR: "' + setvcvars + '" does not exist'
-				return 1
-			if clean:
-				RmMinusRF('../../../bin/vc' + PlatformTools + 'Win32')
-			cmds = (
+			PlatformTools = '110'
+			setvcvars = vc11Base + r'\VC\vcvarsall.bat'
+			cmds32 = (
 				r'title VC11 Release Win32',
 				r'cd ..\VC11',
 				r'call "' + setvcvars + r'" x86',
 				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
-			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
-				print 'ERROR: Compile failed, bailing out'
-				return 1
-			if clean:
-				RmMinusRF('../../../bin/vc' + PlatformTools + 'x64')
 			envTarget = 'x86_amd64'
 			if bit64on64:
 				envTarget = 'amd64'
-			cmds = (
+			cmds64 = (
 				r'title VC11 Release x64',
 				r'cd ..\VC11',
 				r'call "' + setvcvars + r'" ' + envTarget,
 				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
-			RunCmds(cmds)
-			if not testing and not os.access('../../../bin/vc' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
-				print 'ERROR: Compile failed, bailing out'
+
+		elif compiler == 'vc12':
+			vc12Base = GetVSDir("12.0")
+			if not os.access(vc12Base, os.F_OK):
+				print 'ERROR: "' + vc12Base + '" does not exist'
 				return 1
+			PlatformTools = '120'
+			setvcvars = vc12Base + r'\VC\vcvarsall.bat'
+			cmds32 = (
+				r'title VC12 Release Win32',
+				r'cd ..\VC12',
+				r'call "' + setvcvars + r'" x86',
+				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
+			envTarget = 'x86_amd64'
+			if bit64on64:
+				envTarget = 'amd64'
+			cmds64 = (
+				r'title VC12 Release x64',
+				r'cd ..\VC12',
+				r'call "' + setvcvars + r'" ' + envTarget,
+				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
+
+		if not os.access(setvcvars, os.F_OK):
+			print 'ERROR: "' + setvcvars + '" does not exist'
+			return 1
+
+		if clean:
+			RmMinusRF('../../../bin/vc' + PlatformTools + 'Win32')
+		RunCmds(cmds32)
+		if not testing and not os.access('../../../bin/vc' + PlatformTools + 'Win32/Release/AgilityBook.exe', os.F_OK):
+			print 'ERROR: Compile failed, bailing out'
+			return 1
+
+		if clean:
+			RmMinusRF('../../../bin/vc' + PlatformTools + 'x64')
+		RunCmds(cmds64)
+		if not testing and not os.access('../../../bin/vc' + PlatformTools + 'x64/Release/AgilityBook.exe', os.F_OK):
+			print 'ERROR: Compile failed, bailing out'
+			return 1
 
 	return 0
 

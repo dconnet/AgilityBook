@@ -90,11 +90,14 @@
     <Link>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
       <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
@@ -108,11 +111,14 @@
     <Link>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
       <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
@@ -126,11 +132,14 @@
     <Link>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
       <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
@@ -144,11 +153,14 @@
     <Link>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
       <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>

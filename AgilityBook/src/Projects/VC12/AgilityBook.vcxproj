@@ -79,11 +79,14 @@
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -91,11 +94,14 @@
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -103,11 +109,14 @@
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -115,11 +124,14 @@
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>

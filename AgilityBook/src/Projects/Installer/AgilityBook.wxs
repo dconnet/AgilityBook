@@ -36,6 +36,7 @@ Note: !(bind.fileVersion._AgilityBook.exe) could replace $(var.CURRENT_VERSION)
       Only difference is bind is all 4 parts, the var is only 3.
 
 Revision History
+2014-11-17 Removed .mo files (moved into resource)
 2014-05-07 Minor tweak to support Wix 3.8.
 2014-04-22 Change REP to after InstallFinalize.
            Added feature that user pinned shortcuts are not broken.
@@ -224,22 +225,7 @@ Revision History
 		</Directory>
 		<Directory Id="$(var.ProgramFilesFolder)">
 			<Directory Id="CompanyFolder" Name="dcon Software">
-				<Directory Id="INSTALLDIR" Name="$(var.DEFFOLDER)">
-					<Directory Id="dirLang" Name="lang">
-<?foreach langVar in $(var.SUPPORTED_LANGS)?>
-						<Directory Id="dir.$(var.langVar)" Name="$(var.langVar)">
-
-							<Component Id="C_$(var.langVar)" Guid="*" Win64="$(var.Win64)">
-								<File Id="_$(var.langVar).mo"
-									Name="AgilityBook.mo"
-									Source="$(var.BASEDIR)\lang\$(var.langVar)\AgilityBook.mo"
-									KeyPath="yes"
-									DiskId="1" />
-							</Component>
-						</Directory>
-<?endforeach?>
-					</Directory>
-				</Directory>
+				<Directory Id="INSTALLDIR" Name="$(var.DEFFOLDER)" />
 			</Directory>
 		</Directory>
 	</Directory>
@@ -374,9 +360,6 @@ Revision History
 		<ComponentRef Id="C_RegistryEntries" />
 		<ComponentRef Id="C_AgilityBook.exe" />
 		<ComponentRef Id="C_AgilityBook.dat" />
-<?foreach langVar in $(var.SUPPORTED_LANGS)?>
-		<ComponentRef Id="C_$(var.langVar)" />
-<?endforeach?>
 
 		<Feature Id="ARBHelp"
 			Display="expand"

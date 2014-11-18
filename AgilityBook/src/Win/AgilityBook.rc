@@ -62,6 +62,9 @@ AGILITYBOOK             ICON                    "res\\AgilityBook.ico"
 /////////////////////////////////////////////////////////////////////////////
 
 
+AGILITYBOOK_EN_US       MOFILE                  "lang/en_US/AgilityBook.mo"
+AGILITYBOOK_FR_FR       MOFILE                  "lang/fr_FR/AgilityBook.mo"
+
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////

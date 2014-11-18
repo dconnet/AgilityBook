@@ -64,6 +64,9 @@ IDR_MAINFRAME           ICON                    "..\\Win\\res\\AgilityBook.ico"
 /////////////////////////////////////////////////////////////////////////////
 
 
+TESTWXARB_EN_US         MOFILE                  "lang/en_US/TestwxARB.mo"
+TESTWXARB_FR_FR         MOFILE                  "lang/fr_FR/TestwxARB.mo"
+
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////

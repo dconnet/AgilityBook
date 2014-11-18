@@ -6,6 +6,8 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2014-11-17 wix3.9 deprecated -sadv
+# 2014-11-17 Removed .mo files (moved into resource)
 # 2013-11-27 Fix arbdll.dll access when building x64.
 # 2013-08-15 Added support for multiple wxs files.
 # 2013-08-12 Added vc11/12 support, remove pre-10 support.
@@ -87,9 +89,6 @@ UpgradeCode = '4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4'
 supportedLangs = [
 	('en-us', '1033'),
 	('fr-fr', '1036')]
-# List of mo files to be included in installer in xx_YY format.
-# (xx is ISO 639 language code, YY is ISO 3166 country code)
-langNames = 'en_US;fr_FR'
 
 wxsFiles = [
 	('AgilityBook'),
@@ -291,7 +290,6 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			candleCmd += ' -arch x86'
 		candleCmd += ' -ext WixUIExtension -ext WixUtilExtension'
 		candleCmd += ' -dBASEDIR="' + baseDir + '"'
-		candleCmd += ' -dSUPPORTED_LANGS=' + langNames
 		candleCmd += ' -dINSTALL_SCOPE=' + perUser
 		runcmd(candleCmd + GetWxsFilesAsString('.wxs'))
 		processing = 0
@@ -303,8 +301,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			if processing > 1:
 				basename += '_' + culture
 			# -wx: Treat warnings as errors
-			# -sadv: Suppress AdvtExecuteSequence table
-			lightCmd = 'light -nologo -wx -pedantic -spdb -sadv'
+			lightCmd = 'light -nologo -wx -pedantic -spdb'
 			lightCmd += ' -dcl:high -cc ' + cabcache
 			if not processing == 1:
 				lightCmd += ' -reusecab'

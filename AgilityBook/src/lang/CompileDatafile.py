@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # Generate the message libraries and data files
 #
-# Requires gettext (msgcat/msgfmt) in PATH
-#
 # Revision History
+# 2014-11-16 Separated PO/MO language from DAT file generation.
 # 2014-05-17 Add exception handling in RunCommand
 # 2012-05-16 Add multiprocessing awareness. Kind of.
 # 2012-03-03 Fixed writing file into dat file.
@@ -14,14 +13,12 @@
 # 2009-03-05 Fixed some parameter passing issues (spaces/hyphens in names)
 # 2009-03-01 Support multiple po files (by using msgcat)
 # 2009-01-02 Updated to support creation of data files
-"""CompileDatafile.py [-x] [-d] [-f filelist] sourceDir firstFile executableDir targetname
+"""CompileDatafile.py [-x] [-d] filelist executableDir targetname
 -x: Exclude ARBUpdater (not needed in test program)
 -d: Debugging mode (does not delete generated autogen.po file)
--f filelist: List of files to include in .dat file
-sourceDir: Directory where .po files are [assumption - all subdirs are lang]
-firstFile: First .po file to process
-executableDir: Directory where executable is (where 'lang' dir is created)
-targetname: Name of .mo and .dat files to generate
+filelist: List of files to include in .dat file
+executableDir: Directory where executable is (where dat file is created)
+targetname: Name of .dat files to generate
 """
 
 import getopt
@@ -30,6 +27,7 @@ import os, os.path
 import stat
 import sys
 import subprocess
+import time
 import zipfile
 
 # By default, gettext is in the path
@@ -60,6 +58,7 @@ class LockFile:
 			return 0
 		try:
 			os.close(self.m_fd)
+			time.sleep(1)
 			os.remove(self.m_filename)
 			return 1
 		except OSError:
@@ -96,9 +95,8 @@ def RunCommand(command, toastErr):
 def main():
 	bIncUpdater = 1
 	bDebug = 0
-	filelist = ''
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'df:x')
+		opts, args = getopt.getopt(sys.argv[1:], 'dx')
 	except getopt.error, msg:
 		print msg
 		print 'Usage:', __doc__
@@ -106,82 +104,38 @@ def main():
 	for o, a in opts:
 		if '-d' == o:
 			bDebug = 1
-		if '-f' == o:
-			filelist = a
-			if not os.access(filelist, os.F_OK):
-				print 'ERROR: "' + filelist + '" does not exist!'
-				print 'Usage:', __doc__
-				return 1;
 		if '-x' == o:
 			bIncUpdater = 0
-	if not len(args) == 4:
+	if not len(args) == 3:
 		print 'Usage:', __doc__
 		return 1
 
-	if not os.environ.has_key('WXWIN'):
-		print 'ERROR: WXWIN environment variable is not set'
-		return 1
-	wxBaseName = os.path.basename(os.environ['WXWIN'])
+	filelist = args[0]
+	executableDir = args[1]
+	targetname = args[2]
 
-	sourceDir = args[0]
-	firstFile = args[1]
-	executableDir = args[2]
-	targetname = args[3]
-
-	if not os.access(sourceDir, os.F_OK):
-		print sourceDir, 'does not exist'
-		return 1
-
-	if not os.access(executableDir, os.F_OK):
-		print executableDir, 'does not exist'
-		return 1
-
-	langDir = os.path.join(executableDir, r'lang')
-	if not os.access(langDir, os.F_OK):
-		os.mkdir(langDir)
-
-	for srcPath in glob.glob(os.path.join(sourceDir, r'*')):
-		langName= os.path.basename(srcPath)
-		if os.access(srcPath, os.F_OK):
-			mode = os.stat(srcPath)[stat.ST_MODE]
-			if stat.S_ISDIR(mode):
-				autogen = os.path.join(srcPath, autogenFile)
-				# -t: output encoding
-				cmd = ['msgcat', '-t', 'utf-8', '-o', autogen, os.path.join(srcPath, firstFile)]
-				for po in glob.glob(os.path.join(srcPath, r'*.po')):
-					if po != os.path.join(srcPath, firstFile) and po != autogen:
-						cmd += [po]
-				wxLangDir = os.path.join(srcPath, wxBaseName)
-				for po in glob.glob(os.path.join(wxLangDir, r'*.po')):
-					cmd += [po]
-				RunCommand(cmd, 0)
-				installPath = os.path.join(langDir, langName)
-				if not os.access(installPath, os.F_OK):
-					os.mkdir(installPath)
-				cmd = ['msgfmt', '--verbose', '--check-format', '--check-domain', '--strict', '-o', os.path.join(installPath, targetname + r'.mo'), autogen]
-				# msgfmt generates interesting messages to stderr, don't toast them.
-				RunCommand(cmd, 0)
-				if not bDebug and os.access(autogen, os.F_OK):
-					os.remove(autogen)
+	# The files listed in the list are relative to the filelist location.
+	if not os.access(filelist, os.F_OK):
+		print 'ERROR: "' + filelist + '" does not exist!'
+		print 'Usage:', __doc__
+		return 1;
 
 	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
-	# The files listed in the list are relative to the filelist location.
-	if 0 < len(filelist):
-		basepath = os.path.dirname(filelist)
-		files = open(filelist)
-		while 1:
-			line = files.readline()
-			if line:
-				line = line.rstrip()
-				inputfile = os.path.abspath(os.path.join(basepath, line))
-				filename = os.path.split(inputfile)[1]
-				if os.access(inputfile, os.F_OK):
-					zip.write(inputfile, filename)
-				else:
-					print 'ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!'
-					return 1
+	basepath = os.path.dirname(filelist)
+	files = open(filelist)
+	while 1:
+		line = files.readline()
+		if line:
+			line = line.rstrip()
+			inputfile = os.path.abspath(os.path.join(basepath, line))
+			filename = os.path.split(inputfile)[1]
+			if os.access(inputfile, os.F_OK):
+				zip.write(inputfile, filename)
 			else:
-				break
+				print 'ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!'
+				return 1
+		else:
+			break
 	if bIncUpdater and os.access(executableDir + r'\ARBUpdater.exe', os.F_OK):
 		zip.write(executableDir + r'\ARBUpdater.exe', 'ARBUpdater.exe')
 	zip.close()

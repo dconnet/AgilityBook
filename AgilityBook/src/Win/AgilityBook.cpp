@@ -170,8 +170,11 @@ BEGIN_EVENT_TABLE(CAgilityBookApp, wxApp)
 END_EVENT_TABLE()
 
 
+// eLanguageCatalogEmbedded will fallback to eLanguageCatalogDirectory
+// on systems that don't support it.
+
 CAgilityBookApp::CAgilityBookApp()
-	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, eLanguageCatalogDirectory)
+	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, eLanguageCatalogEmbedded)
 	, m_bShutdownSocket(false)
 	, m_Localization()
 	, m_UpdateInfo()
@@ -179,7 +182,6 @@ CAgilityBookApp::CAgilityBookApp()
 	, m_printDialogData(nullptr)
 	, m_Prn(nullptr)
 {
-#pragma PRAGMA_TODO(Move MO to RC file)
 	m_BaseInfoName = ARB_CONFIG_INFO;
 }
 
