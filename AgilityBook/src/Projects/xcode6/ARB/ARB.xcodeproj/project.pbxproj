@@ -423,7 +423,7 @@
 		E19B62E2166C08B9004DEDA4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "David Connet";
 			};
 			buildConfigurationList = E19B62E5166C08B9004DEDA4 /* Build configuration list for PBXProject "ARB" */;

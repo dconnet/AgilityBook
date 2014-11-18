@@ -198,7 +198,7 @@
 		E110B501177FD120004071B5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "David Connet";
 			};
 			buildConfigurationList = E110B504177FD120004071B5 /* Build configuration list for PBXProject "ARBCommon" */;

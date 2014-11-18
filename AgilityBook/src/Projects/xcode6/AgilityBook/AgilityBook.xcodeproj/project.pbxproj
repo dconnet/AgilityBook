@@ -706,7 +706,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ARB;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "David Connet";
 			};
 			buildConfigurationList = E19B63B5166C096E004DEDA4 /* Build configuration list for PBXProject "AgilityBook" */;
@@ -749,7 +749,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython \"${LANGDIR}/CompileDataFile.py\" -x \"${LANGDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
+			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython \"${LANGDIR}/CompileLang.py\" \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython \"${LANGDIR}/CompileDataFile.py\" -x \"${LANGDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

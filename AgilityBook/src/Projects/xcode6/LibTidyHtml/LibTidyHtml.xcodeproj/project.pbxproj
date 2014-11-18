@@ -326,7 +326,7 @@
 		E179640A176927D2003AE489 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "David Connet";
 			};
 			buildConfigurationList = E179640D176927D2003AE489 /* Build configuration list for PBXProject "LibTidyHtml" */;

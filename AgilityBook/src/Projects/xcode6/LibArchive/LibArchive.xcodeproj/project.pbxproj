@@ -122,7 +122,7 @@
 		E161078D16BD89D3006B9BC0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "David Connet";
 			};
 			buildConfigurationList = E161079016BD89D3006B9BC0 /* Build configuration list for PBXProject "LibArchive" */;
