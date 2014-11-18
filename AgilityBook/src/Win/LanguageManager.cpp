@@ -170,10 +170,10 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 		::EnumResourceNames(NULL, L"MOFILE", EnumResourceProc, reinterpret_cast<LONG_PTR>(&resourceNames));
 		wxString base = GetDefaultCatalogName();
 		base.MakeUpper();
-		for each (wxString resName in resourceNames)
+		for (std::vector<wxString>::iterator it = resourceNames.begin(); it != resourceNames.end(); ++it)
 		{
-			if (0 == resName.Find(base))
-				files.push_back(resName.Mid(base.length() + 1));
+			if (0 == it->Find(base))
+				files.push_back(it->Mid(base.length() + 1));
 			else
 				assert(0);
 		}
@@ -194,9 +194,9 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 		}
 	}
 
-	for each (wxString filename in files)
+	for (std::vector<wxString>::iterator it = files.begin(); it != files.end(); ++it)
 	{
-		wxLanguageInfo const* info = wxLocale::FindLanguageInfo(filename);
+		wxLanguageInfo const* info = wxLocale::FindLanguageInfo(*it);
 		if (info)
 		{
 			// Trigger poedit to capture these.
