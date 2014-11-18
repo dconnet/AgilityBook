@@ -33,20 +33,22 @@
 
 	Turns out doing REP at the end causes the shortcuts to not be removed when
 	the location/name changes. Since the name changed, it technically broke
-	component rules. So whenever the name is changed, we need to change the
-	GUID too.
+	component rules. So whenever the SHORTCUTNAME or DEFFOLDER is changed,
+	we need to change the GUID too.
+
+	Note2: Doing REP at the end allows the user-pinned shortcut to continue
+	working. But _only_ if DEFFOLDER does not change. If it does, we're back
+	to the shortcut-doesnt-work problem. Pinned items are a pain.
 	-->
 
 	<?ifdef BETA?>
-		<?define DEFFOLDER=$(var.DEFFOLDERbase) Beta v($var.CURRENT_VERSION)?>
-
+		<?define DEFFOLDER=$(var.DEFFOLDERbase) Beta?>
 		<?define SHORTCUTNAME=$(var.DEFFOLDERbase) Beta?>
 		<?define C_MenuShortcutsARB_Guid=416F12A8-C4A5-41DD-AB28-43C4F50316BE?>
 		<?define C_DeskShortcuts_Guid=07FB537B-D8CB-47DD-9DA3-E042FBF9B555?>
 
 	<?else?>
 		<?define DEFFOLDER=$(var.DEFFOLDERbase)?>
-
 		<?define SHORTCUTNAME=$(var.DEFFOLDERbase)?>
 		<?define C_MenuShortcutsARB_Guid=37E14BEA-8C89-45E1-BBA0-99E3C94BC370?>
 		<?define C_DeskShortcuts_Guid=557FA368-A635-4471-BE10-F8EE17D58258?>

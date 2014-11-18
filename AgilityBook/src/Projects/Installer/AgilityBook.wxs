@@ -39,7 +39,8 @@ Revision History
 2014-11-17 Removed .mo files (moved into resource)
 2014-05-07 Minor tweak to support Wix 3.8.
 2014-04-22 Change REP to after InstallFinalize.
-           Added feature that user pinned shortcuts are not broken.
+           Added feature is that user pinned shortcuts are not broken.
+           Except when the menu-directory changes.
 2013-08-15 Add proper per-user/per-machine upgrade logic and defaults.
 2013-03-28 Added MSIFASTINSTALL.
 2012-08-03 Set INSTALLDIR properly during upgrade and maintenance.

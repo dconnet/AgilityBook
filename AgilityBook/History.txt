@@ -52,6 +52,7 @@
   - Specifically set dpi-awareness to false on Windows (manifest).
   - Trial start date was wrong on a new or edited trial (create from Calendar was ok).
   - Changed MSI to uninstall after install. User-pinned shortcuts remain okay.
+    (note, if menu directory changes, pinned items will break)
 
 11/27/2013: v2.4.0.88
 - Bumped Configuration v45:
