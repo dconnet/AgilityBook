@@ -291,7 +291,7 @@ Revision History
 	</DirectoryRef>
 
 	<DirectoryRef Id="ARBMenuFolder">
-		<Component Id="C_MenuShortcutsARB" Guid="74105C3C-0E12-4CE4-B955-DA4551365A97" Win64="$(var.Win64)">
+		<Component Id="C_MenuShortcutsARB" Guid="$(var.C_MenuShortcutsARB_Guid)" Win64="$(var.Win64)">
 			<RegistryValue
 				KeyPath="yes"
 				Root="HKCU"
@@ -300,7 +300,7 @@ Revision History
 				Type="integer"
 				Value="1" />
 			<Shortcut Id="ShortcutARBExe"
-				Name="$(var.DEFFOLDER)"
+				Name="$(var.SHORTCUTNAME)"
 				Target="[INSTALLDIR]AgilityBook.exe">
 				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
 				<ShortcutProperty Key="System.AppUserModel.ID" Value="[AppUserModelId]" />
@@ -330,7 +330,7 @@ Revision History
 	</DirectoryRef>
 
 	<DirectoryRef Id="DesktopFolder">
-		<Component Id="C_DeskShortcuts" Guid="988854A1-81B4-4B57-A51D-5C08BE963E5F" Win64="$(var.Win64)">
+		<Component Id="C_DeskShortcuts" Guid="$(var.C_DeskShortcuts_Guid)" Win64="$(var.Win64)">
 			<Condition>INSTALLDESKTOPSHORTCUT</Condition>
 			<RegistryValue
 				KeyPath="yes"
@@ -340,7 +340,7 @@ Revision History
 				Type="integer"
 				Value="1" />
 			<Shortcut Id="AppDesktop"
-				Name="$(var.DEFFOLDER)"
+				Name="$(var.SHORTCUTNAME)"
 				Target="[INSTALLDIR]AgilityBook.exe">
 				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
 				<ShortcutProperty Key="System.AppUserModel.ID" Value="[AppUserModelId]" />

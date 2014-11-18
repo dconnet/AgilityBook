@@ -26,10 +26,30 @@
 
 	<?define DEFFOLDERbase=Agility Record Book?>
 
+	<!-- v2 component guids
+	  v2 name: "Agility Record Book v2"
+	<?define C_MenuShortcutsARB_Guid=74105C3C-0E12-4CE4-B955-DA4551365A97?>
+	<?define C_DeskShortcuts_Guid=988854A1-81B4-4B57-A51D-5C08BE963E5F?>
+
+	Turns out doing REP at the end causes the shortcuts to not be removed when
+	the location/name changes. Since the name changed, it technically broke
+	component rules. So whenever the name is changed, we need to change the
+	GUID too.
+	-->
+
 	<?ifdef BETA?>
 		<?define DEFFOLDER=$(var.DEFFOLDERbase) Beta v($var.CURRENT_VERSION)?>
+
+		<?define SHORTCUTNAME=$(var.DEFFOLDERbase) Beta?>
+		<?define C_MenuShortcutsARB_Guid=416F12A8-C4A5-41DD-AB28-43C4F50316BE?>
+		<?define C_DeskShortcuts_Guid=07FB537B-D8CB-47DD-9DA3-E042FBF9B555?>
+
 	<?else?>
 		<?define DEFFOLDER=$(var.DEFFOLDERbase)?>
+
+		<?define SHORTCUTNAME=$(var.DEFFOLDERbase)?>
+		<?define C_MenuShortcutsARB_Guid=37E14BEA-8C89-45E1-BBA0-99E3C94BC370?>
+		<?define C_DeskShortcuts_Guid=557FA368-A635-4471-BE10-F8EE17D58258?>
 	<?endif?>
 
 	<!-- Make sure this is the same as in GenMSI.py -->
