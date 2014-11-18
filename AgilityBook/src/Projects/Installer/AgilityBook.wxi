@@ -20,11 +20,30 @@
 	<!-- v1 upgrade code [used thru v1.10.10] -->
 	<?define DEFFOLDERv1=Agility Record Book?>
 	<?define UPGRADECODEv1=DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB?>
-	<!-- v2 upgrade code [started with v2.0.0] -->
+	<!-- v2+ upgrade code [started with v2.0.0] -->
 	<?define DEFFOLDERv2=Agility Record Book v2?>
 	<?define UPGRADECODEv2=4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4?>
 
 	<?define DEFFOLDER=$(var.DEFFOLDERv2)?>
+
+	<!-- v2 component guids
+	  v2 name: "Agility Record Book v2"
+	<?define C_MenuShortcutsARB_Guid=74105C3C-0E12-4CE4-B955-DA4551365A97?>
+	<?define C_DeskShortcuts_Guid=988854A1-81B4-4B57-A51D-5C08BE963E5F?>
+
+	Turns out doing REP at the end causes the shortcuts to not be removed when
+	the location/name changes. Since the name changed, it technically broke
+	component rules. So whenever the name is changed, we need to change the
+	GUID too.
+
+	(yes, this is broken for v1->v2. But honestly, that's an upgrade path
+	I'm just not going to worry about now!)
+	-->
+
+	<?define SHORTCUTNAME=$(var.DEFFOLDER)?>
+	<?define C_MenuShortcutsARB_Guid=74105C3C-0E12-4CE4-B955-DA4551365A97?>
+	<?define C_DeskShortcuts_Guid=988854A1-81B4-4B57-A51D-5C08BE963E5F?>
+
 	<!-- Make sure this is the same as in GenMSI.py -->
 	<?define UPGRADECODE=$(var.UPGRADECODEv2)?>
 
