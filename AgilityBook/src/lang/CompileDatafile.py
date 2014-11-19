@@ -13,9 +13,10 @@
 # 2009-03-05 Fixed some parameter passing issues (spaces/hyphens in names)
 # 2009-03-01 Support multiple po files (by using msgcat)
 # 2009-01-02 Updated to support creation of data files
-"""CompileDatafile.py [-x] [-d] filelist executableDir targetname
+"""CompileDatafile.py [-x] [-d] [-f extrafilelist] filelist executableDir targetname
 -x: Exclude ARBUpdater (not needed in test program)
 -d: Debugging mode (does not delete generated autogen.po file)
+-f extrafilelist: Additional files to include
 filelist: List of files to include in .dat file
 executableDir: Directory where executable is (where dat file is created)
 targetname: Name of .dat files to generate
@@ -92,11 +93,45 @@ def RunCommand(command, toastErr):
 	ReadPipe(sys.stdout, p.stdout)
 
 
+def GenFile(inputfiles, executableDir, targetname, bIncUpdater):
+	for filelist in inputfiles:
+		# The files listed in the list are relative to the filelist location.
+		if not os.access(filelist, os.F_OK):
+			print 'ERROR: "' + filelist + '" does not exist!'
+			print 'Usage:', __doc__
+			return 1;
+
+	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
+
+	for filelist in inputfiles:
+		basepath = os.path.dirname(filelist)
+		files = open(filelist)
+		while 1:
+			line = files.readline()
+			if line:
+				line = line.rstrip()
+				inputfile = os.path.abspath(os.path.join(basepath, line))
+				filename = os.path.split(inputfile)[1]
+				if os.access(inputfile, os.F_OK):
+					zip.write(inputfile, filename)
+				else:
+					print 'ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!'
+					return 1
+			else:
+				break
+
+	if bIncUpdater and os.access(executableDir + r'\ARBUpdater.exe', os.F_OK):
+		zip.write(executableDir + r'\ARBUpdater.exe', 'ARBUpdater.exe')
+
+	zip.close()
+
+
 def main():
 	bIncUpdater = 1
 	bDebug = 0
+	inputfiles = set()
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'dx')
+		opts, args = getopt.getopt(sys.argv[1:], 'df:x')
 	except getopt.error, msg:
 		print msg
 		print 'Usage:', __doc__
@@ -104,51 +139,32 @@ def main():
 	for o, a in opts:
 		if '-d' == o:
 			bDebug = 1
-		if '-x' == o:
+		elif '-f' == o:
+			inputfiles.add(a)
+		elif '-x' == o:
 			bIncUpdater = 0
 	if not len(args) == 3:
 		print 'Usage:', __doc__
 		return 1
 
-	filelist = args[0]
+	inputfiles.add(args[0])
 	executableDir = args[1]
 	targetname = args[2]
 
-	# The files listed in the list are relative to the filelist location.
-	if not os.access(filelist, os.F_OK):
-		print 'ERROR: "' + filelist + '" does not exist!'
+	if not os.access(executableDir, os.F_OK):
+		print 'ERROR: "' + executableDir + '" does not exist!'
 		print 'Usage:', __doc__
 		return 1;
 
-	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
-	basepath = os.path.dirname(filelist)
-	files = open(filelist)
-	while 1:
-		line = files.readline()
-		if line:
-			line = line.rstrip()
-			inputfile = os.path.abspath(os.path.join(basepath, line))
-			filename = os.path.split(inputfile)[1]
-			if os.access(inputfile, os.F_OK):
-				zip.write(inputfile, filename)
-			else:
-				print 'ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!'
-				return 1
-		else:
-			break
-	if bIncUpdater and os.access(executableDir + r'\ARBUpdater.exe', os.F_OK):
-		zip.write(executableDir + r'\ARBUpdater.exe', 'ARBUpdater.exe')
-	zip.close()
-
-	return 0
-
-
-if __name__ == '__main__':
 	rc = 0
-	lockfile = LockFile("CompileDatafile.lck")
+	lockfile = LockFile(os.path.join(executableDir, "CompileDatafile.lck"))
 	if lockfile.acquire():
-		rc = main()
+		rc = GenFile(inputfiles, executableDir, targetname, bIncUpdater)
 		lockfile.release()
 	else:
 		print "CompileDatafile is locked"
-	sys.exit(rc)
+	return rc
+
+
+if __name__ == '__main__':
+	sys.exit(main())
