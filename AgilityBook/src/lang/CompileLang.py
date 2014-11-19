@@ -37,6 +37,36 @@ import zipfile
 autogenFile = 'autogen.po'
 
 
+class LockFile:
+	def __init__(self, filename):
+		self.m_filename = filename
+		self.m_fd = None
+		self.m_pid = os.getpid()
+
+	def __del__(self):
+		self.release()
+
+	def acquire(self):
+		try:
+			self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
+			os.write(self.m_fd, "%d" % self.m_pid)
+			return 1
+		except OSError:
+			self.m_fd = None
+			return 0
+
+	def release(self):
+		if not self.m_fd:
+			return 0
+		try:
+			os.close(self.m_fd)
+			time.sleep(1)
+			os.remove(self.m_filename)
+			return 1
+		except OSError:
+			return 0
+
+
 def ReadPipe(logFile, cmd):
 	while (1):
 		line = cmd.readline()
@@ -119,10 +149,17 @@ def main():
 		return 1
 	wxBaseName = os.path.basename(os.environ['WXWIN'])
 
-	if not CompilePoFiles(wxBaseName, args[0], args[1], args[2], args[3], bDebug):
-		return 1
+	outputDir = args[2]
 
-	return 0
+	rc = 0
+	lockfile = LockFile(os.path.join(outputDir, "CompileDatafile.lck"))
+	if lockfile.acquire():
+		if not CompilePoFiles(wxBaseName, args[0], args[1], outputDir, args[3], bDebug):
+			rc = 1
+		lockfile.release()
+	else:
+		print "CompileDatafile is locked"
+	return rc
 
 
 if __name__ == '__main__':
