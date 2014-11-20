@@ -14,6 +14,7 @@
  * The non-WX ansi string restriction is due to zlib. wchar_t just doesn't work.
  *
  * Revision History
+ * 2014-11-20 Added support for embedded Windows resource.
  * 2014-02-27 Add support for POCO xml.
  * 2013-01-30 Created
  */
@@ -28,8 +29,16 @@
 class CLibArchive
 {
 public:
-	CLibArchive(std::wstring const& zipFile);
+	typedef enum
+	{
+		locationResourceOrFileSystem, // Try resource, fallback to FS
+		locationFileSystem,           // Only look at FS
+		locationResource,             // Only in resource (windows only)
+	} ArchiveLocation;
+	CLibArchive(std::wstring const& zipFile, ArchiveLocation location = locationResourceOrFileSystem);
 	~CLibArchive();
+
+	bool IsResource() const;
 
 	bool ExtractFile(
 			std::wstring const& archiveFile,

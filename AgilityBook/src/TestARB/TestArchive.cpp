@@ -33,7 +33,7 @@ SUITE(TestArchive)
 	{
 		if (!g_bMicroTest)
 		{
-			CLibArchive archive(L"TestArchive.zip");
+			CLibArchive archive(L"TestArchive.zip", CLibArchive::locationResource);
 
 			{
 				std::ostringstream data;

@@ -53,19 +53,18 @@
 class CLibArchiveImpl
 {
 public:
-	CLibArchiveImpl(std::wstring const& zipFile)
-#if defined(__WXWINDOWS__) && !defined(USE_POCO)
-		: m_zipFile(StringUtil::stringWX(zipFile))
-#elif defined(USE_POCO) && defined(ARB_HAS_ISTREAM_WCHAR)
-		: m_zipFile(zipFile)
-#else
-		: m_zipFile(StringUtil::stringA(zipFile))
-#endif
-	{
-		assert(!m_zipFile.empty());
-	}
+	CLibArchiveImpl(std::wstring const& zipFile, CLibArchive::ArchiveLocation location);
 
-	void FindResourceFile(size_t& size, void*& pVoid);
+	bool IsResource() const {return m_bResource;}
+#if defined(USE_POCO)
+	std::istream* GetStream();
+#elif defined(__WXWINDOWS__)
+	wxString GetZipfileName();
+#endif
+
+	bool m_bResource;
+	size_t m_resSize;
+	void* m_resData;
 #if defined(__WXWINDOWS__) && !defined(USE_POCO)
 	wxString m_zipFile;
 	wxString m_zipFileRes;
@@ -79,8 +78,106 @@ public:
 };
 
 
-CLibArchive::CLibArchive(std::wstring const& zipFile)
-	: m_pImpl(new CLibArchiveImpl(zipFile))
+CLibArchiveImpl::CLibArchiveImpl(std::wstring const& zipFile, CLibArchive::ArchiveLocation location)
+#if defined(__WXWINDOWS__) && !defined(USE_POCO)
+	: m_zipFile(StringUtil::stringWX(zipFile))
+#elif defined(USE_POCO) && defined(ARB_HAS_ISTREAM_WCHAR)
+	: m_zipFile(zipFile)
+#else
+	: m_zipFile(StringUtil::stringA(zipFile))
+#endif
+	, m_bResource(false)
+	, m_resSize(0)
+	, m_resData(nullptr)
+{
+	assert(!m_zipFile.empty());
+#if defined(WIN32)
+	if (CLibArchive::locationResourceOrFileSystem == location || CLibArchive::locationResource == location)
+	{
+		std::wstring name;
+
+#if defined(__WXWINDOWS__) && !defined(USE_POCO)
+		name = StringUtil::stringW(m_zipFile);
+#elif defined(USE_POCO) && defined(ARB_HAS_ISTREAM_WCHAR)
+		name = m_zipFile;
+#else
+		name = StringUtil::stringW(m_zipFile);
+#endif
+		std::wstring::size_type pos = name.find_last_of('\\');
+		if (pos != std::wstring::npos)
+			name = name.substr(pos + 1);
+		pos = name.find_last_of('/');
+		if (pos != std::wstring::npos)
+			name = name.substr(pos + 1);
+		m_zipFileRes = name;
+
+		name = StringUtil::ToUpper(name);
+		name = StringUtil::Replace(name, L".", L"_");
+
+		HRSRC hrSrc = ::FindResource(NULL, name.c_str(), L"DATAFILE");
+		if (hrSrc)
+		{
+			m_resSize = ::SizeofResource(NULL, hrSrc);
+			if (m_resSize > 0)
+			{
+				HGLOBAL hRes = ::LoadResource(NULL, hrSrc);
+				if (hRes)
+				{
+					m_resData = ::LockResource(hRes);
+					// Note, there is no need to unlock.
+				}
+			}
+		}
+
+		if (m_resData)
+			m_bResource = true;
+		else
+		{
+			if (CLibArchive::locationResource == location)
+				m_zipFile.clear();
+			m_zipFileRes.clear();
+		}
+	}
+#endif
+}
+
+
+#if defined(USE_POCO)
+std::istream* CLibArchiveImpl::GetStream()
+{
+	if (m_zipFile.empty())
+		return nullptr;
+
+	if (IsResource())
+		return new std::istringstream(std::string((char*)m_resData, m_resSize));
+	else
+		return new std::ifstream(m_pImpl->m_zipFile, std::ios::binary);
+}
+
+#elif defined(__WXWINDOWS__)
+wxString CLibArchiveImpl::GetZipfileName()
+{
+	wxString zipfile;
+	if (!m_zipFile.empty())
+	{
+		if (IsResource())
+		{
+			wxMemoryFSHandler::AddFile(m_zipFileRes, m_resData, m_resSize);
+			zipfile = L"memory:" + m_zipFileRes;
+		}
+		else
+		{
+			zipfile = wxFileSystem::FileNameToURL(wxString(m_zipFile.c_str()));
+		}
+	}
+	return zipfile;
+}
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+CLibArchive::CLibArchive(std::wstring const& zipFile, ArchiveLocation location)
+	: m_pImpl(new CLibArchiveImpl(zipFile, location))
 {
 }
 
@@ -91,50 +188,9 @@ CLibArchive::~CLibArchive()
 }
 
 
-void CLibArchiveImpl::FindResourceFile(size_t& size, void*& pVoid)
+bool CLibArchive::IsResource() const
 {
-	size = 0;
-	pVoid = nullptr;
-
-#if defined(WIN32)
-	std::wstring name;
-
-#if defined(__WXWINDOWS__) && !defined(USE_POCO)
-	name = StringUtil::stringW(m_zipFile);
-#elif defined(USE_POCO) && defined(ARB_HAS_ISTREAM_WCHAR)
-	name = m_zipFile;
-#else
-	name = StringUtil::stringW(m_zipFile);
-#endif
-	std::wstring::size_type pos = name.find_last_of('\\');
-	if (pos != std::wstring::npos)
-		name = name.substr(pos + 1);
-	pos = name.find_last_of('/');
-	if (pos != std::wstring::npos)
-		name = name.substr(pos + 1);
-	m_zipFileRes = name;
-
-	name = StringUtil::ToUpper(name);
-	name = StringUtil::Replace(name, L".", L"_");
-
-	HRSRC hrSrc = ::FindResource(NULL, name.c_str(), L"DATAFILE");
-	if (hrSrc)
-	{
-		size = ::SizeofResource(NULL, hrSrc);
-		if (size > 0)
-		{
-			HGLOBAL hRes = ::LoadResource(NULL, hrSrc);
-			if (hRes)
-			{
-				pVoid = ::LockResource(hRes);
-				// Note, there is no need to unlock.
-			}
-		}
-	}
-
-	if (!pVoid)
-		m_zipFileRes.clear();
-#endif
+	return m_pImpl->IsResource();
 }
 
 
@@ -143,21 +199,11 @@ bool CLibArchive::ExtractFile(
 		std::ostream& outData)
 {
 	bool rc = false;
-
-	size_t size = 0;
-	void* pVoid = NULL;
-
+	if (m_pImpl->m_zipFile.empty())
+		return rc;
+	
 #if defined(USE_POCO)
-	m_pImpl->FindResourceFile(size, pVoid);
-	std::istream* pStream = NULL;
-	if (size && pVoid)
-	{
-		pStream = new std::istringstream(std::string((char*)pVoid, size));
-	}
-	else
-	{
-		pStream = new std::ifstream(m_pImpl->m_zipFile, std::ios::binary);
-	}
+	std::istream* pStream = m_pImpl->GetStream();
 	if (pStream && pStream->good())
 	{
 		std::string archiveFile = StringUtil::stringA(inArchiveFile);
@@ -173,17 +219,7 @@ bool CLibArchive::ExtractFile(
 	delete pStream;
 
 #elif defined(__WXWINDOWS__)
-	wxString zipfile;
-	m_pImpl->FindResourceFile(size, pVoid);
-	if (size && pVoid)
-	{
-		wxMemoryFSHandler::AddFile(m_pImpl->m_zipFileRes, pVoid, size);
-		zipfile = L"memory:" + m_pImpl->m_zipFileRes;
-	}
-	else
-	{
-		zipfile = wxFileSystem::FileNameToURL(wxString(m_pImpl->m_zipFile.c_str()));
-	}
+	wxString zipfile = m_pImpl->GetZipfileName();
 	zipfile += L"#zip:" + wxString(inArchiveFile.c_str());
 	wxFileSystem filesys;
 	wxFSFile* file = filesys.OpenFile(zipfile);
@@ -202,12 +238,7 @@ bool CLibArchive::ExtractFile(
 		delete file;
 		rc = true;
 	}
-	else
-	{
-		wxLogMessage(zipfile);
-		assert(file);
-	}
-	if (size && pVoid)
+	if (!m_pImpl->m_zipFileRes.empty())
 		wxMemoryFSHandler::RemoveFile(m_pImpl->m_zipFileRes);
 
 #else
@@ -256,6 +287,9 @@ bool CLibArchive::ReplaceFile(
 		std::wstring const& archiveFile,
 		std::istream& inData)
 {
+	bool rc = false;
+	if (m_pImpl->m_zipFile.empty())
+		return rc;
 #pragma PRAGMA_TODO(ReplaceFile)
-	return false;
+	return rc;
 }
