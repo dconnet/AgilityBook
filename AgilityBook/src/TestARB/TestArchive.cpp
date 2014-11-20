@@ -46,8 +46,8 @@ SUITE(TestArchive)
 			}
 
 			{
-#ifdef WIN32
 				std::ostringstream data;
+#ifdef WIN32
 				CHECK(archive.ExtractFile(L"test2.txt", data));
 				CHECK(data.str() == FileData2);
 #else
