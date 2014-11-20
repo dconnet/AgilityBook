@@ -250,7 +250,7 @@ The xcode projects were used as follows:
                 C++ Language Dialect: c++11 (-std=c++11)
                 C++ Std Lib: libc++
 
-OSX 10.9+:
+OSX 10.9:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
@@ -258,3 +258,29 @@ setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_56_0
 setenv WXBASE /Users/dconnet/devtools/wx
 setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.2
 ====
+OSX 10.10+:
+- launchd.conf has been deprecated.
+The simplest fix is to put the following into ~/Library/LaunchAgents/
+(http://stackoverflow.com/questions/25385934/setting-environment-variables-via-launchd-conf-no-longer-works-in-os-x-yosemite/26311753#26311753)
+(Obviously adjust paths as needed)
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>my.startup</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>sh</string>
+    <string>-c</string>
+    <string>
+    launchctl setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_57_0
+    launchctl setenv WXBASE /Users/dconnet/devtools/wx
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.2
+    </string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>
