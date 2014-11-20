@@ -151,7 +151,7 @@ std::istream* CLibArchiveImpl::GetStream()
 	if (IsResource())
 		return new std::istringstream(std::string((char*)m_resData, m_resSize));
 	else
-		return new std::ifstream(m_pImpl->m_zipFile, std::ios::binary);
+		return new std::ifstream(m_zipFile, std::ios::binary);
 }
 
 #elif defined(__WXWINDOWS__)
