@@ -9,6 +9,7 @@
 # run via the post-build. So we pad a blank in the quotes and strip it here.
 #
 # Revision History
+# 2014-11-19 DAT file is now embedded on Windows. Don't generate file here.
 # 2011-01-22 Allow 32bit to run on 64bit.
 # 2009-03-05 Moved bat file to python (removes dependency on wzzip)
 """RunARBTests.py SourceDir TargetDirectory TargetName PlatformName
@@ -59,13 +60,14 @@ def main():
 		print 'Unknown platform:', platform
 		return 1
 
-	# Create "TestARB.dat"
-	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
-	zip.write(srcDir + r'/Win/res/DefaultConfig.xml', 'DefaultConfig.xml')
-	zip.write(srcDir + r'/Win/res/AgilityRecordBook.dtd', 'AgilityRecordBook.dtd')
-	for file in glob.glob(srcDir + r'/TestARB/res/*.xml'):
-		zip.write(file, os.path.basename(file))
-	zip.close()
+	if not "Win32" == platform and not "x64" == platform:
+		# Create "TestARB.dat"
+		zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
+		zip.write(srcDir + r'/Win/res/DefaultConfig.xml', 'DefaultConfig.xml')
+		zip.write(srcDir + r'/Win/res/AgilityRecordBook.dtd', 'AgilityRecordBook.dtd')
+		for file in glob.glob(srcDir + r'/TestARB/res/*.xml'):
+			zip.write(file, os.path.basename(file))
+		zip.close()
 
 	os.chdir(executableDir)
 

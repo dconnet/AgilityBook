@@ -1,6 +1,6 @@
 11/17/2014: v3.0.0.<in development>
 - New features / Enhancements:
-  - Moved language files into Windows resource
+  - Moved language and data files into Windows resource
   - Change Tree/Runs view to a single consolidated view.
     [Still not decided - compile option now allows toggling back to old format]
     [currently set on old format]

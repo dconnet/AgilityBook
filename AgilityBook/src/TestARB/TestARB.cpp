@@ -36,6 +36,7 @@
 #include "../Win/LanguageManager.h"
 #include <wx/app.h>
 #include <wx/fs_arc.h>
+#include <wx/fs_mem.h>
 #include <wx/stdpaths.h>
 #endif
 
@@ -225,6 +226,7 @@ int main(int argc, char** argv)
 
 #if defined(__WXWINDOWS__)
 	wxFileSystem::AddHandler(new wxArchiveFSHandler);
+	wxFileSystem::AddHandler(new wxMemoryFSHandler);
 #endif
 
 	// Some names are 'funny' since it's cut/paste from ../Win/

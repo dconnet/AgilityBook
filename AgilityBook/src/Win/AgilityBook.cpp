@@ -58,6 +58,7 @@
 #include <wx/file.h>
 #include <wx/fileconf.h>
 #include <wx/fs_arc.h>
+#include <wx/fs_mem.h>
 #include <wx/msgdlg.h>
 #include <wx/settings.h>
 #include <wx/stdpaths.h>
@@ -297,6 +298,7 @@ bool CAgilityBookApp::OnInit()
 
 	wxImage::AddHandler(new wxGIFHandler);
 	wxFileSystem::AddHandler(new wxArchiveFSHandler);
+	wxFileSystem::AddHandler(new wxMemoryFSHandler);
 
 	wxCmdLineParser cmdline(argc, argv);
 	cmdline.AddParam(_("Agility Record Book file"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL);

@@ -273,14 +273,6 @@ Revision History
 			</RegistryKey>
 		</Component>
 
-		<Component Id="C_AgilityBook.dat" Guid="C44F2D55-7128-423F-926A-AAE9848D1842" Win64="$(var.Win64)">
-			<File Id="_AgilityBook.dat"
-				Name="AgilityBook.dat"
-				Source="$(var.BASEDIR)\AgilityBook.dat"
-				KeyPath="yes"
-				DiskId="1" />
-		</Component>
-
 		<Component Id="C_ARBHelp.exe" Guid="6E5D1584-06A0-4024-A197-84B9E0326EA1" Win64="$(var.Win64)">
 			<File Id="_ARBHelp.exe"
 				Name="ARBHelp.exe"
@@ -360,7 +352,6 @@ Revision History
 		<ComponentRef Id="C_DeskShortcuts" />
 		<ComponentRef Id="C_RegistryEntries" />
 		<ComponentRef Id="C_AgilityBook.exe" />
-		<ComponentRef Id="C_AgilityBook.dat" />
 
 		<Feature Id="ARBHelp"
 			Display="expand"

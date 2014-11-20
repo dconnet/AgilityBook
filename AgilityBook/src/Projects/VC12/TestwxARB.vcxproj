@@ -80,7 +80,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <CustomBuildAfterTargets>Link</CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>ResourceCompile</CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -97,8 +97,8 @@
       <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
-      <Outputs>$(OutDir)$(TargetName).dat</Outputs>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
     </CustomBuildStep>
@@ -118,8 +118,8 @@
       <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
-      <Outputs>$(OutDir)$(TargetName).dat</Outputs>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
     </CustomBuildStep>
@@ -139,8 +139,8 @@
       <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
-      <Outputs>$(OutDir)$(TargetName).dat</Outputs>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
     </CustomBuildStep>
@@ -160,8 +160,8 @@
       <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(OutDir)." "$(TargetName)"</Command>
-      <Outputs>$(OutDir)$(TargetName).dat</Outputs>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
     </CustomBuildStep>
