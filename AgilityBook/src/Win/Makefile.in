@@ -43,6 +43,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	AgilityBookCalendarView.cpp \
 	AgilityBookDoc.cpp \
 	AgilityBookHtmlView.cpp \
+	AgilityBookImages.cpp \
 	AgilityBookMenu.cpp \
 	AgilityBookOptions.cpp \
 	AgilityBookPanels.cpp \
@@ -50,9 +51,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	AgilityBookRunsView.cpp \
 	AgilityBookTrainingView.cpp \
 	AgilityBookTreeData.cpp \
-	AgilityBookTreeListData.cpp \
-	AgilityBookTreeListModel.cpp \
-	AgilityBookTreeListView.cpp \
 	AgilityBookTreeView.cpp \
 	CalendarSites.cpp \
 	CalendarSiteUSDAA.cpp \
@@ -182,6 +180,7 @@ dist:: all $(PHONY)
 	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/PkgInfo
 	cp @PACKAGE_ARB_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS/@PACKAGE_ARB_SHORTNAME@
 	cp $(TOPSRCDIR)/src/Win/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
+	cp $(TOPSRCDIR)/src/Win/res/*.png $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp @PACKAGE_ARB_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 

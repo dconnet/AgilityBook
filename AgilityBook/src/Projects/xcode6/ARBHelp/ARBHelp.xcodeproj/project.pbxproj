@@ -17,10 +17,14 @@
 		E19B6638166C166F004DEDA4 /* DlgPageEncodeFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B662A166C166F004DEDA4 /* DlgPageEncodeFiles.cpp */; };
 		E19B6639166C166F004DEDA4 /* DlgPageEncodeFinish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */; };
 		E19B6650166C18B3004DEDA4 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B664E166C18B3004DEDA4 /* Widgets.cpp */; };
-		E19B6653166C1928004DEDA4 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E19B6652166C1928004DEDA4 /* AgilityBook.icns */; };
 		E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */; };
 		E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612617ECB2CA0026B41B /* libARB.a */; };
 		E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612717ECB2CA0026B41B /* libARBCommon.a */; };
+		E1D2AFDF1A2923D4006EA87D /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFDE1A2923D4006EA87D /* AgilityBook.icns */; };
+		E1D2AFE41A2923F0006EA87D /* AgilityBook16.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE01A2923F0006EA87D /* AgilityBook16.png */; };
+		E1D2AFE51A2923F0006EA87D /* AgilityBook32.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE11A2923F0006EA87D /* AgilityBook32.png */; };
+		E1D2AFE61A2923F0006EA87D /* AgilityBook48.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE21A2923F0006EA87D /* AgilityBook48.png */; };
+		E1D2AFE71A2923F1006EA87D /* AgilityBook256.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE31A2923F0006EA87D /* AgilityBook256.png */; };
 		E1DCE95E17C17E8F00F79DFA /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */; };
 /* End PBXBuildFile section */
 
@@ -51,11 +55,15 @@
 		E19B662D166C166F004DEDA4 /* DlgPageEncodeFinish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFinish.h; sourceTree = "<group>"; };
 		E19B664E166C18B3004DEDA4 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Widgets.cpp; path = ../../../../Win/Widgets.cpp; sourceTree = "<group>"; };
 		E19B664F166C18B3004DEDA4 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Widgets.h; path = ../../../../Win/Widgets.h; sourceTree = "<group>"; };
-		E19B6652166C1928004DEDA4 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../AgilityBook/AgilityBook/AgilityBook.icns; sourceTree = "<group>"; };
 		E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
 		E1CAE57B16B5BFA200B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
 		E1CE612617ECB2CA0026B41B /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
 		E1CE612717ECB2CA0026B41B /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
+		E1D2AFDE1A2923D4006EA87D /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
+		E1D2AFE01A2923F0006EA87D /* AgilityBook16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook16.png; path = ../../../../Win/res/AgilityBook16.png; sourceTree = "<group>"; };
+		E1D2AFE11A2923F0006EA87D /* AgilityBook32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook32.png; path = ../../../../Win/res/AgilityBook32.png; sourceTree = "<group>"; };
+		E1D2AFE21A2923F0006EA87D /* AgilityBook48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook48.png; path = ../../../../Win/res/AgilityBook48.png; sourceTree = "<group>"; };
+		E1D2AFE31A2923F0006EA87D /* AgilityBook256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook256.png; path = ../../../../Win/res/AgilityBook256.png; sourceTree = "<group>"; };
 		E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageManager.cpp; path = ../../../../Win/LanguageManager.cpp; sourceTree = "<group>"; };
 		E1DCE95D17C17E8F00F79DFA /* LanguageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageManager.h; path = ../../../../Win/LanguageManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,7 +132,11 @@
 		E19B6609166C1640004DEDA4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E19B6652166C1928004DEDA4 /* AgilityBook.icns */,
+				E1D2AFE01A2923F0006EA87D /* AgilityBook16.png */,
+				E1D2AFE11A2923F0006EA87D /* AgilityBook32.png */,
+				E1D2AFE21A2923F0006EA87D /* AgilityBook48.png */,
+				E1D2AFE31A2923F0006EA87D /* AgilityBook256.png */,
+				E1D2AFDE1A2923D4006EA87D /* AgilityBook.icns */,
 				E19B660A166C1640004DEDA4 /* ARBHelp-Info.plist */,
 				E19B6610166C1640004DEDA4 /* ARBHelp-Prefix.pch */,
 			);
@@ -230,7 +242,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E19B6653166C1928004DEDA4 /* AgilityBook.icns in Resources */,
+				E1D2AFE51A2923F0006EA87D /* AgilityBook32.png in Resources */,
+				E1D2AFDF1A2923D4006EA87D /* AgilityBook.icns in Resources */,
+				E1D2AFE61A2923F0006EA87D /* AgilityBook48.png in Resources */,
+				E1D2AFE41A2923F0006EA87D /* AgilityBook16.png in Resources */,
+				E1D2AFE71A2923F1006EA87D /* AgilityBook256.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +435,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -432,7 +448,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
