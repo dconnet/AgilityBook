@@ -16,7 +16,7 @@
 
 #include "stdafx.h"
 #include "AgilityBook.h"
-#include "AgilityBookImages.h"
+#include "ImageHelper.h"
 
 #include <wx/artprov.h>
 
@@ -25,7 +25,10 @@
 #endif
 
 
-bool CAgilityBookApp::OnCreateBitmap(
+namespace ImageHelper
+{
+
+bool DoCreateBitmap(
 		const wxArtID& id,
 		const wxArtClient& client,
 		const wxSize& size,
@@ -212,7 +215,7 @@ bool CAgilityBookApp::OnCreateBitmap(
 }
 
 
-bool CAgilityBookApp::OnCreateIconBundle(
+bool DoCreateIconBundle(
 		const wxArtID& id,
 		const wxArtClient& client,
 		wxIconBundle& outIcon)
@@ -227,3 +230,5 @@ bool CAgilityBookApp::OnCreateIconBundle(
 	}
 	return false;
 }
+
+};

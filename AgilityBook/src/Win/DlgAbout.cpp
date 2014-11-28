@@ -29,7 +29,7 @@
 #include "DlgAbout.h"
 
 #include "AgilityBook.h"
-#include "AgilityBookImages.h"
+#include "ImageHelper.h"
 #include "VersionNumber.h"
 
 #include "ARBCommon/StringUtil.h"

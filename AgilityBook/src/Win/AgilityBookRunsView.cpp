@@ -49,7 +49,6 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "AgilityBookImages.h"
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookPanels.h"
@@ -61,6 +60,7 @@
 #include "DlgReorder.h"
 #include "FilterOptions.h"
 #include "Globals.h"
+#include "ImageHelper.h"
 #include "ListData.h"
 #include "MainFrm.h"
 #include "PointsData.h"

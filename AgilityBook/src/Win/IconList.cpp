@@ -19,7 +19,7 @@
 #include "IconList.h"
 
 #include "AgilityBook.h"
-#include "AgilityBookImages.h"
+#include "ImageHelper.h"
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogTrial.h"

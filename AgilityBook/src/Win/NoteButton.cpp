@@ -17,7 +17,7 @@
 #include "stdafx.h"
 #include "NoteButton.h"
 
-#include "AgilityBookImages.h"
+#include "ImageHelper.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

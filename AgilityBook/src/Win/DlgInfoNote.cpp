@@ -42,8 +42,8 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "AgilityBookImages.h"
 #include "DlgName.h"
+#include "ImageHelper.h"
 #include "Widgets.h"
 
 #include "ARBCommon/StringUtil.h"

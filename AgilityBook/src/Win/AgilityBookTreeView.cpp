@@ -43,7 +43,6 @@
 #include "AgilityBookTreeView.h"
 
 #include "AgilityBook.h"
-#include "AgilityBookImages.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookPanels.h"
 #include "AgilityBookRunsView.h"
@@ -54,6 +53,7 @@
 #include "DlgFind.h"
 #include "FilterOptions.h"
 #include "Globals.h"
+#include "ImageHelper.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"

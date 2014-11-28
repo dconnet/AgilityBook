@@ -249,6 +249,9 @@
     <ClCompile Include="..\..\Win\IconList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\ImageHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\ImageManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -325,9 +328,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\WizardStart.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\AgilityBookImages.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -563,6 +563,9 @@
     <ClInclude Include="..\..\Win\IconList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Win\ImageHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Win\ImageManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -670,9 +673,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\AgilityBookImages.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

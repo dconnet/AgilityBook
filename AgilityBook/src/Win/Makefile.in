@@ -43,7 +43,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	AgilityBookCalendarView.cpp \
 	AgilityBookDoc.cpp \
 	AgilityBookHtmlView.cpp \
-	AgilityBookImages.cpp \
 	AgilityBookMenu.cpp \
 	AgilityBookOptions.cpp \
 	AgilityBookPanels.cpp \
@@ -115,6 +114,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	FilterOptions.cpp \
 	Globals.cpp \
 	IconList.cpp \
+	ImageHelper.cpp \
 	ImageManager.cpp \
 	LanguageManager.cpp \
 	ListCtrl.cpp \

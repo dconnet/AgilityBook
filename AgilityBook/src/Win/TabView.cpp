@@ -25,16 +25,16 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "AgilityBookImages.h"
 #include "AgilityBookPanels.h"
+#include "ImageHelper.h"
 #include "MainFrm.h"
 #include "RegItems.h"
 #include <wx/choicebk.h>
 #include <wx/config.h>
 #include <wx/listbook.h>
 #include <wx/notebook.h>
-#include <wx/treebook.h>
 #include <wx/toolbook.h>
+#include <wx/treebook.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

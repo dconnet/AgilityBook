@@ -55,12 +55,12 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "AgilityBookImages.h"
 #include "AgilityBookOptions.h"
 #include "DlgExistingPoints.h"
 #include "DlgRegNum.h"
 #include "DlgTitle.h"
 #include "FilterOptions.h"
+#include "ImageHelper.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 #include "Validators.h"

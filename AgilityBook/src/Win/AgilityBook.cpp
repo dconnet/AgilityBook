@@ -37,6 +37,7 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "ImageHelper.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
@@ -552,6 +553,24 @@ void CAgilityBookApp::OnSetLanguage(int langId)
 	}
 }
 
+
+bool CAgilityBookApp::OnCreateBitmap(
+		const wxArtID& id,
+		const wxArtClient& client,
+		const wxSize& size,
+		wxBitmap& outBmp)
+{
+	return ImageHelper::DoCreateBitmap(id, client, size, outBmp);
+}
+
+
+bool CAgilityBookApp::OnCreateIconBundle(
+		const wxArtID& id,
+		const wxArtClient& client,
+		wxIconBundle& outIcon)
+{
+	return ImageHelper::DoCreateIconBundle(id, client, outIcon);
+}
 
 
 bool CAgilityBookApp::InitLocale()

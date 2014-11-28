@@ -30,7 +30,7 @@
 #include "stdafx.h"
 #include "CheckTreeCtrl.h"
 
-#include "AgilityBookImages.h"
+#include "ImageHelper.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

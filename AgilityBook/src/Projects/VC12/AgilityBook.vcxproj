@@ -140,7 +140,6 @@
     <ClCompile Include="..\..\Win\AgilityBookCalendarView.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookDoc.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookHtmlView.cpp" />
-    <ClCompile Include="..\..\Win\AgilityBookImages.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookMenu.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookOptions.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookPanels.cpp" />
@@ -212,6 +211,7 @@
     <ClCompile Include="..\..\Win\FilterOptions.cpp" />
     <ClCompile Include="..\..\Win\Globals.cpp" />
     <ClCompile Include="..\..\Win\IconList.cpp" />
+    <ClCompile Include="..\..\Win\ImageHelper.cpp" />
     <ClCompile Include="..\..\Win\ImageManager.cpp" />
     <ClCompile Include="..\..\Win\LanguageManager.cpp" />
     <ClCompile Include="..\..\Win\ListCtrl.cpp" />
@@ -259,7 +259,6 @@
     <ClInclude Include="..\..\Win\AgilityBookCalendarView.h" />
     <ClInclude Include="..\..\Win\AgilityBookDoc.h" />
     <ClInclude Include="..\..\Win\AgilityBookHtmlView.h" />
-    <ClInclude Include="..\..\Win\AgilityBookImages.h" />
     <ClInclude Include="..\..\Win\AgilityBookMenu.h" />
     <ClInclude Include="..\..\Win\AgilityBookOptions.h" />
     <ClInclude Include="..\..\Win\AgilityBookPanels.h" />
@@ -332,6 +331,7 @@
     <ClInclude Include="..\..\Win\FilterOptions.h" />
     <ClInclude Include="..\..\Win\Globals.h" />
     <ClInclude Include="..\..\Win\IconList.h" />
+    <ClInclude Include="..\..\Win\ImageHelper.h" />
     <ClInclude Include="..\..\Win\ImageManager.h" />
     <ClInclude Include="..\..\Win\LanguageManager.h" />
     <ClInclude Include="..\..\Win\ListCtrl.h" />

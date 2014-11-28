@@ -21,6 +21,23 @@
 
 #include "ImageManager.h"
 
+// Helper functions called from IImageManagerCallback interfaces
+
+namespace ImageHelper
+{
+	extern bool DoCreateBitmap(
+			const wxArtID& id,
+			const wxArtClient& client,
+			const wxSize& size,
+			wxBitmap& outBmp);
+
+	extern bool DoCreateIconBundle(
+			const wxArtID& id,
+			const wxArtClient& client,
+			wxIconBundle& outIcon);
+};
+
+
 #define ImageMgrAppBundle			wxART_MAKE_ART_ID(ImageMgrAppBundle)
 #define ImageMgrApp					wxART_MAKE_ART_ID(ImageMgrApp)
 #define ImageMgrApp48				wxART_MAKE_ART_ID(ImageMgrApp48)

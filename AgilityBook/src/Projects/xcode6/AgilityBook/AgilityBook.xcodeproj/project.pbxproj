@@ -180,7 +180,7 @@
 		E1CE612317ECB2BF0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE611F17ECB2BF0026B41B /* libARBCommon.a */; };
 		E1CE612417ECB2BF0026B41B /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612017ECB2BF0026B41B /* libLibArchive.a */; };
 		E1CE612517ECB2BF0026B41B /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612117ECB2BF0026B41B /* libLibTidyHtml.a */; };
-		E1D2AFEA1A292424006EA87D /* AgilityBookImages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D2AFE81A292424006EA87D /* AgilityBookImages.cpp */; };
+		E1D2AFEA1A292424006EA87D /* ImageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D2AFE81A292424006EA87D /* ImageHelper.cpp */; };
 		E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */; };
 		E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */; };
 /* End PBXBuildFile section */
@@ -476,8 +476,8 @@
 		E1CE611F17ECB2BF0026B41B /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E1CE612017ECB2BF0026B41B /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/AgilityBook/Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
 		E1CE612117ECB2BF0026B41B /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../build/AgilityBook/Build/Products/Debug/libLibTidyHtml.a; sourceTree = "<group>"; };
-		E1D2AFE81A292424006EA87D /* AgilityBookImages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookImages.cpp; sourceTree = "<group>"; };
-		E1D2AFE91A292424006EA87D /* AgilityBookImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookImages.h; sourceTree = "<group>"; };
+		E1D2AFE81A292424006EA87D /* ImageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageHelper.cpp; sourceTree = "<group>"; };
+		E1D2AFE91A292424006EA87D /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelper.h; sourceTree = "<group>"; };
 		E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxQ.cpp; sourceTree = "<group>"; };
 		E1E1D05217234DEF00D7D1E4 /* ComboBoxQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxQ.h; sourceTree = "<group>"; };
 		E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxVenue.cpp; sourceTree = "<group>"; };
@@ -643,8 +643,6 @@
 				E19B63E5166C09B9004DEDA4 /* AgilityBookDoc.h */,
 				E19B63E6166C09B9004DEDA4 /* AgilityBookHtmlView.cpp */,
 				E19B63E7166C09B9004DEDA4 /* AgilityBookHtmlView.h */,
-				E1D2AFE81A292424006EA87D /* AgilityBookImages.cpp */,
-				E1D2AFE91A292424006EA87D /* AgilityBookImages.h */,
 				E19B63E8166C09B9004DEDA4 /* AgilityBookMenu.cpp */,
 				E19B63E9166C09B9004DEDA4 /* AgilityBookMenu.h */,
 				E19B63EA166C09B9004DEDA4 /* AgilityBookOptions.cpp */,
@@ -788,6 +786,8 @@
 				E19B6471166C09B9004DEDA4 /* Globals.h */,
 				E19B6472166C09B9004DEDA4 /* IconList.cpp */,
 				E19B6473166C09B9004DEDA4 /* IconList.h */,
+				E1D2AFE81A292424006EA87D /* ImageHelper.cpp */,
+				E1D2AFE91A292424006EA87D /* ImageHelper.h */,
 				E1105D36169017DF0067091C /* ImageManager.cpp */,
 				E1105D37169017DF0067091C /* ImageManager.h */,
 				E19B6475166C09B9004DEDA4 /* LanguageManager.cpp */,
@@ -1056,7 +1056,7 @@
 				E19B6516166C09B9004DEDA4 /* DlgCRCDViewer.cpp in Sources */,
 				E19B6517166C09B9004DEDA4 /* DlgDog.cpp in Sources */,
 				E19B6518166C09B9004DEDA4 /* DlgEventSelect.cpp in Sources */,
-				E1D2AFEA1A292424006EA87D /* AgilityBookImages.cpp in Sources */,
+				E1D2AFEA1A292424006EA87D /* ImageHelper.cpp in Sources */,
 				E19B6519166C09B9004DEDA4 /* DlgExistingPoints.cpp in Sources */,
 				E19B651A166C09B9004DEDA4 /* DlgFault.cpp in Sources */,
 				E19B651B166C09B9004DEDA4 /* DlgFind.cpp in Sources */,
