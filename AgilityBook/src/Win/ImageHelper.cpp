@@ -15,7 +15,6 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "ImageHelper.h"
 
 #include <wx/artprov.h>
