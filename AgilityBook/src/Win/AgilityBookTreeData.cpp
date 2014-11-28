@@ -47,7 +47,6 @@
  */
 
 #include "stdafx.h"
-#if !USE_TREELIST
 #include "AgilityBookTreeData.h"
 
 #include "AgilityBook.h"
@@ -1297,5 +1296,3 @@ void CAgilityBookTreeDataRun::Properties()
 			pDoc->Modify(true);
 	}
 }
-
-#endif // USE_TREELIST

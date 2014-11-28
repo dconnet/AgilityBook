@@ -45,7 +45,6 @@
  */
 
 #include "stdafx.h"
-#if !USE_TREELIST
 #include "AgilityBookRunsView.h"
 
 #include "AgilityBook.h"
@@ -2055,5 +2054,3 @@ void CAgilityBookRunsView::OnPreview(wxCommandEvent& evt)
 {
 	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
-
-#endif // USE_TREELIST

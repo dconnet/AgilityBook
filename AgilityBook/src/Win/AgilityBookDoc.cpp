@@ -66,14 +66,9 @@
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTrainingView.h"
-#if USE_TREELIST
-#include "AgilityBookTreeListModel.h"
-#include "AgilityBookTreeListView.h"
-#else
 #include "AgilityBookRunsView.h"
 #include "AgilityBookTreeData.h"
 #include "AgilityBookTreeView.h"
-#endif
 #include "ClipBoard.h"
 #include "ConfigHandler.h"
 #include "DlgAbout.h"
@@ -110,13 +105,8 @@
 #endif
 
 
-#if USE_TREELIST
-#define CTREEVIEW CAgilityBookTreeListView
-#define GETTREEVIEW GetTreeListView
-#else
 #define CTREEVIEW CAgilityBookTreeView
 #define GETTREEVIEW GetTreeView
-#endif
 
 IMPLEMENT_DYNAMIC_CLASS(CAgilityBookDoc, wxDocument)
 
@@ -227,10 +217,6 @@ BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_UPDATE_UI(ID_UNSORT, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_SORTRUNS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookDoc::OnUpdateCmd)
-#if USE_TREELIST
-	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_LIST, CAgilityBookDoc::OnUpdateCmd)
-	EVT_UPDATE_UI(ID_VIEW_ALL_RUNS_BY_LIST, CAgilityBookDoc::OnUpdateCmd)
-#endif
 	EVT_UPDATE_UI(ID_VIEW_HIDDEN, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookDoc::OnUpdateCmd)
@@ -428,13 +414,8 @@ ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial() const
 	ARBDogTrialPtr pTrial;
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-#if USE_TREELIST
-	if (pTree)
-		pTrial = pTree->GetStore()->GetTrial(pTree->GetSelection());
-#else
 	if (pTree && pTree->GetCurrentTreeItem())
 		pTrial = pTree->GetCurrentTreeItem()->GetTrial();
-#endif
 	return pTrial;
 }
 
@@ -447,13 +428,8 @@ ARBDogRunPtr CAgilityBookDoc::GetCurrentRun() const
 	ARBDogRunPtr pRun;
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-#if USE_TREELIST
-	if (pTree)
-		pRun = pTree->GetStore()->GetRun(pTree->GetSelection());
-#else
 	if (pTree && pTree->GetCurrentTreeItem())
 		pRun = pTree->GetCurrentTreeItem()->GetRun();
-#endif
 	return pRun;
 }
 
@@ -494,15 +470,6 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-#if USE_TREELIST
-	wxDataViewItem item = pTree->FindData(pSelectedRun);
-	if (item.IsOk())
-	{
-		wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, ID_AGILITY_NEW_TRIAL);
-		evt.SetEventObject(this);
-		pTree->GetEventHandler()->ProcessEvent(evt);
-	}
-#else
 	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
 	if (pData)
 	{
@@ -514,7 +481,6 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 				Modify(true);
 		}
 	}
-#endif
 }
 
 
@@ -522,15 +488,6 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 {
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-#if USE_TREELIST
-	wxDataViewItem item = pTree->FindData(pSelectedRun);
-	if (item.IsOk())
-	{
-		wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, ID_AGILITY_NEW_RUN);
-		evt.SetEventObject(this);
-		pTree->GetEventHandler()->ProcessEvent(evt);
-	}
-#else
 	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
 	if (pData)
 	{
@@ -542,7 +499,6 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 				Modify(true);
 		}
 	}
-#endif
 }
 
 
@@ -550,15 +506,6 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 {
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-#if USE_TREELIST
-	wxDataViewItem item = pTree->FindData(pRun);
-	if (item.IsOk())
-	{
-		wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, ID_AGILITY_EDIT_RUN);
-		evt.SetEventObject(this);
-		pTree->GetEventHandler()->ProcessEvent(evt);
-	}
-#else
 	CAgilityBookTreeData* pData = pTree->FindData(pRun);
 	if (pData)
 	{
@@ -570,7 +517,6 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 				Modify(true);
 		}
 	}
-#endif
 }
 
 
@@ -578,15 +524,6 @@ void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 {
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-#if USE_TREELIST
-	wxDataViewItem item = pTree->FindData(pRun);
-	if (item.IsOk())
-	{
-		wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, ID_AGILITY_DELETE_RUN);
-		evt.SetEventObject(this);
-		pTree->GetEventHandler()->ProcessEvent(evt);
-	}
-#else
 	CAgilityBookTreeData* pData = pTree->FindData(pRun);
 	if (pData)
 	{
@@ -598,7 +535,6 @@ void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 				Modify(true);
 		}
 	}
-#endif
 }
 
 
@@ -1317,19 +1253,6 @@ CTabView* CAgilityBookDoc::GetTabView() const
 /**
  * Function to get the tree view. This is used internally and by the runs view.
  */
-#if USE_TREELIST
-CAgilityBookTreeListView* CAgilityBookDoc::GetTreeListView() const
-{
-	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
-	{
-		CAgilityBookTreeListView* pView = wxDynamicCast(*iView, CAgilityBookTreeListView);
-		if (pView)
-			return pView;
-	}
-	return nullptr;
-}
-
-#else
 CAgilityBookTreeView* CAgilityBookDoc::GetTreeView() const
 {
 	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
@@ -1355,7 +1278,6 @@ CAgilityBookRunsView* CAgilityBookDoc::GetRunsView() const
 	}
 	return nullptr;
 }
-#endif
 
 
 /**
@@ -1790,18 +1712,6 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 		evt.Enable(false);
 		evt.Skip();
 		break;
-#if USE_TREELIST
-	case ID_VIEW_RUNS_BY_LIST:
-		evt.Check(CAgilityBookOptions::eViewRunsByList == CAgilityBookOptions::GetViewRunsStyle() ? 1 : 0);
-		evt.Enable(false);
-		evt.Skip();
-		break;
-	case ID_VIEW_ALL_RUNS_BY_LIST:
-		evt.Check(CAgilityBookOptions::eViewAllRunsByList == CAgilityBookOptions::GetViewRunsStyle() ? 1 : 0);
-		evt.Enable(false);
-		evt.Skip();
-		break;
-#endif
 	case ID_VIEW_HIDDEN:
 		evt.Check(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
 		evt.Enable(false);

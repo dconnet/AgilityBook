@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-04-11 Fix switching dogs (hidden since new TreeList was being used)
+ * 2014-04-11 Fix switching dogs
  * 2013-04-22 Changing dogs didn't update runs when viewing all runs.
  * 2012-10-03 Fixed a printing problem in the tree.
  * 2012-07-04 Add option to use run time or opening time in gamble OPS.
@@ -40,7 +40,6 @@
  */
 
 #include "stdafx.h"
-#if !USE_TREELIST
 #include "AgilityBookTreeView.h"
 
 #include "AgilityBook.h"
@@ -1400,5 +1399,3 @@ void CAgilityBookTreeView::OnPreview(wxCommandEvent& evt)
 {
 	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(GetPrintDataAsHtmlTable()));
 }
-
-#endif // USE_TREELIST

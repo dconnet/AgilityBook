@@ -1,5 +1,4 @@
 #pragma once
-#if !USE_TREELIST
 
 /*
  * Copyright (c) David Connet. All Rights Reserved.
@@ -301,5 +300,3 @@ public:
 private:
 	ARBDogRunPtr m_pRun;
 };
-
-#endif // USE_TREELIST

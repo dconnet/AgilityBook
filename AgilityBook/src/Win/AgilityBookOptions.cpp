@@ -1722,60 +1722,14 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_TREE_DOG_CALLNAME);
 				outValues.push_back(IO_TREE_DOG_AGE);
 				break;
-#if USE_TREELIST
-			case IO_TYPE_VIEW_TREELIST_TRIAL:
-#else
 			case IO_TYPE_VIEW_TREE_TRIAL:
 				outValues.push_back(IO_TREE_TRIAL_START);
-#endif
 #ifndef __WXMSW__
 				outValues.push_back(IO_TREE_TRIAL_VERIFIED);
 #endif
 				outValues.push_back(IO_TREE_TRIAL_VENUE);
 				outValues.push_back(IO_TREE_TRIAL_LOCATION);
 				break;
-#if USE_TREELIST
-			case IO_TYPE_VIEW_TREELIST_RUNS:
-				outValues.push_back(IO_RUNS_DATE);
-				outValues.push_back(IO_RUNS_Q);
-				outValues.push_back(IO_RUNS_TITLE_POINTS);
-				outValues.push_back(IO_RUNS_SCORE);
-				outValues.push_back(IO_RUNS_VENUE);
-				outValues.push_back(IO_RUNS_EVENT);
-				outValues.push_back(IO_RUNS_DIVISION);
-				outValues.push_back(IO_RUNS_LEVEL);
-				outValues.push_back(IO_RUNS_HEIGHT);
-				outValues.push_back(IO_RUNS_JUDGE);
-				outValues.push_back(IO_RUNS_TIME);
-				outValues.push_back(IO_RUNS_YPS);
-				outValues.push_back(IO_RUNS_PLACE);
-				outValues.push_back(IO_RUNS_IN_CLASS);
-				outValues.push_back(IO_RUNS_DOGSQD);
-				outValues.push_back(IO_RUNS_COMMENTS);
-				break;
-			case IO_TYPE_VIEW_TREELIST_RUNS_LIST:
-				outValues.push_back(IO_RUNS_CALL_NAME);
-				outValues.push_back(IO_RUNS_VENUE);
-				outValues.push_back(IO_RUNS_CLUB);
-				outValues.push_back(IO_RUNS_LOCATION);
-				outValues.push_back(IO_RUNS_DATE);
-				outValues.push_back(IO_RUNS_Q);
-				outValues.push_back(IO_RUNS_TITLE_POINTS);
-				outValues.push_back(IO_RUNS_SCORE);
-				outValues.push_back(IO_RUNS_VENUE);
-				outValues.push_back(IO_RUNS_EVENT);
-				outValues.push_back(IO_RUNS_DIVISION);
-				outValues.push_back(IO_RUNS_LEVEL);
-				outValues.push_back(IO_RUNS_HEIGHT);
-				outValues.push_back(IO_RUNS_JUDGE);
-				outValues.push_back(IO_RUNS_TIME);
-				outValues.push_back(IO_RUNS_YPS);
-				outValues.push_back(IO_RUNS_PLACE);
-				outValues.push_back(IO_RUNS_IN_CLASS);
-				outValues.push_back(IO_RUNS_DOGSQD);
-				outValues.push_back(IO_RUNS_COMMENTS);
-				break;
-#else
 			case IO_TYPE_VIEW_TREE_RUN:
 				outValues.push_back(IO_TREE_RUN_DATE);
 				outValues.push_back(IO_TREE_RUN_EVENT);
@@ -1798,7 +1752,6 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_COMMENTS);
 				break;
-#endif
 			case IO_TYPE_VIEW_CALENDAR_LIST:
 				outValues.push_back(IO_CAL_START_DATE);
 				outValues.push_back(IO_CAL_VENUE);

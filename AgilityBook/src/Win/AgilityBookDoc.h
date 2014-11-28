@@ -40,12 +40,8 @@
 class CAgilityBookCalendarListView;
 class CAgilityBookCalendarView;
 class CAgilityBookTrainingView;
-#if USE_TREELIST
-class CAgilityBookTreeListView;
-#else
 class CAgilityBookRunsView;
 class CAgilityBookTreeView;
-#endif
 class CStatusHandler;
 class CTabView;
 struct CVenueFilter;
@@ -180,14 +176,9 @@ public:
 
 	CTabView* GetTabView() const;
 
-#if USE_TREELIST
-private:
-	CAgilityBookTreeListView* GetTreeListView() const;
-#else
 	CAgilityBookTreeView* GetTreeView() const;
 	CAgilityBookRunsView* GetRunsView() const;
 private:
-#endif
 	CAgilityBookCalendarListView* GetCalendarListView() const;
 	CAgilityBookCalendarView* GetCalendarView() const;
 	CAgilityBookTrainingView* GetTrainingView() const;

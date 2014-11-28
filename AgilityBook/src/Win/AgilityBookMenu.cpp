@@ -130,14 +130,8 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{MENU_ITEM, ID_UNSORT,                wxITEM_NORMAL, 1, nullptr, arbT("MenuUnsort"), arbT("DescUnsort"), nullptr},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
 	{MENU_ITEM, ID_VIEW_SORTRUNS,         wxITEM_CHECK,  1, nullptr, arbT("MenuViewNewestTrials"), arbT("DescViewNewestTrials"), nullptr},
-#if !USE_TREELIST
-	{MENU_ITEM, ID_VIEW_RUNS_BY_TRIAL,    wxITEM_CHECK,  1, nullptr, arbT("MenuViewRunsByTrial"), arbT("DescViewRunsByTrial"), nullptr},
-#else
 	{MENU_ITEM, 0,                        wxITEM_NORMAL, 1, nullptr, arbT("MenuViewRuns"), nullptr, nullptr},
 	{MENU_ITEM, ID_VIEW_RUNS_BY_TRIAL,    wxITEM_RADIO,  2, nullptr, arbT("MenuViewRunsListByTrial"), arbT("DescViewRunsListByTrial"), nullptr},
-	{MENU_ITEM, ID_VIEW_RUNS_BY_LIST,     wxITEM_RADIO,  2, nullptr, arbT("MenuViewRunsByList"), arbT("DescViewRunsByList"), nullptr},
-	{MENU_ITEM, ID_VIEW_ALL_RUNS_BY_LIST, wxITEM_RADIO,  2, nullptr, arbT("MenuViewAllRunsByList"), arbT("DescViewAllRunsByList"), nullptr},
-#endif
 	{MENU_ITEM, ID_VIEW_TABLE_IN_YPS,     wxITEM_CHECK,  1, nullptr, arbT("MenuViewIncludeTable"), arbT("DescViewIncludeTable"), nullptr},
 	{MENU_ITEM, ID_VIEW_RUNTIME_IN_OPS,   wxITEM_CHECK,  1, nullptr, arbT("MenuViewIncludeRunTime"), arbT("DescViewIncludeRunTime"), nullptr},
 	{MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
@@ -310,24 +304,6 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_PRINT_TRIAL, _("MenuTrialPrintRuns"), _("DescTrialPrintRuns"));
 		CMenuHelper::DoMenuItem(menu, ID_AGILITY_PRINT_RUNS, _("MenuRunPrintRuns"), _("DescRunPrintRuns"));
 		break;
-
-#if USE_TREELIST
-	case IdMenuRunDifferent:
-		CMenuHelper::DoMenuItem(menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
-		menu->AppendSeparator();
-		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(true));
-		CMenuHelper::DoMenuItem(menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
-		CMenuHelper::DoMenuItem(menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
-		CMenuHelper::DoMenuItem(menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_DELETE_RUN, _("MenuRunDelete"), _("DescRunDelete"));
-		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
-		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_PRINT_TRIAL, _("MenuTrialPrintRuns"), _("DescTrialPrintRuns"));
-		CMenuHelper::DoMenuItem(menu, ID_AGILITY_PRINT_RUNS, _("MenuRunPrintRuns"), _("DescRunPrintRuns"));
-		break;
-#endif
 
 	case IdMenuPoints:
 		CMenuHelper::DoMenuItem(menu, ID_DETAILS, _("MenuDetails"), _("DescDetails"));

@@ -1,5 +1,4 @@
 #pragma once
-#if !USE_TREELIST
 
 /*
  * Copyright (c) David Connet. All Rights Reserved.
@@ -217,5 +216,3 @@ private:
 	void OnPrint(wxCommandEvent& evt);
 	void OnPreview(wxCommandEvent& evt);
 };
-
-#endif // USE_TREELIST

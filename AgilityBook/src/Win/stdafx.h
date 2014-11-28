@@ -9,4 +9,3 @@
  */
 
 #include "Platform/SetupWX.h"
-#define USE_TREELIST	0
