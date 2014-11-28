@@ -102,6 +102,7 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
+#include "AgilityBookImages.h"
 #include "AgilityBookOptions.h"
 #include "CheckLink.h"
 #include "ClipBoard.h"
@@ -113,7 +114,6 @@
 #include "DlgReferenceRun.h"
 #include "DlgSelectURL.h"
 #include "Globals.h"
-#include "ImageManager.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 #include "NoteButton.h"

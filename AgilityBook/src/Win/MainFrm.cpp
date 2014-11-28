@@ -28,11 +28,11 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
+#include "AgilityBookImages.h"
 #include "AgilityBookMenu.h"
 #include "CommonView.h"
 #include "DlgMessage.h"
 #include "Globals.h"
-#include "ImageManager.h"
 #include "PointsData.h"
 #include "Print.h"
 #include "RegItems.h"

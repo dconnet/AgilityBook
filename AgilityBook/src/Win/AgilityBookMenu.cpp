@@ -26,7 +26,7 @@
 #include "stdafx.h"
 #include "AgilityBookMenu.h"
 
-#include "ImageManager.h"
+#include "AgilityBookImages.h"
 #include "MainFrm.h"
 #include <wx/artprov.h>
 #include <wx/config.h>

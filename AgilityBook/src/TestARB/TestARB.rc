@@ -50,23 +50,23 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Icon
+// Resources
 //
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "..\\Win\\res\\AgilityBook.ico"
-
-#endif    // English (U.S.) resources
-/////////////////////////////////////////////////////////////////////////////
-
+IDR_MAINFRAME           ICON                    "../Win/res/AgilityBook.ico"
 
 TESTWXARB_EN_US         MOFILE                  "lang/en_US/TestwxARB.mo"
 TESTWXARB_FR_FR         MOFILE                  "lang/fr_FR/TestwxARB.mo"
+
 TESTWXARB_DAT           DATAFILE                "TestwxARB.dat"
+
 TESTARCHIVE_ZIP         DATAFILE                "res/TestArchive.zip"
 
 

@@ -66,9 +66,6 @@
 #include <wx/url.h>
 #include <wx/utils.h>
 
-#include "res/AgilityBook48.xpm"
-#include "res/AgilityBook256.xpm"
-
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
@@ -297,6 +294,7 @@ bool CAgilityBookApp::OnInit()
 	}
 
 	wxImage::AddHandler(new wxGIFHandler);
+	wxImage::AddHandler(new wxPNGHandler);
 	wxFileSystem::AddHandler(new wxArchiveFSHandler);
 	wxFileSystem::AddHandler(new wxMemoryFSHandler);
 
@@ -554,32 +552,6 @@ void CAgilityBookApp::OnSetLanguage(int langId)
 	}
 }
 
-
-bool CAgilityBookApp::OnCreateBitmap(
-		const wxArtID& id,
-		const wxArtClient& client,
-		const wxSize& size,
-		wxBitmap& outBmp)
-{
-	return false;
-}
-
-
-bool CAgilityBookApp::OnCreateIconBundle(
-		const wxArtID& id,
-		const wxArtClient& client,
-		wxIconBundle& outIcon)
-{
-	if (id == ImageMgrAppBundle)
-	{
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp));
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX));
-		outIcon.AddIcon(wxIcon(AgilityBook48_xpm));
-		outIcon.AddIcon(wxIcon(AgilityBook256_xpm));
-		return true;
-	}
-	return false;
-}
 
 
 bool CAgilityBookApp::InitLocale()

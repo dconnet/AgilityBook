@@ -48,23 +48,90 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Icon
+// Resources
 //
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-AGILITYBOOK             ICON                    "res\\AgilityBook.ico"
-
-#endif    // English (U.S.) resources
-/////////////////////////////////////////////////////////////////////////////
-
+AGILITYBOOK             ICON                    "res/AgilityBook.ico"
 
 AGILITYBOOK_EN_US       MOFILE                  "lang/en_US/AgilityBook.mo"
 AGILITYBOOK_FR_FR       MOFILE                  "lang/fr_FR/AgilityBook.mo"
+
 AGILITYBOOK_DAT         DATAFILE                "AgilityBook.dat"
+
+AGILITYBOOK16           RCDATA                  "res/AgilityBook16.png"
+AGILITYBOOK32           RCDATA                  "res/AgilityBook32.png"
+AGILITYBOOK48           RCDATA                  "res/AgilityBook48.png"
+AGILITYBOOK256          RCDATA                  "res/AgilityBook256.png"
+ACCCONFIRM              RCDATA                  "res/AccConfirm.png"
+ACCNONE                 RCDATA                  "res/AccNone.png"
+ACCTODO                 RCDATA                  "res/AccTodo.png"
+CALEMPTY                RCDATA                  "res/CalEmpty.png"
+CALENDAR                RCDATA                  "res/calendar.png"
+CALENTERED              RCDATA                  "res/CalEntered.png"
+CALENTEREDTENTATIVE     RCDATA                  "res/CalEnteredTentative.png"
+CALPENDING              RCDATA                  "res/CalPending.png"
+CALPENDINGTENTATIVE     RCDATA                  "res/CalPendingTentative.png"
+CALPLAN                 RCDATA                  "res/CalPlan.png"
+CALPLANTENTATIVE        RCDATA                  "res/CalPlanTentative.png"
+CALTENTATIVE            RCDATA                  "res/CalTentative.png"
+CHECKED                 RCDATA                  "res/checked.png"
+CRCD                    RCDATA                  "res/crcd.png"
+DOG                     RCDATA                  "res/dog.png"
+HDRDOWN                 RCDATA                  "res/HdrDown.png"
+HDRUP                   RCDATA                  "res/HdrUp.png"
+HELP16                  RCDATA                  "res/help16.png"
+HELP32                  RCDATA                  "res/help32.png"
+HELP48                  RCDATA                  "res/help48.png"
+HIDDEN                  RCDATA                  "res/hidden.png"
+NOTE                    RCDATA                  "res/Note.png"
+NOTEADDED               RCDATA                  "res/NoteAdded.png"
+NOTENOTE                RCDATA                  "res/NoteNote.png"
+NOTENOTEADDED           RCDATA                  "res/NoteNoteAdded.png"
+POINTS                  RCDATA                  "res/points.png"
+RUN                     RCDATA                  "res/run.png"
+SPLASH                  RCDATA                  "res/Splash.png"
+TITLE_HIDDEN            RCDATA                  "res/title_hidden.png"
+TITLE_HIDDEN_HAVE       RCDATA                  "res/title_hidden_have.png"
+TITLE_VISIBLE           RCDATA                  "res/title_visible.png"
+TITLE_VISIBLE_HAVE      RCDATA                  "res/title_visible_have.png"
+TOOLBARABOUT            RCDATA                  "res/toolbarAbout.png"
+TOOLBARCALENDAR         RCDATA                  "res/toolbarCalendar.png"
+TOOLBARCOPY             RCDATA                  "res/toolbarCopy.png"
+TOOLBARCUT              RCDATA                  "res/toolbarCut.png"
+TOOLBARDOG              RCDATA                  "res/toolbarDog.png"
+TOOLBARNEW              RCDATA                  "res/toolbarNew.png"
+TOOLBAROPEN             RCDATA                  "res/toolbarOpen.png"
+TOOLBARPASTE            RCDATA                  "res/toolbarPaste.png"
+TOOLBARPREVIEW          RCDATA                  "res/toolbarPreview.png"
+TOOLBARPRINT            RCDATA                  "res/toolbarPrint.png"
+TOOLBARRUN              RCDATA                  "res/toolbarRun.png"
+TOOLBARSAVE             RCDATA                  "res/toolbarSave.png"
+TOOLBARTITLE            RCDATA                  "res/toolbarTitle.png"
+TOOLBARTRAINING         RCDATA                  "res/toolbarTraining.png"
+TOOLBARTRIAL            RCDATA                  "res/toolbarTrial.png"
+TRAINING                RCDATA                  "res/training.png"
+TRIAL                   RCDATA                  "res/trial.png"
+UNCHECKED               RCDATA                  "res/unchecked.png"
+VENUE_AAC               RCDATA                  "res/venue_aac.png"
+VENUE_AKC               RCDATA                  "res/venue_akc.png"
+VENUE_ASCA              RCDATA                  "res/venue_asca.png"
+VENUE_CKC               RCDATA                  "res/venue_ckc.png"
+VENUE_CPE               RCDATA                  "res/venue_cpe.png"
+VENUE_DOCNA             RCDATA                  "res/venue_docna.png"
+VENUE_FCI               RCDATA                  "res/venue_fci.png"
+VENUE_NADAC             RCDATA                  "res/venue_nadac.png"
+VENUE_SCC               RCDATA                  "res/venue_scc.png"
+VENUE_SWEEP             RCDATA                  "res/venue_sweep.png"
+VENUE_TDAA              RCDATA                  "res/venue_tdaa.png"
+VENUE_UKC               RCDATA                  "res/venue_ukc.png"
+VENUE_USDAA             RCDATA                  "res/venue_usdaa.png"
 
 
 #ifndef APSTUDIO_INVOKED

@@ -48,19 +48,22 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Icon
+// Resources
 //
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "..\\Win\\res\\AgilityBook.ico"
+IDR_MAINFRAME           ICON                    "../Win/res/AgilityBook.ico"
 
-#endif    // English (U.S.) resources
-/////////////////////////////////////////////////////////////////////////////
-
+AGILITYBOOK16           RCDATA                  "../Win/res/AgilityBook16.png"
+AGILITYBOOK32           RCDATA                  "../Win/res/AgilityBook32.png"
+AGILITYBOOK48           RCDATA                  "../Win/res/AgilityBook48.png"
+AGILITYBOOK256          RCDATA                  "../Win/res/AgilityBook256.png"
 
 
 #ifndef APSTUDIO_INVOKED

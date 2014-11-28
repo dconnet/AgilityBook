@@ -25,8 +25,8 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
+#include "AgilityBookImages.h"
 #include "AgilityBookPanels.h"
-#include "ImageManager.h"
 #include "MainFrm.h"
 #include "RegItems.h"
 #include <wx/choicebk.h>

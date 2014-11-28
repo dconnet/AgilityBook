@@ -31,8 +31,8 @@
 #include "stdafx.h"
 #include "ListCtrl.h"
 
+#include "AgilityBookImages.h"
 #include "Globals.h"
-#include "ImageManager.h"
 #include "ListData.h"
 #include <sstream>
 

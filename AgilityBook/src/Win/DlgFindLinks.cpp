@@ -25,10 +25,10 @@
 #include "DlgFindLinks.h"
 
 #include "AgilityBook.h"
+#include "AgilityBookImages.h"
 #include "CheckLink.h"
 #include "ClipBoard.h"
 #include "DlgSelectURL.h"
-#include "ImageManager.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 

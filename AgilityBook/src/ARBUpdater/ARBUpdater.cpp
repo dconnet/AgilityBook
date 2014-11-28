@@ -55,6 +55,8 @@ bool CARBUpdaterApp::OnInit()
 	if (!CBaseApp::OnInit())
 		return false;
 
+	wxImage::AddHandler(new wxPNGHandler);
+
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
 		{wxCMD_LINE_SWITCH, "g", "generate",

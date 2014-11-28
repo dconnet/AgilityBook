@@ -31,11 +31,6 @@
 #include <wx/ffile.h>
 #include <wx/filename.h>
 
-#include "../Win/res/AgilityBook16.xpm"
-#include "../Win/res/AgilityBook32.xpm"
-#include "../Win/res/AgilityBook48.xpm"
-#include "../Win/res/AgilityBook256.xpm"
-
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
@@ -45,10 +40,26 @@ CDlgARBHelp::CDlgARBHelp()
 	: wxWizard(nullptr, wxID_ANY, L"Agility Record Book Helper", wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
 	wxIconBundle icons;
-	icons.AddIcon(wxIcon(AgilityBook16_xpm));
-	icons.AddIcon(wxIcon(AgilityBook32_xpm));
-	icons.AddIcon(wxIcon(AgilityBook48_xpm));
-	icons.AddIcon(wxIcon(AgilityBook256_xpm));
+	{
+		wxIcon icon;
+		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook16));
+		icons.AddIcon(icon);
+	}
+	{
+		wxIcon icon;
+		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook32));
+		icons.AddIcon(icon);
+	}
+	{
+		wxIcon icon;
+		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook48));
+		icons.AddIcon(icon);
+	}
+	{
+		wxIcon icon;
+		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook256));
+		icons.AddIcon(icon);
+	}
 	SetIcons(icons);
 
 	m_firstPage = new CDlgPageEncode(this);

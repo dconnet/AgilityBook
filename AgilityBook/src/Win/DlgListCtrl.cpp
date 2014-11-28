@@ -29,12 +29,12 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
+#include "AgilityBookImages.h"
 #include "AgilityBookOptions.h"
 #include "DlgCalendar.h"
 #include "DlgFault.h"
 #include "DlgOtherPoint.h"
 #include "DlgPartner.h"
-#include "ImageManager.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 
