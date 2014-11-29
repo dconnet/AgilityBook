@@ -43,7 +43,7 @@ Do a full rebuild and verify it.
 Commit all changes to SVN.
 
 Pull files onto Mac and build there (see MAC_BUILD.txt)
-- Update Project Version in xcode target properties (x.y.z)
+- Update Version (x.y.z) and Build (n) in xcode project General settings
   (unless this was done as prep for a new release below)
 On Mac10.9:
 - export PATH=$WXWIN/build-cocoa:$PATH
