@@ -222,7 +222,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ARB;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "David Connet";
 			};
 			buildConfigurationList = E19B65F8166C1640004DEDA4 /* Build configuration list for PBXProject "ARBHelp" */;
@@ -441,7 +441,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -454,7 +453,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
