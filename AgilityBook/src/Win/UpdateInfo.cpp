@@ -306,7 +306,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		 *   'minOS' is happening now).
 		 *   -->
 		 *   <!ATTLIST Platform
-		 *     arch CDATA (x86,x64,mac,osx)
+		 *     arch CDATA (win32,win64,osx) [pre-v2.4.0: x86,x64,mac]
 		 *     minOS CDATA #IMPLIED (maj.min)
 		 *     ver CDATA #REQUIRED
 		 *     config CDATA #REQUIRED
