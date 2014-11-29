@@ -36,7 +36,8 @@
 
 
 // When adding a new config:
-//  - Add entry here. That's it.
+//  - Add entry here.
+//  - Add entry in res/CompileDatListTest.dat
 // RunARBTests.py will automatically pick up all XML files in ./res/
 // Also, update "Default" test if venues/actions/etc changed.
 const wchar_t* const gc_Configs[] =

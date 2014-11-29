@@ -100,7 +100,7 @@
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
-      <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -121,7 +121,7 @@
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
-      <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -142,7 +142,7 @@
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
-      <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,7 +163,7 @@
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
-      <Inputs>$(ProjectDir)..\..\lang\en_US\arb.po;$(ProjectDir)..\..\lang\fr_FR\arb.po;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -251,6 +251,29 @@
     <None Include="..\..\TestARB\res\Config23_v12_8.xml" />
     <None Include="..\..\TestARB\res\Config24_v12_8.xml" />
     <None Include="..\..\TestARB\res\Config25_v12_9.xml" />
+    <None Include="..\..\TestARB\res\Config26_v12_9.xml" />
+    <None Include="..\..\TestARB\res\Config27_v12_10.xml" />
+    <None Include="..\..\TestARB\res\Config28_v12_11.xml" />
+    <None Include="..\..\TestARB\res\Config29_v12_11.xml" />
+    <None Include="..\..\TestARB\res\Config30_v12_11.xml" />
+    <None Include="..\..\TestARB\res\Config31_v12_11.xml" />
+    <None Include="..\..\TestARB\res\Config32_v12_11.xml" />
+    <None Include="..\..\TestARB\res\Config33_v13_1.xml" />
+    <None Include="..\..\TestARB\res\Config34_v13_1.xml" />
+    <None Include="..\..\TestARB\res\Config35_v13_1.xml" />
+    <None Include="..\..\TestARB\res\Config36_v13_1.xml" />
+    <None Include="..\..\TestARB\res\Config37_v13_1.xml" />
+    <None Include="..\..\TestARB\res\Config38_v13_1.xml" />
+    <None Include="..\..\TestARB\res\Config39_v13_2.xml" />
+    <None Include="..\..\TestARB\res\Config40_v13_2.xml" />
+    <None Include="..\..\TestARB\res\Config41_v13_2.xml" />
+    <None Include="..\..\TestARB\res\Config42_v14_0.xml" />
+    <None Include="..\..\TestARB\res\Config43_v14_0.xml" />
+    <None Include="..\..\TestARB\res\Config44_v14_1.xml" />
+    <None Include="..\..\TestARB\res\Config45_v14_2.xml" />
+    <None Include="..\..\TestARB\res\Config46_v14_3.xml" />
+    <None Include="..\..\TestARB\res\Config47_v14_3.xml" />
+    <None Include="..\..\TestARB\res\Config48_v14_3.xml" />
     <None Include="..\..\TestARB\res\TestARB.rc2" />
   </ItemGroup>
   <ItemGroup>

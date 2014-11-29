@@ -86,7 +86,7 @@
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -101,7 +101,7 @@
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -116,7 +116,7 @@
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,7 +131,7 @@
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
