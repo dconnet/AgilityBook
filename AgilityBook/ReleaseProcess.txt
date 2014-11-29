@@ -29,7 +29,7 @@ Run Doxygen and fix any warnings/errors it reports.
 
 Do a full rebuild and verify it.
 - cd src\Projects\Installer
-- 'BuildAll.py -w %WXBASE%\wxWidgets-3.0.0 -b fullupdate' [runs VC10 compile]
+- 'BuildAll.py -w %WXBASE%\wxWidgets-3.0.2 -b fullupdate' [runs VC10 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
       -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.0.0'
 	            Default is %WXWIN%
@@ -45,14 +45,6 @@ Commit all changes to SVN.
 Pull files onto Mac and build there (see MAC_BUILD.txt)
 - Update Project Version in xcode target properties (x.y.z)
   (unless this was done as prep for a new release below)
-On Mac10.5:
-- export PATH=$WXWIN/build-carbon:$PATH
-- cd .../AgilityBook
-- autoconf
-- rm -rf build-carbon
-- mkdir build-carbon
-- cd build-carbon
-- ../configure
 On Mac10.9:
 - export PATH=$WXWIN/build-cocoa:$PATH
 - cd .../AgilityBook

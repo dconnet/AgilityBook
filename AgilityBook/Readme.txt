@@ -1,11 +1,12 @@
 Setting up the build environment
 ================================
+(note, comments/etc are very Windows-oriented since that's my main platform.)
 Additional software packages required (all free):
 - wxWidgets
 - gettext (MinGW)
 - poedit
 - wxFormBuilder (optional)
-- UnitTest++ [see note below]
+- UnitTest++ [see note below, included in src tree now]
 - Boost libraries (not needed as of VC9+SP1)
 - Windows Installer XML toolset
 - Doxygen (optional)
@@ -19,8 +20,8 @@ Once the above software is unpacked, the directory structure should look like:
     - ...
   - <some_path>/boost_<ver>/ [BOOST_ROOT points to this]
       - ...(Boost structure)
-
-(note, comments/etc are very Windows-oriented since that's my main platform.)
+    I typically use \devtools\boost\boost_<ver>. Then my other 3rdparty tools
+	also reside in devtools, for instance: \devtools\wx\wxWidgets-<ver>.
 
 --------------------
 
@@ -100,7 +101,7 @@ Currently using Gettext v0.18.3.2.
 --------------------
 
 poedit: http://www.poedit.net
-Cross platform editor for modifying .po files. Currently using 1.6.5.
+Cross platform editor for modifying .po files. Currently using 1.6.10.
 (makes use of gettext)
 Use this to keep the catalog in sync with the source code.
 
@@ -135,30 +136,29 @@ All VC project files have been copied/renamed/modified such that:
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.55.0. There is no need
+ARB has been built and tested using Boost version 1.56.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr,
 weak_ptr and make_shared templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
-above. The default directory when unpacked is boost_1_55_0 (of course,
+above. The default directory when unpacked is boost_1_56_0 (of course,
 this will vary based on boost version). Set BOOST_ROOT to point to this
 directory. The projects use this environment variable.
 
 --------------------
 
 Windows Installer XML toolset: http://wixtoolset.org/
-Currently using Version 3.5.2519.0 (as of ARB v2.2.6).
+Currently using Version 3.9.1006.0 (as of ARB v2.4.5).
 - Install votive [optional]
 - (1), run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
 - Or (2) Unzip binaries.zip into "C:\Tools\wix3"
   (GenMSI.py assumes WiX is installed here, unless WIX env var is set)
-  [I actually have c:\wix\wix<version>\ so I can test multiple versions]
 
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.7.
+Used to create source code documentation. AgilityBook.dox uses v1.8.8.
 [Install to default location]
 
 --------------------
@@ -238,10 +238,7 @@ initial: sudo port install autoconf
          sudo port install subversion
 
 The xcode projects were used as follows:
-.../xcode3: Xcode 3.1 on OSX10.5
-            AgilityBookCocoa.xcodeproj
-                wx3.0, cocoa, OSX10.5 sdk
-.../xcode5: Xcode 5.0 on OSX10.9
+.../xcode6: Xcode 6.1 on OSX10.9
             Recommended (so projects work right):
             - Set DerivedData to Relative, 'build'
               - Advanced: Unique
@@ -275,7 +272,7 @@ The simplest fix is to put the following into ~/Library/LaunchAgents/
     <string>sh</string>
     <string>-c</string>
     <string>
-    launchctl setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_57_0
+    launchctl setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_56_0
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
     launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.2
     </string>
