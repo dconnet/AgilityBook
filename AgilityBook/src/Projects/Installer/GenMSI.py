@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2014-11-17 wix3.9 deprecated -sadv
 # 2013-11-27 Fix arbdll.dll access when building x64.
 # 2013-08-15 Added support for multiple wxs files.
 # 2013-08-12 Added vc11/12 support, remove pre-10 support.
@@ -303,8 +304,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			if processing > 1:
 				basename += '_' + culture
 			# -wx: Treat warnings as errors
-			# -sadv: Suppress AdvtExecuteSequence table
-			lightCmd = 'light -nologo -wx -pedantic -spdb -sadv'
+			lightCmd = 'light -nologo -wx -pedantic -spdb'
 			lightCmd += ' -dcl:high -cc ' + cabcache
 			if not processing == 1:
 				lightCmd += ' -reusecab'
