@@ -1,9 +1,12 @@
 11/28/2014: v3.0.0.<in development>
+- Notes:
+  - pre Mac-10.7 support dropped.
 - New features / Enhancements:
   - Moved image, language, and data files into Windows resource
   - Dropped xcode 3 support
+  - Updated to wx3 (auto-complete comboboxes and much more)
 
-11/4/2014: v2.4.5.<development>
+11/29/2014: v2.4.5.93
 - Bumped Configuration v48:
   - Added CKCSC
   - Fixed AKC MXP/MJP titles (should not be recurring)
@@ -12,7 +15,7 @@
 - Bug fixes:
   - Fix gambles with no closing required so titling works. (CPE non-traditional
     and USDAA tournament) Points earned can be properly specified as open/close.
-  - Fixed an issue where clicking (or just mousing over) a URL caused multipe
+  - Fixed an issue where clicking (or just mousing over) a URL caused multiple
     browser pages to open.
 
 8/17/2014: v2.4.4.92
