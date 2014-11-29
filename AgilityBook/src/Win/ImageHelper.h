@@ -25,6 +25,8 @@
 
 namespace ImageHelper
 {
+	extern wxIcon CreateIconFromBitmap(const wxBitmap& bitmap);
+
 	extern bool DoCreateBitmap(
 			const wxArtID& id,
 			const wxArtClient& client,

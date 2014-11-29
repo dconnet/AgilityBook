@@ -28,6 +28,7 @@
 
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
+#include "../Win/ImageHelper.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
 
@@ -40,26 +41,10 @@ CDlgARBHelp::CDlgARBHelp()
 	: wxWizard(nullptr, wxID_ANY, L"Agility Record Book Helper", wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
 	wxIconBundle icons;
-	{
-		wxIcon icon;
-		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook16));
-		icons.AddIcon(icon);
-	}
-	{
-		wxIcon icon;
-		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook32));
-		icons.AddIcon(icon);
-	}
-	{
-		wxIcon icon;
-		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook48));
-		icons.AddIcon(icon);
-	}
-	{
-		wxIcon icon;
-		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook256));
-		icons.AddIcon(icon);
-	}
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook16)));
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook32)));
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook48)));
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook256)));
 	SetIcons(icons);
 
 	m_firstPage = new CDlgPageEncode(this);

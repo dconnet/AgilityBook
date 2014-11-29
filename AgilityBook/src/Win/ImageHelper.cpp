@@ -27,6 +27,14 @@
 namespace ImageHelper
 {
 
+wxIcon CreateIconFromBitmap(const wxBitmap& bitmap)
+{
+	wxIcon icon;
+	icon.CopyFromBitmap(bitmap);
+	return icon;
+}
+
+
 bool DoCreateBitmap(
 		const wxArtID& id,
 		const wxArtClient& client,

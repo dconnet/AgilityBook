@@ -27,6 +27,9 @@
     <ClCompile Include="..\..\Win\Globals.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\ImageHelper.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\ImageManager.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
@@ -58,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Win\Globals.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\ImageHelper.h">
       <Filter>ARB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\ImageManager.h">

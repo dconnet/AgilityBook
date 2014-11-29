@@ -18,8 +18,9 @@
 
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/StringUtil.h"
-#include "../Win/Globals.h"
 
+#include "../Win/Globals.h"
+#include "../Win/ImageHelper.h"
 #include <wx/filedlg.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>
@@ -124,26 +125,10 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	Create(nullptr, wxID_ANY, L"MD5/SHA1/SHA256 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxIconBundle icons;
-	{
-		wxIcon icon;
-		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook16));
-		icons.AddIcon(icon);
-	}
-	{
-		wxIcon icon;
-		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook32));
-		icons.AddIcon(icon);
-	}
-	{
-		wxIcon icon;
-		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook48));
-		icons.AddIcon(icon);
-	}
-	{
-		wxIcon icon;
-		icon.CopyFromBitmap(wxBITMAP_PNG(AgilityBook256));
-		icons.AddIcon(icon);
-	}
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook16)));
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook32)));
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook48)));
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook256)));
 	SetIcons(icons);
 
 	if (!m_File.empty())
