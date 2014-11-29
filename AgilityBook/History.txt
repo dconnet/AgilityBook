@@ -1,3 +1,5 @@
+11/29/2014: v3.0.1.<development>
+
 11/29/2014: v3.0.0.94
 - Notes:
   - pre Mac-10.7 support dropped.
