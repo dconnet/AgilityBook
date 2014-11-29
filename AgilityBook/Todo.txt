@@ -1,6 +1,4 @@
-Last Updated: 8/21/2014
-
-- Copying a Standard run (without table) pastes with table checked.
+Last Updated: 11/27/2013
 
 - Create a fully standalone version (for USB). Config file too.
   (supported by existence of AgilityBook.info, no way to auto-create yet)
