@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E154D5EB1A29513100C022E2 /* ImageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154D5E91A29513100C022E2 /* ImageHelper.cpp */; };
 		E164622E17BFF295004F12AF /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164622B17BFF295004F12AF /* SetupApp.cpp */; };
 		E164623117BFF2BE004F12AF /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164622F17BFF2BE004F12AF /* ImageManager.cpp */; };
 		E19B6603166C1640004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B6602166C1640004DEDA4 /* Cocoa.framework */; };
@@ -29,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E154D5E91A29513100C022E2 /* ImageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageHelper.cpp; path = ../../../../Win/ImageHelper.cpp; sourceTree = "<group>"; };
+		E154D5EA1A29513100C022E2 /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageHelper.h; path = ../../../../Win/ImageHelper.h; sourceTree = "<group>"; };
 		E164622B17BFF295004F12AF /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SetupApp.cpp; path = ../../../../Win/SetupApp.cpp; sourceTree = "<group>"; };
 		E164622C17BFF295004F12AF /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupApp.h; path = ../../../../Win/SetupApp.h; sourceTree = "<group>"; };
 		E164622D17BFF295004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupAppARB.h; path = ../../../../Win/SetupAppARB.h; sourceTree = "<group>"; };
@@ -177,6 +180,8 @@
 		E19B664D166C17F3004DEDA4 /* Win */ = {
 			isa = PBXGroup;
 			children = (
+				E154D5E91A29513100C022E2 /* ImageHelper.cpp */,
+				E154D5EA1A29513100C022E2 /* ImageHelper.h */,
 				E164622F17BFF2BE004F12AF /* ImageManager.cpp */,
 				E164623017BFF2BE004F12AF /* ImageManager.h */,
 				E1DCE95C17C17E8F00F79DFA /* LanguageManager.cpp */,
@@ -260,6 +265,7 @@
 				E19B6633166C166F004DEDA4 /* ARBHelp.cpp in Sources */,
 				E19B6635166C166F004DEDA4 /* DlgARBHelp.cpp in Sources */,
 				E19B6636166C166F004DEDA4 /* DlgPageDecode.cpp in Sources */,
+				E154D5EB1A29513100C022E2 /* ImageHelper.cpp in Sources */,
 				E19B6637166C166F004DEDA4 /* DlgPageEncode.cpp in Sources */,
 				E19B6638166C166F004DEDA4 /* DlgPageEncodeFiles.cpp in Sources */,
 				E19B6639166C166F004DEDA4 /* DlgPageEncodeFinish.cpp in Sources */,
