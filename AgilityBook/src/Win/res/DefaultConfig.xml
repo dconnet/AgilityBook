@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2014-11-29 Configuration version 49.
+           Fixed descriptions in NADAC Extreme game titles.
 2014-09-12 Configuration version 48.
            Added CKCSC.
 2014-07-15 Configuration version 47.
@@ -151,7 +153,7 @@ Revision History:
            Added versioning to configuration to allow auto-upgrades.
            Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="48">
+  <Configuration version="49">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -2968,54 +2970,54 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Name="JH-NATCH" Prefix="y" StartAt="4" ValidTo="2005-12-9">Points are the same as NATCH.</Titles>
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH" Prefix="y" ValidTo="2005-12-9"/>
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH" Prefix="y" ValidTo="2005-12-9"/>
-      <Titles LongName="Intro Extreme Chances" Name="XCC-I" ValidFrom="2014-1-1">300 points</Titles>
-      <Titles LongName="Intro Extreme Hoopers" Name="XHP-I" ValidFrom="2014-1-1">300 points</Titles>
-      <Titles LongName="Intro Extreme Gaters" Name="XGT-I" ValidFrom="2014-1-1">300 points</Titles>
-      <Titles LongName="Intro Extreme Barrel Racing" Name="XBR-I" ValidFrom="2014-1-1">300 points</Titles>
-      <Titles LongName="Intro Outstanding Extreme Chances" Name="O-XCC-I" ValidFrom="2014-1-1">600 points</Titles>
-      <Titles LongName="Intro Outstanding Extreme Hoopers" Name="O-XHP-I" ValidFrom="2014-1-1">600 points</Titles>
-      <Titles LongName="Intro Outstanding Extreme Gaters" Name="O-XGT-I" ValidFrom="2014-1-1">600 points</Titles>
-      <Titles LongName="Intro Outstanding Extreme Barrel Racing" Name="O-XBR-I" ValidFrom="2014-1-1">600 points</Titles>
-      <Titles LongName="Intro Superior Extreme Chances" Name="S-XCC-I" ValidFrom="2014-1-1">1000 points</Titles>
-      <Titles LongName="Intro Superior Extreme Hoopers" Name="S-XHP-I" ValidFrom="2014-1-1">1000 points</Titles>
-      <Titles LongName="Intro Superior Extreme Gaters" Name="S-XGT-I" ValidFrom="2014-1-1">1000 points</Titles>
-      <Titles LongName="Intro Superior Extreme Barrel Racing" Name="S-XBR-I" ValidFrom="2014-1-1">1000 points</Titles>
-      <Titles LongName="Novice Extreme Chances" Name="XCC-N">300 points</Titles>
-      <Titles LongName="Novice Extreme Hoopers" Name="XHP-N">300 points</Titles>
-      <Titles LongName="Novice Extreme Gaters" Name="XGT-N">300 points</Titles>
-      <Titles LongName="Novice Extreme Barrel Racing" Name="XBR-N">300 points</Titles>
-      <Titles LongName="Novice Outstanding Extreme Chances" Name="O-XCC-N">600 points</Titles>
-      <Titles LongName="Novice Outstanding Extreme Hoopers" Name="O-XHP-N">600 points</Titles>
-      <Titles LongName="Novice Outstanding Extreme Gaters" Name="O-XGT-N">600 points</Titles>
-      <Titles LongName="Novice Outstanding Extreme Barrel Racing" Name="O-XBR-N">600 points</Titles>
-      <Titles LongName="Novice Superior Extreme Chances" Name="S-XCC-N">1000 points</Titles>
-      <Titles LongName="Novice Superior Extreme Hoopers" Name="S-XHP-N">1000 points</Titles>
-      <Titles LongName="Novice Superior Extreme Gaters" Name="S-XGT-N">1000 points</Titles>
-      <Titles LongName="Novice Superior Extreme Barrel Racing" Name="S-XBR-N">1000 points</Titles>
-      <Titles LongName="Open Extreme Chances" Name="XCC-O">300 points</Titles>
-      <Titles LongName="Open Extreme Hoopers" Name="XHP-O">300 points</Titles>
-      <Titles LongName="Open Extreme Gaters" Name="XGT-O">300 points</Titles>
-      <Titles LongName="Open Extreme Barrel Racing" Name="XBR-O">300 points</Titles>
-      <Titles LongName="Open Outstanding Extreme Chances" Name="O-XCC-O">600 points</Titles>
-      <Titles LongName="Open Outstanding Extreme Hoopers" Name="O-XHP-O">600 points</Titles>
-      <Titles LongName="Open Outstanding Extreme Gaters" Name="O-XGT-O">600 points</Titles>
-      <Titles LongName="Open Outstanding Extreme Barrel Racing" Name="O-XBR-O">600 points</Titles>
-      <Titles LongName="Open Superior Extreme Chances" Name="S-XCC-O">1000 points</Titles>
-      <Titles LongName="Open Superior Extreme Hoopers" Name="S-XHP-O">1000 points</Titles>
-      <Titles LongName="Open Superior Extreme Gaters" Name="S-XGT-O">1000 points</Titles>
-      <Titles LongName="Open Superior Extreme Barrel Racing" Name="S-XBR-O">1000 points</Titles>
-      <Titles LongName="Elite Extreme Chances" Name="XCC-E">300 points</Titles>
-      <Titles LongName="Elite Extreme Hoopers" Name="XHP-E">300 points</Titles>
-      <Titles LongName="Elite Extreme Gaters" Name="XGT-E">300 points</Titles>
-      <Titles LongName="Elite Extreme Barrel Racing" Name="XBR-E">300 points</Titles>
-      <Titles LongName="Elite Outstanding Extreme Chances" Name="O-XCC-E">1000 points</Titles>
-      <Titles LongName="Elite Outstanding Extreme Hoopers" Name="O-XHP-E">1000 points</Titles>
-      <Titles LongName="Elite Outstanding Extreme Gaters" Name="O-XGT-E">1000 points</Titles>
-      <Titles LongName="Elite Outstanding Extreme Barrel Racing" Name="O-XBR-E">1000 points</Titles>
-      <Titles LongName="Elite Superior Extreme Chances" Name="S-XCC-E">2000 points</Titles>
-      <Titles LongName="Elite Superior Extreme Hoopers" Name="S-XHP-E">2000 points</Titles>
-      <Titles LongName="Elite Superior Extreme Gaters" Name="S-XGT-E">2000 points</Titles>
-      <Titles LongName="Elite Superior Extreme Barrel Racing" Name="S-XBR-E">2000 points</Titles>
+      <Titles LongName="Intro Extreme Chances" Name="XCC-I" ValidFrom="2014-1-1">30 points</Titles>
+      <Titles LongName="Intro Extreme Hoopers" Name="XHP-I" ValidFrom="2014-1-1">30 points</Titles>
+      <Titles LongName="Intro Extreme Gaters" Name="XGT-I" ValidFrom="2014-1-1">30 points</Titles>
+      <Titles LongName="Intro Extreme Barrel Racing" Name="XBR-I" ValidFrom="2014-1-1">30 points</Titles>
+      <Titles LongName="Intro Outstanding Extreme Chances" Name="O-XCC-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Outstanding Extreme Hoopers" Name="O-XHP-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Outstanding Extreme Gaters" Name="O-XGT-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Outstanding Extreme Barrel Racing" Name="O-XBR-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Superior Extreme Chances" Name="S-XCC-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Superior Extreme Hoopers" Name="S-XHP-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Superior Extreme Gaters" Name="S-XGT-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Superior Extreme Barrel Racing" Name="S-XBR-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Novice Extreme Chances" Name="XCC-N">30 points</Titles>
+      <Titles LongName="Novice Extreme Hoopers" Name="XHP-N">30 points</Titles>
+      <Titles LongName="Novice Extreme Gaters" Name="XGT-N">30 points</Titles>
+      <Titles LongName="Novice Extreme Barrel Racing" Name="XBR-N">30 points</Titles>
+      <Titles LongName="Novice Outstanding Extreme Chances" Name="O-XCC-N">60 points</Titles>
+      <Titles LongName="Novice Outstanding Extreme Hoopers" Name="O-XHP-N">60 points</Titles>
+      <Titles LongName="Novice Outstanding Extreme Gaters" Name="O-XGT-N">60 points</Titles>
+      <Titles LongName="Novice Outstanding Extreme Barrel Racing" Name="O-XBR-N">60 points</Titles>
+      <Titles LongName="Novice Superior Extreme Chances" Name="S-XCC-N">100 points</Titles>
+      <Titles LongName="Novice Superior Extreme Hoopers" Name="S-XHP-N">100 points</Titles>
+      <Titles LongName="Novice Superior Extreme Gaters" Name="S-XGT-N">100 points</Titles>
+      <Titles LongName="Novice Superior Extreme Barrel Racing" Name="S-XBR-N">100 points</Titles>
+      <Titles LongName="Open Extreme Chances" Name="XCC-O">30 points</Titles>
+      <Titles LongName="Open Extreme Hoopers" Name="XHP-O">30 points</Titles>
+      <Titles LongName="Open Extreme Gaters" Name="XGT-O">30 points</Titles>
+      <Titles LongName="Open Extreme Barrel Racing" Name="XBR-O">30 points</Titles>
+      <Titles LongName="Open Outstanding Extreme Chances" Name="O-XCC-O">60 points</Titles>
+      <Titles LongName="Open Outstanding Extreme Hoopers" Name="O-XHP-O">60 points</Titles>
+      <Titles LongName="Open Outstanding Extreme Gaters" Name="O-XGT-O">60 points</Titles>
+      <Titles LongName="Open Outstanding Extreme Barrel Racing" Name="O-XBR-O">60 points</Titles>
+      <Titles LongName="Open Superior Extreme Chances" Name="S-XCC-O">100 points</Titles>
+      <Titles LongName="Open Superior Extreme Hoopers" Name="S-XHP-O">100 points</Titles>
+      <Titles LongName="Open Superior Extreme Gaters" Name="S-XGT-O">100 points</Titles>
+      <Titles LongName="Open Superior Extreme Barrel Racing" Name="S-XBR-O">100 points</Titles>
+      <Titles LongName="Elite Extreme Chances" Name="XCC-E">30 points</Titles>
+      <Titles LongName="Elite Extreme Hoopers" Name="XHP-E">30 points</Titles>
+      <Titles LongName="Elite Extreme Gaters" Name="XGT-E">30 points</Titles>
+      <Titles LongName="Elite Extreme Barrel Racing" Name="XBR-E">30 points</Titles>
+      <Titles LongName="Elite Outstanding Extreme Chances" Name="O-XCC-E">100 points</Titles>
+      <Titles LongName="Elite Outstanding Extreme Hoopers" Name="O-XHP-E">100 points</Titles>
+      <Titles LongName="Elite Outstanding Extreme Gaters" Name="O-XGT-E">100 points</Titles>
+      <Titles LongName="Elite Outstanding Extreme Barrel Racing" Name="O-XBR-E">100 points</Titles>
+      <Titles LongName="Elite Superior Extreme Chances" Name="S-XCC-E">200 points</Titles>
+      <Titles LongName="Elite Superior Extreme Hoopers" Name="S-XHP-E">200 points</Titles>
+      <Titles LongName="Elite Superior Extreme Gaters" Name="S-XGT-E">200 points</Titles>
+      <Titles LongName="Elite Superior Extreme Barrel Racing" Name="S-XBR-E">200 points</Titles>
       <Division Name="Std Proficient" ShortName="StdPro">
         <Level Name="Intro"/>
         <Level Name="Novice">
