@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2014-11-29 Configuration version 49.
+2014-12-01 Configuration version 49.
            Fixed descriptions in NADAC Extreme game titles.
+           AKC MXP/MXJ titles are recurring.
 2014-09-12 Configuration version 48.
            Added CKCSC.
 2014-07-15 Configuration version 47.
@@ -490,11 +491,11 @@ Revision History:
       <Titles LongName="Novice Agility Preferred" Name="NAP">3 Qs</Titles>
       <Titles LongName="Open Agility Preferred" Name="OAP">3 Qs</Titles>
       <Titles LongName="Agility Excellent Preferred" Name="AXP">3 Qs</Titles>
-      <Titles LongName="Master Agility Excellent Preferred" Name="MXP">10 Qs</Titles>
+      <Titles LongName="Master Agility Excellent Preferred" Name="MXP" StartAt="1">10 Qs</Titles>
       <Titles LongName="Novice JWW Preferred" Name="NJP">3 Qs</Titles>
       <Titles LongName="Open JWW Preferred" Name="OJP">3 Qs</Titles>
       <Titles LongName="Agility Excellent JWW Preferred" Name="AJP">3 Qs</Titles>
-      <Titles LongName="Master Excellent JWW Preferred" Name="MJP">10 Qs</Titles>
+      <Titles LongName="Master Excellent JWW Preferred" Name="MJP" StartAt="1">10 Qs</Titles>
       <Titles LongName="Preferred Agility Excellent" Name="PAX" StartAt="1">20 Double Qs</Titles>
       <Titles LongName="Preferred Agility Champion" Name="PACH" Prefix="y" StartAt="1">20 Double Qs, 750 championship points</Titles>
       <Titles LongName="Novice FAST Title" Name="NF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
