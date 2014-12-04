@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-04 If all dogs are deceased, don't prompt to update config.
  * 2014-04-25 Don't prompt to update config if file is readonly.
  * 2013-01-11 Reset filters on configuration import.
  * 2012-09-29 Strip the Runs View.
@@ -1381,6 +1382,29 @@ bool CAgilityBookDoc::OnNewDocument()
 }
 
 
+// Can we prompt to update the config?
+bool CAgilityBookDoc::IsDocumentUpdatable(wxString const& filename) const
+{
+	// Readonly file will not update.
+	if (!wxFileName::IsFileWritable(filename))
+		return false;
+
+	// Update allowed if no dogs in the file
+	if (0 == m_Records.GetDogs().size())
+		return true;
+
+	// Update allowed if a dog is not deceased.
+	for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog)
+	{
+		if (!(*iDog)->GetDeceased().IsValid())
+			return true;
+	}
+
+	// All dogs are deceased, so no update.
+	return false;
+}
+
+
 // We override this instead of DoOpenDocument because we may need to modify
 // the document.
 bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
@@ -1481,9 +1505,8 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		}
 	}
 
-	// Check our internal config.
-	// But only if the file can be modified.
-	if (wxFileName::IsFileWritable(filename))
+	// Check our internal config (if we're allowed to update)
+	if (IsDocumentUpdatable(filename))
 	{
 		if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
 		&& m_Records.GetConfig().GetUpdateStatus())

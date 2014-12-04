@@ -182,6 +182,7 @@ private:
 	CAgilityBookCalendarListView* GetCalendarListView() const;
 	CAgilityBookCalendarView* GetCalendarView() const;
 	CAgilityBookTrainingView* GetTrainingView() const;
+	bool IsDocumentUpdatable(wxString const& filename) const;
 
 	ARBAgilityRecordBook m_Records; ///< The real records.
 	CCalendarSites m_CalSites;
