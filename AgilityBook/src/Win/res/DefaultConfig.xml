@@ -4,9 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2014-12-01 Configuration version 49.
+2014-12-08 Configuration version 49.
            Fixed descriptions in NADAC Extreme game titles.
            AKC MXP/MXJ titles are recurring.
+           Added TDAA games.
 2014-09-12 Configuration version 48.
            Added CKCSC.
 2014-07-15 Configuration version 47.
@@ -3609,8 +3610,10 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
       </Event>
       <Event Name="Game: Time+Faults" ShortName="Game: T+F" hasSubNames="y">
-        <Desc>This is for Time plus Fault events. Time faults are not added.</Desc>
+        <Desc>This is for Time plus Fault events. Time faults are not added. Subtract Bonus points from Faults. Faults may be negative.</Desc>
         <SubName>Chutes and Ladders</SubName>
+        <SubName>Dealers Choice</SubName>
+        <SubName>Football</SubName>
         <SubName>Louganis</SubName>
         <SubName>Time Warp</SubName>
         <Scoring Division="*" Level="*" type="TimePlusFaults">
@@ -3626,6 +3629,9 @@ TG3 + 10 Qs in at least 5 games
         <SubName>Boston Bowling</SubName>
         <SubName>Connect the Dots</SubName>
         <SubName>Dare to Double</SubName>
+        <SubName>Easter Egg Hunt</SubName>
+        <SubName>Empire State Pinball</SubName>
+        <SubName>FAST</SubName>
         <SubName>Quidditch</SubName>
         <SubName>Snooker</SubName>
         <SubName>The Weakest Link</SubName>
@@ -3648,6 +3654,8 @@ TG3 + 10 Qs in at least 5 games
       </Event>
       <Event Name="Game: Open/Close Points" ShortName="Game: OCPt" hasSubNames="y">
         <Desc>Points are accumulated separately in the opening and closing, like Gamblers.</Desc>
+        <SubName>Double Joker</SubName>
+        <SubName>Double or Nothing</SubName>
         <SubName>Gamblers</SubName>
         <Scoring Division="*" Level="*" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>

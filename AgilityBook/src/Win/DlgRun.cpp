@@ -729,8 +729,8 @@ CDlgRun::CDlgRun(
 	, m_DogsQd(pRun->GetDogsQd())
 	, m_ctrlQ(nullptr)
 	, m_ctrlBonusPtsText(nullptr)
-	, m_ctrlBonusPts(nullptr)
-	, m_BonusPts(pRun->GetScoring().GetBonusPts())
+	, m_ctrlBonusTitlePts(nullptr)
+	, m_BonusTitlePts(pRun->GetScoring().GetBonusTitlePts())
 	, m_ctrlSpeedPtsText(nullptr)
 	, m_ctrlSpeedPts(nullptr)
 	, m_ctrlTitlePointsText(nullptr)
@@ -1180,12 +1180,12 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlBonusPtsText->Wrap(-1);
 
-	m_ctrlBonusPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlBonusTitlePts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
-		CGenericValidator(&m_BonusPts, -1));
-	BIND_OR_CONNECT_CTRL(m_ctrlBonusPts, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnBonusChange);
-	m_ctrlBonusPts->SetHelpText(_("HIDC_RUNSCORE_BONUSPTS"));
-	m_ctrlBonusPts->SetToolTip(_("HIDC_RUNSCORE_BONUSPTS"));
+		CGenericValidator(&m_BonusTitlePts, -1));
+	BIND_OR_CONNECT_CTRL(m_ctrlBonusTitlePts, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnBonusChange);
+	m_ctrlBonusTitlePts->SetHelpText(_("HIDC_RUNSCORE_BONUSTITLEPTS"));
+	m_ctrlBonusTitlePts->SetToolTip(_("HIDC_RUNSCORE_BONUSTITLEPTS"));
 
 	m_ctrlSpeedPtsText = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_SPEEDPTS"),
@@ -1496,7 +1496,7 @@ CDlgRun::CDlgRun(
 
 	wxBoxSizer* sizerBonus = new wxBoxSizer(wxHORIZONTAL);
 	sizerBonus->Add(m_ctrlBonusPtsText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerBonus->Add(m_ctrlBonusPts, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerBonus->Add(m_ctrlBonusTitlePts, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	sizerResults->Add(sizerBonus, 0, wxALIGN_RIGHT, 5);
 
@@ -2100,10 +2100,10 @@ void CDlgRun::SetTitlePoints()
 		// 8/17/03: Only compute title points on Q runs.
 		if (q.Qualified())
 		{
-			if (pScoring->HasBonusPts())
+			if (pScoring->HasBonusTitlePts())
 			{
 				strBonus.clear();
-				strBonus << m_Run->GetScoring().GetBonusPts();
+				strBonus << m_Run->GetScoring().GetBonusTitlePts();
 			}
 			if (pScoring->HasSpeedPts())
 			{
@@ -2121,7 +2121,7 @@ void CDlgRun::SetTitlePoints()
 			strScore = StringUtil::stringWX(ARBDouble::ToString(m_Run->GetScore(pScoring)));
 	}
 	// Doesn't matter if they're hidden,..
-	m_ctrlBonusPts->ChangeValue(strBonus);
+	m_ctrlBonusTitlePts->ChangeValue(strBonus);
 	m_ctrlSpeedPts->ChangeValue(strSpeed);
 	m_ctrlTitlePoints->ChangeValue(strTitle);
 	m_ctrlScore->ChangeValue(strScore);
@@ -2189,7 +2189,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 	m_ctrlDogsQd->Enable(false);
 	m_ctrlQ->Enable(false);
 	m_ctrlBonusPtsText->Show(false);
-	m_ctrlBonusPts->Show(false);
+	m_ctrlBonusTitlePts->Show(false);
 	m_ctrlSpeedPtsText->Show(false);
 	m_ctrlSpeedPts->Show(false);
 	m_ctrlTitlePointsText->Show(false);
@@ -2386,10 +2386,10 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_ctrlTitlePointsText->Show(true);
 		m_ctrlTitlePoints->Show(true);
 	}
-	if (pScoring->HasBonusPts())
+	if (pScoring->HasBonusTitlePts())
 	{
 		m_ctrlBonusPtsText->Show(true);
-		m_ctrlBonusPts->Show(true);
+		m_ctrlBonusTitlePts->Show(true);
 	}
 	if (pScoring->HasSpeedPts())
 	{
@@ -2908,8 +2908,8 @@ void CDlgRun::OnPlaceChange(wxCommandEvent& evt)
 
 void CDlgRun::OnBonusChange(wxCommandEvent& evt)
 {
-	m_BonusPts = static_cast<short>(wxAtol(m_ctrlBonusPts->GetValue()));
-	m_Run->GetScoring().SetBonusPts(m_BonusPts);
+	m_BonusTitlePts = static_cast<short>(wxAtol(m_ctrlBonusTitlePts->GetValue()));
+	m_Run->GetScoring().SetBonusTitlePts(m_BonusTitlePts);
 	SetTitlePoints();
 }
 

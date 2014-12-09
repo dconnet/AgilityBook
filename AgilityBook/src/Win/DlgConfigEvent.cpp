@@ -722,9 +722,9 @@ void CDlgConfigEvent::FillControls()
 					str1 = _("IDS_CONFIGEVENT_DROPFRAC");
 					info << L"; " << str1;
 				}
-				if (pScoring->HasBonusPts())
+				if (pScoring->HasBonusTitlePts())
 				{
-					str1 = _("IDS_CONFIGEVENT_BONUS");
+					str1 = _("IDS_CONFIGEVENT_BONUSTITLE");
 					info << L"; " << str1;
 				}
 				if (pScoring->HasSuperQ())

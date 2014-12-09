@@ -200,8 +200,8 @@ private:
 	short m_DogsQd;
 	CQualifyingComboBox* m_ctrlQ;
 	wxStaticText* m_ctrlBonusPtsText;
-	CTextCtrl* m_ctrlBonusPts;
-	double m_BonusPts;
+	CTextCtrl* m_ctrlBonusTitlePts;
+	double m_BonusTitlePts;
 	wxStaticText* m_ctrlSpeedPtsText;
 	CTextCtrl* m_ctrlSpeedPts;
 	wxStaticText* m_ctrlTitlePointsText;

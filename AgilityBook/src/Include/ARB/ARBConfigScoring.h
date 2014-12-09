@@ -274,13 +274,13 @@ public:
 	{
 		m_bSpeedPts = inBool;
 	}
-	bool HasBonusPts() const
+	bool HasBonusTitlePts() const
 	{
-		return m_bBonusPts;
+		return m_bBonusTitlePts;
 	}
-	void SetHasBonusPts(bool inBool)
+	void SetHasBonusTitlePts(bool inBool)
 	{
-		m_bBonusPts = inBool;
+		m_bBonusTitlePts = inBool;
 	}
 	ARBConfigPlaceInfoList const& GetPlaceInfo() const
 	{
@@ -342,7 +342,7 @@ private:
 	bool m_bSuperQ;
 	bool m_bDoubleQ;
 	bool m_bSpeedPts;
-	bool m_bBonusPts;
+	bool m_bBonusTitlePts;
 	ARBConfigPlaceInfoList m_PlaceInfo;		///< Used for speed points
 	ARBConfigTitlePointsList m_TitlePoints;
 	ARBConfigLifetimePointsList m_LifePoints;

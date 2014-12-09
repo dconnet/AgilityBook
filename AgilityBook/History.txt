@@ -1,4 +1,8 @@
-12/4/2014: v3.0.1.<development>
+12/8/2014: v3.0.1.<development>
+- Bumped Configuration v49:
+  - Fixed descriptions in NADAC Extreme game titles.
+  - AKC MXP/MXJ titles are recurring.
+  - Add more TDAA games.
 - New features / Enhancements:
  - If all dogs in file are deceased, don't prompt to update config.
 

@@ -12,6 +12,8 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-08 Renamed bonuspoints to bonustitlepoints for clarity.
+ *            'bonusPts' stays the same to preserve compatibility.
  * 2013-09-03 Added short name to div/level/event.
  * 2013-01-13 Added new recurring title suffix style.
  * 2012-09-09 Added 'titlePts','speedPts' to 'Placement'.
@@ -177,7 +179,7 @@
 #define ATTRIB_SCORING_CLOSINGPTS			L"ClosingPts"
 #define ATTRIB_SCORING_SUPERQ				L"superQ"
 #define ATTRIB_SCORING_SPEEDPTS				L"speedPts"
-#define ATTRIB_SCORING_BONUSPTS				L"bonusPts"
+#define ATTRIB_SCORING_BONUSTITLEPTS		L"bonusPts"
 #define ATTRIB_SCORING_OBSTACLES			L"obstacles"
 #define ATTRIB_PLACE_INFO_PLACE				L"Place"
 #define ATTRIB_PLACE_INFO_VALUE				L"Value"

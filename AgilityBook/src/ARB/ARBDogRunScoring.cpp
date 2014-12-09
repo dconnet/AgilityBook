@@ -77,7 +77,7 @@ ARBDogRunScoring::ARBDogRunScoring()
 	, m_NeedClosePts(0)
 	, m_OpenPts(0)
 	, m_ClosePts(0)
-	, m_BonusPts(0.0)
+	, m_BonusTitlePts(0.0)
 {
 }
 
@@ -97,7 +97,7 @@ ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 	, m_NeedClosePts(rhs.m_NeedClosePts)
 	, m_OpenPts(rhs.m_OpenPts)
 	, m_ClosePts(rhs.m_ClosePts)
-	, m_BonusPts(rhs.m_BonusPts)
+	, m_BonusTitlePts(rhs.m_BonusTitlePts)
 {
 }
 
@@ -124,7 +124,7 @@ ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
 		m_NeedClosePts = rhs.m_NeedClosePts;
 		m_OpenPts = rhs.m_OpenPts;
 		m_ClosePts = rhs.m_ClosePts;
-		m_BonusPts = rhs.m_BonusPts;
+		m_BonusTitlePts = rhs.m_BonusTitlePts;
 	}
 	return *this;
 }
@@ -145,7 +145,7 @@ bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 		&& m_NeedClosePts == rhs.m_NeedClosePts
 		&& m_OpenPts == rhs.m_OpenPts
 		&& m_ClosePts == rhs.m_ClosePts
-		&& m_BonusPts == rhs.m_BonusPts;
+		&& m_BonusTitlePts == rhs.m_BonusTitlePts;
 }
 
 
@@ -169,7 +169,7 @@ bool ARBDogRunScoring::Load(
 	std::wstring const& name = inTree->GetName();
 	inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 	inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-	inTree->GetAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+	inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
 	inTree->GetAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 	m_type = ARBDogRunScoring::TranslateConfigScoring(inEventScoring->GetScoringStyle());
 	switch (m_type)
@@ -281,7 +281,7 @@ bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 			scoring->AddAttrib(ATTRIB_SCORING_TIME, m_Time);
 			scoring->AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			scoring->AddAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
-			scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+			scoring->AddAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
 			if (0 < m_Obstacles)
 				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}
@@ -300,7 +300,7 @@ bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 			scoring->AddAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
 			scoring->AddAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
 			scoring->AddAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
-			scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+			scoring->AddAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
 			if (0 < m_Obstacles)
 				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}
@@ -315,7 +315,7 @@ bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 				scoring->AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			scoring->AddAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
 			scoring->AddAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
-			scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+			scoring->AddAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
 			if (0 < m_Obstacles)
 				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}

@@ -597,7 +597,7 @@ double ARBDogRun::GetTitlePoints(
 		else
 			*outPlacement = 0.0;
 	}
-	double bonusPts = inScoring->HasBonusPts() ? m_Scoring.GetBonusPts() : 0.0;
+	double bonusTitlePts = inScoring->HasBonusTitlePts() ? m_Scoring.GetBonusTitlePts() : 0.0;
 	switch (m_Scoring.GetType())
 	{
 	default:
@@ -625,16 +625,16 @@ double ARBDogRun::GetTitlePoints(
 						if (0.0 > score)
 							score = 0.0;
 					}
-					pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusPts;
+					pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 					if (outLifeTime)
-						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusPts;
+						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusTitlePts;
 				}
 			}
 			else
 			{
-				pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusPts;
+				pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 				if (outLifeTime)
-					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusPts;
+					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusTitlePts;
 			}
 		}
 		break;
@@ -661,9 +661,9 @@ double ARBDogRun::GetTitlePoints(
 			}
 			if (outClean)
 				*outClean = true;
-			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusPts;
+			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 			if (outLifeTime)
-				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults) + bonusPts;
+				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults) + bonusTitlePts;
 		}
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
@@ -685,9 +685,9 @@ double ARBDogRun::GetTitlePoints(
 			}
 			if (outClean)
 				*outClean = true;
-			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusPts;
+			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 			if (outLifeTime)
-				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults) + bonusPts;
+				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults) + bonusTitlePts;
 		}
 		break;
 	}

@@ -140,7 +140,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_bSuperQ(false)
 	, m_bDoubleQ(false)
 	, m_bSpeedPts(false)
-	, m_bBonusPts(false)
+	, m_bBonusTitlePts(false)
 	, m_PlaceInfo()
 	, m_TitlePoints()
 	, m_LifePoints()
@@ -167,7 +167,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_bSuperQ(rhs.m_bSuperQ)
 	, m_bDoubleQ(rhs.m_bDoubleQ)
 	, m_bSpeedPts(rhs.m_bSpeedPts)
-	, m_bBonusPts(rhs.m_bBonusPts)
+	, m_bBonusTitlePts(rhs.m_bBonusTitlePts)
 	, m_PlaceInfo()
 	, m_TitlePoints()
 	, m_LifePoints()
@@ -212,7 +212,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_bSuperQ = rhs.m_bSuperQ;
 		m_bDoubleQ = rhs.m_bDoubleQ;
 		m_bSpeedPts = rhs.m_bSpeedPts;
-		m_bBonusPts = rhs.m_bBonusPts;
+		m_bBonusTitlePts = rhs.m_bBonusTitlePts;
 		rhs.m_PlaceInfo.Clone(m_PlaceInfo);
 		rhs.m_TitlePoints.Clone(m_TitlePoints);
 		rhs.m_LifePoints.Clone(m_LifePoints);
@@ -241,7 +241,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_bSuperQ == rhs.m_bSuperQ
 		&& m_bDoubleQ == rhs.m_bDoubleQ
 		&& m_bSpeedPts == rhs.m_bSpeedPts
-		&& m_bBonusPts == rhs.m_bBonusPts
+		&& m_bBonusTitlePts == rhs.m_bBonusTitlePts
 		&& m_PlaceInfo == rhs.m_PlaceInfo
 		&& m_TitlePoints == rhs.m_TitlePoints
 		&& m_LifePoints == rhs.m_LifePoints
@@ -395,9 +395,9 @@ bool ARBConfigScoring::Load(
 		return false;
 	}
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_bBonusTitlePts))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_BONUSPTS, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_BONUSTITLEPTS, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
@@ -567,8 +567,8 @@ bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 		scoring->AddAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ);
 	if (m_bSpeedPts)
 		scoring->AddAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts);
-	if (m_bBonusPts)
-		scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts);
+	if (m_bBonusTitlePts)
+		scoring->AddAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_bBonusTitlePts);
 	if (m_bSpeedPts)
 	{
 		if (!m_PlaceInfo.Save(scoring))

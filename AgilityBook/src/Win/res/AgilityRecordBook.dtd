@@ -413,7 +413,7 @@ faults in ScoreThenTime events (DOCNA Strategic gamble).
 'subtractFT' will cause the time faults to be subtracted from the run's score.
 
 The 'superQ', 'speedPts' and 'bonusPts' attributes enable built-in
-features for an event.
+features for an event. (note: bonusPts are actually bonus titling points)
 
 'obstacles' specified the number of obstacles attempted so an obstacles per
 second figure can be computed. On opening/closing time runs (gambles), only

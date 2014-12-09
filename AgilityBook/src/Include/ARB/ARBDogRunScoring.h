@@ -240,13 +240,13 @@ public:
 	{
 		m_ClosePts = inClosePts;
 	}
-	double GetBonusPts() const
+	double GetBonusTitlePts() const
 	{
-		return m_BonusPts;
+		return m_BonusTitlePts;
 	}
-	void SetBonusPts(double inBonusPts)
+	void SetBonusTitlePts(double inBonusPts)
 	{
-		m_BonusPts = inBonusPts;
+		m_BonusTitlePts = inBonusPts;
 	}
 
 private:
@@ -264,5 +264,5 @@ private:
 	short m_NeedClosePts;
 	short m_OpenPts;
 	short m_ClosePts;
-	double m_BonusPts;
+	double m_BonusTitlePts;
 };

@@ -151,7 +151,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_dateFrom(m_pScoring->GetValidFrom())
 	, m_dateTo(m_pScoring->GetValidTo())
 	, m_DropFractions(m_pScoring->DropFractions())
-	, m_Bonus(m_pScoring->HasBonusPts())
+	, m_Bonus(m_pScoring->HasBonusTitlePts())
 	, m_SuperQ(m_pScoring->HasSuperQ())
 	, m_SpeedPts(m_pScoring->HasSpeedPts())
 	, m_Multiply(m_pScoring->TimeFaultMultiplier())
@@ -302,11 +302,11 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlDropFractions->SetToolTip(_("HIDC_CONFIG_EVENT_DROP_FRACTIONS"));
 
 	m_ctrlBonus = new wxCheckBox(this, wxID_ANY,
-		_("IDC_CONFIG_EVENT_BONUS"),
+		_("IDC_CONFIG_EVENT_BONUSTITLE"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_Bonus));
-	m_ctrlBonus->SetHelpText(_("HIDC_CONFIG_EVENT_BONUS"));
-	m_ctrlBonus->SetToolTip(_("HIDC_CONFIG_EVENT_BONUS"));
+	m_ctrlBonus->SetHelpText(_("HIDC_CONFIG_EVENT_BONUSTITLE"));
+	m_ctrlBonus->SetToolTip(_("HIDC_CONFIG_EVENT_BONUSTITLE"));
 
 	m_ctrlSuperQ = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_SUPERQ"),
@@ -960,7 +960,7 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 	m_pScoring->SetLevel(str);
 
 	m_pScoring->SetDropFractions(m_DropFractions);
-	m_pScoring->SetHasBonusPts(m_Bonus);
+	m_pScoring->SetHasBonusTitlePts(m_Bonus);
 	m_pScoring->SetHasSuperQ(m_SuperQ);
 	m_pScoring->SetHasSpeedPts(m_SpeedPts);
 	if (m_SpeedPts)
