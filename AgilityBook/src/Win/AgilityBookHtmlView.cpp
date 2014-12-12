@@ -236,6 +236,8 @@ void CAgilityBookHtmlView::OnUpdate(
 		wxView* sender,
 		wxObject* inHint)
 {
+	STACK_TRACE(stack, L"CAgilityBookHtmlView::OnUpdate");
+
 	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);

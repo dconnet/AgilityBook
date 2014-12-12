@@ -41,6 +41,7 @@ libarbcommon_SRCS = ARBBase64.cpp \
 	ARBMsgDigestSHA1.cpp \
 	ARBMsgDigestSHA256.cpp \
 	ARBTypes.cpp \
+	ARBUtils.cpp \
 	BinaryData.cpp \
 	BreakLine.cpp \
 	Element.cpp \

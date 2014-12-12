@@ -276,6 +276,8 @@ void CAgilityBookPointsView::OnUpdate(
 		wxView* sender,
 		wxObject* inHint)
 {
+	STACK_TRACE(stack, L"CAgilityBookPointsView::OnUpdate");
+
 	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);

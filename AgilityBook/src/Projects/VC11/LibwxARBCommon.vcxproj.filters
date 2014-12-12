@@ -45,6 +45,9 @@
     <ClCompile Include="..\..\ARBCommon\ARBTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ARBCommon\ARBUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ARBCommon\BinaryData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -108,6 +111,9 @@
       <Filter>Include\ARBCommon</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\ARBCommon\ARBTypes.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\ARBUtils.h">
       <Filter>Include\ARBCommon</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\ARBCommon\BinaryData.h">

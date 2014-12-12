@@ -1325,6 +1325,8 @@ void CAgilityBookCalendarView::OnUpdate(
 		wxView* sender,
 		wxObject* inHint)
 {
+	STACK_TRACE(stack, L"CAgilityBookCalendarView::OnUpdate");
+
 	if (!m_Ctrl)
 		return;
 	CUpdateHint* hint = nullptr;

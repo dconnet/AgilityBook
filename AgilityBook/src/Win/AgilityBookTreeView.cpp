@@ -367,6 +367,8 @@ void CAgilityBookTreeView::OnUpdate(
 		wxView* sender,
 		wxObject* inHint)
 {
+	STACK_TRACE(stack, L"CAgilityBookTreeView::OnUpdate");
+
 	if (!m_Ctrl)
 		return;
 	CUpdateHint* hint = nullptr;

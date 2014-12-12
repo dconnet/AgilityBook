@@ -329,6 +329,8 @@ void CTabView::OnDraw(wxDC* dc)
 
 void CTabView::OnUpdate(wxView* sender, wxObject* inHint)
 {
+	STACK_TRACE(stack, L"CTabView::OnUpdate");
+
 	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);

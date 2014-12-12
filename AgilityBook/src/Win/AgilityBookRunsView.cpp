@@ -1360,6 +1360,8 @@ void CAgilityBookRunsView::OnUpdate(
 		wxView* sender,
 		wxObject* inHint)
 {
+	STACK_TRACE(stack, L"CAgilityBookRunsView::OnUpdate");
+
 	if (!m_Ctrl)
 		return;
 	CUpdateHint* hint = nullptr;
@@ -1495,6 +1497,7 @@ bool CAgilityBookRunsView::GetUnifiedTrial(
 
 void CAgilityBookRunsView::SetupColumns()
 {
+	STACK_TRACE(stack, L"CAgilityBookCalendarListView::SetupColumns");
 	if (!m_Ctrl)
 		return;
 	int nColumnCount = m_Ctrl->GetColumnCount();
@@ -1520,6 +1523,8 @@ void CAgilityBookRunsView::SetupColumns()
 
 void CAgilityBookRunsView::LoadData()
 {
+	STACK_TRACE(stack, L"CAgilityBookCalendarListView::LoadData");
+
 	if (!m_Ctrl)
 		return;
 
@@ -1535,6 +1540,7 @@ void CAgilityBookRunsView::LoadData()
 
 	// Clear everything.
 	m_Ctrl->DeleteAllItems();
+	STACK_TICKLE(stack, L"Post DeleteAllItems");
 
 	// Add items.
 	std::vector<CVenueFilter> venues;
@@ -1558,6 +1564,7 @@ void CAgilityBookRunsView::LoadData()
 			}
 		}
 	}
+	STACK_TICKLE(stack, L"Post trial search");
 	int nQs = 0;
 	if (0 < trials.size())
 	{
@@ -1584,6 +1591,7 @@ void CAgilityBookRunsView::LoadData()
 			}
 		}
 	}
+	STACK_TICKLE(stack, L"Post trial insertion");
 	int nColumnCount = m_Ctrl->GetColumnCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		m_Ctrl->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);

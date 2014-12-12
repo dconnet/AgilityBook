@@ -1412,6 +1412,8 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	if (!OnSaveModified())
 		return false;
 
+	STACK_TRACE(stack, L"CAgilityBookDoc");
+
 	//
 	// DoOpenDocument stuff
 	//
@@ -1427,6 +1429,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	{
 		wxBusyCursor wait;
 
+		STACK_TICKLE(stack, L"PreLoadXML");
 		std::wostringstream err;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
@@ -1442,6 +1445,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
+		STACK_TICKLE(stack, L"PostLoadXML");
 
 		// Translate the tree to a class structure.
 		CErrorCallback callback;
@@ -1462,9 +1466,13 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			msg << L"\n\n" << StringUtil::stringWX(callback.m_ErrMsg.str());
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		}
+		STACK_TICKLE(stack, L"PostLoad");
+
 		SortDates();
+		STACK_TICKLE(stack, L"PostSort");
 
 		ResetVisibility();
+		STACK_TICKLE(stack, L"PostReset");
 
 		//
 		// End DoOpenDocument stuff
@@ -1485,6 +1493,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, filename);
 	}
 
+	STACK_TICKLE(stack, L"PreCurDog");
 	if (1 == m_Records.GetDogs().size())
 	{
 		m_pCurrentDog = m_Records.GetDogs().front();
@@ -1504,6 +1513,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			}
 		}
 	}
+	STACK_TICKLE(stack, L"PostCurDog");
 
 	// Check our internal config (if we're allowed to update)
 	if (IsDocumentUpdatable(filename))
@@ -1533,11 +1543,13 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	}
 	*/
 
+	STACK_TICKLE(stack, L"PreKick (post isupdateable)");
 	// Kick the LoadData in every view
 	{
 		wxBusyCursor wait;
 		UpdateAllViews();
 	}
+	STACK_TICKLE(stack, L"PostKick");
 	// Finally, force a status update (currently, the last loaddata is the winner)
 	if (GetDocumentManager())
 	{
@@ -1545,6 +1557,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		if (pView)
 			pView->UpdateMessages();
 	}
+	STACK_TICKLE(stack, L"PostUpdate");
 
 	return true;
 }

@@ -19,6 +19,7 @@
  * 2004-06-02 Moved ShellExecute code here.
  */
 
+#include "ARBCommon/ARBUtils.h"
 #include "Localization.h"
 #include "SetupApp.h"
 #include "UpdateInfo.h"

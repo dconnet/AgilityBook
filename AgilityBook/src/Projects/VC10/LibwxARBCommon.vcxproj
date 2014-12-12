@@ -102,6 +102,7 @@
     <ClCompile Include="..\..\ARBCommon\ARBMsgDigestSHA1.cpp" />
     <ClCompile Include="..\..\ARBCommon\ARBMsgDigestSHA256.cpp" />
     <ClCompile Include="..\..\ARBCommon\ARBTypes.cpp" />
+    <ClCompile Include="..\..\ARBCommon\ARBUtils.cpp" />
     <ClCompile Include="..\..\ARBCommon\BinaryData.cpp" />
     <ClCompile Include="..\..\ARBCommon\BreakLine.cpp" />
     <ClCompile Include="..\..\ARBCommon\Element.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="..\..\Include\ARBCommon\ARBMisc.h" />
     <ClInclude Include="..\..\Include\ARBCommon\ARBMsgDigest.h" />
     <ClInclude Include="..\..\Include\ARBCommon\ARBTypes.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\ARBUtils.h" />
     <ClInclude Include="..\..\Include\ARBCommon\BinaryData.h" />
     <ClInclude Include="..\..\Include\ARBCommon\BreakLine.h" />
     <ClInclude Include="..\..\Include\ARBCommon\Element.h" />
