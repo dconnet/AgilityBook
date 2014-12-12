@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-12 14:55-0800\n"
-"PO-Revision-Date: 2014-12-12 14:55-0800\n"
+"PO-Revision-Date: 2014-12-12 15:13-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -906,52 +906,51 @@ msgstr "Fermer l'application; propose d'enregistrer les documents"
 msgid "MenuEdit"
 msgstr "&Édition"
 
-#: Win/AgilityBookMenu.cpp:62 Win/AgilityBookMenu.cpp:258
-#: Win/AgilityBookMenu.cpp:277 Win/AgilityBookMenu.cpp:296
-#: Win/AgilityBookMenu.cpp:323 Win/AgilityBookMenu.cpp:340
+#: Win/AgilityBookMenu.cpp:62 Win/AgilityBookMenu.cpp:258 Win/AgilityBookMenu.cpp:277
+#: Win/AgilityBookMenu.cpp:296 Win/AgilityBookMenu.cpp:323
+#: Win/AgilityBookMenu.cpp:340
 msgid "MenuEditDuplicate"
 msgstr "&Dupliquer"
 
-#: Win/AgilityBookMenu.cpp:62 Win/AgilityBookMenu.cpp:258
-#: Win/AgilityBookMenu.cpp:277 Win/AgilityBookMenu.cpp:296
-#: Win/AgilityBookMenu.cpp:323 Win/AgilityBookMenu.cpp:340
+#: Win/AgilityBookMenu.cpp:62 Win/AgilityBookMenu.cpp:258 Win/AgilityBookMenu.cpp:277
+#: Win/AgilityBookMenu.cpp:296 Win/AgilityBookMenu.cpp:323
+#: Win/AgilityBookMenu.cpp:340
 msgid "DescEditDuplicate"
 msgstr "Dupliquer selection courant"
 
-#: Win/AgilityBookMenu.cpp:63 Win/AgilityBookMenu.cpp:259
-#: Win/AgilityBookMenu.cpp:278 Win/AgilityBookMenu.cpp:297
-#: Win/AgilityBookMenu.cpp:324 Win/AgilityBookMenu.cpp:341
+#: Win/AgilityBookMenu.cpp:63 Win/AgilityBookMenu.cpp:259 Win/AgilityBookMenu.cpp:278
+#: Win/AgilityBookMenu.cpp:297 Win/AgilityBookMenu.cpp:324
+#: Win/AgilityBookMenu.cpp:341
 msgid "MenuEditCut"
 msgstr "Co&uper\tCtrl+X"
 
-#: Win/AgilityBookMenu.cpp:63 Win/AgilityBookMenu.cpp:259
-#: Win/AgilityBookMenu.cpp:278 Win/AgilityBookMenu.cpp:297
-#: Win/AgilityBookMenu.cpp:324 Win/AgilityBookMenu.cpp:341
+#: Win/AgilityBookMenu.cpp:63 Win/AgilityBookMenu.cpp:259 Win/AgilityBookMenu.cpp:278
+#: Win/AgilityBookMenu.cpp:297 Win/AgilityBookMenu.cpp:324
+#: Win/AgilityBookMenu.cpp:341
 msgid "DescEditCut"
 msgstr "Couper la sélection"
 
-#: Win/AgilityBookMenu.cpp:64 Win/AgilityBookMenu.cpp:260
-#: Win/AgilityBookMenu.cpp:279 Win/AgilityBookMenu.cpp:298
-#: Win/AgilityBookMenu.cpp:325 Win/AgilityBookMenu.cpp:342
+#: Win/AgilityBookMenu.cpp:64 Win/AgilityBookMenu.cpp:260 Win/AgilityBookMenu.cpp:279
+#: Win/AgilityBookMenu.cpp:298 Win/AgilityBookMenu.cpp:325
+#: Win/AgilityBookMenu.cpp:342
 msgid "MenuEditCopy"
 msgstr "&Copier\tCtrl+C"
 
-#: Win/AgilityBookMenu.cpp:64 Win/AgilityBookMenu.cpp:260
-#: Win/AgilityBookMenu.cpp:279 Win/AgilityBookMenu.cpp:298
-#: Win/AgilityBookMenu.cpp:312 Win/AgilityBookMenu.cpp:325
-#: Win/AgilityBookMenu.cpp:342
+#: Win/AgilityBookMenu.cpp:64 Win/AgilityBookMenu.cpp:260 Win/AgilityBookMenu.cpp:279
+#: Win/AgilityBookMenu.cpp:298 Win/AgilityBookMenu.cpp:312
+#: Win/AgilityBookMenu.cpp:325 Win/AgilityBookMenu.cpp:342
 msgid "DescEditCopy"
 msgstr "Copier la sélection"
 
-#: Win/AgilityBookMenu.cpp:65 Win/AgilityBookMenu.cpp:261
-#: Win/AgilityBookMenu.cpp:280 Win/AgilityBookMenu.cpp:299
-#: Win/AgilityBookMenu.cpp:326 Win/AgilityBookMenu.cpp:343
+#: Win/AgilityBookMenu.cpp:65 Win/AgilityBookMenu.cpp:261 Win/AgilityBookMenu.cpp:280
+#: Win/AgilityBookMenu.cpp:299 Win/AgilityBookMenu.cpp:326
+#: Win/AgilityBookMenu.cpp:343
 msgid "MenuEditPaste"
 msgstr "Co&ller\tCtrl+V"
 
-#: Win/AgilityBookMenu.cpp:65 Win/AgilityBookMenu.cpp:261
-#: Win/AgilityBookMenu.cpp:280 Win/AgilityBookMenu.cpp:299
-#: Win/AgilityBookMenu.cpp:326 Win/AgilityBookMenu.cpp:343
+#: Win/AgilityBookMenu.cpp:65 Win/AgilityBookMenu.cpp:261 Win/AgilityBookMenu.cpp:280
+#: Win/AgilityBookMenu.cpp:299 Win/AgilityBookMenu.cpp:326
+#: Win/AgilityBookMenu.cpp:343
 msgid "DescEditPaste"
 msgstr "Coller"
 
@@ -971,13 +970,13 @@ msgstr "Copier &Récompenses"
 msgid "DescEditCopyTitles"
 msgstr "Copier Récompenses"
 
-#: Win/AgilityBookMenu.cpp:70 Win/AgilityBookMenu.cpp:264
-#: Win/AgilityBookMenu.cpp:283 Win/AgilityBookMenu.cpp:302
+#: Win/AgilityBookMenu.cpp:70 Win/AgilityBookMenu.cpp:264 Win/AgilityBookMenu.cpp:283
+#: Win/AgilityBookMenu.cpp:302
 msgid "MenuEditReorder"
 msgstr "&Trier..."
 
-#: Win/AgilityBookMenu.cpp:70 Win/AgilityBookMenu.cpp:264
-#: Win/AgilityBookMenu.cpp:283 Win/AgilityBookMenu.cpp:302
+#: Win/AgilityBookMenu.cpp:70 Win/AgilityBookMenu.cpp:264 Win/AgilityBookMenu.cpp:283
+#: Win/AgilityBookMenu.cpp:302
 msgid "DescEditReorder"
 msgstr "Trier objets"
 
@@ -1093,13 +1092,11 @@ msgstr "&Supprimer"
 msgid "DescTrialDelete"
 msgstr "Supprimer concours"
 
-#: Win/AgilityBookMenu.cpp:95 Win/AgilityBookMenu.cpp:288
-#: Win/AgilityBookMenu.cpp:304
+#: Win/AgilityBookMenu.cpp:95 Win/AgilityBookMenu.cpp:288 Win/AgilityBookMenu.cpp:304
 msgid "MenuTrialPrintRuns"
 msgstr "&Imprimer Parcours sur concours..."
 
-#: Win/AgilityBookMenu.cpp:95 Win/AgilityBookMenu.cpp:288
-#: Win/AgilityBookMenu.cpp:304
+#: Win/AgilityBookMenu.cpp:95 Win/AgilityBookMenu.cpp:288 Win/AgilityBookMenu.cpp:304
 msgid "DescTrialPrintRuns"
 msgstr "Emprimer tous parcours pour concours selectionné"
 
@@ -1615,8 +1612,8 @@ msgid "IDS_DELETE_DOG_DATA"
 msgstr ""
 "ATTENTION\n"
 "\n"
-"Le suppression d'un Chien supprime aussi tous les data assoicié, ca que ne peut "
-"pas etre annulée.\n"
+"Le suppression d'un Chien supprime aussi tous les data assoicié, ca que ne peut pas "
+"etre annulée.\n"
 "\n"
 "Etes-vous sur de continuer?"
 
@@ -2052,13 +2049,13 @@ msgstr "Points"
 msgid "IDS_COL_PLACE"
 msgstr "Classement"
 
-#: Win/DlgAssignColumns.cpp:281 Win/DlgListViewer.cpp:1148
-#: Win/DlgListViewer.cpp:1216 Win/Print.cpp:261
+#: Win/DlgAssignColumns.cpp:281 Win/DlgListViewer.cpp:1148 Win/DlgListViewer.cpp:1216
+#: Win/Print.cpp:261
 msgid "IDS_COL_IN_CLASS"
 msgstr "Engagés"
 
-#: Win/DlgAssignColumns.cpp:284 Win/DlgListViewer.cpp:1149
-#: Win/DlgListViewer.cpp:1217 Win/Print.cpp:262
+#: Win/DlgAssignColumns.cpp:284 Win/DlgListViewer.cpp:1149 Win/DlgListViewer.cpp:1217
+#: Win/Print.cpp:262
 msgid "IDS_COL_Q_D"
 msgstr "Nombres Q"
 
@@ -2075,8 +2072,8 @@ msgstr "Q"
 msgid "IDS_COL_SCORE"
 msgstr "Resultats"
 
-#: Win/DlgAssignColumns.cpp:293 Win/DlgListViewer.cpp:1137
-#: Win/DlgListViewer.cpp:1205 Win/DlgListViewer.cpp:1265
+#: Win/DlgAssignColumns.cpp:293 Win/DlgListViewer.cpp:1137 Win/DlgListViewer.cpp:1205
+#: Win/DlgListViewer.cpp:1265
 msgid "IDS_COL_TITLE_PTS"
 msgstr "Points Distinction"
 
@@ -3017,8 +3014,8 @@ msgid "IDS_CONFIGEVENT_OVERLAPDATES"
 msgstr ""
 "ATTENTION\n"
 "\n"
-"Il y a plusieurs methods pour calculer les points pour les meme dates. Seulement "
-"le premiere method trouvé par le systeme va etre utilisé.\n"
+"Il y a plusieurs methods pour calculer les points pour les meme dates. Seulement le "
+"premiere method trouvé par le systeme va etre utilisé.\n"
 "\n"
 "Etes-vous sur de enregistrer?"
 
@@ -3143,8 +3140,7 @@ msgstr "Multiplicateur pour points de vitesse et de Classements"
 msgid "HIDC_CONFIG_EVENT_PLACEMENT"
 msgstr ""
 "La liste de multiplicateurs pour le classement utilisé en calculant les points "
-"vitesse. S'il n'y a pas d'entrée, le classement n'affecte pas les points de "
-"vitesse."
+"vitesse. S'il n'y a pas d'entrée, le classement n'affecte pas les points de vitesse."
 
 #: Win/DlgConfigEventMethod.cpp:352
 msgid "IDS_COL_MULTIPLIER"
@@ -3406,8 +3402,8 @@ msgstr "Endroit doit etre plus grand que zero."
 #: Win/DlgConfigPlaceInfo.cpp:107
 msgid "IDS_CONFIG_CHECK_VALUE"
 msgstr ""
-"Le valeur est trop petit. Entrez zero ou un valeur plus grand que zero. "
-"(Attention: zero supprime des point vitesse pour ce parcours.)"
+"Le valeur est trop petit. Entrez zero ou un valeur plus grand que zero. (Attention: "
+"zero supprime des point vitesse pour ce parcours.)"
 
 # DlgConfigPlaceInfo
 #: Win/DlgConfigPlaceInfo.cpp:127
@@ -3996,8 +3992,8 @@ msgstr "&Décédé"
 #: Win/DlgDog.cpp:679 Win/DlgDog.cpp:680
 msgid "HIDC_DOG_IS_DECEASED"
 msgstr ""
-"Ce chien est-il décédé? Ceci génèrera la date de décès et le programme ne "
-"calculera plus l'âge."
+"Ce chien est-il décédé? Ceci génèrera la date de décès et le programme ne calculera "
+"plus l'âge."
 
 #: Win/DlgDog.cpp:687 Win/DlgDog.cpp:688
 msgid "HIDC_DOG_DECEASED"
@@ -4048,8 +4044,8 @@ msgstr "Voir cachés"
 #: Win/DlgDog.cpp:752 Win/DlgDog.cpp:753
 msgid "HIDC_DOG_TITLE_HIDDEN"
 msgstr ""
-"Régler laffichage pour les Récompenses cachées. Cette fonction est aussi "
-"disponible dans le menu principal."
+"Régler laffichage pour les Récompenses cachées. Cette fonction est aussi disponible "
+"dans le menu principal."
 
 #: Win/DlgDog.cpp:765 Win/DlgDog.cpp:766
 msgid "HIDC_DOGNUM_REG_NUMS"
@@ -4082,8 +4078,8 @@ msgstr "Supprimer le numéro d'enregistrement sélectionné."
 #: Win/DlgDog.cpp:804 Win/DlgDog.cpp:805
 msgid "HIDC_DOGPTS_POINTS"
 msgstr ""
-"La liste de points existants. Ceux-ci vous permettent d'entrer un chien avancé "
-"sans avoir de besoin d'entrer chaque parcours que le chien a faite."
+"La liste de points existants. Ceux-ci vous permettent d'entrer un chien avancé sans "
+"avoir de besoin d'entrer chaque parcours que le chien a faite."
 
 #: Win/DlgDog.cpp:813
 msgid "IDC_DOGPTS_NEW"
@@ -4171,8 +4167,8 @@ msgstr "&Type"
 #: Win/DlgExistingPoints.cpp:190 Win/DlgExistingPoints.cpp:191
 msgid "HIDC_EXISTING_TYPE"
 msgstr ""
-"Type de points existants. Notez que si vous entrez un parcours Snooker et vous "
-"avez des points SuperQ, vous devez créer deux entrées séparées pour les points."
+"Type de points existants. Notez que si vous entrez un parcours Snooker et vous avez "
+"des points SuperQ, vous devez créer deux entrées séparées pour les points."
 
 #: Win/DlgExistingPoints.cpp:215
 msgid "IDC_EXISTING_DATE"
@@ -4617,8 +4613,8 @@ msgstr "Prévenir en avance"
 #: Win/DlgOptionsCalendar.cpp:137 Win/DlgOptionsCalendar.cpp:138
 msgid "HIDC_OPT_CAL_WARN_CLOSENEAR"
 msgstr ""
-"Surligner une entrée quand la date de Clôture approche et que vous avez indiqué "
-"que vous avez prévu de vous inscrire."
+"Surligner une entrée quand la date de Clôture approche et que vous avez indiqué que "
+"vous avez prévu de vous inscrire."
 
 #: Win/DlgOptionsCalendar.cpp:143 Win/DlgOptionsCalendar.cpp:144
 msgid "HIDC_OPT_CAL_CLOSENEAR"
@@ -4912,8 +4908,7 @@ msgstr "Afficher seulement les degrés sélectionnés dessous."
 
 #: Win/DlgOptionsFilter.cpp:252 Win/DlgOptionsFilter.cpp:253
 msgid "HIDC_OPT_FILTER_RUN_VENUES"
-msgstr ""
-"Sélectionnez les degrés dans chaque organisation que vous souhaitez afficher."
+msgstr "Sélectionnez les degrés dans chaque organisation que vous souhaitez afficher."
 
 #: Win/DlgOptionsPrint.cpp:75
 msgid "IDC_OPT_PRINT_FONT_GROUP"
@@ -4974,9 +4969,9 @@ msgstr "&Largeur"
 #: Win/DlgOptionsPrint.cpp:134 Win/DlgOptionsPrint.cpp:135
 msgid "HIDC_OPT_PRINT_RUNPAGE_W"
 msgstr ""
-"Définit la largeur de la page pour l'impression des parcours. Permet la création "
-"de pages plus petites sur papier standard. Si la largeur est à 0, la véritable "
-"largeur sera utilisée."
+"Définit la largeur de la page pour l'impression des parcours. Permet la création de "
+"pages plus petites sur papier standard. Si la largeur est à 0, la véritable largeur "
+"sera utilisée."
 
 #: Win/DlgOptionsPrint.cpp:138
 msgid "IDC_OPT_PRINT_RUNPAGE_H"
@@ -4985,9 +4980,9 @@ msgstr "&Hauteur"
 #: Win/DlgOptionsPrint.cpp:145 Win/DlgOptionsPrint.cpp:146
 msgid "HIDC_OPT_PRINT_RUNPAGE_H"
 msgstr ""
-"Définit la hauteur de la page pour l'impression des parcours. Permet la création "
-"de pages plus petites sur papier standard. Si la hauteur est à 0, la véritable "
-"hauteur sera utilisée."
+"Définit la hauteur de la page pour l'impression des parcours. Permet la création de "
+"pages plus petites sur papier standard. Si la hauteur est à 0, la véritable hauteur "
+"sera utilisée."
 
 #: Win/DlgOptionsPrint.cpp:148
 msgid "IDC_OPT_PRINT_MARGIN"
@@ -5032,14 +5027,13 @@ msgstr "Vérifie automatiquement les mises à jour"
 #: Win/DlgOptionsProgram.cpp:52 Win/DlgOptionsProgram.cpp:53
 msgid "HIDC_OPT_PGM_AUTO_CHECK"
 msgstr ""
-"Vérifier automatiquement tous les 30 jours si une nouvelle version du programme "
-"est disponible."
+"Vérifier automatiquement tous les 30 jours si une nouvelle version du programme est "
+"disponible."
 
 #: Win/DlgOptionsProgram.cpp:56
 msgid "IDC_OPT_PGM_AUTO_CHECK_TEXT"
 msgstr ""
-"NB: Cette fonction vérifie si des mises à jour existent. Elle ne les télécharge "
-"pas."
+"NB: Cette fonction vérifie si des mises à jour existent. Elle ne les télécharge pas."
 
 #: Win/DlgOptionsProgram.cpp:61
 msgid "IDC_OPT_PGM_EDIT"
@@ -5049,14 +5043,14 @@ msgstr "Nombre des copies de sauvegarde"
 msgid "HIDC_OPT_PGM_EDIT"
 msgstr ""
 "Nombre de copies sauvegarde conservées. Chaque fois que vous sauvegardez le "
-"dossier, une nouvelle copie de sauvegarde est créée. Si cette fonction est à 0, "
-"des copies de sauvegarde ne sont plus créées."
+"dossier, une nouvelle copie de sauvegarde est créée. Si cette fonction est à 0, des "
+"copies de sauvegarde ne sont plus créées."
 
 #: Win/DlgOptionsProgram.cpp:72
 msgid "IDC_OPT_PGM_EDIT_TEXT"
 msgstr ""
-"Chaque fois qu'un fichier est sauvegardé, une copie est faite. Mettez 0 pour "
-"éviter cela."
+"Chaque fois qu'un fichier est sauvegardé, une copie est faite. Mettez 0 pour éviter "
+"cela."
 
 #: Win/DlgOptionsProgram.cpp:77
 msgid "IDC_OPT_PGM_AUTOSHOW"
@@ -5184,10 +5178,10 @@ msgstr ""
 #: Win/DlgPluginDetails.cpp:103 Win/DlgPluginDetails.cpp:104
 msgid "HIDC_PLUGINDETAIL_SEARCH"
 msgstr ""
-"Cet adresse URL est utilisée pour lire des données de lInternet. Les textes \"!L!"
-"\" et \"!V!\" seront remplacés avec les codes dendroit et dorganisation "
-"sélectionnés par lutilisateur. Plusieurs codes seront assemblés en utilisant le "
-"caractère + entre les codes."
+"Cet adresse URL est utilisée pour lire des données de lInternet. Les textes \"!L!\" "
+"et \"!V!\" seront remplacés avec les codes dendroit et dorganisation sélectionnés "
+"par lutilisateur. Plusieurs codes seront assemblés en utilisant le caractère + "
+"entre les codes."
 
 #: Win/DlgPluginDetails.cpp:107
 msgid "IDC_PLUGINDETAIL_HELP"
@@ -5245,8 +5239,7 @@ msgstr "&3ème Niveau"
 #: Win/DlgPointsViewSort.cpp:99 Win/DlgPointsViewSort.cpp:100
 msgid "HIDC_POINTS_VIEW_SORT_C3"
 msgstr ""
-"Spécifier la clef tertiaire pour trier les entrées affichées dans laffichage "
-"Points."
+"Spécifier la clef tertiaire pour trier les entrées affichées dans laffichage Points."
 
 # DlgProgress
 #: Win/DlgProgress.cpp:108
@@ -5269,13 +5262,11 @@ msgstr ""
 
 #: Win/DlgQueryDetail.cpp:91 Win/DlgQueryDetail.cpp:92
 msgid "HIDC_QUERYDETAIL_COMBO"
-msgstr ""
-"Ceci est le nom qui va être affiché à lutilisateur pour sélectionner un code."
+msgstr "Ceci est le nom qui va être affiché à lutilisateur pour sélectionner un code."
 
 #: Win/DlgQueryDetail.cpp:103 Win/DlgQueryDetail.cpp:104
 msgid "HIDC_QUERYDETAIL_NAME"
-msgstr ""
-"Ceci est le nom qui va être affiché à lutilisateur pour sélectionner un code."
+msgstr "Ceci est le nom qui va être affiché à lutilisateur pour sélectionner un code."
 
 #: Win/DlgQueryDetail.cpp:189 Win/Validators.cpp:442 Win/Validators.cpp:543
 msgid "Please enter a value"
@@ -5496,8 +5487,7 @@ msgstr "&Juge"
 #: Win/DlgRun.cpp:960 Win/DlgRun.cpp:961
 msgid "HIDC_RUNSCORE_JUDGE"
 msgstr ""
-"Liste de juges déjà entrés. Vous pouvez entrer n'importe quel texte que vous "
-"voulez."
+"Liste de juges déjà entrés. Vous pouvez entrer n'importe quel texte que vous voulez."
 
 #: Win/DlgRun.cpp:965 Win/DlgRun.cpp:966
 msgid "HIDC_RUNSCORE_JUDGE_NOTES"
@@ -5561,8 +5551,7 @@ msgstr "Vitesse minimum"
 #: Win/DlgRun.cpp:1050 Win/DlgRun.cpp:1051 Win/DlgRun.cpp:2311 Win/DlgRun.cpp:2312
 msgid "HIDC_RUNSCORE_SCT2"
 msgstr ""
-"Temps Standard du Parcours (ou le temps fermeture pour les épreuves basé sur "
-"points)"
+"Temps Standard du Parcours (ou le temps fermeture pour les épreuves basé sur points)"
 
 #: Win/DlgRun.cpp:1054
 msgid "IDC_RUNSCORE_CLOSING_PTS"
@@ -5771,8 +5760,7 @@ msgstr "Coller le parcours"
 
 #: Win/DlgRun.cpp:1335 Win/DlgRun.cpp:1336
 msgid "HIDC_RUNCRCD_COPY"
-msgstr ""
-"Initialiser le parcours existant, ou coller le contenu de presse-papiers ici."
+msgstr "Initialiser le parcours existant, ou coller le contenu de presse-papiers ici."
 
 #: Win/DlgRun.cpp:1342
 msgid "IDC_RUNCRCD_IMAGE"
@@ -5851,8 +5839,7 @@ msgstr "Mètres"
 
 #: Win/DlgRun.cpp:2259 Win/DlgRun.cpp:2260
 msgid "HIDC_RUNSCORE_YARDS"
-msgstr ""
-"Longueur du parcours. Entrez 0 si pas connu ou si longueur ne s'applique pas."
+msgstr "Longueur du parcours. Entrez 0 si pas connu ou si longueur ne s'applique pas."
 
 #: Win/DlgRun.cpp:2273
 msgid "IDC_RUNSCORE_YPS"
@@ -6099,8 +6086,7 @@ msgstr "Supprimer le club sélectionné de ce concours."
 
 #: Win/DlgTrial.cpp:218 Win/DlgTrial.cpp:219
 msgid "HIDC_TRIAL_CLUBS"
-msgstr ""
-"Liste des clubs associés à ce concours. L'ordre des clubs est très important."
+msgstr "Liste des clubs associés à ce concours. L'ordre des clubs est très important."
 
 #: Win/DlgTrial.cpp:223 Win/DlgTrial.cpp:224
 msgid "HIDC_TRIAL_CLUB_NOTES"
@@ -6294,6 +6280,7 @@ msgid "IDS_UPDATE_CURRENT"
 msgstr "Pas des mises a jour."
 
 #: Win/UpdateInfo.cpp:878
+#, fuzzy
 msgid "IDS_INSTALL_BUSY"
 msgstr ""
 "An update is available but cannot be installed at this time. Make sure the system "
@@ -6559,8 +6546,8 @@ msgstr "Attribuer Colonnes..."
 #: Win/WizardImport.cpp:230 Win/WizardImport.cpp:231
 msgid "HIDC_WIZARD_IMPORT_ASSIGN"
 msgstr ""
-"Configurer comment les données importées seront alignées. Quand les champs/"
-"colonnes sont assignées, les changements seront affichés dans l'aperçu dessous."
+"Configurer comment les données importées seront alignées. Quand les champs/colonnes "
+"sont assignées, les changements seront affichés dans l'aperçu dessous."
 
 #: Win/WizardImport.cpp:234
 msgid "IDC_WIZARD_IMPORT_FILE"
@@ -6614,8 +6601,7 @@ msgstr "Attention: Ligne %1$d: Entré passé, nom organisation invalide: %2$s"
 
 #: Win/WizardImport.cpp:1274
 msgid "IDS_IMPORT_BAD_DATE_CALSTART"
-msgstr ""
-"ERREUR: Ligne %1$d, colonne %2$d: Date commencement calendrier invalide: %3$s"
+msgstr "ERREUR: Ligne %1$d, colonne %2$d: Date commencement calendrier invalide: %3$s"
 
 #: Win/WizardImport.cpp:1296
 msgid "IDS_IMPORT_BAD_DATE_CALEND"
@@ -6668,8 +6654,8 @@ msgstr "OpenOffice Calc (directement)"
 #: Win/WizardStart.cpp:118 Win/WizardStart.cpp:119
 msgid "HIDC_WIZARD_START_CALC"
 msgstr ""
-"Importer des données directement de, ou exporter des données directement vers, "
-"Open Office Calc."
+"Importer des données directement de, ou exporter des données directement vers, Open "
+"Office Calc."
 
 #: Win/WizardStart.cpp:123
 msgid "IDC_WIZARD_START_SPREADSHEET"
@@ -6709,9 +6695,9 @@ msgid "IDS_WIZ_IMPORT_RUNS_EXCEL"
 msgstr ""
 "Importer information de Concours and Parcours de Microsoft Excel.\n"
 "\n"
-" Chaque Parcours devrais avoir des valeur valide pour Organisation, Epreuve, "
-"Niveau conducteur et Categorie comme definié dans le configuration. En plus, si "
-"l'Epreuve est double sanction"
+" Chaque Parcours devrais avoir des valeur valide pour Organisation, Epreuve, Niveau "
+"conducteur et Categorie comme definié dans le configuration. En plus, si l'Epreuve "
+"est double sanction"
 
 #: Win/WizardStart.cpp:228
 msgid "IDS_WIZ_IMPORT_RUNS_SPREAD"
@@ -6736,9 +6722,9 @@ msgid "IDS_WIZ_IMPORT_RUNS_CALC"
 msgstr ""
 "Importer information de Concours and Parcours de OpenOffice Calc.\n"
 "\n"
-" Chaque Parcours devrais avoir des valeur valide pour Organisation, Epreuve, "
-"Niveau conducteur et Categorie comme definié dans le configuration. En plus, si "
-"l'Epreuve est double sanction"
+" Chaque Parcours devrais avoir des valeur valide pour Organisation, Epreuve, Niveau "
+"conducteur et Categorie comme definié dans le configuration. En plus, si l'Epreuve "
+"est double sanction"
 
 #: Win/WizardStart.cpp:234 Win/WizardStart.cpp:235 Win/WizardStart.cpp:237
 msgid "IDS_WIZ_EXPORT_RUNS"
