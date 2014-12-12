@@ -31,6 +31,8 @@
 		E18302C3182048F6000E04FF /* ARBMsgDigestMD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E18302BF182048F6000E04FF /* ARBMsgDigestMD5.cpp */; };
 		E18302C4182048F6000E04FF /* ARBMsgDigestSHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E18302C0182048F6000E04FF /* ARBMsgDigestSHA1.cpp */; };
 		E18302C5182048F6000E04FF /* ARBMsgDigestSHA256.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E18302C1182048F6000E04FF /* ARBMsgDigestSHA256.cpp */; };
+		E1B443C41A3B6DCC005CBE64 /* ARBUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B443C31A3B6DCC005CBE64 /* ARBUtils.h */; };
+		E1B443C61A3B6DE8005CBE64 /* ARBUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1B443C51A3B6DE8005CBE64 /* ARBUtils.cpp */; };
 		E1B8965A17971A96009FB430 /* ARBMisc.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B8965917971A96009FB430 /* ARBMisc.h */; };
 		E1B8965C17971AAD009FB430 /* ARBMisc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1B8965B17971AAD009FB430 /* ARBMisc.cpp */; };
 /* End PBXBuildFile section */
@@ -61,6 +63,8 @@
 		E18302BF182048F6000E04FF /* ARBMsgDigestMD5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMsgDigestMD5.cpp; path = ../../../ARBCommon/ARBMsgDigestMD5.cpp; sourceTree = "<group>"; };
 		E18302C0182048F6000E04FF /* ARBMsgDigestSHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMsgDigestSHA1.cpp; path = ../../../ARBCommon/ARBMsgDigestSHA1.cpp; sourceTree = "<group>"; };
 		E18302C1182048F6000E04FF /* ARBMsgDigestSHA256.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMsgDigestSHA256.cpp; path = ../../../ARBCommon/ARBMsgDigestSHA256.cpp; sourceTree = "<group>"; };
+		E1B443C31A3B6DCC005CBE64 /* ARBUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBUtils.h; sourceTree = "<group>"; };
+		E1B443C51A3B6DE8005CBE64 /* ARBUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBUtils.cpp; path = ../../../ARBCommon/ARBUtils.cpp; sourceTree = "<group>"; };
 		E1B8965917971A96009FB430 /* ARBMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMisc.h; sourceTree = "<group>"; };
 		E1B8965B17971AAD009FB430 /* ARBMisc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMisc.cpp; path = ../../../ARBCommon/ARBMisc.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +121,7 @@
 				E1B8965917971A96009FB430 /* ARBMisc.h */,
 				E110B515177FD146004071B5 /* ARBMsgDigest.h */,
 				E110B516177FD146004071B5 /* ARBTypes.h */,
+				E1B443C31A3B6DCC005CBE64 /* ARBUtils.h */,
 				E110B517177FD146004071B5 /* BinaryData.h */,
 				E110B518177FD146004071B5 /* BreakLine.h */,
 				E110B519177FD146004071B5 /* Element.h */,
@@ -139,6 +144,7 @@
 				E18302C0182048F6000E04FF /* ARBMsgDigestSHA1.cpp */,
 				E18302C1182048F6000E04FF /* ARBMsgDigestSHA256.cpp */,
 				E110B52A177FD16A004071B5 /* ARBTypes.cpp */,
+				E1B443C51A3B6DE8005CBE64 /* ARBUtils.cpp */,
 				E110B52B177FD16A004071B5 /* BinaryData.cpp */,
 				E110B52C177FD16A004071B5 /* BreakLine.cpp */,
 				E110B52D177FD16A004071B5 /* Element.cpp */,
@@ -161,6 +167,7 @@
 				E110B51D177FD146004071B5 /* ARBDate.h in Headers */,
 				E110B51E177FD146004071B5 /* ARBMsgDigest.h in Headers */,
 				E110B51F177FD146004071B5 /* ARBTypes.h in Headers */,
+				E1B443C41A3B6DCC005CBE64 /* ARBUtils.h in Headers */,
 				E110B520177FD146004071B5 /* BinaryData.h in Headers */,
 				E110B521177FD146004071B5 /* BreakLine.h in Headers */,
 				E110B522177FD146004071B5 /* Element.h in Headers */,
@@ -227,6 +234,7 @@
 				E110B534177FD16A004071B5 /* ARBDate.cpp in Sources */,
 				E18302C3182048F6000E04FF /* ARBMsgDigestMD5.cpp in Sources */,
 				E110B535177FD16A004071B5 /* ARBMsgDigest.cpp in Sources */,
+				E1B443C61A3B6DE8005CBE64 /* ARBUtils.cpp in Sources */,
 				E110B536177FD16A004071B5 /* ARBTypes.cpp in Sources */,
 				E110B537177FD16A004071B5 /* BinaryData.cpp in Sources */,
 				E18302C4182048F6000E04FF /* ARBMsgDigestSHA1.cpp in Sources */,
