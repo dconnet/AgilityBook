@@ -39,10 +39,12 @@ protected:
 	CUpdateInfo();
 	bool ReadVersionFile(bool bVerbose);
 	bool IsOutOfDate();
+	bool CanInstall() const;
 	bool CheckProgram(
 			CAgilityBookDoc* pDoc,
 			std::wstring const& lang,
-			bool& outClose);
+			bool& outClose,
+			bool& canInstall);
 	void CheckConfig(
 			CAgilityBookDoc* pDoc,
 			bool bVerbose);

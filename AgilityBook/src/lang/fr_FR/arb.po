@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-08 18:09-0800\n"
-"PO-Revision-Date: 2014-12-08 18:09-0800\n"
+"POT-Creation-Date: 2014-12-12 14:55-0800\n"
+"PO-Revision-Date: 2014-12-12 14:55-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -498,7 +498,7 @@ msgstr ""
 msgid "Agility Record Book file"
 msgstr "fichier de Agility Record Book"
 
-#: Win/AgilityBookCalendarListView.cpp:453 Win/AgilityBookDoc.cpp:1642
+#: Win/AgilityBookCalendarListView.cpp:453 Win/AgilityBookDoc.cpp:1655
 #: Win/AgilityBookRunsView.cpp:1160 Win/AgilityBookTrainingView.cpp:285
 #: Win/AgilityBookTreeView.cpp:177
 msgid "IDS_CANNOT_FIND"
@@ -514,7 +514,7 @@ msgstr "%1$d epreuves"
 msgid "IDS_INDICATOR_BLANK"
 msgstr "          "
 
-#: Win/AgilityBookCalendarListView.cpp:1013
+#: Win/AgilityBookCalendarListView.cpp:1015
 msgid "IDS_NOT_VISIBLE"
 msgstr ""
 "Attention: %1$d nouveaux entrés ne sont pas visible a cause de votre filtrage "
@@ -567,7 +567,7 @@ msgstr "Ouverture"
 msgid "IDS_COL_CLOSES"
 msgstr "Fermeture"
 
-#: Win/AgilityBookCalendarView.cpp:625 Win/AgilityBookDoc.cpp:1983
+#: Win/AgilityBookCalendarView.cpp:625 Win/AgilityBookDoc.cpp:1996
 #: Win/DlgAssignColumns.cpp:330 Win/DlgAssignColumns.cpp:340
 #: Win/DlgAssignColumns.cpp:375 Win/DlgAssignColumns.cpp:520 Win/DlgListCtrl.cpp:406
 msgid "IDS_COL_NOTES"
@@ -710,90 +710,90 @@ msgstr "%1$d nouveaux entrés Log Entraînement rajoutés, %2$d entrés mis a jo
 msgid "IDS_COL_DOG"
 msgstr "Chien"
 
-#: Win/AgilityBookDoc.cpp:1422
+#: Win/AgilityBookDoc.cpp:1424
 msgid "Sorry, could not open this file."
 msgstr "Impossible d'ouvrir ce fichier."
 
-#: Win/AgilityBookDoc.cpp:1437 Win/AgilityBookDoc.cpp:1451
+#: Win/AgilityBookDoc.cpp:1440 Win/AgilityBookDoc.cpp:1455
 #, c-format
 msgid "Cannot open file '%s'."
 msgstr "Impossible d'ouvrir le fichier « %s »."
 
-#: Win/AgilityBookDoc.cpp:1461
+#: Win/AgilityBookDoc.cpp:1465
 msgid "IDS_NONFATAL_MSGS"
 msgstr "Attention: Des messages pas fatal ont etais crée en chargent le fichier:"
 
-#: Win/AgilityBookDoc.cpp:1575 Win/UpdateInfo.cpp:536
+#: Win/AgilityBookDoc.cpp:1588 Win/UpdateInfo.cpp:542
 msgid "IDS_CANNOT_OPEN"
 msgstr "Impossible d'ouvrir fichier '%1$s' pour ecriture."
 
-#: Win/AgilityBookDoc.cpp:1581
+#: Win/AgilityBookDoc.cpp:1594
 msgid "IDS_INTERNAL_ERROR"
 msgstr "Erreur interne: Fichier pas enregistré."
 
-#: Win/AgilityBookDoc.cpp:1604
+#: Win/AgilityBookDoc.cpp:1617
 msgid "IDS_SEARCH_NOTES"
 msgstr "Notes Recherche"
 
-#: Win/AgilityBookDoc.cpp:1776
+#: Win/AgilityBookDoc.cpp:1789
 msgid "IDS_NO_LINKED_FILES"
 msgstr "Aucun fichier associé trouvé."
 
-#: Win/AgilityBookDoc.cpp:2051
+#: Win/AgilityBookDoc.cpp:2064
 #, fuzzy
 msgid "IDS_FILEPROP_NAME"
 msgstr "SousDegré"
 
-#: Win/AgilityBookDoc.cpp:2053
+#: Win/AgilityBookDoc.cpp:2066
 #, fuzzy
 msgid "IDS_FILEPROP_READONLY"
 msgstr "%1$s points pour la vie avec %2$s fautes"
 
-#: Win/AgilityBookDoc.cpp:2058
+#: Win/AgilityBookDoc.cpp:2071
 #, fuzzy
 msgid "IDS_FILEPROP_SIZE"
 msgstr "%1$s points avec %2$s fautes"
 
-#: Win/AgilityBookDoc.cpp:2063
+#: Win/AgilityBookDoc.cpp:2076
 #, fuzzy
 msgid "IDS_FILEPROP_CREATED"
 msgstr "%1$s points avec %2$s fautes"
 
-#: Win/AgilityBookDoc.cpp:2064
+#: Win/AgilityBookDoc.cpp:2077
 #, fuzzy
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "%1$s points pour la vie avec %2$s fautes"
 
-#: Win/AgilityBookDoc.cpp:2072
+#: Win/AgilityBookDoc.cpp:2085
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "%1$s points pour la vie avec %2$s fautes"
 
-#: Win/AgilityBookDoc.cpp:2074
+#: Win/AgilityBookDoc.cpp:2087
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Pas des mises a jour."
 
-#: Win/AgilityBookDoc.cpp:2080
+#: Win/AgilityBookDoc.cpp:2093
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Version %1$s accesible. Voulez-vous le telecharger? "
 
-#: Win/AgilityBookDoc.cpp:2082
+#: Win/AgilityBookDoc.cpp:2095
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Impossible de determiner information version"
 
-#: Win/AgilityBookDoc.cpp:2091
+#: Win/AgilityBookDoc.cpp:2104
 #, fuzzy
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr "%1$s points pour la vie avec %2$s fautes"
 
-#: Win/AgilityBookDoc.cpp:2101
+#: Win/AgilityBookDoc.cpp:2114
 msgid "IDS_FILE_PROPERTIES"
 msgstr "Propriétés du fichier"
 
-#: Win/AgilityBookHtmlView.cpp:258 Win/AgilityBookPointsView.cpp:324
+#: Win/AgilityBookHtmlView.cpp:260 Win/AgilityBookPointsView.cpp:326
 #: Win/PointsData.cpp:270
 msgid "IDS_TITLING_POINTS"
 msgstr "Points Distinction"
@@ -1600,11 +1600,11 @@ msgstr "Il faut créer un club organisateur avant créer des epreuves."
 msgid "IDS_VENUE_CONFIG_MISSING"
 msgstr "Impossible de localiser information configuration pour organisation '%1$s'."
 
-#: Win/AgilityBookTreeData.cpp:249 Win/AgilityBookTreeView.cpp:757
+#: Win/AgilityBookTreeData.cpp:249 Win/AgilityBookTreeView.cpp:759
 msgid "IDS_CREATERUN_FAILED"
 msgstr "Erreur: Impossible de créer parcours."
 
-#: Win/AgilityBookTreeData.cpp:267 Win/AgilityBookTreeView.cpp:782
+#: Win/AgilityBookTreeData.cpp:267 Win/AgilityBookTreeView.cpp:784
 msgid "IDS_CREATERUN_FILTERED"
 msgstr ""
 "Attention: Le parcours juste creé ne peut pas etre montré a cause des filtres "
@@ -1643,7 +1643,7 @@ msgstr ""
 "\n"
 "Etes-vous sur de continuer?"
 
-#: Win/AgilityBookTreeView.cpp:692
+#: Win/AgilityBookTreeView.cpp:694
 msgid "IDS_CREATEDOG_FAILED"
 msgstr "Erreur: Impossible de créer chien."
 
@@ -1801,7 +1801,7 @@ msgid "LinkArbDownloadText"
 msgstr "Telecharger Agility Record Book"
 
 #: Win/DlgAbout.cpp:203 Win/DlgAbout.cpp:205 Win/DlgAbout.cpp:206
-#: Win/UpdateInfo.cpp:254
+#: Win/UpdateInfo.cpp:258
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
@@ -2981,7 +2981,7 @@ msgid "IDS_CONFIGEVENT_TF_OVER"
 msgstr "Calculer Fautes Temps sous TPS"
 
 #: Win/DlgConfigEvent.cpp:668 Win/DlgRun.cpp:2363 Win/TabView.cpp:230
-#: Win/TabView.cpp:272 Win/TabView.cpp:338
+#: Win/TabView.cpp:272 Win/TabView.cpp:340
 msgid "IDS_POINTS"
 msgstr "Points"
 
@@ -4423,7 +4423,7 @@ msgstr "Afficher ou cacher cet article dans des listes sélection."
 msgid "HIDC_INFONOTE_COMMENTS"
 msgstr "Notes sur le club, le juge ou lendroit."
 
-#: Win/DlgListCtrl.cpp:396 Win/TabView.cpp:233 Win/TabView.cpp:339
+#: Win/DlgListCtrl.cpp:396 Win/TabView.cpp:233 Win/TabView.cpp:341
 msgid "IDS_CALENDAR"
 msgstr "Calendrier"
 
@@ -6160,7 +6160,7 @@ msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtré"
 
 #: Win/PointsData.cpp:621 Win/PointsData.cpp:1412 Win/Print.cpp:102
-#: Win/Print.cpp:1042 Win/TabView.cpp:227 Win/TabView.cpp:337
+#: Win/Print.cpp:1042 Win/TabView.cpp:227 Win/TabView.cpp:339
 msgid "IDS_RUNS"
 msgstr "Parcours"
 
@@ -6238,60 +6238,66 @@ msgstr "Lire %1$d lignes and %2$d colonnes"
 msgid "Reading %1$d rows"
 msgstr "Lire %1$d lignes"
 
-#: Win/TabView.cpp:236 Win/TabView.cpp:340
+#: Win/TabView.cpp:236 Win/TabView.cpp:342
 msgid "IDS_TRAINING"
 msgstr "Log Entraînement"
 
-#: Win/UpdateInfo.cpp:175
+#: Win/UpdateInfo.cpp:179
 msgid "IDS_UPDATED_CONFIG"
 msgstr "La configuration a etais mise a jour. Voulez-vous introduire vos data?"
 
-#: Win/UpdateInfo.cpp:257 Win/UpdateInfo.cpp:737
+#: Win/UpdateInfo.cpp:261 Win/UpdateInfo.cpp:779
 msgid "IDS_HELP_UPDATE"
 msgstr "http://www.agilityrecordbook.com"
 
-#: Win/UpdateInfo.cpp:282 Win/UpdateInfo.cpp:426
+#: Win/UpdateInfo.cpp:286 Win/UpdateInfo.cpp:430
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Version current pas determinable."
 
-#: Win/UpdateInfo.cpp:353 Win/UpdateInfo.cpp:756
+#: Win/UpdateInfo.cpp:357 Win/UpdateInfo.cpp:798
 msgid "IDS_LOAD_FAILED"
 msgstr "Impossible de charger '%1$s'."
 
-#: Win/UpdateInfo.cpp:501
+#: Win/UpdateInfo.cpp:507
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version %1$s accesible. Voulez-vous le telecharger? "
 
-#: Win/UpdateInfo.cpp:541
+#: Win/UpdateInfo.cpp:547
 msgid "IDS_DOWNLOADING"
 msgstr "Téléchargement en cours..."
 
-#: Win/UpdateInfo.cpp:562
+#: Win/UpdateInfo.cpp:568
 msgid "IDS_VALIDATING"
 msgstr "Validation en cours..."
 
-#: Win/UpdateInfo.cpp:570 Win/UpdateInfo.cpp:594 Win/UpdateInfo.cpp:602
-#: Win/UpdateInfo.cpp:610
+#: Win/UpdateInfo.cpp:576 Win/UpdateInfo.cpp:600 Win/UpdateInfo.cpp:608
+#: Win/UpdateInfo.cpp:616
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERREUR: Le fichier téléchargé est corrompu."
 
-#: Win/UpdateInfo.cpp:586
+#: Win/UpdateInfo.cpp:592
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "%1$s a fini de télécharger. Agility Record Book va fermer pour vous laisser "
 "l'installer."
 
-#: Win/UpdateInfo.cpp:618
+#: Win/UpdateInfo.cpp:624
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERREUR: Format de fichier non reconnu, fichier MSI attendu."
 
-#: Win/UpdateInfo.cpp:652 Win/UpdateInfo.cpp:671
+#: Win/UpdateInfo.cpp:658 Win/UpdateInfo.cpp:677
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERREUR: Erreur interne pendant la mise à jour. Procédure annulée."
 
-#: Win/UpdateInfo.cpp:791
+#: Win/UpdateInfo.cpp:833
 msgid "IDS_UPDATE_CURRENT"
 msgstr "Pas des mises a jour."
+
+#: Win/UpdateInfo.cpp:878
+msgid "IDS_INSTALL_BUSY"
+msgstr ""
+"An update is available but cannot be installed at this time. Make sure the system "
+"is not updating or waiting to be rebooted."
 
 #: Win/Validators.cpp:388 Win/Validators.cpp:407 Win/Validators.cpp:421
 #: Win/Validators.cpp:432

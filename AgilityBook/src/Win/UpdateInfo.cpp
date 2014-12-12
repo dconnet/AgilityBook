@@ -117,6 +117,10 @@
 #include <wx/textfile.h>
 #include <wx/wfstream.h>
 
+#ifdef WIN32
+#include <wuapi.h>
+#endif
+
 #include "Platform/arbWarningPush.h"
 #pragma warning(disable : 4355)
 
@@ -484,15 +488,17 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 bool CUpdateInfo::CheckProgram(
 		CAgilityBookDoc* pDoc,
 		std::wstring const& lang,
-		bool& outClose)
+		bool& outClose,
+		bool& canInstall)
 {
 	outClose = false;
+	canInstall = CanInstall();
 	bool bNeedsUpdating = false;
 	ARBDate today = ARBDate::Today();
 	if (IsOutOfDate())
 	{
 		bNeedsUpdating = true;
-		if (pDoc && !pDoc->OnSaveModified())
+		if ((pDoc && !pDoc->OnSaveModified()) || !canInstall)
 		{
 			// Return that it needs updating, but don't record that we checked.
 			return bNeedsUpdating;
@@ -704,6 +710,37 @@ bool CUpdateInfo::IsOutOfDate()
 }
 
 
+/**
+ * Can we install?
+ * Check to see if Window Update is in process.
+ */
+bool CUpdateInfo::CanInstall() const
+{
+	bool bAllowInstall = true;
+#ifdef WIN32
+	// Note: CoInitialize already called
+	IUpdateInstaller* iInstaller = NULL;
+	if (SUCCEEDED(CoCreateInstance(CLSID_UpdateInstaller, NULL, CLSCTX_INPROC_SERVER, IID_IUpdateInstaller, (LPVOID*)&iInstaller)))
+	{
+		VARIANT_BOOL bVal;
+		if (SUCCEEDED(iInstaller->get_IsBusy(&bVal)))
+		{
+			if (bVal)
+				bAllowInstall = false;
+		}
+		if (SUCCEEDED(iInstaller->get_RebootRequiredBeforeInstallation(&bVal)))
+		{
+			if (bVal)
+				bAllowInstall = false;
+		}
+
+		iInstaller->Release();
+	}
+#endif
+	return bAllowInstall;
+}
+
+
 void CUpdateInfo::CheckConfig(
 		CAgilityBookDoc* pDoc,
 		bool bVerbose)
@@ -800,7 +837,10 @@ void CUpdateInfo::AutoUpdateProgram(
 	outClose = false;
 	if (ReadVersionFile(false))
 	{
-		CheckProgram(pDoc, wxGetApp().CurrentLanguage(), outClose);
+		// When checking if we can install, silently ignore the case when we
+		// are due to update, but can't because Windows is updating.
+		bool canInstall;
+		CheckProgram(pDoc, wxGetApp().CurrentLanguage(), outClose, canInstall);
 	}
 }
 
@@ -826,7 +866,12 @@ void CUpdateInfo::UpdateConfiguration(
 	// AND the version is up-to-date.
 	if (!ReadVersionFile(true))
 		return;
-	if (CheckProgram(pDoc, wxGetApp().CurrentLanguage(), outClose))
+	bool canInstall;
+	if (CheckProgram(pDoc, wxGetApp().CurrentLanguage(), outClose, canInstall))
+	{
+		if (!canInstall)
+			wxMessageBox(_("IDS_INSTALL_BUSY"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 		return;
+	}
 	CheckConfig(pDoc, true);
 }

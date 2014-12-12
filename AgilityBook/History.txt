@@ -5,6 +5,7 @@
   - Add more TDAA games.
 - New features / Enhancements:
  - If all dogs in file are deceased, don't prompt to update config.
+ - Before auto-updating on Windows, make sure Windows Update is not busy.
 
 11/29/2014: v3.0.0.94
 - Notes:
