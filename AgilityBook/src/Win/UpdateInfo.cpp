@@ -719,8 +719,8 @@ bool CUpdateInfo::CanInstall() const
 	bool bAllowInstall = true;
 #ifdef WIN32
 	// Note: CoInitialize already called
-	IUpdateInstaller* iInstaller = NULL;
-	if (SUCCEEDED(CoCreateInstance(CLSID_UpdateInstaller, NULL, CLSCTX_INPROC_SERVER, IID_IUpdateInstaller, (LPVOID*)&iInstaller)))
+	IUpdateInstaller* iInstaller = nullptr;
+	if (SUCCEEDED(CoCreateInstance(CLSID_UpdateInstaller, nullptr, CLSCTX_INPROC_SERVER, IID_IUpdateInstaller, (LPVOID*)&iInstaller)))
 	{
 		VARIANT_BOOL bVal;
 		if (SUCCEEDED(iInstaller->get_IsBusy(&bVal)))

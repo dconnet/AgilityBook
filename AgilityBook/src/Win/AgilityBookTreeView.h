@@ -164,7 +164,7 @@ public:
 			ARBDogRunPtr pRun,
 			wxTreeItemId hParent);
 	bool PasteDog(bool& bLoaded);
-	bool PasteRuns(ARBDogPtr pDog, ARBDogTrialPtr pTrial, bool& bLoaded, bool* bTreeSelectionSet = NULL);
+	bool PasteRuns(ARBDogPtr pDog, ARBDogTrialPtr pTrial, bool& bLoaded, bool* bTreeSelectionSet = nullptr);
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
 	std::wstring GetPrintLine(wxTreeItemId hItem) const;

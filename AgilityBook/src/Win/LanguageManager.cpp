@@ -167,7 +167,7 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 		// Note: Resource names are the basename+langid.
 		// See wxResourceTranslationsLoader for more information.
 		std::vector<wxString> resourceNames;
-		::EnumResourceNames(NULL, L"MOFILE", EnumResourceProc, reinterpret_cast<LONG_PTR>(&resourceNames));
+		::EnumResourceNames(nullptr, L"MOFILE", EnumResourceProc, reinterpret_cast<LONG_PTR>(&resourceNames));
 		wxString base = GetDefaultCatalogName();
 		base.MakeUpper();
 		for (std::vector<wxString>::iterator it = resourceNames.begin(); it != resourceNames.end(); ++it)

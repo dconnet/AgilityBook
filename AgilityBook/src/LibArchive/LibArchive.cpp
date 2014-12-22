@@ -114,13 +114,13 @@ CLibArchiveImpl::CLibArchiveImpl(std::wstring const& zipFile, CLibArchive::Archi
 		name = StringUtil::ToUpper(name);
 		name = StringUtil::Replace(name, L".", L"_");
 
-		HRSRC hrSrc = ::FindResource(NULL, name.c_str(), L"DATAFILE");
+		HRSRC hrSrc = ::FindResource(nullptr, name.c_str(), L"DATAFILE");
 		if (hrSrc)
 		{
-			m_resSize = ::SizeofResource(NULL, hrSrc);
+			m_resSize = ::SizeofResource(nullptr, hrSrc);
 			if (m_resSize > 0)
 			{
-				HGLOBAL hRes = ::LoadResource(NULL, hrSrc);
+				HGLOBAL hRes = ::LoadResource(nullptr, hrSrc);
 				if (hRes)
 				{
 					m_resData = ::LockResource(hRes);
