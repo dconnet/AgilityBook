@@ -155,3 +155,10 @@ namespace std
 #else
 #define nullptr NULL
 #endif
+
+// Copied from WinUser.h for Win8.1 DPI per-monitor support
+#ifdef WIN32
+#ifndef WM_DPICHANGED
+#define WM_DPICHANGED		0x02E0
+#endif
+#endif
