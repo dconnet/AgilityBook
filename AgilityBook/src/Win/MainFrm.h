@@ -53,6 +53,9 @@ private:
 class CMainFrame : public wxDocParentFrame
 {
 	DECLARE_NO_COPY_CLASS(CMainFrame)
+#ifdef __WXMSW__
+	virtual WXLRESULT MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam);
+#endif
 
 public:
 	CMainFrame(wxDocManager* manager);

@@ -94,6 +94,18 @@ void CMainFrame::CStartupEvent::Notify()
 
 /////////////////////////////////////////////////////////////////////////////
 
+#ifdef __WXMSW__
+WXLRESULT CMainFrame::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam)
+{
+	if (WM_DPICHANGED == nMsg)
+	{
+	}
+	return __super::MSWWindowProc(nMsg, wParam, lParam);
+}
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+
 BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_CLOSE(CMainFrame::OnClose)
 #if defined(__WXMAC__)
