@@ -1003,7 +1003,7 @@ static long ConvertMetric(long val, bool bToMM)
 
 
 void CAgilityBookOptions::GetPrinterMargins(
-		bool bAsMM, // In .01in or millimeters, ignored it DC is set
+		bool bAsMM, // In .01in or millimeters, ignored if DC is set
 		long& outLeft,
 		long& outRight,
 		long& outTop,
