@@ -320,7 +320,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	wxStaticText* textTitlePoints = new wxStaticText(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_POINTS"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	textTitlePoints->Wrap( -1 );
+	textTitlePoints->Wrap(-1);
 
 	m_ctrlPointsList = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
