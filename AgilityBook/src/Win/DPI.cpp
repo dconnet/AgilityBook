@@ -16,7 +16,7 @@
 #include "stdafx.h"
 #include "DPI.h"
 
-#if 0 && defined(WIN32) && (NTDDI_VERSION >= NTDDI_WINBLUE)
+#if _MSC_VER >= 1800 && (NTDDI_VERSION >= NTDDI_WINBLUE)
 #include <shellscalingapi.h>
 
 #else
@@ -48,11 +48,12 @@ class CDPI
 	unsigned int m_nScaleFactorSDA;
 	PROCESS_DPI_AWARENESS m_Awareness;
 #ifdef WIN32
-	HMODULE hCore;
-	typedef HRESULT(STDAPICALLTYPE *GETPROCESSDPIAWARENESS)(HANDLE, PROCESS_DPI_AWARENESS*);
-	typedef HRESULT(STDAPICALLTYPE *GETDPIFORMONITOR)(HMONITOR, MONITOR_DPI_TYPE, UINT*, UINT*);
-	GETPROCESSDPIAWARENESS pGetProcessDpiAwareness;
-	GETDPIFORMONITOR pGetDpiForMonitor;
+	typedef HRESULT (WINAPI *GETPROCESSDPIAWARENESS)(HANDLE, PROCESS_DPI_AWARENESS*);
+	typedef HRESULT (WINAPI *GETDPIFORMONITOR)(HMONITOR, MONITOR_DPI_TYPE, UINT*, UINT*);
+	typedef BOOL (WINAPI *ISPROCESSDPIAWARE)(void);
+	GETPROCESSDPIAWARENESS m_pGetProcessDpiAwareness;
+	GETDPIFORMONITOR m_pGetDpiForMonitor;
+	ISPROCESSDPIAWARE m_pIsIsProcessDPIAware;
 #endif
 
 public:
@@ -61,29 +62,34 @@ public:
 		, m_nScaleFactorSDA(0)
 		, m_Awareness(PROCESS_DPI_UNAWARE)
 #ifdef WIN32
-		, hCore(LoadLibrary(L"shcore.dll"))
-		, pGetProcessDpiAwareness(nullptr)
-		, pGetDpiForMonitor(nullptr)
+		, m_pGetProcessDpiAwareness(nullptr)
+		, m_pGetDpiForMonitor(nullptr)
+		, m_pIsIsProcessDPIAware(nullptr)
 #endif
 	{
 #ifdef WIN32
+		HMODULE hCore = LoadLibrary(L"shcore.dll");
 		if (hCore)
 		{
-			pGetProcessDpiAwareness = (GETPROCESSDPIAWARENESS)GetProcAddress(hCore, "GetProcessDpiAwareness");
-			pGetDpiForMonitor = (GETDPIFORMONITOR)GetProcAddress(hCore, "GetDpiForMonitor");
+			m_pGetProcessDpiAwareness = (GETPROCESSDPIAWARENESS)GetProcAddress(hCore, "GetProcessDpiAwareness");
+			m_pGetDpiForMonitor = (GETDPIFORMONITOR)GetProcAddress(hCore, "GetDpiForMonitor");
 		}
 
 		HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, GetCurrentProcessId());
-		if (pGetProcessDpiAwareness)
-			pGetProcessDpiAwareness(hProcess, &m_Awareness);
+		if (m_pGetProcessDpiAwareness)
+			m_pGetProcessDpiAwareness(hProcess, &m_Awareness);
 		else
 		{
-			if (IsProcessDPIAware())
+			HMODULE hUser = LoadLibrary(L"user32.dll");
+			if (hUser)
+				m_pIsIsProcessDPIAware = (ISPROCESSDPIAWARE)GetProcAddress(hUser, "IsProcessDPIAware");
+			if (m_pIsIsProcessDPIAware && m_pIsIsProcessDPIAware())
 				m_Awareness = PROCESS_SYSTEM_DPI_AWARE;
 			else
 				m_Awareness = PROCESS_DPI_UNAWARE;
 		}
 #else
+		// I'm using this, so I must be aware!
 		m_Awareness = PROCESS_SYSTEM_DPI_AWARE;
 #endif
 
@@ -100,9 +106,9 @@ public:
 		pt.y = y;
 		HMONITOR hMonitor = MonitorFromPoint(pt, MONITOR_DEFAULTTONEAREST);
 		UINT dpix = 0, dpiy = 0;
-		if (pGetDpiForMonitor)
+		if (m_pGetDpiForMonitor)
 		{
-			if (SUCCEEDED(pGetDpiForMonitor(hMonitor, MDT_EFFECTIVE_DPI, &dpix, &dpiy)))
+			if (SUCCEEDED(m_pGetDpiForMonitor(hMonitor, MDT_EFFECTIVE_DPI, &dpix, &dpiy)))
 			{
 				bNotSet = false;
 				SetScale(dpix);
