@@ -144,7 +144,7 @@ public:
 		return x * 100 / GetScale();
 	}
 
-	UINT GetScale()
+	unsigned int GetScale()
 	{
 		// DPI Unaware: Return the input value with no scaling.
 		// These apps are always virtualized to 96 DPI and scaled by the system for the DPI of the monitor where shown.

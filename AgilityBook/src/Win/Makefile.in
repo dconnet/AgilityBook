@@ -111,6 +111,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgTitle.cpp \
 	DlgTraining.cpp \
 	DlgTrial.cpp \
+	DPI.cpp \
 	FilterOptions.cpp \
 	Globals.cpp \
 	IconList.cpp \
