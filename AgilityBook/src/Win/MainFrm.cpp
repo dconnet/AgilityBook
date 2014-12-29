@@ -148,6 +148,10 @@ BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_MENU(ID_NEXT_PANE, CMainFrame::OnNextPane)
 	EVT_MENU(ID_PREV_PANE, CMainFrame::OnPrevPane)
 	EVT_MENU(ID_HELP_SYSINFO, CMainFrame::OnHelpSysinfo)
+#ifdef _DEBUG
+	EVT_MENU(ID_HELP_DEBUG, CMainFrame::OnHelpDebug)
+#endif
+
 END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -532,3 +536,11 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 	CDlgMessage dlg(StringUtil::stringW(str), this);
 	dlg.ShowModal();
 }
+
+
+#ifdef _DEBUG
+void CMainFrame::OnHelpDebug(wxCommandEvent& evt)
+{
+	// Just provides a hook for testing (typically a dialog)
+}
+#endif

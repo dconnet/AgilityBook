@@ -134,5 +134,6 @@ enum
 
 	ID_DETAILS,
 
-	ID_ARB_LAST
+	ID_ARB_LAST,
+	ID_HELP_DEBUG, // Outside LAST range so it doesn't get disabled
 };

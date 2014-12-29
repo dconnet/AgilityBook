@@ -41,7 +41,8 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-// Default splitter widths
+// Default splitter widths.
+// Note: These are in normalized pixels. So they work in hi-dpi.
 #define DEFAULT_RUN_WIDTH	200L
 #define MIN_RUN_WIDTH		50L
 #define DEFAULT_CAL_WIDTH	300L
@@ -179,9 +180,9 @@ CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
 void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 {
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX, DEFAULT_RUN_WIDTH);
-	cx = DPI::Scale(cx);
 	if (cx < MIN_RUN_WIDTH)
 		cx = MIN_RUN_WIDTH;
+	cx = DPI::Scale(cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
 	UNBIND_OR_DISCONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelRuns::SplitterOnIdle);
@@ -280,9 +281,9 @@ CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
 void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 {
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX2, DEFAULT_CAL_WIDTH);
-	cx = DPI::Scale(cx);
 	if (cx < MIN_CAL_WIDTH)
 		cx = MIN_CAL_WIDTH;
+	cx = DPI::Scale(cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
 	UNBIND_OR_DISCONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelCalendar::SplitterOnIdle);

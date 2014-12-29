@@ -173,6 +173,9 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{MENU_ITEM, ID_PREV_PANE,             wxITEM_NORMAL, 1, nullptr, arbT("MenuWindowPrev"), arbT("DescWindowPrev"), nullptr},
 
 	{MENU_ITEM, 0,                        wxITEM_NORMAL, 0, nullptr, arbT("MenuHelp"), nullptr, nullptr},
+#ifdef _DEBUG
+	{MENU_ITEM, ID_HELP_DEBUG,            wxITEM_NORMAL, 1, nullptr, L"Debug: Test Feature", L"Debug Helper", nullptr},
+#endif
 	{MENU_ITEM, ID_HELP_UPDATE,           wxITEM_NORMAL, 1, nullptr, arbT("MenuHelpUpdates"), arbT("DescHelpUpdates"), nullptr},
 	{MENU_ITEM, ID_HELP_SYSINFO,          wxITEM_NORMAL, 1, nullptr, arbT("MenuHelpSysInfo"), arbT("DescHelpSysInfo"), nullptr},
 #ifndef __WXMAC__

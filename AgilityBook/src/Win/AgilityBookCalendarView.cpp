@@ -59,7 +59,8 @@
 #endif
 
 #define WEEKS_PER_PAGE		6
-#define DAY_TEXT_INSET		2
+// In dlgunits
+#define DAY_TEXT_INSET		1
 
 
 class CAgilityBookCalendar : public wxWindow
@@ -287,6 +288,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		}
 
 		// Draw the days
+		int dayTextInset = wxDLG_UNIT_X(this, DAY_TEXT_INSET);
 		ARBDate today = ARBDate::Today();
 		ARBDate day = FirstDayOfWeek(curMonth);
 		int iWeek;
@@ -297,14 +299,14 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 			rect.y = rCalendar.y + 1;
 			rect.height = height - 1;
 			rect.Offset(0, iWeek * height);
-			rect.Inflate(-DAY_TEXT_INSET, -DAY_TEXT_INSET);
+			rect.Inflate(-dayTextInset, -dayTextInset);
 			for (iDay = 0; iDay < 7; ++iDay)
 			{
 				// Change background of non-current month days
 				if (!bIsPrinting && m_Current == day)
 				{
 					wxRect r(rect);
-					r.Inflate(DAY_TEXT_INSET + 1, DAY_TEXT_INSET + 1); // +1 for null pen
+					r.Inflate(dayTextInset + 1, dayTextInset + 1); // +1 for null pen
 					if (wxWindow::DoFindFocus() == this)
 						pDC->SetBrush(brHighlight);
 					else
@@ -314,7 +316,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 				else if (day.GetMonth() != curMonth.GetMonth())
 				{
 					wxRect r(rect);
-					r.Inflate(DAY_TEXT_INSET + 1, DAY_TEXT_INSET + 1);
+					r.Inflate(dayTextInset + 1, dayTextInset + 1);
 					pDC->SetBrush(brWorkspace);
 					pDC->DrawRectangle(r);
 				}
