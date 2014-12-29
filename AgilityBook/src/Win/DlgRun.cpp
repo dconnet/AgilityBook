@@ -112,6 +112,7 @@
 #include "DlgListCtrl.h"
 #include "DlgReferenceRun.h"
 #include "DlgSelectURL.h"
+#include "DPI.h"
 #include "Globals.h"
 #include "ImageHelper.h"
 #include "ListCtrl.h"
@@ -750,7 +751,7 @@ CDlgRun::CDlgRun(
 	, m_ctrlCRCDCopy(nullptr)
 	, m_ctrlIncImage(nullptr)
 	, m_ctrlLinks(nullptr)
-	, m_ImageList(16,16)
+	, m_ImageList(DPI::Scale(16), DPI::Scale(16))
 	, m_imgEmpty(-1)
 	, m_imgOk(-1)
 	, m_imgMissing(-1)

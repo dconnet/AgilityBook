@@ -37,6 +37,7 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "DPI.h"
 #include "ImageHelper.h"
 #include "MainFrm.h"
 #include "Print.h"
@@ -362,6 +363,10 @@ bool CAgilityBookApp::OnInit()
 	wxConfig::Get()->Read(CFG_SETTINGS_LASTYPOS, &y, y);
 	wxConfig::Get()->Read(CFG_SETTINGS_LASTCX, &width, width);
 	wxConfig::Get()->Read(CFG_SETTINGS_LASTCY, &height, height);
+	x = DPI::Scale(x);
+	y = DPI::Scale(y);
+	width = DPI::Scale(width);
+	height = DPI::Scale(height);
 	long state = wxConfig::Get()->Read(CFG_SETTINGS_LASTSTATE, 0L);
 	bool bCompute = false;
 	wxMouseState mouseState = ::wxGetMouseState();

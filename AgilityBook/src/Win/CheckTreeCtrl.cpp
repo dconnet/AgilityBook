@@ -30,6 +30,7 @@
 #include "stdafx.h"
 #include "CheckTreeCtrl.h"
 
+#include "DPI.h"
 #include "ImageHelper.h"
 
 #ifdef __WXMSW__
@@ -48,7 +49,7 @@ CCheckTreeCtrl::CCheckTreeCtrl(
 		const wxPoint& pos,
 		const wxSize& size)
 	: CTreeCtrl()
-	, m_stateList(16,16)
+	, m_stateList(DPI::Scale(16), DPI::Scale(16))
 	, m_stateNone(-1)
 	, m_stateUnChecked(-1)
 	, m_stateChecked(-1)

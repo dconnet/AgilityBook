@@ -19,6 +19,7 @@
 #include "IconList.h"
 
 #include "AgilityBook.h"
+#include "DPI.h"
 #include "ImageHelper.h"
 
 #include "ARB/ARBConfig.h"
@@ -30,7 +31,7 @@
 
 
 CIconList::CIconList()
-	: wxImageList(16, 16)
+	: wxImageList(DPI::Scale(16), DPI::Scale(16))
 {
 	m_idxDog = Add(CImageManager::Get()->GetIcon(ImageMgrDog));
 	m_idxTrial = Add(CImageManager::Get()->GetIcon(ImageMgrTrial));

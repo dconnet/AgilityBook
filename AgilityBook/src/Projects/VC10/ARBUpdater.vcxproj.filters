@@ -24,6 +24,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Win\DPI.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\Globals.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
@@ -60,6 +63,9 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Win\DPI.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Win\Globals.h">
       <Filter>ARB</Filter>
     </ClInclude>

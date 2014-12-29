@@ -75,6 +75,9 @@
 #include <wx/valtext.h>
 #endif
 
+#define wxDLG_UNIT_X(parent, value) parent->ConvertDialogToPixels(wxPoint(value,0)).x
+#define wxDLG_UNIT_Y(parent, value) parent->ConvertDialogToPixels(wxPoint(0,value)).y
+
 // ARBv3 was developed against v3.0.0+ - anything earlier is not supported.
 // It makes use of features not available in earlier versions.
 #include <wx/version.h>

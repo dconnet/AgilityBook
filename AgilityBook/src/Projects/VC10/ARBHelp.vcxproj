@@ -110,6 +110,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\Win\DPI.cpp" />
     <ClCompile Include="..\..\Win\ImageHelper.cpp" />
     <ClCompile Include="..\..\Win\ImageManager.cpp" />
     <ClCompile Include="..\..\Win\LanguageManager.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="..\..\Include\ICalendarSite.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
+    <ClInclude Include="..\..\Win\DPI.h" />
     <ClInclude Include="..\..\Win\ImageHelper.h" />
     <ClInclude Include="..\..\Win\ImageManager.h" />
     <ClInclude Include="..\..\Win\LanguageManager.h" />

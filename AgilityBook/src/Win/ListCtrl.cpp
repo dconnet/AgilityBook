@@ -31,6 +31,7 @@
 #include "stdafx.h"
 #include "ListCtrl.h"
 
+#include "DPI.h"
 #include "Globals.h"
 #include "ImageHelper.h"
 #include "ListData.h"
@@ -51,7 +52,7 @@ CReportListCtrl::CReportListCtrl(
 		bool bHasBorder,
 		bool bHasImageList)
 	: CListCtrl()
-	, m_ImageList(16,16)
+	, m_ImageList(DPI::Scale(16), DPI::Scale(16))
 	, m_imgEmpty(-1)
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
@@ -70,7 +71,7 @@ CReportListCtrl::CReportListCtrl(
 		bool bHasBorder,
 		bool bHasImageList)
 	: CListCtrl()
-	, m_ImageList(16,16)
+	, m_ImageList(DPI::Scale(16), DPI::Scale(16))
 	, m_imgEmpty(-1)
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
@@ -367,7 +368,7 @@ CCheckListCtrl::CCheckListCtrl(
 		const wxSize& size,
 		bool bHasChecks)
 	: m_HasChecks(bHasChecks)
-	, m_ImageList(16,16)
+	, m_ImageList(DPI::Scale(16), DPI::Scale(16))
 	, m_imgEmpty(-1)
 	, m_imgNoCheck(-1)
 	, m_imgChecked(-1)

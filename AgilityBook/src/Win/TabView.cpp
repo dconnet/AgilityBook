@@ -26,6 +26,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookPanels.h"
+#include "DPI.h"
 #include "ImageHelper.h"
 #include "MainFrm.h"
 #include "RegItems.h"
@@ -68,7 +69,7 @@ CTabView::CTabView()
 	, m_orient(ID_ORIENT_TOP - ID_ORIENT_FIRST)
 	, m_sizerFrame(nullptr)
 	, m_ctrlBook(nullptr)
-	, m_imageList(16,16)
+	, m_imageList(DPI::Scale(16), DPI::Scale(16))
 	, m_bIgnoreEvents(false)
 {
 	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrRuns));

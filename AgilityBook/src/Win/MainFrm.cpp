@@ -31,6 +31,7 @@
 #include "AgilityBookMenu.h"
 #include "CommonView.h"
 #include "DlgMessage.h"
+#include "DPI.h"
 #include "Globals.h"
 #include "ImageHelper.h"
 #include "PointsData.h"
@@ -99,6 +100,27 @@ WXLRESULT CMainFrame::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lPara
 {
 	if (WM_DPICHANGED == nMsg)
 	{
+		// wParam: new DPI
+		// lParam: scaled rect of window
+		DPI::SetScale(LOWORD(wParam));
+
+#pragma PRAGMA_TODO(per-monitor rendering)
+#if 0
+		// Copied from MS sample
+		// For the new DPI: resize the window, select new 
+		// fonts, and re-render window content 
+		LPRECT lprcNewScale = (LPRECT)lParam;
+		::SetWindowPos(hWnd, 
+			HWND_TOP, 
+			lprcNewScale->left, 
+			lprcNewScale->top, 
+			RectWidth(*lprcNewScale), 
+			RectHeight(*lprcNewScale), 
+			SWP_NOZORDER | SWP_NOACTIVATE); 
+
+		CreateFonts(hWnd); 
+		RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE); 
+#endif
 	}
 	return __super::MSWWindowProc(nMsg, wParam, lParam);
 }
@@ -328,10 +350,10 @@ void CMainFrame::OnClose(wxCloseEvent& evt)
 	else
 	{
 		wxRect r = GetScreenRect();
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTXPOS, r.x);
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTYPOS, r.y);
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTCX, r.width);
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTCY, r.height);
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTXPOS, DPI::UnScale(r.x));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTYPOS, DPI::UnScale(r.y));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTCX, DPI::UnScale(r.width));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTCY, DPI::UnScale(r.height));
 	}
 	wxConfig::Get()->Write(CFG_SETTINGS_LASTSTATE, state);
 	evt.Skip();

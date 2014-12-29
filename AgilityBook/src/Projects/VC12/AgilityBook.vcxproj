@@ -208,6 +208,7 @@
     <ClCompile Include="..\..\Win\DlgTitle.cpp" />
     <ClCompile Include="..\..\Win\DlgTraining.cpp" />
     <ClCompile Include="..\..\Win\DlgTrial.cpp" />
+    <ClCompile Include="..\..\Win\DPI.cpp" />
     <ClCompile Include="..\..\Win\FilterOptions.cpp" />
     <ClCompile Include="..\..\Win\Globals.cpp" />
     <ClCompile Include="..\..\Win\IconList.cpp" />
@@ -328,6 +329,7 @@
     <ClInclude Include="..\..\Win\DlgTitle.h" />
     <ClInclude Include="..\..\Win\DlgTraining.h" />
     <ClInclude Include="..\..\Win\DlgTrial.h" />
+    <ClInclude Include="..\..\Win\DPI.h" />
     <ClInclude Include="..\..\Win\FilterOptions.h" />
     <ClInclude Include="..\..\Win\Globals.h" />
     <ClInclude Include="..\..\Win\IconList.h" />

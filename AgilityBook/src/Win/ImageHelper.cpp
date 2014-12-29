@@ -17,6 +17,7 @@
 #include "stdafx.h"
 #include "ImageHelper.h"
 
+#include "DPI.h"
 #include <wx/artprov.h>
 
 #ifdef __WXMSW__
@@ -35,6 +36,42 @@ wxIcon CreateIconFromBitmap(const wxBitmap& bitmap)
 }
 
 
+#if defined(__WINDOWS__)
+static void LoadLocalBitmap(wchar_t const* const pImageName, wxBitmap& outBmp)
+{
+	wxLogNull suppress;
+	unsigned int scale = DPI::GetScale();
+	if (scale > 100)
+	{
+		wxString s(pImageName);
+		s += L"_2";
+		outBmp = wxBitmap(s, wxBITMAP_TYPE_PNG_RESOURCE);
+		if (outBmp.IsOk())
+			scale /= 2;
+		else
+			outBmp = wxBitmap(pImageName, wxBITMAP_TYPE_PNG_RESOURCE);
+	}
+	else
+		outBmp = wxBitmap(pImageName, wxBITMAP_TYPE_PNG_RESOURCE);
+
+	if (100 != scale && outBmp.IsOk())
+	{
+		wxImage image = outBmp.ConvertToImage();
+		image.Rescale(outBmp.GetWidth() * scale / 100, outBmp.GetHeight() * scale / 100);
+		outBmp = wxBitmap(image);
+	}
+}
+#define LOAD_BITMAP_PNG(name, outBmp)	LoadLocalBitmap(L#name, outBmp)
+
+#else
+#if !defined(__WXOSX__)
+// OSX auto-loads @2 images.
+#pragma PRAGMA_FIXME(This is not likely to load the correct image);
+#endif
+#define LOAD_BITMAP_PNG(name, outBmp)	outBmp = wxBITMAP_PNG(name)
+#endif
+
+
 bool DoCreateBitmap(
 		const wxArtID& id,
 		const wxArtClient& client,
@@ -48,163 +85,166 @@ bool DoCreateBitmap(
 	if (id == ImageMgrApp)
 	{
 		if (client == wxART_MESSAGE_BOX)
-			outBmp = wxBITMAP_PNG(AgilityBook32);
+			LOAD_BITMAP_PNG(AgilityBook32, outBmp);
 		else
-			outBmp = wxBITMAP_PNG(AgilityBook16);
+			LOAD_BITMAP_PNG(AgilityBook16, outBmp);
 	}
 	else if (id == ImageMgrApp48)
-		outBmp = wxBITMAP_PNG(AgilityBook48);
+		LOAD_BITMAP_PNG(AgilityBook48, outBmp);
 	else if (id == ImageMgrApp256)
-		outBmp = wxBITMAP_PNG(AgilityBook256);
+		LOAD_BITMAP_PNG(AgilityBook256, outBmp);
 
 	else if (id == ImageMgrRuns)
 	{
 		if (client == wxART_TOOLBAR)
-			outBmp = wxBITMAP_PNG(toolbarRun);
+			LOAD_BITMAP_PNG(toolbarRun, outBmp);
 		else
-			outBmp = wxBITMAP_PNG(run);
+			LOAD_BITMAP_PNG(run, outBmp);
 	}
 
 	else if (id == ImageMgrPoints)
-		outBmp = wxBITMAP_PNG(points);
+		LOAD_BITMAP_PNG(points, outBmp);
 
 	else if (id == ImageMgrCalendar)
 	{
 		if (client == wxART_TOOLBAR)
-			outBmp = wxBITMAP_PNG(toolbarCalendar);
+			LOAD_BITMAP_PNG(toolbarCalendar, outBmp);
 		else
-			outBmp = wxBITMAP_PNG(calendar);
+			LOAD_BITMAP_PNG(calendar, outBmp);
 	}
 
 	else if (id == ImageMgrTraining)
 	{
 		if (client == wxART_TOOLBAR)
-			outBmp = wxBITMAP_PNG(toolbarTraining);
+			LOAD_BITMAP_PNG(toolbarTraining, outBmp);
 		else
-			outBmp = wxBITMAP_PNG(training);
+			LOAD_BITMAP_PNG(training, outBmp);
 	}
 
 	else if (id == ImageMgrDog)
 	{
 		if (client == wxART_TOOLBAR)
-			outBmp = wxBITMAP_PNG(toolbarDog);
+			LOAD_BITMAP_PNG(toolbarDog, outBmp);
 		else
-			outBmp = wxBITMAP_PNG(dog);
+			LOAD_BITMAP_PNG(dog, outBmp);
 	}
 
 	else if (id == ImageMgrTrial)
 	{
 		if (client == wxART_TOOLBAR)
-			outBmp = wxBITMAP_PNG(toolbarTrial);
+			LOAD_BITMAP_PNG(toolbarTrial, outBmp);
 		else
-			outBmp = wxBITMAP_PNG(trial);
+			LOAD_BITMAP_PNG(trial, outBmp);
 	}
 
 	else if (id == ImageMgrVenueAAC)
-		outBmp = wxBITMAP_PNG(venue_aac);
+		LOAD_BITMAP_PNG(venue_aac, outBmp);
 	else if (id == ImageMgrVenueAKC)
-		outBmp = wxBITMAP_PNG(venue_akc);
+		LOAD_BITMAP_PNG(venue_akc, outBmp);
 	else if (id == ImageMgrVenueASCA)
-		outBmp = wxBITMAP_PNG(venue_asca);
+		LOAD_BITMAP_PNG(venue_asca, outBmp);
 	else if (id == ImageMgrVenueCKC)
-		outBmp = wxBITMAP_PNG(venue_ckc);
+		LOAD_BITMAP_PNG(venue_ckc, outBmp);
 	else if (id == ImageMgrVenueCPE)
-		outBmp = wxBITMAP_PNG(venue_cpe);
+		LOAD_BITMAP_PNG(venue_cpe, outBmp);
 	else if (id == ImageMgrVenueDOCNA)
-		outBmp = wxBITMAP_PNG(venue_docna);
+		LOAD_BITMAP_PNG(venue_docna, outBmp);
 	else if (id == ImageMgrVenueFCI)
-		outBmp = wxBITMAP_PNG(venue_fci);
+		LOAD_BITMAP_PNG(venue_fci, outBmp);
 	else if (id == ImageMgrVenueNADAC)
-		outBmp = wxBITMAP_PNG(venue_nadac);
+		LOAD_BITMAP_PNG(venue_nadac, outBmp);
 	else if (id == ImageMgrVenueSCC)
-		outBmp = wxBITMAP_PNG(venue_scc);
+		LOAD_BITMAP_PNG(venue_scc, outBmp);
 	else if (id == ImageMgrVenueSweepstakes)
-		outBmp = wxBITMAP_PNG(venue_sweep);
+		LOAD_BITMAP_PNG(venue_sweep, outBmp);
 	else if (id == ImageMgrVenueTDAA)
-		outBmp = wxBITMAP_PNG(venue_tdaa);
+		LOAD_BITMAP_PNG(venue_tdaa, outBmp);
 	else if (id == ImageMgrVenueUKC)
-		outBmp = wxBITMAP_PNG(venue_ukc);
+		LOAD_BITMAP_PNG(venue_ukc, outBmp);
 	else if (id == ImageMgrVenueUSDAA)
-		outBmp = wxBITMAP_PNG(venue_usdaa);
+		LOAD_BITMAP_PNG(venue_usdaa, outBmp);
 
 	else if (id == ImageMgrCRCD)
-		outBmp = wxBITMAP_PNG(crcd);
+		LOAD_BITMAP_PNG(crcd, outBmp);
 	else if (id == ImageMgrBlank)
-		outBmp = wxBITMAP_PNG(CalEmpty);
+		LOAD_BITMAP_PNG(CalEmpty, outBmp);
 	else if (id == ImageMgrChecked)
-		outBmp = wxBITMAP_PNG(checked);
+		LOAD_BITMAP_PNG(checked, outBmp);
 	else if (id == ImageMgrUnChecked)
-		outBmp = wxBITMAP_PNG(unchecked);
+		LOAD_BITMAP_PNG(unchecked, outBmp);
 	else if (id == ImageMgrAccomConfirm)
-		outBmp = wxBITMAP_PNG(AccConfirm);
+		LOAD_BITMAP_PNG(AccConfirm, outBmp);
 	else if (id == ImageMgrAccomNone)
-		outBmp = wxBITMAP_PNG(AccNone);
+		LOAD_BITMAP_PNG(AccNone, outBmp);
 	else if (id == ImageMgrAccomTodo)
-		outBmp = wxBITMAP_PNG(AccTodo);
+		LOAD_BITMAP_PNG(AccTodo, outBmp);
 	else if (id == ImageMgrCalEntered)
-		outBmp = wxBITMAP_PNG(CalEntered);
+		LOAD_BITMAP_PNG(CalEntered, outBmp);
 	else if (id == ImageMgrCalEnteredTentative)
-		outBmp = wxBITMAP_PNG(CalEnteredTentative);
+		LOAD_BITMAP_PNG(CalEnteredTentative, outBmp);
 	else if (id == ImageMgrCalPending)
-		outBmp = wxBITMAP_PNG(CalPending);
+		LOAD_BITMAP_PNG(CalPending, outBmp);
 	else if (id == ImageMgrCalPendingTentative)
-		outBmp = wxBITMAP_PNG(CalPendingTentative);
+		LOAD_BITMAP_PNG(CalPendingTentative, outBmp);
 	else if (id == ImageMgrCheck)
-		outBmp = wxBITMAP_PNG(CalPlan);
+		LOAD_BITMAP_PNG(CalPlan, outBmp);
 	else if (id == ImageMgrCalPlanTentative)
-		outBmp = wxBITMAP_PNG(CalPlanTentative);
+		LOAD_BITMAP_PNG(CalPlanTentative, outBmp);
 	else if (id == ImageMgrQuestion)
-		outBmp = wxBITMAP_PNG(CalTentative);
+		LOAD_BITMAP_PNG(CalTentative, outBmp);
 	else if (id == ImageMgrHeaderDown)
-		outBmp = wxBITMAP_PNG(HdrDown);
+		LOAD_BITMAP_PNG(HdrDown, outBmp);
 	else if (id == ImageMgrHeaderUp)
-		outBmp = wxBITMAP_PNG(HdrUp);
+		LOAD_BITMAP_PNG(HdrUp, outBmp);
 
 	else if (id == ImageMgrTitle)
-		outBmp = wxBITMAP_PNG(toolbarTitle);
+		LOAD_BITMAP_PNG(toolbarTitle, outBmp);
 	else if (id == ImageMgrTitleHidden)
-		outBmp = wxBITMAP_PNG(hidden);
+		LOAD_BITMAP_PNG(hidden, outBmp);
 	else if (id == ImageMgrTitleTitledHidden)
-		outBmp = wxBITMAP_PNG(title_hidden);
+		LOAD_BITMAP_PNG(title_hidden, outBmp);
 	else if (id == ImageMgrTitleTitledHiddenHave)
-		outBmp = wxBITMAP_PNG(title_hidden_have);
+		LOAD_BITMAP_PNG(title_hidden_have, outBmp);
 	else if (id == ImageMgrTitleTitled)
-		outBmp = wxBITMAP_PNG(title_visible);
+		LOAD_BITMAP_PNG(title_visible, outBmp);
 	else if (id == ImageMgrTitleTitledHave)
-		outBmp = wxBITMAP_PNG(title_visible_have);
+		LOAD_BITMAP_PNG(title_visible_have, outBmp);
 
 	else if (id == ImageMgrNoteButton)
-		outBmp = wxBITMAP_PNG(Note);
+		LOAD_BITMAP_PNG(Note, outBmp);
 	else if (id == ImageMgrInfoNote)
-		outBmp = wxBITMAP_PNG(NoteNote);
+		LOAD_BITMAP_PNG(NoteNote, outBmp);
 	else if (id == ImageMgrInfoNoteAdded)
-		outBmp = wxBITMAP_PNG(NoteAdded);
+		LOAD_BITMAP_PNG(NoteAdded, outBmp);
 	else if (id == ImageMgrInfoNoteNoteAdded)
-		outBmp = wxBITMAP_PNG(NoteNoteAdded);
+		LOAD_BITMAP_PNG(NoteNoteAdded, outBmp);
 	
 	else if (id == ImageMgrAbout)
-		outBmp = wxBITMAP_PNG(toolbarAbout);
+		LOAD_BITMAP_PNG(toolbarAbout, outBmp);
 	else if (id == ImageMgrCopy)
-		outBmp = wxBITMAP_PNG(toolbarCopy);
+		LOAD_BITMAP_PNG(toolbarCopy, outBmp);
 	else if (id == ImageMgrCut)
-		outBmp = wxBITMAP_PNG(toolbarCut);
+		LOAD_BITMAP_PNG(toolbarCut, outBmp);
 	else if (id == ImageMgrNew)
-		outBmp = wxBITMAP_PNG(toolbarNew);
+		LOAD_BITMAP_PNG(toolbarNew, outBmp);
 	else if (id == ImageMgrOpen)
-		outBmp = wxBITMAP_PNG(toolbarOpen);
+		LOAD_BITMAP_PNG(toolbarOpen, outBmp);
 	else if (id == ImageMgrPaste)
-		outBmp = wxBITMAP_PNG(toolbarPaste);
+		LOAD_BITMAP_PNG(toolbarPaste, outBmp);
 	else if (id == ImageMgrPreview)
-		outBmp = wxBITMAP_PNG(toolbarPreview);
+		LOAD_BITMAP_PNG(toolbarPreview, outBmp);
 	else if (id == ImageMgrPrint)
-		outBmp = wxBITMAP_PNG(toolbarPrint);
+		LOAD_BITMAP_PNG(toolbarPrint, outBmp);
 	else if (id == ImageMgrSave)
-		outBmp = wxBITMAP_PNG(toolbarSave);
+		LOAD_BITMAP_PNG(toolbarSave, outBmp);
 
 	else
 	{
 #ifdef _DEBUG
-		if (id == wxART_FILE_SAVE_AS)
+		if (id == wxART_FILE_SAVE_AS
+		|| id == wxART_INFORMATION
+		|| id == wxART_WARNING
+		|| id == wxART_ERROR)
 			;
 		else
 			assert(0);

@@ -168,12 +168,12 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 
 	wxStaticBitmap* icon = new wxStaticBitmap(this, wxID_ANY,
 		CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX),
-		wxPoint(5, 5), wxDefaultSize, 0);
+		wxDLG_UNIT(this, wxPoint(2,1)), wxDefaultSize, 0);
 
 	wxStaticText* version = new wxStaticText(this, wxID_ANY,
 		wxString::Format(_("AboutVersion"), wxString::From8BitData(ARB_VERSION_STRING).c_str(), _("Agility Record Book")),
 		wxDefaultPosition, wxDefaultSize, 0);
-	version->Wrap(400);
+ 	version->Wrap(wxDLG_UNIT_X(this, 250));
 
 	CHyperlinkCtrl* link1 = new CHyperlinkCtrl(this, wxID_ANY,
 		_("LinkYahooText"), _("LinkYahooUrl"),
@@ -217,32 +217,32 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	// Sizers (sizer creation is in same order as wxFormBuilder)
 
 	wxBoxSizer* sizerTop = new wxBoxSizer(wxHORIZONTAL);
-	sizerTop->Add(icon, 0, wxALIGN_LEFT|wxALIGN_TOP|wxALL, 10);
+	sizerTop->Add(icon, 0, wxALIGN_LEFT | wxALIGN_TOP | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBox = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerText = new wxBoxSizer(wxVERTICAL);
-	sizerText->Add(version, 1, wxEXPAND|wxRIGHT|wxTOP, 10);
+	sizerText->Add(version, 1, wxEXPAND | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerLinksBox1 = new wxBoxSizer(wxHORIZONTAL);
-	sizerLinksBox1->Add(20, 0, 0, wxEXPAND, 0);
+	sizerLinksBox1->Add(wxDLG_UNIT_X(this, 10), 0, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerLinks1 = new wxBoxSizer(wxVERTICAL);
-	sizerLinks1->Add(link1, 0, wxALL, 2);
-	sizerLinks1->Add(link2, 0, wxALL, 2);
+	sizerLinks1->Add(link1, 0, wxALL, wxDLG_UNIT_X(this, 1));
+	sizerLinks1->Add(link2, 0, wxALL, wxDLG_UNIT_X(this, 1));
 
 	sizerLinksBox1->Add(sizerLinks1, 1, wxEXPAND, 0);
 
 	sizerText->Add(sizerLinksBox1, 0, wxEXPAND, 0);
-	sizerText->Add(0, 5, 0, wxEXPAND, 0);
+	sizerText->Add(0, wxDLG_UNIT_Y(this, 2), 0, wxEXPAND, 0);
 	sizerText->Add(usefulLinks, 0, wxALL, 0);
 
 	wxBoxSizer* sizerLinksBox2 = new wxBoxSizer(wxHORIZONTAL);
-	sizerLinksBox2->Add(20, 0, 0, wxEXPAND, 0);
+	sizerLinksBox2->Add(wxDLG_UNIT_X(this, 10), 0, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerLinks2 = new wxBoxSizer(wxVERTICAL);
-	sizerLinks2->Add(link3, 0, wxALL, 2);
-	sizerLinks2->Add(link4, 0, wxALL, 2);
+	sizerLinks2->Add(link3, 0, wxALL, wxDLG_UNIT_X(this, 1));
+	sizerLinks2->Add(link4, 0, wxALL, wxDLG_UNIT_X(this, 1));
 
 	sizerLinksBox2->Add(sizerLinks2, 1, wxEXPAND, 0);
 
@@ -255,7 +255,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	sizerButtons->Add(0, 0, 1, wxEXPAND, 0);
 	sizerButtons->Add(ok, 0, wxALIGN_RIGHT, 0);
 
-	sizerBox->Add(sizerButtons, 0, wxBOTTOM|wxEXPAND|wxRIGHT|wxTOP, 10);
+	sizerBox->Add(sizerButtons, 0, wxBOTTOM | wxEXPAND | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	sizerTop->Add(sizerBox, 1, wxEXPAND, 0);
 

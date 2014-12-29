@@ -769,7 +769,6 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 	idxCalendarAppt,
 	idxCalendarTask,
 	idxViewCalendar,
-	idxViewTreeTrial,
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -900,7 +899,8 @@ CDlgAssignColumns::CDlgAssignColumns(
 	btnDelete->SetToolTip(_("HIDC_ASSIGN_NAMES_DELETE"));
 
 	m_ctrlType = new CListCtrl(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 150), wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(200, 75)),
+		wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
 	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgAssignColumns::OnItemchanged);
 	m_ctrlType->SetHelpText(_("HIDC_ASSIGN_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_ASSIGN_TYPE"));
@@ -942,7 +942,8 @@ CDlgAssignColumns::CDlgAssignColumns(
 	textAvail->Wrap(-1);
 
 	m_ctrlAvailable = new wxListBox(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 250), 0, nullptr, 0);
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(70, 90)),
+		0, nullptr, 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlAvailable, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeAvailable);
 	m_ctrlAvailable->SetHelpText(_("HIDC_ASSIGN_AVAILABLE"));
 	m_ctrlAvailable->SetToolTip(_("HIDC_ASSIGN_AVAILABLE"));
@@ -987,7 +988,8 @@ CDlgAssignColumns::CDlgAssignColumns(
 	textOrder->Wrap(-1);
 
 	m_ctrlColumns = new wxListBox(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 250), 0, nullptr, 0);
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(70, 90)),
+		0, nullptr, 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlColumns, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeColumns);
 	m_ctrlColumns->SetHelpText(_("HIDC_ASSIGN_COLUMNS"));
 	m_ctrlColumns->SetToolTip(_("HIDC_ASSIGN_COLUMNS"));
@@ -995,45 +997,45 @@ CDlgAssignColumns::CDlgAssignColumns(
 	// Sizers (sizer creation is in same order as wxFormBuilder)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textNames, 0, wxLEFT|wxTOP, 5);
+	bSizer->Add(textNames, 0, wxLEFT|wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerSettings = new wxBoxSizer(wxHORIZONTAL);
-	sizerSettings->Add(m_ctrlConfig, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerSettings->Add(btnSave, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerSettings->Add(btnDelete, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerSettings->Add(m_ctrlConfig, 1, wxALIGN_CENTER_VERTICAL|wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerSettings->Add(btnSave, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerSettings->Add(btnDelete, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, wxDLG_UNIT_X(this, 3));
 
-	bSizer->Add(sizerSettings, 0, wxEXPAND, 0);
-	bSizer->Add(m_ctrlType, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(sizerSettings, 0, wxEXPAND|wxLEFT|wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlType, 0, wxEXPAND|wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerFields = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerAvail = new wxBoxSizer(wxVERTICAL);
-	sizerAvail->Add(textAvail, 0, wxLEFT, 5);
-	sizerAvail->Add(m_ctrlAvailable, 1, wxALL|wxEXPAND, 5);
+	sizerAvail->Add(textAvail, 0, wxLEFT, wxDLG_UNIT_X(this, 5));
+	sizerAvail->Add(m_ctrlAvailable, 1, wxEXPAND|wxLEFT|wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	sizerFields->Add(sizerAvail, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(textSpacer, 0, 0, 5);
-	sizerBtns->Add(m_btnAdd, 0, wxALL, 5);
-	sizerBtns->Add(m_btnRemove, 0, wxALL, 5);
-	sizerBtns->Add(m_btnUp, 0, wxALL, 5);
-	sizerBtns->Add(m_btnDown, 0, wxALL, 5);
+	sizerBtns->Add(textSpacer, 0, 0, 0);
+	sizerBtns->Add(m_btnAdd, 0, wxLEFT|wxRIGHT|wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	sizerBtns->Add(m_btnRemove, 0, wxALL, wxDLG_UNIT_X(this, 2));
+	sizerBtns->Add(m_btnUp, 0, wxALL, wxDLG_UNIT_X(this, 2));
+	sizerBtns->Add(m_btnDown, 0, wxALL, wxDLG_UNIT_X(this, 2));
 	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
-	sizerBtns->Add(btnReset, 0, wxALL, 5);
+	sizerBtns->Add(btnReset, 0, wxLEFT|wxRIGHT|wxTOP, wxDLG_UNIT_X(this, 2));
 
 	sizerFields->Add(sizerBtns, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerOrder = new wxBoxSizer(wxVERTICAL);
-	sizerOrder->Add(textOrder, 0, wxLEFT, 5);
-	sizerOrder->Add(m_ctrlColumns, 1, wxALL|wxEXPAND, 5);
+	sizerOrder->Add(textOrder, 0, wxLEFT, wxDLG_UNIT_X(this, 5));
+	sizerOrder->Add(m_ctrlColumns, 1, wxEXPAND|wxLEFT|wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	sizerFields->Add(sizerOrder, 1, wxEXPAND, 0);
 
 	bSizer->Add(sizerFields, 1, wxEXPAND, 0);
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

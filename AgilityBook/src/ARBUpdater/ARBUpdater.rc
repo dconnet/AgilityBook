@@ -61,8 +61,11 @@ END
 IDR_MAINFRAME           ICON                    "../Win/res/AgilityBook.ico"
 
 AGILITYBOOK16           RCDATA                  "../Win/res/AgilityBook16.png"
+AGILITYBOOK16_2         RCDATA                  "../Win/res/AgilityBook16@2.png"
 AGILITYBOOK32           RCDATA                  "../Win/res/AgilityBook32.png"
+AGILITYBOOK32_2         RCDATA                  "../Win/res/AgilityBook32@2.png"
 AGILITYBOOK48           RCDATA                  "../Win/res/AgilityBook48.png"
+AGILITYBOOK48_2         RCDATA                  "../Win/res/AgilityBook48@2.png"
 AGILITYBOOK256          RCDATA                  "../Win/res/AgilityBook256.png"
 
 

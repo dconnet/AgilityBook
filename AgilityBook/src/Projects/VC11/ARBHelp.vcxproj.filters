@@ -24,6 +24,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Win\DPI.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\ImageHelper.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
@@ -72,6 +75,9 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Win\DPI.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Win\ImageHelper.h">
       <Filter>ARB</Filter>
     </ClInclude>

@@ -29,6 +29,7 @@
 #include "AgilityBookRunsView.h"
 #include "AgilityBookTreeView.h"
 #include "CommonView.h"
+#include "DPI.h"
 #include "RegItems.h"
 
 #include "ARBCommon/StringUtil.h"
@@ -170,7 +171,7 @@ CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
 {
 	if (m_bInit)
 	{
-		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX, m_splitter->GetSashPosition());
+		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX, DPI::UnScale(m_splitter->GetSashPosition()));
 	}
 }
 
@@ -178,6 +179,7 @@ CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
 void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 {
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX, DEFAULT_RUN_WIDTH);
+	cx = DPI::Scale(cx);
 	if (cx < MIN_RUN_WIDTH)
 		cx = MIN_RUN_WIDTH;
 	m_splitter->SetSashPosition(cx);
@@ -270,7 +272,7 @@ CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
 {
 	if (m_bInit)
 	{
-		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX2, m_splitter->GetSashPosition());
+		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX2, DPI::UnScale(m_splitter->GetSashPosition()));
 	}
 }
 
@@ -278,6 +280,7 @@ CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
 void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 {
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX2, DEFAULT_CAL_WIDTH);
+	cx = DPI::Scale(cx);
 	if (cx < MIN_CAL_WIDTH)
 		cx = MIN_CAL_WIDTH;
 	m_splitter->SetSashPosition(cx);

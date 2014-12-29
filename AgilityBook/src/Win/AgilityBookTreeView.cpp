@@ -51,6 +51,7 @@
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
 #include "DlgFind.h"
+#include "DPI.h"
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "ImageHelper.h"
@@ -258,7 +259,7 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	, m_Ctrl(nullptr)
 	, m_ImageList()
 #ifdef WX_TREE_HAS_STATE
-	, m_ImageListStates(16,16)
+	, m_ImageListStates(DPI::Scale(16), DPI::Scale(16))
 	, m_idxEmpty(-1)
 	, m_idxChecked(-1)
 #endif
