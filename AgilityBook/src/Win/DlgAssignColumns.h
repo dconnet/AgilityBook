@@ -44,7 +44,7 @@
 #define IO_TYPE_CALENDAR_APPT			12
 #define IO_TYPE_CALENDAR_TASK			13
 #define IO_TYPE_VIEW_CALENDAR			14
-#define IO_TYPE_MAX						18
+#define IO_TYPE_MAX						15
 
 #define IO_RUNS_REG_NAME			0
 #define IO_RUNS_CALL_NAME			1
