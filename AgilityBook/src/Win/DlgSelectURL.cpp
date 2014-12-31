@@ -57,7 +57,8 @@ CDlgSelectURL::CDlgSelectURL(
 	btnSelect->SetHelpText(_("HIDC_SELECTURL_FILENAME"));
 	btnSelect->SetToolTip(_("HIDC_SELECTURL_FILENAME"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

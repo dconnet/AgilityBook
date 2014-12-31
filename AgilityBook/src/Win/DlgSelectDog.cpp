@@ -83,7 +83,8 @@ CDlgSelectDog::CDlgSelectDog(
 	m_checkList->SetHelpText(_("HIDC_PICK_NAME"));
 	m_checkList->SetToolTip(_("HIDC_PICK_NAME"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(m_checkList, 1, wxALL|wxEXPAND, 5);

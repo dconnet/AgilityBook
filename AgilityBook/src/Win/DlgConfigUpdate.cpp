@@ -84,7 +84,8 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	m_FileName->SetHelpText(_("HIDC_CONFIG_UPDATE_FILENAME"));
 	m_FileName->SetToolTip(_("HIDC_CONFIG_UPDATE_FILENAME"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(m_radioDefault, 0, wxALL, 5);

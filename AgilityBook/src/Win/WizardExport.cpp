@@ -226,7 +226,8 @@ CWizardExport::CWizardExport(
 	m_ctrlPreview->SetHelpText(_("HIDC_WIZARD_EXPORT_PREVIEW"));
 	m_ctrlPreview->SetToolTip(_("HIDC_WIZARD_EXPORT_PREVIEW"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

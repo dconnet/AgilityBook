@@ -279,7 +279,8 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	ctrlFont->SetHelpText(_("HIDC_OPT_CAL_FONT"));
 	ctrlFont->SetToolTip(_("HIDC_OPT_CAL_FONT"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* sizerCal = new wxBoxSizer(wxVERTICAL);
 

@@ -102,7 +102,8 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	m_ctrlProxy->SetToolTip(_("HIDC_OPT_PGM_PROXY"));
 	m_ctrlProxy->Enable(m_UseProxy);
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* sizerPgm = new wxBoxSizer(wxVERTICAL);
 	sizerPgm->Add(ctrlUpdates, 0, wxALL, 5);

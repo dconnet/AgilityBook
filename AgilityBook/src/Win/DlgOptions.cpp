@@ -68,6 +68,7 @@ CDlgOptions::CDlgOptions(
 	notebook->AddPage(m_pageCal, _("IDD_VIEW_OPTIONS_CALENDAR"), false);
 	notebook->AddPage(m_pagePrint, _("IDD_VIEW_OPTIONS_PRINTING"), false);
 
+#pragma PRAGMA_TODO(convert to dialog units)
 	bSizer->Add(notebook, 1, wxEXPAND | wxALL, 5);
 
 	wxSizer* sdbSizer = CreateButtonSizer(wxOK|wxCANCEL);

@@ -124,7 +124,8 @@ CDlgTraining::CDlgTraining(
 	ctrlNote->SetHelpText(_("HIDC_TRAINING_NOTES"));
 	ctrlNote->SetToolTip(_("HIDC_TRAINING_NOTES"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

@@ -451,7 +451,7 @@ CDlgCalendar::CDlgCalendar(
 	ctrlNotes->SetHelpText(_("HIDC_CAL_NOTES"));
 	ctrlNotes->SetToolTip(_("HIDC_CAL_NOTES"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -565,7 +565,7 @@ CDlgCalendar::CDlgCalendar(
 	bSizer->Add(textNotes, 0, wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 6));
 	bSizer->Add(ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 6));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 
 	ListLocations();

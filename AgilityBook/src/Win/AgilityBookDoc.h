@@ -205,4 +205,7 @@ private:
 	void OnCmd(wxCommandEvent& evt);
 	void OnUpdateFileProperties(wxUpdateUIEvent& evt);
 	void OnFileProperties(wxCommandEvent& evt);
+#ifdef _DEBUG
+	void OnHelpDebug(wxCommandEvent& evt);
+#endif
 };

@@ -246,7 +246,8 @@ CWizardImport::CWizardImport(
 	m_ctrlPreview->SetHelpText(_("HIDC_WIZARD_IMPORT_PREVIEW"));
 	m_ctrlPreview->SetToolTip(_("HIDC_WIZARD_IMPORT_PREVIEW"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

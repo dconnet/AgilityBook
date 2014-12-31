@@ -95,7 +95,7 @@ CDlgQueryDetail::CDlgQueryDetail(
 	else
 	{
 		CTextCtrl* ctrlLocation = new CTextCtrl(this, wxID_ANY, m_strName,
-			wxDefaultPosition, wxSize(200, -1), 0);
+			wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 150), -1), 0);
 		if (bReadOnly)
 			ctrlLocation->SetEditable(false);
 		else
@@ -105,24 +105,24 @@ CDlgQueryDetail::CDlgQueryDetail(
 		ctrlLocationOrVenue = ctrlLocation;
 	}
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerCode = new wxBoxSizer(wxHORIZONTAL);
-	sizerCode->Add(textCode, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerCode->Add(m_ctrlCode, 0, wxALL, 5);
+	sizerCode->Add(textCode, 0, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerCode->Add(m_ctrlCode, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	bSizer->Add(sizerCode, 1, wxEXPAND, 0);
+	bSizer->Add(sizerCode, 1, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerVenue->Add(ctrlLocationOrVenue, 1, wxALL, 5);
+	sizerVenue->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerVenue->Add(ctrlLocationOrVenue, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	bSizer->Add(sizerVenue, 1, wxEXPAND, 0);
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

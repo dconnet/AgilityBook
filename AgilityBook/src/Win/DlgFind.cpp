@@ -115,7 +115,8 @@ CDlgFind::CDlgFind(
 		_("IDC_FIND_CLOSE"),
 		wxDefaultPosition, wxDefaultSize, 0);
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

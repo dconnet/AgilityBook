@@ -168,7 +168,8 @@ CWizardStart::CWizardStart(
 		wxDefaultPosition, wxSize(200, -1), wxST_NO_AUTORESIZE);
 	m_ctrlDesc->Wrap(200);
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

@@ -145,7 +145,8 @@ void CDlgReorder::Init(wxWindow* pParent)
 	m_ctrlDown->SetHelpText(_("HIDC_REORDER_MOVE_DOWN"));
 	m_ctrlDown->SetToolTip(_("HIDC_REORDER_MOVE_DOWN"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

@@ -177,7 +177,8 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	ctrlDesc->SetHelpText(_("HIDC_CONFIG_OTHER_DESC"));
 	ctrlDesc->SetToolTip(_("HIDC_CONFIG_OTHER_DESC"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

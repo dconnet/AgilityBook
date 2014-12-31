@@ -47,6 +47,9 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	BIND_OR_CONNECT_CTRL(btnNone, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgPageEncodeFiles::OnCheckNone);
 
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
+
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(text1, 0, wxALL, 5);
 

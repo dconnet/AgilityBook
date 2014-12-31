@@ -66,34 +66,31 @@ CDlgAuthenticate::CDlgAuthenticate(
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 100), -1), wxTE_PASSWORD,
 		wxGenericValidator(&m_Password));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
 
 	wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
 	if (textMsg)
-	{
-		sizer->Add(textMsg, 0, wxALL|wxEXPAND, wxDLG_UNIT_X(this, 3));
-		sizer->Add(0, wxDLG_UNIT_Y(this, 5), 0, 0, 0);
-	}
+		sizer->Add(textMsg, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerRows = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerUserName = new wxBoxSizer(wxHORIZONTAL);
-	sizerUserName->Add(textUserName, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 3));
-	sizerUserName->Add(ctrlUsername, 1, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerUserName->Add(textUserName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerUserName->Add(ctrlUsername, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerRows->Add(sizerUserName, 1, wxEXPAND, 0);
+	sizerRows->Add(sizerUserName, 1, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	wxBoxSizer* sizerPassword = new wxBoxSizer(wxHORIZONTAL);
-	sizerPassword->Add(textPassword, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 3));
-	sizerPassword->Add(ctrlPassword, 1, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerPassword->Add(textPassword, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPassword->Add(ctrlPassword, 1, wxALIGN_CENTER_VERTICAL, 0);
 
 	sizerRows->Add(sizerPassword, 1, wxEXPAND, 0);
 
-	sizer->Add(sizerRows, 1, wxEXPAND, 0);
+	sizer->Add(sizerRows, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	sizer->Add(sdbSizer, 0, wxALL | wxEXPAND, wxDLG_UNIT_X(this, 3));
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	sizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(sizer);
 	Layout();

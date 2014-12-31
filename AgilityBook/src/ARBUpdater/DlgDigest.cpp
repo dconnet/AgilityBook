@@ -188,6 +188,9 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		CLongValidator(&m_Size));
 	ctrlSize->SetBackgroundColour(GetBackgroundColour());
 
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
+
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(ctrlFile, 0, wxALL|wxEXPAND, 5);
 	bSizer->Add(ctrlMD5, 0, wxALL|wxEXPAND, 5);

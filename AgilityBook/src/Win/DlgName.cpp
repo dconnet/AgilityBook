@@ -64,7 +64,8 @@ bool CDlgName::Create(
 	textCtrl->SetHelpText(_("HIDC_NAME"));
 	textCtrl->SetToolTip(_("HIDC_NAME"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(textCtrl, 0, wxALL|wxEXPAND, 5);

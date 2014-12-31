@@ -97,7 +97,4 @@ private:
 	void OnNextPane(wxCommandEvent& evt);
 	void OnPrevPane(wxCommandEvent& evt);
 	void OnHelpSysinfo(wxCommandEvent& evt);
-#ifdef _DEBUG
-	void OnHelpDebug(wxCommandEvent& evt);
-#endif
 };

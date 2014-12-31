@@ -125,7 +125,8 @@ CDlgPluginDetails::CDlgPluginDetails(
 		wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
 	m_ctrlCodes->Wrap(-1);
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

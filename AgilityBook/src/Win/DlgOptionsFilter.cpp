@@ -252,7 +252,8 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlVenue->SetHelpText(_("HIDC_OPT_FILTER_RUN_VENUES"));
 	m_ctrlVenue->SetToolTip(_("HIDC_OPT_FILTER_RUN_VENUES"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* sizerFilter = new wxBoxSizer(wxHORIZONTAL);
 

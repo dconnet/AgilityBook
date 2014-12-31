@@ -103,7 +103,8 @@ CDlgOtherPoint::CDlgOtherPoint(
 	ctrlPoints->SetHelpText(_("HIDC_OTHER_POINTS"));
 	ctrlPoints->SetToolTip(_("HIDC_OTHER_POINTS"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

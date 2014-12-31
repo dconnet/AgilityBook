@@ -157,7 +157,8 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	ctrlValue->SetHelpText(_("HIDC_CONFIG_PLACEINFO_VALUE"));
 	ctrlValue->SetToolTip(_("HIDC_CONFIG_PLACEINFO_VALUE"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(textNote, 1, wxALL|wxEXPAND, 5);

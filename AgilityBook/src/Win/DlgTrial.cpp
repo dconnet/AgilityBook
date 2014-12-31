@@ -233,7 +233,8 @@ CDlgTrial::CDlgTrial(
 	m_ctrlClubInfo->SetHelpText(_("HIDC_TRIAL_CLUB_INFO"));
 	m_ctrlClubInfo->SetToolTip(_("HIDC_TRIAL_CLUB_INFO"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

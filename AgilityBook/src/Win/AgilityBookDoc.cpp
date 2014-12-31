@@ -226,6 +226,9 @@ BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_MENU(wxID_ABOUT, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(ID_HELP_UPDATE, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_HELP_UPDATE, CAgilityBookDoc::OnCmd)
+#ifdef _DEBUG
+	EVT_MENU(ID_HELP_DEBUG, CAgilityBookDoc::OnHelpDebug)
+#endif
 END_EVENT_TABLE()
 
 
@@ -2115,3 +2118,16 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 		dlg.ShowModal();
 	}
 }
+
+
+#ifdef _DEBUG
+#include "DlgQueryDetail.h"
+void CAgilityBookDoc::OnHelpDebug(wxCommandEvent& evt)
+{
+	wxWindow* parent = wxGetApp().GetTopWindow();
+
+	CDlgQueryDetail dlg(false, L"code", L"AKC", parent, &Book().GetConfig());
+
+	dlg.ShowModal();
+}
+#endif

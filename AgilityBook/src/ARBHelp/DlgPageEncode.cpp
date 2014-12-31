@@ -111,6 +111,9 @@ CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	text2->Wrap(600);
 
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
+
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(text1, 0, wxALL|wxEXPAND, 5);
 	bSizer->Add(text2, 0, wxALL, 5);

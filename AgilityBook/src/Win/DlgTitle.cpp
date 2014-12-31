@@ -168,7 +168,8 @@ CDlgTitle::CDlgTitle(
 
 	FillTitles(true);
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

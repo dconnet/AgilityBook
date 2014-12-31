@@ -1404,7 +1404,8 @@ CDlgRun::CDlgRun(
 	m_ctrlLinkOpen->SetHelpText(_("HIDC_RUNLINK_OPEN"));
 	m_ctrlLinkOpen->SetToolTip(_("HIDC_RUNLINK_OPEN"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

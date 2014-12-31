@@ -216,7 +216,8 @@ CDlgInfoNote::CDlgInfoNote(
 		m_ctrlNames->SetSelection(0);
 	UpdateData();
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

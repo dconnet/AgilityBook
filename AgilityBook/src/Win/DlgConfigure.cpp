@@ -180,7 +180,8 @@ CDlgConfigure::CDlgConfigure(
 	btnUpdate->SetHelpText(_("HIDC_CONFIG_UPDATE"));
 	btnUpdate->SetToolTip(_("HIDC_CONFIG_UPDATE"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

@@ -78,7 +78,8 @@ CDlgPageDecode::CDlgPageDecode()
 	wxButton* btnClose = new wxButton(this, wxID_CANCEL, L"Close",
 		wxDefaultPosition, wxDefaultSize, 0);
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(staticText, 0, wxALL|wxEXPAND, 5);

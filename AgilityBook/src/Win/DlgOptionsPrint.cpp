@@ -191,7 +191,8 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	ctrlBottom->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_B"));
 	ctrlBottom->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_B"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* sizerPrint = new wxBoxSizer(wxVERTICAL);
 

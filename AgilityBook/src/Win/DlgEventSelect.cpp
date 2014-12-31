@@ -141,7 +141,8 @@ CDlgEventSelect::CDlgEventSelect(
 	m_ctrlEvents->SetHelpText(_("HIDC_EVENT_SELECT_EVENT"));
 	m_ctrlEvents->SetToolTip(_("HIDC_EVENT_SELECT_EVENT"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

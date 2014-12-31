@@ -91,7 +91,8 @@ CDlgCRCDViewer::CDlgCRCDViewer(
 	wxButton* btnClose = new wxButton(this, wxID_OK, _("IDC_VIEWER_CRCD_CLOSE"));
 	btnClose->SetDefault();
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(textCtrl, 1, wxALL|wxEXPAND, 5);

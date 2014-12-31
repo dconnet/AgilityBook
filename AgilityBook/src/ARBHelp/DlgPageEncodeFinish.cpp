@@ -51,6 +51,9 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	m_ctrlText->SetMaxLength(0);
 	m_ctrlText->SetFont(fontFixed);
 
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
+
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(text1, 0, wxALL|wxEXPAND, 5);
 	bSizer->Add(m_ctrlText, 1, wxALL|wxEXPAND, 5);

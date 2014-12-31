@@ -311,7 +311,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	m_ctrlUnused->Enable(false);
 
 	m_ctrlInfo = new wxStaticText(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, 50), wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
+		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 30)), wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
 	BIND_OR_CONNECT_CTRL(m_ctrlInfo, wxEVT_COMMAND_LEFT_DCLICK, wxCommandEventHandler, CDlgConfigEvent::OnDblclickConfigInfo);
 	m_ctrlInfo->Wrap(-1);
 	m_ctrlInfo->SetHelpText(_("HIDC_CONFIG_EVENT_INFO"));
@@ -361,7 +361,8 @@ CDlgConfigEvent::CDlgConfigEvent(
 	m_ctrlNote->SetHelpText(_("HIDC_CONFIG_EVENT_NOTES"));
 	m_ctrlNote->SetToolTip(_("HIDC_CONFIG_EVENT_NOTES"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -447,7 +448,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	bSizer->Add(sizerMethods, 1, wxEXPAND, 0);
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
 	FillSubNames(true);

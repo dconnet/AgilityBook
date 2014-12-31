@@ -108,7 +108,8 @@ CDlgPartner::CDlgPartner(
 	ctrlNumber->SetHelpText(_("HIDC_PARTNER_REG_NUM"));
 	ctrlNumber->SetToolTip(_("HIDC_PARTNER_REG_NUM"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

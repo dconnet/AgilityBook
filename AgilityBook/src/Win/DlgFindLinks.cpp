@@ -215,7 +215,8 @@ CDlgFindLinks::CDlgFindLinks(
 	m_ctrlOpen->SetHelpText(_("HIDC_FINDLINKS_OPEN"));
 	m_ctrlOpen->SetToolTip(_("HIDC_FINDLINKS_OPEN"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

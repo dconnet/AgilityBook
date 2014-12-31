@@ -118,7 +118,8 @@ CDlgRegNum::CDlgRegNum(
 	ctrlDesc->SetHelpText(_("HIDC_REGNUM_NOTE"));
 	ctrlDesc->SetToolTip(_("HIDC_REGNUM_NOTE"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

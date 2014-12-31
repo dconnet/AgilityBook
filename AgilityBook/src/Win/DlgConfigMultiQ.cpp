@@ -155,7 +155,8 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	m_ctrlRemove->SetHelpText(_("HIDC_CONFIG_MULTIQ_DELETE"));
 	m_ctrlRemove->SetToolTip(_("HIDC_CONFIG_MULTIQ_DELETE"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

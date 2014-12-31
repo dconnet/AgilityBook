@@ -214,7 +214,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	wxButton* ok = new wxButton(this, wxID_OK);
 	ok->SetDefault();
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
 
 	wxBoxSizer* sizerTop = new wxBoxSizer(wxHORIZONTAL);
 	sizerTop->Add(icon, 0, wxALIGN_LEFT | wxALIGN_TOP | wxALL, wxDLG_UNIT_X(this, 5));

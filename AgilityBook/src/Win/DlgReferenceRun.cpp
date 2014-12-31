@@ -212,7 +212,8 @@ CDlgReferenceRun::CDlgReferenceRun(
 	ctrlNotes->SetHelpText(_("HIDC_REFRUN_NOTES"));
 	ctrlNotes->SetToolTip(_("HIDC_REFRUN_NOTES"));
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

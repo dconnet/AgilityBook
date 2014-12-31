@@ -827,7 +827,8 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 			m_ctrlPlugins->SetChecked(hItem, true, false);
 	}
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxHORIZONTAL);
 

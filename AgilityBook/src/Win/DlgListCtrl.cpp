@@ -581,7 +581,8 @@ bool CDlgListCtrl::Create(
 	m_ctrlCreateTrial->SetToolTip(_("HIDC_LIST_TRIAL"));
 	m_ctrlCreateTrial->Show(false);
 
-	// Sizers (sizer creation is in same order as wxFormBuilder)
+	// Sizers
+#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
