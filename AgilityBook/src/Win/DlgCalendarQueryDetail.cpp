@@ -207,8 +207,8 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	wxBoxSizer* sizerLocation = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerLocationCodes = new wxBoxSizer(wxVERTICAL);
-	sizerLocationCodes->Add(textLocCodes, 0, wxBOTTOM, wxDLG_UNIT_X(this, 1));
-	sizerLocationCodes->Add(m_ctrlLocations, 1, wxEXPAND, 0);
+	sizerLocationCodes->Add(textLocCodes, 0, 0, 0);
+	sizerLocationCodes->Add(m_ctrlLocations, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
 
 	sizerLocation->Add(sizerLocationCodes, 1, wxEXPAND, 0);
 
@@ -216,20 +216,20 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	{
 		wxBoxSizer* sizerLocBtns = new wxBoxSizer(wxVERTICAL);
 		sizerLocBtns->Add(0, 0, 1, wxEXPAND, 0);
-		sizerLocBtns->Add(m_ctrlNewLoc, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-		sizerLocBtns->Add(m_ctrlEditLoc, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-		sizerLocBtns->Add(m_ctrlDeleteLoc, 0, 0, 0);
+		sizerLocBtns->Add(m_ctrlNewLoc, 0, 0, 0);
+		sizerLocBtns->Add(m_ctrlEditLoc, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+		sizerLocBtns->Add(m_ctrlDeleteLoc, 0, wxTOP, wxDLG_UNIT_X(this, 2));
 
-		sizerLocation->Add(sizerLocBtns, 0, wxEXPAND | wxLEFT | wxTOP, wxDLG_UNIT_X(this, 5));
+		sizerLocation->Add(sizerLocBtns, 0, wxEXPAND | wxLEFT, wxDLG_UNIT_X(this, 5));
 	}
 
-	bSizer->Add(sizerLocation, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerLocation, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerVenueCodes = new wxBoxSizer(wxVERTICAL);
-	sizerVenueCodes->Add(textVenueCodes, 0, wxBOTTOM, wxDLG_UNIT_X(this, 1));
-	sizerVenueCodes->Add(m_ctrlVenues, 1, wxEXPAND, 0);
+	sizerVenueCodes->Add(textVenueCodes, 0, 0, 0);
+	sizerVenueCodes->Add(m_ctrlVenues, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
 
 	sizerVenue->Add(sizerVenueCodes, 1, wxEXPAND, 0);
 
@@ -237,17 +237,17 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	{
 		wxBoxSizer* sizerVenueBtns = new wxBoxSizer(wxVERTICAL);
 		sizerVenueBtns->Add(0, 0, 1, wxEXPAND, 0);
-		sizerVenueBtns->Add(m_ctrlNewVenue, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-		sizerVenueBtns->Add(m_ctrlEditVenue, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-		sizerVenueBtns->Add(m_ctrlDeleteVenue, 0, 0, 0);
+		sizerVenueBtns->Add(m_ctrlNewVenue, 0, 0, 0);
+		sizerVenueBtns->Add(m_ctrlEditVenue, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+		sizerVenueBtns->Add(m_ctrlDeleteVenue, 0, wxTOP, wxDLG_UNIT_X(this, 2));
 
-		sizerVenue->Add(sizerVenueBtns, 0, wxEXPAND | wxLEFT | wxTOP, wxDLG_UNIT_X(this, 5));
+		sizerVenue->Add(sizerVenueBtns, 0, wxEXPAND | wxLEFT, wxDLG_UNIT_X(this, 5));
 	}
 
-	bSizer->Add(sizerVenue, 1, wxBOTTOM | wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerVenue, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

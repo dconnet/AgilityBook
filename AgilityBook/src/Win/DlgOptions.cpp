@@ -54,8 +54,6 @@ CDlgOptions::CDlgOptions(
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDS_VIEWING_OPTIONS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
-	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-
 	wxNotebook* notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
 	BIND_OR_CONNECT_CTRL(notebook, wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING, wxNotebookEventHandler, CDlgOptions::OnPageChanging);
 
@@ -68,6 +66,10 @@ CDlgOptions::CDlgOptions(
 	notebook->AddPage(m_pageFilter, _("IDD_VIEW_OPTIONS_FILTER"), false);
 	notebook->AddPage(m_pageCal, _("IDD_VIEW_OPTIONS_CALENDAR"), false);
 	notebook->AddPage(m_pagePrint, _("IDD_VIEW_OPTIONS_PRINTING"), false);
+
+	// Sizers
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	bSizer->Add(notebook, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 

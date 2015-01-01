@@ -590,15 +590,15 @@ bool CDlgListCtrl::Create(
 	bSizerList->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(btnCancel, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(btnOk, 0, 0, 0);
+	bSizerSide->Add(btnCancel, 0, wxTOP, wxDLG_UNIT_X(this, 2));
 	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerSide->Add(m_ctrlUp, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(m_ctrlDown, 0, 0, 0);
+	bSizerSide->Add(m_ctrlUp, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(m_ctrlDown, 0, wxTOP, wxDLG_UNIT_X(this, 2));
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
 
-	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerEdit = new wxBoxSizer(wxHORIZONTAL);
 	bSizerEdit->Add(m_ctrlNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 2));
@@ -607,7 +607,7 @@ bool CDlgListCtrl::Create(
 	bSizerEdit->Add(0, 0, 1, wxEXPAND, 0);
 	bSizerEdit->Add(m_ctrlCreateTrial, 0, 0, 0);
 
-	bSizer->Add(bSizerEdit, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerEdit, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

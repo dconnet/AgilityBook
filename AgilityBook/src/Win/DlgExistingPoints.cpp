@@ -328,7 +328,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerPoints, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerContent = new wxBoxSizer(wxHORIZONTAL);
 
@@ -338,25 +338,25 @@ CDlgExistingPoints::CDlgExistingPoints(
 	sizerCombo->SetFlexibleDirection(wxBOTH);
 	sizerCombo->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
-	sizerCombo->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerCombo->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerCombo->Add(m_textDivMultiQs, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerCombo->Add(m_ctrlDivMultiQs, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(m_textDivMultiQs, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(m_ctrlDivMultiQs, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
 
-	sizerCombo->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerCombo->Add(m_ctrlLevels, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(m_ctrlLevels, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
 
-	sizerCombo->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerCombo->Add(m_ctrlEvents, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(m_ctrlEvents, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
 
-	sizerCombo->Add(textSubName, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerCombo->Add(m_ctrlSubNames, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(textSubName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(m_ctrlSubNames, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
 
-	sizerCombo->Add(textOther, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerCombo->Add(m_ctrlOthers, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(textOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(m_ctrlOthers, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
 
-	sizerWhere->Add(sizerCombo, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 2));
+	sizerWhere->Add(sizerCombo, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 
 	sizerContent->Add(sizerWhere, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
@@ -364,7 +364,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	sizerComment->Add(ctrlNote, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 	sizerContent->Add(sizerComment, 1, wxEXPAND, 0);
 
-	bSizer->Add(sizerContent, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerContent, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	// Not a separated sizer like most other dialogs because of the groups
 	// boxes right above them.

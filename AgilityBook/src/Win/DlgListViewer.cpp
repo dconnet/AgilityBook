@@ -1433,14 +1433,14 @@ bool CDlgListViewer::Create(
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_ctrlList, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerBtns->Add(m_ctrlCopy, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(sizerBtns, 0, wxALIGN_BOTTOM | wxALIGN_RIGHT | wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerBtns, 0, wxALIGN_BOTTOM | wxALIGN_RIGHT | wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

@@ -463,111 +463,118 @@ CDlgCalendar::CDlgCalendar(
 	wxFlexGridSizer* sizerDates1 = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerDates1->SetFlexibleDirection(wxBOTH);
 	sizerDates1->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerDates1->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates1->Add(ctrlStart, 0, wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates1->Add(textEnd, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates1->Add(m_ctrlEnd, 0, wxALL, wxDLG_UNIT_X(this, 1));
+	sizerDates1->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDates1->Add(ctrlStart, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerDates1->Add(textEnd, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDates1->Add(m_ctrlEnd, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 3));
 
 	sizerTrialInfo->Add(sizerDates1, 0, wxEXPAND, 0);
-	sizerTrialInfo->Add(ctrlTentative, 0, wxALL, wxDLG_UNIT_X(this, 3));
+	sizerTrialInfo->Add(ctrlTentative, 0, wxTOP, wxDLG_UNIT_X(this, 3));
 
-	sizerDates->Add(sizerTrialInfo, 0, wxEXPAND, 0);
+	sizerDates->Add(sizerTrialInfo, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxFlexGridSizer* sizerDates2 = new wxFlexGridSizer(3, 3, 0, 0);
 	sizerDates2->SetFlexibleDirection(wxBOTH);
 	sizerDates2->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerDates2->Add(textOpens, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates2->Add(m_ctrlOpens, 0, wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates2->Add(ctrlOpensUnknown, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates2->Add(textDraws, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates2->Add(m_ctrlDraws, 0, wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates2->Add(ctrDrawsUnknown, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates2->Add(textCloses, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates2->Add(m_ctrlCloses, 0, wxALL, wxDLG_UNIT_X(this, 1));
-	sizerDates2->Add(ctrlClosesUnknown, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerDates2->Add(textOpens, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDates2->Add(m_ctrlOpens, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDates2->Add(ctrlOpensUnknown, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerDates2->Add(textDraws, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDates2->Add(m_ctrlDraws, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDates2->Add(ctrDrawsUnknown, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDates2->Add(textCloses, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDates2->Add(m_ctrlCloses, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDates2->Add(ctrlClosesUnknown, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 3));
 
 	sizerDates->Add(sizerDates2, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerDates, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sizerDates, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerContent = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizer1 = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerEntry = new wxStaticBoxSizer(boxEntry, wxVERTICAL);
-	sizerEntry->Add(m_ctrlEntryNot, 0, wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 2));
-	sizerEntry->Add(m_ctrlEntryPlan, 0, wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	wxBoxSizer* sizerEntryCtrl = new wxBoxSizer(wxVERTICAL);
+	sizerEntryCtrl->Add(m_ctrlEntryNot, 0, 0, 0);
+	sizerEntryCtrl->Add(m_ctrlEntryPlan, 0, wxTOP, wxDLG_UNIT_X(this, 3));
 
 	wxBoxSizer* sizerOnline = new wxBoxSizer(wxHORIZONTAL);
 	sizerOnline->Add(wxDLG_UNIT_X(this, 8), 0, 0, 0, 0);
-	sizerOnline->Add(m_ctrlOnlineUrlEntry, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
-	sizerOnline->Add(m_ctrlOnlineUrl, 1, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerOnline->Add(m_ctrlOnlineUrlEntry, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerOnline->Add(m_ctrlOnlineUrl, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerEntry->Add(sizerOnline, 0, wxEXPAND, 0);
-	sizerEntry->Add(m_ctrlEntryPending, 0, wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 2));
-	sizerEntry->Add(m_ctrlEntryEntered, 0, wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	sizerEntryCtrl->Add(sizerOnline, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
+	sizerEntryCtrl->Add(m_ctrlEntryPending, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerEntryCtrl->Add(m_ctrlEntryEntered, 0, wxTOP, wxDLG_UNIT_X(this, 3));
 
-	sizer1->Add(sizerEntry, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerEntry->Add(sizerEntryCtrl, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizer1->Add(sizerEntry, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerPremium = new wxBoxSizer(wxHORIZONTAL);
-	sizerPremium->Add(m_ctrlPremiumEntry, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 3));
-	sizerPremium->Add(m_ctrlPremiumUrl, 1, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 2));
+	sizerPremium->Add(m_ctrlPremiumEntry, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerPremium->Add(m_ctrlPremiumUrl, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizer1->Add(sizerPremium, 0, wxEXPAND, 0);
+	sizer1->Add(sizerPremium, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerSec = new wxBoxSizer(wxHORIZONTAL);
-	sizerSec->Add(m_ctrlEMailSec, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 3));
-	sizerSec->Add(m_ctrlEMailSecAddr, 1, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 2));
+	sizerSec->Add(m_ctrlEMailSec, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerSec->Add(m_ctrlEMailSecAddr, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizer1->Add(sizerSec, 0, wxEXPAND, 0);
+	sizer1->Add(sizerSec, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 3));
-	sizerVenue->Add(m_ctrlVenue, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 2));
+	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerVenue->Add(m_ctrlVenue, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizer1->Add(sizerVenue, 0, wxEXPAND, 0);
+	sizer1->Add(sizerVenue, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerClub = new wxBoxSizer(wxHORIZONTAL);
-	sizerClub->Add(textClub, 0, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerClub->Add(m_ctrlClub, 0, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 1));
-	sizerClub->Add(m_ctrlClubNotes, 0, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerClub->Add(textClub, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerClub->Add(m_ctrlClub, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 1));
+	sizerClub->Add(m_ctrlClubNotes, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizer1->Add(sizerClub, 0, wxEXPAND, 0);
-	sizer1->Add(m_ctrlClubInfo, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizer1->Add(sizerClub, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizer1->Add(m_ctrlClubInfo, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 3));
 
-	sizerContent->Add(sizer1, 3, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerContent->Add(sizer1, 3, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerAccom = new wxStaticBoxSizer(boxAccom, wxVERTICAL);
-	sizerAccom->Add(m_ctrlAccomNot, 0, wxALL, wxDLG_UNIT_X(this, 2));
-	sizerAccom->Add(m_ctrlAccomNeeded, 0, wxALL, wxDLG_UNIT_X(this, 2));
+	wxBoxSizer* sizerAccomCtrl = new wxBoxSizer(wxVERTICAL);
+	sizerAccomCtrl->Add(m_ctrlAccomNot, 0, 0, 0);
+	sizerAccomCtrl->Add(m_ctrlAccomNeeded, 0, wxTOP, wxDLG_UNIT_X(this, 3));
 
 	wxBoxSizer* sizerMade = new wxBoxSizer(wxHORIZONTAL);
-	sizerMade->Add(m_ctrlAccomMade, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 2));
-	sizerMade->Add(m_ctrlConfirmation, 1, wxALL, wxDLG_UNIT_X(this, 1));
+	sizerMade->Add(m_ctrlAccomMade, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 2));
+	sizerMade->Add(m_ctrlConfirmation, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerAccom->Add(sizerMade, 0, wxEXPAND, 0);
+	sizerAccomCtrl->Add(sizerMade, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 3));
 
-	sizer2->Add(sizerAccom, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerAccom->Add(sizerAccomCtrl, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizer2->Add(sizerAccom, 0, wxEXPAND, 0);
 	sizer2->Add(0, 0, 1, wxEXPAND, 0);
-	sizer2->Add(textLocation, 0, wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizer2->Add(textLocation, 0, 0, 0);
 
 	wxBoxSizer* sizerLocation = new wxBoxSizer(wxHORIZONTAL);
-	sizerLocation->Add(m_ctrlLocation, 1, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerLocation->Add(m_ctrlLocationNotes, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 2));
+	sizerLocation->Add(m_ctrlLocation, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 1));
+	sizerLocation->Add(m_ctrlLocationNotes, 0, wxALIGN_CENTER_VERTICAL, 0);
 
 	sizer2->Add(sizerLocation, 0, wxEXPAND, 0);
-	sizer2->Add(m_ctrlLocationInfo, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizer2->Add(m_ctrlLocationInfo, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 3));
 
-	sizerContent->Add(sizer2, 2, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerContent->Add(sizer2, 2, wxEXPAND, 0);
+	bSizer->Add(sizerContent, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	bSizer->Add(sizerContent, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	bSizer->Add(textNotes, 0, wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 6));
-	bSizer->Add(ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 6));
+	wxBoxSizer* sizerNotes = new wxBoxSizer(wxVERTICAL);
+	sizerNotes->Add(textNotes, 0, 0, 0);
+	sizerNotes->Add(ctrlNotes, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
+
+	bSizer->Add(sizerNotes, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	ListLocations();
 	ListClubs();

@@ -124,21 +124,21 @@ CDlgFind::CDlgFind(
 	bSizerWhat->Add(staticText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	bSizerWhat->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(bSizerWhat, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_checkBox, 0, wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerWhat, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_checkBox, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerFind = new wxBoxSizer(wxHORIZONTAL);
 	bSizerFind->Add(m_radioBoxSearch, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 	bSizerFind->Add(m_radioBoxDir, 0, 0, 0);
 
-	bSizer->Add(bSizerFind, 0, wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerFind, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerBtns = new wxBoxSizer(wxHORIZONTAL);
 	bSizerBtns->Add(0, 0, 1, wxEXPAND, 0);
 	bSizerBtns->Add(m_btnFind, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 	bSizerBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(bSizerBtns, 0, wxEXPAND | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerBtns, 0, wxEXPAND | wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

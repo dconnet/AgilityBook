@@ -224,12 +224,12 @@ CDlgFindLinks::CDlgFindLinks(
 	bSizerList->Add(m_ctrlLinks, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(btnCancel, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(btnOk, 0, 0, 0);
+	bSizerSide->Add(btnCancel, 0, wxTOP, wxDLG_UNIT_X(this, 2));
 	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerSide->Add(btnCopy, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(m_ctrlEdit, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(m_ctrlOpen, 0, 0, 0);
+	bSizerSide->Add(btnCopy, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(m_ctrlEdit, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(m_ctrlOpen, 0, wxTOP, wxDLG_UNIT_X(this, 2));
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
 

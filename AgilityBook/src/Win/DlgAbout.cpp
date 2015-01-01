@@ -169,7 +169,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 
 	wxStaticBitmap* icon = new wxStaticBitmap(this, wxID_ANY,
 		CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX),
-		wxDLG_UNIT(this, wxPoint(2,1)), wxDefaultSize, 0);
+		wxDLG_UNIT(this, wxPoint(2, 1)), wxDefaultSize, 0);
 
 	wxStaticText* version = new wxStaticText(this, wxID_ANY,
 		wxString::Format(_("AboutVersion"), wxString::From8BitData(ARB_VERSION_STRING).c_str(), _("Agility Record Book")),
@@ -217,50 +217,45 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 
 	// Sizers
 
-	wxBoxSizer* sizerTop = new wxBoxSizer(wxHORIZONTAL);
-	sizerTop->Add(icon, 0, wxALIGN_LEFT | wxALIGN_TOP | wxALL, wxDLG_UNIT_X(this, 5));
+	wxBoxSizer* bSizer = new wxBoxSizer(wxHORIZONTAL);
+	bSizer->Add(icon, 0, wxALIGN_LEFT | wxALIGN_TOP | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBox = new wxBoxSizer(wxVERTICAL);
-
-	wxBoxSizer* sizerText = new wxBoxSizer(wxVERTICAL);
-	sizerText->Add(version, 1, wxEXPAND | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerBox->Add(version, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerLinksBox1 = new wxBoxSizer(wxHORIZONTAL);
 	sizerLinksBox1->Add(wxDLG_UNIT_X(this, 10), 0, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerLinks1 = new wxBoxSizer(wxVERTICAL);
-	sizerLinks1->Add(link1, 0, wxALL, wxDLG_UNIT_X(this, 1));
-	sizerLinks1->Add(link2, 0, wxALL, wxDLG_UNIT_X(this, 1));
+	sizerLinks1->Add(link1, 0, 0, 0);
+	sizerLinks1->Add(link2, 0, wxTOP, wxDLG_UNIT_X(this, 1));
 
 	sizerLinksBox1->Add(sizerLinks1, 1, wxEXPAND, 0);
 
-	sizerText->Add(sizerLinksBox1, 0, wxEXPAND, 0);
-	sizerText->Add(0, wxDLG_UNIT_Y(this, 2), 0, wxEXPAND, 0);
-	sizerText->Add(usefulLinks, 0, wxALL, 0);
+	sizerBox->Add(sizerLinksBox1, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
+	sizerBox->Add(usefulLinks, 0, wxTOP, wxDLG_UNIT_X(this, 3));
 
 	wxBoxSizer* sizerLinksBox2 = new wxBoxSizer(wxHORIZONTAL);
 	sizerLinksBox2->Add(wxDLG_UNIT_X(this, 10), 0, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerLinks2 = new wxBoxSizer(wxVERTICAL);
-	sizerLinks2->Add(link3, 0, wxALL, wxDLG_UNIT_X(this, 1));
-	sizerLinks2->Add(link4, 0, wxALL, wxDLG_UNIT_X(this, 1));
+	sizerLinks2->Add(link3, 0, 0, 0);
+	sizerLinks2->Add(link4, 0, wxTOP, wxDLG_UNIT_X(this, 1));
 
 	sizerLinksBox2->Add(sizerLinks2, 1, wxEXPAND, 0);
 
-	sizerText->Add(sizerLinksBox2, 0, wxEXPAND, 0);
-
-	sizerBox->Add(sizerText, 1, wxEXPAND, 0);
+	sizerBox->Add(sizerLinksBox2, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
 
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxHORIZONTAL);
 	sizerButtons->Add(updates, 0, wxALIGN_LEFT | wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerButtons->Add(0, 0, 1, wxEXPAND, 0);
 	sizerButtons->Add(ok, 0, wxALIGN_RIGHT, 0);
 
-	sizerBox->Add(sizerButtons, 0, wxBOTTOM | wxEXPAND | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerBox->Add(sizerButtons, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	sizerTop->Add(sizerBox, 1, wxEXPAND, 0);
+	bSizer->Add(sizerBox, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	SetSizer(sizerTop);
+	SetSizer(bSizer);
 	Layout();
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
