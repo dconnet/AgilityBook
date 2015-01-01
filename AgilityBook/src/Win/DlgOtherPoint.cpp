@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2013-01-23 Initialize points correctly when editing existing entry.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -88,7 +89,7 @@ CDlgOtherPoint::CDlgOtherPoint(
 	ctrlNew->SetToolTip(_("HIDC_OTHER_NEW"));
 
 	m_ctrlDesc = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(210,120), true);
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(120, 65)), true);
 	m_ctrlDesc->SetHelpText(_("HIDC_OTHER_DESC"));
 	m_ctrlDesc->SetToolTip(_("HIDC_OTHER_DESC"));
 
@@ -104,25 +105,24 @@ CDlgOtherPoint::CDlgOtherPoint(
 	ctrlPoints->SetToolTip(_("HIDC_OTHER_POINTS"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerItems = new wxBoxSizer(wxHORIZONTAL);
-	sizerItems->Add(m_ctrlOtherPoints, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
-	sizerItems->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerItems->Add(m_ctrlOtherPoints, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerItems->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerItems, 0, wxEXPAND, 0);
-	bSizer->Add(m_ctrlDesc, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(sizerItems, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
-	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND, 0);
+	bSizer->Add(sizerPoints, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

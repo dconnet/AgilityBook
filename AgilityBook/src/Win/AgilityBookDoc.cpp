@@ -2125,14 +2125,14 @@ void CAgilityBookDoc::OnHelpDebug(wxCommandEvent& evt)
 {
 	wxWindow* parent = wxGetApp().GetTopWindow();
 
-	wxSize x = parent->ConvertPixelsToDialog(wxSize(50, 80));
-	wxString s = wxString::Format(L"%d,%d\n", x.x, x.y);
-	x = parent->ConvertPixelsToDialog(wxSize(110, 55));
-	s << wxString::Format(L"%d,%d\n", x.x, x.y);
-	x = parent->ConvertPixelsToDialog(wxSize(400, 0));
-	s << wxString::Format(L"%d,%d\n", x.x, x.y);
-	x = parent->ConvertPixelsToDialog(wxSize(250, 0));
-	s << wxString::Format(L"%d,%d\n", x.x, x.y);
+	wxSize x;
+	wxString s;
+	x = parent->ConvertPixelsToDialog(wxSize(200, 50));
+	s << wxString::Format(L"px->dlg %d,%d\n", x.x, x.y);
+	x = parent->ConvertPixelsToDialog(wxSize(50, 70));
+	s << wxString::Format(L"px->dlg %d,%d\n", x.x, x.y);
+	x = parent->ConvertPixelsToDialog(wxSize(30, 0));
+	s << wxString::Format(L"px->dlg %d,%d\n", x.x, x.y);
 	wxMessageBox(s);
 
 //	dlg.ShowModal();

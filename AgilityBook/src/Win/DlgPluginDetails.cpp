@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -126,26 +127,34 @@ CDlgPluginDetails::CDlgPluginDetails(
 	m_ctrlCodes->Wrap(-1);
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER|wxALL, 5);
-	sizerName->Add(m_ctrlName, 1, wxALL|wxEXPAND, 5);
+	sizerName->Add(textName, 0, wxALIGN_CENTER | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(m_ctrlName, 1, wxEXPAND, 0);
+	bSizer->Add(sizerName, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	bSizer->Add(sizerName, 0, wxEXPAND, 0);
-	bSizer->Add(textDesc, 0, wxALL, 5);
-	bSizer->Add(ctrlDesc, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(textSearchURL, 0, wxALL, 5);
-	bSizer->Add(ctrlSearchURL, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(textHelpURL, 0, wxALL, 5);
-	bSizer->Add(ctrlHelpURL, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(btnCodes, 0, wxALL, 5);
-	bSizer->Add(m_ctrlCodes, 0, wxALL|wxEXPAND, 5);
+	wxBoxSizer* sizerDesc = new wxBoxSizer(wxVERTICAL);
+	sizerDesc->Add(textDesc, 0, wxBOTTOM, wxDLG_UNIT_X(this, 1));
+	sizerDesc->Add(ctrlDesc, 0, wxEXPAND, 0);
+	bSizer->Add(sizerDesc, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxBoxSizer* sizerSearch = new wxBoxSizer(wxVERTICAL);
+	sizerSearch->Add(textSearchURL, 0, wxBOTTOM, wxDLG_UNIT_X(this, 1));
+	sizerSearch->Add(ctrlSearchURL, 0, wxEXPAND, 0);
+	bSizer->Add(sizerSearch, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+
+	wxBoxSizer* sizerHelp = new wxBoxSizer(wxVERTICAL);
+	sizerHelp->Add(textHelpURL, 0, wxBOTTOM, wxDLG_UNIT_X(this, 1));
+	sizerHelp->Add(ctrlHelpURL, 0, wxEXPAND, 0);
+	bSizer->Add(sizerHelp, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+
+	bSizer->Add(btnCodes, 0, wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlCodes, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

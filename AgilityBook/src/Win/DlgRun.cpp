@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2013-05-19 Make last div/level/height/handler dog-aware.
  * 2012-12-29 Fix pasting metafiles.
  * 2012-11-17 Allow judge to be empty.
@@ -929,9 +930,9 @@ CDlgRun::CDlgRun(
 	m_ctrlHeight = new CAutoFillComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition,
 #ifdef __WXMAC__
-		wxSize(100, -1), // Just not wide enough on a Mac...
+		wxSize(wxDLG_UNIT_X(this, 60), -1), // Just not wide enough on a Mac...
 #else
-		wxSize(50, -1),
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
 #endif
 		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
@@ -993,14 +994,14 @@ CDlgRun::CDlgRun(
 	textConditions->Wrap(-1);
 
 	m_ctrlConditions = new CSpellCheckCtrl(m_panelScore, wxID_ANY,
-		wxEmptyString, wxDefaultPosition, wxSize(-1, 50),
+		wxEmptyString, wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 25)),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Conditions, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlConditions->SetHelpText(_("HIDC_RUNSCORE_CONDITIONS"));
 	m_ctrlConditions->SetToolTip(_("HIDC_RUNSCORE_CONDITIONS"));
 
 	m_ctrlDesc = new CRichEditCtrl2(m_panelScore, wxID_ANY,
-		wxEmptyString, wxDefaultPosition, wxSize(-1, 70), true);
+		wxEmptyString, wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 35)), true);
 	m_ctrlDesc->SetHelpText(_("HIDC_RUNSCORE_DESC"));
 	m_ctrlDesc->SetToolTip(_("HIDC_RUNSCORE_DESC"));
 
@@ -1012,7 +1013,7 @@ CDlgRun::CDlgRun(
 	m_ctrlPartnerEdit->SetToolTip(_("HIDC_RUNSCORE_PARTNERS_EDIT"));
 
 	m_ctrlPartner = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(200, -1), wxTE_READONLY);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 115), -1), wxTE_READONLY);
 	m_ctrlPartner->SetBackgroundColour(m_clrBack);
 	m_ctrlPartner->SetHelpText(_("HIDC_RUNSCORE_PARTNER"));
 	m_ctrlPartner->SetToolTip(_("HIDC_RUNSCORE_PARTNER"));
@@ -1023,7 +1024,7 @@ CDlgRun::CDlgRun(
 	m_ctrlSCTText->Wrap(-1);
 
 	m_ctrlSCT = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
 		CGenericValidator(&m_SCT));
 	BIND_OR_CONNECT_CTRL(m_ctrlSCT, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnSCTChange);
 	m_ctrlSCT->SetHelpText(_("HIDC_RUNSCORE_SCT"));
@@ -1035,7 +1036,7 @@ CDlgRun::CDlgRun(
 	m_textYardsReqOpeningPts->Wrap(-1);
 
 	m_ctrlYardsReqOpeningPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlYardsReqOpeningPts, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnReqOpeningYPSChange);
 	m_ctrlYardsReqOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPENING_PTS"));
 	m_ctrlYardsReqOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPENING_PTS"));
@@ -1046,7 +1047,7 @@ CDlgRun::CDlgRun(
 	m_textMinYPSClosingTime->Wrap(-1);
 
 	m_ctrlMinYPSClosingTime = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlMinYPSClosingTime, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnClosingTimeChange);
 	m_ctrlMinYPSClosingTime->SetHelpText(_("HIDC_RUNSCORE_SCT2"));
 	m_ctrlMinYPSClosingTime->SetToolTip(_("HIDC_RUNSCORE_SCT2"));
@@ -1057,7 +1058,7 @@ CDlgRun::CDlgRun(
 	m_ctrlClosingText->Wrap(-1);
 
 	m_ctrlClosing = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
 		CGenericValidator(&m_Closing));
 	BIND_OR_CONNECT_CTRL(m_ctrlClosing, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnReqClosingChange);
 	m_ctrlClosing->SetHelpText(_("HIDC_RUNSCORE_CLOSING_PTS"));
@@ -1069,7 +1070,7 @@ CDlgRun::CDlgRun(
 	ctrlObstaclesText->Wrap(-1);
 
 	m_ctrlObstacles = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
 		CGenericValidator(&m_Obstacles));
 	BIND_OR_CONNECT_CTRL(m_ctrlObstacles, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnNumObsChange);
 	m_ctrlObstacles->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES"));
@@ -1081,7 +1082,7 @@ CDlgRun::CDlgRun(
 	m_ctrlTimeText->Wrap(-1);
 
 	m_ctrlTime = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
 		CGenericValidator(&m_Time));
 	BIND_OR_CONNECT_CTRL(m_ctrlTime, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnTimeChange);
 	m_ctrlTime->SetHelpText(_("HIDC_RUNSCORE_TIME"));
@@ -1093,7 +1094,7 @@ CDlgRun::CDlgRun(
 	m_ctrlFaultsText->Wrap(-1);
 
 	m_ctrlFaults = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
 		CGenericValidator(&m_Faults));
 	BIND_OR_CONNECT_CTRL(m_ctrlFaults, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnFaultsChange);
 	m_ctrlFaults->SetHelpText(_("HIDC_RUNSCORE_FAULTS"));
@@ -1105,7 +1106,7 @@ CDlgRun::CDlgRun(
 	m_textYPSOpeningPts->Wrap(-1);
 
 	m_ctrlYPSOpeningPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlYPSOpeningPts, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnOpenChange);
 	m_ctrlYPSOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPEN_PTS"));
 	m_ctrlYPSOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPEN_PTS"));
@@ -1116,7 +1117,7 @@ CDlgRun::CDlgRun(
 	m_textClosingPtsTotalFaults->Wrap(-1);
 
 	m_ctrlClosingPtsTotalFaults = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlClosingPtsTotalFaults, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnCloseChange);
 	m_ctrlClosingPtsTotalFaults->SetHelpText(_("HIDC_RUNSCORE_CLOSE_PTS"));
 	m_ctrlClosingPtsTotalFaults->SetToolTip(_("HIDC_RUNSCORE_CLOSE_PTS"));
@@ -1127,7 +1128,7 @@ CDlgRun::CDlgRun(
 	ctrlObstaclesPSText->Wrap(-1);
 
 	m_ctrlObstaclesPS = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), wxTE_READONLY);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), wxTE_READONLY);
 	m_ctrlObstaclesPS->SetBackgroundColour(m_clrBack);
 	m_ctrlObstaclesPS->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
 	m_ctrlObstaclesPS->SetToolTip(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
@@ -1138,7 +1139,7 @@ CDlgRun::CDlgRun(
 	textPlace->Wrap(-1);
 
 	m_ctrlPlace = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(30, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
 		CGenericValidator(&m_Place));
 	BIND_OR_CONNECT_CTRL(m_ctrlPlace, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnPlaceChange);
 	m_ctrlPlace->SetHelpText(_("HIDC_RUNSCORE_PLACE"));
@@ -1150,7 +1151,7 @@ CDlgRun::CDlgRun(
 	textPlaceOf->Wrap(-1);
 
 	m_ctrlInClass = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(30, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
 		CGenericValidator(&m_InClass));
 	m_ctrlInClass->SetHelpText(_("HIDC_RUNSCORE_IN_CLASS"));
 	m_ctrlInClass->SetToolTip(_("HIDC_RUNSCORE_IN_CLASS"));
@@ -1161,7 +1162,7 @@ CDlgRun::CDlgRun(
 	textDogsQd->Wrap(-1);
 
 	m_ctrlDogsQd = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(30, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
 		CGenericValidator(&m_DogsQd, -1));
 	m_ctrlDogsQd->SetHelpText(_("HIDC_RUNSCORE_DOGS_QD"));
 	m_ctrlDogsQd->SetToolTip(_("HIDC_RUNSCORE_DOGS_QD"));
@@ -1182,7 +1183,7 @@ CDlgRun::CDlgRun(
 	m_ctrlBonusPtsText->Wrap(-1);
 
 	m_ctrlBonusTitlePts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
 		CGenericValidator(&m_BonusTitlePts, -1));
 	BIND_OR_CONNECT_CTRL(m_ctrlBonusTitlePts, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnBonusChange);
 	m_ctrlBonusTitlePts->SetHelpText(_("HIDC_RUNSCORE_BONUSTITLEPTS"));
@@ -1194,7 +1195,7 @@ CDlgRun::CDlgRun(
 	m_ctrlSpeedPtsText->Wrap(-1);
 
 	m_ctrlSpeedPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), wxTE_READONLY);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), wxTE_READONLY);
 	m_ctrlSpeedPts->SetBackgroundColour(m_clrBack);
 
 	m_ctrlTitlePointsText = new wxStaticText(m_panelScore, wxID_ANY,
@@ -1203,7 +1204,7 @@ CDlgRun::CDlgRun(
 	m_ctrlTitlePointsText->Wrap(-1);
 
 	m_ctrlTitlePoints = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), wxTE_READONLY);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), wxTE_READONLY);
 	m_ctrlTitlePoints->SetBackgroundColour(m_clrBack);
 
 	wxStaticText* textScore = new wxStaticText(m_panelScore, wxID_ANY,
@@ -1212,7 +1213,7 @@ CDlgRun::CDlgRun(
 	textScore->Wrap(-1);
 
 	m_ctrlScore = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), wxTE_READONLY);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), wxTE_READONLY);
 	m_ctrlScore->SetBackgroundColour(m_clrBack);
 
 	wxButton* btnOtherPoints = new wxButton(m_panelScore, wxID_ANY,
@@ -1405,186 +1406,185 @@ CDlgRun::CDlgRun(
 	m_ctrlLinkOpen->SetToolTip(_("HIDC_RUNLINK_OPEN"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerScorePanel = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
-	sizerDate->Add(textDate, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerDate->Add(ctrlDate, 0, wxALL, 5);
-	sizerDate->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerDate->Add(textClub, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerDate->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerDate->Add(textDate, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDate->Add(ctrlDate, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDate->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDate->Add(textClub, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDate->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerScorePanel->Add(sizerDate, 0, wxEXPAND, 0);
+	sizerScorePanel->Add(sizerDate, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerDivHt = new wxBoxSizer(wxHORIZONTAL);
 
 	wxFlexGridSizer* sizerEvent = new wxFlexGridSizer(5, 2, 0, 0);
 	sizerEvent->SetFlexibleDirection(wxBOTH);
 	sizerEvent->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerEvent->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerEvent->Add(m_ctrlDivisions, 0, wxALL, 5);
-	sizerEvent->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerEvent->Add(m_ctrlLevels, 0, wxALL, 5);
-	sizerEvent->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerEvent->Add(m_ctrlEvents, 0, wxALL, 5);
-	sizerEvent->Add(m_ctrlSubNamesText, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerEvent->Add(m_ctrlSubNames, 0, wxALL, 5);
+	sizerEvent->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerEvent->Add(m_ctrlDivisions, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerEvent->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerEvent->Add(m_ctrlLevels, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerEvent->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerEvent->Add(m_ctrlEvents, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerEvent->Add(m_ctrlSubNamesText, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerEvent->Add(m_ctrlSubNames, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
 	sizerEvent->Add(0, 0, 1, wxEXPAND, 0);
-	sizerEvent->Add(m_ctrlTable, 0, wxALL, 5);
+	sizerEvent->Add(m_ctrlTable, 0, 0, 0);
 
-	sizerDivHt->Add(sizerEvent, 0, wxEXPAND, 0);
+	sizerDivHt->Add(sizerEvent, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerHtCond = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerHt = new wxBoxSizer(wxHORIZONTAL);
-	sizerHt->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerHt->Add(m_ctrlHeight, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerHt->Add(textJudge, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerHt->Add(m_ctrlJudge, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerHt->Add(ctrlJudgeNote, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxRIGHT|wxTOP, 5);
-	sizerHt->Add(textHandler, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerHt->Add(m_ctrlHandler, 0, wxALL, 5);
+	sizerHt->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHt->Add(m_ctrlHeight, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHt->Add(textJudge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHt->Add(m_ctrlJudge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHt->Add(ctrlJudgeNote, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHt->Add(textHandler, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHt->Add(m_ctrlHandler, 0, 0, 0);
 
-	sizerHtCond->Add(sizerHt, 0, wxEXPAND, 0);
+	sizerHtCond->Add(sizerHt, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerCond = new wxBoxSizer(wxHORIZONTAL);
-	sizerCond->Add(textConditions, 0, wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerCond->Add(m_ctrlConditions, 1, wxALL|wxEXPAND, 5);
+	sizerCond->Add(textConditions, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerCond->Add(m_ctrlConditions, 1, wxEXPAND, 0);
 
-	sizerHtCond->Add(sizerCond, 1, wxEXPAND, 0);
+	sizerHtCond->Add(sizerCond, 1, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerComments = new wxBoxSizer(wxHORIZONTAL);
-	sizerComments->Add(m_ctrlDesc, 1, wxALL|wxEXPAND, 5);
+	sizerComments->Add(m_ctrlDesc, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerPartner = new wxBoxSizer(wxVERTICAL);
-	sizerPartner->Add(m_ctrlPartnerEdit, 0, wxALL, 5);
-	sizerPartner->Add(m_ctrlPartner, 0, wxALL, 5);
+	sizerPartner->Add(m_ctrlPartnerEdit, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerPartner->Add(m_ctrlPartner, 0, 0, 0);
 
-	sizerComments->Add(sizerPartner, 0, wxEXPAND, 0);
+	sizerComments->Add(sizerPartner, 0, wxEXPAND | wxLEFT, wxDLG_UNIT_X(this, 5));
 
 	sizerHtCond->Add(sizerComments, 0, wxEXPAND, 0);
 
 	sizerDivHt->Add(sizerHtCond, 0, wxEXPAND, 0);
 
-	sizerScorePanel->Add(sizerDivHt, 0, wxEXPAND, 0);
+	sizerScorePanel->Add(sizerDivHt, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxFlexGridSizer* sizerResults = new wxFlexGridSizer(5, 4, 0, 0);
 	sizerResults->SetFlexibleDirection(wxBOTH);
 	sizerResults->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
 	wxBoxSizer* sizerSCT = new wxBoxSizer(wxHORIZONTAL);
-	sizerSCT->Add(m_ctrlSCTText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerSCT->Add(m_ctrlSCT, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerSCT->Add(m_ctrlSCTText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerSCT->Add(m_ctrlSCT, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerSCT, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerSCT, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerTime = new wxBoxSizer(wxHORIZONTAL);
-	sizerTime->Add(m_ctrlTimeText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerTime->Add(m_ctrlTime, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerTime->Add(m_ctrlTimeText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerTime->Add(m_ctrlTime, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerTime, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerTime, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerPlace = new wxBoxSizer(wxHORIZONTAL);
-	sizerPlace->Add(textPlace, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerPlace->Add(m_ctrlPlace, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerPlace->Add(textPlaceOf, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxTOP, 5);
-	sizerPlace->Add(m_ctrlInClass, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPlace->Add(textPlace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPlace->Add(m_ctrlPlace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPlace->Add(textPlaceOf, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPlace->Add(m_ctrlInClass, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerPlace, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerPlace, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBonus = new wxBoxSizer(wxHORIZONTAL);
-	sizerBonus->Add(m_ctrlBonusPtsText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerBonus->Add(m_ctrlBonusTitlePts, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerBonus->Add(m_ctrlBonusPtsText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerBonus->Add(m_ctrlBonusTitlePts, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerBonus, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerBonus, 0, wxALIGN_RIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerYardsReqOpeningPts = new wxBoxSizer(wxHORIZONTAL);
-	sizerYardsReqOpeningPts->Add(m_textYardsReqOpeningPts, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerYardsReqOpeningPts->Add(m_ctrlYardsReqOpeningPts, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerYardsReqOpeningPts->Add(m_textYardsReqOpeningPts, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerYardsReqOpeningPts->Add(m_ctrlYardsReqOpeningPts, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerYardsReqOpeningPts, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerYardsReqOpeningPts, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerFaults = new wxBoxSizer(wxHORIZONTAL);
-	sizerFaults->Add(m_ctrlFaultsText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerFaults->Add(m_ctrlFaults, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerFaults->Add(m_ctrlFaultsText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerFaults->Add(m_ctrlFaults, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerFaults, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerFaults, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerDogsQd = new wxBoxSizer(wxHORIZONTAL);
-	sizerDogsQd->Add(textDogsQd, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerDogsQd->Add(m_ctrlDogsQd, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerDogsQd->Add(textDogsQd, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDogsQd->Add(m_ctrlDogsQd, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerDogsQd, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerDogsQd, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerSpeed = new wxBoxSizer(wxHORIZONTAL);
-	sizerSpeed->Add(m_ctrlSpeedPtsText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerSpeed->Add(m_ctrlSpeedPts, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerSpeed->Add(m_ctrlSpeedPtsText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerSpeed->Add(m_ctrlSpeedPts, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerSpeed, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerSpeed, 0, wxALIGN_RIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerMinYPSClosingTime = new wxBoxSizer(wxHORIZONTAL);
-	sizerMinYPSClosingTime->Add(m_textMinYPSClosingTime, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerMinYPSClosingTime->Add(m_ctrlMinYPSClosingTime, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerMinYPSClosingTime->Add(m_textMinYPSClosingTime, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerMinYPSClosingTime->Add(m_ctrlMinYPSClosingTime, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerMinYPSClosingTime, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerMinYPSClosingTime, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerYPSOpeningPts = new wxBoxSizer(wxHORIZONTAL);
-	sizerYPSOpeningPts->Add(m_textYPSOpeningPts, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerYPSOpeningPts->Add(m_ctrlYPSOpeningPts, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerYPSOpeningPts->Add(m_textYPSOpeningPts, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerYPSOpeningPts->Add(m_ctrlYPSOpeningPts, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerYPSOpeningPts, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerYPSOpeningPts, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerQ = new wxBoxSizer(wxHORIZONTAL);
-	sizerQ->Add(textQ, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerQ->Add(m_ctrlQ, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerQ->Add(textQ, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerQ->Add(m_ctrlQ, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerQ, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerQ, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerTitlePts = new wxBoxSizer(wxHORIZONTAL);
-	sizerTitlePts->Add(m_ctrlTitlePointsText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerTitlePts->Add(m_ctrlTitlePoints, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerTitlePts->Add(m_ctrlTitlePointsText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerTitlePts->Add(m_ctrlTitlePoints, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerTitlePts, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerTitlePts, 0, wxALIGN_RIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerReqClosingPts = new wxBoxSizer(wxHORIZONTAL);
-	sizerReqClosingPts->Add(m_ctrlClosingText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerReqClosingPts->Add(m_ctrlClosing, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerReqClosingPts->Add(m_ctrlClosingText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerReqClosingPts->Add(m_ctrlClosing, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerReqClosingPts, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerReqClosingPts, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerClosingPtsTotalFaults = new wxBoxSizer(wxHORIZONTAL);
-	sizerClosingPtsTotalFaults->Add(m_textClosingPtsTotalFaults, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerClosingPtsTotalFaults->Add(m_ctrlClosingPtsTotalFaults, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerClosingPtsTotalFaults->Add(m_textClosingPtsTotalFaults, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerClosingPtsTotalFaults->Add(m_ctrlClosingPtsTotalFaults, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerClosingPtsTotalFaults, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerClosingPtsTotalFaults, 0, wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	sizerResults->Add(0, 0, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerScore = new wxBoxSizer(wxHORIZONTAL);
-	sizerScore->Add(textScore, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerScore->Add(m_ctrlScore, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerScore->Add(textScore, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerScore->Add(m_ctrlScore, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerScore, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerScore, 0, wxALIGN_RIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerNumObs = new wxBoxSizer(wxHORIZONTAL);
-	sizerNumObs->Add(ctrlObstaclesText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerNumObs->Add(m_ctrlObstacles, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerNumObs->Add(ctrlObstaclesText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerNumObs->Add(m_ctrlObstacles, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerNumObs, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerNumObs, 0, wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerObsSec = new wxBoxSizer(wxHORIZONTAL);
-	sizerObsSec->Add(ctrlObstaclesPSText, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerObsSec->Add(m_ctrlObstaclesPS, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerObsSec->Add(ctrlObstaclesPSText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerObsSec->Add(m_ctrlObstaclesPS, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerResults->Add(sizerObsSec, 0, wxALIGN_RIGHT, 5);
+	sizerResults->Add(sizerObsSec, 0, wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerResults->Add(0, 0, 1, wxEXPAND, 0);
-	sizerResults->Add(btnOtherPoints, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
+	sizerResults->Add(btnOtherPoints, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
-	sizerScorePanel->Add(sizerResults, 1, wxEXPAND, 0);
+	sizerScorePanel->Add(sizerResults, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	m_panelScore->SetSizer(sizerScorePanel);
 	m_panelScore->Layout();
@@ -1592,13 +1592,13 @@ CDlgRun::CDlgRun(
 	notebook->AddPage(m_panelScore, _("IDD_RUN_SCORE"), false);
 
 	wxBoxSizer* sizerCommentsFaults = new wxBoxSizer(wxHORIZONTAL);
-	sizerCommentsFaults->Add(ctrlComments, 1, wxALL|wxEXPAND, 5);
+	sizerCommentsFaults->Add(ctrlComments, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerFaultsList = new wxBoxSizer(wxVERTICAL);
-	sizerFaultsList->Add(m_ctrlFaultsList, 1, wxALL, 5);
-	sizerFaultsList->Add(btnFaults, 0, wxALL, 5);
+	sizerFaultsList->Add(m_ctrlFaultsList, 1, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerFaultsList->Add(btnFaults, 0, 0, 0);
 
-	sizerCommentsFaults->Add(sizerFaultsList, 0, wxEXPAND, 0);
+	sizerCommentsFaults->Add(sizerFaultsList, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	panelComments->SetSizer(sizerCommentsFaults);
 	panelComments->Layout();
@@ -1606,14 +1606,14 @@ CDlgRun::CDlgRun(
 	notebook->AddPage(panelComments, _("IDD_RUN_COMMENTS"), false);
 
 	wxBoxSizer* sizerRefRuns = new wxBoxSizer(wxVERTICAL);
-	sizerRefRuns->Add(m_ctrlRefRuns, 1, wxALL|wxEXPAND, 5);
+	sizerRefRuns->Add(m_ctrlRefRuns, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerRefBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerRefBtns->Add(btnRefNew, 0, wxALL, 5);
-	sizerRefBtns->Add(m_ctrlRefAddMe, 0, wxALL, 5);
-	sizerRefBtns->Add(m_ctrlRefEdit, 0, wxALL, 5);
-	sizerRefBtns->Add(m_ctrlRefDelete, 0, wxALL, 5);
-	sizerRefRuns->Add(sizerRefBtns, 0, wxEXPAND, 0);
+	sizerRefBtns->Add(btnRefNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerRefBtns->Add(m_ctrlRefAddMe, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerRefBtns->Add(m_ctrlRefEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerRefBtns->Add(m_ctrlRefDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerRefRuns->Add(sizerRefBtns, 0, wxEXPAND | wxLEFT | wxRIGHT| wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	panelRefRuns->SetSizer(sizerRefRuns);
 	panelRefRuns->Layout();
@@ -1624,23 +1624,23 @@ CDlgRun::CDlgRun(
 	wxBoxSizer* sizerCRCD = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerDisplay = new wxBoxSizer(wxVERTICAL);
-	sizerDisplay->Add(textCRCD, 0, wxALL, 5);
-	sizerDisplay->Add(m_CRCDDisplay, 1, wxALL|wxEXPAND, 5);
+	sizerDisplay->Add(textCRCD, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerDisplay->Add(m_CRCDDisplay, 1, wxEXPAND, 0);
 
-	sizerCRCD->Add(sizerDisplay, 1, wxEXPAND, 0);
+	sizerCRCD->Add(sizerDisplay, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtnsCRCD = new wxBoxSizer(wxVERTICAL);
 	if (m_ctrlCourse)
-		sizerBtnsCRCD->Add(m_ctrlCourse, 0, wxALL, 5);
+		sizerBtnsCRCD->Add(m_ctrlCourse, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	if (m_ctrlCRCDView)
-		sizerBtnsCRCD->Add(m_ctrlCRCDView, 0, wxALL, 5);
-	sizerBtnsCRCD->Add(m_ctrlCRCDCopy, 0, wxALL, 5);
+		sizerBtnsCRCD->Add(m_ctrlCRCDView, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtnsCRCD->Add(m_ctrlCRCDCopy, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	if (m_ctrlIncImage)
-		sizerBtnsCRCD->Add(m_ctrlIncImage, 0, wxALL, 5);
+		sizerBtnsCRCD->Add(m_ctrlIncImage, 0, wxBOTTOM, 3);
 	if (textImageDesc)
-		sizerBtnsCRCD->Add(textImageDesc, 0, wxALL, 5);
+		sizerBtnsCRCD->Add(textImageDesc, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
-	sizerCRCD->Add(sizerBtnsCRCD, 0, wxEXPAND, 0);
+	sizerCRCD->Add(sizerBtnsCRCD, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	panelCRCD->SetSizer(sizerCRCD);
 	panelCRCD->Layout();
@@ -1648,26 +1648,26 @@ CDlgRun::CDlgRun(
 	notebook->AddPage(panelCRCD, _("IDD_RUN_CRCD"), false);
 
 	wxBoxSizer* sizerLinks = new wxBoxSizer(wxVERTICAL);
-	sizerLinks->Add(m_ctrlLinks, 1, wxALL|wxEXPAND, 5);
+	sizerLinks->Add(m_ctrlLinks, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerLinkBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerLinkBtns->Add(btnLinkNew, 0, wxALL, 5);
-	sizerLinkBtns->Add(m_ctrlLinkEdit, 0, wxALL, 5);
-	sizerLinkBtns->Add(m_ctrlLinkDelete, 0, wxALL, 5);
+	sizerLinkBtns->Add(btnLinkNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerLinkBtns->Add(m_ctrlLinkEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerLinkBtns->Add(m_ctrlLinkDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerLinkBtns->Add(0, 0, 1, wxEXPAND, 0);
-	sizerLinkBtns->Add(m_ctrlLinkOpen, 0, wxALL, 5);
+	sizerLinkBtns->Add(m_ctrlLinkOpen, 0, 0, 0);
 
-	sizerLinks->Add(sizerLinkBtns, 0, wxEXPAND, 0);
+	sizerLinks->Add(sizerLinkBtns, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	panelLinks->SetSizer(sizerLinks);
 	panelLinks->Layout();
 	sizerLinks->Fit(panelLinks);
 	notebook->AddPage(panelLinks, _("IDD_RUN_LINK"), false);
 
-	bSizer->Add(notebook, 1, wxEXPAND | wxALL, 5);
+	bSizer->Add(notebook, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	FillDivisions(false); // This will call UpdateControls();
 	FillJudges();

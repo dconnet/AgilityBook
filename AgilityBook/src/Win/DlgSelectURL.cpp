@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2013-01-12 Clean up spacing.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -45,7 +46,7 @@ CDlgSelectURL::CDlgSelectURL(
 	// Controls (these are done first to control tab order)
 
 	m_textCtrl = new CTextCtrl(this, wxID_ANY, m_Name,
-		wxDefaultPosition, wxSize(300, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 170), -1), 0,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	m_textCtrl->SetHelpText(_("HIDC_SELECTURL_NAME"));
 	m_textCtrl->SetToolTip(_("HIDC_SELECTURL_NAME"));
@@ -58,18 +59,17 @@ CDlgSelectURL::CDlgSelectURL(
 	btnSelect->SetToolTip(_("HIDC_SELECTURL_FILENAME"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bTextSizer = new wxBoxSizer(wxHORIZONTAL);
-	bTextSizer->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	bTextSizer->Add(btnSelect, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
+	bTextSizer->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bTextSizer->Add(btnSelect, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT, 0);
 
-	bSizer->Add(bTextSizer, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(bTextSizer, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(sdbSizer, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

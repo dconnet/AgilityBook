@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2010-03-28 Added ability to import/export program settings.
@@ -156,7 +157,7 @@ CWizardStart::CWizardStart(
 	}
 
 	m_ctrlList = new wxListBox(this, wxID_ANY,
-		wxDefaultPosition, wxSize(200, -1),
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 115), -1),
 		0, nullptr, wxLB_HSCROLL|wxLB_SINGLE);
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CWizardStart::OnSelchangeExportList);
 	m_ctrlList->SetHelpText(_("HIDC_WIZARD_START_LIST"));
@@ -165,30 +166,31 @@ CWizardStart::CWizardStart(
 	wxStaticBox* boxDesc = new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_START_DESCRIPTION"));
 
 	m_ctrlDesc = new wxStaticText(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(200, -1), wxST_NO_AUTORESIZE);
-	m_ctrlDesc->Wrap(200);
+		wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
+	m_ctrlDesc->Wrap(wxDLG_UNIT_X(this, 115));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerImportExport = new wxStaticBoxSizer(boxImportExport, wxVERTICAL);
+	wxBoxSizer* sizerRadio = new wxBoxSizer(wxVERTICAL);
 	if (radioExcel)
-		sizerImportExport->Add(radioExcel, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+		sizerRadio->Add(radioExcel, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	if (radioCalc)
-		sizerImportExport->Add(radioCalc, 0, wxLEFT|wxRIGHT|wxTOP, 5);
-	sizerImportExport->Add(radioSpread, 0, wxLEFT|wxRIGHT|wxTOP, 5);
-	sizerImportExport->Add(radioArb, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxTOP, 5);
-	bSizer->Add(sizerImportExport, 0, wxALL, 5);
+		sizerRadio->Add(radioCalc, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerRadio->Add(radioSpread, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerRadio->Add(radioArb, 0, 0, 0);
+	sizerImportExport->Add(sizerRadio, 0, wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerImportExport, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerAction = new wxBoxSizer(wxHORIZONTAL);
-	sizerAction->Add(m_ctrlList, 1, wxALL|wxEXPAND, 5);
+	sizerAction->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxStaticBoxSizer* sizerDesc = new wxStaticBoxSizer(boxDesc, wxVERTICAL);
-	sizerDesc->Add(m_ctrlDesc, 1, wxALL|wxEXPAND, 5);
+	sizerDesc->Add(m_ctrlDesc, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 
-	sizerAction->Add(sizerDesc, 1, wxEXPAND|wxLEFT|wxRIGHT, 5);
+	sizerAction->Add(sizerDesc, 1, wxEXPAND, 0);
 
 	bSizer->Add(sizerAction, 1, wxEXPAND, 0);
 

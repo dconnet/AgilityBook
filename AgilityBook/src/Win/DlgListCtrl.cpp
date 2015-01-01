@@ -591,7 +591,7 @@ bool CDlgListCtrl::Create(
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
 	bSizerSide->Add(btnOk, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(btnCancel, 0, 0, 0);
+	bSizerSide->Add(btnCancel, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
 	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
 	bSizerSide->Add(m_ctrlUp, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
 	bSizerSide->Add(m_ctrlDown, 0, 0, 0);
@@ -603,7 +603,7 @@ bool CDlgListCtrl::Create(
 	wxBoxSizer* bSizerEdit = new wxBoxSizer(wxHORIZONTAL);
 	bSizerEdit->Add(m_ctrlNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 2));
 	bSizerEdit->Add(m_ctrlEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 2));
-	bSizerEdit->Add(m_ctrlDelete, 0, 0, 0);
+	bSizerEdit->Add(m_ctrlDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 2));
 	bSizerEdit->Add(0, 0, 1, wxEXPAND, 0);
 	bSizerEdit->Add(m_ctrlCreateTrial, 0, 0, 0);
 

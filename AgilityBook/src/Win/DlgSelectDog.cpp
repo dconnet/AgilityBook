@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-10 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -84,13 +85,12 @@ CDlgSelectDog::CDlgSelectDog(
 	m_checkList->SetToolTip(_("HIDC_PICK_NAME"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_checkList, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(m_checkList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

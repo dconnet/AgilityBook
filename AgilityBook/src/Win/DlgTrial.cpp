@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2014-02-20 Trial start date was not properly saved.
  * 2012-05-22 Change KillFocus handler to text change handler.
  * 2012-05-07 Added autocompletion to combo boxes.
@@ -51,9 +52,9 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define DEF_CTRL_WIDTH	260
-#define DEF_CTRL_HEIGHT	70
-#define DEF_NOTE_WIDTH	170
+#define DEF_CTRL_WIDTH	150
+#define DEF_CTRL_HEIGHT	35
+#define DEF_NOTE_WIDTH	95
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -163,7 +164,7 @@ CDlgTrial::CDlgTrial(
 	textNotes->Wrap(-1);
 
 	CSpellCheckCtrl* ctrlTrialNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, DEF_CTRL_HEIGHT), wxTE_MULTILINE,
+		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, DEF_CTRL_HEIGHT)), wxTE_MULTILINE,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlTrialNotes->SetHelpText(_("HIDC_TRIAL_NOTES"));
 	ctrlTrialNotes->SetToolTip(_("HIDC_TRIAL_NOTES"));
@@ -179,7 +180,7 @@ CDlgTrial::CDlgTrial(
 	noteLocationNotes->Wrap(-1);
 
 	m_ctrlLocationInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(DEF_NOTE_WIDTH, -1), true);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, DEF_NOTE_WIDTH), -1), true);
 	m_ctrlLocationInfo->SetHelpText(_("HIDC_TRIAL_LOCATION_INFO"));
 	m_ctrlLocationInfo->SetToolTip(_("HIDC_TRIAL_LOCATION_INFO"));
 
@@ -210,7 +211,7 @@ CDlgTrial::CDlgTrial(
 	m_ctrlDelete->SetToolTip(_("HIDC_TRIAL_CLUB_DELETE"));
 
 	m_ctrlClubs = new CReportListCtrl(this,
-		wxDefaultPosition, wxSize(DEF_CTRL_WIDTH, DEF_CTRL_HEIGHT),
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(DEF_CTRL_WIDTH, DEF_CTRL_HEIGHT)),
 		true, CReportListCtrl::eNoSortHeader, true);
 	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgTrial::OnItemSelectedClubs);
 	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgTrial::OnItemActivatedClubs);
@@ -229,12 +230,11 @@ CDlgTrial::CDlgTrial(
 	textClubNotes->Wrap(-1);
 
 	m_ctrlClubInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(DEF_NOTE_WIDTH, -1), true);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, DEF_NOTE_WIDTH), -1), true);
 	m_ctrlClubInfo->SetHelpText(_("HIDC_TRIAL_CLUB_INFO"));
 	m_ctrlClubInfo->SetToolTip(_("HIDC_TRIAL_CLUB_INFO"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -243,31 +243,31 @@ CDlgTrial::CDlgTrial(
 	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_ALL);
 
 	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
-	sizerDate->Add(textStart, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
-	sizerDate->Add(m_ctrlStart, 0, wxLEFT|wxRIGHT, 5);
+	sizerDate->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDate->Add(m_ctrlStart, 0, 0, 0);
 
 	wxBoxSizer* sizerLocation = new wxBoxSizer(wxHORIZONTAL);
-	sizerLocation->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
-	sizerLocation->Add(m_ctrlLocation, 1, wxLEFT|wxRIGHT|wxEXPAND, 5);
+	sizerLocation->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerLocation->Add(m_ctrlLocation, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerLocationNotes = new wxBoxSizer(wxHORIZONTAL);
-	sizerLocationNotes->Add(m_ctrlLocationNotes, 0, wxALIGN_BOTTOM|wxLEFT|wxRIGHT, 5);
-	sizerLocationNotes->Add(noteLocationNotes, 0, wxALIGN_BOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerLocationNotes->Add(m_ctrlLocationNotes, 0, wxALIGN_BOTTOM | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerLocationNotes->Add(noteLocationNotes, 0, wxALIGN_BOTTOM, 0);
 
 	wxBoxSizer* sizerNote = new wxBoxSizer(wxHORIZONTAL);
-	sizerNote->Add(textNotes, 0, wxALIGN_TOP|wxLEFT|wxRIGHT, 5);
-	sizerNote->Add(ctrlTrialNotes, 1, wxLEFT|wxRIGHT|wxEXPAND, 5);
+	sizerNote->Add(textNotes, 0, wxALIGN_TOP | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerNote->Add(ctrlTrialNotes, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerClub = new wxBoxSizer(wxHORIZONTAL);
-	sizerClub->Add(textClub, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
+	sizerClub->Add(textClub, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerClub->Add(0, 0, 1, wxEXPAND, 0);
-	sizerClub->Add(btnNew, 0, wxLEFT|wxRIGHT, 5);
-	sizerClub->Add(m_ctrlEdit, 0, wxLEFT|wxRIGHT, 5);
-	sizerClub->Add(m_ctrlDelete, 0, wxLEFT|wxRIGHT, 5);
+	sizerClub->Add(btnNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerClub->Add(m_ctrlEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerClub->Add(m_ctrlDelete, 0, 0, 0);
 
 	wxBoxSizer* sizerClubNotes = new wxBoxSizer(wxHORIZONTAL);
-	sizerClubNotes->Add(m_ctrlClubNotes, 0, wxALIGN_BOTTOM|wxLEFT|wxRIGHT, 5);
-	sizerClubNotes->Add(textClubNotes, 0, wxALIGN_BOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerClubNotes->Add(m_ctrlClubNotes, 0, wxALIGN_BOTTOM | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerClubNotes->Add(textClubNotes, 0, wxALIGN_BOTTOM, 0);
 
 	sizerGrid->AddGrowableCol(0, 3);
 	sizerGrid->AddGrowableCol(1, 2);
@@ -275,25 +275,25 @@ CDlgTrial::CDlgTrial(
 	sizerGrid->AddGrowableRow(4);
 
 	// row 0
-	sizerGrid->Add(sizerDate, 0, wxTOP|wxBOTTOM|wxEXPAND, 5);
-	sizerGrid->Add(checkVerified, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+	sizerGrid->Add(sizerDate, 0, wxEXPAND | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(checkVerified, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 	// row 1
-	sizerGrid->Add(sizerLocation, 0, wxTOP|wxEXPAND, 5);
-	sizerGrid->Add(sizerLocationNotes, 0, wxTOP|wxEXPAND, 5);
+	sizerGrid->Add(sizerLocation, 0, wxEXPAND | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(sizerLocationNotes, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 	// row 2
-	sizerGrid->Add(sizerNote, 0, wxTOP|wxBOTTOM|wxEXPAND, 5);
-	sizerGrid->Add(m_ctrlLocationInfo, 0, wxALL|wxEXPAND, 5);
+	sizerGrid->Add(sizerNote, 0, wxEXPAND | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(m_ctrlLocationInfo, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 	// row 3
-	sizerGrid->Add(sizerClub, 0, wxTOP|wxEXPAND, 5);
-	sizerGrid->Add(sizerClubNotes, 0, wxTOP|wxEXPAND, 5);
+	sizerGrid->Add(sizerClub, 0, wxEXPAND | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(sizerClubNotes, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 	// row 4
-	sizerGrid->Add(m_ctrlClubs, 0, wxALL|wxEXPAND, 5);
-	sizerGrid->Add(m_ctrlClubInfo, 0, wxALL|wxEXPAND, 5);
+	sizerGrid->Add(m_ctrlClubs, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(m_ctrlClubInfo, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerGrid, 1, wxEXPAND, 5);
+	bSizer->Add(sizerGrid, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

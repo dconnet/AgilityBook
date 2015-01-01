@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-12-31 Select run on startup.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2011-10-14 Changed how reorder dlg is used, made run reorder a tree.
@@ -110,7 +111,7 @@ void CDlgReorder::Init(wxWindow* pParent)
 	if (m_Dogs)
 	{
 		ctrl = m_ctrlList = new wxListBox(this, wxID_ANY,
-			wxDefaultPosition, wxSize(150, 100),
+			wxDefaultPosition, wxDLG_UNIT(this, wxSize(85, 50)),
 			0, nullptr,
 			wxLB_NEEDED_SB|wxLB_SINGLE);
 		BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgReorder::OnListSelected);
@@ -120,7 +121,7 @@ void CDlgReorder::Init(wxWindow* pParent)
 	else if (m_Trial)
 	{
 		ctrl = m_ctrlTree = new CTreeCtrl(this, wxID_ANY,
-			wxDefaultPosition,wxSize(250, 200),
+			wxDefaultPosition, wxDLG_UNIT(this, wxSize(145, 50)),
 			wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 		BIND_OR_CONNECT_CTRL(m_ctrlTree, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgReorder::OnTreeSelected);
 		m_ctrlTree->SetHelpText(_("HIDC_REORDER_LIST"));
@@ -146,26 +147,25 @@ void CDlgReorder::Init(wxWindow* pParent)
 	m_ctrlDown->SetToolTip(_("HIDC_REORDER_MOVE_DOWN"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bSizerList = new wxBoxSizer(wxHORIZONTAL);
 	if (m_ctrlList)
-		bSizerList->Add(m_ctrlList, 1, wxALL|wxEXPAND, 5);
+		bSizerList->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	else if (m_ctrlTree)
-		bSizerList->Add(m_ctrlTree, 1, wxALL|wxEXPAND, 5);
+		bSizerList->Add(m_ctrlTree, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxALL, 5);
-	bSizerSide->Add(btnCancel, 0, wxALL, 5);
+	bSizerSide->Add(btnOk, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(btnCancel, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerSide->Add(m_ctrlUp, 0, wxALL, 5);
-	bSizerSide->Add(m_ctrlDown, 0, wxALL, 5);
+	bSizerSide->Add(m_ctrlUp, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(m_ctrlDown, 0, 0, 0);
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
 
-	bSizer->Add(bSizerList, 1, wxEXPAND, 0);
+	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	if (m_Dogs && m_ctrlList)
 	{

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-05-22 Change KillFocus handler to text change handler.
  * 2012-05-07 Added autocompletion to combo boxes.
  * 2012-02-16 Fix initial focus.
@@ -95,7 +96,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textPlace->Wrap(-1);
 
 	CTextCtrl* ctrlPlace = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(40, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 25), -1), 0,
 		CGenericValidator(&m_Place));
 	ctrlPlace->SetHelpText(_("HIDC_REFRUN_PLACE"));
 	ctrlPlace->SetToolTip(_("HIDC_REFRUN_PLACE"));
@@ -116,7 +117,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textTime->Wrap(-1);
 
 	m_ctrlTime = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(60, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 35), -1), 0,
 		CGenericValidator(&m_Time));
 	BIND_OR_CONNECT_CTRL(m_ctrlTime, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgReferenceRun::OnEnChangeRefRunTime);
 	m_ctrlTime->SetHelpText(_("HIDC_REFRUN_TIME"));
@@ -128,7 +129,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textYPS->Wrap(-1);
 
 	m_ctrlYPS = new wxStaticText(this, wxID_ANY,
-		strYPS.c_str(), wxDefaultPosition, wxSize(40, -1),
+		strYPS.c_str(), wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 25), -1),
 		wxALIGN_CENTRE|wxSTATIC_BORDER);
 	m_ctrlYPS->Wrap(-1);
 
@@ -138,7 +139,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textScore->Wrap(-1);
 
 	CTextCtrl* ctrlScore = new CTextCtrl(this, wxID_ANY, wxString(),
-		wxDefaultPosition, wxSize(40, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 25), -1), 0,
 		CTrimValidator(&m_Points, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlScore->SetHelpText(_("HIDC_REFRUN_POINTS"));
 	ctrlScore->SetToolTip(_("HIDC_REFRUN_POINTS"));
@@ -156,7 +157,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	}
 	choices.Sort();
 	CAutoFillComboBox* ctrlHt = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1),
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1),
 		choices, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHt->SetHelpText(_("HIDC_REFRUN_HEIGHT"));
@@ -207,52 +208,51 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textNotes->Wrap(-1);
 
 	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(this, wxID_ANY, wxString(),
-		wxDefaultPosition, wxSize(-1, 70), 0,
+		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_X(this, 35)), 0,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_REFRUN_NOTES"));
 	ctrlNotes->SetToolTip(_("HIDC_REFRUN_NOTES"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerStats = new wxBoxSizer(wxHORIZONTAL);
-	sizerStats->Add(textPlace, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStats->Add(ctrlPlace, 0, wxALL, 5);
-	sizerStats->Add(textQ, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStats->Add(ctrlQ, 0, wxALL, 5);
-	sizerStats->Add(textTime, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStats->Add(m_ctrlTime, 0, wxALL, 5);
-	sizerStats->Add(textYPS, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStats->Add(m_ctrlYPS, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStats->Add(textScore, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStats->Add(ctrlScore, 0, wxALL, 5);
-	sizerStats->Add(textHt, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerStats->Add(ctrlHt, 0, wxALL, 5);
+	sizerStats->Add(textPlace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(ctrlPlace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(textQ, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(ctrlQ, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(textTime, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(m_ctrlTime, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(textYPS, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(m_ctrlYPS, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(textScore, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(ctrlScore, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(textHt, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerStats->Add(ctrlHt, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerStats, 0, wxEXPAND, 0);
+	bSizer->Add(sizerStats, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerName->Add(ctrlName, 1, wxALL, 5);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(ctrlName, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerName, 0, wxEXPAND, 0);
+	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBreed = new wxBoxSizer(wxHORIZONTAL);
-	sizerBreed->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerBreed->Add(ctrlBreed, 1, wxALL, 5);
+	sizerBreed->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerBreed->Add(ctrlBreed, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerBreed, 0, wxEXPAND, 0);
+	bSizer->Add(sizerBreed, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerNotes = new wxBoxSizer(wxHORIZONTAL);
-	sizerNotes->Add(textNotes, 0, wxALIGN_TOP|wxALL, 5);
-	sizerNotes->Add(ctrlNotes, 1, wxALL|wxEXPAND, 5);
+	sizerNotes->Add(textNotes, 0, wxALIGN_TOP | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerNotes->Add(ctrlNotes, 1, wxEXPAND, 0);
 
-	bSizer->Add(sizerNotes, 1, wxEXPAND, 0);
+	bSizer->Add(sizerNotes, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

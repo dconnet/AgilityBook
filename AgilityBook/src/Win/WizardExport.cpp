@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-07-25 Adhere to RFC4180 and use CRLF between records.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2011-01-08 Fixed export (was writing unicode instead of utf8)
@@ -227,7 +228,6 @@ CWizardExport::CWizardExport(
 	m_ctrlPreview->SetToolTip(_("HIDC_WIZARD_EXPORT_PREVIEW"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -238,37 +238,37 @@ CWizardExport::CWizardExport(
 	wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, 0, 0);
 	sizerDelim2->SetFlexibleDirection(wxBOTH);
 	sizerDelim2->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerDelim2->Add(m_ctrlTab, 0, wxLEFT|wxRIGHT|wxTOP, 5);
-	sizerDelim2->Add(m_ctrlColon, 0, wxLEFT|wxRIGHT|wxTOP, 5);
-	sizerDelim2->Add(m_ctrlComma, 0, wxLEFT|wxRIGHT|wxTOP, 5);
-	sizerDelim2->Add(m_ctrlSpace, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerDelim2->Add(m_ctrlTab, 0, wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlColon, 0, wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlComma, 0, wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlSpace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
 
 	wxBoxSizer* sizerOther = new wxBoxSizer(wxHORIZONTAL);
-	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerOther->Add(m_ctrlOtherChar, 0, wxALL, 5);
+	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerOther->Add(m_ctrlOtherChar, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerDelim2->Add(sizerOther, 1, wxEXPAND, 0);
+	sizerDelim2->Add(sizerOther, 1, wxEXPAND | wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND, 0);
+	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 0);
+	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerAssign = new wxBoxSizer(wxHORIZONTAL);
-	sizerAssign->Add(m_ctrlAssign, 0, wxALL, 5);
+	sizerAssign->Add(m_ctrlAssign, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerFormat = new wxBoxSizer(wxHORIZONTAL);
-	sizerFormat->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerFormat->Add(m_ctrlDateFormat, 0, wxALL, 5);
+	sizerFormat->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerFormat->Add(m_ctrlDateFormat, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerAssign->Add(sizerFormat, 0, wxALIGN_TOP, 5);
+	sizerAssign->Add(sizerFormat, 0, wxALIGN_TOP, 0);
 
 	sizerOptions->Add(0, 0, 1, wxEXPAND, 0);
 	sizerOptions->Add(sizerAssign, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerOptions, 0, wxEXPAND, 0);
-	bSizer->Add(textPreview, 0, wxLEFT|wxRIGHT|wxTOP, 5);
-	bSizer->Add(m_ctrlPreview, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(sizerOptions, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(textPreview, 0, 0, 0);
+	bSizer->Add(m_ctrlPreview, 1, wxEXPAND, 0);
 
 	SetSizer(bSizer);
 	bSizer->Fit(this);

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-11 Ported to wxWidgets.
@@ -112,39 +113,38 @@ CDlgRegNum::CDlgRegNum(
 	checkReceived->SetToolTip(_("HIDC_REGNUM_RECEIVED"));
 
 	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(350, 100),
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(200, 50)),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Note, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlDesc->SetHelpText(_("HIDC_REGNUM_NOTE"));
 	ctrlDesc->SetToolTip(_("HIDC_REGNUM_NOTE"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerVenue->Add(m_ctrlVenues, 0, wxALL, 5);
+	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerVenue->Add(m_ctrlVenues, 0, 0, 0);
 
-	bSizer->Add(sizerVenue, 0, wxEXPAND, 0);
+	bSizer->Add(sizerVenue, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerRegNum = new wxBoxSizer(wxHORIZONTAL);
-	sizerRegNum->Add(textRegNum, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerRegNum->Add(ctrlRegNum, 0, wxALL, 5);
+	sizerRegNum->Add(textRegNum, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerRegNum->Add(ctrlRegNum, 0, 0, 0);
 
-	bSizer->Add(sizerRegNum, 0, wxEXPAND, 0);
+	bSizer->Add(sizerRegNum, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerHeight = new wxBoxSizer(wxHORIZONTAL);
-	sizerHeight->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerHeight->Add(ctrlHeight, 0, wxALL, 5);
+	sizerHeight->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHeight->Add(ctrlHeight, 0, 0, 0);
 
-	bSizer->Add(sizerHeight, 0, wxEXPAND, 0);
-	bSizer->Add(checkReceived, 0, wxALL, 5);
-	bSizer->Add(ctrlDesc, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(sizerHeight, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(checkReceived, 0, wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

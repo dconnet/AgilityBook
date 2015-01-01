@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-02-11 Ported to wxWidgets.
  * 2008-09-05 Put progress dialog into separate UI thread
@@ -122,16 +123,15 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 		m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(400 ,-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer;
 	bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_ctrlMessage, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(m_ctrlMessage, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	for (size_t i = 0; i < m_ctrlBars.size(); ++i)
-		bSizer->Add(m_ctrlBars[i].gauge, 0, wxALL|wxEXPAND, 5);
+		bSizer->Add(m_ctrlBars[i].gauge, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 	m_ctrlCancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
 	BIND_OR_CONNECT_CTRL(m_ctrlCancel, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgProgress::OnCancel);
 

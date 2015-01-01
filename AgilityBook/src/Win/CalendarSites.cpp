@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-30 Changed pixels to dialog units.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2010-03-05 Changed architecture of ICalendarSite.
@@ -736,7 +737,7 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 
 	// Controls (these are done first to control tab order)
 
-	m_ctrlPlugins = new CSortCheckTreeCtrl(this, wxDefaultPosition, wxSize(400, -1));
+	m_ctrlPlugins = new CSortCheckTreeCtrl(this, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 230), -1));
 	BIND_OR_CONNECT_CTRL(m_ctrlPlugins, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgCalendarPlugins::OnSelectionChanged);
 	BIND_OR_CONNECT_CTRL(m_ctrlPlugins, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CDlgCalendarPlugins::OnItemActivated);
 	BIND_OR_CONNECT_CTRL(m_ctrlPlugins, wxEVT_COMMAND_TREE_CHECK_CHANGED, wxEventHandler, CDlgCalendarPlugins::OnCheckChange);
@@ -744,7 +745,7 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	m_ctrlPlugins->SetToolTip(_("HIDC_PLUGIN_TREE"));
 
 	m_ctrlDetails = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, 75),
+		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 40)),
 		wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
 	m_ctrlDetails->SetBackgroundColour(GetBackgroundColour());
 	m_ctrlDetails->SetHelpText(_("HIDC_PLUGIN_DETAILS"));
@@ -828,37 +829,36 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	}
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerPlugins = new wxBoxSizer(wxVERTICAL);
-	sizerPlugins->Add(m_ctrlPlugins, 1, wxALL|wxEXPAND, 5);
-	sizerPlugins->Add(m_ctrlDetails, 0, wxALL|wxEXPAND, 5);
+	sizerPlugins->Add(m_ctrlPlugins, 1, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerPlugins->Add(m_ctrlDetails, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerPlugins, 1, wxEXPAND, 0);
+	bSizer->Add(sizerPlugins, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlRead, 0, wxALL, 5);
-	sizerBtns->Add(m_ctrlAdd, 0, wxALL, 5);
-	sizerBtns->Add( 
+	sizerBtns->Add(m_ctrlRead, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlAdd, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0, wxEXPAND | wxALL, 5 );
-	sizerBtns->Add(m_ctrlEnable, 0, wxALL, 5);
-	sizerBtns->Add(m_ctrlQuery, 0, wxALL, 5);
-	sizerBtns->Add( 
+		0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlEnable, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlQuery, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0, wxEXPAND | wxALL, 5 );
-	sizerBtns->Add(btnNew, 0, wxALL, 5);
-	sizerBtns->Add(m_ctrlEdit, 0, wxALL, 5);
-	sizerBtns->Add(m_ctrlDelete, 0, wxALL, 5);
-	sizerBtns->Add( 
+		0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(btnNew, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlEdit, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlDelete, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0, wxEXPAND | wxALL, 5 );
+		0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
-	sizerBtns->Add(btnClose, 0, wxALL, 5);
+	sizerBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(sizerBtns, 0, wxEXPAND, 0);
+	bSizer->Add(sizerBtns, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

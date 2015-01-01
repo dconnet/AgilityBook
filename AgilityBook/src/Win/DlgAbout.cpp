@@ -252,7 +252,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	sizerBox->Add(sizerText, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxHORIZONTAL);
-	sizerButtons->Add(updates, 0, wxALIGN_LEFT, 0);
+	sizerButtons->Add(updates, 0, wxALIGN_LEFT | wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerButtons->Add(0, 0, 1, wxEXPAND, 0);
 	sizerButtons->Add(ok, 0, wxALIGN_RIGHT, 0);
 
