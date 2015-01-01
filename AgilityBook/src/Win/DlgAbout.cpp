@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-30 Changed pixels to dialog units.
  * 2012-09-23 Fix text wrapping on Mac (wx2.9).
  * 2012-07-13 Fix text wrapping on Mac.
  * 2011-12-22 Switch to using Bind on wx2.9+.

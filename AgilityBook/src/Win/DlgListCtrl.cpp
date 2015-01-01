@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-11 Ported to wxWidgets.
@@ -519,7 +520,7 @@ bool CDlgListCtrl::Create(
 	// Controls (these are done first to control tab order)
 
 	m_ctrlList = new CReportListCtrl(this,
-		wxDefaultPosition, wxSize(400,150),
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 80)),
 		true, CReportListCtrl::eNoSortHeader, true, bHasImageList);
 	m_imgTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
 	m_imgPlan = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCheck));
@@ -582,32 +583,31 @@ bool CDlgListCtrl::Create(
 	m_ctrlCreateTrial->Show(false);
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bSizerList = new wxBoxSizer(wxHORIZONTAL);
-	bSizerList->Add(m_ctrlList, 1, wxALL|wxEXPAND, 5);
+	bSizerList->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxALL, 5);
-	bSizerSide->Add(btnCancel, 0, wxALL, 5);
+	bSizerSide->Add(btnOk, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(btnCancel, 0, 0, 0);
 	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerSide->Add(m_ctrlUp, 0, wxALL, 5);
-	bSizerSide->Add(m_ctrlDown, 0, wxALL, 5);
+	bSizerSide->Add(m_ctrlUp, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(m_ctrlDown, 0, 0, 0);
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
 
-	bSizer->Add(bSizerList, 1, wxEXPAND, 0);
+	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerEdit = new wxBoxSizer(wxHORIZONTAL);
-	bSizerEdit->Add(m_ctrlNew, 0, wxALL, 5);
-	bSizerEdit->Add(m_ctrlEdit, 0, wxALL, 5);
-	bSizerEdit->Add(m_ctrlDelete, 0, wxALL, 5);
+	bSizerEdit->Add(m_ctrlNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 2));
+	bSizerEdit->Add(m_ctrlEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 2));
+	bSizerEdit->Add(m_ctrlDelete, 0, 0, 0);
 	bSizerEdit->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerEdit->Add(m_ctrlCreateTrial, 0, wxALL, 5);
+	bSizerEdit->Add(m_ctrlCreateTrial, 0, 0, 0);
 
-	bSizer->Add(bSizerEdit, 0, wxEXPAND, 0);
+	bSizer->Add(bSizerEdit, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

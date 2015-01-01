@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-11 Ported to wxWidgets.
@@ -142,30 +143,29 @@ CDlgEventSelect::CDlgEventSelect(
 	m_ctrlEvents->SetToolTip(_("HIDC_EVENT_SELECT_EVENT"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-	wxBoxSizer* sizer1 = new wxBoxSizer(wxHORIZONTAL);
-	sizer1->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizer1->Add(m_ctrlDivisions, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+	wxBoxSizer* sizerDiv = new wxBoxSizer(wxHORIZONTAL);
+	sizerDiv->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDiv->Add(m_ctrlDivisions, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
 
-	bSizer->Add(sizer1, 0, wxEXPAND, 0);
+	bSizer->Add(sizerDiv, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
-	sizer2->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizer2->Add(m_ctrlLevels, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+	wxBoxSizer* sizerLevel = new wxBoxSizer(wxHORIZONTAL);
+	sizerLevel->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerLevel->Add(m_ctrlLevels, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
 
-	bSizer->Add(sizer2, 0, wxEXPAND, 0);
+	bSizer->Add(sizerLevel, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
-	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
-	sizer3->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizer3->Add(m_ctrlEvents, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+	wxBoxSizer* sizerEvent = new wxBoxSizer(wxHORIZONTAL);
+	sizerEvent->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerEvent->Add(m_ctrlEvents, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
 
-	bSizer->Add(sizer3, 1, wxEXPAND, 0);
+	bSizer->Add(sizerEvent, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
 	assert(!!m_ctrlOk);
 

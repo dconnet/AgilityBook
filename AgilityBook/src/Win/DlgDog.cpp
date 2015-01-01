@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -93,11 +94,11 @@ static struct
 	wchar_t const* idText;
 } const colTitleInfo[] =
 {
-	{wxLIST_FORMAT_LEFT, 10, nullptr},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_DATE")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_VENUE")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_TITLE")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_NAME")},
+	{wxLIST_FORMAT_LEFT, 5, nullptr},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_DATE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_VENUE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_TITLE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_NAME")},
 };
 static int const nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
 
@@ -109,11 +110,11 @@ static struct
 	wchar_t const* idText;
 } const colRegNumInfo[] =
 {
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_VENUE")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_NUMBER")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_HEIGHT")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_RECEIVED")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_NOTE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_VENUE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_NUMBER")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_HEIGHT")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_RECEIVED")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_NOTE")},
 };
 static int const nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0]);
 
@@ -125,17 +126,17 @@ static struct
 	wchar_t const* idText;
 } const colExistingPointsInfo[] =
 {
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_DATE")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_TYPE")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_POINTS")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_OTHERPOINTS")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_VENUE")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_MULTIQ")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_DIVISION")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_LEVEL")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_EVENT")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_SUBNAME")},
-	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_COMMENTS")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_DATE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_TYPE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_POINTS")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_OTHERPOINTS")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_VENUE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_MULTIQ")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_DIVISION")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_LEVEL")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_EVENT")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_SUBNAME")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_COMMENTS")},
 };
 static int const nColExistingPointsInfo = sizeof(colExistingPointsInfo) / sizeof(colExistingPointsInfo[0]);
 
@@ -655,7 +656,7 @@ CDlgDog::CDlgDog(
 
 	m_ctrlAge = new wxStaticText(panelProp, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(40, -1), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), wxALIGN_CENTRE | wxST_NO_AUTORESIZE | wxSUNKEN_BORDER);
 	m_ctrlAge->Wrap(-1);
 
 	wxStaticText* textBDay = new wxStaticText(panelProp, wxID_ANY,
@@ -693,7 +694,7 @@ CDlgDog::CDlgDog(
 	textNotes->Wrap(-1);
 
 	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(panelProp, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, 180), wxTE_MULTILINE|wxTE_WORDWRAP,
+		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 80)), wxTE_MULTILINE | wxTE_WORDWRAP,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_DOG_NOTES"));
 	ctrlNotes->SetToolTip(_("HIDC_DOG_NOTES"));
@@ -703,7 +704,7 @@ CDlgDog::CDlgDog(
 	wxPanel* panelTitles = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlTitles = new CReportListCtrl(panelTitles, wxDefaultPosition, wxSize(500, -1), true, CReportListCtrl::eSortHeader, true);
+	m_ctrlTitles = new CReportListCtrl(panelTitles, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), true, CReportListCtrl::eSortHeader, true);
 	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgDog::OnTitleColumnClick);
 	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgDog::OnTitleItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgDog::OnTitleItemActivated);
@@ -719,7 +720,7 @@ CDlgDog::CDlgDog(
 	int i;
 	for (i = 0; i < nColTitleInfo; ++i)
 	{
-		m_ctrlTitles->InsertColumn(i, wxEmptyString, colTitleInfo[i].fmt, colTitleInfo[i].cx);
+		m_ctrlTitles->InsertColumn(i, wxEmptyString, colTitleInfo[i].fmt, wxDLG_UNIT_X(this, colTitleInfo[i].cx));
 	}
 	SetColumnTitleHeaders();
 
@@ -757,7 +758,7 @@ CDlgDog::CDlgDog(
 	wxPanel* panelRegNums = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlRegNums = new CReportListCtrl(panelRegNums, wxDefaultPosition, wxSize(500, -1), true, CReportListCtrl::eSortHeader, true);
+	m_ctrlRegNums = new CReportListCtrl(panelRegNums, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), true, CReportListCtrl::eSortHeader, true);
 	BIND_OR_CONNECT_CTRL(m_ctrlRegNums, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgDog::OnRegNumColumnClick);
 	BIND_OR_CONNECT_CTRL(m_ctrlRegNums, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgDog::OnRegNumItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlRegNums, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgDog::OnRegNumItemActivated);
@@ -766,7 +767,7 @@ CDlgDog::CDlgDog(
 	m_ctrlRegNums->SetToolTip(_("HIDC_DOGNUM_REG_NUMS"));
 	for (i = 0; i < nColRegNumInfo; ++i)
 	{
-		m_ctrlRegNums->InsertColumn(i, wxEmptyString, colRegNumInfo[i].fmt, colRegNumInfo[i].cx);
+		m_ctrlRegNums->InsertColumn(i, wxEmptyString, colRegNumInfo[i].fmt, wxDLG_UNIT_X(this, colRegNumInfo[i].cx));
 	}
 	SetColumnRegNumHeaders();
 
@@ -796,7 +797,7 @@ CDlgDog::CDlgDog(
 	wxPanel* panelPoints = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlPoints = new CReportListCtrl(panelPoints, wxDefaultPosition, wxSize(500, -1), false, CReportListCtrl::eSortHeader, true);
+	m_ctrlPoints = new CReportListCtrl(panelPoints, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), false, CReportListCtrl::eSortHeader, true);
 	BIND_OR_CONNECT_CTRL(m_ctrlPoints, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgDog::OnPointsColumnClick);
 	BIND_OR_CONNECT_CTRL(m_ctrlPoints, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgDog::OnPointsItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlPoints, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgDog::OnPointsItemActivated);
@@ -805,7 +806,7 @@ CDlgDog::CDlgDog(
 	m_ctrlPoints->SetToolTip(_("HIDC_DOGPTS_POINTS"));
 	for (i = 0; i < nColExistingPointsInfo; ++i)
 	{
-		m_ctrlPoints->InsertColumn(i, wxEmptyString, colExistingPointsInfo[i].fmt, colExistingPointsInfo[i].cx);
+		m_ctrlPoints->InsertColumn(i, wxEmptyString, colExistingPointsInfo[i].fmt, wxDLG_UNIT_X(this, colExistingPointsInfo[i].cx));
 	}
 	SetColumnPointsHeaders();
 
@@ -836,41 +837,40 @@ CDlgDog::CDlgDog(
 	textPts->Wrap(-1);
 
 	m_ctrlSelectedPts = new wxStaticText(panelPoints, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), wxALIGN_CENTRE | wxST_NO_AUTORESIZE | wxSUNKEN_BORDER);
 	m_ctrlSelectedPts->Wrap(-1);
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerProp = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textCallName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerName->Add(ctrlName, 2, wxALL, 5);
-	sizerName->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerName->Add(ctrlBreed, 3, wxALL, 5);
+	sizerName->Add(textCallName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(ctrlName, 2, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(ctrlBreed, 3, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerProp->Add(sizerName, 0, wxEXPAND, 0);
+	sizerProp->Add(sizerName, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerRegName = new wxBoxSizer(wxHORIZONTAL);
-	sizerRegName->Add(textRegName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerRegName->Add(ctrlRegName, 1, wxALL, 5);
+	sizerRegName->Add(textRegName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerRegName->Add(ctrlRegName, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerProp->Add(sizerRegName, 0, wxEXPAND, 0);
+	sizerProp->Add(sizerRegName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerAge = new wxBoxSizer(wxHORIZONTAL);
-	sizerAge->Add(textAge, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerAge->Add(m_ctrlAge, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerAge->Add(textBDay, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerAge->Add(ctrlBDay, 0, wxALL, 5);
-	sizerAge->Add(ctrlDeceased, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerAge->Add(m_ctrlDDay, 0, wxALL, 5);
+	sizerAge->Add(textAge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerAge->Add(m_ctrlAge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerAge->Add(textBDay, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerAge->Add(ctrlBDay, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerAge->Add(ctrlDeceased, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerAge->Add(m_ctrlDDay, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerProp->Add(sizerAge, 0, wxEXPAND, 0);
-	sizerProp->Add(textNotes, 0, wxLEFT|wxRIGHT|wxTOP, 5);
-	sizerProp->Add(ctrlNotes, 1, wxALL|wxEXPAND, 5);
+	sizerProp->Add(sizerAge, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerProp->Add(textNotes, 0, wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerProp->Add(ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	panelProp->SetSizer(sizerProp);
 	panelProp->Layout();
@@ -878,16 +878,16 @@ CDlgDog::CDlgDog(
 	notebook->AddPage(panelProp, _("IDD_DOG_PROP"), true);
 
 	wxBoxSizer* sizerTitles = new wxBoxSizer(wxVERTICAL);
-	sizerTitles->Add(m_ctrlTitles, 1, wxALL|wxEXPAND, 5);
+	sizerTitles->Add(m_ctrlTitles, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerTitleBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerTitleBtns->Add(btnTitleNew, 0, wxALL, 5);
-	sizerTitleBtns->Add(m_ctrlTitleEdit, 0, wxALL, 5);
-	sizerTitleBtns->Add(m_ctrlTitleDelete, 0, wxALL, 5);
+	sizerTitleBtns->Add(btnTitleNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerTitleBtns->Add(m_ctrlTitleEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerTitleBtns->Add(m_ctrlTitleDelete, 0, 0, 0);
 	sizerTitleBtns->Add(0, 0, 1, wxEXPAND, 0);
-	sizerTitleBtns->Add(ctrlHidden, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerTitleBtns->Add(ctrlHidden, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerTitles->Add(sizerTitleBtns, 0, wxEXPAND, 0);
+	sizerTitles->Add(sizerTitleBtns, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	panelTitles->SetSizer(sizerTitles);
 	panelTitles->Layout();
@@ -895,14 +895,14 @@ CDlgDog::CDlgDog(
 	notebook->AddPage(panelTitles, _("IDD_DOG_TITLES"), false);
 
 	wxBoxSizer* sizerReg = new wxBoxSizer(wxVERTICAL);
-	sizerReg->Add(m_ctrlRegNums, 1, wxALL|wxEXPAND, 5);
+	sizerReg->Add(m_ctrlRegNums, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerRegBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerRegBtns->Add(btnRegNew, 0, wxALL, 5);
-	sizerRegBtns->Add(m_ctrlRegEdit, 0, wxALL, 5);
-	sizerRegBtns->Add(m_ctrlRegDelete, 0, wxALL, 5);
+	sizerRegBtns->Add(btnRegNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerRegBtns->Add(m_ctrlRegEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerRegBtns->Add(m_ctrlRegDelete, 0, 0, 0);
 
-	sizerReg->Add(sizerRegBtns, 0, wxEXPAND, 0);
+	sizerReg->Add(sizerRegBtns, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	panelRegNums->SetSizer(sizerReg);
 	panelRegNums->Layout();
@@ -910,27 +910,27 @@ CDlgDog::CDlgDog(
 	notebook->AddPage(panelRegNums, _("IDD_DOG_NUMBERS"), false);
 
 	wxBoxSizer* sizerPts = new wxBoxSizer(wxVERTICAL);
-	sizerPts->Add(m_ctrlPoints, 1, wxALL|wxEXPAND, 5);
+	sizerPts->Add(m_ctrlPoints, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerPtsBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerPtsBtns->Add(btnPtsNew, 0, wxALL, 5);
-	sizerPtsBtns->Add(m_ctrlPointsEdit, 0, wxALL, 5);
-	sizerPtsBtns->Add(m_ctrlPointsDelete, 0, wxALL, 5);
+	sizerPtsBtns->Add(btnPtsNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPtsBtns->Add(m_ctrlPointsEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPtsBtns->Add(m_ctrlPointsDelete, 0, 0, 0);
 	sizerPtsBtns->Add(0, 0, 1, wxEXPAND, 0);
-	sizerPtsBtns->Add(textPts, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerPtsBtns->Add(m_ctrlSelectedPts, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPtsBtns->Add(textPts, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPtsBtns->Add(m_ctrlSelectedPts, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerPts->Add(sizerPtsBtns, 0, wxEXPAND, 0);
+	sizerPts->Add(sizerPtsBtns, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	panelPoints->SetSizer(sizerPts);
 	panelPoints->Layout();
 	sizerPts->Fit(panelPoints);
 	notebook->AddPage(panelPoints, _("IDD_DOG_POINTS"), false);
 
-	bSizer->Add(notebook, 1, wxEXPAND | wxALL, 5);
+	bSizer->Add(notebook, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	UpdateDeceased();
 	ListTitles();

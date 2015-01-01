@@ -71,6 +71,7 @@ Training Log:
 
  *
  * Revision History
+ * 2014-12-30 Changed pixels to dialog units.
  * 2012-12-23 Changed default Runs view columns.
  * 2012-05-07 Added autocompletion to combo boxes.
  * 2011-12-22 Switch to using Bind on wx2.9+.

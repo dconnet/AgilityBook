@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-05-07 Added autocompletion to combo boxes.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -202,7 +203,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlLogSome->SetToolTip(_("HIDC_OPT_FILTER_LOG_NAME_SELECTED"));
 
 	m_ctrlNames = new wxCheckListBox(this, wxID_ANY,
-		wxDefaultPosition, wxSize(-1, 80),
+		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 45)),
 		0, nullptr, wxLB_SORT);
 	BIND_OR_CONNECT_CTRL(m_ctrlNames, wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterLogNames);
 	m_ctrlNames->SetHelpText(_("HIDC_OPT_FILTER_LOG_NAME"));
@@ -253,70 +254,79 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlVenue->SetToolTip(_("HIDC_OPT_FILTER_RUN_VENUES"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* sizerFilter = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerCol1 = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerFilters = new wxStaticBoxSizer(boxFilters, wxVERTICAL);
-	sizerFilters->Add(m_ctrlFilters, 0, wxALL|wxEXPAND, 5);
+	sizerFilters->Add(m_ctrlFilters, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerBtns->Add(btnSave, 0, wxALL, 5);
-	sizerBtns->Add(btnDelete, 0, wxALL, 5);
+	sizerBtns->Add(btnSave, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(btnDelete, 0, 0, 0);
 
-	sizerFilters->Add(sizerBtns, 1, wxEXPAND, 0);
+	sizerFilters->Add(sizerBtns, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
-	sizerCol1->Add(sizerFilters, 0, wxALL|wxEXPAND, 5);
+	sizerCol1->Add(sizerFilters, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxStaticBoxSizer* sizerDates = new wxStaticBoxSizer(boxDates, wxVERTICAL);
-	sizerDates->Add(m_ctrlDatesAll, 0, wxALL, 5);
-	sizerDates->Add(m_ctrlDatesSome, 0, wxALL, 5);
+	wxBoxSizer* sizerDateCtrl = new wxBoxSizer(wxVERTICAL);
+	sizerDateCtrl->Add(m_ctrlDatesAll, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerDateCtrl->Add(m_ctrlDatesSome, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
 
 	wxFlexGridSizer* sizerDateRange = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerDateRange->SetFlexibleDirection(wxBOTH);
 	sizerDateRange->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerDateRange->Add(m_ctrlDateStartCheck, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
-	sizerDateRange->Add(m_ctrlDateStart, 0, wxALL, 3);
-	sizerDateRange->Add(m_ctrlDateEndCheck, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
-	sizerDateRange->Add(m_ctrlDateEnd, 0, wxALL, 3);
+	sizerDateRange->Add(m_ctrlDateStartCheck, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerDateRange->Add(m_ctrlDateStart, 0, wxALIGN_CENTER_VERTICAL | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerDateRange->Add(m_ctrlDateEndCheck, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDateRange->Add(m_ctrlDateEnd, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerDates->Add(sizerDateRange, 1, wxEXPAND, 0);
+	sizerDateCtrl->Add(sizerDateRange, 1, wxEXPAND, 0);
+	sizerDates->Add(sizerDateCtrl, 0, wxALL, wxDLG_UNIT_X(this, 5));
 
-	sizerCol1->Add(sizerDates, 0, wxALL|wxEXPAND, 5);
+	sizerCol1->Add(sizerDates, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxStaticBoxSizer* sizerCal1 = new wxStaticBoxSizer(boxCal1, wxVERTICAL);
-	sizerCal1->Add(ctrlCalNot, 0, wxALL, 5);
-	sizerCal1->Add(ctrlCalPlan, 0, wxALL, 5);
-	sizerCal1->Add(ctrlCalEntered, 0, wxALL, 5);
+	wxBoxSizer* sizerCal1Ctrl = new wxBoxSizer(wxVERTICAL);
+	sizerCal1Ctrl->Add(ctrlCalNot, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerCal1Ctrl->Add(ctrlCalPlan, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerCal1Ctrl->Add(ctrlCalEntered, 0, 0, 0);
 
-	sizerCol1->Add(sizerCal1, 0, wxALL|wxEXPAND, 5);
+	sizerCal1->Add(sizerCal1Ctrl, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerCol1->Add(sizerCal1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxStaticBoxSizer* sizerLog = new wxStaticBoxSizer(boxLog, wxVERTICAL);
-	sizerLog->Add(m_ctrlLogAll, 0, wxALL, 5);
-	sizerLog->Add(m_ctrlLogSome, 0, wxALL, 5);
-	sizerLog->Add(m_ctrlNames, 0, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5);
+	wxBoxSizer* sizerLogCtrl = new wxBoxSizer(wxVERTICAL);
+	sizerLogCtrl->Add(m_ctrlLogAll, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerLogCtrl->Add(m_ctrlLogSome, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	sizerLogCtrl->Add(m_ctrlNames, 0, wxEXPAND, 0);
 
-	sizerCol1->Add(sizerLog, 0, wxALL|wxEXPAND, 5);
+	sizerLog->Add(sizerLogCtrl, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerCol1->Add(sizerLog, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
-	sizerFilter->Add(sizerCol1, 1, 0, 5);
+	sizerFilter->Add(sizerCol1, 1, 0, 0);
 
 	wxBoxSizer* sizerCol2 = new wxBoxSizer(wxVERTICAL);
 
-	wxStaticBoxSizer* m_ctrlQs = new wxStaticBoxSizer(boxQs, wxVERTICAL);
-	m_ctrlQs->Add(m_ctrlQsAll, 0, wxALL, 5);
-	m_ctrlQs->Add(m_ctrlQsQs, 0, wxALL, 5);
-	m_ctrlQs->Add(m_ctrlQsNonQs, 0, wxALL, 5);
+	wxStaticBoxSizer* sizerQs = new wxStaticBoxSizer(boxQs, wxVERTICAL);
+	wxBoxSizer* sizerQsCtrl = new wxBoxSizer(wxVERTICAL);
+	sizerQsCtrl->Add(m_ctrlQsAll, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerQsCtrl->Add(m_ctrlQsQs, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerQsCtrl->Add(m_ctrlQsNonQs, 0, 0, 0);
 
-	sizerCol2->Add(m_ctrlQs, 0, wxALL|wxEXPAND, 5);
+	sizerQs->Add(sizerQsCtrl, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerCol2->Add(sizerQs, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxStaticBoxSizer* sizerVenue = new wxStaticBoxSizer(boxVenue, wxVERTICAL);
-	sizerVenue->Add(m_ctrlVenueAll, 0, wxALL, 5);
-	sizerVenue->Add(m_ctrlVenueSome, 0, wxALL, 5);
-	sizerVenue->Add(m_ctrlVenue, 1, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5);
+	wxBoxSizer* sizerVenueCtrl = new wxBoxSizer(wxVERTICAL);
+	sizerVenueCtrl->Add(m_ctrlVenueAll, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerVenueCtrl->Add(m_ctrlVenueSome, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerVenueCtrl->Add(m_ctrlVenue, 1, wxEXPAND, 0);
 
-	sizerCol2->Add(sizerVenue, 1, wxALL|wxEXPAND, 5);
+	sizerVenue->Add(sizerVenueCtrl, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerCol2->Add(sizerVenue, 1, wxEXPAND | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	sizerFilter->Add(sizerCol2, 1, wxEXPAND, 0);
 

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2009-02-11 Ported to wxWidgets.
  */
@@ -59,19 +60,18 @@ bool CDlgName::Create(
 	// Controls (these are done first to control tab order)
 
 	CTextCtrl* textCtrl = new CTextCtrl(this, wxID_ANY, m_Name,
-		wxDefaultPosition, wxSize(300, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 170), -1), 0,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	textCtrl->SetHelpText(_("HIDC_NAME"));
 	textCtrl->SetToolTip(_("HIDC_NAME"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textCtrl, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(textCtrl, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

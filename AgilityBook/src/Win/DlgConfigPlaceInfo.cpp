@@ -131,7 +131,7 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	wxStaticText* textNote = new wxStaticText(this, wxID_ANY,
 		_("IDD_CONFIG_PLACEINFO_TEXT"),
 		wxDefaultPosition, wxDefaultSize, 0);
- 	textNote->Wrap(ConvertDialogToPixels(wxSize(150,0)).x);
+	textNote->Wrap(wxDLG_UNIT_X(this, 150));
 
 	wxStaticText* textPlace = new wxStaticText(this, wxID_ANY,
 		_("IDC_CONFIG_PLACEINFO_PLACE"),

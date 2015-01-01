@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2009-02-11 Ported to wxWidgets.
  * 2004-03-06 Created
  */
@@ -92,11 +93,10 @@ CDlgCRCDViewer::CDlgCRCDViewer(
 	btnClose->SetDefault();
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textCtrl, 1, wxALL|wxEXPAND, 5);
-	bSizer->Add(btnClose, 0, wxALIGN_RIGHT|wxALL, 5);
+	bSizer->Add(textCtrl, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(btnClose, 0, wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

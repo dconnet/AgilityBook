@@ -141,7 +141,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 		assert(pView->HasNextPane() && pView->HasPrevPane());
 		m_views.push_back(pView);
 	}
-	m_views[0]->Create(this, panel1, doc, flags, bSizer1, 1, wxALL|wxEXPAND, 0);
+	m_views[0]->Create(this, panel1, doc, flags, bSizer1, 1, wxEXPAND | wxALL, 0);
 
 	panel1->SetSizer(bSizer1);
 	panel1->Layout();
@@ -155,7 +155,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 		assert(pView->HasNextPane() && pView->HasPrevPane());
 		m_views.push_back(pView);
 	}
-	m_views[1]->Create(this, panel2, doc, flags, bSizer2, 1, wxALL|wxEXPAND, 0);
+	m_views[1]->Create(this, panel2, doc, flags, bSizer2, 1, wxEXPAND | wxALL, 0);
 	panel2->SetSizer(bSizer2);
 	panel2->Layout();
 	bSizer2->Fit(panel2);
@@ -243,7 +243,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 		assert(pView->HasNextPane() && pView->HasPrevPane());
 		m_views.push_back(pView);
 	}
-	m_views[0]->Create(this, panel1, doc, flags, bSizer1, 1, wxALL|wxEXPAND, 0);
+	m_views[0]->Create(this, panel1, doc, flags, bSizer1, 1, wxEXPAND | wxALL, 0);
 	panel1->SetSizer(bSizer1);
 	panel1->Layout();
 	bSizer1->Fit(panel1);
@@ -256,7 +256,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 		assert(pView->HasNextPane() && pView->HasPrevPane());
 		m_views.push_back(pView);
 	}
-	m_views[1]->Create(this, panel2, doc, flags, bSizer2, 1, wxALL|wxEXPAND, 0);
+	m_views[1]->Create(this, panel2, doc, flags, bSizer2, 1, wxEXPAND | wxALL, 0);
 	panel2->SetSizer(bSizer2);
 	panel2->Layout();
 	bSizer2->Fit(panel2);

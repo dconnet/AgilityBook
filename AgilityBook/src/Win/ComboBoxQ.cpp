@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-06-16 Do not enable autocomplete on readonly combos.
  * 2012-05-07 Added autocompletion.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -59,7 +60,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 	, m_Run()
 {
 	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, DEF_Q_WIDTH), -1),
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
 		0, nullptr, 0, validator);
 	ResetContent(ARBConfigScoringPtr());
 }
@@ -74,7 +75,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 	, m_Run(run)
 {
 	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, DEF_Q_WIDTH), -1),
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
 		0, nullptr, 0, validator);
 	ResetContent(ARBConfigScoringPtr());
 }
@@ -90,7 +91,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 	, m_Run(run)
 {
 	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, DEF_Q_WIDTH), -1),
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
 		0, nullptr, 0, validator);
 	ResetContent(scoring);
 }

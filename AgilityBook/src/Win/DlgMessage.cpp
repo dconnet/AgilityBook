@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2009-02-09 Ported to wxWidgets.
  */
 
@@ -37,18 +38,17 @@ CDlgMessage::CDlgMessage(
 	// Controls (these are done first to control tab order)
 
 	CTextCtrl* textCtrl = new CTextCtrl(this, wxID_ANY, msg.c_str(),
-		wxDefaultPosition, wxSize(450, 300),
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(260, 160)),
 		wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
 
 	wxButton* btnClose = new wxButton(this, wxID_OK, _("IDC_MESSAGE_CLOSE"));
 	btnClose->SetDefault();
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textCtrl, 1, wxALL|wxEXPAND, 5);
-	bSizer->Add(btnClose, 0, wxALIGN_RIGHT|wxALL, 5);
+	bSizer->Add(textCtrl, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(btnClose, 0, wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

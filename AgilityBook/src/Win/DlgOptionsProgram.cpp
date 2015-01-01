@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-02-11 Ported to wxWidgets.
  * 2004-08-31 Added option to disable splash screen.
@@ -54,8 +55,8 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 
 	wxStaticText* textUpdates = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PGM_AUTO_CHECK_TEXT"),
-		wxDefaultPosition, wxSize(400, -1), 0);
-	textUpdates->Wrap(400);
+		wxDefaultPosition, wxDefaultSize, 0);
+	textUpdates->Wrap(wxDLG_UNIT_X(this, 230));
 
 	wxStaticText* textBackups = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PGM_EDIT"),
@@ -63,15 +64,15 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	textBackups->Wrap(-1);
 
 	CTextCtrl* ctrlBackups = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
 		wxGenericValidator(&m_Backups));
 	ctrlBackups->SetHelpText(_("HIDC_OPT_PGM_EDIT"));
 	ctrlBackups->SetToolTip(_("HIDC_OPT_PGM_EDIT"));
 
 	wxStaticText* textBackupHelp = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PGM_EDIT_TEXT"),
-		wxDefaultPosition, wxSize(250, -1), 0);
-	textBackupHelp->Wrap(250);
+		wxDefaultPosition, wxDefaultSize, 0);
+	textBackupHelp->Wrap(wxDLG_UNIT_X(this, 155));
 
 	wxCheckBox* ctrlShowDog = new wxCheckBox(this, wxID_ANY,
 		_("IDC_OPT_PGM_AUTOSHOW"),
@@ -103,22 +104,25 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	m_ctrlProxy->Enable(m_UseProxy);
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* sizerPgm = new wxBoxSizer(wxVERTICAL);
-	sizerPgm->Add(ctrlUpdates, 0, wxALL, 5);
-	sizerPgm->Add(textUpdates, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerPgm->Add(ctrlUpdates, 0, wxALL, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(textUpdates, 0, wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBackups = new wxBoxSizer(wxHORIZONTAL);
-	sizerBackups->Add(textBackups, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerBackups->Add(ctrlBackups, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerBackups->Add(textBackupHelp, 0, wxALL, 5);
+	sizerBackups->Add(textBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerBackups->Add(ctrlBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerBackups->Add(textBackupHelp, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerPgm->Add(sizerBackups, 0, wxEXPAND, 0);
-	sizerPgm->Add(ctrlShowDog, 0, wxALL, 5);
-	sizerPgm->Add(ctrlHtml, 0, wxALL, 5);
-	sizerPgm->Add(ctrlUseProxy, 0, wxALL, 5);
-	sizerPgm->Add(m_ctrlProxy, 0, wxEXPAND|wxLEFT|wxRIGHT, 20);
+	sizerPgm->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(ctrlShowDog, 0, wxALL, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(ctrlHtml, 0, wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(ctrlUseProxy, 0, wxALL, wxDLG_UNIT_X(this, 5));
+
+	wxBoxSizer* sizerProxy = new wxBoxSizer(wxHORIZONTAL);
+	sizerProxy->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
+	sizerProxy->Add(m_ctrlProxy, 1, wxEXPAND, 0);
+	sizerPgm->Add(sizerProxy, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(sizerPgm);
 	Layout();

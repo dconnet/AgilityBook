@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-30 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2009-01-06 Ported to wxWidgets.
  * 2007-08-03 Created

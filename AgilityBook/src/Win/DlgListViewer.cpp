@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2011-12-12 Added Score to Other points list.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -1410,7 +1411,7 @@ bool CDlgListViewer::Create(
 	// Controls (these are done first to control tab order)
 
 	m_ctrlList = new CReportListCtrl(this,
-		wxDefaultPosition, wxSize(500, 180),
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(300, 100)),
 		false, CReportListCtrl::eSortHeader, true);
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgListViewer::OnColumnClick);
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgListViewer::OnItemSelected);
@@ -1430,17 +1431,16 @@ bool CDlgListViewer::Create(
 	btnClose->SetDefault();
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_ctrlList, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(m_ctrlList, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
-	sizerBtns->Add(m_ctrlCopy, 0, wxALL, 5);
-	sizerBtns->Add(btnClose, 0, wxALL, 5);
+	sizerBtns->Add(m_ctrlCopy, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(sizerBtns, 0, wxALIGN_BOTTOM|wxALIGN_RIGHT|wxEXPAND, 5);
+	bSizer->Add(sizerBtns, 0, wxALIGN_BOTTOM | wxALIGN_RIGHT | wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

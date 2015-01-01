@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-02-25 Ported to wxWidgets.
  * 2004-09-11 Created
@@ -92,22 +93,21 @@ CDlgMessageBox::CDlgMessageBox(
 	long btnFlags = inFlags & (wxOK | wxCANCEL | wxYES | wxNO | wxHELP | wxNO_DEFAULT);
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerText = new wxBoxSizer(wxHORIZONTAL);
 	if (ctrlIcon)
-		sizerText->Add(ctrlIcon, 0, wxALL, 5);
-	sizerText->Add(ctrlText, 1, wxALL|wxEXPAND, 5);
+		sizerText->Add(ctrlIcon, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerText->Add(ctrlText, 1, wxEXPAND, 0);
 
-	bSizer->Add(sizerText, 1, wxEXPAND, 0);
+	bSizer->Add(sizerText, 1, wxEXPAND | wxTOP | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	if (ctrlDetails)
-		bSizer->Add(ctrlDetails, 0, wxALIGN_RIGHT|wxALL, 5);
+		bSizer->Add(ctrlDetails, 0, wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(btnFlags);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

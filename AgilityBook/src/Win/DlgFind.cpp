@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-01-26 Ported to wxWidgets.
@@ -116,29 +117,28 @@ CDlgFind::CDlgFind(
 		wxDefaultPosition, wxDefaultSize, 0);
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-	wxBoxSizer* bSizer2 = new wxBoxSizer(wxHORIZONTAL);
-	bSizer2->Add(staticText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	bSizer2->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxBoxSizer* bSizerWhat = new wxBoxSizer(wxHORIZONTAL);
+	bSizerWhat->Add(staticText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizerWhat->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(bSizer2, 0, wxEXPAND, 0);
-	bSizer->Add(m_checkBox, 0, wxALL, 5);
+	bSizer->Add(bSizerWhat, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_checkBox, 0, wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
-	wxBoxSizer* bSizer3 = new wxBoxSizer(wxHORIZONTAL);
-	bSizer3->Add(m_radioBoxSearch, 0, wxALL, 5);
-	bSizer3->Add(m_radioBoxDir, 0, wxALL, 5);
+	wxBoxSizer* bSizerFind = new wxBoxSizer(wxHORIZONTAL);
+	bSizerFind->Add(m_radioBoxSearch, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizerFind->Add(m_radioBoxDir, 0, 0, 0);
 
-	bSizer->Add(bSizer3, 0, 0, 5);
+	bSizer->Add(bSizerFind, 0, wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerBtns = new wxBoxSizer(wxHORIZONTAL);
 	bSizerBtns->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerBtns->Add(m_btnFind, 0, wxALL, 5);
-	bSizerBtns->Add(btnClose, 0, wxALL, 5);
+	bSizerBtns->Add(m_btnFind, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizerBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(bSizerBtns, 0, wxEXPAND, 0);
+	bSizer->Add(bSizerBtns, 0, wxEXPAND | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

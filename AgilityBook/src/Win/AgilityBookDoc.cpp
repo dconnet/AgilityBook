@@ -2121,13 +2121,20 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 
 
 #ifdef _DEBUG
-#include "DlgQueryDetail.h"
 void CAgilityBookDoc::OnHelpDebug(wxCommandEvent& evt)
 {
 	wxWindow* parent = wxGetApp().GetTopWindow();
 
-	CDlgQueryDetail dlg(false, L"code", L"AKC", parent, &Book().GetConfig());
+	wxSize x = parent->ConvertPixelsToDialog(wxSize(50, 80));
+	wxString s = wxString::Format(L"%d,%d\n", x.x, x.y);
+	x = parent->ConvertPixelsToDialog(wxSize(110, 55));
+	s << wxString::Format(L"%d,%d\n", x.x, x.y);
+	x = parent->ConvertPixelsToDialog(wxSize(400, 0));
+	s << wxString::Format(L"%d,%d\n", x.x, x.y);
+	x = parent->ConvertPixelsToDialog(wxSize(250, 0));
+	s << wxString::Format(L"%d,%d\n", x.x, x.y);
+	wxMessageBox(s);
 
-	dlg.ShowModal();
+//	dlg.ShowModal();
 }
 #endif

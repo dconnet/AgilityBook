@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-30 Changed pixels to dialog units.
  * 2012-05-07 Added autocompletion to combo boxes.
  * 2012-02-16 Fix initial focus.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.

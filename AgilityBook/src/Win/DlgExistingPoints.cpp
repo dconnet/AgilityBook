@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-05-07 Fixed some comboboxes that should have been readonly.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -231,7 +232,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	textPoints->Wrap(-1);
 
 	CTextCtrl* ctrlPoints = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
 		CGenericValidator(&m_Points));
 	ctrlPoints->SetHelpText(_("HIDC_EXISTING_POINTS"));
 	ctrlPoints->SetToolTip(_("HIDC_EXISTING_POINTS"));
@@ -310,25 +311,24 @@ CDlgExistingPoints::CDlgExistingPoints(
 	wxStaticBox* boxComment = new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_COMMENTS"));
 
 	CSpellCheckCtrl* ctrlNote = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(200, 150), wxTE_MULTILINE|wxTE_WORDWRAP,
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(120, 70)), wxTE_MULTILINE | wxTE_WORDWRAP,
 		CTrimValidator(&m_Comments, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlNote->SetHelpText(_("HIDC_EXISTING_COMMENTS"));
 	ctrlNote->SetToolTip(_("HIDC_EXISTING_COMMENTS"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
-	sizerPoints->Add(textType, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerPoints->Add(m_ctrlType, 0, wxALL, 5);
-	sizerPoints->Add(textEarned, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerPoints->Add(m_ctrlDate, 0, wxALL, 5);
-	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerPoints->Add(ctrlPoints, 0, wxALL, 5);
+	sizerPoints->Add(textType, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPoints->Add(m_ctrlType, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPoints->Add(textEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPoints->Add(m_ctrlDate, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND, 0);
+	bSizer->Add(sizerPoints, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerContent = new wxBoxSizer(wxHORIZONTAL);
 
@@ -338,38 +338,38 @@ CDlgExistingPoints::CDlgExistingPoints(
 	sizerCombo->SetFlexibleDirection(wxBOTH);
 	sizerCombo->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
-	sizerCombo->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerCombo->Add(m_ctrlVenues, 0, wxALL, 5);
+	sizerCombo->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
 
-	sizerCombo->Add(m_textDivMultiQs, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerCombo->Add(m_ctrlDivMultiQs, 0, wxALL, 5);
+	sizerCombo->Add(m_textDivMultiQs, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(m_ctrlDivMultiQs, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
 
-	sizerCombo->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerCombo->Add(m_ctrlLevels, 0, wxALL, 5);
+	sizerCombo->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(m_ctrlLevels, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
 
-	sizerCombo->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerCombo->Add(m_ctrlEvents, 0, wxALL, 5);
+	sizerCombo->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(m_ctrlEvents, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
 
-	sizerCombo->Add(textSubName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerCombo->Add(m_ctrlSubNames, 0, wxALL, 5);
+	sizerCombo->Add(textSubName, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(m_ctrlSubNames, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
 
-	sizerCombo->Add(textOther, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerCombo->Add(m_ctrlOthers, 0, wxALL, 5);
+	sizerCombo->Add(textOther, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
+	sizerCombo->Add(m_ctrlOthers, 0, wxALIGN_CENTER_VERTICAL | wxALL, wxDLG_UNIT_X(this, 1));
 
-	sizerWhere->Add(sizerCombo, 0, wxEXPAND, 0);
+	sizerWhere->Add(sizerCombo, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 2));
 
-	sizerContent->Add(sizerWhere, 1, wxALL|wxEXPAND, 5);
+	sizerContent->Add(sizerWhere, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxStaticBoxSizer* sizerComment = new wxStaticBoxSizer(boxComment, wxVERTICAL);
-	sizerComment->Add(ctrlNote, 1, wxALL|wxEXPAND, 5);
-	sizerContent->Add(sizerComment, 1, wxALL|wxEXPAND, 5);
+	sizerComment->Add(ctrlNote, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerContent->Add(sizerComment, 1, wxEXPAND, 0);
 
-	bSizer->Add(sizerContent, 1, wxEXPAND, 0);
+	bSizer->Add(sizerContent, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	// Not a separated sizer like most other dialogs because of the groups
 	// boxes right above them.
-	m_sdbSizer = CreateButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(m_sdbSizer, 0, wxALL|wxEXPAND, 5);
+	m_sdbSizer = CreateButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(m_sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	// Add MultiQ to types if at least one venue supports it.
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();

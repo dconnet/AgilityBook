@@ -15,6 +15,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-05-22 Change KillFocus handler to text change handler.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -191,7 +192,7 @@ CDlgInfoNote::CDlgInfoNote(
 	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
 
 	m_ctrlNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(300, 100), wxTE_MULTILINE);
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(180, 60)), wxTE_MULTILINE);
 	BIND_OR_CONNECT_CTRL(m_ctrlNotes, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgInfoNote::OnEnChangeComments);
 	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
 	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));
@@ -217,21 +218,20 @@ CDlgInfoNote::CDlgInfoNote(
 	UpdateData();
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerJudges = new wxBoxSizer(wxHORIZONTAL);
-	sizerJudges->Add(m_ctrlNames, 1, wxALL, 5);
-	sizerJudges->Add(ctrlNew, 0, wxALL, 5);
-	sizerJudges->Add(m_ctrlDelete, 0, wxALL, 5);
+	sizerJudges->Add(m_ctrlNames, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerJudges->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerJudges->Add(m_ctrlDelete, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerJudges, 0, wxEXPAND, 0);
-	bSizer->Add(m_ctrlVisible, 0, wxALL, 5);
-	bSizer->Add(m_ctrlNotes, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(sizerJudges, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlVisible, 0, wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

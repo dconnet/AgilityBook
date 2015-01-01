@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2011-08-31 Column headings were wrong.
@@ -179,7 +180,7 @@ CDlgFindLinks::CDlgFindLinks(
 	// Controls (these are done first to control tab order)
 
 	m_ctrlLinks = new CReportListCtrl(this,
-		wxDefaultPosition, wxSize(400,150),
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 85)),
 		true, CReportListCtrl::eSortHeader, true);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgFindLinks::OnColumnClick);
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgFindLinks::OnItemSelected);
@@ -216,24 +217,23 @@ CDlgFindLinks::CDlgFindLinks(
 	m_ctrlOpen->SetToolTip(_("HIDC_FINDLINKS_OPEN"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bSizerList = new wxBoxSizer(wxHORIZONTAL);
-	bSizerList->Add(m_ctrlLinks, 1, wxALL|wxEXPAND, 5);
+	bSizerList->Add(m_ctrlLinks, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxALL, 5);
-	bSizerSide->Add(btnCancel, 0, wxALL, 5);
+	bSizerSide->Add(btnOk, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(btnCancel, 0, 0, 0);
 	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerSide->Add(btnCopy, 0, wxALL, 5);
-	bSizerSide->Add(m_ctrlEdit, 0, wxALL, 5);
-	bSizerSide->Add(m_ctrlOpen, 0, wxALL, 5);
+	bSizerSide->Add(btnCopy, 0, wxBOTTOM, 2);
+	bSizerSide->Add(m_ctrlEdit, 0, wxBOTTOM, 2);
+	bSizerSide->Add(m_ctrlOpen, 0, 0, 0);
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
 
-	bSizer->Add(bSizerList, 1, wxEXPAND, 0);
+	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();
