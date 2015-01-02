@@ -48,21 +48,20 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	BIND_OR_CONNECT_CTRL(btnNone, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgPageEncodeFiles::OnCheckNone);
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(text1, 0, wxALL, 5);
+	bSizer->Add(text1, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerListBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerListBtns->Add(m_ctrlList, 1, wxALL|wxEXPAND, 5);
+	sizerListBtns->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(btnAll, 0, wxALL, 5);
-	sizerBtns->Add(btnNone, 0, wxALL, 5);
+	sizerBtns->Add(btnAll, 0, 0, 0);
+	sizerBtns->Add(btnNone, 0, wxTOP, wxDLG_UNIT_X(this, 3));
 
 	sizerListBtns->Add(sizerBtns, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerListBtns, 1, wxEXPAND, 0);
+	bSizer->Add(sizerListBtns, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

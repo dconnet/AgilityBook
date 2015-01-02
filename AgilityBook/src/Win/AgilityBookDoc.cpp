@@ -2121,24 +2121,16 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 
 
 #ifdef _DEBUG
-#include "DlgAuthenticate.h"
 void CAgilityBookDoc::OnHelpDebug(wxCommandEvent& evt)
 {
 	wxWindow* parent = wxGetApp().GetTopWindow();
 
-	/*
 	wxSize x;
 	wxString s;
-	x = parent->ConvertPixelsToDialog(wxSize(200, 50));
-	s << wxString::Format(L"px->dlg %d,%d\n", x.x, x.y);
-	x = parent->ConvertPixelsToDialog(wxSize(50, 70));
-	s << wxString::Format(L"px->dlg %d,%d\n", x.x, x.y);
-	x = parent->ConvertPixelsToDialog(wxSize(30, 0));
+	x = parent->ConvertPixelsToDialog(wxSize(400, 0));
 	s << wxString::Format(L"px->dlg %d,%d\n", x.x, x.y);
 	wxMessageBox(s);
-	*/
-	CDlgAuthenticate dlg(L"User Name", parent, L"Caption", L"Message");
 
-	dlg.ShowModal();
+//	dlg.ShowModal();
 }
 #endif

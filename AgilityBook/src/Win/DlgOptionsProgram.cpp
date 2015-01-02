@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-02-11 Ported to wxWidgets.
  * 2004-08-31 Added option to disable splash screen.
@@ -106,23 +106,23 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	// Sizers
 
 	wxBoxSizer* sizerPgm = new wxBoxSizer(wxVERTICAL);
-	sizerPgm->Add(ctrlUpdates, 0, wxALL, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(textUpdates, 0, wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(ctrlUpdates, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(textUpdates, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBackups = new wxBoxSizer(wxHORIZONTAL);
 	sizerBackups->Add(textBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerBackups->Add(ctrlBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerBackups->Add(textBackupHelp, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerPgm->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(ctrlShowDog, 0, wxALL, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(ctrlHtml, 0, wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(ctrlUseProxy, 0, wxALL, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(ctrlShowDog, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(ctrlHtml, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(ctrlUseProxy, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerProxy = new wxBoxSizer(wxHORIZONTAL);
 	sizerProxy->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
 	sizerProxy->Add(m_ctrlProxy, 1, wxEXPAND, 0);
-	sizerPgm->Add(sizerProxy, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(sizerProxy, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(sizerPgm);
 	Layout();

@@ -55,7 +55,7 @@ CMetaDataStatic::CMetaDataStatic(
 {
 	wxStaticText::Create(pParent, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(450, 450), wxSUNKEN_BORDER);
+		wxDefaultPosition, wxDLG_UNIT(pParent, wxSize(260, 220)), wxSUNKEN_BORDER);
 	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 }
 

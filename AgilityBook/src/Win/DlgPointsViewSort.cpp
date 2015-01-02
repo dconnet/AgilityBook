@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-02-09 Ported to wxWidgets.
  * 2006-07-16 Created
@@ -110,19 +110,19 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 	sizer1->Add(text1, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizer1->Add(m_ctrlPrimary, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
 
-	bSizer->Add(sizer1, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizer1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	sizer2->Add(text2, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizer2->Add(m_ctrlSecondary, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
 
-	bSizer->Add(sizer2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizer2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
 	sizer3->Add(text3, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizer3->Add(m_ctrlTertiary, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
 
-	bSizer->Add(sizer3, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizer3, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));

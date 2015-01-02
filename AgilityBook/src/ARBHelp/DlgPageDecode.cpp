@@ -56,7 +56,7 @@ CDlgPageDecode::CDlgPageDecode()
 
 	wxStaticText* staticText = new wxStaticText(this, wxID_ANY, str,
 		wxDefaultPosition, wxDefaultSize, 0);
-	staticText->Wrap(600);
+	staticText->Wrap(wxDLG_UNIT_X(this, 345));
 
 	m_ctrlEncoded = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
@@ -65,7 +65,7 @@ CDlgPageDecode::CDlgPageDecode()
 	m_ctrlEncoded->SetFont(wxFont(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight()));
 
 	m_ctrlDecoded = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, 200),
+		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 110)),
 		wxHSCROLL|wxTE_MULTILINE|wxTE_READONLY);
 	m_ctrlDecoded->SetMaxLength(0);
 	font = m_ctrlDecoded->GetFont();
@@ -79,19 +79,18 @@ CDlgPageDecode::CDlgPageDecode()
 		wxDefaultPosition, wxDefaultSize, 0);
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(staticText, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(m_ctrlEncoded, 2, wxALL|wxEXPAND, 5);
-	bSizer->Add(m_ctrlDecoded, 3, wxALL|wxEXPAND, 5);
+	bSizer->Add(staticText, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlEncoded, 2, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlDecoded, 3, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizeBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizeBtns->Add(btnDecode, 0, wxALL, 5);
+	sizeBtns->Add(btnDecode, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizeBtns->Add(0, 0, 1, wxEXPAND, 0);
-	sizeBtns->Add(btnClose, 0, wxALL, 5);
+	sizeBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(sizeBtns, 0, wxEXPAND, 0);
+	bSizer->Add(sizeBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

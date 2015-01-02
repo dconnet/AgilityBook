@@ -34,9 +34,9 @@
 
 // The combobox for the Q on a Mac is just too small.
 #ifdef __WXMAC__
-#define DEF_Q_WIDTH	70
-#else
 #define DEF_Q_WIDTH	50
+#else
+#define DEF_Q_WIDTH	30
 #endif
 
 IMPLEMENT_CLASS(CQualifyingComboBox, wxChoice)

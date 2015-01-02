@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-11 Ported to wxWidgets.
@@ -607,7 +607,7 @@ bool CDlgListCtrl::Create(
 	bSizerEdit->Add(0, 0, 1, wxEXPAND, 0);
 	bSizerEdit->Add(m_ctrlCreateTrial, 0, 0, 0);
 
-	bSizer->Add(bSizerEdit, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerEdit, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-07-14 Fixed group box creation order.
  * 2009-05-31 Added options for print page size.
@@ -197,10 +197,12 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	wxBoxSizer* sizerPrint = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerFont = new wxStaticBoxSizer(boxFont, wxVERTICAL);
-	sizerFont->Add(m_ctrlFontPrint, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
-	sizerFont->Add(btnFont, 0, wxALIGN_CENTER_HORIZONTAL | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	wxBoxSizer* sizerFontCtrl = new wxBoxSizer(wxVERTICAL);
+	sizerFontCtrl->Add(m_ctrlFontPrint, 1, wxEXPAND, 0);
+	sizerFontCtrl->Add(btnFont, 0, wxALIGN_CENTER_HORIZONTAL | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	sizerPrint->Add(sizerFont, 0, wxALL, wxDLG_UNIT_X(this, 5));
+	sizerFont->Add(sizerFontCtrl, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerPrint->Add(sizerFont, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerRadio = new wxBoxSizer(wxHORIZONTAL);
 	sizerRadio->Add(m_Orientation, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
@@ -211,37 +213,37 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	wxFlexGridSizer* sizerPage = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerPage->SetFlexibleDirection(wxBOTH);
 	sizerPage->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerPage->Add(textWidth, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerPage->Add(ctrlWidth, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerPage->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPage->Add(ctrlHeight, 0, 0, 0);
+	sizerPage->Add(textWidth, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPage->Add(ctrlWidth, 0, 0, 0);
+	sizerPage->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerPage->Add(ctrlHeight, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 
-	sizerPageSize->Add(sizerPage, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerPageSize->Add(sizerPage, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 	sizerRadio->Add(sizerPageSize, 0, wxEXPAND, 0);
 
-	sizerPrint->Add(sizerRadio, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPrint->Add(sizerRadio, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxStaticBoxSizer* sizerMargins = new wxStaticBoxSizer(boxMargins, wxHORIZONTAL);
 
 	wxFlexGridSizer* sizerLT = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerLT->SetFlexibleDirection(wxBOTH);
 	sizerLT->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerLT->Add(textLeft, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerLT->Add(ctrlLeft, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerLT->Add(textTop, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerLT->Add(ctrlTop, 0, 0, 0);
+	sizerLT->Add(textLeft, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerLT->Add(ctrlLeft, 0, 0, 0);
+	sizerLT->Add(textTop, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerLT->Add(ctrlTop, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 
-	sizerMargins->Add(sizerLT, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerMargins->Add(sizerLT, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 
 	wxFlexGridSizer* sizerRB = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerRB->SetFlexibleDirection(wxBOTH);
 	sizerRB->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerRB->Add(textRight, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerRB->Add(ctrlRight, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerRB->Add(textBottom, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerRB->Add(ctrlBottom, 0, 0, 0);
+	sizerRB->Add(textRight, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerRB->Add(ctrlRight, 0, 0, 0);
+	sizerRB->Add(textBottom, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerRB->Add(ctrlBottom, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 
-	sizerMargins->Add(sizerRB, 1, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerMargins->Add(sizerRB, 1, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	sizerPrint->Add(sizerMargins, 0, wxALL, wxDLG_UNIT_X(this, 5));
 

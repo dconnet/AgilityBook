@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2013-01-12 Clean up spacing.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -64,7 +64,7 @@ CDlgSelectURL::CDlgSelectURL(
 
 	wxBoxSizer* bTextSizer = new wxBoxSizer(wxHORIZONTAL);
 	bTextSizer->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	bTextSizer->Add(btnSelect, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT, 0);
+	bTextSizer->Add(btnSelect, 0, wxALIGN_CENTER_VERTICAL, 0);
 
 	bSizer->Add(bTextSizer, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 

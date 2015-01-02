@@ -104,19 +104,18 @@ CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
 		L"When Agility Record Book has a problem, this program helps by gathering information that may be useful in determining what when wrong.",
 		wxDefaultPosition, wxDefaultSize, 0);
-	text1->Wrap(600);
+	text1->Wrap(wxDLG_UNIT_X(this, 345));
 
 	wxStaticText* text2 = new wxStaticText(this, wxID_ANY,
 		L"In addition to any ARB files you select in the following dialog, basic system information from the registry will be included.",
-		wxDefaultPosition, wxDefaultSize, 0);
-	text2->Wrap(600);
+		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 120)), 0);
+	text2->Wrap(wxDLG_UNIT_X(this, 345));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(text1, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(text2, 0, wxALL, 5);
+	bSizer->Add(text1, 0, wxEXPAND, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(text2, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

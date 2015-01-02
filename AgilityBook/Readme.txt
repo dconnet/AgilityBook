@@ -31,7 +31,58 @@ Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
 
-=== Changes to 3.0.1 and 3.0.2:
+=== Changes to 3.0.2:
+-[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
+  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
+-[win]- src/msw/bmpcbox.cpp
+    cross ported changes from trunk to fix hi-dpi issue with combo
+c:\devtools\wx\wxWidgets-3.0.2\src\msw>diff -c bmpcbox.cpp.orig bmpcbox.cpp
+*** bmpcbox.cpp.orig    Mon Oct 06 13:34:04 2014
+--- bmpcbox.cpp Thu Jan 01 19:47:56 2015
+***************
+*** 409,415 ****
+
+      // Draw default for item -1, which means 'focus rect only'
+      if ( pos == -1 )
+!         return FALSE;
+
+      int flags = 0;
+      if ( lpDrawItem->itemState & ODS_COMBOBOXEDIT )
+--- 409,415 ----
+
+      // Draw default for item -1, which means 'focus rect only'
+      if ( pos == -1 )
+!         return false;
+
+      int flags = 0;
+      if ( lpDrawItem->itemState & ODS_COMBOBOXEDIT )
+***************
+*** 449,457 ****
+      LPMEASUREITEMSTRUCT lpMeasureItem = (LPMEASUREITEMSTRUCT) item;
+      int pos = lpMeasureItem->itemID;
+
+!     // Measure item height if item list is not empty,
+      // otherwise leave default system value.
+!     if ( pos >= 0 )
+      {
+          lpMeasureItem->itemHeight = wxBitmapComboBoxBase::MeasureItem(pos);
+      }
+--- 449,457 ----
+      LPMEASUREITEMSTRUCT lpMeasureItem = (LPMEASUREITEMSTRUCT) item;
+      int pos = lpMeasureItem->itemID;
+
+!     // Measure edit field height if item list is not empty,
+      // otherwise leave default system value.
+!     if ( m_usedImgSize.y >= 0 || pos >= 0 )
+      {
+          lpMeasureItem->itemHeight = wxBitmapComboBoxBase::MeasureItem(pos);
+      }
+
+=== Changes to 3.0.1
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-01-01 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2009-02-11 Ported to wxWidgets.
  * 2006-11-04 Created.
@@ -158,25 +159,24 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	ctrlValue->SetToolTip(_("HIDC_CONFIG_PLACEINFO_VALUE"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textNote, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(textNote, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerPlace = new wxBoxSizer(wxHORIZONTAL);
-	sizerPlace->Add(textPlace, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerPlace->Add(ctrlPlace, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPlace->Add(textPlace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPlace->Add(ctrlPlace, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerPlace, 0, wxEXPAND, 0);
+	bSizer->Add(sizerPlace, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerValue = new wxBoxSizer(wxHORIZONTAL);
-	sizerValue->Add(textValue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	sizerValue->Add(ctrlValue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerValue->Add(textValue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerValue->Add(ctrlValue, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerValue, 0, wxEXPAND, 0);
+	bSizer->Add(sizerValue, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

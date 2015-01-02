@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-01-01 Changed pixels to dialog units.
  * 2009-02-11 Ported to wxWidgets.
  * 2005-12-12 Created
  */
@@ -17,6 +18,7 @@
 #include "stdafx.h"
 #include "NoteButton.h"
 
+#include "DPI.h"
 #include "ImageHelper.h"
 
 #ifdef __WXMSW__
@@ -27,5 +29,9 @@
 CNoteButton::CNoteButton(wxWindow* parent)
 	: wxBitmapButton()
 {
-	wxBitmapButton::Create(parent, wxID_ANY, CImageManager::Get()->GetBitmap(ImageMgrNoteButton), wxDefaultPosition, wxSize(20, 20));
+	wxBitmap image = CImageManager::Get()->GetBitmap(ImageMgrNoteButton);
+	wxSize size = image.GetSize();
+	size.x += DPI::Scale(4);
+	size.y += DPI::Scale(4);
+	wxBitmapButton::Create(parent, wxID_ANY, image, wxDefaultPosition, size);
 }

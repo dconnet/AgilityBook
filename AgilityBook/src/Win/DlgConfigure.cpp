@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-10 Ported to wxWidgets.
@@ -137,7 +138,7 @@ CDlgConfigure::CDlgConfigure(
 	// Controls (these are done first to control tab order)
 
 	m_ctrlItems = new CTreeCtrl(this, wxID_ANY,
-		wxDefaultPosition, wxSize(375, 400),
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(215, 215)),
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 	m_ctrlItems->SetImageList(&m_ImageList);
 	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgConfigure::OnSelectionChanged);
@@ -181,31 +182,30 @@ CDlgConfigure::CDlgConfigure(
 	btnUpdate->SetToolTip(_("HIDC_CONFIG_UPDATE"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerConfig = new wxBoxSizer(wxHORIZONTAL);
-	sizerConfig->Add(m_ctrlItems, 1, wxALL|wxEXPAND, 5);
+	sizerConfig->Add(m_ctrlItems, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlNew, 0, wxALL, 5);
-	sizerBtns->Add(m_ctrlEdit, 0, wxALL, 5);
-	sizerBtns->Add(m_ctrlDelete, 0, wxALL, 5);
-	sizerBtns->Add(m_ctrlCopy, 0, wxALL, 5);
+	sizerBtns->Add(m_ctrlNew, 0, 0, 0);
+	sizerBtns->Add(m_ctrlEdit, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlDelete, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlCopy, 0, wxTOP, wxDLG_UNIT_X(this, 3));
 
 	sizerConfig->Add(sizerBtns, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerConfig, 1, wxEXPAND, 0);
+	bSizer->Add(sizerConfig, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerUpdate = new wxBoxSizer(wxHORIZONTAL);
 	sizerUpdate->Add(0, 0, 1, wxEXPAND, 0);
-	sizerUpdate->Add(btnUpdate, 0, wxALL, 5);
+	sizerUpdate->Add(btnUpdate, 0, 0, 0);
 
-	bSizer->Add(sizerUpdate, 0, wxEXPAND, 0);
+	bSizer->Add(sizerUpdate, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 

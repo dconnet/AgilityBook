@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-01-01 Changed pixels to dialog units.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -85,25 +86,24 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	m_FileName->SetToolTip(_("HIDC_CONFIG_UPDATE_FILENAME"));
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_radioDefault, 0, wxALL, 5);
+	bSizer->Add(m_radioDefault, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerRadio = new wxBoxSizer(wxHORIZONTAL);
-	bSizerRadio->Add(m_radioExisting, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	bSizerRadio->Add(m_btnPick, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	bSizerRadio->Add(m_radioExisting, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizerRadio->Add(m_btnPick, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(bSizerRadio, 0, 0, 5);
+	bSizer->Add(bSizerRadio, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerWithSpace = new wxBoxSizer(wxHORIZONTAL);
-	bSizerWithSpace->Add(15, 0, 0, wxEXPAND, 0);
-	bSizerWithSpace->Add(m_FileName, 1, wxALL|wxEXPAND, 5);
+	bSizerWithSpace->Add(wxDLG_UNIT_X(this, 10), 0, 0, wxEXPAND, 0);
+	bSizerWithSpace->Add(m_FileName, 1, wxEXPAND, 0);
 
-	bSizer->Add(bSizerWithSpace, 0, wxEXPAND, 0);
+	bSizer->Add(bSizerWithSpace, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

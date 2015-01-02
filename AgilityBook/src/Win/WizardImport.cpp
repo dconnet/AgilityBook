@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2012-07-25 Importing runs with multiple clubs didn't parse venue correctly.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2011-01-22 Defer sorting of imported items until the end.
@@ -260,7 +260,7 @@ CWizardImport::CWizardImport(
 	sizerStart->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerStart->Add(m_ctrlDateFormat, 0, 0, 0);
 
-	bSizer->Add(sizerStart, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerStart, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerOptions = new wxBoxSizer(wxHORIZONTAL);
 
@@ -269,30 +269,30 @@ CWizardImport::CWizardImport(
 	wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, 0, 0);
 	sizerDelim2->SetFlexibleDirection(wxBOTH);
 	sizerDelim2->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerDelim2->Add(m_ctrlTab, 0, wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlColon, 0, wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlComma, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlSpace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlTab, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlColon, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlComma, 0, 0, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlSpace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
 
 	wxBoxSizer* sizerOther = new wxBoxSizer(wxHORIZONTAL);
 	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerOther->Add(m_ctrlOtherChar, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerDelim2->Add(sizerOther, 1, wxEXPAND | wxALIGN_CENTER_VERTICAL, 0);
+	sizerDelim2->Add(sizerOther, 1, wxEXPAND | wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 3));
 
-	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 
 	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerOptions, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerOptions, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizeFile = new wxBoxSizer(wxHORIZONTAL);
 	sizeFile->Add(btnFile, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizeFile->Add(m_ctrlPreviewFile, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizeFile, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlPreview, 1, wxEXPAND, 0);
+	bSizer->Add(sizeFile, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlPreview, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	bSizer->Fit(this);

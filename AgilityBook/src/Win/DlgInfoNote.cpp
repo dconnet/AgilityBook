@@ -201,7 +201,7 @@ CDlgInfoNote::CDlgInfoNote(
 	for (size_t idx = 0; idx < m_Names.size(); ++idx)
 	{
 		// Combo box is ownerdraw.
-		int index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name));
+		int index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name), m_None);
 		m_ctrlNames->SetClientData(index, (void*)idx);
 		UpdateImage(index);
 		if (!bSet && 0 < m_Select.length())

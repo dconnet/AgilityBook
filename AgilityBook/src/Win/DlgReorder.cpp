@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2012-12-31 Select run on startup.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2011-10-14 Changed how reorder dlg is used, made run reorder a tree.
@@ -157,11 +157,11 @@ void CDlgReorder::Init(wxWindow* pParent)
 		bSizerList->Add(m_ctrlTree, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	bSizerSide->Add(btnCancel, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(btnOk, 0, 0, 0);
+	bSizerSide->Add(btnCancel, 0, wxTOP, wxDLG_UNIT_X(this, 3));
 	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerSide->Add(m_ctrlUp, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	bSizerSide->Add(m_ctrlDown, 0, 0, 0);
+	bSizerSide->Add(m_ctrlUp, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(m_ctrlDown, 0, wxTOP, wxDLG_UNIT_X(this, 3));
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
 

@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2010-03-28 Added ability to import/export program settings.
@@ -176,13 +176,13 @@ CWizardStart::CWizardStart(
 	wxStaticBoxSizer* sizerImportExport = new wxStaticBoxSizer(boxImportExport, wxVERTICAL);
 	wxBoxSizer* sizerRadio = new wxBoxSizer(wxVERTICAL);
 	if (radioExcel)
-		sizerRadio->Add(radioExcel, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+		sizerRadio->Add(radioExcel, 0, 0, 0);
 	if (radioCalc)
-		sizerRadio->Add(radioCalc, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerRadio->Add(radioSpread, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerRadio->Add(radioArb, 0, 0, 0);
-	sizerImportExport->Add(sizerRadio, 0, wxALL, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(sizerImportExport, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+		sizerRadio->Add(radioCalc, 0, 0, 0);
+	sizerRadio->Add(radioSpread, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerRadio->Add(radioArb, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerImportExport->Add(sizerRadio, 0, wxALL, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sizerImportExport, 0, 0, 0);
 
 	wxBoxSizer* sizerAction = new wxBoxSizer(wxHORIZONTAL);
 	sizerAction->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
@@ -192,7 +192,7 @@ CWizardStart::CWizardStart(
 
 	sizerAction->Add(sizerDesc, 1, wxEXPAND, 0);
 
-	bSizer->Add(sizerAction, 1, wxEXPAND, 0);
+	bSizer->Add(sizerAction, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	bSizer->Fit(this);

@@ -161,7 +161,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 	wxTextCtrl* ctrlFile = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(450, -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 260), -1), 0,
 		wxTextValidator(wxFILTER_NONE, &m_File));
 
 	wxTextCtrl* ctrlMD5 = new wxTextCtrl(this, wxID_ANY,
@@ -184,26 +184,25 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 	wxTextCtrl* ctrlSize = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(100, -1), wxTE_READONLY,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 115), -1), wxTE_READONLY,
 		CLongValidator(&m_Size));
 	ctrlSize->SetBackgroundColour(GetBackgroundColour());
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(ctrlFile, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(ctrlMD5, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(ctrlSHA1, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(ctrlSHA256, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(ctrlSize, 0, wxALL, 5);
+	bSizer->Add(ctrlFile, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlMD5, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlSHA1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlSHA256, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlSize, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	wxButton* ok = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_OK), wxButton);
 	ok->SetLabel(L"Find...");
 	wxButton* cancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
 	cancel->SetLabel(L"Close");
-	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

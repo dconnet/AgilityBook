@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2013-03-24 Show title in caption to aid with repeating titles.
  * 2013-01-13 Added new recurring title suffix style.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -181,33 +181,33 @@ CDlgTitle::CDlgTitle(
 	sizerDate->Add(checkEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerDate->Add(m_ctrlDate, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerDateVenue->Add(sizerDate, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerDateVenue->Add(sizerDate, 0, wxEXPAND, 0);
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
 	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerVenue->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerDateVenue->Add(sizerVenue, 0, wxEXPAND, 0);
+	sizerDateVenue->Add(sizerVenue, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	sizerTop2Rows->Add(sizerDateVenue, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerChecks = new wxBoxSizer(wxVERTICAL);
-	sizerChecks->Add(m_ctrlHide, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerChecks->Add(m_ctrlReceived, 0, 0, 0);
+	sizerChecks->Add(m_ctrlHide, 0, 0, 0);
+	sizerChecks->Add(m_ctrlReceived, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 
 	sizerTop2Rows->Add(sizerChecks, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerTop2Rows, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerTop2Rows, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerTitle = new wxBoxSizer(wxHORIZONTAL);
 	sizerTitle->Add(textTitle, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerTitle->Add(m_ctrlTitles, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerTitle, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerTitle, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);

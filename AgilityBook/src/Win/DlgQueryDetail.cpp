@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2014-12-31 Changed pixels to dialog units.
+ * 2015-01-01 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -111,16 +111,16 @@ CDlgQueryDetail::CDlgQueryDetail(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerCode = new wxBoxSizer(wxHORIZONTAL);
-	sizerCode->Add(textCode, 0, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerCode->Add(m_ctrlCode, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerCode->Add(textCode, 0, wxALIGN_CENTER_VERTICAL |  wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerCode->Add(m_ctrlCode, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerCode, 1, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sizerCode, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerVenue->Add(ctrlLocationOrVenue, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerVenue->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerVenue->Add(ctrlLocationOrVenue, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerVenue, 1, wxEXPAND, 0);
+	bSizer->Add(sizerVenue, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));

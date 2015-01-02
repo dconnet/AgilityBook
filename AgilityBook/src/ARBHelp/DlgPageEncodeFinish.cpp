@@ -52,11 +52,10 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	m_ctrlText->SetFont(fontFixed);
 
 	// Sizers
-#pragma PRAGMA_TODO(convert to dialog units)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(text1, 0, wxALL|wxEXPAND, 5);
-	bSizer->Add(m_ctrlText, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(text1, 0, wxEXPAND, 0);
+	bSizer->Add(m_ctrlText, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();

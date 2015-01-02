@@ -73,8 +73,6 @@ public:
 			wxWindow* parent);
 	~CAgilityBookCalendar();
 
-	//virtual wxSize DoGetBestSize() const	{return wxSize(100, 100);}
-
 	void OnDraw(wxDC* pDC);
 
 	ARBDate CurrentDate() const		{return m_Current;}
