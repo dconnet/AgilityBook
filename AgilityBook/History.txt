@@ -1,4 +1,4 @@
-1/1/2015: v3.1.0.<development>
+1/2/2015: v3.1.0.95
 - Bumped Configuration v49:
   - Fixed descriptions in NADAC Extreme game titles.
   - AKC MXP/MXJ titles are recurring.
@@ -7,6 +7,8 @@
  - If all dogs in file are deceased, don't prompt to update config.
  - Before auto-updating on Windows, make sure Windows Update is not busy.
  - Begin adding support for hi-dpi.
+- Bug fixes:
+ - Fixed crash when opening Assign Column dialog.
 
 11/29/2014: v3.0.0.94
 - Notes:

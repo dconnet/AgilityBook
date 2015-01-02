@@ -35,7 +35,7 @@ Do a full rebuild and verify it.
 	            Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
-      compiler: vc10, vc11 (default: vc10)
+      compiler: vc10, vc11, vc12 (default: vc10)
 - Run 'GenMSI.py /all' to create w32/x64 installers and auto-update
   Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
