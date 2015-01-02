@@ -9,6 +9,7 @@
  - Begin adding support for hi-dpi.
 - Bug fixes:
  - Fixed crash when opening Assign Column dialog.
+ - Fix upgrade issue on Windows. (can't upgrade from 3.0.0, missing arbupdater.exe)
 
 11/29/2014: v3.0.0.94
 - Notes:

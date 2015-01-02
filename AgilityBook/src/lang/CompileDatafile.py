@@ -2,6 +2,7 @@
 # Generate the message libraries and data files
 #
 # Revision History
+# 2015-01-02 Fixed ARBUpdater inclusion
 # 2014-11-16 Separated PO/MO language from DAT file generation.
 # 2014-05-17 Add exception handling in RunCommand
 # 2012-05-16 Add multiprocessing awareness. Kind of.
@@ -13,12 +14,12 @@
 # 2009-03-05 Fixed some parameter passing issues (spaces/hyphens in names)
 # 2009-03-01 Support multiple po files (by using msgcat)
 # 2009-01-02 Updated to support creation of data files
-"""CompileDatafile.py [-x] [-d] [-f extrafilelist] filelist executableDir targetname
+"""CompileDatafile.py [-x] [-d] [-f extrafilelist] filelist intermediateDir targetname
 -x: Exclude ARBUpdater (not needed in test program)
 -d: Debugging mode (does not delete generated autogen.po file)
 -f extrafilelist: Additional files to include
 filelist: List of files to include in .dat file
-executableDir: Directory where executable is (where dat file is created)
+intermediateDir: Directory where dat file is created (ARBUpdater assumes in ..)
 targetname: Name of .dat files to generate
 """
 
@@ -93,7 +94,7 @@ def RunCommand(command, toastErr):
 	ReadPipe(sys.stdout, p.stdout)
 
 
-def GenFile(inputfiles, executableDir, targetname, bIncUpdater):
+def GenFile(inputfiles, intermediateDir, targetname, bIncUpdater):
 	for filelist in inputfiles:
 		# The files listed in the list are relative to the filelist location.
 		if not os.access(filelist, os.F_OK):
@@ -101,7 +102,7 @@ def GenFile(inputfiles, executableDir, targetname, bIncUpdater):
 			print 'Usage:', __doc__
 			return 1;
 
-	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
+	zip = zipfile.ZipFile(os.path.join(intermediateDir, targetname + '.dat'), 'w')
 
 	for filelist in inputfiles:
 		basepath = os.path.dirname(filelist)
@@ -120,8 +121,12 @@ def GenFile(inputfiles, executableDir, targetname, bIncUpdater):
 			else:
 				break
 
-	if bIncUpdater and os.access(executableDir + r'\ARBUpdater.exe', os.F_OK):
-		zip.write(executableDir + r'\ARBUpdater.exe', 'ARBUpdater.exe')
+	if bIncUpdater:
+		if os.access(intermediateDir + r'\..\ARBUpdater.exe', os.F_OK):
+			zip.write(intermediateDir + r'\..\ARBUpdater.exe', 'ARBUpdater.exe')
+		else:
+			print 'ERROR: File "' + intermediateDir + r'\..\ARBUpdater.exe' + '" does not exist!'
+			return 1
 
 	zip.close()
 
@@ -148,18 +153,18 @@ def main():
 		return 1
 
 	inputfiles.add(args[0])
-	executableDir = args[1]
+	intermediateDir = args[1]
 	targetname = args[2]
 
-	if not os.access(executableDir, os.F_OK):
-		print 'ERROR: "' + executableDir + '" does not exist!'
+	if not os.access(intermediateDir, os.F_OK):
+		print 'ERROR: "' + intermediateDir + '" does not exist!'
 		print 'Usage:', __doc__
 		return 1;
 
 	rc = 0
-	lockfile = LockFile(os.path.join(executableDir, "CompileDatafile.lck"))
+	lockfile = LockFile(os.path.join(intermediateDir, "CompileDatafile.lck"))
 	if lockfile.acquire():
-		rc = GenFile(inputfiles, executableDir, targetname, bIncUpdater)
+		rc = GenFile(inputfiles, intermediateDir, targetname, bIncUpdater)
 		lockfile.release()
 	else:
 		print "CompileDatafile is locked"
