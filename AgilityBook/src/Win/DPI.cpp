@@ -90,7 +90,9 @@ public:
 		}
 #else
 		// I'm using this, so I must be aware!
-		m_Awareness = PROCESS_SYSTEM_DPI_AWARE;
+		//m_Awareness = PROCESS_SYSTEM_DPI_AWARE;
+		// Not working as expected on Mac. So just declare we're not.
+		m_Awareness = PROCESS_DPI_UNAWARE;
 #endif
 
 		// Set scaling of main monitor for system dpi-aware apps.
