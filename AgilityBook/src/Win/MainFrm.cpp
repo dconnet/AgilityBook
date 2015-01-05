@@ -104,20 +104,20 @@ WXLRESULT CMainFrame::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lPara
 		// lParam: scaled rect of window
 		DPI::SetScale(LOWORD(wParam));
 
+		// Based on MS sample
+		// For the new DPI: resize the window, select new
+		// fonts, and re-render window content
+		LPRECT lprcNewScale = (LPRECT)lParam;
+		::SetWindowPos(this->m_hWnd,
+			HWND_TOP,
+			lprcNewScale->left,
+			lprcNewScale->top,
+			lprcNewScale->right - lprcNewScale->left,
+			lprcNewScale->bottom - lprcNewScale->top,
+			SWP_NOZORDER | SWP_NOACTIVATE);
+
 #pragma PRAGMA_TODO(per-monitor rendering)
 #if 0
-		// Copied from MS sample
-		// For the new DPI: resize the window, select new 
-		// fonts, and re-render window content 
-		LPRECT lprcNewScale = (LPRECT)lParam;
-		::SetWindowPos(hWnd, 
-			HWND_TOP, 
-			lprcNewScale->left, 
-			lprcNewScale->top, 
-			RectWidth(*lprcNewScale), 
-			RectHeight(*lprcNewScale), 
-			SWP_NOZORDER | SWP_NOACTIVATE); 
-
 		CreateFonts(hWnd); 
 		RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE); 
 #endif
