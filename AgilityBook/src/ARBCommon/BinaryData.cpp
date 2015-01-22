@@ -49,7 +49,6 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define CHUNK	131072
 
 BinaryData::BinaryData()
 {
@@ -66,6 +65,7 @@ bool BinaryData::Decode(
 	if (inBase64.empty())
 		return false;
 
+	bool bOk = false;
 	unsigned char* pData;
 	size_t len;
 	if (ARBBase64::Decode(inBase64, pData, len))
@@ -79,6 +79,7 @@ bool BinaryData::Decode(
 		outBytes = data.size();
 		outBinData = new unsigned char[outBytes];
 		memcpy(outBinData, data.data(), outBytes);
+		bOk = true;
 
 #elif defined(__WXWINDOWS__)
 		wxMemoryOutputStream output;
@@ -90,13 +91,14 @@ bool BinaryData::Decode(
 		outBytes = output.GetSize();
 		outBinData = new unsigned char[outBytes];
 		output.CopyTo(outBinData, outBytes);
+		bOk = true;
 
 #endif
 
 		ARBBase64::Release(pData);
 	}
 
-	return true;
+	return bOk;
 }
 
 
