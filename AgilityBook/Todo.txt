@@ -1,4 +1,8 @@
-Last Updated: 11/27/2013
+Last Updated: 1/25/2015
+
+- Do not count DNR runs in status bar
+
+- Compute score even for NA runs (steeplechase r2, accomodating pairs)
 
 - Create a fully standalone version (for USB). Config file too.
   (supported by existence of AgilityBook.info, no way to auto-create yet)
