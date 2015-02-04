@@ -1,4 +1,10 @@
-Last Updated: 1/25/2015
+Last Updated: 2/4/2015
+
+- Add support for lifetime points in NADAC Extreme. This needs to use the
+  Bonus Points to determine lifetime.
+  - 50 - 74.99 == 5
+  - 75 - 99.99 == 10
+  - >=100 == 15
 
 - Do not count DNR runs in status bar
 

@@ -1,3 +1,7 @@
+2/4/2015: v3.1.1.<development>
+- Bumped Configuration v50:
+  - Added lifetime points to NADAC Beginners Agility
+
 1/2/2015: v3.1.0.95
 - Bumped Configuration v49:
   - Fixed descriptions in NADAC Extreme game titles.

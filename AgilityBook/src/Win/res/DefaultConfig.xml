@@ -4,6 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2015-02-04 Configuration version 50.
+           Added NADAC Beginners Agility titles.
+           Added NADAC lifetime points to Beginners and Extreme games.
 2014-12-08 Configuration version 49.
            Fixed descriptions in NADAC Extreme game titles.
            AKC MXP/MXJ titles are recurring.
@@ -155,7 +158,7 @@ Revision History:
            Added versioning to configuration to allow auto-upgrades.
            Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="49">
+  <Configuration version="50">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -3020,6 +3023,9 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Titles LongName="Elite Superior Extreme Hoopers" Name="S-XHP-E">200 points</Titles>
       <Titles LongName="Elite Superior Extreme Gaters" Name="S-XGT-E">200 points</Titles>
       <Titles LongName="Elite Superior Extreme Barrel Racing" Name="S-XBR-E">200 points</Titles>
+      <Titles LongName="Beginners Agility 1" Name="BA1">30 points</Titles>
+      <Titles LongName="Beginners Agility 2" Name="BA2">30 points</Titles>
+      <Titles LongName="Beginners Agility 3" Name="BA3">30 points</Titles>
       <Division Name="Std Proficient" ShortName="StdPro">
         <Level Name="Intro"/>
         <Level Name="Novice">
@@ -3464,7 +3470,10 @@ Was called Wild Card briefly.</Desc>
         </Scoring>
       </Event>
       <Event Name="Beginners Agility">
-        <Scoring Division="Beginners" Level="*" type="FaultsThenTime"/>
+        <Desc>Use Faults to indicate number of failed tests.</Desc>
+        <Scoring Division="Beginners" Level="*" type="FaultsThenTime">
+          <LifeTime Faults="0" Points="10"/>
+        </Scoring>
       </Event>
     </Venue>
     <Venue LongName="Société Centrale Canine" Name="SCC" URL="http://www.france-agility.com/agility/reglts.htm" icon="15">

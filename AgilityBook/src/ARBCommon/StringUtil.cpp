@@ -543,7 +543,11 @@ bool CanCompareDigits()
 
 int CompareNoCase(std::wstring const& inStr1, std::wstring const& inStr2)
 {
-#ifdef WIN32
+#if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PC_APP || WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+	// Yeah, changing from case insensitive to sensitive. Deal.
+	return inStr1.compare(inStr2);
+#elif defined(WIN32)
+	// WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 	if (UseCompareString())
 	{
 		switch (CompareStringW(LOCALE_USER_DEFAULT, NORM_IGNORECASE | SORT_DIGITSASNUMBERS, inStr1.c_str(), (int)inStr1.length(), inStr2.c_str(), (int)inStr2.length()))
