@@ -1,6 +1,9 @@
 2/4/2015: v3.1.1.<development>
 - Bumped Configuration v50:
   - Added lifetime points to NADAC Beginners Agility
+- New features / Enhancements:
+  - Changed source code license from Historical Permission Notice and Disclaimer
+    to MIT (HPND has been deprecated).
 
 1/2/2015: v3.1.0.95
 - Bumped Configuration v49:
