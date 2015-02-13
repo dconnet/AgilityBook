@@ -16,6 +16,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2015-02-13 File version 14.3
+ *            Added '?' as Q type (unknown/unset)
  * 2014-08-17 Fix crash when saving a new file.
  * 2014-06-09 Add access to write-only data for file-properties purpose.
  * 2013-10-23 Change arch signature to allow deprecating platforms.
@@ -115,7 +117,7 @@
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(14, 2);
+	static ARBVersion const curVersion(14, 3);
 	return curVersion;
 }
 

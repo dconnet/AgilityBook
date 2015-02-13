@@ -1,6 +1,8 @@
-2/4/2015: v3.1.1.<development>
+2/13/2015: v3.1.1.<development>
 - Bumped Configuration v50:
   - Added lifetime points to NADAC Beginners Agility
+- Bumped file version to 14.3
+  - Added '?' to Q type
 - New features / Enhancements:
   - Changed source code license from Historical Permission Notice and Disclaimer
     to MIT (HPND has been deprecated).
@@ -62,7 +64,7 @@
   - Added ASCA ACE program
   - Added 'Nationals' level to AKC for tracking of National rounds.
   - Added NADAC Beginners Agility
-- Bumped file version to 14.3:
+- Bumped file version to 14.3: [edit - this was never incremented]
   - Added 'scorePts' to 'Placement'.
 - New features / Enhancements:
   - In Points view, scroll to clicked link when page is reloaded.

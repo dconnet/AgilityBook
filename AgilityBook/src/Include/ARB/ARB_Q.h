@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-02-13 Added Unknown state.
  * 2013-08-14 Moved out of ARBTypes.h
  */
 
@@ -32,6 +33,7 @@ public:
 	 */
 	typedef enum
 	{
+		eQ_UNK,		///< Unknown / not set. This must be first.
 		eQ_NA,		///< Cannot qualify in this run.
 		eQ_DNR,		///< Did Not Run.
 		eQ_E,		///< Eliminated.
@@ -62,7 +64,7 @@ public:
 	 */
 	static ARB_Q GetValidType(int inIndex);
 
-	ARB_Q() : m_Q(eQ_NA)
+	ARB_Q() : m_Q(eQ_UNK)
 	{
 	}
 	ARB_Q(eQ inQ) : m_Q(inQ)

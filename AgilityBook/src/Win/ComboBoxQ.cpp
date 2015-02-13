@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-02-13 Added Unknown Q type.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-06-16 Do not enable autocomplete on readonly combos.
  * 2012-05-07 Added autocompletion.
@@ -116,7 +117,8 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr scoring)
 		if (scoring && ARB_Q::eQ_SuperQ == q && !scoring->HasSuperQ())
 			continue;
 		// Allow non-titling runs to only have certain types.
-		if (!bHasTitling && !q.AllowForNonTitling())
+		// 0 is special - it's the Unknown case.
+		if (0 < index && !bHasTitling && !q.AllowForNonTitling())
 			continue;
 		int idx = Append(StringUtil::stringWX(q.str()));
 		SetClientObject(idx, new CQualifyingComboData(q));

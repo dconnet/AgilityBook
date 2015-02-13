@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-02-13 Added Unknown Q type.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-11 Created
  */
@@ -36,7 +37,7 @@ SUITE(TestARBQ)
 		{
 #if defined(__WXWINDOWS__)
 			ARB_Q q;
-			CHECK(L"NA" == q.str());
+			CHECK(L"?" == q.str());
 
 			ARB_Q q1(ARB_Q::eQ_Q);
 			CHECK(L"Q" == q1.str());
@@ -52,18 +53,19 @@ SUITE(TestARBQ)
 		if (!g_bMicroTest)
 		{
 #if defined(__WXWINDOWS__)
-			CHECK_EQUAL(6, ARB_Q::GetNumValidTypes());
-			CHECK(L"NA, Q, NQ, E, DNR, SQ" == ARB_Q::GetValidTypes());
-			CHECK(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(0));
-			CHECK(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(1));
-			CHECK(ARB_Q(ARB_Q::eQ_NQ) == ARB_Q::GetValidType(2));
-			CHECK(ARB_Q(ARB_Q::eQ_E) == ARB_Q::GetValidType(3));
-			CHECK(ARB_Q(ARB_Q::eQ_DNR) == ARB_Q::GetValidType(4));
-			CHECK(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(5));
+			CHECK_EQUAL(7, ARB_Q::GetNumValidTypes());
+			CHECK(L"?, NA, Q, NQ, E, DNR, SQ" == ARB_Q::GetValidTypes());
+			CHECK(ARB_Q(ARB_Q::eQ_UNK) == ARB_Q::GetValidType(0));
+			CHECK(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(1));
+			CHECK(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(2));
+			CHECK(ARB_Q(ARB_Q::eQ_NQ) == ARB_Q::GetValidType(3));
+			CHECK(ARB_Q(ARB_Q::eQ_E) == ARB_Q::GetValidType(4));
+			CHECK(ARB_Q(ARB_Q::eQ_DNR) == ARB_Q::GetValidType(5));
+			CHECK(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(6));
 
 			std::vector<std::wstring> types;
 			ARB_Q::GetValidTypes(types);
-			CHECK_EQUAL(6u, types.size());
+			CHECK_EQUAL(7u, types.size());
 #else
 #pragma PRAGMA_TODO(implement non-wx version)
 #endif
@@ -154,7 +156,7 @@ SUITE(TestARBQ)
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			CHECK(!q.Load(L"attrib", ver, callback));
-			CHECK(L"NA" == q.str());
+			CHECK(L"?" == q.str());
 #else
 #pragma PRAGMA_TODO(implement non-wx version)
 #endif
@@ -171,7 +173,7 @@ SUITE(TestARBQ)
 			CHECK(q.Save(ele, L"attrib"));
 			std::wstring str;
 			CHECK(ElementNode::eFound == ele->GetAttrib(L"attrib", str));
-			CHECK(L"NA" == str);
+			CHECK(L"?" == str);
 		}
 	}
 }

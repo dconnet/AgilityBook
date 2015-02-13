@@ -11,7 +11,9 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2014-02-12 File version 14.3
+2015-02-13 File version 14.3
+           Added '?' as Q type (unknown/unset)
+2014-02-12 File version 14.3 - oops - version was never incremented
            Added 'scorePts' to 'Placement'.
 2013-09-03 File version 14.2
            Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
@@ -677,7 +679,7 @@ These 3 elements define the major scoring mechanisms.
 -->
 <!ELEMENT Placement (OtherPoints*) >
 	<!ATTLIST Placement
-		Q (NA|SQ|Q|NQ|E|DNR) 'NA'
+		Q (?|NA|SQ|Q|NQ|E|DNR) '?'
 		Place CDATA #REQUIRED
 		InClass CDATA #IMPLIED
 		DogsQd CDATA #IMPLIED

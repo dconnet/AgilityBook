@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-02-13 Added Unknown state.
  * 2013-08-14 Moved out of ARBTypes.cpp
  */
 
@@ -33,6 +34,7 @@ static struct Q2Enum
 	wchar_t const* trans;	///< Translation
 } const sc_Qs[] =
 {
+	{ATTRIB_QTYPE_UNK, ARB_Q::eQ_UNK,    arbT("IDS_QTYPE_UNK")},
 	{ATTRIB_QTYPE_NA,  ARB_Q::eQ_NA,     arbT("IDS_QTYPE_NA")},
 	{ATTRIB_QTYPE_Q,   ARB_Q::eQ_Q,      arbT("IDS_QTYPE_Q")},
 	{ATTRIB_QTYPE_NQ,  ARB_Q::eQ_NQ,     arbT("IDS_QTYPE_NQ")},
@@ -111,8 +113,8 @@ bool ARB_Q::Load(
 			return true;
 		}
 	}
-	// Any Q that is not recognized is changed into a "NA".
-	m_Q = eQ_NA;
+	// Any Q that is not recognized is changed into a "?".
+	m_Q = eQ_UNK;
 	return false;
 }
 
@@ -122,10 +124,10 @@ bool ARB_Q::Save(
 		wchar_t const* const inAttribName) const
 {
 	// If, somehow, m_Q is set to a value we don't understand,
-	// it will be written as "NA".
+	// it will be written as "?".
 	assert(!!inAttribName);
 	bool bOk = false;
-	std::wstring q(L"NA");
+	std::wstring q(ATTRIB_QTYPE_UNK);
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (m_Q == sc_Qs[i].q)
