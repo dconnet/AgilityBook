@@ -477,10 +477,6 @@
     <Image Include="..\..\Win\res\points.png" />
     <Image Include="..\..\Win\res\run.png" />
     <Image Include="..\..\Win\res\Splash.png" />
-    <Image Include="..\..\Win\res\title-hidden-have.png" />
-    <Image Include="..\..\Win\res\title-hidden.png" />
-    <Image Include="..\..\Win\res\title-visible-have.png" />
-    <Image Include="..\..\Win\res\title-visible.png" />
     <Image Include="..\..\Win\res\toolbarAbout.png" />
     <Image Include="..\..\Win\res\toolbarCalendar.png" />
     <Image Include="..\..\Win\res\toolbarCopy.png" />
@@ -499,19 +495,6 @@
     <Image Include="..\..\Win\res\training.png" />
     <Image Include="..\..\Win\res\trial.png" />
     <Image Include="..\..\Win\res\unchecked.png" />
-    <Image Include="..\..\Win\res\venue-aac.png" />
-    <Image Include="..\..\Win\res\venue-akc.png" />
-    <Image Include="..\..\Win\res\venue-asca.png" />
-    <Image Include="..\..\Win\res\venue-ckc.png" />
-    <Image Include="..\..\Win\res\venue-cpe.png" />
-    <Image Include="..\..\Win\res\venue-docna.png" />
-    <Image Include="..\..\Win\res\venue-fci.png" />
-    <Image Include="..\..\Win\res\venue-nadac.png" />
-    <Image Include="..\..\Win\res\venue-scc.png" />
-    <Image Include="..\..\Win\res\venue-sweep.png" />
-    <Image Include="..\..\Win\res\venue-tdaa.png" />
-    <Image Include="..\..\Win\res\venue-ukc.png" />
-    <Image Include="..\..\Win\res\venue-usdaa.png" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Win\res\AgilityBook.ico" />

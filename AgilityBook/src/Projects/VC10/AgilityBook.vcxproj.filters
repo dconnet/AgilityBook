@@ -1047,18 +1047,6 @@
     <Image Include="..\..\Win\res\Splash.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>
-    <Image Include="..\..\Win\res\title-hidden.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\title-hidden-have.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\title-visible.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\title-visible-have.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
     <Image Include="..\..\Win\res\toolbarAbout.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>
@@ -1111,45 +1099,6 @@
       <Filter>Resource Files\PNG</Filter>
     </Image>
     <Image Include="..\..\Win\res\unchecked.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-aac.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-akc.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-asca.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-ckc.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-cpe.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-docna.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-fci.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-nadac.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-scc.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-sweep.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-tdaa.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-ukc.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\venue-usdaa.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>
     <Image Include="..\..\Win\res\AgilityBook.ico">

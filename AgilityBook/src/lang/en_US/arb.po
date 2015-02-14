@@ -1565,7 +1565,7 @@ msgstr "SQ"
 
 #: Win/AgilityBookRunsView.cpp:1309
 msgid "IDS_NUM_RUNS_QS"
-msgstr "%1$d runs, %2$d Qs"
+msgstr "%1$d entries, %2$d runs, %3$d Qs"
 
 #: Win/AgilityBookTrainingView.cpp:408
 msgid "IDS_NUM_TRAINING"

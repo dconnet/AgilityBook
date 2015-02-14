@@ -1299,14 +1299,21 @@ bool CAgilityBookRunsView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
+	int nIgnoredRuns = 0;
 	int nQs = 0;
 	for (int index = 0; index < m_Ctrl->GetItemCount(); ++index)
 	{
 		CAgilityBookRunsViewDataPtr pData = GetItemRunData(index);
-		if (pData && pData->GetRun() && pData->GetRun()->GetQ().Qualified())
-			++nQs;
+		if (pData && pData->GetRun())
+		{
+			ARB_Q q = pData->GetRun()->GetQ();
+			if (q.Qualified())
+				++nQs;
+			else if (ARB_Q::eQ_UNK == q || ARB_Q::eQ_DNR == q)
+				++nIgnoredRuns;
+		}
 	}
-	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_RUNS_QS"), m_Ctrl->GetItemCount(), nQs));
+	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_RUNS_QS"), m_Ctrl->GetItemCount(), m_Ctrl->GetItemCount() - nIgnoredRuns, nQs));
 	return true;
 }
 

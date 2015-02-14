@@ -6,6 +6,7 @@
 - New features / Enhancements:
   - Changed source code license from Historical Permission Notice and Disclaimer
     to MIT (HPND has been deprecated).
+  - Enhance status to show total/runs/Qs where runs does not include DNR.
 
 1/2/2015: v3.1.0.95
 - Bumped Configuration v49:
