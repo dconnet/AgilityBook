@@ -3,8 +3,7 @@ Setting up the build environment
 (note, comments/etc are very Windows-oriented since that's my main platform.)
 Additional software packages required (all free):
 - wxWidgets
-- gettext (MinGW)
-- poedit
+- poedit (includes msgcat)
 - wxFormBuilder (optional)
 - UnitTest++ [see note below, included in src tree now]
 - Boost libraries (not needed as of VC9+SP1)
@@ -128,10 +127,12 @@ To build for Mac, see ./build/setupwx
 
 --------------------
 
-gettext: [windows] http://sourceforge.net/projects/mingw/files/Installer
-         [mac] Part of MacPorts
-This is required in order to create the language stuff.
-Make sure "C:\MinGW\bin" is added to the PATH. (windows)
+poedit: http://www.poedit.net
+Cross platform editor for modifying .po files. Currently using 1.6.10.
+- includes gettext
+  - on Mac, probably want to include MacPorts version
+Use this to keep the catalog in sync with the source code.
+
 When initially developing:
 - mkdir <lang>
 - cd <lang>
@@ -141,20 +142,6 @@ When initially developing:
    - or -
    cp ../../locale/wxstd.po .
 This will generate an initial set of strings to translate.
-
-MinGW: After installing the Installation Manager (currently 0.6.2 beta),
-select the mingw32-gettext package (bin [gettext] and dev [msgcat/etc]).
-Update. That's all. (Plus anything else you might want)
-Note: Sometimes, after applying an update, MinGW seems to lose packages.
-The only work around I found is to delete C:\MinGW and reinstall.
-Currently using Gettext v0.18.3.2.
-
---------------------
-
-poedit: http://www.poedit.net
-Cross platform editor for modifying .po files. Currently using 1.6.10.
-(makes use of gettext)
-Use this to keep the catalog in sync with the source code.
 
 --------------------
 
