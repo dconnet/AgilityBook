@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Generate the message libraries
 #
-# Requires gettext (msgcat/msgfmt) in PATH
+# Requires msgcat/msgfmt (gettext) in PATH
 #
 # Revision History
 # 2014-11-16 Separated PO/MO language from DAT file generation.
@@ -32,7 +32,6 @@ import subprocess
 import time
 import zipfile
 
-# By default, gettext is in the path
 # This file is generated with msgcat of all po files ('firstFile' is first)
 autogenFile = 'autogen.po'
 

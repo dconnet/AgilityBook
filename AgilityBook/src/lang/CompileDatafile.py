@@ -32,10 +32,6 @@ import subprocess
 import time
 import zipfile
 
-# By default, gettext is in the path
-# This file is generated with msgcat of all po files ('firstFile' is first)
-autogenFile = 'autogen.po'
-
 
 class LockFile:
 	def __init__(self, filename):
