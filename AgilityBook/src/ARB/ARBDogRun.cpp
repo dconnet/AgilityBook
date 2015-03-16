@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-03-15 Fixed Unknown-Q usage.
  * 2014-09-02 Fix gambles with no closing required so titling works.
  * 2014-02-12 Added 'scorePts' to 'Placement'.
  * 2012-09-09 Added 'titlePts','speedPts' to 'Placement'.
@@ -372,7 +373,7 @@ bool ARBDogRun::Load(
 				std::wstring msg(Localization()->ValidValues());
 				msg += ARB_Q::GetValidTypes();
 				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
-				return false;
+				// Warn, but keep going so data is not lost.
 			}
 			element->GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
 			element->GetAttrib(ATTRIB_PLACEMENT_INCLASS, m_InClass);
@@ -437,7 +438,7 @@ bool ARBDogRun::Save(
 	if (!m_Scoring.Save(run))
 		return false;
 
-	if (0 < m_Place || ARB_Q::eQ_NA != m_Q)
+	if (0 < m_Place || ARB_Q::eQ_UNK != m_Q)
 	{
 		ElementNodePtr element = run->AddElementNode(TREE_PLACEMENT);
 		m_Q.Save(element, ATTRIB_PLACEMENT_Q);

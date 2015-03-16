@@ -1,4 +1,9 @@
-Last Updated: 2/13/2015
+Last Updated: 3/15/2015
+
+- Add warning in run dialog when Q is UNK that the following will not
+  be saved:
+  - Place/InClass/DogsQ
+  - Other Points
 
 - Add test to verify version in arbrecordbook.cpp, defaultconfig.xml
   (and dtd file would be nice too)

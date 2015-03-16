@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown state.
  * 2013-08-14 Moved out of ARBTypes.cpp
  */
@@ -34,7 +35,7 @@ static struct Q2Enum
 	wchar_t const* trans;	///< Translation
 } const sc_Qs[] =
 {
-	{ATTRIB_QTYPE_UNK, ARB_Q::eQ_UNK,    arbT("IDS_QTYPE_UNK")},
+	{nullptr,          ARB_Q::eQ_UNK,    nullptr},
 	{ATTRIB_QTYPE_NA,  ARB_Q::eQ_NA,     arbT("IDS_QTYPE_NA")},
 	{ATTRIB_QTYPE_Q,   ARB_Q::eQ_Q,      arbT("IDS_QTYPE_Q")},
 	{ATTRIB_QTYPE_NQ,  ARB_Q::eQ_NQ,     arbT("IDS_QTYPE_NQ")},
@@ -48,11 +49,16 @@ static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 std::wstring ARB_Q::GetValidTypes()
 {
 	std::wostringstream types;
+	bool bComma = false;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
-		if (0 < i)
-			types << L", ";
-		types << StringUtil::GetTranslation(sc_Qs[i].trans);
+		if (sc_Qs[i].trans)
+		{
+			if (bComma)
+				types << L", ";
+			bComma = true;
+			types << StringUtil::GetTranslation(sc_Qs[i].trans);
+		}
 	}
 	return types.str();
 }
@@ -63,7 +69,10 @@ void ARB_Q::GetValidTypes(std::vector<std::wstring>& outTypes)
 	outTypes.clear();
 	for (int i = 0; i < sc_nQs; ++i)
 	{
-		outTypes.push_back(StringUtil::GetTranslation(sc_Qs[i].trans));
+		if (sc_Qs[i].trans)
+			outTypes.push_back(StringUtil::GetTranslation(sc_Qs[i].trans));
+		else
+			outTypes.push_back(std::wstring());
 	}
 }
 
@@ -87,12 +96,15 @@ ARB_Q ARB_Q::GetValidType(int inIndex)
 
 std::wstring ARB_Q::str() const
 {
-	std::wstring s(L"?");
+	std::wstring s;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (sc_Qs[i].q == m_Q)
 		{
-			s = StringUtil::GetTranslation(sc_Qs[i].trans);
+			if (sc_Qs[i].trans)
+				s = StringUtil::GetTranslation(sc_Qs[i].trans);
+			else
+				s = std::wstring();
 			break;
 		}
 	}
@@ -107,13 +119,13 @@ bool ARB_Q::Load(
 {
 	for (int i = 0; i < sc_nQs; ++i)
 	{
-		if (inAttrib == sc_Qs[i].pQ)
+		if (sc_Qs[i].pQ && inAttrib == sc_Qs[i].pQ)
 		{
 			m_Q = sc_Qs[i].q;
 			return true;
 		}
 	}
-	// Any Q that is not recognized is changed into a "?".
+	// Any Q that is not recognized is changed into unknown.
 	m_Q = eQ_UNK;
 	return false;
 }
@@ -123,19 +135,19 @@ bool ARB_Q::Save(
 		ElementNodePtr ioTree,
 		wchar_t const* const inAttribName) const
 {
-	// If, somehow, m_Q is set to a value we don't understand,
-	// it will be written as "?".
 	assert(!!inAttribName);
 	bool bOk = false;
-	std::wstring q(ATTRIB_QTYPE_UNK);
+	std::wstring q;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (m_Q == sc_Qs[i].q)
 		{
-			q = sc_Qs[i].pQ;
+			if (sc_Qs[i].pQ)
+				q = sc_Qs[i].pQ;
 			bOk = true;
 		}
 	}
-	ioTree->AddAttrib(inAttribName, q);
+	if (!q.empty())
+		ioTree->AddAttrib(inAttribName, q);
 	return bOk;
 }

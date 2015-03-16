@@ -248,7 +248,6 @@
 #define ATTRIB_BY_POINTS_NEED				L"NeedPts"
 #define ATTRIB_BY_POINTS_GOT				L"Points"
 #define ATTRIB_PLACEMENT_Q					L"Q"
-#define ATTRIB_QTYPE_UNK						L"?"
 #define ATTRIB_QTYPE_NA							L"NA"
 #define ATTRIB_QTYPE_Q							L"Q"
 #define ATTRIB_QTYPE_NQ							L"NQ"

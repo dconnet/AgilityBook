@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown Q type.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-11 Created
@@ -37,7 +38,7 @@ SUITE(TestARBQ)
 		{
 #if defined(__WXWINDOWS__)
 			ARB_Q q;
-			CHECK(L"?" == q.str());
+			CHECK(L"" == q.str());
 
 			ARB_Q q1(ARB_Q::eQ_Q);
 			CHECK(L"Q" == q1.str());
@@ -54,7 +55,7 @@ SUITE(TestARBQ)
 		{
 #if defined(__WXWINDOWS__)
 			CHECK_EQUAL(7, ARB_Q::GetNumValidTypes());
-			CHECK(L"?, NA, Q, NQ, E, DNR, SQ" == ARB_Q::GetValidTypes());
+			CHECK(L"NA, Q, NQ, E, DNR, SQ" == ARB_Q::GetValidTypes());
 			CHECK(ARB_Q(ARB_Q::eQ_UNK) == ARB_Q::GetValidType(0));
 			CHECK(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(1));
 			CHECK(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(2));
@@ -156,7 +157,7 @@ SUITE(TestARBQ)
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			CHECK(!q.Load(L"attrib", ver, callback));
-			CHECK(L"?" == q.str());
+			CHECK(L"" == q.str());
 #else
 #pragma PRAGMA_TODO(implement non-wx version)
 #endif
@@ -164,7 +165,21 @@ SUITE(TestARBQ)
 	}
 
 
-	TEST(Save)
+	TEST(SaveValid)
+	{
+		if (!g_bMicroTest)
+		{
+			ARB_Q q(ARB_Q::eQ_Q);
+			ElementNodePtr ele = ElementNode::New(L"test");
+			CHECK(q.Save(ele, L"attrib"));
+			std::wstring str;
+			CHECK(ElementNode::eFound == ele->GetAttrib(L"attrib", str));
+			CHECK(L"Q" == str);
+		}
+	}
+
+
+	TEST(SaveUnknown)
 	{
 		if (!g_bMicroTest)
 		{
@@ -172,8 +187,8 @@ SUITE(TestARBQ)
 			ElementNodePtr ele = ElementNode::New(L"test");
 			CHECK(q.Save(ele, L"attrib"));
 			std::wstring str;
-			CHECK(ElementNode::eFound == ele->GetAttrib(L"attrib", str));
-			CHECK(L"?" == str);
+			CHECK(ElementNode::eNotFound == ele->GetAttrib(L"attrib", str));
+			CHECK(L"" == str);
 		}
 	}
 }

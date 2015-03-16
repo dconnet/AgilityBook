@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown state.
  * 2013-08-14 Moved out of ARBTypes.h
  */
@@ -126,7 +127,7 @@ public:
 	 */
 	bool AllowTally() const
 	{
-		return eQ_NA != m_Q && eQ_DNR != m_Q;
+		return eQ_UNK != m_Q && eQ_NA != m_Q && eQ_DNR != m_Q;
 	}
 
 	/**
@@ -135,7 +136,7 @@ public:
 	 */
 	bool AllowForNonTitling() const
 	{
-		return ARB_Q::eQ_E == m_Q || ARB_Q::eQ_DNR == m_Q || ARB_Q::eQ_NA == m_Q;
+		return eQ_UNK == m_Q || eQ_NA == m_Q || eQ_DNR == m_Q || eQ_E == m_Q;
 	}
 
 	operator eQ() const

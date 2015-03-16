@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown Q type.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-06-16 Do not enable autocomplete on readonly combos.
@@ -104,7 +105,7 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr scoring)
 	bool bHasTitling = true;
 	if (scoring)
 		bHasTitling = (0 < scoring->GetTitlePoints().size() || 0 < scoring->GetLifetimePoints().size());
-	ARB_Q curQ = ARB_Q::eQ_NA;
+	ARB_Q curQ = ARB_Q::eQ_UNK;
 	if (m_refRun)
 		curQ = m_refRun->GetQ();
 	else if (m_Run)
@@ -134,5 +135,5 @@ ARB_Q CQualifyingComboBox::GetQ(int index) const
 	wxClientData* pData = GetClientObject(index);
 	if (pData)
 		return dynamic_cast<CQualifyingComboData*>(pData)->m_Q;
-	return ARB_Q::eQ_NA;
+	return ARB_Q::eQ_UNK;
 }

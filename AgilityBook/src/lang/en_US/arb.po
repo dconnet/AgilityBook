@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-13 13:19-0800\n"
-"PO-Revision-Date: 2015-02-13 13:43-0800\n"
+"POT-Creation-Date: 2015-03-15 21:33-0800\n"
+"PO-Revision-Date: 2015-03-15 21:33-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.7.5\n"
 "X-Poedit-SearchPath-0: ARB\n"
 "X-Poedit-SearchPath-1: ARBHelp\n"
 "X-Poedit-SearchPath-2: ARBUpdater\n"
@@ -32,31 +32,27 @@ msgstr "AKC / Time 2 Beat"
 msgid "IDS_TITLEPOINT_NORMAL_UKI"
 msgstr "UKI"
 
-#: ARB/ARB_Q.cpp:36
-msgid "IDS_QTYPE_UNK"
-msgstr "?"
-
-#: ARB/ARB_Q.cpp:37
+#: ARB/ARB_Q.cpp:39
 msgid "IDS_QTYPE_NA"
 msgstr "NA"
 
-#: ARB/ARB_Q.cpp:38
+#: ARB/ARB_Q.cpp:40
 msgid "IDS_QTYPE_Q"
 msgstr "Q"
 
-#: ARB/ARB_Q.cpp:39
+#: ARB/ARB_Q.cpp:41
 msgid "IDS_QTYPE_NQ"
 msgstr "NQ"
 
-#: ARB/ARB_Q.cpp:40
+#: ARB/ARB_Q.cpp:42
 msgid "IDS_QTYPE_E"
 msgstr "E"
 
-#: ARB/ARB_Q.cpp:41
+#: ARB/ARB_Q.cpp:43
 msgid "IDS_QTYPE_DNR"
 msgstr "DNR"
 
-#: ARB/ARB_Q.cpp:42
+#: ARB/ARB_Q.cpp:44
 msgid "IDS_QTYPE_SQ"
 msgstr "SQ"
 
@@ -280,7 +276,7 @@ msgid "IDS_UPDATE_IDENTICAL"
 msgstr "%1$d identical"
 
 #: TestARB/Local.cpp:139 Win/DlgAssignColumns.cpp:300 Win/DlgConfigure.cpp:216
-#: Win/Localization.cpp:123 Win/Print.cpp:258
+#: Win/Localization.cpp:123 Win/Print.cpp:259
 msgid "IDS_COL_FAULTS"
 msgstr "Faults"
 
@@ -485,11 +481,11 @@ msgstr "Updated %1$d Team runs."
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Table setting updated in %1$d runs."
 
-#: Win/AgilityBook.cpp:155 Win/Print.cpp:1006 Win/Print.cpp:1039
+#: Win/AgilityBook.cpp:155 Win/Print.cpp:1007 Win/Print.cpp:1040
 msgid "Sorry, print preview needs a printer to be installed."
 msgstr "Sorry, print preview needs a printer to be installed."
 
-#: Win/AgilityBook.cpp:158 Win/Print.cpp:1009
+#: Win/AgilityBook.cpp:158 Win/Print.cpp:1010
 msgid "Print Preview"
 msgstr "Print Preview"
 
@@ -533,7 +529,7 @@ msgstr "End Date"
 #: Win/DlgCalendarQueryDetail.cpp:165 Win/DlgDog.cpp:99 Win/DlgDog.cpp:113
 #: Win/DlgDog.cpp:133 Win/DlgListCtrl.cpp:406 Win/DlgListViewer.cpp:1139
 #: Win/DlgListViewer.cpp:1207 Win/DlgListViewer.cpp:1347 Win/DlgQueryDetail.cpp:79
-#: Win/DlgTrial.cpp:308 Win/Print.cpp:244
+#: Win/DlgTrial.cpp:308 Win/Print.cpp:245
 msgid "IDS_COL_VENUE"
 msgstr "Venue"
 
@@ -543,7 +539,7 @@ msgstr "Venue"
 #: Win/DlgInfoNote.cpp:356 Win/DlgListCtrl.cpp:404 Win/DlgListViewer.cpp:955
 #: Win/DlgListViewer.cpp:995 Win/DlgListViewer.cpp:1007 Win/DlgListViewer.cpp:1145
 #: Win/DlgListViewer.cpp:1213 Win/DlgListViewer.cpp:1267 Win/DlgQueryDetail.cpp:79
-#: Win/Print.cpp:247
+#: Win/Print.cpp:248
 msgid "IDS_COL_LOCATION"
 msgstr "Location"
 
@@ -552,7 +548,7 @@ msgstr "Location"
 #: Win/DlgListCtrl.cpp:405 Win/DlgListViewer.cpp:949 Win/DlgListViewer.cpp:989
 #: Win/DlgListViewer.cpp:1001 Win/DlgListViewer.cpp:1146 Win/DlgListViewer.cpp:1214
 #: Win/DlgListViewer.cpp:1268 Win/DlgListViewer.cpp:1346 Win/DlgTrial.cpp:307
-#: Win/Print.cpp:245
+#: Win/Print.cpp:246
 msgid "IDS_COL_CLUB"
 msgstr "Club"
 
@@ -703,7 +699,7 @@ msgid "IDS_UPDATED_TRAINING_ITEMS"
 msgstr "Added %1$d new Training Log items, %2$d updated items."
 
 #: Win/AgilityBookDoc.cpp:1370 Win/DlgDog.cpp:597 Win/DlgFindLinks.cpp:118
-#: Win/DlgListCtrl.cpp:457 Win/DlgListViewer.cpp:1202 Win/Print.cpp:242
+#: Win/DlgListCtrl.cpp:457 Win/DlgListViewer.cpp:1202 Win/Print.cpp:243
 msgid "IDS_COL_DOG"
 msgstr "Dog"
 
@@ -1563,7 +1559,7 @@ msgstr "This panel contains your training log entries."
 msgid "IDS_SQ"
 msgstr "SQ"
 
-#: Win/AgilityBookRunsView.cpp:1309
+#: Win/AgilityBookRunsView.cpp:1316
 msgid "IDS_NUM_RUNS_QS"
 msgstr "%1$d entries, %2$d runs, %3$d Qs"
 
@@ -1933,7 +1929,7 @@ msgstr "Call Name"
 #: Win/DlgAssignColumns.cpp:207 Win/DlgAssignColumns.cpp:335
 #: Win/DlgAssignColumns.cpp:380 Win/DlgDog.cpp:98 Win/DlgDog.cpp:129
 #: Win/DlgListViewer.cpp:1135 Win/DlgListViewer.cpp:1203 Win/DlgListViewer.cpp:1264
-#: Win/DlgListViewer.cpp:1343 Win/Print.cpp:243
+#: Win/DlgListViewer.cpp:1343 Win/Print.cpp:244
 msgid "IDS_COL_DATE"
 msgstr "Date"
 
@@ -1963,22 +1959,22 @@ msgid "IDS_COL_EVENT"
 msgstr "Event"
 
 #: Win/DlgAssignColumns.cpp:231 Win/DlgAssignColumns.cpp:395 Win/DlgDog.cpp:115
-#: Win/DlgRun.cpp:196 Win/Print.cpp:248 Win/Print.cpp:269 Win/Print.cpp:275
-#: Win/Print.cpp:281 Win/Print.cpp:287
+#: Win/DlgRun.cpp:196 Win/Print.cpp:249 Win/Print.cpp:270 Win/Print.cpp:276
+#: Win/Print.cpp:282 Win/Print.cpp:288
 msgid "IDS_COL_HEIGHT"
 msgstr "Height"
 
 #: Win/DlgAssignColumns.cpp:234 Win/DlgInfoNote.cpp:353 Win/DlgListViewer.cpp:952
 #: Win/DlgListViewer.cpp:992 Win/DlgListViewer.cpp:1004 Win/DlgListViewer.cpp:1147
-#: Win/DlgListViewer.cpp:1215 Win/Print.cpp:249
+#: Win/DlgListViewer.cpp:1215 Win/Print.cpp:250
 msgid "IDS_COL_JUDGE"
 msgstr "Judge"
 
-#: Win/DlgAssignColumns.cpp:237 Win/DlgListCtrl.cpp:459 Win/Print.cpp:250
+#: Win/DlgAssignColumns.cpp:237 Win/DlgListCtrl.cpp:459 Win/Print.cpp:251
 msgid "IDS_COL_HANDLER"
 msgstr "Handler"
 
-#: Win/DlgAssignColumns.cpp:240 Win/Print.cpp:251
+#: Win/DlgAssignColumns.cpp:240 Win/Print.cpp:252
 msgid "IDS_COL_CONDITIONS"
 msgstr "Conditions"
 
@@ -1986,12 +1982,12 @@ msgstr "Conditions"
 msgid "IDS_COL_COURSEFAULTS"
 msgstr "Course Faults"
 
-#: Win/DlgAssignColumns.cpp:246 Win/DlgRun.cpp:194 Win/Print.cpp:256
-#: Win/Print.cpp:267 Win/Print.cpp:273 Win/Print.cpp:279 Win/Print.cpp:285
+#: Win/DlgAssignColumns.cpp:246 Win/DlgRun.cpp:194 Win/Print.cpp:257
+#: Win/Print.cpp:268 Win/Print.cpp:274 Win/Print.cpp:280 Win/Print.cpp:286
 msgid "IDS_COL_TIME"
 msgstr "Time"
 
-#: Win/DlgAssignColumns.cpp:249 Win/Print.cpp:254
+#: Win/DlgAssignColumns.cpp:249 Win/Print.cpp:255
 msgid "IDS_COL_YARDS"
 msgstr "Yards"
 
@@ -1999,7 +1995,7 @@ msgstr "Yards"
 msgid "IDS_COL_YPS"
 msgstr "YPS"
 
-#: Win/DlgAssignColumns.cpp:255 Win/Print.cpp:253
+#: Win/DlgAssignColumns.cpp:255 Win/Print.cpp:254
 msgid "IDS_COL_SCT"
 msgstr "SCT"
 
@@ -2034,31 +2030,31 @@ msgstr "Points"
 
 #: Win/DlgAssignColumns.cpp:279 Win/DlgConfigEventMethod.cpp:352
 #: Win/DlgListViewer.cpp:1148 Win/DlgListViewer.cpp:1216 Win/DlgRun.cpp:192
-#: Win/Print.cpp:260 Win/Print.cpp:265 Win/Print.cpp:271 Win/Print.cpp:277
-#: Win/Print.cpp:283
+#: Win/Print.cpp:261 Win/Print.cpp:266 Win/Print.cpp:272 Win/Print.cpp:278
+#: Win/Print.cpp:284
 msgid "IDS_COL_PLACE"
 msgstr "Place"
 
 #: Win/DlgAssignColumns.cpp:282 Win/DlgListViewer.cpp:1149
-#: Win/DlgListViewer.cpp:1217 Win/Print.cpp:261
+#: Win/DlgListViewer.cpp:1217 Win/Print.cpp:262
 msgid "IDS_COL_IN_CLASS"
 msgstr "In Class"
 
 #: Win/DlgAssignColumns.cpp:285 Win/DlgListViewer.cpp:1150
-#: Win/DlgListViewer.cpp:1218 Win/Print.cpp:262
+#: Win/DlgListViewer.cpp:1218 Win/Print.cpp:263
 msgid "IDS_COL_Q_D"
 msgstr "Q'd"
 
 #: Win/DlgAssignColumns.cpp:288 Win/DlgAssignColumns.cpp:383
 #: Win/DlgListViewer.cpp:1137 Win/DlgListViewer.cpp:1205 Win/DlgRun.cpp:191
-#: Win/Print.cpp:252 Win/Print.cpp:266 Win/Print.cpp:272 Win/Print.cpp:278
-#: Win/Print.cpp:284
+#: Win/Print.cpp:253 Win/Print.cpp:267 Win/Print.cpp:273 Win/Print.cpp:279
+#: Win/Print.cpp:285
 msgid "IDS_COL_Q"
 msgstr "Q"
 
 #: Win/DlgAssignColumns.cpp:291 Win/DlgListViewer.cpp:1352 Win/DlgRun.cpp:193
-#: Win/Print.cpp:259 Win/Print.cpp:268 Win/Print.cpp:274 Win/Print.cpp:280
-#: Win/Print.cpp:286
+#: Win/Print.cpp:260 Win/Print.cpp:269 Win/Print.cpp:275 Win/Print.cpp:281
+#: Win/Print.cpp:287
 msgid "IDS_COL_SCORE"
 msgstr "Score"
 
@@ -2068,7 +2064,7 @@ msgid "IDS_COL_TITLE_PTS"
 msgstr "Title Points"
 
 #: Win/DlgAssignColumns.cpp:297 Win/DlgDog.cpp:139 Win/DlgListViewer.cpp:1382
-#: Win/Print.cpp:264
+#: Win/Print.cpp:265
 msgid "IDS_COL_COMMENTS"
 msgstr "Comments"
 
@@ -2235,7 +2231,7 @@ msgstr "MinYPS"
 msgid "IDS_COL_DRAWS"
 msgstr "Draws"
 
-#: Win/DlgAssignColumns.cpp:551 Win/Print.cpp:257
+#: Win/DlgAssignColumns.cpp:551 Win/Print.cpp:258
 msgid "IDS_COL_OBSTACLES"
 msgstr "Obstacles"
 
@@ -6075,8 +6071,8 @@ msgstr "status"
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtered"
 
-#: Win/PointsData.cpp:621 Win/PointsData.cpp:1412 Win/Print.cpp:102
-#: Win/Print.cpp:1042 Win/TabView.cpp:228 Win/TabView.cpp:340
+#: Win/PointsData.cpp:621 Win/PointsData.cpp:1412 Win/Print.cpp:103
+#: Win/Print.cpp:1043 Win/TabView.cpp:228 Win/TabView.cpp:340
 msgid "IDS_RUNS"
 msgstr "Runs"
 
@@ -6124,19 +6120,19 @@ msgstr "[%1$d SQ]"
 msgid "IDS_POINTS_SPEED_SUBTOTAL"
 msgstr "[%1$d speed]"
 
-#: Win/Print.cpp:246
+#: Win/Print.cpp:247
 msgid "IDS_COL_DIV_LVL_EVT"
 msgstr "Division/Level/Event"
 
-#: Win/Print.cpp:255
+#: Win/Print.cpp:256
 msgid "IDS_COL_OPEN_CLOSE"
 msgstr "Open/Close"
 
-#: Win/Print.cpp:263
+#: Win/Print.cpp:264
 msgid "IDS_COL_OTHERPOINTS"
 msgstr "Other Points"
 
-#: Win/Print.cpp:270 Win/Print.cpp:276 Win/Print.cpp:282 Win/Print.cpp:288
+#: Win/Print.cpp:271 Win/Print.cpp:277 Win/Print.cpp:283 Win/Print.cpp:289
 msgid "IDS_COL_NAME_BREED_NOTE"
 msgstr "Name/Breed/Notes"
 
@@ -6892,6 +6888,9 @@ msgstr "arbsettings"
 msgid "IDS_FILEEXT_FILTER_SETTINGS"
 msgstr ""
 "Agility Record Book settings (*.arbsettings)|*.arbsettings|All Files (*.*)|*.*||"
+
+#~ msgid "IDS_QTYPE_UNK"
+#~ msgstr "?"
 
 #~ msgid "IDS_MIN_RESOLUTION"
 #~ msgstr ""

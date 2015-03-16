@@ -1,8 +1,8 @@
-2/13/2015: v3.1.1.<development>
+3/15/2015: v3.1.1.<development>
 - Bumped Configuration v50:
   - Added lifetime points to NADAC Beginners Agility
 - Bumped file version to 14.3
-  - Added '?' to Q type
+  - Added Unknown to Q type
 - New features / Enhancements:
   - Changed source code license from Historical Permission Notice and Disclaimer
     to MIT (HPND has been deprecated).

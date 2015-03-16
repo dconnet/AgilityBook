@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-03-15 Fixed Unknown-Q usage.
  * 2013-09-03 Changed to use short names.
  * 2009-12-19 Fix blank page layout in landscape.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -374,7 +375,7 @@ static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr ref, i
 	case CODE_REFQ2:
 	case CODE_REFQ3:
 	case CODE_REFQ4:
-		if ((ARB_Q::eQ)ref->GetQ() != ARB_Q::eQ_NA)
+		if ((ARB_Q::eQ)ref->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)ref->GetQ() != ARB_Q::eQ_NA)
 			text << ref->GetQ().str();
 		break;
 	case CODE_REFTIME1:
@@ -535,7 +536,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 	case CODE_Q:
 		if (run)
 		{
-			if ((ARB_Q::eQ)run->GetQ() != ARB_Q::eQ_NA)
+			if ((ARB_Q::eQ)run->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)run->GetQ() != ARB_Q::eQ_NA)
 				text << run->GetQ().str();
 		}
 		break;
