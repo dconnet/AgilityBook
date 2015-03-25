@@ -17,9 +17,9 @@
  *
  * Revision History
  * 2015-02-13 File version 14.3
- *            Added '?' as Q type (unknown/unset)
  * 2014-08-17 Fix crash when saving a new file.
  * 2014-06-09 Add access to write-only data for file-properties purpose.
+ * 2014-05-18 File version 14.3 (but version bump didn't happen)
  * 2013-10-23 Change arch signature to allow deprecating platforms.
  * 2013-09-06 File version 14.2
  *            Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
