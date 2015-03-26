@@ -295,7 +295,7 @@ setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.2
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
-The simplest fix is to put the following into ~/Library/LaunchAgents/
+The simplest fix is to put the following into ~/Library/LaunchAgents/environment.plist
 (http://stackoverflow.com/questions/25385934/setting-environment-variables-via-launchd-conf-no-longer-works-in-os-x-yosemite/26311753#26311753)
 (Obviously adjust paths as needed)
 
