@@ -17,6 +17,7 @@
  * before include wx headers causes issues in msvc)
  *
  * Revision History
+ * 2015-04-04 Add support for C99 printf formats. (Breaking change)
  * 2014-05-16 Moved HAS macros here.
  * 2013-01-27 Split/moved stdafx.h.
  */
@@ -115,6 +116,16 @@ namespace std
 //  sprintf_s(char*, size_t, const char*, ...)
 #if _MSC_VER >= 1400
 #define ARB_HAS_SECURE_SPRINTF
+#endif
+
+// ARB_HAS_C99_PRINTF_SPECS
+//  %s is narrow, %ls is wide - regardless of UNICODE (C99 breaking change)
+//  (previous VC behavior had %s as the "natural" char)
+#if _MSC_VER >= 1900
+// If legacy mode is specified, honor it.
+#ifndef _CRT_STDIO_LEGACY_WIDE_SPECIFIERS 
+#define ARB_HAS_C99_PRINTF_SPECS
+#endif
 #endif
 
 // ARB_SET_ERASE_RETURNS_ITERATOR

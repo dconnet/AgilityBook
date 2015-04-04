@@ -12,6 +12,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * 2015-04-04 Add support for C99 printf formats. (Breaking change)
  * 2014-06-09 Move string->arbversion parsing to ARBVersion.
  * 2014-03-31 Fixed POCO xml load.
  * 2014-02-26 Add support for POCO xml.
@@ -520,7 +521,11 @@ static std::wstring GetIndentBuffer(int indent)
 	if (0 < indent)
 	{
 		wchar_t* buffer = new wchar_t[indent + 1];
+#ifdef ARB_HAS_C99_PRINTF_SPECS
+		swprintf(buffer, indent + 1, L"%*ls", indent, L" ");
+#else
 		swprintf(buffer, indent + 1, L"%*s", indent, L" ");
+#endif
 		str = buffer;
 		delete [] buffer;
 	}
