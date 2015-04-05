@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-04-04 Add C99 printf test.
  * 2014-11-17 Added "true" units (nonIEC) to FormatBytes.
  * 2014-08-28 Enhanced FormatBytes
  * 2012-04-03 Added ARBVersion test.
@@ -227,4 +228,46 @@ SUITE(TestMisc)
 		}
 	}
 #endif
+
+	TEST(C99PrintfToSame)
+	{
+		if (!g_bMicroTest)
+		{
+			std::string str("str");
+			std::wstring wstr(L"str");
+			char buffer[100];
+			wchar_t wbuffer[100];
+
+#ifdef ARB_HAS_C99_PRINTF_SPECS
+			sprintf(buffer, "%s", indent, str.c_str());
+			swprintf(wbuffer, L"%ls", indent, wstr.c_str());
+#else
+			sprintf(buffer, "%s", str.c_str());
+			swprintf(wbuffer, L"%s", wstr.c_str());
+#endif
+			CHECK(str == buffer);
+			CHECK(wstr == wbuffer);
+		}
+	}
+
+	TEST(C99PrintfToOpposite)
+	{
+		if (!g_bMicroTest)
+		{
+			std::string str("str");
+			std::wstring wstr(L"str");
+			char buffer[100];
+			wchar_t wbuffer[100];
+
+#ifdef ARB_HAS_C99_PRINTF_SPECS
+			sprintf(buffer, "%ls", indent, wstr.c_str());
+			swprintf(wbuffer, L"%s", indent, str.c_str());
+#else
+			sprintf(buffer, "%S", wstr.c_str());
+			swprintf(wbuffer, L"%S", str.c_str());
+#endif
+			CHECK(str == buffer);
+			CHECK(wstr == wbuffer);
+		}
+	}
 }
