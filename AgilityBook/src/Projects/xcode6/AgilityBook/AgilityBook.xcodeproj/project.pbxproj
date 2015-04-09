@@ -902,7 +902,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ARB;
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "David Connet";
 			};
 			buildConfigurationList = E19B63B5166C096E004DEDA4 /* Build configuration list for PBXProject "AgilityBook" */;
