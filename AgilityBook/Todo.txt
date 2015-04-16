@@ -1,4 +1,7 @@
-Last Updated: 3/15/2015
+Last Updated: 4/16/2015
+
+- Update USDAA SAM/etc titles that MstCh scores also apply to these.
+  Set up tracking item for USDAA Biathlon.
 
 - Add warning in run dialog when Q is UNK that the following will not
   be saved:
