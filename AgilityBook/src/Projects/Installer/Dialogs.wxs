@@ -147,6 +147,7 @@ Revision History
 			</Control>
 		</Dialog>
 
+		<UIRef Id="WixUI_ErrorProgressText" />
 	</UI>
 
 </Fragment>
