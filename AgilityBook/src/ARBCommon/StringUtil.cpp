@@ -832,7 +832,7 @@ std::wstring FormatBytes(
 	}
 
 	int index = 0;
-	if (abs(inSize) != 0.0)
+	if (std::abs(inSize) != 0.0)
 	{
 		index = std::min(static_cast<int>(log(inSize) / log(sc_units[unitIndex].base)), static_cast<int>(sc_units[unitIndex].numUnits) - 1);
 		inSize /= pow(sc_units[unitIndex].base, index);
