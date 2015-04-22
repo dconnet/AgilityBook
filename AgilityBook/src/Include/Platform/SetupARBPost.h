@@ -122,13 +122,14 @@ namespace std
 //  %s is narrow, %ls is wide - regardless of UNICODE (C99 breaking change)
 //  (previous VC behavior had %s as the "natural" char)
 //Note: Feature was planned for VC14, removed in VS2015CTP6
-//TODO: Test on xcode
 //#if _MSC_VER >= 1900
 // If legacy mode is specified, honor it.
 //#ifndef _CRT_STDIO_LEGACY_WIDE_SPECIFIERS 
 //#define ARB_HAS_C99_PRINTF_SPECS
 //#endif
-//#endif
+#if (defined(MAC_OS_X_VERSION_10_9) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_9)
+#define ARB_HAS_C99_PRINTF_SPECS
+#endif
 
 // ARB_SET_ERASE_RETURNS_ITERATOR
 //  std::set<x>::iterator i = var.begin()...; i = var.erase(i); ...

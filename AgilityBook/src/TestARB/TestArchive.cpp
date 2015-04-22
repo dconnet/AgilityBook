@@ -26,8 +26,10 @@
 
 SUITE(TestArchive)
 {
+#ifdef WIN32
 	static char const* FileData1 = "This is test1\r\nOk";
 	static char const* FileData2 = "This is test2\r\nOk\r\n";
+#endif
 
 	TEST(ExtractFileFromRes)
 	{

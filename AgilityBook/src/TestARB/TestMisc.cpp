@@ -26,6 +26,8 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 
+#include <stdarg.h>
+
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
@@ -239,11 +241,11 @@ SUITE(TestMisc)
 			wchar_t wbuffer[100];
 
 #ifdef ARB_HAS_C99_PRINTF_SPECS
-			sprintf(buffer, "%s", indent, str.c_str());
-			swprintf(wbuffer, L"%ls", indent, wstr.c_str());
+			sprintf(buffer, "%s", str.c_str());
+			swprintf(wbuffer, 100, L"%ls", wstr.c_str());
 #else
 			sprintf(buffer, "%s", str.c_str());
-			swprintf(wbuffer, L"%s", wstr.c_str());
+			swprintf(wbuffer, 100, L"%s", wstr.c_str());
 #endif
 			CHECK(str == buffer);
 			CHECK(wstr == wbuffer);
@@ -260,11 +262,11 @@ SUITE(TestMisc)
 			wchar_t wbuffer[100];
 
 #ifdef ARB_HAS_C99_PRINTF_SPECS
-			sprintf(buffer, "%ls", indent, wstr.c_str());
-			swprintf(wbuffer, L"%s", indent, str.c_str());
+			sprintf(buffer, "%ls", wstr.c_str());
+			swprintf(wbuffer, 100, L"%s", str.c_str());
 #else
 			sprintf(buffer, "%S", wstr.c_str());
-			swprintf(wbuffer, L"%S", str.c_str());
+			swprintf(wbuffer, 100, L"%S", str.c_str());
 #endif
 			CHECK(str == buffer);
 			CHECK(wstr == wbuffer);

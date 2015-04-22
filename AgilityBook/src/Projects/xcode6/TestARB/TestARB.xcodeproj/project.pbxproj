@@ -281,7 +281,7 @@
 		E15106441808913A002AC401 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "David Connet";
 			};
 			buildConfigurationList = E15106471808913A002AC401 /* Build configuration list for PBXProject "TestARB" */;
@@ -537,7 +537,6 @@
 		E15106561808913A002AC401 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -545,7 +544,6 @@
 		E15106571808913A002AC401 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
