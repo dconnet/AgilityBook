@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2013-09-03 Changed to use short names.
  * 2009-12-19 Fix blank page layout in landscape.
@@ -166,7 +167,7 @@ void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pag
 	}
 	else
 	{
-		if (abs(pageW) > abs(pageH)) // landscape
+		if (std::abs(pageW) > std::abs(pageH)) // landscape
 			m_nPagesX = 2;
 	}
 	m_nPerSheet = (m_nPagesX * m_nPagesY) * 2;
@@ -914,19 +915,19 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 	{
 		width = rSheet.width;
 		height = rSheet.height;
-		if (abs(width) > abs(height)) // landscape
+		if (std::abs(width) > std::abs(height)) // landscape
 			width /= 2;
 	}
 
 	size_t curRun = (pageNum - 1) * m_nPerSheet;
 
 	// Make sure our margins are at least as large as the physical printer margins.
-	if (marginL < abs(rSheet.x))
-		marginL = abs(rSheet.x);
+	if (marginL < std::abs(rSheet.x))
+		marginL = std::abs(rSheet.x);
 	if (marginR < rSheet.width - r.width + rSheet.x)
 		marginR = rSheet.width - r.width + rSheet.x;
-	if (marginT < abs(rSheet.y))
-		marginT = abs(rSheet.y);
+	if (marginT < std::abs(rSheet.y))
+		marginT = std::abs(rSheet.y);
 	if (marginB < rSheet.height - r.height + rSheet.y)
 		marginB = rSheet.height - r.height + rSheet.y;
 

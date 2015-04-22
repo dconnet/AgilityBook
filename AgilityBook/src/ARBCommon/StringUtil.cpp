@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-11-17 Enhanced FormatBytes (added true units as they're meant to be!)
  * 2014-08-28 Enhanced FormatBytes
  * 2014-06-24 Added CompareNoCase.

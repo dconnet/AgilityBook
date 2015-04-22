@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-06-09 Move string->arbversion parsing to ARBVersion.
  * 2013-07-17 Moved SanitizeStringForHTML to ARBMisc.
  * 2012-12-12 Use fabs instead of abs. Works on Mac too.
@@ -136,7 +137,7 @@ bool ARBDouble::equal(
 		return false;
 
 	double epsilon = ldexp(inPrec, mag1);
-	double diff = fabs(inVal1 - inVal2);
+	double diff = std::abs(inVal1 - inVal2);
 	return diff <= epsilon;
 }
 

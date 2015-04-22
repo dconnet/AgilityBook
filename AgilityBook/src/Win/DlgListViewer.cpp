@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2011-12-12 Added Score to Other points list.
@@ -1045,7 +1046,7 @@ int wxCALLBACK CompareRows(wxIntPtr item1, wxIntPtr item2, wxIntPtr item3)
 	CDlgListViewerDataPtr pRow2 = s_SortInfo.pThis->GetDataByData(static_cast<long>(item2));
 	if (!pRow1 || !pRow2)
 		return 0;
-	int iCol = abs(s_SortInfo.nCol);
+	int iCol = std::abs(s_SortInfo.nCol);
 	int nRet = pRow1->Compare(pRow2, iCol - 1);
 	if (0 > s_SortInfo.nCol)
 		nRet *= -1;
@@ -1458,14 +1459,14 @@ void CDlgListViewer::FinishCreate()
 	s_SortInfo.pThis = this;
 	s_SortInfo.nCol = m_SortColumn;
 	m_ctrlList->SortItems(CompareRows, 0);
-	m_ctrlList->SetColumnSort(abs(m_SortColumn)-1, m_SortColumn);
+	m_ctrlList->SetColumnSort(std::abs(m_SortColumn) - 1, m_SortColumn);
 	m_ctrlCopy->Enable(0 < m_ctrlList->GetItemCount());
 }
 
 
 void CDlgListViewer::OnColumnClick(wxListEvent& evt)
 {
-	m_ctrlList->SetColumnSort(abs(m_SortColumn)-1, 0);
+	m_ctrlList->SetColumnSort(std::abs(m_SortColumn) - 1, 0);
 	int nBackwards = 1;
 	if (m_SortColumn == evt.GetColumn() + 1)
 		nBackwards = -1;
@@ -1473,7 +1474,7 @@ void CDlgListViewer::OnColumnClick(wxListEvent& evt)
 	s_SortInfo.pThis = this;
 	s_SortInfo.nCol = m_SortColumn;
 	m_ctrlList->SortItems(CompareRows, 0);
-	m_ctrlList->SetColumnSort(abs(m_SortColumn)-1, m_SortColumn);
+	m_ctrlList->SetColumnSort(std::abs(m_SortColumn) - 1, m_SortColumn);
 }
 
 

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-04 Ported to wxWidgets.
@@ -326,7 +327,7 @@ int wxCALLBACK CompareCalendar(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData
 	CAgilityBookCalendarListViewDataPtr pItem1 = s_SortInfo.pThis->GetItemCalDataByData(static_cast<long>(item1));
 	CAgilityBookCalendarListViewDataPtr pItem2 = s_SortInfo.pThis->GetItemCalDataByData(static_cast<long>(item2));
 	int nRet = 0;
-	int iCol = abs(s_SortInfo.nCol);
+	int iCol = std::abs(s_SortInfo.nCol);
 	switch (s_SortInfo.pThis->m_Columns[iCol-1])
 	{
 	case IO_CAL_START_DATE:
@@ -814,7 +815,7 @@ void CAgilityBookCalendarListView::LoadData()
 	s_SortInfo.pThis = this;
 	s_SortInfo.nCol = m_SortColumn.GetColumn();
 	m_Ctrl->SortItems(CompareCalendar, 0);
-	m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn())-1, m_SortColumn.GetColumn());
+	m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()) - 1, m_SortColumn.GetColumn());
 	// Now make sure the selected item is visible.
 	if (0 <= m_Ctrl->GetFirstSelected())
 		m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
@@ -843,7 +844,7 @@ void CAgilityBookCalendarListView::OnCtrlSetFocus(wxFocusEvent& evt)
 
 void CAgilityBookCalendarListView::OnCtrlColumnClick(wxListEvent& evt)
 {
-	m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn())-1, 0);
+	m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()) - 1, 0);
 	int nBackwards = 1;
 	if (m_SortColumn.GetColumn() == evt.GetColumn() + 1)
 		nBackwards = -1;
@@ -851,7 +852,7 @@ void CAgilityBookCalendarListView::OnCtrlColumnClick(wxListEvent& evt)
 	s_SortInfo.pThis = this;
 	s_SortInfo.nCol = m_SortColumn.GetColumn();
 	m_Ctrl->SortItems(CompareCalendar, 0);
-	m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn())-1, m_SortColumn.GetColumn());
+	m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()) - 1, m_SortColumn.GetColumn());
 }
 
 

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-09-02 After sorting by column, make sure selection is visible.
  * 2014-05-21 Enable paste of copied runs.
  * 2014-04-12 Implement unsorting.
@@ -547,7 +548,7 @@ int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 	CAgilityBookRunsViewDataPtr pRun2 = s_SortInfo.pThis->GetItemRunDataByData(static_cast<long>(item2));
 
 	int nRet = 0;
-	int iCol = abs(s_SortInfo.nCol);
+	int iCol = std::abs(s_SortInfo.nCol);
 	// Col 0 is special: it has the icons. Instead of saving it,
 	// we simply ignore it - so iCol is always off by 1.
 	switch (s_SortInfo.pThis->m_Columns[iCol - 1])
@@ -1612,12 +1613,12 @@ void CAgilityBookRunsView::LoadData()
 		s_SortInfo.nCol = m_SortColumn.GetColumn();
 		m_Ctrl->SortItems(CompareRuns, 0);
 		if (0 == m_SortColumn.GetColumn())
-			m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), 0);
+			m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), 0);
 		else
-			m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
+			m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
 	}
 	else
-		m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), 0);
+		m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), 0);
 
 	// Now make sure the selected item is visible.
 	if (0 <= m_Ctrl->GetFirstSelected())
@@ -1649,7 +1650,7 @@ void CAgilityBookRunsView::OnCtrlColumnClick(wxListEvent& evt)
 {
 	if (0 != evt.GetColumn() && m_Ctrl)
 	{
-		m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), 0);
+		m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), 0);
 		int nBackwards = 1;
 		if (m_SortColumn.GetColumn() == evt.GetColumn())
 			nBackwards = -1;
@@ -1657,7 +1658,7 @@ void CAgilityBookRunsView::OnCtrlColumnClick(wxListEvent& evt)
 		s_SortInfo.pThis = this;
 		s_SortInfo.nCol = m_SortColumn.GetColumn();
 		m_Ctrl->SortItems(CompareRuns, 0);
-		m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
+		m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
 
 		if (0 <= m_Ctrl->GetFirstSelected())
 			m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
@@ -2007,14 +2008,14 @@ bool CAgilityBookRunsView::OnCmd(int id)
 			s_SortInfo.pThis = this;
 			s_SortInfo.nCol = m_SortColumn.GetColumn();
 			m_Ctrl->SortItems(CompareRuns, 0);
-			m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
+			m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
 
 			if (0 <= m_Ctrl->GetFirstSelected())
 				m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
 		}
 		else
 		{
-			m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), 0);
+			m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), 0);
 			LoadData();
 		}
 		break;
