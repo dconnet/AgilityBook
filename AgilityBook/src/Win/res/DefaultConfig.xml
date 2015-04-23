@@ -4,9 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2015-02-04 Configuration version 50.
+2015-04-23 Configuration version 50.
            Added NADAC Beginners Agility titles.
            Added NADAC lifetime points to Beginners and Extreme games.
+           Added USDAA Biathlon.
 2014-12-08 Configuration version 49.
            Fixed descriptions in NADAC Extreme game titles.
            AKC MXP/MXJ titles are recurring.
@@ -4526,6 +4527,17 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2006-9-22" type="TimePlusFaults">
           <Note>Non-titling event - known as Leap N Chase, Fast &amp; Furious, etc.</Note>
+        </Scoring>
+      </Event>
+      <Event Name="Biathlon">
+        <Desc>This tracks Master Challenge overall status for all both events.</Desc>
+        <Scoring Division="Championship" Level="Nationals" ValidFrom="2012-1-1" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Nationals" ValidFrom="2012-1-1" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
       <Event Name="Jokers Wild">

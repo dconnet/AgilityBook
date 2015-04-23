@@ -1,6 +1,7 @@
-3/15/2015: v3.1.1.<development>
+4/23/2015: v3.1.1.<development>
 - Bumped Configuration v50:
   - Added lifetime points to NADAC Beginners Agility
+  - Added USDAA Biathlon.
 - Bumped file version to 14.3
   - Added Unknown to Q type
 - New features / Enhancements:
