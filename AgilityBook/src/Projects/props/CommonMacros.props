@@ -9,6 +9,9 @@
   <PropertyGroup Label="UserMacros" Condition="'$(VisualStudioVersion)'=='12.0'">
     <OutputPlatform>vc120</OutputPlatform>
   </PropertyGroup>
+  <PropertyGroup Label="UserMacros" Condition="'$(VisualStudioVersion)'=='14.0'">
+    <OutputPlatform>vc140</OutputPlatform>
+  </PropertyGroup>
   <PropertyGroup Label="UserMacros" Condition="'$(OutputPlatform)'==''">
     <OutputPlatform>$(PlatformToolsetVersion)</OutputPlatform>
   </PropertyGroup>
