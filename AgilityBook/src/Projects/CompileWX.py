@@ -11,6 +11,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2015-04-24 Added vc14.
 # 2013-10-14 Allow x64-on-x64 compilation to fall back to x86_amd (VCExpress)
 # 2013-07-30 Modify tmpfile to allow multiple builds
 #            (a VM can now build vc12 and the same time vc11 builds locally)
@@ -36,7 +37,7 @@
 	-d:       Compile as DLLs (default: static)
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
-	compiler: vc7, vc8, vc9, vc10, vc9x64, vc10x64, vc11, vc11x64, vc12, vc12x64
+	compiler: vc7, vc8, vc9, vc10, vc9x64, vc10x64, vc11, vc11x64, vc12, vc12x64, vc14, vc14x64
 """
 
 import getopt
@@ -65,6 +66,7 @@ vc9Base     = r'\Microsoft Visual Studio 9.0'
 vc10Base    = r'\Microsoft Visual Studio 10.0'
 vc11Base    = r'\Microsoft Visual Studio 11.0'
 vc12Base    = r'\Microsoft Visual Studio 12.0'
+vc14Base    = r'\Microsoft Visual Studio 14.0'
 useVC10SDK = False
 
 
@@ -103,7 +105,7 @@ def GetVSDir(version):
 
 
 def AddCompiler(compilers, c):
-	global vc6Base, vc7Base, vc8Base, vc9Base, vc10Base, vc11Base, vc12Base
+	global vc6Base, vc7Base, vc8Base, vc9Base, vc10Base, vc11Base, vc12Base, vc14Base
 	baseDir = ''
 	testFile = ''
 
@@ -185,6 +187,19 @@ def AddCompiler(compilers, c):
 			print 'ERROR: VC12x64 does not do MBCS'
 			return False
 		baseDir = vc12Base
+		testFile = baseDir + r'\VC\vcvarsall.bat'
+
+	elif c == 'vc14':
+		vc14Base = GetVSDir("14.0")
+		baseDir = vc14Base
+		testFile = baseDir + r'\VC\vcvarsall.bat'
+
+	elif c == 'vc14x64':
+		vc14Base = GetVSDir("14.0")
+		if not useUnicode:
+			print 'ERROR: VC14x64 does not do MBCS'
+			return False
+		baseDir = vc14Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 
 	else:
@@ -439,6 +454,24 @@ def main():
 				cfg = ' COMPILER_PREFIX=vc120'
 			else:
 				cfg = ' CFG=_vc120'
+			cppflags = common_cppflags
+
+		elif compiler == 'vc14':
+			setenv_rel = 'call "' + vc14Base + r'\VC\vcvarsall.bat" x86'
+			if hasPrefix:
+				cfg = ' COMPILER_PREFIX=vc140'
+			else:
+				cfg = ' CFG=_vc140'
+			cppflags = common_cppflags
+
+		elif compiler == 'vc14x64':
+			setenv_rel = 'call "' + vc14Base + r'\VC\vcvarsall.bat" '
+			setenv_rel += GetX64Target(vc14Base, bit64on64)
+			target_cpu = ' TARGET_CPU=' + x64Target
+			if hasPrefix:
+				cfg = ' COMPILER_PREFIX=vc140'
+			else:
+				cfg = ' CFG=_vc140'
 			cppflags = common_cppflags
 
 		build_rel = ''
