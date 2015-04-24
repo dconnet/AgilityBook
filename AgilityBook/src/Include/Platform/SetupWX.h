@@ -33,6 +33,10 @@
 #endif
 
 #include "Platform/arbWarningPush.h"
+#if defined(_MSC_VER) && _MSC_VER > 1800
+#pragma warning(disable : 4458)
+#endif
+
 // Pre-compiled header setup
 #include <wx/wxprec.h>
 #ifdef __BORLANDC__

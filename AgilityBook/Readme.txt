@@ -81,6 +81,49 @@ c:\devtools\wx\wxWidgets-3.0.2\src\msw>diff -c bmpcbox.cpp.orig bmpcbox.cpp
           lpMeasureItem->itemHeight = wxBitmapComboBoxBase::MeasureItem(pos);
       }
 
+=== Changes for support VC14: https://forums.wxwidgets.org/viewtopic.php?t=40491
+1) <wxdir>\src\zlib\gzguts.h - line 102
+change:
+CODE: SELECT ALL
+#ifdef _MSC_VER
+#  define snprintf _snprintf
+#endif
+
+to:
+CODE: SELECT ALL
+#if (defined(_MSC_VER) && (_MSC_VER < 1900))
+  #define snprintf _snprintf
+#endif
+
+2) <wxdir>\src\tiff\libtiff\tif_config.h - line 367
+change:
+CODE: SELECT ALL
+#define snprintf _snprintf
+
+to:
+CODE: SELECT ALL
+#if (defined(_MSC_VER) && (_MSC_VER < 1900))
+  #define snprintf _snprintf
+#endif
+
+3) <wxdir>\include\wx\propgrid\advprops.h - line 453
+change:
+CODE: SELECT ALL
+wxDateTime GetDateValue() const
+{
+    //return m_valueDateTime;
+    return m_value;
+}
+
+to:
+CODE: SELECT ALL
+wxDateTime GetDateValue() const
+{
+    //return m_valueDateTime;
+    return m_value.GetDateTime();
+}
+
+
 === Changes to 3.0.1
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
@@ -264,6 +307,12 @@ Microsoft Visual Studio 2013 (VC12)
 ===================================
    It works, no additional notes. But only targets Vista+.
    If 'vc120_xp' is set as the target platform, it appears to work, but the
+   compilation of WX is not targeted at that platform, so it's not supported.
+
+Microsoft Visual Studio 2015 (VC14)
+===================================
+   It works, no additional notes. But only targets Vista+.
+   If 'vc140_xp' is set as the target platform, it appears to work, but the
    compilation of WX is not targeted at that platform, so it's not supported.
 
 

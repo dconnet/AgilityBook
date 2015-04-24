@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{a8ee7915-0bd4-4e9a-939d-6a0b167be240}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{d3e9b58a-9a3f-4611-b7fd-29619423d7ae}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="tidy">
+      <UniqueIdentifier>{9e18ef32-05b7-44c6-8493-667fb95dad52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{b43f1775-7c20-4f7b-8a36-b3d3c0992f7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\LibTidyHtml">
+      <UniqueIdentifier>{92dc8cd7-8b5d-4fce-8492-b86b5e12efe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Platform">
+      <UniqueIdentifier>{c0a1c9c3-3a55-4a61-904f-da10c81c0287}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\access.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\alloc.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrask.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrdict.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrget.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrs.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\buffio.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\clean.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\config.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\entities.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\fileio.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\istack.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\lexer.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\localize.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\mappedio.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\parser.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\pprint.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\streamio.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tagask.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tags.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tidylib.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tmbstr.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\utf8.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\win32tc.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\LibTidyHtml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\access.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrdict.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrs.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\buffio.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\clean.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\config.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\entities.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\fileio.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\forward.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\lexer.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\mappedio.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\message.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\parser.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\platform.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\pprint.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\streamio.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\tags.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\tidy-int.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidy.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidyenum.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\tmbstr.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\utf8.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\version.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\win32tc.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibTidyHtml\LibTidyHtml.h">
+      <Filter>Include\LibTidyHtml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
