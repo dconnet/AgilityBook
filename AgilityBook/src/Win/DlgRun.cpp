@@ -3255,10 +3255,10 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	//TODO: Remove debugging code
 #ifdef _DEBUG
 	{
-		ARBConfigEventPtr pEvent;
-		m_pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent);
-		assert(!!pEvent.get());
-		if (!pEvent->HasTable())
+		ARBConfigEventPtr pEvent2;
+		m_pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent2);
+		assert(!!pEvent2.get());
+		if (!pEvent2->HasTable())
 			if (m_Run->GetScoring().HasTable())
 				wxMessageBox(L"Poof!", wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 	}
