@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-04-26 Fixed recurring title name (startat wasn't being written)
  * 2013-01-13 Added new recurring title suffix style.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -235,7 +236,16 @@ bool ARBDogTitle::Load(
 		return false;
 	}
 
-	if (!inConfig.GetVenues().FindTitle(m_Venue, m_Name))
+	ARBConfigTitlePtr pConfigTitle;
+	if (inConfig.GetVenues().FindTitle(m_Venue, m_Name, &pConfigTitle))
+	{
+		// Fix a bug in v3.1.0 that appeared in GetGenericName
+		if (pConfigTitle->IsRecurring() && 0 == m_MultipleStartAt)
+		{
+			m_MultipleStartAt = pConfigTitle->GetMultipleStartAt();
+		}
+	}
+	else
 	{
 		// This fixes a bug in v1.0.0.8 where the 'nice' name was being written
 		// as the title name.
@@ -282,6 +292,8 @@ bool ARBDogTitle::Save(ElementNodePtr ioTree) const
 	title->AddAttrib(ATTRIB_TITLE_NAME, m_Name);
 	if (1 < m_Instance)
 		title->AddAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
+	if (0 < m_MultipleStartAt)
+		title->AddAttrib(ATTRIB_TITLE_INSTANCE_STARTAT, m_MultipleStartAt);
 	if (1 < m_MultipleIncrement)
 		title->AddAttrib(ATTRIB_TITLE_INSTANCE_INC, m_MultipleIncrement);
 	if (m_bShowInstanceOne)

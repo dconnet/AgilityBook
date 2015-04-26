@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-04-26 Fixed recurring title name on instance 0 (new title dialog)
  * 2013-01-13 Added new recurring title suffix style.
  * 2012-07-30 Added new recurring title style (none).
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -280,6 +281,10 @@ std::wstring ARBTitleInstance::TitleInstance(
 	std::wostringstream str;
 	if (bShowInstanceOne || 1 < instance)
 	{
+		// If we're showing in the selection menu (new title), there is no
+		// instance, so don't show "title0".
+		if (bShowInstanceOne && 0 == instance)
+			style = eTitleStyleNone;
 		short value = startAt + (instance - 1) * increment;
 		switch (style)
 		{

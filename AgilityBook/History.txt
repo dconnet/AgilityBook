@@ -1,4 +1,4 @@
-4/23/2015: v3.1.1.<development>
+4/26/2015: v3.1.1.<development>
 - Bumped Configuration v50:
   - Added lifetime points to NADAC Beginners Agility
   - Added USDAA Biathlon.
@@ -8,6 +8,9 @@
   - Changed source code license from Historical Permission Notice and Disclaimer
     to MIT (HPND has been deprecated).
   - Enhance status to show total/runs/Qs where runs does not include DNR.
+- Bug fixes:
+  - Fixed bug where 'Copy Titles' would show the wrong repeating index.
+  - Fixed bug where AKC FTC (and others) would show in new title dialg as FTC0.
 
 1/2/2015: v3.1.0.95
 - Bumped Configuration v49:
