@@ -1,6 +1,4 @@
-Last Updated: 4/23/2015
-
-- Update USDAA SAM/etc titles that MstCh scores also apply to these.
+Last Updated: 4/26/2015
 
 - Add warning in run dialog when Q is UNK that the following will not
   be saved:

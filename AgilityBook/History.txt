@@ -2,6 +2,7 @@
 - Bumped Configuration v50:
   - Added lifetime points to NADAC Beginners Agility
   - Added USDAA Biathlon.
+  - Remove USDAA Master Challenge titles, update Std/Jmp CH title descriptions.
 - Bumped file version to 14.3
   - Added Unknown to Q type
 - New features / Enhancements:
