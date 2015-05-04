@@ -1,4 +1,9 @@
-Last Updated: 4/26/2015
+Last Updated: 5/4/2015
+
+- USDAA: Check Team/Gamblers for lifetime point - since Gamblers is usually
+  open+close, I think there's an issue since Team Q is by combined pts.
+
+- View->ShowRuns->ByTrial can't be unchecked.
 
 - Add warning in run dialog when Q is UNK that the following will not
   be saved:
