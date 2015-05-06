@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-05-05 Reorder "NA" lower in list.
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown state.
  * 2013-08-14 Moved out of ARBTypes.cpp
@@ -36,11 +37,11 @@ static struct Q2Enum
 } const sc_Qs[] =
 {
 	{nullptr,          ARB_Q::eQ_UNK,    nullptr},
-	{ATTRIB_QTYPE_NA,  ARB_Q::eQ_NA,     arbT("IDS_QTYPE_NA")},
 	{ATTRIB_QTYPE_Q,   ARB_Q::eQ_Q,      arbT("IDS_QTYPE_Q")},
 	{ATTRIB_QTYPE_NQ,  ARB_Q::eQ_NQ,     arbT("IDS_QTYPE_NQ")},
 	{ATTRIB_QTYPE_E,   ARB_Q::eQ_E,      arbT("IDS_QTYPE_E")},
 	{ATTRIB_QTYPE_DNR, ARB_Q::eQ_DNR,    arbT("IDS_QTYPE_DNR")},
+	{ATTRIB_QTYPE_NA,  ARB_Q::eQ_NA,     arbT("IDS_QTYPE_NA")},
 	{ATTRIB_QTYPE_SQ,  ARB_Q::eQ_SuperQ, arbT("IDS_QTYPE_SQ")}
 }; ///< This is a list of the various types of "Q"s we support.
 static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
