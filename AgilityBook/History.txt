@@ -1,4 +1,4 @@
-5/4/2015: v3.1.1.<development>
+5/5/2015: v3.1.1.<development>
 - Bumped Configuration v50:
   - Added lifetime points to NADAC Beginners Agility
   - Added USDAA Biathlon.
@@ -13,6 +13,7 @@
   - Fixed bug where 'Copy Titles' would show the wrong repeating index.
   - Fixed bug where AKC FTC (and others) would show in new title dialg as FTC0.
   - Fixed "View->Show Runs" (regression from 3.0.0.94 release)
+  - Set minimum size on splitters so views can't be "lost".
 
 1/2/2015: v3.1.0.95
 - Bumped Configuration v49:

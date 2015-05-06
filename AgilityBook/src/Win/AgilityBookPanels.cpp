@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-05-05 Set minimum size on splitters so views can't be "lost".
  * 2012-09-29 Strip the Runs View.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2011-02-12 Don't save sash position if it hasn't been initialized.
@@ -44,9 +45,9 @@
 // Default splitter widths.
 // Note: These are in normalized pixels. So they work in hi-dpi.
 #define DEFAULT_RUN_WIDTH	200L
-#define MIN_RUN_WIDTH		50L
+#define MIN_RUN_WIDTH		100L
 #define DEFAULT_CAL_WIDTH	300L
-#define MIN_CAL_WIDTH		50L
+#define MIN_CAL_WIDTH		100L
 
 
 CBasePanel::CBasePanel(wxWindow* parent, std::wstring const& helpText)
@@ -130,6 +131,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 	bool bAttachViews = m_views.empty();
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
+	m_splitter->SetMinimumPaneSize(DPI::Scale(MIN_RUN_WIDTH));
 	BIND_OR_CONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelRuns::SplitterOnIdle);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -233,6 +235,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 	bool bAttachViews = m_views.empty();
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
+	m_splitter->SetMinimumPaneSize(DPI::Scale(MIN_CAL_WIDTH));
 	BIND_OR_CONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelCalendar::SplitterOnIdle);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
