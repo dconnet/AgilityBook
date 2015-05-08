@@ -274,6 +274,8 @@
     <None Include="..\..\TestARB\res\Config46_v14_3.xml" />
     <None Include="..\..\TestARB\res\Config47_v14_3.xml" />
     <None Include="..\..\TestARB\res\Config48_v14_3.xml" />
+    <None Include="..\..\TestARB\res\Config49_v14_3.xml" />
+    <None Include="..\..\TestARB\res\Config50_v14_3.xml" />
     <None Include="..\..\TestARB\res\TestARB.rc2" />
   </ItemGroup>
   <ItemGroup>

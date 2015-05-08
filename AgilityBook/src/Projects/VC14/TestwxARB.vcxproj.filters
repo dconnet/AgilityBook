@@ -325,6 +325,12 @@
     <None Include="..\..\TestARB\res\Config48_v14_3.xml">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\..\TestARB\res\Config49_v14_3.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config50_v14_3.xml">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\TestARB\TestARB.rc">
