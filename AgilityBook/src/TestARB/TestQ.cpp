@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-05-06 Updated for changed Q order.
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown Q type.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -36,15 +37,11 @@ SUITE(TestARBQ)
 		// properly setup.
 		if (!g_bMicroTest)
 		{
-#if defined(__WXWINDOWS__)
 			ARB_Q q;
 			CHECK(L"" == q.str());
 
 			ARB_Q q1(ARB_Q::eQ_Q);
 			CHECK(L"Q" == q1.str());
-#else
-#pragma PRAGMA_TODO(implement non-wx version)
-#endif
 		}
 	}
 
@@ -53,23 +50,21 @@ SUITE(TestARBQ)
 	{
 		if (!g_bMicroTest)
 		{
-#if defined(__WXWINDOWS__)
+			// FYI: None of the code assumes any order. This is just to make
+			// sure I didn't add/remove something and forget.
 			CHECK_EQUAL(7, ARB_Q::GetNumValidTypes());
-			CHECK(L"NA, Q, NQ, E, DNR, SQ" == ARB_Q::GetValidTypes());
+			CHECK(L"SQ, Q, NQ, E, DNR, NA" == ARB_Q::GetValidTypes());
 			CHECK(ARB_Q(ARB_Q::eQ_UNK) == ARB_Q::GetValidType(0));
-			CHECK(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(1));
+			CHECK(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(6));
 			CHECK(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(2));
 			CHECK(ARB_Q(ARB_Q::eQ_NQ) == ARB_Q::GetValidType(3));
 			CHECK(ARB_Q(ARB_Q::eQ_E) == ARB_Q::GetValidType(4));
 			CHECK(ARB_Q(ARB_Q::eQ_DNR) == ARB_Q::GetValidType(5));
-			CHECK(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(6));
+			CHECK(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(1));
 
 			std::vector<std::wstring> types;
 			ARB_Q::GetValidTypes(types);
 			CHECK_EQUAL(7u, types.size());
-#else
-#pragma PRAGMA_TODO(implement non-wx version)
-#endif
 		}
 	}
 
