@@ -16,6 +16,7 @@
  * Text Controls: Turn off tabstops on multiline readonly controls.
  *
  * Revision History
+ * 2015-05-19 Add ComputeHeightHint to CTreeCtrl.
  * 2014-11-03 Enable spellchecking on richedit on Win8+.
  * 2010-03-28 Moved SetColumnWidth override from CReportListCtrl.
  *            Removed wx2.9 kludges (was causing problems on Mac).
@@ -125,6 +126,10 @@ public:
 		wxTreeCtrl::SetItemImage(item, state);
 #endif
 	}
+
+	// Usage: After Layout/Fit in a dialog, call this and then Fit again.
+	// Tree controls do not autosize to their content. This will.
+	bool ComputeHeightHint();
 };
 
 

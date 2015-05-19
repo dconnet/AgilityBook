@@ -10,12 +10,15 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-05-19 Add ComputeHeightHint to CTreeCtrl.
  * 2014-11-03 Enable spellchecking on richedit on Win8+.
  * 2009-10-11 Created.
  */
 
 #include "stdafx.h"
 #include "Widgets.h"
+
+#include "Globals.h"
 
 #ifdef WIN32
 #include <richedit.h>
@@ -34,6 +37,49 @@ IMPLEMENT_CLASS(CTreeCtrl, wxTreeCtrl)
 IMPLEMENT_CLASS(CTextCtrl, wxTextCtrl)
 IMPLEMENT_CLASS(CSpellCheckCtrl, CTextCtrl)
 
+
+static bool ComputeTreeHeight(
+		wxTreeCtrl* tree,
+		wxTreeItemId item,
+		int& height)
+{
+	if (!item.IsOk())
+		return false;
+
+	bool bChanged = false;
+	wxTreeItemIdValue cookie;
+	wxTreeItemId hChildItem = tree->GetFirstChild(item, cookie);
+	while (hChildItem)
+	{
+		wxRect r;
+		if (tree->GetBoundingRect(hChildItem, r))
+		{
+			bChanged = true;
+			height += r.height;
+			ComputeTreeHeight(tree, hChildItem, height);
+		}
+		hChildItem = tree->GetNextChild(item, cookie);
+	}
+	return bChanged;
+}
+
+
+bool CTreeCtrl::ComputeHeightHint()
+{
+	int height = 0;
+	if (ComputeTreeHeight(this, GetRootItem(), height))
+	{
+		wxRect rClient = GetClientRect();
+		if (height > rClient.height)
+		{
+			SetSizeHints(-1, height);
+			return true;
+		}
+	}
+	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 bool CTextCtrl::EnableSpellChecking(bool bForceRtfAsPlainText)
 {

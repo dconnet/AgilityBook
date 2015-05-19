@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-05-19 Added GetName (generic name without date).
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2014-09-02 Fix gambles with no closing required so titling works.
  * 2014-02-12 Added 'scorePts' to 'Placement'.
@@ -189,14 +190,21 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 }
 
 
-std::wstring ARBDogRun::GetGenericName() const
+std::wstring ARBDogRun::GetName() const
 {
-	std::wstring name = m_Date.GetString(ARBDate::eDashYMD) + L" ";
-	name += m_Division + L" " + m_Level + L" " + m_Event;
+	std::wstring name = m_Division + L" " + m_Level + L" " + m_Event;
 	if (0 < m_SubName.length())
 	{
 		name += L" " + m_SubName;
 	}
+	return name;
+}
+
+
+std::wstring ARBDogRun::GetGenericName() const
+{
+	std::wstring name = m_Date.GetString(ARBDate::eDashYMD) + L" ";
+	name += GetName();
 	return name;
 }
 

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-05-19 Added GetName (generic name without date).
  * 2012-09-09 Added 'titlePts' to 'Placement'.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -55,6 +56,13 @@ public:
 	{
 		return !operator==(rhs);
 	}
+
+	/**
+	 * Get the name of this object.
+	 * This is the generic name without a date.
+	 * @return The name of this object.
+	 */
+	std::wstring GetName() const;
 
 	/**
 	 * Get the generic name of this object.

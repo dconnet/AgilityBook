@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-05-19 Size dialog so all runs are visible.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-12-31 Select run on startup.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -121,8 +122,9 @@ void CDlgReorder::Init(wxWindow* pParent)
 	else if (m_Trial)
 	{
 		ctrl = m_ctrlTree = new CTreeCtrl(this, wxID_ANY,
-			wxDefaultPosition, wxDLG_UNIT(this, wxSize(145, 50)),
+			wxDefaultPosition, wxDLG_UNIT(this, wxSize(145, -1)),
 			wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
+		m_ctrlTree->SetQuickBestSize(false);
 		BIND_OR_CONNECT_CTRL(m_ctrlTree, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgReorder::OnTreeSelected);
 		m_ctrlTree->SetHelpText(_("HIDC_REORDER_LIST"));
 		m_ctrlTree->SetToolTip(_("HIDC_REORDER_LIST"));
@@ -188,16 +190,11 @@ void CDlgReorder::Init(wxWindow* pParent)
 			ARBDogRunPtr pRun = *iter;
 			if (dates.end() == dates.find(pRun->GetDate()))
 				dates[pRun->GetDate()] = m_ctrlTree->AppendItem(root, StringUtil::stringWX(pRun->GetDate().GetString()));
-			wxTreeItemId item = m_ctrlTree->AppendItem(dates[pRun->GetDate()], StringUtil::stringWX(pRun->GetGenericName()), -1, 1, new CReorderTreeData(pRun));
+			wxTreeItemId item = m_ctrlTree->AppendItem(dates[pRun->GetDate()], StringUtil::stringWX(pRun->GetName()), -1, 1, new CReorderTreeData(pRun));
 			if (m_Run == pRun || (!m_Run && !idSelect.IsOk()))
 				idSelect = item;
 		}
-		for (std::map<ARBDate, wxTreeItemId>::iterator i = dates.begin();
-			i != dates.end();
-			++i)
-		{
-			m_ctrlTree->Expand(i->second);
-		}
+		m_ctrlTree->ExpandAll();
 		if (idSelect.IsOk())
 		{
 			m_ctrlTree->EnsureVisible(idSelect);
@@ -210,6 +207,14 @@ void CDlgReorder::Init(wxWindow* pParent)
 	Layout();
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
+
+	// Recompute layout so the tree is fully visible.
+	if (m_Trial && m_ctrlTree)
+	{
+		if (m_ctrlTree->ComputeHeightHint())
+			GetSizer()->Fit(this);
+	}
+
 	CenterOnParent();
 
 	if (ctrl)
