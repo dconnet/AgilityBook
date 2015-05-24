@@ -5,10 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-04 13:52-0800\n"
-"PO-Revision-Date: 2015-05-04 13:52-0800\n"
+"POT-Creation-Date: 2015-05-24 08:57-0800\n"
+"PO-Revision-Date: 2015-05-24 08:57-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
-"Language-Team:  <help@agilityrecordbook.com>\n"
+"Language-Team: help@agilityrecordbook.com\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8\n"
 "X-Poedit-SearchPath-0: ARB\n"
 "X-Poedit-SearchPath-1: ARBHelp\n"
 "X-Poedit-SearchPath-2: ARBUpdater\n"
@@ -32,29 +32,29 @@ msgstr "AKC / Time 2 Beat"
 msgid "IDS_TITLEPOINT_NORMAL_UKI"
 msgstr "UKI"
 
-#: ARB/ARB_Q.cpp:39
-msgid "IDS_QTYPE_NA"
-msgstr "INV"
-
 #: ARB/ARB_Q.cpp:40
+msgid "IDS_QTYPE_SQ"
+msgstr "SQ"
+
+#: ARB/ARB_Q.cpp:41
 msgid "IDS_QTYPE_Q"
 msgstr "Q"
 
-#: ARB/ARB_Q.cpp:41
+#: ARB/ARB_Q.cpp:42
 msgid "IDS_QTYPE_NQ"
 msgstr "NQ"
 
-#: ARB/ARB_Q.cpp:42
+#: ARB/ARB_Q.cpp:43
 msgid "IDS_QTYPE_E"
 msgstr "E"
 
-#: ARB/ARB_Q.cpp:43
+#: ARB/ARB_Q.cpp:44
 msgid "IDS_QTYPE_DNR"
 msgstr "PC"
 
-#: ARB/ARB_Q.cpp:44
-msgid "IDS_QTYPE_SQ"
-msgstr "SQ"
+#: ARB/ARB_Q.cpp:45
+msgid "IDS_QTYPE_NA"
+msgstr "INV"
 
 #: ARBHelp/DlgPageEncode.cpp:219 Win/MainFrm.cpp:525
 msgid "IDS_BAD_VERSION"
@@ -1537,24 +1537,24 @@ msgstr "Montrer details"
 msgid "MenuEditCopySelection"
 msgstr "&Copier la sélection\tCtrl+C"
 
-#: Win/AgilityBookPanels.cpp:125
+#: Win/AgilityBookPanels.cpp:126
 msgid "PanelRuns"
 msgstr ""
 "Cette fenêtre contient toutes les informations concernant vos parcours. C'est là "
 "que vous créez vos chiens, concours et parcours."
 
-#: Win/AgilityBookPanels.cpp:199
+#: Win/AgilityBookPanels.cpp:201
 msgid "PanelPoints"
 msgstr ""
 "Cette fenêtre montre quelques statistiques simples sur vos parcours pour le chien "
 "choisi. Si ce dossier contient plus d'un chien, vous pouvez facilement changer de "
 "chien par un click droit sur le nom du chien dans la barre d'état."
 
-#: Win/AgilityBookPanels.cpp:228
+#: Win/AgilityBookPanels.cpp:230
 msgid "PanelCal"
 msgstr "Cette fenêtre contient des informations concernant les concours à venir."
 
-#: Win/AgilityBookPanels.cpp:300
+#: Win/AgilityBookPanels.cpp:303
 msgid "PanelTraining"
 msgstr "Cette fenêtre contient toutes les informations concernant vos entrainements."
 
@@ -5385,28 +5385,28 @@ msgid "HIDC_REGNUM_NOTE"
 msgstr "Information supplémentaire de cette inscription, par exemple votre numéro."
 
 # DlgReorder
-#: Win/DlgReorder.cpp:106
+#: Win/DlgReorder.cpp:107
 msgid "IDD_REORDER"
 msgstr "Changer l'ordre"
 
-#: Win/DlgReorder.cpp:118 Win/DlgReorder.cpp:119 Win/DlgReorder.cpp:127
-#: Win/DlgReorder.cpp:128
+#: Win/DlgReorder.cpp:119 Win/DlgReorder.cpp:120 Win/DlgReorder.cpp:129
+#: Win/DlgReorder.cpp:130
 msgid "HIDC_REORDER_LIST"
 msgstr "Liste des parcours dans le concours à re-organiser."
 
-#: Win/DlgReorder.cpp:136
+#: Win/DlgReorder.cpp:138
 msgid "IDC_REORDER_MOVE_UP"
 msgstr "&Monter"
 
-#: Win/DlgReorder.cpp:139 Win/DlgReorder.cpp:140
+#: Win/DlgReorder.cpp:141 Win/DlgReorder.cpp:142
 msgid "HIDC_REORDER_MOVE_UP"
 msgstr "Faire monter le parcours sélectionné."
 
-#: Win/DlgReorder.cpp:143
+#: Win/DlgReorder.cpp:145
 msgid "IDC_REORDER_MOVE_DOWN"
 msgstr "&Descendre"
 
-#: Win/DlgReorder.cpp:146 Win/DlgReorder.cpp:147
+#: Win/DlgReorder.cpp:148 Win/DlgReorder.cpp:149
 msgid "HIDC_REORDER_MOVE_DOWN"
 msgstr "Faire descendre le parcours sélectionné."
 
