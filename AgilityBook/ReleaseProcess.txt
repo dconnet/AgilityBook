@@ -84,7 +84,7 @@ SourceForge:
   - AgilityBook-n_n_n_n-x64.zip
   - AgilityBook-n_n_n_n-mac.dmg
 - Set default file information (sets up file to auto-download)
-  - Windows: -win
+  - Windows: -x64
   - Mac: -mac
   - Others: -src
 

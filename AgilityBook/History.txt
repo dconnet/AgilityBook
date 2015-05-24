@@ -1,3 +1,5 @@
+5/24/2015: v3.1.2.<development>
+
 5/24/2015: v3.1.1.96
 - Bumped Configuration v50:
   - Added lifetime points to NADAC Beginners Agility
