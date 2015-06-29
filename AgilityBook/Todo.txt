@@ -1,4 +1,6 @@
-Last Updated: 5/8/2015
+Last Updated: 6/29/2015
+
+- UKI Master/Champion runs don't allow Qing. Need to add Title Points to each.
 
 - Add warning in run dialog when Q is UNK that the following will not
   be saved:
