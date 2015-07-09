@@ -3,12 +3,6 @@
   (c) 1998-2006 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
   
-  CVS Info :
-
-    $Author: arnaud02 $ 
-    $Date: 2006/12/29 16:31:08 $ 
-    $Revision: 1.21 $ 
-
 */
 
 #include "tidy-int.h"
@@ -45,6 +39,12 @@ static Bool IsNodePushable( Node *node )
         return no;
 
     if (node->tag->model & CM_OBJECT)
+        return no;
+
+    /*\ Issue #92: OLD problem of ins and del which are marked as both
+     *  inline and block, thus should NOT ever be 'inserted'
+    \*/
+    if (nodeIsINS(node) || nodeIsDEL(node))
         return no;
 
     return yes;

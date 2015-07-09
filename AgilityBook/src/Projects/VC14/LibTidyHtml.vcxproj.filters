@@ -56,6 +56,9 @@
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\fileio.c">
       <Filter>tidy</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\gdoc.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\istack.c">
       <Filter>tidy</Filter>
     </ClCompile>
@@ -72,6 +75,9 @@
       <Filter>tidy</Filter>
     </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\pprint.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\sprtf.c">
       <Filter>tidy</Filter>
     </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\streamio.c">
@@ -100,6 +106,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\buffio.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\platform.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidy.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidyenum.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\access.h">
       <Filter>tidy</Filter>
     </ClInclude>
@@ -107,9 +125,6 @@
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrs.h">
-      <Filter>tidy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\buffio.h">
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\clean.h">
@@ -127,6 +142,9 @@
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\forward.h">
       <Filter>tidy</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\gdoc.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\lexer.h">
       <Filter>tidy</Filter>
     </ClInclude>
@@ -139,7 +157,7 @@
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\parser.h">
       <Filter>tidy</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\platform.h">
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\sprtf.h">
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\pprint.h">
@@ -152,12 +170,6 @@
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\tidy-int.h">
-      <Filter>tidy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidy.h">
-      <Filter>tidy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidyenum.h">
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\tmbstr.h">

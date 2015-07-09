@@ -4,15 +4,6 @@
   (c) 1998-2008 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
 
-  CVS Info :
-
-    $Author: arnaud02 $ 
-    $Date: 2008/06/18 20:18:54 $ 
-    $Revision: 1.111 $ 
-
-*/
-
-/*
   config files associate a property name with a value.
 
   // comments can start at the beginning of a line
@@ -136,6 +127,7 @@ static const ctmbstr newlinePicks[] =
 
 static const ctmbstr doctypePicks[] = 
 {
+  "html5",
   "omit",
   "auto",
   "strict",
@@ -206,12 +198,19 @@ static ParseProperty ParseSorter;
 static ParseProperty ParseCharEnc;
 static ParseProperty ParseNewline;
 
-/* omit | auto | strict | loose | <fpi> */
+/* html5 | omit | auto | strict | loose | <fpi> */
 static ParseProperty ParseDocType;
 
 /* keep-first or keep-last? */
 static ParseProperty ParseRepeatAttr;
 
+/*\
+ * 20150515 - support using tabs instead of spaces - Issue #108
+ * (a) parser for 't'/'f', 'true'/'false', 'y'/'n', 'yes'/'no' or '1'/'0' 
+ * (b) sets the TidyIndentSpaces to 1 if 'yes'
+ * (c) sets the indent_char to '\t' or ' '
+\*/
+static ParseProperty ParseTabs;
 
 static const TidyOptionImpl option_defs[] =
 {
@@ -219,9 +218,9 @@ static const TidyOptionImpl option_defs[] =
   { TidyIndentSpaces,            PP, "indent-spaces",               IN, 2,               ParseInt,          NULL            },
   { TidyWrapLen,                 PP, "wrap",                        IN, 68,              ParseInt,          NULL            },
   { TidyTabSize,                 PP, "tab-size",                    IN, 8,               ParseInt,          NULL            },
-  { TidyCharEncoding,            CE, "char-encoding",               IN, ASCII,           ParseCharEnc,      charEncPicks    },
-  { TidyInCharEncoding,          CE, "input-encoding",              IN, LATIN1,          ParseCharEnc,      charEncPicks    },
-  { TidyOutCharEncoding,         CE, "output-encoding",             IN, ASCII,           ParseCharEnc,      charEncPicks    },
+  { TidyCharEncoding,            CE, "char-encoding",               IN, UTF8,            ParseCharEnc,      charEncPicks    },
+  { TidyInCharEncoding,          CE, "input-encoding",              IN, UTF8,            ParseCharEnc,      charEncPicks    },
+  { TidyOutCharEncoding,         CE, "output-encoding",             IN, UTF8,            ParseCharEnc,      charEncPicks    },
   { TidyNewline,                 CE, "newline",                     IN, DLF,             ParseNewline,      newlinePicks    },
   { TidyDoctypeMode,             MU, "doctype-mode",                IN, TidyDoctypeAuto, NULL,              doctypePicks    },
   { TidyDoctype,                 MU, "doctype",                     ST, 0,               ParseDocType,      doctypePicks    },
@@ -235,9 +234,12 @@ static const TidyOptionImpl option_defs[] =
   { TidyOutFile,                 MS, "output-file",                 ST, 0,               ParseString,       NULL            },
   { TidyWriteBack,               MS, "write-back",                  BL, no,              ParseBool,         boolPicks       },
   { TidyShowMarkup,              PP, "markup",                      BL, yes,             ParseBool,         boolPicks       },
+  { TidyShowInfo,                DG, "show-info",                   BL, yes,             ParseBool,         boolPicks       },
   { TidyShowWarnings,            DG, "show-warnings",               BL, yes,             ParseBool,         boolPicks       },
   { TidyQuiet,                   MS, "quiet",                       BL, no,              ParseBool,         boolPicks       },
   { TidyIndentContent,           PP, "indent",                      IN, TidyNoState,     ParseAutoBool,     autoBoolPicks   },
+  { TidyCoerceEndTags,           MU, "coerce-endtags",              BL, yes,             ParseBool,         boolPicks       },
+  { TidyOmitOptionalTags,        MU, "omit-optional-tags",          BL, no,              ParseBool,         boolPicks       },
   { TidyHideEndTags,             MU, "hide-endtags",                BL, no,              ParseBool,         boolPicks       },
   { TidyXmlTags,                 MU, "input-xml",                   BL, no,              ParseBool,         boolPicks       },
   { TidyXmlOut,                  MU, "output-xml",                  BL, no,              ParseBool,         boolPicks       },
@@ -248,9 +250,11 @@ static const TidyOptionImpl option_defs[] =
   { TidyUpperCaseAttrs,          MU, "uppercase-attributes",        BL, no,              ParseBool,         boolPicks       },
   { TidyMakeBare,                MU, "bare",                        BL, no,              ParseBool,         boolPicks       },
   { TidyMakeClean,               MU, "clean",                       BL, no,              ParseBool,         boolPicks       },
+  { TidyGDocClean,               MU, "gdoc",                        BL, no,              ParseBool,         boolPicks       },
   { TidyLogicalEmphasis,         MU, "logical-emphasis",            BL, no,              ParseBool,         boolPicks       },
   { TidyDropPropAttrs,           MU, "drop-proprietary-attributes", BL, no,              ParseBool,         boolPicks       },
   { TidyDropFontTags,            MU, "drop-font-tags",              BL, no,              ParseBool,         boolPicks       },
+  { TidyDropEmptyElems,          MU, "drop-empty-elements",         BL, yes,             ParseBool,         boolPicks       },
   { TidyDropEmptyParas,          MU, "drop-empty-paras",            BL, yes,             ParseBool,         boolPicks       },
   { TidyFixComments,             MU, "fix-bad-comments",            BL, yes,             ParseBool,         boolPicks       },
   { TidyBreakBeforeBR,           PP, "break-before-br",             BL, no,              ParseBool,         boolPicks       },
@@ -309,12 +313,14 @@ static const TidyOptionImpl option_defs[] =
 #if SUPPORT_ASIAN_ENCODINGS
   { TidyPunctWrap,               PP, "punctuation-wrap",            BL, no,              ParseBool,         boolPicks       },
 #endif
+  { TidyMergeEmphasis,           MU, "merge-emphasis",              BL, yes,             ParseBool,         boolPicks       },
   { TidyMergeDivs,               MU, "merge-divs",                  IN, TidyAutoState,   ParseAutoBool,     autoBoolPicks   },
   { TidyDecorateInferredUL,      MU, "decorate-inferred-ul",        BL, no,              ParseBool,         boolPicks       },
   { TidyPreserveEntities,        MU, "preserve-entities",           BL, no,              ParseBool,         boolPicks       },
   { TidySortAttributes,          PP, "sort-attributes",             IN, TidySortAttrNone,ParseSorter,       sorterPicks     },
   { TidyMergeSpans,              MU, "merge-spans",                 IN, TidyAutoState,   ParseAutoBool,     autoBoolPicks   },
   { TidyAnchorAsName,            MU, "anchor-as-name",              BL, yes,             ParseBool,         boolPicks       },
+  { TidyPPrintTabs,              PP, "indent-with-tabs",            BL, no,              ParseTabs,         NULL            }, /* 20150515 - Issue #108 */
   { N_TIDY_OPTIONS,              XX, NULL,                          XY, 0,               NULL,              NULL            }
 };
 
@@ -1206,6 +1212,30 @@ Bool ParseCSS1Selector( TidyDocImpl* doc, const TidyOptionImpl* option )
     return yes;
 }
 
+/*\
+ * 20150515 - support using tabs instead of spaces - Issue #108
+ * Sets the indent character to a tab if on, and set indent space count to 1
+ * and sets indent character to a space if off.
+\*/
+Bool ParseTabs( TidyDocImpl* doc, const TidyOptionImpl* entry )
+{
+    ulong flag = 0;
+    Bool status = ParseTriState( TidyNoState, doc, entry, &flag );
+    if ( status ) {
+        Bool tabs = flag != 0 ? yes : no;
+        TY_(SetOptionBool)( doc, entry->id, tabs );
+        if (tabs) {
+            TY_(PPrintTabs)();
+            TY_(SetOptionInt)( doc, TidyIndentSpaces, 1 );
+        } else {
+            TY_(PPrintSpaces)();
+            /* optional - TY_(ResetOptionToDefault)( doc, TidyIndentSpaces ); */
+        }
+    }
+    return status;
+}
+
+
 /* Coordinates Config update and Tags data */
 static void DeclareUserTag( TidyDocImpl* doc, TidyOptionId optId,
                             UserTagType tagType, ctmbstr name )
@@ -1431,7 +1461,7 @@ ctmbstr TY_(CharEncodingOptName)( int encoding )
 }
 
 /*
-   doctype: omit | auto | strict | loose | <fpi>
+   doctype: html5 | omit | auto | strict | loose | <fpi>
 
    where the fpi is a string similar to
 
@@ -1468,6 +1498,8 @@ Bool ParseDocType( TidyDocImpl* doc, const TidyOptionImpl* option )
 
     if ( TY_(tmbstrcasecmp)(buf, "auto") == 0 )
         dtmode = TidyDoctypeAuto;
+    else if ( TY_(tmbstrcasecmp)(buf, "html5") == 0 )
+        dtmode = TidyDoctypeHtml5;
     else if ( TY_(tmbstrcasecmp)(buf, "omit") == 0 )
         dtmode = TidyDoctypeOmit;
     else if ( TY_(tmbstrcasecmp)(buf, "strict") == 0 )

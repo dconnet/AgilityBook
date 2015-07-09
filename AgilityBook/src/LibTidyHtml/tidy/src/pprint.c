@@ -3,12 +3,6 @@
   
   (c) 1998-2007 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
-  
-  CVS Info :
-
-    $Author: arnaud02 $ 
-    $Date: 2008/03/22 20:23:37 $ 
-    $Revision: 1.119 $ 
 
 */
 
@@ -41,6 +35,21 @@ static int  TextEndsWithNewline( Lexer *lexer, Node *node, uint mode );
 static int  TextStartsWithWhitespace( Lexer *lexer, Node *node, uint start, uint mode );
 static Bool InsideHead( TidyDocImpl* doc, Node *node );
 static Bool ShouldIndent( TidyDocImpl* doc, Node *node );
+
+/*\
+ * 20150515 - support using tabs instead of spaces - Issue #108
+ * GH: https://github.com/htacg/tidy-html5/issues/108 - Keep indent with tabs #108
+ * SF: https://sourceforge.net/p/tidy/feature-requests/3/ - #3 tabs in place of spaces
+\*/
+static uint indent_char = ' ';
+void TY_(PPrintTabs)(void)
+{
+    indent_char = '\t';
+}
+void TY_(PPrintSpaces)(void)
+{
+    indent_char = ' ';
+}
 
 #if SUPPORT_ASIAN_ENCODINGS
 /* #431953 - start RJ Wraplen adjusted for smooth international ride */
@@ -588,7 +597,7 @@ static void WrapLine( TidyDocImpl* doc )
     {
         uint spaces = GetSpaces( pprint );
         for ( i = 0; i < spaces; ++i )
-            TY_(WriteChar)( ' ', doc->docOut );
+            TY_(WriteChar)( indent_char, doc->docOut ); /* 20150515 - Issue #108 */
     }
 
     for ( i = 0; i < pprint->wraphere; ++i )
@@ -639,7 +648,7 @@ static void WrapAttrVal( TidyDocImpl* doc )
     {
         uint spaces = GetSpaces( pprint );
         for ( i = 0; i < spaces; ++i )
-            TY_(WriteChar)( ' ', doc->docOut );
+            TY_(WriteChar)( indent_char, doc->docOut ); /* 20150515 - Issue #108 */
     }
 
     for ( i = 0; i < pprint->wraphere; ++i )
@@ -666,7 +675,7 @@ static void PFlushLineImpl( TidyDocImpl* doc )
     {
         uint spaces = GetSpaces( pprint );
         for ( i = 0; i < spaces; ++i )
-            TY_(WriteChar)( ' ', doc->docOut );
+            TY_(WriteChar)( indent_char, doc->docOut ); /* 20150515 - Issue #108 */
     }
 
     for ( i = 0; i < pprint->linelen; ++i )
@@ -754,7 +763,8 @@ static void PPrintChar( TidyDocImpl* doc, uint c, uint mode )
           for XML where naked '&' are illegal.
         */
         if ( c == '&' && cfgBool(doc, TidyQuoteAmpersand)
-             && !cfgBool(doc, TidyPreserveEntities) )
+             && !cfgBool(doc, TidyPreserveEntities)
+             && ( mode != OtherNamespace) ) /* #130 MathML attr and entity fix! */
         {
             AddString( pprint, "&amp;" );
             return;
@@ -1158,7 +1168,7 @@ static void PPrintAttribute( TidyDocImpl* doc, uint indent,
     {
         if ( TY_(IsScript)(doc, name) )
             wrappable = cfgBool( doc, TidyWrapScriptlets );
-        else if (!(attrIsCONTENT(attr) || attrIsVALUE(attr) || attrIsALT(attr)) && wrapAttrs )
+        else if (!(attrIsCONTENT(attr) || attrIsVALUE(attr) || attrIsALT(attr) || attrIsTITLE(attr)) && wrapAttrs )
             wrappable = yes;
     }
 
@@ -1308,6 +1318,72 @@ static Bool AfterSpace(Lexer *lexer, Node *node)
     return AfterSpaceImp(lexer, node, TY_(nodeCMIsEmpty)(node));
 }
 
+static void PPrintEndTag( TidyDocImpl* doc, uint ARG_UNUSED(mode),
+                          uint ARG_UNUSED(indent), Node *node );
+
+/*\
+ *  See Issue #162 - void elements also get a closing tag, like img, br, ...
+ *
+ *  from : http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
+ *  A complete list of the void elements in HTML:
+ *  area, base, br, col, command, embed, hr, img, input, keygen, link, meta, param, source, track, wbr
+ *
+ *  This could be sped up by NOT using the macro nodeIsXXXX, since this repeatedly checks the node,
+ *  and then the node->tag, which here are checked at the beginning...
+ *
+ *  Some have already been done... at least where no macro yet exists.
+ *
+ *  And maybe a switch(id) case would be faster.
+\*/
+
+static Bool TY_(isVoidElement)( Node *node )
+{
+    TidyTagId id;
+    if ( !node )
+        return no;
+    if ( !node->tag )
+        return no;
+    id = node->tag->id;
+    if (nodeIsAREA(node))
+        return yes;
+    if (nodeIsBASE(node))
+        return yes;
+    if (nodeIsBR(node))
+        return yes;
+    if (nodeIsCOL(node))
+        return yes;
+    /* if (nodeIsCOMMAND(node)) */
+    if (id == TidyTag_COMMAND)
+        return yes;
+    if (nodeIsEMBED(node))
+        return yes;
+    if (nodeIsHR(node))
+        return yes;
+    if (nodeIsIMG(node))
+        return yes;
+    if (nodeIsINPUT(node))
+        return yes;
+    /* if (nodeIsKEYGEN(node)) */
+    if (id == TidyTag_KEYGEN )
+        return yes;
+    if (nodeIsLINK(node))
+        return yes;
+    if (nodeIsMETA(node))
+        return yes;
+    if (nodeIsPARAM(node))
+        return yes;
+    /* if (nodeIsSOURCE(node)) */
+    if (id == TidyTag_SOURCE )
+        return yes;
+    /* if (nodeIsTRACK(node)) */
+    if (id == TidyTag_TRACK )
+        return yes;
+    if (nodeIsWBR(node))
+        return yes;
+
+    return no;
+}
+
 static void PPrintTag( TidyDocImpl* doc,
                        uint mode, uint indent, Node *node )
 {
@@ -1350,7 +1426,19 @@ static void PPrintTag( TidyDocImpl* doc,
 
     AddChar( pprint, '>' );
 
-    if ( (node->type != StartEndTag || xhtmlOut) && !(mode & PREFORMATTED) )
+    /*\
+     *  Appears this was added for Issue #111, #112, #113, but will now add an end tag
+     *  for elements like <img ...> which do NOT have an EndTag, even in html5
+     *  See Issue #162 - void elements also get a closing tag, like img, br, ...
+     *  A complete list of the void elements in HTML:
+     *  area, base, br, col, command, embed, hr, img, input, keygen, link, meta, param, source, track, wbr
+    \*/
+    if ((node->type == StartEndTag && TY_(HTMLVersion)(doc) == HT50) && !TY_(isVoidElement)(node) )
+    {
+        PPrintEndTag( doc, mode, indent, node );
+    }
+
+    if ( (node->type != StartEndTag || xhtmlOut || (node->type == StartEndTag && TY_(HTMLVersion)(doc) == HT50)) && !(mode & PREFORMATTED) )
     {
         uint wraplen = cfg( doc, TidyWrapLen );
         CheckWrapIndent( doc, indent );
@@ -1730,10 +1818,29 @@ static int TextEndsWithNewline(Lexer *lexer, Node *node, uint mode )
     return -1;
 }
 
+/*\
+ * Issue #133 - creeping indent - a very OLD bug - 2nd tidy run increases the indent!
+ * If the node is text, then remove any white space equal to the indent,
+ * but this also applies to the AspTag, which is text like...
+ * And may apply to other text like nodes as well.
+ *
+ * Here the total white space is returned, and then a sister service, IncrWS() 
+ * will advance the start of the lexer output by the amount of the indent.
+\*/
+static Bool TY_(nodeIsTextLike)( Node *node )
+{
+    if ( TY_(nodeIsText)(node) )
+        return yes;
+    if ( node->type == AspTag )
+        return yes;
+    /* add other text like nodes... */
+    return no;
+}
+
 static int TextStartsWithWhitespace( Lexer *lexer, Node *node, uint start, uint mode )
 {
     assert( node != NULL );
-    if ( (mode & (CDATA|COMMENT)) && TY_(nodeIsText)(node) && node->end > node->start && start >= node->start )
+    if ( (mode & (CDATA|COMMENT)) && TY_(nodeIsTextLike)(node) && node->end > node->start && start >= node->start )
     {
         uint ch, ix = start;
         /* Skip whitespace. */
@@ -1776,10 +1883,13 @@ void PPrintScriptStyle( TidyDocImpl* doc, uint mode, uint indent, Node *node )
     if ( InsideHead(doc, node) )
       TY_(PFlushLine)( doc, indent );
 
+    PCondFlushLine( doc, indent );  /* Issue #56 - long oustanding bug - flush any existing closing tag */
+
     PPrintTag( doc, mode, indent, node );
 
-    /* use zero indent here, see http://tidy.sf.net/bug/729972 */
-    TY_(PFlushLine)(doc, 0);
+    /* use zero indent here, see http://tidy.sf.net/bug/729972 
+       WHY??? TY_(PFlushLine)(doc, 0); */
+    TY_(PFlushLine)(doc, indent);
 
     if ( xhtmlOut && node->content != NULL )
     {
@@ -1931,6 +2041,21 @@ void TY_(PrintBody)( TidyDocImpl* doc )
     }
 }
 
+/* #130 MathML attr and entity fix! 
+   Support MathML namepsace */
+static void PPrintMathML( TidyDocImpl* doc, uint indent, Node *node )
+{
+    Node *content;
+    uint mode = OtherNamespace;
+
+    PPrintTag( doc, mode, indent, node );
+
+    for ( content = node->content; content; content = content->next )
+           TY_(PPrintTree)( doc, mode, indent, content );
+
+    PPrintEndTag( doc, mode, indent, node );
+}
+
 void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
 {
     Node *content, *last;
@@ -1969,9 +2094,15 @@ void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
         PPrintJste( doc, indent, node );
     else if ( node->type == PhpTag)
         PPrintPhp( doc, indent, node );
+    else if ( nodeIsMATHML(node) )
+        PPrintMathML( doc, indent, node ); /* #130 MathML attr and entity fix! */
     else if ( TY_(nodeCMIsEmpty)(node) ||
               (node->type == StartEndTag && !xhtml) )
     {
+        /* Issue #8 - flush to new line? 
+           maybe use if ( TY_(nodeHasCM)(node, CM_BLOCK) ) instead
+           or remove the CM_INLINE from the tag
+         */
         if ( ! TY_(nodeHasCM)(node, CM_INLINE) )
             PCondFlushLine( doc, indent );
 
@@ -2089,7 +2220,8 @@ void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
         {
             Bool indcont  = ( cfgAutoBool(doc, TidyIndentContent) != TidyNoState );
             Bool indsmart = ( cfgAutoBool(doc, TidyIndentContent) == TidyAutoState );
-            Bool hideend  = cfgBool( doc, TidyHideEndTags );
+            Bool hideend  = cfgBool( doc, TidyHideEndTags ) ||
+              cfgBool( doc, TidyOmitOptionalTags );
             Bool classic  = cfgBool( doc, TidyVertSpace );
             uint contentIndent = indent;
 
@@ -2103,7 +2235,13 @@ void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
                 contentIndent += spaces;
 
             PCondFlushLine( doc, indent );
-            if ( indsmart && node->prev != NULL )
+
+            /*\
+             *  Issue #180 - with the above PCondFlushLine, 
+             *  this adds an uneccessary additional line!
+             *  Maybe only if 'classic' ie --vertical-space yes 
+            \*/
+            if ( indsmart && node->prev != NULL && classic)
                 TY_(PFlushLine)( doc, indent );
 
             /* do not omit elements with attributes */

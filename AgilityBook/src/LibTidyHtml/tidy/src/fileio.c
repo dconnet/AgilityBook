@@ -3,12 +3,6 @@
   (c) 1998-2007 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
 
-  CVS Info :
-
-    $Author: arnaud02 $ 
-    $Date: 2007/05/30 16:47:31 $ 
-    $Revision: 1.17 $ 
-
   Default implementations of Tidy input sources
   and output sinks based on standard C FILE*.
 
@@ -19,6 +13,9 @@
 #include "forward.h"
 #include "fileio.h"
 #include "tidy.h"
+#if !defined(NDEBUG) && defined(_MSC_VER)
+#include "sprtf.h"
+#endif
 
 typedef struct _fp_input_source
 {
@@ -88,6 +85,10 @@ void TIDY_CALL TY_(filesink_putByte)( void* sinkData, byte bv )
 {
   FILE* fout = (FILE*) sinkData;
   fputc( bv, fout );
+#if !defined(NDEBUG) && defined(_MSC_VER)
+  if (fout->_file != 2)
+    SPRTF("%c",bv);
+#endif
 }
 
 void TY_(initFileSink)( TidyOutputSink* outp, FILE* fp )

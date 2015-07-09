@@ -6,11 +6,6 @@
    (c) 1998-2007 (W3C) MIT, ERCIM, Keio University
    See tidy.h for the copyright notice.
   
-   CVS Info:
-     $Author: arnaud02 $ 
-     $Date: 2007/02/11 09:45:08 $ 
-     $Revision: 1.9 $ 
-
 */
 
 #include "forward.h"
@@ -89,5 +84,10 @@ void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node );
 
 void TY_(PPrintXMLTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node );
 
+/*\
+ * 20150515 - support using tabs instead of spaces
+\*/
+void TY_(PPrintTabs)(void);
+void TY_(PPrintSpaces)(void);
 
 #endif /* __PPRINT_H__ */

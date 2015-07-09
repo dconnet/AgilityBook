@@ -6,12 +6,6 @@
   (c) 1998-2008 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
 
-  CVS Info :
-
-    $Author: arnaud02 $ 
-    $Date: 2008/03/17 12:57:01 $ 
-    $Revision: 1.66 $ 
-
 */
 
 #ifdef __cplusplus
@@ -483,6 +477,10 @@ extern "C" {
 #define access _access
 #define strcasecmp _stricmp
 
+#ifndef va_copy
+#define va_copy(dest, src) (dest = src)
+#endif
+
 #if _MSC_VER > 1000
 #pragma warning( disable : 4189 ) /* local variable is initialized but not referenced */
 #pragma warning( disable : 4100 ) /* unreferenced formal parameter */
@@ -497,8 +495,14 @@ extern "C" {
 
 #if defined(_WIN32)
 
-#if (defined(_USRDLL) || defined(_WINDLL)) && !defined(TIDY_EXPORT)
+#if (defined(_USRDLL) || defined(_WINDLL)) || defined(BUILD_SHARED_LIB) && !defined(TIDY_EXPORT)
+#ifdef BUILDING_SHARED_LIB
 #define TIDY_EXPORT __declspec( dllexport ) 
+#else
+#define TIDY_EXPORT __declspec( dllimport ) 
+#endif
+#else
+#define TIDY_EXPORT extern
 #endif
 
 #ifndef TIDY_CALL

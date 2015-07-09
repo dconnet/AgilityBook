@@ -1,2 +1,2 @@
-Snapshot of Tidy from http://tidy.cvs.sourceforge.net/tidy/tidy/ on Dec 15, 2007
-Only the 'htmldoc', 'include' and 'src' directories are included.
+4.9.30 release of Tidy from https://github.com/htacg/tidy-html5
+Only 'documentation', 'include' and 'src' directories are included.

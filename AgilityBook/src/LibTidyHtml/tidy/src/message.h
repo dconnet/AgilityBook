@@ -5,12 +5,6 @@
 
   (c) 1998-2007 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
-  
-  CVS Info :
-
-    $Author: arnaud02 $ 
-    $Date: 2007/05/30 16:47:31 $ 
-    $Revision: 1.29 $ 
 
 */
 
@@ -160,7 +154,11 @@ void TY_(ReportFatal)(TidyDocImpl* doc, Node* element, Node* node, uint code);
 #define MISSING_ATTRIBUTE            86
 #define WHITE_IN_URI                 87
 
-#define PREVIOUS_LOCATION            88 /* last */
+#define REMOVED_HTML5                88 /* this element removed from HTML5 */
+#define BAD_BODY_HTML5               89 /* attr on body removed from HTML5 */
+#define BAD_ALIGN_HTML5              90 /* use of align attr removed from HTML5 */
+
+#define PREVIOUS_LOCATION            91 /* last */
 
 /* character encoding errors */
 
