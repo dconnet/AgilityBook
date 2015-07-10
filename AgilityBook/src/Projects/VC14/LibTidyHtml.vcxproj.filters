@@ -157,10 +157,10 @@
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\parser.h">
       <Filter>tidy</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\sprtf.h">
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\pprint.h">
       <Filter>tidy</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\pprint.h">
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\sprtf.h">
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\streamio.h">
