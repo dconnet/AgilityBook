@@ -18,7 +18,7 @@
    -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.0.2)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -t:       Testing, just print commands to run
-   compiler: vc10, vc11, vc12 (default: vc10)
+   compiler: vc10, vc11, vc12, vc14 (default: vc10)
 """
 
 import getopt
@@ -118,7 +118,7 @@ def GetVSDir(version):
 
 
 def AddCompiler(compilers, c):
-	global vc10Base, vc11Base, vc12Base
+	global vc10Base, vc11Base, vc12Base, vc14Base
 	baseDir = ''
 	testFile = ''
 
@@ -135,6 +135,11 @@ def AddCompiler(compilers, c):
 	elif c == 'vc12':
 		vc12Base = GetVSDir("12.0")
 		baseDir = vc12Base
+		testFile = baseDir + r'\VC\vcvarsall.bat'
+
+	elif c == 'vc14':
+		vc14Base = GetVSDir("14.0")
+		baseDir = vc14Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 
 	else:
@@ -293,6 +298,27 @@ def main():
 			cmds64 = (
 				r'title VC12 Release x64',
 				r'cd ..\VC12',
+				r'call "' + setvcvars + r'" ' + envTarget,
+				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
+
+		elif compiler == 'vc14':
+			vc14Base = GetVSDir("14.0")
+			if not os.access(vc14Base, os.F_OK):
+				print 'ERROR: "' + vc14Base + '" does not exist'
+				return 1
+			PlatformTools = '140'
+			setvcvars = vc14Base + r'\VC\vcvarsall.bat'
+			cmds32 = (
+				r'title VC14 Release Win32',
+				r'cd ..\VC14',
+				r'call "' + setvcvars + r'" x86',
+				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=Win32')
+			envTarget = 'x86_amd64'
+			if bit64on64:
+				envTarget = 'amd64'
+			cmds64 = (
+				r'title VC14 Release x64',
+				r'cd ..\VC14',
 				r'call "' + setvcvars + r'" ' + envTarget,
 				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=Release;Platform=x64')
 
