@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2015-07-23 Added vc14 support.
 # 2014-11-17 wix3.9 deprecated -sadv
 # 2014-11-17 Removed .mo files (moved into resource)
 # 2013-11-27 Fix arbdll.dll access when building x64.
@@ -45,7 +46,7 @@
 # 2007-10-31 Changed from WiX to InnoSetup
 # 2007-03-07 Created
 
-"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC[10|11|12]]
+"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC[10|11|12|14]]
 	wix: Override internal wix path (c:\Tools\wix3)
 	user: Create msi as a per-user install (default: per-machine)
 	32: Create 32bit Unicode msi
@@ -386,6 +387,8 @@ def main():
 			vcver = '11'
 		elif o == '/VC12':
 			vcver = '12'
+		elif o == '/VC14':
+			vcver = '14'
 		else:
 			error = 1
 			break
