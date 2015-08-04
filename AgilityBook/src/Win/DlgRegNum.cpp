@@ -89,7 +89,7 @@ CDlgRegNum::CDlgRegNum(
 	textRegNum->Wrap(-1);
 
 	CTextCtrl* ctrlRegNum = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(60, -1)), 0,
 		CTrimValidator(&m_RegNum));
 	ctrlRegNum->SetHelpText(_("HIDC_REGNUM_REG_NUM"));
 	ctrlRegNum->SetToolTip(_("HIDC_REGNUM_REG_NUM"));
@@ -100,7 +100,7 @@ CDlgRegNum::CDlgRegNum(
 	textHeight->Wrap(-1);
 
 	CTextCtrl* ctrlHeight = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(30, -1)), 0,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHeight->SetHelpText(_("HIDC_REGNUM_HEIGHT"));
 	ctrlHeight->SetToolTip(_("HIDC_REGNUM_HEIGHT"));

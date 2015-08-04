@@ -232,7 +232,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	textName->Wrap(-1);
 
 	CTextCtrl* ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(50, -1)), 0,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_INVALID_NAME")));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_VENUE"));
 	ctrlName->SetToolTip(_("HIDC_CONFIG_VENUE"));
