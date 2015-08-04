@@ -37,7 +37,7 @@
 #include <wx/strconv.h>
 #endif
 
-#if defined(WIN32) && (_WIN32_IE >= _WIN32_IE_IE55) && (WINVER < _WIN32_WINNT_WIN7)
+#if defined(WIN32) && (_WIN32_IE >= _WIN32_IE_IE55)
 #include "Shlwapi.h"
 #pragma comment(lib, "shlwapi.lib")
 #endif
