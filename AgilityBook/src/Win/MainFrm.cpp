@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-08-11 Status bar gripper is too small on hiDPI. Kludge.
  * 2014-05-18 Moved startup version check to a timer.
  * 2012-11-14 "Filtered" was truncated in wx2.8 status bar.
  * 2012-01-07 Fix tab type/orientation persistence.
@@ -155,9 +156,12 @@ END_EVENT_TABLE()
 static void SetStatusBarWidths(
 		wxStatusBar* statusbar,
 		int col,
-		int* widths)
+		int* widths,
+		bool bAddKludge)
 {
-	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
+	// The gripper isn't right on hidpi. Add a fudge factor.
+	if (bAddKludge && DPI::GetScale() > 100)
+		widths[NUM_STATUS_FIELDS - 1] += DPI::Scale(10);
 #if defined(__WXMAC__)
 	// On the Mac, setting the width is always a bit small.
 	// For instance, we want 36, but it gets set to 32.
@@ -171,11 +175,11 @@ static void SetStatusBarWidths(
 			if (r.width < widths[i])
 			{
 				widths[i] += 2 * (widths[i] - r.width);
-				statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
 			}
 		}
 	}
 #endif
+	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -239,7 +243,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 			style[i] = wxSB_NORMAL;
 			SetStatusText(str, i);
 		}
-		SetStatusBarWidths(statusbar, -1, m_Widths);
+		SetStatusBarWidths(statusbar, -1, m_Widths, true);
 		statusbar->SetStatusStyles(NUM_STATUS_FIELDS, style);
 	}
 #if !defined(__WXMAC__)
@@ -286,7 +290,7 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 #if !wxCHECK_VERSION(3, 0, 0)
 		m_Widths[index] += 4;
 #endif
-		SetStatusBarWidths(statusbar, index, m_Widths);
+		SetStatusBarWidths(statusbar, index, m_Widths, index == NUM_STATUS_FIELDS - 1);
 	}
 	SetStatusText(StringUtil::stringWX(msg), index);
 }
