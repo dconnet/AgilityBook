@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		E110B4FF177FD089004071B5 /* LibTidyHtml.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4FE177FD089004071B5 /* LibTidyHtml.h */; };
+		E1243CB91B8A4B4B00B632E5 /* gdoc.c in Sources */ = {isa = PBXBuildFile; fileRef = E1243CB71B8A4B4B00B632E5 /* gdoc.c */; };
+		E1243CBA1B8A4B4B00B632E5 /* gdoc.h in Headers */ = {isa = PBXBuildFile; fileRef = E1243CB81B8A4B4B00B632E5 /* gdoc.h */; };
+		E1243CBD1B8A4B8B00B632E5 /* sprtf.c in Sources */ = {isa = PBXBuildFile; fileRef = E1243CBB1B8A4B8B00B632E5 /* sprtf.c */; };
+		E1243CBE1B8A4B8B00B632E5 /* sprtf.h in Headers */ = {isa = PBXBuildFile; fileRef = E1243CBC1B8A4B8B00B632E5 /* sprtf.h */; };
 		E1796484176927F0003AE489 /* LibTidyHtml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E179641A176927F0003AE489 /* LibTidyHtml.cpp */; };
 		E1796486176927F0003AE489 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E179641D176927F0003AE489 /* stdafx.h */; };
 		E179648E176927F0003AE489 /* buffio.h in Headers */ = {isa = PBXBuildFile; fileRef = E179644E176927F0003AE489 /* buffio.h */; };
@@ -66,6 +70,10 @@
 
 /* Begin PBXFileReference section */
 		E110B4FE177FD089004071B5 /* LibTidyHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibTidyHtml.h; sourceTree = "<group>"; };
+		E1243CB71B8A4B4B00B632E5 /* gdoc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gdoc.c; sourceTree = "<group>"; };
+		E1243CB81B8A4B4B00B632E5 /* gdoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gdoc.h; sourceTree = "<group>"; };
+		E1243CBB1B8A4B8B00B632E5 /* sprtf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sprtf.c; sourceTree = "<group>"; };
+		E1243CBC1B8A4B8B00B632E5 /* sprtf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprtf.h; sourceTree = "<group>"; };
 		E1796412176927D2003AE489 /* libLibTidyHtml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibTidyHtml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E179641A176927F0003AE489 /* LibTidyHtml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibTidyHtml.cpp; path = ../../../LibTidyHtml/LibTidyHtml.cpp; sourceTree = "<group>"; };
 		E179641D176927F0003AE489 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../LibTidyHtml/stdafx.h; sourceTree = "<group>"; };
@@ -210,6 +218,10 @@
 		E1796453176927F0003AE489 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				E1243CBB1B8A4B8B00B632E5 /* sprtf.c */,
+				E1243CBC1B8A4B8B00B632E5 /* sprtf.h */,
+				E1243CB71B8A4B4B00B632E5 /* gdoc.c */,
+				E1243CB81B8A4B4B00B632E5 /* gdoc.h */,
 				E1796454176927F0003AE489 /* access.c */,
 				E1796455176927F0003AE489 /* access.h */,
 				E1796456176927F0003AE489 /* alloc.c */,
@@ -269,12 +281,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1243CBE1B8A4B8B00B632E5 /* sprtf.h in Headers */,
 				E1796486176927F0003AE489 /* stdafx.h in Headers */,
 				E179648E176927F0003AE489 /* buffio.h in Headers */,
 				E179648F176927F0003AE489 /* platform.h in Headers */,
 				E1796490176927F0003AE489 /* tidy.h in Headers */,
 				E1796491176927F0003AE489 /* tidyenum.h in Headers */,
 				E1796493176927F0003AE489 /* access.h in Headers */,
+				E1243CBA1B8A4B4B00B632E5 /* gdoc.h in Headers */,
 				E1796497176927F0003AE489 /* attrdict.h in Headers */,
 				E179649A176927F0003AE489 /* attrs.h in Headers */,
 				E179649D176927F0003AE489 /* charsets.h in Headers */,
@@ -359,7 +373,9 @@
 				E1796498176927F0003AE489 /* attrget.c in Sources */,
 				E1796499176927F0003AE489 /* attrs.c in Sources */,
 				E179649B176927F0003AE489 /* buffio.c in Sources */,
+				E1243CB91B8A4B4B00B632E5 /* gdoc.c in Sources */,
 				E179649C176927F0003AE489 /* charsets.c in Sources */,
+				E1243CBD1B8A4B8B00B632E5 /* sprtf.c in Sources */,
 				E179649E176927F0003AE489 /* clean.c in Sources */,
 				E17964A0176927F0003AE489 /* config.c in Sources */,
 				E17964A2176927F0003AE489 /* entities.c in Sources */,
