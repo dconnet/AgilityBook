@@ -45,6 +45,7 @@ libtidyhtml_SRCS = LibTidyHtml.cpp \
 	tidy/src/config.c \
 	tidy/src/entities.c \
 	tidy/src/fileio.c \
+	tidy/src/gdoc.c \
 	tidy/src/istack.c \
 	tidy/src/lexer.c \
 	tidy/src/localize.c \
