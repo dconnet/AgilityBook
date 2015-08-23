@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-08-22 Expose LOAD_BITMAP_PNG for use in OnCreateBitmap.
  * 2013-10-13 Changed ImageManager to an art provider.
  * 2012-12-29 Created (separated from IconList).
  */
@@ -37,7 +38,7 @@ wxIcon CreateIconFromBitmap(const wxBitmap& bitmap)
 
 
 #if defined(__WINDOWS__)
-static void LoadLocalBitmap(wchar_t const* const pImageName, wxBitmap& outBmp)
+void LoadLocalBitmap(wchar_t const* const pImageName, wxBitmap& outBmp)
 {
 	wxLogNull suppress;
 	unsigned int scale = DPI::GetScale();
@@ -61,14 +62,6 @@ static void LoadLocalBitmap(wchar_t const* const pImageName, wxBitmap& outBmp)
 		outBmp = wxBitmap(image);
 	}
 }
-#define LOAD_BITMAP_PNG(name, outBmp)	LoadLocalBitmap(L#name, outBmp)
-
-#else
-#if !defined(__WXOSX__)
-// OSX auto-loads @2 images.
-#pragma PRAGMA_FIXME(This is not likely to load the correct image);
-#endif
-#define LOAD_BITMAP_PNG(name, outBmp)	outBmp = wxBITMAP_PNG(name)
 #endif
 
 

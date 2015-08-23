@@ -15,6 +15,7 @@
  * Users of this can extend by associating a callback class.
  *
  * Revision History
+ * 2015-08-22 Expose LOAD_BITMAP_PNG for use in OnCreateBitmap.
  * 2013-10-13 Changed ImageManager to an art provider.
  * 2012-12-29 Created.
  */
@@ -37,6 +38,12 @@ namespace ImageHelper
 			const wxArtID& id,
 			const wxArtClient& client,
 			wxIconBundle& outIcon);
+
+#if defined(__WINDOWS__)
+	extern void LoadLocalBitmap(
+			wchar_t const* const pImageName,
+			wxBitmap& outBmp);
+#endif
 };
 
 
@@ -109,3 +116,26 @@ namespace ImageHelper
 #define ImageMgrPreview				wxART_MAKE_ART_ID(ImageMgrPreview)
 #define ImageMgrPrint				wxART_MAKE_ART_ID(ImageMgrPrint)
 #define ImageMgrSave				wxART_MAKE_ART_ID(ImageMgrSave)
+
+
+#if defined(__WINDOWS__)
+#define LOAD_BITMAP_PNG(name, outBmp)	ImageHelper::LoadLocalBitmap(L#name, outBmp)
+#define LOAD_BUNDLE_PNG(name, outIcon) \
+	{ \
+		wxBitmap bmp; \
+		ImageHelper::LoadLocalBitmap(L#name, bmp); \
+		outIcon.AddIcon(ImageHelper::CreateIconFromBitmap(bmp)); \
+	}
+
+#else
+#if !defined(__WXOSX__)
+// OSX auto-loads @2 images.
+#pragma PRAGMA_FIXME(This is not likely to load the correct image);
+#endif
+#define LOAD_BITMAP_PNG(name, outBmp)	outBmp = wxBITMAP_PNG(name)
+#define LOAD_BUNDLE_PNG(name, outIcon) \
+	{ \
+		wxBitmap bmp = wxBITMAP_PNG(name); \
+		outIcon.AddIcon(ImageHelper::CreateIconFromBitmap(bmp)); \
+	}
+#endif

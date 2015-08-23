@@ -118,9 +118,9 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	m_ctrlMessage = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlMessage->Wrap(-1);
 
-	m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 230) ,-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+	m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDLG_UNIT(this, wxSize(230 ,-1)), wxGA_HORIZONTAL|wxGA_SMOOTH)));
 	for (int nBar = 1; nBar < nBars; ++nBar)
-		m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 230),-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+		m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDLG_UNIT(this, wxSize(230,-1)), wxGA_HORIZONTAL|wxGA_SMOOTH)));
 
 	// Sizers
 

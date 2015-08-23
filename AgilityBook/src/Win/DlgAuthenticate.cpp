@@ -56,7 +56,7 @@ CDlgAuthenticate::CDlgAuthenticate(
 	textUserName->Wrap(-1);
 
 	CTextCtrl* ctrlUsername = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 100), -1), 0,
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(100, -1)), 0,
 		wxGenericValidator(&m_Name));
 
 	wxStaticText* textPassword = new wxStaticText(this, wxID_ANY, _("Password"),
@@ -64,7 +64,7 @@ CDlgAuthenticate::CDlgAuthenticate(
 	textPassword->Wrap(-1);
 
 	CTextCtrl* ctrlPassword = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 100), -1), wxTE_PASSWORD,
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(100, -1)), wxTE_PASSWORD,
 		wxGenericValidator(&m_Password));
 
 	// Sizers
