@@ -52,6 +52,7 @@ libtidyhtml_SRCS = LibTidyHtml.cpp \
 	tidy/src/mappedio.c \
 	tidy/src/parser.c \
 	tidy/src/pprint.c \
+	tidy/src/sprtf.c \
 	tidy/src/streamio.c \
 	tidy/src/tagask.c \
 	tidy/src/tags.c \
