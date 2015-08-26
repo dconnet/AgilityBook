@@ -134,14 +134,14 @@ public:
 
 	int Scale(int x)
 	{
-		if (m_Awareness == PROCESS_DPI_UNAWARE)
+		if (m_Awareness == PROCESS_DPI_UNAWARE || GetScale() == 100)
 			return x;
 		return x * GetScale() / 100;
 	}
 
 	int UnScale(int x)
 	{
-		if (m_Awareness == PROCESS_DPI_UNAWARE)
+		if (m_Awareness == PROCESS_DPI_UNAWARE || GetScale() == 100)
 			return x;
 		return x * 100 / GetScale();
 	}
