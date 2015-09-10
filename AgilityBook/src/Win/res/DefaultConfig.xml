@@ -4,9 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2015-06-29 Configuration version 51.
+2015-09-10 Configuration version 51.
            Added AKC Premier. Added support for fun games.
-           Fixed Q/NQ on UKI Master/Ch.
+           Fixed Q/NQ on UKI Master/Ch, allow progression points.
 2015-04-23 Configuration version 50.
            Added NADAC Beginners Agility titles.
            Added NADAC lifetime points to Beginners and Extreme games.
@@ -3713,6 +3713,13 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
+      <Event Name="Game: Time+Faults (2)" ShortName="Game: T+F2" hasSubNames="y">
+        <Desc>This is for Time plus Fault events. Time faults are not added. Bonus points allowed.</Desc>
+        <SubName>Football</SubName>
+        <Scoring Division="*" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+      </Event>
       <Event Name="Game: Total Points" ShortName="Game: Pt" hasSubNames="y">
         <Desc>Points are accumulated in a single time period, like Snooker.</Desc>
         <SubName>12 Tone Row</SubName>
@@ -3967,17 +3974,11 @@ TG3 + 10 Qs in at least 5 games
         <Level Name="Champion" ShortName="Ch"/>
       </Division>
       <Event Name="Agility" hasTable="y">
-        <Scoring Division="Masters" Level="Champion" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>
       </Event>
       <Event Name="Jumping">
-        <Scoring Division="Masters" Level="Champion" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>

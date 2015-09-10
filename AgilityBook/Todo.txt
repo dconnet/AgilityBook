@@ -1,8 +1,4 @@
-Last Updated: 9/7/2015
-
-- Copy/paste of fun run in AKC doesn't copy subname.
-
-- UKI Master/Champion runs don't allow Qing. Need to add Title Points to each.
+Last Updated: 9/10/2015
 
 - Add warning in run dialog when Q is UNK that the following will not
   be saved:
