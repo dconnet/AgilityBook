@@ -133,48 +133,25 @@
  * Bind is only available on wx2.9+.
  * Rather than ifdef each instance of Connect, hide behind an evil macro.
  */
-#if wxCHECK_VERSION(3, 0, 0)
-	#define BIND_OR_CONNECT(evt, cast, func) \
-		Bind(evt, &func, this)
-	#define UNBIND_OR_DISCONNECT(evt, cast, func) \
-		Unbind(evt, &func, this)
+#define BIND_OR_CONNECT(evt, cast, func) \
+	Bind(evt, &func, this)
+#define UNBIND_OR_DISCONNECT(evt, cast, func) \
+	Unbind(evt, &func, this)
 
-	#define BIND_OR_CONNECT_CTRL(ctrl, evt, cast, func) \
-		ctrl->Bind(evt, &func, this)
-	#define UNBIND_OR_DISCONNECT_CTRL(ctrl, evt, cast, func) \
-		ctrl->Unbind(evt, &func, this)
+#define BIND_OR_CONNECT_CTRL(ctrl, evt, cast, func) \
+	ctrl->Bind(evt, &func, this)
+#define UNBIND_OR_DISCONNECT_CTRL(ctrl, evt, cast, func) \
+	ctrl->Unbind(evt, &func, this)
 
-	#define BIND_OR_CONNECT_ID(id, evt, cast, func) \
-		Bind(evt, &func, this, id)
-	#define UNBIND_OR_DISCONNECT_ID(id, evt, cast, func) \
-		Unbind(evt, &func, this, id)
+#define BIND_OR_CONNECT_ID(id, evt, cast, func) \
+	Bind(evt, &func, this, id)
+#define UNBIND_OR_DISCONNECT_ID(id, evt, cast, func) \
+	Unbind(evt, &func, this, id)
 
-	#define BIND_OR_CONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
-		ctrl->Bind(evt, &func, this, id)
-	#define UNBIND_OR_DISCONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
-		ctrl->Unbind(evt, &func, this, id)
-
-#else
-	#define BIND_OR_CONNECT(evt, cast, func) \
-		Connect(evt, cast(func))
-	#define UNBIND_OR_DISCONNECT(evt, cast, func) \
-		Disconnect(evt, cast(func))
-
-	#define BIND_OR_CONNECT_CTRL(ctrl, evt, cast, func) \
-		ctrl->Connect(evt, cast(func), nullptr, this)
-	#define UNBIND_OR_DISCONNECT_CTRL(ctrl, evt, cast, func) \
-		ctrl->Disconnect(evt, cast(func), nullptr, this);
-
-	#define BIND_OR_CONNECT_ID(id, evt, cast, func) \
-		Connect(id, evt, cast(func), nullptr, this)
-	#define UNBIND_OR_DISCONNECT_ID(id, evt, cast, func) \
-		Disconnect(id, evt, cast(func), nullptr, this)
-
-	#define BIND_OR_CONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
-		ctrl->Connect(id, evt, cast(func), nullptr, this)
-	#define UNBIND_OR_DISCONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
-		ctrl->Disconnect(id, evt, cast(func), nullptr, this)
-#endif
+#define BIND_OR_CONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
+	ctrl->Bind(evt, &func, this, id)
+#define UNBIND_OR_DISCONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
+	ctrl->Unbind(evt, &func, this, id)
 
 
 /**

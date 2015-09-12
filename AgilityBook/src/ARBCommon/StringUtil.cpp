@@ -108,7 +108,7 @@ wxString stringWX(std::string const& inStr)
 
 std::wstring stringW(wxString const& inStr)
 {
-#if wxCHECK_VERSION(3, 0, 0) && defined(wxUSE_STD_STRING) && wxUSE_STD_STRING
+#if defined(wxUSE_STD_STRING) && wxUSE_STD_STRING
 	return inStr.ToStdWstring();
 #else
 	return std::wstring(inStr.wx_str());
@@ -377,7 +377,6 @@ bool ToCLong(std::wstring const& inStr, long& outValue, bool bRetry)
 {
 #if defined(__WXWINDOWS__) && !USE_CRT
 	wxString s(inStr.c_str());
-#if wxCHECK_VERSION(3, 0, 0)
 	bool bOk = s.ToCLong(&outValue);
 	// The above fails for "123-45" and returns 0. Before it returned 123.
 	// That's the behavior I'm relying on. (Needed when reading dates)
@@ -387,10 +386,6 @@ bool ToCLong(std::wstring const& inStr, long& outValue, bool bRetry)
 		str >> outValue;
 	}
 	return bOk;
-#else
-	wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
-	return s.ToLong(&outValue);
-#endif
 #else
 	wchar_t* end = nullptr;
 	_locale_t locale = _create_locale(LC_NUMERIC, "C");
@@ -413,7 +408,6 @@ bool ToCULong(std::wstring const& inStr, unsigned long& outValue, bool bRetry)
 {
 #if defined(__WXWINDOWS__) && !USE_CRT
 	wxString s(inStr.c_str());
-#if wxCHECK_VERSION(3, 0, 0)
 	bool bOk = s.ToCULong(&outValue);
 	// The above fails for "123-45" and returns 0. Before it returned 123.
 	// That's the behavior I'm relying on. (Needed when reading dates)
@@ -423,10 +417,6 @@ bool ToCULong(std::wstring const& inStr, unsigned long& outValue, bool bRetry)
 		str >> outValue;
 	}
 	return bOk;
-#else
-	wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
-	return s.ToULong(&outValue);
-#endif
 #else
 	wchar_t* end = nullptr;
 	_locale_t locale = _create_locale(LC_NUMERIC, "C");
@@ -448,14 +438,9 @@ unsigned long ToCULong(std::wstring const& inStr)
 bool ToCDouble(std::wstring const& inStr, double& outValue)
 {
 #if defined(__WXWINDOWS__) && !USE_CRT
-#if wxCHECK_VERSION(3, 0, 0)
 	// This will fail on "1.2-3". That's ok. The only time this is used
 	// is for parsing an actual number in Element.
 	return stringWX(inStr).ToCDouble(&outValue);
-#else
-	wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
-	return stringWX(inStr).ToDouble(&outValue);
-#endif
 #else
 	wchar_t* end = nullptr;
 	_locale_t locale = _create_locale(LC_NUMERIC, "C");
@@ -581,7 +566,7 @@ int CompareNoCase(std::wstring const& inStr1, std::wstring const& inStr2)
 int CompareNoCase(wxString const& inStr1, wxString const& inStr2)
 {
 #ifdef WIN32
-#if wxCHECK_VERSION(3, 0, 0) && defined(wxUSE_STD_STRING) && wxUSE_STD_STRING
+#if defined(wxUSE_STD_STRING) && wxUSE_STD_STRING
 	return CompareNoCase(inStr1.ToStdWstring(), inStr2.ToStdWstring());
 #else
 	return CompareNoCase(std::wstring(inStr1.wx_str()), std::wstring(inStr2.wx_str()));

@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2015-09-12 Clean up status bar sizing.
+ * 2015-09-12 Clean up status bar sizing. SetStatusBarWidths was broken on Mac.
  * 2015-08-11 Status bar gripper is too small on hiDPI. Kludge.
  * 2014-05-18 Moved startup version check to a timer.
  * 2012-11-14 "Filtered" was truncated in wx2.8 status bar.
@@ -163,10 +163,12 @@ static void SetStatusBarWidths(
 	// The gripper isn't right on hidpi. Add a fudge factor.
 	if (bAddKludge && DPI::GetScale() > 100)
 		widths[NUM_STATUS_FIELDS - 1] += DPI::Scale(10);
+	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
 #if defined(__WXMAC__)
 	// On the Mac, setting the width is always a bit small.
 	// For instance, we want 36, but it gets set to 32.
 	// So kludge it and force it larger.
+	bool bFix = false;
 	for (int i = 0; i < NUM_STATUS_FIELDS; ++i)
 	{
 		if ((0 > col || i == col) && 0 < widths[i])
@@ -175,12 +177,14 @@ static void SetStatusBarWidths(
 			statusbar->GetFieldRect(i, r);
 			if (r.width < widths[i])
 			{
+				bFix = true;
 				widths[i] += 2 * (widths[i] - r.width);
 			}
 		}
 	}
+	if (bFix)
+		statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
 #endif
-	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -225,16 +229,8 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 			case STATUS_FILTERED:
 				str = _("ID_INDICATOR_FILTERED");
 				break;
-#if !wxCHECK_VERSION(3, 0, 0)
-			case STATUS_FILLER:
-				str = L"     "; // Filler for where the grabber is
-				break;
-#endif
 			}
 			m_Widths[i] = statusbar->GetTextExtent(str).x;
-#if !wxCHECK_VERSION(3, 0, 0)
-			m_Widths[i] += 4;
-#endif
 			style[i] = wxSB_NORMAL;
 			SetStatusText(str, i);
 		}
@@ -281,9 +277,6 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 	if (bResize)
 	{
 		m_Widths[index] = statusbar->GetTextExtent(str).x;
-#if !wxCHECK_VERSION(3, 0, 0)
-		m_Widths[index] += 4;
-#endif
 		SetStatusBarWidths(statusbar, index, m_Widths, index == NUM_STATUS_FIELDS - 1);
 	}
 	SetStatusText(str, index);

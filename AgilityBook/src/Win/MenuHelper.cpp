@@ -286,11 +286,7 @@ void CMenuHelper::DoSubMenu(wxMenu* parent, MenuHandle const& handle)
 {
 	if (parent)
 	{
-#if wxCHECK_VERSION(3, 0, 0)
 		parent->FindItemByPosition(handle.idx)->SetItemLabel(wxGetTranslation(handle.item.c_str()));
-#else
-		parent->FindItemByPosition(handle.idx)->SetText(wxGetTranslation(handle.item.c_str()));
-#endif
 	}
 	for (std::vector<MenuHandle>::const_iterator data = handle.subMenus.begin(); data != handle.subMenus.end(); ++data)
 	{

@@ -40,7 +40,7 @@ public:
 	// Embedding language MO files is only supported on Windows.
 	CLanguageManager(
 			ILanguageCallback* pCallback,
-#if defined(WIN32) && wxCHECK_VERSION(3, 0, 0)
+#if defined(WIN32)
 			bool bEmbedded
 #else
 			bool bEmbedded = false

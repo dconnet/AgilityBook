@@ -92,11 +92,7 @@ bool CTextCtrl::EnableSpellChecking(bool bForceRtfAsPlainText)
 		bChanged = true;
 		// Note: This only works on Win8+. Thankfully, it has no effect
 		// on lower versions, so we can safely just call it.
-#if wxCHECK_VERSION(3, 0, 0)
 		HWND hwnd = GetHWND();
-#else
-		HWND hwnd = (HWND)GetHWND();
-#endif
 		if (bForceRtfAsPlainText)
 		{
 			// The control must be empty to change the mode.

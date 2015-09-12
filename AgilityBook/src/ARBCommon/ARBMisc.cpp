@@ -96,14 +96,6 @@ bool GetOSInfo(int& verMajor, int& verMinor)
 	wxPlatformInfo info;
 	verMajor = info.GetOSMajorVersion();
 	verMinor = info.GetOSMinorVersion();
-#ifdef __WXMAC__
-#ifndef __WXOSX_COCOA__
-#if !wxCHECK_VERSION(3, 0, 0)
-	verMajor = (verMajor == 16 ? 10 : verMajor);
-	verMinor = (verMinor >> 4);
-#endif
-#endif
-#endif
 	return true;
 
 #elif defined(_WIN32)

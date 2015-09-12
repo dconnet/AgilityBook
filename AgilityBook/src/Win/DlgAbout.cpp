@@ -40,123 +40,6 @@
 #endif
 
 
-#if wxCHECK_VERSION(3, 0, 0)
-// 2.9 now supports the below code in the generic version.
-// And in some cases (like msw), the hyperlink is native.
-typedef wxHyperlinkCtrl CHyperlinkCtrl;
-
-#else
-
-// Add a focus rect to the control
-class CHyperlinkCtrl : public wxHyperlinkCtrl
-{
-	DECLARE_DYNAMIC_CLASS(CHyperlinkCtrl)
-public:
-	CHyperlinkCtrl();
-	CHyperlinkCtrl(wxWindow *pParent,
-			wxWindowID id,
-			const wxString& label,
-			const wxString& url,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize,
-			long style = wxHL_DEFAULT_STYLE,
-			const wxString& name = wxHyperlinkCtrlNameStr);
-	DECLARE_EVENT_TABLE()
-	void OnPaint(wxPaintEvent& WXUNUSED(evt));
-	void OnFocus(wxFocusEvent& evt);
-	void OnKeyDown(wxKeyEvent& evt);
-};
-
-
-IMPLEMENT_DYNAMIC_CLASS(CHyperlinkCtrl, wxHyperlinkCtrl)
-
-
-BEGIN_EVENT_TABLE(CHyperlinkCtrl, wxHyperlinkCtrl)
-	EVT_PAINT(CHyperlinkCtrl::OnPaint)
-	EVT_SET_FOCUS(CHyperlinkCtrl::OnFocus)
-	EVT_KILL_FOCUS(CHyperlinkCtrl::OnFocus)
-	EVT_KEY_DOWN(CHyperlinkCtrl::OnKeyDown)
-END_EVENT_TABLE()
-
-
-CHyperlinkCtrl::CHyperlinkCtrl()
-{
-}
-
-
-CHyperlinkCtrl::CHyperlinkCtrl(wxWindow *pParent,
-		wxWindowID id,
-		const wxString& label,
-		const wxString& url,
-		const wxPoint& pos,
-		const wxSize& size,
-		long style,
-		const wxString& name)
-	: wxHyperlinkCtrl()
-{
-	Create(pParent, id, label, url, pos, size, style, name);
-}
-
-
-void CHyperlinkCtrl::OnPaint(wxPaintEvent& WXUNUSED(evt))
-{
-	wxPaintDC dc(this);
-	dc.SetFont(GetFont());
-	dc.SetTextForeground(GetForegroundColour());
-	dc.SetTextBackground(GetBackgroundColour());
-
-	dc.DrawText(GetLabel(), GetLabelRect().GetTopLeft());
-	if (wxWindow::DoFindFocus() == this)
-	{
-		wxBrush br(wxColour(0,0,0), wxTRANSPARENT);
-		dc.SetBrush(br);
-		wxColour cr = GetBackgroundColour();
-		// Invert the background color.
-		wxPen pen(wxColor(~cr.Red(),~cr.Green(),~cr.Blue()), 1, wxDOT);
-		dc.SetPen(pen);
-		wxRect r = GetClientRect();
-		dc.DrawRectangle(r);
-	}
-}
-
-
-void CHyperlinkCtrl::OnFocus(wxFocusEvent& evt)
-{
-	Refresh();
-	evt.Skip();
-}
-
-
-void CHyperlinkCtrl::OnKeyDown(wxKeyEvent& evt)
-{
-	switch (evt.GetKeyCode())
-	{
-	default:
-		evt.Skip();
-		break;
-	case WXK_SPACE:
-	case WXK_NUMPAD_SPACE:
-		{
-			SetVisited();
-			// Copied from wxHyperlinkCtrlBase::SendEvent()
-			wxString url = GetURL();
-			wxHyperlinkEvent linkEvent(this, GetId(), url);
-			if (!GetEventHandler()->ProcessEvent(linkEvent))     // was the event skipped ?
-			{
-				if (!wxLaunchDefaultBrowser(url))
-				{
-					wxLogWarning(L"Could not launch the default browser with url '%s' !", url.c_str());
-				}
-			}
-		}
-		break;
-	}
-}
-
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-
 CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
@@ -176,13 +59,13 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 		wxDefaultPosition, wxDefaultSize, 0);
  	version->Wrap(wxDLG_UNIT_X(this, 250));
 
-	CHyperlinkCtrl* link1 = new CHyperlinkCtrl(this, wxID_ANY,
+	wxHyperlinkCtrl* link1 = new wxHyperlinkCtrl(this, wxID_ANY,
 		_("LinkYahooText"), _("LinkYahooUrl"),
 		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
 	link1->SetToolTip(_("LinkYahooUrl"));
 	link1->SetHelpText(_("LinkYahooUrl"));
 
-	CHyperlinkCtrl* link2 = new CHyperlinkCtrl(this, wxID_ANY,
+	wxHyperlinkCtrl* link2 = new wxHyperlinkCtrl(this, wxID_ANY,
 		_("LinkHelpText"), _("LinkHelpUrl"),
 		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
 	link2->SetToolTip(_("LinkHelpUrl"));
@@ -194,13 +77,13 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	usefulLinks->Wrap(-1);
 
-	CHyperlinkCtrl* link3 = new CHyperlinkCtrl(this, wxID_ANY,
+	wxHyperlinkCtrl* link3 = new wxHyperlinkCtrl(this, wxID_ANY,
 		_("LinkArbText"), _("LinkArbUrl"),
 		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
 	link3->SetToolTip(_("LinkArbUrl"));
 	link3->SetHelpText(_("LinkArbUrl"));
 
-	CHyperlinkCtrl* link4 = new CHyperlinkCtrl(this, wxID_ANY,
+	wxHyperlinkCtrl* link4 = new wxHyperlinkCtrl(this, wxID_ANY,
 		_("LinkArbDownloadText"), _("LinkArbDownloadUrl"),
 		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
 	link4->SetToolTip(_("LinkArbDownloadUrl"));
