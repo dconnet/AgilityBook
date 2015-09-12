@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-09-12 Clean up status bar sizing.
  * 2015-08-11 Status bar gripper is too small on hiDPI. Kludge.
  * 2014-05-18 Moved startup version check to a timer.
  * 2012-11-14 "Filtered" was truncated in wx2.8 status bar.
@@ -203,13 +204,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
 	if (statusbar)
 	{
-#ifdef __WXMSW__
-		m_fontStatusBar = statusbar->GetFont();
-		statusbar->SetFont(m_fontStatusBar);
-#endif
 		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_CONTEXT_MENU, wxContextMenuEventHandler, CMainFrame::OnStatusBarContextMenu);
-		wxClientDC dc(statusbar);
-		dc.SetFont(statusbar->GetFont());
 		int style[NUM_STATUS_FIELDS];
 		m_Widths[0] = -1;
 		style[0] = wxSB_FLAT;
@@ -236,7 +231,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 				break;
 #endif
 			}
-			m_Widths[i] = dc.GetTextExtent(str).x;
+			m_Widths[i] = statusbar->GetTextExtent(str).x;
 #if !wxCHECK_VERSION(3, 0, 0)
 			m_Widths[i] += 4;
 #endif
@@ -282,17 +277,16 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 	wxStatusBar* statusbar = GetStatusBar();
 	if (!statusbar)
 		return;
+	wxString str = StringUtil::stringWX(msg);
 	if (bResize)
 	{
-		wxClientDC dc(statusbar);
-		dc.SetFont(statusbar->GetFont());
-		m_Widths[index] = dc.GetTextExtent(StringUtil::stringWX(msg)).x;
+		m_Widths[index] = statusbar->GetTextExtent(str).x;
 #if !wxCHECK_VERSION(3, 0, 0)
 		m_Widths[index] += 4;
 #endif
 		SetStatusBarWidths(statusbar, index, m_Widths, index == NUM_STATUS_FIELDS - 1);
 	}
-	SetStatusText(StringUtil::stringWX(msg), index);
+	SetStatusText(str, index);
 }
 
 

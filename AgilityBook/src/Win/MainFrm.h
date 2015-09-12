@@ -76,9 +76,6 @@ private:
 	} m_timerStartup;
 	wxDocManager* m_manager;
 	CMenuHelper m_menus;
-#ifdef __WXMSW__
-	wxFont m_fontStatusBar;
-#endif
 	int m_Widths[NUM_STATUS_FIELDS];
 
 private:
