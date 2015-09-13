@@ -48,6 +48,7 @@
 #endif
 
 #if !defined(NDEBUG) && defined(_MSC_VER)
+/* #define DEBUG_ALLOCATION   special EXTRA allocation debug information - VERY NOISY */
 static void check_me(char *name);
 static Bool show_attrs = yes;
 #define MX_TXT 5
@@ -1054,9 +1055,17 @@ static void ParseEntity( TidyDocImpl* doc, GetTokenMode mode )
             if (semicolon)
                 TY_(AddCharToLexer)( lexer, ';' );
         }
-        else /* naked & */
-            TY_(ReportEntityError)( doc, UNESCAPED_AMPERSAND,
+        else
+        {
+            /*\ 
+             *  Issue #207 - A naked & is allowed in HTML5, as an unambiguous ampersand!
+            \*/
+            if (TY_(HTMLVersion)(doc) != HT50) 
+            {
+                TY_(ReportEntityError)( doc, UNESCAPED_AMPERSAND,
                                     lexer->lexbuf+start, ch );
+            }
+        }
     }
     else
     {
@@ -3739,16 +3748,17 @@ static tmbstr ParseValue( TidyDocImpl* doc, ctmbstr name,
         /* and prompts attributes unless --literal-attributes is set to yes      */
         /* #994841 - Whitespace is removed from value attributes                 */
 
-        if (munge &&
+        /* Issue #217 - Also only if/while (len > 0) - MUST NEVER GO NEGATIVE! */
+        if ((len > 0) && munge &&
             TY_(tmbstrcasecmp)(name, "alt") &&
             TY_(tmbstrcasecmp)(name, "title") &&
             TY_(tmbstrcasecmp)(name, "value") &&
             TY_(tmbstrcasecmp)(name, "prompt"))
         {
-            while (TY_(IsWhite)(lexer->lexbuf[start+len-1]))
+            while (TY_(IsWhite)(lexer->lexbuf[start+len-1]) && (len > 0))
                 --len;
 
-            while (TY_(IsWhite)(lexer->lexbuf[start]) && start < len)
+            while (TY_(IsWhite)(lexer->lexbuf[start]) && (start < len) && (len > 0))
             {
                 ++start;
                 --len;

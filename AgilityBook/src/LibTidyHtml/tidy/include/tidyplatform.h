@@ -1,7 +1,7 @@
 #ifndef __TIDY_PLATFORM_H__
 #define __TIDY_PLATFORM_H__
 
-/* platform.h -- Platform specifics
+/* tidyplatform.h -- Platform specifics
 
   (c) 1998-2008 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
@@ -495,7 +495,7 @@ extern "C" {
 
 #if defined(_WIN32)
 
-#if (defined(_USRDLL) || defined(_WINDLL)) || defined(BUILD_SHARED_LIB) && !defined(TIDY_EXPORT)
+#if (defined(_USRDLL) || defined(_WINDLL) || defined(BUILD_SHARED_LIB)) && !defined(TIDY_EXPORT) && !defined(TIDY_STATIC)
 #ifdef BUILDING_SHARED_LIB
 #define TIDY_EXPORT __declspec( dllexport ) 
 #else

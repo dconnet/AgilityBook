@@ -8,10 +8,14 @@
 #ifdef RELEASE_DATE
 static const char TY_(release_date)[] = RELEASE_DATE;
 #else
-static const char TY_(release_date)[] = "1970/01/01";
+static const char TY_(release_date)[] = "2015/01/22";
 #endif
 #ifdef LIBTIDY_VERSION
+#ifdef RC_NUMBER
+static const char TY_(library_version)[] = LIBTIDY_VERSION "." RC_NUMBER;
+#else
 static const char TY_(library_version)[] = LIBTIDY_VERSION;
+#endif
 #else
 static const char TY_(library_version)[] = "5.0.0";
 #endif

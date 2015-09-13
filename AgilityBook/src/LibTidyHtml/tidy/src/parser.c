@@ -516,6 +516,10 @@ static void TrimInitialSpace( TidyDocImpl* doc, Node *element, Node *text )
                 node->end = element->start;
                 lexer->lexbuf[node->start] = ' ';
                 TY_(InsertNodeBeforeElement)(element ,node);
+#if !defined(NDEBUG) && defined(_MSC_VER)
+                SPRTF("TrimInitialSpace: Created text node, inserted before <%s>\n", 
+                    (element->element ? element->element : "unknown"));
+#endif
             }
         }
 
@@ -905,6 +909,13 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
           (element->tag->model & CM_FIELD ) )
     {
         mode = IgnoreWhitespace;
+    }
+    else if (mode == IgnoreWhitespace)
+    {
+        /* Issue #212 - Further fix in case ParseBlock() is called with 'IgnoreWhitespace'
+           when such a leading space may need to be inserted before this element to 
+           preverve the browser view */
+        mode = MixedContent;
     }
 
     while ((node = TY_(GetToken)(doc, mode /*MixedContent*/)) != NULL)
@@ -1355,6 +1366,9 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
             if (node->implicit)
                 TY_(ReportError)(doc, element, node, INSERTING_TAG );
 
+            /* Issue #212 - WHY is this hard coded to 'IgnoreWhitespace' while an 
+               effort has been made above to set a 'MixedContent' mode in some cases?
+               WHY IS THE 'mode' VARIABLE NOT USED HERE???? */
             ParseTag( doc, node, IgnoreWhitespace /*MixedContent*/ );
             continue;
         }
@@ -1713,7 +1727,14 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
         else if ( TY_(IsPushed)(doc, node) && node->type == StartTag && 
                   nodeIsQ(node) )
         {
-            TY_(ReportWarning)(doc, element, node, NESTED_QUOTATION);
+            /*\
+             * Issue #215 - such nested quotes are NOT a problem if HTML5, so
+             * only issue this warning if NOT HTML5 mode.
+            \*/
+            if (TY_(HTMLVersion)(doc) != HT50) 
+            {
+                TY_(ReportWarning)(doc, element, node, NESTED_QUOTATION);
+            }
         }
 
         if ( TY_(nodeIsText)(node) )

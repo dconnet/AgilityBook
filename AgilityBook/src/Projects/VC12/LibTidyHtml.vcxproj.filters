@@ -106,16 +106,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\buffio.h">
-      <Filter>tidy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\platform.h">
-      <Filter>tidy</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidy.h">
       <Filter>tidy</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidybuffio.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidyenum.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidyplatform.h">
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\access.h">
