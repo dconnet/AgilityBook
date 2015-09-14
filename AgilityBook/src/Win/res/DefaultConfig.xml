@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2015-09-14 Configuration version 52.
+           Added USDAA Veteran CH titles.
 2015-09-10 Configuration version 51.
            Added AKC Premier. Added support for fun games.
            Fixed Q/NQ on UKI Master/Ch, allow progression points.
@@ -4204,6 +4206,10 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Veteran Gambler Dog" Name="VGD">5 qualifying scores.</Titles>
       <Titles LongName="Veteran Snooker Dog" Name="VKD">5 qualifying scores.</Titles>
       <Titles LongName="Veteran Versatility Dog" Name="VVD">VSD, VJD, VGD, VKD</Titles>
+      <Titles LongName="Veteran Standard Champion" Name="VSCH">10 qualifying scores.</Titles>
+      <Titles LongName="Veteran Jumper Champion" Name="VJCH">10 qualifying scores.</Titles>
+      <Titles LongName="Veteran Gambler Champion" Name="VGCH">10 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Champion" Name="VKCH">10 qualifying scores.</Titles>
       <Titles LongName="Veteran Standard Dog - Bronze" Name="VSD-Bronze">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Jumper Dog - Bronze" Name="VJD-Bronze">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Gambler Dog - Bronze" Name="VGD-Bronze">15 qualifying scores.</Titles>

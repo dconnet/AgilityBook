@@ -34,7 +34,6 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "ComboBoxes.h"
 #include "DlgClub.h"
 #include "DlgInfoNote.h"
 #include "ListCtrl.h"
@@ -148,7 +147,7 @@ CDlgTrial::CDlgTrial(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLocation->Wrap(-1);
 
-	m_ctrlLocation = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlLocation = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr,
 		wxCB_DROPDOWN|wxCB_SORT,

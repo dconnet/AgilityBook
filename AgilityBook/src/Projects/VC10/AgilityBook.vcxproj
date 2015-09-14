@@ -274,7 +274,6 @@
     <ClInclude Include="..\..\Win\CheckTreeCtrl.h" />
     <ClInclude Include="..\..\Win\ClipBoard.h" />
     <ClInclude Include="..\..\Win\ColumnOrder.h" />
-    <ClInclude Include="..\..\Win\ComboBoxes.h" />
     <ClInclude Include="..\..\Win\ComboBoxQ.h" />
     <ClInclude Include="..\..\Win\ComboBoxVenue.h" />
     <ClInclude Include="..\..\Win\CommonView.h" />

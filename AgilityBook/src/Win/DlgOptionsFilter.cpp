@@ -33,7 +33,6 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "CheckTreeCtrl.h"
-#include "ComboBoxes.h"
 #include "Validators.h"
 #include "Widgets.h"
 
@@ -82,7 +81,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	wxStaticBox* boxFilters = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_NAMES"));
 
-	m_ctrlFilters = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlFilters = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_FilterName, TRIMVALIDATOR_TRIM_BOTH));

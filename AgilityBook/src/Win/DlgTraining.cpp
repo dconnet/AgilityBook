@@ -23,7 +23,6 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "ComboBoxes.h"
 #include "Validators.h"
 #include "Widgets.h"
 
@@ -97,7 +96,7 @@ CDlgTraining::CDlgTraining(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	CAutoFillComboBox* ctrlName = new CAutoFillComboBox(this, wxID_ANY, m_Name,
+	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY, m_Name,
 		wxDefaultPosition, wxDefaultSize,
 		names, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
@@ -110,7 +109,7 @@ CDlgTraining::CDlgTraining(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textSubname->Wrap(-1);
 
-	CAutoFillComboBox* ctrlSubname = new CAutoFillComboBox(this, wxID_ANY, m_SubName,
+	wxComboBox* ctrlSubname = new wxComboBox(this, wxID_ANY, m_SubName,
 		wxDefaultPosition, wxDefaultSize,
 		subnames, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_SubName, TRIMVALIDATOR_TRIM_BOTH));

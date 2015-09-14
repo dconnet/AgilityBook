@@ -168,7 +168,6 @@
 #include "AgilityBookOptions.h"
 #include "NamedColumns.h"
 class CAgilityBookDoc;
-class CAutoFillComboBox;
 class CListCtrl;
 class ColumnData;
 class wxListEvent;
@@ -209,7 +208,7 @@ private:
 	int m_initSelection;
 	bool m_bIncludeBlank;
 	wxString m_ConfigName;
-	CAutoFillComboBox* m_ctrlConfig;
+	wxComboBox* m_ctrlConfig;
 	CListCtrl* m_ctrlType;
 	wxListBox* m_ctrlAvailable;
 	wxListBox* m_ctrlColumns;

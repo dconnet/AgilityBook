@@ -106,7 +106,6 @@
 #include "AgilityBookOptions.h"
 #include "CheckLink.h"
 #include "ClipBoard.h"
-#include "ComboBoxes.h"
 #include "ComboBoxQ.h"
 #include "DlgCRCDViewer.h"
 #include "DlgInfoNote.h"
@@ -907,7 +906,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlSubNamesText->Wrap(-1);
 
-	m_ctrlSubNames = new CAutoFillComboBox(m_panelScore, wxID_ANY,
+	m_ctrlSubNames = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_SubName, TRIMVALIDATOR_TRIM_BOTH));
@@ -927,7 +926,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textHeight->Wrap(-1);
 
-	m_ctrlHeight = new CAutoFillComboBox(m_panelScore, wxID_ANY,
+	m_ctrlHeight = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition,
 #ifdef __WXMAC__
 		wxSize(wxDLG_UNIT_X(this, 50), -1), // Just not wide enough on a Mac...
@@ -955,7 +954,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textJudge->Wrap(-1);
 
-	m_ctrlJudge = new CAutoFillComboBox(m_panelScore, wxID_ANY,
+	m_ctrlJudge = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_Judge, TRIMVALIDATOR_TRIM_BOTH));
@@ -972,7 +971,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textHandler->Wrap(-1);
 
-	m_ctrlHandler = new CAutoFillComboBox(m_panelScore, wxID_ANY,
+	m_ctrlHandler = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN,
 		CTrimValidator(&m_Handler, TRIMVALIDATOR_TRIM_BOTH));

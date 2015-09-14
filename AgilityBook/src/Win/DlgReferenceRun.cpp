@@ -28,7 +28,6 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ComboBoxes.h"
 #include "ComboBoxQ.h"
 #include "Validators.h"
 #include "ValidatorsQ.h"
@@ -156,7 +155,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	CAutoFillComboBox* ctrlHt = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
+	wxComboBox* ctrlHt = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1),
 		choices, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
@@ -175,7 +174,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	CAutoFillComboBox* ctrlName = new CAutoFillComboBox(this, wxID_ANY,
+	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		choices, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
@@ -194,7 +193,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	CAutoFillComboBox* ctrlBreed = new CAutoFillComboBox(this, wxID_ANY, wxString(),
+	wxComboBox* ctrlBreed = new wxComboBox(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxDefaultSize,
 		choices, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Breed, TRIMVALIDATOR_TRIM_BOTH));

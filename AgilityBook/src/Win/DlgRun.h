@@ -51,7 +51,6 @@
 #include "ARBCommon/ARBDate.h"
 #include <wx/listctrl.h>
 class CAgilityBookDoc;
-class CAutoFillComboBox;
 class CDlgDogDivData;
 class CDlgDogLevelData;
 class CListCtrl;
@@ -135,16 +134,16 @@ private:
 	wxComboBox* m_ctrlLevels;
 	wxComboBox* m_ctrlEvents;
 	wxStaticText* m_ctrlSubNamesText;
-	CAutoFillComboBox* m_ctrlSubNames;
+	wxComboBox* m_ctrlSubNames;
 	wxString m_SubName;
 	wxCheckBox* m_ctrlTable;
 	bool m_Table;
-	CAutoFillComboBox* m_ctrlHeight;
+	wxComboBox* m_ctrlHeight;
 	wxString m_Height;
-	CAutoFillComboBox* m_ctrlJudge;
+	wxComboBox* m_ctrlJudge;
 	wxString m_Judge;
 	//CNoteButton m_ctrlJudgeNotes;
-	CAutoFillComboBox* m_ctrlHandler;
+	wxComboBox* m_ctrlHandler;
 	wxString m_Handler;
 	CSpellCheckCtrl* m_ctrlConditions;
 	wxString m_Conditions;

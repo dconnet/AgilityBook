@@ -395,9 +395,6 @@
     <ClInclude Include="..\..\Win\ColumnOrder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\ComboBoxes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\ComboBoxQ.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -22,7 +22,6 @@
 #include "DlgFault.h"
 
 #include "AgilityBook.h"
-#include "ComboBoxes.h"
 #include "Validators.h"
 
 #include "ARBCommon/StringUtil.h"
@@ -52,7 +51,7 @@ CDlgFault::CDlgFault(
 
 	// Controls (these are done first to control tab order)
 
-	CAutoFillComboBox* comboBox = new CAutoFillComboBox(this, wxID_ANY, m_Fault,
+	wxComboBox* comboBox = new wxComboBox(this, wxID_ANY, m_Fault,
 		wxDefaultPosition, wxDefaultSize,
 		faults,
 		wxCB_DROPDOWN|wxCB_SORT,

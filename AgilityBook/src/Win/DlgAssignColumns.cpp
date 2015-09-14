@@ -95,7 +95,6 @@ Training Log:
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ComboBoxes.h"
 #include "ListCtrl.h"
 #include "Validators.h"
 
@@ -860,7 +859,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 			wxDefaultPosition, wxDefaultSize, 0);
 	textNames->Wrap(-1);
 
-	m_ctrlConfig = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlConfig = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_ConfigName, TRIMVALIDATOR_TRIM_BOTH));

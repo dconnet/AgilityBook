@@ -24,7 +24,6 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "ComboBoxes.h"
 #include "ComboBoxVenue.h"
 #include "Validators.h"
 
@@ -86,7 +85,7 @@ CDlgClub::CDlgClub(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	m_ctrlClubs = new CAutoFillComboBox(this, wxID_ANY, m_Club,
+	m_ctrlClubs = new wxComboBox(this, wxID_ANY, m_Club,
 		wxDefaultPosition, wxDefaultSize,
 		clubs, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Club, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));

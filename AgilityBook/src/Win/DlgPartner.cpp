@@ -23,7 +23,6 @@
 #include "DlgPartner.h"
 
 #include "AgilityBook.h"
-#include "ComboBoxes.h"
 #include "Validators.h"
 #include "Widgets.h"
 
@@ -77,7 +76,7 @@ CDlgPartner::CDlgPartner(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textHandler->Wrap(-1);
 
-	CAutoFillComboBox* ctrlHandler = new CAutoFillComboBox(this, wxID_ANY, m_Handler,
+	wxComboBox* ctrlHandler = new wxComboBox(this, wxID_ANY, m_Handler,
 		wxDefaultPosition, wxDefaultSize,
 		handlers, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Handler, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
@@ -90,7 +89,7 @@ CDlgPartner::CDlgPartner(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDog->Wrap(-1);
 
-	CAutoFillComboBox* ctrlDog = new CAutoFillComboBox(this, wxID_ANY, m_Dog,
+	wxComboBox* ctrlDog = new wxComboBox(this, wxID_ANY, m_Dog,
 		wxDefaultPosition, wxDefaultSize,
 		dogs, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Dog, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));

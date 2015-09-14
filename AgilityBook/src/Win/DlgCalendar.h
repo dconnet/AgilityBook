@@ -22,7 +22,6 @@
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
 class CAgilityBookDoc;
-class CAutoFillComboBox;
 class CNoteButton;
 class CRichEditCtrl2;
 class CTextCtrl;
@@ -82,12 +81,12 @@ private:
 	wxButton* m_ctrlPremiumEntry;
 	CTextCtrl* m_ctrlPremiumUrl;
 	wxButton* m_ctrlEMailSec;
-	CAutoFillComboBox* m_ctrlEMailSecAddr;
+	wxComboBox* m_ctrlEMailSecAddr;
 	CVenueComboBox* m_ctrlVenue;
-	CAutoFillComboBox* m_ctrlClub;
+	wxComboBox* m_ctrlClub;
 	CNoteButton* m_ctrlClubNotes;
 	CRichEditCtrl2* m_ctrlClubInfo;
-	CAutoFillComboBox* m_ctrlLocation;
+	wxComboBox* m_ctrlLocation;
 	CNoteButton* m_ctrlLocationNotes;
 	CRichEditCtrl2* m_ctrlLocationInfo;
 

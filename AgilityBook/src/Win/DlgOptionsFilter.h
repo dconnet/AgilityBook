@@ -21,7 +21,6 @@
 
 #include "FilterOptions.h"
 class CAgilityBookDoc;
-class CAutoFillComboBox;
 class CCheckTreeCtrl;
 class wxDatePickerCtrl;
 class wxTreeEvent;
@@ -54,7 +53,7 @@ private:
 	bool m_bPlanning;
 	bool m_bEntered;
 
-	CAutoFillComboBox* m_ctrlFilters;
+	wxComboBox* m_ctrlFilters;
 	wxRadioButton* m_ctrlDatesAll;
 	wxRadioButton* m_ctrlDatesSome;
 	wxCheckBox* m_ctrlDateStartCheck;

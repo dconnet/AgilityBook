@@ -33,7 +33,6 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ComboBoxes.h"
 #include "ComboBoxVenue.h"
 #include "DlgInfoNote.h"
 #include "NoteButton.h"
@@ -359,7 +358,7 @@ CDlgCalendar::CDlgCalendar(
 	if (m_EMailSecAddr.empty())
 		m_ctrlEMailSec->Enable(false);
 
-	m_ctrlEMailSecAddr = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlEMailSecAddr = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_EMailSecAddr, TRIMVALIDATOR_TRIM_BOTH));
@@ -400,7 +399,7 @@ CDlgCalendar::CDlgCalendar(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textClub->Wrap(-1);
 
-	m_ctrlClub = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlClub = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Club, TRIMVALIDATOR_TRIM_BOTH));
@@ -423,7 +422,7 @@ CDlgCalendar::CDlgCalendar(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLocation->Wrap(-1);
 
-	m_ctrlLocation = new CAutoFillComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlLocation = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location, TRIMVALIDATOR_TRIM_BOTH));

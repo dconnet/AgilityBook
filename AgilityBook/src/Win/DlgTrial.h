@@ -25,7 +25,6 @@
 #include "ARB/ARBDogClub.h"
 #include "ARBCommon/ARBDate.h"
 class CAgilityBookDoc;
-class CAutoFillComboBox;
 class CNoteButton;
 class CReportListCtrl;
 class CRichEditCtrl2;
@@ -49,7 +48,7 @@ private:
 	ARBDate m_dateStart;
 	bool m_Verified;
 	wxString m_Location;
-	CAutoFillComboBox* m_ctrlLocation;
+	wxComboBox* m_ctrlLocation;
 	wxString m_Notes;
 	CNoteButton* m_ctrlLocationNotes;
 	CRichEditCtrl2* m_ctrlLocationInfo;

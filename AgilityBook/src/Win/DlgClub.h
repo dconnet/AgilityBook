@@ -19,7 +19,6 @@
  */
 
 #include "ARB/ARBTypes2.h"
-class CAutoFillComboBox;
 class CAgilityBookDoc;
 class CVenueComboBox;
 
@@ -39,7 +38,7 @@ public:
 private:
 	CAgilityBookDoc* m_pDoc;
 	ARBDogClubPtr m_pClub;
-	CAutoFillComboBox* m_ctrlClubs;
+	wxComboBox* m_ctrlClubs;
 	CVenueComboBox* m_ctrlVenues;
 	wxString m_Club;
 	wxString m_Venue;
