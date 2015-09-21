@@ -334,6 +334,12 @@ The xcode projects were used as follows:
                 C++ Language Dialect: c++11 (-std=c++11)
                 C++ Std Lib: libc++
 
+xcode7 notes:
+From release notes: "The Xcode build system no longer automatically inherits
+the environment used to launch the app when running in the IDE"
+This means my use of $WXBASE is now broken. To fix, run this in bash:
+  defaults write com.apple.dt.Xcode UseSanitizedBuildSystemEnvironment -bool NO
+
 OSX 10.9:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
