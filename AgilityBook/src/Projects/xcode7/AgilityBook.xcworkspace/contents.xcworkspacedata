@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:LibTidyHtml/LibTidyHtml.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LibArchive/LibArchive.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ARBCommon/ARBCommon.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ARB/ARB.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:UnitTest/UnitTest.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TestARB/TestARB.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ARBHelp/ARBHelp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AgilityBook/AgilityBook.xcodeproj">
+   </FileRef>
+</Workspace>

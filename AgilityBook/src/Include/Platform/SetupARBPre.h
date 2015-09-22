@@ -145,6 +145,13 @@
 
 // Any non-windows system checking should go here.
 
+// xcode7 issues
+
+#if defined(__clang__) && __clang_major__ >= 7
+#pragma clang diagnostic ignored "-Winconsistent-missing-override"
+#pragma clang diagnostic ignored "-Wpotentially-evaluated-expression"
+#endif
+
 #endif // _WIN32
 
 
