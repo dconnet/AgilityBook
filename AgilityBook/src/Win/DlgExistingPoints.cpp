@@ -423,7 +423,7 @@ ARBDogExistingPoints::PointType CDlgExistingPoints::GetCurrentType() const
 	if (wxNOT_FOUND != index)
 	{
 		type = static_cast<ARBDogExistingPoints::PointType>(
-			reinterpret_cast<int>(m_ctrlType->GetClientData(index)));
+			reinterpret_cast<size_t>(m_ctrlType->GetClientData(index)));
 	}
 	return type;
 }

@@ -84,31 +84,26 @@ c:\devtools\wx\wxWidgets-3.0.2\src\msw>diff -c bmpcbox.cpp.orig bmpcbox.cpp
 === Changes for support VC14: https://forums.wxwidgets.org/viewtopic.php?t=40491
 1) <wxdir>\src\zlib\gzguts.h - line 102
 change:
-CODE: SELECT ALL
 #ifdef _MSC_VER
 #  define snprintf _snprintf
 #endif
 
 to:
-CODE: SELECT ALL
 #if (defined(_MSC_VER) && (_MSC_VER < 1900))
   #define snprintf _snprintf
 #endif
 
 2) <wxdir>\src\tiff\libtiff\tif_config.h - line 367
 change:
-CODE: SELECT ALL
 #define snprintf _snprintf
 
 to:
-CODE: SELECT ALL
 #if (defined(_MSC_VER) && (_MSC_VER < 1900))
   #define snprintf _snprintf
 #endif
 
 3) <wxdir>\include\wx\propgrid\advprops.h - line 453
 change:
-CODE: SELECT ALL
 wxDateTime GetDateValue() const
 {
     //return m_valueDateTime;
@@ -116,12 +111,19 @@ wxDateTime GetDateValue() const
 }
 
 to:
-CODE: SELECT ALL
 wxDateTime GetDateValue() const
 {
     //return m_valueDateTime;
     return m_value.GetDateTime();
 }
+
+=== Changes for support 64bit xcode: http://goharsha.com/blog/compiling-wxwidgets-3-0-2-mac-os-x-yosemite/
+src/osx/webview_webkit.mm: - line 31
+(note, fixed in wx3.0.3)
+change:
+#include <WebKit/WebKit.h>
+to:
+#include <WebKit/WebKitLegacy.h>
 
 
 === Changes to 3.0.1

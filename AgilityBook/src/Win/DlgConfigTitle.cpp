@@ -405,10 +405,10 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 		{
 			m_Title->SetMultipleStyle(
 				static_cast<ARBTitleStyle>(
-					reinterpret_cast<int>(
+					reinterpret_cast<size_t>(
 						m_ctrlStyle->GetClientData(m_ctrlStyle->GetSelection()))),
 				static_cast<ARBTitleSeparator>(
-					reinterpret_cast<int>(
+					reinterpret_cast<size_t>(
 						m_ctrlSep->GetClientData(m_ctrlSep->GetSelection()))));
 		}
 	}
