@@ -417,7 +417,7 @@ void CWizardExport::UpdatePreview()
 	ARBDate::DateFormat format = ARBDate::eSlashMDY;
 	long idxDateFormat = m_ctrlDateFormat->GetSelection();
 	if (wxNOT_FOUND != idxDateFormat)
-		format = static_cast<ARBDate::DateFormat>((int)m_ctrlDateFormat->GetClientData(idxDateFormat));
+		format = static_cast<ARBDate::DateFormat>(reinterpret_cast<int>(m_ctrlDateFormat->GetClientData(idxDateFormat)));
 	wchar_t delim = GetDelim();
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 	&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle()
@@ -1444,7 +1444,7 @@ bool CWizardExport::DoWizardFinish()
 		CAgilityBookOptions::SetImportExportDelimiters(false, m_Delim, tmp);
 		m_Delimiter = StringUtil::stringWX(tmp);
 	}
-	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>((int)m_ctrlDateFormat->GetClientData(index));
+	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(reinterpret_cast<int>(m_ctrlDateFormat->GetClientData(index)));
 	CAgilityBookOptions::SetImportExportDateFormat(false, format);
 
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
