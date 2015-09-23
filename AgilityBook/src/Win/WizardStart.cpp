@@ -383,7 +383,7 @@ void CWizardStart::DoUpdateExportList(bool bInit)
 	if (wxNOT_FOUND == index)
 		return;
 
-	int idx = (int)m_ctrlList->GetClientData(index);
+	size_t idx = reinterpret_cast<size_t>(m_ctrlList->GetClientData(index));
 
 	bool bEnableNext = true;
 	switch (sc_Items[idx].data[m_Style].nextPage)
@@ -459,7 +459,7 @@ void CWizardStart::OnWizardChanging(wxWizardEvent& evt)
 			evt.Veto();
 			return;
 		}
-		int data = (int)m_ctrlList->GetClientData(index);
+		int data = static_cast<int>(reinterpret_cast<size_t>(m_ctrlList->GetClientData(index)));
 		m_pSheet->SetImportExportItem(data, m_Style);
 		if (ePageFinish == sc_Items[data].data[m_Style].nextPage
 		&& !DoWizardFinish())
@@ -489,7 +489,7 @@ bool CWizardStart::DoWizardFinish()
 	int index = m_ctrlList->GetSelection();
 	if (-1 != m_Style && wxNOT_FOUND != index)
 	{
-		int data = (int)m_ctrlList->GetClientData(index);
+		size_t data = reinterpret_cast<size_t>(m_ctrlList->GetClientData(index));
 		switch (data)
 		{
 		default:
