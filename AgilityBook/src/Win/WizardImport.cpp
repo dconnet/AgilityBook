@@ -774,7 +774,7 @@ bool CWizardImport::DoWizardFinish()
 	{
 		CAgilityBookOptions::SetImportExportDelimiters(true, m_Delim, m_Delimiter);
 	}
-	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>((int)m_ctrlDateFormat->GetClientData(index));
+	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(reinterpret_cast<size_t>(m_ctrlDateFormat->GetClientData(index)));
 	CAgilityBookOptions::SetImportExportDateFormat(true, format);
 
 	wxBusyCursor wait;

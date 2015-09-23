@@ -367,7 +367,7 @@ void CWizardStart::UpdateList(bool bInit)
 			index = m_ctrlList->Append(str);
 		}
 		if (wxNOT_FOUND != index)
-			m_ctrlList->SetClientData(index, (void*)i);
+			m_ctrlList->SetClientData(index, reinterpret_cast<void*>(size_t(i)));
 	}
 	wxString str;
 	str << LAST_STYLEITEM << m_Style;
