@@ -320,6 +320,7 @@ Microsoft Visual Studio 2015 (VC14)
 
 Xcode
 =====
+Install xcode command line tools
 Install MacPorts: http://www.macports.org
 sudo port -v selfupdate
 sudo port upgrade outdated
@@ -333,6 +334,15 @@ The xcode projects were used as follows:
               - Advanced: Unique
             AgilityBook.xcworkspace
                 wx3.0, cocoa, OSX10.9 sdk, OSX10.7 deployment target
+                C++ Language Dialect: c++11 (-std=c++11)
+                C++ Std Lib: libc++
+.../xcode7: Xcode 7.x on OSX10.10
+            Recommended (so projects work right):
+            - Set DerivedData to Relative, 'build'
+              - Advanced: Unique
+            AgilityBook.xcworkspace
+                wx3.0, cocoa, Current sdk, OSX10.7 deployment target
+				x64 (dropped 32bit)
                 C++ Language Dialect: c++11 (-std=c++11)
                 C++ Std Lib: libc++
 
@@ -355,9 +365,10 @@ setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.2
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
-The simplest fix is to put the following into ~/Library/LaunchAgents/environment.plist
+  The simplest fix is to put the following into ~/Library/LaunchAgents/environment.plist
 (http://stackoverflow.com/questions/25385934/setting-environment-variables-via-launchd-conf-no-longer-works-in-os-x-yosemite/26311753#26311753)
 (Obviously adjust paths as needed)
+  Must logoff/logon after modifying.
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

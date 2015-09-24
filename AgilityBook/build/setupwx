@@ -66,7 +66,7 @@ if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/
 	export LIBS="-lc++"
 	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 	MINSDK=10.7
-	TARGETARCH="--enable-macosx_arch=i386"
+	TARGETARCH="--enable-macosx_arch=x86_64"
 
 elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk; then
 	export CXXFLAGS="-std=c++11 -stdlib=libc++"
@@ -74,7 +74,7 @@ elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platfor
 	export LIBS="-lc++"
 	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
 	MINSDK=10.7
-	TARGETARCH="--enable-macosx_arch=i386"
+	TARGETARCH="--enable-macosx_arch=x86_64"
 
 elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk; then
 	COMPILERS="CC=clang CXX=clang++ LD=clang++"

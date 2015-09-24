@@ -33,6 +33,7 @@
 #  CPPDEPFLAGS      - Flags required to build the corresponding dependency file.
 #  DEFAULT_INCLUDES - Default include directories to specify during build
 ##########
+CC               = @CC@
 CXX              = @CXX@
 CFLAGS           = @CFLAGS@
 CXXFLAGS         = @CXXFLAGS@

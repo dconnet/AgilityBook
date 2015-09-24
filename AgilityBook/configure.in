@@ -51,10 +51,6 @@ AC_ARG_PROGRAM
 # We get these libs from our own src/ directories
 # AC_CHECK_LIB([unittest], [RunAllTests])
 
-# TODO: Add config option to enable POCO
-#USE_POCO=yes
-USE_POCO=no
-
 AC_SUBST(CC, "`wx-config --cc`")
 AC_SUBST(CXX, "`wx-config --cxx`")
 AC_SUBST(LD, "`wx-config --ld`")
@@ -73,40 +69,21 @@ fi
 
 AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not found. export BOOST_ROOT=fullpath to boost install])])
 
-# POCO settings
-
-if test "x$USE_POCO" = "xyes"; then
-	if test "x$POCO_BASE" = "x"; then
-		AC_MSG_ERROR(POCO_BASE is not set)
-	else
-		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Foundation/Include")
-		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Data/Include")
-		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Data/SQLite/Include")
-		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Net/Include")
-		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Util/Include")
-		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/Zip/Include")
-		AC_SUBST(CXXFLAGS,"$CXXFLAGS -I$POCO_BASE/XML/Include")
-		AC_SUBST(LDFLAGS, "$LDFLAGS -L$POCO_BASE/build-libs/lib/Darwin/i386")
-
-		if text "x`wx-config --cflags | grep DEBUG_LEVEL=0`" = "x"; then
-			AC_SUBST(LDFLAGS, "$LDFLAGS -lPocoData -lPocoDataSQLite -lPocoFoundation -lPocoJSON -lPocoMongoDB -lPocoNet -lPocoUtil -lPocoXML -lPocoZip")
-		else
-			AC_SUBST(LDFLAGS, "$LDFLAGS -lPocoDatad -lPocoDataSQLited -lPocoFoundationd -lPocoJSONd -lPocoMongoDBd -lPocoNetd -lPocoUtild -lPocoXMLd -lPocoZipd")
-		fi
-	fi
-
-	AC_SUBST(CXXFLAGS,"$CXXFLAGS -DUSE_POCO")
-fi
-
 case `uname` in
 Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
 
-	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 	then
-		AC_SUBST(CFLAGS, "$CFLAGS -arch i386")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch i386 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++11 -stdlib=libc++")
-		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch i386"])
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++11 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++11 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64"])
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 	then
