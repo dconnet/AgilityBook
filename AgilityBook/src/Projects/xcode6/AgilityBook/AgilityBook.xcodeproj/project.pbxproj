@@ -1135,7 +1135,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
@@ -1207,7 +1206,7 @@
 					"-lwxzlib-3.0",
 					"-lpthread",
 				);
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -1215,7 +1214,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
@@ -1281,7 +1279,7 @@
 					"-lwxzlib-3.0",
 					"-lpthread",
 				);
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -1292,6 +1290,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AgilityBook/AgilityBook-Prefix.pch";
 				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1304,6 +1303,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AgilityBook/AgilityBook-Prefix.pch";
 				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

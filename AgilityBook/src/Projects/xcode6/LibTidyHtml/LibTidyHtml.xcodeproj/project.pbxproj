@@ -14,10 +14,10 @@
 		E1243CBE1B8A4B8B00B632E5 /* sprtf.h in Headers */ = {isa = PBXBuildFile; fileRef = E1243CBC1B8A4B8B00B632E5 /* sprtf.h */; };
 		E1796484176927F0003AE489 /* LibTidyHtml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E179641A176927F0003AE489 /* LibTidyHtml.cpp */; };
 		E1796486176927F0003AE489 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E179641D176927F0003AE489 /* stdafx.h */; };
-		E1796490176927F0003AE489 /* tidy.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796450176927F0003AE489 /* tidy.h */; };
 		E179648E176927F0003AE489 /* tidybuffio.h in Headers */ = {isa = PBXBuildFile; fileRef = E179644E176927F0003AE489 /* tidybuffio.h */; };
-		E1796491176927F0003AE489 /* tidyenum.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796451176927F0003AE489 /* tidyenum.h */; };
 		E179648F176927F0003AE489 /* tidyplatform.h in Headers */ = {isa = PBXBuildFile; fileRef = E179644F176927F0003AE489 /* tidyplatform.h */; };
+		E1796490176927F0003AE489 /* tidy.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796450176927F0003AE489 /* tidy.h */; };
+		E1796491176927F0003AE489 /* tidyenum.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796451176927F0003AE489 /* tidyenum.h */; };
 		E1796492176927F0003AE489 /* access.c in Sources */ = {isa = PBXBuildFile; fileRef = E1796454176927F0003AE489 /* access.c */; };
 		E1796493176927F0003AE489 /* access.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796455176927F0003AE489 /* access.h */; };
 		E1796494176927F0003AE489 /* alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = E1796456176927F0003AE489 /* alloc.c */; };
@@ -77,10 +77,10 @@
 		E1796412176927D2003AE489 /* libLibTidyHtml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibTidyHtml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E179641A176927F0003AE489 /* LibTidyHtml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibTidyHtml.cpp; path = ../../../LibTidyHtml/LibTidyHtml.cpp; sourceTree = "<group>"; };
 		E179641D176927F0003AE489 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../LibTidyHtml/stdafx.h; sourceTree = "<group>"; };
-		E1796450176927F0003AE489 /* tidy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tidy.h; sourceTree = "<group>"; };
 		E179644E176927F0003AE489 /* tidybuffio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tidybuffio.h; sourceTree = "<group>"; };
-		E1796451176927F0003AE489 /* tidyenum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tidyenum.h; sourceTree = "<group>"; };
 		E179644F176927F0003AE489 /* tidyplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tidyplatform.h; sourceTree = "<group>"; };
+		E1796450176927F0003AE489 /* tidy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tidy.h; sourceTree = "<group>"; };
+		E1796451176927F0003AE489 /* tidyenum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tidyenum.h; sourceTree = "<group>"; };
 		E1796454176927F0003AE489 /* access.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = access.c; sourceTree = "<group>"; };
 		E1796455176927F0003AE489 /* access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = access.h; sourceTree = "<group>"; };
 		E1796456176927F0003AE489 /* alloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = alloc.c; sourceTree = "<group>"; };
@@ -404,7 +404,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
@@ -439,7 +438,7 @@
 					"-D__WXOSX_COCOA__",
 					"-DUSE_WXWIDGETS",
 				);
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -447,7 +446,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
@@ -476,13 +474,14 @@
 					"-D__WXOSX_COCOA__",
 					"-DUSE_WXWIDGETS",
 				);
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		E1796417176927D2003AE489 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -491,6 +490,7 @@
 		E1796418176927D2003AE489 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
