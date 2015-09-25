@@ -818,7 +818,9 @@ std::wstring CAgilityBookTreeView::GetPrintLine(wxTreeItemId hItem) const
 
 void CAgilityBookTreeView::UpdateData(wxTreeItemId hItem)
 {
-	if (m_Ctrl && m_Ctrl->GetRootItem() != hItem)
+	if (!m_Ctrl)
+		return;
+	if (m_Ctrl->GetRootItem() != hItem)
 	{
 		CAgilityBookTreeData* pData = dynamic_cast<CAgilityBookTreeData*>(m_Ctrl->GetItemData(hItem));
 		if (pData && pData->GetId().IsOk())

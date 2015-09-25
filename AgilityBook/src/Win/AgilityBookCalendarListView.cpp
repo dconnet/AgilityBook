@@ -766,8 +766,8 @@ void CAgilityBookCalendarListView::LoadData()
 			if (pCal->IsBefore(today))
 				continue;
 		}
-		if (bHide && (ARBCalendar::ePending != pCal->GetEntered()
-		|| ARBCalendar::eEntered != pCal->GetEntered()))
+		if (bHide && !(ARBCalendar::ePending == pCal->GetEntered()
+		|| ARBCalendar::eEntered == pCal->GetEntered()))
 		{
 			bool bSuppress = false;
 			for (std::vector<ARBCalendarPtr>::const_iterator iterE = entered.begin();

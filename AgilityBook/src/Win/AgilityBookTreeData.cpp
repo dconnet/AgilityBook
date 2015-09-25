@@ -180,7 +180,8 @@ static bool EditTrial(
 		{
 			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 			pTree->GetDocument()->ResetVisibility(venues, pTrial);
-			pTree->RefreshItem(pTrialData->GetId());
+			if (pTrialData)
+				pTree->RefreshItem(pTrialData->GetId());
 			if (dlg.RunsWereDeleted())
 			{
 				if (bTreeSelectionSet)
