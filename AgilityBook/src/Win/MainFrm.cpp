@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-09-30 Dbl-click on Filter status area invokes Preferences.
  * 2015-09-12 Clean up status bar sizing. SetStatusBarWidths was broken on Mac.
  * 2015-08-11 Status bar gripper is too small on hiDPI. Kludge.
  * 2014-05-18 Moved startup version check to a timer.
@@ -209,6 +210,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	if (statusbar)
 	{
 		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_CONTEXT_MENU, wxContextMenuEventHandler, CMainFrame::OnStatusBarContextMenu);
+		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_LEFT_DCLICK, wxMouseEvent, CMainFrame::OnStatusBarDblClick);
 		int style[NUM_STATUS_FIELDS];
 		m_Widths[0] = -1;
 		style[0] = wxSB_FLAT;
@@ -304,12 +306,12 @@ void CMainFrame::OnStatusBarContextMenu(wxContextMenuEvent& evt)
 		}
 		else
 			point = statusbar->ScreenToClient(point);
-		static const int ids[NUM_STATUS_FIELDS-1] = {STATUS_DOG, STATUS_STATUS, STATUS_FILTERED};
+		static const int ids[] = {STATUS_DOG, STATUS_STATUS, STATUS_FILTERED};
 		CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
 		assert(pDoc);
 		if (pDoc)
 		{
-			for (int i = 0; i < NUM_STATUS_FIELDS - 1; ++i)
+			for (int i = 0; i < ARRAY_SIZE(ids); ++i)
 			{
 				if (statusbar->GetFieldRect(ids[i], rect) && rect.Contains(point))
 				{
@@ -318,6 +320,48 @@ void CMainFrame::OnStatusBarContextMenu(wxContextMenuEvent& evt)
 						bSkip = false;
 						break;
 					}
+				}
+			}
+		}
+	}
+	if (bSkip)
+		evt.Skip();
+}
+
+
+void CMainFrame::OnStatusBarDblClick(wxMouseEvent& evt)
+{
+	bool bSkip = true;
+	wxStatusBar* statusbar = GetStatusBar();
+	if (statusbar)
+	{
+		wxRect rect;
+		wxPoint point = evt.GetPosition();
+		if (wxDefaultPosition == point)
+		{
+			rect = statusbar->GetScreenRect();
+			point = ::wxGetMousePosition();
+			if (!rect.Contains(point))
+			{
+				point.x = rect.GetLeft() + rect.GetWidth() / 3;
+				point.y = rect.GetTop() + rect.GetHeight() / 2;
+			}
+			point = statusbar->ScreenToClient(point);
+		}
+		static const int ids[] = { STATUS_FILTERED };
+		CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
+		assert(pDoc);
+		if (pDoc)
+		{
+			for (int i = 0; i < ARRAY_SIZE(ids); ++i)
+			{
+				if (statusbar->GetFieldRect(ids[i], rect) && rect.Contains(point))
+				{
+					wxCommandEvent evtCmd(wxEVT_MENU, wxID_PREFERENCES);
+					evtCmd.SetEventObject(this);
+					pDoc->ProcessEvent(evtCmd);
+					bSkip = false;
+					break;
 				}
 			}
 		}

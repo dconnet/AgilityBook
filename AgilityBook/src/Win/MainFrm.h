@@ -76,6 +76,7 @@ private:
 private:
 	DECLARE_EVENT_TABLE()
 	void OnStatusBarContextMenu(wxContextMenuEvent& evt);
+	void OnStatusBarDblClick(wxMouseEvent& evt);
 	void OnClose(wxCloseEvent& evt);
 #if defined(__WXMAC__)
 	void OnIdle(wxIdleEvent& evt);
