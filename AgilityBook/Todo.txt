@@ -1,4 +1,8 @@
-Last Updated: 9/10/2015
+Last Updated: 10/5/2015
+
+- Update VALOR
+  "Currently looking into the VALOR venue for one or more of our agility dogs. Noticed that Agility Record Book only has (Beginner, Intermediate, Expert) Standard and Jumpers events programmed. There are now games and levels, some very new. Was wondering if there are any plans to add these events at some time. The games are probably the higher priority."
+   "Looks like there are now (Beginner, Intermediate, Expert, Exceptional, and multiple Dictorian) Standard and Jumpers, Snooker and Perfect-50 events. (Ref: http://teamworksdogtraining.org/VirtualAgilityLeague/VALOR_levels.html )"
 
 - Add warning in run dialog when Q is UNK that the following will not
   be saved:
