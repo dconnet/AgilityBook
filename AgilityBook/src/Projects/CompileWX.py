@@ -11,6 +11,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2015-10-11 Added -r option.
 # 2015-04-24 Added vc14.
 # 2013-10-14 Allow x64-on-x64 compilation to fall back to x86_amd (VCExpress)
 # 2013-07-30 Modify tmpfile to allow multiple builds
@@ -30,13 +31,14 @@
 #            (2.8 is rarely rebuilt, default to the active build)
 # 2009-09-26 Tweak compile options
 # 2009-09-12 Fix dll creation
-"""CompileWX.py -w wxwin [-e] [-a] [-p] [-d] [-m] [-s name]* compiler*
+"""CompileWX.py -w wxwin [-e] [-a] [-p] [-d] [-m] [-s name]* [-r config] compiler*
 	-w wxwin: Root of wx tree, normally %WXWIN%
 	-e:       Just show the environment, don't do it
 	-a:       Compile all (vc10, vc10x64)
 	-d:       Compile as DLLs (default: static)
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
+	-r config: config: release/debug
 	compiler: vc7, vc8, vc9, vc10, vc9x64, vc10x64, vc11, vc11x64, vc12, vc12x64, vc14, vc14x64
 """
 
@@ -270,8 +272,10 @@ def main():
 	wxwin = ''
 	samples = set()
 	compilers = set()
+	debug = True
+	release = True
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'w:eadms:')
+		opts, args = getopt.getopt(sys.argv[1:], 'w:eadms:r:')
 	except getopt.error, msg:
 		print msg
 		print 'Usage:', __doc__
@@ -290,6 +294,17 @@ def main():
 			useUnicode = False
 		elif '-s' == o:
 			samples.add(a)
+		elif '-r' == o:
+			if a == 'release':
+				release = True
+				debug = False
+			elif a == 'debug':
+				release = False
+				debug = True
+			else:
+				print 'ERROR: Unknown option for -r: Must be "release" or "debug"'
+				print 'Usage:', __doc__
+				return 1
 
 	# Made -w required since normal WXWIN rarely needs rebuilding.
 	if len(wxwin) == 0:
@@ -506,17 +521,27 @@ def main():
 			for s in samples:
 				if os.access(os.environ['WXWIN'] + '\\samples\\' + s, os.F_OK):
 					print >>bat, 'cd /d "' + os.environ['WXWIN'] + '\\samples\\' + s + '"'
-					print >>bat, setenv_rel
-					print >>bat, build_rel + ' ' + build_flags
-					print >>bat, setenv_dbg
-					print >>bat, build_dbg + ' ' + build_flags
+					if release:
+						print >>bat, setenv_rel
+						print >>bat, build_rel + ' ' + build_flags
+					if debug:
+						if 0 < len(setenv_dbg):
+							print >>bat, setenv_dbg
+						elif not release:
+							print >>bat, setenv_rel
+						print >>bat, build_dbg + ' ' + build_flags
 				else:
 					print 'ERROR: sample "' + s + '" does not exist'
 		else:
-			print >>bat, setenv_rel
-			print >>bat, build_rel + ' ' + build_flags
-			print >>bat, setenv_dbg
-			print >>bat, build_dbg + ' ' + build_flags
+			if release:
+				print >>bat, setenv_rel
+				print >>bat, build_rel + ' ' + build_flags
+			if debug:
+				if 0 < len(setenv_dbg):
+					print >>bat, setenv_dbg
+				elif not release:
+					print >>bat, setenv_rel
+				print >>bat, build_dbg + ' ' + build_flags
 		if resetColor:
 			print >>bat, 'color 07'
 
