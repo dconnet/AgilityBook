@@ -809,14 +809,14 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         <MultiQItem Div="Regular" Event="JWW" Level="Master"/>
         <MultiQItem Div="Regular" Event="Standard" Level="Master"/>
       </MultiQ>
-      <MultiQ Name="Preferred Double Q" SName="QQ">
-        <MultiQItem Div="Preferred" Event="JWW" Level="Master"/>
-        <MultiQItem Div="Preferred" Event="Standard" Level="Master"/>
-      </MultiQ>
       <MultiQ Name="Triple Q" SName="QQQ">
         <MultiQItem Div="Regular" Event="FAST" Level="Master"/>
         <MultiQItem Div="Regular" Event="JWW" Level="Master"/>
         <MultiQItem Div="Regular" Event="Standard" Level="Master"/>
+      </MultiQ>
+      <MultiQ Name="Preferred Double Q" SName="QQ">
+        <MultiQItem Div="Preferred" Event="JWW" Level="Master"/>
+        <MultiQItem Div="Preferred" Event="Standard" Level="Master"/>
       </MultiQ>
       <MultiQ Name="Preferred Triple Q" SName="QQQ">
         <MultiQItem Div="Preferred" Event="FAST" Level="Master"/>
