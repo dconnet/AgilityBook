@@ -37,6 +37,7 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSE_MEDIACTRL to 0 (currently 1)
+  - Set wxUSE_INKEDIT to 1 (currently 0)
 -[win]- src/msw/bmpcbox.cpp
     cross ported changes from trunk to fix hi-dpi issue with combo
 c:\devtools\wx\wxWidgets-3.0.2\src\msw>diff -c bmpcbox.cpp.orig bmpcbox.cpp
@@ -118,12 +119,46 @@ wxDateTime GetDateValue() const
 }
 
 === Changes for support 64bit xcode: http://goharsha.com/blog/compiling-wxwidgets-3-0-2-mac-os-x-yosemite/
-src/osx/webview_webkit.mm: - line 31
+-[mac]- src/osx/webview_webkit.mm
 (note, fixed in wx3.0.3)
+src/osx/webview_webkit.mm: - line 31
 change:
 #include <WebKit/WebKit.h>
 to:
 #include <WebKit/WebKitLegacy.h>
+
+=== Changes to support ink in richedit
+-[win]- src/msw/textctrl.cpp
+>diff -c textctrl.cpp.orig textctrl.cpp
+*** textctrl.cpp.orig   Mon Oct 06 14:34:04 2014
+--- textctrl.cpp        Thu Oct 22 14:35:14 2015
+***************
+*** 76,81 ****
+--- 76,85 ----
+
+  #endif // wxUSE_RICHEDIT
+
++ #if wxUSE_INKEDIT
++     #include <wx/dynlib.h>
++ #endif
++
+  #include "wx/msw/missing.h"
+
+  // FIXME-VC6: This seems to be only missing from VC6 headers.
+***************
+*** 339,344 ****
+--- 343,353 ----
+          m_dropTarget = NULL;
+      }
+  #endif // wxUSE_DRAG_AND_DROP && wxUSE_RICHEDIT
++
++ #if wxUSE_INKEDIT && wxUSE_RICHEDIT
++     if (m_isInkEdit)
++         DissociateHandle();
++ #endif
+
+      delete m_privateContextMenu;
+  }
 
 
 === Changes to 3.0.1

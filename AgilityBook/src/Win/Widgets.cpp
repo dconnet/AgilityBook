@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-10-22 Fix setting spell checking flags - this allows ink input.
  * 2015-05-19 Add ComputeHeightHint to CTreeCtrl.
  * 2014-11-03 Enable spellchecking on richedit on Win8+.
  * 2009-10-11 Created.
@@ -93,6 +94,7 @@ bool CTextCtrl::EnableSpellChecking(bool bForceRtfAsPlainText)
 		// Note: This only works on Win8+. Thankfully, it has no effect
 		// on lower versions, so we can safely just call it.
 		HWND hwnd = GetHWND();
+
 		if (bForceRtfAsPlainText)
 		{
 			// The control must be empty to change the mode.
@@ -103,9 +105,13 @@ bool CTextCtrl::EnableSpellChecking(bool bForceRtfAsPlainText)
 			if (!val.empty())
 				SetValue(val);
 		}
-		::SendMessage(hwnd, EM_SETLANGOPTIONS, 0, IMF_SPELLCHECKING);
-		LRESULT style = ::SendMessage(hwnd, EM_GETEDITSTYLE, 0, 0);
-		::SendMessage(hwnd, EM_SETEDITSTYLE, 0, style | SES_USECTF | SES_CTFALLOWEMBED | SES_CTFALLOWSMARTTAG | SES_CTFALLOWPROOFING);
+
+		LRESULT options = ::SendMessage(hwnd, EM_GETLANGOPTIONS, 0, 0);
+		::SendMessage(hwnd, EM_SETLANGOPTIONS, 0, options | IMF_SPELLCHECKING);
+
+		// wParam: flags, lParam: Mask of flags to set
+		WPARAM flags = SES_USECTF | SES_CTFALLOWEMBED | SES_CTFALLOWSMARTTAG | SES_CTFALLOWPROOFING;
+		::SendMessage(hwnd, EM_SETEDITSTYLE, flags, flags);
 	}
 #endif
 	return bChanged;
