@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2015-09-14 Configuration version 52.
+2015-10-23 Configuration version 52.
            Added USDAA Veteran CH titles.
+           Updated VALOR events and titles.
 2015-09-10 Configuration version 51.
            Added AKC Premier. Added support for fun games.
            Fixed Q/NQ on UKI Master/Ch, allow progression points.
@@ -4647,32 +4648,83 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
       </Event>
     </Venue>
     <Venue LongName="Virtual Agility League" Name="VALOR" URL="http://www.dogtrainingraleighnc.net/VirtualAgilityLeague/VALOR_home.html" icon="-1">
-      <Titles LongName="VALOR Training (Beginner) Standard" Name="VBS-T">3 Qualifying Scores on a Beginner Standard OR Intermediate Standard Level Course</Titles>
-      <Titles LongName="VALOR Training (Intermediate) Standard" Name="VIS-T">3 Qualifying Scores on a Beginner Standard OR Intermediate Standard Level Course</Titles>
-      <Titles LongName="VALOR Training (Beginner) Jumpers" Name="VBJ-T">3 Qualifying Scores on a Beginner Jumpers Level OR Intermediate Jumpers Course</Titles>
-      <Titles LongName="VALOR Training (Intermediate) Jumpers" Name="VIJ-T">3 Qualifying Scores on a Beginner Jumpers Level OR Intermediate Jumpers Course</Titles>
+      <Titles LongName="VALOR Training (Beginner) Standard" Name="VBS-T">3 Qualifying Scores on a Beginner Standard Level Course</Titles>
+      <Titles LongName="VALOR Training (Beginner) Jumpers" Name="VBJ-T">3 Qualifying Scores on a Beginner Jumpers Level Course</Titles>
+      <Titles LongName="VALOR Training (Beginner) Snooker" Name="VBK-T">3 Qualifying Scores on a Beginner Snooker Course</Titles>
+      <Titles LongName="VALOR Training (Beginner) Perfect 50" Name="BPF-T">3 Qualifying Scores on a Beginner Perfect 50 Course</Titles>
+      <Titles LongName="VALOR Training (Beginner) Standard Cum Laude" Name="VBSCL-T">10 Qualifying Scores in Beginner Standard</Titles>
+      <Titles LongName="VALOR Training (Beginner) Jumpers Cum Laude" Name="VBJCL-T">10 Qualifying Scores in Beginner Jumpers</Titles>
+      <Titles LongName="VALOR Training (Beginner) Snooker Cum Laude" Name="VBKCL-T">10 Qualifying Scores in Beginner Snooker</Titles>
+      <Titles LongName="VALOR Training (Beginner) Perfect 50 Cum Laude" Name="VBPFCL-T">10 Qualifying Scores in Beginner Perfect 50</Titles>
+      <Titles LongName="VALOR Training (Beginner) Standard Magna Cum Laude" Name="VBSMCL-T">20 Qualifying Scores in Beginner Standard</Titles>
+      <Titles LongName="VALOR Training (Beginner) Jumpers Magna Cum Laude" Name="VBJMCL-T">20 Qualifying Scores in Beginner Jumpers</Titles>
+      <Titles LongName="VALOR Training (Beginner) Snooker Magna Cum Laude" Name="VBKMCL-T">20 Qualifying Scores in Beginner Snooker</Titles>
+      <Titles LongName="VALOR Training (Beginner) Perfect 50 Magna Cum Laude" Name="VBPFMCL-T">20 Qualifying Scores in Beginner Perfect 50</Titles>
+      <Titles LongName="VALOR Training (Beginner) Standard Summa Cum Laude" Name="VBSSCL-T">50 Qualifying Scores in Beginner Standard</Titles>
+      <Titles LongName="VALOR Training (Beginner) Jumpers Summa Cum Laude" Name="VBJSCL-T">50 Qualifying Scores in Beginner Jumpers</Titles>
+      <Titles LongName="VALOR Training (Beginner) Snooker Summa Cum Laude" Name="VBKSCL-T">50 Qualifying Scores in Beginner Snooker</Titles>
+      <Titles LongName="VALOR Training (Beginner) Perfect 50 Summa Cum Laude" Name="VBPFSCL-T">50 Qualifying Scores in Beginner Perfect 50</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Standard" Name="VIS-T">3 Qualifying Scores on a Intermediate Standard Level Course</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Jumpers" Name="VIJ-T">3 Qualifying Scores on a Intermediate Jumpers Course</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Snooker" Name="VIK-T">3 Qualifying Scores on a Intermediate Snooker Course</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Perfect 50" Name="IPF-T">3 Qualifying Scores on a Intermediate Perfect 50 Course</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Standard Cum Laude" Name="VISCL-T">10 Qualifying Scores in Intermediate Standard</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Jumpers Cum Laude" Name="VIJCL-T">10 Qualifying Scores in Intermediate Jumpers</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Snooker Cum Laude" Name="VKJCL-T">10 Qualifying Scores in Intermediate Snooker</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Perfect 50 Cum Laude" Name="IPFCL-T">10 Qualifying Scores in Intermediate Perfect 50</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Standard Magna Cum Laude" Name="VISMCL-T">20 Qualifying Scores in Intermediate Standard</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Jumpers Magna Cum Laude" Name="VIJMCL-T">20 Qualifying Scores in Intermediate Jumpers</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Snooker Magna Cum Laude" Name="VKJMCL-T">20 Qualifying Scores in Intermediate Snooker</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Perfect 50 Magna Cum Laude" Name="IPFMCL-T">20 Qualifying Scores in Intermediate Perfect 50</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Standard Summa Cum Laude" Name="VISSCL-T">50 Qualifying Scores in Intermediate Standard</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Jumpers Summa Cum Laude" Name="VIJSCL-T">50 Qualifying Scores in Intermediate Jumpers</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Snooker Summa Cum Laude" Name="VKJSCL-T">50 Qualifying Scores in Intermediate Snooker</Titles>
+      <Titles LongName="VALOR Training (Intermediate) Perfect 50 Summa Cum Laude" Name="IPFSCL-T">50 Qualifying Scores in Intermediate Perfect 50</Titles>
       <Titles LongName="VALOR Beginner Standard" Name="VBS">3 Qualifying Scores on a Beginner Standard Level Course</Titles>
       <Titles LongName="VALOR Beginner Jumpers" Name="VBJ">3 Qualifying Scores on a Beginner Jumpers Level Course</Titles>
+      <Titles LongName="VALOR Beginner Snooker" Name="VBK">3 Qualifying Scores on a Beginner Snooker Course</Titles>
+      <Titles LongName="VALOR Beginner Perfect 50" Name="BPF">3 Qualifying Scores on a Beginner Perfect 50 Course</Titles>
       <Titles LongName="VALOR Beginner Standard Cum Laude" Name="VBSCL">10 Qualifying Scores in Beginner Standard</Titles>
       <Titles LongName="VALOR Beginner Jumpers Cum Laude" Name="VBJCL">10 Qualifying Scores in Beginner Jumpers</Titles>
+      <Titles LongName="VALOR Beginner Snooker Cum Laude" Name="VBKCL">10 Qualifying Scores in Beginner Snooker</Titles>
+      <Titles LongName="VALOR Beginner Perfect 50 Cum Laude" Name="VBPFCL">10 Qualifying Scores in Beginner Perfect 50</Titles>
       <Titles LongName="VALOR Beginner Standard Magna Cum Laude" Name="VBSMCL">20 Qualifying Scores in Beginner Standard</Titles>
       <Titles LongName="VALOR Beginner Jumpers Magna Cum Laude" Name="VBJMCL">20 Qualifying Scores in Beginner Jumpers</Titles>
+      <Titles LongName="VALOR Beginner Snooker Magna Cum Laude" Name="VBKMCL">20 Qualifying Scores in Beginner Snooker</Titles>
+      <Titles LongName="VALOR Beginner Perfect 50 Magna Cum Laude" Name="VBPFMCL">20 Qualifying Scores in Beginner Perfect 50</Titles>
       <Titles LongName="VALOR Beginner Standard Summa Cum Laude" Name="VBSSCL">50 Qualifying Scores in Beginner Standard</Titles>
       <Titles LongName="VALOR Beginner Jumpers Summa Cum Laude" Name="VBJSCL">50 Qualifying Scores in Beginner Jumpers</Titles>
+      <Titles LongName="VALOR Beginner Snooker Summa Cum Laude" Name="VBKSCL">50 Qualifying Scores in Beginner Snooker</Titles>
+      <Titles LongName="VALOR Beginner Perfect 50 Summa Cum Laude" Name="VBPFSCL">50 Qualifying Scores in Beginner Perfect 50</Titles>
       <Titles LongName="VALOR Intermediate Standard" Name="VIS">3 Qualifying Scores on a Intermediate Standard Level Course</Titles>
       <Titles LongName="VALOR Intermediate Jumpers" Name="VIJ">3 Qualifying Scores on a Intermediate Jumpers Level Course</Titles>
+      <Titles LongName="VALOR Intermediate Snooker" Name="VIK">3 Qualifying Scores on a Intermediate Snooker Level Course</Titles>
+      <Titles LongName="VALOR Intermediate Perfect 50" Name="IPF">3 Qualifying Scores on a Intermediate Perfect 50 Level Course</Titles>
       <Titles LongName="VALOR Intermediate Standard Cum Laude" Name="VISCL">10 Qualifying Scores in Intermediate Standard</Titles>
       <Titles LongName="VALOR Intermediate Jumpers Cum Laude" Name="VIJCL">10 Qualifying Scores in Intermediate Jumpers</Titles>
+      <Titles LongName="VALOR Intermediate Snooker Cum Laude" Name="VIKCL">10 Qualifying Scores in Intermediate Snooker</Titles>
+      <Titles LongName="VALOR Intermediate Perfect 50 Cum Laude" Name="VIPFCL">10 Qualifying Scores in Intermediate Perfect 50</Titles>
       <Titles LongName="VALOR Intermediate Standard Magna Cum Laude" Name="VISMCL">20 Qualifying Scores in Intermediate Standard</Titles>
       <Titles LongName="VALOR Intermediate Jumpers Magna Cum Laude" Name="VIJMCL">20 Qualifying Scores in Intermediate Jumpers</Titles>
+      <Titles LongName="VALOR Intermediate Snooker Magna Cum Laude" Name="VIKMCL">20 Qualifying Scores in Intermediate Snooker</Titles>
+      <Titles LongName="VALOR Intermediate Perfect 50 Magna Cum Laude" Name="VIPFMCL">20 Qualifying Scores in Intermediate Perfect 50</Titles>
       <Titles LongName="VALOR Intermediate Standard Summa Cum Laude" Name="VISSCL">50 Qualifying Scores in Intermediate Standard</Titles>
       <Titles LongName="VALOR Intermediate Jumpers Summa Cum Laude" Name="VIJSCL">50 Qualifying Scores in Intermediate Jumpers</Titles>
+      <Titles LongName="VALOR Intermediate Snooker Summa Cum Laude" Name="VIKSCL">50 Qualifying Scores in Intermediate Snooker</Titles>
+      <Titles LongName="VALOR Intermediate Perfect 50 Summa Cum Laude" Name="VIPFSCL">50 Qualifying Scores in Intermediate Perfect 50</Titles>
       <Titles LongName="VALOR Expert Standard" Name="VES">3 Qualifying Scores on a Expert Standard Level Course</Titles>
       <Titles LongName="VALOR Expert Jumpers" Name="VEJ">3 Qualifying Scores on a Expert Jumpers Level Course</Titles>
+      <Titles LongName="VALOR Expert Snooker" Name="VEK">3 Qualifying Scores on a Expert Snooker Level Course</Titles>
+      <Titles LongName="VALOR Expert Perfect 50" Name="EPF">3 Qualifying Scores on a Expert Perfect 50 Level Course</Titles>
       <Titles LongName="VALOR Exceptional Standard" Name="VXS">10 Qualifying Scores in Expert Standard</Titles>
       <Titles LongName="VALOR Exceptional Jumpers" Name="VXJ">10 Qualifying Scores in Expert Jumpers</Titles>
-      <Titles LongName="VALOR DICTORIAN Standard" Name="VDS" StartAt="1">20 Qualifying Scores in Expert Standard</Titles>
-      <Titles LongName="VALOR DICTORIAN Jumpers" Name="VDJ" StartAt="1">20 Qualifying Scores in Expert Jumpers</Titles>
+      <Titles LongName="VALOR Exceptional Snooker" Name="VXK">10 Qualifying Scores in Expert Snooker</Titles>
+      <Titles LongName="VALOR Exceptional Perfect 50" Name="XPF">10 Qualifying Scores in Expert Perfect 50</Titles>
+      <Titles LongName="VALOR DICTORIAN Standard" Name="VDS" Sep="h" StartAt="1">20 Qualifying Scores in Expert Standard</Titles>
+      <Titles LongName="VALOR DICTORIAN Jumpers" Name="VDJ" Sep="h" StartAt="1">20 Qualifying Scores in Expert Jumpers</Titles>
+      <Titles LongName="VALOR DICTORIAN Snooker" Name="VDK" Sep="h" StartAt="1">20 Qualifying Scores in Expert Snooker</Titles>
+      <Titles LongName="VALOR DICTORIAN Perfect 50" Name="VPF" Sep="h" StartAt="1">20 Qualifying Scores in Expert Perfect 50</Titles>
+      <Titles LongName="VALOR DICTORIAN Master Agility Champion" Name="VMACH" Sep="h" StartAt="1">VDS, VDJ, VDK, VFP</Titles>
       <Division Name="Training" ShortName="Tr">
         <Level Name="Beginner" ShortName="Beg"/>
         <Level Name="Intermediate" ShortName="Int"/>
@@ -4689,6 +4741,22 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
       </Event>
       <Event Name="Jumpers">
         <Scoring Division="*" Level="*" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+      </Event>
+      <Event Name="Snooker">
+        <Scoring Division="*" Level="Beginner" OpeningPts="30" type="ScoreThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Intermediate" OpeningPts="35" type="ScoreThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="*" OpeningPts="37" type="ScoreThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+      </Event>
+      <Event Name="Perfect 50">
+        <Scoring Division="*" Level="*" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
