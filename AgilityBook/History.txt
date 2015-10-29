@@ -1,9 +1,10 @@
-10/23/2015: v3.1.3.<development>
+10/29/2015: v3.1.3.<development>
 - Bumped Configuration v52:
   - Added USDAA Veteran-CH titles.
   - Updated VALOR events and titles.
 - New features / Enhancements:
   - Dbl-click on Filter status area invokes Preferences.
+  - Add a check during save to see if file has been modified since it was read.
 - Bug fixes:
   - Fix combobox issue introduced in 3.1.2.
   - Fixed ink input

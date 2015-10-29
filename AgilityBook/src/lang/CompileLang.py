@@ -4,6 +4,7 @@
 # Requires msgcat/msgfmt (gettext) in PATH
 #
 # Revision History
+# 2015-10-29 Put --use-fuzzy back, remove --check-format.
 # 2014-11-16 Separated PO/MO language from DAT file generation.
 # 2012-05-16 Add multiprocessing awareness. Kind of.
 # 2012-03-03 Fixed writing file into dat file.
@@ -120,7 +121,7 @@ def CompilePoFiles(wxBaseName, sourceDir, firstFile, outputDir, targetname, bDeb
 				installPath = os.path.join(langDir, langName)
 				if not os.access(installPath, os.F_OK):
 					os.mkdir(installPath)
-				cmd = ['msgfmt', '--verbose', '--check-format', '--check-domain', '--strict', '-o', os.path.join(installPath, targetname + r'.mo'), autogen]
+				cmd = ['msgfmt', '--verbose', '--check-domain', '--use-fuzzy', '--strict', '-o', os.path.join(installPath, targetname + r'.mo'), autogen]
 				# msgfmt generates interesting messages to stderr, don't toast them.
 				RunCommand(cmd, 0)
 				if not bDebug and os.access(autogen, os.F_OK):

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-10-29 Add Save override. Check if file was externally modified.
  * 2014-12-04 If all dogs are deceased, don't prompt to update config.
  * 2014-04-25 Don't prompt to update config if file is readonly.
  * 2013-01-11 Reset filters on configuration import.
@@ -94,12 +95,14 @@
 #include "UpdateInfo.h"
 #include "Wizard.h"
 
+#include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
 #include <algorithm>
 #include <wx/config.h>
 #include <wx/file.h>
 #include <wx/filefn.h>
+#include <wx/wfstream.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -1343,11 +1346,12 @@ bool CAgilityBookDoc::DeleteContents()
 {
 	if (!wxDocument::DeleteContents())
 		return false;
+	m_fileHash.clear();
 	std::wstring msg(_("IDS_INDICATOR_BLANK"));
 	wxGetApp().SetMessageText(msg, CFilterOptions::Options().IsFilterEnabled());
 	wxGetApp().SetMessageText2(msg);
 	m_Records.clear();
-	return wxDocument::DeleteContents();
+	return true;
 }
 
 
@@ -1405,6 +1409,14 @@ bool CAgilityBookDoc::IsDocumentUpdatable(wxString const& filename) const
 
 	// All dogs are deceased, so no update.
 	return false;
+}
+
+
+std::wstring CAgilityBookDoc::GenerateHash(wxString const& filename) const
+{
+	wxFileInputStream file(StringUtil::stringW(filename));
+	wxStdInputStream stdfile(file);
+	return ARBMsgDigest::Compute(stdfile, ARBMsgDigest::ARBDigestSHA1, nullptr);
 }
 
 
@@ -1562,7 +1574,25 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	}
 	STACK_TICKLE(stack, L"PostUpdate");
 
+	m_fileHash = GenerateHash(filename);
+
 	return true;
+}
+
+
+bool CAgilityBookDoc::Save()
+{
+	// Check if file externally modified
+	if (!m_fileHash.empty() && !GetFilename().empty())
+	{
+		std::wstring hash = GenerateHash(GetFilename());
+		if (!hash.empty() && hash != m_fileHash)
+		{
+			if (wxYES != wxMessageBox(_("IDS_WARN_FILE_UPDATED"), wxMessageBoxCaptionStr, wxICON_WARNING | wxYES_NO))
+				return false;
+		}
+	}
+	return __super::Save();
 }
 
 
@@ -1596,6 +1626,8 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 	{
 		wxMessageBox(_("IDS_INTERNAL_ERROR"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 	}
+
+	m_fileHash = GenerateHash(filename);
 	return bOk;
 }
 

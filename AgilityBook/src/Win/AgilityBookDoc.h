@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-10-29 Add Save override.
  * 2012-09-29 Strip the Runs View.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-05 Ported to wxWidgets.
@@ -183,7 +184,9 @@ private:
 	CAgilityBookCalendarView* GetCalendarView() const;
 	CAgilityBookTrainingView* GetTrainingView() const;
 	bool IsDocumentUpdatable(wxString const& filename) const;
+	std::wstring GenerateHash(wxString const& filename) const;
 
+	std::wstring m_fileHash;
 	ARBAgilityRecordBook m_Records; ///< The real records.
 	CCalendarSites m_CalSites;
 	CStatusHandler* m_StatusData;
@@ -193,6 +196,7 @@ protected:
 	virtual bool DeleteContents();
 	virtual bool OnNewDocument();
 	virtual bool OnOpenDocument(const wxString& file);
+	virtual bool Save();
 	virtual bool DoSaveDocument(const wxString& file);
 	virtual bool OnCloseDocument();
 
