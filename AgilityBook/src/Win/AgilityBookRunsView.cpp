@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-01 Compute score for NA runs also.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-09-02 After sorting by column, make sure selection is visible.
  * 2014-05-21 Enable paste of copied runs.
@@ -353,8 +354,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			}
 			break;
 		case IO_RUNS_SCORE:
-			if (m_pRun->GetQ().Qualified()
-			|| ARB_Q::eQ_NQ == m_pRun->GetQ())
+			if (ShouldComputeScore(m_pRun->GetQ()))
 			{
 				ARBConfigScoringPtr pScoring;
 				if (m_pTrial->GetClubs().GetPrimaryClub())

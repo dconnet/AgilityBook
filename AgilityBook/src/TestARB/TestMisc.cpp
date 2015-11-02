@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-01 Added ARBConfig/ARBBook version test.
  * 2015-04-04 Add C99 printf test.
  * 2014-11-17 Added "true" units (nonIEC) to FormatBytes.
  * 2014-08-28 Enhanced FormatBytes
@@ -22,9 +23,12 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARBCommon/ARBMisc.h"
-#include "ARBCommon/ARBTypes.h"
-#include "ARBCommon/StringUtil.h"
+#include "ConfigHandler.h"
+#include <ARB/ARBAgilityRecordBook.h>
+#include <ARB/ARBConfig.h>
+#include <ARBCommon/ARBMisc.h>
+#include <ARBCommon/ARBTypes.h>
+#include <ARBCommon/StringUtil.h>
 
 #include <stdarg.h>
 
@@ -231,6 +235,7 @@ SUITE(TestMisc)
 	}
 #endif
 
+
 	TEST(C99PrintfToSame)
 	{
 		if (!g_bMicroTest)
@@ -252,6 +257,7 @@ SUITE(TestMisc)
 		}
 	}
 
+
 	TEST(C99PrintfToOpposite)
 	{
 		if (!g_bMicroTest)
@@ -271,5 +277,16 @@ SUITE(TestMisc)
 			CHECK(str == buffer);
 			CHECK(wstr == wbuffer);
 		}
+	}
+
+
+	TEST(ARBConfigFiles)
+	{
+		ARBConfig config;
+		CConfigHandler handler;
+		ARBVersion version;
+		config.Default(&handler, &version);
+		CHECK(version.IsSet());
+		CHECK(version == ARBAgilityRecordBook::GetCurrentDocVersion());
 	}
 }

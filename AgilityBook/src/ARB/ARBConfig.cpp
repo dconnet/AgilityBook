@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-01 Added ARBVersion to Default().
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-10-26 Added option to prevent auto-update user query.
@@ -225,15 +226,19 @@ bool ARBConfig::Save(ElementNodePtr ioTree) const
 
 
 // Add a few known configurations.
-void ARBConfig::Default(IARBConfigHandler* inHandler)
+void ARBConfig::Default(IARBConfigHandler* inHandler, ARBVersion* pVersion)
 {
 	clear();
+	if (pVersion)
+		pVersion->clear();
 	if (inHandler)
 	{
 		ElementNodePtr tree = inHandler->LoadDefaultConfig();
 		if (tree && tree->GetName() == L"DefaultConfig")
 		{
 			ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
+			if (pVersion)
+				*pVersion = version;
 			tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 			int config = tree->FindElement(TREE_CONFIG);
 			if (0 <= config)

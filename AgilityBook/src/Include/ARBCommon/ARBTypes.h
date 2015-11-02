@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-01 Added clear and IsSet.
  * 2014-06-09 Move string->arbversion parsing to ARBVersion.
  *            Added missing ARBVersion operator!=.
  * 2013-07-17 Moved SanitizeStringForHTML to ARBMisc.
@@ -147,6 +148,15 @@ public:
 	bool operator>=(ARBVersion const& rhs) const
 	{
 		return m_Version >= rhs.m_Version;
+	}
+
+	void clear()
+	{
+		m_Version = 0;
+	}
+	bool IsSet()
+	{
+		return m_Version > 0;
 	}
 
 	unsigned short Major() const

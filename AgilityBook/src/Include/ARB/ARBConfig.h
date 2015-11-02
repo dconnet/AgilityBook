@@ -122,8 +122,9 @@ public:
 	/**
 	 * Set the configuration to the default (DefaultConfig.xml)
 	 * @param inHandler Interface to deal with platform specific resource issues
+	 * @param pVersion Version number of default config.
 	 */
-	void Default(IARBConfigHandler* inHandler);
+	void Default(IARBConfigHandler* inHandler, ARBVersion* pVersion = NULL);
 
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)

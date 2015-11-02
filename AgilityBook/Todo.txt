@@ -5,16 +5,11 @@ Last Updated: 10/23/2015
   - Place/InClass/DogsQ
   - Other Points
 
-- Add test to verify version in arbrecordbook.cpp, defaultconfig.xml
-  (and dtd file would be nice too)
-
 - Add support for lifetime points in NADAC Extreme. This needs to use the
   Bonus Points to determine lifetime.
   - 50 - 74.99 == 5
   - 75 - 99.99 == 10
   - >=100 == 15
-
-- Compute score even for NA runs (steeplechase r2, accomodating pairs)
 
 - Create a fully standalone version (for USB). Config file too.
   (supported by existence of AgilityBook.info, no way to auto-create yet)
@@ -48,9 +43,6 @@ Last Updated: 10/23/2015
   - Points: (NumDogs - Place) * 2 + 1
 
 - Make Mac dmg nicer for install (DnD app into Application folder)
-
-- Add 'YPS' into Reference Run list
-  (currently only in dialog to enter Reference Run data).
 
 - Make the trial properties dialog easier to add a club.
 

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-01 Compute score for NA runs also.
  * 2015-01-01 Changed pixels to dialog units.
  * 2013-05-19 Make last div/level/height/handler dog-aware.
  * 2012-12-29 Fix pasting metafiles.
@@ -50,6 +51,7 @@
  * 2004-03-30 Created
  *
  * DlgRunReference
+ * 2015-11-01 Added YPS.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-09-20 Added yourself was not getting up-to-date scoring info.
  * 2005-07-10 Add button to add yourself to ref-runs.
@@ -191,6 +193,7 @@ static struct
 	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_PLACE")},
 	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_SCORE")},
 	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_TIME")},
+	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_YPS")},
 	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
 	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_HEIGHT")},
 	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_BREED")},
@@ -241,14 +244,15 @@ public:
 class CDlgDogRefRunData : public CListData
 {
 public:
-	CDlgDogRefRunData(ARBDogReferenceRunPtr refRun)
-		: m_RefRun(refRun)
+	CDlgDogRefRunData(ARBDogRunPtr run, ARBDogReferenceRunPtr refRun)
+		: m_Run(run)
+		, m_RefRun(refRun)
 	{
 	}
 	virtual std::wstring OnNeedText(long iCol) const;
 	ARBDogReferenceRunPtr GetData() const		{return m_RefRun;}
-	void SetData(ARBDogReferenceRunPtr data)	{m_RefRun = data;}
 private:
+	ARBDogRunPtr m_Run;
 	ARBDogReferenceRunPtr m_RefRun;
 };
 
@@ -272,16 +276,26 @@ std::wstring CDlgDogRefRunData::OnNeedText(long iCol) const
 	case 3: // Time
 		str << ARBDouble::ToString(m_RefRun->GetTime());
 		break;
-	case 4: // Name
+	case 4: // YPS
+		{
+			double time = m_RefRun->GetTime();
+			double yps;
+			if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), time, yps))
+			{
+				str << ARBDouble::ToString(yps, 3);
+			}
+		}
+		break;
+	case 5: // Name
 		str << m_RefRun->GetName();
 		break;
-	case 5: // Height
+	case 6: // Height
 		str << m_RefRun->GetHeight();
 		break;
-	case 6: // Breed
+	case 7: // Breed
 		str << m_RefRun->GetBreed();
 		break;
-	case 7: // Note
+	case 8: // Note
 		str << StringUtil::Replace(m_RefRun->GetNote(), L"\n", L" ");
 		break;
 	}
@@ -2116,11 +2130,7 @@ void CDlgRun::SetTitlePoints()
 			strTitle.clear();
 			strTitle << m_Run->GetTitlePoints(pScoring);
 		}
-		// 8/17/03: Only compute score on Q and NQ runs.
-		// 11/13/04: Also compute score for NA runs that have no titling pts.
-		if (q.Qualified()
-		|| ARB_Q::eQ_NQ == q
-		|| (ARB_Q::eQ_NA == q && ARBDouble::equal(0.0, static_cast<double>(pScoring->GetTitlePoints().size()))))
+		if (ShouldComputeScore(q))
 			strScore = StringUtil::stringWX(ARBDouble::ToString(m_Run->GetScore(pScoring)));
 	}
 	// Doesn't matter if they're hidden,..
@@ -2538,7 +2548,7 @@ void CDlgRun::ListRefRuns()
 	iterRef != m_Run->GetReferenceRuns().end();
 	++index, ++iterRef)
 	{
-		CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(*iterRef));
+		CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(m_Run, *iterRef));
 		m_ctrlRefRuns->InsertItem(data);
 	}
 	for (index = 0; index < scNumRefRunColumns; ++index)
@@ -3004,7 +3014,7 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 	{
 		if (m_Run->GetReferenceRuns().AddReferenceRun(ref))
 		{
-			CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(ref));
+			CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(m_Run, ref));
 			long index = m_ctrlRefRuns->InsertItem(data);
 			m_ctrlRefRuns->Select(index);
 			// Insert item first to set selection.
@@ -3021,7 +3031,7 @@ void CDlgRun::OnRefRunAddMe(wxCommandEvent& evt)
 	{
 		if (m_Run->GetReferenceRuns().AddReferenceRun(m_pRefRunMe))
 		{
-			CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(m_pRefRunMe));
+			CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(m_Run, m_pRefRunMe));
 			long index = m_ctrlRefRuns->InsertItem(data);
 			m_ctrlRefRuns->Select(index);
 			// Insert item first to set selection.

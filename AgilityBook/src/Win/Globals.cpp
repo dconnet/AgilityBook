@@ -280,3 +280,13 @@ void DrawBetterLabel(
 	if (!bCalc)
 		pDC->DestroyClippingRegion();
 }
+
+
+// 8/17/03: Only compute score on Q and NQ runs.
+// 11/13/04: Also compute score for NA runs that have no titling pts.
+// 11/1/15: Moved test to Globals, allow all NA runs. (AgilityBookViewRuns
+//          never had the NA test added.)
+bool ShouldComputeScore(ARB_Q q)
+{
+	return q.Qualified() || ARB_Q::eQ_NQ == q || ARB_Q::eQ_NA == q;
+}

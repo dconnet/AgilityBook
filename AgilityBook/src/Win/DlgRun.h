@@ -30,6 +30,7 @@
  * 2004-03-30 Created
  *
  * DlgRunReference
+ * 2015-11-01 Added YPS.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-07-10 Add button to add yourself to ref-runs.
  * 2005-06-25 Cleaned up reference counting when returning a pointer.

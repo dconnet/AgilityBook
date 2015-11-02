@@ -166,7 +166,7 @@ Revision History:
            Added versioning to configuration to allow auto-upgrades.
            Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="51">
+  <Configuration version="52">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
