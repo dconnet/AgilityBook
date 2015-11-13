@@ -786,8 +786,10 @@ std::wstring FormatBytes(
 		int inPrec,
 		ByteSizeStyle inSizeStyle)
 {
-	// byte, kibibyte, mebibyte, gibibyte, tebibyte, pebibyte, exbibyte, zetta, yotta
+	// byte, kilo, mega, giga, tera, peta, exa, zetta, yotta
+	// Note: bronto, geop are next. Don't know the binary units, or the abbrev
 	static wchar_t const * const sc_unitsSI[]     = {L" B", L" kB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB", L"ZB", L"YB"};
+	// byte, kibi, mebi, gibi, tebi, pebi, exbi, zebi, yobi
 	static wchar_t const * const sc_unitsBinary[] = {L" B", L" KiB", L" MiB", L" GiB", L" TiB", L" PiB", L" EiB", L"ZiB", L"YiB"};
 	static wchar_t const * const sc_unitsTrue[]   = {L" B", L" KB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB", L"ZB", L"YB"};
 	static const struct
