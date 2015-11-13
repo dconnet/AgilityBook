@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-13 Added zetta and yotta bytes.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-11-17 Enhanced FormatBytes (added true units as they're meant to be!)
  * 2014-08-28 Enhanced FormatBytes
@@ -785,10 +786,10 @@ std::wstring FormatBytes(
 		int inPrec,
 		ByteSizeStyle inSizeStyle)
 {
-	// byte, kibibyte, mebibyte, gibibyte, tebibyte, pebibyte, exbibyte
-	static wchar_t const * const sc_unitsSI[]     = {L" B", L" kB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB"};
-	static wchar_t const * const sc_unitsBinary[] = {L" B", L" KiB", L" MiB", L" GiB", L" TiB", L" PiB", L" EiB"};
-	static wchar_t const * const sc_unitsTrue[]   = {L" B", L" KB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB"};
+	// byte, kibibyte, mebibyte, gibibyte, tebibyte, pebibyte, exbibyte, zetta, yotta
+	static wchar_t const * const sc_unitsSI[]     = {L" B", L" kB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB", L"ZB", L"YB"};
+	static wchar_t const * const sc_unitsBinary[] = {L" B", L" KiB", L" MiB", L" GiB", L" TiB", L" PiB", L" EiB", L"ZiB", L"YiB"};
+	static wchar_t const * const sc_unitsTrue[]   = {L" B", L" KB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB", L"ZB", L"YB"};
 	static const struct
 	{
 		wchar_t const* const* units;
