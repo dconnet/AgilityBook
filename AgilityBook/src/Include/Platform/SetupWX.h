@@ -17,6 +17,7 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
+ * 2015-11-25 Created ARB_64BIT
  * 2013-01-27 Split/moved stdafx.h.
  * 2013-01-01 Added _VARIADIC_MAX for vc11.
  * 2012-01-29 Add macro to ease selecting all text on dialog init.
@@ -126,6 +127,20 @@
 	#if !defined(_UNICODE)
 		#error _UNICODE must be defined when using wxUSE_UNICODE
 	#endif
+#endif
+
+// WX does not define a common 64bit flag
+
+#if defined(__WXMSW__)
+ #if defined(_WIN64) && !defined(ARB_64BIT)
+  #define ARB_64BIT
+ #endif
+#elif defined(__WXMAC__)
+ #if defined(__LP64__) && !defined(ARB_64BIT)
+  #define ARB_64BIT
+ #endif
+#else
+#error Unknown platform
 #endif
 
 

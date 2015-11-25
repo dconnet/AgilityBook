@@ -549,7 +549,7 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 	{
 		CVersionNum ver(true);
 		str << wxStandardPaths::Get().GetExecutablePath()
-#ifdef __WIN64__
+#ifdef ARB_64BIT
 			<< L" (64-bit): ";
 #else
 			<< L" (32-bit): ";

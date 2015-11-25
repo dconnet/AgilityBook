@@ -129,7 +129,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 std::wstring ARBAgilityRecordBook::GetArch()
 {
 #if defined(__WXMSW__)
- #if defined(__WIN64__)
+ #if defined(ARB_64BIT)
 	// Was "x64" (changed in v2.4)
 	return L"win64";
  #else
@@ -137,7 +137,7 @@ std::wstring ARBAgilityRecordBook::GetArch()
 	return L"win32";
  #endif
 #elif defined(__WXMAC__)
-// #if defined(__WIN64__)
+// #if defined(ARB_64BIT)
 //	return L"osx";
 // #else
 	// Was "mac" (changed in v2.4)
