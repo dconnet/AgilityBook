@@ -7,6 +7,7 @@
 #
 # History
 # 2015-11-10 Removed wx2.8/osx10.4 support
+# 2015-11-25 Strip 10.5/10.8 sdk (my build machine is 10.11 now)
 
 export BUILDDIR=
 export DEBUG=
@@ -20,7 +21,7 @@ USAGE="Usage $0 trunk|3.0 [debug|release] [carbon]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
-	VERSION="--disable-compat28"
+	VERSION="--disable-compat30"
 elif test "x$1" = "x3.0"; then
 	WXWIN=~/devtools/wx/wxWidgets-3.0.2
 	VERSION="--disable-compat28"
@@ -72,20 +73,6 @@ elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platfor
 	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
 	MINSDK=10.7
 	TARGETARCH="--enable-macosx_arch=x86_64"
-
-elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk; then
-	echo "Using 10.8 SDK"
-	COMPILERS="CC=clang CXX=clang++ LD=clang++"
-	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
-	MINSDK=10.5
-	TARGETARCH="--enable-macosx_arch=i386"
-
-elif test -d /Developer/SDKs/MacOSX10.5.sdk; then
-	echo "Using 10.5 SDK"
-	COMPILERS="CC=gcc-4.2 CXX=g++-4.2 LD=g++-4.2"
-	TARGETSDK=/Developer/SDKs/MacOSX10.5.sdk
-	MINSDK=10.5
-	TARGETARCH="--enable-macosx_arch=i386"
 fi
 
 if test "x$TARGETSDK" = "x"; then
