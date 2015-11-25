@@ -128,18 +128,23 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 // arch/lang to filename mapping). (see Win/UpdateInfo.cpp)
 std::wstring ARBAgilityRecordBook::GetArch()
 {
-#if defined(_WIN64)
+#if defined(__WXMSW__)
+ #if defined(__WIN64__)
 	// Was "x64" (changed in v2.4)
 	return L"win64";
-#elif defined(_WIN32)
+ #else
 	// Was "x86" (changed in v2.4)
 	return L"win32";
+ #endif
 #elif defined(__WXMAC__)
+// #if defined(__WIN64__)
+//	return L"osx";
+// #else
 	// Was "mac" (changed in v2.4)
 	return L"osx";
+// #endif
 #else
-#pragma PRAGMA_TODO("Define platform arch in version file for download")
-	return std::wstring();
+#error Unknown platform
 #endif
 }
 

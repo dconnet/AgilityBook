@@ -208,7 +208,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		{
 			CVersionNum ver(true);
 			str << wxStandardPaths::Get().GetExecutablePath()
-#ifdef _WIN64
+#ifdef __WIN64__
 				<< L" (64-bit): ";
 #else
 				<< L" (32-bit): ";
