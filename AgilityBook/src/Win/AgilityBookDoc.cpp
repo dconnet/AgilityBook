@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-25 Oops, Mac doesn't have '__super'.
  * 2015-10-29 Add Save override. Check if file was externally modified.
  * 2014-12-04 If all dogs are deceased, don't prompt to update config.
  * 2014-04-25 Don't prompt to update config if file is readonly.
@@ -1592,7 +1593,7 @@ bool CAgilityBookDoc::Save()
 				return false;
 		}
 	}
-	return __super::Save();
+	return wxDocument::Save();
 }
 
 
