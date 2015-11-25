@@ -137,10 +137,8 @@ std::wstring ARBAgilityRecordBook::GetArch()
 	return L"win32";
  #endif
 #elif defined(__WXMAC__)
-// #if defined(ARB_64BIT)
-//	return L"osx";
-// #else
 	// Was "mac" (changed in v2.4)
+	// Note: 32bit osx was dropped in v3 when min os changed to 10.7.
 	return L"osx";
 // #endif
 #else
