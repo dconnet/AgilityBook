@@ -11,7 +11,7 @@ class TestReporter;
 class TestResults;
 class Timer;
 
-int RunAllTests();
+UNITTEST_LINKAGE int RunAllTests();
 
 struct True
 {
@@ -21,13 +21,13 @@ struct True
 	}
 };
 
-class TestRunner
+class UNITTEST_LINKAGE TestRunner
 {
 public:
 	explicit TestRunner(TestReporter& reporter);
 	~TestRunner();
 
-	template <class Predicate>
+	template< class Predicate >
 	int RunTestsIf(TestList const& list, char const* suiteName, 
 				   const Predicate& predicate, int maxTestTimeInMs) const
 	{
@@ -35,16 +35,16 @@ public:
 
 	    while (curTest != 0)
 	    {
-		    if (IsTestInSuite(curTest,suiteName) && predicate(curTest))
-			{
+		    if (IsTestInSuite(curTest, suiteName) && predicate(curTest))
 				RunTest(m_result, curTest, maxTestTimeInMs);
-			}
 
-			curTest = curTest->next;
+			curTest = curTest->m_nextTest;
 	    }
 
 	    return Finish();
 	}	
+
+	TestResults* GetTestResults();
 
 private:
 	TestReporter* m_reporter;

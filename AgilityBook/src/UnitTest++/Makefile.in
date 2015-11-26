@@ -36,6 +36,7 @@ ARCHIVES = libUnitTest
 libUnitTest_SRCS = src/AssertException.cpp \
 	src/Test.cpp \
 	src/Checks.cpp \
+	src/CompositeTestReporter.cpp \
 	src/TestRunner.cpp \
 	src/TestResults.cpp \
 	src/TestReporter.cpp \

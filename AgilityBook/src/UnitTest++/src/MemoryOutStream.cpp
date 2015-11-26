@@ -1,25 +1,58 @@
 #include "MemoryOutStream.h"
 
-#ifndef UNITTEST_USE_CUSTOM_STREAMS
-
+#ifdef UNITTEST_MEMORYOUTSTREAM_IS_STD_OSTRINGSTREAM
 
 namespace UnitTest {
 
 char const* MemoryOutStream::GetText() const
 {
-    m_text = this->str();
-    return m_text.c_str();
+	m_text = this->str();
+	return m_text.c_str();
 }
 
-
+void MemoryOutStream::Clear()
+{
+	this->str(std::string());
+	m_text = this->str();
 }
 
+#ifdef UNITTEST_COMPILER_IS_MSVC6
+
+#define snprintf _snprintf
+
+template<typename ValueType>
+std::ostream& FormatToStream(std::ostream& stream, char const* format, ValueType const& value)
+{
+   using namespace std;
+   
+   const size_t BUFFER_SIZE=32;
+   char txt[BUFFER_SIZE];
+   snprintf(txt, BUFFER_SIZE, format, value);
+   return stream << txt;
+}
+
+std::ostream& operator<<(std::ostream& stream, __int64 const n)
+{
+   return FormatToStream(stream, "%I64d", n);
+}
+
+std::ostream& operator<<(std::ostream& stream, unsigned __int64 const n)
+{
+   return FormatToStream(stream, "%I64u", n);
+}
+
+#endif
+
+}
 
 #else
 
-
 #include <cstring>
 #include <cstdio>
+
+#if _MSC_VER
+#define snprintf _snprintf
+#endif
 
 namespace UnitTest {
 
@@ -30,8 +63,9 @@ void FormatToStream(MemoryOutStream& stream, char const* format, ValueType const
 {
 	using namespace std;
 
-    char txt[32];
-    sprintf(txt, format, value);
+    const size_t BUFFER_SIZE=32;
+    char txt[BUFFER_SIZE];
+    snprintf(txt, BUFFER_SIZE, format, value);
     stream << txt;
 }
 
@@ -56,12 +90,17 @@ MemoryOutStream::~MemoryOutStream()
     delete [] m_buffer;
 }
 
+void MemoryOutStream::Clear()
+{
+	m_buffer[0] = '\0';
+}
+
 char const* MemoryOutStream::GetText() const
 {
     return m_buffer;
 }
 
-MemoryOutStream& MemoryOutStream::operator << (char const* txt)
+MemoryOutStream& MemoryOutStream::operator <<(char const* txt)
 {
 	using namespace std;
 
@@ -78,37 +117,67 @@ MemoryOutStream& MemoryOutStream::operator << (char const* txt)
     return *this;
 }
 
-MemoryOutStream& MemoryOutStream::operator << (int const n)
+MemoryOutStream& MemoryOutStream::operator <<(int const n)
 {
     FormatToStream(*this, "%i", n);
     return *this;
 }
 
-MemoryOutStream& MemoryOutStream::operator << (long const n)
+MemoryOutStream& MemoryOutStream::operator <<(long const n)
 {
     FormatToStream(*this, "%li", n);
     return *this;
 }
 
-MemoryOutStream& MemoryOutStream::operator << (unsigned long const n)
+MemoryOutStream& MemoryOutStream::operator <<(unsigned long const n)
 {
     FormatToStream(*this, "%lu", n);
     return *this;
 }
 
-MemoryOutStream& MemoryOutStream::operator << (float const f)
+#ifdef UNITTEST_COMPILER_IS_MSVC6
+MemoryOutStream& MemoryOutStream::operator <<(__int64 const n)
+#else
+MemoryOutStream& MemoryOutStream::operator <<(long long const n)
+#endif
 {
-    FormatToStream(*this, "%ff", f);
+#ifdef UNITTEST_WIN32
+	FormatToStream(*this, "%I64d", n);
+#else
+	FormatToStream(*this, "%lld", n);
+#endif
+
+	return *this;
+}
+
+#ifdef UNITTEST_COMPILER_IS_MSVC6
+MemoryOutStream& MemoryOutStream::operator <<(unsigned __int64 const n)
+#else
+MemoryOutStream& MemoryOutStream::operator <<(unsigned long long const n)
+#endif
+{
+#ifdef UNITTEST_WIN32
+	FormatToStream(*this, "%I64u", n);
+#else
+	FormatToStream(*this, "%llu", n);
+#endif
+
+	return *this;
+}
+
+MemoryOutStream& MemoryOutStream::operator <<(float const f)
+{
+    FormatToStream(*this, "%0.6f", f);
     return *this;    
 }
 
-MemoryOutStream& MemoryOutStream::operator << (void const* p)
+MemoryOutStream& MemoryOutStream::operator <<(void const* p)
 {
     FormatToStream(*this, "%p", p);
     return *this;    
 }
 
-MemoryOutStream& MemoryOutStream::operator << (unsigned int const s)
+MemoryOutStream& MemoryOutStream::operator <<(unsigned int const s)
 {
     FormatToStream(*this, "%u", s);
     return *this;    
@@ -116,7 +185,7 @@ MemoryOutStream& MemoryOutStream::operator << (unsigned int const s)
 
 MemoryOutStream& MemoryOutStream::operator <<(double const d)
 {
-	FormatToStream(*this, "%f", d);
+	FormatToStream(*this, "%0.6f", d);
 	return *this;
 }
 

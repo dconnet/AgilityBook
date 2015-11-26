@@ -5,7 +5,6 @@ Additional software packages required (all free):
 - wxWidgets
 - poedit (includes msgcat)
 - wxFormBuilder (optional)
-- UnitTest++ [see note below, included in src tree now]
 - Boost libraries (not needed as of VC9+SP1)
 - Windows Installer XML toolset
 - Doxygen (optional)
@@ -227,27 +226,6 @@ This will generate an initial set of strings to translate.
 
 wxFormBuilder: http://sourceforge.net/projects/wxformbuilder/
 Useful for figuring out how a lay a dialog out.
-
---------------------
-
-UnitTest++: http://unittest-cpp.sourceforge.net/
-I'm currently using version 1.4
-If you don't want to run the unit tests, this is not required.
-All VC project files have been copied/renamed/modified such that:
- "vsnet..." to "VC..."
- OutputDirectory: $(SolutionDir)\bin\$(PlatformName)
- IntermediateDirectory: $(OutDir)\$(ConfigurationName)\$(ProjectName)
- Unicode/Non-unicode/LIB/DLL configs added to VC9 projects
- .lib names changed to UnitTest++.VC<vcversion>[S][U][D].lib
- Projects now use common vsprops files
-  - common, debug dll, debug lib, debug settings, (and release versions)
-- The original makefile has been renamed to Makefile.orig and Makefile.in
-  has been added so it can easily be compiled on Mac.
-- In addition, the .cpp files in Posix/ have been copied into the root
-  src directory as posix_*.cpp to avoid subdirectory make issues.
-- This has now been added into the source tree. Follow the UnitTest++
-  directions for compiling. [On Windows, you must specifically compile this.
-  On Mac, it is included in the current make process]
 
 --------------------
 

@@ -11,6 +11,7 @@
     </ClCompile>
     <ClCompile Include="..\..\UnitTest++\src\AssertException.cpp" />
     <ClCompile Include="..\..\UnitTest++\src\Checks.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\CompositeTestReporter.cpp" />
     <ClCompile Include="..\..\UnitTest++\src\CurrentTest.cpp" />
     <ClCompile Include="..\..\UnitTest++\src\DeferredTestReporter.cpp" />
     <ClCompile Include="..\..\UnitTest++\src\DeferredTestResult.cpp" />
@@ -33,13 +34,17 @@
     <ClInclude Include="..\..\UnitTest++\src\AssertException.h" />
     <ClInclude Include="..\..\UnitTest++\src\CheckMacros.h" />
     <ClInclude Include="..\..\UnitTest++\src\Checks.h" />
+    <ClInclude Include="..\..\UnitTest++\src\CompositeTestReporter.h" />
     <ClInclude Include="..\..\UnitTest++\src\Config.h" />
     <ClInclude Include="..\..\UnitTest++\src\CurrentTest.h" />
     <ClInclude Include="..\..\UnitTest++\src\DeferredTestReporter.h" />
     <ClInclude Include="..\..\UnitTest++\src\DeferredTestResult.h" />
+    <ClInclude Include="..\..\UnitTest++\src\ExceptionMacros.h" />
     <ClInclude Include="..\..\UnitTest++\src\ExecuteTest.h" />
+    <ClInclude Include="..\..\UnitTest++\src\HelperMacros.h" />
     <ClInclude Include="..\..\UnitTest++\src\MemoryOutStream.h" />
     <ClInclude Include="..\..\UnitTest++\src\ReportAssert.h" />
+    <ClInclude Include="..\..\UnitTest++\src\ReportAssertImpl.h" />
     <ClInclude Include="..\..\UnitTest++\src\Test.h" />
     <ClInclude Include="..\..\UnitTest++\src\TestDetails.h" />
     <ClInclude Include="..\..\UnitTest++\src\TestList.h" />
@@ -52,6 +57,7 @@
     <ClInclude Include="..\..\UnitTest++\src\TimeConstraint.h" />
     <ClInclude Include="..\..\UnitTest++\src\TimeHelpers.h" />
     <ClInclude Include="..\..\UnitTest++\src\UnitTest++.h" />
+    <ClInclude Include="..\..\UnitTest++\src\UnitTestPP.h" />
     <ClInclude Include="..\..\UnitTest++\src\XmlTestReporter.h" />
   </ItemGroup>
 </Project>

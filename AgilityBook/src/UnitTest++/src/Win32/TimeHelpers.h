@@ -2,7 +2,7 @@
 #define UNITTEST_TIMEHELPERS_H
 
 #include "../Config.h"
-
+#include "../HelperMacros.h"
 
 #ifdef UNITTEST_MINGW
     #ifndef __int64
@@ -12,12 +12,12 @@
 
 namespace UnitTest {
 
-class Timer
+class UNITTEST_LINKAGE Timer
 {
 public:
     Timer();
 	void Start();
-	int GetTimeInMs() const;    
+	double GetTimeInMs() const;    
 
 private:
     __int64 GetTime() const;
@@ -37,12 +37,9 @@ private:
 
 namespace TimeHelpers
 {
-void SleepMs (int ms);
+	UNITTEST_LINKAGE void SleepMs(int ms);
 }
 
-
 }
-
-
 
 #endif
