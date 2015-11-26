@@ -19,7 +19,7 @@ Once the above software is unpacked, the directory structure should look like:
   - <some_path>/boost_<ver>/ [BOOST_ROOT points to this]
       - ...(Boost structure)
     I typically use \devtools\boost\boost_<ver>. Then my other 3rdparty tools
-	also reside in devtools, for instance: \devtools\wx\wxWidgets-<ver>.
+    also reside in devtools, for instance: \devtools\wx\wxWidgets-<ver>.
 
 --------------------
 
@@ -339,34 +339,26 @@ sudo port -v selfupdate
 sudo port upgrade outdated
 initial: sudo port install autoconf
          sudo port install subversion
+         sudo port install git
 
 The xcode projects were used as follows:
-.../xcode6: Xcode 6.1 on OSX10.9
-            Recommended (so projects work right):
-            - Set DerivedData to Relative, 'build'
-              - Advanced: Unique
-            AgilityBook.xcworkspace
-                wx3.0, cocoa, OSX10.9 sdk, OSX10.7 deployment target
-                C++ Language Dialect: c++11 (-std=c++11)
-                C++ Std Lib: libc++
-.../xcode7: Xcode 7.x on OSX10.10
+.../xcode7: Xcode 7.x on OSX10.11
+            From release notes: "The Xcode build system no longer automatically
+            inherits the environment used to launch the app when running in the
+            IDE" This means my use of $WXBASE is now broken. To fix, run this
+            in bash:
+              defaults write com.apple.dt.Xcode UseSanitizedBuildSystemEnvironment -bool NO
             Recommended (so projects work right):
             - Set DerivedData to Relative, 'build'
               - Advanced: Unique
             AgilityBook.xcworkspace
                 wx3.0, cocoa, Current sdk, OSX10.7 deployment target
-				x64 (dropped 32bit)
+                x64 (dropped 32bit)
                 C++ Language Dialect: c++11 (-std=c++11)
                 C++ Std Lib: libc++
 
 To determine clang precessor defines (works for gcc also):
   clang -dM -E -x c /dev/null
-
-xcode7 notes:
-From release notes: "The Xcode build system no longer automatically inherits
-the environment used to launch the app when running in the IDE"
-This means my use of $WXBASE is now broken. To fix, run this in bash:
-  defaults write com.apple.dt.Xcode UseSanitizedBuildSystemEnvironment -bool NO
 
 OSX 10.9:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)

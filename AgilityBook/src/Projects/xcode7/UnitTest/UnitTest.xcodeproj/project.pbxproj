@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E10891DF1C07963D009C8CE3 /* CompositeTestReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10891D91C07963D009C8CE3 /* CompositeTestReporter.cpp */; };
+		E10891E01C07963D009C8CE3 /* CompositeTestReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = E10891DA1C07963D009C8CE3 /* CompositeTestReporter.h */; };
+		E10891E11C07963D009C8CE3 /* ExceptionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E10891DB1C07963D009C8CE3 /* ExceptionMacros.h */; };
+		E10891E21C07963D009C8CE3 /* HelperMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E10891DC1C07963D009C8CE3 /* HelperMacros.h */; };
+		E10891E31C07963D009C8CE3 /* ReportAssertImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = E10891DE1C07963D009C8CE3 /* ReportAssertImpl.h */; };
+		E10891E51C07965F009C8CE3 /* UnitTestPP.h in Headers */ = {isa = PBXBuildFile; fileRef = E10891E41C07965F009C8CE3 /* UnitTestPP.h */; };
 		E10A1BA018088BB900697325 /* AssertException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10A1B5B18088BB900697325 /* AssertException.cpp */; };
 		E10A1BA118088BB900697325 /* AssertException.h in Headers */ = {isa = PBXBuildFile; fileRef = E10A1B5C18088BB900697325 /* AssertException.h */; };
 		E10A1BA218088BB900697325 /* CheckMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E10A1B5D18088BB900697325 /* CheckMacros.h */; };
@@ -55,6 +61,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E10891D91C07963D009C8CE3 /* CompositeTestReporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompositeTestReporter.cpp; sourceTree = "<group>"; };
+		E10891DA1C07963D009C8CE3 /* CompositeTestReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositeTestReporter.h; sourceTree = "<group>"; };
+		E10891DB1C07963D009C8CE3 /* ExceptionMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionMacros.h; sourceTree = "<group>"; };
+		E10891DC1C07963D009C8CE3 /* HelperMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperMacros.h; sourceTree = "<group>"; };
+		E10891DE1C07963D009C8CE3 /* ReportAssertImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportAssertImpl.h; sourceTree = "<group>"; };
+		E10891E41C07965F009C8CE3 /* UnitTestPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitTestPP.h; sourceTree = "<group>"; };
 		E10A1B5218088B5300697325 /* libUnitTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUnitTest.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E10A1B5B18088BB900697325 /* AssertException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssertException.cpp; sourceTree = "<group>"; };
 		E10A1B5C18088BB900697325 /* AssertException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssertException.h; sourceTree = "<group>"; };
@@ -147,6 +159,8 @@
 				E10A1B5D18088BB900697325 /* CheckMacros.h */,
 				E10A1B5E18088BB900697325 /* Checks.cpp */,
 				E10A1B5F18088BB900697325 /* Checks.h */,
+				E10891D91C07963D009C8CE3 /* CompositeTestReporter.cpp */,
+				E10891DA1C07963D009C8CE3 /* CompositeTestReporter.h */,
 				E10A1B6018088BB900697325 /* Config.h */,
 				E10A1B6118088BB900697325 /* CurrentTest.cpp */,
 				E10A1B6218088BB900697325 /* CurrentTest.h */,
@@ -154,13 +168,16 @@
 				E10A1B6418088BB900697325 /* DeferredTestReporter.h */,
 				E10A1B6518088BB900697325 /* DeferredTestResult.cpp */,
 				E10A1B6618088BB900697325 /* DeferredTestResult.h */,
+				E10891DB1C07963D009C8CE3 /* ExceptionMacros.h */,
 				E10A1B6718088BB900697325 /* ExecuteTest.h */,
+				E10891DC1C07963D009C8CE3 /* HelperMacros.h */,
 				E10A1B6818088BB900697325 /* MemoryOutStream.cpp */,
 				E10A1B6918088BB900697325 /* MemoryOutStream.h */,
 				E10A1B6F18088BB900697325 /* posix_SignalTranslator.cpp */,
 				E10A1B7018088BB900697325 /* posix_TimeHelpers.cpp */,
 				E10A1B7118088BB900697325 /* ReportAssert.cpp */,
 				E10A1B7218088BB900697325 /* ReportAssert.h */,
+				E10891DE1C07963D009C8CE3 /* ReportAssertImpl.h */,
 				E10A1B7318088BB900697325 /* Test.cpp */,
 				E10A1B7418088BB900697325 /* Test.h */,
 				E10A1B7518088BB900697325 /* TestDetails.cpp */,
@@ -181,6 +198,7 @@
 				E10A1B9818088BB900697325 /* TimeConstraint.h */,
 				E10A1B9918088BB900697325 /* TimeHelpers.h */,
 				E10A1B9A18088BB900697325 /* UnitTest++.h */,
+				E10891E41C07965F009C8CE3 /* UnitTestPP.h */,
 				E10A1B9E18088BB900697325 /* XmlTestReporter.cpp */,
 				E10A1B9F18088BB900697325 /* XmlTestReporter.h */,
 			);
@@ -210,6 +228,7 @@
 				E10A1BA218088BB900697325 /* CheckMacros.h in Headers */,
 				E10A1BA418088BB900697325 /* Checks.h in Headers */,
 				E10A1BA518088BB900697325 /* Config.h in Headers */,
+				E10891E11C07963D009C8CE3 /* ExceptionMacros.h in Headers */,
 				E10A1BA718088BB900697325 /* CurrentTest.h in Headers */,
 				E10A1BA918088BB900697325 /* DeferredTestReporter.h in Headers */,
 				E10A1BAB18088BB900697325 /* DeferredTestResult.h in Headers */,
@@ -219,16 +238,20 @@
 				E10A1BB818088BB900697325 /* Test.h in Headers */,
 				E10A1BBA18088BB900697325 /* TestDetails.h in Headers */,
 				E10A1BBC18088BB900697325 /* TestList.h in Headers */,
+				E10891E01C07963D009C8CE3 /* CompositeTestReporter.h in Headers */,
 				E10A1BBD18088BB900697325 /* TestMacros.h in Headers */,
 				E10A1BBF18088BB900697325 /* TestReporter.h in Headers */,
 				E10A1BC118088BB900697325 /* TestReporterStdout.h in Headers */,
+				E10891E31C07963D009C8CE3 /* ReportAssertImpl.h in Headers */,
 				E10A1BC318088BB900697325 /* TestResults.h in Headers */,
+				E10891E51C07965F009C8CE3 /* UnitTestPP.h in Headers */,
 				E10A1BC518088BB900697325 /* TestRunner.h in Headers */,
 				E10A1BD918088BB900697325 /* TestSuite.h in Headers */,
 				E10A1BDB18088BB900697325 /* TimeConstraint.h in Headers */,
 				E10A1BDC18088BB900697325 /* TimeHelpers.h in Headers */,
 				E10A1BDD18088BB900697325 /* UnitTest++.h in Headers */,
 				E10A1BE118088BB900697325 /* XmlTestReporter.h in Headers */,
+				E10891E21C07963D009C8CE3 /* HelperMacros.h in Headers */,
 				E10A1BE818088DDF00697325 /* SignalTranslator.h in Headers */,
 				E10A1BEA18088DDF00697325 /* TimeHelpers.h in Headers */,
 			);
@@ -305,6 +328,7 @@
 				E10A1BE018088BB900697325 /* XmlTestReporter.cpp in Sources */,
 				E10A1BE718088DDF00697325 /* SignalTranslator.cpp in Sources */,
 				E10A1BE918088DDF00697325 /* TimeHelpers.cpp in Sources */,
+				E10891DF1C07963D009C8CE3 /* CompositeTestReporter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
