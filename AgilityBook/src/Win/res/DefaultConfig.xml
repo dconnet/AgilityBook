@@ -772,39 +772,27 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       </Event>
       <Event Name="Game: Faults/Time" ShortName="Game: FT" hasSubNames="y" hasTable="y">
         <Desc>This is for events scored like Standard.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
+        <Scoring Division="Fun" Level="Fun" type="FaultsThenTime"/>
       </Event>
       <Event Name="Game: Time+Faults" ShortName="Game: T+F" hasSubNames="y">
         <Desc>This is for Time plus Fault events. Time faults are not added.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="TimePlusFaults">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
+        <Scoring Division="Fun" Level="Fun" type="TimePlusFaults"/>
       </Event>
       <Event Name="Game: Total Points" ShortName="Game: Pt" hasSubNames="y">
         <Desc>Points are accumulated in a single time period, like FAST.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="OCScoreThenTime">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
+        <Scoring Division="Fun" Level="Fun" type="OCScoreThenTime"/>
       </Event>
       <Event Name="Game: Total Points - TimeFaults1" ShortName="Game: Pt-TF1" hasSubNames="y">
         <Desc>Points are accumulated in a single time period, like FAST. Time over SCT is deducted.</Desc>
-        <Scoring Division="Fun" Level="Fun" dropFractions="y" overTF="y" subtractTF="y" type="OCScoreThenTime">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
+        <Scoring Division="Fun" Level="Fun" dropFractions="y" overTF="y" subtractTF="y" type="OCScoreThenTime"/>
       </Event>
       <Event Name="Game: Open/Close Points" ShortName="Game: OCPt" hasSubNames="y">
         <Desc>Points are accumulated separately in the opening and closing, like Gamblers.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="OCScoreThenTime">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
+        <Scoring Division="Fun" Level="Fun" type="OCScoreThenTime"/>
       </Event>
       <Event Name="Game: Relay" ShortName="Game: Relay" hasPartner="y" hasSubNames="y">
         <Desc>This is for events run with one or more partners. Scored like Standard.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
+        <Scoring Division="Fun" Level="Fun" type="FaultsThenTime"/>
       </Event>
       <MultiQ Name="Double Q" SName="QQ">
         <MultiQItem Div="Regular" Event="JWW" Level="Master"/>

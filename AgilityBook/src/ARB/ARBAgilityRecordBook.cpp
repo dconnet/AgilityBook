@@ -16,6 +16,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2015-11-27 Fix Qs on runs when titling points are removed from config.
  * 2015-02-13 File version 14.3
  * 2014-08-17 Fix crash when saving a new file.
  * 2014-06-09 Add access to write-only data for file-properties purpose.
@@ -548,6 +549,15 @@ bool ARBAgilityRecordBook::Update(
 						!= pRun->GetScoring().GetType())
 					{
 						pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()), pScoring->DropFractions());
+					}
+					if (0 == pScoring->GetLifetimePoints().size() + pScoring->GetTitlePoints().size())
+					{
+						ARB_Q q = pRun->GetQ();
+						if (!q.AllowForNonTitling())
+						{
+							// Titling points were removed. Reset the Q/NQ to NA.
+							pRun->SetQ(ARB_Q::eQ_NA);
+						}
 					}
 					++iterRun;
 				}

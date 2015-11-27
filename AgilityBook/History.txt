@@ -2,6 +2,7 @@
 - Bumped Configuration v52:
   - Added USDAA Veteran-CH titles.
   - Updated VALOR events and titles.
+  - Removed Q/NQ from AKC fun runs (from config v51).
 - New features / Enhancements:
   - Dbl-click on Filter status area invokes Preferences.
   - Add a check during save to see if file has been modified since it was read.
@@ -10,6 +11,7 @@
 - Bug fixes:
   - Fix combobox issue introduced in 3.1.2.
   - Fixed ink input
+  - Fix Qs on runs when titling points are removed from config.
 
 9/12/2015: v3.1.2.97
 - Bumped Configuration v51:
