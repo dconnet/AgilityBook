@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-27 Use subname for event, if set.
  * 2012-09-09 Added 'titlePts' to 'Placement'.
  * 2012-03-03 Fixed new unearned titles from showing up in view.
  * 2011-10-14 Modify how reorder dialog is invoked.
@@ -1263,7 +1264,10 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 			}
 			break;
 		case IO_TREE_RUN_EVENT:
-			str << m_pRun->GetEvent();
+			if (m_pRun->GetSubName().empty())
+				str << m_pRun->GetEvent();
+			else
+				str << m_pRun->GetSubName();
 			break;
 		case IO_TREE_RUN_DIVISION:
 			str << m_pRun->GetDivision();

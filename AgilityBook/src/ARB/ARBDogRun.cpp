@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-27 Changed generic name to use subname if set.
  * 2015-05-19 Added GetName (generic name without date).
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2014-09-02 Fix gambles with no closing required so titling works.
@@ -204,7 +205,10 @@ std::wstring ARBDogRun::GetName() const
 std::wstring ARBDogRun::GetGenericName() const
 {
 	std::wstring name = m_Date.GetString(ARBDate::eDashYMD) + L" ";
-	name += GetName();
+	if (0 < m_SubName.length())
+		name = m_Division + L" " + m_Level + L" " + m_SubName;
+	else
+		name += GetName();
 	return name;
 }
 

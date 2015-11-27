@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-27 Use subname for event, if set.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2013-09-03 Changed to use short names.
@@ -505,9 +506,14 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 								div = pDiv->GetName();
 						}
 
-						evt = pEvent->GetShortName();
+						if (pEvent->HasSubNames())
+							evt = run->GetSubName();
 						if (evt.empty())
-							evt = pEvent->GetName();
+						{
+							evt = pEvent->GetShortName();
+							if (evt.empty())
+								evt = pEvent->GetName();
+						}
 					}
 				}
 			}

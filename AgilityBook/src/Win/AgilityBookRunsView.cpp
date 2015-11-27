@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-27 Use subname for event, if set.
  * 2015-11-01 Compute score for NA runs also.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-09-02 After sorting by column, make sure selection is visible.
@@ -173,7 +174,10 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			str << m_pRun->GetLevel();
 			break;
 		case IO_RUNS_EVENT:
-			str << m_pRun->GetEvent();
+			if (m_pRun->GetSubName().empty())
+				str << m_pRun->GetEvent();
+			else
+				str << m_pRun->GetSubName();
 			break;
 		case IO_RUNS_HEIGHT:
 			str << m_pRun->GetHeight();
