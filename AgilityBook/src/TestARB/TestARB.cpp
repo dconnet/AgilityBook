@@ -9,6 +9,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-27 Added test duration to verbose option.
  * 2013-08-18 Reuse Win/LanguageManager
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2011-11-17 Add ability to switch languages
@@ -65,10 +66,10 @@ void CReporterVerbose::ReportTestStart(UnitTest::TestDetails const& test)
 }
 
 
-void CReporterVerbose::ReportTestFinish(UnitTest::TestDetails const& test, float /*secondsElapsed*/)
+void CReporterVerbose::ReportTestFinish(UnitTest::TestDetails const& test, float secondsElapsed)
 {
 	if (m_bVerbose)
-		printf("%s:%d: %s:%s finished\n", test.filename, test.lineNumber, test.suiteName, test.testName);
+		printf("%s:%d: %s:%s finished in %f seconds\n", test.filename, test.lineNumber, test.suiteName, test.testName, secondsElapsed);
 }
 
 
