@@ -1,7 +1,7 @@
-Last Updated: 11/24/2015
+Last Updated: 11/27/2015
 
-- Create 'named' title points. For instance, a named Lifetime point could
-  be ASCA's 'Finals Points'.
+- Support multiple named lifetime points. Currently only one set of
+  (optionally) named lifetime points are supported.
 
 - Add warning in run dialog when Q is UNK that the following will not
   be saved:

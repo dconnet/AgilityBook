@@ -1,6 +1,7 @@
 11/27/2015: v3.1.3.<development>
 - Bumped Configuration v52:
   - Added USDAA Veteran-CH titles.
+  - Added ASCA Finals points.
   - Updated VALOR events and titles.
   - Removed Q/NQ from AKC fun runs (from config v51).
 - New features / Enhancements:

@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2015-10-23 Configuration version 52.
+2015-11-27 Configuration version 52.
            Added USDAA Veteran CH titles.
+           Added ASCA Finals points (lifetime).
            Updated VALOR events and titles.
 2015-09-10 Configuration version 51.
            Added AKC Premier. Added support for fun games.
@@ -813,7 +814,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         <MultiQItem Div="Preferred" Event="Standard" Level="Master"/>
       </MultiQ>
     </Venue>
-    <Venue LongName="Australian Shepherd Club of America" Name="ASCA" URL="http://www.asca.org/" icon="5">
+    <Venue LifetimeName="Finals" LongName="Australian Shepherd Club of America" Name="ASCA" URL="http://www.asca.org/" icon="5">
       <Titles LongName="Novice Regular" Name="RS-N">30 Points</Titles>
       <Titles LongName="Novice Jumpers" Name="JS-N">20 Points</Titles>
       <Titles LongName="Novice Gamblers" Name="GS-N">20 Points</Titles>
@@ -995,14 +996,17 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         <Scoring Division="Standard" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Veterans" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Junior" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="ACE" Level="*" ValidFrom="2014-6-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
@@ -1016,12 +1020,15 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Event Name="Jumpers">
         <Scoring Division="Standard" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Veterans" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Junior" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="ACE" Level="*" ValidFrom="2014-6-8" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
@@ -1034,50 +1041,62 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         <Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="21" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="18" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="15" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="21" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="18" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="15" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="ACE" Level="Elite" OpeningPts="21" ValidFrom="2014-6-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
