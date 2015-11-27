@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-27 Remove WIN32 ifdef from tests.
  * 2008-06-29 Created
  */
 
@@ -240,95 +241,116 @@ SUITE(TestString)
 
 	TEST(Trim)
 	{
-		std::wstring str(L"  xyx  ");
-		CHECK(StringUtil::Trim(str) == L"xyx");
-		CHECK(StringUtil::TrimLeft(str) == L"xyx  ");
-		CHECK(StringUtil::TrimRight(str) == L"  xyx");
+		if (!g_bMicroTest)
+		{
+			std::wstring str(L"  xyx  ");
+			CHECK(StringUtil::Trim(str) == L"xyx");
+			CHECK(StringUtil::TrimLeft(str) == L"xyx  ");
+			CHECK(StringUtil::TrimRight(str) == L"  xyx");
+		}
 	}
 
 
 	TEST(TrimChar)
 	{
-		std::wstring str(L"\"xyx\"");
-		CHECK(StringUtil::Trim(str, '"') == L"xyx");
-		CHECK(StringUtil::TrimLeft(str, '"') == L"xyx\"");
-		CHECK(StringUtil::TrimRight(str, '"') == L"\"xyx");
+		if (!g_bMicroTest)
+		{
+			std::wstring str(L"\"xyx\"");
+			CHECK(StringUtil::Trim(str, '"') == L"xyx");
+			CHECK(StringUtil::TrimLeft(str, '"') == L"xyx\"");
+			CHECK(StringUtil::TrimRight(str, '"') == L"\"xyx");
+		}
 	}
 
 
-#ifdef WIN32
 	TEST(Sort)
 	{
-		CHECK(StringUtil::CanCompareDigits());
-
-		std::vector<std::wstring> items;
-		items.push_back(L"1a");
-		items.push_back(L"10a");
-		items.push_back(L"2a");
-
-		std::stable_sort(items.begin(), items.end(),
-			[](std::wstring const& one, std::wstring const& two)
+		if (!g_bMicroTest)
+		{
+			if (StringUtil::CanCompareDigits())
 			{
-				return StringUtil::CompareNoCase(one, two) < 0;
-			}
-			);
 
-		CHECK(items[0] == L"1a");
-		CHECK(items[1] == L"2a");
-		CHECK(items[2] == L"10a");
+				std::vector<std::wstring> items;
+				items.push_back(L"1a");
+				items.push_back(L"10a");
+				items.push_back(L"2a");
+
+				std::stable_sort(items.begin(), items.end(),
+					[](std::wstring const& one, std::wstring const& two)
+					{
+						return StringUtil::CompareNoCase(one, two) < 0;
+					}
+					);
+
+				CHECK(items[0] == L"1a");
+				CHECK(items[1] == L"2a");
+				CHECK(items[2] == L"10a");
+			}
+		}
 	}
 
 
 	TEST(Sort2)
 	{
-		std::vector<std::wstring> items;
-		items.push_back(L"bob");
-		items.push_back(L"Bob");
-		items.push_back(L"Aa");
-		items.push_back(L"2a");
-		items.push_back(L"a");
-
-		std::stable_sort(items.begin(), items.end(),
-			[](std::wstring const& one, std::wstring const& two)
+		if (!g_bMicroTest)
+		{
+			if (StringUtil::CanCompareDigits())
 			{
-				return StringUtil::CompareNoCase(one, two) < 0;
-			}
-			);
+				std::vector<std::wstring> items;
+				items.push_back(L"bob");
+				items.push_back(L"Bob");
+				items.push_back(L"Aa");
+				items.push_back(L"2a");
+				items.push_back(L"a");
 
-		CHECK(items[0] == L"2a");
-		CHECK(items[1] == L"a");
-		CHECK(items[2] == L"Aa");
-		// Case insensitive - so these should be same order as inserted
-		CHECK(items[3] == L"bob");
-		CHECK(items[4] == L"Bob");
+				std::stable_sort(items.begin(), items.end(),
+					[](std::wstring const& one, std::wstring const& two)
+					{
+						return StringUtil::CompareNoCase(one, two) < 0;
+					}
+					);
+
+				CHECK(items[0] == L"2a");
+				CHECK(items[1] == L"a");
+				CHECK(items[2] == L"Aa");
+				// Case insensitive - so these should be same order as inserted
+				CHECK(items[3] == L"bob");
+				CHECK(items[4] == L"Bob");
+			}
+		}
 	}
 
 
 	TEST(Sort3)
 	{
-		std::vector<std::wstring> items;
-		items.push_back(L"Bob");
-		items.push_back(L"bob");
-		items.push_back(L"Aa");
-		items.push_back(L"2a");
-		items.push_back(L"a");
-
-		// Note: Ignore case simply means "bob" == "Bob".
-		// It does not mean that lower case sorts before (or after) upper case.
-		std::stable_sort(items.begin(), items.end(),
-			[](std::wstring const& one, std::wstring const& two)
+		if (!g_bMicroTest)
+		{
+			if (StringUtil::CanCompareDigits())
 			{
-				return StringUtil::CompareNoCase(one, two) < 0;
-			}
-			);
+				std::vector<std::wstring> items;
+				items.push_back(L"Bob");
+				items.push_back(L"bob");
+				items.push_back(L"Aa");
+				items.push_back(L"2a");
+				items.push_back(L"a");
 
-		CHECK(items[0] == L"2a");
-		CHECK(items[1] == L"a");
-		CHECK(items[2] == L"Aa");
-		// Case insensitive - so these should be same order as inserted
-		CHECK(items[3] == L"Bob");
-		CHECK(items[4] == L"bob");
+				// Note: Ignore case simply means "bob" == "Bob".
+				// It does not mean that lower case sorts before (or after) upper case.
+				std::stable_sort(items.begin(), items.end(),
+					[](std::wstring const& one, std::wstring const& two)
+					{
+						return StringUtil::CompareNoCase(one, two) < 0;
+					}
+					);
+
+				CHECK(items[0] == L"2a");
+				CHECK(items[1] == L"a");
+				CHECK(items[2] == L"Aa");
+				// Case insensitive - so these should be same order as inserted
+				CHECK(items[3] == L"Bob");
+				CHECK(items[4] == L"bob");
+			}
+		}
 	}
-#endif
 
 }
