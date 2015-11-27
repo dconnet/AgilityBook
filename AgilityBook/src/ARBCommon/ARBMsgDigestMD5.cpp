@@ -16,6 +16,7 @@
  * the original external interfaces are]
  *
  * Revision History
+ * 2015-11-27 Fixed UINT4 definition on Mac by using wx-defined sizes.
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
  * 2010-02-07 Created
  */
@@ -64,7 +65,7 @@ typedef unsigned char *POINTER;
 /* UINT2 defines a two byte word */
 typedef unsigned short UINT2;
 /* UINT4 defines a four byte word */
-typedef unsigned long UINT4;
+typedef wxUint32 UINT4;
 
 typedef struct
 {

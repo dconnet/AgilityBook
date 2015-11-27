@@ -11,8 +11,9 @@
   - Show Subname for event when available.
 - Bug fixes:
   - Fix combobox issue introduced in 3.1.2.
-  - Fixed ink input
+  - Fixed ink input on Windows.
   - Fix Qs on runs when titling points are removed from config.
+  - Fixed broken MD5 computation on Mac.
 
 9/12/2015: v3.1.2.97
 - Bumped Configuration v51:
