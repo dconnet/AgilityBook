@@ -194,11 +194,11 @@ SUITE(TestMisc)
 #endif
 
 
-#ifdef __WXMSW__
 	TEST(VerifyColor)
 	{
 		if (!g_bMicroTest)
 		{
+#ifdef __WXMSW__
 			CHECK(wxSYS_COLOUR_SCROLLBAR == COLOR_SCROLLBAR);
 			CHECK(wxSYS_COLOUR_DESKTOP == COLOR_BACKGROUND);
 			CHECK(wxSYS_COLOUR_ACTIVECAPTION == COLOR_ACTIVECAPTION);
@@ -231,9 +231,9 @@ SUITE(TestMisc)
 			//CHECK(wxSYS_COLOUR_MENUHILIGHT == );
 			//CHECK(wxSYS_COLOUR_MENUBAR == );
 			//CHECK(wxSYS_COLOUR_LISTBOXTEXT == );
+#endif
 		}
 	}
-#endif
 
 
 	TEST(C99PrintfToSame)
