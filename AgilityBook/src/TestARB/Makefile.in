@@ -40,11 +40,11 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestArchive.cpp \
 	TestBinaryData.cpp \
 	TestBreakLine.cpp \
-	TestCalendar.cpp \
 	TestCalcPoints.cpp \
+	TestCalendar.cpp \
+	TestConfig.cpp \
 	TestConfigAction.cpp \
 	TestConfigCalSite.cpp \
-	TestConfig.cpp \
 	TestConfigDivision.cpp \
 	TestConfigEvent.cpp \
 	TestConfigFault.cpp \
@@ -59,8 +59,8 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestConfigTitlePoints.cpp \
 	TestConfigVenue.cpp \
 	TestDate.cpp \
-	TestDogClub.cpp \
 	TestDog.cpp \
+	TestDogClub.cpp \
 	TestDogExistingPoints.cpp \
 	TestDogNotes.cpp \
 	TestDogReferenceRun.cpp \
@@ -75,6 +75,7 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestElement.cpp \
 	TestErrorCallback.cpp \
 	TestInfoItem.cpp \
+	TestMD5.cpp \
 	TestMisc.cpp \
 	TestQ.cpp \
 	TestString.cpp \
