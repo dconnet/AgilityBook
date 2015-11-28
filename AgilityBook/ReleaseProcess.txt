@@ -45,6 +45,8 @@ Commit all changes to SVN.
 Pull files onto Mac and build there (see MAC_BUILD.txt)
 - Update Version (x.y.z) and Build (n) in xcode project General settings
   (unless this was done as prep for a new release below)
+- Update CFBundleVersion in xcode plist files (build number), this can be
+  done in Xcode in the 'General' page for ARBHelp and AgilityBook.
 On Mac10.9:
 - export PATH=$WXWIN/build-cocoa:$PATH
 - cd .../AgilityBook
