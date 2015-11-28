@@ -32,7 +32,7 @@ Do a full rebuild and verify it.
 - 'BuildAll.py -w %WXBASE%\wxWidgets-3.0.2 -b fullupdate' [runs VC10 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
       -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.0.0'
-	            Default is %WXWIN%
+                Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
       compiler: vc10, vc11, vc12 (default: vc10)
@@ -93,9 +93,10 @@ SourceForge:
 Web Site:
 - Upload msi zip files and dmg to files/
 - Update "$fileversion" and "$fileVerNo" in func.php
-- Update version2.xml and version.txt
+- Update version2.xml
   - Run 'ARBUpdater /g' and generate new size and md5/sha1 tags for each file.
   - Update config file (ConfigN.txt) [if necessary]
+  - (note: version.txt is no longer updated. It's only for 2.x support)
 - Make sure things are current (ongoing task!).
   - Update DTD
   - Update bugs.php, index.php
@@ -118,5 +119,5 @@ Prepare for next release:
   - This is done by editing .../include/VersionNumber.h
 - Update History.txt
 - Update CFBundleShortVersionString in xcode plist files
-  (so it doesn't have to be done as part of the release process,
-  except for CFBundleVersion - the build number)
+  (so it doesn't have to be done as part of the release process, except for
+  CFBundleVersion - the build number - that is done at start of release process)
