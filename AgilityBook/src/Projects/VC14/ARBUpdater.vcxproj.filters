@@ -51,6 +51,9 @@
     <ClCompile Include="..\..\ARBUpdater\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\Localization.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Win\res\AgilityBook.ico">
@@ -116,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\Localization.h">
+      <Filter>ARB</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

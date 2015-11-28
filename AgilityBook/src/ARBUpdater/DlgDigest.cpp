@@ -10,14 +10,20 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-11-28 Cleaned up UI, added copy command.
  * 2010-02-09 Created
  */
 
 #include "stdafx.h"
 #include "DlgDigest.h"
 
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/ARBMsgDigest.h"
+#include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "VersionNumber.h"
 
 #include "../Win/Globals.h"
 #include "../Win/ImageHelper.h"
@@ -110,17 +116,19 @@ bool CLongValidator::Validate(wxWindow* parent)
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgDigest, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgDigest::OnOk)
-END_EVENT_TABLE()
-
-
 CDlgDigest::CDlgDigest(wxString const& inFile)
-	: m_File(inFile)
+	: m_Localization()
+	, m_ctrlInit(nullptr)
+	, m_ctrlConfig(nullptr)
+	, m_ctrlConfigVersion(nullptr)
+	, m_ctrlCopy(nullptr)
+	, m_Config(L"C:\\AgilityBook\\trunk\\AgilityBook\\src\\Win\\res\\DefaultConfig.xml")
+	, m_File(inFile)
 	, m_MD5()
 	, m_SHA1()
 	, m_SHA256()
 	, m_Size(0)
+	, m_ConfigVersion(0)
 {
 	Create(nullptr, wxID_ANY, L"MD5/SHA1/SHA256 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
@@ -130,6 +138,9 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook48)));
 	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook256)));
 	SetIcons(icons);
+
+	m_Localization.Load();
+	IARBLocalization::Init(&m_Localization);
 
 	if (!m_File.empty())
 	{
@@ -159,10 +170,36 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 			m_Size = static_cast<long>(size);
 	}
 
+	m_ctrlInit = new wxButton(this, wxID_ANY,
+		_("Init"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	BIND_OR_CONNECT_CTRL(m_ctrlInit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDigest::OnInit);
+
+	m_ctrlConfig = new wxStaticText(this, wxID_ANY,
+		m_Config,
+		wxDefaultPosition, wxDefaultSize, 0);
+
+	wxStaticText* ctrlVersion = new wxStaticText(this, wxID_ANY,
+		L"Config Version:",
+		wxDefaultPosition, wxDefaultSize, 0);
+
+	m_ctrlConfigVersion = new wxStaticText(this, wxID_ANY,
+		L"?",
+		wxDefaultPosition, wxDefaultSize, 0);
+
 	wxTextCtrl* ctrlFile = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 260), -1), 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 260), -1), wxTE_READONLY,
 		wxTextValidator(wxFILTER_NONE, &m_File));
+
+	wxButton* ctrlFind = new wxButton(this, wxID_ANY,
+		_("Browse..."),
+		wxDefaultPosition, wxDefaultSize, 0);
+	BIND_OR_CONNECT_CTRL(ctrlFind, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDigest::OnBrowse);
+
+	wxStaticText* txtMD5 = new wxStaticText(this, wxID_ANY,
+		L"MD5",
+		wxDefaultPosition, wxDefaultSize, 0);
 
 	wxTextCtrl* ctrlMD5 = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
@@ -170,17 +207,29 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		wxTextValidator(wxFILTER_NONE, &m_MD5));
 	ctrlMD5->SetBackgroundColour(GetBackgroundColour());
 
+	wxStaticText* txtSHA1 = new wxStaticText(this, wxID_ANY,
+		L"SHA1",
+		wxDefaultPosition, wxDefaultSize, 0);
+
 	wxTextCtrl* ctrlSHA1 = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_READONLY,
 		wxTextValidator(wxFILTER_NONE, &m_SHA1));
 	ctrlSHA1->SetBackgroundColour(GetBackgroundColour());
 
+	wxStaticText* txtSHA256 = new wxStaticText(this, wxID_ANY,
+		L"SHA256",
+		wxDefaultPosition, wxDefaultSize, 0);
+
 	wxTextCtrl* ctrlSHA256 = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_READONLY,
 		wxTextValidator(wxFILTER_NONE, &m_SHA256));
 	ctrlSHA256->SetBackgroundColour(GetBackgroundColour());
+
+	wxStaticText* txtSize = new wxStaticText(this, wxID_ANY,
+		L"Size",
+		wxDefaultPosition, wxDefaultSize, 0);
 
 	wxTextCtrl* ctrlSize = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
@@ -191,15 +240,45 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(ctrlFile, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlMD5, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlSHA1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlSHA256, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlSize, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+
+
+	wxBoxSizer* sizeConfigData = new wxBoxSizer(wxVERTICAL);
+	sizeConfigData->Add(m_ctrlConfig, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+
+	wxBoxSizer* sizeConfigVersion = new wxBoxSizer(wxHORIZONTAL);
+	sizeConfigVersion->Add(ctrlVersion, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizeConfigVersion->Add(m_ctrlConfigVersion, 0, 0, 0);
+	sizeConfigData->Add(sizeConfigVersion, 0, 0, 0);
+
+	wxBoxSizer* sizeConfig = new wxBoxSizer(wxHORIZONTAL);
+	sizeConfig->Add(m_ctrlInit, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizeConfig->Add(sizeConfigData, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
+	bSizer->Add(sizeConfig, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+
+	wxBoxSizer* sizeFile = new wxBoxSizer(wxHORIZONTAL);
+	sizeFile->Add(ctrlFile, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizeFile->Add(ctrlFind, 0, wxALIGN_CENTER_VERTICAL, 0);
+	bSizer->Add(sizeFile, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+
+	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(4, 2, 0, 0);
+	sizerGrid->AddGrowableCol(1);
+	sizerGrid->SetFlexibleDirection(wxBOTH);
+	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+	sizerGrid->Add(txtMD5, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(ctrlMD5, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(txtSHA1, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(ctrlSHA1, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(txtSHA256, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(ctrlSHA256, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(txtSize, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(ctrlSize, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerGrid, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	wxButton* ok = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_OK), wxButton);
-	ok->SetLabel(L"Find...");
+	m_ctrlCopy = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_OK), wxButton);
+	m_ctrlCopy->SetLabel(L"Copy");
+	BIND_OR_CONNECT_CTRL(m_ctrlCopy, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDigest::OnCopy);
+	m_ctrlCopy->Enable(false);
 	wxButton* cancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
 	cancel->SetLabel(L"Close");
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
@@ -209,12 +288,72 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	GetSizer()->Fit(this);
 	wxSize sz = GetSize();
 	SetSizeHints(sz, wxSize(-1, sz.y));
-	ok->SetFocus();
+	ctrlFind->SetFocus();
 	CenterOnParent();
 }
 
 
-void CDlgDigest::OnOk(wxCommandEvent& evt)
+bool CDlgDigest::Init()
+{
+	static bool bInit = false;
+	if (!bInit)
+	{
+		wxFileDialog file(this,
+				L"", // caption
+				L"", // default dir
+				m_Config,
+				L"XML Files (*.xml)|*.xml|All Files (*.*)|*.*||",
+				wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+		if (wxID_OK != file.ShowModal())
+			return false;
+		if (m_Config != file.GetPath())
+		{
+			m_Config = file.GetPath();
+			m_ctrlConfig->SetLabel(m_Config);
+		}
+
+		wxBusyCursor wait;
+
+		ElementNodePtr tree(ElementNode::New());
+
+		std::wostringstream errMsg;
+		bool bOk = tree->LoadXML(m_Config.c_str(), errMsg);
+		if (!bOk)
+		{
+			wxMessageBox(errMsg.str().c_str());
+			return false;
+		}
+		if (tree->GetName() != L"DefaultConfig")
+			return false;
+
+		ARBConfig config;
+		int configIdx = tree->FindElement(TREE_CONFIG);
+		ARBErrorCallback err(errMsg);
+		if (!config.Load(tree->GetElementNode(configIdx), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+		{
+			wxMessageBox(errMsg.str().c_str());
+			return false;
+		}
+
+		m_ConfigVersion = config.GetVersion();
+		m_ctrlConfigVersion->SetLabel(wxString::Format(L"%hd", m_ConfigVersion));
+
+		bInit = true;
+		m_ctrlInit->Enable(false);
+		m_ctrlCopy->Enable(true);
+	}
+
+	return bInit;
+}
+
+
+void CDlgDigest::OnInit(wxCommandEvent& evt)
+{
+	Init();
+}
+
+
+void CDlgDigest::OnBrowse(wxCommandEvent& evt)
 {
 	wxFileDialog dlg(nullptr, wxFileSelectorPromptStr, wxEmptyString, m_File);
 	if (wxID_OK == dlg.ShowModal())
@@ -240,4 +379,48 @@ void CDlgDigest::OnOk(wxCommandEvent& evt)
 		m_Size = static_cast<long>(size);
 		TransferDataToWindow();
 	}
+}
+
+
+void CDlgDigest::OnCopy(wxCommandEvent& evt)
+{
+	if (m_File.empty())
+	{
+		wxBell();
+		return;
+	}
+
+	if (!Init())
+		return;
+
+	wxBusyCursor busy;
+
+	// Copy data in XML form needed for version2.xml
+	// <Platform arch = "osx" minOS = "10.4" ver = "2.4.5.93" config = "49"
+	//   file = "http://www.agilityrecordbook.com/files/AgilityBook-2_4_5_93-mac.dmg"
+	//   md5 = "0ed4c6dfbcfdd764ac877a25a8c19b2e"
+	//   sha1 = "80d7faaefa9680a783c126c3918a74dc4e46e7bb"
+	//   size = "10942007"
+	//   / >
+
+	wxFileName filename(m_File);
+
+	wxString str;
+	str << L"<Platform arch=\"?\" minOS=\"?\" "
+			<< L"ver=\"" << wxString::From8BitData(ARB_VERSION_STRING) << L"\" "
+			<< L"config=\"" << m_ConfigVersion << L"\"\n"
+		<< L"\tfile=\"http://www.agilityrecordbook.com/files/" << filename.GetFullName() << L"\"\n"
+		<< L"\tmd5=\"" << m_MD5 << L"\"\n"
+		<< L"\tsha1=\"" << m_SHA1 << L"\"\n"
+		<< L"\tsize=\"" << m_Size << L"\"\n"
+		<< L"\t/>\n";
+
+	if (wxTheClipboard->Open())
+	{
+		wxTheClipboard->SetData(new wxTextDataObject(str));
+		wxTheClipboard->Close();
+		wxMessageBox(L"Copied!", wxMessageBoxCaptionStr, wxOK, this);
+	}
+	else
+		wxBell();
 }

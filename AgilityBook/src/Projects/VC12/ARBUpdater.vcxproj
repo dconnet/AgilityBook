@@ -111,6 +111,7 @@
     <ClCompile Include="..\..\Win\ImageHelper.cpp" />
     <ClCompile Include="..\..\Win\ImageManager.cpp" />
     <ClCompile Include="..\..\Win\LanguageManager.cpp" />
+    <ClCompile Include="..\..\Win\Localization.cpp" />
     <ClCompile Include="..\..\Win\SetupApp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +137,7 @@
     <ClInclude Include="..\..\Win\ImageHelper.h" />
     <ClInclude Include="..\..\Win\ImageManager.h" />
     <ClInclude Include="..\..\Win\LanguageManager.h" />
+    <ClInclude Include="..\..\Win\Localization.h" />
     <ClInclude Include="..\..\Win\SetupApp.h" />
     <ClInclude Include="..\..\Win\SetupAppARB.h" />
   </ItemGroup>
@@ -145,6 +147,9 @@
     </ProjectReference>
     <ProjectReference Include="LibwxARBCommon.vcxproj">
       <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
+    </ProjectReference>
+    <ProjectReference Include="LibwxArchive.vcxproj">
+      <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
