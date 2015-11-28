@@ -10,7 +10,7 @@ Files to change before marking files for release:
     If this is missed, the new data will not be merged.
 - If configuration has changed:
   - Same as file version changing above
-  - Make sure it is added to TestARB (TestConfig.cpp)
+  - Make sure it is added to TestARB (TestConfig.cpp and CompileDatListTest.txt)
 - Update CD Labels
   - lsl: LightScribe Template Labeler
 - History.txt
