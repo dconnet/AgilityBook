@@ -4,7 +4,6 @@
     <Import Project="CommonMacros.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <wxWin2_8>$(WXBASE)\wxWidgets-2.8.12</wxWin2_8>
     <wxWin3_0>$(WXBASE)\wxWidgets-3.0.2</wxWin3_0>
     <wxWinTrunk>$(WXBASE)\trunk</wxWinTrunk>
     <wxWinEnv>$(WXWIN)</wxWinEnv>
@@ -25,9 +24,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <BuildMacro Include="wxWin2_8">
-      <Value>$(wxWin2_8)</Value>
-    </BuildMacro>
     <BuildMacro Include="wxWin3_0">
       <Value>$(wxWin3_0)</Value>
     </BuildMacro>
