@@ -49,6 +49,7 @@
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;ARBDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>..\Installer\arbdll\$(ProjectName).def</ModuleDefinitionFile>
@@ -58,6 +59,7 @@
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;ARBDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>..\Installer\arbdll\$(ProjectName).def</ModuleDefinitionFile>
