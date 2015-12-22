@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-12-22 Changed bAlwaysStripZeros to eStripZeros.
  * 2015-11-01 Added clear and IsSet.
  * 2014-06-09 Move string->arbversion parsing to ARBVersion.
  *            Added missing ARBVersion operator!=.
@@ -66,6 +67,13 @@ public:
 		eCurrent,	///< Use current locale.
 		eDefault	///< Use default (system) locale.
 	};
+	/// How to handle trailing zeros
+	enum ZeroStrip
+	{
+		eCompatible,	///< Strip, unless inPrec = 2
+		eStrip,			///< Strip
+		eAsIs			///< Don't touch
+	};
 	/**
 	 * Trailing zeros are trimmed unless inPrec=2.
 	 * Then they are only trimmed if all zero (and inPrec=2).
@@ -74,7 +82,7 @@ public:
 			double inValue,
 			int inPrec = 2,
 			LocaleType eUseDefaultLocale = eDefault,
-			bool bAlwaysStripZeros = false);
+			ZeroStrip eStripZeros = eCompatible);
 	/**
 	 * Compare two doubles, allowing for 'prec' error.
 	 */
@@ -115,7 +123,6 @@ public:
 	}
 
 	ARBVersion(std::wstring inStr);
-
 
 	ARBVersion& operator=(ARBVersion const& rhs)
 	{

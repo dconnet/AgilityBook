@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-12-22 Changed bAlwaysStripZeros to eStripZeros.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-06-09 Move string->arbversion parsing to ARBVersion.
  * 2013-07-17 Moved SanitizeStringForHTML to ARBMisc.
@@ -54,7 +55,7 @@ std::wstring ARBDouble::ToString(
 		double inValue,
 		int inPrec,
 		LocaleType eUseDefaultLocale,
-		bool bAlwaysStripZeros)
+		ZeroStrip eStripZeros)
 {
 #if !defined(__WXWINDOWS__)
 	eUseDefaultLocale = eNone;
@@ -88,36 +89,39 @@ std::wstring ARBDouble::ToString(
 		delete locale;
 	}
 #endif
-	std::wstring::size_type pos = retVal.find(pt);
-	if (std::wstring::npos != pos)
+	if (eAsIs != eStripZeros)
 	{
-		// Strip trailing zeros iff they are all 0.
-		if (2 == inPrec && !bAlwaysStripZeros)
+		std::wstring::size_type pos = retVal.find(pt);
+		if (std::wstring::npos != pos)
 		{
-			std::wstring twoZeros;
-			twoZeros = pt;
-			twoZeros += L"00";
-			if (retVal.substr(pos) == twoZeros)
+			// Strip trailing zeros iff they are all 0.
+			if (2 == inPrec && eCompatible == eStripZeros)
 			{
-				// Input is ".00", so simplify
-				if (0 == pos)
-					retVal = L"0";
-				// Strip the ".00".
-				else
-					retVal = retVal.substr(0, pos);
+				std::wstring twoZeros;
+				twoZeros = pt;
+				twoZeros += L"00";
+				if (retVal.substr(pos) == twoZeros)
+				{
+					// Input is ".00", so simplify
+					if (0 == pos)
+						retVal = L"0";
+					// Strip the ".00".
+					else
+						retVal = retVal.substr(0, pos);
+				}
 			}
-		}
-		// Strip all trailing 0s.
-		else
-		{
-			size_t len = retVal.length();
-			size_t oldLen = len;
-			while (0 < len && retVal[len-1] == '0')
-				--len;
-			if (0 < len && retVal[len-1] == pt)
-				--len;
-			if (len != oldLen)
-				retVal = retVal.substr(0, len);
+			// Strip all trailing 0s.
+			else
+			{
+				size_t len = retVal.length();
+				size_t oldLen = len;
+				while (0 < len && retVal[len-1] == '0')
+					--len;
+				if (0 < len && retVal[len-1] == pt)
+					--len;
+				if (len != oldLen)
+					retVal = retVal.substr(0, len);
+			}
 		}
 	}
 	return retVal;

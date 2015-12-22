@@ -828,7 +828,7 @@ std::wstring FormatBytes(
 	}
 	std::wstring form(sc_units[unitIndex].units[index]);
 
-	std::wstring val = ARBDouble::ToString(inSize, inPrec, ARBDouble::eDefault, true) + form;
+	std::wstring val = ARBDouble::ToString(inSize, inPrec, ARBDouble::eDefault, ARBDouble::eStrip) + form;
 	return val;
 }
 

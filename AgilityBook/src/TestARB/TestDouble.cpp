@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-12-22 Added tests for changed ARBDouble parameter.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-12 Created
  */
@@ -49,6 +50,8 @@ static void RunDblTests()
 	s = ARBDouble::ToString(p, 4, ARBDouble::eCurrent);
 	CHECK(FormNumber(L"3", decimalPt, L"1416") == s);
 
+	// eCompatible
+
 	p = 2.1;
 	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent);
 	CHECK(FormNumber(L"2", decimalPt, L"1") == s);
@@ -64,6 +67,42 @@ static void RunDblTests()
 	CHECK(L"2" == s);
 	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent);
 	CHECK(L"2" == s);
+
+	// eStrip
+
+	p = 2.1;
+	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent, ARBDouble::eStrip);
+	CHECK(FormNumber(L"2", decimalPt, L"1") == s);
+	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent, ARBDouble::eStrip);
+	CHECK(FormNumber(L"2", decimalPt, L"1") == s);
+	s = ARBDouble::ToString(p, 3, ARBDouble::eCurrent, ARBDouble::eStrip);
+	CHECK(FormNumber(L"2", decimalPt, L"1") == s);
+
+	p = 2;
+	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent, ARBDouble::eStrip);
+	CHECK(L"2" == s);
+	s = ARBDouble::ToString(p, 1, ARBDouble::eCurrent, ARBDouble::eStrip);
+	CHECK(L"2" == s);
+	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent, ARBDouble::eStrip);
+	CHECK(L"2" == s);
+
+	// eAsIs
+
+	p = 2.1;
+	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	CHECK(FormNumber(L"2", decimalPt, L"1") == s);
+	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	CHECK(FormNumber(L"2", decimalPt, L"10") == s);
+	s = ARBDouble::ToString(p, 3, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	CHECK(FormNumber(L"2", decimalPt, L"100") == s);
+
+	p = 2;
+	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	CHECK(L"2" == s);
+	s = ARBDouble::ToString(p, 1, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	CHECK(FormNumber(L"2", decimalPt, L"0") == s);
+	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	CHECK(FormNumber(L"2", decimalPt, L"00") == s);
 }
 
 
