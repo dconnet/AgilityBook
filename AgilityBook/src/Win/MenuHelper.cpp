@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-12-23 Fix a bug when a separator followed submenu.
  * 2013-10-13 Changed to using an art provider.
  * 2012-07-28 Fix About menu insertion.
  * 2012-07-13 Created
@@ -121,7 +122,7 @@ void CMenuHelper::Menu(
 				if (m_doTranslation)
 				{
 					name = wxGetTranslation(items[idxMenu].menu);
-					subhandle.item = items[index].menu;
+					subhandle.item = items[idxMenu].menu;
 				}
 				else
 				{
