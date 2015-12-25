@@ -28,14 +28,14 @@ public:
 			std::wstring const& caption,
 			wxWindow* pParent = nullptr);
 
-	bool Create(
-			std::wstring const& caption,
-			wxWindow* pParent = nullptr);
-
 	std::wstring Name() const;
 
 private:
 	wxString m_Name;
+
+	bool Create(
+			std::wstring const& caption,
+			wxWindow* pParent = nullptr);
 
 	DECLARE_ON_INIT()
 };
