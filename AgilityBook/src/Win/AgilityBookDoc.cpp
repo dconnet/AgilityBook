@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2015-12-31 Add wx version to file-written-on section in File Properties.
  * 2015-11-25 Oops, Mac doesn't have '__super'.
  * 2015-10-29 Add Save override. Check if file was externally modified.
  * 2014-12-04 If all dogs are deceased, don't prompt to update config.
@@ -2142,7 +2143,8 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform),
 				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp),
 				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion))
-			<< L"\n";
+			<< L"\n"
+			<< wxVERSION_STRING << L"\n";
 	}
 
 	if (!str.empty())
