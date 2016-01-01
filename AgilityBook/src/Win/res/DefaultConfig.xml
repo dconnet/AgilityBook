@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2015-12-24 Configuration version 53.
+2016-01-01 Configuration version 53.
            Added AKC AGCH, fixed PremJWW title points.
+           Setup AKC Lifetime points as "NAC" to track Premier.
 2015-11-27 Configuration version 52.
            Added USDAA Veteran CH titles.
            Added ASCA Finals points (lifetime).
@@ -169,7 +170,7 @@ Revision History:
            Added versioning to configuration to allow auto-upgrades.
            Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="52">
+  <Configuration version="53">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -496,7 +497,7 @@ Revision History:
         </Scoring>
       </Event>
     </Venue>
-    <Venue LongName="American Kennel Club" Name="AKC" URL="http://www.akc.org/" icon="4">
+    <Venue LifetimeName="NAC" LongName="American Kennel Club" Name="AKC" URL="http://www.akc.org/" icon="4">
       <Desc>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Desc>
       <Titles LongName="Novice Agility" Name="NA">3 Qs</Titles>
       <Titles LongName="Open Agility" Name="OA">3 Qs</Titles>
@@ -662,6 +663,7 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
         </Scoring>
         <Scoring Division="*" Level="Premier" ValidFrom="2015-10-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifeTime Faults="0" Points="5"/>
         </Scoring>
       </Event>
       <Event Name="JWW">
@@ -702,6 +704,7 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
         </Scoring>
         <Scoring Division="*" Level="Premier" ValidFrom="2015-10-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifeTime Faults="0" Points="5"/>
         </Scoring>
       </Event>
       <Event Name="National Rounds" ShortName="NatRnd" hasSubNames="y">
