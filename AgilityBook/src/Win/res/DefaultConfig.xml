@@ -784,7 +784,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="ACT">
+      <Event Name="ACT" hasTable="y">
         <Scoring Division="ACT" Level="*" ValidFrom="2016-1-1" dropFractions="y" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
