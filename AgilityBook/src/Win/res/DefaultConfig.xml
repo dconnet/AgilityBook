@@ -4,9 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2016-01-01 Configuration version 53.
+2016-01-03 Configuration version 53.
            Added AKC AGCH, fixed PremJWW title points.
            Setup AKC Lifetime points as "NAC" to track Premier.
+           Added AKC ACT (pre-agility).
 2015-11-27 Configuration version 52.
            Added USDAA Veteran CH titles.
            Added ASCA Finals points (lifetime).
@@ -595,6 +596,8 @@ Repeat titles are MFPC + 75 Qs</Titles>
       <Titles LongName="Gold Premier Jumpers Dog Preferred" Name="PJDPG" StartAt="1" ValidFrom="2015-10-1">75 Qs</Titles>
       <Titles LongName="Century Premier Jumpers Dog Preferred" Name="PJDPC" StartAt="1" ValidFrom="2015-10-1">100 Qs</Titles>
       <Titles LongName="Agility Grand Champion" Name="AGCH" Prefix="y">100 Std, 100 JWW, 75 FAST, 75 T2B, 50 Premier Std, 50 Premier JWW. (Regular or Preferred)</Titles>
+      <Titles LongName="Agility Course Test 1" Name="ACT1">2 passing ACT1 scores</Titles>
+      <Titles LongName="Agility Course Test 2" Name="ACT2">2 passing ACT2 scores</Titles>
       <Division Name="ISC">
         <Level Name="Master"/>
       </Division>
@@ -624,6 +627,10 @@ Repeat titles are MFPC + 75 Qs</Titles>
       </Division>
       <Division Name="Fun">
         <Level Name="Fun"/>
+      </Division>
+      <Division Name="ACT">
+        <Level Name="ACT1"/>
+        <Level Name="ACT2"/>
       </Division>
       <Event Name="Standard" hasTable="y">
         <Scoring Division="ISC" Level="Master" type="FaultsThenTime">
@@ -775,6 +782,11 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         </Scoring>
         <Scoring Division="Preferred" Level="T2B" ValidFrom="2010-1-1" ValidTo="2011-6-30" timeFault="0" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="ACT">
+        <Scoring Division="ACT" Level="*" ValidFrom="2016-1-1" dropFractions="y" type="Faults100ThenTime">
+          <TitlePoints Faults="15" Points="1"/>
         </Scoring>
       </Event>
       <Event Name="Game: Faults/Time" ShortName="Game: FT" hasSubNames="y" hasTable="y">
