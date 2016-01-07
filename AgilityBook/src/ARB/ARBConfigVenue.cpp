@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Removed LifetimeName, added LifetimeNames.
  * 2013-01-13 Added new recurring title suffix style.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2007-10-10 Added 'LifetimeName'
@@ -69,7 +70,7 @@ ARBConfigVenue::ARBConfigVenue()
 	, m_LongName()
 	, m_URL()
 	, m_Desc()
-	, m_LifetimeName()
+	, m_LifetimeNames()
 	, m_idxIcon(-1)
 	, m_Titles()
 	, m_Divisions()
@@ -84,13 +85,13 @@ ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	, m_LongName(rhs.m_LongName)
 	, m_URL(rhs.m_URL)
 	, m_Desc(rhs.m_Desc)
-	, m_LifetimeName(rhs.m_LifetimeName)
 	, m_idxIcon(rhs.m_idxIcon)
 	, m_Titles()
 	, m_Divisions()
 	, m_Events()
 	, m_MultiQs()
 {
+	rhs.m_LifetimeNames.Clone(m_LifetimeNames);
 	rhs.m_Titles.Clone(m_Titles);
 	rhs.m_Divisions.Clone(m_Divisions);
 	rhs.m_Events.Clone(m_Events);
@@ -117,7 +118,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 		m_LongName = rhs.m_LongName;
 		m_URL = rhs.m_URL;
 		m_Desc = rhs.m_Desc;
-		m_LifetimeName = rhs.m_LifetimeName;
+		rhs.m_LifetimeNames.Clone(m_LifetimeNames);
 		m_idxIcon = rhs.m_idxIcon;
 		rhs.m_Titles.Clone(m_Titles);
 		rhs.m_Divisions.Clone(m_Divisions);
@@ -134,7 +135,7 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 		&& m_LongName == rhs.m_LongName
 		&& m_URL == rhs.m_URL
 		&& m_Desc == rhs.m_Desc
-		&& m_LifetimeName == rhs.m_LifetimeName
+		&& m_LifetimeNames == rhs.m_LifetimeNames
 		&& m_idxIcon == rhs.m_idxIcon
 		&& m_Titles == rhs.m_Titles
 		&& m_Divisions == rhs.m_Divisions
@@ -149,7 +150,7 @@ void ARBConfigVenue::clear()
 	m_LongName.clear();
 	m_URL.clear();
 	m_Desc.clear();
-	m_LifetimeName.clear();
+	m_LifetimeNames.clear();
 	m_idxIcon = -1;
 	m_Titles.clear();
 	m_Divisions.clear();
@@ -178,8 +179,20 @@ bool ARBConfigVenue::Load(
 	inTree->GetAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	// URL added in v12.3
 	inTree->GetAttrib(ATTRIB_VENUE_URL, m_URL);
-	// LifetimeName added in v12.6
-	inTree->GetAttrib(ATTRIB_VENUE_LIFETIME_NAME, m_LifetimeName);
+	// LifetimeName added in v12.6, removed in 14.4
+	if (inVersion < ARBVersion(14,4))
+	{
+		std::wstring lifetimeName;
+		inTree->GetAttrib(L"LifetimeName", lifetimeName);
+		if (lifetimeName.empty())
+			lifetimeName = L"Lifetime";
+			//lifetimeName = _("IDS_TITLEPOINT_LIFETIME");
+#pragma PRAGMA_TODO("i18n?")
+		// maybe allow empty names?
+		// but then how to prevent the name being added? would need to prevent
+		// all forms of IDS_TITLEPOINT_LIFETIME
+		m_LifetimeNames.AddLifetimeName(lifetimeName);
+	}
 	// Icon index added in 12.5
 	inTree->GetAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
@@ -191,6 +204,10 @@ bool ARBConfigVenue::Load(
 		if (name == TREE_VENUE_DESC)
 		{
 			m_Desc = element->GetValue();
+		}
+		else if (name == TREE_VENUE_LIFETIMENAMES)
+		{
+			m_LifetimeNames.Load(element, inVersion, ioCallback);
 		}
 		else if (element->GetName() == TREE_TITLES)
 		{
@@ -239,6 +256,17 @@ bool ARBConfigVenue::Load(
 			}
 		}
 	}
+	if (m_LifetimeNames.empty())
+	{
+#pragma PRAGMA_TODO(need better way)
+		m_LifetimeNames.AddLifetimeName(L"Lifetime");
+	}
+
+	// Finish lifetime name conversion.
+	if (inVersion < ARBVersion(14,4))
+	{
+#pragma PRAGMA_TODO(convert lifetime points)
+	}
 
 	// Convert old double Qs into new ones.
 	if (inVersion < ARBVersion(11, 0))
@@ -281,14 +309,14 @@ bool ARBConfigVenue::Save(ElementNodePtr ioTree) const
 		venue->AddAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	if (0 < m_URL.length())
 		venue->AddAttrib(ATTRIB_VENUE_URL, m_URL);
-	if (0 < m_LifetimeName.length())
-		venue->AddAttrib(ATTRIB_VENUE_LIFETIME_NAME, m_LifetimeName);
 	venue->AddAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
 	if (0 < m_Desc.length())
 	{
 		ElementNodePtr desc = venue->AddElementNode(TREE_VENUE_DESC);
 		desc->SetValue(m_Desc);
 	}
+	if (!m_LifetimeNames.Save(venue))
+		return false;
 	if (!m_Titles.Save(venue))
 		return false;
 	if (!m_Divisions.Save(venue))
@@ -335,10 +363,30 @@ bool ARBConfigVenue::Update(
 		SetDesc(inVenueNew->GetDesc());
 	}
 
-	if (GetLifetimeName() != inVenueNew->GetLifetimeName())
+	if (GetLifetimeNames() != inVenueNew->GetLifetimeNames())
 	{
-		bChanges = true;
-		SetLifetimeName(inVenueNew->GetLifetimeName());
+		int nNew = 0;
+		int nChanges = 0;
+		int nSkipped = 0;
+		for (ARBConfigLifetimeNameList::const_iterator iter = inVenueNew->GetLifetimeNames().begin();
+			iter != inVenueNew->GetLifetimeNames().end();
+			++iter)
+		{
+			if (!GetLifetimeNames().FindLifetimeName((*iter)->GetName()))
+			{
+				++nNew;
+				++nChanges;
+				GetLifetimeNames().AddLifetimeName((*iter)->GetName());
+			}
+			else
+				++nSkipped;
+		}
+		if (0 < nNew || 0 < nChanges)
+		{
+			ioInfo += Localization()->UpdateLifetimeNames(nNew, nSkipped);
+			ioInfo += L"\n";
+		}
+
 	}
 
 	if (GetIcon() != inVenueNew->GetIcon())

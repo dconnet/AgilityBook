@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Added ARBConfigLifetimeName.
  * 2013-04-15 Moved ARB specific things out of ARBTypes.h
  * 2012-09-09 Added ARBVectorNoSave.
  */
@@ -42,6 +43,7 @@ ARB_TYPEDEF_LIST(ARBConfigDivision)
 ARB_TYPEDEF_LIST(ARBConfigEvent)
 ARB_TYPEDEF_LIST(ARBConfigFault)
 ARB_TYPEDEF_LIST(ARBConfigLevel)
+ARB_TYPEDEF_LIST(ARBConfigLifetimeName)
 ARB_TYPEDEF_LIST(ARBConfigLifetimePoints)
 ARB_TYPEDEF_LIST(ARBConfigMultiQ)
 ARB_TYPEDEF_LIST(ARBConfigOtherPoints)

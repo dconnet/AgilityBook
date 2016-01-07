@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-06-25 Cleaned up reference counting when returning a pointer.
@@ -35,13 +36,25 @@ class ARBConfigLifetimePoints : public ARBBase
 {
 protected:
 	ARBConfigLifetimePoints();
-	ARBConfigLifetimePoints(double inPoints, double inFaults);
+	ARBConfigLifetimePoints(
+			std::wstring const& name,
+			double inPoints,
+			double inFaults);
+	ARBConfigLifetimePoints(
+			std::wstring const& name,
+			double inFaults);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
 
 public:
 	~ARBConfigLifetimePoints();
 	static ARBConfigLifetimePointsPtr New();
-	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
+	static ARBConfigLifetimePointsPtr New(
+			std::wstring const& name,
+			double inPoints,
+			double inFaults);
+	static ARBConfigLifetimePointsPtr New(
+			std::wstring const& name,
+			double inFaults);
 	ARBConfigLifetimePointsPtr Clone() const;
 
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
@@ -92,6 +105,18 @@ public:
 	/*
 	 * Setters/getters.
 	 */
+	std::wstring GetName() const
+	{
+		return m_Name;
+	}
+	bool UseSpeedPts() const
+	{
+		return m_UseSpeedPts;
+	}
+	void UseSpeedPts(bool inUseSpeedPts)
+	{
+		m_UseSpeedPts = inUseSpeedPts;
+	}
 	double GetPoints() const
 	{
 		return m_Points;
@@ -104,9 +129,11 @@ public:
 	{
 		return m_Faults;
 	}
-	// There is no SetFaults since this needs to be a unique key in the list.
+	// There is no SetName/Faults since this needs to be a unique key in the list.
 
 private:
+	std::wstring m_Name;
+	bool m_UseSpeedPts;
 	double m_Points;
 	double m_Faults;
 };
@@ -142,34 +169,55 @@ public:
 	 * @param inFaults Number of faults in the run.
 	 * @return Number of lifetime titling points.
 	 */
-	double GetLifetimePoints(double inFaults) const;
+	double GetLifetimePoints(
+			std::wstring const& inName,
+			double inFaults) const;
 
 	/**
 	 * Find a points object.
+	 * @param inName Name of faults to find.
 	 * @param inFaults Number of faults to find.
 	 * @param outPoints Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
 	bool FindLifetimePoints(
+			std::wstring const& inName,
 			double inFaults,
 			ARBConfigLifetimePointsPtr* outPoints = nullptr) const;
 
 	/**
 	 * Add an object.
+	 * @param inName Name of faults to find.
 	 * @param inPoints Number of lifetime points.
 	 * @param inFaults Number of faults.
 	 * @param outPoints Pointer to new object, NULL if it already exists.
 	 * @return Whether the object was added.
 	 */
 	bool AddLifetimePoints(
+			std::wstring const& inName,
 			double inPoints,
 			double inFaults,
 			ARBConfigLifetimePointsPtr* outPoints = nullptr);
 
 	/**
+	 * Add an object, uses speed points.
+	 * @param inName Name of faults to find.
+	 * @param inFaults Number of faults.
+	 * @param outPoints Pointer to new object, NULL if it already exists.
+	 * @return Whether the object was added.
+	 */
+	bool AddLifetimePoints(
+			std::wstring const& inName,
+			double inFaults,
+			ARBConfigLifetimePointsPtr* outPoints = nullptr);
+
+	/**
 	 * Delete an object.
+	 * @param inName Name of faults to find.
 	 * @param inFaults Delete object with the given faults.
 	 * @return Whether object was deleted.
 	 */
-	bool DeleteLifetimePoints(double inFaults);
+	bool DeleteLifetimePoints(
+			std::wstring const& inName,
+			double inFaults);
 };

@@ -16,6 +16,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2016-01-06 File version 14.4
  * 2015-11-27 Fix Qs on runs when titling points are removed from config.
  * 2015-02-13 File version 14.3
  * 2014-08-17 Fix crash when saving a new file.
@@ -118,7 +119,7 @@
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(14, 3);
+	static ARBVersion const curVersion(14, 4);
 	return curVersion;
 }
 

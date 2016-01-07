@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Add support for named lifetime points.
  * 2011-07-31 Allow a time fault multipler of 0.
  * 2011-01-08 Added test around a debug message.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -436,7 +437,8 @@ bool ARBConfigScoring::Load(
 				if (!m_TitlePoints.Load(element, inVersion, ioCallback, m_LifePoints))
 					return false;
 			}
-			else if (element->GetName() == TREE_LIFETIME_POINTS)
+			else if (element->GetName() == TREE_LIFETIME_POINTS
+			|| element->GetName() == L"LifeTime") // Changed in v14.4
 			{
 				if (bVer10orMore)
 				{

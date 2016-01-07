@@ -11,6 +11,9 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2016-01-06 File version 14.4
+		   Added 'LifetimeNames' to 'Venue'. Removed 'LifetimeName' from Venue.
+           Renamed 'LifeTime' to 'LifetimePoints', added 'Name', 'SpeedPts'.
 2015-02-13 File version 14.3
 2014-02-12 File version 14.3 - oops - version was never incremented
            Added 'scorePts' to 'Placement'.
@@ -310,13 +313,21 @@ top-ten points. The 'Count' value is how they are accumulated
 		defValue CDATA #IMPLIED
 		>
 
-<!ELEMENT Venue (Desc?, Titles*, Division+, Event+, MultiQ*) >
+<!ELEMENT Venue (Desc?, LifetimeNames*, Titles*, Division+, Event+, MultiQ*) >
 	<!ATTLIST Venue
 		Name CDATA #REQUIRED
 		LongName CDATA #IMPLIED
 		URL CDATA #IMPLIED
 		icon CDATA #IMPLIED
-		LifetimeName CDATA #IMPLIED
+		>
+
+<!--
+This allows for multiple lifetime accumulations. None are currently known,
+but I'm needing to misuse lifetime more often (AKC NAC).
+-->
+<!ELEMENT LifetimeNames EMPTY >
+	<!ATTLIST LifetimeNames
+		Name CDATA #REQUIRED
 		>
 
 <!--
@@ -343,7 +354,7 @@ Sep n: None
 
 <!--
 This allows for multiple multiQs within a venue. Currently, I only
-know of 2 venues - each has 1: AKC/QQ and UKC/QQQ
+know of 2 venues: AKC/QQ, AKC/QQQ, and UKC/QQQ
 -->
 <!ELEMENT MultiQ (MultiQItem+) >
 	<!ATTLIST MultiQ
@@ -449,7 +460,7 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 		hasSubNames (y|n) 'n'
 		>
 <!ELEMENT SubName (#PCDATA) >
-<!ELEMENT Scoring (Note?, PlaceInfo*, TitlePoints*, LifeTime*, Placements?) >
+<!ELEMENT Scoring (Note?, PlaceInfo*, TitlePoints*, LifetimePoints*, Placements?) >
 	<!ATTLIST Scoring
 		ValidFrom CDATA #IMPLIED
 		ValidTo CDATA #IMPLIED
@@ -481,9 +492,11 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 		Faults CDATA #REQUIRED
 		Type CDATA #IMPLIED
 		>
-<!ELEMENT LifeTime EMPTY >
-	<!ATTLIST LifeTime
-		Points CDATA #REQUIRED
+<!ELEMENT LifetimePoints EMPTY >
+	<!ATTLIST LifetimePoints
+		Name CDATA #REQUIRED
+		SpeedPts (y|n) 'n'
+		Points CDATA #IMPLIED
 		Faults CDATA #REQUIRED
 		>
 <!ELEMENT Placements (PlaceInfo+) >

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Add support for named lifetime points.
  * 2014-12-08 Renamed bonuspoints to bonustitlepoints for clarity.
  *            'bonusPts' stays the same to preserve compatibility.
  * 2013-09-03 Added short name to div/level/event.
@@ -34,6 +35,7 @@
 #define TREE_ACTION							L"Action"
 #define TREE_VENUE							L"Venue"
 #define TREE_VENUE_DESC						L"Desc"
+#define TREE_VENUE_LIFETIMENAMES			L"LifetimeNames"
 #define TREE_TITLES							L"Titles"
 #define TREE_MULTIQ							L"MultiQ"
 #define TREE_MULTIQ_ITEM					L"MultiQItem"
@@ -46,7 +48,7 @@
 #define TREE_SCORING						L"Scoring"
 #define TREE_PLACE_INFO						L"PlaceInfo"
 #define TREE_TITLE_POINTS					L"TitlePoints"
-#define TREE_LIFETIME_POINTS				L"LifeTime"
+#define TREE_LIFETIME_POINTS				L"LifetimePoints"
 #define TREE_PLACEMENTS						L"Placements"
 #define TREE_CALSITE						L"CalSite"
 #define TREE_CALSITE_DESC					L"Desc"
@@ -126,7 +128,7 @@
 #define ATTRIB_VENUE_LONGNAME				L"LongName"
 #define ATTRIB_VENUE_URL					L"URL"
 #define ATTRIB_VENUE_ICON					L"icon"
-#define ATTRIB_VENUE_LIFETIME_NAME			L"LifetimeName"
+#define ATTRIB_LIFETIMENAMES_NAME			L"Name"
 #define ATTRIB_MULTIQ_NAME					L"Name"
 #define ATTRIB_MULTIQ_SHORTNAME				L"SName"
 #define ATTRIB_MULTIQ_VALID_FROM			L"ValidFrom"
@@ -190,6 +192,8 @@
 #define ATTRIB_TITLE_POINTS_TYPE_NORMAL			L"Norm"
 #define ATTRIB_TITLE_POINTS_TYPE_T2B			L"T2B"
 #define ATTRIB_TITLE_POINTS_TYPE_UKI			L"UKI"
+#define ATTRIB_LIFETIME_POINTS_NAME			L"Name"
+#define ATTRIB_LIFETIME_POINTS_SPEEDPTS		L"SpeedPts"
 #define ATTRIB_LIFETIME_POINTS_POINTS		L"Points"
 #define ATTRIB_LIFETIME_POINTS_FAULTS		L"Faults"
 #define ATTRIB_INFO_NAME					L"Name"

@@ -105,6 +105,7 @@
     <ClCompile Include="..\..\ARB\ARBConfigEvent.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigFault.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigLevel.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigLifetimeName.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigLifetimePoints.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigMultiQ.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigOtherPoints.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="..\..\Include\ARB\ARBConfigEvent.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigFault.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigLevel.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimeName.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimePoints.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigMultiQ.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigOtherPoints.h" />

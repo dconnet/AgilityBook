@@ -1,8 +1,30 @@
-Last Updated: 1/1/2016
+Last Updated: 1/6/2016
 
 - Support multiple named lifetime points. Currently only one set of
   (optionally) named lifetime points are supported. These need to also
   support using Speed Points.
+  <in process>
+==============================================================================
+DTD: (done)
+ - Add 'Name' attribute (may be empty)
+ - Change 'Points' to implied, add 'SpeedPts' Y/N 'n', Points required when 'n'
+ - Add new LifetimeNames element to Venue (add before multiq)
+<!ELEMENT LifetimeNames (#EMPTY) >
+	<!ATTLIST LifetimeNames Name CDATA #REQUIRED >
+- rename LifeTime to LifetimePoints. Otherwise loading newer file will fail
+  hard when reading a changed LifeTime.
+
+On Load conversion:
+ Config
+ - Move Venue LifetimeName attrib to LifetimeNames element
+   If not set, create using default 'Lifetime'
+   TODO: i18n issues for default Lifetime. Can I have blank and that uses i18n?
+ - In element LifeTime, set Name to LifetimeNames/@Name, SpeedPts=n
+
+TODO:
+- currently, arb knows there is only 1 lifetime points - having multiple
+  implies tallying multiple things. Need to track all places affected
+==============================================================================
 
 - Add warning in run dialog when Q is UNK that the following will not
   be saved:

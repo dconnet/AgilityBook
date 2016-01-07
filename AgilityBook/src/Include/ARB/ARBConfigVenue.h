@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Removed LifetimeName, added LifetimeNames.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2007-10-10 Added 'LifetimeName'
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -27,6 +28,7 @@
 #include "ARB/ARBBase.h"
 #include "ARB/ARBConfigDivision.h"
 #include "ARB/ARBConfigEvent.h"
+#include "ARB/ARBConfigLifetimeName.h"
 #include "ARB/ARBConfigMultiQ.h"
 #include "ARB/ARBConfigTitle.h"
 #include "ARB/ARBTypes2.h"
@@ -149,17 +151,13 @@ public:
 	{
 		m_Desc = inDesc;
 	}
-	bool HasLifetimeName() const
+	ARBConfigLifetimeNameList const& GetLifetimeNames() const
 	{
-		return !m_LifetimeName.empty();
+		return m_LifetimeNames;
 	}
-	std::wstring GetLifetimeName() const
+	ARBConfigLifetimeNameList& GetLifetimeNames()
 	{
-		return m_LifetimeName;
-	}
-	void SetLifetimeName(std::wstring const& name)
-	{
-		m_LifetimeName = name;
+		return m_LifetimeNames;
 	}
 	short GetIcon() const
 	{
@@ -207,7 +205,7 @@ private:
 	std::wstring m_LongName;
 	std::wstring m_URL;
 	std::wstring m_Desc;
-	std::wstring m_LifetimeName;
+	ARBConfigLifetimeNameList m_LifetimeNames;
 	short m_idxIcon;
 	ARBConfigTitleList m_Titles;
 	ARBConfigDivisionList m_Divisions;

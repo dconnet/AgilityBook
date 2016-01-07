@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Add support for named lifetime points.
  * 2015-05-19 Added GetName (generic name without date).
  * 2012-09-09 Added 'titlePts' to 'Placement'.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -143,6 +144,7 @@ public:
 	 * Get the number of title points earned in this run.
 	 * @param inScoring Scoring method used.
 	 * @param outClean Was this a clean run?
+	 * @param inLifetimeName Name of Lifetime points to tally.
 	 * @param outLifeTime Lifetime points earned in this run.
 	 * @param outPlacement Placement titling points earned in this run.
 	 * @return Number of title points earned.
@@ -150,6 +152,7 @@ public:
 	double GetTitlePoints(
 			ARBConfigScoringPtr inScoring,
 			bool* outClean = nullptr,
+			std::wstring const* inLifetimeName = nullptr,
 			double* outLifeTime = nullptr,
 			double* outPlacement = nullptr) const;
 

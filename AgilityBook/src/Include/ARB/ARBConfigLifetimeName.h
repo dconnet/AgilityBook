@@ -1,0 +1,147 @@
+#pragma once
+
+/*
+ * Copyright (c) David Connet. All Rights Reserved.
+ *
+ * License: See License.txt
+ */
+
+/**
+ * @file
+ * @brief ARBConfigLifetimeName and ARBConfigLifetimeNameList class.
+ * @author David Connet
+ *
+ * Revision History
+ * 2016-01-06 Created
+ */
+
+#include "ARB/ARBBase.h"
+#include "ARB/ARBTypes2.h"
+
+
+/**
+ * Pre-loaded LifetimeName types.
+ */
+class ARBConfigLifetimeName : public ARBBase
+{
+protected:
+	ARBConfigLifetimeName();
+	ARBConfigLifetimeName(ARBConfigLifetimeName const& rhs);
+
+public:
+	~ARBConfigLifetimeName();
+	static ARBConfigLifetimeNamePtr New();
+	ARBConfigLifetimeNamePtr Clone() const;
+
+	ARBConfigLifetimeName& operator=(ARBConfigLifetimeName const& rhs);
+
+	bool operator==(ARBConfigLifetimeName const& rhs) const;
+	bool operator!=(ARBConfigLifetimeName const& rhs) const
+	{
+		return !operator==(rhs);
+	}
+
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::wstring GetGenericName() const
+	{
+		return m_Name;
+	}
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
+	{
+		return 0;
+	}
+
+	/**
+	 * Load a fault.
+	 * @pre inTree is the actual ARBConfigLifetimeName element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ElementNodePtr inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfigLifetimeName element will be created in ioTree.
+	 */
+	bool Save(ElementNodePtr ioTree) const;
+
+	/*
+	 * Getters/setters.
+	 */
+	std::wstring const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(std::wstring const& inName)
+	{
+		m_Name = inName;
+	}
+
+private:
+	std::wstring m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+/**
+ * List of ARBConfigLifetimeName objects.
+ */
+class ARBConfigLifetimeNameList : public ARBVector<ARBConfigLifetimeNamePtr>
+{
+public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ElementNodePtr inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
+	/**
+	 * Find a fault.
+	 * @param inName Name of fault to find.
+	 * @param outLifetimeName Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
+	 */
+	bool FindLifetimeName(
+			std::wstring const& inName,
+			ARBConfigLifetimeNamePtr* outLifetimeName = nullptr) const;
+
+	/**
+	 * Add a fault.
+	 * @param inName LifetimeName to add.
+	 * @param outLifetimeName Pointer to object, NULL if name already exists or is empty.
+	 * @return Whether the fault was added.
+	 */
+	bool AddLifetimeName(
+			std::wstring const& inName,
+			ARBConfigLifetimeNamePtr* outLifetimeName = nullptr);
+
+	/**
+	 * Delete the fault.
+	 * @param inName Name of fault to delete.
+	 * @return Whether fault was deleted.
+	 */
+	bool DeleteLifetimeName(std::wstring const& inName);
+};

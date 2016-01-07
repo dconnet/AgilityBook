@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-06-25 Cleaned up reference counting when returning a pointer.
@@ -550,8 +551,11 @@ bool ARBDogExistingPointsList::HasPoints(
 						ARBConfigScoringPtr pScoring;
 						if (inEvent->GetScorings().FindEvent(inDiv->GetName(), inLevel->GetName(), (*iter)->GetDate(), &pScoring))
 						{
-							if (0 < pScoring->GetLifetimePoints().GetLifetimePoints(0.0))
-								return true;
+							for each (ARBConfigLifetimeNamePtr pName in inVenue->GetLifetimeNames())
+							{
+								if (0 < pScoring->GetLifetimePoints().GetLifetimePoints(pName->GetName(), 0.0))
+									return true;
+							}
 						}
 					}
 					else

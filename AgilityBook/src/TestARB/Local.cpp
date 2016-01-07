@@ -18,6 +18,7 @@
  * this.
  *
  * Revision History
+ * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-07-19 Ported to wxWidgets.
  * 2008-01-13 Created
@@ -177,6 +178,24 @@ std::wstring CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) c
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nNew)
 		<< L", "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")).c_str(), nUpdated)
+		<< L", "
+		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_IDENTICAL")).c_str(), nSkipped);
+	return StringUtil::stringW(buffer);
+#else
+#pragma PRAGMA_TODO(Write localization)
+	return std::wstring();
+#endif
+}
+
+
+std::wstring CLocalization::UpdateLifetimeNames(int nNew, int nSkipped) const
+{
+#if defined(__WXWINDOWS__)
+	wxString buffer;
+#pragma PRAGMA_TODO(lifetime name string)
+	buffer << StringUtil::GetTranslation(arbT("IDS_LIFETIMENAMES")).c_str()
+		<< L": "
+		<<wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nNew)
 		<< L", "
 		<< wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_IDENTICAL")).c_str(), nSkipped);
 	return StringUtil::stringW(buffer);

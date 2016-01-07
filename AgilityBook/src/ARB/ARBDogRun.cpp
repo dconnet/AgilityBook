@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Add support for named lifetime points.
  * 2015-11-27 Changed generic name to use subname if set.
  * 2015-05-19 Added GetName (generic name without date).
  * 2015-03-15 Fixed Unknown-Q usage.
@@ -594,6 +595,7 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr inScoring) const
 double ARBDogRun::GetTitlePoints(
 		ARBConfigScoringPtr inScoring,
 		bool* outClean,
+		std::wstring const* inLifetimeName,
 		double* outLifeTime,
 		double* outPlacement) const
 {
@@ -601,7 +603,12 @@ double ARBDogRun::GetTitlePoints(
 	if (outClean)
 		*outClean = false;
 	if (outLifeTime)
+	{
 		*outLifeTime = 0.0;
+		assert(inLifetimeName);
+		if (!inLifetimeName)
+			outLifeTime = nullptr;
+	}
 	if (outPlacement)
 	{
 		double pts2;
@@ -640,14 +647,14 @@ double ARBDogRun::GetTitlePoints(
 					}
 					pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 					if (outLifeTime)
-						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusTitlePts;
+						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(*inLifetimeName, score) + bonusTitlePts;
 				}
 			}
 			else
 			{
 				pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 				if (outLifeTime)
-					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusTitlePts;
+					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(*inLifetimeName, score) + bonusTitlePts;
 			}
 		}
 		break;
@@ -676,7 +683,7 @@ double ARBDogRun::GetTitlePoints(
 				*outClean = true;
 			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 			if (outLifeTime)
-				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults) + bonusTitlePts;
+				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(*inLifetimeName, timeFaults) + bonusTitlePts;
 		}
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
@@ -700,7 +707,7 @@ double ARBDogRun::GetTitlePoints(
 				*outClean = true;
 			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 			if (outLifeTime)
-				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults) + bonusTitlePts;
+				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(*inLifetimeName, timeFaults) + bonusTitlePts;
 		}
 		break;
 	}

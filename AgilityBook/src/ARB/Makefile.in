@@ -45,6 +45,7 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBConfigEvent.cpp \
 	ARBConfigFault.cpp \
 	ARBConfigLevel.cpp \
+	ARBConfigLifetimeName.cpp \
 	ARBConfigLifetimePoints.cpp \
 	ARBConfigMultiQ.cpp \
 	ARBConfigOtherPoints.cpp \

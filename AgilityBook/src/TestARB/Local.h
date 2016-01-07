@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-07-19 Ported to wxWidgets.
  * 2008-01-13 Created
@@ -66,6 +67,7 @@ public:
 	std::wstring UpdateFaults(int nNew, int nSkipped) const;
 	std::wstring UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const;
 	std::wstring UpdateVenues(int nNew, int nUpdated, int nSkipped) const;
+	std::wstring UpdateLifetimeNames(int nNew, int nSkipped) const;
 	std::wstring UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const;
 	std::wstring UpdateDivisionsReordered() const;
 	std::wstring UpdateEvents(int nAdded, int nUpdated, int nSkipped) const;
