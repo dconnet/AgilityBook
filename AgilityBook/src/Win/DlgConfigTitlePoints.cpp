@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-14 Fix initial control layout.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -76,7 +77,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		m_ctrlValue->SetValidator(CGenericValidator(&m_Faults));
 	m_ctrlValue->SetHelpText(_("HIDC_CONFIG_TITLEPTS_VALUE"));
 	m_ctrlValue->SetToolTip(_("HIDC_CONFIG_TITLEPTS_VALUE"));
-	if (eTitleNormal != m_Type || ePointsTypeNormal != m_TypeNormal)
+	if (eTitleNormal == m_Type && ePointsTypeNormal != m_TypeNormal)
 	{
 		m_textValue->Hide();
 		m_ctrlValue->Hide();
@@ -93,7 +94,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		CGenericValidator(&m_Points));
 	m_ctrlPoints->SetHelpText(_("HIDC_CONFIG_TITLEPTS_POINTS"));
 	m_ctrlPoints->SetToolTip(_("HIDC_CONFIG_TITLEPTS_POINTS"));
-	if (eTitleNormal != m_Type || ePointsTypeNormal != m_TypeNormal)
+	if (eTitleNormal == m_Type && ePointsTypeNormal != m_TypeNormal)
 	{
 		m_textPoints->Hide();
 		m_ctrlPoints->Hide();
