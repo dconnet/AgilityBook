@@ -144,17 +144,28 @@ public:
 	 * Get the number of title points earned in this run.
 	 * @param inScoring Scoring method used.
 	 * @param outClean Was this a clean run?
-	 * @param inLifetimeName Name of Lifetime points to tally.
-	 * @param outLifeTime Lifetime points earned in this run.
-	 * @param outPlacement Placement titling points earned in this run.
 	 * @return Number of title points earned.
 	 */
 	double GetTitlePoints(
 			ARBConfigScoringPtr inScoring,
-			bool* outClean = nullptr,
-			std::wstring const* inLifetimeName = nullptr,
-			double* outLifeTime = nullptr,
-			double* outPlacement = nullptr) const;
+			bool* outClean = nullptr) const;
+
+	/**
+	* Get the number of lifetime points earned in this run.
+	* @param inScoring Scoring method used.
+	* @param inLifetimeName Name of Lifetime points to tally.
+	* @return Number of lifetime points earned.
+	*/
+	double GetLifetimePoints(
+			ARBConfigScoringPtr inScoring,
+			std::wstring const& inLifetimeName) const;
+
+	/**
+	* Get the number of lifetime placement points earned in this run.
+	* @param inScoring Scoring method used.
+	* @return Number of placement points earned.
+	*/
+	double GetPlacementPoints(ARBConfigScoringPtr inScoring) const;
 
 	/**
 	 * Get the score for this run.

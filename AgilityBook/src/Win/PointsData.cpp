@@ -646,10 +646,22 @@ bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataLifetime::CPointsDataLifetime(
 		CAgilityBookDoc* pDoc,
-		bool bLifetime,
 		ARBConfigVenuePtr inVenue)
 	: CPointsDataBase(pDoc)
-	, m_bLifetime(bLifetime)
+	, m_LifetimeName()
+	, m_Venue(inVenue)
+	, m_Lifetime(0.0)
+	, m_Filtered(0.0)
+{
+}
+
+
+CPointsDataLifetime::CPointsDataLifetime(
+		CAgilityBookDoc* pDoc,
+		ARBConfigLifetimeNamePtr inLifetimeName,
+		ARBConfigVenuePtr inVenue)
+	: CPointsDataBase(pDoc)
+	, m_LifetimeName(inLifetimeName)
 	, m_Venue(inVenue)
 	, m_Lifetime(0.0)
 	, m_Filtered(0.0)
@@ -675,12 +687,10 @@ std::wstring CPointsDataLifetime::OnNeedText(int inCol) const
 	switch (inCol)
 	{
 	case 1:
-		if (m_bLifetime)
+		if (m_LifetimeName)
 		{
-			std::wstring lifetime;
-			if (m_Venue->HasLifetimeName())
-				lifetime = m_Venue->GetLifetimeName();
-			else
+			std::wstring lifetime = m_LifetimeName->GetName();
+			if (lifetime.empty())
 				lifetime = _("IDS_TITLEPOINT_LIFETIME");
 			str << StringUtil::stringW(wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str()));
 		}
@@ -729,12 +739,10 @@ void CPointsDataLifetime::Details() const
 {
 	std::wstring caption(m_Venue->GetName());
 	std::wstring str;
-	if (m_bLifetime)
+	if (m_LifetimeName)
 	{
-		std::wstring lifetime;
-		if (m_Venue->HasLifetimeName())
-			lifetime = m_Venue->GetLifetimeName();
-		else
+		std::wstring lifetime = m_LifetimeName->GetName();
+		if (lifetime.empty())
 			lifetime = _("IDS_TITLEPOINT_LIFETIME");
 		str = StringUtil::stringW(wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str()));
 	}
@@ -759,10 +767,19 @@ bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 		CAgilityBookDoc* pDoc,
-		bool bLifetime,
 		ARBConfigVenuePtr inVenue,
 		std::wstring const& inName)
-	: CPointsDataLifetime(pDoc, bLifetime, inVenue)
+	: CPointsDataLifetime(pDoc, inVenue)
+	, m_Name(inName)
+{
+}
+
+CPointsDataLifetimeByName::CPointsDataLifetimeByName(
+		CAgilityBookDoc* pDoc,
+		ARBConfigLifetimeNamePtr inLifetimeName,
+		ARBConfigVenuePtr inVenue,
+		std::wstring const& inName)
+	: CPointsDataLifetime(pDoc, inLifetimeName, inVenue)
 	, m_Name(inName)
 {
 }
@@ -1384,7 +1401,7 @@ void CPointsDataItems::LoadData(
 
 		bool bRunsInserted = false;
 		LifeTimePointsList lifetime;
-		LifeTimePointsList placement;
+		PlacementPointsList placement;
 
 		// Then the runs.
 		std::list<ARBDogTrialPtr> trialsInVenue;
@@ -1438,9 +1455,10 @@ void CPointsDataItems::LoadData(
 						if (CFilterOptions::Options().GetEndFilterDateSet())
 							dateTo = CFilterOptions::Options().GetEndFilterDate();
 					}
-					LifeTimePoints pts;
-					pts.pDiv = pDiv;
-					pts.pLevel = pLevel;
+					LifeTimePoints ptsLifetime;
+					PlacementPoints ptsPlacement;
+					ptsLifetime.pDiv = ptsPlacement.pDiv = pDiv;
+					ptsLifetime.pLevel = ptsPlacement.pLevel = pLevel;
 					// We know the venue is visible,
 					// we don't know if the trial or individual runs are.
 					int idxEvent = 0;
@@ -1546,15 +1564,18 @@ void CPointsDataItems::LoadData(
 									|| 0 < pScoringMethod->GetPlacements().size())
 									&& pRun->GetQ().Qualified())
 									{
-										double nLifetime, nPlacement;
-										pRun->GetTitlePoints(pScoringMethod, nullptr, &nLifetime, &nPlacement);
-										if (0 < nLifetime)
+										for each (ARBConfigLifetimeNamePtr name in pVenue->GetLifetimeNames())
 										{
-											pts.ptLifetime.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
+											double nLifetime = pRun->GetLifetimePoints(pScoringMethod, name->GetName());
+											if (0 < nLifetime)
+											{
+												ptsLifetime.ptLifetime[name].push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
+											}
 										}
+										double nPlacement = pRun->GetPlacementPoints(pScoringMethod);
 										if (0 < nPlacement)
 										{
-											pts.ptPlacement.push_back(LifeTimePoint(pRun->GetEvent(), nPlacement, !bRunVisible));
+											ptsPlacement.ptPlacement.push_back(LifeTimePoint(pRun->GetEvent(), nPlacement, !bRunVisible));
 										}
 									}
 								}
@@ -1572,10 +1593,13 @@ void CPointsDataItems::LoadData(
 										pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2));
 							}
 							// Now add the existing lifetime points
+#pragma PRAGMA_TODO(lifetime existing points have to change)
+							/*
 							if (bHasExistingLifetimePoints && !ARBDouble::equal(0.0, nExistingPts + nExistingSQ))
 							{
 								pts.ptLifetime.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
 							}
+							*/
 							if (bHasExistingPoints || 0 < matching.size())
 							{
 								for (std::list<RunInfo>::const_iterator iterRun = matching.begin();
@@ -1666,10 +1690,10 @@ void CPointsDataItems::LoadData(
 							ARBDogExistingPoints::eSpeed,
 							pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, ARBConfigEventPtr(), dateFrom, dateTo));
 					}
-					if (0 < pts.ptLifetime.size())
-						lifetime.push_back(pts);
-					if (0 < pts.ptPlacement.size())
-						placement.push_back(pts);
+					if (0 < ptsLifetime.ptLifetime.size())
+						lifetime.push_back(ptsLifetime);
+					if (0 < ptsPlacement.ptPlacement.size())
+						placement.push_back(ptsPlacement);
 				} // level loop
 				if (bHasSpeedPts)
 				{
@@ -1730,109 +1754,124 @@ void CPointsDataItems::LoadData(
 		// Next comes lifetime points.
 		if (0 < lifetime.size())
 		{
-			CPointsDataLifetime* pData = new CPointsDataLifetime(pDoc, true, pVenue);
-			typedef std::map<std::wstring, CPointsDataLifetimeByName*> NamedLifetime;
-			NamedLifetime subgroups;
-			if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
+			for each (ARBConfigLifetimeNamePtr lifetimeName in pVenue->GetLifetimeNames())
 			{
-				// Gather event names
-				std::set<std::wstring> names;
-				for (LifeTimePointsList::iterator iter = lifetime.begin();
-					iter != lifetime.end();
-					++iter)
+				CPointsDataLifetime* pData = new CPointsDataLifetime(pDoc, lifetimeName, pVenue);
+				typedef std::map<std::wstring, CPointsDataLifetimeByName*> NamedLifetime;
+				NamedLifetime subgroups;
+				if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
 				{
-					for (LifeTimePointList::iterator iter2 = (*iter).ptLifetime.begin();
-						iter2 != (*iter).ptLifetime.end();
-						++iter2)
-					{
-						names.insert(iter2->eventName);
-					}
-				}
-				for (std::set<std::wstring>::iterator iName = names.begin(); iName != names.end(); ++iName)
-				{
-					double pts2 = 0.0;
-					double ptFiltered2 = 0;
+					// Gather event names
+					std::set<std::wstring> names;
 					for (LifeTimePointsList::iterator iter = lifetime.begin();
-						iter != lifetime.end();
+					iter != lifetime.end();
 						++iter)
 					{
-						for (LifeTimePointList::iterator iter2 = (*iter).ptLifetime.begin();
-							iter2 != (*iter).ptLifetime.end();
-							++iter2)
+						std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName = (*iter).ptLifetime.find(lifetimeName);
+						if ((*iter).ptLifetime.end() != iterName)
 						{
-							if (iter2->eventName == *iName)
+							for (LifeTimePointList::iterator iter2 = iterName->second.begin();
+								iter2 != iterName->second.end();
+								++iter2)
 							{
-								pts2 += (*iter2).points;
-								if ((*iter2).bFiltered)
-									ptFiltered2 += (*iter2).points;
+								names.insert(iter2->eventName);
 							}
 						}
 					}
-					pData->AddLifetimeInfo(*iName, std::wstring(), pts2, ptFiltered2);
+					for (std::set<std::wstring>::iterator iName = names.begin(); iName != names.end(); ++iName)
+					{
+						double pts2 = 0.0;
+						double ptFiltered2 = 0;
+						for (LifeTimePointsList::iterator iter = lifetime.begin();
+						iter != lifetime.end();
+							++iter)
+						{
+							std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName = (*iter).ptLifetime.find(lifetimeName);
+							if ((*iter).ptLifetime.end() != iterName)
+							{
+								for (LifeTimePointList::iterator iter2 = iterName->second.begin();
+								iter2 != iterName->second.end();
+									++iter2)
+								{
+									if (iter2->eventName == *iName)
+									{
+										pts2 += (*iter2).points;
+										if ((*iter2).bFiltered)
+											ptFiltered2 += (*iter2).points;
+									}
+								}
+							}
+						}
+						pData->AddLifetimeInfo(*iName, std::wstring(), pts2, ptFiltered2);
+					}
 				}
-			}
-			for (LifeTimePointsList::iterator iter = lifetime.begin();
+				for (LifeTimePointsList::iterator iter = lifetime.begin();
 				iter != lifetime.end();
-				++iter)
-			{
-				CPointsDataLifetimeByName* pNameData = nullptr;
-				NamedLifetime::iterator it = subgroups.find(iter->pDiv->GetName());
-				if (subgroups.end() != it)
+					++iter)
 				{
-					pNameData = it->second;
-				}
-				else
-				{
-					pNameData = new CPointsDataLifetimeByName(pDoc, true, pVenue, iter->pDiv->GetName());
-					subgroups.insert(NamedLifetime::value_type(iter->pDiv->GetName(), pNameData));
+					CPointsDataLifetimeByName* pNameData = nullptr;
+					NamedLifetime::iterator it = subgroups.find(iter->pDiv->GetName());
+					if (subgroups.end() != it)
+					{
+						pNameData = it->second;
+					}
+					else
+					{
+						pNameData = new CPointsDataLifetimeByName(pDoc, lifetimeName, pVenue, iter->pDiv->GetName());
+						subgroups.insert(NamedLifetime::value_type(iter->pDiv->GetName(), pNameData));
+					}
+
+					double pts2 = 0.0;
+					double ptFiltered2 = 0;
+					std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName = (*iter).ptLifetime.find(lifetimeName);
+					if ((*iter).ptLifetime.end() != iterName)
+					{
+						for (LifeTimePointList::iterator iter2 = iterName->second.begin();
+						iter2 != iterName->second.end();
+							++iter2)
+						{
+							pts2 += (*iter2).points;
+							if ((*iter2).bFiltered)
+								ptFiltered2 += (*iter2).points;
+						}
+					}
+
+					if (!CAgilityBookOptions::GetViewLifetimePointsByEvent())
+						pData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
+					pNameData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
 				}
 
-				double pts2 = 0.0;
-				double ptFiltered2 = 0;
-				for (LifeTimePointList::iterator iter2 = (*iter).ptLifetime.begin();
-					iter2 != (*iter).ptLifetime.end();
-					++iter2)
+				m_Lines.push_back(CPointsDataBasePtr(pData));
+				if (1 < subgroups.size())
 				{
-					pts2 += (*iter2).points;
-					if ((*iter2).bFiltered)
-						ptFiltered2 += (*iter2).points;
-				}
-
-				if (!CAgilityBookOptions::GetViewLifetimePointsByEvent())
-					pData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
-				pNameData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
-			}
-
-			m_Lines.push_back(CPointsDataBasePtr(pData));
-			if (1 < subgroups.size())
-			{
-				for (NamedLifetime::iterator it = subgroups.begin();
+					for (NamedLifetime::iterator it = subgroups.begin();
 					it != subgroups.end();
-					++it)
-				{
-					m_Lines.push_back(CPointsDataBasePtr(it->second));
+						++it)
+					{
+						m_Lines.push_back(CPointsDataBasePtr(it->second));
+					}
 				}
-			}
-			else if (1 == subgroups.size())
-			{
-				delete subgroups.begin()->second;
+				else if (1 == subgroups.size())
+				{
+					delete subgroups.begin()->second;
+				}
 			}
 		}
 		if (0 < placement.size())
 		{
-			CPointsDataLifetime* pData = new CPointsDataLifetime(pDoc, false, pVenue);
+			CPointsDataLifetime* pData = new CPointsDataLifetime(pDoc, pVenue);
 			typedef std::map<std::wstring, CPointsDataLifetimeByName*> NamedLifetime;
 			NamedLifetime subgroups;
 			if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
 			{
 				// Gather event names
 				std::set<std::wstring> names;
-				for (LifeTimePointsList::iterator iter = lifetime.begin();
-					iter != lifetime.end();
+				for (PlacementPointsList::iterator iter = placement.begin();
+					iter != placement.end();
 					++iter)
 				{
-					for (LifeTimePointList::iterator iter2 = (*iter).ptLifetime.begin();
-						iter2 != (*iter).ptLifetime.end();
+					for (LifeTimePointList::iterator iter2 = (*iter).ptPlacement.begin();
+						iter2 != (*iter).ptPlacement.end();
 						++iter2)
 					{
 						names.insert(iter2->eventName);
@@ -1842,12 +1881,12 @@ void CPointsDataItems::LoadData(
 				{
 					double pts2 = 0.0;
 					double ptFiltered2 = 0;
-					for (LifeTimePointsList::iterator iter = lifetime.begin();
-						iter != lifetime.end();
+					for (PlacementPointsList::iterator iter = placement.begin();
+						iter != placement.end();
 						++iter)
 					{
-						for (LifeTimePointList::iterator iter2 = (*iter).ptLifetime.begin();
-							iter2 != (*iter).ptLifetime.end();
+						for (LifeTimePointList::iterator iter2 = (*iter).ptPlacement.begin();
+							iter2 != (*iter).ptPlacement.end();
 							++iter2)
 						{
 							if (iter2->eventName == *iName)
@@ -1861,7 +1900,7 @@ void CPointsDataItems::LoadData(
 					pData->AddLifetimeInfo(*iName, std::wstring(), pts2, ptFiltered2);
 				}
 			}
-			for (LifeTimePointsList::iterator iter = placement.begin();
+			for (PlacementPointsList::iterator iter = placement.begin();
 				iter != placement.end();
 				++iter)
 			{
@@ -1873,7 +1912,7 @@ void CPointsDataItems::LoadData(
 				}
 				else
 				{
-					pNameData = new CPointsDataLifetimeByName(pDoc, false, pVenue, iter->pDiv->GetName());
+					pNameData = new CPointsDataLifetimeByName(pDoc, pVenue, iter->pDiv->GetName());
 					subgroups.insert(NamedLifetime::value_type(iter->pDiv->GetName(), pNameData));
 				}
 

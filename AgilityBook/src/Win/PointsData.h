@@ -311,7 +311,10 @@ public:
 	 */
 	CPointsDataLifetime(
 			CAgilityBookDoc* pDoc,
-			bool bLifetime,
+			ARBConfigVenuePtr inVenue);
+	CPointsDataLifetime(
+			CAgilityBookDoc* pDoc,
+			ARBConfigLifetimeNamePtr inLifetimeName,
 			ARBConfigVenuePtr inVenue);
 	void AddLifetimeInfo(
 			std::wstring const& inDiv,
@@ -326,7 +329,7 @@ public:
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	bool m_bLifetime;	///< Lifetime or Placement?
+	ARBConfigLifetimeNamePtr m_LifetimeName;	///< null implies Placement
 	ARBConfigVenuePtr m_Venue;
 	std::list<LifeTimePointInfoPtr> m_Data;
 	double m_Lifetime;	///< Total lifetime points.
@@ -340,9 +343,18 @@ typedef std::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
 class CPointsDataLifetimeByName : public CPointsDataLifetime
 {
 public:
+	/**
+	* @param pDoc Document
+	* @param inVenue Associated venue
+	* @param inName Division name
+	*/
 	CPointsDataLifetimeByName(
 			CAgilityBookDoc* pDoc,
-			bool bLifetime,
+			ARBConfigVenuePtr inVenue,
+			std::wstring const& inName);
+	CPointsDataLifetimeByName(
+			CAgilityBookDoc* pDoc,
+			ARBConfigLifetimeNamePtr inLifetimeName,
 			ARBConfigVenuePtr inVenue,
 			std::wstring const& inName);
 
@@ -542,7 +554,7 @@ private:
 		{
 		}
 		LifeTimePoint(
-				const std::wstring inEvent,
+				std::wstring const& inEvent,
 				double inPoints,
 				bool inFiltered)
 			: eventName(inEvent)
@@ -556,10 +568,16 @@ private:
 	{
 		ARBConfigDivisionPtr pDiv;
 		ARBConfigLevelPtr pLevel;
-		LifeTimePointList ptLifetime;
-		LifeTimePointList ptPlacement;
+		std::map<ARBConfigLifetimeNamePtr, LifeTimePointList> ptLifetime;
 	};
 	typedef std::list<LifeTimePoints> LifeTimePointsList;
+	struct PlacementPoints
+	{
+		ARBConfigDivisionPtr pDiv;
+		ARBConfigLevelPtr pLevel;
+		LifeTimePointList ptPlacement;
+	};
+	typedef std::list<PlacementPoints> PlacementPointsList;
 
 	void InsertVenueHeader(
 			CAgilityBookDoc* pDoc,

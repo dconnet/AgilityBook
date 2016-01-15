@@ -87,7 +87,6 @@ private:
 	wxString m_Name;
 	wxString m_LongName;
 	wxString m_URL;
-	wxString m_LifetimeName;
 	wxString m_Desc;
 	CTreeCtrl* m_ctrlItems;
 	wxButton* m_ctrlNew;

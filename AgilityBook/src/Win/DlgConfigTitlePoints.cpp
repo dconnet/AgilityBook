@@ -102,10 +102,13 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 
 	wxArrayString types;
 	types.Add(_("IDS_TITLEPOINT_NORMAL"));
+#pragma PRAGMA_TODO(lifetime points)
+#if 0
 	if (m_Venue->HasLifetimeName())
 		types.Add(StringUtil::stringWX(m_Venue->GetLifetimeName()));
 	else
-		types.Add(_("IDS_TITLEPOINT_LIFETIME"));
+#endif
+	types.Add(_("IDS_TITLEPOINT_LIFETIME"));
 	types.Add(_("IDS_TITLEPOINT_PLACEMENT"));
 	assert(types.size() == eTitleMax);
 	m_ctrlType = new wxChoice(this, wxID_ANY,

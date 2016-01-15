@@ -977,7 +977,11 @@ void CDlgConfigEvent::EditPoints()
 						if (pTitle)
 							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetCalc()->GetType(), pTitle->GetFaults());
 						else if (pLife)
-							pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+						{
+							assert(0);
+#pragma PRAGMA_TODO(lifetime points)
+							//pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+						}
 						else
 							pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
 					}
@@ -1002,7 +1006,9 @@ void CDlgConfigEvent::EditPoints()
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case CDlgConfigTitlePoints::eTitleLifetime:
-						bOk = pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults());
+						assert(0);
+#pragma PRAGMA_TODO(lifetime points)
+						//bOk = pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults());
 						if (!bOk)
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
@@ -1017,7 +1023,11 @@ void CDlgConfigEvent::EditPoints()
 						if (pTitle)
 							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetCalc()->GetType(), pTitle->GetFaults());
 						else if (pLife)
-							pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+						{
+							assert(0);
+#pragma PRAGMA_TODO(lifetime points)
+							//pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+						}
 						else
 							pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
 					}
@@ -1274,8 +1284,10 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case CDlgConfigTitlePoints::eTitleLifetime:
-					if (!pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults()))
-						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					assert(0);
+#pragma PRAGMA_TODO(lifetime points)
+					//if (!pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults()))
+					//	wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case CDlgConfigTitlePoints::eTitlePlacement:
 					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true))
@@ -1323,7 +1335,11 @@ void CDlgConfigEvent::OnPointsDelete(wxCommandEvent& evt)
 			if (pTitle)
 				pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetCalc()->GetType(), pTitle->GetFaults());
 			else if (pLife)
-				pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+			{
+				assert(0);
+#pragma PRAGMA_TODO(lifetime points)
+				//pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+			}
 			else
 				pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
 			m_ctrlPointsList->Delete(idx);

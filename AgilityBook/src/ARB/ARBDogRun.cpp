@@ -594,29 +594,11 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr inScoring) const
 
 double ARBDogRun::GetTitlePoints(
 		ARBConfigScoringPtr inScoring,
-		bool* outClean,
-		std::wstring const* inLifetimeName,
-		double* outLifeTime,
-		double* outPlacement) const
+		bool* outClean) const
 {
 	double pts = 0.0;
 	if (outClean)
 		*outClean = false;
-	if (outLifeTime)
-	{
-		*outLifeTime = 0.0;
-		assert(inLifetimeName);
-		if (!inLifetimeName)
-			outLifeTime = nullptr;
-	}
-	if (outPlacement)
-	{
-		double pts2;
-		if (inScoring->GetPlacements().GetPlaceInfo(GetPlace(), pts2))
-			*outPlacement = pts2;
-		else
-			*outPlacement = 0.0;
-	}
 	double bonusTitlePts = inScoring->HasBonusTitlePts() ? m_Scoring.GetBonusTitlePts() : 0.0;
 	switch (m_Scoring.GetType())
 	{
@@ -646,15 +628,11 @@ double ARBDogRun::GetTitlePoints(
 							score = 0.0;
 					}
 					pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
-					if (outLifeTime)
-						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(*inLifetimeName, score) + bonusTitlePts;
 				}
 			}
 			else
 			{
 				pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
-				if (outLifeTime)
-					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(*inLifetimeName, score) + bonusTitlePts;
 			}
 		}
 		break;
@@ -682,8 +660,6 @@ double ARBDogRun::GetTitlePoints(
 			if (outClean)
 				*outClean = true;
 			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
-			if (outLifeTime)
-				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(*inLifetimeName, timeFaults) + bonusTitlePts;
 		}
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
@@ -706,11 +682,104 @@ double ARBDogRun::GetTitlePoints(
 			if (outClean)
 				*outClean = true;
 			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
-			if (outLifeTime)
-				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(*inLifetimeName, timeFaults) + bonusTitlePts;
 		}
 		break;
 	}
+	return pts;
+}
+
+
+double ARBDogRun::GetLifetimePoints(
+		ARBConfigScoringPtr inScoring,
+		std::wstring const& inLifetimeName) const
+{
+	double pts = 0.0;
+	double bonusTitlePts = inScoring->HasBonusTitlePts() ? m_Scoring.GetBonusTitlePts() : 0.0;
+	switch (m_Scoring.GetType())
+	{
+	default:
+		break;
+	case ARBDogRunScoring::eTypeByTime:
+		{
+			double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
+			if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
+			{
+				if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
+				{
+					// If SCT is 0, don't compute anything.
+					if (0.0 < m_Scoring.GetSCT())
+					{
+						score += m_Scoring.GetTime();
+						// Adjust the 'score' to the number of "faults" (total over SCT)
+						// This allows DOCNA's Challenge to work - it's T+F with 12 time faults allowed
+						score -= m_Scoring.GetSCT();
+						// If negative, run was faster than SCT
+						if (0.0 > score)
+							score = 0.0;
+					}
+					pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score) + bonusTitlePts;
+				}
+			}
+			else
+			{
+				pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score) + bonusTitlePts;
+			}
+		}
+		break;
+	case ARBDogRunScoring::eTypeByOpenClose:
+		if ((m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts()
+		&& m_Scoring.GetNeedClosePts() <= m_Scoring.GetClosePts())
+		// Allows for USDAA tournament gambles
+		|| (0 == m_Scoring.GetNeedClosePts()
+		&& m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts() + m_Scoring.GetClosePts()))
+		{
+			double timeFaults = 0.0;
+			if (inScoring->ComputeTimeFaultsUnder()
+			|| inScoring->ComputeTimeFaultsOver())
+			{
+				timeFaults = m_Scoring.GetTimeFaults(inScoring);
+				if (0.0 < timeFaults && inScoring->SubtractTimeFaultsFromScore())
+				{
+					// If time faults are being subtracted from the score,
+					// recompute if we have enough points. If so, just pretend
+					// there are no time faults.
+					if (static_cast<double>(m_Scoring.GetNeedOpenPts() + m_Scoring.GetNeedClosePts()) <= GetScore(inScoring))
+						timeFaults = 0.0;
+				}
+			}
+			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, timeFaults) + bonusTitlePts;
+		}
+		break;
+	case ARBDogRunScoring::eTypeByPoints:
+		if (m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts())
+		{
+			double timeFaults = 0.0;
+			if (inScoring->ComputeTimeFaultsUnder()
+			|| inScoring->ComputeTimeFaultsOver())
+			{
+				timeFaults = m_Scoring.GetTimeFaults(inScoring);
+				if (0.0 < timeFaults && inScoring->SubtractTimeFaultsFromScore())
+				{
+					// If time faults are being subtracted from the score,
+					// recompute if we have enough points. If so, just pretend
+					// there are no time faults.
+					if (static_cast<double>(m_Scoring.GetNeedOpenPts()) <= GetScore(inScoring))
+						timeFaults = 0.0;
+				}
+			}
+			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, timeFaults) + bonusTitlePts;
+		}
+		break;
+	}
+	return pts;
+}
+
+
+double ARBDogRun::GetPlacementPoints(ARBConfigScoringPtr inScoring) const
+{
+	double pts = 0.0;
+	if (!inScoring->GetPlacements().GetPlaceInfo(GetPlace(), pts))
+		pts = 0.0;
 	return pts;
 }
 

@@ -207,7 +207,6 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_Name(StringUtil::stringWX(m_pVenue->GetName()))
 	, m_LongName(StringUtil::stringWX(m_pVenue->GetLongName()))
 	, m_URL(StringUtil::stringWX(m_pVenue->GetURL()))
-	, m_LifetimeName(StringUtil::stringWX(m_pVenue->GetLifetimeName()))
 	, m_Desc(StringUtil::stringWX(m_pVenue->GetDesc()))
 	, m_ctrlItems(nullptr)
 	, m_ctrlNew(nullptr)
@@ -259,6 +258,8 @@ CDlgConfigVenue::CDlgConfigVenue(
 	ctrlLongName->SetHelpText(_("HIDC_CONFIG_VENUE_LONGNAME"));
 	ctrlLongName->SetToolTip(_("HIDC_CONFIG_VENUE_LONGNAME"));
 
+#pragma PRAGMA_TODO(Kill)
+	/*
 	wxStaticText* textLifetime = new wxStaticText(this, wxID_ANY,
 		_("IDC_CONFIG_VENUE_LIFETIME_NAME"),
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -269,6 +270,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		CTrimValidator(&m_LifetimeName, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlLifetime->SetHelpText(_("HIDC_CONFIG_VENUE_LIFETIME_NAME"));
 	ctrlLifetime->SetToolTip(_("HIDC_CONFIG_VENUE_LIFETIME_NAME"));
+	*/
 
 	wxStaticText* textDesc = new wxStaticText(this, wxID_ANY,
 		_("IDC_CONFIG_VENUE_DESC"),
@@ -348,8 +350,6 @@ CDlgConfigVenue::CDlgConfigVenue(
 	sizerLongName->Add(ctrlLongName, 1, 0, 0);
 
 	bSizer->Add(sizerLongName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(textLifetime, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlLifetime, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(textDesc, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(ctrlDesc, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
@@ -625,7 +625,6 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 	m_pVenue->SetLongName(StringUtil::stringW(m_LongName));
 	m_pVenue->SetURL(StringUtil::stringW(m_URL));
 	m_pVenue->SetDesc(StringUtil::stringW(m_Desc));
-	m_pVenue->SetLifetimeName(StringUtil::stringW(m_LifetimeName));
 
 	if (oldName != name)
 		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(0, oldName, name));
