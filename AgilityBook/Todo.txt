@@ -1,29 +1,29 @@
-Last Updated: 1/6/2016
+Last Updated: 1/16/2016
 
 - Support multiple named lifetime points. Currently only one set of
   (optionally) named lifetime points are supported. These need to also
   support using Speed Points.
   <in process>
 ==============================================================================
-DTD: (done)
- - Add 'Name' attribute (may be empty)
- - Change 'Points' to implied, add 'SpeedPts' Y/N 'n', Points required when 'n'
- - Add new LifetimeNames element to Venue (add before multiq)
-<!ELEMENT LifetimeNames (#EMPTY) >
-	<!ATTLIST LifetimeNames Name CDATA #REQUIRED >
-- rename LifeTime to LifetimePoints. Otherwise loading newer file will fail
-  hard when reading a changed LifeTime.
-
-On Load conversion:
- Config
- - Move Venue LifetimeName attrib to LifetimeNames element
-   If not set, create using default 'Lifetime'
-   TODO: i18n issues for default Lifetime. Can I have blank and that uses i18n?
- - In element LifeTime, set Name to LifetimeNames/@Name, SpeedPts=n
-
 TODO:
-- currently, arb knows there is only 1 lifetime points - having multiple
-  implies tallying multiple things. Need to track all places affected
+- existing points need to change for lifetime. Currently assumes points go
+  towards both title and lifetime. Changing this may cause issues with existing
+  users. To migrate, should create new existing pt entries for lifetime.
+- currently, arb knows there is only 1 lifetime points - back end work is done
+  finish dialogs
+- When loading file, always automatically add lifetime names to venue if an
+  unknown name is found in either existing or config entries.
+- When deleting, need to warn/remove existing pt entries. Normal runs don't need
+  adjusting since that is done on-the-fly based on config.
+- rename: need to update existing pts.
+
+---------- DLGCONFIGEVENT.CPP
+- dlg
+---------- DLGCONFIGTITLEPOINTS.CPP
+- dlg
+---------- POINTSDATA.CPP
+- need to fix existing lifetime pts
+- need to add placement pts to existing data
 ==============================================================================
 
 - Add warning in run dialog when Q is UNK that the following will not

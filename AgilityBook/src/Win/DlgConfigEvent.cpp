@@ -18,6 +18,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * 2016-01-16 Cleaned up new/edit/delete buttons.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-06-16 Display number of faults for each time fault.
  * 2012-02-16 Fix initial focus.
@@ -389,9 +390,9 @@ CDlgConfigEvent::CDlgConfigEvent(
 	sizerSubname->Add(m_ctrlSubNames, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtnSub = new wxBoxSizer(wxVERTICAL);
-	sizerBtnSub->Add(m_ctrlSubNamesNew, 0, wxALIGN_CENTER, 0);
-	sizerBtnSub->Add(m_ctrlSubNamesEdit, 0, wxALIGN_CENTER | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerBtnSub->Add(m_ctrlSubNamesDelete, 0, wxALIGN_CENTER | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerBtnSub->Add(m_ctrlSubNamesNew, 0, wxEXPAND, 0);
+	sizerBtnSub->Add(m_ctrlSubNamesEdit, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerBtnSub->Add(m_ctrlSubNamesDelete, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
 
 	sizerSubname->Add(sizerBtnSub, 0, wxEXPAND, 0);
 
@@ -436,9 +437,9 @@ CDlgConfigEvent::CDlgConfigEvent(
 	sizerPoints->Add(m_ctrlPointsList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtnPts = new wxBoxSizer(wxVERTICAL);
-	sizerBtnPts->Add(m_ctrlPointsNew, 0, wxALIGN_CENTER, 0);
-	sizerBtnPts->Add(m_ctrlPointsEdit, 0, wxALIGN_CENTER | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerBtnPts->Add(m_ctrlPointsDelete, 0, wxALIGN_CENTER | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerBtnPts->Add(m_ctrlPointsNew, 0, wxEXPAND, 0);
+	sizerBtnPts->Add(m_ctrlPointsEdit, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerBtnPts->Add(m_ctrlPointsDelete, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
 
 	sizerPoints->Add(sizerBtnPts, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerPoints->Add(textMethodNote, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));

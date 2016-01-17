@@ -171,7 +171,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	}
 
 	m_ctrlInit = new wxButton(this, wxID_ANY,
-		_("Init"),
+		L"Init",
 		wxDefaultPosition, wxDefaultSize, 0);
 	BIND_OR_CONNECT_CTRL(m_ctrlInit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDigest::OnInit);
 
@@ -193,7 +193,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		wxTextValidator(wxFILTER_NONE, &m_File));
 
 	wxButton* ctrlFind = new wxButton(this, wxID_ANY,
-		_("Browse..."),
+		L"Browse...",
 		wxDefaultPosition, wxDefaultSize, 0);
 	BIND_OR_CONNECT_CTRL(ctrlFind, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDigest::OnBrowse);
 

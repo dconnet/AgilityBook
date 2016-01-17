@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-16 Cleaned up new/edit/delete buttons.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-06-16 Show time fault multiplier in point games.
  *            Fixed initial layout with speed points.
@@ -497,9 +498,9 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	sizerPlacements->Add(m_ctrlPlacement, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlPlacementNew, 0, wxALIGN_CENTER, 0);
-	sizerBtns->Add(m_ctrlPlacementEdit, 0, wxALIGN_CENTER | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlPlacementDelete, 0, wxALIGN_CENTER | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlPlacementNew, 0, wxEXPAND, 0);
+	sizerBtns->Add(m_ctrlPlacementEdit, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlPlacementDelete, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 3));
 
 	sizerPlacements->Add(sizerBtns, 0, wxEXPAND, 0);
 

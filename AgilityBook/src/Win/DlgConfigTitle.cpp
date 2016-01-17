@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-16 Made 'Name' field wider (cut off on hiDPI)
  * 2015-01-01 Changed pixels to dialog units.
  * 2013-01-13 Added new recurring title suffix style.
  * 2012-05-07 Fixed some comboboxes that should have been readonly.
@@ -114,7 +115,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	textName->Wrap(-1);
 
 	CTextCtrl* ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(50, -1)), 0,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_TITLE_NAME"));
 	ctrlName->SetToolTip(_("HIDC_CONFIG_TITLE_NAME"));

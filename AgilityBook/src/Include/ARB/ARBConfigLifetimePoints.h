@@ -131,6 +131,12 @@ public:
 	}
 	// There is no SetName/Faults since this needs to be a unique key in the list.
 
+	// Fixup routine called from ARBConfigVenue only.
+	void FixName(std::wstring const& inName)
+	{
+		m_Name = inName;
+	}
+
 private:
 	std::wstring m_Name;
 	bool m_UseSpeedPts;

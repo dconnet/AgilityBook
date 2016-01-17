@@ -192,7 +192,6 @@ std::wstring CLocalization::UpdateLifetimeNames(int nNew, int nSkipped) const
 {
 #if defined(__WXWINDOWS__)
 	wxString buffer;
-#pragma PRAGMA_TODO(lifetime name string)
 	buffer << StringUtil::GetTranslation(arbT("IDS_LIFETIMENAMES")).c_str()
 		<< L": "
 		<<wxString::Format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")).c_str(), nNew)

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-01-16 Finish lifetime conversion.
  * 2016-01-06 Removed LifetimeName, added LifetimeNames.
  * 2013-01-13 Added new recurring title suffix style.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -184,13 +185,6 @@ bool ARBConfigVenue::Load(
 	{
 		std::wstring lifetimeName;
 		inTree->GetAttrib(L"LifetimeName", lifetimeName);
-		if (lifetimeName.empty())
-			lifetimeName = L"Lifetime";
-			//lifetimeName = _("IDS_TITLEPOINT_LIFETIME");
-#pragma PRAGMA_TODO("i18n?")
-		// maybe allow empty names?
-		// but then how to prevent the name being added? would need to prevent
-		// all forms of IDS_TITLEPOINT_LIFETIME
 		m_LifetimeNames.AddLifetimeName(lifetimeName);
 	}
 	// Icon index added in 12.5
@@ -209,7 +203,7 @@ bool ARBConfigVenue::Load(
 		{
 			m_LifetimeNames.Load(element, inVersion, ioCallback);
 		}
-		else if (element->GetName() == TREE_TITLES)
+		else if (name == TREE_TITLES)
 		{
 			// Ignore any errors...
 			m_Titles.Load(element, inVersion, ioCallback);
@@ -257,15 +251,32 @@ bool ARBConfigVenue::Load(
 		}
 	}
 	if (m_LifetimeNames.empty())
-	{
-#pragma PRAGMA_TODO(need better way)
-		m_LifetimeNames.AddLifetimeName(L"Lifetime");
-	}
+		m_LifetimeNames.AddLifetimeName(L"");
 
 	// Finish lifetime name conversion.
 	if (inVersion < ARBVersion(14,4))
 	{
-#pragma PRAGMA_TODO(convert lifetime points)
+		if (1 == m_LifetimeNames.size() && !m_LifetimeNames.front()->GetName().empty())
+		{
+			std::wstring name = m_LifetimeNames.front()->GetName();
+			for (ARBConfigEventList::iterator iter = m_Events.begin();
+			iter != m_Events.end();
+				++iter)
+			{
+				for (ARBConfigScoringList::iterator iterS = (*iter)->GetScorings().begin();
+				iterS != (*iter)->GetScorings().end();
+					++iterS)
+				{
+					for each (ARBConfigLifetimePointsPtr lifetime in (*iterS)->GetLifetimePoints())
+					{
+						if (lifetime->GetName().empty())
+						{
+							lifetime->FixName(name);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	// Convert old double Qs into new ones.

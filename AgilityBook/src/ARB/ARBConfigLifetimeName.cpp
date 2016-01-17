@@ -152,7 +152,7 @@ bool ARBConfigLifetimeNameList::AddLifetimeName(
 {
 	if (outLifetimeName)
 		outLifetimeName->reset();
-	if (0 == inName.length())
+	if (FindLifetimeName(inName))
 		return false;
 	ARBConfigLifetimeNamePtr pLifetimeName(ARBConfigLifetimeName::New());
 	pLifetimeName->SetName(inName);

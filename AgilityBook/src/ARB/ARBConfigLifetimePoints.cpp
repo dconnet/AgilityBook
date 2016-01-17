@@ -185,11 +185,9 @@ bool ARBConfigLifetimePoints::Load(
 		if (inTree->GetName() != TREE_LIFETIME_POINTS)
 			return false;
 
-		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_NAME, m_Name))
-		{
-			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_NAME));
-			return false;
-		}
+		// Note: Allow an empty name - that's the default.
+		// There should only be one.
+		inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_NAME, m_Name);
 		inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_SPEEDPTS, m_UseSpeedPts);
 		inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points);
 	}

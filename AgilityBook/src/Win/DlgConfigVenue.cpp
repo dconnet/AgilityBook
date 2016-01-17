@@ -258,20 +258,6 @@ CDlgConfigVenue::CDlgConfigVenue(
 	ctrlLongName->SetHelpText(_("HIDC_CONFIG_VENUE_LONGNAME"));
 	ctrlLongName->SetToolTip(_("HIDC_CONFIG_VENUE_LONGNAME"));
 
-#pragma PRAGMA_TODO(Kill)
-	/*
-	wxStaticText* textLifetime = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_LIFETIME_NAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
-	textLifetime->Wrap(-1);
-
-	CTextCtrl* ctrlLifetime = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
-		CTrimValidator(&m_LifetimeName, TRIMVALIDATOR_TRIM_RIGHT));
-	ctrlLifetime->SetHelpText(_("HIDC_CONFIG_VENUE_LIFETIME_NAME"));
-	ctrlLifetime->SetToolTip(_("HIDC_CONFIG_VENUE_LIFETIME_NAME"));
-	*/
-
 	wxStaticText* textDesc = new wxStaticText(this, wxID_ANY,
 		_("IDC_CONFIG_VENUE_DESC"),
 		wxDefaultPosition, wxDefaultSize, 0);

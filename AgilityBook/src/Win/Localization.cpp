@@ -161,7 +161,6 @@ std::wstring CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) c
 std::wstring CLocalization::UpdateLifetimeNames(int nNew, int nSkipped) const
 {
 	wxString buffer;
-#pragma PRAGMA_TODO(lifetime name string)
 	buffer << _("IDS_LIFETIMENAMES")
 		<< L": "
 		<< wxString::Format(_("IDS_UPDATE_ADDED"), nNew)

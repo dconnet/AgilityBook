@@ -494,7 +494,7 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 		>
 <!ELEMENT LifetimePoints EMPTY >
 	<!ATTLIST LifetimePoints
-		Name CDATA #REQUIRED
+		Name CDATA #IMPLIED
 		SpeedPts (y|n) 'n'
 		Points CDATA #IMPLIED
 		Faults CDATA #REQUIRED
