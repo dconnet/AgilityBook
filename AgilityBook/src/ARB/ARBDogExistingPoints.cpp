@@ -551,9 +551,11 @@ bool ARBDogExistingPointsList::HasPoints(
 						ARBConfigScoringPtr pScoring;
 						if (inEvent->GetScorings().FindEvent(inDiv->GetName(), inLevel->GetName(), (*iter)->GetDate(), &pScoring))
 						{
-							for each (ARBConfigLifetimeNamePtr pName in inVenue->GetLifetimeNames())
+							for (ARBConfigLifetimeNameList::iterator iterN = inVenue->GetLifetimeNames().begin();
+								iterN != inVenue->GetLifetimeNames().end();
+								++iterN)
 							{
-								if (0 < pScoring->GetLifetimePoints().GetLifetimePoints(pName->GetName(), 0.0))
+								if (0 < pScoring->GetLifetimePoints().GetLifetimePoints((*iterN)->GetName(), 0.0))
 									return true;
 							}
 						}

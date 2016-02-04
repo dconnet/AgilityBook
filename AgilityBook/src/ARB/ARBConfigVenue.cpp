@@ -260,18 +260,20 @@ bool ARBConfigVenue::Load(
 		{
 			std::wstring name = m_LifetimeNames.front()->GetName();
 			for (ARBConfigEventList::iterator iter = m_Events.begin();
-			iter != m_Events.end();
+				iter != m_Events.end();
 				++iter)
 			{
 				for (ARBConfigScoringList::iterator iterS = (*iter)->GetScorings().begin();
-				iterS != (*iter)->GetScorings().end();
+					iterS != (*iter)->GetScorings().end();
 					++iterS)
 				{
-					for each (ARBConfigLifetimePointsPtr lifetime in (*iterS)->GetLifetimePoints())
+					for (ARBConfigLifetimePointsList::iterator iterL = (*iterS)->GetLifetimePoints().begin();
+						iterL != (*iterS)->GetLifetimePoints().end();
+						++iterL)
 					{
-						if (lifetime->GetName().empty())
+						if ((*iterL)->GetName().empty())
 						{
-							lifetime->FixName(name);
+							(*iterL)->FixName(name);
 						}
 					}
 				}
