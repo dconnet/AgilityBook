@@ -1,4 +1,7 @@
-Last Updated: 1/16/2016
+Last Updated: 2/8/2016
+
+- When adding items into list ctrl, put focus on added item and ensure visible.
+  (Fault Types in run doesn't scroll)
 
 - Support multiple named lifetime points. Currently only one set of
   (optionally) named lifetime points are supported. These need to also
