@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-02-17 Create a disabled image for toolbar. wx3.1 images are too dark.
  * 2015-12-23 Fix a bug when a separator followed submenu.
  * 2013-10-13 Changed to using an art provider.
  * 2012-07-28 Fix About menu insertion.
@@ -257,25 +258,28 @@ void CMenuHelper::CreateMenu(
 					continue;
 				assert(menuItems[idxItem].toolbar);
 				wxString name;
-				wxString desc;
+				wxString descShort;
 				if (doTranslation)
 				{
 					name = wxGetTranslation(menuItems[idxItem].toolbar);
-					desc = wxGetTranslation(menuItems[idxItem].help);
+					descShort = wxGetTranslation(menuItems[idxItem].help);
 					m_ToolbarData.push_back(TranslationData(menuItems[idxItem].id, menuItems[idxItem].toolbar, menuItems[idxItem].help));
 				}
 				else
 				{
 					name = menuItems[idxItem].toolbar;
-					desc = menuItems[idxItem].help;
+					descShort = menuItems[idxItem].help;
 				}
 				wxBitmap bmp = wxArtProvider::GetBitmap(menuItems[idxItem].artId, wxART_TOOLBAR);
 				assert(bmp.IsOk());
+				wxBitmap bmpDisabled = bmp.ConvertToDisabled();
+				assert(bmpDisabled.IsOk());
 				toolbar->AddTool(menuItems[idxItem].id,
 					name,
 					bmp,
-					desc,
-					menuItems[idxItem].kind);
+					bmpDisabled,
+					menuItems[idxItem].kind,
+					descShort);
 			}
 		}
 		toolbar->Realize();
