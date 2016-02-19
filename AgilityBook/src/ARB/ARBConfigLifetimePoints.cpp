@@ -230,7 +230,7 @@ bool ARBConfigLifetimePointsList::Load(
 }
 
 
-#ifndef ARB_HAS_LAMBDA
+#if !(defined(ARB_HAS_LAMBDA) && (!defined(_MSC_VER) || (defined(_MSC_VER) && _MSC_VER > 1600)))
 class SortConfigLifetimePoints
 {
 public:
@@ -249,7 +249,8 @@ void ARBConfigLifetimePointsList::sort()
 {
 	if (2 > size())
 		return;
-#ifdef ARB_HAS_LAMBDA
+#if defined(ARB_HAS_LAMBDA) && (!defined(_MSC_VER) || (defined(_MSC_VER) && _MSC_VER > 1600))
+	// Seriously VC10? "return expr" is fine. "if (expr) return expr; return expr" errors
 	std::stable_sort(begin(), end(),
 		[](ARBConfigLifetimePointsPtr const& one, ARBConfigLifetimePointsPtr const& two)
 		{
