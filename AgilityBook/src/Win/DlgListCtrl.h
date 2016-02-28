@@ -33,6 +33,7 @@ typedef std::shared_ptr<CDlgListCtrlData> CDlgListCtrlDataPtr;
 class CDlgListCtrl : public wxDialog
 {
 	friend class CDlgListCtrlDataCalendar; // To allow easy access to image icons
+	friend class CDlgListCtrlDataFaults; // To allow access to GetItemListData
 public:
 	typedef enum
 	{

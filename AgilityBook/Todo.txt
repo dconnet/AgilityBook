@@ -7,9 +7,6 @@ Last Updated: 2/28/2016
   is zero or more items) Maybe deal with this as a formatted field.
     "Name<sep>value<sep>Name<sep>Value"
 
-- When adding items into list ctrl, put focus on added item and ensure visible.
-  (Fault Types in run doesn't scroll)
-
 - Support multiple named lifetime points. Currently only one set of
   (optionally) named lifetime points are supported. These need to also
   support using Speed Points.

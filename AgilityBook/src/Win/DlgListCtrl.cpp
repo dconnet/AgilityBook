@@ -10,6 +10,8 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-02-28 Make sure new item is visible.
+ *            Fix a bug in initializing the fault list.
  * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -169,17 +171,20 @@ class CDlgListCtrlDataFaults : public CDlgListCtrlData
 {
 public:
 	static void GetAllFaults(
+			CDlgListCtrl* pDlg,
 			CReportListCtrl* ctrl,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
 			std::set<std::wstring>& faults);
 	CDlgListCtrlDataFaults(
+			CDlgListCtrl* pDlg,
 			CReportListCtrl* list,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
 			std::wstring fault)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
+		, m_pDlg(pDlg)
 		, m_pRun(pRun)
 		, m_Fault(fault)
 	{
@@ -189,6 +194,7 @@ public:
 	virtual void Apply();
 private:
 	CAgilityBookDoc* m_pDoc;
+	CDlgListCtrl* m_pDlg;
 	ARBDogRunPtr m_pRun;
 	std::wstring m_Fault;
 };
@@ -196,6 +202,7 @@ typedef std::shared_ptr<CDlgListCtrlDataFaults> CDlgListCtrlDataFaultsPtr;
 
 
 void CDlgListCtrlDataFaults::GetAllFaults(
+		CDlgListCtrl* pDlg,
 		CReportListCtrl* ctrl,
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr pRun,
@@ -214,10 +221,11 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 	}
 	for (int index = 0; index < ctrl->GetItemCount(); ++index)
 	{
-		wxListItem info;
-		info.SetMask(wxLIST_MASK_TEXT);
-		ctrl->GetColumn(index, info);
-		faults.insert(StringUtil::stringW(info.GetText()));
+		CDlgListCtrlDataPtr pData = pDlg->GetItemListData(index);
+		if (pData)
+		{
+			faults.insert(pData->OnNeedText(0));
+		}
 	}
 }
 
@@ -225,7 +233,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 bool CDlgListCtrlDataFaults::OnEdit()
 {
 	std::set<std::wstring> faults;
-	CDlgListCtrlDataFaults::GetAllFaults(m_List, m_pDoc, m_pRun, faults);
+	CDlgListCtrlDataFaults::GetAllFaults(m_pDlg, m_List, m_pDoc, m_pRun, faults);
 	CDlgFault dlg(faults, m_Fault);
 	if (wxID_OK == dlg.ShowModal())
 	{
@@ -446,7 +454,7 @@ CDlgListCtrl::CDlgListCtrl(
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_FAULT"));
 		for (ARBDogFaultList::const_iterator iter = m_pRun->GetFaults().begin(); iter != m_pRun->GetFaults().end(); ++iter)
 		{
-			CDlgListCtrlDataFaultsPtr pData(new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, (*iter)));
+			CDlgListCtrlDataFaultsPtr pData(new CDlgListCtrlDataFaults(this, m_ctrlList, m_pDoc, m_pRun, (*iter)));
 			items.push_back(pData);
 		}
 	}
@@ -711,6 +719,7 @@ void CDlgListCtrl::DoEdit()
 		if (pData && pData->OnEdit())
 		{
 			m_ctrlList->RefreshItem(nItem);
+			m_ctrlList->EnsureVisible(nItem);
 			UpdateControls();
 		}
 	}
@@ -767,6 +776,7 @@ void CDlgListCtrl::OnKeyDown(wxKeyEvent& evt)
 void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 {
 	bool bUpdate = false;
+	long nItem = wxNOT_FOUND;
 	switch (m_What)
 	{
 	default:
@@ -784,7 +794,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 				{
 					bUpdate = true;
 					CDlgListCtrlDataCalendarPtr pData(new CDlgListCtrlDataCalendar(this, cal));
-					m_ctrlList->Select(m_ctrlList->InsertItem(pData));
+					nItem = m_ctrlList->InsertItem(pData);
 				}
 			}
 		}
@@ -793,13 +803,13 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 	case eFaults:
 		{
 			std::set<std::wstring> faults;
-			CDlgListCtrlDataFaults::GetAllFaults(m_ctrlList, m_pDoc, m_pRun, faults);
+			CDlgListCtrlDataFaults::GetAllFaults(this, m_ctrlList, m_pDoc, m_pRun, faults);
 			CDlgFault dlg(faults, wxEmptyString, this);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				bUpdate = true;
-				CDlgListCtrlDataFaultsPtr pData(new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, dlg.GetFault()));
-				m_ctrlList->Select(m_ctrlList->InsertItem(pData));
+				CDlgListCtrlDataFaultsPtr pData(new CDlgListCtrlDataFaults(this, m_ctrlList, m_pDoc, m_pRun, dlg.GetFault()));
+				nItem = m_ctrlList->InsertItem(pData);
 			}
 		}
 		break;
@@ -812,7 +822,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 			{
 				bUpdate = true;
 				CDlgListCtrlDataOtherPointsPtr pData(new CDlgListCtrlDataOtherPoints(m_ctrlList, *m_pConfig, m_pRun, pOther));
-				m_ctrlList->Select(m_ctrlList->InsertItem(pData));
+				nItem = m_ctrlList->InsertItem(pData);
 			}
 		}
 		break;
@@ -827,13 +837,18 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 			{
 				bUpdate = true;
 				CDlgListCtrlDataPartnersPtr pData(new CDlgListCtrlDataPartners(this, m_ctrlList, m_pRun, partner));
-				m_ctrlList->Select(m_ctrlList->InsertItem(pData));
+				nItem = m_ctrlList->InsertItem(pData);
 			}
 		}
 		break;
 	}
 	if (bUpdate)
 	{
+		if (wxNOT_FOUND != nItem)
+		{
+			m_ctrlList->Select(nItem);
+			m_ctrlList->EnsureVisible(nItem);
+		}
 		int nColumns = m_ctrlList->GetColumnCount();
 		for (int i = 0; i < nColumns; ++i)
 			m_ctrlList->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
