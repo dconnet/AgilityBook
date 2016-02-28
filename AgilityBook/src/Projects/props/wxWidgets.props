@@ -5,6 +5,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <wxWin3_0>$(WXBASE)\wxWidgets-3.0.2</wxWin3_0>
+    <wxWin3_1>$(WXBASE)\wxWidgets-3.1.0</wxWin3_1>
     <wxWinTrunk>$(WXBASE)\trunk</wxWinTrunk>
     <wxWinEnv>$(WXWIN)</wxWinEnv>
     <wxWin>$(wxWin3_0)</wxWin>
@@ -26,6 +27,9 @@
   <ItemGroup>
     <BuildMacro Include="wxWin3_0">
       <Value>$(wxWin3_0)</Value>
+    </BuildMacro>
+    <BuildMacro Include="wxWin3_1">
+      <Value>$(wxWin3_1)</Value>
     </BuildMacro>
     <BuildMacro Include="wxWinTrunk">
       <Value>$(wxWinTrunk)</Value>
