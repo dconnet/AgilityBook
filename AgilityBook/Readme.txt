@@ -24,10 +24,35 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.0.2.
+I'm currently using version 3.1.0.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
+
+=== Changes to 3.1.0:
+-[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
+  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
+  - Set wxUSE_INKEDIT to 1 (currently 0)
+>diff -c textctrl.cpp.orig textctrl.cpp
+*** textctrl.cpp.orig   Mon Feb 29 13:45:04 2016
+--- textctrl.cpp        Mon Feb 29 13:25:44 2016
+***************
+*** 329,334 ****
+--- 329,339 ----
+      }
+  #endif // wxUSE_DRAG_AND_DROP && wxUSE_RICHEDIT
+
++ #if wxUSE_INKEDIT && wxUSE_RICHEDIT
++     if (m_isInkEdit)
++         DissociateHandle();
++ #endif
++
+      delete m_privateContextMenu;
+  }
 
 === Changes to 3.0.2:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:

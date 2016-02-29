@@ -7,6 +7,7 @@
 - New features / Enhancements:
   - Add support for multiple named lifetime points.
   - Add support for AKC NAC points (speed+premier5)
+  - Update to wx3.1.0
 - Bug fixes:
   - When adding items into list control, make sure it is visible.
     Fix a bug in initializing the fault list.

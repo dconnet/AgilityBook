@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2016-02-29 Changed to wx3.1 as default.
 # 2015-09-10 Added -c (configuration) option.
 # 2014-11-17 Add VC12 support, restructured for less code duplication.
 # 2013-09-12 Add /m option to msbuild (multiple processor build)
@@ -16,7 +17,7 @@
 # 2010-06-11 Support building on x64 OS
 # 2010-05-30 Converted .bat to .py (keeps environment clean!)
 """BuildAll.py -w wxwin [-b type] compiler*
-   -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.0.2)'
+   -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.1.0)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config: 'release' or 'debug' (default, release)
    -t:       Testing, just print commands to run
@@ -37,7 +38,7 @@ ProgramFiles = r'c:\Program Files'
 useVC10SDK = False
 
 # ARB is officially released using this branch. This is located under $WXBASE.
-wxBranch = r'\wxWidgets-3.0.2'
+wxBranch = r'\wxWidgets-3.1.0'
 
 testing = False
 
