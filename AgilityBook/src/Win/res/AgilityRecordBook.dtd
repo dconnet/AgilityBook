@@ -324,10 +324,11 @@ top-ten points. The 'Count' value is how they are accumulated
 <!--
 This allows for multiple lifetime accumulations. None are currently known,
 but I'm needing to misuse lifetime more often (AKC NAC).
+An empty 'Name' implies the default. This is a localized name ("Lifetime").
 -->
 <!ELEMENT LifetimeNames EMPTY >
 	<!ATTLIST LifetimeNames
-		Name CDATA #REQUIRED
+		Name CDATA #IMPLIED
 		>
 
 <!--
