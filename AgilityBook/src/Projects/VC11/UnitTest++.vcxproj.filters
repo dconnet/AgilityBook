@@ -26,6 +26,9 @@
     <ClCompile Include="..\..\UnitTest++\src\TestRunner.cpp" />
     <ClCompile Include="..\..\UnitTest++\src\TimeConstraint.cpp" />
     <ClCompile Include="..\..\UnitTest++\src\XmlTestReporter.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\RequiredCheckException.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\RequiredCheckTestReporter.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\ThrowingTestReporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\UnitTest++\src\Win32\TimeHelpers.h">
@@ -59,5 +62,9 @@
     <ClInclude Include="..\..\UnitTest++\src\UnitTest++.h" />
     <ClInclude Include="..\..\UnitTest++\src\UnitTestPP.h" />
     <ClInclude Include="..\..\UnitTest++\src\XmlTestReporter.h" />
+    <ClInclude Include="..\..\UnitTest++\src\RequiredCheckException.h" />
+    <ClInclude Include="..\..\UnitTest++\src\RequiredCheckTestReporter.h" />
+    <ClInclude Include="..\..\UnitTest++\src\RequireMacros.h" />
+    <ClInclude Include="..\..\UnitTest++\src\ThrowingTestReporter.h" />
   </ItemGroup>
 </Project>

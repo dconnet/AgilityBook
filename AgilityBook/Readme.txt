@@ -37,6 +37,22 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSE_MEDIACTRL to 0 (currently 1)
   - Set wxUSE_INKEDIT to 1 (currently 0)
+
+>diff -c datavcmn.cpp.orig datavcmn.cpp
+*** datavcmn.cpp.orig	Tue Mar 15 09:54:08 2016
+--- datavcmn.cpp	Tue Mar 15 09:54:13 2016
+***************
+*** 684,689 ****
+--- 684,691 ----
+      unsigned int col = GetOwner()->GetModelColumn();
+      const wxVariant& value = CheckedGetValue(dv_ctrl->GetModel(), item, col);
+  
++     m_item = item;
++ 
+      m_editorCtrl = CreateEditorCtrl( dv_ctrl->GetMainWindow(), labelRect, value );
+  
+      // there might be no editor control for the given item
+
 >diff -c textctrl.cpp.orig textctrl.cpp
 *** textctrl.cpp.orig   Mon Feb 29 13:45:04 2016
 --- textctrl.cpp        Mon Feb 29 13:25:44 2016

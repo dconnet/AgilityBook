@@ -34,24 +34,27 @@ ARCHIVES = libUnitTest
 # Source files for each target
 ##########
 libUnitTest_SRCS = src/AssertException.cpp \
-	src/Test.cpp \
 	src/Checks.cpp \
 	src/CompositeTestReporter.cpp \
-	src/TestRunner.cpp \
-	src/TestResults.cpp \
-	src/TestReporter.cpp \
-	src/TestReporterStdout.cpp \
-	src/ReportAssert.cpp \
-	src/TestList.cpp \
-	src/TimeConstraint.cpp \
-	src/TestDetails.cpp \
-	src/MemoryOutStream.cpp \
+	src/CurrentTest.cpp \
 	src/DeferredTestReporter.cpp \
 	src/DeferredTestResult.cpp \
-	src/XmlTestReporter.cpp \
-	src/CurrentTest.cpp \
+	src/MemoryOutStream.cpp \
 	src/posix_SignalTranslator.cpp \
-	src/posix_TimeHelpers.cpp
+	src/posix_TimeHelpers.cpp \
+	src/ReportAssert.cpp \
+	src/RequiredCheckException.cpp \
+	src/RequiredCheckTestReporter.cpp \
+	src/Test.cpp \
+	src/TestDetails.cpp \
+	src/TestList.cpp \
+	src/TestReporter.cpp \
+	src/TestReporterStdout.cpp \
+	src/TestResults.cpp \
+	src/TestRunner.cpp \
+	src/ThrowingTestReporter.cpp \
+	src/TimeConstraint.cpp \
+	src/XmlTestReporter.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)

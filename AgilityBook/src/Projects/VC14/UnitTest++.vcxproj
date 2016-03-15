@@ -94,6 +94,9 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\UnitTest++\src\RequiredCheckException.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\RequiredCheckTestReporter.cpp" />
+    <ClCompile Include="..\..\UnitTest++\src\ThrowingTestReporter.cpp" />
     <ClCompile Include="..\..\UnitTest++\src\Win32\TimeHelpers.cpp" />
     <ClCompile Include="..\..\UnitTest++\src\AssertException.cpp" />
     <ClCompile Include="..\..\UnitTest++\src\Checks.cpp" />
@@ -114,6 +117,10 @@
     <ClCompile Include="..\..\UnitTest++\src\XmlTestReporter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\UnitTest++\src\RequiredCheckException.h" />
+    <ClInclude Include="..\..\UnitTest++\src\RequiredCheckTestReporter.h" />
+    <ClInclude Include="..\..\UnitTest++\src\RequireMacros.h" />
+    <ClInclude Include="..\..\UnitTest++\src\ThrowingTestReporter.h" />
     <ClInclude Include="..\..\UnitTest++\src\Win32\TimeHelpers.h" />
     <ClInclude Include="..\..\UnitTest++\src\AssertException.h" />
     <ClInclude Include="..\..\UnitTest++\src\CheckMacros.h" />
