@@ -4,6 +4,7 @@
 # Requires msgcat/msgfmt (gettext) in PATH
 #
 # Revision History
+# 2016-03-28 Cleanup lockfile on exception
 # 2015-10-29 Put --use-fuzzy back, remove --check-format.
 # 2014-11-16 Separated PO/MO language from DAT file generation.
 # 2012-05-16 Add multiprocessing awareness. Kind of.
@@ -154,8 +155,12 @@ def main():
 	rc = 0
 	lockfile = LockFile(os.path.join(outputDir, "CompileDatafile.lck"))
 	if lockfile.acquire():
-		if not CompilePoFiles(wxBaseName, args[0], args[1], outputDir, args[3], bDebug):
-			rc = 1
+		try:
+			if not CompilePoFiles(wxBaseName, args[0], args[1], outputDir, args[3], bDebug):
+				rc = 1
+		except:
+			lockfile.release()
+			raise
 		lockfile.release()
 	else:
 		print "CompileDatafile is locked"

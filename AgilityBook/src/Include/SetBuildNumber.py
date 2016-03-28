@@ -3,6 +3,7 @@
 #
 # This assumes the current directory is 'Include'
 #
+# 2016-03-28 Cleanup lockfile on exception
 # 2012-09-24 Sync copyright in configure.in with VersionNumber.h
 # 2012-07-18 Change build number from days-since-birth to sequential.
 # 2011-08-20 Added a nicer file lock.
@@ -144,7 +145,11 @@ if __name__ == '__main__':
 	if 2 == len(sys.argv) and sys.argv[1] == "--official":
 		lockfile = LockFile("SetBuildNumber.lck")
 		if lockfile.acquire():
-			doWork()
+			try:
+				doWork()
+			except:
+				lockfile.release()
+				raise
 			lockfile.release()
 		else:
 			print "SetBuildNumber is locked"

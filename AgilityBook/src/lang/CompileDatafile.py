@@ -2,6 +2,7 @@
 # Generate the message libraries and data files
 #
 # Revision History
+# 2016-03-28 Cleanup lockfile on exception
 # 2015-01-02 Fixed ARBUpdater inclusion
 # 2014-11-16 Separated PO/MO language from DAT file generation.
 # 2014-05-17 Add exception handling in RunCommand
@@ -160,7 +161,11 @@ def main():
 	rc = 0
 	lockfile = LockFile(os.path.join(intermediateDir, "CompileDatafile.lck"))
 	if lockfile.acquire():
-		rc = GenFile(inputfiles, intermediateDir, targetname, bIncUpdater)
+		try:
+			rc = GenFile(inputfiles, intermediateDir, targetname, bIncUpdater)
+		except:
+			lockfile.release()
+			raise
 		lockfile.release()
 	else:
 		print "CompileDatafile is locked"
