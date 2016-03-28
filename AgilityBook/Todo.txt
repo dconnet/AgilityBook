@@ -1,4 +1,7 @@
-Last Updated: 2/28/2016
+Last Updated: 3/28/2016
+
+- Pasting text including control chars into richedit preserves those.
+  Specifically ctrl+K. This is then serialized into xml. Which fails on load.
 
 - When importing, allow OtherPoints. This is a field that needs to be allowed
   to be specified more than once. Also, on import, it needs both a name and
