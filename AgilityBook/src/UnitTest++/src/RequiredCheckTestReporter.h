@@ -4,6 +4,11 @@
 #include "HelperMacros.h"
 #include "ThrowingTestReporter.h"
 
+#if defined(_MSC_VER) && _MSC_VER <= 1600
+#pragma warning(push)
+#pragma warning(disable : 4512)
+#endif
+
 namespace UnitTest {
 
    class TestResults;
@@ -26,5 +31,8 @@ namespace UnitTest {
    };
 }
 
+#if defined(_MSC_VER) && _MSC_VER <= 1600
+#pragma warning(pop)
 #endif
 
+#endif
