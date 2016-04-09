@@ -12,6 +12,15 @@
 		E1243CBA1B8A4B4B00B632E5 /* gdoc.h in Headers */ = {isa = PBXBuildFile; fileRef = E1243CB81B8A4B4B00B632E5 /* gdoc.h */; };
 		E1243CBD1B8A4B8B00B632E5 /* sprtf.c in Sources */ = {isa = PBXBuildFile; fileRef = E1243CBB1B8A4B8B00B632E5 /* sprtf.c */; };
 		E1243CBE1B8A4B8B00B632E5 /* sprtf.h in Headers */ = {isa = PBXBuildFile; fileRef = E1243CBC1B8A4B8B00B632E5 /* sprtf.h */; };
+		E1650E701CB98FE900277070 /* language_en_gb.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E671CB98FE900277070 /* language_en_gb.h */; };
+		E1650E711CB98FE900277070 /* language_en.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E681CB98FE900277070 /* language_en.h */; };
+		E1650E721CB98FE900277070 /* language_es_mx.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E691CB98FE900277070 /* language_es_mx.h */; };
+		E1650E731CB98FE900277070 /* language_es.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E6A1CB98FE900277070 /* language_es.h */; };
+		E1650E741CB98FE900277070 /* language_fr.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E6B1CB98FE900277070 /* language_fr.h */; };
+		E1650E751CB98FE900277070 /* language_zh_cn.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E6C1CB98FE900277070 /* language_zh_cn.h */; };
+		E1650E761CB98FE900277070 /* language.c in Sources */ = {isa = PBXBuildFile; fileRef = E1650E6D1CB98FE900277070 /* language.c */; };
+		E1650E771CB98FE900277070 /* language.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E6E1CB98FE900277070 /* language.h */; };
+		E1650E781CB98FE900277070 /* message.c in Sources */ = {isa = PBXBuildFile; fileRef = E1650E6F1CB98FE900277070 /* message.c */; };
 		E1796484176927F0003AE489 /* LibTidyHtml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E179641A176927F0003AE489 /* LibTidyHtml.cpp */; };
 		E1796486176927F0003AE489 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E179641D176927F0003AE489 /* stdafx.h */; };
 		E179648E176927F0003AE489 /* tidybuffio.h in Headers */ = {isa = PBXBuildFile; fileRef = E179644E176927F0003AE489 /* tidybuffio.h */; };
@@ -44,7 +53,6 @@
 		E17964A9176927F0003AE489 /* istack.c in Sources */ = {isa = PBXBuildFile; fileRef = E179646B176927F0003AE489 /* istack.c */; };
 		E17964AA176927F0003AE489 /* lexer.c in Sources */ = {isa = PBXBuildFile; fileRef = E179646C176927F0003AE489 /* lexer.c */; };
 		E17964AB176927F0003AE489 /* lexer.h in Headers */ = {isa = PBXBuildFile; fileRef = E179646D176927F0003AE489 /* lexer.h */; };
-		E17964AC176927F0003AE489 /* localize.c in Sources */ = {isa = PBXBuildFile; fileRef = E179646E176927F0003AE489 /* localize.c */; };
 		E17964AD176927F0003AE489 /* mappedio.c in Sources */ = {isa = PBXBuildFile; fileRef = E179646F176927F0003AE489 /* mappedio.c */; };
 		E17964AE176927F0003AE489 /* mappedio.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796470176927F0003AE489 /* mappedio.h */; };
 		E17964AF176927F0003AE489 /* message.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796471176927F0003AE489 /* message.h */; };
@@ -74,6 +82,15 @@
 		E1243CB81B8A4B4B00B632E5 /* gdoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gdoc.h; sourceTree = "<group>"; };
 		E1243CBB1B8A4B8B00B632E5 /* sprtf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sprtf.c; sourceTree = "<group>"; };
 		E1243CBC1B8A4B8B00B632E5 /* sprtf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprtf.h; sourceTree = "<group>"; };
+		E1650E671CB98FE900277070 /* language_en_gb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_en_gb.h; sourceTree = "<group>"; };
+		E1650E681CB98FE900277070 /* language_en.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_en.h; sourceTree = "<group>"; };
+		E1650E691CB98FE900277070 /* language_es_mx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_es_mx.h; sourceTree = "<group>"; };
+		E1650E6A1CB98FE900277070 /* language_es.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_es.h; sourceTree = "<group>"; };
+		E1650E6B1CB98FE900277070 /* language_fr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_fr.h; sourceTree = "<group>"; };
+		E1650E6C1CB98FE900277070 /* language_zh_cn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_zh_cn.h; sourceTree = "<group>"; };
+		E1650E6D1CB98FE900277070 /* language.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = language.c; sourceTree = "<group>"; };
+		E1650E6E1CB98FE900277070 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
+		E1650E6F1CB98FE900277070 /* message.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = message.c; sourceTree = "<group>"; };
 		E1796412176927D2003AE489 /* libLibTidyHtml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibTidyHtml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E179641A176927F0003AE489 /* LibTidyHtml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibTidyHtml.cpp; path = ../../../LibTidyHtml/LibTidyHtml.cpp; sourceTree = "<group>"; };
 		E179641D176927F0003AE489 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../LibTidyHtml/stdafx.h; sourceTree = "<group>"; };
@@ -107,7 +124,6 @@
 		E179646B176927F0003AE489 /* istack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = istack.c; sourceTree = "<group>"; };
 		E179646C176927F0003AE489 /* lexer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lexer.c; sourceTree = "<group>"; };
 		E179646D176927F0003AE489 /* lexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lexer.h; sourceTree = "<group>"; };
-		E179646E176927F0003AE489 /* localize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = localize.c; sourceTree = "<group>"; };
 		E179646F176927F0003AE489 /* mappedio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mappedio.c; sourceTree = "<group>"; };
 		E1796470176927F0003AE489 /* mappedio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mappedio.h; sourceTree = "<group>"; };
 		E1796471176927F0003AE489 /* message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = message.h; sourceTree = "<group>"; };
@@ -218,10 +234,6 @@
 		E1796453176927F0003AE489 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E1243CBB1B8A4B8B00B632E5 /* sprtf.c */,
-				E1243CBC1B8A4B8B00B632E5 /* sprtf.h */,
-				E1243CB71B8A4B4B00B632E5 /* gdoc.c */,
-				E1243CB81B8A4B4B00B632E5 /* gdoc.h */,
 				E1796454176927F0003AE489 /* access.c */,
 				E1796455176927F0003AE489 /* access.h */,
 				E1796456176927F0003AE489 /* alloc.c */,
@@ -243,19 +255,31 @@
 				E1796466176927F0003AE489 /* fileio.c */,
 				E1796467176927F0003AE489 /* fileio.h */,
 				E1796468176927F0003AE489 /* forward.h */,
+				E1243CB71B8A4B4B00B632E5 /* gdoc.c */,
+				E1243CB81B8A4B4B00B632E5 /* gdoc.h */,
 				E1796469176927F0003AE489 /* iconvtc.c */,
 				E179646A176927F0003AE489 /* iconvtc.h */,
 				E179646B176927F0003AE489 /* istack.c */,
+				E1650E671CB98FE900277070 /* language_en_gb.h */,
+				E1650E681CB98FE900277070 /* language_en.h */,
+				E1650E691CB98FE900277070 /* language_es_mx.h */,
+				E1650E6A1CB98FE900277070 /* language_es.h */,
+				E1650E6B1CB98FE900277070 /* language_fr.h */,
+				E1650E6C1CB98FE900277070 /* language_zh_cn.h */,
+				E1650E6D1CB98FE900277070 /* language.c */,
+				E1650E6E1CB98FE900277070 /* language.h */,
 				E179646C176927F0003AE489 /* lexer.c */,
 				E179646D176927F0003AE489 /* lexer.h */,
-				E179646E176927F0003AE489 /* localize.c */,
 				E179646F176927F0003AE489 /* mappedio.c */,
 				E1796470176927F0003AE489 /* mappedio.h */,
+				E1650E6F1CB98FE900277070 /* message.c */,
 				E1796471176927F0003AE489 /* message.h */,
 				E1796472176927F0003AE489 /* parser.c */,
 				E1796473176927F0003AE489 /* parser.h */,
 				E1796474176927F0003AE489 /* pprint.c */,
 				E1796475176927F0003AE489 /* pprint.h */,
+				E1243CBB1B8A4B8B00B632E5 /* sprtf.c */,
+				E1243CBC1B8A4B8B00B632E5 /* sprtf.h */,
 				E1796476176927F0003AE489 /* streamio.c */,
 				E1796477176927F0003AE489 /* streamio.h */,
 				E1796478176927F0003AE489 /* tagask.c */,
@@ -281,6 +305,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1650E731CB98FE900277070 /* language_es.h in Headers */,
 				E1243CBE1B8A4B8B00B632E5 /* sprtf.h in Headers */,
 				E1796486176927F0003AE489 /* stdafx.h in Headers */,
 				E1796490176927F0003AE489 /* tidy.h in Headers */,
@@ -289,7 +314,11 @@
 				E179648F176927F0003AE489 /* tidyplatform.h in Headers */,
 				E1796493176927F0003AE489 /* access.h in Headers */,
 				E1243CBA1B8A4B4B00B632E5 /* gdoc.h in Headers */,
+				E1650E721CB98FE900277070 /* language_es_mx.h in Headers */,
 				E1796497176927F0003AE489 /* attrdict.h in Headers */,
+				E1650E751CB98FE900277070 /* language_zh_cn.h in Headers */,
+				E1650E771CB98FE900277070 /* language.h in Headers */,
+				E1650E701CB98FE900277070 /* language_en_gb.h in Headers */,
 				E179649A176927F0003AE489 /* attrs.h in Headers */,
 				E179649D176927F0003AE489 /* charsets.h in Headers */,
 				E179649F176927F0003AE489 /* clean.h in Headers */,
@@ -305,6 +334,8 @@
 				E17964B3176927F0003AE489 /* pprint.h in Headers */,
 				E17964B5176927F0003AE489 /* streamio.h in Headers */,
 				E17964B8176927F0003AE489 /* tags.h in Headers */,
+				E1650E741CB98FE900277070 /* language_fr.h in Headers */,
+				E1650E711CB98FE900277070 /* language_en.h in Headers */,
 				E17964B9176927F0003AE489 /* tidy-int.h in Headers */,
 				E17964BC176927F0003AE489 /* tmbstr.h in Headers */,
 				E17964BE176927F0003AE489 /* utf8.h in Headers */,
@@ -379,11 +410,12 @@
 				E179649E176927F0003AE489 /* clean.c in Sources */,
 				E17964A0176927F0003AE489 /* config.c in Sources */,
 				E17964A2176927F0003AE489 /* entities.c in Sources */,
+				E1650E761CB98FE900277070 /* language.c in Sources */,
+				E1650E781CB98FE900277070 /* message.c in Sources */,
 				E17964A4176927F0003AE489 /* fileio.c in Sources */,
 				E17964A7176927F0003AE489 /* iconvtc.c in Sources */,
 				E17964A9176927F0003AE489 /* istack.c in Sources */,
 				E17964AA176927F0003AE489 /* lexer.c in Sources */,
-				E17964AC176927F0003AE489 /* localize.c in Sources */,
 				E17964AD176927F0003AE489 /* mappedio.c in Sources */,
 				E17964B0176927F0003AE489 /* parser.c in Sources */,
 				E17964B2176927F0003AE489 /* pprint.c in Sources */,
