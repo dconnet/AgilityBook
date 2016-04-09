@@ -44,6 +44,9 @@
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\buffio.c">
       <Filter>tidy</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\charsets.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\clean.c">
       <Filter>tidy</Filter>
     </ClCompile>
@@ -59,16 +62,22 @@
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\gdoc.c">
       <Filter>tidy</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\iconvtc.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\istack.c">
       <Filter>tidy</Filter>
     </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\lexer.c">
       <Filter>tidy</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\localize.c">
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\language.c">
       <Filter>tidy</Filter>
     </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\mappedio.c">
+      <Filter>tidy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\message.c">
       <Filter>tidy</Filter>
     </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\parser.c">
@@ -101,6 +110,8 @@
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\win32tc.c">
       <Filter>tidy</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="..\..\LibTidyHtml\LibTidyHtml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -127,6 +138,9 @@
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrs.h">
       <Filter>tidy</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\charsets.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\clean.h">
       <Filter>tidy</Filter>
     </ClInclude>
@@ -143,6 +157,30 @@
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\gdoc.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\iconvtc.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_en.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_en_gb.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_es.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_es_mx.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_fr.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_zh_cn.h">
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\lexer.h">
@@ -184,6 +222,8 @@
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\win32tc.h">
       <Filter>tidy</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="..\..\LibTidyHtml\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -17,6 +17,18 @@
 #include "tmbstr.h"
 #include "utf8.h"
 
+/* *** FOR DEBUG ONLY *** */
+#if !defined(NDEBUG) && defined(_MSC_VER)
+/* #define DEBUG_PPRINT */
+/* #define DEBUG_INDENT */
+#ifdef DEBUG_PPRINT
+extern void dbg_show_node( TidyDocImpl* doc, Node *node, int caller, int indent );
+#endif
+#ifdef DEBUG_INDENT
+#include "sprtf.h"
+#endif
+#endif
+
 /*
   Block-level and unknown elements are printed on
   new lines and their contents indented 2 spaces
@@ -312,6 +324,7 @@ void TY_(InitPrintBuf)( TidyDocImpl* doc )
     InitIndent( &doc->pprint.indent[0] );
     InitIndent( &doc->pprint.indent[1] );
     doc->pprint.allocator = doc->allocator;
+    doc->pprint.line = 0;
 }
 
 void TY_(FreePrintBuf)( TidyDocImpl* doc )
@@ -613,6 +626,7 @@ static void WrapLine( TidyDocImpl* doc )
         TY_(WriteChar)( '\\', doc->docOut );
 
     TY_(WriteChar)( '\n', doc->docOut );
+    pprint->line++;
     ResetLineAfterWrap( pprint );
 }
 
@@ -638,7 +652,12 @@ static Bool CheckWrapIndent( TidyDocImpl* doc, uint indent )
     {
         WrapLine( doc );
         if ( pprint->indent[ 0 ].spaces < 0 )
+        {
+#if !defined(NDEBUG) && defined(_MSC_VER) && defined(DEBUG_INDENT)
+            SPRTF("%s Indent from %d to %d\n", __FUNCTION__, pprint->indent[ 0 ].spaces, indent );
+#endif  
             pprint->indent[ 0 ].spaces = indent;
+        }
         return yes;
     }
     return no;
@@ -666,6 +685,7 @@ static void WrapAttrVal( TidyDocImpl* doc )
         TY_(WriteChar)( ' ', doc->docOut );
 
     TY_(WriteChar)( '\n', doc->docOut );
+    pprint->line++;
     ResetLineAfterWrap( pprint );
 }
 
@@ -686,7 +706,7 @@ static void PFlushLineImpl( TidyDocImpl* doc )
 
     for ( i = 0; i < pprint->linelen; ++i )
         TY_(WriteChar)( pprint->linebuf[i], doc->docOut );
-    
+
     if ( IsInString(pprint) )
         TY_(WriteChar)( '\\', doc->docOut );
     ResetLine( pprint );
@@ -701,7 +721,15 @@ void TY_(PFlushLine)( TidyDocImpl* doc, uint indent )
         PFlushLineImpl( doc );
 
     TY_(WriteChar)( '\n', doc->docOut );
-    pprint->indent[ 0 ].spaces = indent;
+    pprint->line++;
+
+    if (pprint->indent[ 0 ].spaces != (int)indent )
+    {
+#if !defined(NDEBUG) && defined(_MSC_VER) && defined(DEBUG_INDENT)
+        SPRTF("%s Indent from %d to %d\n", __FUNCTION__, pprint->indent[ 0 ].spaces, indent );
+#endif  
+        pprint->indent[ 0 ].spaces = indent;
+    }
 }
 
 static void PCondFlushLine( TidyDocImpl* doc, uint indent )
@@ -713,6 +741,15 @@ static void PCondFlushLine( TidyDocImpl* doc, uint indent )
          PFlushLineImpl( doc );
 
          TY_(WriteChar)( '\n', doc->docOut );
+         pprint->line++;
+    }
+
+    /* Issue #390 - Whether chars to flush or not, set new indent */
+    if ( pprint->indent[ 0 ].spaces != (int)indent )
+    {
+#if !defined(NDEBUG) && defined(_MSC_VER)  && defined(DEBUG_INDENT)
+        SPRTF("%s Indent from %d to %d\n", __FUNCTION__, pprint->indent[ 0 ].spaces, indent );
+#endif  
          pprint->indent[ 0 ].spaces = indent;
     }
 }
@@ -733,9 +770,16 @@ void TY_(PFlushLineSmart)( TidyDocImpl* doc, uint indent )
     /* Issue #228 - cfgBool( doc, TidyVertSpace ); */
     if(TidyAddVS) {
         TY_(WriteChar)( '\n', doc->docOut );
+        pprint->line++;
     }
 
-    pprint->indent[ 0 ].spaces = indent;
+    if ( pprint->indent[ 0 ].spaces != (int)indent )
+    {
+#if !defined(NDEBUG) && defined(_MSC_VER) && defined(DEBUG_INDENT)
+        SPRTF("%s Indent from %d to %d\n", __FUNCTION__, pprint->indent[ 0 ].spaces, indent );
+#endif  
+        pprint->indent[ 0 ].spaces = indent;
+    }
 }
 
 static void PCondFlushLineSmart( TidyDocImpl* doc, uint indent )
@@ -749,9 +793,22 @@ static void PCondFlushLineSmart( TidyDocImpl* doc, uint indent )
          /* Issue #228 - cfgBool( doc, TidyVertSpace ); */
          if(TidyAddVS) {
             TY_(WriteChar)( '\n', doc->docOut );
+            pprint->line++;
          }
+    }
 
-         pprint->indent[ 0 ].spaces = indent;
+    /*\
+     *  Issue #390 - Must still deal with fixing indent!
+     *  If TidyHideEndTags or TidyOmitOptionalTags, then
+     *  in certain circumstance no PrintEndTag will be done,
+     *  so linelen will be 0...
+    \*/
+    if (pprint->indent[ 0 ].spaces != (int)indent)
+    {
+#if !defined(NDEBUG) && defined(_MSC_VER) && defined(DEBUG_INDENT)
+        SPRTF("%s Indent from %d to %d\n", __FUNCTION__, pprint->indent[ 0 ].spaces, indent );
+#endif  
+        pprint->indent[ 0 ].spaces = indent;
     }
 }
 
@@ -1027,10 +1084,11 @@ static void PPrintText( TidyDocImpl* doc, uint mode, uint indent,
             ix = IncrWS( ix, end, indent, ixWS );
         }
         else if (( c == '&' ) && (TY_(HTMLVersion)(doc) == HT50) &&
-            (((ix + 1) == end) || (((ix + 1) < end) && (isspace(doc->lexer->lexbuf[ix+1])))) )
+            (((ix + 1) == end) || (((ix + 1) < end) && (isspace(doc->lexer->lexbuf[ix+1] & 0xff)))) )
         {
             /*\
              * Issue #207 - This is an unambiguous ampersand need not be 'quoted' in HTML5
+             * Issue #379 - Ensure only 0 to 255 passed to 'isspace' to avoid debug assert
             \*/
             PPrintChar( doc, c, (mode | CDATA) );
         }
@@ -1859,9 +1917,12 @@ static int TextEndsWithNewline(Lexer *lexer, Node *node, uint mode )
     if ( (mode & (CDATA|COMMENT)) && TY_(nodeIsText)(node) && node->end > node->start )
     {
         uint ch, ix = node->end - 1;
-        /* Skip non-newline whitespace. */
-        while ( ix >= node->start && (ch = (lexer->lexbuf[ix] & 0xff))
-                && ( ch == ' ' || ch == '\t' || ch == '\r' ) )
+        /*\
+         *  Skip non-newline whitespace. 
+         *  Issue #379 - Only if ix is GT start can it be decremented!
+        \*/
+        while ( ix > node->start && (ch = (lexer->lexbuf[ix] & 0xff))
+                 && ( ch == ' ' || ch == '\t' || ch == '\r' ) )
             --ix;
 
         if ( lexer->lexbuf[ ix ] == '\n' )
@@ -2015,6 +2076,9 @@ void PPrintScriptStyle( TidyDocImpl* doc, uint mode, uint indent, Node *node )
 
     if ( node->content && pprint->indent[ 0 ].spaces != (int)indent )
     {
+#if !defined(NDEBUG) && defined(_MSC_VER) && defined(DEBUG_INDENT)
+        SPRTF("%s Indent from %d to %d\n", __FUNCTION__, pprint->indent[ 0 ].spaces, indent );
+#endif  
         pprint->indent[ 0 ].spaces = indent;
     }
     PPrintEndTag( doc, mode, indent, node );
@@ -2114,6 +2178,15 @@ void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
 
     if ( node == NULL )
         return;
+
+    if (doc->progressCallback)
+    {
+        doc->progressCallback( tidyImplToDoc(doc), node->line, node->column, doc->pprint.line + 1 );
+    }
+
+#if !defined(NDEBUG) && defined(_MSC_VER) && defined(DEBUG_PPRINT)
+    dbg_show_node( doc, node, 4, GetSpaces( &doc->pprint ) );
+#endif
 
     if (node->type == TextNode)
     {
@@ -2363,6 +2436,18 @@ void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
                         TY_(PFlushLineSmart)( doc, indent );
                     PPrintEndTag( doc, mode, indent, node );
                 }
+                else if (hideend)
+                {
+                    /* Issue #390  - must still deal with adjusting indent */
+                    TidyPrintImpl* pprint = &doc->pprint;
+                    if (pprint->indent[ 0 ].spaces != (int)indent)
+                    {
+#if !defined(NDEBUG) && defined(_MSC_VER) && defined(DEBUG_INDENT)
+                        SPRTF("%s Indent from %d to %d\n", __FUNCTION__, pprint->indent[ 0 ].spaces, indent );
+#endif  
+                        pprint->indent[ 0 ].spaces = indent;
+                    }
+                }
             }
 
             if (!indcont && !hideend && !nodeIsHTML(node) && !classic)
@@ -2379,6 +2464,11 @@ void TY_(PPrintXMLTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
     if (node == NULL)
         return;
 
+    if (doc->progressCallback)
+    {
+        doc->progressCallback( tidyImplToDoc(doc), node->line, node->column, doc->pprint.line + 1 );
+    }
+    
     if ( node->type == TextNode)
     {
         PPrintText( doc, mode, indent, node );

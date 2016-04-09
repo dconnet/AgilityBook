@@ -852,14 +852,17 @@ void CheckIMG( TidyDocImpl* doc, Node *node )
 
     if ( !HasAlt )
     {
-        if ( cfg(doc, TidyAccessibilityCheckLevel) == 0 )
+        ctmbstr alttext = cfgStr(doc, TidyAltText);
+        if ( ( cfg(doc, TidyAccessibilityCheckLevel) == 0 ) && ( !alttext ) )
         {
             doc->badAccess |= BA_MISSING_IMAGE_ALT;
             TY_(ReportMissingAttr)( doc, node, "alt" );
         }
 
-        if ( cfgStr(doc, TidyAltText) )
-            TY_(AddAttribute)( doc, node, "alt", cfgStr(doc, TidyAltText) );
+        if ( alttext ) {
+            AttVal *attval = TY_(AddAttribute)( doc, node, "alt", alttext );
+            TY_(ReportAttrError)( doc, node, attval, INSERTING_AUTO_ATTRIBUTE);
+        }
     }
 
     if ( !HasSrc && !HasDataFld )
@@ -921,7 +924,8 @@ void CheckTABLE( TidyDocImpl* doc, Node *node )
 {
     AttVal* attval;
     Bool HasSummary = (TY_(AttrGetById)(node, TidyAttr_SUMMARY) != NULL) ? yes : no;
-    Bool isHTML5 = (TY_(HTMLVersion)(doc) == HT50) ? yes : no;
+    uint vers = TY_(HTMLVersion)(doc);  /* Issue #377 - Also applies to XHTML5 */
+    Bool isHTML5 = ((vers == HT50)||(vers == XH50)) ? yes : no;
 
     TY_(CheckAttributes)(doc, node);
 
