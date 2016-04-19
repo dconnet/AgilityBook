@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-04-19 Fix loading name.
  * 2016-03-08 Fix loading empty element.
  * 2016-01-06 Created
  */
@@ -93,6 +94,7 @@ bool ARBConfigLifetimeName::Load(
 	if (!inTree || inTree->GetName() != TREE_VENUE_LIFETIMENAMES)
 		return false;
 	// Note: an empty name is allowed. That will be the default lifetime name.
+	inTree->GetAttrib(ATTRIB_LIFETIMENAMES_NAME, m_Name);
 	return true;
 }
 
