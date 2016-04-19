@@ -105,7 +105,7 @@ bool ARBConfigLifetimeName::Save(ElementNodePtr ioTree) const
 	if (!ioTree)
 		return false;
 	ElementNodePtr element = ioTree->AddElementNode(TREE_VENUE_LIFETIMENAMES);
-	if (0 < m_Name.length())
+	if (!m_Name.empty())
 		element->AddAttrib(ATTRIB_LIFETIMENAMES_NAME, m_Name);
 	return true;
 }

@@ -207,7 +207,8 @@ bool ARBConfigLifetimePoints::Save(ElementNodePtr ioTree) const
 	if (!ioTree)
 		return false;
 	ElementNodePtr life = ioTree->AddElementNode(TREE_LIFETIME_POINTS);
-	life->AddAttrib(ATTRIB_LIFETIME_POINTS_NAME, m_Name);
+	if (!m_Name.empty())
+		life->AddAttrib(ATTRIB_LIFETIME_POINTS_NAME, m_Name);
 	life->AddAttrib(ATTRIB_LIFETIME_POINTS_SPEEDPTS, m_UseSpeedPts);
 	if (!m_UseSpeedPts)
 		life->AddAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points, 0);

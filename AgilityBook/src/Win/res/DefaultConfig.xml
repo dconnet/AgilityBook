@@ -337,6 +337,7 @@ Revision History:
     <Action Config="50" OldName="MCPJC" Venue="USDAA" Verb="DeleteTitle" />
 
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
+      <LifetimeNames/>
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
       <Titles LongName="Starters Games Dog of Canada" Name="SGDC">2 qualifying scores in each of the 3 games (jumpers, gamblers, snooker) under at least 2 different judges in each game
 [Before Jan 1, 2009] 1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
@@ -426,7 +427,7 @@ Revision History:
         <Scoring Division="*" Level="Masters" type="FaultsThenTime">
           <Note>E: 3 Rs or 1 wrong course or 1 NC</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n" Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Advanced" type="FaultsThenTime">
           <Note>E: 3 Rs or 2 NCs</Note>
@@ -440,11 +441,11 @@ Revision History:
       <Event Name="Gamblers">
         <Scoring Division="Veteran" Level="Masters" OpeningPts="22" ValidFrom="2005-1-1" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n" Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Masters" OpeningPts="28" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n" Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Veteran" Level="*" OpeningPts="16" ValidFrom="2005-1-1" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -456,11 +457,11 @@ Revision History:
       <Event Name="Snooker">
         <Scoring Division="Veteran" Level="Masters" OpeningPts="34" ValidFrom="2005-1-1" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n" Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Masters" OpeningPts="40" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n" Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Veteran" Level="*" OpeningPts="32" ValidFrom="2005-1-1" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -472,7 +473,7 @@ Revision History:
       <Event Name="Team Relay" ShortName="Team" hasPartner="y">
         <Scoring Division="*" Level="Masters" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n" Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -481,7 +482,7 @@ Revision History:
       <Event Name="Jumpers">
         <Scoring Division="*" Level="Masters" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -490,19 +491,19 @@ Revision History:
       <Event Name="Steeplechase">
         <Scoring Division="*" Level="Masters" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Challenge">
         <Scoring Division="*" Level="Masters" ValidFrom="2009-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
       </Event>
     </Venue>
     <Venue LongName="American Kennel Club" Name="AKC" URL="http://www.akc.org/" icon="4">
       <Desc>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Desc>
-	  <LifetimeNames Name="NAC"/>
+      <LifetimeNames Name="NAC"/>
       <Titles LongName="Novice Agility" Name="NA">3 Qs</Titles>
       <Titles LongName="Open Agility" Name="OA">3 Qs</Titles>
       <Titles LongName="Agility Excellent" Name="AX">3 Qs</Titles>
@@ -673,7 +674,7 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
         </Scoring>
         <Scoring Division="*" Level="Premier" ValidFrom="2015-10-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints Name="NAC" SpeedPts="n"  Faults="0" Points="5"/>
+          <LifetimePoints Faults="0" Name="NAC" Points="5" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="JWW">
@@ -714,7 +715,7 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
         </Scoring>
         <Scoring Division="*" Level="Premier" ValidFrom="2015-10-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints Name="NAC" SpeedPts="n"  Faults="0" Points="5"/>
+          <LifetimePoints Faults="0" Name="NAC" Points="5" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="National Rounds" ShortName="NatRnd" hasSubNames="y">
@@ -1018,17 +1019,17 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         <Scoring Division="Standard" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Veterans" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Junior" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="ACE" Level="*" ValidFrom="2014-6-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
@@ -1042,15 +1043,15 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Event Name="Jumpers">
         <Scoring Division="Standard" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Veterans" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Junior" Level="*" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="ACE" Level="*" ValidFrom="2014-6-8" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
@@ -1063,62 +1064,62 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         <Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="21" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="18" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="15" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="21" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="18" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="15" ValidFrom="2008-1-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" ValidTo="2007-12-31" type="OCScoreThenTime">
           <Note>Opening time: 40 seconds</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Name="Finals" SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="Finals" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="ACE" Level="Elite" OpeningPts="21" ValidFrom="2014-6-1" type="OCScoreThenTime">
           <Note>Opening time: 30 seconds</Note>
@@ -1147,6 +1148,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       </Event>
     </Venue>
     <Venue LongName="Canadian Kennel Club" Name="CKC" URL="http://www.ckc.ca/" icon="6">
+      <LifetimeNames/>
       <Titles LongName="Agility Novice" Name="AG.N.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Intermediate" Name="AG.I.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Excellent" Name="AG.X.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
@@ -1240,6 +1242,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
     </Venue>
     <Venue LongName="Cavalier King Charles Spaniel Club" Name="CKCSC" URL="http://www.ckcsc.org//" icon="-1">
       <Desc>Note: Titles and events generally follow AKC rules, with some differences in the number of qualifying scores for C-MX and C-MXJ.</Desc>
+      <LifetimeNames/>
       <Titles LongName="Cavalier Novice Agility" Name="C-NA">3 Qs</Titles>
       <Titles LongName="Cavalier Open Agility" Name="C-OA">3 Qs</Titles>
       <Titles LongName="Cavalier Agility Excellent" Name="C-AX">3 Qs</Titles>
@@ -1321,6 +1324,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       </MultiQ>
     </Venue>
     <Venue LongName="Canine Performance Events" Name="CPE" URL="http://www.k9cpe.com/" icon="7">
+      <LifetimeNames/>
       <Titles LongName="Level 1 Standard" Name="CL1-R">2 Qualifying Legs</Titles>
       <Titles LongName="Level 1 Handler Games" Name="CL1-H">1 Qualifying Leg each of Colors and Wildcard</Titles>
       <Titles LongName="Level 1 Strategy Games" Name="CL1-S">1 Qualifying Leg each of Snooker and Jackpot</Titles>
@@ -1541,7 +1545,7 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
       <Event Name="Standard">
         <Scoring Division="*" Level="Level C" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 5" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1549,8 +1553,8 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="5" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 4" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1558,9 +1562,9 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 3" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1569,9 +1573,9 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 2" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1580,9 +1584,9 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 1" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1591,31 +1595,31 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level C" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 5" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 4" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 3" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1623,9 +1627,9 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 2" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1633,9 +1637,9 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 1" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1643,9 +1647,9 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 3" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1655,42 +1659,42 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
           <TitlePoints Faults="0" Points="25"/>
           <TitlePoints Faults="5" Points="20"/>
           <TitlePoints Faults="10" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="15"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="15" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Colors">
         <Desc>Successfully run your choice of one of the three over-lapping mini-agility courses on the same field.</Desc>
         <Scoring Division="*" Level="Level C" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 5" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 1 other
 5 time faults</Note>
           <TitlePoints Faults="5" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="10"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 4" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="5"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 3" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="5"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 2" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1698,9 +1702,9 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="5"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 1" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -1708,60 +1712,60 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="5"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level C" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 5" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 3 time faults</Note>
           <TitlePoints Faults="3" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="3" Points="10"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 4" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 3 time faults</Note>
           <TitlePoints Faults="3" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="3" Points="10"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 3" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 4 time faults</Note>
           <TitlePoints Faults="4" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="4" Points="10"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 2" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 1 off course
 4 time faults</Note>
           <TitlePoints Faults="9" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="9" Points="5"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="9" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 1" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 1 off course
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="5"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 3" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 4 time faults</Note>
           <TitlePoints Faults="0" Points="15"/>
           <TitlePoints Faults="4" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="4" Points="10"/>
+          <LifetimePoints Faults="0" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Wildcard">
@@ -1769,7 +1773,7 @@ However, only 5 of the 7 classes are required to be completed.</Titles>
         <Scoring Division="*" Level="Level C" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt</Note>
           <TitlePoints Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 5" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt
@@ -1778,8 +1782,8 @@ Faults allowed:
 1 other
 5 time faults</Note>
           <TitlePoints Faults="5" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 4" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt
@@ -1788,9 +1792,9 @@ Faults allowed:
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 3" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt
@@ -1799,9 +1803,9 @@ Faults allowed:
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 2" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 2 1pt, 1 2pt
@@ -1811,9 +1815,9 @@ Faults allowed:
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 1" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 2 1pt, 1 2pt
@@ -1823,14 +1827,14 @@ Faults allowed:
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level C" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt</Note>
           <TitlePoints Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 5" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt
@@ -1838,9 +1842,9 @@ Faults allowed:
 1 bar down
 3 time faults</Note>
           <TitlePoints Faults="8" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="8" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="8" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 4" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt
@@ -1848,9 +1852,9 @@ Faults allowed:
 1 bar down
 3 time faults</Note>
           <TitlePoints Faults="8" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="8" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="8" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 3" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt
@@ -1858,9 +1862,9 @@ Faults allowed:
 1 bar down
 4 time faults</Note>
           <TitlePoints Faults="9" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="9" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="9" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 2" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 2 1pt, 1 2pt
@@ -1869,9 +1873,9 @@ Faults allowed:
 1 bar down
 4 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 1" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 2 1pt, 1 2pt
@@ -1880,9 +1884,9 @@ Faults allowed:
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 3" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>WildCard: 1 1pt, 2 2pt
@@ -1892,229 +1896,229 @@ Faults allowed:
           <TitlePoints Faults="0" Points="20"/>
           <TitlePoints Faults="5" Points="15"/>
           <TitlePoints Faults="9" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="9" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="9" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Snooker">
         <Desc>To test the course planning strategies of the handler, and the dog's ability to concentrate on and execute the handlers directions.</Desc>
         <Scoring Division="Regular" Level="Level C" OpeningPts="32" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 5" OpeningPts="32" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 4" OpeningPts="32" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 3" OpeningPts="30" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 2" OpeningPts="28" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 1" OpeningPts="26" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level C" OpeningPts="30" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 5" OpeningPts="30" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 4" OpeningPts="30" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 3" OpeningPts="28" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 2" OpeningPts="26" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 1" OpeningPts="24" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level C" OpeningPts="30" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 5" OpeningPts="30" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 4" OpeningPts="30" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 3" OpeningPts="28" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 2" OpeningPts="26" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 1" OpeningPts="24" ValidFrom="2007-2-1" dropFractions="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level C" OpeningPts="32" ValidTo="2007-1-31" dropFractions="y" type="ScoreThenTime">
           <Note>32 points</Note>
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 5" OpeningPts="32" ValidTo="2007-1-31" dropFractions="y" type="ScoreThenTime">
           <Note>32 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 4" OpeningPts="32" ValidTo="2007-1-31" dropFractions="y" type="ScoreThenTime">
           <Note>32 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 3" OpeningPts="30" ValidTo="2007-1-31" dropFractions="y" type="ScoreThenTime">
           <Note>30 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 2" OpeningPts="28" ValidTo="2007-1-31" dropFractions="y" type="ScoreThenTime">
           <Note>28 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 1" OpeningPts="26" ValidTo="2007-1-31" dropFractions="y" type="ScoreThenTime">
           <Note>26 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 3" OpeningPts="30" ValidTo="2007-1-31" dropFractions="y" type="ScoreThenTime">
           <Note>30 points</Note>
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Jackpot">
         <Desc>To test the course planning strategies of the handler, and the dog's ability to work at a distance.</Desc>
         <Scoring ClosingPts="20" Division="Regular" Level="Level C" OpeningPts="24" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 5" OpeningPts="24" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 4" OpeningPts="24" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 3" OpeningPts="20" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 2" OpeningPts="16" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 1" OpeningPts="12" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Enthusiast" Level="Level C" OpeningPts="22" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Enthusiast" Level="Level 5" OpeningPts="22" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Enthusiast" Level="Level 4" OpeningPts="22" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Enthusiast" Level="Level 3" OpeningPts="18" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Enthusiast" Level="Level 2" OpeningPts="14" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Enthusiast" Level="Level 1" OpeningPts="10" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Specialist" Level="Level C" OpeningPts="22" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Specialist" Level="Level 5" OpeningPts="22" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Specialist" Level="Level 4" OpeningPts="22" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Specialist" Level="Level 3" OpeningPts="18" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Specialist" Level="Level 2" OpeningPts="14" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Specialist" Level="Level 1" OpeningPts="10" ValidFrom="2007-2-1" dropFractions="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level C" OpeningPts="28" ValidTo="2007-1-31" dropFractions="y" type="OCScoreThenTime">
           <Note>28+20 points</Note>
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 5" OpeningPts="28" ValidTo="2007-1-31" dropFractions="y" type="OCScoreThenTime">
           <Note>28+20 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 4" OpeningPts="28" ValidTo="2007-1-31" dropFractions="y" type="OCScoreThenTime">
           <Note>28+20 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 3" OpeningPts="24" ValidTo="2007-1-31" dropFractions="y" type="OCScoreThenTime">
           <Note>24+20 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 2" OpeningPts="20" ValidTo="2007-1-31" dropFractions="y" type="OCScoreThenTime">
           <Note>20+20 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Regular" Level="Level 1" OpeningPts="16" ValidTo="2007-1-31" dropFractions="y" type="OCScoreThenTime">
           <Note>16+20 points</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Specialist" Level="Level 3" OpeningPts="24" ValidTo="2007-1-31" dropFractions="y" type="OCScoreThenTime">
           <Note>24+20 points</Note>
           <TitlePoints Faults="0" Points="25"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="25"/>
+          <LifetimePoints Faults="0" Points="25" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="FullHouse">
@@ -2124,110 +2128,110 @@ Faults allowed:
 joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
         <Scoring Division="Regular" Level="Level C" OpeningPts="25" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 5" OpeningPts="25" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 4" OpeningPts="25" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 3" OpeningPts="23" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 2" OpeningPts="21" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 1" OpeningPts="19" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level C" OpeningPts="23" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 5" OpeningPts="23" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 4" OpeningPts="23" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 3" OpeningPts="21" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 2" OpeningPts="19" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Enthusiast" Level="Level 1" OpeningPts="17" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level C" OpeningPts="23" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 5" OpeningPts="23" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 4" OpeningPts="23" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 3" OpeningPts="21" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 2" OpeningPts="19" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 1" OpeningPts="17" ValidFrom="2007-2-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level C" OpeningPts="25" ValidTo="2007-1-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 5" OpeningPts="25" ValidTo="2007-1-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 4" OpeningPts="25" ValidTo="2007-1-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 3" OpeningPts="23" ValidTo="2007-1-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 2" OpeningPts="21" ValidTo="2007-1-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 1" OpeningPts="19" ValidTo="2007-1-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 3" OpeningPts="23" ValidTo="2007-1-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Jumpers">
         <Desc>Successfully complete course within fault limits and course time.</Desc>
         <Scoring Division="*" Level="Level C" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 5" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -2235,8 +2239,8 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="5" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 4" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -2244,9 +2248,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 3" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -2255,9 +2259,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 2" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -2266,9 +2270,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="*" Level="Level 1" ValidFrom="2007-2-1" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -2277,31 +2281,31 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 other
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level C" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 5" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 4" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 3" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -2309,9 +2313,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 2" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -2319,9 +2323,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Regular" Level="Level 1" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -2329,9 +2333,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 bar down
 5 time faults</Note>
           <TitlePoints Faults="10" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Specialist" Level="Level 3" ValidTo="2007-1-31" dropFractions="y" type="FaultsThenTime">
           <Note>Faults allowed:
@@ -2341,13 +2345,14 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
           <TitlePoints Faults="0" Points="20"/>
           <TitlePoints Faults="5" Points="15"/>
           <TitlePoints Faults="10" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="20"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="15"/>
-          <LifetimePoints SpeedPts="n"  Faults="10" Points="10"/>
+          <LifetimePoints Faults="0" Points="20" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="15" SpeedPts="n"/>
+          <LifetimePoints Faults="10" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
     </Venue>
     <Venue LongName="Dogs On Course in North America" Name="DOCNA" URL="http://www.docna.com/" icon="8">
+      <LifetimeNames/>
       <Titles LongName="Competition - Beginner Standard Agility Award" Name="C-BSA">3 Qs</Titles>
       <Titles LongName="Competition - Beginner Gamblers Award" Name="C-BGA">3 Qs, any combination of Gambles</Titles>
       <Titles LongName="Competition - Beginner Jumpers Award" Name="C-BJA">3 Qs</Titles>
@@ -2812,6 +2817,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
       </Event>
     </Venue>
     <Venue LongName="Fédération Cynologique Internationale" Name="FCI" URL="http://www.fci.be" icon="14">
+      <LifetimeNames/>
       <Titles LongName="Agility Certificate" Name="Agility Certificate">Qualified 'Excellent' 3 times, with clear rounds, under 2 different judges in Agility 1 competitions</Titles>
       <Division Name="Standard" ShortName="Std">
         <Level Name="Level 1" ShortName="L1"/>
@@ -2875,6 +2881,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
     </Venue>
     <Venue LongName="North American Dog Agility Council" Name="NADAC" URL="http://www.nadac.com/" icon="9">
       <Desc>Note: As of 12/10/2005, NADAC no longer tracks points in different divisions. All of the -V and -JH titles are gone. For simplicity, the new Categories are being treated as Divisions.</Desc>
+      <LifetimeNames/>
       <Titles Inc="200" LongName="Intro Agility Certificate" Name="IAC" Sep="h" StartAt="200" ValidFrom="2014-1-1">30 points
 Extended title at 400 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Intro Chances Certificate" Name="ICC" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
@@ -3267,106 +3274,106 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="5"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Vet Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="5"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2012-5-18" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="5"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" ValidTo="2012-5-17" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" ValidTo="2012-5-17" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" ValidTo="2012-5-17" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="5"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="5"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="5"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="5"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Veterans" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="5"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="5" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Junior" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <TitlePoints Faults="5" Points="5"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="5"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="5" Points="5" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Jumpers">
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Veterans" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Junior" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Gamblers" hasSubNames="y">
@@ -3377,42 +3384,42 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
         <Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" ValidTo="2004-12-31" type="OCScoreThenTime">
           <Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" ValidTo="2004-12-31" type="OCScoreThenTime">
           <Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" ValidTo="2004-12-31" type="OCScoreThenTime">
           <Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" ValidTo="2004-12-31" type="OCScoreThenTime">
           <Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" ValidTo="2004-12-31" type="OCScoreThenTime">
           <Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" ValidTo="2004-12-31" type="OCScoreThenTime">
           <Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Standard" Level="*" ValidFrom="2005-1-1" ValidTo="2006-1-1" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Veterans" Level="*" ValidFrom="2005-1-1" ValidTo="2006-1-1" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Chances">
@@ -3421,136 +3428,136 @@ Was called Wild Card briefly.</Desc>
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Tunnelers">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="TouchNGo">
         <Desc>Double Shot: Enter as 2 separate runs.</Desc>
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Weavers">
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Hoopers">
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Gaters">
         <Scoring Division="Std Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Chances" ShortName="ExChances">
@@ -3616,11 +3623,12 @@ Was called Wild Card briefly.</Desc>
       <Event Name="Beginners Agility">
         <Desc>Use Faults to indicate number of failed tests.</Desc>
         <Scoring Division="Beginners" Level="*" type="FaultsThenTime">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
     </Venue>
     <Venue LongName="Société Centrale Canine" Name="SCC" URL="http://www.france-agility.com/agility/reglts.htm" icon="15">
+      <LifetimeNames/>
       <Titles LongName="Agility Certificate" Name="Agility Certificate">Le Brevet d'Agility, qualifiant pour 2ème degré, sera attribué au chien ayant obtenu 3 qualificatifs excellents sous deux juges différents en Agility 1er degré.</Titles>
       <Division Name="Senior">
         <Level Name="1er degré"/>
@@ -3720,6 +3728,7 @@ Was called Wild Card briefly.</Desc>
       </Event>
     </Venue>
     <Venue LongName="Teacup Dogs Agility Association" Name="TDAA" URL="http://www.k9tdaa.com/" icon="11">
+      <LifetimeNames/>
       <Titles LongName="Teacup Beginner Agile Dog" Name="TBAD">3 Qs in standard courses</Titles>
       <Titles LongName="Teacup Intermediate Agile Dog" Name="TIAD">3 Qs in standard courses</Titles>
       <Titles LongName="Teacup Superior Agile Dog" Name="TSAD">5 Qs in standard courses</Titles>
@@ -3866,20 +3875,20 @@ TG3 + 10 Qs in at least 5 games
       <Event Name="Agility I">
         <Scoring Division="*" Level="Agility I" type="Faults200ThenTime">
           <TitlePoints Faults="30" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="UAGI" Level="*" dropFractions="y" type="Faults200ThenTime">
           <Note>This division/level is for dogs that are working towards their UAGI title.</Note>
           <TitlePoints Faults="30" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="UACH" Level="B" dropFractions="y" type="Faults200ThenTime">
           <Note>This division/level is for dogs that have earned both their UAGI and UAGII titles.</Note>
@@ -3888,39 +3897,39 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="2" Points="4"/>
           <TitlePoints Faults="3" Points="2"/>
           <TitlePoints Faults="4" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="UGRACH" Level="B" dropFractions="y" type="Faults200ThenTime">
           <Note>This division/level is for dogs that have earned their UACHX title.</Note>
           <TitlePoints Faults="4" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Agility II">
         <Scoring Division="*" Level="Agility II" type="Faults200ThenTime">
           <TitlePoints Faults="30" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="UAGII" Level="*" dropFractions="y" type="Faults200ThenTime">
           <Note>This division/level is for dogs that are working towards their UAGII title.</Note>
           <TitlePoints Faults="30" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="UACH" Level="*" dropFractions="y" type="Faults200ThenTime">
           <Note>This division/level is for dogs that have earned both their UAGI and UAGII titles.</Note>
@@ -3929,48 +3938,48 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="2" Points="4"/>
           <TitlePoints Faults="3" Points="2"/>
           <TitlePoints Faults="4" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="UGRACH" Level="*" dropFractions="y" type="Faults200ThenTime">
           <Note>This division/level is for dogs that have earned their UACHX title.</Note>
           <TitlePoints Faults="4" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Agility III">
         <Scoring Division="*" Level="Agility III" dropFractions="y" type="Faults200ThenTime">
           <TitlePoints Faults="4" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="UACHX" Level="B" dropFractions="y" type="Faults200ThenTime">
           <Note>This division/level is for dogs that have earned their UACH title.</Note>
           <TitlePoints Faults="4" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="UGRACH" Level="B" dropFractions="y" type="Faults200ThenTime">
           <Note>This division/level is for dogs that have earned their UACHX title.</Note>
           <TitlePoints Faults="4" Points="1"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="0" Points="10"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="1" Points="6"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="2" Points="4"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="3" Points="2"/>
-          <LifetimePoints Name="All Star" SpeedPts="n"  Faults="4" Points="1"/>
+          <LifetimePoints Faults="0" Name="All Star" Points="10" SpeedPts="n"/>
+          <LifetimePoints Faults="1" Name="All Star" Points="6" SpeedPts="n"/>
+          <LifetimePoints Faults="2" Name="All Star" Points="4" SpeedPts="n"/>
+          <LifetimePoints Faults="3" Name="All Star" Points="2" SpeedPts="n"/>
+          <LifetimePoints Faults="4" Name="All Star" Points="1" SpeedPts="n"/>
         </Scoring>
       </Event>
       <MultiQ Name="Triple Q" SName="QQQ">
@@ -3985,6 +3994,7 @@ TG3 + 10 Qs in at least 5 games
       </MultiQ>
     </Venue>
     <Venue LongName="UK Agility International" Name="UKI" URL="http://www.ukagilityinternational.com/" icon="-1">
+      <LifetimeNames/>
       <Titles LongName="Beginner International Dog" Name="BID">Required points to move from Beginners to Novice.</Titles>
       <Titles LongName="International Novice Dog" Name="IND">Required points to move from Novice to Senior.</Titles>
       <Titles LongName="International Senior Dog" Name="ISD">Required points to move from Senior to Champion.</Titles>
@@ -4093,6 +4103,7 @@ TG3 + 10 Qs in at least 5 games
       </Event>
     </Venue>
     <Venue LongName="United States Dog Agility Association" Name="USDAA" URL="http://www.usdaa.com/" icon="13">
+      <LifetimeNames/>
       <Titles LongName="Agility Dog®" Name="AD">Starters Standard Agility title plus 1 qualifying score in each of the 4 Starters nonstandard classes.
 [Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
       <Titles LongName="Starters Standard Agility" Name="SSA">3 qualifying scores earned under at least 2 different judges.</Titles>
@@ -4348,16 +4359,16 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Championship" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4368,16 +4379,16 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Performance" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PII" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4390,7 +4401,7 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Veterans" Level="*" ValidFrom="2011-3-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Intro" Level="Intro" ValidFrom="2011-8-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4400,16 +4411,16 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Championship" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4421,16 +4432,16 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Performance" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PII" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4441,7 +4452,7 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="FaultsThenTime"/>
         <Scoring Division="Veterans" Level="*" ValidFrom="2011-3-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Intro" Level="Intro" ValidFrom="2011-8-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4450,12 +4461,12 @@ TG3 + 10 Qs in at least 5 games
       <Event Name="Gamblers">
         <Scoring Division="Championship" Level="Nationals" type="OCScoreThenTime"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="OCScoreThenTime">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="OCScoreThenTime"/>
         <Scoring Division="Championship" Level="Masters" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4466,12 +4477,12 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="OCScoreThenTime"/>
         <Scoring Division="Performance" Level="Nationals" type="OCScoreThenTime"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="OCScoreThenTime">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="OCScoreThenTime"/>
         <Scoring Division="Performance" Level="PIII" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PII" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4482,7 +4493,7 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="OCScoreThenTime"/>
         <Scoring Division="Veterans" Level="*" ValidFrom="2011-3-1" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Intro" Level="Intro" ValidFrom="2011-8-1" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4491,12 +4502,12 @@ TG3 + 10 Qs in at least 5 games
       <Event Name="Snooker">
         <Scoring Division="Championship" Level="Nationals" type="ScoreThenTime"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="ScoreThenTime">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="ScoreThenTime"/>
         <Scoring Division="Championship" Level="Masters" OpeningPts="37" superQ="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" OpeningPts="37" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4507,12 +4518,12 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
         <Scoring Division="Performance" Level="Nationals" type="ScoreThenTime"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="ScoreThenTime">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="ScoreThenTime"/>
         <Scoring Division="Performance" Level="PIII" OpeningPts="37" superQ="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PII" OpeningPts="37" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4523,7 +4534,7 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Performance" Level="PI" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
         <Scoring Division="Veterans" Level="*" OpeningPts="37" ValidFrom="2011-3-1" superQ="y" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Intro" Level="Intro" OpeningPts="37" ValidFrom="2011-8-1" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4537,7 +4548,7 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
           <Note>DAM Team</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="1998-12-31" type="TimePlusFaults">
           <Note>DAM Team</Note>
@@ -4549,7 +4560,7 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2006-9-23" type="TimePlusFaults">
           <Note>Performance Versatility Pairs</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Pairs" hasPartner="y">
@@ -4561,7 +4572,7 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Championship" Level="Masters" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
@@ -4578,7 +4589,7 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Performance" Level="PIII" ValidFrom="2007-1-1" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PIII" ValidTo="2006-12-31" type="TimePlusFaults">
           <Note>Non-titling event - known as Babar's, Oscar's, etc.</Note>
@@ -4601,28 +4612,28 @@ TG3 + 10 Qs in at least 5 games
       </Event>
       <Event Name="Grand Prix">
         <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="FaultsThenTime">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="FaultsThenTime"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="FaultsThenTime">
           <Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2006-9-23" ValidTo="2008-9-18" type="FaultsThenTime">
           <Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="5" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="1"/>
+          <LifetimePoints Faults="5" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2006-9-22" type="FaultsThenTime">
           <Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="7" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="7" Points="1"/>
+          <LifetimePoints Faults="7" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="FaultsThenTime">
           <Note>Performance National Standard
 For tracking purposes, you can use this to record Veterans GP also.</Note>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="FaultsThenTime">
           <Note>Performance National Standard
@@ -4632,38 +4643,38 @@ For tracking purposes, you can use this to record Veterans GP also.</Note>
           <Note>Performance National Standard
 In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2006-9-23" ValidTo="2008-9-18" type="FaultsThenTime">
           <Note>Performance National Standard
 In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="5" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="5" Points="1"/>
+          <LifetimePoints Faults="5" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2004-1-1" ValidTo="2006-9-22" type="FaultsThenTime">
           <Note>2004: Performance Grand Prix
 2005: Performance National Standard
 In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="7" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="7" Points="1"/>
+          <LifetimePoints Faults="7" Points="1" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Steeplechase">
         <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
           <Note>Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="1998-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
           <Note>Performance Speed Jumping</Note>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults">
           <Note>Performance Speed Jumping</Note>
@@ -4672,7 +4683,7 @@ In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be m
           <Note>Performance Speed Jumping
 Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints SpeedPts="n"  Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2006-9-22" type="TimePlusFaults">
           <Note>Non-titling event - known as Leap N Chase, Fast &amp; Furious, etc.</Note>
@@ -4706,6 +4717,7 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
       </Event>
     </Venue>
     <Venue LongName="Virtual Agility League" Name="VALOR" URL="http://www.dogtrainingraleighnc.net/VirtualAgilityLeague/VALOR_home.html" icon="-1">
+      <LifetimeNames/>
       <Titles LongName="VALOR Training (Beginner) Standard" Name="VBS-T">3 Qualifying Scores on a Beginner Standard Level Course</Titles>
       <Titles LongName="VALOR Training (Beginner) Jumpers" Name="VBJ-T">3 Qualifying Scores on a Beginner Jumpers Level Course</Titles>
       <Titles LongName="VALOR Training (Beginner) Snooker" Name="VBK-T">3 Qualifying Scores on a Beginner Snooker Course</Titles>

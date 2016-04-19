@@ -4,6 +4,9 @@
     Setup AKC Lifetime points as "NAC" to track Premier.
     Added AKC ACT (pre-agility).
     Updated CKC titles.
+- Bumped file version to 14.4:
+  - Added 'LifetimeNames' to 'Venue'. Removed 'LifetimeName' from Venue.
+    Renamed 'LifeTime' to 'LifetimePoints', added 'Name', 'SpeedPts'.
 - New features / Enhancements:
   - Add support for multiple named lifetime points.
   - Add support for AKC NAC points (speed+premier5)
