@@ -304,11 +304,6 @@ typedef std::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
 class CPointsDataLifetime : public CPointsDataBase
 {
 public:
-	/**
-	 * @param pDoc Document
-	 * @param bLifetime Lifetime or Placement?
-	 * @param inVenue Associated venue
-	 */
 	CPointsDataLifetime(
 			CAgilityBookDoc* pDoc,
 			ARBConfigVenuePtr inVenue);

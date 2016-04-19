@@ -268,14 +268,20 @@ void ARBConfigLifetimePointsList::sort()
 
 double ARBConfigLifetimePointsList::GetLifetimePoints(
 		std::wstring const& inName,
-		double inFaults) const
+		double inFaults,
+		short inSpeedPts) const
 {
 	// This is why we keep the list sorted!
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inName
 		&& inFaults <= static_cast<double>((*iter)->GetFaults()))
-			return (*iter)->GetPoints();
+		{
+			if ((*iter)->UseSpeedPts())
+				return inSpeedPts;
+			else
+				return (*iter)->GetPoints();
+		}
 	}
 	return 0.0;
 }

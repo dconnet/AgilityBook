@@ -172,12 +172,15 @@ public:
 
 	/**
 	 * Get the number of lifetime title points earned based on faults.
+	 * @param inName Name of lifetime points.
 	 * @param inFaults Number of faults in the run.
+	 * @param inSpeedPts Number of speed points, if applicable.
 	 * @return Number of lifetime titling points.
 	 */
 	double GetLifetimePoints(
 			std::wstring const& inName,
-			double inFaults) const;
+			double inFaults,
+			short inSpeedPts) const;
 
 	/**
 	 * Find a points object.

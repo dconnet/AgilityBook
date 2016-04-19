@@ -555,7 +555,7 @@ bool ARBDogExistingPointsList::HasPoints(
 								iterN != inVenue->GetLifetimeNames().end();
 								++iterN)
 							{
-								if (0 < pScoring->GetLifetimePoints().GetLifetimePoints((*iterN)->GetName(), 0.0))
+								if (0 < pScoring->GetLifetimePoints().GetLifetimePoints((*iterN)->GetName(), 0.0, 0))
 									return true;
 							}
 						}

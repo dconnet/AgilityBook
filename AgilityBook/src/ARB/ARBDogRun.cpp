@@ -717,12 +717,12 @@ double ARBDogRun::GetLifetimePoints(
 						if (0.0 > score)
 							score = 0.0;
 					}
-					pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score) + bonusTitlePts;
+					pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score, GetSpeedPoints(inScoring)) + bonusTitlePts;
 				}
 			}
 			else
 			{
-				pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score) + bonusTitlePts;
+				pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score, GetSpeedPoints(inScoring)) + bonusTitlePts;
 			}
 		}
 		break;
@@ -747,7 +747,7 @@ double ARBDogRun::GetLifetimePoints(
 						timeFaults = 0.0;
 				}
 			}
-			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, timeFaults) + bonusTitlePts;
+			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, timeFaults, GetSpeedPoints(inScoring)) + bonusTitlePts;
 		}
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
@@ -767,7 +767,7 @@ double ARBDogRun::GetLifetimePoints(
 						timeFaults = 0.0;
 				}
 			}
-			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, timeFaults) + bonusTitlePts;
+			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, timeFaults, GetSpeedPoints(inScoring)) + bonusTitlePts;
 		}
 		break;
 	}
