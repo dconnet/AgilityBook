@@ -720,6 +720,8 @@ void CAgilityBookCalendarListView::LoadData()
 	if (!m_Ctrl)
 		return;
 
+	STACK_TRACE(stack, L"CAgilityBookCalendarListView::LoadData");
+
 	m_bSuppressSelect = true;
 
 	// Remember what's selected.

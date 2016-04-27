@@ -335,6 +335,8 @@ void CAgilityBookPointsView::LoadData()
 	if (!m_Ctrl)
 		return;
 
+	STACK_TRACE(stack, L"CAgilityBookPointsView::LoadData");
+
 	wxBusyCursor wait;
 
 	// Reduce flicker

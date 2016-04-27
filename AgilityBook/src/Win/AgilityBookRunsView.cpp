@@ -1535,10 +1535,10 @@ void CAgilityBookRunsView::SetupColumns()
 
 void CAgilityBookRunsView::LoadData()
 {
-	STACK_TRACE(stack, L"CAgilityBookCalendarListView::LoadData");
-
 	if (!m_Ctrl)
 		return;
+
+	STACK_TRACE(stack, L"CAgilityBookRunsView::LoadData");
 
 	m_bSuppressSelect = true;
 

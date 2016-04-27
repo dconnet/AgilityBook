@@ -794,6 +794,8 @@ void CAgilityBookCalendar::OnCreateEntry(CAgilityBookDoc* pDoc)
 
 void CAgilityBookCalendar::LoadData(CAgilityBookDoc* pDoc)
 {
+	STACK_TRACE(stack, L"CAgilityBookCalendar::LoadData");
+
 	Freeze();
 
 	// Clear everything.

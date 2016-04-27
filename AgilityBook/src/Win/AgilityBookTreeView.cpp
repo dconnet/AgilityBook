@@ -900,6 +900,8 @@ void CAgilityBookTreeView::LoadData()
 	if (!m_Ctrl)
 		return;
 
+	STACK_TRACE(stack, L"CAgilityBookTreeView::LoadData");
+
 	m_bSuppressSelect = true;
 
 	m_Ctrl->Freeze();

@@ -287,6 +287,8 @@ wxString CAgilityBookHtmlView::RawHtml(
 
 void CAgilityBookHtmlView::LoadData()
 {
+	STACK_TRACE(stack, L"CAgilityBookHtmlView::LoadData");
+
 	wxBusyCursor wait;
 
 	m_Items->LoadData(GetDocument(), GetDocument()->GetCurrentDog());

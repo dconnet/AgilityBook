@@ -514,6 +514,8 @@ void CAgilityBookTrainingView::LoadData()
 	if (!m_Ctrl)
 		return;
 
+	STACK_TRACE(stack, L"CAgilityBookTrainingView::LoadData");
+
 	// Remember what's selected.
 	ARBTrainingPtr pCurTraining;
 	CAgilityBookTrainingViewDataPtr pCurData = GetItemTrainingData(m_Ctrl->GetFirstSelected());
