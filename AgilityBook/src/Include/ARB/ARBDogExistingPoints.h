@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-06-25 Cleaned up reference counting when returning a pointer.
@@ -54,8 +55,8 @@ public:
 	virtual std::wstring GetGenericName() const
 	{
 		std::wstring name;
-		if (0 < m_Other.length())
-			name = m_Other;
+		if (0 < m_TypeName.length())
+			name = m_TypeName;
 		else
 			name = m_Event;
 		return name;
@@ -100,8 +101,9 @@ public:
 	typedef enum
 	{
 		eUnknown,
-		eOtherPoints,	///< OtherPoint points.
-		eRuns,			///< Number of titling points for a run.
+		eOtherPoints,	///< Number of OtherPoint points.
+		eLifetime,		///< Number of Lifetime points.
+		eTitle,			///< Number of Titling points.
 		eSpeed,			///< Number of Speed points.
 		eMQ,			///< Number of multi Qs.
 		eSQ				///< Number of Super Qs.
@@ -139,13 +141,13 @@ public:
 	{
 		m_Comment = inComment;
 	}
-	std::wstring const& GetOtherPoints() const
+	std::wstring const& GetTypeName() const
 	{
-		return m_Other;
+		return m_TypeName;
 	}
-	void SetOtherPoints(std::wstring const& inOther)
+	void SetTypeName(std::wstring const& inTypeName)
 	{
-		m_Other = inOther;
+		m_TypeName = inTypeName;
 	}
 	std::wstring const& GetVenue() const
 	{
@@ -208,7 +210,7 @@ private:
 	ARBDate m_Date;
 	std::wstring m_Comment;
 	PointType m_Type;
-	std::wstring m_Other;
+	std::wstring m_TypeName; // Name of OtherPoints or Lifetime item
 	std::wstring m_Venue;
 	std::wstring m_MultiQ;
 	std::wstring m_Div;
@@ -275,7 +277,7 @@ public:
 
 	/**
 	 * Get the number of existing points.
-	 * @param inType Type of existing points to tally.
+	 * @param inType Type of existing points to tally, not lifetime
 	 * @param inVenue Venue to search for.
 	 * @param inMultiQ MultiQ to search for.
 	 * @param inDiv Division to search for.
@@ -289,6 +291,27 @@ public:
 			ARBDogExistingPoints::PointType inType,
 			ARBConfigVenuePtr inVenue,
 			ARBConfigMultiQPtr inMultiQ,
+			ARBConfigDivisionPtr inDiv,
+			ARBConfigLevelPtr inLevel,
+			ARBConfigEventPtr inEvent,
+			ARBDate inDateFrom,
+			ARBDate inDateTo) const;
+
+	/**
+	 * Get the number of existing points.
+	 * @param inType Type of existing points to tally.
+	 * @param inVenue Venue to search for.
+	 * @param inMultiQ MultiQ to search for.
+	 * @param inDiv Division to search for.
+	 * @param inLevel Level to search for.
+	 * @param inEvent Event to search for.
+	 * @param inDateFrom Date to throttle points.
+	 * @param inDateTo Date to throttle points.
+	 * @return The number of existing points.
+	 */
+	double ExistingLifetimePoints(
+			ARBConfigLifetimeNamePtr inName,
+			ARBConfigVenuePtr inVenue,
 			ARBConfigDivisionPtr inDiv,
 			ARBConfigLevelPtr inLevel,
 			ARBConfigEventPtr inEvent,
@@ -448,6 +471,31 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteOtherPoints(std::wstring const& inOther);
+
+	/**
+	 * Number of Lifetime objects in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inLifetime Name of item to look for.
+	 * @return Number of objects, not points.
+	 */
+	int NumLifetimePointsInUse(std::wstring const& inLifetime) const;
+
+	/**
+	 * Rename an Lifetime, rename any dependent objects.
+	 * @param inOldLifetime Lifetime name being renamed.
+	 * @param inNewLifetime New Lifetime name.
+	 * @return Number of items changed.
+	 */
+	int RenameLifetimePoints(
+			std::wstring const& inOldLifetime,
+			std::wstring const& inNewLifetime);
+
+	/**
+	 * Delete an Lifetime, remove any dependent objects.
+	 * @param inLifetime Lifetime name being deleted.
+	 * @return Number of items removed.
+	 */
+	int DeleteLifetimePoints(std::wstring const& inLifetime);
 
 	/**
 	 * Number of MultiQ objects in use.

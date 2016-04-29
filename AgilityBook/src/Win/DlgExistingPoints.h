@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2009-02-11 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2004-02-03 Created
@@ -24,7 +25,7 @@ class CDlgPointsDivisionData;
 class CDlgPointsEventData;
 class CDlgPointsLevelData;
 class CDlgPointsMultiQData;
-class CDlgPointsOtherPtData;
+class CDlgPointsTypeNameData;
 class CDlgPointsVenueData;
 class wxDateEvent;
 class wxDatePickerCtrl;
@@ -45,7 +46,7 @@ private:
 	CDlgPointsDivisionData* GetDivisionData(int index) const;
 	CDlgPointsLevelData* GetLevelData(int index) const;
 	CDlgPointsEventData* GetEventData(int index) const;
-	CDlgPointsOtherPtData* GetOtherPointData(int index) const;
+	CDlgPointsTypeNameData* GetTypeNameData(int index) const;
 	CDlgPointsMultiQData* GetMultiQData(int index) const;
 	void SetEnableLists(
 			bool& outVenue,
@@ -53,7 +54,7 @@ private:
 			bool& outLevel,
 			bool& outEvent,
 			bool& outSubName,
-			bool& outOther,
+			bool& outTypeName,
 			bool bSet);
 	void UpdateControls();
 	void FillVenues();
@@ -61,6 +62,7 @@ private:
 	void FillLevels();
 	void FillEvents();
 	void FillSubNames();
+	void FillTypeNames();
 
 	CAgilityBookDoc* m_pDoc;
 	ARBDogExistingPointsList& m_PointsList;
@@ -81,8 +83,8 @@ private:
 	wxString m_TextEvent;
 	wxComboBox* m_ctrlSubNames;
 	wxString m_TextSubName;
-	wxComboBox* m_ctrlOthers;
-	wxString m_TextOther;
+	wxComboBox* m_ctrlTypeNames;
+	wxString m_TextTypeName;
 	wxSizer* m_sdbSizer;
 
 	DECLARE_EVENT_TABLE()

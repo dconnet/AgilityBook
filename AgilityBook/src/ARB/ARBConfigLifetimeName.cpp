@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2016-04-19 Fix loading name.
  * 2016-03-08 Fix loading empty element.
  * 2016-01-06 Created
@@ -122,6 +123,17 @@ bool ARBConfigLifetimeNameList::Load(
 		return false;
 	push_back(thing);
 	return true;
+}
+
+
+bool ARBConfigLifetimeNameList::VerifyLifetimeName(std::wstring const& inName) const
+{
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetName() == inName)
+			return true;
+	}
+	return false;
 }
 
 

@@ -19,6 +19,7 @@ TODO:
 - existing points need to change for lifetime. Currently assumes points go
   towards both title and lifetime. Changing this may cause issues with existing
   users. To migrate, should create new existing pt entries for lifetime.
+  [mostly done, ignoring lifetime migration - will be breaking change]
 - currently, arb knows there is only 1 lifetime points - back end work is done
   finish dialogs
 - When loading file, always automatically add lifetime names to venue if an

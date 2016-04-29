@@ -1,4 +1,4 @@
-4/19/2016: v3.2.0.<development>
+4/29/2016: v3.2.0.<development>
 - Bumped Configuration v53:
   - Added AKC AGCH, fixed PremJWW title points.
     Setup AKC Lifetime points as "NAC" to track Premier.

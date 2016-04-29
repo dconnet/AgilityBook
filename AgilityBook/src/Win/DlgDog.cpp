@@ -29,6 +29,7 @@
  * 2003-08-18 Added a deceased date for a dog.
  *
  * DlgDogPoints
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2006-07-15 Only adjust column widths the first time.
  *            Add a selected-item total.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -423,7 +424,7 @@ std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
 		text << m_Pts->GetPoints();
 		break;
 	case 3: // Other Points
-		text << m_Pts->GetOtherPoints();
+		text << m_Pts->GetTypeName();
 		break;
 	case 4: // Venue
 		text << m_Pts->GetVenue();
@@ -484,9 +485,9 @@ int wxCALLBACK ComparePoints(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 				rc = 1;
 			break;
 		case 3: // Other Points
-			if (pExistingPoints1->GetOtherPoints() < pExistingPoints2->GetOtherPoints())
+			if (pExistingPoints1->GetTypeName() < pExistingPoints2->GetTypeName())
 				rc = -1;
-			else if (pExistingPoints1->GetOtherPoints() > pExistingPoints2->GetOtherPoints())
+			else if (pExistingPoints1->GetTypeName() > pExistingPoints2->GetTypeName())
 				rc = 1;
 			break;
 		case 4: // Venue

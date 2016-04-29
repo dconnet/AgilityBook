@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-04-29 Add VerifyLifetimeName
  * 2016-01-06 Created
  */
 
@@ -117,6 +118,13 @@ public:
 			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
+
+	/**
+	 * Verify the name exists.
+	 * @param inName Name to verify.
+	 * @return Whether the name exists.
+	 */
+	bool VerifyLifetimeName(std::wstring const& inName) const;
 
 	/**
 	 * Find a fault.

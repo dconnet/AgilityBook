@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2014-04-23 Add anchors to all hrefs.
  * 2011-10-27 Add the MultiQ name to the Points view, span columns.
  * 2011-08-13 Don't copy internal url links to the clipboard.
@@ -1582,26 +1583,27 @@ void CPointsDataItems::LoadData(
 									}
 								}
 							}
-							// Accumulate existing points - used for both lifetime and
-							// normal runs.
+							// Accumulate existing points
 							if (bHasExistingPoints || bHasExistingLifetimePoints || 0 < matching.size())
 							{
 								nExistingPts = inDog->GetExistingPoints().ExistingPoints(
-									ARBDogExistingPoints::eRuns,
+									ARBDogExistingPoints::eTitle,
 									pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2);
 								if (pScoringMethod->HasSuperQ())
 									nExistingSQ += static_cast<int>(inDog->GetExistingPoints().ExistingPoints(
 										ARBDogExistingPoints::eSQ,
 										pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2));
+								// Now add the existing lifetime points
+								for (ARBConfigLifetimeNameList::const_iterator iterLifetime = pVenue->GetLifetimeNames().begin();
+									iterLifetime != pVenue->GetLifetimeNames().end();
+									++iterLifetime)
+								{
+									double nExistingLifetimePts = inDog->GetExistingPoints().ExistingLifetimePoints(
+										*iterLifetime, pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2);
+									if (0.0 < nExistingLifetimePts)
+										ptsLifetime.ptLifetime[(*iterLifetime)].push_back(LifeTimePoint(pEvent->GetName(), nExistingLifetimePts, false));
+								}
 							}
-							// Now add the existing lifetime points
-#pragma PRAGMA_TODO(lifetime existing points have to change)
-							/*
-							if (bHasExistingLifetimePoints && !ARBDouble::equal(0.0, nExistingPts + nExistingSQ))
-							{
-								pts.ptLifetime.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
-							}
-							*/
 							if (bHasExistingPoints || 0 < matching.size())
 							{
 								for (std::list<RunInfo>::const_iterator iterRun = matching.begin();
@@ -2029,7 +2031,7 @@ void CPointsDataItems::LoadData(
 				++iterExisting)
 			{
 				if (ARBDogExistingPoints::eOtherPoints == (*iterExisting)->GetType()
-				&& (*iterExisting)->GetOtherPoints() == pOther->GetName())
+				&& (*iterExisting)->GetTypeName() == pOther->GetName())
 				{
 					runs.push_back(OtherPtInfo(*iterExisting));
 				}

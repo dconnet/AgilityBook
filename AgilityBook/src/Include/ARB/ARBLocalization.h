@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2016-01-06 Add support for named lifetime points.
  * 2013-09-03 Changed sub level updating.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -53,6 +54,7 @@ public:
 	virtual std::wstring InvalidVenueConfig() const = 0;
 	virtual std::wstring InvalidDivName() const = 0;
 	virtual std::wstring InvalidVenueName() const = 0;
+	virtual std::wstring InvalidLifetimeName() const = 0;
 	virtual std::wstring InvalidOtherPtsName() const = 0;
 	virtual std::wstring InvalidMultiqName() const = 0;
 	virtual std::wstring InvalidMultiqConversion() const = 0;
@@ -192,6 +194,7 @@ public:
 
 	// Used in ARBDogExistingPoints.cpp
 	virtual std::wstring ExistingPointsOther() const = 0;
+	virtual std::wstring ExistingPointsLifetime() const = 0;
 	virtual std::wstring ExistingPointsRun() const = 0;
 	virtual std::wstring ExistingPointsSpeed() const = 0;
 	virtual std::wstring ExistingPointsMQ() const = 0;

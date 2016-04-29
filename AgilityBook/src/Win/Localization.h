@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-01-06 Ported to wxWidgets.
@@ -42,6 +43,7 @@ public:
 	std::wstring InvalidVenueConfig() const			{return m_InvalidVenueConfig;}
 	std::wstring InvalidDivName() const				{return m_InvalidDivName;}
 	std::wstring InvalidVenueName() const			{return m_InvalidVenueName;}
+	std::wstring InvalidLifetimeName() const		{return m_InvalidLifetimeName;}
 	std::wstring InvalidOtherPtsName() const		{return m_InvalidOtherPtsName;}
 	std::wstring InvalidMultiqName() const			{return m_InvalidMultiqName;}
 	std::wstring InvalidMultiqConversion() const	{return m_InvalidMultiqConversion;}
@@ -176,6 +178,7 @@ public:
 	std::wstring ScoreStyleTimePlusFaults() const	{return m_ScoreStyleTimePlusFaults;}
 
 	std::wstring ExistingPointsOther() const		{return m_ExistingPointsOther;}
+	std::wstring ExistingPointsLifetime() const		{return m_ExistingPointsLifetime;}
 	std::wstring ExistingPointsRun() const			{return m_ExistingPointsRun;}
 	std::wstring ExistingPointsSpeed() const		{return m_ExistingPointsSpeed;}
 	std::wstring ExistingPointsMQ() const			{return m_ExistingPointsMQ;}
@@ -207,6 +210,7 @@ private:
 	std::wstring m_InvalidVenueConfig;
 	std::wstring m_InvalidDivName;
 	std::wstring m_InvalidVenueName;
+	std::wstring m_InvalidLifetimeName;
 	std::wstring m_InvalidOtherPtsName;
 	std::wstring m_InvalidMultiqName;
 	std::wstring m_InvalidMultiqConversion;
@@ -243,6 +247,7 @@ private:
 	std::wstring m_QTypeSQ;
 
 	std::wstring m_ExistingPointsOther;
+	std::wstring m_ExistingPointsLifetime;
 	std::wstring m_ExistingPointsRun;
 	std::wstring m_ExistingPointsSpeed;
 	std::wstring m_ExistingPointsMQ;

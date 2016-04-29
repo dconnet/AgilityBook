@@ -18,6 +18,7 @@
  * this.
  *
  * Revision History
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-07-19 Ported to wxWidgets.
@@ -73,6 +74,7 @@ bool CLocalization::Load()
 #endif
 	m_InvalidDivName = StringUtil::GetTranslation(arbT("IDS_INVALID_DIV_NAME"));
 	m_InvalidVenueName = StringUtil::GetTranslation(arbT("IDS_INVALID_VENUE_NAME"));
+	m_InvalidLifetimeName = StringUtil::GetTranslation(arbT("IDS_INVALID_LIFETIME_NAME"));
 	m_InvalidOtherPtsName = StringUtil::GetTranslation(arbT("IDS_INVALID_OTHER_PTS_NAME"));
 	m_InvalidMultiqName = StringUtil::GetTranslation(arbT("IDS_INVALID_MULTIQ_NAME"));
 	m_InvalidMultiqConversion = StringUtil::GetTranslation(arbT("IDS_INVALID_MULTIQ_CONVERSION"));
@@ -105,6 +107,7 @@ bool CLocalization::Load()
 	m_ScoreStyleScoreTime = StringUtil::GetTranslation(arbT("IDS_SCORE_STYLE_SCORE_TIME"));
 	m_ScoreStyleTimePlusFaults = StringUtil::GetTranslation(arbT("IDS_SCORE_STYLE_TIME_PLUS_FAULTS"));
 	m_ExistingPointsOther = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_OTHER"));
+	m_ExistingPointsLifetime = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_LIFETIME"));
 	m_ExistingPointsRun = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_RUN"));
 	m_ExistingPointsSpeed = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_SPEED"));
 	m_ExistingPointsMQ = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_MQ"));

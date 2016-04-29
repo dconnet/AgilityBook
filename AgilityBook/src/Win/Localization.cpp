@@ -18,6 +18,7 @@
  * this.
  *
  * Revision History
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2016-01-06 Add support for named lifetime points.
  * 2013-09-03 Changed sub level updating.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -63,6 +64,7 @@ bool CLocalization::Load()
 	m_InvalidVenueConfig = StringUtil::stringW(wxString::Format(_("IDS_INVALID_VENUE_CONFIG"), TREE_DIVISION, TREE_EVENT));
 	m_InvalidDivName = _("IDS_INVALID_DIV_NAME");
 	m_InvalidVenueName = _("IDS_INVALID_VENUE_NAME");
+	m_InvalidLifetimeName = _("IDS_INVALID_LIFETIME_NAME");
 	m_InvalidOtherPtsName = _("IDS_INVALID_OTHER_PTS_NAME");
 	m_InvalidMultiqName = _("IDS_INVALID_MULTIQ_NAME");
 	m_InvalidMultiqConversion = _("IDS_INVALID_MULTIQ_CONVERSION");
@@ -95,6 +97,7 @@ bool CLocalization::Load()
 	m_ScoreStyleScoreTime = _("IDS_SCORE_STYLE_SCORE_TIME");
 	m_ScoreStyleTimePlusFaults = _("IDS_SCORE_STYLE_TIME_PLUS_FAULTS");
 	m_ExistingPointsOther = _("IDS_EXISTING_POINTS_OTHER");
+	m_ExistingPointsLifetime = _("IDS_EXISTING_POINTS_LIFETIME");
 	m_ExistingPointsRun = _("IDS_EXISTING_POINTS_RUN");
 	m_ExistingPointsSpeed = _("IDS_EXISTING_POINTS_SPEED");
 	m_ExistingPointsMQ = _("IDS_EXISTING_POINTS_MQ");

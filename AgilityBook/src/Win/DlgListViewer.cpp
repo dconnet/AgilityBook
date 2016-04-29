@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-04-29 Separate lifetime points from title (run) points.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -785,7 +786,7 @@ std::wstring CDlgListViewerDataOther::OnNeedText(long iCol) const
 		break;
 	case COL_OTHER_NAME: // Trial/Existing Points
 		if (m_info.m_pExisting)
-			str << m_info.m_pExisting->GetOtherPoints();
+			str << m_info.m_pExisting->GetTypeName();
 		else
 			str << m_info.m_pTrial->GetLocation();
 		break;
@@ -850,11 +851,11 @@ int CDlgListViewerDataOther::Compare(
 		}
 	case COL_OTHER_NAME: // Trial/Existing Points
 		if (m_info.m_pExisting)
-			str1 = m_info.m_pExisting->GetOtherPoints();
+			str1 = m_info.m_pExisting->GetTypeName();
 		else
 			str1 = m_info.m_pTrial->GetLocation();
 		if (pData->m_info.m_pExisting)
-			str2 = pData->m_info.m_pExisting->GetOtherPoints();
+			str2 = pData->m_info.m_pExisting->GetTypeName();
 		else
 			str2 = pData->m_info.m_pTrial->GetLocation();
 		break;
@@ -1119,7 +1120,7 @@ CDlgListViewer::CDlgListViewer(
 			++iter)
 		{
 			ARBDogExistingPointsPtr pExisting = *iter;
-			if (ARBDogExistingPoints::eRuns == pExisting->GetType()
+			if (ARBDogExistingPoints::eTitle == pExisting->GetType()
 			&& pExisting->GetVenue() == inData->m_Venue->GetName()
 			&& pExisting->GetDivision() == inData->m_Div->GetName()
 			&& (pExisting->GetLevel() == inData->m_Level->GetName()
@@ -1441,7 +1442,7 @@ bool CDlgListViewer::Create(
 	sizerBtns->Add(m_ctrlCopy, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(sizerBtns, 0, wxALIGN_BOTTOM | wxALIGN_RIGHT | wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();
