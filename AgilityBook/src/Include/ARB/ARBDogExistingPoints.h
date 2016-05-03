@@ -299,9 +299,8 @@ public:
 
 	/**
 	 * Get the number of existing points.
-	 * @param inType Type of existing points to tally.
+	 * @param inName Name of lifetime points to tally.
 	 * @param inVenue Venue to search for.
-	 * @param inMultiQ MultiQ to search for.
 	 * @param inDiv Division to search for.
 	 * @param inLevel Level to search for.
 	 * @param inEvent Event to search for.
