@@ -1,6 +1,6 @@
-These files are all the original UnitTest 1.5.1 files, except Makefile.in.
+These files are all the original UnitTest files, except Makefile.in.
 Note: docs/UnitTest++.html is from v1.4.
-Note: src/* is UnitTest++/* from 1.5.1
+Note: src/* is UnitTest++/* from 1.6.1
 
 1.5 switched to using CMake. I don't. Makefile.in is ARB's makefile.
 

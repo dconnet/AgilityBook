@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.1)
 project(UnitTest++)
 
-option(UTPP_USE_PLUS_SIGN "Set this to OFF is you with to use '-cpp' instead of '++' in lib/include paths" ON)
+option(UTPP_USE_PLUS_SIGN "Set this to OFF if you wish to use '-cpp' instead of '++' in lib/include paths" ON)
 
 if(MSVC14 OR MSVC12)
     # has the support we need
@@ -69,6 +69,11 @@ else()
 	set (UTPP_INSTALL_DESTINATION "include/UnitTestPP")
 endif()
 
-install(TARGETS UnitTest++ DESTINATION lib)
+set(config_install_dir_ lib/cmake/${PROJECT_NAME})
+set(targets_export_name_ "${PROJECT_NAME}Targets")
+
+install(TARGETS UnitTest++ EXPORT "${targets_export_name_}" DESTINATION lib)
 install(FILES ${headers_} DESTINATION ${UTPP_INSTALL_DESTINATION})
 install(FILES ${platformHeaders_} DESTINATION ${UTPP_INSTALL_DESTINATION}/${platformDir_})
+install(FILES cmake/UnitTest++Config.cmake DESTINATION "${config_install_dir_}")
+install(EXPORT "${targets_export_name_}" DESTINATION "${config_install_dir_}")
