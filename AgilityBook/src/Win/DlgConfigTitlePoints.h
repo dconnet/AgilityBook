@@ -24,6 +24,8 @@ class CTextCtrl;
 
 class CDlgConfigTitlePoints : public wxDialog
 {
+	void Init(wxWindow* pParent);
+
 public:
 	enum ETitlePointType
 	{
@@ -42,9 +44,15 @@ public:
 			ARBPointsType inTypeNormal,
 			wxWindow* pParent = nullptr);
 
-	double Faults() const	{return m_Faults;}
-	short Place() const		{return m_Place;}
-	double Points() const	{return m_Points;}
+	CDlgConfigTitlePoints(
+			ARBConfigVenuePtr inVenue,
+			wxString const& inLifetimeName,
+			wxWindow* pParent = nullptr);
+
+	double Faults() const			{return m_Faults;}
+	short Place() const				{return m_Place;}
+	double Points() const			{return m_Points;}
+	wxString LifetimeName() const	{return m_LifetimeName;}
 	ETitlePointType Type() const
 	{
 		return static_cast<ETitlePointType>(m_Type);
@@ -64,9 +72,12 @@ private:
 	CTextCtrl* m_ctrlPoints;
 	wxChoice* m_ctrlType;
 	wxChoice* m_ctrlTypeNormal;
+	wxStaticText* m_textLifetimeName;
+	CTextCtrl* m_ctrlLifetimeName;
 	double m_Faults;
 	short m_Place;
 	double m_Points;
+	wxString m_LifetimeName;
 
 	DECLARE_ON_INIT()
 	void OnSelchangeTitlePoints(wxCommandEvent& evt);

@@ -52,9 +52,43 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_ctrlPoints(nullptr)
 	, m_ctrlType(nullptr)
 	, m_ctrlTypeNormal(nullptr)
+	, m_textLifetimeName(nullptr)
+	, m_ctrlLifetimeName(nullptr)
 	, m_Faults(inValue)
 	, m_Place(static_cast<short>(inValue))
 	, m_Points(inPoints)
+	, m_LifetimeName()
+{
+	Init(pParent);
+}
+
+
+CDlgConfigTitlePoints::CDlgConfigTitlePoints(
+		ARBConfigVenuePtr inVenue,
+		wxString const& inLifetimeName,
+		wxWindow* pParent)
+	: wxDialog()
+	, m_Venue(inVenue)
+	, m_Type(eTitleLifetime)
+	, m_TypeNormal(ePointsTypeNormal)
+	, m_textValue(nullptr)
+	, m_ctrlValue(nullptr)
+	, m_textPoints(nullptr)
+	, m_ctrlPoints(nullptr)
+	, m_ctrlType(nullptr)
+	, m_ctrlTypeNormal(nullptr)
+	, m_textLifetimeName(nullptr)
+	, m_ctrlLifetimeName(nullptr)
+	, m_Faults(0)
+	, m_Place(0)
+	, m_Points(0)
+	, m_LifetimeName(inLifetimeName)
+{
+	Init(pParent);
+}
+
+
+void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
@@ -132,6 +166,26 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	if (eTitleNormal != m_Type)
 		m_ctrlTypeNormal->Hide();
 
+#pragma PRAGMA_TODO(lifetime name)
+	m_textLifetimeName = new wxStaticText(this, wxID_ANY,
+		_("Lifetime Name (todo)"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_textLifetimeName->Wrap(-1);
+
+	m_ctrlLifetimeName = new CTextCtrl(this, wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_LifetimeName, TRIMVALIDATOR_TRIM_BOTH));
+#pragma PRAGMA_TODO(lifetime name)
+	// Should validator have 3rd parameter for error prompt?
+	m_ctrlLifetimeName->SetHelpText(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
+	m_ctrlLifetimeName->SetToolTip(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
+	if (eTitleLifetime != m_Type)
+	{
+		m_textLifetimeName->Hide();
+		m_ctrlLifetimeName->Hide();
+	}
+
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
@@ -146,9 +200,14 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	sizerPoints->Add(m_textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerPoints->Add(m_ctrlPoints, 1, wxALIGN_CENTER_VERTICAL, 0);
 
+	wxBoxSizer* sizerLTName = new wxBoxSizer(wxHORIZONTAL);
+	sizerLTName->Add(m_textLifetimeName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerLTName->Add(m_ctrlLifetimeName, 1, wxALIGN_CENTER_VERTICAL, 0);
+
 	bSizer->Add(sizerPoints, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(m_ctrlType, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(m_ctrlTypeNormal, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerLTName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
@@ -182,6 +241,16 @@ void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 		m_ctrlValue->Show();
 		m_textPoints->Show();
 		m_ctrlPoints->Show();
+		if (eTitleLifetime == m_Type)
+		{
+			m_textLifetimeName->Show();
+			m_ctrlLifetimeName->Show();
+		}
+		else
+		{
+			m_textLifetimeName->Hide();
+			m_ctrlLifetimeName->Hide();
+		}
 	}
 	else if (eTitleNormal == m_Type && ePointsTypeNormal != m_TypeNormal)
 	{
@@ -190,6 +259,8 @@ void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 		m_ctrlValue->Hide();
 		m_textPoints->Hide();
 		m_ctrlPoints->Hide();
+		m_textLifetimeName->Hide();
+		m_ctrlLifetimeName->Hide();
 	}
 
 	if (eTitleNormal == m_Type)
