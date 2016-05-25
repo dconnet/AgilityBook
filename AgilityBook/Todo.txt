@@ -1,4 +1,7 @@
-Last Updated: 3/28/2016
+Last Updated: 5/25/2016
+
+- Bad Dog Agility Breed Power 10 score?
+  http://baddogagility.com/announcing-the-breed-power-10/
 
 - Pasting text including control chars into richedit preserves those.
   Specifically ctrl+K. This is then serialized into xml. Which fails on load.
