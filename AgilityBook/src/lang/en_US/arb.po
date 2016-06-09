@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-29 14:55-0700\n"
-"PO-Revision-Date: 2016-04-29 14:55-0700\n"
+"POT-Creation-Date: 2016-06-09 16:47-0700\n"
+"PO-Revision-Date: 2016-06-09 16:47-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -17,18 +17,18 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SearchPath-0: ARB\n"
 "X-Poedit-SearchPath-1: ARBHelp\n"
 "X-Poedit-SearchPath-2: ARBUpdater\n"
 "X-Poedit-SearchPath-3: TestARB\n"
 "X-Poedit-SearchPath-4: Win\n"
 
-#: ARB/ARBCalcPoints.cpp:121 Win/DlgConfigTitlePoints.cpp:123
+#: ARB/ARBCalcPoints.cpp:121 Win/DlgConfigTitlePoints.cpp:151
 msgid "IDS_TITLEPOINT_NORMAL_T2B"
 msgstr "AKC / Time 2 Beat"
 
-#: ARB/ARBCalcPoints.cpp:177 Win/DlgConfigTitlePoints.cpp:124
+#: ARB/ARBCalcPoints.cpp:177 Win/DlgConfigTitlePoints.cpp:152
 msgid "IDS_TITLEPOINT_NORMAL_UKI"
 msgstr "UKI"
 
@@ -60,11 +60,11 @@ msgstr "NA"
 msgid "IDS_BAD_VERSION"
 msgstr "Unable to determine version information"
 
-#: TestARB/Local.cpp:49 TestARB/TestMisc.cpp:125 Win/Localization.cpp:47
+#: TestARB/Local.cpp:50 TestARB/TestMisc.cpp:125 Win/Localization.cpp:48
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Unknown document version"
 
-#: TestARB/Local.cpp:53 Win/Localization.cpp:51
+#: TestARB/Local.cpp:54 Win/Localization.cpp:52
 msgid "IDS_WARNING_NEWER_DOC"
 msgstr ""
 "WARNING\n"
@@ -75,411 +75,411 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: TestARB/Local.cpp:54 Win/Localization.cpp:52
+#: TestARB/Local.cpp:55 Win/Localization.cpp:53
 msgid "IDS_INVALID_DOC_STRUCTURE"
 msgstr "Invalid document structure"
 
-#: TestARB/Local.cpp:55 Win/Localization.cpp:53
+#: TestARB/Local.cpp:56 Win/Localization.cpp:54
 msgid "IDS_INVALID_FILE_FORMAT"
 msgstr "Invalid file format: '"
 
-#: TestARB/Local.cpp:56 Win/Localization.cpp:54
+#: TestARB/Local.cpp:57 Win/Localization.cpp:55
 msgid "IDS_INVALID_FILE_MISSING_ATTRIB"
 msgstr "' is missing required attribute '"
 
-#: TestARB/Local.cpp:57 Win/Localization.cpp:55
+#: TestARB/Local.cpp:58 Win/Localization.cpp:56
 msgid "IDS_INVALID_FILE_BAD_ATTRIB"
 msgstr "' has an invalid value for the attribute '"
 
-#: TestARB/Local.cpp:58 Win/Localization.cpp:56
+#: TestARB/Local.cpp:59 Win/Localization.cpp:57
 msgid "IDS_INVALID_DATE"
 msgstr "Invalid date: "
 
-#: TestARB/Local.cpp:59 Win/Localization.cpp:57
+#: TestARB/Local.cpp:60 Win/Localization.cpp:58
 msgid "IDS_INVALID_DIV_LEVEL"
 msgstr "Division/level pair has not been defined: "
 
-#: TestARB/Local.cpp:60 Win/Localization.cpp:58
+#: TestARB/Local.cpp:61 Win/Localization.cpp:59
 msgid "IDS_INVALID_EVENT_NAME"
 msgstr "Event has not been defined: "
 
-#: TestARB/Local.cpp:63 TestARB/Local.cpp:69 Win/Localization.cpp:60
+#: TestARB/Local.cpp:64 TestARB/Local.cpp:70 Win/Localization.cpp:61
 msgid "IDS_INVALID_ROOT"
 msgstr "'%1$s' must be the root element."
 
-#: TestARB/Local.cpp:64 TestARB/Local.cpp:70 Win/Localization.cpp:61
+#: TestARB/Local.cpp:65 TestARB/Local.cpp:71 Win/Localization.cpp:62
 msgid "IDS_MISSING_CONFIG"
 msgstr "Missing '%1$s' section."
 
-#: TestARB/Local.cpp:65 TestARB/Local.cpp:71 Win/Localization.cpp:62
+#: TestARB/Local.cpp:66 TestARB/Local.cpp:72 Win/Localization.cpp:63
 msgid "IDS_INVALID_CONFIG"
 msgstr "Only one '%1$s' section is allowed."
 
-#: TestARB/Local.cpp:66 TestARB/Local.cpp:72 Win/Localization.cpp:63
+#: TestARB/Local.cpp:67 TestARB/Local.cpp:73 Win/Localization.cpp:64
 msgid "IDS_INVALID_VENUE_CONFIG"
 msgstr "All '%1$s' elements must come before '%2$s' elements."
 
-#: TestARB/Local.cpp:74 Win/Localization.cpp:64
+#: TestARB/Local.cpp:75 Win/Localization.cpp:65
 msgid "IDS_INVALID_DIV_NAME"
 msgstr "Invalid division name: "
 
-#: TestARB/Local.cpp:75 Win/Localization.cpp:65
+#: TestARB/Local.cpp:76 Win/Localization.cpp:66
 msgid "IDS_INVALID_VENUE_NAME"
 msgstr "Invalid venue name: "
 
-#: TestARB/Local.cpp:76 Win/Localization.cpp:66
+#: TestARB/Local.cpp:77 Win/Localization.cpp:67
 msgid "IDS_INVALID_LIFETIME_NAME"
 msgstr "Invalid Lifetime name: "
 
-#: TestARB/Local.cpp:77 Win/Localization.cpp:67
+#: TestARB/Local.cpp:78 Win/Localization.cpp:68
 msgid "IDS_INVALID_OTHER_PTS_NAME"
 msgstr "Invalid Other Points name: "
 
-#: TestARB/Local.cpp:78 Win/Localization.cpp:68
+#: TestARB/Local.cpp:79 Win/Localization.cpp:69
 msgid "IDS_INVALID_MULTIQ_NAME"
 msgstr "Invalid Multiple Q name: "
 
-#: TestARB/Local.cpp:79 Win/Localization.cpp:69
+#: TestARB/Local.cpp:80 Win/Localization.cpp:70
 msgid "IDS_INVALID_MULTIQ_CONVERSION"
 msgstr "Unable to convert Existing QQ Points"
 
-#: TestARB/Local.cpp:80 Win/Localization.cpp:70
+#: TestARB/Local.cpp:81 Win/Localization.cpp:71
 msgid "IDS_INVALID_EVENT"
 msgstr ""
 "Unable to locate an event description in any of the venues of the affiliated "
 "clubs: "
 
-#: TestARB/Local.cpp:81 Win/Localization.cpp:71
+#: TestARB/Local.cpp:82 Win/Localization.cpp:72
 msgid "IDS_INVALID_TITLE"
 msgstr "Title is not defined in the Venue description: "
 
-#: TestARB/Local.cpp:82 Win/Localization.cpp:72
+#: TestARB/Local.cpp:83 Win/Localization.cpp:73
 msgid "IDS_VALID_VALUES"
 msgstr "Valid values: "
 
-#: TestARB/Local.cpp:87 Win/Localization.cpp:77
+#: TestARB/Local.cpp:88 Win/Localization.cpp:78
 msgid "IDS_CALENDAR_TENTATIVE"
 msgstr "Information is tentative."
 
-#: TestARB/Local.cpp:88 Win/Localization.cpp:78
+#: TestARB/Local.cpp:89 Win/Localization.cpp:79
 msgid "IDS_CALENDAR_PAST"
 msgstr "Past"
 
-#: TestARB/Local.cpp:89 Win/Localization.cpp:79
+#: TestARB/Local.cpp:90 Win/Localization.cpp:80
 msgid "IDS_CALENDAR_NOTENTERED"
 msgstr "Not entered"
 
-#: TestARB/Local.cpp:90 Win/Localization.cpp:80 Win/WizardImport.cpp:1328
+#: TestARB/Local.cpp:91 Win/Localization.cpp:81 Win/WizardImport.cpp:1328
 msgid "IDS_CALENDAR_ENTERED"
 msgstr "Entered"
 
-#: TestARB/Local.cpp:91 Win/Localization.cpp:81 Win/WizardImport.cpp:1323
+#: TestARB/Local.cpp:92 Win/Localization.cpp:82 Win/WizardImport.cpp:1323
 msgid "IDS_CALENDAR_PENDING"
 msgstr "Pending"
 
-#: TestARB/Local.cpp:92 Win/Localization.cpp:82 Win/WizardImport.cpp:1318
+#: TestARB/Local.cpp:93 Win/Localization.cpp:83 Win/WizardImport.cpp:1318
 msgid "IDS_CALENDAR_PLANNING"
 msgstr "Planning"
 
-#: TestARB/Local.cpp:93 Win/Localization.cpp:83
+#: TestARB/Local.cpp:94 Win/Localization.cpp:84
 msgid "IDS_CALENDAR_STATUS"
 msgstr "Status: "
 
-#: TestARB/Local.cpp:98 Win/Localization.cpp:88
+#: TestARB/Local.cpp:99 Win/Localization.cpp:89
 msgid "IDS_CALENDAR_OPENS"
 msgstr "Trial opens: "
 
-#: TestARB/Local.cpp:99 Win/Localization.cpp:89
+#: TestARB/Local.cpp:100 Win/Localization.cpp:90
 msgid "IDS_CALENDAR_DRAW"
 msgstr "Trial draws: "
 
-#: TestARB/Local.cpp:100 Win/Localization.cpp:90
+#: TestARB/Local.cpp:101 Win/Localization.cpp:91
 msgid "IDS_CALENDAR_CLOSES"
 msgstr "Trial closes: "
 
-#: TestARB/Local.cpp:101 Win/Localization.cpp:91
+#: TestARB/Local.cpp:102 Win/Localization.cpp:92
 msgid "IDS_SCORE_STYLE_UNKNOWN"
 msgstr "Unknown"
 
-#: TestARB/Local.cpp:102 Win/Localization.cpp:92
+#: TestARB/Local.cpp:103 Win/Localization.cpp:93
 msgid "IDS_SCORE_STYLE_FAULTS_TIME"
 msgstr "Faults Then Time"
 
-#: TestARB/Local.cpp:103 Win/Localization.cpp:93
+#: TestARB/Local.cpp:104 Win/Localization.cpp:94
 msgid "IDS_SCORE_STYLE_FAULTS100_TIME"
 msgstr "100 Minus Faults Then Time"
 
-#: TestARB/Local.cpp:104 Win/Localization.cpp:94
+#: TestARB/Local.cpp:105 Win/Localization.cpp:95
 msgid "IDS_SCORE_STYLE_FAULTS200_TIME"
 msgstr "200 Minus Faults Then Time"
 
-#: TestARB/Local.cpp:105 Win/Localization.cpp:95
+#: TestARB/Local.cpp:106 Win/Localization.cpp:96
 msgid "IDS_SCORE_STYLE_OCSCORE_TIME"
 msgstr "Opening/Closing Points Then Time"
 
-#: TestARB/Local.cpp:106 Win/Localization.cpp:96
+#: TestARB/Local.cpp:107 Win/Localization.cpp:97
 msgid "IDS_SCORE_STYLE_SCORE_TIME"
 msgstr "Points Then Time"
 
-#: TestARB/Local.cpp:107 Win/Localization.cpp:97
+#: TestARB/Local.cpp:108 Win/Localization.cpp:98
 msgid "IDS_SCORE_STYLE_TIME_PLUS_FAULTS"
 msgstr "Time Plus Faults"
 
-#: TestARB/Local.cpp:108 Win/Localization.cpp:98
+#: TestARB/Local.cpp:109 Win/Localization.cpp:99
 msgid "IDS_EXISTING_POINTS_OTHER"
 msgstr "OtherPoints"
 
-#: TestARB/Local.cpp:109 Win/Localization.cpp:99
+#: TestARB/Local.cpp:110 Win/Localization.cpp:100
 msgid "IDS_EXISTING_POINTS_LIFETIME"
 msgstr "Lifetime"
 
-#: TestARB/Local.cpp:110 Win/Localization.cpp:100
+#: TestARB/Local.cpp:111 Win/Localization.cpp:101
 msgid "IDS_EXISTING_POINTS_RUN"
 msgstr "Run"
 
-#: TestARB/Local.cpp:111 Win/Localization.cpp:101
+#: TestARB/Local.cpp:112 Win/Localization.cpp:102
 msgid "IDS_EXISTING_POINTS_SPEED"
 msgstr "Speed"
 
-#: TestARB/Local.cpp:112 Win/Localization.cpp:102
+#: TestARB/Local.cpp:113 Win/Localization.cpp:103
 msgid "IDS_EXISTING_POINTS_MQ"
 msgstr "Multiple Q"
 
-#: TestARB/Local.cpp:113 Win/Localization.cpp:103
+#: TestARB/Local.cpp:114 Win/Localization.cpp:104
 msgid "IDS_EXISTING_POINTS_SQ"
 msgstr "SuperQ"
 
-#: TestARB/Local.cpp:123 Win/Localization.cpp:112
+#: TestARB/Local.cpp:124 Win/Localization.cpp:113
 msgid "IDS_UPDATE_CALSITES"
 msgstr "Calendar Sites"
 
-#: TestARB/Local.cpp:125 TestARB/Local.cpp:144 TestARB/Local.cpp:161
-#: TestARB/Local.cpp:180 TestARB/Local.cpp:199 TestARB/Local.cpp:216
-#: TestARB/Local.cpp:250 TestARB/Local.cpp:284 TestARB/Local.cpp:318
-#: TestARB/Local.cpp:352 TestARB/Local.cpp:386 TestARB/Local.cpp:421
-#: Win/Localization.cpp:114 Win/Localization.cpp:128 Win/Localization.cpp:140
-#: Win/Localization.cpp:154 Win/Localization.cpp:168 Win/Localization.cpp:180
-#: Win/Localization.cpp:204 Win/Localization.cpp:228 Win/Localization.cpp:252
-#: Win/Localization.cpp:276 Win/Localization.cpp:300 Win/Localization.cpp:325
+#: TestARB/Local.cpp:126 TestARB/Local.cpp:145 TestARB/Local.cpp:162
+#: TestARB/Local.cpp:181 TestARB/Local.cpp:200 TestARB/Local.cpp:217
+#: TestARB/Local.cpp:251 TestARB/Local.cpp:285 TestARB/Local.cpp:319
+#: TestARB/Local.cpp:353 TestARB/Local.cpp:387 TestARB/Local.cpp:422
+#: Win/Localization.cpp:115 Win/Localization.cpp:129 Win/Localization.cpp:141
+#: Win/Localization.cpp:155 Win/Localization.cpp:169 Win/Localization.cpp:181
+#: Win/Localization.cpp:205 Win/Localization.cpp:229 Win/Localization.cpp:253
+#: Win/Localization.cpp:277 Win/Localization.cpp:301 Win/Localization.cpp:326
 msgid "IDS_UPDATE_ADDED"
 msgstr "%1$d added"
 
-#: TestARB/Local.cpp:127 TestARB/Local.cpp:163 TestARB/Local.cpp:182
-#: TestARB/Local.cpp:218 TestARB/Local.cpp:252 TestARB/Local.cpp:320
-#: TestARB/Local.cpp:354 TestARB/Local.cpp:388 TestARB/Local.cpp:425
-#: Win/Localization.cpp:116 Win/Localization.cpp:142 Win/Localization.cpp:156
-#: Win/Localization.cpp:182 Win/Localization.cpp:206 Win/Localization.cpp:254
-#: Win/Localization.cpp:278 Win/Localization.cpp:302 Win/Localization.cpp:329
+#: TestARB/Local.cpp:128 TestARB/Local.cpp:164 TestARB/Local.cpp:183
+#: TestARB/Local.cpp:219 TestARB/Local.cpp:253 TestARB/Local.cpp:321
+#: TestARB/Local.cpp:355 TestARB/Local.cpp:389 TestARB/Local.cpp:426
+#: Win/Localization.cpp:117 Win/Localization.cpp:143 Win/Localization.cpp:157
+#: Win/Localization.cpp:183 Win/Localization.cpp:207 Win/Localization.cpp:255
+#: Win/Localization.cpp:279 Win/Localization.cpp:303 Win/Localization.cpp:330
 msgid "IDS_UPDATE_UPDATED"
 msgstr "%1$d updated"
 
-#: TestARB/Local.cpp:129 TestARB/Local.cpp:146 TestARB/Local.cpp:165
-#: TestARB/Local.cpp:184 TestARB/Local.cpp:201 TestARB/Local.cpp:220
-#: TestARB/Local.cpp:254 TestARB/Local.cpp:288 TestARB/Local.cpp:322
-#: TestARB/Local.cpp:356 TestARB/Local.cpp:390 TestARB/Local.cpp:427
-#: Win/Localization.cpp:118 Win/Localization.cpp:130 Win/Localization.cpp:144
-#: Win/Localization.cpp:158 Win/Localization.cpp:170 Win/Localization.cpp:184
-#: Win/Localization.cpp:208 Win/Localization.cpp:232 Win/Localization.cpp:256
-#: Win/Localization.cpp:280 Win/Localization.cpp:304 Win/Localization.cpp:331
+#: TestARB/Local.cpp:130 TestARB/Local.cpp:147 TestARB/Local.cpp:166
+#: TestARB/Local.cpp:185 TestARB/Local.cpp:202 TestARB/Local.cpp:221
+#: TestARB/Local.cpp:255 TestARB/Local.cpp:289 TestARB/Local.cpp:323
+#: TestARB/Local.cpp:357 TestARB/Local.cpp:391 TestARB/Local.cpp:428
+#: Win/Localization.cpp:119 Win/Localization.cpp:131 Win/Localization.cpp:145
+#: Win/Localization.cpp:159 Win/Localization.cpp:171 Win/Localization.cpp:185
+#: Win/Localization.cpp:209 Win/Localization.cpp:233 Win/Localization.cpp:257
+#: Win/Localization.cpp:281 Win/Localization.cpp:305 Win/Localization.cpp:332
 msgid "IDS_UPDATE_IDENTICAL"
 msgstr "%1$d identical"
 
-#: TestARB/Local.cpp:142 Win/DlgAssignColumns.cpp:299 Win/DlgConfigure.cpp:216
-#: Win/Localization.cpp:126 Win/Print.cpp:261
+#: TestARB/Local.cpp:143 Win/DlgAssignColumns.cpp:299 Win/DlgConfigure.cpp:216
+#: Win/Localization.cpp:127 Win/Print.cpp:261
 msgid "IDS_COL_FAULTS"
 msgstr "Faults"
 
-#: TestARB/Local.cpp:159 Win/DlgConfigure.cpp:219 Win/DlgDog.cpp:132
-#: Win/DlgListCtrl.cpp:503 Win/Localization.cpp:138 Win/PointsData.cpp:1058
-#: Win/PointsData.cpp:1128 Win/PointsData.cpp:1198 Win/PointsData.cpp:1274
-#: Win/PointsData.cpp:1961
+#: TestARB/Local.cpp:160 Win/DlgConfigure.cpp:219 Win/DlgDog.cpp:133
+#: Win/DlgListCtrl.cpp:503 Win/Localization.cpp:139 Win/PointsData.cpp:1059
+#: Win/PointsData.cpp:1129 Win/PointsData.cpp:1199 Win/PointsData.cpp:1275
+#: Win/PointsData.cpp:1963
 msgid "IDS_OTHERPOINTS"
 msgstr "Other Points"
 
-#: TestARB/Local.cpp:178 Win/DlgConfigure.cpp:212 Win/Localization.cpp:152
+#: TestARB/Local.cpp:179 Win/DlgConfigure.cpp:212 Win/Localization.cpp:153
 msgid "IDS_COL_VENUES"
 msgstr "Venues"
 
-#: TestARB/Local.cpp:197 Win/Localization.cpp:166
+#: TestARB/Local.cpp:198 Win/Localization.cpp:167
 msgid "IDS_LIFETIMENAMES"
 msgstr "Lifetime Names"
 
-#: TestARB/Local.cpp:214 TestARB/Local.cpp:233 Win/Localization.cpp:178
-#: Win/Localization.cpp:192
+#: TestARB/Local.cpp:215 TestARB/Local.cpp:234 Win/Localization.cpp:179
+#: Win/Localization.cpp:193
 msgid "IDS_COL_DIVISIONS"
 msgstr "Divisions"
 
-#: TestARB/Local.cpp:235 TestARB/Local.cpp:269 TestARB/Local.cpp:303
-#: TestARB/Local.cpp:337 TestARB/Local.cpp:371 TestARB/Local.cpp:405
-#: Win/Localization.cpp:194 Win/Localization.cpp:218 Win/Localization.cpp:242
-#: Win/Localization.cpp:266 Win/Localization.cpp:290 Win/Localization.cpp:314
+#: TestARB/Local.cpp:236 TestARB/Local.cpp:270 TestARB/Local.cpp:304
+#: TestARB/Local.cpp:338 TestARB/Local.cpp:372 TestARB/Local.cpp:406
+#: Win/Localization.cpp:195 Win/Localization.cpp:219 Win/Localization.cpp:243
+#: Win/Localization.cpp:267 Win/Localization.cpp:291 Win/Localization.cpp:315
 msgid "IDS_REORDERED"
 msgstr "Reordered"
 
-#: TestARB/Local.cpp:248 TestARB/Local.cpp:267 Win/Localization.cpp:202
-#: Win/Localization.cpp:216
+#: TestARB/Local.cpp:249 TestARB/Local.cpp:268 Win/Localization.cpp:203
+#: Win/Localization.cpp:217
 msgid "IDS_COL_EVENTS"
 msgstr "Events"
 
-#: TestARB/Local.cpp:282 TestARB/Local.cpp:301 Win/Localization.cpp:226
-#: Win/Localization.cpp:240
+#: TestARB/Local.cpp:283 TestARB/Local.cpp:302 Win/Localization.cpp:227
+#: Win/Localization.cpp:241
 msgid "IDS_COL_MULTIQS"
 msgstr "MultiQs"
 
-#: TestARB/Local.cpp:286 TestARB/Local.cpp:423 Win/Localization.cpp:230
-#: Win/Localization.cpp:327
+#: TestARB/Local.cpp:287 TestARB/Local.cpp:424 Win/Localization.cpp:231
+#: Win/Localization.cpp:328
 msgid "IDS_UPDATE_DELETED"
 msgstr "%1$d deleted"
 
-#: TestARB/Local.cpp:316 TestARB/Local.cpp:335 Win/Localization.cpp:250
-#: Win/Localization.cpp:264
+#: TestARB/Local.cpp:317 TestARB/Local.cpp:336 Win/Localization.cpp:251
+#: Win/Localization.cpp:265
 msgid "IDS_COL_LEVELS"
 msgstr "Levels"
 
-#: TestARB/Local.cpp:350 TestARB/Local.cpp:369 Win/Localization.cpp:274
-#: Win/Localization.cpp:288 Win/PointsData.cpp:1391
+#: TestARB/Local.cpp:351 TestARB/Local.cpp:370 Win/Localization.cpp:275
+#: Win/Localization.cpp:289 Win/PointsData.cpp:1392
 msgid "IDS_TITLES"
 msgstr "Titles"
 
-#: TestARB/Local.cpp:384 TestARB/Local.cpp:403 Win/DlgConfigureData.cpp:313
-#: Win/DlgConfigureData.cpp:469 Win/Localization.cpp:298
-#: Win/Localization.cpp:312
+#: TestARB/Local.cpp:385 TestARB/Local.cpp:404 Win/DlgConfigureData.cpp:313
+#: Win/DlgConfigureData.cpp:469 Win/Localization.cpp:299
+#: Win/Localization.cpp:313
 msgid "IDS_SUBLEVEL_NAME"
 msgstr "SubLevel"
 
-#: TestARB/Local.cpp:419 Win/Localization.cpp:323
+#: TestARB/Local.cpp:420 Win/Localization.cpp:324
 msgid "IDS_UPDATE_RULES"
 msgstr "rules"
 
-#: TestARB/Local.cpp:439 Win/Localization.cpp:338
+#: TestARB/Local.cpp:440 Win/Localization.cpp:339
 msgid "IDS_ACTION_DELETE_CALPLUGIN"
 msgstr "Action: Deleting Plugin [%1$s]"
 
-#: TestARB/Local.cpp:454 Win/Localization.cpp:348
+#: TestARB/Local.cpp:455 Win/Localization.cpp:349
 msgid "IDS_ACTION_RENAME_OTHERPTS"
 msgstr "Action: Renaming OtherPoints [%1$s] to [%2$s]"
 
-#: TestARB/Local.cpp:457 Win/Localization.cpp:351
+#: TestARB/Local.cpp:458 Win/Localization.cpp:352
 msgid "IDS_ACTION_RENAME_OTHERPTS2"
 msgstr ", updating %1$d OtherPoints"
 
-#: TestARB/Local.cpp:472 Win/Localization.cpp:361
+#: TestARB/Local.cpp:473 Win/Localization.cpp:362
 msgid "IDS_ACTION_PREDELETE_OTHERPTS"
 msgstr "DELETING: OtherPoints [%1$s] %2$d items"
 
-#: TestARB/Local.cpp:483 Win/Localization.cpp:367
+#: TestARB/Local.cpp:484 Win/Localization.cpp:368
 msgid "IDS_ACTION_DELETE_OTHERPTS"
 msgstr "Action: Deleting OtherPoints [%1$s]"
 
-#: TestARB/Local.cpp:498 Win/Localization.cpp:377
+#: TestARB/Local.cpp:499 Win/Localization.cpp:378
 msgid "IDS_ACTION_RENAME_VENUE"
 msgstr "Action: Renaming Venue [%1$s] to [%2$s]"
 
-#: TestARB/Local.cpp:501 Win/Localization.cpp:380
+#: TestARB/Local.cpp:502 Win/Localization.cpp:381
 msgid "IDS_ACTION_RENAME_VENUE2"
 msgstr ", updating %1$d related items"
 
-#: TestARB/Local.cpp:516 Win/Localization.cpp:390
+#: TestARB/Local.cpp:517 Win/Localization.cpp:391
 msgid "IDS_ACTION_PREDELETE_VENUE"
 msgstr "DELETING: Venue [%1$s] %2$d items"
 
-#: TestARB/Local.cpp:527 Win/Localization.cpp:396
+#: TestARB/Local.cpp:528 Win/Localization.cpp:397
 msgid "IDS_ACTION_DELETE_VENUE"
 msgstr "Action: Deleting Venue [%1$s]"
 
-#: TestARB/Local.cpp:543 Win/Localization.cpp:407
+#: TestARB/Local.cpp:544 Win/Localization.cpp:408
 msgid "IDS_ACTION_RENAME_MULTIQ"
 msgstr "Action: Renaming %1$s MultiQ [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:546 Win/Localization.cpp:410
+#: TestARB/Local.cpp:547 Win/Localization.cpp:411
 msgid "IDS_ACTION_RENAME_MULTIQ2"
 msgstr ", updating %1$d MultiQs"
 
-#: TestARB/Local.cpp:562 Win/Localization.cpp:421
+#: TestARB/Local.cpp:563 Win/Localization.cpp:422
 msgid "IDS_ACTION_PREDELETE_MULTIQ"
 msgstr "DELETING: %1$s MultiQ [%2$s] %3$d items"
 
-#: TestARB/Local.cpp:575 Win/Localization.cpp:429
+#: TestARB/Local.cpp:576 Win/Localization.cpp:430
 msgid "IDS_ACTION_DELETE_MULTIQ"
 msgstr "Action: Deleting %1$s MultiQ [%2$s]"
 
-#: TestARB/Local.cpp:591 Win/Localization.cpp:440
+#: TestARB/Local.cpp:592 Win/Localization.cpp:441
 msgid "IDS_ACTION_RENAME_DIV"
 msgstr "Action: Renaming %1$s Division [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:594 Win/Localization.cpp:443
+#: TestARB/Local.cpp:595 Win/Localization.cpp:444
 msgid "IDS_ACTION_RENAME_DIV2"
 msgstr ", updating %1$d runs"
 
-#: TestARB/Local.cpp:610 Win/Localization.cpp:454
+#: TestARB/Local.cpp:611 Win/Localization.cpp:455
 msgid "IDS_ACTION_PREDELETE_DIV"
 msgstr "DELETING: %1$s Division [%2$s] %3$d runs and existing points"
 
-#: TestARB/Local.cpp:623 Win/Localization.cpp:462
+#: TestARB/Local.cpp:624 Win/Localization.cpp:463
 msgid "IDS_ACTION_DELETE_DIV"
 msgstr "Action: Deleting %1$s Division [%2$s]"
 
-#: TestARB/Local.cpp:639 Win/Localization.cpp:473
+#: TestARB/Local.cpp:640 Win/Localization.cpp:474
 msgid "IDS_ACTION_RENAME_LEVEL"
 msgstr "Action: Renaming %1$s Level [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:642 Win/Localization.cpp:476
+#: TestARB/Local.cpp:643 Win/Localization.cpp:477
 msgid "IDS_ACTION_RENAME_LEVEL2"
 msgstr ", updating %1$d runs"
 
-#: TestARB/Local.cpp:658 Win/Localization.cpp:487
+#: TestARB/Local.cpp:659 Win/Localization.cpp:488
 msgid "IDS_ACTION_PREDELETE_LEVEL"
 msgstr "DELETING: %1$s Level [%2$s] %3$d runs"
 
-#: TestARB/Local.cpp:671 Win/Localization.cpp:495
+#: TestARB/Local.cpp:672 Win/Localization.cpp:496
 msgid "IDS_ACTION_DELETE_LEVEL"
 msgstr "Action: Deleting %1$s Level [%2$s]"
 
-#: TestARB/Local.cpp:687 Win/Localization.cpp:506
+#: TestARB/Local.cpp:688 Win/Localization.cpp:507
 msgid "IDS_ACTION_RENAME_TITLE"
 msgstr "Action: Renaming %1$s Title [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:690 Win/Localization.cpp:509
+#: TestARB/Local.cpp:691 Win/Localization.cpp:510
 msgid "IDS_ACTION_RENAME_TITLE2"
 msgstr ", updating %1$d titles"
 
-#: TestARB/Local.cpp:706 Win/Localization.cpp:520
+#: TestARB/Local.cpp:707 Win/Localization.cpp:521
 msgid "IDS_ACTION_PREDELETE_TITLE"
 msgstr "DELETING: %1$s Title [%2$s] %3$d titles"
 
-#: TestARB/Local.cpp:719 Win/Localization.cpp:528
+#: TestARB/Local.cpp:720 Win/Localization.cpp:529
 msgid "IDS_ACTION_DELETE_TITLE"
 msgstr "Action: Deleting %1$s Title [%2$s]"
 
-#: TestARB/Local.cpp:735 Win/Localization.cpp:539
+#: TestARB/Local.cpp:736 Win/Localization.cpp:540
 msgid "IDS_ACTION_RENAME_EVENT"
 msgstr "Action: Renaming %1$s Event [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:738 Win/Localization.cpp:542
+#: TestARB/Local.cpp:739 Win/Localization.cpp:543
 msgid "IDS_ACTION_RENAME_EVENT2"
 msgstr ", updating %1$d events"
 
-#: TestARB/Local.cpp:754 Win/Localization.cpp:553
+#: TestARB/Local.cpp:755 Win/Localization.cpp:554
 msgid "IDS_ACTION_PREDELETE_EVENT"
 msgstr "DELETING: %1$s Event [%2$s] %3$d events"
 
-#: TestARB/Local.cpp:767 Win/Localization.cpp:561
+#: TestARB/Local.cpp:768 Win/Localization.cpp:562
 msgid "IDS_ACTION_DELETE_EVENT"
 msgstr "Action: Deleting %1$s Event [%2$s]"
 
-#: TestARB/Local.cpp:780 Win/Localization.cpp:569
+#: TestARB/Local.cpp:781 Win/Localization.cpp:570
 msgid "IDS_TITLEPOINTSNAME"
 msgstr "%1$s points with %2$s faults"
 
-#: TestARB/Local.cpp:793 Win/Localization.cpp:577
+#: TestARB/Local.cpp:794 Win/Localization.cpp:578
 msgid "IDS_LIFETITLEPOINTSNAME"
 msgstr "%1$s lifetime points with %2$s faults"
 
-#: TestARB/Local.cpp:805 Win/Localization.cpp:584
+#: TestARB/Local.cpp:806 Win/Localization.cpp:585
 msgid "IDS_PLACEMENTPOINTSNAME"
 msgstr "%1$s points with place of %2$d"
 
-#: TestARB/Local.cpp:817 Win/Localization.cpp:591
+#: TestARB/Local.cpp:818 Win/Localization.cpp:592
 msgid "IDS_WARN_DELETED_RUNS"
 msgstr ""
 "WARNING\n"
@@ -487,11 +487,11 @@ msgstr ""
 "%1$d run(s) deleted due to configuration changes.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: TestARB/Local.cpp:831 Win/Localization.cpp:600
+#: TestARB/Local.cpp:832 Win/Localization.cpp:601
 msgid "IDS_UPDATE_TEAM_RUNS"
 msgstr "Updated %1$d Team runs."
 
-#: TestARB/Local.cpp:844 Win/Localization.cpp:608
+#: TestARB/Local.cpp:845 Win/Localization.cpp:609
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Table setting updated in %1$d runs."
 
@@ -541,9 +541,9 @@ msgstr "End Date"
 
 #: Win/AgilityBookCalendarView.cpp:620 Win/DlgAssignColumns.cpp:209
 #: Win/DlgAssignColumns.cpp:321 Win/DlgAssignColumns.cpp:369
-#: Win/DlgCalendarQueryDetail.cpp:165 Win/DlgDog.cpp:99 Win/DlgDog.cpp:113
-#: Win/DlgDog.cpp:133 Win/DlgListCtrl.cpp:414 Win/DlgListViewer.cpp:1140
-#: Win/DlgListViewer.cpp:1208 Win/DlgListViewer.cpp:1348
+#: Win/DlgCalendarQueryDetail.cpp:165 Win/DlgDog.cpp:100 Win/DlgDog.cpp:114
+#: Win/DlgDog.cpp:134 Win/DlgListCtrl.cpp:414 Win/DlgListViewer.cpp:1141
+#: Win/DlgListViewer.cpp:1209 Win/DlgListViewer.cpp:1349
 #: Win/DlgQueryDetail.cpp:79 Win/DlgTrial.cpp:307 Win/Print.cpp:247
 msgid "IDS_COL_VENUE"
 msgstr "Venue"
@@ -551,19 +551,19 @@ msgstr "Venue"
 #: Win/AgilityBookCalendarView.cpp:621 Win/DlgAssignColumns.cpp:215
 #: Win/DlgAssignColumns.cpp:315 Win/DlgAssignColumns.cpp:372
 #: Win/DlgAssignColumns.cpp:456 Win/DlgCalendarQueryDetail.cpp:114
-#: Win/DlgInfoNote.cpp:356 Win/DlgListCtrl.cpp:412 Win/DlgListViewer.cpp:956
-#: Win/DlgListViewer.cpp:996 Win/DlgListViewer.cpp:1008
-#: Win/DlgListViewer.cpp:1146 Win/DlgListViewer.cpp:1214
-#: Win/DlgListViewer.cpp:1268 Win/DlgQueryDetail.cpp:79 Win/Print.cpp:250
+#: Win/DlgInfoNote.cpp:356 Win/DlgListCtrl.cpp:412 Win/DlgListViewer.cpp:957
+#: Win/DlgListViewer.cpp:997 Win/DlgListViewer.cpp:1009
+#: Win/DlgListViewer.cpp:1147 Win/DlgListViewer.cpp:1215
+#: Win/DlgListViewer.cpp:1269 Win/DlgQueryDetail.cpp:79 Win/Print.cpp:250
 msgid "IDS_COL_LOCATION"
 msgstr "Location"
 
 #: Win/AgilityBookCalendarView.cpp:622 Win/DlgAssignColumns.cpp:212
 #: Win/DlgAssignColumns.cpp:318 Win/DlgAssignColumns.cpp:366
-#: Win/DlgInfoNote.cpp:350 Win/DlgListCtrl.cpp:413 Win/DlgListViewer.cpp:950
-#: Win/DlgListViewer.cpp:990 Win/DlgListViewer.cpp:1002
-#: Win/DlgListViewer.cpp:1147 Win/DlgListViewer.cpp:1215
-#: Win/DlgListViewer.cpp:1269 Win/DlgListViewer.cpp:1347 Win/DlgTrial.cpp:306
+#: Win/DlgInfoNote.cpp:350 Win/DlgListCtrl.cpp:413 Win/DlgListViewer.cpp:951
+#: Win/DlgListViewer.cpp:991 Win/DlgListViewer.cpp:1003
+#: Win/DlgListViewer.cpp:1148 Win/DlgListViewer.cpp:1216
+#: Win/DlgListViewer.cpp:1270 Win/DlgListViewer.cpp:1348 Win/DlgTrial.cpp:306
 #: Win/Print.cpp:248
 msgid "IDS_COL_CLUB"
 msgstr "Club"
@@ -715,8 +715,8 @@ msgstr "Added %1$d new calendar items, %2$d updated items."
 msgid "IDS_UPDATED_TRAINING_ITEMS"
 msgstr "Added %1$d new Training Log items, %2$d updated items."
 
-#: Win/AgilityBookDoc.cpp:1376 Win/DlgDog.cpp:597 Win/DlgFindLinks.cpp:118
-#: Win/DlgListCtrl.cpp:465 Win/DlgListViewer.cpp:1203 Win/Print.cpp:245
+#: Win/AgilityBookDoc.cpp:1376 Win/DlgDog.cpp:598 Win/DlgFindLinks.cpp:118
+#: Win/DlgListCtrl.cpp:465 Win/DlgListViewer.cpp:1204 Win/Print.cpp:245
 msgid "IDS_COL_DOG"
 msgstr "Dog"
 
@@ -806,7 +806,7 @@ msgid "IDS_FILE_PROPERTIES"
 msgstr "File Properties"
 
 #: Win/AgilityBookHtmlView.cpp:260 Win/AgilityBookPointsView.cpp:326
-#: Win/PointsData.cpp:270
+#: Win/PointsData.cpp:271
 msgid "IDS_TITLING_POINTS"
 msgstr "Titling Points"
 
@@ -1953,9 +1953,9 @@ msgid "IDS_COL_CALLNAME"
 msgstr "Call Name"
 
 #: Win/DlgAssignColumns.cpp:206 Win/DlgAssignColumns.cpp:334
-#: Win/DlgAssignColumns.cpp:379 Win/DlgDog.cpp:98 Win/DlgDog.cpp:129
-#: Win/DlgListViewer.cpp:1136 Win/DlgListViewer.cpp:1204
-#: Win/DlgListViewer.cpp:1265 Win/DlgListViewer.cpp:1344 Win/Print.cpp:246
+#: Win/DlgAssignColumns.cpp:379 Win/DlgDog.cpp:99 Win/DlgDog.cpp:130
+#: Win/DlgListViewer.cpp:1137 Win/DlgListViewer.cpp:1205
+#: Win/DlgListViewer.cpp:1266 Win/DlgListViewer.cpp:1345 Win/Print.cpp:246
 msgid "IDS_COL_DATE"
 msgstr "Date"
 
@@ -1964,37 +1964,37 @@ msgid "IDS_COL_TRIALNOTES"
 msgstr "Trial Notes"
 
 #: Win/DlgAssignColumns.cpp:221 Win/DlgAssignColumns.cpp:388
-#: Win/DlgConfigMultiQ.cpp:134 Win/DlgDog.cpp:135 Win/DlgListViewer.cpp:1141
-#: Win/DlgListViewer.cpp:1209 Win/DlgListViewer.cpp:1313
-#: Win/DlgListViewer.cpp:1349 Win/DlgPointsViewSort.cpp:172
+#: Win/DlgConfigMultiQ.cpp:134 Win/DlgDog.cpp:136 Win/DlgListViewer.cpp:1142
+#: Win/DlgListViewer.cpp:1210 Win/DlgListViewer.cpp:1314
+#: Win/DlgListViewer.cpp:1350 Win/DlgPointsViewSort.cpp:172
 msgid "IDS_COL_DIVISION"
 msgstr "Division"
 
 #: Win/DlgAssignColumns.cpp:224 Win/DlgAssignColumns.cpp:391
-#: Win/DlgConfigMultiQ.cpp:135 Win/DlgDog.cpp:136 Win/DlgListViewer.cpp:1142
-#: Win/DlgListViewer.cpp:1210 Win/DlgListViewer.cpp:1314
-#: Win/DlgListViewer.cpp:1350 Win/DlgPointsViewSort.cpp:177
+#: Win/DlgConfigMultiQ.cpp:135 Win/DlgDog.cpp:137 Win/DlgListViewer.cpp:1143
+#: Win/DlgListViewer.cpp:1211 Win/DlgListViewer.cpp:1315
+#: Win/DlgListViewer.cpp:1351 Win/DlgPointsViewSort.cpp:177
 msgid "IDS_COL_LEVEL"
 msgstr "Level"
 
 #: Win/DlgAssignColumns.cpp:227 Win/DlgAssignColumns.cpp:385
-#: Win/DlgConfigMultiQ.cpp:136 Win/DlgDog.cpp:137 Win/DlgFindLinks.cpp:120
-#: Win/DlgListViewer.cpp:1143 Win/DlgListViewer.cpp:1211
-#: Win/DlgListViewer.cpp:1309 Win/DlgListViewer.cpp:1351
+#: Win/DlgConfigMultiQ.cpp:136 Win/DlgDog.cpp:138 Win/DlgFindLinks.cpp:120
+#: Win/DlgListViewer.cpp:1144 Win/DlgListViewer.cpp:1212
+#: Win/DlgListViewer.cpp:1310 Win/DlgListViewer.cpp:1352
 #: Win/DlgPointsViewSort.cpp:182
 msgid "IDS_COL_EVENT"
 msgstr "Event"
 
-#: Win/DlgAssignColumns.cpp:230 Win/DlgAssignColumns.cpp:394 Win/DlgDog.cpp:115
+#: Win/DlgAssignColumns.cpp:230 Win/DlgAssignColumns.cpp:394 Win/DlgDog.cpp:116
 #: Win/DlgRun.cpp:198 Win/Print.cpp:251 Win/Print.cpp:272 Win/Print.cpp:278
 #: Win/Print.cpp:284 Win/Print.cpp:290
 msgid "IDS_COL_HEIGHT"
 msgstr "Height"
 
 #: Win/DlgAssignColumns.cpp:233 Win/DlgInfoNote.cpp:353
-#: Win/DlgListViewer.cpp:953 Win/DlgListViewer.cpp:993
-#: Win/DlgListViewer.cpp:1005 Win/DlgListViewer.cpp:1148
-#: Win/DlgListViewer.cpp:1216 Win/Print.cpp:252
+#: Win/DlgListViewer.cpp:954 Win/DlgListViewer.cpp:994
+#: Win/DlgListViewer.cpp:1006 Win/DlgListViewer.cpp:1149
+#: Win/DlgListViewer.cpp:1217 Win/Print.cpp:252
 msgid "IDS_COL_JUDGE"
 msgstr "Judge"
 
@@ -2051,47 +2051,47 @@ msgstr "Closing"
 msgid "IDS_COL_REQ_POINTS"
 msgstr "Required Points"
 
-#: Win/DlgAssignColumns.cpp:275 Win/DlgDog.cpp:131 Win/DlgListCtrl.cpp:507
-#: Win/DlgListViewer.cpp:1316 Win/DlgListViewer.cpp:1352
+#: Win/DlgAssignColumns.cpp:275 Win/DlgDog.cpp:132 Win/DlgListCtrl.cpp:507
+#: Win/DlgListViewer.cpp:1317 Win/DlgListViewer.cpp:1353
 msgid "IDS_COL_POINTS"
 msgstr "Points"
 
 #: Win/DlgAssignColumns.cpp:278 Win/DlgConfigEventMethod.cpp:353
-#: Win/DlgListViewer.cpp:1149 Win/DlgListViewer.cpp:1217 Win/DlgRun.cpp:193
+#: Win/DlgListViewer.cpp:1150 Win/DlgListViewer.cpp:1218 Win/DlgRun.cpp:193
 #: Win/Print.cpp:263 Win/Print.cpp:268 Win/Print.cpp:274 Win/Print.cpp:280
 #: Win/Print.cpp:286
 msgid "IDS_COL_PLACE"
 msgstr "Place"
 
-#: Win/DlgAssignColumns.cpp:281 Win/DlgListViewer.cpp:1150
-#: Win/DlgListViewer.cpp:1218 Win/Print.cpp:264
+#: Win/DlgAssignColumns.cpp:281 Win/DlgListViewer.cpp:1151
+#: Win/DlgListViewer.cpp:1219 Win/Print.cpp:264
 msgid "IDS_COL_IN_CLASS"
 msgstr "In Class"
 
-#: Win/DlgAssignColumns.cpp:284 Win/DlgListViewer.cpp:1151
-#: Win/DlgListViewer.cpp:1219 Win/Print.cpp:265
+#: Win/DlgAssignColumns.cpp:284 Win/DlgListViewer.cpp:1152
+#: Win/DlgListViewer.cpp:1220 Win/Print.cpp:265
 msgid "IDS_COL_Q_D"
 msgstr "Q'd"
 
 #: Win/DlgAssignColumns.cpp:287 Win/DlgAssignColumns.cpp:382
-#: Win/DlgListViewer.cpp:1138 Win/DlgListViewer.cpp:1206 Win/DlgRun.cpp:192
+#: Win/DlgListViewer.cpp:1139 Win/DlgListViewer.cpp:1207 Win/DlgRun.cpp:192
 #: Win/Print.cpp:255 Win/Print.cpp:269 Win/Print.cpp:275 Win/Print.cpp:281
 #: Win/Print.cpp:287
 msgid "IDS_COL_Q"
 msgstr "Q"
 
-#: Win/DlgAssignColumns.cpp:290 Win/DlgListViewer.cpp:1353 Win/DlgRun.cpp:194
+#: Win/DlgAssignColumns.cpp:290 Win/DlgListViewer.cpp:1354 Win/DlgRun.cpp:194
 #: Win/Print.cpp:262 Win/Print.cpp:271 Win/Print.cpp:277 Win/Print.cpp:283
 #: Win/Print.cpp:289
 msgid "IDS_COL_SCORE"
 msgstr "Score"
 
-#: Win/DlgAssignColumns.cpp:293 Win/DlgListViewer.cpp:1139
-#: Win/DlgListViewer.cpp:1207 Win/DlgListViewer.cpp:1267
+#: Win/DlgAssignColumns.cpp:293 Win/DlgListViewer.cpp:1140
+#: Win/DlgListViewer.cpp:1208 Win/DlgListViewer.cpp:1268
 msgid "IDS_COL_TITLE_PTS"
 msgstr "Title Points"
 
-#: Win/DlgAssignColumns.cpp:296 Win/DlgDog.cpp:139 Win/DlgListViewer.cpp:1383
+#: Win/DlgAssignColumns.cpp:296 Win/DlgDog.cpp:140 Win/DlgListViewer.cpp:1384
 #: Win/Print.cpp:267
 msgid "IDS_COL_COMMENTS"
 msgstr "Comments"
@@ -2104,8 +2104,8 @@ msgstr "Tentative"
 msgid "IDS_COL_ENTERED"
 msgstr "Entered"
 
-#: Win/DlgAssignColumns.cpp:337 Win/DlgDog.cpp:101 Win/DlgFindLinks.cpp:117
-#: Win/DlgListCtrl.cpp:506 Win/DlgListViewer.cpp:1382 Win/DlgRun.cpp:197
+#: Win/DlgAssignColumns.cpp:337 Win/DlgDog.cpp:102 Win/DlgFindLinks.cpp:117
+#: Win/DlgListCtrl.cpp:506 Win/DlgListViewer.cpp:1383 Win/DlgRun.cpp:197
 msgid "IDS_COL_NAME"
 msgstr "Name"
 
@@ -2121,8 +2121,8 @@ msgstr "Birthday"
 msgid "IDS_COL_AGE"
 msgstr "Age"
 
-#: Win/DlgAssignColumns.cpp:398 Win/DlgAssignColumns.cpp:556 Win/DlgDog.cpp:138
-#: Win/DlgListViewer.cpp:1145 Win/DlgListViewer.cpp:1213
+#: Win/DlgAssignColumns.cpp:398 Win/DlgAssignColumns.cpp:556 Win/DlgDog.cpp:139
+#: Win/DlgListViewer.cpp:1146 Win/DlgListViewer.cpp:1214
 msgid "IDS_COL_SUBNAME"
 msgstr "SubName"
 
@@ -2247,7 +2247,7 @@ msgstr "Role"
 msgid "IDS_COL_SCH_PRIORITY"
 msgstr "Schedule+ Priority"
 
-#: Win/DlgAssignColumns.cpp:538 Win/DlgListViewer.cpp:1202
+#: Win/DlgAssignColumns.cpp:538 Win/DlgListViewer.cpp:1203
 msgid "IDS_COL_STATUS"
 msgstr "Status"
 
@@ -3021,13 +3021,13 @@ msgstr "Has Super Qs"
 msgid "IDS_CONFIGEVENT_SPEEDPTS"
 msgstr "Has Speed Points"
 
-#: Win/DlgConfigEvent.cpp:1007 Win/DlgConfigEvent.cpp:1014
-#: Win/DlgConfigEvent.cpp:1019 Win/DlgConfigEvent.cpp:1285
-#: Win/DlgConfigEvent.cpp:1295
+#: Win/DlgConfigEvent.cpp:1018 Win/DlgConfigEvent.cpp:1025
+#: Win/DlgConfigEvent.cpp:1030 Win/DlgConfigEvent.cpp:1296
+#: Win/DlgConfigEvent.cpp:1306
 msgid "IDS_TITLEPTS_EXISTS"
 msgstr "An entry already exists for the specified faults"
 
-#: Win/DlgConfigEvent.cpp:1468
+#: Win/DlgConfigEvent.cpp:1479
 msgid "IDS_CONFIGEVENT_OVERLAPDATES"
 msgstr ""
 "WARNING\n"
@@ -3038,7 +3038,7 @@ msgstr ""
 "\n"
 "Are you sure you want to save this?"
 
-#: Win/DlgConfigEvent.cpp:1478 Win/DlgConfigMultiQ.cpp:372
+#: Win/DlgConfigEvent.cpp:1489 Win/DlgConfigMultiQ.cpp:372
 #: Win/DlgConfigOtherPoints.cpp:70 Win/DlgConfigVenue.cpp:99
 #: Win/DlgConfigVenue.cpp:166 Win/DlgConfigVenue.cpp:605
 #: Win/DlgConfigure.cpp:409 Win/DlgConfigureData.cpp:187
@@ -3587,60 +3587,74 @@ msgid "HIDC_CONFIG_TITLE_VALID_TO_DATE"
 msgstr "Date this title is valid until."
 
 # DlgConfigTitlePoints
-#: Win/DlgConfigTitlePoints.cpp:61
+#: Win/DlgConfigTitlePoints.cpp:95
 msgid "IDD_CONFIG_TITLE_POINTS"
 msgstr "Title Points"
 
-#: Win/DlgConfigTitlePoints.cpp:65 Win/DlgConfigTitlePoints.cpp:208
+#: Win/DlgConfigTitlePoints.cpp:99 Win/DlgConfigTitlePoints.cpp:293
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT2"
 msgstr "&Place"
 
-#: Win/DlgConfigTitlePoints.cpp:65 Win/DlgConfigTitlePoints.cpp:215
+#: Win/DlgConfigTitlePoints.cpp:99 Win/DlgConfigTitlePoints.cpp:300
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT1"
 msgstr "&Faults Allowed"
 
-#: Win/DlgConfigTitlePoints.cpp:78 Win/DlgConfigTitlePoints.cpp:79
+#: Win/DlgConfigTitlePoints.cpp:112 Win/DlgConfigTitlePoints.cpp:113
 msgid "HIDC_CONFIG_TITLEPTS_VALUE"
 msgstr ""
 "Number of faulted points allowed for Normal and Lifetime points. Place that "
 "earns the points for Placement points ('-1' is a wildcard match for any runs "
 "with a non-zero place)."
 
-#: Win/DlgConfigTitlePoints.cpp:87
+#: Win/DlgConfigTitlePoints.cpp:121
 msgid "IDC_CONFIG_TITLEPTS_POINTS"
 msgstr "Points &Earned"
 
-#: Win/DlgConfigTitlePoints.cpp:95 Win/DlgConfigTitlePoints.cpp:96
+#: Win/DlgConfigTitlePoints.cpp:129 Win/DlgConfigTitlePoints.cpp:130
 msgid "HIDC_CONFIG_TITLEPTS_POINTS"
 msgstr "Number of points that will be earned."
 
-#: Win/DlgConfigTitlePoints.cpp:104
+#: Win/DlgConfigTitlePoints.cpp:138
 msgid "IDS_TITLEPOINT_NORMAL"
 msgstr "Normal"
 
-#: Win/DlgConfigTitlePoints.cpp:111 Win/PointsData.cpp:694
-#: Win/PointsData.cpp:746
+#: Win/DlgConfigTitlePoints.cpp:139
 msgid "IDS_TITLEPOINT_LIFETIME"
 msgstr "Lifetime"
 
-#: Win/DlgConfigTitlePoints.cpp:112
+#: Win/DlgConfigTitlePoints.cpp:140
 msgid "IDS_TITLEPOINT_PLACEMENT"
 msgstr "Placement"
 
-#: Win/DlgConfigTitlePoints.cpp:117 Win/DlgConfigTitlePoints.cpp:118
+#: Win/DlgConfigTitlePoints.cpp:145 Win/DlgConfigTitlePoints.cpp:146
 msgid "HIDC_CONFIG_TITLEPTS_TITLE_POINTS"
 msgstr ""
 "Select the type of titling points: Normal (points awarded per run), Lifetime "
 "(points accumulated towards lifetime, normally the same as Normal), "
 "Placement (points accumulated based on placement, treated like lifetime)"
 
-#: Win/DlgConfigTitlePoints.cpp:122
+#: Win/DlgConfigTitlePoints.cpp:150
 msgid "IDS_TITLEPOINT_NORMAL_NORMAL"
 msgstr "Normal"
 
-#: Win/DlgConfigTitlePoints.cpp:129 Win/DlgConfigTitlePoints.cpp:130
+#: Win/DlgConfigTitlePoints.cpp:157 Win/DlgConfigTitlePoints.cpp:158
 msgid "HIDC_CONFIG_TITLEPTS_CALC"
 msgstr "Select the type of calculation for titling points."
+
+#: Win/DlgConfigTitlePoints.cpp:165
+msgid "IDC_CONFIG_TITLEPTS_LIFETIMENAME"
+msgstr "Lifetime Points Name"
+
+#: Win/DlgConfigTitlePoints.cpp:173 Win/DlgConfigTitlePoints.cpp:174
+msgid "HIDC_CONFIG_TITLEPTS_LIFETIMENAME"
+msgstr ""
+"Name to use when displaying lifetime points. If this is not set, 'Lifetime' "
+"is used."
+
+#: Win/DlgConfigTitlePoints.cpp:186 Win/PointsData.cpp:695
+#: Win/PointsData.cpp:747
+msgid "IDS_TITLEPOINT_LIFETIME_NAME"
+msgstr "Lifetime"
 
 # DlgConfigUpdate
 #: Win/DlgConfigUpdate.cpp:55
@@ -3904,212 +3918,212 @@ msgstr ""
 "This name is currently in use. Do you want to merge your data into this "
 "existing name?"
 
-#: Win/DlgDog.cpp:100
+#: Win/DlgDog.cpp:101
 msgid "IDS_COL_TITLE"
 msgstr "Title"
 
-#: Win/DlgDog.cpp:114 Win/DlgListCtrl.cpp:466
+#: Win/DlgDog.cpp:115 Win/DlgListCtrl.cpp:466
 msgid "IDS_COL_NUMBER"
 msgstr "Number"
 
-#: Win/DlgDog.cpp:116
+#: Win/DlgDog.cpp:117
 msgid "IDS_COL_RECEIVED"
 msgstr "Received"
 
-#: Win/DlgDog.cpp:117 Win/DlgRun.cpp:200
+#: Win/DlgDog.cpp:118 Win/DlgRun.cpp:200
 msgid "IDS_COL_NOTE"
 msgstr "Note"
 
-#: Win/DlgDog.cpp:130 Win/DlgListViewer.cpp:1380
+#: Win/DlgDog.cpp:131 Win/DlgListViewer.cpp:1381
 msgid "IDS_COL_TYPE"
 msgstr "Type"
 
-#: Win/DlgDog.cpp:134
+#: Win/DlgDog.cpp:135
 msgid "IDS_COL_MULTIQ"
 msgstr "MultiQ"
 
-#: Win/DlgDog.cpp:173
+#: Win/DlgDog.cpp:174
 msgid "IDS_UNEARNED"
 msgstr "<Unearned>"
 
-#: Win/DlgDog.cpp:620
+#: Win/DlgDog.cpp:621
 msgid "IDC_DOG_CALLNAME"
 msgstr "&Call Name"
 
-#: Win/DlgDog.cpp:626
+#: Win/DlgDog.cpp:627
 msgid "IDS_BLANK_CALLNAME"
 msgstr "Callname may not be left blank."
 
-#: Win/DlgDog.cpp:627 Win/DlgDog.cpp:628
+#: Win/DlgDog.cpp:628 Win/DlgDog.cpp:629
 msgid "HIDC_DOG_CALLNAME"
 msgstr "Call name of your dog."
 
-#: Win/DlgDog.cpp:631
+#: Win/DlgDog.cpp:632
 msgid "IDC_DOG_BREED"
 msgstr "&Breed"
 
-#: Win/DlgDog.cpp:638 Win/DlgDog.cpp:639
+#: Win/DlgDog.cpp:639 Win/DlgDog.cpp:640
 msgid "HIDC_DOG_BREED"
 msgstr "Breed of your dog."
 
-#: Win/DlgDog.cpp:642
+#: Win/DlgDog.cpp:643
 msgid "IDC_DOG_REG_NAME"
 msgstr "&Registered Name"
 
-#: Win/DlgDog.cpp:649 Win/DlgDog.cpp:650
+#: Win/DlgDog.cpp:650 Win/DlgDog.cpp:651
 msgid "HIDC_DOG_REG_NAME"
 msgstr "Registered name."
 
-#: Win/DlgDog.cpp:653
+#: Win/DlgDog.cpp:654
 msgid "IDC_DOG_AGE_TEXT"
 msgstr "Age (years)"
 
-#: Win/DlgDog.cpp:663
+#: Win/DlgDog.cpp:664
 msgid "IDC_DOG_DOB"
 msgstr "B&irthday"
 
-#: Win/DlgDog.cpp:672 Win/DlgDog.cpp:673
+#: Win/DlgDog.cpp:673 Win/DlgDog.cpp:674
 msgid "HIDC_DOG_DOB"
 msgstr "Birthday."
 
-#: Win/DlgDog.cpp:676
+#: Win/DlgDog.cpp:677
 msgid "IDC_DOG_IS_DECEASED"
 msgstr "&Deceased"
 
-#: Win/DlgDog.cpp:680 Win/DlgDog.cpp:681
+#: Win/DlgDog.cpp:681 Win/DlgDog.cpp:682
 msgid "HIDC_DOG_IS_DECEASED"
 msgstr ""
 "Has this dog passed away? This will cause the deceased date to be visible "
 "and stop computing the age."
 
-#: Win/DlgDog.cpp:688 Win/DlgDog.cpp:689
+#: Win/DlgDog.cpp:689 Win/DlgDog.cpp:690
 msgid "HIDC_DOG_DECEASED"
 msgstr "Date this dog passed away."
 
-#: Win/DlgDog.cpp:692
+#: Win/DlgDog.cpp:693
 msgid "IDC_DOG_NOTES"
 msgstr "&Notes"
 
-#: Win/DlgDog.cpp:699 Win/DlgDog.cpp:700
+#: Win/DlgDog.cpp:700 Win/DlgDog.cpp:701
 msgid "HIDC_DOG_NOTES"
 msgstr "Notes. Anything additional you want to add."
 
-#: Win/DlgDog.cpp:712 Win/DlgDog.cpp:713
+#: Win/DlgDog.cpp:713 Win/DlgDog.cpp:714
 msgid "HIDC_DOG_TITLE_TITLES"
 msgstr ""
 "List of titles. The icon denotes whether the title is hidden and also "
 "whether you have actually received the certificate."
 
-#: Win/DlgDog.cpp:728
+#: Win/DlgDog.cpp:729
 msgid "IDC_DOG_TITLE_NEW"
 msgstr "&New..."
 
-#: Win/DlgDog.cpp:731 Win/DlgDog.cpp:732
+#: Win/DlgDog.cpp:732 Win/DlgDog.cpp:733
 msgid "HIDC_DOG_TITLE_NEW"
 msgstr "Create a new title."
 
-#: Win/DlgDog.cpp:735
+#: Win/DlgDog.cpp:736
 msgid "IDC_DOG_TITLE_EDIT"
 msgstr "&Edit..."
 
-#: Win/DlgDog.cpp:738 Win/DlgDog.cpp:739
+#: Win/DlgDog.cpp:739 Win/DlgDog.cpp:740
 msgid "HIDC_DOG_TITLE_EDIT"
 msgstr "Edit the selected title."
 
-#: Win/DlgDog.cpp:742
+#: Win/DlgDog.cpp:743
 msgid "IDC_DOG_TITLE_DELETE"
 msgstr "&Delete"
 
-#: Win/DlgDog.cpp:745 Win/DlgDog.cpp:746
+#: Win/DlgDog.cpp:746 Win/DlgDog.cpp:747
 msgid "HIDC_DOG_TITLE_DELETE"
 msgstr "Delete the selected title."
 
-#: Win/DlgDog.cpp:749
+#: Win/DlgDog.cpp:750
 msgid "IDC_DOG_TITLE_HIDDEN"
 msgstr "View Hidden"
 
-#: Win/DlgDog.cpp:753 Win/DlgDog.cpp:754
+#: Win/DlgDog.cpp:754 Win/DlgDog.cpp:755
 msgid "HIDC_DOG_TITLE_HIDDEN"
 msgstr ""
 "Set the viewing status for hidden titles. This is also available in the main "
 "menu."
 
-#: Win/DlgDog.cpp:766 Win/DlgDog.cpp:767
+#: Win/DlgDog.cpp:767 Win/DlgDog.cpp:768
 msgid "HIDC_DOGNUM_REG_NUMS"
 msgstr "List of configured registration numbers."
 
-#: Win/DlgDog.cpp:775
+#: Win/DlgDog.cpp:776
 msgid "IDC_DOGNUM_NEW"
 msgstr "&New..."
 
-#: Win/DlgDog.cpp:778 Win/DlgDog.cpp:779
+#: Win/DlgDog.cpp:779 Win/DlgDog.cpp:780
 msgid "HIDC_DOGNUM_NEW"
 msgstr "Create a new registration number."
 
-#: Win/DlgDog.cpp:782
+#: Win/DlgDog.cpp:783
 msgid "IDC_DOGNUM_EDIT"
 msgstr "&Edit..."
 
-#: Win/DlgDog.cpp:785 Win/DlgDog.cpp:786
+#: Win/DlgDog.cpp:786 Win/DlgDog.cpp:787
 msgid "HIDC_DOGNUM_EDIT"
 msgstr "Edit the selected registration number."
 
-#: Win/DlgDog.cpp:789
+#: Win/DlgDog.cpp:790
 msgid "IDC_DOGNUM_DELETE"
 msgstr "&Delete"
 
-#: Win/DlgDog.cpp:792 Win/DlgDog.cpp:793
+#: Win/DlgDog.cpp:793 Win/DlgDog.cpp:794
 msgid "HIDC_DOGNUM_DELETE"
 msgstr "Delete the selected registration number."
 
-#: Win/DlgDog.cpp:805 Win/DlgDog.cpp:806
+#: Win/DlgDog.cpp:806 Win/DlgDog.cpp:807
 msgid "HIDC_DOGPTS_POINTS"
 msgstr ""
 "List of existing points. These allow you to enter an advanced dog without "
 "needing to enter every run the dog has done."
 
-#: Win/DlgDog.cpp:814
+#: Win/DlgDog.cpp:815
 msgid "IDC_DOGPTS_NEW"
 msgstr "&New..."
 
-#: Win/DlgDog.cpp:817 Win/DlgDog.cpp:818
+#: Win/DlgDog.cpp:818 Win/DlgDog.cpp:819
 msgid "HIDC_DOGPTS_NEW"
 msgstr "Create a new existing points item."
 
-#: Win/DlgDog.cpp:821
+#: Win/DlgDog.cpp:822
 msgid "IDC_DOGPTS_EDIT"
 msgstr "&Edit..."
 
-#: Win/DlgDog.cpp:824 Win/DlgDog.cpp:825
+#: Win/DlgDog.cpp:825 Win/DlgDog.cpp:826
 msgid "HIDC_DOGPTS_EDIT"
 msgstr "Edit the selected existing points item."
 
-#: Win/DlgDog.cpp:828
+#: Win/DlgDog.cpp:829
 msgid "IDC_DOGPTS_DELETE"
 msgstr "&Delete"
 
-#: Win/DlgDog.cpp:831 Win/DlgDog.cpp:832
+#: Win/DlgDog.cpp:832 Win/DlgDog.cpp:833
 msgid "HIDC_DOGPTS_DELETE"
 msgstr "Delete the selected existing points item."
 
-#: Win/DlgDog.cpp:835
+#: Win/DlgDog.cpp:836
 msgid "IDC_DOGPTS_SELECTED_PTS"
 msgstr "Selected Points"
 
 # DlgDog
-#: Win/DlgDog.cpp:878
+#: Win/DlgDog.cpp:879
 msgid "IDD_DOG_PROP"
 msgstr "Properties"
 
-#: Win/DlgDog.cpp:895
+#: Win/DlgDog.cpp:896
 msgid "IDD_DOG_TITLES"
 msgstr "Titles"
 
-#: Win/DlgDog.cpp:910
+#: Win/DlgDog.cpp:911
 msgid "IDD_DOG_NUMBERS"
 msgstr "Registration Numbers"
 
-#: Win/DlgDog.cpp:928
+#: Win/DlgDog.cpp:929
 msgid "IDD_DOG_POINTS"
 msgstr "Existing Points"
 
@@ -4225,19 +4239,19 @@ msgstr "&Comment"
 msgid "HIDC_EXISTING_COMMENTS"
 msgstr "Comments about these existing points."
 
-#: Win/DlgExistingPoints.cpp:565
+#: Win/DlgExistingPoints.cpp:566
 msgid "IDC_EXISTING_MULTIQ"
 msgstr "&Multiple Q"
 
-#: Win/DlgExistingPoints.cpp:566 Win/DlgExistingPoints.cpp:567
+#: Win/DlgExistingPoints.cpp:567 Win/DlgExistingPoints.cpp:568
 msgid "HIDC_EXISTING_MULTIQ"
 msgstr "Multiple Q that was earned."
 
-#: Win/DlgExistingPoints.cpp:571
+#: Win/DlgExistingPoints.cpp:572
 msgid "IDC_EXISTING_DIVISION"
 msgstr "&Division"
 
-#: Win/DlgExistingPoints.cpp:572 Win/DlgExistingPoints.cpp:573
+#: Win/DlgExistingPoints.cpp:573 Win/DlgExistingPoints.cpp:574
 msgid "HIDC_EXISTING_DIVISION"
 msgstr "Division these points were earned in."
 
@@ -4417,7 +4431,7 @@ msgstr "Fault Types"
 msgid "IDS_COL_FAULT"
 msgstr "Fault"
 
-#: Win/DlgListCtrl.cpp:464 Win/DlgListViewer.cpp:1084
+#: Win/DlgListCtrl.cpp:464 Win/DlgListViewer.cpp:1085
 msgid "IDS_PARTNERS"
 msgstr "Partners"
 
@@ -4476,40 +4490,40 @@ msgstr ""
 "Create a trial from the selected calendar entry. Only entries with "
 "recognized venues can create a trial directly."
 
-#: Win/DlgListViewer.cpp:204 Win/DlgListViewer.cpp:794
+#: Win/DlgListViewer.cpp:205 Win/DlgListViewer.cpp:795
 msgid "IDS_EXISTING_POINTS"
 msgstr "Existing Points"
 
-#: Win/DlgListViewer.cpp:266
+#: Win/DlgListViewer.cpp:267
 msgid "IDS_DELETED"
 msgstr "Deleted"
 
-#: Win/DlgListViewer.cpp:269
+#: Win/DlgListViewer.cpp:270
 msgid "IDS_CHANGED"
 msgstr "Changed"
 
-#: Win/DlgListViewer.cpp:1081
+#: Win/DlgListViewer.cpp:1082
 msgid "IDS_SPEEDPTS"
 msgstr "SpeedPts"
 
-#: Win/DlgListViewer.cpp:1346
+#: Win/DlgListViewer.cpp:1347
 msgid "IDS_COL_TRIAL_EXISTPTS"
 msgstr "Trial / Existing Pts"
 
-#: Win/DlgListViewer.cpp:1419 Win/DlgListViewer.cpp:1420
+#: Win/DlgListViewer.cpp:1420 Win/DlgListViewer.cpp:1421
 msgid "HIDC_LIST_VIEWER"
 msgstr "List of entries."
 
 # DlgListViewer
-#: Win/DlgListViewer.cpp:1423
+#: Win/DlgListViewer.cpp:1424
 msgid "IDC_LIST_COPY"
 msgstr "Copy"
 
-#: Win/DlgListViewer.cpp:1426 Win/DlgListViewer.cpp:1427
+#: Win/DlgListViewer.cpp:1427 Win/DlgListViewer.cpp:1428
 msgid "HIDC_LIST_COPY"
 msgstr "Copy the items in the list to the clipboard in a tab-delineated form."
 
-#: Win/DlgListViewer.cpp:1430
+#: Win/DlgListViewer.cpp:1431
 msgid "IDC_LIST_CLOSE"
 msgstr "Close"
 
@@ -6127,52 +6141,52 @@ msgstr "status"
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtered"
 
-#: Win/PointsData.cpp:621 Win/PointsData.cpp:1429 Win/Print.cpp:105
+#: Win/PointsData.cpp:622 Win/PointsData.cpp:1430 Win/Print.cpp:105
 #: Win/Print.cpp:1050 Win/TabView.cpp:228 Win/TabView.cpp:340
 msgid "IDS_RUNS"
 msgstr "Runs"
 
-#: Win/PointsData.cpp:695 Win/PointsData.cpp:747
+#: Win/PointsData.cpp:696 Win/PointsData.cpp:748
 msgid "IDS_LIFETIME_POINTS"
 msgstr "%1$s Points"
 
-#: Win/PointsData.cpp:698 Win/PointsData.cpp:750
+#: Win/PointsData.cpp:699 Win/PointsData.cpp:751
 msgid "IDS_PLACEMENT_POINTS"
 msgstr "Placement Points"
 
-#: Win/PointsData.cpp:701
+#: Win/PointsData.cpp:702
 msgid "IDS_TOTAL"
 msgstr "Total"
 
-#: Win/PointsData.cpp:956
+#: Win/PointsData.cpp:957
 msgid "IDS_POINTS_SPEED"
 msgstr "%1$d Speed"
 
-#: Win/PointsData.cpp:1634
+#: Win/PointsData.cpp:1636
 msgid "IDS_POINTS_RUNS_JUDGES"
 msgstr "%1$d runs, %2$d judges"
 
-#: Win/PointsData.cpp:1639 Win/PointsData.cpp:1659
+#: Win/PointsData.cpp:1641 Win/PointsData.cpp:1661
 msgid "IDS_POINTS_PARTNERS"
 msgstr ", %1$d partners"
 
-#: Win/PointsData.cpp:1645
+#: Win/PointsData.cpp:1647
 msgid "IDS_POINTS_QS"
 msgstr "%1$d Qs (%2$d%%)"
 
-#: Win/PointsData.cpp:1650
+#: Win/PointsData.cpp:1652
 msgid "IDS_POINTS_CLEAN"
 msgstr ", (%1$d clean)"
 
-#: Win/PointsData.cpp:1654
+#: Win/PointsData.cpp:1656
 msgid "IDS_POINTS_JUDGES"
 msgstr ", %1$d judges"
 
-#: Win/PointsData.cpp:1668
+#: Win/PointsData.cpp:1670
 msgid "IDS_POINTS_SQS"
 msgstr "[%1$d SQ]"
 
-#: Win/PointsData.cpp:1673
+#: Win/PointsData.cpp:1675
 msgid "IDS_POINTS_SPEED_SUBTOTAL"
 msgstr "[%1$d speed]"
 
@@ -6953,14 +6967,6 @@ msgid "IDS_FILEEXT_FILTER_SETTINGS"
 msgstr ""
 "Agility Record Book settings (*.arbsettings)|*.arbsettings|All Files (*.*)|*."
 "*||"
-
-#~ msgid "IDC_CONFIG_VENUE_LIFETIME_NAME"
-#~ msgstr "Lifetime Points Name"
-
-#~ msgid "HIDC_CONFIG_VENUE_LIFETIME_NAME"
-#~ msgstr ""
-#~ "Name to use when displaying lifetime points. If this is not set, "
-#~ "'Lifetime' is used."
 
 #~ msgid "MenuViewRuns"
 #~ msgstr "Show &Runs"

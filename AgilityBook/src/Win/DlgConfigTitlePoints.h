@@ -73,7 +73,7 @@ private:
 	wxChoice* m_ctrlType;
 	wxChoice* m_ctrlTypeNormal;
 	wxStaticText* m_textLifetimeName;
-	CTextCtrl* m_ctrlLifetimeName;
+	wxComboBox* m_ctrlLifetimeName;
 	double m_Faults;
 	short m_Place;
 	double m_Points;

@@ -692,7 +692,7 @@ std::wstring CPointsDataLifetime::OnNeedText(int inCol) const
 		{
 			std::wstring lifetime = m_LifetimeName->GetName();
 			if (lifetime.empty())
-				lifetime = _("IDS_TITLEPOINT_LIFETIME");
+				lifetime = _("IDS_TITLEPOINT_LIFETIME_NAME");
 			str << StringUtil::stringW(wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str()));
 		}
 		else
@@ -744,7 +744,7 @@ void CPointsDataLifetime::Details() const
 	{
 		std::wstring lifetime = m_LifetimeName->GetName();
 		if (lifetime.empty())
-			lifetime = _("IDS_TITLEPOINT_LIFETIME");
+			lifetime = _("IDS_TITLEPOINT_LIFETIME_NAME");
 		str = StringUtil::stringW(wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str()));
 	}
 	else

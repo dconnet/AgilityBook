@@ -136,12 +136,6 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 
 	wxArrayString types;
 	types.Add(_("IDS_TITLEPOINT_NORMAL"));
-#pragma PRAGMA_TODO(lifetime points)
-#if 0
-	if (m_Venue->HasLifetimeName())
-		types.Add(StringUtil::stringWX(m_Venue->GetLifetimeName()));
-	else
-#endif
 	types.Add(_("IDS_TITLEPOINT_LIFETIME"));
 	types.Add(_("IDS_TITLEPOINT_PLACEMENT"));
 	assert(types.size() == eTitleMax);
@@ -166,20 +160,42 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 	if (eTitleNormal != m_Type)
 		m_ctrlTypeNormal->Hide();
 
-#pragma PRAGMA_TODO(lifetime name)
 	m_textLifetimeName = new wxStaticText(this, wxID_ANY,
-		_("Lifetime Name (todo)"),
+		_("IDC_CONFIG_TITLEPTS_LIFETIMENAME"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textLifetimeName->Wrap(-1);
 
-	m_ctrlLifetimeName = new CTextCtrl(this, wxID_ANY,
-		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
-		CTrimValidator(&m_LifetimeName, TRIMVALIDATOR_TRIM_BOTH));
 #pragma PRAGMA_TODO(lifetime name)
-	// Should validator have 3rd parameter for error prompt?
+	// I think this should only be existing names.
+	// Need new dialog to manage names (add/delete/rename)
+	m_ctrlLifetimeName = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_LifetimeName, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlLifetimeName->SetHelpText(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
 	m_ctrlLifetimeName->SetToolTip(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
+
+	wxArrayString choices;
+	for (ARBConfigLifetimeNameList::iterator iter = m_Venue->GetLifetimeNames().begin();
+		iter != m_Venue->GetLifetimeNames().end();
+		++iter)
+	{
+		wxString str = StringUtil::stringWX((*iter)->GetName());
+		bool bDefault = false;
+		if (str.empty())
+		{
+			bDefault = true;
+			str = _("IDS_TITLEPOINT_LIFETIME_NAME");
+		}
+		int index = m_ctrlLifetimeName->Append(str);
+		choices.Add(str);
+		if (str == m_LifetimeName || (m_LifetimeName.empty() && bDefault))
+		{
+			m_ctrlLifetimeName->SetSelection(index);
+		}
+	}
+	m_ctrlLifetimeName->AutoComplete(choices);
+
 	if (eTitleLifetime != m_Type)
 	{
 		m_textLifetimeName->Hide();

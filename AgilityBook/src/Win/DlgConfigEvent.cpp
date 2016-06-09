@@ -963,8 +963,19 @@ void CDlgConfigEvent::EditPoints()
 				type = CDlgConfigTitlePoints::eTitlePlacement;
 				typeNorm = ePointsTypeMax;
 			}
+			int rc = 0;
+			if (pLife)
+			{
+				CDlgConfigTitlePoints dlg(m_pVenue, pLife->GetName());
+				rc = dlg.ShowModal();
+			}
+			else
+			{
+				CDlgConfigTitlePoints dlg(m_pVenue, value, points, type, typeNorm);
+				rc = dlg.ShowModal();
+			}
 			CDlgConfigTitlePoints dlg(m_pVenue, value, points, type, typeNorm);
-			if (wxID_OK == dlg.ShowModal())
+			if (wxID_OK == rc)
 			{
 				if (type != dlg.Type()
 				|| typeNorm != dlg.TypeNormal()
