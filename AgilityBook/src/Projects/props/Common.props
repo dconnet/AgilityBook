@@ -16,6 +16,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <DisableSpecificWarnings>4100;6031</DisableSpecificWarnings>
       <AdditionalOptions>/Zm202 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
       <SuppressStartupBanner>true</SuppressStartupBanner>
