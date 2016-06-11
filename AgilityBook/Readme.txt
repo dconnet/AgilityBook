@@ -389,7 +389,7 @@ initial: sudo port install autoconf
          sudo port install git
          sudo port install python35
          sudo port install py35-readline
-         sudo port select --set python python35
+         sudo port select --set python3 python35
 
 The xcode projects were used as follows:
 .../xcode7: Xcode 7.x on OSX10.11
