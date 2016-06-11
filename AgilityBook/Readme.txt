@@ -1,7 +1,9 @@
 Setting up the build environment
 ================================
-(note, comments/etc are very Windows-oriented since that's my main platform.)
+(Note, comments/etc are very Windows-oriented since that's my main platform.
+Most of the Mac equivalents are installed via MacPorts)
 Additional software packages required (all free):
+- python
 - wxWidgets
 - poedit (includes msgcat)
 - wxFormBuilder (optional)
@@ -22,6 +24,10 @@ Once the above software is unpacked, the directory structure should look like:
     also reside in devtools, for instance: \devtools\wx\wxWidgets-<ver>.
 
 --------------------
+
+python: https://www.python.org
+Currently using version 3.5.1
+- Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
 I'm currently using version 3.1.0.
@@ -381,6 +387,9 @@ sudo port upgrade outdated
 initial: sudo port install autoconf
          sudo port install subversion
          sudo port install git
+         sudo port install python35
+         sudo port install py35-readline
+         sudo port select --set python python35
 
 The xcode projects were used as follows:
 .../xcode7: Xcode 7.x on OSX10.11

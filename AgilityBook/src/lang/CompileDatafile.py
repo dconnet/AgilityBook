@@ -2,6 +2,7 @@
 # Generate the message libraries and data files
 #
 # Revision History
+# 2016-06-10 Convert to Python3
 # 2016-03-28 Cleanup lockfile on exception
 # 2015-01-02 Fixed ARBUpdater inclusion
 # 2014-11-16 Separated PO/MO language from DAT file generation.
@@ -46,7 +47,7 @@ class LockFile:
 	def acquire(self):
 		try:
 			self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
-			os.write(self.m_fd, "%d" % self.m_pid)
+			os.write(self.m_fd, b"%d" % self.m_pid)
 			return 1
 		except OSError:
 			self.m_fd = None
@@ -68,7 +69,7 @@ def ReadPipe(logFile, cmd):
 	while (1):
 		line = cmd.readline()
 		if line:
-			print >>logFile, line,
+			print(line.decode(), file=logFile)
 		else:
 			break
 
@@ -76,7 +77,7 @@ def ReadPipe(logFile, cmd):
 # Some commands generate messages on stderr that are interesting.
 # Some are just plain annoying (wzzip)
 def RunCommand(command, toastErr):
-	print 'Running:', command
+	print('Running:', command)
 	if toastErr:
 		# Map stderr to a pipe that we ignore
 		p = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -84,9 +85,9 @@ def RunCommand(command, toastErr):
 		# Map stderr to stdout
 		try:
 			p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
-		except OSError, msg:
-			print 'ERROR:', command
-			print 'EXCEPTION:', msg
+		except OSError as msg:
+			print('ERROR:', command)
+			print('EXCEPTION:', msg)
 			raise
 	ReadPipe(sys.stdout, p.stdout)
 
@@ -95,8 +96,8 @@ def GenFile(inputfiles, intermediateDir, targetname, bIncUpdater):
 	for filelist in inputfiles:
 		# The files listed in the list are relative to the filelist location.
 		if not os.access(filelist, os.F_OK):
-			print 'ERROR: "' + filelist + '" does not exist!'
-			print 'Usage:', __doc__
+			print('ERROR: "' + filelist + '" does not exist!')
+			print('Usage:', __doc__)
 			return 1;
 
 	zip = zipfile.ZipFile(os.path.join(intermediateDir, targetname + '.dat'), 'w')
@@ -113,7 +114,7 @@ def GenFile(inputfiles, intermediateDir, targetname, bIncUpdater):
 				if os.access(inputfile, os.F_OK):
 					zip.write(inputfile, filename)
 				else:
-					print 'ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!'
+					print('ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!')
 					return 1
 			else:
 				break
@@ -122,7 +123,7 @@ def GenFile(inputfiles, intermediateDir, targetname, bIncUpdater):
 		if os.access(intermediateDir + r'\..\ARBUpdater.exe', os.F_OK):
 			zip.write(intermediateDir + r'\..\ARBUpdater.exe', 'ARBUpdater.exe')
 		else:
-			print 'ERROR: File "' + intermediateDir + r'\..\ARBUpdater.exe' + '" does not exist!'
+			print('ERROR: File "' + intermediateDir + r'\..\ARBUpdater.exe' + '" does not exist!')
 			return 1
 
 	zip.close()
@@ -134,9 +135,9 @@ def main():
 	inputfiles = set()
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], 'df:x')
-	except getopt.error, msg:
-		print msg
-		print 'Usage:', __doc__
+	except getopt.error as msg:
+		print(msg)
+		print('Usage:', __doc__)
 		return 1
 	for o, a in opts:
 		if '-d' == o:
@@ -146,7 +147,7 @@ def main():
 		elif '-x' == o:
 			bIncUpdater = 0
 	if not len(args) == 3:
-		print 'Usage:', __doc__
+		print('Usage:', __doc__)
 		return 1
 
 	inputfiles.add(args[0])
@@ -154,8 +155,8 @@ def main():
 	targetname = args[2]
 
 	if not os.access(intermediateDir, os.F_OK):
-		print 'ERROR: "' + intermediateDir + '" does not exist!'
-		print 'Usage:', __doc__
+		print('ERROR: "' + intermediateDir + '" does not exist!')
+		print('Usage:', __doc__)
 		return 1;
 
 	rc = 0
@@ -168,7 +169,7 @@ def main():
 			raise
 		lockfile.release()
 	else:
-		print "CompileDatafile is locked"
+		print("CompileDatafile is locked")
 	return rc
 
 

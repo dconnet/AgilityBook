@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2016-06-10 Convert to Python3
 # 2015-07-23 Added vc14 support.
 # 2014-11-17 wix3.9 deprecated -sadv
 # 2014-11-17 Removed .mo files (moved into resource)
@@ -100,7 +101,7 @@ CA_dll = 'arbdll.dll'
 
 def errprint(*args):
 	# Used to print exception messages
-	strings = map(str, args)
+	strings = list(map(str, args))
 	msg = ' '.join(strings)
 	if msg[-1:] != '\n':
 		msg += '\n'
@@ -120,11 +121,11 @@ def RmMinusRF(name):
 			os.rmdir(name)
 		else:
 			if not os.access(name, os.W_OK):
-				os.chmod(name, 0666)
+				os.chmod(name, 0o666)
 			if os.access(name, os.W_OK):
 				try:
 					os.remove(name)
-				except OSError, msg:
+				except OSError as msg:
 					errprint('os.remove:', msg)
 
 
@@ -178,18 +179,19 @@ def getoutputvars(code, version, vcver):
 		outputFile = 'AgilityBook-' + version + '-x64'
 		baseDir = AgilityBookDir + r'\bin\vc' + vcver + 'x64\Release'
 	else:
-		raise Exception, 'Invalid code'
+		raise Exception('Invalid code')
 	return baseDir, outputFile
 
 
 def runcmd(command):
-	print command
+	print(command)
 	(childin, childout) = os.popen4(command)
 	childin.close()
 	while (1):
 		line = childout.readline()
 		if line:
-			print >>sys.stdout, line,
+			line = str.rstrip(line.decode())
+			print(line, file=sys.stdout)
 		else:
 			break
 
@@ -245,7 +247,7 @@ def WriteCode(baseMsi, ver4Dot, code, vcver):
 			installs = 'VC' + vcver + ',x64'
 		else:
 			installs = 'VC' + vcver + ',win32'
-		print >>codes, 'v' + ver4Dot + ',' + d + ',' + prodcode + ',' + UpgradeCode + ',' + installs
+		print('v' + ver4Dot + ',' + d + ',' + prodcode + ',' + UpgradeCode + ',' + installs, file=codes)
 
 
 def GetWxsFiles(extension):
@@ -267,7 +269,7 @@ def CopyCAdll(ver4Line, vcver):
 	baseDir, outputFile = getoutputvars(code32, ver4Line, vcver)
 	arbdll = baseDir + '\\' + CA_dll
 	if not os.access(arbdll, os.F_OK):
-		print arbdll + r' does not exist, MSI skipped'
+		print(arbdll + r' does not exist, MSI skipped')
 		return 0
 	shutil.copy(arbdll, '.')
 	return 1
@@ -276,7 +278,7 @@ def CopyCAdll(ver4Line, vcver):
 def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 	baseDir, outputFile = getoutputvars(code, ver4Line, vcver)
 	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
-		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
+		print(baseDir + r'\AgilityBook.exe does not exist, MSI skipped')
 		return 0
 
 	if os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
@@ -332,7 +334,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 		if not testing:
 			WriteCode(baseMsi, ver4Dot, code, vcver)
 	else:
-		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
+		print(baseDir + r'\AgilityBook.exe does not exist, MSI skipped')
 
 	if tidy:
 		for file in GetWxsFiles('.wixobj'):
@@ -345,7 +347,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 def main():
 	global WiXdir
 	# When WiX is installed, it sets "WIX" to point to the top-level directory
-	if os.environ.has_key('WIX'):
+	if 'WIX' in os.environ:
 		WiXdir = os.environ['WIX'] + r'\bin'
 	# This must be set to a valid Package/@InstallScope value.
 	perUser = "perMachine"
@@ -355,7 +357,7 @@ def main():
 	testing = 0
 	vcver = '10'
 	if 1 == len(sys.argv):
-		print 'Setting /32 /test'
+		print('Setting /32 /test')
 		b32 = 1
 		testing = 1
 	error = 0
@@ -394,11 +396,11 @@ def main():
 			break
 		i += 1
 	if error:
-		print 'Usage:', __doc__
+		print('Usage:', __doc__)
 		return 1
 
 	if not os.access(WiXdir, os.W_OK):
-		print 'ERROR: "' + WiXdir + '" does not exist!'
+		print('ERROR: "' + WiXdir + '" does not exist!')
 		return 1
 
 	if b32 + b64 == 0:

@@ -7,6 +7,7 @@
 #   Help\html\History.html
 #
 # Revision History
+# 2016-06-10 Convert to Python3
 # 2010-01-05 Updated comments and www directory.
 # 2005-01-23 Created
 
@@ -21,7 +22,7 @@ This program should be run from the ...\\AgilityBook\\src directory.
 defAgilityBookWeb = r"\dcon\www\agilityrecordbook"
 
 # This line must exist in any template file.
-gTrigger = "<!-- Just copy the help file's HistoryData.html into here -->\n"
+gTrigger = "<!-- Just copy the help file's HistoryData.html into here -->"
 
 import getopt
 import string
@@ -29,7 +30,7 @@ import sys
 
 def errprint(*args):
 	# Used to print exception messages
-	strings = map(str, args)
+	strings = list(map(str, args))
 	msg = ' '.join(strings)
 	if msg[-1:] != '\n':
 		msg += '\n'
@@ -41,15 +42,17 @@ def GenerateFile(data, inFilename, outFilename):
 	bProcessed = 0
 	while 1:
 		line = fileTemplate.readline()
-		if not line: break
+		if not line:
+			break
+		line = str.rstrip(line)
 		if line == gTrigger:
 			bProcessed = 1
 			i = 0
 			while i < len(data):
-				print >>fileOutput, data[i],
+				print(data[i], file=fileOutput)
 				i = i + 1
 		else:
-			print >>fileOutput, line,
+			print(line, file=fileOutput)
 	fileTemplate.close()
 	fileOutput.close()
 	if not bProcessed:
@@ -62,7 +65,7 @@ def main():
 	rawData = r"Help\html\HistoryData.html"
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], "hwp:")
-	except getopt.error, msg:
+	except getopt.error as msg:
 		errprint(msg)
 		errprint("Usage: ", __doc__)
 		return 1

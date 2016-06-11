@@ -4,6 +4,7 @@
 # Requires msgcat/msgfmt (gettext) in PATH
 #
 # Revision History
+# 2016-06-10 Convert to Python3
 # 2016-03-28 Cleanup lockfile on exception
 # 2015-10-29 Put --use-fuzzy back, remove --check-format.
 # 2014-11-16 Separated PO/MO language from DAT file generation.
@@ -50,7 +51,7 @@ class LockFile:
 	def acquire(self):
 		try:
 			self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
-			os.write(self.m_fd, "%d" % self.m_pid)
+			os.write(self.m_fd, b"%d" % self.m_pid)
 			return 1
 		except OSError:
 			self.m_fd = None
@@ -72,7 +73,8 @@ def ReadPipe(logFile, cmd):
 	while (1):
 		line = cmd.readline()
 		if line:
-			print >>logFile, line,
+			line = str.rstrip(line.decode())
+			print(line, file=logFile)
 		else:
 			break
 
@@ -80,7 +82,7 @@ def ReadPipe(logFile, cmd):
 # Some commands generate messages on stderr that are interesting.
 # Some are just plain annoying (wzzip)
 def RunCommand(command, toastErr):
-	print 'Running:', command
+	print('Running:', command)
 	if toastErr:
 		# Map stderr to a pipe that we ignore
 		p = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -93,11 +95,11 @@ def RunCommand(command, toastErr):
 # wxBaseName: base of wx ('trunk', 'wxWidgets-2.8.12', 'wxWidgets-3.0.2', etc)
 def CompilePoFiles(wxBaseName, sourceDir, firstFile, outputDir, targetname, bDebug):
 	if not os.access(sourceDir, os.F_OK):
-		print sourceDir, 'does not exist'
+		print(sourceDir, 'does not exist')
 		return False
 
 	if not os.access(outputDir, os.F_OK):
-		print outputDir, 'does not exist'
+		print(outputDir, 'does not exist')
 		return False
 
 	langDir = os.path.join(outputDir, r'lang')
@@ -134,19 +136,19 @@ def main():
 	bDebug = 0
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], 'd')
-	except getopt.error, msg:
-		print msg
-		print 'Usage:', __doc__
+	except getopt.error as msg:
+		print(msg)
+		print('Usage:', __doc__)
 		return 1
 	for o, a in opts:
 		if '-d' == o:
 			bDebug = 1
 	if not len(args) == 4:
-		print 'Usage:', __doc__
+		print('Usage:', __doc__)
 		return 1
 
-	if not os.environ.has_key('WXWIN'):
-		print 'ERROR: WXWIN environment variable is not set'
+	if 'WXWIN' not in os.environ:
+		print('ERROR: WXWIN environment variable is not set')
 		return 1
 	wxBaseName = os.path.basename(os.environ['WXWIN'])
 
@@ -163,7 +165,7 @@ def main():
 			raise
 		lockfile.release()
 	else:
-		print "CompileDatafile is locked"
+		print("CompileDatafile is locked")
 	return rc
 
 

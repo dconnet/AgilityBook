@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2016-06-10 Convert to Python3
 # 2016-02-29 Changed to wx3.1 as default.
 # 2015-09-10 Added -c (configuration) option.
 # 2014-11-17 Add VC12 support, restructured for less code duplication.
@@ -44,7 +45,7 @@ testing = False
 
 def errprint(*args):
 	# Used to print exception messages
-	strings = map(str, args)
+	strings = list(map(str, args))
 	msg = ' '.join(strings)
 	if msg[-1:] != '\n':
 		msg += '\n'
@@ -70,11 +71,11 @@ def RmMinusRF(name):
 			os.rmdir(name)
 		else:
 			if not os.access(name, os.W_OK):
-				os.chmod(name, 0666)
+				os.chmod(name, 0o666)
 			if os.access(name, os.W_OK):
 				try:
 					os.remove(name)
-				except OSError, msg:
+				except OSError as msg:
 					errprint('os.remove:', msg)
 
 
@@ -82,12 +83,12 @@ def RunCmds(cmds):
 	filename = 'runcmds.bat'
 	bat = open(filename, 'w')
 	if testing:
-		print >>bat, '@echo off'
+		print('@echo off', file=bat)
 		for cmd in cmds:
-			print >>bat, 'echo ' + cmd
+			print('echo ' + cmd, file=bat)
 	else:
 		for cmd in cmds:
-			print >>bat, cmd
+			print(cmd, file=bat)
 	bat.close()
 	newenv = os.environ.copy()
 	proc = subprocess.Popen(filename, env=newenv)
@@ -100,11 +101,11 @@ def GetRegString(hkey, path, value):
 	key = None
 	try:
 		key = win32api.RegOpenKeyEx(hkey, path, 0, win32con.KEY_READ)
-	except Exception, msg:
+	except Exception as msg:
 		return ""
 	try:
 		return win32api.RegQueryValueEx(key, value)[0]
-	except Exception, msg:
+	except Exception as msg:
 		return ""
 
 
@@ -149,7 +150,7 @@ def AddCompiler(compilers, c):
 		return False
 
 	if not os.access(baseDir, os.F_OK) or not os.access(testFile, os.F_OK):
-		print 'ERROR: "' + baseDir + '" does not exist'
+		print('ERROR: "' + baseDir + '" does not exist')
 		return False
 	compilers.add(c)
 	return True
@@ -159,16 +160,16 @@ def main():
 	# ProgramFiles must point to the native one since the SDK installs there.
 	global ProgramFiles, testing
 	bit64on64 = False
-	if os.environ.has_key('ProgramFiles'):
+	if 'ProgramFiles' in os.environ:
 		ProgramFiles = os.environ['ProgramFiles']
 	# 64bit on 64bit
-	if os.environ.has_key('PROCESSOR_ARCHITECTURE') and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
+	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
 		bit64on64 = True
 	# 64bit on Wow64 (32bit cmd shell spawned from msdev)
 	#if os.environ.has_key('PROCESSOR_ARCHITEW6432') and os.environ['PROCESSOR_ARCHITEW6432'] == 'AMD64':
 
 	wxwin = ''
-	if os.environ.has_key('WXBASE'):
+	if 'WXBASE' in os.environ:
 		wxwin= os.environ['WXBASE'] + wxBranch
 
 	compilers = set()
@@ -177,9 +178,9 @@ def main():
 	clean = False
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], 'w:b:c:t')
-	except getopt.error, msg:
-		print msg
-		print 'Usage:', __doc__
+	except getopt.error as msg:
+		print(msg)
+		print('Usage:', __doc__)
 		return 1
 	for o, a in opts:
 		if '-w' == o:
@@ -195,7 +196,7 @@ def main():
 				updateBuildNumber = False
 				clean = False
 			else:
-				print 'Usage:', __doc__
+				print('Usage:', __doc__)
 				return 1
 		elif '-c' == o:
 			if 'release' == a:
@@ -203,22 +204,22 @@ def main():
 			elif 'debug' == a:
 				config = 'Debug'
 			else:
-				print 'Usage:', __doc__
+				print('Usage:', __doc__)
 				return 1
 		elif '-t' == o:
 			testing = True
 
 	for c in args:
 		if not AddCompiler(compilers, c):
-			print 'Unknown compiler:', c
-			print 'Usage:', __doc__
+			print('Unknown compiler:', c)
+			print('Usage:', __doc__)
 			return 1
 
 	if 0 == len(compilers):
 		AddCompiler(compilers, 'vc10')
 
 	if len(wxwin) == 0:
-		print 'Usage:', __doc__
+		print('Usage:', __doc__)
 		return 1
 	os.environ['WXWIN'] = wxwin
 
@@ -239,7 +240,7 @@ def main():
 		if compiler == 'vc10':
 			vc10Base = GetVSDir("10.0")
 			if not os.access(vc10Base, os.F_OK):
-				print 'ERROR: "' + vc10Base + '" does not exist'
+				print('ERROR: "' + vc10Base + '" does not exist')
 				return 1
 			PlatformTools = '100'
 			if useVC10SDK:
@@ -274,7 +275,7 @@ def main():
 		elif compiler == 'vc11':
 			vc11Base = GetVSDir("11.0")
 			if not os.access(vc11Base, os.F_OK):
-				print 'ERROR: "' + vc11Base + '" does not exist'
+				print('ERROR: "' + vc11Base + '" does not exist')
 				return 1
 			PlatformTools = '110'
 			setvcvars = vc11Base + r'\VC\vcvarsall.bat'
@@ -295,7 +296,7 @@ def main():
 		elif compiler == 'vc12':
 			vc12Base = GetVSDir("12.0")
 			if not os.access(vc12Base, os.F_OK):
-				print 'ERROR: "' + vc12Base + '" does not exist'
+				print('ERROR: "' + vc12Base + '" does not exist')
 				return 1
 			PlatformTools = '120'
 			setvcvars = vc12Base + r'\VC\vcvarsall.bat'
@@ -316,7 +317,7 @@ def main():
 		elif compiler == 'vc14':
 			vc14Base = GetVSDir("14.0")
 			if not os.access(vc14Base, os.F_OK):
-				print 'ERROR: "' + vc14Base + '" does not exist'
+				print('ERROR: "' + vc14Base + '" does not exist')
 				return 1
 			PlatformTools = '140'
 			setvcvars = vc14Base + r'\VC\vcvarsall.bat'
@@ -335,21 +336,21 @@ def main():
 				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=x64')
 
 		if not os.access(setvcvars, os.F_OK):
-			print 'ERROR: "' + setvcvars + '" does not exist'
+			print('ERROR: "' + setvcvars + '" does not exist')
 			return 1
 
 		if clean:
 			RmMinusRF('../../../bin/vc' + PlatformTools + 'Win32')
 		RunCmds(cmds32)
 		if not testing and not os.access('../../../bin/vc' + PlatformTools + 'Win32/' + config + '/AgilityBook.exe', os.F_OK):
-			print 'ERROR: Compile failed, bailing out'
+			print('ERROR: Compile failed, bailing out')
 			return 1
 
 		if clean:
 			RmMinusRF('../../../bin/vc' + PlatformTools + 'x64')
 		RunCmds(cmds64)
 		if not testing and not os.access('../../../bin/vc' + PlatformTools + 'x64/' + config + '/AgilityBook.exe', os.F_OK):
-			print 'ERROR: Compile failed, bailing out'
+			print('ERROR: Compile failed, bailing out')
 			return 1
 
 	return 0

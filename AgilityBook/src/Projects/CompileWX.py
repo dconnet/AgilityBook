@@ -11,6 +11,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2016-06-10 Convert to Python3
 # 2015-10-11 Added -r option.
 # 2015-04-24 Added vc14.
 # 2013-10-14 Allow x64-on-x64 compilation to fall back to x86_amd (VCExpress)
@@ -76,11 +77,11 @@ def GetRegString(hkey, path, value):
 	key = None
 	try:
 		key = win32api.RegOpenKeyEx(hkey, path, 0, win32con.KEY_READ)
-	except Exception, msg:
+	except Exception as msg:
 		return ""
 	try:
 		return win32api.RegQueryValueEx(key, value)[0]
-	except Exception, msg:
+	except Exception as msg:
 		return ""
 
 
@@ -113,17 +114,17 @@ def AddCompiler(compilers, c):
 
 	if c == 'vc6':
 		if useUnicode:
-			print 'ERROR: VC6 does not do UNICODE'
+			print('ERROR: VC6 does not do UNICODE')
 			return False
 		if useStatic:
-			print 'ERROR: VC6 does not do static libraries'
+			print('ERROR: VC6 does not do static libraries')
 			return False
 		baseDir = vc6Base
 		testFile = baseDir + r'\VC98\bin\vcvars32.bat'
 
 	elif c == 'vc7':
 		if useUnicode:
-			print 'ERROR: VC7 does not do UNICODE'
+			print('ERROR: VC7 does not do UNICODE')
 			return False
 		vc7Base = GetVSDir("7.1")
 		baseDir = vc7Base
@@ -143,7 +144,7 @@ def AddCompiler(compilers, c):
 		vc9Base = GetVSDir("9.0")
 		if not useUnicode:
 			# Well, it might. I don't.
-			print 'ERROR: VC9x64 does not do MBCS'
+			print('ERROR: VC9x64 does not do MBCS')
 			return False
 		baseDir = vc9Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
@@ -156,7 +157,7 @@ def AddCompiler(compilers, c):
 	elif c == 'vc10x64':
 		vc10Base = GetVSDir("10.0")
 		if not useUnicode:
-			print 'ERROR: VC10x64 does not do MBCS'
+			print('ERROR: VC10x64 does not do MBCS')
 			return False
 		baseDir = vc10Base
 		# Doesn't matter what the "current" sdk is. We must have 7.1.
@@ -173,7 +174,7 @@ def AddCompiler(compilers, c):
 	elif c == 'vc11x64':
 		vc11Base = GetVSDir("11.0")
 		if not useUnicode:
-			print 'ERROR: VC11x64 does not do MBCS'
+			print('ERROR: VC11x64 does not do MBCS')
 			return False
 		baseDir = vc11Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
@@ -186,7 +187,7 @@ def AddCompiler(compilers, c):
 	elif c == 'vc12x64':
 		vc12Base = GetVSDir("12.0")
 		if not useUnicode:
-			print 'ERROR: VC12x64 does not do MBCS'
+			print('ERROR: VC12x64 does not do MBCS')
 			return False
 		baseDir = vc12Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
@@ -199,7 +200,7 @@ def AddCompiler(compilers, c):
 	elif c == 'vc14x64':
 		vc14Base = GetVSDir("14.0")
 		if not useUnicode:
-			print 'ERROR: VC14x64 does not do MBCS'
+			print('ERROR: VC14x64 does not do MBCS')
 			return False
 		baseDir = vc14Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
@@ -208,7 +209,7 @@ def AddCompiler(compilers, c):
 		return False
 
 	if not os.access(baseDir, os.F_OK) or not os.access(testFile, os.F_OK):
-		print 'ERROR: "' + baseDir + '" does not exist'
+		print('ERROR: "' + baseDir + '" does not exist')
 		return False
 	compilers.add(c)
 	return True
@@ -259,14 +260,14 @@ def main():
 	global compileIt, hasPrefix, useStatic, useUnicode
 
 	bit64on64 = False
-	if os.environ.has_key('ProgramFiles'):
+	if 'ProgramFiles' in os.environ:
 		ProgramFiles = os.environ['ProgramFiles']
 	# 64bit on 64bit
-	if os.environ.has_key('PROCESSOR_ARCHITECTURE') and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
+	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
 		bit64on64 = True
 		ProgramFiles = r'c:\Program Files (x86)'
 	# 64bit on Wow64 (32bit cmd shell spawned from msdev)
-	if os.environ.has_key('PROCESSOR_ARCHITEW6432') and os.environ['PROCESSOR_ARCHITEW6432'] == 'AMD64':
+	if 'PROCESSOR_ARCHITEW6432' in os.environ and os.environ['PROCESSOR_ARCHITEW6432'] == 'AMD64':
 		ProgramFiles = r'c:\Program Files (x86)'
 
 	wxwin = ''
@@ -276,9 +277,9 @@ def main():
 	release = True
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], 'w:eadms:r:')
-	except getopt.error, msg:
-		print msg
-		print 'Usage:', __doc__
+	except getopt.error as msg:
+		print(msg)
+		print('Usage:', __doc__)
 		return 1
 	for o, a in opts:
 		if '-e' == o:
@@ -302,28 +303,28 @@ def main():
 				release = False
 				debug = True
 			else:
-				print 'ERROR: Unknown option for -r: Must be "release" or "debug"'
-				print 'Usage:', __doc__
+				print('ERROR: Unknown option for -r: Must be "release" or "debug"')
+				print('Usage:', __doc__)
 				return 1
 
 	# Made -w required since normal WXWIN rarely needs rebuilding.
 	if len(wxwin) == 0:
-		print 'ERROR: -w option not specified'
-		print 'Usage:', __doc__
+		print('ERROR: -w option not specified')
+		print('Usage:', __doc__)
 		return 1
 	os.environ['WXWIN'] = wxwin
 
-	if not os.environ.has_key('WXWIN'):
-		print 'ERROR: WXWIN environment variable is not set'
+	if 'WXWIN' not in os.environ:
+		print('ERROR: WXWIN environment variable is not set')
 		return 1
 
 	if not os.access(os.environ['WXWIN'], os.F_OK):
-		print 'ERROR: ' + os.environ['WXWIN'] + ' doesn\'t exist'
+		print('ERROR: ' + os.environ['WXWIN'] + ' doesn\'t exist')
 		return 1
 
 	wxInclude = os.environ['WXWIN'] + r'\include\wx\version.h'
 	if not os.access(wxInclude, os.F_OK):
-		print 'ERROR: ' + wxInclude + ' doesn\'t exist'
+		print('ERROR: ' + wxInclude + ' doesn\'t exist')
 		return 1
 	version = getversion(wxInclude)
 	if version[0] == '2' and version[1] == '8':
@@ -335,12 +336,12 @@ def main():
 
 	for c in args:
 		if not AddCompiler(compilers, c):
-			print 'Unknown compiler:', c
-			print 'Usage:', __doc__
+			print('Unknown compiler:', c)
+			print('Usage:', __doc__)
 			return 1
 
 	if 0 == len(compilers):
-		print 'Usage:', __doc__
+		print('Usage:', __doc__)
 		return 1
 
 	vendor = ''
@@ -360,7 +361,7 @@ def main():
 		newenv = os.environ.copy()
 
 		bat = open(tmpfile, 'w')
-		print >>bat, 'title ' + compiler
+		print('title ' + compiler, file=bat)
 
 		# rel will be called first, so if no different, just set that.
 		setenv_rel = ''
@@ -520,30 +521,30 @@ def main():
 		if 0 < len(samples):
 			for s in samples:
 				if os.access(os.environ['WXWIN'] + '\\samples\\' + s, os.F_OK):
-					print >>bat, 'cd /d "' + os.environ['WXWIN'] + '\\samples\\' + s + '"'
+					print('cd /d "' + os.environ['WXWIN'] + '\\samples\\' + s + '"', file=bat)
 					if release:
-						print >>bat, setenv_rel
-						print >>bat, build_rel + ' ' + build_flags
+						print(setenv_rel, file=bat)
+						print(build_rel + ' ' + build_flags, file=bat)
 					if debug:
 						if 0 < len(setenv_dbg):
-							print >>bat, setenv_dbg
+							print(setenv_dbg, file=bat)
 						elif not release:
-							print >>bat, setenv_rel
-						print >>bat, build_dbg + ' ' + build_flags
+							print(setenv_rel, file=bat)
+						print(build_dbg + ' ' + build_flags, file=bat)
 				else:
-					print 'ERROR: sample "' + s + '" does not exist'
+					print('ERROR: sample "' + s + '" does not exist')
 		else:
 			if release:
-				print >>bat, setenv_rel
-				print >>bat, build_rel + ' ' + build_flags
+				print(setenv_rel, file=bat)
+				print(build_rel + ' ' + build_flags, file=bat)
 			if debug:
 				if 0 < len(setenv_dbg):
-					print >>bat, setenv_dbg
+					print(setenv_dbg, file=bat)
 				elif not release:
-					print >>bat, setenv_rel
-				print >>bat, build_dbg + ' ' + build_flags
+					print(setenv_rel, file=bat)
+				print(build_dbg + ' ' + build_flags, file=bat)
 		if resetColor:
-			print >>bat, 'color 07'
+			print('color 07', file=bat)
 
 		bat.close()
 		if compileIt:

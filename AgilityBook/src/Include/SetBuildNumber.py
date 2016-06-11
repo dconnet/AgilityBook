@@ -3,6 +3,7 @@
 #
 # This assumes the current directory is 'Include'
 #
+# 2016-06-10 Convert to Python3
 # 2016-03-28 Cleanup lockfile on exception
 # 2012-09-24 Sync copyright in configure.in with VersionNumber.h
 # 2012-07-18 Change build number from days-since-birth to sequential.
@@ -32,7 +33,7 @@ class LockFile:
 	def acquire(self):
 		try:
 			self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
-			os.write(self.m_fd, "%d" % self.m_pid)
+			os.write(self.m_fd, b"%d" % self.m_pid)
 			return 1
 		except OSError:
 			self.m_fd = None
@@ -58,50 +59,50 @@ def doWork():
 	vBldARB = '0'
 	ver = open('VersionNumber.h', 'r')
 	verOut = open('VersionNumber.h.new', 'w')
-	while 1:
+	while True:
 		line = ver.readline()
-		if line:
-			defineCopy = '#define ARB_VERSION_LegalCopyright'
-			defineMaj = '#define ARB_VER_MAJOR'
-			defineMin = '#define ARB_VER_MINOR'
-			defineDot = '#define ARB_VER_DOT'
-			defineBld = '#define ARB_VER_BUILD'
-			pos = line.find(defineCopy)
-			if 0 == pos:
-				copyRight = string.strip(line[pos+len(defineCopy):])
-			pos = line.find(defineMaj)
-			if 0 == pos:
-				vMajARB = string.strip(line[pos+len(defineMaj):])
-			pos = line.find(defineMin)
-			if 0 == pos:
-				vMinARB = string.strip(line[pos+len(defineMin):])
-			pos = line.find(defineDot)
-			if 0 == pos:
-				vDotARB = string.strip(line[pos+len(defineDot):])
-			pos = line.find(defineBld)
-			if 0 == pos:
-				vBldOld = string.strip(line[pos+len(defineBld):])
-				vBldARB = str(int(vBldOld) + 1)
-				update = 1
-				print >>verOut, defineBld + '\t\t\t\t\t' + vBldARB
-				#vBldARB = str((datetime.date.today() - datetime.date(2002,12,28)).days)
-				#if not vBldOld == vBldARB:
-				#	update = 1
-				#	print >>verOut, defineBld + '\t\t\t\t\t' + vBldARB
-				#else:
-				#	print >>verOut, line,
-			else:
-				print >>verOut, line,
-		else:
+		if not line:
 			break
+		line = str.rstrip(line)
+		defineCopy = '#define ARB_VERSION_LegalCopyright'
+		defineMaj = '#define ARB_VER_MAJOR'
+		defineMin = '#define ARB_VER_MINOR'
+		defineDot = '#define ARB_VER_DOT'
+		defineBld = '#define ARB_VER_BUILD'
+		pos = line.find(defineCopy)
+		if 0 == pos:
+			copyRight = str.strip(line[pos+len(defineCopy):])
+		pos = line.find(defineMaj)
+		if 0 == pos:
+			vMajARB = str.strip(line[pos+len(defineMaj):])
+		pos = line.find(defineMin)
+		if 0 == pos:
+			vMinARB = str.strip(line[pos+len(defineMin):])
+		pos = line.find(defineDot)
+		if 0 == pos:
+			vDotARB = str.strip(line[pos+len(defineDot):])
+		pos = line.find(defineBld)
+		if 0 == pos:
+			vBldOld = str.strip(line[pos+len(defineBld):])
+			vBldARB = str(int(vBldOld) + 1)
+			update = 1
+			print(defineBld + '\t\t\t\t\t' + vBldARB, file=verOut)
+			#vBldARB = str((datetime.date.today() - datetime.date(2002,12,28)).days)
+			#if not vBldOld == vBldARB:
+			#	update = 1
+			#	print >>verOut, defineBld + '\t\t\t\t\t' + vBldARB
+			#else:
+			#	print >>verOut, line,
+		else:
+			print(line, file=verOut)
 	ver.close()
 	verOut.close()
 	if update:
-		print "VersionNumber.h updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB
+		print("VersionNumber.h updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
 		os.remove('VersionNumber.h')
 		os.rename('VersionNumber.h.new', 'VersionNumber.h')
 	else:
-		print "VersionNumber.h is up-to-date"
+		print("VersionNumber.h is up-to-date")
 		os.remove('VersionNumber.h.new')
 
 	update = 0
@@ -109,33 +110,33 @@ def doWork():
 	confOut = open('../../configure.in.new', 'w')
 	while 1:
 		line = conf.readline()
-		if line:
-			if 0 == line.find('AC_INIT('):
-				newLine = 'AC_INIT(Agility Record Book, ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB + ', [help@agilityrecordbook.com])\n'
-				if not line == newLine:
-					update = 1
-					print >>confOut, newLine,
-				else:
-					print >>confOut, line,
-			elif 0 == line.find('AC_SUBST(PACKAGE_COPYRIGHT,'):
-				newLine = 'AC_SUBST(PACKAGE_COPYRIGHT, ' + copyRight + ')\n'
-				if not line == newLine:
-					update = 1
-					print >>confOut, newLine,
-				else:
-					print >>confOut, line,
-			else:
-				print >>confOut, line,
-		else:
+		if not line:
 			break
+		line = str.rstrip(line)
+		if 0 == line.find('AC_INIT('):
+			newLine = 'AC_INIT(Agility Record Book, ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB + ', [help@agilityrecordbook.com])'
+			if not line == newLine:
+				update = 1
+				print(newLine, file=confOut)
+			else:
+				print(line, file=confOut)
+		elif 0 == line.find('AC_SUBST(PACKAGE_COPYRIGHT,'):
+			newLine = 'AC_SUBST(PACKAGE_COPYRIGHT, ' + copyRight + ')'
+			if not line == newLine:
+				update = 1
+				print(newLine, file=confOut)
+			else:
+				print(line, file=confOut)
+		else:
+			print(line, file=confOut)
 	conf.close()
 	confOut.close()
 	if update:
-		print "../../configure.in updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB
+		print("../../configure.in updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
 		os.remove('../../configure.in')
 		os.rename('../../configure.in.new', '../../configure.in')
 	else:
-		print "../../configure.in is up-to-date"
+		print("../../configure.in is up-to-date")
 		os.remove('../../configure.in.new')
 
 	return 0
@@ -152,7 +153,7 @@ if __name__ == '__main__':
 				raise
 			lockfile.release()
 		else:
-			print "SetBuildNumber is locked"
+			print("SetBuildNumber is locked")
 	else:
-		print "SetBuildNumber skipped"
+		print("SetBuildNumber skipped")
 	sys.exit(0)
