@@ -2,7 +2,7 @@
 # Above line is for python
 #
 # Revision History
-# 2016-06-10 Convert to Python3
+# 2016-06-10 Convert to Python3, cleaned up error checks.
 # 2016-02-29 Changed to wx3.1 as default.
 # 2015-09-10 Added -c (configuration) option.
 # 2014-11-17 Add VC12 support, restructured for less code duplication.
@@ -34,9 +34,6 @@ import subprocess
 import sys
 import win32api
 import win32con
-
-ProgramFiles = r'c:\Program Files'
-useVC10SDK = False
 
 # ARB is officially released using this branch. This is located under $WXBASE.
 wxBranch = r'\wxWidgets-3.1.0'
@@ -122,51 +119,45 @@ def GetVSDir(version):
 
 
 def AddCompiler(compilers, c):
-	global vc10Base, vc11Base, vc12Base, vc14Base
 	baseDir = ''
 	testFile = ''
 
 	if c == 'vc10':
-		vc10Base = GetVSDir("10.0")
-		baseDir = vc10Base
+		baseDir = GetVSDir("10.0")
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 
 	elif c == 'vc11':
-		vc11Base = GetVSDir("11.0")
-		baseDir = vc11Base
+		baseDir = GetVSDir("11.0")
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 
 	elif c == 'vc12':
-		vc12Base = GetVSDir("12.0")
-		baseDir = vc12Base
+		baseDir = GetVSDir("12.0")
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 
 	elif c == 'vc14':
-		vc14Base = GetVSDir("14.0")
-		baseDir = vc14Base
+		baseDir = GetVSDir("14.0")
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 
 	else:
+		print('Unknown compiler:', c)
 		return False
 
 	if not os.access(baseDir, os.F_OK) or not os.access(testFile, os.F_OK):
-		print('ERROR: "' + baseDir + '" does not exist')
+		if len(baseDir) == 0:
+			print('Unknown compiler:', c)
+		else:
+			print('ERROR: "' + baseDir + '" does not exist')
 		return False
+
 	compilers.add(c)
 	return True
 
 
 def main():
-	# ProgramFiles must point to the native one since the SDK installs there.
-	global ProgramFiles, testing
 	bit64on64 = False
-	if 'ProgramFiles' in os.environ:
-		ProgramFiles = os.environ['ProgramFiles']
 	# 64bit on 64bit
 	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
 		bit64on64 = True
-	# 64bit on Wow64 (32bit cmd shell spawned from msdev)
-	#if os.environ.has_key('PROCESSOR_ARCHITEW6432') and os.environ['PROCESSOR_ARCHITEW6432'] == 'AMD64':
 
 	wxwin = ''
 	if 'WXBASE' in os.environ:
@@ -211,16 +202,16 @@ def main():
 
 	for c in args:
 		if not AddCompiler(compilers, c):
-			print('Unknown compiler:', c)
 			print('Usage:', __doc__)
 			return 1
 
 	if 0 == len(compilers):
 		AddCompiler(compilers, 'vc10')
 
-	if len(wxwin) == 0:
+	if 0 == len(compilers) or len(wxwin) == 0:
 		print('Usage:', __doc__)
 		return 1
+
 	os.environ['WXWIN'] = wxwin
 
 	if updateBuildNumber:
@@ -243,34 +234,20 @@ def main():
 				print('ERROR: "' + vc10Base + '" does not exist')
 				return 1
 			PlatformTools = '100'
-			if useVC10SDK:
-				setvcvars = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd'
-				cmds32 = (
-					r'title VC10 ' + config + ' Win32',
-					r'cd ..\VC10',
-					r'call "' + setvcvars + r'" /' + config + ' /x86 /xp',
-					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=Win32')
-				cmds64 = (
-					r'title VC10 ' + config + ' x64',
-					r'cd ..\VC10',
-					r'call "' + setvcvars + r'" /' + config + ' /x64 /xp',
-					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=x64',
-					r'color 07')
-			else:
-				setvcvars = vc10Base + r'\VC\vcvarsall.bat'
-				cmds32 = (
-					r'title VC10 ' + config + ' Win32',
-					r'cd ..\VC10',
-					r'call "' + setvcvars + r'" x86',
-					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=Win32')
-				envTarget = 'x86_amd64'
-				if bit64on64:
-					envTarget = 'amd64'
-				cmds64 = (
-					r'title VC10 ' + config + ' x64',
-					r'cd ..\VC10',
-					r'call "' + setvcvars + r'" ' + envTarget,
-					r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=x64')
+			setvcvars = vc10Base + r'\VC\vcvarsall.bat'
+			cmds32 = (
+				r'title VC10 ' + config + ' Win32',
+				r'cd ..\VC10',
+				r'call "' + setvcvars + r'" x86',
+				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=Win32')
+			envTarget = 'x86_amd64'
+			if bit64on64:
+				envTarget = 'amd64'
+			cmds64 = (
+				r'title VC10 ' + config + ' x64',
+				r'cd ..\VC10',
+				r'call "' + setvcvars + r'" ' + envTarget,
+				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=x64')
 
 		elif compiler == 'vc11':
 			vc11Base = GetVSDir("11.0")
