@@ -77,6 +77,7 @@ def RmMinusRF(name):
 
 
 def RunCmds(cmds):
+	global testing
 	filename = 'runcmds.bat'
 	bat = open(filename, 'w')
 	if testing:
@@ -154,6 +155,7 @@ def AddCompiler(compilers, c):
 
 
 def main():
+	global testing
 	bit64on64 = False
 	# 64bit on 64bit
 	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':

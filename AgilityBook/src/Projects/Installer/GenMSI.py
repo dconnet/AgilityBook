@@ -65,6 +65,7 @@ import os
 import shutil
 import stat
 import string
+import subprocess
 import sys
 
 # Where top-level AgilityBook directory is relative to this script.
@@ -183,17 +184,20 @@ def getoutputvars(code, version, vcver):
 	return baseDir, outputFile
 
 
-def runcmd(command):
-	print(command)
-	(childin, childout) = os.popen4(command)
-	childin.close()
+def ReadPipe(logFile, cmd):
 	while (1):
-		line = childout.readline()
+		line = cmd.readline()
 		if line:
 			line = str.rstrip(line.decode())
-			print(line, file=sys.stdout)
+			print(line, file=logFile)
 		else:
 			break
+
+
+def runcmd(command):
+	print(command)
+	p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+	ReadPipe(sys.stdout, p.stdout)
 
 
 # This is the old WiSubStg.vbs script
@@ -218,7 +222,7 @@ def WiSubStg(baseMsi, langId):
 def WiLangId(baseMsi, sumInfoStream):
 	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_TRANSACT)
 	sumInfo = database.GetSummaryInformation(1)
-	template = sumInfo.GetProperty(7)
+	template = sumInfo.GetProperty(7).decode()
 	iDelim = template.find(';')
 	platform = ';'
 	if 0 <= iDelim:
@@ -327,6 +331,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 				if processing > 1:
 					if os.access(basename + '.msi', os.F_OK):
 						os.remove(basename + '.msi')
+
 		if processing > 1:
 			WiLangId(baseMsi, sumInfoStream)
 		if tidy:
