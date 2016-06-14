@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-14 Add support for named/speedpt lifetime points.
  * 2016-01-14 Fix initial control layout.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
@@ -35,6 +36,11 @@
 #endif
 
 
+BEGIN_EVENT_TABLE(CDlgConfigTitlePoints, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgConfigTitlePoints::OnOk)
+END_EVENT_TABLE()
+
+
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		ARBConfigVenuePtr inVenue,
 		double inValue, // Faults or Place
@@ -48,6 +54,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_TypeNormal(inTypeNormal)
 	, m_textValue(nullptr)
 	, m_ctrlValue(nullptr)
+	, m_ctrlSpeedPts(nullptr)
 	, m_textPoints(nullptr)
 	, m_ctrlPoints(nullptr)
 	, m_ctrlType(nullptr)
@@ -56,6 +63,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_ctrlLifetimeName(nullptr)
 	, m_Faults(inValue)
 	, m_Place(static_cast<short>(inValue))
+	, m_bSpeed(false)
 	, m_Points(inPoints)
 	, m_LifetimeName()
 {
@@ -65,7 +73,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		ARBConfigVenuePtr inVenue,
-		wxString const& inLifetimeName,
+		ARBConfigLifetimePointsPtr inLifetime,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)
@@ -73,16 +81,18 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_TypeNormal(ePointsTypeNormal)
 	, m_textValue(nullptr)
 	, m_ctrlValue(nullptr)
+	, m_ctrlSpeedPts(nullptr)
 	, m_textPoints(nullptr)
 	, m_ctrlPoints(nullptr)
 	, m_ctrlType(nullptr)
 	, m_ctrlTypeNormal(nullptr)
 	, m_textLifetimeName(nullptr)
 	, m_ctrlLifetimeName(nullptr)
-	, m_Faults(0)
+	, m_Faults(inLifetime->GetFaults())
 	, m_Place(0)
-	, m_Points(0)
-	, m_LifetimeName(inLifetimeName)
+	, m_bSpeed(inLifetime->UseSpeedPts())
+	, m_Points(inLifetime->GetPoints())
+	, m_LifetimeName(inLifetime->GetName())
 {
 	Init(pParent);
 }
@@ -104,7 +114,7 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 
 	m_ctrlValue = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0);
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0);
 	if (eTitlePlacement == m_Type)
 		m_ctrlValue->SetValidator(CGenericValidator(&m_Place));
 	else
@@ -117,6 +127,14 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 		m_ctrlValue->Hide();
 	}
 
+	m_ctrlSpeedPts = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_TITLEPTS_SPEEDPTS"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bSpeed));
+	BIND_OR_CONNECT_CTRL(m_ctrlSpeedPts, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigTitlePoints::OnUseSpeedPoints);
+	m_ctrlSpeedPts->SetHelpText(_("HIDC_CONFIG_TITLEPTS_SPEEDPTS"));
+	m_ctrlSpeedPts->SetToolTip(_("HIDC_CONFIG_TITLEPTS_SPEEDPTS"));
+
 	m_textPoints = new wxStaticText(this, wxID_ANY,
 		_("IDC_CONFIG_TITLEPTS_POINTS"),
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -124,7 +142,7 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 
 	m_ctrlPoints = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
 		CGenericValidator(&m_Points));
 	m_ctrlPoints->SetHelpText(_("HIDC_CONFIG_TITLEPTS_POINTS"));
 	m_ctrlPoints->SetToolTip(_("HIDC_CONFIG_TITLEPTS_POINTS"));
@@ -133,6 +151,8 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 		m_textPoints->Hide();
 		m_ctrlPoints->Hide();
 	}
+	else
+		m_ctrlPoints->Enable(!m_bSpeed);
 
 	wxArrayString types;
 	types.Add(_("IDS_TITLEPOINT_NORMAL"));
@@ -166,16 +186,15 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 	m_textLifetimeName->Wrap(-1);
 
 #pragma PRAGMA_TODO(lifetime name)
-	// I think this should only be existing names.
+	// Need control to set points or speed-pts for earned
 	// Need new dialog to manage names (add/delete/rename)
 	m_ctrlLifetimeName = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
+		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT,
 		CTrimValidator(&m_LifetimeName, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlLifetimeName->SetHelpText(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
 	m_ctrlLifetimeName->SetToolTip(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
 
-	wxArrayString choices;
 	for (ARBConfigLifetimeNameList::iterator iter = m_Venue->GetLifetimeNames().begin();
 		iter != m_Venue->GetLifetimeNames().end();
 		++iter)
@@ -188,13 +207,19 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 			str = _("IDS_TITLEPOINT_LIFETIME_NAME");
 		}
 		int index = m_ctrlLifetimeName->Append(str);
-		choices.Add(str);
+		m_ctrlLifetimeName->SetClientData(index, (void*)(bDefault ? 1 : 0));
 		if (str == m_LifetimeName || (m_LifetimeName.empty() && bDefault))
 		{
 			m_ctrlLifetimeName->SetSelection(index);
 		}
 	}
-	m_ctrlLifetimeName->AutoComplete(choices);
+	if (0 == m_ctrlLifetimeName->GetCount())
+	{
+		wxString str = _("IDS_TITLEPOINT_LIFETIME_NAME");
+		int index = m_ctrlLifetimeName->Append(str);
+		m_ctrlLifetimeName->SetClientData(index, (void*)(1));
+		m_ctrlLifetimeName->SetSelection(index);
+	}
 
 	if (eTitleLifetime != m_Type)
 	{
@@ -213,6 +238,7 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 	bSizer->Add(sizerValue, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
+	sizerPoints->Add(m_ctrlSpeedPts, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerPoints->Add(m_textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerPoints->Add(m_ctrlPoints, 1, wxALIGN_CENTER_VERTICAL, 0);
 
@@ -242,6 +268,13 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 DEFINE_ON_INIT(CDlgConfigTitlePoints)
 
 
+void CDlgConfigTitlePoints::OnUseSpeedPoints(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	m_ctrlPoints->Enable(!m_bSpeed);
+}
+
+
 void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 {
 	int oldType = m_Type;
@@ -257,13 +290,16 @@ void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 		m_ctrlValue->Show();
 		m_textPoints->Show();
 		m_ctrlPoints->Show();
+		m_ctrlPoints->Enable(!m_bSpeed);
 		if (eTitleLifetime == m_Type)
 		{
+			m_ctrlSpeedPts->Show();
 			m_textLifetimeName->Show();
 			m_ctrlLifetimeName->Show();
 		}
 		else
 		{
+			m_ctrlSpeedPts->Hide();
 			m_textLifetimeName->Hide();
 			m_ctrlLifetimeName->Hide();
 		}
@@ -273,6 +309,7 @@ void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 		bRefit = true;
 		m_textValue->Hide();
 		m_ctrlValue->Hide();
+		m_ctrlSpeedPts->Hide();
 		m_textPoints->Hide();
 		m_ctrlPoints->Hide();
 		m_textLifetimeName->Hide();
@@ -308,4 +345,21 @@ void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 		TransferDataToWindow();
 		GetSizer()->Fit(this);
 	}
+}
+
+
+void CDlgConfigTitlePoints::OnOk(wxCommandEvent& evt)
+{
+	if (!Validate() || !TransferDataFromWindow())
+		return;
+
+	if (eTitleLifetime == Type())
+	{
+		int index = m_ctrlLifetimeName->GetSelection();
+		int isDefault = (int)m_ctrlLifetimeName->GetClientData(index);
+		if (isDefault)
+			m_LifetimeName.clear();
+	}
+
+	EndDialog(wxID_OK);
 }

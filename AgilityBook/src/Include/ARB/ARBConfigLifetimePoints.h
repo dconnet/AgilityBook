@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-14 Add support for speed point based lifetime points.
  * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -221,12 +222,19 @@ public:
 			ARBConfigLifetimePointsPtr* outPoints = nullptr);
 
 	/**
-	 * Delete an object.
-	 * @param inName Name of faults to find.
+	 * Delete a non-Speed Point lifetime name object.
+	 * @param inName Name of points to find.
 	 * @param inFaults Delete object with the given faults.
 	 * @return Whether object was deleted.
 	 */
 	bool DeleteLifetimePoints(
 			std::wstring const& inName,
 			double inFaults);
+
+	/**
+	 * Delete a Speed Point lifetime name object.
+	 * @param inName Name of points to find.
+	 * @return Whether object was deleted.
+	 */
+	bool DeleteLifetimePoints(std::wstring const& inName);
 };

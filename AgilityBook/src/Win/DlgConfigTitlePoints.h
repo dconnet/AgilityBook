@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-14 Add support for named/speedpt lifetime points.
  * 2009-02-11 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2004-10-06 Removed ARB classes so it could be used to lifetime pts.
@@ -46,11 +47,12 @@ public:
 
 	CDlgConfigTitlePoints(
 			ARBConfigVenuePtr inVenue,
-			wxString const& inLifetimeName,
+			ARBConfigLifetimePointsPtr inLifetime,
 			wxWindow* pParent = nullptr);
 
 	double Faults() const			{return m_Faults;}
 	short Place() const				{return m_Place;}
+	bool UseSpeedPts() const		{return m_bSpeed;}
 	double Points() const			{return m_Points;}
 	wxString LifetimeName() const	{return m_LifetimeName;}
 	ETitlePointType Type() const
@@ -68,6 +70,7 @@ private:
 	int m_TypeNormal;
 	wxStaticText* m_textValue;
 	CTextCtrl* m_ctrlValue;
+	wxCheckBox* m_ctrlSpeedPts;
 	wxStaticText* m_textPoints;
 	CTextCtrl* m_ctrlPoints;
 	wxChoice* m_ctrlType;
@@ -76,9 +79,13 @@ private:
 	wxComboBox* m_ctrlLifetimeName;
 	double m_Faults;
 	short m_Place;
+	bool m_bSpeed;
 	double m_Points;
 	wxString m_LifetimeName;
 
+	DECLARE_EVENT_TABLE()
 	DECLARE_ON_INIT()
+	void OnUseSpeedPoints(wxCommandEvent& evt);
 	void OnSelchangeTitlePoints(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };

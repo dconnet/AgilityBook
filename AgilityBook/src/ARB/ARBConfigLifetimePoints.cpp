@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-14 Add support for speed point based lifetime points.
  * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -156,7 +157,10 @@ bool ARBConfigLifetimePoints::operator==(ARBConfigLifetimePoints const& rhs) con
 
 std::wstring ARBConfigLifetimePoints::GetGenericName() const
 {
-	return Localization()->LifetimePointsNameFormat(m_Points, m_Faults);
+	if (m_UseSpeedPts)
+		return Localization()->LifetimePointsNameWithSpeedPointsFormat(m_Faults);
+	else
+		return Localization()->LifetimePointsNameFormat(m_Points, m_Faults);
 }
 
 
@@ -352,7 +356,23 @@ bool ARBConfigLifetimePointsList::DeleteLifetimePoints(
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inName
+		&& !(*iter)->UseSpeedPts()
 		&& ARBDouble::equal((*iter)->GetFaults(), inFaults))
+		{
+			erase(iter);
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ARBConfigLifetimePointsList::DeleteLifetimePoints(std::wstring const& inName)
+{
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetName() == inName
+		&& (*iter)->UseSpeedPts())
 		{
 			erase(iter);
 			return true;

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-09 16:47-0700\n"
-"PO-Revision-Date: 2016-06-09 16:47-0700\n"
+"POT-Creation-Date: 2016-06-14 14:07-0700\n"
+"PO-Revision-Date: 2016-06-14 14:07-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -24,11 +24,11 @@ msgstr ""
 "X-Poedit-SearchPath-3: TestARB\n"
 "X-Poedit-SearchPath-4: Win\n"
 
-#: ARB/ARBCalcPoints.cpp:121 Win/DlgConfigTitlePoints.cpp:151
+#: ARB/ARBCalcPoints.cpp:121 Win/DlgConfigTitlePoints.cpp:166
 msgid "IDS_TITLEPOINT_NORMAL_T2B"
 msgstr "AKC / Time 2 Beat"
 
-#: ARB/ARBCalcPoints.cpp:177 Win/DlgConfigTitlePoints.cpp:152
+#: ARB/ARBCalcPoints.cpp:177 Win/DlgConfigTitlePoints.cpp:167
 msgid "IDS_TITLEPOINT_NORMAL_UKI"
 msgstr "UKI"
 
@@ -473,26 +473,31 @@ msgstr "Action: Suppression %1$s Epreuve [%2$s]"
 msgid "IDS_TITLEPOINTSNAME"
 msgstr "%1$s points avec %2$s fautes"
 
-#: TestARB/Local.cpp:794 Win/Localization.cpp:578
+#: TestARB/Local.cpp:792 Win/DlgAssignColumns.cpp:404 Win/Localization.cpp:576
+msgid "IDS_COL_SPEED"
+msgstr "Vitesse"
+
+#: TestARB/Local.cpp:794 TestARB/Local.cpp:807 Win/Localization.cpp:578
+#: Win/Localization.cpp:586
 msgid "IDS_LIFETITLEPOINTSNAME"
 msgstr "%1$s points pour la vie avec %2$s fautes"
 
-#: TestARB/Local.cpp:806 Win/Localization.cpp:585
+#: TestARB/Local.cpp:819 Win/Localization.cpp:593
 msgid "IDS_PLACEMENTPOINTSNAME"
 msgstr "%1$s points avec rang %2$d"
 
-#: TestARB/Local.cpp:818 Win/Localization.cpp:592
+#: TestARB/Local.cpp:831 Win/Localization.cpp:600
 msgid "IDS_WARN_DELETED_RUNS"
 msgstr ""
 "ATTENTION\n"
 "\n"
 "%1$d parcour(s) suprimmé a cause de changement configuration."
 
-#: TestARB/Local.cpp:832 Win/Localization.cpp:601
+#: TestARB/Local.cpp:845 Win/Localization.cpp:609
 msgid "IDS_UPDATE_TEAM_RUNS"
 msgstr "Updated %1$d Team runs."
 
-#: TestARB/Local.cpp:845 Win/Localization.cpp:609
+#: TestARB/Local.cpp:858 Win/Localization.cpp:617
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Parametre table changé pour %1$d parcours."
 
@@ -2140,10 +2145,6 @@ msgstr "Sous-titre"
 msgid "IDS_COL_VERIFIED"
 msgstr "Confirmé"
 
-#: Win/DlgAssignColumns.cpp:404
-msgid "IDS_COL_SPEED"
-msgstr "Vitesse"
-
 #: Win/DlgAssignColumns.cpp:408 Win/DlgAssignColumns.cpp:475
 msgid "IDS_COL_SUBJECT"
 msgstr "Sujet"
@@ -3630,71 +3631,81 @@ msgid "HIDC_CONFIG_TITLE_VALID_TO_DATE"
 msgstr "La date jusqu'à laquelle la récompense reste valide."
 
 # DlgConfigTitlePoints
-#: Win/DlgConfigTitlePoints.cpp:95
+#: Win/DlgConfigTitlePoints.cpp:100
 msgid "IDD_CONFIG_TITLE_POINTS"
 msgstr "Points Récompense"
 
-#: Win/DlgConfigTitlePoints.cpp:99 Win/DlgConfigTitlePoints.cpp:293
+#: Win/DlgConfigTitlePoints.cpp:104 Win/DlgConfigTitlePoints.cpp:327
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT2"
 msgstr "&Classement"
 
-#: Win/DlgConfigTitlePoints.cpp:99 Win/DlgConfigTitlePoints.cpp:300
+#: Win/DlgConfigTitlePoints.cpp:104 Win/DlgConfigTitlePoints.cpp:334
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT1"
 msgstr "&Nombre de fautes permises"
 
-#: Win/DlgConfigTitlePoints.cpp:112 Win/DlgConfigTitlePoints.cpp:113
+#: Win/DlgConfigTitlePoints.cpp:117 Win/DlgConfigTitlePoints.cpp:118
 msgid "HIDC_CONFIG_TITLEPTS_VALUE"
 msgstr ""
 "Le nombre des points pénalité permis pour points Normaux et Cumulatif. "
 "Classement qui permet de gagner des points de Classement ('-1' is a wildcard "
 "match for any runs with a non-zero place)."
 
-#: Win/DlgConfigTitlePoints.cpp:121
+#: Win/DlgConfigTitlePoints.cpp:126
+msgid "IDC_CONFIG_TITLEPTS_SPEEDPTS"
+msgstr "Points vitesse"
+
+#: Win/DlgConfigTitlePoints.cpp:130 Win/DlgConfigTitlePoints.cpp:131
+#, fuzzy
+msgid "HIDC_CONFIG_TITLEPTS_SPEEDPTS"
+msgstr "Use Speed Points when computing points"
+
+#: Win/DlgConfigTitlePoints.cpp:134
 msgid "IDC_CONFIG_TITLEPTS_POINTS"
 msgstr "Points &gagnés"
 
-#: Win/DlgConfigTitlePoints.cpp:129 Win/DlgConfigTitlePoints.cpp:130
+#: Win/DlgConfigTitlePoints.cpp:142 Win/DlgConfigTitlePoints.cpp:143
 msgid "HIDC_CONFIG_TITLEPTS_POINTS"
 msgstr "Le nombre de points qui seront gagnés."
 
-#: Win/DlgConfigTitlePoints.cpp:138
+#: Win/DlgConfigTitlePoints.cpp:153
 msgid "IDS_TITLEPOINT_NORMAL"
 msgstr "Normal"
 
-#: Win/DlgConfigTitlePoints.cpp:139
+#: Win/DlgConfigTitlePoints.cpp:154
 msgid "IDS_TITLEPOINT_LIFETIME"
 msgstr "Lifetime"
 
-#: Win/DlgConfigTitlePoints.cpp:140
+#: Win/DlgConfigTitlePoints.cpp:155
 msgid "IDS_TITLEPOINT_PLACEMENT"
 msgstr "Classement"
 
-#: Win/DlgConfigTitlePoints.cpp:145 Win/DlgConfigTitlePoints.cpp:146
+#: Win/DlgConfigTitlePoints.cpp:160 Win/DlgConfigTitlePoints.cpp:161
 msgid "HIDC_CONFIG_TITLEPTS_TITLE_POINTS"
 msgstr ""
 "Choisir le type de points Récompense: Normal (points gagnés sur le parcours), "
 "Cumulatif (points accumulés pour la vie, normalement pareil comme Normal), "
 "Classement (points gagnés basé sur Classement, traité comme Cumulatif)"
 
-#: Win/DlgConfigTitlePoints.cpp:150
+#: Win/DlgConfigTitlePoints.cpp:165
 msgid "IDS_TITLEPOINT_NORMAL_NORMAL"
 msgstr "Normal"
 
-#: Win/DlgConfigTitlePoints.cpp:157 Win/DlgConfigTitlePoints.cpp:158
+#: Win/DlgConfigTitlePoints.cpp:172 Win/DlgConfigTitlePoints.cpp:173
 msgid "HIDC_CONFIG_TITLEPTS_CALC"
 msgstr "Sélectionnez le type de calcul pour les points de titrage."
 
-#: Win/DlgConfigTitlePoints.cpp:165
+#: Win/DlgConfigTitlePoints.cpp:179
 msgid "IDC_CONFIG_TITLEPTS_LIFETIMENAME"
 msgstr "Nom points cumulatifs"
 
-#: Win/DlgConfigTitlePoints.cpp:173 Win/DlgConfigTitlePoints.cpp:174
+#: Win/DlgConfigTitlePoints.cpp:190 Win/DlgConfigTitlePoints.cpp:191
 msgid "HIDC_CONFIG_TITLEPTS_LIFETIMENAME"
 msgstr ""
 "Dénomination pour les points Cumulatifs. Si rien n'est entré, le nom, 'Points "
 "Cumulatifs' est utilisé."
 
-#: Win/DlgConfigTitlePoints.cpp:186 Win/PointsData.cpp:695 Win/PointsData.cpp:747
+#: Win/DlgConfigTitlePoints.cpp:202 Win/DlgConfigTitlePoints.cpp:213
+#: Win/PointsData.cpp:695 Win/PointsData.cpp:747
 msgid "IDS_TITLEPOINT_LIFETIME_NAME"
 msgstr "Lifetime"
 

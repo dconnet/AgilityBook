@@ -166,6 +166,7 @@ public:
 			std::wstring const& name) const;
 
 	std::wstring TitlePointsNameFormat(double points, double faults) const;
+	std::wstring LifetimePointsNameWithSpeedPointsFormat(double faults) const;
 	std::wstring LifetimePointsNameFormat(double points, double faults) const;
 	std::wstring PlacementPointsNameFormat(double points, short place) const;
 

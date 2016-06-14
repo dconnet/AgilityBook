@@ -571,6 +571,14 @@ std::wstring CLocalization::TitlePointsNameFormat(double points, double faults) 
 }
 
 
+std::wstring CLocalization::LifetimePointsNameWithSpeedPointsFormat(double faults) const
+{
+	wxString str1 = StringUtil::GetTranslation(arbT("IDS_COL_SPEED"));
+	wxString dbl2 = wxString::Format(L"%g", faults);
+	return StringUtil::stringW(wxString::Format(_("IDS_LIFETITLEPOINTSNAME"), str1.c_str(), dbl2.c_str()));
+}
+
+
 std::wstring CLocalization::LifetimePointsNameFormat(double points, double faults) const
 {
 	wxString dbl1 = wxString::Format(L"%g", points);

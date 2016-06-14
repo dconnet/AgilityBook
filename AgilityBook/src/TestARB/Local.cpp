@@ -786,6 +786,19 @@ std::wstring CLocalization::TitlePointsNameFormat(double points, double faults) 
 }
 
 
+std::wstring CLocalization::LifetimePointsNameWithSpeedPointsFormat(double faults) const
+{
+#if defined(__WXWINDOWS__)
+	wxString str1 = StringUtil::GetTranslation(arbT("IDS_COL_SPEED"));
+	wxString dbl2 = wxString::Format(L"%g", faults);
+	return StringUtil::stringW(wxString::Format(StringUtil::GetTranslation(arbT("IDS_LIFETITLEPOINTSNAME")).c_str(), str1.c_str(), dbl2.c_str()));
+#else
+#pragma PRAGMA_TODO(Write localization)
+	return std::wstring();
+#endif
+}
+
+
 std::wstring CLocalization::LifetimePointsNameFormat(double points, double faults) const
 {
 #if defined(__WXWINDOWS__)

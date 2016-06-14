@@ -18,6 +18,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * 2016-06-14 Add support for named/speedpt lifetime points.
  * 2016-01-16 Cleaned up new/edit/delete buttons.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-06-16 Display number of faults for each time fault.
@@ -964,81 +965,104 @@ void CDlgConfigEvent::EditPoints()
 				typeNorm = ePointsTypeMax;
 			}
 			int rc = 0;
+			double dlgFaults = 0.0;
+			short dlgPlace = 0;
+			bool dlgUseSpeedPts = false;
+			double dlgPoints = 0.0;
+			wxString dlgLifetimeName;
+			CDlgConfigTitlePoints::ETitlePointType dlgType;
+			ARBPointsType dlgTypeNormal;
 			if (pLife)
 			{
-				CDlgConfigTitlePoints dlg(m_pVenue, pLife->GetName());
+				CDlgConfigTitlePoints dlg(m_pVenue, pLife);
 				rc = dlg.ShowModal();
+				dlgFaults = dlg.Faults();
+				dlgPlace = dlg.Place();
+				dlgUseSpeedPts = dlg.UseSpeedPts();
+				dlgPoints = dlg.Points();
+				dlgLifetimeName = dlg.LifetimeName();
+				dlgType = dlg.Type();
+				dlgTypeNormal = dlg.TypeNormal();
 			}
 			else
 			{
 				CDlgConfigTitlePoints dlg(m_pVenue, value, points, type, typeNorm);
 				rc = dlg.ShowModal();
+				dlgFaults = dlg.Faults();
+				dlgPlace = dlg.Place();
+				dlgUseSpeedPts = dlg.UseSpeedPts();
+				dlgPoints = dlg.Points();
+				dlgLifetimeName = dlg.LifetimeName();
+				dlgType = dlg.Type();
+				dlgTypeNormal = dlg.TypeNormal();
 			}
-			CDlgConfigTitlePoints dlg(m_pVenue, value, points, type, typeNorm);
 			if (wxID_OK == rc)
 			{
-				if (type != dlg.Type()
-				|| typeNorm != dlg.TypeNormal()
-				|| (pTitle && pTitle->GetFaults() != dlg.Faults())
-				|| (pLife && pLife->GetFaults() != dlg.Faults())
-				|| (pPlace && pPlace->GetPlace() != dlg.Place()))
+				if (type != dlgType
+				|| typeNorm != dlgTypeNormal
+				|| (pTitle && pTitle->GetFaults() != dlgFaults)
+				|| (pLife && (pLife->GetName() != dlgLifetimeName || pLife->UseSpeedPts() != dlgUseSpeedPts || pLife->GetFaults() != dlgFaults))
+				|| (pPlace && pPlace->GetPlace() != dlgPlace))
 				{
 					// Clean up.
-					if (type == dlg.Type())
+					if (type == dlgType)
 					{
 						if (pTitle)
 							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetCalc()->GetType(), pTitle->GetFaults());
 						else if (pLife)
 						{
-							assert(0);
-#pragma PRAGMA_TODO(lifetime points)
-							//pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+							if (pLife->UseSpeedPts())
+								pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetName());
+							else
+								pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetName(), pLife->GetFaults());
 						}
 						else
 							pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
 					}
 					bool bOk = false;
-					switch (dlg.Type())
+					switch (dlgType)
 					{
 					default:
 						assert(0);
 					case CDlgConfigTitlePoints::eTitleNormal:
 						{
 							ARBCalcPointsPtr calc = pScoring->GetTitlePoints().GetCalc();
-							if (!calc || dlg.TypeNormal() != calc->GetType())
+							if (!calc || dlgTypeNormal != calc->GetType())
 							{
 								bOk = true;
-								pScoring->GetTitlePoints().SetType(dlg.TypeNormal());
+								pScoring->GetTitlePoints().SetType(dlgTypeNormal);
 								calc = pScoring->GetTitlePoints().GetCalc();
 							}
 							if (!calc || calc->AllowConfiguration())
-								bOk = pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults());
+								bOk = pScoring->GetTitlePoints().AddTitlePoints(dlgPoints, dlgFaults);
 						}
 						if (!bOk)
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case CDlgConfigTitlePoints::eTitleLifetime:
-						assert(0);
-#pragma PRAGMA_TODO(lifetime points)
-						//bOk = pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults());
+						if (dlgUseSpeedPts)
+							bOk = pScoring->GetLifetimePoints().AddLifetimePoints(StringUtil::stringW(dlgLifetimeName), dlgFaults);
+						else
+							bOk = pScoring->GetLifetimePoints().AddLifetimePoints(StringUtil::stringW(dlgLifetimeName), dlgPoints, dlgFaults);
 						if (!bOk)
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case CDlgConfigTitlePoints::eTitlePlacement:
-						bOk = pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true);
+						bOk = pScoring->GetPlacements().AddPlaceInfo(dlgPlace, dlgPoints, true);
 						if (!bOk)
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					}
-					if (bOk && type != dlg.Type())
+					if (bOk && type != dlgType)
 					{
 						if (pTitle)
 							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetCalc()->GetType(), pTitle->GetFaults());
 						else if (pLife)
 						{
-							assert(0);
-#pragma PRAGMA_TODO(lifetime points)
-							//pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+							if (pLife->UseSpeedPts())
+								pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetName());
+							else
+								pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetName(), pLife->GetFaults());
 						}
 						else
 							pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
@@ -1047,11 +1071,11 @@ void CDlgConfigEvent::EditPoints()
 				else
 				{
 					if (pTitle)
-						pTitle->SetPoints(dlg.Points());
+						pTitle->SetPoints(dlgPoints);
 					else if (pLife)
-						pLife->SetPoints(dlg.Points());
+						pLife->SetPoints(dlgPoints);
 					else
-						pPlace->SetValue(dlg.Points());
+						pPlace->SetValue(dlgPoints);
 				}
 				FillTitlePoints(pScoring);
 				EnablePointsControls();

@@ -180,6 +180,7 @@ public:
 
 	// Used in ARBConfigTitlePoints.cpp
 	virtual std::wstring TitlePointsNameFormat(double points, double faults) const = 0;
+	virtual std::wstring LifetimePointsNameWithSpeedPointsFormat(double faults) const = 0;
 	virtual std::wstring LifetimePointsNameFormat(double points, double faults) const = 0;
 	virtual std::wstring PlacementPointsNameFormat(double points, short place) const = 0;
 
