@@ -18,6 +18,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * 2016-06-17 Add support for Lifetime names.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -129,6 +130,10 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 				}
 			}
 		}
+		break;
+
+	case CDlgConfigVenue::eLifetimeNames:
+#pragma PRAGMA_TODO(lifetime name)
 		break;
 
 	case CDlgConfigVenue::eMultiQ:
@@ -376,6 +381,17 @@ CDlgConfigVenue::CDlgConfigVenue(
 		pData->AddSubItems();
 	}
 	m_ctrlItems->Expand(events);
+
+	wxTreeItemId lifetimeNames = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_MULTIQ"), -1, -1, new CDlgConfigVenueDataRoot(this, eLifetimeNames));
+	for (ARBConfigLifetimeNameList::iterator iter = m_pVenue->GetLifetimeNames().begin();
+		iter != m_pVenue->GetLifetimeNames().end();
+		++iter)
+	{
+		CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(this, *iter);
+		m_ctrlItems->AppendItem(lifetimeNames, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		pData->AddSubItems();
+	}
+
 
 	wxTreeItemId multiQs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_MULTIQ"), -1, -1, new CDlgConfigVenueDataRoot(this, eMultiQ));
 	for (ARBConfigMultiQList::iterator iter = m_pVenue->GetMultiQs().begin();

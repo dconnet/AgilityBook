@@ -314,6 +314,7 @@ bool ARBConfigLifetimePointsList::FindLifetimePoints(
 
 bool ARBConfigLifetimePointsList::AddLifetimePoints(
 		std::wstring const& inName,
+		bool inUseSpeedPts,
 		double inPoints,
 		double inFaults,
 		ARBConfigLifetimePointsPtr* outPoints)
@@ -322,25 +323,11 @@ bool ARBConfigLifetimePointsList::AddLifetimePoints(
 		outPoints->reset();
 	if (FindLifetimePoints(inName, inFaults))
 		return false;
-	ARBConfigLifetimePointsPtr pLife(ARBConfigLifetimePoints::New(inName, inPoints, inFaults));
-	push_back(pLife);
-	sort();
-	if (outPoints)
-		*outPoints = pLife;
-	return true;
-}
-
-
-bool ARBConfigLifetimePointsList::AddLifetimePoints(
-		std::wstring const& inName,
-		double inFaults,
-		ARBConfigLifetimePointsPtr* outPoints)
-{
-	if (outPoints)
-		outPoints->reset();
-	if (FindLifetimePoints(inName, inFaults))
-		return false;
-	ARBConfigLifetimePointsPtr pLife(ARBConfigLifetimePoints::New(inName, inFaults));
+	ARBConfigLifetimePointsPtr pLife;
+	if (inUseSpeedPts)
+		pLife = ARBConfigLifetimePoints::New(inName, inFaults);
+	else
+		pLife = ARBConfigLifetimePoints::New(inName, inPoints, inFaults);
 	push_back(pLife);
 	sort();
 	if (outPoints)
@@ -356,23 +343,7 @@ bool ARBConfigLifetimePointsList::DeleteLifetimePoints(
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inName
-		&& !(*iter)->UseSpeedPts()
 		&& ARBDouble::equal((*iter)->GetFaults(), inFaults))
-		{
-			erase(iter);
-			return true;
-		}
-	}
-	return false;
-}
-
-
-bool ARBConfigLifetimePointsList::DeleteLifetimePoints(std::wstring const& inName)
-{
-	for (iterator iter = begin(); iter != end(); ++iter)
-	{
-		if ((*iter)->GetName() == inName
-		&& (*iter)->UseSpeedPts())
 		{
 			erase(iter);
 			return true;

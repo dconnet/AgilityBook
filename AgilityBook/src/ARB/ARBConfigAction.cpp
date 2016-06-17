@@ -15,6 +15,7 @@
  * maintain our data integrity, we need to update things to deal with this.
  *
  * Revision History
+ * 2016-06-17 Add support for Lifetime names.
  * 2013-01-11 Fix filters on configuration import.
  * 2012-11-21 Add RenameLevel action verb.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -1721,6 +1722,213 @@ bool ARBConfigActionDeleteEvent::Apply(
 			ioInfo << Localization()->ActionDeleteEvent(m_Venue, m_Name) << L"\n";
 			venue->GetMultiQs().DeleteEvent(m_Name);
 			venue->GetEvents().DeleteEvent(m_Name);
+		}
+	}
+
+	return bChanged;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBConfigActionRenameLifetimeName_concrete : public ARBConfigActionRenameLifetimeName
+{
+public:
+	ARBConfigActionRenameLifetimeName_concrete(
+			short configVersion,
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName)
+		: ARBConfigActionRenameLifetimeName(configVersion, inVenue, inOldName, inNewName)
+	{
+	}
+	ARBConfigActionRenameLifetimeName_concrete(
+			ARBConfigActionRenameLifetimeName const& rhs)
+		: ARBConfigActionRenameLifetimeName(rhs)
+	{
+	}
+};
+
+
+ARBConfigActionPtr ARBConfigActionRenameLifetimeName::New(
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
+{
+	return std::make_shared<ARBConfigActionRenameLifetimeName_concrete>(
+		configVersion,
+		inVenue,
+		inOldName,
+		inNewName);
+}
+
+
+ARBConfigActionRenameLifetimeName::ARBConfigActionRenameLifetimeName(
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
+	, m_OldName(inOldName)
+	, m_NewName(inNewName)
+{
+}
+
+
+ARBConfigActionRenameLifetimeName::ARBConfigActionRenameLifetimeName(ARBConfigActionRenameLifetimeName const& rhs)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
+	, m_OldName(rhs.m_OldName)
+	, m_NewName(rhs.m_NewName)
+{
+}
+
+
+ARBConfigActionPtr ARBConfigActionRenameLifetimeName::Clone() const
+{
+	return std::make_shared<ARBConfigActionRenameLifetimeName_concrete>(
+		m_configVersion,
+		m_Venue,
+		m_OldName,
+		m_NewName);
+}
+
+
+bool ARBConfigActionRenameLifetimeName::Apply(
+		ARBConfig& ioConfig,
+		ARBDogList* ioDogs,
+		std::wostringstream& ioInfo,
+		IConfigActionCallback& ioCallBack) const
+{
+	bool bChanged = false;
+
+	ARBConfigVenuePtr venue;
+	if (ioConfig.GetVenues().FindVenue(m_Venue, &venue))
+	{
+		ARBConfigLifetimeNamePtr oldLifetimeName;
+		if (venue->GetLifetimeNames().FindLifetimeName(m_OldName, &oldLifetimeName))
+		{
+#pragma PRAGMA_TODO(Lifetimename fixup rename)
+#if 0
+			bChanged = true;
+			// If any events are in use, create a fixup action.
+			int nEvents = 0;
+			if (ioDogs)
+				nEvents = ioDogs->NumEventsInUse(m_Venue, m_OldName);
+			if (0 < nEvents && ioDogs)
+			{
+				ioDogs->RenameEvent(m_Venue, m_OldName, m_NewName);
+			}
+			ioInfo << Localization()->ActionRenameEvent(m_Venue, m_OldName, m_NewName, nEvents) << L"\n";
+			// If the new event exists, just delete the old.
+			// Otherwise, rename the old to new.
+			if (venue->GetEvents().FindEvent(m_NewName))
+				venue->GetEvents().DeleteEvent(m_OldName);
+			else
+				oldEvent->SetName(m_NewName);
+#endif
+		}
+	}
+
+	return bChanged;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBConfigActionDeleteLifetimeName_concrete : public ARBConfigActionDeleteLifetimeName
+{
+public:
+	ARBConfigActionDeleteLifetimeName_concrete(
+			short configVersion,
+			std::wstring const& inVenue,
+			std::wstring const& inName)
+		: ARBConfigActionDeleteLifetimeName(configVersion, inVenue, inName)
+	{
+	}
+	ARBConfigActionDeleteLifetimeName_concrete(
+			ARBConfigActionDeleteLifetimeName const& rhs)
+		: ARBConfigActionDeleteLifetimeName(rhs)
+	{
+	}
+};
+
+
+ARBConfigActionPtr ARBConfigActionDeleteLifetimeName::New(
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inName)
+{
+	return std::make_shared<ARBConfigActionDeleteLifetimeName_concrete>(
+		configVersion,
+		inVenue,
+		inName);
+}
+
+
+ARBConfigActionDeleteLifetimeName::ARBConfigActionDeleteLifetimeName(
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inName)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
+	, m_Name(inName)
+{
+}
+
+
+ARBConfigActionDeleteLifetimeName::ARBConfigActionDeleteLifetimeName(ARBConfigActionDeleteLifetimeName const& rhs)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
+	, m_Name(rhs.m_Name)
+{
+}
+
+
+ARBConfigActionPtr ARBConfigActionDeleteLifetimeName::Clone() const
+{
+	return std::make_shared<ARBConfigActionDeleteLifetimeName_concrete>(
+		m_configVersion,
+		m_Venue,
+		m_Name);
+}
+
+
+bool ARBConfigActionDeleteLifetimeName::Apply(
+		ARBConfig& ioConfig,
+		ARBDogList* ioDogs,
+		std::wostringstream& ioInfo,
+		IConfigActionCallback& ioCallBack) const
+{
+	bool bChanged = false;
+
+	ARBConfigVenuePtr venue;
+	if (ioConfig.GetVenues().FindVenue(m_Venue, &venue))
+	{
+		ARBConfigLifetimeNamePtr oldLifetimeName;
+		if (venue->GetLifetimeNames().FindLifetimeName(m_Name, &oldLifetimeName))
+		{
+#pragma PRAGMA_TODO(Lifetimename fixup delete)
+#if 0
+			bChanged = true;
+			int nEvents = 0;
+			if (ioDogs)
+				nEvents = ioDogs->NumEventsInUse(m_Venue, m_Name);
+			// If any events are in use, create a fixup action.
+			if (0 < nEvents && ioDogs)
+			{
+				std::wstring msg = Localization()->ActionPreDeleteEvent(m_Venue, m_Name, nEvents);
+				ioCallBack.PreDelete(msg);
+				if (!ioCallBack.CanContinue())
+					return bChanged;
+				ioInfo << msg << L"\n";
+				ioDogs->DeleteEvent(m_Venue, m_Name);
+			}
+			ioInfo << Localization()->ActionDeleteEvent(m_Venue, m_Name) << L"\n";
+			venue->GetMultiQs().DeleteEvent(m_Name);
+			venue->GetEvents().DeleteEvent(m_Name);
+#endif
 		}
 	}
 

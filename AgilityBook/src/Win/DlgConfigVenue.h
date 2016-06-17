@@ -30,6 +30,7 @@ class CDlgConfigVenue : public wxDialog
 	friend class CDlgConfigureDataDivision;
 	friend class CDlgConfigureDataEvent;
 	friend class CDlgConfigureDataLevel;
+	friend class CDlgConfigureDataLifetimeName;
 	friend class CDlgConfigureDataMultiQ;
 	friend class CDlgConfigureDataSubLevel;
 	friend class CDlgConfigureDataTitle;
@@ -50,6 +51,7 @@ public:
 		eNone,
 		eDivisions,
 		eEvents,
+		eLifetimeNames,
 		eMultiQ,
 		eTitles,
 	} eAction;

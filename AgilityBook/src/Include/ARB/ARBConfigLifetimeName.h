@@ -149,7 +149,10 @@ public:
 	/**
 	 * Delete the fault.
 	 * @param inName Name of fault to delete.
+	 * @param ioEvents Events to clean up when deleted.
 	 * @return Whether fault was deleted.
 	 */
-	bool DeleteLifetimeName(std::wstring const& inName);
+	bool DeleteLifetimeName(
+			std::wstring const& inName,
+			ARBConfigEventList& ioEvents);
 };

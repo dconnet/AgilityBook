@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-17 Add support for Lifetime names.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-11 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -177,7 +178,7 @@ bool CDlgConfigureDataDivision::DoAdd()
 	while (!done)
 	{
 		done = true;
-		CDlgName dlg(name, StringUtil::stringW(_("IDS_LEVEL_NAME")), m_pDlg);
+		CDlgName dlg(name, _("IDS_LEVEL_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			name = dlg.Name();
@@ -214,7 +215,7 @@ bool CDlgConfigureDataDivision::DoEdit()
 	while (!done)
 	{
 		done = true;
-		CDlgName dlg(name, StringUtil::stringW(_("IDS_DIVISION_NAME")), m_pDlg);
+		CDlgName dlg(name, _("IDS_DIVISION_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			name = dlg.Name();
@@ -310,7 +311,7 @@ bool CDlgConfigureDataLevel::DoAdd()
 	while (!done)
 	{
 		done = true;
-		CDlgName dlg(name, StringUtil::stringW(_("IDS_SUBLEVEL_NAME")), m_pDlg);
+		CDlgName dlg(name, _("IDS_SUBLEVEL_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			name = dlg.Name();
@@ -354,7 +355,7 @@ bool CDlgConfigureDataLevel::DoEdit()
 	while (!done)
 	{
 		done = true;
-		CDlgName dlg(name, StringUtil::stringW(_("IDS_LEVEL_NAME")), m_pDlg);
+		CDlgName dlg(name, _("IDS_LEVEL_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			name = dlg.Name();
@@ -466,7 +467,7 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 	while (!done)
 	{
 		done = true;
-		CDlgName dlg(name, StringUtil::stringW(_("IDS_SUBLEVEL_NAME")), m_pDlg);
+		CDlgName dlg(name, _("IDS_SUBLEVEL_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			name = dlg.Name();
@@ -733,6 +734,106 @@ CDlgConfigureDataBase* CDlgConfigureDataEvent::DoMove(bool bUp)
 {
 	if (m_pDlg->m_pVenue->GetEvents().Move(m_Event, bUp ? -1 : 1))
 		return new CDlgConfigureDataEvent(m_pDlg, m_Event);
+	return nullptr;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CDlgConfigureDataLifetimeName::CDlgConfigureDataLifetimeName(
+		CDlgConfigVenue* pDlg,
+		ARBConfigLifetimeNamePtr name)
+	: CDlgConfigureDataBase(pDlg)
+	, m_pName(name)
+{
+}
+
+
+std::wstring CDlgConfigureDataLifetimeName::OnNeedText() const
+{
+	return OnNeedText(0);
+}
+
+
+std::wstring CDlgConfigureDataLifetimeName::OnNeedText(int iColumn) const
+{
+	std::wstring str = m_pName->GetName();
+	if (str.empty())
+		str = StringUtil::stringW(_("IDS_TITLEPOINT_LIFETIME_NAME"));
+	return str;
+}
+
+
+bool CDlgConfigureDataLifetimeName::DoEdit()
+{
+	bool bEdited = false;
+	std::wstring oldName = m_pName->GetName();
+	std::wstring name(oldName);
+	bool done = false;
+	while (!done)
+	{
+		done = true;
+		CDlgName dlg(name, _("IDC_CONFIG_TITLEPTS_LIFETIMENAME"), m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			name = m_pName->GetName();
+			if (name != oldName)
+			{
+				if (m_pDlg->m_pVenue->GetLifetimeNames().FindLifetimeName(name))
+				{
+					done = false;
+					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					continue;
+				}
+				m_pName->SetName(name);
+				m_pDlg->m_pVenue->GetEvents().RenameLifetimeName(oldName, name);
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLifetimeName::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
+				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
+				bEdited = true;
+			}
+		}
+	}
+	return bEdited;
+}
+
+
+bool CDlgConfigureDataLifetimeName::DoDelete()
+{
+	std::wstring name = m_pName->GetName();
+	if (m_pDlg->m_pVenue->GetLifetimeNames().DeleteLifetimeName(name, m_pDlg->m_pVenue->GetEvents()))
+	{
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLifetimeName::New(0, m_pDlg->m_pVenue->GetName(), name));
+		m_pDlg->m_ctrlItems->Delete(GetId());
+		return true;
+	}
+	return false;
+}
+
+
+bool CDlgConfigureDataLifetimeName::DoCopy()
+{
+	bool bAdded = false;
+	std::wstring name(m_pName->GetName());
+	while (m_pDlg->m_pVenue->GetLifetimeNames().FindLifetimeName(name))
+	{
+		name = StringUtil::stringW(wxString::Format(_("IDS_COPYOF"), name.c_str()));
+	}
+	ARBConfigLifetimeNamePtr lifetimename;
+	if (m_pDlg->m_pVenue->GetLifetimeNames().AddLifetimeName(name, &lifetimename))
+	{
+		CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(m_pDlg, lifetimename);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		pData->AddSubItems();
+		m_pDlg->m_ctrlItems->SelectItem(id);
+		bAdded = true;
+	}
+	return bAdded;
+}
+
+
+CDlgConfigureDataBase* CDlgConfigureDataLifetimeName::DoMove(bool bUp)
+{
+	if (m_pDlg->m_pVenue->GetLifetimeNames().Move(m_pName, bUp ? -1 : 1))
+		return new CDlgConfigureDataLifetimeName(m_pDlg, m_pName);
 	return nullptr;
 }
 

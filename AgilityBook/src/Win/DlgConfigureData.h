@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-17 Add support for Lifetime names.
  * 2009-02-11 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2004-04-02 Up the ref count to prevent problems.
@@ -219,6 +220,29 @@ public:
 	virtual CDlgConfigureDataBase* DoMove(bool bUp);
 protected:
 	ARBConfigEventPtr m_Event;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgConfigureDataLifetimeName : public CDlgConfigureDataBase
+{
+public:
+	CDlgConfigureDataLifetimeName(
+			CDlgConfigVenue* pDlg,
+			ARBConfigLifetimeNamePtr name);
+	ARBConfigLifetimeNamePtr GetLifetimeName() const	{return m_pName;}
+	virtual std::wstring OnNeedText() const;
+	virtual std::wstring OnNeedText(int iColumn) const;
+	virtual bool CanEdit() const				{return true;}
+	virtual bool CanDelete() const				{return true;}
+	virtual bool CanCopy() const				{return true;}
+	virtual bool CanMove() const				{return true;}
+	virtual bool DoEdit();
+	virtual bool DoDelete();
+	virtual bool DoCopy();
+	virtual CDlgConfigureDataBase* DoMove(bool bUp);
+protected:
+	ARBConfigLifetimeNamePtr m_pName;
 };
 
 /////////////////////////////////////////////////////////////////////////////

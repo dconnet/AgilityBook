@@ -34,13 +34,13 @@ CDlgName::CDlgName(
 		wxWindow* pParent)
 	: m_Name(StringUtil::stringWX(name))
 {
-	Create(StringUtil::stringW(_("IDD_NAME")), pParent);
+	Create(_("IDD_NAME"), pParent);
 }
 
 
 CDlgName::CDlgName(
 		std::wstring const& name,
-		std::wstring const& caption,
+		wxString const& caption,
 		wxWindow* pParent)
 	: m_Name(StringUtil::stringWX(name))
 {
@@ -49,12 +49,12 @@ CDlgName::CDlgName(
 
 
 bool CDlgName::Create(
-		std::wstring const& caption,
+		wxString const& caption,
 		wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	if (!wxDialog::Create(pParent, wxID_ANY, caption.c_str(), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
+	if (!wxDialog::Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
 		return false;
 
 	// Controls (these are done first to control tab order)

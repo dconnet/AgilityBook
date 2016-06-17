@@ -397,7 +397,7 @@ void CDlgConfigure::DoEdit()
 			while (!done)
 			{
 				done = true;
-				CDlgName dlg(name, StringUtil::stringW(_("IDS_FAULT_TYPE_NAME")), this);
+				CDlgName dlg(name, _("IDS_FAULT_TYPE_NAME"), this);
 				if (wxID_OK == dlg.ShowModal())
 				{
 					name = dlg.Name();
@@ -564,7 +564,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 
 	case eFaults:
 		{
-			CDlgName dlg(std::wstring(), StringUtil::stringW(_("IDS_FAULT_TYPE_NAME")), this);
+			CDlgName dlg(std::wstring(), _("IDS_FAULT_TYPE_NAME"), this);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				std::wstring name = dlg.Name();

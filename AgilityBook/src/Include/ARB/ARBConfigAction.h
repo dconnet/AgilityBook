@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-17 Add support for Lifetime names.
  * 2013-01-11 Fix filters on configuration import.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-12-03 Complete re-write of action class.
@@ -614,6 +615,68 @@ protected:
 			std::wstring const& inVenue,
 			std::wstring const& inName);
 	ARBConfigActionDeleteEvent(ARBConfigActionDeleteEvent const& rhs);
+
+public:
+	static ARBConfigActionPtr New(
+			short configVersion,
+			std::wstring const& inVenue,
+			std::wstring const& inName);
+
+	virtual ARBConfigActionPtr Clone() const;
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			std::wostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	std::wstring m_Venue;
+	std::wstring m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBConfigActionRenameLifetimeName : public ARBConfigAction
+{
+protected:
+	ARBConfigActionRenameLifetimeName(
+			short configVersion,
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
+	ARBConfigActionRenameLifetimeName(ARBConfigActionRenameLifetimeName const& rhs);
+
+public:
+	static ARBConfigActionPtr New(
+			short configVersion,
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
+
+	virtual ARBConfigActionPtr Clone() const;
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			std::wostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	std::wstring m_Venue;
+	std::wstring m_OldName;
+	std::wstring m_NewName;
+};
+
+
+class ARBConfigActionDeleteLifetimeName : public ARBConfigAction
+{
+protected:
+	ARBConfigActionDeleteLifetimeName(
+			short configVersion,
+			std::wstring const& inVenue,
+			std::wstring const& inName);
+	ARBConfigActionDeleteLifetimeName(ARBConfigActionDeleteLifetimeName const& rhs);
 
 public:
 	static ARBConfigActionPtr New(

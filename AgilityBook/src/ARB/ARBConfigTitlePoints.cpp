@@ -208,7 +208,7 @@ bool ARBConfigTitlePoints::Load(
 			{
 				if (bLifetime)
 				{
-					ioLifetimePoints.AddLifetimePoints(L"", m_Points, m_Faults);
+					ioLifetimePoints.AddLifetimePoints(L"", false, m_Points, m_Faults);
 				}
 			}
 		}

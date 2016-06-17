@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-17 Add support for Lifetime names.
  * 2013-09-03 Added short name.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -522,6 +523,22 @@ int ARBConfigEventList::DeleteLevel(
 		}
 	}
 	return count;
+}
+
+
+int ARBConfigEventList::RenameLifetimeName(
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
+{
+#pragma PRAGMA_TODO(ARBConfigEventList::RenameLifetimeName)
+	return 0;
+}
+
+
+int ARBConfigEventList::DeleteLifetimeName(std::wstring const& inName)
+{
+#pragma PRAGMA_TODO(ARBConfigEventList::DeleteLifetimeName)
+	return 0;
 }
 
 

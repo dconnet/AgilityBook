@@ -198,6 +198,7 @@ public:
 	/**
 	 * Add an object.
 	 * @param inName Name of faults to find.
+	 * @param inUseSpeedPts If true, ignore inPoints
 	 * @param inPoints Number of lifetime points.
 	 * @param inFaults Number of faults.
 	 * @param outPoints Pointer to new object, NULL if it already exists.
@@ -205,24 +206,13 @@ public:
 	 */
 	bool AddLifetimePoints(
 			std::wstring const& inName,
+			bool inUseSpeedPts,
 			double inPoints,
 			double inFaults,
 			ARBConfigLifetimePointsPtr* outPoints = nullptr);
 
 	/**
-	 * Add an object, uses speed points.
-	 * @param inName Name of faults to find.
-	 * @param inFaults Number of faults.
-	 * @param outPoints Pointer to new object, NULL if it already exists.
-	 * @return Whether the object was added.
-	 */
-	bool AddLifetimePoints(
-			std::wstring const& inName,
-			double inFaults,
-			ARBConfigLifetimePointsPtr* outPoints = nullptr);
-
-	/**
-	 * Delete a non-Speed Point lifetime name object.
+	 * Delete a lifetime name object.
 	 * @param inName Name of points to find.
 	 * @param inFaults Delete object with the given faults.
 	 * @return Whether object was deleted.
@@ -230,11 +220,4 @@ public:
 	bool DeleteLifetimePoints(
 			std::wstring const& inName,
 			double inFaults);
-
-	/**
-	 * Delete a Speed Point lifetime name object.
-	 * @param inName Name of points to find.
-	 * @return Whether object was deleted.
-	 */
-	bool DeleteLifetimePoints(std::wstring const& inName);
 };

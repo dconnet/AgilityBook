@@ -25,7 +25,7 @@ public:
 			wxWindow* pParent = nullptr);
 	CDlgName(
 			std::wstring const& name,
-			std::wstring const& caption,
+			wxString const& caption,
 			wxWindow* pParent = nullptr);
 
 	std::wstring Name() const;
@@ -34,7 +34,7 @@ private:
 	wxString m_Name;
 
 	bool Create(
-			std::wstring const& caption,
+			wxString const& caption,
 			wxWindow* pParent = nullptr);
 
 	DECLARE_ON_INIT()

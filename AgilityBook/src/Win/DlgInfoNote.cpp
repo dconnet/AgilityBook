@@ -343,7 +343,7 @@ void CDlgInfoNote::OnEnChangeComments(wxCommandEvent& evt)
 
 void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 {
-	std::wstring caption;
+	wxString caption;
 	switch (m_Type)
 	{
 	case ARBInfo::eClubInfo:

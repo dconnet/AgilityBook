@@ -185,9 +185,6 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textLifetimeName->Wrap(-1);
 
-#pragma PRAGMA_TODO(lifetime name)
-	// Need control to set points or speed-pts for earned
-	// Need new dialog to manage names (add/delete/rename)
 	m_ctrlLifetimeName = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT,
@@ -343,6 +340,7 @@ void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 	if (bRefit)
 	{
 		TransferDataToWindow();
+		Layout();
 		GetSizer()->Fit(this);
 	}
 }
