@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-19 Add a blank icon to fix issue on Mac.
  * 2012-12-29 Move icon management to global list.
  * 2009-01-27 Ported to wxWidgets.
  * 2007-04-22 Created.
@@ -49,7 +50,9 @@ CIconList::CIconList()
 	m_idxVenueUSDAA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueUSDAA));
 	m_idxVenueFCI = Add(CImageManager::Get()->GetIcon(ImageMgrVenueFCI));
 	m_idxVenueSCC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueSCC));
+
 	m_idxARB = Add(CImageManager::Get()->GetIcon(ImageMgrApp));
+	m_idxEmpty = Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
 
 #ifdef _DEBUG
 	struct

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-19 Add a blank icon to fix issue on Mac.
  * 2012-12-29 Move icon management to global list.
  * 2009-01-27 Ported to wxWidgets.
  * 2007-04-22 Created.
@@ -26,6 +27,7 @@ class CIconList : public wxImageList
 public:
 	CIconList();
 
+	int IndexEmpty() const	{return m_idxEmpty;}
 	int IndexARB() const	{return m_idxARB;}
 	int IndexDog() const	{return m_idxDog;}
 	int IndexTrial() const	{return m_idxTrial;}
@@ -47,6 +49,7 @@ public:
 	int Trial(ARBConfig& config, ARBDogTrialPtr pTrial) const;
 
 protected:
+	int m_idxEmpty;
 	int m_idxARB;
 	int m_idxDog;
 	int m_idxTrial;

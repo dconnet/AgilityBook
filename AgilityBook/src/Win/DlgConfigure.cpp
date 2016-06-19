@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-19 Add a blank icon to fix issue on Mac.
  * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -322,8 +323,9 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 			{
 				int idx = (*iterVenue)->GetIcon();
 				if (0 > idx || idx >= m_ImageList.GetImageCount())
-					idx = -1;
-				CDlgConfigureDataVenue* pData = new CDlgConfigureDataVenue(*iterVenue);
+					idx = m_ImageList.IndexEmpty();
+				assert(0 <= idx && idx < m_ImageList.GetImageCount());
+					CDlgConfigureDataVenue* pData = new CDlgConfigureDataVenue(*iterVenue);
 				m_ctrlItems->AppendItem(
 					hParent,
 					StringUtil::stringWX(pData->OnNeedText()),
