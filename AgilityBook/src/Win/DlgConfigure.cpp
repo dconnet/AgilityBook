@@ -129,7 +129,7 @@ CDlgConfigure::CDlgConfigure(
 	, m_hItemFaults()
 	, m_hItemOtherPts()
 {
-	m_idxFaults = m_ImageList.Add(wxArtProvider::GetIcon(wxART_WARNING));
+	m_idxFaults = m_ImageList.Add(wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, m_ImageList.GetSize()));
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIGURE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
