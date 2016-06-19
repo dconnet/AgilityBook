@@ -110,6 +110,10 @@ public:
 	{
 		return m_Name;
 	}
+	void SetName(std::wstring const& inName)
+	{
+		m_Name = inName;
+	}
 	bool UseSpeedPts() const
 	{
 		return m_UseSpeedPts;

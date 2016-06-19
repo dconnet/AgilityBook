@@ -18,7 +18,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
- * 2016-06-14 Add support for named/speedpt lifetime points.
+ * 2016-06-19 Add support for named/speedpt lifetime points.
  * 2016-01-16 Cleaned up new/edit/delete buttons.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-06-16 Display number of faults for each time fault.
@@ -1359,11 +1359,7 @@ void CDlgConfigEvent::OnPointsDelete(wxCommandEvent& evt)
 			if (pTitle)
 				pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetCalc()->GetType(), pTitle->GetFaults());
 			else if (pLife)
-			{
-				assert(0);
-#pragma PRAGMA_TODO(lifetime points)
-				//pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
-			}
+				pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetName(), pLife->GetFaults());
 			else
 				pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
 			m_ctrlPointsList->Delete(idx);

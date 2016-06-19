@@ -1,4 +1,4 @@
-Last Updated: 5/25/2016
+Last Updated: 6/19/2016
 
 - Bad Dog Agility Breed Power 10 score?
   http://baddogagility.com/announcing-the-breed-power-10/
@@ -13,32 +13,7 @@ Last Updated: 5/25/2016
   is zero or more items) Maybe deal with this as a formatted field.
     "Name<sep>value<sep>Name<sep>Value"
 
-- Support multiple named lifetime points. Currently only one set of
-  (optionally) named lifetime points are supported. These need to also
-  support using Speed Points.
-  <in process>
-==============================================================================
-TODO:
-- existing points need to change for lifetime. Currently assumes points go
-  towards both title and lifetime. Changing this may cause issues with existing
-  users. To migrate, should create new existing pt entries for lifetime.
-  [mostly done, ignoring lifetime migration - will be breaking change]
-- currently, arb knows there is only 1 lifetime points - back end work is done
-  finish dialogs
-- When loading file, always automatically add lifetime names to venue if an
-  unknown name is found in either existing or config entries.
-- When deleting, need to warn/remove existing pt entries. Normal runs don't need
-  adjusting since that is done on-the-fly based on config.
-- rename: need to update existing pts.
-
----------- DLGCONFIGEVENT.CPP
-- dlg
----------- DLGCONFIGTITLEPOINTS.CPP
-- dlg
----------- POINTSDATA.CPP
-- need to fix existing lifetime pts
-- need to add placement pts to existing data
-==============================================================================
+- Need to add placement pts to existing data
 
 - Add warning in run dialog when Q is UNK that the following will not
   be saved:

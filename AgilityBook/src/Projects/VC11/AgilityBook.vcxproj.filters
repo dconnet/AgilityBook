@@ -117,6 +117,9 @@
     <ClCompile Include="..\..\Win\DlgConfigEventMethod.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\DlgConfigLifetimeName.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\DlgConfigMultiQ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -429,6 +432,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\DlgConfigEventMethod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\DlgConfigLifetimeName.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\DlgConfigMultiQ.h">

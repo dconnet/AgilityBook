@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-19 Add delete method
  * 2016-04-29 Add VerifyLifetimeName
  * 2016-01-06 Created
  */
@@ -137,7 +138,7 @@ public:
 			ARBConfigLifetimeNamePtr* outLifetimeName = nullptr) const;
 
 	/**
-	 * Add a fault.
+	 * Add a Lifetime name.
 	 * @param inName LifetimeName to add.
 	 * @param outLifetimeName Pointer to object, NULL if name already exists or is empty.
 	 * @return Whether the fault was added.
@@ -147,12 +148,9 @@ public:
 			ARBConfigLifetimeNamePtr* outLifetimeName = nullptr);
 
 	/**
-	 * Delete the fault.
+	 * Delete the Lifetime name.
 	 * @param inName Name of fault to delete.
-	 * @param ioEvents Events to clean up when deleted.
 	 * @return Whether fault was deleted.
 	 */
-	bool DeleteLifetimeName(
-			std::wstring const& inName,
-			ARBConfigEventList& ioEvents);
+	bool DeleteLifetimeName(std::wstring const& inName);
 };

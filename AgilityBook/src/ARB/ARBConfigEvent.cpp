@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2016-06-17 Add support for Lifetime names.
+ * 2016-06-19 Add support for Lifetime names.
  * 2013-09-03 Added short name.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -530,15 +530,49 @@ int ARBConfigEventList::RenameLifetimeName(
 		std::wstring const& inOldName,
 		std::wstring const& inNewName)
 {
-#pragma PRAGMA_TODO(ARBConfigEventList::RenameLifetimeName)
-	return 0;
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
+			iterScore != (*iter)->GetScorings().end(); ++iterScore)
+		{
+			for (ARBConfigLifetimePointsList::iterator iterPoints = (*iterScore)->GetLifetimePoints().begin();
+				iterPoints != (*iterScore)->GetLifetimePoints().end(); ++iterPoints)
+			{
+				if ((*iterPoints)->GetName() == inOldName)
+				{
+					++count;
+					(*iterPoints)->SetName(inNewName);
+				}
+			}
+		}
+	}
+	return count;
 }
 
 
 int ARBConfigEventList::DeleteLifetimeName(std::wstring const& inName)
 {
-#pragma PRAGMA_TODO(ARBConfigEventList::DeleteLifetimeName)
-	return 0;
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
+			iterScore != (*iter)->GetScorings().end(); ++iterScore)
+		{
+			for (ARBConfigLifetimePointsList::iterator iterPoints = (*iterScore)->GetLifetimePoints().begin();
+				iterPoints != (*iterScore)->GetLifetimePoints().end(); )
+			{
+				if ((*iterPoints)->GetName() == inName)
+				{
+					++count;
+					iterPoints = (*iterScore)->GetLifetimePoints().erase(iterPoints);
+				}
+				else
+					++iterScore;
+			}
+		}
+	}
+	return count;
 }
 
 

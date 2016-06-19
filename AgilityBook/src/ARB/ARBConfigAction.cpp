@@ -15,7 +15,7 @@
  * maintain our data integrity, we need to update things to deal with this.
  *
  * Revision History
- * 2016-06-17 Add support for Lifetime names.
+ * 2016-06-19 Add support for Lifetime names.
  * 2013-01-11 Fix filters on configuration import.
  * 2012-11-21 Add RenameLevel action verb.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -1809,25 +1809,12 @@ bool ARBConfigActionRenameLifetimeName::Apply(
 		ARBConfigLifetimeNamePtr oldLifetimeName;
 		if (venue->GetLifetimeNames().FindLifetimeName(m_OldName, &oldLifetimeName))
 		{
-#pragma PRAGMA_TODO(Lifetimename fixup rename)
-#if 0
 			bChanged = true;
-			// If any events are in use, create a fixup action.
-			int nEvents = 0;
+			oldLifetimeName->SetName(m_NewName);
+			int nEvents = venue->GetEvents().RenameLifetimeName(m_OldName, m_NewName);
+			ioInfo << Localization()->ActionRenameLifetimeName(m_Venue, m_OldName, m_NewName, nEvents) << L"\n";
 			if (ioDogs)
-				nEvents = ioDogs->NumEventsInUse(m_Venue, m_OldName);
-			if (0 < nEvents && ioDogs)
-			{
-				ioDogs->RenameEvent(m_Venue, m_OldName, m_NewName);
-			}
-			ioInfo << Localization()->ActionRenameEvent(m_Venue, m_OldName, m_NewName, nEvents) << L"\n";
-			// If the new event exists, just delete the old.
-			// Otherwise, rename the old to new.
-			if (venue->GetEvents().FindEvent(m_NewName))
-				venue->GetEvents().DeleteEvent(m_OldName);
-			else
-				oldEvent->SetName(m_NewName);
-#endif
+				ioDogs->RenameLifetimeName(m_Venue, m_OldName, m_NewName);
 		}
 	}
 
@@ -1906,29 +1893,13 @@ bool ARBConfigActionDeleteLifetimeName::Apply(
 	ARBConfigVenuePtr venue;
 	if (ioConfig.GetVenues().FindVenue(m_Venue, &venue))
 	{
-		ARBConfigLifetimeNamePtr oldLifetimeName;
-		if (venue->GetLifetimeNames().FindLifetimeName(m_Name, &oldLifetimeName))
+		if (venue->GetLifetimeNames().DeleteLifetimeName(m_Name))
 		{
-#pragma PRAGMA_TODO(Lifetimename fixup delete)
-#if 0
 			bChanged = true;
-			int nEvents = 0;
+			int nEvents = venue->GetEvents().DeleteLifetimeName(m_Name);
+			ioInfo << Localization()->ActionDeleteLifetimeName(m_Venue, m_Name, nEvents) << L"\n";
 			if (ioDogs)
-				nEvents = ioDogs->NumEventsInUse(m_Venue, m_Name);
-			// If any events are in use, create a fixup action.
-			if (0 < nEvents && ioDogs)
-			{
-				std::wstring msg = Localization()->ActionPreDeleteEvent(m_Venue, m_Name, nEvents);
-				ioCallBack.PreDelete(msg);
-				if (!ioCallBack.CanContinue())
-					return bChanged;
-				ioInfo << msg << L"\n";
-				ioDogs->DeleteEvent(m_Venue, m_Name);
-			}
-			ioInfo << Localization()->ActionDeleteEvent(m_Venue, m_Name) << L"\n";
-			venue->GetMultiQs().DeleteEvent(m_Name);
-			venue->GetEvents().DeleteEvent(m_Name);
-#endif
+				ioDogs->DeleteLifetimeName(m_Venue, m_Name);
 		}
 	}
 

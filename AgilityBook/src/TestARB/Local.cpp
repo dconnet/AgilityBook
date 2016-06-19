@@ -18,6 +18,7 @@
  * this.
  *
  * Revision History
+ * 2016-06-19 Add support for Lifetime names.
  * 2016-04-29 Separate lifetime points from title (run) points.
  * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -766,6 +767,41 @@ std::wstring CLocalization::ActionDeleteEvent(
 {
 #if defined(__WXWINDOWS__)
 	return StringUtil::stringW(wxString::Format(StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_EVENT")).c_str(), venue.c_str(), name.c_str()));
+#else
+#pragma PRAGMA_TODO(Write localization)
+	return std::wstring();
+#endif
+}
+
+
+std::wstring CLocalization::ActionRenameLifetimeName(
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nEventChanges) const
+{
+#if defined(__WXWINDOWS__)
+	if (0 == nEventChanges)
+		return StringUtil::stringW(wxString::Format(_("IDS_ACTION_RENAME_LIFETIMENAME_0"), venue.c_str(), oldName.c_str(), newName.c_str()));
+	else
+		return StringUtil::stringW(wxString::Format(_("IDS_ACTION_RENAME_LIFETIMENAME_N"), venue.c_str(), oldName.c_str(), newName.c_str(), nEventChanges));
+#else
+#pragma PRAGMA_TODO(Write localization)
+	return std::wstring();
+#endif
+}
+
+
+std::wstring CLocalization::ActionDeleteLifetimeName(
+		std::wstring const& venue,
+		std::wstring const& name,
+		int nEventChanges) const
+{
+#if defined(__WXWINDOWS__)
+	if (0 == nEventChanges)
+		return StringUtil::stringW(wxString::Format(_("IDS_ACTION_DELETE_LIFETIMENAME_0"), venue.c_str(), name.c_str()));
+	else
+		return StringUtil::stringW(wxString::Format(_("IDS_ACTION_DELETE_LIFETIMENAME_N"), venue.c_str(), name.c_str(), nEventChanges));
 #else
 #pragma PRAGMA_TODO(Write localization)
 	return std::wstring();

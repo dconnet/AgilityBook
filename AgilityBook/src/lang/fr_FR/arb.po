@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-14 14:07-0700\n"
-"PO-Revision-Date: 2016-06-14 14:07-0700\n"
+"POT-Creation-Date: 2016-06-19 12:32-0700\n"
+"PO-Revision-Date: 2016-06-19 12:32-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -24,11 +24,11 @@ msgstr ""
 "X-Poedit-SearchPath-3: TestARB\n"
 "X-Poedit-SearchPath-4: Win\n"
 
-#: ARB/ARBCalcPoints.cpp:121 Win/DlgConfigTitlePoints.cpp:166
+#: ARB/ARBCalcPoints.cpp:121 Win/DlgConfigTitlePoints.cpp:171
 msgid "IDS_TITLEPOINT_NORMAL_T2B"
 msgstr "AKC / Time 2 Beat"
 
-#: ARB/ARBCalcPoints.cpp:177 Win/DlgConfigTitlePoints.cpp:167
+#: ARB/ARBCalcPoints.cpp:177 Win/DlgConfigTitlePoints.cpp:172
 msgid "IDS_TITLEPOINT_NORMAL_UKI"
 msgstr "UKI"
 
@@ -343,8 +343,8 @@ msgstr "Degrés"
 msgid "IDS_TITLES"
 msgstr "Distinctions"
 
-#: TestARB/Local.cpp:385 TestARB/Local.cpp:404 Win/DlgConfigureData.cpp:313
-#: Win/DlgConfigureData.cpp:469 Win/Localization.cpp:299 Win/Localization.cpp:313
+#: TestARB/Local.cpp:385 TestARB/Local.cpp:404 Win/DlgConfigureData.cpp:315
+#: Win/DlgConfigureData.cpp:471 Win/Localization.cpp:299 Win/Localization.cpp:313
 msgid "IDS_SUBLEVEL_NAME"
 msgstr "SousDegré"
 
@@ -469,35 +469,55 @@ msgstr "SUPPRESSION: %1$s Epreuve [%2$s] %3$d epreuves"
 msgid "IDS_ACTION_DELETE_EVENT"
 msgstr "Action: Suppression %1$s Epreuve [%2$s]"
 
-#: TestARB/Local.cpp:781 Win/Localization.cpp:570
+#: TestARB/Local.cpp:784 Win/Localization.cpp:573
+#, fuzzy
+msgid "IDS_ACTION_RENAME_LIFETIMENAME_0"
+msgstr "Action: Renaming Lifetime Name '%1$s' to '%2$s' [%3$s]"
+
+#: TestARB/Local.cpp:786 Win/Localization.cpp:575
+#, fuzzy
+msgid "IDS_ACTION_RENAME_LIFETIMENAME_N"
+msgstr "Action: Renaming Lifetime Name '%1$s' to '%2$s' in %4$d events [%3$s]"
+
+#: TestARB/Local.cpp:801 Win/Localization.cpp:585
+#, fuzzy
+msgid "IDS_ACTION_DELETE_LIFETIMENAME_0"
+msgstr "Action: Deleting Lifetime Name '%1$s' [%2$s]"
+
+#: TestARB/Local.cpp:803 Win/Localization.cpp:587
+#, fuzzy
+msgid "IDS_ACTION_DELETE_LIFETIMENAME_N"
+msgstr "Action: Deleting Lifetime Name '%1$s' from %3$d events [%2$s]"
+
+#: TestARB/Local.cpp:816 Win/Localization.cpp:595
 msgid "IDS_TITLEPOINTSNAME"
 msgstr "%1$s points avec %2$s fautes"
 
-#: TestARB/Local.cpp:792 Win/DlgAssignColumns.cpp:404 Win/Localization.cpp:576
+#: TestARB/Local.cpp:827 Win/DlgAssignColumns.cpp:404 Win/Localization.cpp:601
 msgid "IDS_COL_SPEED"
 msgstr "Vitesse"
 
-#: TestARB/Local.cpp:794 TestARB/Local.cpp:807 Win/Localization.cpp:578
-#: Win/Localization.cpp:586
+#: TestARB/Local.cpp:829 TestARB/Local.cpp:842 Win/Localization.cpp:603
+#: Win/Localization.cpp:611
 msgid "IDS_LIFETITLEPOINTSNAME"
 msgstr "%1$s points pour la vie avec %2$s fautes"
 
-#: TestARB/Local.cpp:819 Win/Localization.cpp:593
+#: TestARB/Local.cpp:854 Win/Localization.cpp:618
 msgid "IDS_PLACEMENTPOINTSNAME"
 msgstr "%1$s points avec rang %2$d"
 
-#: TestARB/Local.cpp:831 Win/Localization.cpp:600
+#: TestARB/Local.cpp:866 Win/Localization.cpp:625
 msgid "IDS_WARN_DELETED_RUNS"
 msgstr ""
 "ATTENTION\n"
 "\n"
 "%1$d parcour(s) suprimmé a cause de changement configuration."
 
-#: TestARB/Local.cpp:845 Win/Localization.cpp:609
+#: TestARB/Local.cpp:880 Win/Localization.cpp:634
 msgid "IDS_UPDATE_TEAM_RUNS"
 msgstr "Updated %1$d Team runs."
 
-#: TestARB/Local.cpp:858 Win/Localization.cpp:617
+#: TestARB/Local.cpp:893 Win/Localization.cpp:642
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Parametre table changé pour %1$d parcours."
 
@@ -2737,10 +2757,10 @@ msgstr "Club"
 msgid "IDC_CLUB_CLUBS"
 msgstr "&Nom"
 
-#: Win/DlgClub.cpp:91 Win/DlgConfigEvent.cpp:180 Win/DlgConfigMultiQ.cpp:84
-#: Win/DlgConfigTitle.cpp:119 Win/DlgFault.cpp:58 Win/DlgName.cpp:64
-#: Win/DlgPartner.cpp:82 Win/DlgPartner.cpp:95 Win/DlgSelectURL.cpp:50
-#: Win/DlgTrial.cpp:154
+#: Win/DlgClub.cpp:91 Win/DlgConfigEvent.cpp:181 Win/DlgConfigLifetimeName.cpp:87
+#: Win/DlgConfigMultiQ.cpp:84 Win/DlgConfigTitle.cpp:119 Win/DlgFault.cpp:58
+#: Win/DlgName.cpp:64 Win/DlgPartner.cpp:82 Win/DlgPartner.cpp:95
+#: Win/DlgSelectURL.cpp:50 Win/DlgTrial.cpp:154
 msgid "IDS_ENTER_NAME"
 msgstr "Entrez un nom."
 
@@ -2769,280 +2789,280 @@ msgid "Validation conflict"
 msgstr "Conflit de validation"
 
 # DlgConfigEvent
-#: Win/DlgConfigEvent.cpp:164
+#: Win/DlgConfigEvent.cpp:165
 msgid "IDD_CONFIG_EVENT"
 msgstr "Parametres de l'épreuve"
 
-#: Win/DlgConfigEvent.cpp:174
+#: Win/DlgConfigEvent.cpp:175
 msgid "IDC_CONFIG_EVENT"
 msgstr "&Nom"
 
-#: Win/DlgConfigEvent.cpp:181 Win/DlgConfigEvent.cpp:182
+#: Win/DlgConfigEvent.cpp:182 Win/DlgConfigEvent.cpp:183
 msgid "HIDC_CONFIG_EVENT"
 msgstr "Le nom d'épreuve."
 
-#: Win/DlgConfigEvent.cpp:185
+#: Win/DlgConfigEvent.cpp:186
 msgid "IDC_CONFIG_EVENT_TABLE"
 msgstr "&Table?"
 
-#: Win/DlgConfigEvent.cpp:188 Win/DlgConfigEvent.cpp:189
+#: Win/DlgConfigEvent.cpp:189 Win/DlgConfigEvent.cpp:190
 msgid "HIDC_CONFIG_EVENT_TABLE"
 msgstr "Pourrait-il y avoir une table dans cette épreuve?"
 
-#: Win/DlgConfigEvent.cpp:192
+#: Win/DlgConfigEvent.cpp:193
 msgid "IDC_CONFIG_EVENT_PARTNER"
 msgstr "&Partenaires?"
 
-#: Win/DlgConfigEvent.cpp:195 Win/DlgConfigEvent.cpp:196
+#: Win/DlgConfigEvent.cpp:196 Win/DlgConfigEvent.cpp:197
 msgid "HIDC_CONFIG_EVENT_PARTNER"
 msgstr "Cette épreuve a-t-elle des partenaires?"
 
-#: Win/DlgConfigEvent.cpp:199
+#: Win/DlgConfigEvent.cpp:200
 msgid "IDC_CONFIG_EVENT_HAS_SUBNAMES"
 msgstr "Sous-titres?"
 
-#: Win/DlgConfigEvent.cpp:203 Win/DlgConfigEvent.cpp:204
+#: Win/DlgConfigEvent.cpp:204 Win/DlgConfigEvent.cpp:205
 msgid "HIDC_CONFIG_EVENT_HAS_SUBNAMES"
 msgstr ""
 "Permettre des sous-titres pour cette épreuve. Ceci permet de 'créer' une "
 "épreuve sans modifier la configuration, comme par exemple les Gambles dans "
 "NADAC."
 
-#: Win/DlgConfigEvent.cpp:207
+#: Win/DlgConfigEvent.cpp:208
 msgid "IDC_CONFIG_EVENT_DESC"
 msgstr ""
 "Notes\n"
 "&épreuve"
 
-#: Win/DlgConfigEvent.cpp:214 Win/DlgConfigEvent.cpp:215
+#: Win/DlgConfigEvent.cpp:215 Win/DlgConfigEvent.cpp:216
 msgid "HIDC_CONFIG_EVENT_DESC"
 msgstr "Description de cette épreuve."
 
-#: Win/DlgConfigEvent.cpp:217
+#: Win/DlgConfigEvent.cpp:218
 msgid "IDC_CONFIG_EVENT_SCORING"
 msgstr "Méthodes comptage"
 
-#: Win/DlgConfigEvent.cpp:224 Win/DlgConfigEvent.cpp:225
+#: Win/DlgConfigEvent.cpp:225 Win/DlgConfigEvent.cpp:226
 msgid "HIDC_CONFIG_EVENT_SUBNAMES"
 msgstr "Sous-titres d'épreuve pré-configurés."
 
-#: Win/DlgConfigEvent.cpp:228
+#: Win/DlgConfigEvent.cpp:229
 msgid "IDC_CONFIG_EVENT_SUBNAMES_NEW"
 msgstr "Nouveau..."
 
-#: Win/DlgConfigEvent.cpp:231 Win/DlgConfigEvent.cpp:232
+#: Win/DlgConfigEvent.cpp:232 Win/DlgConfigEvent.cpp:233
 msgid "HIDC_CONFIG_EVENT_SUBNAMES_NEW"
 msgstr "Ajouter un sous-titre d'épreuve."
 
-#: Win/DlgConfigEvent.cpp:235
+#: Win/DlgConfigEvent.cpp:236
 msgid "IDC_CONFIG_EVENT_SUBNAMES_EDIT"
 msgstr "Édition..."
 
-#: Win/DlgConfigEvent.cpp:238 Win/DlgConfigEvent.cpp:239
+#: Win/DlgConfigEvent.cpp:239 Win/DlgConfigEvent.cpp:240
 msgid "HIDC_CONFIG_EVENT_SUBNAMES_EDIT"
 msgstr "Éditer le sous-titre d'épreuve sélectionné."
 
-#: Win/DlgConfigEvent.cpp:242
+#: Win/DlgConfigEvent.cpp:243
 msgid "IDC_CONFIG_EVENT_SUBNAMES_DELETE"
 msgstr "Supprimer"
 
-#: Win/DlgConfigEvent.cpp:245 Win/DlgConfigEvent.cpp:246
+#: Win/DlgConfigEvent.cpp:246 Win/DlgConfigEvent.cpp:247
 msgid "HIDC_CONFIG_EVENT_SUBNAMES_DELETE"
 msgstr "Supprimer un sous-titre d'épreuve."
 
-#: Win/DlgConfigEvent.cpp:249
+#: Win/DlgConfigEvent.cpp:250
 msgid "IDC_CONFIG_EVENT_METHODS"
 msgstr "Niveaux &conducteur/degrés définis"
 
-#: Win/DlgConfigEvent.cpp:258 Win/DlgConfigEvent.cpp:259
+#: Win/DlgConfigEvent.cpp:259 Win/DlgConfigEvent.cpp:260
 msgid "HIDC_CONFIG_EVENT_METHODS"
 msgstr ""
 "Méthodes pour calculer les points actuellement utilisés. L'ordre est très "
 "important  la première méthode qui égale un degré/niveau conducteur va être "
 "utilisé."
 
-#: Win/DlgConfigEvent.cpp:262
+#: Win/DlgConfigEvent.cpp:263
 msgid "IDC_CONFIG_EVENT_NEW"
 msgstr "Nouveau..."
 
-#: Win/DlgConfigEvent.cpp:265 Win/DlgConfigEvent.cpp:266
+#: Win/DlgConfigEvent.cpp:266 Win/DlgConfigEvent.cpp:267
 msgid "HIDC_CONFIG_EVENT_NEW"
 msgstr "Créer une nouvelle méthode pour calculer les points."
 
-#: Win/DlgConfigEvent.cpp:269
+#: Win/DlgConfigEvent.cpp:270
 msgid "IDC_CONFIG_EVENT_EDIT"
 msgstr "Édition..."
 
-#: Win/DlgConfigEvent.cpp:272 Win/DlgConfigEvent.cpp:273
+#: Win/DlgConfigEvent.cpp:273 Win/DlgConfigEvent.cpp:274
 msgid "HIDC_CONFIG_EVENT_EDIT"
 msgstr ""
 "Éditer la méthode pour calculer les points sélectionnés. Cest aussi possible "
 "de double-cliquer directement sur la méthode."
 
-#: Win/DlgConfigEvent.cpp:276
+#: Win/DlgConfigEvent.cpp:277
 msgid "IDC_CONFIG_EVENT_DELETE"
 msgstr "Supprimer"
 
-#: Win/DlgConfigEvent.cpp:279 Win/DlgConfigEvent.cpp:280
+#: Win/DlgConfigEvent.cpp:280 Win/DlgConfigEvent.cpp:281
 msgid "HIDC_CONFIG_EVENT_DELETE"
 msgstr "Supprimer la méthode pour calculer les points sélectionnés."
 
-#: Win/DlgConfigEvent.cpp:283
+#: Win/DlgConfigEvent.cpp:284
 msgid "IDC_CONFIG_EVENT_COPY"
 msgstr "Copier"
 
-#: Win/DlgConfigEvent.cpp:286 Win/DlgConfigEvent.cpp:287
+#: Win/DlgConfigEvent.cpp:287 Win/DlgConfigEvent.cpp:288
 msgid "HIDC_CONFIG_EVENT_COPY"
 msgstr "Faire une copie de la méthode de calcule des points sélectionnée."
 
-#: Win/DlgConfigEvent.cpp:290
+#: Win/DlgConfigEvent.cpp:291
 msgid "IDC_CONFIG_EVENT_MOVE_UP"
 msgstr "Monter"
 
-#: Win/DlgConfigEvent.cpp:293 Win/DlgConfigEvent.cpp:294
+#: Win/DlgConfigEvent.cpp:294 Win/DlgConfigEvent.cpp:295
 msgid "HIDC_CONFIG_EVENT_MOVE_UP"
 msgstr "Faire monter la méthode sélectionnée dans la liste."
 
-#: Win/DlgConfigEvent.cpp:297
+#: Win/DlgConfigEvent.cpp:298
 msgid "IDC_CONFIG_EVENT_MOVE_DOWN"
 msgstr "Descendre"
 
-#: Win/DlgConfigEvent.cpp:300 Win/DlgConfigEvent.cpp:301
+#: Win/DlgConfigEvent.cpp:301 Win/DlgConfigEvent.cpp:302
 msgid "HIDC_CONFIG_EVENT_MOVE_DOWN"
 msgstr "Faire descendre la méthode sélectionnée dans la liste."
 
-#: Win/DlgConfigEvent.cpp:304
+#: Win/DlgConfigEvent.cpp:305
 msgid "IDC_CONFIG_EVENT_UNUSED"
 msgstr "Niveaux conducteur/degrés non définis"
 
-#: Win/DlgConfigEvent.cpp:311 Win/DlgConfigEvent.cpp:312
+#: Win/DlgConfigEvent.cpp:312 Win/DlgConfigEvent.cpp:313
 msgid "HIDC_CONFIG_EVENT_UNUSED"
 msgstr "Degrés/niveaux conducteur non définis actuellement."
 
-#: Win/DlgConfigEvent.cpp:319 Win/DlgConfigEvent.cpp:320
+#: Win/DlgConfigEvent.cpp:320 Win/DlgConfigEvent.cpp:321
 msgid "HIDC_CONFIG_EVENT_INFO"
 msgstr ""
 "Affiche l'information concernant la méthode sélectionnée. Cliquez 'Éditer' "
 "pour éditer cette information."
 
-#: Win/DlgConfigEvent.cpp:323
+#: Win/DlgConfigEvent.cpp:324
 msgid "IDC_CONFIG_EVENT_POINTS"
 msgstr ""
 "Points\n"
 "&Récompense"
 
-#: Win/DlgConfigEvent.cpp:332 Win/DlgConfigEvent.cpp:333
+#: Win/DlgConfigEvent.cpp:333 Win/DlgConfigEvent.cpp:334
 msgid "HIDC_CONFIG_EVENT_POINTS"
 msgstr ""
 "Liste des points qualifiant ou/et cumulatif basés sur le nombre des points "
 "pénalités."
 
-#: Win/DlgConfigEvent.cpp:336
+#: Win/DlgConfigEvent.cpp:337
 msgid "IDC_CONFIG_EVENT_POINTS_NEW"
 msgstr "Nouveau..."
 
-#: Win/DlgConfigEvent.cpp:339 Win/DlgConfigEvent.cpp:340
+#: Win/DlgConfigEvent.cpp:340 Win/DlgConfigEvent.cpp:341
 msgid "HIDC_CONFIG_EVENT_POINTS_NEW"
 msgstr "Créer un nouvel point qualifiant."
 
-#: Win/DlgConfigEvent.cpp:343
+#: Win/DlgConfigEvent.cpp:344
 msgid "IDC_CONFIG_EVENT_POINTS_EDIT"
 msgstr "Édition..."
 
-#: Win/DlgConfigEvent.cpp:346 Win/DlgConfigEvent.cpp:347
+#: Win/DlgConfigEvent.cpp:347 Win/DlgConfigEvent.cpp:348
 msgid "HIDC_CONFIG_EVENT_POINTS_EDIT"
 msgstr "Éditer le point qualifiant sélectionné."
 
-#: Win/DlgConfigEvent.cpp:350
+#: Win/DlgConfigEvent.cpp:351
 msgid "IDC_CONFIG_EVENT_POINTS_DELETE"
 msgstr "Supprimer"
 
-#: Win/DlgConfigEvent.cpp:353 Win/DlgConfigEvent.cpp:354
+#: Win/DlgConfigEvent.cpp:354 Win/DlgConfigEvent.cpp:355
 msgid "HIDC_CONFIG_EVENT_POINTS_DELETE"
 msgstr "Supprimer le point qualifiant sélectionné."
 
-#: Win/DlgConfigEvent.cpp:357
+#: Win/DlgConfigEvent.cpp:358
 msgid "IDC_CONFIG_EVENT_NOTES"
 msgstr ""
 "Notes sur\n"
 "&méthode"
 
-#: Win/DlgConfigEvent.cpp:363 Win/DlgConfigEvent.cpp:364
+#: Win/DlgConfigEvent.cpp:364 Win/DlgConfigEvent.cpp:365
 msgid "HIDC_CONFIG_EVENT_NOTES"
 msgstr "Les notes concernant la méthode couramment sélectionnée."
 
-#: Win/DlgConfigEvent.cpp:548 Win/DlgConfigEventMethod.cpp:189
+#: Win/DlgConfigEvent.cpp:549 Win/DlgConfigEventMethod.cpp:189
 #: Win/DlgConfigEventMethod.cpp:711 Win/FilterOptions.cpp:207
 #: Win/FilterOptions.cpp:291 Win/FilterOptions.cpp:389 Win/FilterOptions.cpp:397
 #: Win/FilterOptions.cpp:428
 msgid "IDS_ALL"
 msgstr "<Tous>"
 
-#: Win/DlgConfigEvent.cpp:626
+#: Win/DlgConfigEvent.cpp:627
 msgid "IDS_CONFIGEVENT_STYLE"
 msgstr "Method pour calculer les resultats"
 
-#: Win/DlgConfigEvent.cpp:639 Win/DlgConfigEvent.cpp:654
-#: Win/DlgConfigEvent.cpp:677 Win/DlgConfigEvent.cpp:693
-#: Win/DlgConfigEvent.cpp:706
+#: Win/DlgConfigEvent.cpp:640 Win/DlgConfigEvent.cpp:655
+#: Win/DlgConfigEvent.cpp:678 Win/DlgConfigEvent.cpp:694
+#: Win/DlgConfigEvent.cpp:707
 msgid "IDS_CONFIGEVENT_TIMEFAULTMULT"
 msgstr "Temps Faut Multiplicateur"
 
-#: Win/DlgConfigEvent.cpp:644
+#: Win/DlgConfigEvent.cpp:645
 msgid "IDS_CONFIGEVENT_REQOPEN"
 msgstr "Ouverture necessaire"
 
-#: Win/DlgConfigEvent.cpp:645
+#: Win/DlgConfigEvent.cpp:646
 msgid "IDS_CONFIGEVENT_REQCLOSE"
 msgstr "Fermeture necessaire"
 
-#: Win/DlgConfigEvent.cpp:652 Win/DlgConfigEvent.cpp:675
+#: Win/DlgConfigEvent.cpp:653 Win/DlgConfigEvent.cpp:676
 msgid "IDS_CONFIGEVENT_TF_FROMSCORE"
 msgstr "Soustraire Fautes temps de resultat"
 
-#: Win/DlgConfigEvent.cpp:659 Win/DlgConfigEvent.cpp:682
-#: Win/DlgConfigEvent.cpp:712
+#: Win/DlgConfigEvent.cpp:660 Win/DlgConfigEvent.cpp:683
+#: Win/DlgConfigEvent.cpp:713
 msgid "IDS_CONFIGEVENT_TF_UNDER"
 msgstr "Calculer Fautes Temps sur TPS"
 
-#: Win/DlgConfigEvent.cpp:664 Win/DlgConfigEvent.cpp:687
-#: Win/DlgConfigEvent.cpp:717
+#: Win/DlgConfigEvent.cpp:665 Win/DlgConfigEvent.cpp:688
+#: Win/DlgConfigEvent.cpp:718
 msgid "IDS_CONFIGEVENT_TF_OVER"
 msgstr "Calculer Fautes Temps sous TPS"
 
-#: Win/DlgConfigEvent.cpp:670 Win/DlgRun.cpp:2376 Win/TabView.cpp:231
+#: Win/DlgConfigEvent.cpp:671 Win/DlgRun.cpp:2376 Win/TabView.cpp:231
 #: Win/TabView.cpp:273 Win/TabView.cpp:341
 msgid "IDS_POINTS"
 msgstr "Points"
 
-#: Win/DlgConfigEvent.cpp:700
+#: Win/DlgConfigEvent.cpp:701
 msgid "IDS_CONFIGEVENT_CLEANQ"
 msgstr "Parcours doit etre sans fautes pour Q."
 
-#: Win/DlgConfigEvent.cpp:724
+#: Win/DlgConfigEvent.cpp:725
 msgid "IDS_CONFIGEVENT_DROPFRAC"
 msgstr "Supprimer fraction temps pour fautes"
 
-#: Win/DlgConfigEvent.cpp:729
+#: Win/DlgConfigEvent.cpp:730
 #, fuzzy
 msgid "IDS_CONFIGEVENT_BONUSTITLE"
 msgstr "Points Bonus existent"
 
-#: Win/DlgConfigEvent.cpp:734
+#: Win/DlgConfigEvent.cpp:735
 msgid "IDS_CONFIGEVENT_SUPERQ"
 msgstr "Super Qs existant"
 
-#: Win/DlgConfigEvent.cpp:739
+#: Win/DlgConfigEvent.cpp:740
 msgid "IDS_CONFIGEVENT_SPEEDPTS"
 msgstr "Points vitesse existent"
 
-#: Win/DlgConfigEvent.cpp:1018 Win/DlgConfigEvent.cpp:1025
-#: Win/DlgConfigEvent.cpp:1030 Win/DlgConfigEvent.cpp:1296
-#: Win/DlgConfigEvent.cpp:1306
+#: Win/DlgConfigEvent.cpp:1037 Win/DlgConfigEvent.cpp:1042
+#: Win/DlgConfigEvent.cpp:1047 Win/DlgConfigEvent.cpp:1309
+#: Win/DlgConfigEvent.cpp:1314 Win/DlgConfigEvent.cpp:1318
 msgid "IDS_TITLEPTS_EXISTS"
 msgstr "Il y a deja un entré pour ces fautes"
 
-#: Win/DlgConfigEvent.cpp:1479
+#: Win/DlgConfigEvent.cpp:1487
 msgid "IDS_CONFIGEVENT_OVERLAPDATES"
 msgstr ""
 "ATTENTION\n"
@@ -3052,12 +3072,13 @@ msgstr ""
 "\n"
 "Etes-vous sur de enregistrer?"
 
-#: Win/DlgConfigEvent.cpp:1489 Win/DlgConfigMultiQ.cpp:372
-#: Win/DlgConfigOtherPoints.cpp:70 Win/DlgConfigVenue.cpp:99
-#: Win/DlgConfigVenue.cpp:166 Win/DlgConfigVenue.cpp:605 Win/DlgConfigure.cpp:409
-#: Win/DlgConfigureData.cpp:187 Win/DlgConfigureData.cpp:226
-#: Win/DlgConfigureData.cpp:320 Win/DlgConfigureData.cpp:378
-#: Win/DlgConfigureData.cpp:478 Win/DlgConfigureData.cpp:591
+#: Win/DlgConfigEvent.cpp:1497 Win/DlgConfigLifetimeName.cpp:125
+#: Win/DlgConfigMultiQ.cpp:372 Win/DlgConfigOtherPoints.cpp:70
+#: Win/DlgConfigVenue.cpp:101 Win/DlgConfigVenue.cpp:187
+#: Win/DlgConfigVenue.cpp:637 Win/DlgConfigure.cpp:409
+#: Win/DlgConfigureData.cpp:189 Win/DlgConfigureData.cpp:228
+#: Win/DlgConfigureData.cpp:322 Win/DlgConfigureData.cpp:380
+#: Win/DlgConfigureData.cpp:480 Win/DlgConfigureData.cpp:593
 #: Win/DlgPluginDetails.cpp:218
 msgid "IDS_NAME_IN_USE"
 msgstr "Ce nom existe deja."
@@ -3288,6 +3309,15 @@ msgid "IDS_CONFIGEVENT_PLACEMENT0"
 msgstr ""
 "Pour une rang de 0, il faut des endroits specifiés ou que les points vitesses "
 "sont etteint."
+
+#: Win/DlgConfigLifetimeName.cpp:81
+msgid "IDD_CONFIG_LIFETIMENAME"
+msgstr "Nom points cumulatifs"
+
+#: Win/DlgConfigLifetimeName.cpp:88 Win/DlgConfigLifetimeName.cpp:89
+#, fuzzy
+msgid "HIDC_CONFIG_LIFETIME_NAME"
+msgstr "Name of the Lifetime Points (use an empty string for the default name)"
 
 # DlgConfigMultiQ
 #: Win/DlgConfigMultiQ.cpp:73
@@ -3631,81 +3661,81 @@ msgid "HIDC_CONFIG_TITLE_VALID_TO_DATE"
 msgstr "La date jusqu'à laquelle la récompense reste valide."
 
 # DlgConfigTitlePoints
-#: Win/DlgConfigTitlePoints.cpp:100
+#: Win/DlgConfigTitlePoints.cpp:105
 msgid "IDD_CONFIG_TITLE_POINTS"
 msgstr "Points Récompense"
 
-#: Win/DlgConfigTitlePoints.cpp:104 Win/DlgConfigTitlePoints.cpp:327
+#: Win/DlgConfigTitlePoints.cpp:109 Win/DlgConfigTitlePoints.cpp:329
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT2"
 msgstr "&Classement"
 
-#: Win/DlgConfigTitlePoints.cpp:104 Win/DlgConfigTitlePoints.cpp:334
+#: Win/DlgConfigTitlePoints.cpp:109 Win/DlgConfigTitlePoints.cpp:336
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT1"
 msgstr "&Nombre de fautes permises"
 
-#: Win/DlgConfigTitlePoints.cpp:117 Win/DlgConfigTitlePoints.cpp:118
+#: Win/DlgConfigTitlePoints.cpp:122 Win/DlgConfigTitlePoints.cpp:123
 msgid "HIDC_CONFIG_TITLEPTS_VALUE"
 msgstr ""
 "Le nombre des points pénalité permis pour points Normaux et Cumulatif. "
 "Classement qui permet de gagner des points de Classement ('-1' is a wildcard "
 "match for any runs with a non-zero place)."
 
-#: Win/DlgConfigTitlePoints.cpp:126
+#: Win/DlgConfigTitlePoints.cpp:131
 msgid "IDC_CONFIG_TITLEPTS_SPEEDPTS"
 msgstr "Points vitesse"
 
-#: Win/DlgConfigTitlePoints.cpp:130 Win/DlgConfigTitlePoints.cpp:131
+#: Win/DlgConfigTitlePoints.cpp:135 Win/DlgConfigTitlePoints.cpp:136
 #, fuzzy
 msgid "HIDC_CONFIG_TITLEPTS_SPEEDPTS"
 msgstr "Use Speed Points when computing points"
 
-#: Win/DlgConfigTitlePoints.cpp:134
+#: Win/DlgConfigTitlePoints.cpp:139
 msgid "IDC_CONFIG_TITLEPTS_POINTS"
 msgstr "Points &gagnés"
 
-#: Win/DlgConfigTitlePoints.cpp:142 Win/DlgConfigTitlePoints.cpp:143
+#: Win/DlgConfigTitlePoints.cpp:147 Win/DlgConfigTitlePoints.cpp:148
 msgid "HIDC_CONFIG_TITLEPTS_POINTS"
 msgstr "Le nombre de points qui seront gagnés."
 
-#: Win/DlgConfigTitlePoints.cpp:153
+#: Win/DlgConfigTitlePoints.cpp:158
 msgid "IDS_TITLEPOINT_NORMAL"
 msgstr "Normal"
 
-#: Win/DlgConfigTitlePoints.cpp:154
+#: Win/DlgConfigTitlePoints.cpp:159
 msgid "IDS_TITLEPOINT_LIFETIME"
 msgstr "Lifetime"
 
-#: Win/DlgConfigTitlePoints.cpp:155
+#: Win/DlgConfigTitlePoints.cpp:160
 msgid "IDS_TITLEPOINT_PLACEMENT"
 msgstr "Classement"
 
-#: Win/DlgConfigTitlePoints.cpp:160 Win/DlgConfigTitlePoints.cpp:161
+#: Win/DlgConfigTitlePoints.cpp:165 Win/DlgConfigTitlePoints.cpp:166
 msgid "HIDC_CONFIG_TITLEPTS_TITLE_POINTS"
 msgstr ""
 "Choisir le type de points Récompense: Normal (points gagnés sur le parcours), "
 "Cumulatif (points accumulés pour la vie, normalement pareil comme Normal), "
 "Classement (points gagnés basé sur Classement, traité comme Cumulatif)"
 
-#: Win/DlgConfigTitlePoints.cpp:165
+#: Win/DlgConfigTitlePoints.cpp:170
 msgid "IDS_TITLEPOINT_NORMAL_NORMAL"
 msgstr "Normal"
 
-#: Win/DlgConfigTitlePoints.cpp:172 Win/DlgConfigTitlePoints.cpp:173
+#: Win/DlgConfigTitlePoints.cpp:177 Win/DlgConfigTitlePoints.cpp:178
 msgid "HIDC_CONFIG_TITLEPTS_CALC"
 msgstr "Sélectionnez le type de calcul pour les points de titrage."
 
-#: Win/DlgConfigTitlePoints.cpp:179
+#: Win/DlgConfigTitlePoints.cpp:184
 msgid "IDC_CONFIG_TITLEPTS_LIFETIMENAME"
 msgstr "Nom points cumulatifs"
 
-#: Win/DlgConfigTitlePoints.cpp:190 Win/DlgConfigTitlePoints.cpp:191
+#: Win/DlgConfigTitlePoints.cpp:192 Win/DlgConfigTitlePoints.cpp:193
 msgid "HIDC_CONFIG_TITLEPTS_LIFETIMENAME"
 msgstr ""
 "Dénomination pour les points Cumulatifs. Si rien n'est entré, le nom, 'Points "
 "Cumulatifs' est utilisé."
 
-#: Win/DlgConfigTitlePoints.cpp:202 Win/DlgConfigTitlePoints.cpp:213
-#: Win/PointsData.cpp:695 Win/PointsData.cpp:747
+#: Win/DlgConfigTitlePoints.cpp:204 Win/DlgConfigTitlePoints.cpp:215
+#: Win/DlgConfigureData.cpp:762 Win/PointsData.cpp:695 Win/PointsData.cpp:747
 msgid "IDS_TITLEPOINT_LIFETIME_NAME"
 msgstr "Lifetime"
 
@@ -3755,112 +3785,112 @@ msgstr "L'ouverture du document a échoué."
 msgid "IDS_FILEEXT_FILTER_ARB"
 msgstr "Agility Record Book (*.arb)|*.arb|Tous fichiers (*.*)|*.*||"
 
-#: Win/DlgConfigVenue.cpp:92 Win/DlgConfigureData.cpp:217
+#: Win/DlgConfigVenue.cpp:94 Win/DlgConfigureData.cpp:219
 msgid "IDS_DIVISION_NAME"
 msgstr "Nom Niveau conducteur"
 
 # DlgConfigVenue
-#: Win/DlgConfigVenue.cpp:221
+#: Win/DlgConfigVenue.cpp:242
 msgid "IDD_CONFIG_VENUE"
 msgstr "Paramètres de lorganisation"
 
-#: Win/DlgConfigVenue.cpp:229
+#: Win/DlgConfigVenue.cpp:250
 msgid "IDC_CONFIG_VENUE"
 msgstr "N&om"
 
-#: Win/DlgConfigVenue.cpp:235
+#: Win/DlgConfigVenue.cpp:256
 msgid "IDS_INVALID_NAME"
 msgstr "Nom invalide"
 
-#: Win/DlgConfigVenue.cpp:236 Win/DlgConfigVenue.cpp:237
+#: Win/DlgConfigVenue.cpp:257 Win/DlgConfigVenue.cpp:258
 msgid "HIDC_CONFIG_VENUE"
 msgstr "Le nom dorganisation."
 
-#: Win/DlgConfigVenue.cpp:240
+#: Win/DlgConfigVenue.cpp:261
 msgid "IDC_CONFIG_VENUE_URL"
 msgstr "Site &web"
 
-#: Win/DlgConfigVenue.cpp:247 Win/DlgConfigVenue.cpp:248
+#: Win/DlgConfigVenue.cpp:268 Win/DlgConfigVenue.cpp:269
 msgid "HIDC_CONFIG_VENUE_URL"
 msgstr "Le site Web de lorganisation."
 
-#: Win/DlgConfigVenue.cpp:251
+#: Win/DlgConfigVenue.cpp:272
 msgid "IDC_CONFIG_VENUE_LONGNAME"
 msgstr "Nom complet"
 
-#: Win/DlgConfigVenue.cpp:258 Win/DlgConfigVenue.cpp:259
+#: Win/DlgConfigVenue.cpp:279 Win/DlgConfigVenue.cpp:280
 msgid "HIDC_CONFIG_VENUE_LONGNAME"
 msgstr "Le nom complet dorganisation."
 
-#: Win/DlgConfigVenue.cpp:262
+#: Win/DlgConfigVenue.cpp:283
 msgid "IDC_CONFIG_VENUE_DESC"
 msgstr "Desc&ription"
 
-#: Win/DlgConfigVenue.cpp:269 Win/DlgConfigVenue.cpp:270
+#: Win/DlgConfigVenue.cpp:290 Win/DlgConfigVenue.cpp:291
 msgid "HIDC_CONFIG_VENUE_DESC"
 msgstr "Description dorganisation."
 
-#: Win/DlgConfigVenue.cpp:281
+#: Win/DlgConfigVenue.cpp:302
 msgid "IDC_CONFIG_VENUE_NEW"
 msgstr "&Nouveau..."
 
-#: Win/DlgConfigVenue.cpp:284 Win/DlgConfigVenue.cpp:285
+#: Win/DlgConfigVenue.cpp:305 Win/DlgConfigVenue.cpp:306
 msgid "HIDC_CONFIG_VENUE_NEW"
 msgstr "Créer un nouvel article."
 
-#: Win/DlgConfigVenue.cpp:288
+#: Win/DlgConfigVenue.cpp:309
 msgid "IDC_CONFIG_VENUE_EDIT"
 msgstr "&Édition..."
 
-#: Win/DlgConfigVenue.cpp:291 Win/DlgConfigVenue.cpp:292
+#: Win/DlgConfigVenue.cpp:312 Win/DlgConfigVenue.cpp:313
 msgid "HIDC_CONFIG_VENUE_EDIT"
 msgstr "Éditer l'article sélectionné."
 
-#: Win/DlgConfigVenue.cpp:295
+#: Win/DlgConfigVenue.cpp:316
 msgid "IDC_CONFIG_VENUE_DELETE"
 msgstr "&Supprimer"
 
-#: Win/DlgConfigVenue.cpp:298 Win/DlgConfigVenue.cpp:299
+#: Win/DlgConfigVenue.cpp:319 Win/DlgConfigVenue.cpp:320
 msgid "HIDC_CONFIG_VENUE_DELETE"
 msgstr "Supprimer l'article sélectionne."
 
-#: Win/DlgConfigVenue.cpp:302
+#: Win/DlgConfigVenue.cpp:323
 msgid "IDC_CONFIG_VENUE_COPY"
 msgstr "&Copier..."
 
-#: Win/DlgConfigVenue.cpp:305 Win/DlgConfigVenue.cpp:306
+#: Win/DlgConfigVenue.cpp:326 Win/DlgConfigVenue.cpp:327
 msgid "HIDC_CONFIG_VENUE_COPY"
 msgstr "Copier l'article sélectionné."
 
-#: Win/DlgConfigVenue.cpp:309
+#: Win/DlgConfigVenue.cpp:330
 msgid "IDC_CONFIG_VENUE_MOVE_UP"
 msgstr "&Monter"
 
-#: Win/DlgConfigVenue.cpp:312 Win/DlgConfigVenue.cpp:313
+#: Win/DlgConfigVenue.cpp:333 Win/DlgConfigVenue.cpp:334
 msgid "HIDC_CONFIG_VENUE_MOVE_UP"
 msgstr "Faire monter l'article sélectionné dans la liste."
 
-#: Win/DlgConfigVenue.cpp:316
+#: Win/DlgConfigVenue.cpp:337
 msgid "IDC_CONFIG_VENUE_MOVE_DOWN"
 msgstr "&Descendre"
 
-#: Win/DlgConfigVenue.cpp:319 Win/DlgConfigVenue.cpp:320
+#: Win/DlgConfigVenue.cpp:340 Win/DlgConfigVenue.cpp:341
 msgid "HIDC_CONFIG_VENUE_MOVE_DOWN"
 msgstr "Faire descendre l'article sélectionné dans la liste."
 
-#: Win/DlgConfigVenue.cpp:362
+#: Win/DlgConfigVenue.cpp:383
 msgid "IDC_CONFIG_VENUE_DIVISION"
 msgstr "Niveaux conducteurs"
 
-#: Win/DlgConfigVenue.cpp:371
+#: Win/DlgConfigVenue.cpp:392
 msgid "IDC_CONFIG_VENUE_EVENT"
 msgstr "Épreuves"
 
-#: Win/DlgConfigVenue.cpp:380
+#: Win/DlgConfigVenue.cpp:401 Win/DlgConfigVenue.cpp:412
 msgid "IDC_CONFIG_VENUE_MULTIQ"
 msgstr "Plusieurs épreuves qualifiantes"
 
-#: Win/DlgConfigVenue.cpp:390
+#: Win/DlgConfigVenue.cpp:422
 msgid "IDC_CONFIG_VENUE_TITLES"
 msgstr "Récompense"
 
@@ -3921,17 +3951,17 @@ msgstr "Mettre à jour la configuration."
 msgid "IDS_FAULT_TYPE_NAME"
 msgstr "Nom Faut"
 
-#: Win/DlgConfigure.cpp:693 Win/DlgConfigure.cpp:737 Win/DlgConfigureData.cpp:632
-#: Win/DlgConfigureData.cpp:633 Win/DlgConfigureData.cpp:716
-#: Win/DlgConfigureData.cpp:803
+#: Win/DlgConfigure.cpp:693 Win/DlgConfigure.cpp:737 Win/DlgConfigureData.cpp:634
+#: Win/DlgConfigureData.cpp:635 Win/DlgConfigureData.cpp:718
+#: Win/DlgConfigureData.cpp:810 Win/DlgConfigureData.cpp:896
 msgid "IDS_COPYOF"
 msgstr "Copie de %1$s"
 
-#: Win/DlgConfigureData.cpp:180 Win/DlgConfigureData.cpp:357
+#: Win/DlgConfigureData.cpp:182 Win/DlgConfigureData.cpp:359
 msgid "IDS_LEVEL_NAME"
 msgstr "Degré"
 
-#: Win/DlgConfigureData.cpp:209
+#: Win/DlgConfigureData.cpp:211
 msgid "IDS_CHANGEDIV_ISSUES"
 msgstr ""
 "ATTENTION\n"
@@ -3942,7 +3972,7 @@ msgstr ""
 "\n"
 "Etes-vous sur de continuer?"
 
-#: Win/DlgConfigureData.cpp:350
+#: Win/DlgConfigureData.cpp:352
 msgid "IDS_CHANGELEVEL_ISSUES"
 msgstr ""
 "ATTENTION\n"
@@ -3953,7 +3983,7 @@ msgstr ""
 "\n"
 "Etes-vous sur de continuer?"
 
-#: Win/DlgConfigureData.cpp:463
+#: Win/DlgConfigureData.cpp:465
 msgid "IDS_CHANGESUBLEVEL_ISSUES"
 msgstr ""
 "ATTENTION\n"
@@ -3964,7 +3994,7 @@ msgstr ""
 "\n"
 "Etes-vous sur de continuer?"
 
-#: Win/DlgConfigureData.cpp:577
+#: Win/DlgConfigureData.cpp:579
 msgid "IDS_NAME_IN_USE_MERGE"
 msgstr "Ce nom est utilisé. Voulez-vous mellanger vos data avec le nom existant?"
 

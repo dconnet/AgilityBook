@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2016-06-17 Add support for Lifetime names.
+ * 2016-06-19 Add support for Lifetime names.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-11 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -25,6 +25,7 @@
 #include "DlgConfigureData.h"
 
 #include "DlgConfigEvent.h"
+#include "DlgConfigLifetimeName.h"
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigOtherPoints.h"
 #include "DlgConfigTitle.h"
@@ -772,24 +773,14 @@ bool CDlgConfigureDataLifetimeName::DoEdit()
 	while (!done)
 	{
 		done = true;
-		CDlgName dlg(name, _("IDC_CONFIG_TITLEPTS_LIFETIMENAME"), m_pDlg);
+		CDlgConfigLifetimeName dlg(m_pDlg->m_pVenue, name);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			name = m_pName->GetName();
-			if (name != oldName)
-			{
-				if (m_pDlg->m_pVenue->GetLifetimeNames().FindLifetimeName(name))
-				{
-					done = false;
-					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
-					continue;
-				}
-				m_pName->SetName(name);
-				m_pDlg->m_pVenue->GetEvents().RenameLifetimeName(oldName, name);
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLifetimeName::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
-				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
-				bEdited = true;
-			}
+			m_pName->SetName(name);
+			m_pDlg->m_pVenue->GetEvents().RenameLifetimeName(oldName, name);
+			m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLifetimeName::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
+			RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
+			bEdited = true;
 		}
 	}
 	return bEdited;
@@ -799,8 +790,9 @@ bool CDlgConfigureDataLifetimeName::DoEdit()
 bool CDlgConfigureDataLifetimeName::DoDelete()
 {
 	std::wstring name = m_pName->GetName();
-	if (m_pDlg->m_pVenue->GetLifetimeNames().DeleteLifetimeName(name, m_pDlg->m_pVenue->GetEvents()))
+	if (m_pDlg->m_pVenue->GetLifetimeNames().DeleteLifetimeName(name))
 	{
+		m_pDlg->m_pVenue->GetEvents().DeleteLifetimeName(name);
 		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLifetimeName::New(0, m_pDlg->m_pVenue->GetName(), name));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;

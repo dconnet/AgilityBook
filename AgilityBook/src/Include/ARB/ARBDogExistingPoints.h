@@ -480,21 +480,26 @@ public:
 	int NumLifetimePointsInUse(std::wstring const& inLifetime) const;
 
 	/**
-	 * Rename an Lifetime, rename any dependent objects.
-	 * @param inOldLifetime Lifetime name being renamed.
-	 * @param inNewLifetime New Lifetime name.
+	 * Rename a Lifetime name.
+	 * @param inVenue Venue name is in.
+	 * @param inOldName Lifetime name being renamed.
+	 * @param inNewLName New Lifetime name.
 	 * @return Number of items changed.
 	 */
-	int RenameLifetimePoints(
-			std::wstring const& inOldLifetime,
-			std::wstring const& inNewLifetime);
+	int RenameLifetimeName(
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	/**
-	 * Delete an Lifetime, remove any dependent objects.
+	 * Delete a Lifetime name.
+	 * @param inVenue Venue name is in.
 	 * @param inLifetime Lifetime name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteLifetimePoints(std::wstring const& inLifetime);
+	int DeleteLifetimeName(
+			std::wstring const& inVenue,
+			std::wstring const& inName);
 
 	/**
 	 * Number of MultiQ objects in use.

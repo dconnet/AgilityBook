@@ -170,6 +170,7 @@
     <ClCompile Include="..\..\Win\DlgClub.cpp" />
     <ClCompile Include="..\..\Win\DlgConfigEvent.cpp" />
     <ClCompile Include="..\..\Win\DlgConfigEventMethod.cpp" />
+    <ClCompile Include="..\..\Win\DlgConfigLifetimeName.cpp" />
     <ClCompile Include="..\..\Win\DlgConfigMultiQ.cpp" />
     <ClCompile Include="..\..\Win\DlgConfigOtherPoints.cpp" />
     <ClCompile Include="..\..\Win\DlgConfigPlaceInfo.cpp" />
@@ -294,6 +295,7 @@
     <ClInclude Include="..\..\Win\DlgClub.h" />
     <ClInclude Include="..\..\Win\DlgConfigEvent.h" />
     <ClInclude Include="..\..\Win\DlgConfigEventMethod.h" />
+    <ClInclude Include="..\..\Win\DlgConfigLifetimeName.h" />
     <ClInclude Include="..\..\Win\DlgConfigMultiQ.h" />
     <ClInclude Include="..\..\Win\DlgConfigOtherPoints.h" />
     <ClInclude Include="..\..\Win\DlgConfigPlaceInfo.h" />

@@ -956,17 +956,19 @@ int ARBDogExistingPointsList::NumLifetimePointsInUse(std::wstring const& inLifet
 }
 
 
-int ARBDogExistingPointsList::RenameLifetimePoints(
-		std::wstring const& inOldLifetime,
-		std::wstring const& inNewLifetime)
+int ARBDogExistingPointsList::RenameLifetimeName(
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (ARBDogExistingPoints::eLifetime == (*iter)->GetType()
-		&& (*iter)->GetTypeName() == inOldLifetime)
+		&& (*iter)->GetVenue() == inVenue
+		&& (*iter)->GetTypeName() == inOldName)
 		{
-			(*iter)->SetTypeName(inNewLifetime);
+			(*iter)->SetTypeName(inNewName);
 			++count;
 		}
 	}
@@ -974,13 +976,16 @@ int ARBDogExistingPointsList::RenameLifetimePoints(
 }
 
 
-int ARBDogExistingPointsList::DeleteLifetimePoints(std::wstring const& inLifetime)
+int ARBDogExistingPointsList::DeleteLifetimeName(
+		std::wstring const& inVenue,
+		std::wstring const& inName)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
 		if (ARBDogExistingPoints::eLifetime == (*iter)->GetType()
-		&& (*iter)->GetTypeName() == inLifetime)
+		&& (*iter)->GetVenue() == inVenue
+		&& (*iter)->GetTypeName() == inName)
 		{
 			iter = erase(iter);
 			++count;

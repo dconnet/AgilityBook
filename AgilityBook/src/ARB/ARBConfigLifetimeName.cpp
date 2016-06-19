@@ -173,16 +173,13 @@ bool ARBConfigLifetimeNameList::AddLifetimeName(
 }
 
 
-bool ARBConfigLifetimeNameList::DeleteLifetimeName(
-		std::wstring const& inName,
-		ARBConfigEventList& ioEvents)
+bool ARBConfigLifetimeNameList::DeleteLifetimeName(std::wstring const& inName)
 {
 	std::wstring name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)
 		{
-			ioEvents.DeleteLifetimeName(inName);
 			erase(iter);
 			return true;
 		}

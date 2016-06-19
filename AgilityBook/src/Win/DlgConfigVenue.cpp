@@ -18,7 +18,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
- * 2016-06-17 Add support for Lifetime names.
+ * 2016-06-19 Add support for Lifetime names.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -41,6 +41,7 @@
 
 #include "AgilityBook.h"
 #include "DlgConfigEvent.h"
+#include "DlgConfigLifetimeName.h"
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigTitle.h"
 #include "DlgConfigureData.h"
@@ -133,7 +134,22 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 		break;
 
 	case CDlgConfigVenue::eLifetimeNames:
-#pragma PRAGMA_TODO(lifetime name)
+		{
+			// The dialog will ensure uniqueness.
+			CDlgConfigLifetimeName dlg(m_pDlg->m_pVenue, m_pDlg);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				ARBConfigLifetimeNamePtr pName;
+				if (m_pDlg->m_pVenue->GetLifetimeNames().AddLifetimeName(dlg.GetLifetimeName(), &pName))
+				{
+					CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(m_pDlg, pName);
+					wxTreeItemId evt = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+					pData->AddSubItems();
+					m_pDlg->m_ctrlItems->SelectItem(evt);
+					bAdded = true;
+				}
+			}
+		}
 		break;
 
 	case CDlgConfigVenue::eMultiQ:

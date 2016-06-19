@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-19 Add support for Lifetime names.
  * 2012-09-09 Added 'titlePts' to 'Placement'.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -709,6 +710,33 @@ int ARBDogList::DeleteEvent(
 	{
 		count += (*iter)->GetExistingPoints().DeleteEvent(inVenue, inEvent);
 		count += (*iter)->GetTrials().DeleteEvent(inVenue, inEvent);
+	}
+	return count;
+}
+
+
+int ARBDogList::RenameLifetimeName(
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
+{
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().RenameLifetimeName(inVenue, inOldName, inNewName);
+	}
+	return count;
+}
+
+
+int ARBDogList::DeleteLifetimeName(
+		std::wstring const& inVenue,
+		std::wstring const& inName)
+{
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().DeleteLifetimeName(inVenue, inName);
 	}
 	return count;
 }

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-19 Add support for Lifetime names.
  * 2012-09-09 Added 'titlePts' to 'Placement'.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -536,6 +537,28 @@ public:
 	int DeleteEvent(
 			std::wstring const& inVenue,
 			std::wstring const& inEvent);
+
+	/**
+	 * Rename a lifetime name.
+	 * @param inVenue Venue name is in.
+	 * @param inOldName Lifetime name being renamed.
+	 * @param inNewName New Lifetime name.
+	 * @return Number of items changed.
+	 */
+	int RenameLifetimeName(
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
+
+	/**
+	 * Delete a lifetime name.
+	 * @param inVenue Venue name is in.
+	 * @param inName Lifetime name being deleted.
+	 * @return Number of items removed.
+	 */
+	int DeleteLifetimeName(
+			std::wstring const& inVenue,
+			std::wstring const& inName);
 
 	/**
 	 * Add a dog.

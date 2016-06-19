@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-19 Add support for Lifetime names.
  * 2016-04-29 Separate lifetime points from title (run) points.
  * 2016-01-06 Add support for named lifetime points.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -164,6 +165,15 @@ public:
 	std::wstring ActionDeleteEvent(
 			std::wstring const& venue,
 			std::wstring const& name) const;
+	virtual std::wstring ActionRenameLifetimeName(
+			std::wstring const& venue,
+			std::wstring const& oldName,
+			std::wstring const& newName,
+			int nEventChanges) const;
+	virtual std::wstring ActionDeleteLifetimeName(
+			std::wstring const& venue,
+			std::wstring const& name,
+			int nEventChanges) const;
 
 	std::wstring TitlePointsNameFormat(double points, double faults) const;
 	std::wstring LifetimePointsNameWithSpeedPointsFormat(double faults) const;

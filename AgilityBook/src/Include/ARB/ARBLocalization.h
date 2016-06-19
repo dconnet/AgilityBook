@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-19 Add support for Lifetime names.
  * 2016-04-29 Separate lifetime points from title (run) points.
  * 2016-01-06 Add support for named lifetime points.
  * 2013-09-03 Changed sub level updating.
@@ -177,6 +178,15 @@ public:
 	virtual std::wstring ActionDeleteEvent(
 			std::wstring const& venue,
 			std::wstring const& name) const = 0;
+	virtual std::wstring ActionRenameLifetimeName(
+			std::wstring const& venue,
+			std::wstring const& oldName,
+			std::wstring const& newName,
+			int nEventChanges) const = 0;
+	virtual std::wstring ActionDeleteLifetimeName(
+			std::wstring const& venue,
+			std::wstring const& name,
+			int nEventChanges) const = 0;
 
 	// Used in ARBConfigTitlePoints.cpp
 	virtual std::wstring TitlePointsNameFormat(double points, double faults) const = 0;
