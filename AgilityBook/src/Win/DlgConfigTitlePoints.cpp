@@ -204,7 +204,7 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 			str = _("IDS_TITLEPOINT_LIFETIME_NAME");
 		}
 		int index = m_ctrlLifetimeName->Append(str);
-		m_ctrlLifetimeName->SetClientData(index, (void*)(bDefault ? 1 : 0));
+		m_ctrlLifetimeName->SetClientData(index, reinterpret_cast<void*>(bDefault ? 1 : 0));
 		if (str == m_LifetimeName || (m_LifetimeName.empty() && bDefault))
 		{
 			m_ctrlLifetimeName->SetSelection(index);
@@ -354,7 +354,7 @@ void CDlgConfigTitlePoints::OnOk(wxCommandEvent& evt)
 	if (eTitleLifetime == Type())
 	{
 		int index = m_ctrlLifetimeName->GetSelection();
-		int isDefault = (int)m_ctrlLifetimeName->GetClientData(index);
+		void* isDefault = m_ctrlLifetimeName->GetClientData(index);
 		if (isDefault)
 			m_LifetimeName.clear();
 	}

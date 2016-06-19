@@ -797,6 +797,9 @@ void CDlgExistingPoints::FillTypeNames()
 
 	switch (type)
 	{
+	default:
+		break;
+			
 	case ARBDogExistingPoints::eOtherPoints:
 		for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->Book().GetConfig().GetOtherPoints().begin();
 			iterOther != m_pDoc->Book().GetConfig().GetOtherPoints().end();
