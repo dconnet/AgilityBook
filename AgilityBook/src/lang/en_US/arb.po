@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-19 12:32-0700\n"
-"PO-Revision-Date: 2016-06-19 12:32-0700\n"
+"POT-Creation-Date: 2016-06-19 14:15-0700\n"
+"PO-Revision-Date: 2016-06-19 14:15-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -60,11 +60,11 @@ msgstr "NA"
 msgid "IDS_BAD_VERSION"
 msgstr "Unable to determine version information"
 
-#: TestARB/Local.cpp:50 TestARB/TestMisc.cpp:125 Win/Localization.cpp:48
+#: TestARB/Local.cpp:51 TestARB/TestMisc.cpp:125 Win/Localization.cpp:49
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Unknown document version"
 
-#: TestARB/Local.cpp:54 Win/Localization.cpp:52
+#: TestARB/Local.cpp:55 Win/Localization.cpp:53
 msgid "IDS_WARNING_NEWER_DOC"
 msgstr ""
 "WARNING\n"
@@ -75,432 +75,432 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: TestARB/Local.cpp:55 Win/Localization.cpp:53
+#: TestARB/Local.cpp:56 Win/Localization.cpp:54
 msgid "IDS_INVALID_DOC_STRUCTURE"
 msgstr "Invalid document structure"
 
-#: TestARB/Local.cpp:56 Win/Localization.cpp:54
+#: TestARB/Local.cpp:57 Win/Localization.cpp:55
 msgid "IDS_INVALID_FILE_FORMAT"
 msgstr "Invalid file format: '"
 
-#: TestARB/Local.cpp:57 Win/Localization.cpp:55
+#: TestARB/Local.cpp:58 Win/Localization.cpp:56
 msgid "IDS_INVALID_FILE_MISSING_ATTRIB"
 msgstr "' is missing required attribute '"
 
-#: TestARB/Local.cpp:58 Win/Localization.cpp:56
+#: TestARB/Local.cpp:59 Win/Localization.cpp:57
 msgid "IDS_INVALID_FILE_BAD_ATTRIB"
 msgstr "' has an invalid value for the attribute '"
 
-#: TestARB/Local.cpp:59 Win/Localization.cpp:57
+#: TestARB/Local.cpp:60 Win/Localization.cpp:58
 msgid "IDS_INVALID_DATE"
 msgstr "Invalid date: "
 
-#: TestARB/Local.cpp:60 Win/Localization.cpp:58
+#: TestARB/Local.cpp:61 Win/Localization.cpp:59
 msgid "IDS_INVALID_DIV_LEVEL"
 msgstr "Division/level pair has not been defined: "
 
-#: TestARB/Local.cpp:61 Win/Localization.cpp:59
+#: TestARB/Local.cpp:62 Win/Localization.cpp:60
 msgid "IDS_INVALID_EVENT_NAME"
 msgstr "Event has not been defined: "
 
-#: TestARB/Local.cpp:64 TestARB/Local.cpp:70 Win/Localization.cpp:61
+#: TestARB/Local.cpp:65 TestARB/Local.cpp:71 Win/Localization.cpp:62
 msgid "IDS_INVALID_ROOT"
 msgstr "'%1$s' must be the root element."
 
-#: TestARB/Local.cpp:65 TestARB/Local.cpp:71 Win/Localization.cpp:62
+#: TestARB/Local.cpp:66 TestARB/Local.cpp:72 Win/Localization.cpp:63
 msgid "IDS_MISSING_CONFIG"
 msgstr "Missing '%1$s' section."
 
-#: TestARB/Local.cpp:66 TestARB/Local.cpp:72 Win/Localization.cpp:63
+#: TestARB/Local.cpp:67 TestARB/Local.cpp:73 Win/Localization.cpp:64
 msgid "IDS_INVALID_CONFIG"
 msgstr "Only one '%1$s' section is allowed."
 
-#: TestARB/Local.cpp:67 TestARB/Local.cpp:73 Win/Localization.cpp:64
+#: TestARB/Local.cpp:68 TestARB/Local.cpp:74 Win/Localization.cpp:65
 msgid "IDS_INVALID_VENUE_CONFIG"
 msgstr "All '%1$s' elements must come before '%2$s' elements."
 
-#: TestARB/Local.cpp:75 Win/Localization.cpp:65
+#: TestARB/Local.cpp:76 Win/Localization.cpp:66
 msgid "IDS_INVALID_DIV_NAME"
 msgstr "Invalid division name: "
 
-#: TestARB/Local.cpp:76 Win/Localization.cpp:66
+#: TestARB/Local.cpp:77 Win/Localization.cpp:67
 msgid "IDS_INVALID_VENUE_NAME"
 msgstr "Invalid venue name: "
 
-#: TestARB/Local.cpp:77 Win/Localization.cpp:67
+#: TestARB/Local.cpp:78 Win/Localization.cpp:68
 msgid "IDS_INVALID_LIFETIME_NAME"
 msgstr "Invalid Lifetime name: "
 
-#: TestARB/Local.cpp:78 Win/Localization.cpp:68
+#: TestARB/Local.cpp:79 Win/Localization.cpp:69
 msgid "IDS_INVALID_OTHER_PTS_NAME"
 msgstr "Invalid Other Points name: "
 
-#: TestARB/Local.cpp:79 Win/Localization.cpp:69
+#: TestARB/Local.cpp:80 Win/Localization.cpp:70
 msgid "IDS_INVALID_MULTIQ_NAME"
 msgstr "Invalid Multiple Q name: "
 
-#: TestARB/Local.cpp:80 Win/Localization.cpp:70
+#: TestARB/Local.cpp:81 Win/Localization.cpp:71
 msgid "IDS_INVALID_MULTIQ_CONVERSION"
 msgstr "Unable to convert Existing QQ Points"
 
-#: TestARB/Local.cpp:81 Win/Localization.cpp:71
+#: TestARB/Local.cpp:82 Win/Localization.cpp:72
 msgid "IDS_INVALID_EVENT"
 msgstr ""
 "Unable to locate an event description in any of the venues of the affiliated "
 "clubs: "
 
-#: TestARB/Local.cpp:82 Win/Localization.cpp:72
+#: TestARB/Local.cpp:83 Win/Localization.cpp:73
 msgid "IDS_INVALID_TITLE"
 msgstr "Title is not defined in the Venue description: "
 
-#: TestARB/Local.cpp:83 Win/Localization.cpp:73
+#: TestARB/Local.cpp:84 Win/Localization.cpp:74
 msgid "IDS_VALID_VALUES"
 msgstr "Valid values: "
 
-#: TestARB/Local.cpp:88 Win/Localization.cpp:78
+#: TestARB/Local.cpp:89 Win/Localization.cpp:79
 msgid "IDS_CALENDAR_TENTATIVE"
 msgstr "Information is tentative."
 
-#: TestARB/Local.cpp:89 Win/Localization.cpp:79
+#: TestARB/Local.cpp:90 Win/Localization.cpp:80
 msgid "IDS_CALENDAR_PAST"
 msgstr "Past"
 
-#: TestARB/Local.cpp:90 Win/Localization.cpp:80
+#: TestARB/Local.cpp:91 Win/Localization.cpp:81
 msgid "IDS_CALENDAR_NOTENTERED"
 msgstr "Not entered"
 
-#: TestARB/Local.cpp:91 Win/Localization.cpp:81 Win/WizardImport.cpp:1328
+#: TestARB/Local.cpp:92 Win/Localization.cpp:82 Win/WizardImport.cpp:1328
 msgid "IDS_CALENDAR_ENTERED"
 msgstr "Entered"
 
-#: TestARB/Local.cpp:92 Win/Localization.cpp:82 Win/WizardImport.cpp:1323
+#: TestARB/Local.cpp:93 Win/Localization.cpp:83 Win/WizardImport.cpp:1323
 msgid "IDS_CALENDAR_PENDING"
 msgstr "Pending"
 
-#: TestARB/Local.cpp:93 Win/Localization.cpp:83 Win/WizardImport.cpp:1318
+#: TestARB/Local.cpp:94 Win/Localization.cpp:84 Win/WizardImport.cpp:1318
 msgid "IDS_CALENDAR_PLANNING"
 msgstr "Planning"
 
-#: TestARB/Local.cpp:94 Win/Localization.cpp:84
+#: TestARB/Local.cpp:95 Win/Localization.cpp:85
 msgid "IDS_CALENDAR_STATUS"
 msgstr "Status: "
 
-#: TestARB/Local.cpp:99 Win/Localization.cpp:89
+#: TestARB/Local.cpp:100 Win/Localization.cpp:90
 msgid "IDS_CALENDAR_OPENS"
 msgstr "Trial opens: "
 
-#: TestARB/Local.cpp:100 Win/Localization.cpp:90
+#: TestARB/Local.cpp:101 Win/Localization.cpp:91
 msgid "IDS_CALENDAR_DRAW"
 msgstr "Trial draws: "
 
-#: TestARB/Local.cpp:101 Win/Localization.cpp:91
+#: TestARB/Local.cpp:102 Win/Localization.cpp:92
 msgid "IDS_CALENDAR_CLOSES"
 msgstr "Trial closes: "
 
-#: TestARB/Local.cpp:102 Win/Localization.cpp:92
+#: TestARB/Local.cpp:103 Win/Localization.cpp:93
 msgid "IDS_SCORE_STYLE_UNKNOWN"
 msgstr "Unknown"
 
-#: TestARB/Local.cpp:103 Win/Localization.cpp:93
+#: TestARB/Local.cpp:104 Win/Localization.cpp:94
 msgid "IDS_SCORE_STYLE_FAULTS_TIME"
 msgstr "Faults Then Time"
 
-#: TestARB/Local.cpp:104 Win/Localization.cpp:94
+#: TestARB/Local.cpp:105 Win/Localization.cpp:95
 msgid "IDS_SCORE_STYLE_FAULTS100_TIME"
 msgstr "100 Minus Faults Then Time"
 
-#: TestARB/Local.cpp:105 Win/Localization.cpp:95
+#: TestARB/Local.cpp:106 Win/Localization.cpp:96
 msgid "IDS_SCORE_STYLE_FAULTS200_TIME"
 msgstr "200 Minus Faults Then Time"
 
-#: TestARB/Local.cpp:106 Win/Localization.cpp:96
+#: TestARB/Local.cpp:107 Win/Localization.cpp:97
 msgid "IDS_SCORE_STYLE_OCSCORE_TIME"
 msgstr "Opening/Closing Points Then Time"
 
-#: TestARB/Local.cpp:107 Win/Localization.cpp:97
+#: TestARB/Local.cpp:108 Win/Localization.cpp:98
 msgid "IDS_SCORE_STYLE_SCORE_TIME"
 msgstr "Points Then Time"
 
-#: TestARB/Local.cpp:108 Win/Localization.cpp:98
+#: TestARB/Local.cpp:109 Win/Localization.cpp:99
 msgid "IDS_SCORE_STYLE_TIME_PLUS_FAULTS"
 msgstr "Time Plus Faults"
 
-#: TestARB/Local.cpp:109 Win/Localization.cpp:99
+#: TestARB/Local.cpp:110 Win/Localization.cpp:100
 msgid "IDS_EXISTING_POINTS_OTHER"
 msgstr "OtherPoints"
 
-#: TestARB/Local.cpp:110 Win/Localization.cpp:100
+#: TestARB/Local.cpp:111 Win/Localization.cpp:101
 msgid "IDS_EXISTING_POINTS_LIFETIME"
 msgstr "Lifetime"
 
-#: TestARB/Local.cpp:111 Win/Localization.cpp:101
+#: TestARB/Local.cpp:112 Win/Localization.cpp:102
 msgid "IDS_EXISTING_POINTS_RUN"
 msgstr "Run"
 
-#: TestARB/Local.cpp:112 Win/Localization.cpp:102
+#: TestARB/Local.cpp:113 Win/Localization.cpp:103
 msgid "IDS_EXISTING_POINTS_SPEED"
 msgstr "Speed"
 
-#: TestARB/Local.cpp:113 Win/Localization.cpp:103
+#: TestARB/Local.cpp:114 Win/Localization.cpp:104
 msgid "IDS_EXISTING_POINTS_MQ"
 msgstr "Multiple Q"
 
-#: TestARB/Local.cpp:114 Win/Localization.cpp:104
+#: TestARB/Local.cpp:115 Win/Localization.cpp:105
 msgid "IDS_EXISTING_POINTS_SQ"
 msgstr "SuperQ"
 
-#: TestARB/Local.cpp:124 Win/Localization.cpp:113
+#: TestARB/Local.cpp:125 Win/Localization.cpp:114
 msgid "IDS_UPDATE_CALSITES"
 msgstr "Calendar Sites"
 
-#: TestARB/Local.cpp:126 TestARB/Local.cpp:145 TestARB/Local.cpp:162
-#: TestARB/Local.cpp:181 TestARB/Local.cpp:200 TestARB/Local.cpp:217
-#: TestARB/Local.cpp:251 TestARB/Local.cpp:285 TestARB/Local.cpp:319
-#: TestARB/Local.cpp:353 TestARB/Local.cpp:387 TestARB/Local.cpp:422
-#: Win/Localization.cpp:115 Win/Localization.cpp:129 Win/Localization.cpp:141
-#: Win/Localization.cpp:155 Win/Localization.cpp:169 Win/Localization.cpp:181
-#: Win/Localization.cpp:205 Win/Localization.cpp:229 Win/Localization.cpp:253
-#: Win/Localization.cpp:277 Win/Localization.cpp:301 Win/Localization.cpp:326
+#: TestARB/Local.cpp:127 TestARB/Local.cpp:146 TestARB/Local.cpp:163
+#: TestARB/Local.cpp:182 TestARB/Local.cpp:201 TestARB/Local.cpp:218
+#: TestARB/Local.cpp:252 TestARB/Local.cpp:286 TestARB/Local.cpp:320
+#: TestARB/Local.cpp:354 TestARB/Local.cpp:388 TestARB/Local.cpp:423
+#: Win/Localization.cpp:116 Win/Localization.cpp:130 Win/Localization.cpp:142
+#: Win/Localization.cpp:156 Win/Localization.cpp:170 Win/Localization.cpp:182
+#: Win/Localization.cpp:206 Win/Localization.cpp:230 Win/Localization.cpp:254
+#: Win/Localization.cpp:278 Win/Localization.cpp:302 Win/Localization.cpp:327
 msgid "IDS_UPDATE_ADDED"
 msgstr "%1$d added"
 
-#: TestARB/Local.cpp:128 TestARB/Local.cpp:164 TestARB/Local.cpp:183
-#: TestARB/Local.cpp:219 TestARB/Local.cpp:253 TestARB/Local.cpp:321
-#: TestARB/Local.cpp:355 TestARB/Local.cpp:389 TestARB/Local.cpp:426
-#: Win/Localization.cpp:117 Win/Localization.cpp:143 Win/Localization.cpp:157
-#: Win/Localization.cpp:183 Win/Localization.cpp:207 Win/Localization.cpp:255
-#: Win/Localization.cpp:279 Win/Localization.cpp:303 Win/Localization.cpp:330
+#: TestARB/Local.cpp:129 TestARB/Local.cpp:165 TestARB/Local.cpp:184
+#: TestARB/Local.cpp:220 TestARB/Local.cpp:254 TestARB/Local.cpp:322
+#: TestARB/Local.cpp:356 TestARB/Local.cpp:390 TestARB/Local.cpp:427
+#: Win/Localization.cpp:118 Win/Localization.cpp:144 Win/Localization.cpp:158
+#: Win/Localization.cpp:184 Win/Localization.cpp:208 Win/Localization.cpp:256
+#: Win/Localization.cpp:280 Win/Localization.cpp:304 Win/Localization.cpp:331
 msgid "IDS_UPDATE_UPDATED"
 msgstr "%1$d updated"
 
-#: TestARB/Local.cpp:130 TestARB/Local.cpp:147 TestARB/Local.cpp:166
-#: TestARB/Local.cpp:185 TestARB/Local.cpp:202 TestARB/Local.cpp:221
-#: TestARB/Local.cpp:255 TestARB/Local.cpp:289 TestARB/Local.cpp:323
-#: TestARB/Local.cpp:357 TestARB/Local.cpp:391 TestARB/Local.cpp:428
-#: Win/Localization.cpp:119 Win/Localization.cpp:131 Win/Localization.cpp:145
-#: Win/Localization.cpp:159 Win/Localization.cpp:171 Win/Localization.cpp:185
-#: Win/Localization.cpp:209 Win/Localization.cpp:233 Win/Localization.cpp:257
-#: Win/Localization.cpp:281 Win/Localization.cpp:305 Win/Localization.cpp:332
+#: TestARB/Local.cpp:131 TestARB/Local.cpp:148 TestARB/Local.cpp:167
+#: TestARB/Local.cpp:186 TestARB/Local.cpp:203 TestARB/Local.cpp:222
+#: TestARB/Local.cpp:256 TestARB/Local.cpp:290 TestARB/Local.cpp:324
+#: TestARB/Local.cpp:358 TestARB/Local.cpp:392 TestARB/Local.cpp:429
+#: Win/Localization.cpp:120 Win/Localization.cpp:132 Win/Localization.cpp:146
+#: Win/Localization.cpp:160 Win/Localization.cpp:172 Win/Localization.cpp:186
+#: Win/Localization.cpp:210 Win/Localization.cpp:234 Win/Localization.cpp:258
+#: Win/Localization.cpp:282 Win/Localization.cpp:306 Win/Localization.cpp:333
 msgid "IDS_UPDATE_IDENTICAL"
 msgstr "%1$d identical"
 
-#: TestARB/Local.cpp:143 Win/DlgAssignColumns.cpp:299 Win/DlgConfigure.cpp:216
-#: Win/Localization.cpp:127 Win/Print.cpp:261
+#: TestARB/Local.cpp:144 Win/DlgAssignColumns.cpp:299 Win/DlgConfigure.cpp:216
+#: Win/Localization.cpp:128 Win/Print.cpp:261
 msgid "IDS_COL_FAULTS"
 msgstr "Faults"
 
-#: TestARB/Local.cpp:160 Win/DlgConfigure.cpp:219 Win/DlgDog.cpp:133
-#: Win/DlgListCtrl.cpp:503 Win/Localization.cpp:139 Win/PointsData.cpp:1059
+#: TestARB/Local.cpp:161 Win/DlgConfigure.cpp:219 Win/DlgDog.cpp:133
+#: Win/DlgListCtrl.cpp:503 Win/Localization.cpp:140 Win/PointsData.cpp:1059
 #: Win/PointsData.cpp:1129 Win/PointsData.cpp:1199 Win/PointsData.cpp:1275
 #: Win/PointsData.cpp:1963
 msgid "IDS_OTHERPOINTS"
 msgstr "Other Points"
 
-#: TestARB/Local.cpp:179 Win/DlgConfigure.cpp:212 Win/Localization.cpp:153
+#: TestARB/Local.cpp:180 Win/DlgConfigure.cpp:212 Win/Localization.cpp:154
 msgid "IDS_COL_VENUES"
 msgstr "Venues"
 
-#: TestARB/Local.cpp:198 Win/Localization.cpp:167
+#: TestARB/Local.cpp:199 Win/Localization.cpp:168
 msgid "IDS_LIFETIMENAMES"
 msgstr "Lifetime Names"
 
-#: TestARB/Local.cpp:215 TestARB/Local.cpp:234 Win/Localization.cpp:179
-#: Win/Localization.cpp:193
+#: TestARB/Local.cpp:216 TestARB/Local.cpp:235 Win/Localization.cpp:180
+#: Win/Localization.cpp:194
 msgid "IDS_COL_DIVISIONS"
 msgstr "Divisions"
 
-#: TestARB/Local.cpp:236 TestARB/Local.cpp:270 TestARB/Local.cpp:304
-#: TestARB/Local.cpp:338 TestARB/Local.cpp:372 TestARB/Local.cpp:406
-#: Win/Localization.cpp:195 Win/Localization.cpp:219 Win/Localization.cpp:243
-#: Win/Localization.cpp:267 Win/Localization.cpp:291 Win/Localization.cpp:315
+#: TestARB/Local.cpp:237 TestARB/Local.cpp:271 TestARB/Local.cpp:305
+#: TestARB/Local.cpp:339 TestARB/Local.cpp:373 TestARB/Local.cpp:407
+#: Win/Localization.cpp:196 Win/Localization.cpp:220 Win/Localization.cpp:244
+#: Win/Localization.cpp:268 Win/Localization.cpp:292 Win/Localization.cpp:316
 msgid "IDS_REORDERED"
 msgstr "Reordered"
 
-#: TestARB/Local.cpp:249 TestARB/Local.cpp:268 Win/Localization.cpp:203
-#: Win/Localization.cpp:217
+#: TestARB/Local.cpp:250 TestARB/Local.cpp:269 Win/Localization.cpp:204
+#: Win/Localization.cpp:218
 msgid "IDS_COL_EVENTS"
 msgstr "Events"
 
-#: TestARB/Local.cpp:283 TestARB/Local.cpp:302 Win/Localization.cpp:227
-#: Win/Localization.cpp:241
+#: TestARB/Local.cpp:284 TestARB/Local.cpp:303 Win/Localization.cpp:228
+#: Win/Localization.cpp:242
 msgid "IDS_COL_MULTIQS"
 msgstr "MultiQs"
 
-#: TestARB/Local.cpp:287 TestARB/Local.cpp:424 Win/Localization.cpp:231
-#: Win/Localization.cpp:328
+#: TestARB/Local.cpp:288 TestARB/Local.cpp:425 Win/Localization.cpp:232
+#: Win/Localization.cpp:329
 msgid "IDS_UPDATE_DELETED"
 msgstr "%1$d deleted"
 
-#: TestARB/Local.cpp:317 TestARB/Local.cpp:336 Win/Localization.cpp:251
-#: Win/Localization.cpp:265
+#: TestARB/Local.cpp:318 TestARB/Local.cpp:337 Win/Localization.cpp:252
+#: Win/Localization.cpp:266
 msgid "IDS_COL_LEVELS"
 msgstr "Levels"
 
-#: TestARB/Local.cpp:351 TestARB/Local.cpp:370 Win/Localization.cpp:275
-#: Win/Localization.cpp:289 Win/PointsData.cpp:1392
+#: TestARB/Local.cpp:352 TestARB/Local.cpp:371 Win/Localization.cpp:276
+#: Win/Localization.cpp:290 Win/PointsData.cpp:1392
 msgid "IDS_TITLES"
 msgstr "Titles"
 
-#: TestARB/Local.cpp:385 TestARB/Local.cpp:404 Win/DlgConfigureData.cpp:315
-#: Win/DlgConfigureData.cpp:471 Win/Localization.cpp:299
-#: Win/Localization.cpp:313
+#: TestARB/Local.cpp:386 TestARB/Local.cpp:405 Win/DlgConfigureData.cpp:315
+#: Win/DlgConfigureData.cpp:471 Win/Localization.cpp:300
+#: Win/Localization.cpp:314
 msgid "IDS_SUBLEVEL_NAME"
 msgstr "SubLevel"
 
-#: TestARB/Local.cpp:420 Win/Localization.cpp:324
+#: TestARB/Local.cpp:421 Win/Localization.cpp:325
 msgid "IDS_UPDATE_RULES"
 msgstr "rules"
 
-#: TestARB/Local.cpp:440 Win/Localization.cpp:339
+#: TestARB/Local.cpp:441 Win/Localization.cpp:340
 msgid "IDS_ACTION_DELETE_CALPLUGIN"
 msgstr "Action: Deleting Plugin [%1$s]"
 
-#: TestARB/Local.cpp:455 Win/Localization.cpp:349
+#: TestARB/Local.cpp:456 Win/Localization.cpp:350
 msgid "IDS_ACTION_RENAME_OTHERPTS"
 msgstr "Action: Renaming OtherPoints [%1$s] to [%2$s]"
 
-#: TestARB/Local.cpp:458 Win/Localization.cpp:352
+#: TestARB/Local.cpp:459 Win/Localization.cpp:353
 msgid "IDS_ACTION_RENAME_OTHERPTS2"
 msgstr ", updating %1$d OtherPoints"
 
-#: TestARB/Local.cpp:473 Win/Localization.cpp:362
+#: TestARB/Local.cpp:474 Win/Localization.cpp:363
 msgid "IDS_ACTION_PREDELETE_OTHERPTS"
 msgstr "DELETING: OtherPoints [%1$s] %2$d items"
 
-#: TestARB/Local.cpp:484 Win/Localization.cpp:368
+#: TestARB/Local.cpp:485 Win/Localization.cpp:369
 msgid "IDS_ACTION_DELETE_OTHERPTS"
 msgstr "Action: Deleting OtherPoints [%1$s]"
 
-#: TestARB/Local.cpp:499 Win/Localization.cpp:378
+#: TestARB/Local.cpp:500 Win/Localization.cpp:379
 msgid "IDS_ACTION_RENAME_VENUE"
 msgstr "Action: Renaming Venue [%1$s] to [%2$s]"
 
-#: TestARB/Local.cpp:502 Win/Localization.cpp:381
+#: TestARB/Local.cpp:503 Win/Localization.cpp:382
 msgid "IDS_ACTION_RENAME_VENUE2"
 msgstr ", updating %1$d related items"
 
-#: TestARB/Local.cpp:517 Win/Localization.cpp:391
+#: TestARB/Local.cpp:518 Win/Localization.cpp:392
 msgid "IDS_ACTION_PREDELETE_VENUE"
 msgstr "DELETING: Venue [%1$s] %2$d items"
 
-#: TestARB/Local.cpp:528 Win/Localization.cpp:397
+#: TestARB/Local.cpp:529 Win/Localization.cpp:398
 msgid "IDS_ACTION_DELETE_VENUE"
 msgstr "Action: Deleting Venue [%1$s]"
 
-#: TestARB/Local.cpp:544 Win/Localization.cpp:408
+#: TestARB/Local.cpp:545 Win/Localization.cpp:409
 msgid "IDS_ACTION_RENAME_MULTIQ"
 msgstr "Action: Renaming %1$s MultiQ [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:547 Win/Localization.cpp:411
+#: TestARB/Local.cpp:548 Win/Localization.cpp:412
 msgid "IDS_ACTION_RENAME_MULTIQ2"
 msgstr ", updating %1$d MultiQs"
 
-#: TestARB/Local.cpp:563 Win/Localization.cpp:422
+#: TestARB/Local.cpp:564 Win/Localization.cpp:423
 msgid "IDS_ACTION_PREDELETE_MULTIQ"
 msgstr "DELETING: %1$s MultiQ [%2$s] %3$d items"
 
-#: TestARB/Local.cpp:576 Win/Localization.cpp:430
+#: TestARB/Local.cpp:577 Win/Localization.cpp:431
 msgid "IDS_ACTION_DELETE_MULTIQ"
 msgstr "Action: Deleting %1$s MultiQ [%2$s]"
 
-#: TestARB/Local.cpp:592 Win/Localization.cpp:441
+#: TestARB/Local.cpp:593 Win/Localization.cpp:442
 msgid "IDS_ACTION_RENAME_DIV"
 msgstr "Action: Renaming %1$s Division [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:595 Win/Localization.cpp:444
+#: TestARB/Local.cpp:596 Win/Localization.cpp:445
 msgid "IDS_ACTION_RENAME_DIV2"
 msgstr ", updating %1$d runs"
 
-#: TestARB/Local.cpp:611 Win/Localization.cpp:455
+#: TestARB/Local.cpp:612 Win/Localization.cpp:456
 msgid "IDS_ACTION_PREDELETE_DIV"
 msgstr "DELETING: %1$s Division [%2$s] %3$d runs and existing points"
 
-#: TestARB/Local.cpp:624 Win/Localization.cpp:463
+#: TestARB/Local.cpp:625 Win/Localization.cpp:464
 msgid "IDS_ACTION_DELETE_DIV"
 msgstr "Action: Deleting %1$s Division [%2$s]"
 
-#: TestARB/Local.cpp:640 Win/Localization.cpp:474
+#: TestARB/Local.cpp:641 Win/Localization.cpp:475
 msgid "IDS_ACTION_RENAME_LEVEL"
 msgstr "Action: Renaming %1$s Level [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:643 Win/Localization.cpp:477
+#: TestARB/Local.cpp:644 Win/Localization.cpp:478
 msgid "IDS_ACTION_RENAME_LEVEL2"
 msgstr ", updating %1$d runs"
 
-#: TestARB/Local.cpp:659 Win/Localization.cpp:488
+#: TestARB/Local.cpp:660 Win/Localization.cpp:489
 msgid "IDS_ACTION_PREDELETE_LEVEL"
 msgstr "DELETING: %1$s Level [%2$s] %3$d runs"
 
-#: TestARB/Local.cpp:672 Win/Localization.cpp:496
+#: TestARB/Local.cpp:673 Win/Localization.cpp:497
 msgid "IDS_ACTION_DELETE_LEVEL"
 msgstr "Action: Deleting %1$s Level [%2$s]"
 
-#: TestARB/Local.cpp:688 Win/Localization.cpp:507
+#: TestARB/Local.cpp:689 Win/Localization.cpp:508
 msgid "IDS_ACTION_RENAME_TITLE"
 msgstr "Action: Renaming %1$s Title [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:691 Win/Localization.cpp:510
+#: TestARB/Local.cpp:692 Win/Localization.cpp:511
 msgid "IDS_ACTION_RENAME_TITLE2"
 msgstr ", updating %1$d titles"
 
-#: TestARB/Local.cpp:707 Win/Localization.cpp:521
+#: TestARB/Local.cpp:708 Win/Localization.cpp:522
 msgid "IDS_ACTION_PREDELETE_TITLE"
 msgstr "DELETING: %1$s Title [%2$s] %3$d titles"
 
-#: TestARB/Local.cpp:720 Win/Localization.cpp:529
+#: TestARB/Local.cpp:721 Win/Localization.cpp:530
 msgid "IDS_ACTION_DELETE_TITLE"
 msgstr "Action: Deleting %1$s Title [%2$s]"
 
-#: TestARB/Local.cpp:736 Win/Localization.cpp:540
+#: TestARB/Local.cpp:737 Win/Localization.cpp:541
 msgid "IDS_ACTION_RENAME_EVENT"
 msgstr "Action: Renaming %1$s Event [%2$s] to [%3$s]"
 
-#: TestARB/Local.cpp:739 Win/Localization.cpp:543
+#: TestARB/Local.cpp:740 Win/Localization.cpp:544
 msgid "IDS_ACTION_RENAME_EVENT2"
 msgstr ", updating %1$d events"
 
-#: TestARB/Local.cpp:755 Win/Localization.cpp:554
+#: TestARB/Local.cpp:756 Win/Localization.cpp:555
 msgid "IDS_ACTION_PREDELETE_EVENT"
 msgstr "DELETING: %1$s Event [%2$s] %3$d events"
 
-#: TestARB/Local.cpp:768 Win/Localization.cpp:562
+#: TestARB/Local.cpp:769 Win/Localization.cpp:563
 msgid "IDS_ACTION_DELETE_EVENT"
 msgstr "Action: Deleting %1$s Event [%2$s]"
 
-#: TestARB/Local.cpp:784 Win/Localization.cpp:573
+#: TestARB/Local.cpp:785 Win/Localization.cpp:574
 msgid "IDS_ACTION_RENAME_LIFETIMENAME_0"
 msgstr "Action: Renaming Lifetime Name '%1$s' to '%2$s' [%3$s]"
 
-#: TestARB/Local.cpp:786 Win/Localization.cpp:575
+#: TestARB/Local.cpp:787 Win/Localization.cpp:576
 msgid "IDS_ACTION_RENAME_LIFETIMENAME_N"
 msgstr "Action: Renaming Lifetime Name '%1$s' to '%2$s' in %4$d events [%3$s]"
 
-#: TestARB/Local.cpp:801 Win/Localization.cpp:585
+#: TestARB/Local.cpp:802 Win/Localization.cpp:586
 msgid "IDS_ACTION_DELETE_LIFETIMENAME_0"
 msgstr "Action: Deleting Lifetime Name '%1$s' [%2$s]"
 
-#: TestARB/Local.cpp:803 Win/Localization.cpp:587
+#: TestARB/Local.cpp:804 Win/Localization.cpp:588
 msgid "IDS_ACTION_DELETE_LIFETIMENAME_N"
 msgstr "Action: Deleting Lifetime Name '%1$s' from %3$d events [%2$s]"
 
-#: TestARB/Local.cpp:816 Win/Localization.cpp:595
+#: TestARB/Local.cpp:817 Win/Localization.cpp:596
 msgid "IDS_TITLEPOINTSNAME"
 msgstr "%1$s points with %2$s faults"
 
-#: TestARB/Local.cpp:827 Win/DlgAssignColumns.cpp:404 Win/Localization.cpp:601
+#: TestARB/Local.cpp:828 Win/DlgAssignColumns.cpp:404 Win/Localization.cpp:602
 msgid "IDS_COL_SPEED"
 msgstr "Speed"
 
-#: TestARB/Local.cpp:829 TestARB/Local.cpp:842 Win/Localization.cpp:603
-#: Win/Localization.cpp:611
+#: TestARB/Local.cpp:830 TestARB/Local.cpp:843 Win/Localization.cpp:604
+#: Win/Localization.cpp:612
 msgid "IDS_LIFETITLEPOINTSNAME"
 msgstr "%1$s lifetime points with %2$s faults"
 
-#: TestARB/Local.cpp:854 Win/Localization.cpp:618
+#: TestARB/Local.cpp:855 Win/Localization.cpp:619
 msgid "IDS_PLACEMENTPOINTSNAME"
 msgstr "%1$s points with place of %2$d"
 
-#: TestARB/Local.cpp:866 Win/Localization.cpp:625
+#: TestARB/Local.cpp:867 Win/Localization.cpp:626
 msgid "IDS_WARN_DELETED_RUNS"
 msgstr ""
 "WARNING\n"
@@ -508,11 +508,11 @@ msgstr ""
 "%1$d run(s) deleted due to configuration changes.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: TestARB/Local.cpp:880 Win/Localization.cpp:634
+#: TestARB/Local.cpp:881 Win/Localization.cpp:635
 msgid "IDS_UPDATE_TEAM_RUNS"
 msgstr "Updated %1$d Team runs."
 
-#: TestARB/Local.cpp:893 Win/Localization.cpp:642
+#: TestARB/Local.cpp:894 Win/Localization.cpp:643
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Table setting updated in %1$d runs."
 
@@ -3837,7 +3837,11 @@ msgstr "Divisions"
 msgid "IDC_CONFIG_VENUE_EVENT"
 msgstr "Events"
 
-#: Win/DlgConfigVenue.cpp:401 Win/DlgConfigVenue.cpp:412
+#: Win/DlgConfigVenue.cpp:401
+msgid "IDC_CONFIG_VENUE_LIFETIMENAME"
+msgstr "Lifetime Names"
+
+#: Win/DlgConfigVenue.cpp:412
 msgid "IDC_CONFIG_VENUE_MULTIQ"
 msgstr "Multiple Qs"
 

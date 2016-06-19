@@ -1,6 +1,11 @@
 Notes for releasing a new version.
 
-[On new year, update License.txt and src/Include/VersionNumber.h.]
+On new year, update copyright year in:
+- License.txt
+- configure.in
+- src/Include/VersionNumber.h
+- src/Projects/xcode7/AgilityBook/AgilityBook/AgilityBook-Info.plist
+- src/Projects/xcode7/ARBHelp/ARBHelp/ARBHelp-Info.plist
 
 Files to change before marking files for release:
 - If file version has changed (arb version, not build number):

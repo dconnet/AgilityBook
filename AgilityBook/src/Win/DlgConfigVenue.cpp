@@ -398,7 +398,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	}
 	m_ctrlItems->Expand(events);
 
-	wxTreeItemId lifetimeNames = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_MULTIQ"), -1, -1, new CDlgConfigVenueDataRoot(this, eLifetimeNames));
+	wxTreeItemId lifetimeNames = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_LIFETIMENAME"), -1, -1, new CDlgConfigVenueDataRoot(this, eLifetimeNames));
 	for (ARBConfigLifetimeNameList::iterator iter = m_pVenue->GetLifetimeNames().begin();
 		iter != m_pVenue->GetLifetimeNames().end();
 		++iter)
