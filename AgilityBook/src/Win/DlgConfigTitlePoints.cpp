@@ -121,11 +121,6 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 		m_ctrlValue->SetValidator(CGenericValidator(&m_Faults));
 	m_ctrlValue->SetHelpText(_("HIDC_CONFIG_TITLEPTS_VALUE"));
 	m_ctrlValue->SetToolTip(_("HIDC_CONFIG_TITLEPTS_VALUE"));
-	if (eTitleNormal == m_Type && ePointsTypeNormal != m_TypeNormal)
-	{
-		m_textValue->Hide();
-		m_ctrlValue->Hide();
-	}
 
 	m_ctrlSpeedPts = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_TITLEPTS_SPEEDPTS"),
@@ -146,13 +141,6 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 		CGenericValidator(&m_Points));
 	m_ctrlPoints->SetHelpText(_("HIDC_CONFIG_TITLEPTS_POINTS"));
 	m_ctrlPoints->SetToolTip(_("HIDC_CONFIG_TITLEPTS_POINTS"));
-	if (eTitleNormal == m_Type && ePointsTypeNormal != m_TypeNormal)
-	{
-		m_textPoints->Hide();
-		m_ctrlPoints->Hide();
-	}
-	else
-		m_ctrlPoints->Enable(!m_bSpeed);
 
 	wxArrayString types;
 	types.Add(_("IDS_TITLEPOINT_NORMAL"));
@@ -217,6 +205,8 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 		m_ctrlLifetimeName->SetClientData(index, (void*)(1));
 		m_ctrlLifetimeName->SetSelection(index);
 	}
+	if (1 == m_ctrlLifetimeName->GetCount())
+		m_ctrlLifetimeName->SetSelection(0);
 
 	if (eTitleLifetime != m_Type)
 	{
@@ -252,6 +242,9 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
+
+	UpdateControls(-1);
+
 	Layout();
 	GetSizer()->Fit(this);
 	wxSize sz = GetSize();
@@ -262,24 +255,9 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 }
 
 
-DEFINE_ON_INIT(CDlgConfigTitlePoints)
-
-
-void CDlgConfigTitlePoints::OnUseSpeedPoints(wxCommandEvent& evt)
+bool CDlgConfigTitlePoints::UpdateControls(int oldType)
 {
-	TransferDataFromWindow();
-	m_ctrlPoints->Enable(!m_bSpeed);
-}
-
-
-void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
-{
-	int oldType = m_Type;
-	m_Type = m_ctrlType->GetSelection();
-	m_TypeNormal = m_ctrlTypeNormal->GetSelection();
-	TransferDataFromWindow();
 	bool bRefit = false;
-
 	if (eTitleNormal != m_Type || ePointsTypeNormal == m_TypeNormal)
 	{
 		bRefit = true;
@@ -337,7 +315,28 @@ void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 		m_ctrlValue->SetValidator(CGenericValidator(&m_Faults));
 		bRefit = true;
 	}
-	if (bRefit)
+	return bRefit;
+}
+
+
+DEFINE_ON_INIT(CDlgConfigTitlePoints)
+
+
+void CDlgConfigTitlePoints::OnUseSpeedPoints(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	m_ctrlPoints->Enable(!m_bSpeed);
+}
+
+
+void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
+{
+	int oldType = m_Type;
+	m_Type = m_ctrlType->GetSelection();
+	m_TypeNormal = m_ctrlTypeNormal->GetSelection();
+	TransferDataFromWindow();
+
+	if (UpdateControls(oldType))
 	{
 		TransferDataToWindow();
 		Layout();

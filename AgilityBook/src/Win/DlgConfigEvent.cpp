@@ -1309,8 +1309,7 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case CDlgConfigTitlePoints::eTitleLifetime:
-					assert(0);
-					if (!pScoring->GetLifetimePoints().AddLifetimePoints(StringUtil::stringW(dlg.GetName()), dlg.UseSpeedPts(), dlg.Points(), dlg.Faults()))
+					if (!pScoring->GetLifetimePoints().AddLifetimePoints(StringUtil::stringW(dlg.LifetimeName()), dlg.UseSpeedPts(), dlg.Points(), dlg.Faults()))
 						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case CDlgConfigTitlePoints::eTitlePlacement:

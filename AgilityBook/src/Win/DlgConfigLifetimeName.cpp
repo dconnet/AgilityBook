@@ -84,7 +84,7 @@ void CDlgConfigLifetimeName::Init(wxWindow* pParent)
 
 	CTextCtrl* ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(50, -1)), 0,
-		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
+		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_LIFETIME_NAME"));
 	ctrlName->SetToolTip(_("HIDC_CONFIG_LIFETIME_NAME"));
 

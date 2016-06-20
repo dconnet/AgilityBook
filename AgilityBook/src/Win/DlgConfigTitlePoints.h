@@ -83,6 +83,8 @@ private:
 	double m_Points;
 	wxString m_LifetimeName;
 
+	bool UpdateControls(int oldType);
+
 	DECLARE_EVENT_TABLE()
 	DECLARE_ON_INIT()
 	void OnUseSpeedPoints(wxCommandEvent& evt);
