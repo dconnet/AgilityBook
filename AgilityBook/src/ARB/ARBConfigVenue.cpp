@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-06-29 Fix when default lifetime name is created during conversion.
  * 2016-01-16 Finish lifetime conversion.
  * 2016-01-06 Removed LifetimeName, added LifetimeNames.
  * 2013-01-13 Added new recurring title suffix style.
@@ -181,11 +182,12 @@ bool ARBConfigVenue::Load(
 	// URL added in v12.3
 	inTree->GetAttrib(ATTRIB_VENUE_URL, m_URL);
 	// LifetimeName added in v12.6, removed in 14.4
+	bool bAddLifetime = false;
 	if (inVersion < ARBVersion(14,4))
 	{
 		std::wstring lifetimeName;
-		inTree->GetAttrib(L"LifetimeName", lifetimeName);
-		m_LifetimeNames.AddLifetimeName(lifetimeName);
+		if (ElementNode::eFound == inTree->GetAttrib(L"LifetimeName", lifetimeName))
+			m_LifetimeNames.AddLifetimeName(lifetimeName);
 	}
 	// Icon index added in 12.5
 	inTree->GetAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
@@ -222,6 +224,22 @@ bool ARBConfigVenue::Load(
 		{
 			// Ignore any errors...
 			m_Events.Load(m_Divisions, element, inVersion, ioCallback);
+			// Look for any lifetime points for conversion.
+			if (inVersion < ARBVersion(14,4))
+			{
+				for (ARBConfigEventList::iterator iter = m_Events.begin();
+					!bAddLifetime && iter != m_Events.end();
+					++iter)
+				{
+					for (ARBConfigScoringList::iterator iterS = (*iter)->GetScorings().begin();
+						!bAddLifetime && iterS != (*iter)->GetScorings().end();
+						++iterS)
+					{
+						if (!(*iterS)->GetLifetimePoints().empty())
+							bAddLifetime = true;
+					}
+				}
+			}
 		}
 		else if (name == TREE_MULTIQ)
 		{
@@ -250,7 +268,7 @@ bool ARBConfigVenue::Load(
 			}
 		}
 	}
-	if (m_LifetimeNames.empty())
+	if (bAddLifetime && m_LifetimeNames.empty())
 		m_LifetimeNames.AddLifetimeName(L"");
 
 	// Finish lifetime name conversion.
