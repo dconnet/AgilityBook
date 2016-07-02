@@ -63,7 +63,7 @@
       <ModuleDefinitionFile>..\Installer\arbdll\$(ProjectName).def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

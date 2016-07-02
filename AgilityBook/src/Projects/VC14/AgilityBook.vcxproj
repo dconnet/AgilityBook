@@ -122,7 +122,7 @@
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,7 +141,7 @@
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -92,7 +92,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -100,7 +100,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
