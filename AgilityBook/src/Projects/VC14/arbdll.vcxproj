@@ -62,6 +62,9 @@
     <Link>
       <ModuleDefinitionFile>..\Installer\arbdll\$(ProjectName).def</ModuleDefinitionFile>
     </Link>
+    <PostBuildEvent>
+      <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetName)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Installer\arbdll\stdafx.h" />
