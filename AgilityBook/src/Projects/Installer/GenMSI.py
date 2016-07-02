@@ -339,7 +339,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			RmMinusRF(cabcache)
 		if not testing:
 			WriteCode(baseMsi, ver4Dot, code, vcver)
-		runcmd(r'..\SignStuff.py -1 ' + baseMsi)
+		runcmd(r'python ..\SignStuff.py -1 ' + baseMsi)
 	else:
 		print(baseDir + r'\AgilityBook.exe does not exist, MSI skipped')
 

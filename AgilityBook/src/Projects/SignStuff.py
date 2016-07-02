@@ -60,7 +60,7 @@ def main():
 	pfxFile = ''
 	password = ''
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 's:n:f:p:')
+		opts, args = getopt.getopt(sys.argv[1:], 's:n:f:p:1')
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
