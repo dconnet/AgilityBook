@@ -11,11 +11,12 @@
 #
 # Revision History
 # 2016-07-01 Created
-"""SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] target
+"""SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] [-1] target
 	-s signtool: Full path to signtool.exe (Default: SignTool is assumed in PATH)
 	-n CertName: Name of installed cert
 	-f pfx_file: Path to PFX file (Default: use named cert)
 	-p password: Password for PFX file
+	-1: Only sign with SHA1 (msi)
 	target: exe to sign
 Note: The -n/-f/-p options will override the build machine name check
 """
@@ -33,6 +34,8 @@ CertName = 'David Connet'
 SignTool = 'signtool.exe'
 SignSHA1 = '/v /t http://timestamp.verisign.com/scripts/timestamp.dll'
 SignSHA256 = '/v /fd sha256 /tr http://timestamp.geotrust.com/tsa /td sha256 /as'
+signSHA1 = True
+signSHA256 = True
 
 
 def Run(cmd, onlyTest = False):
@@ -73,6 +76,9 @@ def main():
 			pfxFile = a
 		elif '-p' == o:
 			password = a
+		elif '-1' == o:
+			signSHA1 = True
+			signSHA256 = False
 
 	if not len(args) == 1:
 		print('Usage:', __doc__)
@@ -97,13 +103,16 @@ def main():
 	cmdSHA256 = command + ' ' + SignSHA256 + ' "' + args[0] + '"'
 
 	# Sign with sha1 (for XP)
-	Run(cmdSHA1)
+	if signSHA1:
+		Run(cmdSHA1)
 
 	# Running the 2nd signtool too quickly results in a file-in-use error
-	time.sleep(5)
+	if signSHA1 and signSHA256:
+		time.sleep(5)
 
 	# Add dual sign for modern OSs
-	Run(cmdSHA256)
+	if signSHA256:
+		Run(cmdSHA256)
 
 	return 0
 

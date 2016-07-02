@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2016-07-01 Add signing
 # 2016-06-10 Convert to Python3
 # 2015-07-23 Added vc14 support.
 # 2014-11-17 wix3.9 deprecated -sadv
@@ -338,6 +339,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			RmMinusRF(cabcache)
 		if not testing:
 			WriteCode(baseMsi, ver4Dot, code, vcver)
+		runcmd(r'..\SignStuff.py -1 ' + baseMsi)
 	else:
 		print(baseDir + r'\AgilityBook.exe does not exist, MSI skipped')
 
