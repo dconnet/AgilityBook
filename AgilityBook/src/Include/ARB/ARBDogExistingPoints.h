@@ -483,7 +483,7 @@ public:
 	 * Rename a Lifetime name.
 	 * @param inVenue Venue name is in.
 	 * @param inOldName Lifetime name being renamed.
-	 * @param inNewLName New Lifetime name.
+	 * @param inNewName New Lifetime name.
 	 * @return Number of items changed.
 	 */
 	int RenameLifetimeName(
@@ -494,7 +494,7 @@ public:
 	/**
 	 * Delete a Lifetime name.
 	 * @param inVenue Venue name is in.
-	 * @param inLifetime Lifetime name being deleted.
+	 * @param inName Lifetime name to delete.
 	 * @return Number of items removed.
 	 */
 	int DeleteLifetimeName(
