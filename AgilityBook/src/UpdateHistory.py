@@ -7,6 +7,7 @@
 #   Help\html\History.html
 #
 # Revision History
+# 2016-07-05 Fix file reading issue from p3 conversion.
 # 2016-06-10 Convert to Python3
 # 2010-01-05 Updated comments and www directory.
 # 2005-01-23 Created
@@ -88,6 +89,7 @@ def main():
 		while 1:
 			line = file.readline()
 			if not line: break
+			line = str.rstrip(line)
 			data[i] = line
 			i = i + 1
 		file.close()
