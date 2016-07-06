@@ -165,12 +165,12 @@ public:
 	std::wstring ActionDeleteEvent(
 			std::wstring const& venue,
 			std::wstring const& name) const;
-	std::wstring CLocalization::ActionRenameLifetimeName(
+	std::wstring ActionRenameLifetimeName(
 			std::wstring const& venue,
 			std::wstring const& oldName,
 			std::wstring const& newName,
 			int nEventChanges) const;
-	std::wstring CLocalization::ActionDeleteLifetimeName(
+	std::wstring ActionDeleteLifetimeName(
 			std::wstring const& venue,
 			std::wstring const& name,
 			int nEventChanges) const;
