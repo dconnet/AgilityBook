@@ -69,6 +69,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgClub.cpp \
 	DlgConfigEvent.cpp \
 	DlgConfigEventMethod.cpp \
+	DlgConfigLifetimeName.cpp \
 	DlgConfigMultiQ.cpp \
 	DlgConfigOtherPoints.cpp \
 	DlgConfigPlaceInfo.cpp \

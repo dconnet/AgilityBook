@@ -242,7 +242,6 @@
 		E19B6401166C09B9004DEDA4 /* ClipBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipBoard.h; sourceTree = "<group>"; };
 		E19B6402166C09B9004DEDA4 /* ColumnOrder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColumnOrder.cpp; sourceTree = "<group>"; };
 		E19B6403166C09B9004DEDA4 /* ColumnOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnOrder.h; sourceTree = "<group>"; };
-		E19B6405166C09B9004DEDA4 /* ComboBoxes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxes.h; sourceTree = "<group>"; };
 		E19B6406166C09B9004DEDA4 /* CommonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonView.cpp; sourceTree = "<group>"; };
 		E19B6407166C09B9004DEDA4 /* CommonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonView.h; sourceTree = "<group>"; };
 		E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigHandler.cpp; sourceTree = "<group>"; };
@@ -637,8 +636,6 @@
 		E19B63DC166C09B9004DEDA4 /* Win */ = {
 			isa = PBXGroup;
 			children = (
-				E13371801D173D4800E7344D /* DlgConfigLifetimeName.cpp */,
-				E13371811D173D4800E7344D /* DlgConfigLifetimeName.h */,
 				E11B66491A51B9A8008E74CB /* DPI.cpp */,
 				E11B664A1A51B9A8008E74CB /* DPI.h */,
 				E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */,
@@ -681,7 +678,6 @@
 				E19B6401166C09B9004DEDA4 /* ClipBoard.h */,
 				E19B6402166C09B9004DEDA4 /* ColumnOrder.cpp */,
 				E19B6403166C09B9004DEDA4 /* ColumnOrder.h */,
-				E19B6405166C09B9004DEDA4 /* ComboBoxes.h */,
 				E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */,
 				E1E1D05217234DEF00D7D1E4 /* ComboBoxQ.h */,
 				E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */,
@@ -706,6 +702,8 @@
 				E19B6417166C09B9004DEDA4 /* DlgConfigEvent.h */,
 				E19B6418166C09B9004DEDA4 /* DlgConfigEventMethod.cpp */,
 				E19B6419166C09B9004DEDA4 /* DlgConfigEventMethod.h */,
+				E13371801D173D4800E7344D /* DlgConfigLifetimeName.cpp */,
+				E13371811D173D4800E7344D /* DlgConfigLifetimeName.h */,
 				E19B641A166C09B9004DEDA4 /* DlgConfigMultiQ.cpp */,
 				E19B641B166C09B9004DEDA4 /* DlgConfigMultiQ.h */,
 				E19B641C166C09B9004DEDA4 /* DlgConfigOtherPoints.cpp */,
