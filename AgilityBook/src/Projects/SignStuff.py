@@ -10,6 +10,7 @@
 # environment as that version of signtool is too old.
 #
 # Revision History
+# 2016-07-05 Fix variables
 # 2016-07-01 Created
 """SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] [-1] target
 	-s signtool: Full path to signtool.exe (Default: SignTool is assumed in PATH)
@@ -32,8 +33,8 @@ BuildMachine = 'dcon-build'
 CertName = 'David Connet'
 
 SignTool = 'signtool.exe'
-SignSHA1 = '/v /t http://timestamp.verisign.com/scripts/timestamp.dll'
-SignSHA256 = '/v /fd sha256 /tr http://timestamp.geotrust.com/tsa /td sha256 /as'
+SignSHA1cmd = '/v /t http://timestamp.verisign.com/scripts/timestamp.dll'
+SignSHA256cmd = '/v /fd sha256 /tr http://timestamp.geotrust.com/tsa /td sha256 /as'
 signSHA1 = True
 signSHA256 = True
 
@@ -50,6 +51,7 @@ def Run(cmd, onlyTest = False):
 
 def main():
 	global BuildMachine, CertName, SignTool
+	global SignSHA1cmd, SignSHA256cmd, signSHA1, signSHA256
 
 	if 'SIGNTOOL_EXE' in os.environ:
 		sign = os.environ['SIGNTOOL_EXE']
@@ -99,8 +101,8 @@ def main():
 		if len(password) > 0:
 			command = command + ' /p "' + password + '"'
 
-	cmdSHA1 = command + ' ' + SignSHA1 + ' "' + args[0] + '"'
-	cmdSHA256 = command + ' ' + SignSHA256 + ' "' + args[0] + '"'
+	cmdSHA1 = command + ' ' + SignSHA1cmd + ' "' + args[0] + '"'
+	cmdSHA256 = command + ' ' + SignSHA256cmd + ' "' + args[0] + '"'
 
 	# Sign with sha1 (for XP)
 	if signSHA1:
