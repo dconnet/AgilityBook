@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-08-09 Change tab order so Venue combo is right before Title combo.
  * 2015-01-01 Changed pixels to dialog units.
  * 2013-03-24 Show title in caption to aid with repeating titles.
  * 2013-01-13 Added new recurring title suffix style.
@@ -119,18 +120,6 @@ CDlgTitle::CDlgTitle(
 	if (!m_bEarned)
 		m_ctrlDate->Enable(false);
 
-	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
-		_("IDC_TITLE_VENUES"),
-		wxDefaultPosition, wxDefaultSize, 0);
-	textVenue->Wrap(-1);
-
-	m_ctrlVenues = new CVenueComboBox(this,
-		config.GetVenues(), m_Venue, false,
-		wxGenericValidator(&m_Venue));
-	BIND_OR_CONNECT_CTRL(m_ctrlVenues, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgTitle::OnSelchangeVenues);
-	m_ctrlVenues->SetHelpText(_("HIDC_TITLE_VENUES"));
-	m_ctrlVenues->SetToolTip(_("HIDC_TITLE_VENUES"));
-
 	m_ctrlHide = new wxCheckBox(this, wxID_ANY,
 		_("IDC_TITLE_HIDDEN"),
 		wxDefaultPosition, wxDefaultSize, 0,
@@ -148,6 +137,18 @@ CDlgTitle::CDlgTitle(
 	m_ctrlReceived->SetToolTip(_("HIDC_TITLE_RECEIVED"));
 	if (!m_bEarned)
 		m_ctrlReceived->Enable(false);
+
+	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
+		_("IDC_TITLE_VENUES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textVenue->Wrap(-1);
+
+	m_ctrlVenues = new CVenueComboBox(this,
+		config.GetVenues(), m_Venue, false,
+		wxGenericValidator(&m_Venue));
+	BIND_OR_CONNECT_CTRL(m_ctrlVenues, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgTitle::OnSelchangeVenues);
+	m_ctrlVenues->SetHelpText(_("HIDC_TITLE_VENUES"));
+	m_ctrlVenues->SetToolTip(_("HIDC_TITLE_VENUES"));
 
 	wxStaticText* textTitle = new wxStaticText(this, wxID_ANY,
 		_("IDC_TITLE_TITLES"),
