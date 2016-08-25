@@ -66,6 +66,9 @@ CBaseApp::~CBaseApp()
 bool CBaseApp::OnInit()
 {
 #if defined(__WXMSW__)
+	// Remove current directory from DLL load path.
+	SetDllDirectory(L"");
+
 	// By default, the path directories are tweaked to remove debug/release.
 	// I assume my files are in the same location as the binary.
 	// Now I don't need to tweak the wx source!
