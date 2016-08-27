@@ -61,14 +61,14 @@
 #endif
 
 // Minimum system
-// Vista              _WIN32_WINNT >= 0x0600  WINVER >= 0x0600
-// Server 2003 family _WIN32_WINNT >= 0x0502  WINVER >= 0x0502
-// WinXP              _WIN32_WINNT >= 0x0501  WINVER >= 0x0501
-// Win2K              _WIN32_WINNT >= 0x0500  WINVER >= 0x0500
-// WinNT4.0           _WIN32_WINNT >= 0x0400  WINVER >= 0x0400
-// WinMe            _WIN32_WINDOWS >= 0x0500  WINVER >= 0x0500
-// Win98            _WIN32_WINDOWS >= 0x0410  WINVER >= 0x0410
-// Win95            _WIN32_WINDOWS >= 0x0400  WINVER >= 0x0400
+// Vista                      _WIN32_WINNT >= 0x0600  WINVER >= 0x0600
+// WinServer2003sp1, WinXPsp2 _WIN32_WINNT >= 0x0502  WINVER >= 0x0502
+// WinServer2003, WinXP       _WIN32_WINNT >= 0x0501  WINVER >= 0x0501
+// Win2K                      _WIN32_WINNT >= 0x0500  WINVER >= 0x0500
+// WinNT4.0                   _WIN32_WINNT >= 0x0400  WINVER >= 0x0400
+// WinMe                    _WIN32_WINDOWS >= 0x0500  WINVER >= 0x0500
+// Win98                    _WIN32_WINDOWS >= 0x0410  WINVER >= 0x0410
+// Win95                    _WIN32_WINDOWS >= 0x0400  WINVER >= 0x0400
 // IE7.0             _WIN32_IE >= 0x0700
 // IE6.0 SP2         _WIN32_IE >= 0x0603
 // IE6.0 SP1         _WIN32_IE >= 0x0601
@@ -95,9 +95,9 @@
 	#elif defined(_M_IA64)
 		#define WINVER	0x0502
 	#elif defined(_M_X64)
-		#define WINVER	0x0501
+		#define WINVER	0x0502
 	#else //x86
-		#define WINVER	0x0501
+		#define WINVER	0x0502
 	#endif
 #endif
 
@@ -115,7 +115,6 @@
 #endif
 
 // Error checking
-// VC9: Minimum system: x86 - Win2000, x64 - XP, Itanium - Server 2003
 // VC10: Minimum system: x86 - XP SP2, x64 - XP, Itanium - Server 2003 SP1
 // VC11: Minimum system: Vista (Can target XP using platform toolset 'v110_xp')
 #if _MSC_VER >= 1800
@@ -132,10 +131,10 @@
 #elif _MSC_VER >= 1600
 	#if defined(_M_IA64) && WINVER < 0x0502
 		#error Itanium minimum version is 0x0502
-	#elif defined(_M_X64) && WINVER < 0x0501
-		#error x64 minimum version is 0x0501
-	#elif WINVER < 0x0501
-		#error VC10 minimum version is 0x0501
+	#elif defined(_M_X64) && WINVER < 0x0502
+		#error x64 minimum version is 0x0502
+	#elif WINVER < 0x0502
+		#error VC10 minimum version is 0x0502
 	#endif
 #else
 	#error Go away. Only VC10+ supported.
