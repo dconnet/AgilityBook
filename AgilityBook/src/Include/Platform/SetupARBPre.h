@@ -17,6 +17,7 @@
  * framework, then include SetupARBPost.h
  *
  * Revision History
+ * 2016-09-27 Increase minimun WINVER to 0x502
  * 2014-05-16 Updated to reflect non-support for VC9, moved HAS macros to Post.
  * 2013-01-27 Split/moved stdafx.h.
  * 2013-01-01 Added _VARIADIC_MAX for vc11.
