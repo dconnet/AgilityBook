@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2016-09-02 Start support for scrolling on touch.
+ * 2016-09-02 Add support for scrolling on touch (or mouse drag).
  * 2013-01-01 Allow the mouse wheel to scroll beyond last entry.
  *            Add better keyboard navigation on Mac.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -73,6 +73,8 @@ public:
 			CBasePanel* parentOfView,
 			wxWindow* parent);
 	~CAgilityBookCalendar();
+
+	int GetDayHeight();
 
 	void OnDraw(wxDC* pDC);
 
@@ -186,6 +188,18 @@ CAgilityBookCalendar::CAgilityBookCalendar(
 
 CAgilityBookCalendar::~CAgilityBookCalendar()
 {
+}
+
+
+int CAgilityBookCalendar::GetDayHeight()
+{
+	wxClientDC dc(this);
+
+	wxRect rHeader, rDaysOfWeek, rCalendar;
+	int width, height;
+	GetWorkingAreas(&dc, rHeader, rDaysOfWeek, rCalendar, width, height, false);
+
+	return height;
 }
 
 
@@ -1185,6 +1199,9 @@ CAgilityBookCalendarView::CAgilityBookCalendarView(
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
 	, m_Ctrl(nullptr)
+	, m_bTracking(false)
+	, m_lastPt(0, 0)
+	, m_motionDelta(0)
 {
 }
 
@@ -1206,9 +1223,11 @@ bool CAgilityBookCalendarView::Create(
 {
 	m_Ctrl = new CAgilityBookCalendar(this, parentView, parentCtrl);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_LEFT_DOWN, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_LEFT_UP, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_RIGHT_DOWN, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_LEFT_DCLICK, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_MOTION, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseDrag);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_LEAVE_WINDOW, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseMove);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_MOTION, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseMove);
 #if wxUSE_MOUSEWHEEL
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_MOUSEWHEEL, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseWheel);
 #endif
@@ -1384,11 +1403,19 @@ void CAgilityBookCalendarView::OnCtrlMouseEvent(wxMouseEvent& evt)
 	{
 		m_Ctrl->SetFocus();
 	}
-	if (evt.ButtonDown(wxMOUSE_BTN_LEFT) || evt.ButtonDown(wxMOUSE_BTN_RIGHT))
+	if (evt.LeftDown() || evt.RightDown())
 	{
+		m_bTracking = true;
+		m_lastPt = evt.GetPosition();
+		m_motionDelta = m_Ctrl->GetDayHeight();
 		m_Ctrl->OnClick(evt.GetPosition());
 	}
-	else if (evt.ButtonDClick(wxMOUSE_BTN_LEFT))
+	else if (evt.LeftUp())
+	{
+		m_bTracking = false;
+		m_lastPt.x = m_lastPt.y = 0;
+	}
+	else if (evt.LeftDClick())
 	{
 		m_Ctrl->OnEdit(GetDocument());
 	}
@@ -1396,9 +1423,30 @@ void CAgilityBookCalendarView::OnCtrlMouseEvent(wxMouseEvent& evt)
 }
 
 
-void CAgilityBookCalendarView::OnCtrlMouseDrag(wxMouseEvent& evt)
+void CAgilityBookCalendarView::OnCtrlMouseMove(wxMouseEvent& evt)
 {
-#pragma PRAGMA_TODO(Track motion so finger scrolling can scroll months)
+	if (!m_Ctrl)
+		return;
+	if (evt.Leaving())
+	{
+		m_bTracking = false;
+		m_lastPt.x = m_lastPt.y = 0;
+	}
+	else if (m_bTracking && evt.Dragging())
+	{
+		wxPoint pt = evt.GetPosition();
+		if (0 != m_lastPt.x && 0 != m_lastPt.y)
+		{
+			int diff = m_lastPt.y - pt.y;
+			if (abs(diff) > m_motionDelta)
+			{
+				m_lastPt = pt;
+				m_Ctrl->OnWheel(diff);
+			}
+		}
+		else
+			m_lastPt = pt;
+	}
 	evt.Skip();
 }
 

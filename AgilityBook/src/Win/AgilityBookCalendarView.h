@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-09-02 Add support for scrolling on touch (or mouse drag).
  * 2009-02-10 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2004-12-31 Make F1 invoke context help.
@@ -82,11 +83,14 @@ private:
 	void LoadData();
 
 	CAgilityBookCalendar* m_Ctrl;
+	bool m_bTracking;
+	wxPoint m_lastPt;
+	int m_motionDelta;
 
 	DECLARE_EVENT_TABLE()
 	void OnContextMenu(wxContextMenuEvent& evt);
 	void OnCtrlMouseEvent(wxMouseEvent& evt);
-	void OnCtrlMouseDrag(wxMouseEvent& evt);
+	void OnCtrlMouseMove(wxMouseEvent& evt);
 #if wxUSE_MOUSEWHEEL
 	void OnCtrlMouseWheel(wxMouseEvent& evt);
 #endif
