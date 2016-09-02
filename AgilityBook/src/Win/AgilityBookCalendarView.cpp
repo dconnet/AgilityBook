@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-09-02 Start support for scrolling on touch.
  * 2013-01-01 Allow the mouse wheel to scroll beyond last entry.
  *            Add better keyboard navigation on Mac.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -1207,6 +1208,7 @@ bool CAgilityBookCalendarView::Create(
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_LEFT_DOWN, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_RIGHT_DOWN, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_LEFT_DCLICK, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_MOTION, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseDrag);
 #if wxUSE_MOUSEWHEEL
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_MOUSEWHEEL, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseWheel);
 #endif
@@ -1390,6 +1392,13 @@ void CAgilityBookCalendarView::OnCtrlMouseEvent(wxMouseEvent& evt)
 	{
 		m_Ctrl->OnEdit(GetDocument());
 	}
+	evt.Skip();
+}
+
+
+void CAgilityBookCalendarView::OnCtrlMouseDrag(wxMouseEvent& evt)
+{
+#pragma PRAGMA_TODO(Track motion so finger scrolling can scroll months)
 	evt.Skip();
 }
 

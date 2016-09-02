@@ -86,6 +86,7 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnContextMenu(wxContextMenuEvent& evt);
 	void OnCtrlMouseEvent(wxMouseEvent& evt);
+	void OnCtrlMouseDrag(wxMouseEvent& evt);
 #if wxUSE_MOUSEWHEEL
 	void OnCtrlMouseWheel(wxMouseEvent& evt);
 #endif
