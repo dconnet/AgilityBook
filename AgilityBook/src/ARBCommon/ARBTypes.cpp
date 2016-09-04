@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-09-04 Add a ToString wrapper.
  * 2015-12-22 Changed bAlwaysStripZeros to eStripZeros.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-06-09 Move string->arbversion parsing to ARBVersion.
@@ -125,6 +126,15 @@ std::wstring ARBDouble::ToString(
 		}
 	}
 	return retVal;
+}
+
+
+std::wstring ARBDouble::ToString(
+		double inValue,
+		int inPrec,
+		ARBDouble::ZeroStrip eStripZeros)
+{
+	return ARBDouble::ToString(inValue, inPrec, eDefault, eStripZeros);
 }
 
 

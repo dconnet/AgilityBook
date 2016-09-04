@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-09-04 Add a ToString wrapper.
  * 2015-12-22 Changed bAlwaysStripZeros to eStripZeros.
  * 2015-11-01 Added clear and IsSet.
  * 2014-06-09 Move string->arbversion parsing to ARBVersion.
@@ -83,6 +84,10 @@ public:
 			int inPrec = 2,
 			LocaleType eUseDefaultLocale = eDefault,
 			ZeroStrip eStripZeros = eCompatible);
+	static std::wstring ToString(
+			double inValue,
+			int inPrec,
+			ZeroStrip eStripZeros);
 	/**
 	 * Compare two doubles, allowing for 'prec' error.
 	 */
