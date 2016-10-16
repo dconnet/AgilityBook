@@ -52,7 +52,7 @@ CReportListCtrl::CReportListCtrl(
 		bool bHasBorder,
 		bool bHasImageList)
 	: CListCtrl()
-	, m_ImageList(DPI::Scale(16), DPI::Scale(16))
+	, m_ImageList()
 	, m_imgEmpty(-1)
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
@@ -71,7 +71,7 @@ CReportListCtrl::CReportListCtrl(
 		bool bHasBorder,
 		bool bHasImageList)
 	: CListCtrl()
-	, m_ImageList(DPI::Scale(16), DPI::Scale(16))
+	, m_ImageList()
 	, m_imgEmpty(-1)
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
@@ -98,6 +98,9 @@ bool CReportListCtrl::Create(
 		return false;
 	}
 	BIND_OR_CONNECT(wxEVT_COMMAND_LIST_DELETE_ITEM, wxListEventHandler, CReportListCtrl::OnDeleteItem);
+
+	m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
+
 	// Make the blank one the 1st icon so if an icon isn't set in a list
 	// it will use this by default
 	if (bHasImageList || sortHeader == eSortHeader)
@@ -368,7 +371,7 @@ CCheckListCtrl::CCheckListCtrl(
 		const wxSize& size,
 		bool bHasChecks)
 	: m_HasChecks(bHasChecks)
-	, m_ImageList(DPI::Scale(16), DPI::Scale(16))
+	, m_ImageList()
 	, m_imgEmpty(-1)
 	, m_imgNoCheck(-1)
 	, m_imgChecked(-1)
@@ -377,6 +380,7 @@ CCheckListCtrl::CCheckListCtrl(
 	if (!bHasChecks)
 		flags |= wxLC_SINGLE_SEL;
 	Create(parent, wxID_ANY, pos, size, flags);
+	m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 	if (bHasChecks)
 	{
 		BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckListCtrl::OnClick);

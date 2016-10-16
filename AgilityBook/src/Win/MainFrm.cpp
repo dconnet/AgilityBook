@@ -103,6 +103,8 @@ WXLRESULT CMainFrame::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lPara
 {
 	if (WM_DPICHANGED == nMsg)
 	{
+#pragma PRAGMA_TODO(per-monitor rendering)
+#if 0
 		// wParam: new DPI
 		// lParam: scaled rect of window
 		DPI::SetScale(LOWORD(wParam));
@@ -119,8 +121,6 @@ WXLRESULT CMainFrame::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lPara
 			lprcNewScale->bottom - lprcNewScale->top,
 			SWP_NOZORDER | SWP_NOACTIVATE);
 
-#pragma PRAGMA_TODO(per-monitor rendering)
-#if 0
 		CreateFonts(hWnd); 
 		RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE); 
 #endif
@@ -162,8 +162,8 @@ static void SetStatusBarWidths(
 		bool bAddKludge)
 {
 	// The gripper isn't right on hidpi. Add a fudge factor.
-	if (bAddKludge && DPI::GetScale() > 100)
-		widths[NUM_STATUS_FIELDS - 1] += DPI::Scale(10);
+	if (bAddKludge && DPI::GetScale(statusbar) > 100)
+		widths[NUM_STATUS_FIELDS - 1] += DPI::Scale(statusbar, 10);
 	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
 #if defined(__WXMAC__)
 	// On the Mac, setting the width is always a bit small.
@@ -385,10 +385,10 @@ void CMainFrame::OnClose(wxCloseEvent& evt)
 	else
 	{
 		wxRect r = GetScreenRect();
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTXPOS, DPI::UnScale(r.x));
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTYPOS, DPI::UnScale(r.y));
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTCX, DPI::UnScale(r.width));
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTCY, DPI::UnScale(r.height));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTXPOS, DPI::UnScale(this, r.x));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTYPOS, DPI::UnScale(this, r.y));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTCX, DPI::UnScale(this, r.width));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTCY, DPI::UnScale(this, r.height));
 	}
 	wxConfig::Get()->Write(CFG_SETTINGS_LASTSTATE, state);
 	evt.Skip();

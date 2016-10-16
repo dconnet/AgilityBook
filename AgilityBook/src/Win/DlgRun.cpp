@@ -765,7 +765,7 @@ CDlgRun::CDlgRun(
 	, m_ctrlCRCDCopy(nullptr)
 	, m_ctrlIncImage(nullptr)
 	, m_ctrlLinks(nullptr)
-	, m_ImageList(DPI::Scale(16), DPI::Scale(16))
+	, m_ImageList()
 	, m_imgEmpty(-1)
 	, m_imgOk(-1)
 	, m_imgMissing(-1)
@@ -780,6 +780,7 @@ CDlgRun::CDlgRun(
 			StringUtil::stringWX(pDoc->AddDogToCaption(StringUtil::stringW(_("IDS_RUN_PROPERTIES")))),
 			wxDefaultPosition, wxDefaultSize,
 			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 
 	m_clrBack = GetBackgroundColour();
 

@@ -31,7 +31,7 @@ CNoteButton::CNoteButton(wxWindow* parent)
 {
 	wxBitmap image = CImageManager::Get()->GetBitmap(ImageMgrNoteButton);
 	wxSize size = image.GetSize();
-	size.x += DPI::Scale(4);
-	size.y += DPI::Scale(4);
+	size.x += DPI::Scale(parent, 4);
+	size.y += DPI::Scale(parent, 4);
 	wxBitmapButton::Create(parent, wxID_ANY, image, wxDefaultPosition, size);
 }

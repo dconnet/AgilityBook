@@ -131,7 +131,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 	bool bAttachViews = m_views.empty();
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
-	m_splitter->SetMinimumPaneSize(DPI::Scale(MIN_RUN_WIDTH));
+	m_splitter->SetMinimumPaneSize(DPI::Scale(this, MIN_RUN_WIDTH));
 	BIND_OR_CONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelRuns::SplitterOnIdle);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -174,7 +174,7 @@ CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
 {
 	if (m_bInit)
 	{
-		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX, DPI::UnScale(m_splitter->GetSashPosition()));
+		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX, DPI::UnScale(this, m_splitter->GetSashPosition()));
 	}
 }
 
@@ -184,7 +184,7 @@ void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX, DEFAULT_RUN_WIDTH);
 	if (cx < MIN_RUN_WIDTH)
 		cx = MIN_RUN_WIDTH;
-	cx = DPI::Scale(cx);
+	cx = DPI::Scale(this, cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
 	UNBIND_OR_DISCONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelRuns::SplitterOnIdle);
@@ -235,7 +235,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 	bool bAttachViews = m_views.empty();
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
-	m_splitter->SetMinimumPaneSize(DPI::Scale(MIN_CAL_WIDTH));
+	m_splitter->SetMinimumPaneSize(DPI::Scale(this, MIN_CAL_WIDTH));
 	BIND_OR_CONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelCalendar::SplitterOnIdle);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -276,7 +276,7 @@ CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
 {
 	if (m_bInit)
 	{
-		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX2, DPI::UnScale(m_splitter->GetSashPosition()));
+		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX2, DPI::UnScale(this, m_splitter->GetSashPosition()));
 	}
 }
 
@@ -286,7 +286,7 @@ void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX2, DEFAULT_CAL_WIDTH);
 	if (cx < MIN_CAL_WIDTH)
 		cx = MIN_CAL_WIDTH;
-	cx = DPI::Scale(cx);
+	cx = DPI::Scale(this, cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
 	UNBIND_OR_DISCONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelCalendar::SplitterOnIdle);

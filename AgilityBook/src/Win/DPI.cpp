@@ -9,6 +9,10 @@
  * @brief DPI handling
  * @author David Connet
  *
+ * call only on per-monitor aware
+ * Win10AU: BOOL WINAPI EnableNonClientDpiScaling(_In_ HWND hwnd);
+ * user32.dll, winuser.h
+ *
  * Revision History
  * 2014-12-27 Created.
  */
@@ -173,7 +177,7 @@ static CDPI& GetDPI()
 	return dpi;
 }
 
-
+/*
 void SetScale(int x, int y)
 {
 	GetDPI().SetScale(x, y);
@@ -184,6 +188,12 @@ void SetScale(unsigned int scale)
 {
 	GetDPI().SetScale(scale);
 }
+*/
+
+int Scale(wxWindow* pWindow, int x)
+{
+	return x * GetScale(pWindow) / 100;
+}
 
 
 int Scale(int x)
@@ -192,15 +202,18 @@ int Scale(int x)
 }
 
 
-int UnScale(int x)
+int UnScale(wxWindow* pWindow, int x)
 {
-	return GetDPI().UnScale(x);
+	//return GetDPI().UnScale(x);
+	return x * 100 / GetScale(pWindow);
 }
 
 
-unsigned int GetScale()
+unsigned int GetScale(wxWindow* pWindow)
 {
-	return GetDPI().GetScale();
+	//this is basically wxScreenDC::GetPPI()
+	return static_cast<unsigned int>(pWindow->GetContentScaleFactor() * 100);
+	//return GetDPI().GetScale();
 }
 
 };

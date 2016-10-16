@@ -69,13 +69,9 @@ CTabView::CTabView()
 	, m_orient(ID_ORIENT_TOP - ID_ORIENT_FIRST)
 	, m_sizerFrame(nullptr)
 	, m_ctrlBook(nullptr)
-	, m_imageList(DPI::Scale(16), DPI::Scale(16))
+	, m_imageList()
 	, m_bIgnoreEvents(false)
 {
-	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrRuns));
-	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrPoints));
-	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrCalendar));
-	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrTraining));
 	m_type = wxConfig::Get()->Read(CFG_SETTINGS_VIEWTYPE, m_type);
 	if (m_type < 0 || m_type > ID_BOOK_LAST - ID_BOOK_FIRST)
 	{
@@ -313,6 +309,13 @@ bool CTabView::OnCreate(wxDocument* doc, long flags)
 	m_frame = wxDynamicCast(wxGetApp().GetTopWindow(), CMainFrame);
 	SetFrame(m_frame);
 	assert(m_frame);
+
+	m_imageList.Create(DPI::Scale(m_frame, 16), DPI::Scale(m_frame, 16));
+	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrRuns));
+	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrPoints));
+	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrCalendar));
+	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrTraining));
+
 	m_sizerFrame = new wxBoxSizer(wxVERTICAL);
 	m_frame->SetSizer(m_sizerFrame);
 	RecreateBook(doc, flags, true);

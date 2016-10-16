@@ -49,7 +49,7 @@ CCheckTreeCtrl::CCheckTreeCtrl(
 		const wxPoint& pos,
 		const wxSize& size)
 	: CTreeCtrl()
-	, m_stateList(DPI::Scale(16), DPI::Scale(16))
+	, m_stateList()
 	, m_stateNone(-1)
 	, m_stateUnChecked(-1)
 	, m_stateChecked(-1)
@@ -58,6 +58,8 @@ CCheckTreeCtrl::CCheckTreeCtrl(
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 	BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckTreeCtrl::OnClick);
 	BIND_OR_CONNECT(wxEVT_KEY_DOWN, wxKeyEventHandler, CCheckTreeCtrl::OnKeyDown);
+
+	m_stateList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 
 	m_stateNone = m_stateList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
 	m_stateUnChecked = m_stateList.Add(CImageManager::Get()->GetIcon(ImageMgrUnChecked));

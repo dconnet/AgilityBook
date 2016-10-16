@@ -129,12 +129,14 @@ CDlgConfigure::CDlgConfigure(
 	, m_hItemFaults()
 	, m_hItemOtherPts()
 {
-	m_idxFaults = m_ImageList.Add(wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, m_ImageList.GetSize()));
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIGURE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	assert(m_pDoc);
+
+	m_ImageList.Create(this);
+	m_idxFaults = m_ImageList.Add(wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, m_ImageList.GetSize()));
 
 	// Controls (these are done first to control tab order)
 

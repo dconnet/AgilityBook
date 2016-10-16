@@ -374,23 +374,16 @@ bool CAgilityBookApp::OnInit()
 		wxDisplay monitor(display);
 		rWorkSpace = monitor.GetClientArea();
 	}
-	int scaleX = x;
-	int scaleY = y;
-	if (wxDefaultCoord == x)
-		scaleX = 0;
-	if (wxDefaultCoord == y)
-		scaleY = 0;
-	DPI::SetScale(scaleX, scaleY);
 
 	CMainFrame *frame = new CMainFrame(m_manager);
 	int width, height;
 	frame->GetSize(&width, &height);
 	int defWidth = width;
 	int defHeight = height;
-	wxConfig::Get()->Read(CFG_SETTINGS_LASTCX, &width, width);
-	wxConfig::Get()->Read(CFG_SETTINGS_LASTCY, &height, height);
-	width = DPI::Scale(width);
-	height = DPI::Scale(height);
+	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTCX, &width, width))
+		width = DPI::Scale(frame, width);
+	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTCY, &height, height))
+		height = DPI::Scale(frame, height);
 	long state = wxConfig::Get()->Read(CFG_SETTINGS_LASTSTATE, 0L);
 	wxSize curSize(defWidth, defHeight);
 	if (defWidth != width)
@@ -573,7 +566,7 @@ bool CAgilityBookApp::OnCreateBitmap(
 		const wxSize& size,
 		wxBitmap& outBmp)
 {
-	return ImageHelper::DoCreateBitmap(id, client, size, outBmp);
+	return ImageHelper::DoCreateBitmap(GetTopWindow(), id, client, size, outBmp);
 }
 
 

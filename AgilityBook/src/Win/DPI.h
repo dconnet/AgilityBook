@@ -18,17 +18,18 @@
 namespace DPI
 {
 	/// Set scaling based on current point (for per-monitor)
-	void SetScale(int x, int y);
+	//void SetScale(int x, int y);
 
 	/// Set scaling. For use in WM_DPICHANGED handling.
-	void SetScale(unsigned int scale);
+	//void SetScale(unsigned int scale);
 
 	/// Scale pixels from 100% to current.
+	int Scale(wxWindow* pWindow, int x);
 	int Scale(int x);
 
 	/// Scale pixels from current 100%.
-	int UnScale(int x);
+	int UnScale(wxWindow* pWindow, int x);
 
 	/// Current scaling (200 == 200%)
-	unsigned int GetScale();
+	unsigned int GetScale(wxWindow* pWindow);
 };

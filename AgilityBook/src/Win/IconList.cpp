@@ -32,8 +32,14 @@
 
 
 CIconList::CIconList()
-	: wxImageList(DPI::Scale(16), DPI::Scale(16))
 {
+}
+
+bool CIconList::Create(wxWindow* pWindow)
+{
+	if (!wxImageList::Create(DPI::Scale(pWindow, 16), DPI::Scale(pWindow, 16)))
+		return false;
+
 	m_idxDog = Add(CImageManager::Get()->GetIcon(ImageMgrDog));
 	m_idxTrial = Add(CImageManager::Get()->GetIcon(ImageMgrTrial));
 	m_idxRun = Add(CImageManager::Get()->GetIcon(ImageMgrRuns));
@@ -84,9 +90,14 @@ CIconList::CIconList()
 
 	for (int idx = 0; idx < nIcons; ++idx)
 	{
-		assert(icons[idx].assertIndex == *icons[idx].index);
+		if (icons[idx].assertIndex != *icons[idx].index)
+		{
+			assert(0);
+			return false;
+		}
 	}
 #endif
+	return true;
 }
 
 

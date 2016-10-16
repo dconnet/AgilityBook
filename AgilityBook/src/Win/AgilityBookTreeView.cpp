@@ -259,7 +259,7 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	, m_Ctrl(nullptr)
 	, m_ImageList()
 #ifdef WX_TREE_HAS_STATE
-	, m_ImageListStates(DPI::Scale(16), DPI::Scale(16))
+	, m_ImageListStates()
 	, m_idxEmpty(-1)
 	, m_idxChecked(-1)
 #endif
@@ -272,13 +272,6 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	, m_itemPopup()
 	, m_Callback(this)
 {
-#ifdef WX_TREE_HAS_STATE
-	// Note: Position 0 cannot be used.
-	m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
-	m_idxEmpty = m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
-	m_idxChecked = m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrCheck));
-#endif
-
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
@@ -307,8 +300,14 @@ bool CAgilityBookTreeView::Create(
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_TREE_ITEM_MENU, wxTreeEventHandler, CAgilityBookTreeView::OnCtrlContextMenu);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CAgilityBookTreeView::OnCtrlSelectionChanged);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CAgilityBookTreeView::OnCtrlItemActivated);
+	m_ImageList.Create(m_Ctrl);
 	m_Ctrl->SetImageList(&m_ImageList);
 #ifdef WX_TREE_HAS_STATE
+	m_ImageListStates.Create(DPI::Scale(m_Ctrl, 16), DPI::Scale(m_Ctrl, 16));
+	// Note: Position 0 cannot be used.
+	m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
+	m_idxEmpty = m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
+	m_idxChecked = m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrCheck));
 	m_Ctrl->SetStateImageList(&m_ImageListStates);
 #endif
 #if defined(__WXMAC__)

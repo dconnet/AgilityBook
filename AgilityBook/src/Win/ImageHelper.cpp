@@ -38,10 +38,13 @@ wxIcon CreateIconFromBitmap(const wxBitmap& bitmap)
 
 
 #if defined(__WINDOWS__)
-void LoadLocalBitmap(wchar_t const* const pImageName, wxBitmap& outBmp)
+void LoadLocalBitmap(
+		wxWindow* pWindow,
+		wchar_t const* const pImageName,
+		wxBitmap& outBmp)
 {
 	wxLogNull suppress;
-	unsigned int scale = DPI::GetScale();
+	unsigned int scale = DPI::GetScale(pWindow);
 	if (scale > 100)
 	{
 		wxString s(pImageName);
@@ -66,6 +69,7 @@ void LoadLocalBitmap(wchar_t const* const pImageName, wxBitmap& outBmp)
 
 
 bool DoCreateBitmap(
+		wxWindow* pWindow,
 		const wxArtID& id,
 		const wxArtClient& client,
 		const wxSize& size,
@@ -78,158 +82,158 @@ bool DoCreateBitmap(
 	if (id == ImageMgrApp)
 	{
 		if (client == wxART_MESSAGE_BOX)
-			LOAD_BITMAP_PNG(AgilityBook32, outBmp);
+			LOAD_BITMAP_PNG(pWindow, AgilityBook32, outBmp);
 		else
-			LOAD_BITMAP_PNG(AgilityBook16, outBmp);
+			LOAD_BITMAP_PNG(pWindow, AgilityBook16, outBmp);
 	}
 	else if (id == ImageMgrApp48)
-		LOAD_BITMAP_PNG(AgilityBook48, outBmp);
+		LOAD_BITMAP_PNG(pWindow, AgilityBook48, outBmp);
 	else if (id == ImageMgrApp256)
-		LOAD_BITMAP_PNG(AgilityBook256, outBmp);
+		LOAD_BITMAP_PNG(pWindow, AgilityBook256, outBmp);
 
 	else if (id == ImageMgrRuns)
 	{
 		if (client == wxART_TOOLBAR)
-			LOAD_BITMAP_PNG(toolbarRun, outBmp);
+			LOAD_BITMAP_PNG(pWindow, toolbarRun, outBmp);
 		else
-			LOAD_BITMAP_PNG(run, outBmp);
+			LOAD_BITMAP_PNG(pWindow, run, outBmp);
 	}
 
 	else if (id == ImageMgrPoints)
-		LOAD_BITMAP_PNG(points, outBmp);
+		LOAD_BITMAP_PNG(pWindow, points, outBmp);
 
 	else if (id == ImageMgrCalendar)
 	{
 		if (client == wxART_TOOLBAR)
-			LOAD_BITMAP_PNG(toolbarCalendar, outBmp);
+			LOAD_BITMAP_PNG(pWindow, toolbarCalendar, outBmp);
 		else
-			LOAD_BITMAP_PNG(calendar, outBmp);
+			LOAD_BITMAP_PNG(pWindow, calendar, outBmp);
 	}
 
 	else if (id == ImageMgrTraining)
 	{
 		if (client == wxART_TOOLBAR)
-			LOAD_BITMAP_PNG(toolbarTraining, outBmp);
+			LOAD_BITMAP_PNG(pWindow, toolbarTraining, outBmp);
 		else
-			LOAD_BITMAP_PNG(training, outBmp);
+			LOAD_BITMAP_PNG(pWindow, training, outBmp);
 	}
 
 	else if (id == ImageMgrDog)
 	{
 		if (client == wxART_TOOLBAR)
-			LOAD_BITMAP_PNG(toolbarDog, outBmp);
+			LOAD_BITMAP_PNG(pWindow, toolbarDog, outBmp);
 		else
-			LOAD_BITMAP_PNG(dog, outBmp);
+			LOAD_BITMAP_PNG(pWindow, dog, outBmp);
 	}
 
 	else if (id == ImageMgrTrial)
 	{
 		if (client == wxART_TOOLBAR)
-			LOAD_BITMAP_PNG(toolbarTrial, outBmp);
+			LOAD_BITMAP_PNG(pWindow, toolbarTrial, outBmp);
 		else
-			LOAD_BITMAP_PNG(trial, outBmp);
+			LOAD_BITMAP_PNG(pWindow, trial, outBmp);
 	}
 
 	else if (id == ImageMgrVenueAAC)
-		LOAD_BITMAP_PNG(venue_aac, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_aac, outBmp);
 	else if (id == ImageMgrVenueAKC)
-		LOAD_BITMAP_PNG(venue_akc, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_akc, outBmp);
 	else if (id == ImageMgrVenueASCA)
-		LOAD_BITMAP_PNG(venue_asca, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_asca, outBmp);
 	else if (id == ImageMgrVenueCKC)
-		LOAD_BITMAP_PNG(venue_ckc, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_ckc, outBmp);
 	else if (id == ImageMgrVenueCPE)
-		LOAD_BITMAP_PNG(venue_cpe, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_cpe, outBmp);
 	else if (id == ImageMgrVenueDOCNA)
-		LOAD_BITMAP_PNG(venue_docna, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_docna, outBmp);
 	else if (id == ImageMgrVenueFCI)
-		LOAD_BITMAP_PNG(venue_fci, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_fci, outBmp);
 	else if (id == ImageMgrVenueNADAC)
-		LOAD_BITMAP_PNG(venue_nadac, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_nadac, outBmp);
 	else if (id == ImageMgrVenueSCC)
-		LOAD_BITMAP_PNG(venue_scc, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_scc, outBmp);
 	else if (id == ImageMgrVenueSweepstakes)
-		LOAD_BITMAP_PNG(venue_sweep, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_sweep, outBmp);
 	else if (id == ImageMgrVenueTDAA)
-		LOAD_BITMAP_PNG(venue_tdaa, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_tdaa, outBmp);
 	else if (id == ImageMgrVenueUKC)
-		LOAD_BITMAP_PNG(venue_ukc, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_ukc, outBmp);
 	else if (id == ImageMgrVenueUSDAA)
-		LOAD_BITMAP_PNG(venue_usdaa, outBmp);
+		LOAD_BITMAP_PNG(pWindow, venue_usdaa, outBmp);
 
 	else if (id == ImageMgrCRCD)
-		LOAD_BITMAP_PNG(crcd, outBmp);
+		LOAD_BITMAP_PNG(pWindow, crcd, outBmp);
 	else if (id == ImageMgrBlank)
-		LOAD_BITMAP_PNG(CalEmpty, outBmp);
+		LOAD_BITMAP_PNG(pWindow, CalEmpty, outBmp);
 	else if (id == ImageMgrChecked)
-		LOAD_BITMAP_PNG(checked, outBmp);
+		LOAD_BITMAP_PNG(pWindow, checked, outBmp);
 	else if (id == ImageMgrUnChecked)
-		LOAD_BITMAP_PNG(unchecked, outBmp);
+		LOAD_BITMAP_PNG(pWindow, unchecked, outBmp);
 	else if (id == ImageMgrAccomConfirm)
-		LOAD_BITMAP_PNG(AccConfirm, outBmp);
+		LOAD_BITMAP_PNG(pWindow, AccConfirm, outBmp);
 	else if (id == ImageMgrAccomNone)
-		LOAD_BITMAP_PNG(AccNone, outBmp);
+		LOAD_BITMAP_PNG(pWindow, AccNone, outBmp);
 	else if (id == ImageMgrAccomTodo)
-		LOAD_BITMAP_PNG(AccTodo, outBmp);
+		LOAD_BITMAP_PNG(pWindow, AccTodo, outBmp);
 	else if (id == ImageMgrCalEntered)
-		LOAD_BITMAP_PNG(CalEntered, outBmp);
+		LOAD_BITMAP_PNG(pWindow, CalEntered, outBmp);
 	else if (id == ImageMgrCalEnteredTentative)
-		LOAD_BITMAP_PNG(CalEnteredTentative, outBmp);
+		LOAD_BITMAP_PNG(pWindow, CalEnteredTentative, outBmp);
 	else if (id == ImageMgrCalPending)
-		LOAD_BITMAP_PNG(CalPending, outBmp);
+		LOAD_BITMAP_PNG(pWindow, CalPending, outBmp);
 	else if (id == ImageMgrCalPendingTentative)
-		LOAD_BITMAP_PNG(CalPendingTentative, outBmp);
+		LOAD_BITMAP_PNG(pWindow, CalPendingTentative, outBmp);
 	else if (id == ImageMgrCheck)
-		LOAD_BITMAP_PNG(CalPlan, outBmp);
+		LOAD_BITMAP_PNG(pWindow, CalPlan, outBmp);
 	else if (id == ImageMgrCalPlanTentative)
-		LOAD_BITMAP_PNG(CalPlanTentative, outBmp);
+		LOAD_BITMAP_PNG(pWindow, CalPlanTentative, outBmp);
 	else if (id == ImageMgrQuestion)
-		LOAD_BITMAP_PNG(CalTentative, outBmp);
+		LOAD_BITMAP_PNG(pWindow, CalTentative, outBmp);
 	else if (id == ImageMgrHeaderDown)
-		LOAD_BITMAP_PNG(HdrDown, outBmp);
+		LOAD_BITMAP_PNG(pWindow, HdrDown, outBmp);
 	else if (id == ImageMgrHeaderUp)
-		LOAD_BITMAP_PNG(HdrUp, outBmp);
+		LOAD_BITMAP_PNG(pWindow, HdrUp, outBmp);
 
 	else if (id == ImageMgrTitle)
-		LOAD_BITMAP_PNG(toolbarTitle, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarTitle, outBmp);
 	else if (id == ImageMgrTitleHidden)
-		LOAD_BITMAP_PNG(hidden, outBmp);
+		LOAD_BITMAP_PNG(pWindow, hidden, outBmp);
 	else if (id == ImageMgrTitleTitledHidden)
-		LOAD_BITMAP_PNG(title_hidden, outBmp);
+		LOAD_BITMAP_PNG(pWindow, title_hidden, outBmp);
 	else if (id == ImageMgrTitleTitledHiddenHave)
-		LOAD_BITMAP_PNG(title_hidden_have, outBmp);
+		LOAD_BITMAP_PNG(pWindow, title_hidden_have, outBmp);
 	else if (id == ImageMgrTitleTitled)
-		LOAD_BITMAP_PNG(title_visible, outBmp);
+		LOAD_BITMAP_PNG(pWindow, title_visible, outBmp);
 	else if (id == ImageMgrTitleTitledHave)
-		LOAD_BITMAP_PNG(title_visible_have, outBmp);
+		LOAD_BITMAP_PNG(pWindow, title_visible_have, outBmp);
 
 	else if (id == ImageMgrNoteButton)
-		LOAD_BITMAP_PNG(Note, outBmp);
+		LOAD_BITMAP_PNG(pWindow, Note, outBmp);
 	else if (id == ImageMgrInfoNote)
-		LOAD_BITMAP_PNG(NoteNote, outBmp);
+		LOAD_BITMAP_PNG(pWindow, NoteNote, outBmp);
 	else if (id == ImageMgrInfoNoteAdded)
-		LOAD_BITMAP_PNG(NoteAdded, outBmp);
+		LOAD_BITMAP_PNG(pWindow, NoteAdded, outBmp);
 	else if (id == ImageMgrInfoNoteNoteAdded)
-		LOAD_BITMAP_PNG(NoteNoteAdded, outBmp);
+		LOAD_BITMAP_PNG(pWindow, NoteNoteAdded, outBmp);
 	
 	else if (id == ImageMgrAbout)
-		LOAD_BITMAP_PNG(toolbarAbout, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarAbout, outBmp);
 	else if (id == ImageMgrCopy)
-		LOAD_BITMAP_PNG(toolbarCopy, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarCopy, outBmp);
 	else if (id == ImageMgrCut)
-		LOAD_BITMAP_PNG(toolbarCut, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarCut, outBmp);
 	else if (id == ImageMgrNew)
-		LOAD_BITMAP_PNG(toolbarNew, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarNew, outBmp);
 	else if (id == ImageMgrOpen)
-		LOAD_BITMAP_PNG(toolbarOpen, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarOpen, outBmp);
 	else if (id == ImageMgrPaste)
-		LOAD_BITMAP_PNG(toolbarPaste, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarPaste, outBmp);
 	else if (id == ImageMgrPreview)
-		LOAD_BITMAP_PNG(toolbarPreview, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarPreview, outBmp);
 	else if (id == ImageMgrPrint)
-		LOAD_BITMAP_PNG(toolbarPrint, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarPrint, outBmp);
 	else if (id == ImageMgrSave)
-		LOAD_BITMAP_PNG(toolbarSave, outBmp);
+		LOAD_BITMAP_PNG(pWindow, toolbarSave, outBmp);
 
 	else
 	{

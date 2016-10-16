@@ -29,6 +29,7 @@ namespace ImageHelper
 	extern wxIcon CreateIconFromBitmap(const wxBitmap& bitmap);
 
 	extern bool DoCreateBitmap(
+			wxWindow* pWindow,
 			const wxArtID& id,
 			const wxArtClient& client,
 			const wxSize& size,
@@ -41,6 +42,7 @@ namespace ImageHelper
 
 #if defined(__WINDOWS__)
 	extern void LoadLocalBitmap(
+			wxWindow* pWindow,
 			wchar_t const* const pImageName,
 			wxBitmap& outBmp);
 #endif
@@ -119,11 +121,11 @@ namespace ImageHelper
 
 
 #if defined(__WINDOWS__)
-#define LOAD_BITMAP_PNG(name, outBmp)	ImageHelper::LoadLocalBitmap(L#name, outBmp)
-#define LOAD_BUNDLE_PNG(name, outIcon) \
+#define LOAD_BITMAP_PNG(pWindow, name, outBmp)	ImageHelper::LoadLocalBitmap(pWindow, L#name, outBmp)
+#define LOAD_BUNDLE_PNG(pWindow, name, outIcon) \
 	{ \
 		wxBitmap bmp; \
-		ImageHelper::LoadLocalBitmap(L#name, bmp); \
+		ImageHelper::LoadLocalBitmap(pWindow, L#name, bmp); \
 		outIcon.AddIcon(ImageHelper::CreateIconFromBitmap(bmp)); \
 	}
 
@@ -132,8 +134,8 @@ namespace ImageHelper
 // OSX auto-loads @2 images.
 #pragma PRAGMA_FIXME(This is not likely to load the correct image);
 #endif
-#define LOAD_BITMAP_PNG(name, outBmp)	outBmp = wxBITMAP_PNG(name)
-#define LOAD_BUNDLE_PNG(name, outIcon) \
+#define LOAD_BITMAP_PNG(pWindow, name, outBmp)	outBmp = wxBITMAP_PNG(name)
+#define LOAD_BUNDLE_PNG(pWindow, name, outIcon) \
 	{ \
 		wxBitmap bmp = wxBITMAP_PNG(name); \
 		outIcon.AddIcon(ImageHelper::CreateIconFromBitmap(bmp)); \
