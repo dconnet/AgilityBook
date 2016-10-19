@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
 # 2016-06-10 Convert to Python3, cleaned up error checks.
 # 2016-02-29 Changed to wx3.1 as default.
 # 2015-09-10 Added -c (configuration) option.
@@ -28,6 +29,7 @@
 import getopt
 import glob
 import os
+import shutil
 import stat
 import string
 import subprocess
@@ -56,16 +58,14 @@ def remove(file):
 
 
 # Kill an entire directory
+def del_rw(func, path, exc_info):
+	os.chmod(path, stat.S_IWUSR)
+	func(path)
 def RmMinusRF(name):
 	if os.access(name, os.F_OK):
 		mode = os.stat(name)[stat.ST_MODE]
 		if stat.S_ISDIR(mode):
-			curDir = os.getcwd()
-			os.chdir(name)
-			for file in glob.glob('./*'):
-				RmMinusRF(file)
-			os.chdir(curDir)
-			os.rmdir(name)
+			shutil.rmtree(name, onerror=del_rw)
 		else:
 			if not os.access(name, os.W_OK):
 				os.chmod(name, 0o666)

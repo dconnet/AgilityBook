@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
 # 2016-07-01 Add signing
 # 2016-06-10 Convert to Python3
 # 2015-07-23 Added vc14 support.
@@ -111,16 +112,14 @@ def errprint(*args):
 
 
 # Kill an entire directory
+def del_rw(func, path, exc_info):
+	os.chmod(path, stat.S_IWUSR)
+	func(path)
 def RmMinusRF(name):
 	if os.access(name, os.F_OK):
 		mode = os.stat(name)[stat.ST_MODE]
 		if stat.S_ISDIR(mode):
-			curDir = os.getcwd()
-			os.chdir(name)
-			for file in glob.glob('./*'):
-				RmMinusRF(file)
-			os.chdir(curDir)
-			os.rmdir(name)
+			shutil.rmtree(name, onerror=del_rw)
 		else:
 			if not os.access(name, os.W_OK):
 				os.chmod(name, 0o666)
