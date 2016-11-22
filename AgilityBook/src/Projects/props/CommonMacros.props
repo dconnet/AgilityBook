@@ -13,7 +13,7 @@
     <OutputPlatform>vc140</OutputPlatform>
   </PropertyGroup>
   <PropertyGroup Label="UserMacros" Condition="'$(OutputPlatform)'==''">
-    <OutputPlatform>$(PlatformToolsetVersion)</OutputPlatform>
+    <OutputPlatform>vc$(PlatformToolsetVersion)</OutputPlatform>
   </PropertyGroup>
   <ItemGroup>
     <BuildMacro Include="OutputPlatform">

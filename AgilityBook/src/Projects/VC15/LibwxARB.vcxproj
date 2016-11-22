@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{09C48F16-0C9D-4A44-925D-7C02E33341DD}</ProjectGuid>
+    <RootNamespace>LibwxARB</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonRelease32.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebug32.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonRelease64.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebug64.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ARB\ARBAgilityRecordBook.cpp" />
+    <ClCompile Include="..\..\ARB\ARBBase.cpp" />
+    <ClCompile Include="..\..\ARB\ARBCalcPoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBCalendar.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfig.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigAction.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigCalSite.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigDivision.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigEvent.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigFault.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigLevel.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigLifetimeName.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigLifetimePoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigMultiQ.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigOtherPoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigPlaceInfo.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigScoring.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigSubLevel.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigTitle.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigTitlePoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigVenue.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDog.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogClub.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogExistingPoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogNotes.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogReferenceRun.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRegNum.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRun.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRunOtherPoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRunPartner.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRunScoring.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogTitle.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogTrial.cpp" />
+    <ClCompile Include="..\..\ARB\ARBInfo.cpp" />
+    <ClCompile Include="..\..\ARB\ARBInfoItem.cpp" />
+    <ClCompile Include="..\..\ARB\ARBLocalization.cpp" />
+    <ClCompile Include="..\..\ARB\ARBTraining.cpp" />
+    <ClCompile Include="..\..\ARB\ARB_Q.cpp" />
+    <ClCompile Include="..\..\ARB\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MultiProcessorCompilation>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Include\ARB\ARBAgilityRecordBook.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBBase.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBCalcPoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBCalendar.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfig.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigAction.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigCalSite.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigDivision.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigEvent.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigFault.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigLevel.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimeName.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimePoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigMultiQ.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigOtherPoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigPlaceInfo.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigScoring.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigSubLevel.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigTitle.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigTitlePoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBConfigVenue.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDog.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogClub.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogExistingPoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogNotes.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogReferenceRun.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRegNum.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRun.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRunOtherPoints.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRunPartner.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogRunScoring.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogTitle.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDogTrial.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBInfo.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBInfoItem.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBLocalization.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBStructure.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBTraining.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBTypes2.h" />
+    <ClInclude Include="..\..\Include\ARB\ARB_Q.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupMessages.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\Include\ICalendarSite.h" />
+    <ClInclude Include="..\..\Include\IProgressMeter.h" />
+    <ClInclude Include="..\..\Include\VersionNumber.h" />
+    <ClInclude Include="..\..\ARB\stdafx.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
