@@ -10,7 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
-# 2016-11-22 Added vc15, removed old compilers.
+# 2016-11-22 Added vc15, removed vc9. Changed GetCompilerPaths api.
 # 2016-06-10 Convert to Python3
 # 2015-10-11 Added -r option.
 # 2015-04-24 Added vc14.
@@ -40,7 +40,7 @@
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
 	-r config: config: release/debug
-	compiler: vc9, vc9x64, vc10, vc10x64, vc11, vc11x64, vc12, vc12x64, vc14, vc14x64, vc15, vc15x64
+	compiler: vc10, vc10x64, vc11, vc11x64, vc12, vc12x64, vc14, vc14x64, vc15, vc15x64
 """
 
 import getopt
@@ -106,61 +106,61 @@ def GetCompilerPaths(c):
 	baseDir = ''
 	vcvarsall = ''
 	target = ''
+	platformDir = ''
 
-	if c == 'vc9':
-		baseDir = GetVSDir("9.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = 'x86'
-
-	elif c == 'vc9x64':
-		baseDir = GetVSDir("9.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetX64Target(baseDir)
-
-	elif c == 'vc10':
+	if c == 'vc10':
 		baseDir = GetVSDir("10.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
+		platformDir = 'vc100'
 
 	elif c == 'vc10x64':
 		baseDir = GetVSDir("10.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
+		platformDir = 'vc100'
 
 	elif c == 'vc11':
 		baseDir = GetVSDir("11.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
+		platformDir = 'vc110'
 
 	elif c == 'vc11x64':
 		baseDir = GetVSDir("11.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
+		platformDir = 'vc110'
 
 	elif c == 'vc12':
 		baseDir = GetVSDir("12.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
+		platformDir = 'vc120'
 
 	elif c == 'vc12x64':
 		baseDir = GetVSDir("12.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
+		platformDir = 'vc120'
 
 	elif c == 'vc14':
 		baseDir = GetVSDir("14.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
+		platformDir = 'vc140'
 
 	elif c == 'vc14x64':
 		baseDir = GetVSDir("14.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
+		platformDir = 'vc140'
 
 	elif c == 'vc15':
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = 'x86'
+		platformDir = 'vc141'
 
 	elif c == 'vc15x64':
 		baseDir = GetVSDir("15.0")
@@ -168,6 +168,7 @@ def GetCompilerPaths(c):
 		#baseDir + "\VC\Tools\MSVC\14.10.24629\bin\HostX86\x64\"
 		#target = GetX64Target(baseDir)
 		target = 'amd64'
+		platformDir = 'vc141'
 
 	else:
 		print(('ERROR: Unknown target: ' + c))
@@ -183,23 +184,17 @@ def GetCompilerPaths(c):
 		print(('ERROR: "' + vcvarsall + '" does not exist'))
 		return ('', '')
 
-	return (baseDir, '"' + vcvarsall + '" ' + target)
+	return (baseDir, '"' + vcvarsall + '" ' + target, platformDir)
 
 
 def AddCompiler(compilers, c):
-	vcBaseDir, vcvarsall = GetCompilerPaths(c)
+	vcBaseDir, vcvarsall, platformDir = GetCompilerPaths(c)
 
 	if len(vcBaseDir) == 0:
 		return False
 
 	# Sanity test
-	if c == 'vc9x64':
-		if not useUnicode:
-			# Well, it might. I don't.
-			print('ERROR: VC9x64 does not do MBCS')
-			return False
-
-	elif c == 'vc10x64':
+	if c == 'vc10x64':
 		if not useUnicode:
 			print('ERROR: VC10x64 does not do MBCS')
 			return False
@@ -352,7 +347,7 @@ def main():
 		os.chdir(os.environ['WXWIN'] + r'\build\msw')
 
 	for compiler in compilers:
-		vcBaseDir, vcvarsall = GetCompilerPaths(c)
+		vcBaseDir, vcvarsall, platformDir = GetCompilerPaths(c)
 
 		newenv = os.environ.copy()
 
@@ -368,106 +363,54 @@ def main():
 		resetColor = False
 
 		# Note: Look into using COMPILER_VERSION instead of COMPILER_PREFIX
-		if compiler == 'vc9':
-			setenv_rel = 'call ' + vcvarsall
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc90'
-			else:
-				cfg = ' CFG=_vc90'
-			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
+		if hasPrefix:
+			cfg = ' COMPILER_PREFIX=' + platformDir
+		else:
+			cfg = ' CFG=_' + platformDir
 
-		elif compiler == 'vc9x64':
+		if compiler == 'vc10':
 			setenv_rel = 'call ' + vcvarsall
-			target_cpu = ' TARGET_CPU=' + x64Target
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc90'
-			else:
-				cfg = ' CFG=_vc90'
-			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
-
-		elif compiler == 'vc10':
-			setenv_rel = 'call ' + vcvarsall
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc100'
-			else:
-				cfg = ' CFG=_vc100'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc10x64':
 			setenv_rel = 'call ' + vcvarsall
 			target_cpu = ' TARGET_CPU=' + x64Target
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc100'
-			else:
-				cfg = ' CFG=_vc100'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc11':
 			setenv_rel = 'call ' + vcvarsall
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc110'
-			else:
-				cfg = ' CFG=_vc110'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc11x64':
 			setenv_rel = 'call ' + vcvarsall
 			target_cpu = ' TARGET_CPU=' + x64Target
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc110'
-			else:
-				cfg = ' CFG=_vc110'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc12':
 			setenv_rel = 'call ' + vcvarsall
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc120'
-			else:
-				cfg = ' CFG=_vc120'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc12x64':
 			setenv_rel = 'call ' + vcvarsall
 			target_cpu = ' TARGET_CPU=' + x64Target
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc120'
-			else:
-				cfg = ' CFG=_vc120'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc14':
 			setenv_rel = 'call ' + vcvarsall
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc140'
-			else:
-				cfg = ' CFG=_vc140'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc14x64':
 			setenv_rel = 'call ' + vcvarsall
 			target_cpu = ' TARGET_CPU=' + x64Target
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc140'
-			else:
-				cfg = ' CFG=_vc140'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc15':
 			setenv_rel = 'call ' + vcvarsall
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc141'
-			else:
-				cfg = ' CFG=_vc141'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc15x64':
 			setenv_rel = 'call ' + vcvarsall
 			target_cpu = ' TARGET_CPU=' + x64Target
-			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc141'
-			else:
-				cfg = ' CFG=_vc141'
 			cppflags = common_cppflags
 
 		build_rel = ''
