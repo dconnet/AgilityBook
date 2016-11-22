@@ -456,18 +456,18 @@ def main():
 		elif compiler == 'vc15':
 			setenv_rel = 'call ' + vcvarsall
 			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc150'
+				cfg = ' COMPILER_PREFIX=vc141'
 			else:
-				cfg = ' CFG=_vc150'
+				cfg = ' CFG=_vc141'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc15x64':
 			setenv_rel = 'call ' + vcvarsall
 			target_cpu = ' TARGET_CPU=' + x64Target
 			if hasPrefix:
-				cfg = ' COMPILER_PREFIX=vc150'
+				cfg = ' COMPILER_PREFIX=vc141'
 			else:
-				cfg = ' CFG=_vc150'
+				cfg = ' CFG=_vc141'
 			cppflags = common_cppflags
 
 		build_rel = ''
