@@ -347,7 +347,7 @@ def main():
 		os.chdir(os.environ['WXWIN'] + r'\build\msw')
 
 	for compiler in compilers:
-		vcBaseDir, vcvarsall, platformDir = GetCompilerPaths(c)
+		vcBaseDir, vcvarsall, platformDir = GetCompilerPaths(compiler)
 
 		newenv = os.environ.copy()
 
