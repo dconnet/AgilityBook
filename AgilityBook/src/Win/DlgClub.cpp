@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-11-29 Fix sizer assertions.
  * 2014-12-30 Changed pixels to dialog units.
  * 2012-05-07 Added autocompletion to combo boxes.
  * 2012-02-16 Fix initial focus.
@@ -110,13 +111,13 @@ CDlgClub::CDlgClub(
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
 	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerName->Add(m_ctrlClubs, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
+	sizerName->Add(m_ctrlClubs, 1, wxEXPAND, 0);
 
 	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
 	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerVenue->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
+	sizerVenue->Add(m_ctrlVenues, 0, wxEXPAND, 0);
 
 	bSizer->Add(sizerVenue, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 

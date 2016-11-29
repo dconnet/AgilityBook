@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-11-29 Fix sizer assertions.
  * 2014-12-30 Changed pixels to dialog units.
  * 2012-09-23 Fix text wrapping on Mac (wx2.9).
  * 2012-07-13 Fix text wrapping on Mac.
@@ -130,9 +131,9 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	sizerBox->Add(sizerLinksBox2, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
 
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxHORIZONTAL);
-	sizerButtons->Add(updates, 0, wxALIGN_LEFT | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerButtons->Add(updates, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerButtons->Add(0, 0, 1, wxEXPAND, 0);
-	sizerButtons->Add(ok, 0, wxALIGN_RIGHT, 0);
+	sizerButtons->Add(ok, 0, 0, 0);
 
 	sizerBox->Add(sizerButtons, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 

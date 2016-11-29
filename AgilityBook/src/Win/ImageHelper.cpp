@@ -240,6 +240,13 @@ bool DoCreateBitmap(
 #ifdef _DEBUG
 		if (id == wxART_FILE_SAVE_AS
 		|| id == wxART_INFORMATION
+		|| id == wxART_PRINT
+		|| id == wxART_GOTO_FIRST
+		|| id == wxART_GOTO_LAST
+		|| id == wxART_GO_BACK
+		|| id == wxART_GO_FORWARD
+		|| id == wxART_MINUS
+		|| id == wxART_PLUS
 		|| id == wxART_WARNING
 		|| id == wxART_ERROR)
 			;

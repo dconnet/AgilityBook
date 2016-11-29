@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-11-29 Fix sizer assertions.
  * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -148,19 +149,19 @@ CDlgEventSelect::CDlgEventSelect(
 
 	wxBoxSizer* sizerDiv = new wxBoxSizer(wxHORIZONTAL);
 	sizerDiv->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerDiv->Add(m_ctrlDivisions, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
+	sizerDiv->Add(m_ctrlDivisions, 1, wxEXPAND, 0);
 
 	bSizer->Add(sizerDiv, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerLevel = new wxBoxSizer(wxHORIZONTAL);
 	sizerLevel->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerLevel->Add(m_ctrlLevels, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
+	sizerLevel->Add(m_ctrlLevels, 1, wxEXPAND, 0);
 
 	bSizer->Add(sizerLevel, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerEvent = new wxBoxSizer(wxHORIZONTAL);
 	sizerEvent->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerEvent->Add(m_ctrlEvents, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
+	sizerEvent->Add(m_ctrlEvents, 1, wxEXPAND, 0);
 
 	bSizer->Add(sizerEvent, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 

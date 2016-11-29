@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2016-11-29 Fix sizer assertions.
  * 2015-01-01 Changed pixels to dialog units.
  * 2013-01-23 Initialize points correctly when editing existing entry.
  * 2012-02-16 Fix initial focus.
@@ -109,7 +110,7 @@ CDlgOtherPoint::CDlgOtherPoint(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerItems = new wxBoxSizer(wxHORIZONTAL);
-	sizerItems->Add(m_ctrlOtherPoints, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerItems->Add(m_ctrlOtherPoints, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerItems->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL, 0);
 
 	bSizer->Add(sizerItems, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
