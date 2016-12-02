@@ -20,6 +20,7 @@
 #include "stdafx.h"
 #include "DPI.h"
 
+#ifndef EVT_DPI_CHANGED
 #if _MSC_VER >= 1800 && (NTDDI_VERSION >= NTDDI_WINBLUE)
 #include <shellscalingapi.h>
 
@@ -36,6 +37,7 @@ typedef enum MONITOR_DPI_TYPE {
 	MDT_RAW_DPI = 2,
 	MDT_DEFAULT = MDT_EFFECTIVE_DPI
 } MONITOR_DPI_TYPE;
+#endif
 #endif
 
 #ifdef __WXMSW__

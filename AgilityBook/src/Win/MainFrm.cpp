@@ -98,40 +98,10 @@ void CMainFrame::CStartupEvent::Notify()
 
 /////////////////////////////////////////////////////////////////////////////
 
-#ifdef __WXMSW__
-WXLRESULT CMainFrame::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam)
-{
-	if (WM_DPICHANGED == nMsg)
-	{
-#pragma PRAGMA_TODO(per-monitor rendering)
-#if 0
-		// wParam: new DPI
-		// lParam: scaled rect of window
-		DPI::SetScale(LOWORD(wParam));
-
-		// Based on MS sample
-		// For the new DPI: resize the window, select new
-		// fonts, and re-render window content
-		LPRECT lprcNewScale = (LPRECT)lParam;
-		::SetWindowPos(this->m_hWnd,
-			HWND_TOP,
-			lprcNewScale->left,
-			lprcNewScale->top,
-			lprcNewScale->right - lprcNewScale->left,
-			lprcNewScale->bottom - lprcNewScale->top,
-			SWP_NOZORDER | SWP_NOACTIVATE);
-
-		CreateFonts(hWnd); 
-		RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE); 
-#endif
-	}
-	return __super::MSWWindowProc(nMsg, wParam, lParam);
-}
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-
 BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
+#ifdef EVT_DPI_CHANGED
+	EVT_DPI_CHANGED(CMainFrame::OnDPIChanged)
+#endif
 	EVT_CLOSE(CMainFrame::OnClose)
 #if defined(__WXMAC__)
 	EVT_IDLE(CMainFrame::OnIdle)
@@ -369,6 +339,43 @@ void CMainFrame::OnStatusBarDblClick(wxMouseEvent& evt)
 	if (bSkip)
 		evt.Skip();
 }
+
+
+#ifdef EVT_DPI_CHANGED
+void CMainFrame::OnDPIChanged(wxDPIChangedEvent& evt)
+{
+#pragma PRAGMA_TODO(per-monitor rendering)
+#if 0
+	// wParam: new DPI
+	// lParam: scaled rect of window
+	DPI::SetScale(LOWORD(wParam));
+
+	// Based on MS sample
+	// For the new DPI: resize the window, select new
+	// fonts, and re-render window content
+	LPRECT lprcNewScale = (LPRECT)lParam;
+	::SetWindowPos(this->m_hWnd,
+		HWND_TOP,
+		lprcNewScale->left,
+		lprcNewScale->top,
+		lprcNewScale->right - lprcNewScale->left,
+		lprcNewScale->bottom - lprcNewScale->top,
+		SWP_NOZORDER | SWP_NOACTIVATE);
+
+	CreateFonts(hWnd);
+	RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE);
+#endif
+
+#ifdef _DEBUG
+	wxSize old = evt.GetOldDPI();
+	wxSize newsz = evt.GetNewDPI();
+	wxString str = wxString::Format(L"DPI Old: %d,%d  New: %d,%d\n", old.x, old.y, newsz.x, newsz.y);
+	OutputDebugString(str.wc_str());
+#endif
+
+	evt.Skip();
+}
+#endif
 
 
 void CMainFrame::OnClose(wxCloseEvent& evt)
