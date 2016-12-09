@@ -51,7 +51,7 @@
 // 1900: VC14.0
 //
 // https://blogs.msdn.microsoft.com/vcblog/2016/10/05/visual-c-compiler-version/
-// > Starting with VS “15” Preview 5, the Visual C++ Team is monotonically updating the value of the built-in preprocessor macro _MSC_VER at every Visual C++ toolset update. 
+// > Starting with VS "15" Preview 5, the Visual C++ Team is monotonically updating the value of the built-in preprocessor macro _MSC_VER at every Visual C++ toolset update. 
 //
 // 1910: VC15.0
 // _M_IX86: Defined for x86 (value specifies processor)
