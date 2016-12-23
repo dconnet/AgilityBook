@@ -12,6 +12,7 @@
 # This script, by default, will only sign when on the build machine.
 #
 # Revision History
+# 2016-12-23 Add test to only target dll/exe. Allows script to be put into common project properties.
 # 2016-07-05 Fix variables
 # 2016-07-01 Created
 """SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] [-1] target
@@ -26,6 +27,7 @@ Note: The -n/-f options will override the build machine name check
 
 import getopt
 import os
+import os.path
 import subprocess
 import sys
 import time
@@ -40,6 +42,8 @@ SignSHA256cmd = '/v /fd sha256 /tr http://timestamp.geotrust.com/tsa /td sha256 
 signSHA1 = True
 signSHA256 = True
 
+validExt = ['.dll', '.exe']
+
 
 def Run(cmd, onlyTest = False):
 	print(cmd)
@@ -49,6 +53,14 @@ def Run(cmd, onlyTest = False):
 	proc = subprocess.Popen(cmd, env=newenv)
 	proc.wait()
 	return proc.returncode
+
+
+def CheckFiletype(filename):
+	fileext = os.path.splitext(filename)[-1].lower()
+	for ext in validExt:
+		if fileext == ext:
+			return True
+	return False
 
 
 def main():
@@ -88,6 +100,11 @@ def main():
 		print('Usage:', __doc__)
 		return 1
 
+	filename = args[0]
+	if not CheckFiletype(filename):
+		# Quietly exit. No error.
+		return 0
+
 	# Just do a simple compare.
 	# Don't care about unicode weirdness with machine names.
 	if not override and not os.environ['USERDOMAIN'].lower() == BuildMachine.lower():
@@ -103,8 +120,8 @@ def main():
 		if len(password) > 0:
 			command = command + ' /p "' + password + '"'
 
-	cmdSHA1 = command + ' ' + SignSHA1cmd + ' "' + args[0] + '"'
-	cmdSHA256 = command + ' ' + SignSHA256cmd + ' "' + args[0] + '"'
+	cmdSHA1 = command + ' ' + SignSHA1cmd + ' "' + filename + '"'
+	cmdSHA256 = command + ' ' + SignSHA256cmd + ' "' + filename + '"'
 
 	# Sign with sha1 (for XP)
 	if signSHA1:
