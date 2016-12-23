@@ -2,12 +2,14 @@
 # Above line is for python
 #
 # Dual sign binaries (at least until XP support is dropped)
-# signtool.exe v6.3+ must be:
+# signtool.exe v6.3+ must be one of:
 # - in the PATH
-# - specified with -s option
-# - specified in ENV with SIGNTOOL_EXE
+# - specified with SignStuff.py -s option
+# - specified in environment with SIGNTOOL_EXE
 # The last allows the build machine to work correctly when in the vc10
 # environment as that version of signtool is too old.
+#
+# This script, by default, will only sign when on the build machine.
 #
 # Revision History
 # 2016-07-05 Fix variables
@@ -19,7 +21,7 @@
 	-p password: Password for PFX file
 	-1: Only sign with SHA1 (msi)
 	target: exe to sign
-Note: The -n/-f/-p options will override the build machine name check
+Note: The -n/-f options will override the build machine name check
 """
 
 import getopt
