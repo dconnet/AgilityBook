@@ -49,5 +49,5 @@
 
 #define ARB_VERSION_CompanyName			"dcon Software"
 #define ARB_VERSION_FileDescription		"Agility Record Book"
-#define ARB_VERSION_LegalCopyright		"Copyright (c) 2002-2016 David Connet. All Rights Reserved."
+#define ARB_VERSION_LegalCopyright		"Copyright (c) 2002-2017 David Connet. All Rights Reserved."
 #define ARB_VERSION_ProductName			"Agility Record Book"
