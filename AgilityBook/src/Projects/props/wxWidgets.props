@@ -6,7 +6,7 @@
   <PropertyGroup Label="UserMacros">
     <wxWin3_0>$(WXBASE)\wxWidgets-3.0.2</wxWin3_0>
     <wxWin3_1>$(WXBASE)\wxWidgets-3.1.0</wxWin3_1>
-    <wxWinTrunk>$(WXBASE)\trunk</wxWinTrunk>
+    <wxWinTrunk>$(WXBASE)\wxDPI</wxWinTrunk>
     <wxWinEnv>$(WXWIN)</wxWinEnv>
     <wxWin>$(wxWin3_1)</wxWin>
   </PropertyGroup>
