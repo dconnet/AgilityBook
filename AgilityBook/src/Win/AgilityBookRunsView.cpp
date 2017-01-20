@@ -1719,7 +1719,7 @@ void CAgilityBookRunsView::OnViewContextMenu(wxContextMenuEvent& evt)
 	wxPoint point;
 	if (GetMenuPosition(point, *m_Ctrl, evt))
 	{
-		wxMenu* menu = CreatePopup(IdMenuRun);
+		wxMenu* menu = CreatePopup(m_Ctrl, IdMenuRun);
 		m_Ctrl->PopupMenu(menu, point);
 		delete menu;
 	}

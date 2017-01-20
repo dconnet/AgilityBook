@@ -41,6 +41,7 @@
 #include "DlgMessage.h"
 #include "DlgMessageBox.h"
 #include "DlgName.h"
+#include "ImageHelper.h"
 #include "Globals.h"
 #include "Widgets.h"
 
@@ -48,7 +49,6 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
-#include <wx/artprov.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -136,7 +136,7 @@ CDlgConfigure::CDlgConfigure(
 	assert(m_pDoc);
 
 	m_ImageList.Create(this);
-	m_idxFaults = m_ImageList.Add(wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, m_ImageList.GetSize()));
+	m_idxFaults = m_ImageList.Add(ImageHelper::GetIcon(this, wxART_WARNING, wxART_OTHER, m_ImageList.GetSize()));
 
 	// Controls (these are done first to control tab order)
 

@@ -37,7 +37,7 @@ extern void CreateMainMenu(
 		wxMenu* pRecent);
 
 
-extern wxMenu* CreatePopup(MenuIdentityPopup idMenu);
+extern wxMenu* CreatePopup(wxWindow* pWindow, MenuIdentityPopup idMenu);
 
 enum
 {

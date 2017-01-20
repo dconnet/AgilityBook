@@ -19,6 +19,7 @@
 #include "stdafx.h"
 #include "DlgMessageBox.h"
 
+#include "ImageHelper.h"
 #include <wx/artprov.h>
 
 #ifdef __WXMSW__
@@ -67,13 +68,13 @@ CDlgMessageBox::CDlgMessageBox(
 	{
 		wxIcon icon;
 		if (inFlags & wxICON_EXCLAMATION)
-			icon = wxArtProvider::GetIcon(wxART_WARNING);
+			icon = ImageHelper::GetIcon(this, wxART_WARNING);
 		else if (inFlags & (wxICON_HAND | wxICON_ERROR))
-			icon = wxArtProvider::GetIcon(wxART_ERROR);
+			icon = ImageHelper::GetIcon(this, wxART_ERROR);
 		else if (inFlags & wxICON_QUESTION)
-			icon = wxArtProvider::GetIcon(wxART_QUESTION);
+			icon = ImageHelper::GetIcon(this, wxART_QUESTION);
 		else if (inFlags & wxICON_INFORMATION)
-			icon = wxArtProvider::GetIcon(wxART_INFORMATION);
+			icon = ImageHelper::GetIcon(this, wxART_INFORMATION);
 		ctrlIcon = new wxStaticBitmap(this, wxID_ANY, icon,
 			wxDefaultPosition, wxDefaultSize, 0);
 	}

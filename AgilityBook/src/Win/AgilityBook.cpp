@@ -575,7 +575,7 @@ bool CAgilityBookApp::OnCreateIconBundle(
 		const wxArtClient& client,
 		wxIconBundle& outIcon)
 {
-	return ImageHelper::DoCreateIconBundle(id, client, outIcon);
+	return ImageHelper::DoCreateIconBundle(GetTopWindow(), id, client, outIcon);
 }
 
 

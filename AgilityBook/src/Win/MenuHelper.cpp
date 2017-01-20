@@ -20,6 +20,7 @@
 #include "stdafx.h"
 #include "MenuHelper.h"
 
+#include "ImageHelper.h"
 #include <wx/artprov.h>
 #include <wx/frame.h>
 
@@ -44,17 +45,19 @@ CMenuHelper::~CMenuHelper()
 
 
 void CMenuHelper::DoMenuItem(
+		wxWindow* pWindow,
 		wxMenu* menu,
 		int id,
 		wxString const& label,
 		wxString const& desc,
 		wxArtID const& artId)
 {
-	DoMenuItem(menu, id, label, desc, wxITEM_NORMAL, nullptr, artId);
+	DoMenuItem(pWindow, menu, id, label, desc, wxITEM_NORMAL, nullptr, artId);
 }
 
 
 void CMenuHelper::DoMenuItem(
+		wxWindow* pWindow,
 		wxMenu* menu,
 		int id,
 		wxString const& label,
@@ -66,7 +69,7 @@ void CMenuHelper::DoMenuItem(
 	wxMenuItem* item = new wxMenuItem(menu, id, label, desc, kind, subMenu);
 	if (!artId.empty() && kind == wxITEM_NORMAL)
 	{
-		wxBitmap bmp = wxArtProvider::GetBitmap(artId, wxART_MENU);
+		wxBitmap bmp = ImageHelper::GetBitmap(pWindow, artId, wxART_MENU);
 		if (bmp.IsOk())
 			item->SetBitmap(bmp);
 	}
@@ -75,6 +78,7 @@ void CMenuHelper::DoMenuItem(
 
 
 void CMenuHelper::Menu(
+		wxWindow* pWindow,
 		MenuHandle& handle,
 		size_t& index,
 		size_t level,
@@ -106,7 +110,7 @@ void CMenuHelper::Menu(
 				{
 					name = items[index].menu;
 				}
-				DoMenuItem(handle.pMenu, wxID_ANY,
+				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
 					name,
 					wxString(),
 					wxITEM_NORMAL,
@@ -118,7 +122,7 @@ void CMenuHelper::Menu(
 			{
 				size_t idxMenu = index;
 				MenuHandle subhandle(static_cast<int>(handle.pMenu->GetMenuItemCount()));
-				Menu(subhandle, index, level + 1, mruMenu, mruAdded, items, numItems);
+				Menu(pWindow, subhandle, index, level + 1, mruMenu, mruAdded, items, numItems);
 				wxString name;
 				if (m_doTranslation)
 				{
@@ -129,7 +133,7 @@ void CMenuHelper::Menu(
 				{
 					name = items[idxMenu].menu;
 				}
-				DoMenuItem(handle.pMenu, wxID_ANY,
+				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
 					name,
 					wxString(),
 					wxITEM_NORMAL,
@@ -153,7 +157,7 @@ void CMenuHelper::Menu(
 					name = items[index].menu;
 					help = items[index].help;
 				}
-				DoMenuItem(handle.pMenu, items[index].id,
+				DoMenuItem(pWindow, handle.pMenu, items[index].id,
 					name,
 					help,
 					items[index].kind,
@@ -188,7 +192,7 @@ void CMenuHelper::CreateMenu(
 			assert(items[index].menu);
 			size_t idxMenu = index;
 			MenuHandle handle(static_cast<int>(m_MenuBar->GetMenuCount()));
-			Menu(handle, index, 1, mruMenu, mruAdded, items, numItems);
+			Menu(pFrame, handle, index, 1, mruMenu, mruAdded, items, numItems);
 			wxString name;
 			if (m_doTranslation)
 			{
@@ -270,7 +274,7 @@ void CMenuHelper::CreateMenu(
 					name = menuItems[idxItem].toolbar;
 					descShort = menuItems[idxItem].help;
 				}
-				wxBitmap bmp = wxArtProvider::GetBitmap(menuItems[idxItem].artId, wxART_TOOLBAR);
+				wxBitmap bmp = ImageHelper::GetBitmap(pFrame, menuItems[idxItem].artId, wxART_TOOLBAR);
 				assert(bmp.IsOk());
 				wxBitmap bmpDisabled = bmp.ConvertToDisabled();
 				assert(bmpDisabled.IsOk());

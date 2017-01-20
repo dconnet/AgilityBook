@@ -65,6 +65,7 @@ public:
 	void UpdateMenu();
 
 	static void DoMenuItem(
+			wxWindow* pWindow,
 			wxMenu* menu,
 			int id,
 			wxString const& label,
@@ -72,6 +73,7 @@ public:
 			wxArtID const& artId = wxArtID());
 
 	static void DoMenuItem(
+			wxWindow* pWindow,
 			wxMenu* menu,
 			int id,
 			wxString const& label,
@@ -125,6 +127,7 @@ private:
 	};
 
 	void Menu(
+			wxWindow* pWindow,
 			MenuHandle& handle,
 			size_t& index,
 			size_t level,

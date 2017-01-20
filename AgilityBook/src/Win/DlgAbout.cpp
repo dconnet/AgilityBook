@@ -90,6 +90,10 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	link4->SetToolTip(_("LinkArbDownloadUrl"));
 	link4->SetHelpText(_("LinkArbDownloadUrl"));
 
+	wxStaticText* credits = new wxStaticText(this, wxID_ANY,
+		_("AboutCredits"),
+		wxDefaultPosition, wxDefaultSize, 0);
+
 	wxButton* updates = new wxButton(this, wxID_ANY,
 		_("CheckForUpdates"),
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -129,6 +133,8 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	sizerLinksBox2->Add(sizerLinks2, 1, wxEXPAND, 0);
 
 	sizerBox->Add(sizerLinksBox2, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
+
+	sizerBox->Add(credits, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxHORIZONTAL);
 	sizerButtons->Add(updates, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));

@@ -1046,7 +1046,7 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 				// and veto it - that kills the change!)
 				m_Ctrl->SelectItem(evt.GetItem());
 			}
-			wxMenu* menu = CreatePopup(pData->GetMenuID());
+			wxMenu* menu = CreatePopup(m_Ctrl, pData->GetMenuID());
 			if (menu)
 			{
 				m_bInPopup = true;
@@ -1134,7 +1134,7 @@ void CAgilityBookTreeView::OnViewContextMenu(wxContextMenuEvent& evt)
 		wxPoint point;
 		if (GetMenuPosition(point, *m_Ctrl, evt))
 		{
-			wxMenu* menu = CreatePopup(pData->GetMenuID());
+			wxMenu* menu = CreatePopup(m_Ctrl, pData->GetMenuID());
 			if (menu)
 			{
 				bSkip = false;

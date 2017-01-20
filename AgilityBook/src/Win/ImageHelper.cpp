@@ -29,6 +29,61 @@
 namespace ImageHelper
 {
 
+wxSize GetScaledSize(wxWindow* pWindow, int logical)
+{
+	return GetScaledSize(pWindow, wxSize(logical, logical));
+}
+
+
+wxSize GetScaledSize(wxWindow* pWindow, wxSize const& szLogical)
+{
+	wxSize sz(szLogical);
+#if defined(__WINDOWS__)
+	unsigned int scale = DPI::GetScale(pWindow);
+	if (scale > 100)
+	{
+		sz.x = sz.x * scale / 100;
+		sz.y = sz.y * scale / 100;
+	}
+#endif
+	return sz;
+}
+
+
+wxBitmap GetBitmap(
+		wxWindow* pWindow,
+		const wxArtID& id,
+		const wxArtClient& client,
+		const wxSize& size)
+{
+	wxSize sz(size);
+	if (sz == wxDefaultSize)
+	{
+		sz = wxArtProvider::GetNativeSizeHint(client);
+		if (sz != wxDefaultSize)
+			sz = GetScaledSize(pWindow, sz);
+	}
+	return wxArtProvider::GetBitmap(id, client, sz);
+}
+
+
+wxIcon GetIcon(
+		wxWindow* pWindow,
+		const wxArtID& id,
+		const wxArtClient& client,
+		const wxSize& size)
+{
+	wxSize sz(size);
+	if (sz == wxDefaultSize)
+	{
+		sz = wxArtProvider::GetNativeSizeHint(client);
+		if (sz != wxDefaultSize)
+			sz = GetScaledSize(pWindow, sz);
+	}
+	return wxArtProvider::GetIcon(id, client, sz);
+}
+
+
 wxIcon CreateIconFromBitmap(const wxBitmap& bitmap)
 {
 	wxIcon icon;
@@ -267,16 +322,17 @@ bool DoCreateBitmap(
 
 
 bool DoCreateIconBundle(
+		wxWindow* pWindow,
 		const wxArtID& id,
 		const wxArtClient& client,
 		wxIconBundle& outIcon)
 {
 	if (id == ImageMgrAppBundle)
 	{
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp));
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX));
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp48));
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp256));
+		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp, wxART_OTHER, ImageHelper::GetScaledSize(pWindow, 16)));
+		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX, ImageHelper::GetScaledSize(pWindow, 32)));
+		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp48, wxART_OTHER, ImageHelper::GetScaledSize(pWindow, 48)));
+		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp256, wxART_OTHER, ImageHelper::GetScaledSize(pWindow, 256)));
 		return true;
 	}
 	return false;

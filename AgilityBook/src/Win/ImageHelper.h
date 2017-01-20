@@ -26,6 +26,21 @@
 
 namespace ImageHelper
 {
+	extern wxSize GetScaledSize(wxWindow* pWindow, int logical);
+	extern wxSize GetScaledSize(wxWindow* pWindow, wxSize const& szLogical);
+
+	extern wxBitmap GetBitmap(
+			wxWindow* pWindow,
+			const wxArtID& id,
+			const wxArtClient& client = wxART_OTHER,
+			const wxSize& size = wxDefaultSize);
+
+	extern wxIcon GetIcon(
+			wxWindow* pWindow,
+			const wxArtID& id,
+			const wxArtClient& client = wxART_OTHER,
+			const wxSize& size = wxDefaultSize);
+
 	extern wxIcon CreateIconFromBitmap(const wxBitmap& bitmap);
 
 	extern bool DoCreateBitmap(
@@ -36,6 +51,7 @@ namespace ImageHelper
 			wxBitmap& outBmp);
 
 	extern bool DoCreateIconBundle(
+			wxWindow* pWindow,
 			const wxArtID& id,
 			const wxArtClient& client,
 			wxIconBundle& outIcon);
