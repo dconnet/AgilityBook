@@ -768,15 +768,6 @@
     <Image Include="..\..\Win\res\HdrUp%402.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>
-    <Image Include="..\..\Win\res\help16%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\help32%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\help48%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
     <Image Include="..\..\Win\res\hidden%402.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>
@@ -1015,15 +1006,6 @@
       <Filter>Resource Files\PNG</Filter>
     </Image>
     <Image Include="..\..\Win\res\HdrUp.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\help16.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\help32.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Win\res\help48.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>
     <Image Include="..\..\Win\res\hidden.png">

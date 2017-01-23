@@ -399,9 +399,6 @@
     <Image Include="..\..\Win\res\dog%402.png" />
     <Image Include="..\..\Win\res\HdrDown%402.png" />
     <Image Include="..\..\Win\res\HdrUp%402.png" />
-    <Image Include="..\..\Win\res\help16%402.png" />
-    <Image Include="..\..\Win\res\help32%402.png" />
-    <Image Include="..\..\Win\res\help48%402.png" />
     <Image Include="..\..\Win\res\hidden%402.png" />
     <Image Include="..\..\Win\res\Note%402.png" />
     <Image Include="..\..\Win\res\NoteAdded%402.png" />
@@ -482,9 +479,6 @@
     <Image Include="..\..\Win\res\dog.png" />
     <Image Include="..\..\Win\res\HdrDown.png" />
     <Image Include="..\..\Win\res\HdrUp.png" />
-    <Image Include="..\..\Win\res\help16.png" />
-    <Image Include="..\..\Win\res\help32.png" />
-    <Image Include="..\..\Win\res\help48.png" />
     <Image Include="..\..\Win\res\hidden.png" />
     <Image Include="..\..\Win\res\Note.png" />
     <Image Include="..\..\Win\res\NoteAdded.png" />
