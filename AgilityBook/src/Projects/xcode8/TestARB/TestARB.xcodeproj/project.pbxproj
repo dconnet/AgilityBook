@@ -1,0 +1,574 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E15106B218089179002AC401 /* ConfigHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151065A18089179002AC401 /* ConfigHandler.cpp */; };
+		E15106B318089179002AC401 /* Local.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151065C18089179002AC401 /* Local.cpp */; };
+		E15106B418089179002AC401 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068018089179002AC401 /* stdafx.cpp */; };
+		E15106B518089179002AC401 /* TestAgilityRecordBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068218089179002AC401 /* TestAgilityRecordBook.cpp */; };
+		E15106B618089179002AC401 /* TestARB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068318089179002AC401 /* TestARB.cpp */; };
+		E15106B718089179002AC401 /* TestArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068618089179002AC401 /* TestArchive.cpp */; };
+		E15106B818089179002AC401 /* TestBinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068718089179002AC401 /* TestBinaryData.cpp */; };
+		E15106B918089179002AC401 /* TestBreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068818089179002AC401 /* TestBreakLine.cpp */; };
+		E15106BA18089179002AC401 /* TestCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068918089179002AC401 /* TestCalcPoints.cpp */; };
+		E15106BB18089179002AC401 /* TestCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068A18089179002AC401 /* TestCalendar.cpp */; };
+		E15106BC18089179002AC401 /* TestConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068B18089179002AC401 /* TestConfig.cpp */; };
+		E15106BD18089179002AC401 /* TestConfigAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068C18089179002AC401 /* TestConfigAction.cpp */; };
+		E15106BE18089179002AC401 /* TestConfigCalSite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068D18089179002AC401 /* TestConfigCalSite.cpp */; };
+		E15106BF18089179002AC401 /* TestConfigDivision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068E18089179002AC401 /* TestConfigDivision.cpp */; };
+		E15106C018089179002AC401 /* TestConfigEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068F18089179002AC401 /* TestConfigEvent.cpp */; };
+		E15106C118089179002AC401 /* TestConfigFault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069018089179002AC401 /* TestConfigFault.cpp */; };
+		E15106C218089179002AC401 /* TestConfigLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069118089179002AC401 /* TestConfigLevel.cpp */; };
+		E15106C318089179002AC401 /* TestConfigLifetimePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069218089179002AC401 /* TestConfigLifetimePoints.cpp */; };
+		E15106C418089179002AC401 /* TestConfigMultiQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069318089179002AC401 /* TestConfigMultiQ.cpp */; };
+		E15106C518089179002AC401 /* TestConfigOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069418089179002AC401 /* TestConfigOtherPoints.cpp */; };
+		E15106C618089179002AC401 /* TestConfigPlaceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069518089179002AC401 /* TestConfigPlaceInfo.cpp */; };
+		E15106C718089179002AC401 /* TestConfigScoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069618089179002AC401 /* TestConfigScoring.cpp */; };
+		E15106C818089179002AC401 /* TestConfigSubLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069718089179002AC401 /* TestConfigSubLevel.cpp */; };
+		E15106C918089179002AC401 /* TestConfigTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069818089179002AC401 /* TestConfigTitle.cpp */; };
+		E15106CA18089179002AC401 /* TestConfigTitlePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069918089179002AC401 /* TestConfigTitlePoints.cpp */; };
+		E15106CB18089179002AC401 /* TestConfigVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069A18089179002AC401 /* TestConfigVenue.cpp */; };
+		E15106CC18089179002AC401 /* TestDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069B18089179002AC401 /* TestDate.cpp */; };
+		E15106CD18089179002AC401 /* TestDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069C18089179002AC401 /* TestDog.cpp */; };
+		E15106CE18089179002AC401 /* TestDogClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069D18089179002AC401 /* TestDogClub.cpp */; };
+		E15106CF18089179002AC401 /* TestDogExistingPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069E18089179002AC401 /* TestDogExistingPoints.cpp */; };
+		E15106D018089179002AC401 /* TestDogNotes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069F18089179002AC401 /* TestDogNotes.cpp */; };
+		E15106D118089179002AC401 /* TestDogReferenceRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A018089179002AC401 /* TestDogReferenceRun.cpp */; };
+		E15106D218089179002AC401 /* TestDogRegNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A118089179002AC401 /* TestDogRegNum.cpp */; };
+		E15106D318089179002AC401 /* TestDogRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A218089179002AC401 /* TestDogRun.cpp */; };
+		E15106D418089179002AC401 /* TestDogRunOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A318089179002AC401 /* TestDogRunOtherPoints.cpp */; };
+		E15106D518089179002AC401 /* TestDogRunPartner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A418089179002AC401 /* TestDogRunPartner.cpp */; };
+		E15106D618089179002AC401 /* TestDogRunScoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A518089179002AC401 /* TestDogRunScoring.cpp */; };
+		E15106D718089179002AC401 /* TestDogTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A618089179002AC401 /* TestDogTitle.cpp */; };
+		E15106D818089179002AC401 /* TestDogTrial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A718089179002AC401 /* TestDogTrial.cpp */; };
+		E15106D918089179002AC401 /* TestDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A818089179002AC401 /* TestDouble.cpp */; };
+		E15106DA18089179002AC401 /* TestElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A918089179002AC401 /* TestElement.cpp */; };
+		E15106DB18089179002AC401 /* TestErrorCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AA18089179002AC401 /* TestErrorCallback.cpp */; };
+		E15106DC18089179002AC401 /* TestInfoItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AB18089179002AC401 /* TestInfoItem.cpp */; };
+		E15106DD18089179002AC401 /* TestMD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AC18089179002AC401 /* TestMD5.cpp */; };
+		E15106DE18089179002AC401 /* TestMisc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AD18089179002AC401 /* TestMisc.cpp */; };
+		E15106DF18089179002AC401 /* TestQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AE18089179002AC401 /* TestQ.cpp */; };
+		E15106E018089179002AC401 /* TestString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AF18089179002AC401 /* TestString.cpp */; };
+		E15106E118089179002AC401 /* TestTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106B018089179002AC401 /* TestTraining.cpp */; };
+		E15106E218089179002AC401 /* TestVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106B118089179002AC401 /* TestVersion.cpp */; };
+		E15106E518089670002AC401 /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106E418089670002AC401 /* LanguageManager.cpp */; };
+		E193AC671809B399008C6257 /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E193AC661809B399008C6257 /* libARBCommon.a */; };
+		E193AC691809B39E008C6257 /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E193AC681809B39E008C6257 /* libARB.a */; };
+		E1E2DD191809BEA700014E0C /* libUnitTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E2DD181809BEA700014E0C /* libUnitTest.a */; };
+		E1EE26B61809B3EA002E7A5F /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1EE26B41809B3EA002E7A5F /* libLibArchive.a */; };
+		E1EE26B71809B3EA002E7A5F /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E151064A1808913A002AC401 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E151064C1808913A002AC401 /* TestARB */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestARB; sourceTree = BUILT_PRODUCTS_DIR; };
+		E151065A18089179002AC401 /* ConfigHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigHandler.cpp; sourceTree = "<group>"; };
+		E151065B18089179002AC401 /* ConfigHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigHandler.h; sourceTree = "<group>"; };
+		E151065C18089179002AC401 /* Local.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Local.cpp; sourceTree = "<group>"; };
+		E151065D18089179002AC401 /* Local.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Local.h; sourceTree = "<group>"; };
+		E151068018089179002AC401 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
+		E151068118089179002AC401 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		E151068218089179002AC401 /* TestAgilityRecordBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestAgilityRecordBook.cpp; sourceTree = "<group>"; };
+		E151068318089179002AC401 /* TestARB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestARB.cpp; sourceTree = "<group>"; };
+		E151068418089179002AC401 /* TestARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestARB.h; sourceTree = "<group>"; };
+		E151068618089179002AC401 /* TestArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestArchive.cpp; sourceTree = "<group>"; };
+		E151068718089179002AC401 /* TestBinaryData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestBinaryData.cpp; sourceTree = "<group>"; };
+		E151068818089179002AC401 /* TestBreakLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestBreakLine.cpp; sourceTree = "<group>"; };
+		E151068918089179002AC401 /* TestCalcPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCalcPoints.cpp; sourceTree = "<group>"; };
+		E151068A18089179002AC401 /* TestCalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCalendar.cpp; sourceTree = "<group>"; };
+		E151068B18089179002AC401 /* TestConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfig.cpp; sourceTree = "<group>"; };
+		E151068C18089179002AC401 /* TestConfigAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigAction.cpp; sourceTree = "<group>"; };
+		E151068D18089179002AC401 /* TestConfigCalSite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigCalSite.cpp; sourceTree = "<group>"; };
+		E151068E18089179002AC401 /* TestConfigDivision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigDivision.cpp; sourceTree = "<group>"; };
+		E151068F18089179002AC401 /* TestConfigEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigEvent.cpp; sourceTree = "<group>"; };
+		E151069018089179002AC401 /* TestConfigFault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigFault.cpp; sourceTree = "<group>"; };
+		E151069118089179002AC401 /* TestConfigLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigLevel.cpp; sourceTree = "<group>"; };
+		E151069218089179002AC401 /* TestConfigLifetimePoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigLifetimePoints.cpp; sourceTree = "<group>"; };
+		E151069318089179002AC401 /* TestConfigMultiQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigMultiQ.cpp; sourceTree = "<group>"; };
+		E151069418089179002AC401 /* TestConfigOtherPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigOtherPoints.cpp; sourceTree = "<group>"; };
+		E151069518089179002AC401 /* TestConfigPlaceInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigPlaceInfo.cpp; sourceTree = "<group>"; };
+		E151069618089179002AC401 /* TestConfigScoring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigScoring.cpp; sourceTree = "<group>"; };
+		E151069718089179002AC401 /* TestConfigSubLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigSubLevel.cpp; sourceTree = "<group>"; };
+		E151069818089179002AC401 /* TestConfigTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigTitle.cpp; sourceTree = "<group>"; };
+		E151069918089179002AC401 /* TestConfigTitlePoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigTitlePoints.cpp; sourceTree = "<group>"; };
+		E151069A18089179002AC401 /* TestConfigVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigVenue.cpp; sourceTree = "<group>"; };
+		E151069B18089179002AC401 /* TestDate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDate.cpp; sourceTree = "<group>"; };
+		E151069C18089179002AC401 /* TestDog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDog.cpp; sourceTree = "<group>"; };
+		E151069D18089179002AC401 /* TestDogClub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogClub.cpp; sourceTree = "<group>"; };
+		E151069E18089179002AC401 /* TestDogExistingPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogExistingPoints.cpp; sourceTree = "<group>"; };
+		E151069F18089179002AC401 /* TestDogNotes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogNotes.cpp; sourceTree = "<group>"; };
+		E15106A018089179002AC401 /* TestDogReferenceRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogReferenceRun.cpp; sourceTree = "<group>"; };
+		E15106A118089179002AC401 /* TestDogRegNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogRegNum.cpp; sourceTree = "<group>"; };
+		E15106A218089179002AC401 /* TestDogRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogRun.cpp; sourceTree = "<group>"; };
+		E15106A318089179002AC401 /* TestDogRunOtherPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogRunOtherPoints.cpp; sourceTree = "<group>"; };
+		E15106A418089179002AC401 /* TestDogRunPartner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogRunPartner.cpp; sourceTree = "<group>"; };
+		E15106A518089179002AC401 /* TestDogRunScoring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogRunScoring.cpp; sourceTree = "<group>"; };
+		E15106A618089179002AC401 /* TestDogTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogTitle.cpp; sourceTree = "<group>"; };
+		E15106A718089179002AC401 /* TestDogTrial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogTrial.cpp; sourceTree = "<group>"; };
+		E15106A818089179002AC401 /* TestDouble.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDouble.cpp; sourceTree = "<group>"; };
+		E15106A918089179002AC401 /* TestElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestElement.cpp; sourceTree = "<group>"; };
+		E15106AA18089179002AC401 /* TestErrorCallback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestErrorCallback.cpp; sourceTree = "<group>"; };
+		E15106AB18089179002AC401 /* TestInfoItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestInfoItem.cpp; sourceTree = "<group>"; };
+		E15106AC18089179002AC401 /* TestMD5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestMD5.cpp; sourceTree = "<group>"; };
+		E15106AD18089179002AC401 /* TestMisc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestMisc.cpp; sourceTree = "<group>"; };
+		E15106AE18089179002AC401 /* TestQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestQ.cpp; sourceTree = "<group>"; };
+		E15106AF18089179002AC401 /* TestString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestString.cpp; sourceTree = "<group>"; };
+		E15106B018089179002AC401 /* TestTraining.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestTraining.cpp; sourceTree = "<group>"; };
+		E15106B118089179002AC401 /* TestVersion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestVersion.cpp; sourceTree = "<group>"; };
+		E15106E418089670002AC401 /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageManager.cpp; path = ../../../Win/LanguageManager.cpp; sourceTree = "<group>"; };
+		E193AC661809B399008C6257 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
+		E193AC681809B39E008C6257 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
+		E1E2DD181809BEA700014E0C /* libUnitTest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libUnitTest.a; path = ../build/AgilityBook/Build/Products/Debug/libUnitTest.a; sourceTree = "<group>"; };
+		E1EE26B41809B3EA002E7A5F /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/AgilityBook/Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
+		E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../build/AgilityBook/Build/Products/Debug/libLibTidyHtml.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E15106491808913A002AC401 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1E2DD191809BEA700014E0C /* libUnitTest.a in Frameworks */,
+				E1EE26B61809B3EA002E7A5F /* libLibArchive.a in Frameworks */,
+				E1EE26B71809B3EA002E7A5F /* libLibTidyHtml.a in Frameworks */,
+				E193AC691809B39E008C6257 /* libARB.a in Frameworks */,
+				E193AC671809B399008C6257 /* libARBCommon.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E15106431808913A002AC401 = {
+			isa = PBXGroup;
+			children = (
+				E1E2DD181809BEA700014E0C /* libUnitTest.a */,
+				E1EE26B41809B3EA002E7A5F /* libLibArchive.a */,
+				E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */,
+				E193AC681809B39E008C6257 /* libARB.a */,
+				E193AC661809B399008C6257 /* libARBCommon.a */,
+				E151065818089169002AC401 /* Source */,
+				E151064D1808913A002AC401 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E151064D1808913A002AC401 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E151064C1808913A002AC401 /* TestARB */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E151065818089169002AC401 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E151065918089179002AC401 /* TestARB */,
+				E15106E318089651002AC401 /* Win */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		E151065918089179002AC401 /* TestARB */ = {
+			isa = PBXGroup;
+			children = (
+				E151065A18089179002AC401 /* ConfigHandler.cpp */,
+				E151065B18089179002AC401 /* ConfigHandler.h */,
+				E151065C18089179002AC401 /* Local.cpp */,
+				E151065D18089179002AC401 /* Local.h */,
+				E151068018089179002AC401 /* stdafx.cpp */,
+				E151068118089179002AC401 /* stdafx.h */,
+				E151068218089179002AC401 /* TestAgilityRecordBook.cpp */,
+				E151068318089179002AC401 /* TestARB.cpp */,
+				E151068418089179002AC401 /* TestARB.h */,
+				E151068618089179002AC401 /* TestArchive.cpp */,
+				E151068718089179002AC401 /* TestBinaryData.cpp */,
+				E151068818089179002AC401 /* TestBreakLine.cpp */,
+				E151068918089179002AC401 /* TestCalcPoints.cpp */,
+				E151068A18089179002AC401 /* TestCalendar.cpp */,
+				E151068B18089179002AC401 /* TestConfig.cpp */,
+				E151068C18089179002AC401 /* TestConfigAction.cpp */,
+				E151068D18089179002AC401 /* TestConfigCalSite.cpp */,
+				E151068E18089179002AC401 /* TestConfigDivision.cpp */,
+				E151068F18089179002AC401 /* TestConfigEvent.cpp */,
+				E151069018089179002AC401 /* TestConfigFault.cpp */,
+				E151069118089179002AC401 /* TestConfigLevel.cpp */,
+				E151069218089179002AC401 /* TestConfigLifetimePoints.cpp */,
+				E151069318089179002AC401 /* TestConfigMultiQ.cpp */,
+				E151069418089179002AC401 /* TestConfigOtherPoints.cpp */,
+				E151069518089179002AC401 /* TestConfigPlaceInfo.cpp */,
+				E151069618089179002AC401 /* TestConfigScoring.cpp */,
+				E151069718089179002AC401 /* TestConfigSubLevel.cpp */,
+				E151069818089179002AC401 /* TestConfigTitle.cpp */,
+				E151069918089179002AC401 /* TestConfigTitlePoints.cpp */,
+				E151069A18089179002AC401 /* TestConfigVenue.cpp */,
+				E151069B18089179002AC401 /* TestDate.cpp */,
+				E151069C18089179002AC401 /* TestDog.cpp */,
+				E151069D18089179002AC401 /* TestDogClub.cpp */,
+				E151069E18089179002AC401 /* TestDogExistingPoints.cpp */,
+				E151069F18089179002AC401 /* TestDogNotes.cpp */,
+				E15106A018089179002AC401 /* TestDogReferenceRun.cpp */,
+				E15106A118089179002AC401 /* TestDogRegNum.cpp */,
+				E15106A218089179002AC401 /* TestDogRun.cpp */,
+				E15106A318089179002AC401 /* TestDogRunOtherPoints.cpp */,
+				E15106A418089179002AC401 /* TestDogRunPartner.cpp */,
+				E15106A518089179002AC401 /* TestDogRunScoring.cpp */,
+				E15106A618089179002AC401 /* TestDogTitle.cpp */,
+				E15106A718089179002AC401 /* TestDogTrial.cpp */,
+				E15106A818089179002AC401 /* TestDouble.cpp */,
+				E15106A918089179002AC401 /* TestElement.cpp */,
+				E15106AA18089179002AC401 /* TestErrorCallback.cpp */,
+				E15106AB18089179002AC401 /* TestInfoItem.cpp */,
+				E15106AC18089179002AC401 /* TestMD5.cpp */,
+				E15106AD18089179002AC401 /* TestMisc.cpp */,
+				E15106AE18089179002AC401 /* TestQ.cpp */,
+				E15106AF18089179002AC401 /* TestString.cpp */,
+				E15106B018089179002AC401 /* TestTraining.cpp */,
+				E15106B118089179002AC401 /* TestVersion.cpp */,
+			);
+			name = TestARB;
+			path = ../../../TestARB;
+			sourceTree = "<group>";
+		};
+		E15106E318089651002AC401 /* Win */ = {
+			isa = PBXGroup;
+			children = (
+				E15106E418089670002AC401 /* LanguageManager.cpp */,
+			);
+			name = Win;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E151064B1808913A002AC401 /* TestARB */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E15106551808913A002AC401 /* Build configuration list for PBXNativeTarget "TestARB" */;
+			buildPhases = (
+				E15106481808913A002AC401 /* Sources */,
+				E15106491808913A002AC401 /* Frameworks */,
+				E151064A1808913A002AC401 /* CopyFiles */,
+				E15106E6180896D3002AC401 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestARB;
+			productName = TestARB;
+			productReference = E151064C1808913A002AC401 /* TestARB */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E15106441808913A002AC401 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "David Connet";
+			};
+			buildConfigurationList = E15106471808913A002AC401 /* Build configuration list for PBXProject "TestARB" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E15106431808913A002AC401;
+			productRefGroup = E151064D1808913A002AC401 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E151064B1808913A002AC401 /* TestARB */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E15106E6180896D3002AC401 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "OUTPUTDIR=${CONFIGURATION_BUILD_DIR}\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\npython3 \"${LANGDIR}/CompileLang.py\" \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" testarb\n\npython3 \"${LANGDIR}/CompileDataFile.py\" -x \"${LANGDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" testarb\n\npython3 ${SOURCE_ROOT}/../../../Projects/RunARBTests.py ${SOURCE_ROOT}/../../../ \"${OUTPUTDIR}\" testarb Mac";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E15106481808913A002AC401 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E15106B218089179002AC401 /* ConfigHandler.cpp in Sources */,
+				E15106B318089179002AC401 /* Local.cpp in Sources */,
+				E15106B418089179002AC401 /* stdafx.cpp in Sources */,
+				E15106B518089179002AC401 /* TestAgilityRecordBook.cpp in Sources */,
+				E15106B618089179002AC401 /* TestARB.cpp in Sources */,
+				E15106B718089179002AC401 /* TestArchive.cpp in Sources */,
+				E15106B818089179002AC401 /* TestBinaryData.cpp in Sources */,
+				E15106B918089179002AC401 /* TestBreakLine.cpp in Sources */,
+				E15106BA18089179002AC401 /* TestCalcPoints.cpp in Sources */,
+				E15106BB18089179002AC401 /* TestCalendar.cpp in Sources */,
+				E15106BC18089179002AC401 /* TestConfig.cpp in Sources */,
+				E15106BD18089179002AC401 /* TestConfigAction.cpp in Sources */,
+				E15106BE18089179002AC401 /* TestConfigCalSite.cpp in Sources */,
+				E15106BF18089179002AC401 /* TestConfigDivision.cpp in Sources */,
+				E15106C018089179002AC401 /* TestConfigEvent.cpp in Sources */,
+				E15106C118089179002AC401 /* TestConfigFault.cpp in Sources */,
+				E15106C218089179002AC401 /* TestConfigLevel.cpp in Sources */,
+				E15106C318089179002AC401 /* TestConfigLifetimePoints.cpp in Sources */,
+				E15106C418089179002AC401 /* TestConfigMultiQ.cpp in Sources */,
+				E15106C518089179002AC401 /* TestConfigOtherPoints.cpp in Sources */,
+				E15106C618089179002AC401 /* TestConfigPlaceInfo.cpp in Sources */,
+				E15106C718089179002AC401 /* TestConfigScoring.cpp in Sources */,
+				E15106C818089179002AC401 /* TestConfigSubLevel.cpp in Sources */,
+				E15106C918089179002AC401 /* TestConfigTitle.cpp in Sources */,
+				E15106CA18089179002AC401 /* TestConfigTitlePoints.cpp in Sources */,
+				E15106CB18089179002AC401 /* TestConfigVenue.cpp in Sources */,
+				E15106CC18089179002AC401 /* TestDate.cpp in Sources */,
+				E15106CD18089179002AC401 /* TestDog.cpp in Sources */,
+				E15106CE18089179002AC401 /* TestDogClub.cpp in Sources */,
+				E15106CF18089179002AC401 /* TestDogExistingPoints.cpp in Sources */,
+				E15106D018089179002AC401 /* TestDogNotes.cpp in Sources */,
+				E15106D118089179002AC401 /* TestDogReferenceRun.cpp in Sources */,
+				E15106D218089179002AC401 /* TestDogRegNum.cpp in Sources */,
+				E15106D318089179002AC401 /* TestDogRun.cpp in Sources */,
+				E15106D418089179002AC401 /* TestDogRunOtherPoints.cpp in Sources */,
+				E15106D518089179002AC401 /* TestDogRunPartner.cpp in Sources */,
+				E15106D618089179002AC401 /* TestDogRunScoring.cpp in Sources */,
+				E15106D718089179002AC401 /* TestDogTitle.cpp in Sources */,
+				E15106D818089179002AC401 /* TestDogTrial.cpp in Sources */,
+				E15106D918089179002AC401 /* TestDouble.cpp in Sources */,
+				E15106DA18089179002AC401 /* TestElement.cpp in Sources */,
+				E15106DB18089179002AC401 /* TestErrorCallback.cpp in Sources */,
+				E15106DC18089179002AC401 /* TestInfoItem.cpp in Sources */,
+				E15106DD18089179002AC401 /* TestMD5.cpp in Sources */,
+				E15106DE18089179002AC401 /* TestMisc.cpp in Sources */,
+				E15106DF18089179002AC401 /* TestQ.cpp in Sources */,
+				E15106E018089179002AC401 /* TestString.cpp in Sources */,
+				E15106E118089179002AC401 /* TestTraining.cpp in Sources */,
+				E15106E218089179002AC401 /* TestVersion.cpp in Sources */,
+				E15106E518089670002AC401 /* LanguageManager.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E15106531808913A002AC401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../..",
+					"-I$SRCROOT/../../../UnitTest++/src",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.1.0/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.0/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
+				);
+				OTHER_LDFLAGS = (
+					"-L$WXBASE/wxWidgets-3.1.0/build-cocoa-debug/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					OpenGL,
+					"-framework",
+					WebKit,
+					"-lwx_osx_cocoau_xrc-3.1",
+					"-lwx_osx_cocoau_webview-3.1",
+					"-lwx_osx_cocoau_qa-3.1",
+					"-lwx_baseu_net-3.1",
+					"-lwx_osx_cocoau_html-3.1",
+					"-lwx_osx_cocoau_adv-3.1",
+					"-lwx_osx_cocoau_core-3.1",
+					"-lwx_baseu_xml-3.1",
+					"-lwx_baseu-3.1",
+					"-lwxregexu-3.1",
+					"-lwxexpat-3.1",
+					"-lwxtiff-3.1",
+					"-lwxjpeg-3.1",
+					"-lwxpng-3.1",
+					"-lwxzlib-3.1",
+					"-lpthread",
+				);
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E15106541808913A002AC401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../..",
+					"-I$SRCROOT/../../../UnitTest++/src",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.1.0/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.0/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
+				);
+				OTHER_LDFLAGS = (
+					"-L$WXBASE/wxWidgets-3.1.0/build-cocoa/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					OpenGL,
+					"-framework",
+					WebKit,
+					"-lwx_osx_cocoau_xrc-3.1",
+					"-lwx_osx_cocoau_webview-3.1",
+					"-lwx_osx_cocoau_qa-3.1",
+					"-lwx_baseu_net-3.1",
+					"-lwx_osx_cocoau_html-3.1",
+					"-lwx_osx_cocoau_adv-3.1",
+					"-lwx_osx_cocoau_core-3.1",
+					"-lwx_baseu_xml-3.1",
+					"-lwx_baseu-3.1",
+					"-lwxregexu-3.1",
+					"-lwxexpat-3.1",
+					"-lwxtiff-3.1",
+					"-lwxjpeg-3.1",
+					"-lwxpng-3.1",
+					"-lwxzlib-3.1",
+					"-lpthread",
+				);
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E15106561808913A002AC401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E15106571808913A002AC401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E15106471808913A002AC401 /* Build configuration list for PBXProject "TestARB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E15106531808913A002AC401 /* Debug */,
+				E15106541808913A002AC401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E15106551808913A002AC401 /* Build configuration list for PBXNativeTarget "TestARB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E15106561808913A002AC401 /* Debug */,
+				E15106571808913A002AC401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E15106441808913A002AC401 /* Project object */;
+}
