@@ -107,60 +107,70 @@ def GetCompilerPaths(c):
 	vcvarsall = ''
 	target = ''
 	platformDir = ''
+	config = ''
 
 	if c == 'vc10':
 		baseDir = GetVSDir("10.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc100'
+		config = 'Win32'
 
 	elif c == 'vc10x64':
 		baseDir = GetVSDir("10.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc100'
+		config = 'x64'
 
 	elif c == 'vc11':
 		baseDir = GetVSDir("11.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc110'
+		config = 'Win32'
 
 	elif c == 'vc11x64':
 		baseDir = GetVSDir("11.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc110'
+		config = 'x64'
 
 	elif c == 'vc12':
 		baseDir = GetVSDir("12.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc120'
+		config = 'Win32'
 
 	elif c == 'vc12x64':
 		baseDir = GetVSDir("12.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc120'
+		config = 'x64'
 
 	elif c == 'vc14':
 		baseDir = GetVSDir("14.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc140'
+		config = 'Win32'
 
 	elif c == 'vc14x64':
 		baseDir = GetVSDir("14.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc140'
+		config = 'x64'
 
 	elif c == 'vc15':
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc141'
+		config = 'Win32'
 
 	elif c == 'vc15x64':
 		baseDir = GetVSDir("15.0")
@@ -169,26 +179,27 @@ def GetCompilerPaths(c):
 		#target = GetX64Target(baseDir)
 		target = 'amd64'
 		platformDir = 'vc141'
+		config = 'x64'
 
 	else:
 		print(('ERROR: Unknown target: ' + c))
-		return ('', '')
+		return ('', '', '', '')
 
 	if len(baseDir) == 0:
 		print(('ERROR: Unknown target: ' + c))
-		return ('', '')
+		return ('', '', '', '')
 	if not os.access(baseDir, os.F_OK):
 		print(('ERROR: "' + baseDir + '" does not exist'))
-		return ('', '')
+		return ('', '', '', '')
 	if not os.access(vcvarsall, os.F_OK):
 		print(('ERROR: "' + vcvarsall + '" does not exist'))
-		return ('', '')
+		return ('', '', '', '')
 
-	return (baseDir, '"' + vcvarsall + '" ' + target, platformDir)
+	return (baseDir, '"' + vcvarsall + '" ' + target, platformDir, config)
 
 
 def AddCompiler(compilers, c):
-	vcBaseDir, vcvarsall, platformDir = GetCompilerPaths(c)
+	vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(c)
 
 	if len(vcBaseDir) == 0:
 		return False
@@ -347,7 +358,7 @@ def main():
 		os.chdir(os.environ['WXWIN'] + r'\build\msw')
 
 	for compiler in compilers:
-		vcBaseDir, vcvarsall, platformDir = GetCompilerPaths(compiler)
+		vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(compiler)
 
 		newenv = os.environ.copy()
 
@@ -368,50 +379,10 @@ def main():
 		else:
 			cfg = ' CFG=_' + platformDir
 
-		if compiler == 'vc10':
-			setenv_rel = 'call ' + vcvarsall
-			cppflags = common_cppflags
-
-		elif compiler == 'vc10x64':
-			setenv_rel = 'call ' + vcvarsall
+		setenv_rel = 'call ' + vcvarsall
+		cppflags = common_cppflags
+		if config == 'x64':
 			target_cpu = ' TARGET_CPU=' + x64Target
-			cppflags = common_cppflags
-
-		elif compiler == 'vc11':
-			setenv_rel = 'call ' + vcvarsall
-			cppflags = common_cppflags
-
-		elif compiler == 'vc11x64':
-			setenv_rel = 'call ' + vcvarsall
-			target_cpu = ' TARGET_CPU=' + x64Target
-			cppflags = common_cppflags
-
-		elif compiler == 'vc12':
-			setenv_rel = 'call ' + vcvarsall
-			cppflags = common_cppflags
-
-		elif compiler == 'vc12x64':
-			setenv_rel = 'call ' + vcvarsall
-			target_cpu = ' TARGET_CPU=' + x64Target
-			cppflags = common_cppflags
-
-		elif compiler == 'vc14':
-			setenv_rel = 'call ' + vcvarsall
-			cppflags = common_cppflags
-
-		elif compiler == 'vc14x64':
-			setenv_rel = 'call ' + vcvarsall
-			target_cpu = ' TARGET_CPU=' + x64Target
-			cppflags = common_cppflags
-
-		elif compiler == 'vc15':
-			setenv_rel = 'call ' + vcvarsall
-			cppflags = common_cppflags
-
-		elif compiler == 'vc15x64':
-			setenv_rel = 'call ' + vcvarsall
-			target_cpu = ' TARGET_CPU=' + x64Target
-			cppflags = common_cppflags
 
 		build_rel = ''
 		build_dbg = ''
