@@ -51,7 +51,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__WXWINDOWS__)
 #include <iostream>
 static void OutputDebugString(wchar_t const* msg)
 {
