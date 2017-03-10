@@ -67,24 +67,13 @@
 #endif
 
 // Minimum system
-// Vista                      _WIN32_WINNT >= 0x0600  WINVER >= 0x0600
-// WinServer2003sp1, WinXPsp2 _WIN32_WINNT >= 0x0502  WINVER >= 0x0502
-// WinServer2003, WinXP       _WIN32_WINNT >= 0x0501  WINVER >= 0x0501
-// Win2K                      _WIN32_WINNT >= 0x0500  WINVER >= 0x0500
-// WinNT4.0                   _WIN32_WINNT >= 0x0400  WINVER >= 0x0400
-// WinMe                    _WIN32_WINDOWS >= 0x0500  WINVER >= 0x0500
-// Win98                    _WIN32_WINDOWS >= 0x0410  WINVER >= 0x0410
-// Win95                    _WIN32_WINDOWS >= 0x0400  WINVER >= 0x0400
-// IE7.0             _WIN32_IE >= 0x0700
-// IE6.0 SP2         _WIN32_IE >= 0x0603
-// IE6.0 SP1         _WIN32_IE >= 0x0601
-// IE6.0             _WIN32_IE >= 0x0600
-// IE5.5             _WIN32_IE >= 0x0550
-// IE5.01            _WIN32_IE >= 0x0501
-// IE5.0, 5.0a, 5.0b _WIN32_IE >= 0x0500
-// IE4.01            _WIN32_IE >= 0x0401
-// IE4.0             _WIN32_IE >= 0x0400
-// IE3.0, 3.01, 3.02 _WIN32_IE >= 0x0300
+// Win10                      WINVER >= 0x0A00 _WIN32_WINNT_WIN10
+// Win8.1                     WINVER >= 0x0603 _WIN32_WINNT_WINBLUE
+// Win8                       WINVER >= 0x0602 _WIN32_WINNT_WIN8
+// Win7                       WINVER >= 0x0601 _WIN32_WINNT_WIN7
+// Vista, WinServer2008       WINVER >= 0x0600 _WIN32_WINNT_VISTA/_WS08/_LONGHORN
+// WinServer2003sp1, WinXPsp2 WINVER >= 0x0502 _WIN32_WINNT_WS03
+// WinServer2003, WinXP       WINVER >= 0x0501 _WIN32_WINNT_WINXP
 
 #ifndef _WIN32_IE
 	#define _WIN32_IE 0x0600	// Minimum IE, 6.0
@@ -97,7 +86,7 @@
 // Unless overridden, target XP by default.
 #ifndef WINVER
 	#if _MSC_VER >= 1700
-		#define WINVER	0x0600
+		#define WINVER	0x0601
 	#elif defined(_M_IA64)
 		#define WINVER	0x0502
 	#elif defined(_M_X64)
