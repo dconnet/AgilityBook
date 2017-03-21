@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2017-01-24 Changed GetCompilerPaths api.
 # 2016-11-22 Added vc15, removed vc9. Changed GetCompilerPaths api.
 # 2016-06-10 Convert to Python3
 # 2015-10-11 Added -r option.
