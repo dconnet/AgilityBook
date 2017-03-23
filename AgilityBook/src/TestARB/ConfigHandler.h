@@ -16,7 +16,7 @@
  * 2008-10-31 Created
  */
 
-#include <ARB/ARBConfig.h>
+#include "ARB/ARBConfig.h"
 
 
 class CConfigHandler : public IARBConfigHandler

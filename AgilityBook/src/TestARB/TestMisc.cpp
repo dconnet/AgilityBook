@@ -24,11 +24,11 @@
 #include "TestARB.h"
 
 #include "ConfigHandler.h"
-#include <ARB/ARBAgilityRecordBook.h>
-#include <ARB/ARBConfig.h>
-#include <ARBCommon/ARBMisc.h>
-#include <ARBCommon/ARBTypes.h>
-#include <ARBCommon/StringUtil.h>
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBConfig.h"
+#include "ARBCommon/ARBMisc.h"
+#include "ARBCommon/ARBTypes.h"
+#include "ARBCommon/StringUtil.h"
 
 #include <stdarg.h>
 

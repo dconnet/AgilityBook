@@ -20,7 +20,7 @@
  * 2008-01-13 Created
  */
 
-#include <ARB/ARBLocalization.h>
+#include "ARB/ARBLocalization.h"
 
 
 class CLocalization : public IARBLocalization

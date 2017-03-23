@@ -24,11 +24,11 @@
 
 #include "ConfigHandler.h"
 
-#include <ARB/ARBAgilityRecordBook.h>
-#include <ARB/ARBStructure.h>
-#include <ARB/ARBConfig.h>
-#include <ARB/ARBDogTitle.h>
-#include <ARBCommon/Element.h>
+#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBStructure.h"
+#include "ARB/ARBConfig.h"
+#include "ARB/ARBDogTitle.h"
+#include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
