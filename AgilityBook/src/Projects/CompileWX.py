@@ -98,8 +98,11 @@ def GetX64Target(vcBase):
 
 	# 64bit on 64bit
 	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
-		if os.access(vcBase + r'VC\bin\amd64', os.F_OK):
-			target = 'amd64'
+		# Note: We used to check for the existence of <vcBase>\VC\bin\amd64.
+		# VS2017 moved that directory. Just assume that if we're compiling
+		# for 64bit on 64bit that the user installed that. With current VS,
+		# that's just done - not like older versions where it was a choice.
+		target = 'amd64'
 	return target
 
 
@@ -107,6 +110,7 @@ def GetCompilerPaths(c):
 	baseDir = ''
 	vcvarsall = ''
 	target = ''
+	extraargs = ''
 	platformDir = ''
 	config = ''
 
@@ -167,36 +171,42 @@ def GetCompilerPaths(c):
 		config = 'x64'
 
 	elif c == 'vc15':
+		#vcvarsall [arch]
+		#vcvarsall [arch] [version]
+		#vcvarsall [arch] [platform_type] [version]
+		# [arch]: x86 | amd64 | x86_amd64 | x86_arm | x86_arm64 | amd64_x86 | amd64_arm | amd64_arm64
+		# [platform_type]: {empty} | store | uwp
+		# [version] : full Windows 10 SDK number (e.g. 10.0.10240.0) or "8.1" to use the Windows 8.1 SDK.
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = 'x86'
+		# Can target specific SDKs
+		#extraargs = ' 10.0.14393.0'
 		platformDir = 'vc141'
 		config = 'Win32'
 
 	elif c == 'vc15x64':
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		#baseDir + "\VC\Tools\MSVC\14.10.24629\bin\HostX86\x64\"
-		#target = GetX64Target(baseDir)
-		target = 'amd64'
+		target = GetX64Target(baseDir)
 		platformDir = 'vc141'
 		config = 'x64'
 
 	else:
-		print(('ERROR: Unknown target: ' + c))
+		print('ERROR: Unknown target: ' + c)
 		return ('', '', '', '')
 
 	if len(baseDir) == 0:
-		print(('ERROR: Unknown target: ' + c))
+		print('ERROR: Unknown target: ' + c)
 		return ('', '', '', '')
 	if not os.access(baseDir, os.F_OK):
-		print(('ERROR: "' + baseDir + '" does not exist'))
+		print('ERROR: "' + baseDir + '" does not exist')
 		return ('', '', '', '')
 	if not os.access(vcvarsall, os.F_OK):
-		print(('ERROR: "' + vcvarsall + '" does not exist'))
+		print('ERROR: "' + vcvarsall + '" does not exist')
 		return ('', '', '', '')
 
-	return (baseDir, '"' + vcvarsall + '" ' + target, platformDir, config)
+	return (baseDir, '"' + vcvarsall + '" ' + target + extraargs, platformDir, config)
 
 
 def AddCompiler(compilers, c):
