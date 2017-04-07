@@ -61,7 +61,8 @@ cd $BUILDDIR
 if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk; then
 	echo "Using 10.12 SDK"
 	export CXXFLAGS="-std=c++11 -stdlib=libc++"
-	export CPPFLAGS="-stdlib=libc++"
+	export OBJCXXFLAGS="-std=c++11 -stdlib=libc++"
+	export LDFLAGS="-stdlib=libc++"
 	export LIBS="-lc++"
 	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
 	MINSDK=10.7
@@ -70,7 +71,8 @@ if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/
 elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk; then
 	echo "Using 10.11 SDK"
 	export CXXFLAGS="-std=c++11 -stdlib=libc++"
-	export CPPFLAGS="-stdlib=libc++"
+	export OBJCXXFLAGS="-std=c++11 -stdlib=libc++"
+	export LDFLAGS="-stdlib=libc++"
 	export LIBS="-lc++"
 	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 	MINSDK=10.7
@@ -79,7 +81,8 @@ elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platfor
 elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk; then
 	echo "Using 10.9 SDK"
 	export CXXFLAGS="-std=c++11 -stdlib=libc++"
-	export CPPFLAGS="-stdlib=libc++"
+	export OBJCXXFLAGS="-std=c++11 -stdlib=libc++"
+	export LDFLAGS="-stdlib=libc++"
 	export LIBS="-lc++"
 	TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
 	MINSDK=10.7
@@ -93,7 +96,7 @@ fi
 
 CONFIG_PARAMS+=" --with-macosx-version-min=$MINSDK --with-macosx-sdk=$TARGETSDK $TARGETARCH"
 
-LIBRARIES+=" --with-expat=builtin --with-regex=builtin --with-zlib=builtin --without-libiconv --without-liblzma"
+LIBRARIES+=" --with-cxx=11 --with-expat=builtin --with-regex=builtin --with-zlib=builtin --without-libiconv --without-liblzma"
 
 echo "../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 
