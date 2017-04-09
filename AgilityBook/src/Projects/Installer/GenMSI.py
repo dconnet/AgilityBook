@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2017-04-09 Added vc15 support.
 # 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
 # 2016-07-01 Add signing
 # 2016-06-10 Convert to Python3
@@ -49,7 +50,7 @@
 # 2007-10-31 Changed from WiX to InnoSetup
 # 2007-03-07 Created
 
-"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC[10|11|12|14]]
+"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC[10|11|12|14|15]]
 	wix: Override internal wix path (c:\Tools\wix3)
 	user: Create msi as a per-user install (default: per-machine)
 	32: Create 32bit Unicode msi
@@ -167,18 +168,15 @@ def getversion(numParts):
 
 
 # returns baseDir, outputFile
-def getoutputvars(code, version, vcver):
+def getoutputvars(code, version, platformTools):
 	outputFile = ''
 	baseDir = ''
-	platformTools = vcver
-	if not vcver == '9':
-		vcver = vcver + '0'
 	if code32 == code:
 		outputFile = 'AgilityBook-' + version + '-win'
-		baseDir = AgilityBookDir + r'\bin\vc' + vcver + 'Win32\Release'
+		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'Win32\Release'
 	elif code64 == code:
 		outputFile = 'AgilityBook-' + version + '-x64'
-		baseDir = AgilityBookDir + r'\bin\vc' + vcver + 'x64\Release'
+		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x64\Release'
 	else:
 		raise Exception('Invalid code')
 	return baseDir, outputFile
@@ -269,8 +267,8 @@ def GetWxsFilesAsString(extension):
 	return str
 
 
-def CopyCAdll(ver4Line, vcver):
-	baseDir, outputFile = getoutputvars(code32, ver4Line, vcver)
+def CopyCAdll(ver4Line, platformTools):
+	baseDir, outputFile = getoutputvars(code32, ver4Line, platformTools)
 	arbdll = baseDir + '\\' + CA_dll
 	if not os.access(arbdll, os.F_OK):
 		print(arbdll + r' does not exist, MSI skipped')
@@ -279,8 +277,8 @@ def CopyCAdll(ver4Line, vcver):
 	return 1
 
 
-def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
-	baseDir, outputFile = getoutputvars(code, ver4Line, vcver)
+def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, platformTools):
+	baseDir, outputFile = getoutputvars(code, ver4Line, platformTools)
 	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
 		print(baseDir + r'\AgilityBook.exe does not exist, MSI skipped')
 		return 0
@@ -362,6 +360,7 @@ def main():
 	tidy = 1
 	testing = 0
 	vcver = '10'
+	platformTools = '100'
 	if 1 == len(sys.argv):
 		print('Setting /32 /test')
 		b32 = 1
@@ -391,12 +390,19 @@ def main():
 			testing = 1
 		elif o == '/VC10':
 			vcver = '10'
+			platformTools = '100'
 		elif o == '/VC11':
 			vcver = '11'
+			platformTools = '110'
 		elif o == '/VC12':
 			vcver = '12'
+			platformTools = '120'
 		elif o == '/VC14':
 			vcver = '14'
+			platformTools = '140'
+		elif o == '/VC15':
+			vcver = '15'
+			platformTools = '141'
 		else:
 			error = 1
 			break

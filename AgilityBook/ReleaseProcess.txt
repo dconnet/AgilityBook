@@ -43,6 +43,7 @@ Do a full rebuild and verify it.
       compiler: vc10, vc11, vc12 (default: vc10)
 - Run 'GenMSI.py /all' to create w32/x64 installers and auto-update
   Misc\Installations\InstallGUIDs.csv
+  - Run '..\SignStuff.py created.msi' for both installers
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
 
 Commit all changes to SVN.

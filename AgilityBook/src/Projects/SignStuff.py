@@ -12,6 +12,7 @@
 # This script, by default, will only sign when on the build machine.
 #
 # Revision History
+# 2017-04-09 Fix MSI signing.
 # 2016-12-23 Add test to only target dll/exe. Allows script to be put into common project properties.
 # 2016-07-05 Fix variables
 # 2016-07-01 Created
@@ -42,7 +43,7 @@ SignSHA256cmd = '/v /fd sha256 /tr http://timestamp.geotrust.com/tsa /td sha256 
 signSHA1 = True
 signSHA256 = True
 
-validExt = ['.dll', '.exe']
+validExt = ['.dll', '.exe', '.msi']
 
 
 def Run(cmd, onlyTest = False):
@@ -61,6 +62,11 @@ def CheckFiletype(filename):
 		if fileext == ext:
 			return True
 	return False
+
+
+def CheckDualSign(filename):
+	fileext = os.path.splitext(filename)[-1].lower()
+	return not (fileext == '.msi')
 
 
 def main():
@@ -104,6 +110,10 @@ def main():
 	if not CheckFiletype(filename):
 		# Quietly exit. No error.
 		return 0
+
+	# If dual signing not supported (msi), forcibly turn it off
+	if signSHA256 and not CheckDualSign(filename):
+		signSHA256 = False
 
 	# Just do a simple compare.
 	# Don't care about unicode weirdness with machine names.
