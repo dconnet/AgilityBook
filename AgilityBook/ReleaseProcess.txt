@@ -34,7 +34,7 @@ Run Doxygen and fix any warnings/errors it reports.
 
 Do a full rebuild and verify it.
 - cd src\Projects\Installer
-- 'BuildAll.py -w %WXBASE%\wxWidgets-3.0.2 -b fullupdate' [runs VC10 compile]
+- 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.0 -b fullupdate' [runs VC10 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
       -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.0.0'
                 Default is %WXWIN%

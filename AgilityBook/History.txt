@@ -1,4 +1,4 @@
-12/14/2016: v3.2.1.<development>
+4/9/2017: v3.2.1.100
 - New features / Enhancements:
   - Add support for scrolling calendar view on touch screens
 - Bumped Configuration v54:

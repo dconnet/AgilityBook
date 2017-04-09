@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2017-04-09 Updated for vc15
 # 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
 # 2016-06-10 Convert to Python3, cleaned up error checks.
 # 2016-02-29 Changed to wx3.1 as default.
@@ -23,7 +24,7 @@
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config: 'release' or 'debug' (default, release)
    -t:       Testing, just print commands to run
-   compiler: vc10, vc11, vc12, vc14 (default: vc10)
+   compiler: vc10, vc11, vc12, vc14, vc15 (default: vc10)
 """
 
 import getopt
@@ -107,7 +108,7 @@ def GetRegString(hkey, path, value):
 		return ""
 
 
-# 7.1, 8.0, 9.0, 10.0, 11.0, 12.0 (as observed on my machine)
+# 7.1, 8.0, 9.0, 10.0, 11.0, 12.0, 14.0, 15.0 (as observed on my machine)
 def GetVSDir(version):
 	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
@@ -119,35 +120,133 @@ def GetVSDir(version):
 	return vsdir
 
 
-def AddCompiler(compilers, c):
+def GetX64Target(vcBase):
+	target = 'x86_amd64'
+
+	# 64bit on 64bit
+	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
+		# Note: We used to check for the existence of <vcBase>\VC\bin\amd64.
+		# VS2017 moved that directory. Just assume that if we're compiling
+		# for 64bit on 64bit that the user installed that. With current VS,
+		# that's just done - not like older versions where it was a choice.
+		target = 'amd64'
+	return target
+
+
+def GetCompilerPaths(c):
 	baseDir = ''
-	testFile = ''
+	vcvarsall = ''
+	target = ''
+	extraargs = ''
+	platformDir = ''
+	config = ''
 
 	if c == 'vc10':
 		baseDir = GetVSDir("10.0")
-		testFile = baseDir + r'\VC\vcvarsall.bat'
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = 'x86'
+		platformDir = 'vc100'
+		config = 'Win32'
+
+	elif c == 'vc10x64':
+		baseDir = GetVSDir("10.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = GetX64Target(baseDir)
+		platformDir = 'vc100'
+		config = 'x64'
 
 	elif c == 'vc11':
 		baseDir = GetVSDir("11.0")
-		testFile = baseDir + r'\VC\vcvarsall.bat'
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = 'x86'
+		platformDir = 'vc110'
+		config = 'Win32'
+
+	elif c == 'vc11x64':
+		baseDir = GetVSDir("11.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = GetX64Target(baseDir)
+		platformDir = 'vc110'
+		config = 'x64'
 
 	elif c == 'vc12':
 		baseDir = GetVSDir("12.0")
-		testFile = baseDir + r'\VC\vcvarsall.bat'
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = 'x86'
+		platformDir = 'vc120'
+		config = 'Win32'
+
+	elif c == 'vc12x64':
+		baseDir = GetVSDir("12.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = GetX64Target(baseDir)
+		platformDir = 'vc120'
+		config = 'x64'
 
 	elif c == 'vc14':
 		baseDir = GetVSDir("14.0")
-		testFile = baseDir + r'\VC\vcvarsall.bat'
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = 'x86'
+		platformDir = 'vc140'
+		config = 'Win32'
+
+	elif c == 'vc14x64':
+		baseDir = GetVSDir("14.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = GetX64Target(baseDir)
+		platformDir = 'vc140'
+		config = 'x64'
+
+	elif c == 'vc15':
+		#vcvarsall [arch]
+		#vcvarsall [arch] [version]
+		#vcvarsall [arch] [platform_type] [version]
+		# [arch]: x86 | amd64 | x86_amd64 | x86_arm | x86_arm64 | amd64_x86 | amd64_arm | amd64_arm64
+		# [platform_type]: {empty} | store | uwp
+		# [version] : full Windows 10 SDK number (e.g. 10.0.10240.0) or "8.1" to use the Windows 8.1 SDK.
+		baseDir = GetVSDir("15.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = 'x86'
+		# Can target specific SDKs
+		#extraargs = ' 10.0.14393.0'
+		platformDir = 'vc141'
+		config = 'Win32'
+
+	elif c == 'vc15x64':
+		baseDir = GetVSDir("15.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetX64Target(baseDir)
+		platformDir = 'vc141'
+		config = 'x64'
 
 	else:
-		print('Unknown compiler:', c)
-		return False
+		print('ERROR: Unknown target: ' + c)
+		return ('', '', '', '')
 
-	if not os.access(baseDir, os.F_OK) or not os.access(testFile, os.F_OK):
-		if len(baseDir) == 0:
-			print('Unknown compiler:', c)
-		else:
-			print('ERROR: "' + baseDir + '" does not exist')
+	if len(baseDir) == 0:
+		print('ERROR: Unknown target: ' + c)
+		return ('', '', '', '')
+	if not os.access(baseDir, os.F_OK):
+		print('ERROR: "' + baseDir + '" does not exist')
+		return ('', '', '', '')
+	if not os.access(vcvarsall, os.F_OK):
+		print('ERROR: "' + vcvarsall + '" does not exist')
+		return ('', '', '', '')
+
+	return (baseDir, '"' + vcvarsall + '" ' + target + extraargs, platformDir, config)
+
+
+def AddCompilers(compilers, c):
+	if not AddCompiler(compilers, c):
+		return False
+	compilersCheck = set()
+	return AddCompiler(compilersCheck, c + 'x64')
+
+
+def AddCompiler(compilers, c):
+	vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(c)
+
+	if len(vcBaseDir) == 0:
 		return False
 
 	compilers.add(c)
@@ -167,7 +266,7 @@ def main():
 
 	compilers = set()
 	updateBuildNumber = False
-	config = 'Release'
+	configuration = 'Release'
 	clean = False
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], 'w:b:c:t')
@@ -193,9 +292,9 @@ def main():
 				return 1
 		elif '-c' == o:
 			if 'release' == a:
-				config = 'Release'
+				configuration = 'Release'
 			elif 'debug' == a:
-				config = 'Debug'
+				configuration = 'Debug'
 			else:
 				print('Usage:', __doc__)
 				return 1
@@ -203,12 +302,12 @@ def main():
 			testing = True
 
 	for c in args:
-		if not AddCompiler(compilers, c):
+		if not AddCompilers(compilers, c):
 			print('Usage:', __doc__)
 			return 1
 
 	if 0 == len(compilers):
-		AddCompiler(compilers, 'vc10')
+		AddCompilers(compilers, 'vc10')
 
 	if 0 == len(compilers) or len(wxwin) == 0:
 		print('Usage:', __doc__)
@@ -230,105 +329,32 @@ def main():
 	#  Targets: AgilityBook, ARBHelp, ARBUpdater, LibARB, LibTidy, TestARB
 
 	for compiler in compilers:
-		if compiler == 'vc10':
-			vc10Base = GetVSDir("10.0")
-			if not os.access(vc10Base, os.F_OK):
-				print('ERROR: "' + vc10Base + '" does not exist')
-				return 1
-			PlatformTools = '100'
-			setvcvars = vc10Base + r'\VC\vcvarsall.bat'
-			cmds32 = (
-				r'title VC10 ' + config + ' Win32',
-				r'cd ..\VC10',
-				r'call "' + setvcvars + r'" x86',
-				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=Win32')
-			envTarget = 'x86_amd64'
-			if bit64on64:
-				envTarget = 'amd64'
-			cmds64 = (
-				r'title VC10 ' + config + ' x64',
-				r'cd ..\VC10',
-				r'call "' + setvcvars + r'" ' + envTarget,
-				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=x64')
+		vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(compiler)
 
-		elif compiler == 'vc11':
-			vc11Base = GetVSDir("11.0")
-			if not os.access(vc11Base, os.F_OK):
-				print('ERROR: "' + vc11Base + '" does not exist')
-				return 1
-			PlatformTools = '110'
-			setvcvars = vc11Base + r'\VC\vcvarsall.bat'
-			cmds32 = (
-				r'title VC11 ' + config + ' Win32',
-				r'cd ..\VC11',
-				r'call "' + setvcvars + r'" x86',
-				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=Win32')
-			envTarget = 'x86_amd64'
-			if bit64on64:
-				envTarget = 'amd64'
-			cmds64 = (
-				r'title VC11 ' + config + ' x64',
-				r'cd ..\VC11',
-				r'call "' + setvcvars + r'" ' + envTarget,
-				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=x64')
-
-		elif compiler == 'vc12':
-			vc12Base = GetVSDir("12.0")
-			if not os.access(vc12Base, os.F_OK):
-				print('ERROR: "' + vc12Base + '" does not exist')
-				return 1
-			PlatformTools = '120'
-			setvcvars = vc12Base + r'\VC\vcvarsall.bat'
-			cmds32 = (
-				r'title VC12 ' + config + ' Win32',
-				r'cd ..\VC12',
-				r'call "' + setvcvars + r'" x86',
-				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=Win32')
-			envTarget = 'x86_amd64'
-			if bit64on64:
-				envTarget = 'amd64'
-			cmds64 = (
-				r'title VC12 ' + config + ' x64',
-				r'cd ..\VC12',
-				r'call "' + setvcvars + r'" ' + envTarget,
-				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=x64')
-
-		elif compiler == 'vc14':
-			vc14Base = GetVSDir("14.0")
-			if not os.access(vc14Base, os.F_OK):
-				print('ERROR: "' + vc14Base + '" does not exist')
-				return 1
-			PlatformTools = '140'
-			setvcvars = vc14Base + r'\VC\vcvarsall.bat'
-			cmds32 = (
-				r'title VC14 ' + config + ' Win32',
-				r'cd ..\VC14',
-				r'call "' + setvcvars + r'" x86',
-				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=Win32')
-			envTarget = 'x86_amd64'
-			if bit64on64:
-				envTarget = 'amd64'
-			cmds64 = (
-				r'title VC14 ' + config + ' x64',
-				r'cd ..\VC14',
-				r'call "' + setvcvars + r'" ' + envTarget,
-				r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + config + ';Platform=x64')
-
-		if not os.access(setvcvars, os.F_OK):
-			print('ERROR: "' + setvcvars + '" does not exist')
-			return 1
+		cmds32 = (
+			r'title ' + compiler + ' ' + configuration + ' ' + config,
+			r'cd ..\\' + compiler,
+			r'call ' + vcvarsall,
+			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + config)
 
 		if clean:
-			RmMinusRF('../../../bin/vc' + PlatformTools + 'Win32')
+			RmMinusRF('../../../bin/' + platformDir + config)
 		RunCmds(cmds32)
-		if not testing and not os.access('../../../bin/vc' + PlatformTools + 'Win32/' + config + '/AgilityBook.exe', os.F_OK):
+		if not testing and not os.access('../../../bin/' + platformDir + config + '/' + configuration + '/AgilityBook.exe', os.F_OK):
 			print('ERROR: Compile failed, bailing out')
 			return 1
 
+		vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(compiler + 'x64')
+		cmds64 = (
+			r'title ' + compiler + ' ' + configuration + ' ' + config,
+			r'cd ..\\' + compiler,
+			r'call ' + vcvarsall,
+			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + config)
+
 		if clean:
-			RmMinusRF('../../../bin/vc' + PlatformTools + 'x64')
+			RmMinusRF('../../../bin/' + platformDir + config)
 		RunCmds(cmds64)
-		if not testing and not os.access('../../../bin/vc' + PlatformTools + 'x64/' + config + '/AgilityBook.exe', os.F_OK):
+		if not testing and not os.access('../../../bin/' + platformDir + config + '/' + configuration + '/AgilityBook.exe', os.F_OK):
 			print('ERROR: Compile failed, bailing out')
 			return 1
 
