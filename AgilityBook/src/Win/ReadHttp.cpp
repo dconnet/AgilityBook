@@ -23,8 +23,6 @@
 #include "stdafx.h"
 #include "ReadHttp.h"
 
-#include "AgilityBook.h"
-#include "AgilityBookOptions.h"
 #include "DlgAuthenticate.h"
 #include "DlgProgress.h"
 
