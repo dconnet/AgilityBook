@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-04-09 Fixed sizer flags, look for config on D:, then fallback to C:.
  * 2015-11-28 Cleaned up UI, added copy command.
  * 2010-02-09 Created
  */
@@ -122,7 +123,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	, m_ctrlConfig(nullptr)
 	, m_ctrlConfigVersion(nullptr)
 	, m_ctrlCopy(nullptr)
-	, m_Config(L"C:\\AgilityBook\\trunk\\AgilityBook\\src\\Win\\res\\DefaultConfig.xml")
+	, m_Config()
 	, m_File(inFile)
 	, m_MD5()
 	, m_SHA1()
@@ -131,6 +132,11 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	, m_ConfigVersion(0)
 {
 	Create(nullptr, wxID_ANY, L"MD5/SHA1/SHA256 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+
+	wxString baseConfig(L"\\AgilityBook\\trunk\\AgilityBook\\src\\Win\\res\\DefaultConfig.xml");
+	m_Config = L"D:" + baseConfig;
+	if (!wxFile::Access(m_Config, wxFile::read))
+		m_Config = L"C" + baseConfig;
 
 	wxIconBundle icons;
 	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook16)));
@@ -252,7 +258,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 	wxBoxSizer* sizeConfig = new wxBoxSizer(wxHORIZONTAL);
 	sizeConfig->Add(m_ctrlInit, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizeConfig->Add(sizeConfigData, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND, 0);
+	sizeConfig->Add(sizeConfigData, 0, wxEXPAND, 0);
 	bSizer->Add(sizeConfig, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizeFile = new wxBoxSizer(wxHORIZONTAL);
@@ -272,7 +278,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	sizerGrid->Add(ctrlSHA256, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerGrid->Add(txtSize, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerGrid->Add(ctrlSize, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(sizerGrid, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	m_ctrlCopy = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_OK), wxButton);
