@@ -38,6 +38,7 @@ private:
 	short m_ConfigVersion;
 
 	bool Init();
+	bool LoadConfig();
 
 	void OnInit(wxCommandEvent& evt);
 	void OnBrowse(wxCommandEvent& evt);

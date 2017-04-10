@@ -136,7 +136,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	wxString baseConfig(L"\\AgilityBook\\trunk\\AgilityBook\\src\\Win\\res\\DefaultConfig.xml");
 	m_Config = L"D:" + baseConfig;
 	if (!wxFile::Access(m_Config, wxFile::read))
-		m_Config = L"C" + baseConfig;
+		m_Config = L"C:" + baseConfig;
 
 	wxIconBundle icons;
 	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook16)));
@@ -247,7 +247,6 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-
 	wxBoxSizer* sizeConfigData = new wxBoxSizer(wxVERTICAL);
 	sizeConfigData->Add(m_ctrlConfig, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
 
@@ -296,60 +295,63 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	ctrlFind->SetFocus();
 	CenterOnParent();
+
+	// Auto-init
+	if (wxFile::Access(m_Config, wxFile::read))
+		LoadConfig();
 }
 
 
 bool CDlgDigest::Init()
 {
-	static bool bInit = false;
-	if (!bInit)
+	wxFileDialog file(this,
+			L"", // caption
+			L"", // default dir
+			m_Config,
+			L"XML Files (*.xml)|*.xml|All Files (*.*)|*.*||",
+			wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+	if (wxID_OK != file.ShowModal())
+		return false;
+	if (m_Config != file.GetPath())
 	{
-		wxFileDialog file(this,
-				L"", // caption
-				L"", // default dir
-				m_Config,
-				L"XML Files (*.xml)|*.xml|All Files (*.*)|*.*||",
-				wxFD_OPEN | wxFD_FILE_MUST_EXIST);
-		if (wxID_OK != file.ShowModal())
-			return false;
-		if (m_Config != file.GetPath())
-		{
-			m_Config = file.GetPath();
-			m_ctrlConfig->SetLabel(m_Config);
-		}
+		m_Config = file.GetPath();
+		m_ctrlConfig->SetLabel(m_Config);
+	}
+	return LoadConfig();
+}
 
-		wxBusyCursor wait;
 
-		ElementNodePtr tree(ElementNode::New());
+bool CDlgDigest::LoadConfig()
+{
+	wxBusyCursor wait;
 
-		std::wostringstream errMsg;
-		bool bOk = tree->LoadXML(m_Config.c_str(), errMsg);
-		if (!bOk)
-		{
-			wxMessageBox(errMsg.str().c_str());
-			return false;
-		}
-		if (tree->GetName() != L"DefaultConfig")
-			return false;
+	ElementNodePtr tree(ElementNode::New());
 
-		ARBConfig config;
-		int configIdx = tree->FindElement(TREE_CONFIG);
-		ARBErrorCallback err(errMsg);
-		if (!config.Load(tree->GetElementNode(configIdx), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
-		{
-			wxMessageBox(errMsg.str().c_str());
-			return false;
-		}
+	std::wostringstream errMsg;
+	bool bOk = tree->LoadXML(m_Config.c_str(), errMsg);
+	if (!bOk)
+	{
+		wxMessageBox(errMsg.str().c_str());
+		return false;
+	}
+	if (tree->GetName() != L"DefaultConfig")
+		return false;
 
-		m_ConfigVersion = config.GetVersion();
-		m_ctrlConfigVersion->SetLabel(wxString::Format(L"%hd", m_ConfigVersion));
-
-		bInit = true;
-		m_ctrlInit->Enable(false);
-		m_ctrlCopy->Enable(true);
+	ARBConfig config;
+	int configIdx = tree->FindElement(TREE_CONFIG);
+	ARBErrorCallback err(errMsg);
+	if (!config.Load(tree->GetElementNode(configIdx), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+	{
+		wxMessageBox(errMsg.str().c_str());
+		return false;
 	}
 
-	return bInit;
+	m_ConfigVersion = config.GetVersion();
+	m_ctrlConfigVersion->SetLabel(wxString::Format(L"%hd", m_ConfigVersion));
+
+	m_ctrlCopy->Enable(true);
+
+	return true;
 }
 
 
