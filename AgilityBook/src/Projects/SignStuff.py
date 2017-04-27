@@ -38,8 +38,8 @@ BuildMachine = 'dcon-build'
 CertName = 'David Connet'
 
 SignTool = 'signtool.exe'
-SignSHA1cmd = '/v /t http://timestamp.verisign.com/scripts/timestamp.dll'
-SignSHA256cmd = '/v /fd sha256 /tr http://timestamp.geotrust.com/tsa /td sha256 /as'
+SignSHA1cmd = '/t http://timestamp.comodoca.com /v'
+SignSHA256cmd = '/fd sha256 /tr http://timestamp.comodoca.com/?td=sha256 /td sha256 /as /v'
 signSHA1 = True
 signSHA256 = True
 
