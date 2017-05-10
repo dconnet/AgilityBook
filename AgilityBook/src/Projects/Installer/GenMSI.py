@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2017-05-10 Fix vcver/platformTools issues.
 # 2017-04-09 Added vc15 support.
 # 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
 # 2016-07-01 Add signing
@@ -277,7 +278,7 @@ def CopyCAdll(ver4Line, platformTools):
 	return 1
 
 
-def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, platformTools):
+def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, platformTools):
 	baseDir, outputFile = getoutputvars(code, ver4Line, platformTools)
 	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
 		print(baseDir + r'\AgilityBook.exe does not exist, MSI skipped')
@@ -424,12 +425,12 @@ def main():
 
 	# Wix
 	os.environ['PATH'] += ';' + WiXdir
-	if not CopyCAdll(ver4Line, vcver):
+	if not CopyCAdll(ver4Line, platformTools):
 		return 1
 	if b32:
-		genWiX(ver3Dot, ver4Dot, ver4Line, code32, tidy, perUser, testing, vcver)
+		genWiX(ver3Dot, ver4Dot, ver4Line, code32, tidy, perUser, testing, vcver, platformTools)
 	if b64:
-		genWiX(ver3Dot, ver4Dot, ver4Line, code64, tidy, perUser, testing, vcver)
+		genWiX(ver3Dot, ver4Dot, ver4Line, code64, tidy, perUser, testing, vcver, platformTools)
 	if os.access(CA_dll, os.W_OK):
 		os.remove(CA_dll)
 
