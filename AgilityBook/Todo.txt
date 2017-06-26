@@ -1,4 +1,7 @@
-Last Updated: 6/19/2016
+Last Updated: 6/26/2017
+
+- Figure out how to remove/combine sublevels. Both USDAA and NADAC have gone
+  to a single Novice level.
 
 - Bad Dog Agility Breed Power 10 score?
   http://baddogagility.com/announcing-the-breed-power-10/
