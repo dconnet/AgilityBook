@@ -1,5 +1,7 @@
 Last Updated: 6/26/2017
 
+- Copy/paste of a trial does not work on Mac. Paste is never enabled.
+
 - Figure out how to remove/combine sublevels. Both USDAA and NADAC have gone
   to a single Novice level.
 
