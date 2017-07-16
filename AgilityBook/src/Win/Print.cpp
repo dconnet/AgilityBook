@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-07-16 Moved RingBinder to top of file (easier to find).
  * 2015-11-27 Use subname for event, if set.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2015-03-15 Fixed Unknown-Q usage.
@@ -41,6 +42,15 @@
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+enum RingBinder
+{
+	eSmall3Ring,
+	eLarge3Ring,
+	eLarge4Ring
+};
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -834,14 +844,6 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 	pDC->SetFont(wxNullFont);
 	pDC->SetBrush(wxNullBrush);
 }
-
-
-enum RingBinder
-{
-	eSmall3Ring,
-	eLarge3Ring,
-	eLarge4Ring
-};
 
 
 static void PrintMark(wxDC* pDC, wxCoord x, wxCoord y, double oneInch)
