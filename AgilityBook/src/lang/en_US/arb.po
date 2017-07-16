@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-19 15:35-0800\n"
-"PO-Revision-Date: 2017-01-19 15:39-0800\n"
+"POT-Creation-Date: 2017-07-16 09:17-0700\n"
+"PO-Revision-Date: 2017-07-16 09:17-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.2\n"
 "X-Poedit-SearchPath-0: ARB\n"
 "X-Poedit-SearchPath-1: ARBHelp\n"
 "X-Poedit-SearchPath-2: ARBUpdater\n"
@@ -5340,7 +5340,7 @@ msgstr "&Time"
 
 #: Win/DlgReferenceRun.cpp:122 Win/DlgReferenceRun.cpp:123
 msgid "HIDC_REFRUN_TIME"
-msgstr "Time of run."
+msgstr "Time of run. (32.14, not 32:14)"
 
 #: Win/DlgReferenceRun.cpp:126
 msgid "IDC_REFRUN_YPS"
@@ -5615,7 +5615,7 @@ msgstr "Time"
 
 #: Win/DlgRun.cpp:1102 Win/DlgRun.cpp:1103
 msgid "HIDC_RUNSCORE_TIME"
-msgstr "Time of run."
+msgstr "Time of run. (32.14, not 32:14)"
 
 #: Win/DlgRun.cpp:1106
 msgid "IDC_RUNSCORE_FAULTS"
@@ -6249,7 +6249,7 @@ msgstr "Other Points"
 msgid "IDS_COL_NAME_BREED_NOTE"
 msgstr "Name/Breed/Notes"
 
-#: Win/ReadHttp.cpp:84
+#: Win/ReadHttp.cpp:82
 msgid "Invalid URL"
 msgstr "Invalid URL"
 

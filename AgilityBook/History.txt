@@ -1,4 +1,6 @@
-4/9/2017: v3.2.2.<development>
+7/16/2017: v3.2.2.<development>
+- New features / Enhancements:
+  - Added format clarification in run time popup help.
 
 4/9/2017: v3.2.1.100
 - New features / Enhancements:
