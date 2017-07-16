@@ -5402,7 +5402,7 @@ msgstr "&Temps"
 
 #: Win/DlgReferenceRun.cpp:122 Win/DlgReferenceRun.cpp:123
 msgid "HIDC_REFRUN_TIME"
-msgstr "Le temps pour finir le parcours. (32.14, not 32:14)"
+msgstr "Le temps pour finir le parcours. (32.14, pas 32:14)"
 
 #: Win/DlgReferenceRun.cpp:126
 msgid "IDC_REFRUN_YPS"
@@ -5686,7 +5686,7 @@ msgstr "Temps"
 
 #: Win/DlgRun.cpp:1102 Win/DlgRun.cpp:1103
 msgid "HIDC_RUNSCORE_TIME"
-msgstr "Le temps pour finir le parcours. (32.14, not 32:14)"
+msgstr "Le temps pour finir le parcours. (32.14, pas 32:14)"
 
 #: Win/DlgRun.cpp:1106
 msgid "IDC_RUNSCORE_FAULTS"
