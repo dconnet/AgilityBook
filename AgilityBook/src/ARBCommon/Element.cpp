@@ -12,6 +12,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * 2017-08-03 Added initial expat support (reader, not write)
  * 2015-04-04 Add support for C99 printf formats. (Breaking change)
  * 2014-06-09 Move string->arbversion parsing to ARBVersion.
  * 2014-03-31 Fixed POCO xml load.
@@ -58,17 +59,26 @@
 
 #if defined(USE_LIBXML2)
 #define __USE_LIBXML2	1
+#define __USE_EXPAT		0
+#define __USE_POCO		0
+#define __USE_WX		0
+
+#elif defined(USE_EXPAT)
+#define __USE_LIBXML2	0
+#define __USE_EXPAT		1
 #define __USE_POCO		0
 #define __USE_WX		0
 
 #elif defined(USE_POCO)
 #define __USE_LIBXML2	0
+#define __USE_EXPAT		0
 #define __USE_POCO		1
 #define __USE_WX		0
 
 #elif defined(__WXWINDOWS__)
-#define __USE_POCO		0
 #define __USE_LIBXML2	0
+#define __USE_EXPAT		0
+#define __USE_POCO		0
 #define __USE_WX		1
 
 #else
@@ -90,6 +100,12 @@
 #pragma comment(lib, "libxml2_a.lib")
 #pragma message ( "Compiling Element with libxml2 " LIBXML_DOTTED_VERSION )
 #endif
+
+#elif __USE_EXPAT
+#define XML_STATIC
+#include "expat.h"
+#pragma comment(lib, "libexpatMT.lib")
+#pragma message ( "Compiling Element with expat " STRING(XML_MAJOR_VERSION) "." STRING(XML_MINOR_VERSION) "." STRING(XML_MICRO_VERSION))
 
 #elif __USE_POCO
 #include "Poco/DOM/AutoPtr.h"
@@ -364,6 +380,8 @@ static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffe
 	}
 }
 
+#elif __USE_EXPAT
+
 #elif __USE_POCO
 
 static void ReadDoc(Poco::XML::Document* pDoc, Poco::XML::Node* inNode, ElementNodePtr tree)
@@ -440,7 +458,7 @@ static void CreateDoc(Poco::XML::Document* pDoc, Poco::XML::Element* node, Eleme
 	}
 }
 
-#else
+#elif __USE_WX
 
 static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 {
@@ -503,6 +521,8 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 	}
 }
 
+#else
+#error No idea what XML parser you want!
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -524,7 +544,7 @@ static std::wstring GetIndentBuffer(int indent)
 	return str;
 }
 
-static void LogMessage(	std::wostringstream& msg)
+static void LogMessage(std::wostringstream& msg)
 {
 #if defined(__WXWINDOWS__)
 	wxLogMessage(L"%s", msg.str().c_str());
@@ -1234,6 +1254,53 @@ static bool LoadXMLNode(
 	return true;
 }
 
+#elif __USE_EXPAT
+
+struct CExpatData
+{
+	ElementNodePtr m_root;
+	std::list<ElementNodePtr> m_elements;
+	std::string m_data;
+};
+
+static void XMLCALL ExpatStart(void *data, const char *el, const char **attr)
+{
+	CExpatData* pData = reinterpret_cast<CExpatData*>(data);
+	pData->m_data.clear();
+
+	ElementNodePtr node;
+	if (pData->m_elements.size() == 0)
+	{
+		node = pData->m_root;
+		node->SetName(StringUtil::stringW(std::string(el)));
+	}
+	else
+		node = pData->m_elements.front()->AddElementNode(StringUtil::stringW(std::string(el)));
+	pData->m_elements.push_front(node);
+
+	for (int i = 0; attr[i]; i += 2) {
+		node->AddAttrib(StringUtil::stringW(std::string(attr[i])), StringUtil::stringW(std::string(attr[i + 1])));
+	}
+}
+
+static void XMLCALL ExpatEnd(void *data, const char *el)
+{
+	CExpatData* pData = reinterpret_cast<CExpatData*>(data);
+	if (!pData->m_data.empty())
+	{
+		pData->m_elements.front()->SetValue(StringUtil::stringW(pData->m_data));
+		pData->m_data.clear();
+	}
+	pData->m_elements.pop_front();
+}
+
+static void XMLCALL ExpatHandleData(void* data, const char* content, int length)
+{
+	CExpatData* pData = reinterpret_cast<CExpatData*>(data);
+	pData->m_data += std::string(content, length);
+}
+
+
 #elif __USE_POCO
 
 static bool LoadXMLNode(
@@ -1255,7 +1322,7 @@ static bool LoadXMLNode(
 	return true;
 }
 
-#else
+#elif __USE_WX
 
 static bool LoadXMLNode(
 		ElementNodePtr node,
@@ -1270,6 +1337,9 @@ static bool LoadXMLNode(
 	ReadDoc(inSource.GetRoot(), node);
 	return true;
 }
+
+#else
+#error No idea what XML parser you want!
 #endif
 
 
@@ -1315,6 +1385,34 @@ bool ElementNode::LoadXML(
 	}
 	return rc;
 
+#elif __USE_EXPAT
+	char buffer[8192];
+	XML_Parser source = XML_ParserCreate(NULL);
+	if (!source)
+		return false;
+
+	CExpatData data;
+	data.m_root = m_Me.lock();
+	XML_SetUserData(source, &data);
+	XML_SetElementHandler(source, ExpatStart, ExpatEnd);
+	XML_SetCharacterDataHandler(source, ExpatHandleData);
+
+	bool bOk = true;
+	while (bOk) {
+		inStream.read(buffer, ARRAYSIZE(buffer));
+		int len = static_cast<int>(inStream.gcount());
+		if (0 >= len)
+			break;
+
+		if (XML_Parse(source, buffer, len, 0) == XML_STATUS_ERROR) {
+			ioErrMsg << L"Parse error at line " << XML_GetCurrentLineNumber(source) << ": " << XML_ErrorString(XML_GetErrorCode(source));
+			bOk = false;
+			break;
+		}
+	}
+	XML_ParserFree(source);
+	return bOk;
+
 #elif __USE_POCO
 
 	try
@@ -1332,7 +1430,7 @@ bool ElementNode::LoadXML(
 		return false;
 	}
 
-#else
+#elif __USE_WX
 	wxLogBuffer* log = new wxLogBuffer();
 	// wxLogChain will delete the log given to it.
 	wxLogChain chain(log);
@@ -1349,6 +1447,9 @@ bool ElementNode::LoadXML(
 		return false;
 	}
 	return LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+
+#else
+#error No idea what XML parser you want!
 #endif
 }
 
@@ -1455,6 +1556,11 @@ bool ElementNode::SaveXML(
 	xmlFreeTextWriter(formatter);
 	return true;
 
+#elif __USE_EXPAT
+#pragma PRAGMA_TODO(expat writer)
+	// Expat is only a reader. We have to write data ourselves.
+	return false;
+
 #elif __USE_POCO
 	int optionsWriter = Poco::XML::XMLWriter::PRETTY_PRINT;
 	if (inDTD.empty())
@@ -1488,7 +1594,7 @@ bool ElementNode::SaveXML(
 	writer.writeNode(outOutput, pDoc);
 	return true;
 
-#else
+#elif __USE_WX
 	wxXmlDocument doc;
 	doc.SetVersion(L"1.0");
 	doc.SetFileEncoding(L"utf-8");
@@ -1498,6 +1604,9 @@ bool ElementNode::SaveXML(
 	CreateDoc(root, *this);
 	wxOutputStdStream out(outOutput);
 	return doc.Save(out);
+
+#else
+#error No idea what XML parser you want!
 #endif
 }
 

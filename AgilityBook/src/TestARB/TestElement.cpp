@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-08-03 Added basic read verification
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-12-27 Replace local LoadTree with LoadXMLData
@@ -301,6 +302,36 @@ SUITE(TestElement)
 		}
 	}
 
+
+	TEST(LoadXML)
+	{
+		if (!g_bMicroTest)
+		{
+			std::stringstream data;
+			data << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+				<< "<Test attrib='a'>\n"
+					<< "<ele>Content</ele>\n"
+					<< "<ele ele='2'>More content</ele>"
+				<< "</Test>";
+
+			std::wostringstream errMsg;
+			ElementNodePtr tree(ElementNode::New());
+			CHECK(tree->LoadXML(data, errMsg));
+
+			std::wstring str;
+			CHECK(tree->GetName() == L"Test");
+			CHECK(tree->GetAttribCount() == 1);
+			CHECK(tree->GetAttrib(L"attrib", str) == ElementNode::eFound);
+			CHECK(str == L"a");
+			CHECK(tree->GetElementCount() == 2);
+			CHECK(tree->GetElementNode(0)->GetAttribCount() == 0);
+			CHECK(tree->GetElementNode(1)->GetAttribCount() == 1);
+			CHECK(tree->GetElementNode(1)->GetAttrib(L"ele", str) == ElementNode::eFound);
+			CHECK(str == L"2");
+			CHECK(tree->GetElementNode(0)->GetValue() == L"Content");
+			CHECK(tree->GetElementNode(1)->GetValue() == L"More content");
+		}
+	}
 
 	TEST(Save)
 	{
