@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * 2017-08-20 Add CPointsDataHeader
+ * 2017-08-20 Add CPointsDataHeader, Fix MultiQ sorting.
  * 2016-04-29 Separate lifetime points from title (run) points.
  * 2014-04-23 Add anchors to all hrefs.
  * 2011-10-27 Add the MultiQ name to the Points view, span columns.
@@ -1823,11 +1823,14 @@ void CPointsDataItems::LoadData(
 						}
 					}
 				}
-				for (std::map<ARBConfigMultiQPtr, std::set<MultiQdata> >::iterator iter = MQs.begin();
-					iter != MQs.end();
-					++iter)
+				// List multiQs in configuration order.
+				for each (auto pMulti in pVenue->GetMultiQs())
 				{
-					m_Lines.push_back(std::make_shared<CPointsDataMultiQs>(pDoc, inDog, pVenue, (*iter).first, (*iter).second));
+					auto iterMQ = MQs.find(pMulti);
+					if (iterMQ != MQs.end())
+					{
+						m_Lines.push_back(std::make_shared<CPointsDataMultiQs>(pDoc, inDog, pVenue, (*iterMQ).first, (*iterMQ).second));
+					}
 				}
 			}
 		}
