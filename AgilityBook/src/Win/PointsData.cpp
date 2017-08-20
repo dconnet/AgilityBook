@@ -180,6 +180,35 @@ CPointsDataSeparator::CPointsDataSeparator(
 
 /////////////////////////////////////////////////////////////////////////////
 
+CPointsDataBasePtr CPointsDataText::CreateListBlankLine(CAgilityBookDoc* pDoc)
+{
+	// Would normally use make_shared, but VS2015 is complaining it can't access
+	// the constructor.
+	CPointsDataBasePtr obj;
+	obj.reset(new CPointsDataText(pDoc, false));
+	return obj;
+}
+
+
+CPointsDataBasePtr CPointsDataText::CreateListOtherPoints(CAgilityBookDoc* pDoc)
+{
+	std::wstring str(_("IDS_OTHERPOINTS"));
+	CPointsDataBasePtr obj;
+	obj.reset(new CPointsDataText(pDoc, false, str.c_str()));
+	return obj;
+}
+
+
+CPointsDataBasePtr CPointsDataText::CreateDataLine(
+		CAgilityBookDoc* pDoc,
+		std::wstring const& str)
+{
+	CPointsDataBasePtr obj;
+	obj.reset(new CPointsDataText(pDoc, true, L"", str.c_str()));
+	return obj;
+}
+
+
 CPointsDataText::CPointsDataText(
 		CAgilityBookDoc* pDoc,
 		bool bUseInHtml,
@@ -192,6 +221,10 @@ CPointsDataText::CPointsDataText(
 {
 	assert(!!inCol1);
 	assert(!!inCol2);
+#ifdef _DEBUG
+	if (m_UseInHtml)
+		assert(m_Col1.empty());
+#endif
 }
 
 
@@ -211,7 +244,7 @@ std::wstring CPointsDataText::OnNeedText(int inCol) const
 
 std::wstring CPointsDataText::GetHtml(
 		size_t /*nCurLine*/,
-		bool bNoInternalLinks) const
+		bool /*bNoInternalLinks*/) const
 {
 	std::wostringstream data;
 	if (m_UseInHtml)
@@ -254,7 +287,9 @@ std::wstring CPointsDataHeader::OnNeedText(int inCol) const
 }
 
 
-std::wstring CPointsDataHeader::GetHtml(size_t nCurLine, bool bNoInternalLinks) const
+std::wstring CPointsDataHeader::GetHtml(
+		size_t /*nCurLine*/,
+		bool /*bNoInternalLinks*/) const
 {
 	std::wostringstream data;
 	data << L"<head><title>"
@@ -265,7 +300,7 @@ std::wstring CPointsDataHeader::GetHtml(size_t nCurLine, bool bNoInternalLinks) 
 }
 
 
-bool CPointsDataHeader::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataHeader::IsEqual(CPointsDataBasePtr /*inData*/)
 {
 	return ARBDate::Today() == m_today;
 }
@@ -1383,7 +1418,7 @@ void CPointsDataItems::InsertVenueHeader(
 		ARBDogPtr inDog,
 		ARBConfigVenuePtr pVenue)
 {
-	m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, false));
+	m_Lines.push_back(CPointsDataText::CreateListBlankLine(pDoc));
 	m_Lines.push_back(std::make_shared<CPointsDataVenue>(pDoc, inDog, pVenue));
 }
 
@@ -2010,8 +2045,8 @@ void CPointsDataItems::LoadData(
 		table += s_TableHeader;
 
 		m_Lines.push_back(std::make_shared<CPointsDataSeparator>(pDoc, table));
-		m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, false));
-		m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, false, str.c_str()));
+		m_Lines.push_back(CPointsDataText::CreateListBlankLine(pDoc));
+		m_Lines.push_back(CPointsDataText::CreateListOtherPoints(pDoc));
 		for (ARBConfigOtherPointsList::const_iterator iterOther = other.begin();
 			iterOther != other.end();
 			++iterOther)
@@ -2090,7 +2125,7 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyAllByEvent:
-				m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, true, L"", pOther->GetName().c_str()));
+				m_Lines.push_back(CPointsDataText::CreateDataLine(pDoc, pOther->GetName()));
 				{
 					std::set<std::wstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -2114,7 +2149,7 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevel:
-				m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, true, L"", pOther->GetName().c_str()));
+				m_Lines.push_back(CPointsDataText::CreateDataLine(pDoc, pOther->GetName()));
 				{
 					std::set<std::wstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -2138,7 +2173,7 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevelByEvent:
-				m_Lines.push_back(std::make_shared<CPointsDataText>(pDoc, true, L"", pOther->GetName().c_str()));
+				m_Lines.push_back(CPointsDataText::CreateDataLine(pDoc, pOther->GetName()));
 				{
 					typedef std::pair<std::wstring, std::wstring> LevelEvent;
 					std::set<LevelEvent> tally;

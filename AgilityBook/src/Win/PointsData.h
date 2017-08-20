@@ -133,6 +133,9 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * Adds raw html into the HTML view.
+ */
 class CPointsDataSeparator : public CPointsDataBase
 {
 public:
@@ -154,14 +157,28 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * Inserts a line
+ * - List view:
+ *   - Blank line
+ *   - Other points header (in html, CPointsDataSeparator is used)
+ * - Both:
+ *   - Name of Other Points data
+ */
 class CPointsDataText : public CPointsDataBase
 {
-public:
+private:
 	CPointsDataText(
 			CAgilityBookDoc* pDoc,
 			bool bUseInHtml,
 			wchar_t const* inCol1 = L"",
 			wchar_t const* inCol2 = L"");
+public:
+	static CPointsDataBasePtr CreateListBlankLine(CAgilityBookDoc* pDoc);
+	static CPointsDataBasePtr CreateListOtherPoints(CAgilityBookDoc* pDoc);
+	static CPointsDataBasePtr CreateDataLine(
+			CAgilityBookDoc* pDoc,
+			std::wstring const& str);
 
 	virtual std::wstring OnNeedText(int inCol) const;
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
