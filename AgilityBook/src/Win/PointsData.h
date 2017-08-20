@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-08-20 Add CPointsDataHeader
  * 2011-08-13 Don't copy internal url links to the clipboard.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-01-26 Ported to wxWidgets.
@@ -177,6 +178,23 @@ typedef std::shared_ptr<CPointsDataText> CPointsDataTextPtr;
 
 /**
  * This is the data for the "header".
+ */
+class CPointsDataHeader : public CPointsDataBase
+{
+public:
+	CPointsDataHeader(CAgilityBookDoc* pDoc);
+
+	virtual std::wstring OnNeedText(int inCol) const;
+	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
+	virtual bool IsEqual(CPointsDataBasePtr inData);
+
+protected:
+	ARBDate m_today;
+};
+typedef std::shared_ptr<CPointsDataHeader> CPointsDataHeaderPtr;
+
+/**
+ * This is the data for the dog.
  */
 class CPointsDataDog : public CPointsDataBase
 {

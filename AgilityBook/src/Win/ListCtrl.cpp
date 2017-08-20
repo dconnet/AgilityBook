@@ -295,14 +295,15 @@ static void PushData(
 }
 
 
-std::wstring CReportListCtrl::GetPrintDataAsHtmlTable() const
+std::wstring CReportListCtrl::GetPrintDataAsHtmlTable(bool bFirstLineIsHeader) const
 {
 	std::wostringstream data;
 	data << L"<table border=\"0\">";
-	PushData(data, this, -1, true);
+	if (!bFirstLineIsHeader)
+		PushData(data, this, -1, true);
 	for (long item = 0; item < GetItemCount(); ++item)
 	{
-		PushData(data, this, item, false);
+		PushData(data, this, item, bFirstLineIsHeader && item == 0);
 	}
 	data << L"</table>\n";
 	return data.str();

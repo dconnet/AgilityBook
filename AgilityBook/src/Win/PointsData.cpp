@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-08-20 Add CPointsDataHeader
  * 2016-04-29 Separate lifetime points from title (run) points.
  * 2014-04-23 Add anchors to all hrefs.
  * 2011-10-27 Add the MultiQ name to the Points view, span columns.
@@ -230,6 +231,47 @@ bool CPointsDataText::IsEqual(CPointsDataBasePtr /*inData*/)
 
 /////////////////////////////////////////////////////////////////////////////
 
+CPointsDataHeader::CPointsDataHeader(CAgilityBookDoc* pDoc)
+	: CPointsDataBase(pDoc)
+	, m_today(ARBDate::Today())
+{
+}
+
+
+std::wstring CPointsDataHeader::OnNeedText(int inCol) const
+{
+	std::wstring str;
+	switch (inCol)
+	{
+	case 1: // Caption
+		str = _("IDS_TITLING_POINTS");
+		break;
+	case 2: // Current date
+		str = m_today.GetString();
+		break;
+	}
+	return str;
+}
+
+
+std::wstring CPointsDataHeader::GetHtml(size_t nCurLine, bool bNoInternalLinks) const
+{
+	std::wostringstream data;
+	data << L"<head><title>"
+		<< StringUtil::stringW(_("IDS_TITLING_POINTS"))
+		<< L" " << m_today.GetString()
+		<< L"</title></head>";
+	return data.str();
+}
+
+
+bool CPointsDataHeader::IsEqual(CPointsDataBasePtr inData)
+{
+	return ARBDate::Today() == m_today;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 CPointsDataDog::CPointsDataDog(
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog)
@@ -251,9 +293,6 @@ std::wstring CPointsDataDog::OnNeedText(int inCol) const
 			break;
 		case 2: // Full name
 			str = m_pDog->GetRegisteredName();
-			break;
-		case 7: // Current date
-			str = ARBDate::Today().GetString();
 			break;
 		}
 	}
@@ -1361,6 +1400,9 @@ void CPointsDataItems::LoadData(
 	// Find all visible items and sort them out by venue.
 	std::vector<CVenueFilter> venues;
 	CFilterOptions::Options().GetFilterVenue(venues);
+
+	// Put header in...
+	m_Lines.push_back(std::make_shared<CPointsDataHeader>(pDoc));
 
 	// Put general info about the dog in...
 	m_Lines.push_back(std::make_shared<CPointsDataDog>(pDoc, inDog));

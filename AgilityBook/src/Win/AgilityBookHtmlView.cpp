@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-08-20 Alter how header is generated/handled.
  * 2014-04-23 Scroll to position of clicked link on page load.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -254,24 +255,20 @@ wxString CAgilityBookHtmlView::RawHtml(
 		bool bFragment,
 		bool bNoInternalLinks) const
 {
-	ARBDate today(ARBDate::Today());
 	std::wostringstream data;
-
-	std::wstring title = StringUtil::stringW(_("IDS_TITLING_POINTS"));
-
 	data << L"<html>\n";
-	if (!bFragment)
-		data << L"<head><title>" << title << L" "
-			<< today.GetString()
-			<< L"</title></head>\n"
-			<< L"<body>\n";
 
 	size_t nItems = m_Items->NumLines();
-	if (0 < nItems)
+	if (!bFragment)
 	{
-		CPointsDataBasePtr item = m_Items->GetLine(0);
-		data << item->GetHtml(0, bNoInternalLinks);
+		if (0 < nItems)
+		{
+			CPointsDataBasePtr item = m_Items->GetLine(0);
+			data << item->GetHtml(0, bNoInternalLinks);
+		}
+		data << L"<body>\n";
 	}
+
 	for (size_t nItem = 1; nItem < nItems; ++nItem)
 	{
 		CPointsDataBasePtr item = m_Items->GetLine(nItem);

@@ -112,7 +112,7 @@ public:
 			long item,
 			CListDataPtr inData);
 
-	std::wstring GetPrintDataAsHtmlTable() const;
+	std::wstring GetPrintDataAsHtmlTable(bool bFirstLineIsHeader = false) const;
 
 	/**
 	 * Returns the data required to print/copy a line.

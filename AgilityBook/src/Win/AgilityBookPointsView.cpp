@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-08-20 Alter how header is generated/handled.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-04 Ported to wxWidgets.
@@ -197,7 +198,7 @@ bool CAgilityBookPointsView::Create(
 		int sizerFlags,
 		int border)
 {
-	m_Ctrl = new CReportListCtrl(parentCtrl, false, CReportListCtrl::eNoSortHeader);
+	m_Ctrl = new CReportListCtrl(parentCtrl, false, CReportListCtrl::eNoHeader);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CAgilityBookPointsView::OnCtrlItemActivated);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookPointsView::OnCtrlKeyDown);
 #if defined(__WXMAC__)
@@ -321,11 +322,8 @@ void CAgilityBookPointsView::SetupColumns()
 
 	for (long iCol = 0; iCol < MAX_COLUMNS; ++iCol)
 	{
-		wxString str = L"";
-		if (1 == iCol)
-			str = _("IDS_TITLING_POINTS");
 		int fmt = wxLIST_FORMAT_LEFT;
-		m_Ctrl->InsertColumn(iCol, str, fmt);
+		m_Ctrl->InsertColumn(iCol, wxString(), fmt);
 	}
 }
 
@@ -567,11 +565,11 @@ void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 
 void CAgilityBookPointsView::OnPrint(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
+	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable(true)));
 }
 
 
 void CAgilityBookPointsView::OnPreview(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
+	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable(true)));
 }
