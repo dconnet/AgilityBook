@@ -1,4 +1,6 @@
-Last Updated: 6/26/2017
+Last Updated: 8/20/2017
+
+- Entering '0' in NumberOfDogs shows "?" on Points page. (Only -1 should)
 
 - Copy/paste of a trial does not work on Mac. Paste is never enabled.
 
