@@ -1,4 +1,6 @@
-Last Updated: 8/20/2017
+Last Updated: 8/24/2017
+
+- Add AKC Invitational point accumulation (QQs add 10pts)
 
 - Entering '0' in NumberOfDogs shows "?" on Points page. (Only -1 should)
 
