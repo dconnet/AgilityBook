@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2017-09-04 Configuration version 55.
+           Updated CKC events.
 2016-12-14 Configuration version 54.
            Updated AKC Premier NAC points for 2017.
 2016-04-19 File version 14.4, changed how lifetime points are handled.
@@ -175,7 +177,7 @@ Revision History:
            Added versioning to configuration to allow auto-upgrades.
            Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="54">
+  <Configuration version="55">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -337,6 +339,10 @@ Revision History:
     <Action Config="50" OldName="MCJC" Venue="USDAA" Verb="DeleteTitle" />
     <Action Config="50" OldName="MCPSC" Venue="USDAA" Verb="DeleteTitle" />
     <Action Config="50" OldName="MCPJC" Venue="USDAA" Verb="DeleteTitle" />
+    <Action Config="55" Div="Standard" OldName="Excellent A" NewName="Excellent" Venue="CKC" Verb="RenameLevel" />
+    <Action Config="55" Div="Standard" OldName="Excellent B" NewName="Master" Venue="CKC" Verb="RenameLevel" />
+    <Action Config="55" Div="Selected" OldName="Excellent A" NewName="Excellent" Venue="CKC" Verb="RenameLevel" />
+    <Action Config="55" Div="Selected" OldName="Excellent B" NewName="Master" Venue="CKC" Verb="RenameLevel" />
 
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <LifetimeNames/>
@@ -1162,6 +1168,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       </Event>
     </Venue>
     <Venue LongName="Canadian Kennel Club" Name="CKC" URL="http://www.ckc.ca/" icon="6">
+      <Desc>Note: Excellent B was renamed to Master. This affects all prior trials in ARB also.</Desc>
       <LifetimeNames/>
       <Titles LongName="Agility Novice" Name="AG.N.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Intermediate" Name="AG.I.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
@@ -1178,14 +1185,21 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Master Excellent PAD" Name="MXP">Receive 10 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Steeplechase" Name="AGSC">Receive 10 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Steeplechase Excellent" Name="AGSCX">Receive 25 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="International Challenge Title" Name="ICA">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="International Challenge Jumpers" Name="ICJ">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="International Challenge Agility Excellent" Name="ICAX">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="International Challenge Jumpers Excellent" Name="ICJX">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="Champion Interntional Challenge Class" Name="CHICC">ICAX and ICJA titles.</Titles>
+      <Titles LongName="Jumps and Tunnels" Name="JT">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="Jumps and Tunnels Excellent" Name="JTX" StartAt="1">Receive 10 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Novice Selected" Name="AGNS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Intermediate Selected" Name="AGIS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Excellent Selected" Name="AGXS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
-      <Titles LongName="Master Agility Excellent Selected" Name="AGMXS" StartAt="1">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="Agility Master Excellent Selected" Name="AGMXS" StartAt="1">Receive 10 qualifying scores.</Titles>
       <Titles LongName="Agility Novice Jumpers Selected" Name="AGNJS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Intermediate Jumpers Selected" Name="AGIJS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Excellent Jumpers Selected" Name="AGXJS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
-      <Titles LongName="Master Agility Excellent Jumpers Selected" Name="AGMXJS" StartAt="1">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="Agility Master Excellent Jumpers Selected" Name="AGMXJS" StartAt="1">Receive 10 qualifying scores.</Titles>
       <Titles LongName="Agility Master Champion Selected" Name="AGMCHS" Prefix="y">Ag.M.X. and Ag.M.X.J.</Titles>
       <Titles LongName="Novice PAD Selected" Name="NPS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Intermediate PAD Selected" Name="IPS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
@@ -1193,14 +1207,21 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Master Excellent PAD Selected" Name="MXPS">Receive 10 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Steeplechase Selected" Name="AGSCS">Receive 10 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Steeplechase Excellent Selected" Name="AGSCXS">Receive 25 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="International Challenge Title Selected" Name="ICAS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="International Challenge Jumpers Selected" Name="ICJS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="International Challenge Agility Excellent Selected" Name="ICAXS">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="International Challenge Jumpers Excellent Selected" Name="ICJXS">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="Champion Interntional Challenge Class Selected" Name="CHICCS">ICAX and ICJA titles.</Titles>
+      <Titles LongName="Jumps and Tunnels Selected" Name="JTS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="Jumps and Tunnels Excellent Selected" Name="JTXS" StartAt="1">Receive 10 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Novice Veteran" Name="AGNV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Intermediate Veteran" Name="AGIV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Excellent Veteran" Name="AGXV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
-      <Titles LongName="Master Agility Excellent Veteran" Name="AGMXV" StartAt="1">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="Agility Master Excellent Veteran" Name="AGMXV" StartAt="1">Receive 10 qualifying scores.</Titles>
       <Titles LongName="Agility Novice Jumpers Veteran" Name="AGNJV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Intermediate Jumpers Veteran" Name="AGIJV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Agility Excellent Jumpers Veteran" Name="AGXJV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
-      <Titles LongName="Master Agility Excellent Jumpers Veteran" Name="AGMXJV" StartAt="1">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="Agility Master Excellent Jumpers Veteran" Name="AGMXJV" StartAt="1">Receive 10 qualifying scores.</Titles>
       <Titles LongName="Agility Master Champion Veteran" Name="AGMCHV" Prefix="y">Ag.M.X. and Ag.M.X.J.</Titles>
       <Titles LongName="Novice PAD Veterans" Name="NPV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Intermediate PAD Veterans" Name="IPV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
@@ -1208,26 +1229,49 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Master Excellent PAD Veterans" Name="MXPV">Receive 10 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Steeplechase Veterans" Name="AGSCV">Receive 10 qualifying scores from at least 2 different judges.</Titles>
       <Titles LongName="Steeplechase Excellent Veterans" Name="AGSCXV">Receive 25 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="International Challenge Title Veterans" Name="ICAV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="International Challenge Jumpers Veterans" Name="ICJV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="International Challenge Agility Excellent Veterans" Name="ICAXV">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="International Challenge Jumpers Excellent Veterans" Name="ICJXV">Receive 10 qualifying scores.</Titles>
+      <Titles LongName="Champion Interntional Challenge Class Veterans" Name="CHICCV">ICAX and ICJA titles.</Titles>
+      <Titles LongName="Jumps and Tunnels Veterans" Name="JTV">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+      <Titles LongName="Jumps and Tunnels Excellent Veterans" Name="JTXV" StartAt="1">Receive 10 qualifying scores from at least 2 different judges.</Titles>
       <Division Name="Standard" ShortName="Std">
+        <Level Name="None" ShortName="None"/>
         <Level Name="Novice">
+          <SubLevel Name="Novice" ShortName="Nov"/>
           <SubLevel Name="Novice A" ShortName="NovA"/>
           <SubLevel Name="Novice B" ShortName="NovB"/>
         </Level>
         <Level Name="Intermediate" ShortName="Int"/>
-        <Level Name="Excellent A" ShortName="ExA"/>
-        <Level Name="Excellent B" ShortName="ExB"/>
+        <Level Name="Excellent" ShortName="Ex"/>
+        <Level Name="Master" ShortName="Mst"/>
+        <Level Name="ICC" ShortName="IC"/>
       </Division>
       <Division Name="Selected" ShortName="Sel">
+        <Level Name="None" ShortName="None"/>
         <Level Name="Novice" ShortName="Nov"/>
         <Level Name="Intermediate" ShortName="Int"/>
-        <Level Name="Excellent A" ShortName="ExA"/>
-        <Level Name="Excellent B" ShortName="ExB"/>
+        <Level Name="Excellent" ShortName="Ex"/>
+        <Level Name="Master" ShortName="Mst"/>
+        <Level Name="ICC" ShortName="IC"/>
+      </Division>
+      <Division Name="Veterans" ShortName="Vet">
+        <Level Name="None" ShortName="None"/>
+        <Level Name="Novice" ShortName="Nov"/>
+        <Level Name="Intermediate" ShortName="Int"/>
+        <Level Name="Excellent" ShortName="Ex"/>
+        <Level Name="Master" ShortName="Mst"/>
+        <Level Name="ICC" ShortName="IC"/>
       </Division>
       <Event Name="Standard" hasTable="y">
-        <Scoring Division="*" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="*" Level="ICC" dropFractions="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Master" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Intermediate" dropFractions="y" timeFault="2" type="Faults100ThenTime">
@@ -1240,10 +1284,13 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         </Scoring>
       </Event>
       <Event Name="JWW">
-        <Scoring Division="*" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="*" Level="ICC" dropFractions="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Master" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Intermediate" dropFractions="y" timeFault="2" type="Faults100ThenTime">
@@ -1251,6 +1298,49 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         </Scoring>
         <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+      </Event>
+      <Event Name="Points and Distance">
+        <Scoring Division="Standard" Level="Master" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>Required pts: 60/56/53</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Master" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>Required pts: 56/53/50</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Standard" Level="Excellent" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Excellent" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>Required pts: 56/53/50</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Standard" Level="Intermediate" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>Required pts: 56/53/50</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Intermediate" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>Required pts: 53/50/47</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Standard" Level="Novice" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>Required pts: 53/50/47</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Novice" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+          <Note>Required pts: 50/47/44</Note>
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+      </Event>
+      <Event Name="Steeplechase">
+        <Scoring Division="*" Level="None" dropFractions="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+      </Event>
+      <Event Name="Jumps and Tunnels">
+        <Scoring Division="*" Level="None" dropFractions="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
     </Venue>
@@ -1262,7 +1352,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Cavalier Agility Excellent" Name="C-AX">3 Qs</Titles>
       <Titles LongName="Cavalier Master Agility" Name="C-MX">6 Qs</Titles>
       <Titles LongName="Cavalier Novice JWW" Name="C-NAJ">3 Qs</Titles>
-      <Titles LongName="Cavalier Open JWW" Name="C-OAJ">3 Qs</Titles>
+	  <Titles LongName="Cavalier Open JWW" Name="C-OAJ">3 Qs</Titles>
       <Titles LongName="Cavalier Agility Excellent JWW" Name="C-AXJ">3 Qs</Titles>
       <Titles LongName="Cavalier Master Excellent JWW" Name="C-MXJ">6 Qs</Titles>
       <Titles LongName="Cavalier Grand Agility Master" Name="C-GAM" StartAt="1" Style="0">Top 5 ranking in a year. Points:
