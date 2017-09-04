@@ -207,7 +207,7 @@ SUITE(TestConfig)
 			CConfigHandler handler;
 			config.Default(&handler);
 			CHECK_EQUAL(0u, config.GetCalSites().size());
-			CHECK_EQUAL(159u, config.GetActions().size());
+			CHECK_EQUAL(163u, config.GetActions().size());
 			CHECK_EQUAL(0u, config.GetFaults().size());
 			CHECK_EQUAL(5u, config.GetOtherPoints().size());
 			CHECK_EQUAL(15u, config.GetVenues().size());
