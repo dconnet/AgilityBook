@@ -5,6 +5,7 @@
   - Added format clarification in run time popup help.
 - Bug fixes:
   - Fixed the sort order of multiQs (AKC QQ/QQQs).
+  - Allow '0' as a valid NumberOfDogs in a run. (default is now -1)
 
 4/9/2017: v3.2.1.100
 - New features / Enhancements:

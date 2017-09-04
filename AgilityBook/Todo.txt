@@ -1,8 +1,6 @@
-Last Updated: 8/24/2017
+Last Updated: 9/4/2017
 
 - Add AKC Invitational point accumulation (QQs add 10pts)
-
-- Entering '0' in NumberOfDogs shows "?" on Points page. (Only -1 should)
 
 - Copy/paste of a trial does not work on Mac. Paste is never enabled.
 

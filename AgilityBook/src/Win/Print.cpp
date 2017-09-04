@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2017-07-16 Moved RingBinder to top of file (easier to find).
  * 2015-11-27 Use subname for event, if set.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
@@ -651,7 +652,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 			text << run->GetPlace();
 		break;
 	case CODE_INCLASS:
-		if (run && 0 < run->GetInClass())
+		if (run && 0 <= run->GetInClass())
 			text << run->GetInClass();
 		break;
 	case CODE_QD:

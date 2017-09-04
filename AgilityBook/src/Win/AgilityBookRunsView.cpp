@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2015-11-27 Use subname for event, if set.
  * 2015-11-01 Compute score for NA runs also.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
@@ -309,7 +310,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			break;
 		case IO_RUNS_IN_CLASS:
 			val = m_pRun->GetInClass();
-			if (0 >= val)
+			if (0 > val)
 				str << L"?";
 			else
 				str << val;

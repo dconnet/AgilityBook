@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2016-01-06 Add support for named lifetime points.
  * 2015-11-27 Changed generic name to use subname if set.
  * 2015-05-19 Added GetName (generic name without date).
@@ -91,7 +92,7 @@ ARBDogRun::ARBDogRun()
 	, m_Scoring()
 	, m_Q()
 	, m_Place(0)
-	, m_InClass(0)
+	, m_InClass(-1)
 	, m_DogsQd(-1)
 	, m_OtherPoints()
 	, m_Notes()
@@ -456,7 +457,7 @@ bool ARBDogRun::Save(
 		ElementNodePtr element = run->AddElementNode(TREE_PLACEMENT);
 		m_Q.Save(element, ATTRIB_PLACEMENT_Q);
 		element->AddAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
-		if (0 < m_InClass)
+		if (0 <= m_InClass)
 			element->AddAttrib(ATTRIB_PLACEMENT_INCLASS, m_InClass);
 		if (0 <= m_DogsQd)
 			element->AddAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
