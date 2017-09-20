@@ -10,8 +10,9 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2017-09-19 Rename vc15 to vc141
 # 2017-01-24 Changed GetCompilerPaths api.
-# 2016-11-22 Added vc15, removed vc9. Changed GetCompilerPaths api.
+# 2016-11-22 Added vc141, removed vc9. Changed GetCompilerPaths api.
 # 2016-06-10 Convert to Python3
 # 2015-10-11 Added -r option.
 # 2015-04-24 Added vc14.
@@ -41,7 +42,7 @@
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
 	-r config: config: release/debug
-	compiler: vc10, vc10x64, vc11, vc11x64, vc12, vc12x64, vc14, vc14x64, vc15, vc15x64
+	compiler: vc10, vc10x64, vc11, vc11x64, vc12, vc12x64, vc14, vc14x64, vc141, vc141x64
 """
 
 import getopt
@@ -82,6 +83,7 @@ def GetWindowsSdkDir():
 
 
 # 7.1, 8.0, 9.0, 10.0, 11.0, 12.0, 14.0, 15.0 (as observed on my machine)
+# Yes, VisualStudio2017 == reg("15.0") == _msc_ver191x
 def GetVSDir(version):
 	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
@@ -170,7 +172,7 @@ def GetCompilerPaths(c):
 		platformDir = 'vc140'
 		config = 'x64'
 
-	elif c == 'vc15':
+	elif c == 'vc141':
 		#vcvarsall [arch]
 		#vcvarsall [arch] [version]
 		#vcvarsall [arch] [platform_type] [version]
@@ -185,7 +187,7 @@ def GetCompilerPaths(c):
 		platformDir = 'vc141'
 		config = 'Win32'
 
-	elif c == 'vc15x64':
+	elif c == 'vc141x64':
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetX64Target(baseDir)
@@ -236,9 +238,9 @@ def AddCompiler(compilers, c):
 			print('ERROR: VC14x64 does not do MBCS')
 			return False
 
-	elif c == 'vc15x64':
+	elif c == 'vc141x64':
 		if not useUnicode:
-			print('ERROR: VC15x64 does not do MBCS')
+			print('ERROR: VC141x64 does not do MBCS')
 			return False
 
 	compilers.add(c)

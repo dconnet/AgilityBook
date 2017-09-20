@@ -7,7 +7,7 @@
 #
 # Revision History
 # 2017-05-10 Fix vcver/platformTools issues.
-# 2017-04-09 Added vc15 support.
+# 2017-04-09 Added vc141 support.
 # 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
 # 2016-07-01 Add signing
 # 2016-06-10 Convert to Python3

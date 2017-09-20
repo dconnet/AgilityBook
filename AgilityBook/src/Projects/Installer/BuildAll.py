@@ -2,7 +2,8 @@
 # Above line is for python
 #
 # Revision History
-# 2017-04-09 Updated for vc15
+# 2017-09-19 Rename vc15 to vc141
+# 2017-04-09 Updated for vc141
 # 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
 # 2016-06-10 Convert to Python3, cleaned up error checks.
 # 2016-02-29 Changed to wx3.1 as default.
@@ -24,7 +25,7 @@
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config: 'release' or 'debug' (default, release)
    -t:       Testing, just print commands to run
-   compiler: vc10, vc11, vc12, vc14, vc15 (default: vc10)
+   compiler: vc10, vc11, vc12, vc14, vc141 (default: vc10)
 """
 
 import getopt
@@ -109,6 +110,7 @@ def GetRegString(hkey, path, value):
 
 
 # 7.1, 8.0, 9.0, 10.0, 11.0, 12.0, 14.0, 15.0 (as observed on my machine)
+# Yes, VisualStudio2017 == reg("15.0") == _msc_ver191x
 def GetVSDir(version):
 	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
@@ -197,7 +199,7 @@ def GetCompilerPaths(c):
 		platformDir = 'vc140'
 		config = 'x64'
 
-	elif c == 'vc15':
+	elif c == 'vc141':
 		#vcvarsall [arch]
 		#vcvarsall [arch] [version]
 		#vcvarsall [arch] [platform_type] [version]
@@ -212,7 +214,7 @@ def GetCompilerPaths(c):
 		platformDir = 'vc141'
 		config = 'Win32'
 
-	elif c == 'vc15x64':
+	elif c == 'vc141x64':
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetX64Target(baseDir)
