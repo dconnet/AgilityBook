@@ -2,7 +2,7 @@
 # Above line is for python
 #
 # Revision History
-# 2017-09-19 Rename vc15 to vc141
+# 2017-09-19 Rename vc15 to vc141, fix GetCompilerPaths tuple name
 # 2017-04-09 Updated for vc141
 # 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
 # 2016-06-10 Convert to Python3, cleaned up error checks.
@@ -141,63 +141,63 @@ def GetCompilerPaths(c):
 	target = ''
 	extraargs = ''
 	platformDir = ''
-	config = ''
+	platform = ''
 
 	if c == 'vc10':
 		baseDir = GetVSDir("10.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc100'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc10x64':
 		baseDir = GetVSDir("10.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc100'
-		config = 'x64'
+		platform = 'x64'
 
 	elif c == 'vc11':
 		baseDir = GetVSDir("11.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc110'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc11x64':
 		baseDir = GetVSDir("11.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc110'
-		config = 'x64'
+		platform = 'x64'
 
 	elif c == 'vc12':
 		baseDir = GetVSDir("12.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc120'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc12x64':
 		baseDir = GetVSDir("12.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc120'
-		config = 'x64'
+		platform = 'x64'
 
 	elif c == 'vc14':
 		baseDir = GetVSDir("14.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc140'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc14x64':
 		baseDir = GetVSDir("14.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc140'
-		config = 'x64'
+		platform = 'x64'
 
 	elif c == 'vc141':
 		#vcvarsall [arch]
@@ -212,14 +212,14 @@ def GetCompilerPaths(c):
 		# Can target specific SDKs
 		#extraargs = ' 10.0.14393.0'
 		platformDir = 'vc141'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc141x64':
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc141'
-		config = 'x64'
+		platform = 'x64'
 
 	else:
 		print('ERROR: Unknown target: ' + c)
@@ -235,7 +235,7 @@ def GetCompilerPaths(c):
 		print('ERROR: "' + vcvarsall + '" does not exist')
 		return ('', '', '', '')
 
-	return (baseDir, '"' + vcvarsall + '" ' + target + extraargs, platformDir, config)
+	return (baseDir, '"' + vcvarsall + '" ' + target + extraargs, platformDir, platform)
 
 
 def AddCompilers(compilers, c):
@@ -246,7 +246,7 @@ def AddCompilers(compilers, c):
 
 
 def AddCompiler(compilers, c):
-	vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(c)
+	vcBaseDir, vcvarsall, platformDir, platform = GetCompilerPaths(c)
 
 	if len(vcBaseDir) == 0:
 		return False
@@ -331,32 +331,32 @@ def main():
 	#  Targets: AgilityBook, ARBHelp, ARBUpdater, LibARB, LibTidy, TestARB
 
 	for compiler in compilers:
-		vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(compiler)
+		vcBaseDir, vcvarsall, platformDir, platform = GetCompilerPaths(compiler)
 
 		cmds32 = (
-			r'title ' + compiler + ' ' + configuration + ' ' + config,
+			r'title ' + compiler + ' ' + configuration + ' ' + platform,
 			r'cd ..\\' + compiler,
 			r'call ' + vcvarsall,
-			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + config)
+			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + platform)
 
 		if clean:
-			RmMinusRF('../../../bin/' + platformDir + config)
+			RmMinusRF('../../../bin/' + platformDir + platform)
 		RunCmds(cmds32)
-		if not testing and not os.access('../../../bin/' + platformDir + config + '/' + configuration + '/AgilityBook.exe', os.F_OK):
+		if not testing and not os.access('../../../bin/' + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
 			print('ERROR: Compile failed, bailing out')
 			return 1
 
-		vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(compiler + 'x64')
+		vcBaseDir, vcvarsall, platformDir, platform = GetCompilerPaths(compiler + 'x64')
 		cmds64 = (
-			r'title ' + compiler + ' ' + configuration + ' ' + config,
+			r'title ' + compiler + ' ' + configuration + ' ' + platform,
 			r'cd ..\\' + compiler,
 			r'call ' + vcvarsall,
-			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + config)
+			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + platform)
 
 		if clean:
-			RmMinusRF('../../../bin/' + platformDir + config)
+			RmMinusRF('../../../bin/' + platformDir + platform)
 		RunCmds(cmds64)
-		if not testing and not os.access('../../../bin/' + platformDir + config + '/' + configuration + '/AgilityBook.exe', os.F_OK):
+		if not testing and not os.access('../../../bin/' + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
 			print('ERROR: Compile failed, bailing out')
 			return 1
 

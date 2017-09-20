@@ -10,7 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
-# 2017-09-19 Rename vc15 to vc141
+# 2017-09-19 Rename vc15 to vc141, fix GetCompilerPaths tuple name
 # 2017-01-24 Changed GetCompilerPaths api.
 # 2016-11-22 Added vc141, removed vc9. Changed GetCompilerPaths api.
 # 2016-06-10 Convert to Python3
@@ -114,63 +114,63 @@ def GetCompilerPaths(c):
 	target = ''
 	extraargs = ''
 	platformDir = ''
-	config = ''
+	platform = ''
 
 	if c == 'vc10':
 		baseDir = GetVSDir("10.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc100'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc10x64':
 		baseDir = GetVSDir("10.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc100'
-		config = 'x64'
+		platform = 'x64'
 
 	elif c == 'vc11':
 		baseDir = GetVSDir("11.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc110'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc11x64':
 		baseDir = GetVSDir("11.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc110'
-		config = 'x64'
+		platform = 'x64'
 
 	elif c == 'vc12':
 		baseDir = GetVSDir("12.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc120'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc12x64':
 		baseDir = GetVSDir("12.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc120'
-		config = 'x64'
+		platform = 'x64'
 
 	elif c == 'vc14':
 		baseDir = GetVSDir("14.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc140'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc14x64':
 		baseDir = GetVSDir("14.0")
 		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc140'
-		config = 'x64'
+		platform = 'x64'
 
 	elif c == 'vc141':
 		#vcvarsall [arch]
@@ -185,14 +185,14 @@ def GetCompilerPaths(c):
 		# Can target specific SDKs
 		#extraargs = ' 10.0.14393.0'
 		platformDir = 'vc141'
-		config = 'Win32'
+		platform = 'Win32'
 
 	elif c == 'vc141x64':
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc141'
-		config = 'x64'
+		platform = 'x64'
 
 	else:
 		print('ERROR: Unknown target: ' + c)
@@ -208,11 +208,11 @@ def GetCompilerPaths(c):
 		print('ERROR: "' + vcvarsall + '" does not exist')
 		return ('', '', '', '')
 
-	return (baseDir, '"' + vcvarsall + '" ' + target + extraargs, platformDir, config)
+	return (baseDir, '"' + vcvarsall + '" ' + target + extraargs, platformDir, platform)
 
 
 def AddCompiler(compilers, c):
-	vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(c)
+	vcBaseDir, vcvarsall, platformDir, platform = GetCompilerPaths(c)
 
 	if len(vcBaseDir) == 0:
 		return False
@@ -371,7 +371,7 @@ def main():
 		os.chdir(os.environ['WXWIN'] + r'\build\msw')
 
 	for compiler in compilers:
-		vcBaseDir, vcvarsall, platformDir, config = GetCompilerPaths(compiler)
+		vcBaseDir, vcvarsall, platformDir, platform = GetCompilerPaths(compiler)
 
 		newenv = os.environ.copy()
 
@@ -394,7 +394,7 @@ def main():
 
 		setenv_rel = 'call ' + vcvarsall
 		cppflags = common_cppflags
-		if config == 'x64':
+		if platform == 'x64':
 			target_cpu = ' TARGET_CPU=' + x64Target
 
 		build_rel = ''
