@@ -1824,9 +1824,9 @@ void CPointsDataItems::LoadData(
 					}
 				}
 				// List multiQs in configuration order.
-				for each (auto pMulti in pVenue->GetMultiQs())
+				for (auto iMulti = pVenue->GetMultiQs().begin(); iMulti != pVenue->GetMultiQs().end(); ++iMulti)
 				{
-					auto iterMQ = MQs.find(pMulti);
+					auto iterMQ = MQs.find((*iMulti));
 					if (iterMQ != MQs.end())
 					{
 						m_Lines.push_back(std::make_shared<CPointsDataMultiQs>(pDoc, inDog, pVenue, (*iterMQ).first, (*iterMQ).second));
