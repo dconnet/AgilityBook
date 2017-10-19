@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-10-18 Fixed FindTitleCompleteName call.
  * 2016-06-29 Fix when default lifetime name is created during conversion.
  * 2016-01-16 Finish lifetime conversion.
  * 2016-01-06 Removed LifetimeName, added LifetimeNames.
@@ -742,7 +743,7 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 	if (FindVenue(inVenue, &pVenue))
 	{
 		ARBConfigTitlePtr pTitle;
-		if (pVenue->GetTitles().FindTitleCompleteName(inName, bAbbrevFirst, true, &pTitle))
+		if (pVenue->GetTitles().FindTitleCompleteName(inName, 0, bAbbrevFirst, &pTitle))
 		{
 			if (outTitle)
 				*outTitle = pTitle;

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-10-18 Add FindTitleCompleteName test.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -208,13 +209,13 @@ SUITE(TestConfigVenueList)
 	{
 		if (!g_bMicroTest)
 		{
-			TODO_TEST
-		//	bool FindTitleCompleteName(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inName,
-		//			bool bShowInstance,
-		//			bool bAbbrevFirst = true,
-		//			ARBConfigTitlePtr* outTitle = nullptr) const;
+			ARBConfig config;
+			CConfigHandler handler;
+			config.Default(&handler);
+			CHECK(config.GetVenues().FindTitleCompleteName(L"AKC", L"[NA] Novice Agility", true));
+			CHECK(config.GetVenues().FindTitleCompleteName(L"AKC", L"Novice Agility [NA]", false));
+			CHECK(config.GetVenues().FindTitleCompleteName(L"AKC", L"[MACH] Master Agility Champion", true));
+			CHECK(config.GetVenues().FindTitleCompleteName(L"AKC", L"Master Agility Champion [MACH]", false));
 		}
 	}
 
