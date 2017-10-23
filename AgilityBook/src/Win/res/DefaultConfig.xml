@@ -6,6 +6,7 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 Revision History:
 2017-09-04 Configuration version 55.
            Updated CKC events.
+           Fixed AKC Triple Q titles to repeat.
 2016-12-14 Configuration version 54.
            Updated AKC Premier NAC points for 2017.
 2016-04-19 File version 14.4, changed how lifetime points are handled.
@@ -535,13 +536,13 @@ Revision History:
       <Titles LongName="Open FAST Title" Name="OF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Excellent FAST Title" Name="XF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Master Excellent FAST Title" Name="MXF" ValidFrom="2007-1-1">10 Qs under at least 2 different judges</Titles>
-      <Titles LongName="Triple Q Excellent" Name="TQX" ValidFrom="2010-1-1">10 QQQs (Master Std/JWW/FAST)</Titles>
+      <Titles LongName="Triple Q Excellent" Name="TQX" StartAt="1" ValidFrom="2010-1-1">10 QQQs (Master Std/JWW/FAST)</Titles>
       <Titles LongName="FAST Century Title" Name="FTC" OnFirst="y" StartAt="1" ValidFrom="2007-1-1">MXF plus 100 Qs (FTC2 == 200Qs)</Titles>
       <Titles LongName="Novice Preferred FAST Title" Name="NFP" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Open Preferred FAST Title" Name="OFP" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Excellent Preferred FAST Title" Name="XFP" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
       <Titles LongName="Master Preferred Excellent FAST Title" Name="MFP" ValidFrom="2007-1-1">10 Qs under at least 2 different judges</Titles>
-      <Titles LongName="Triple Q Excellent Preferred" Name="TQXP" ValidFrom="2010-1-1">10 QQQs (Master Std/JWW/FAST)</Titles>
+      <Titles LongName="Triple Q Excellent Preferred" Name="TQXP" StartAt="1" ValidFrom="2010-1-1">10 QQQs (Master Std/JWW/FAST)</Titles>
       <Titles LongName="FAST Century Preferred Title" Name="FTCP" OnFirst="y" StartAt="1" ValidFrom="2007-1-1">MFP plus 100 Qs (FTCP2 == 200Qs)</Titles>
       <Titles LongName="Time 2 Beat" Name="T2B" StartAt="1" ValidFrom="2011-7-1">15 Qs and 100 points</Titles>
       <Titles LongName="Time 2 Beat Preferred" Name="T2BP" StartAt="1" ValidFrom="2011-7-1">15 Qs and 100 points</Titles>
@@ -1352,7 +1353,7 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Cavalier Agility Excellent" Name="C-AX">3 Qs</Titles>
       <Titles LongName="Cavalier Master Agility" Name="C-MX">6 Qs</Titles>
       <Titles LongName="Cavalier Novice JWW" Name="C-NAJ">3 Qs</Titles>
-	  <Titles LongName="Cavalier Open JWW" Name="C-OAJ">3 Qs</Titles>
+      <Titles LongName="Cavalier Open JWW" Name="C-OAJ">3 Qs</Titles>
       <Titles LongName="Cavalier Agility Excellent JWW" Name="C-AXJ">3 Qs</Titles>
       <Titles LongName="Cavalier Master Excellent JWW" Name="C-MXJ">6 Qs</Titles>
       <Titles LongName="Cavalier Grand Agility Master" Name="C-GAM" StartAt="1" Style="0">Top 5 ranking in a year. Points:
