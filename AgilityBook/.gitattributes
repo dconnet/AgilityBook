@@ -1,4 +1,5 @@
 *.dox eol=lf
 *.dtd eol=lf
+*.lsl eol=lf
 *.po eol=lf
 *.xml eol=lf
