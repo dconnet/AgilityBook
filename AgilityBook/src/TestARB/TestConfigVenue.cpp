@@ -18,6 +18,8 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
+#include "ConfigHandler.h"
+
 #include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/Element.h"

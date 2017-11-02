@@ -12,16 +12,20 @@
 # This script, by default, will only sign when on the build machine.
 #
 # Revision History
+# 2017-10-29 Added -2,-t,-e options.
 # 2017-04-09 Fix MSI signing.
 # 2016-12-23 Add test to only target dll/exe. Allows script to be put into common project properties.
 # 2016-07-05 Fix variables
 # 2016-07-01 Created
-"""SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] [-1] target
+"""SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] [-1] [-2] [-e] [-t sleepTime] target
 	-s signtool: Full path to signtool.exe (Default: SignTool is assumed in PATH)
 	-n CertName: Name of installed cert
 	-f pfx_file: Path to PFX file (Default: use named cert)
 	-p password: Password for PFX file
 	-1: Only sign with SHA1 (msi)
+	-2: Only sign with SHA256
+	-t: Sleep time (default 5) - when signing with both SHA1/SHA256
+    -e: Just show the environment, don't do it
 	target: exe to sign
 Note: The -n/-f options will override the build machine name check
 """
@@ -42,6 +46,7 @@ SignSHA1cmd = '/t http://timestamp.comodoca.com /v'
 SignSHA256cmd = '/fd sha256 /tr http://timestamp.comodoca.com/?td=sha256 /td sha256 /as /v'
 signSHA1 = True
 signSHA256 = True
+sleepTime = 5
 
 validExt = ['.dll', '.exe', '.msi']
 
@@ -72,6 +77,7 @@ def CheckDualSign(filename):
 def main():
 	global BuildMachine, CertName, SignTool
 	global SignSHA1cmd, SignSHA256cmd, signSHA1, signSHA256
+	global sleepTime
 
 	if 'SIGNTOOL_EXE' in os.environ:
 		sign = os.environ['SIGNTOOL_EXE']
@@ -81,8 +87,9 @@ def main():
 	override = False
 	pfxFile = ''
 	password = ''
+	testOnly = False
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 's:n:f:p:1')
+		opts, args = getopt.getopt(sys.argv[1:], 's:n:f:p:12t:e')
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
@@ -101,6 +108,13 @@ def main():
 		elif '-1' == o:
 			signSHA1 = True
 			signSHA256 = False
+		elif '-2' == o:
+			signSHA1 = False
+			signSHA256 = True
+		elif '-t' == o:
+			sleepTime = int(a)
+		elif '-e' == o:
+			testOnly = True
 
 	if not len(args) == 1:
 		print('Usage:', __doc__)
@@ -135,15 +149,15 @@ def main():
 
 	# Sign with sha1 (for XP)
 	if signSHA1:
-		Run(cmdSHA1)
+		Run(cmdSHA1, testOnly)
 
 	# Running the 2nd signtool too quickly results in a file-in-use error
-	if signSHA1 and signSHA256:
-		time.sleep(5)
+	if signSHA1 and signSHA256 and sleepTime > 0:
+		time.sleep(sleepTime)
 
 	# Add dual sign for modern OSs
 	if signSHA256:
-		Run(cmdSHA256)
+		Run(cmdSHA256, testOnly)
 
 	return 0
 
