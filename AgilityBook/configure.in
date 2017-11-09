@@ -142,6 +142,6 @@ AC_SUBST_FILE(NAM_RULES)
 # List of files to generate from the corresponding (*.in) files and the        #
 # subsequent command to generate those files.                                  #
 ################################################################################
-AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile src/UnitTest++/Makefile src/ARBCommon/Makefile src/ARB/Makefile src/LibArchive/Makefile src/LibTidyHtml/Makefile src/ARBHelp/Makefile src/ARBHelp/Info.plist src/ARBHelp/version.plist src/TestARB/Makefile src/Win/Makefile src/Win/Info.plist src/Win/version.plist])
+AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile src/ARBCommon/Makefile src/ARB/Makefile src/LibArchive/Makefile src/LibTidyHtml/Makefile src/ARBHelp/Makefile src/ARBHelp/Info.plist src/ARBHelp/version.plist src/TestARB/Makefile src/Win/Makefile src/Win/Info.plist src/Win/version.plist])
 
 AC_OUTPUT

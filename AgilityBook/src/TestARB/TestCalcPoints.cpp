@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2011-08-02 Created
  */
 
@@ -23,71 +24,71 @@
 #endif
 
 
-SUITE(TestCalcPoints)
+TEST_CASE("CalcPoints")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
-			CHECK(ARBCalcPoints::New(ePointsTypeNormal));
-			CHECK(ARBCalcPoints::New(ePointsTypeT2B));
-			CHECK(ARBCalcPoints::New(ePointsTypeUKI));
-			CHECK(!ARBCalcPoints::New(ePointsTypeMax));
+			REQUIRE(ARBCalcPoints::New(ePointsTypeNormal));
+			REQUIRE(ARBCalcPoints::New(ePointsTypeT2B));
+			REQUIRE(ARBCalcPoints::New(ePointsTypeUKI));
+			REQUIRE(!ARBCalcPoints::New(ePointsTypeMax));
 		}
 	}
 
 	// GetPoints(double inPoints, double inTime, double inSCT, short inPlace, short inClass)
 
-	TEST(Normal)
+	SECTION("Normal")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalcPointsPtr p = ARBCalcPoints::New(ePointsTypeNormal);
-			CHECK(p->GetType() == ePointsTypeNormal);
-			CHECK(p->AllowConfiguration());
+			REQUIRE(p->GetType() == ePointsTypeNormal);
+			REQUIRE(p->AllowConfiguration());
 			double pt = p->GetPoints(1.0, 10.0, 5.0, 0, 0);
-			CHECK(pt == 1.0);
+			REQUIRE(pt == 1.0);
 			// All fields ignored except first.
 			pt = p->GetPoints(1.0, 0.0, 0.0, 0, 0);
-			CHECK(pt == 1.0);
+			REQUIRE(pt == 1.0);
 		}
 	}
 
 
-	TEST(T2B)
+	SECTION("T2B")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalcPointsPtr p = ARBCalcPoints::New(ePointsTypeT2B);
-			CHECK(p->GetType() == ePointsTypeT2B);
-			CHECK(!p->AllowConfiguration());
+			REQUIRE(p->GetType() == ePointsTypeT2B);
+			REQUIRE(!p->AllowConfiguration());
 			// First field ignored.
 			double pt = p->GetPoints(0.0, 28.73, 28.73, 1, 10);
 			// Using the example from the AKC rule book.
-			CHECK(pt == 10.0);
+			REQUIRE(pt == 10.0);
 			pt = p->GetPoints(0.0, 28.73, 28.73, 2, 10);
-			CHECK(pt == 9.0);
+			REQUIRE(pt == 9.0);
 			pt = p->GetPoints(0.0, 31.0, 28.73, 2, 10);
-			CHECK(pt == 9.0);
+			REQUIRE(pt == 9.0);
 			pt = p->GetPoints(0.0, 31.99, 28.73, 2, 10);
-			CHECK(pt == 9.0);
+			REQUIRE(pt == 9.0);
 			pt = p->GetPoints(0.0, 32.0, 28.73, 2, 10);
-			CHECK(pt == 8.0);
+			REQUIRE(pt == 8.0);
 			pt = p->GetPoints(0.0, 34.99, 28.73, 2, 10);
-			CHECK(pt == 8.0);
+			REQUIRE(pt == 8.0);
 			pt = p->GetPoints(0.0, 35.0, 28.73, 2, 10);
-			CHECK(pt == 7.0);
+			REQUIRE(pt == 7.0);
 		}
 	}
 
 
-	TEST(UKI)
+	SECTION("UKI")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalcPointsPtr p = ARBCalcPoints::New(ePointsTypeUKI);
-			CHECK(p->GetType() == ePointsTypeUKI);
-			CHECK(!p->AllowConfiguration());
+			REQUIRE(p->GetType() == ePointsTypeUKI);
+			REQUIRE(!p->AllowConfiguration());
 			// First 3 fields ignored.
 			static struct
 			{
@@ -128,7 +129,7 @@ SUITE(TestCalcPoints)
 			for (size_t i = 0; i < nPoints; ++i)
 			{
 				double pt = p->GetPoints(0.0, 0.0, 0.0, points[i].place, points[i].inCls);
-				CHECK(pt == points[i].pts);
+				REQUIRE(pt == points[i].pts);
 			}
 		}
 	}

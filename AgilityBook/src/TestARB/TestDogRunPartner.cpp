@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestDogRunPartner)
+TEST_CASE("DogRunPartner")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestDogRunPartner)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestDogRunPartner)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestDogRunPartner)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestDogRunPartner)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestDogRunPartner)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -93,7 +94,7 @@ SUITE(TestDogRunPartner)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -104,9 +105,9 @@ SUITE(TestDogRunPartner)
 }
 
 
-SUITE(TestDogRunPartnerList)
+TEST_CASE("DogRunPartnerList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -120,7 +121,7 @@ SUITE(TestDogRunPartnerList)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -129,7 +130,7 @@ SUITE(TestDogRunPartnerList)
 	}
 
 
-	TEST(AddPartner)
+	SECTION("AddPartner")
 	{
 		if (!g_bMicroTest)
 		{

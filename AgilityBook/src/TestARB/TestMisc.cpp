@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-01 Added ARBConfig/ARBBook version test.
  * 2015-04-04 Add C99 printf test.
  * 2014-11-17 Added "true" units (nonIEC) to FormatBytes.
@@ -70,36 +71,36 @@ static const struct
 };
 
 
-SUITE(TestMisc)
+TEST_CASE("Misc")
 {
-	TEST(Html_Sanitize)
+	SECTION("Html_Sanitize")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring s(L"<&amp>");
 			std::wstring s2 = SanitizeStringForHTML(s);
-			CHECK(L"&lt;&amp;amp&gt;" == s2);
+			REQUIRE(L"&lt;&amp;amp&gt;" == s2);
 			s = L"1\r\n2\n3";
 			s2 = SanitizeStringForHTML(s, true);
-			CHECK(L"1<br/>2<br/>3" == s2);
+			REQUIRE(L"1<br/>2<br/>3" == s2);
 			s2 = SanitizeStringForHTML(s, false);
-			CHECK(L"1\r\n2\n3" == s2);
+			REQUIRE(L"1\r\n2\n3" == s2);
 		}
 	}
 
 
-	TEST(Version)
+	SECTION("Version")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBVersion ver(0xf3f3, 0xff44);
-			CHECK(ver.Major() == 0xf3f3);
-			CHECK(ver.Minor() == 0xff44);
+			REQUIRE(ver.Major() == 0xf3f3);
+			REQUIRE(ver.Minor() == 0xff44);
 		}
 	}
 
 
-	TEST(FormatBytes)
+	SECTION("FormatBytes")
 	{
 		if (!g_bMicroTest)
 		{
@@ -107,23 +108,23 @@ SUITE(TestMisc)
 			{
 				for (size_t iPrec = 0; iPrec < NUM_PREC; ++iPrec)
 				{
-					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesBinary) == sc_FormatUnits[i].unitBinary[iPrec]);
-					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesSI) == sc_FormatUnits[i].unitSI[iPrec]);
-					CHECK(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesTrue) == sc_FormatUnits[i].unitTrue[iPrec]);
+					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesBinary) == sc_FormatUnits[i].unitBinary[iPrec]);
+					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesSI) == sc_FormatUnits[i].unitSI[iPrec]);
+					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesTrue) == sc_FormatUnits[i].unitTrue[iPrec]);
 				}
 			}
 		}
 	}
 
 
-	TEST(Localization)
+	SECTION("Localization")
 	{
 		if (!g_bMicroTest)
 		{
 #if defined(__WXWINDOWS__)
 			std::wstring s1(L"IDS_ARB_UNKNOWN_VERSION");
 			std::wstring s2(StringUtil::GetTranslation(arbT("IDS_ARB_UNKNOWN_VERSION")));
-			CHECK(s1 != s2);
+			REQUIRE(s1 != s2);
 #else
 #pragma PRAGMA_TODO(implement non-wx version)
 #endif
@@ -132,7 +133,7 @@ SUITE(TestMisc)
 
 
 #if defined(__WXWINDOWS__)
-	TEST(LocalizationDesc)
+	SECTION("LocalizationDesc")
 	{
 		if (!g_bMicroTest)
 		{
@@ -156,7 +157,7 @@ SUITE(TestMisc)
 				for (size_t j = 0; j < MAX_LANGS; ++j)
 				{
 					wxLanguageInfo const* info = wxLocale::FindLanguageInfo(langs[j].lang);
-					CHECK(info);
+					REQUIRE(info);
 					if (info)
 					{
 						langdata[i].Desc[j] = info->Description;
@@ -173,8 +174,8 @@ SUITE(TestMisc)
 			{
 				for (size_t j = 1; j < MAX_LANGS; ++j)
 				{
-					CHECK(langdata[0].Desc[i] == langdata[j].Desc[i]);
-					CHECK(langdata[0].ArbDesc[i] == langdata[j].ArbDesc[i]);
+					REQUIRE(langdata[0].Desc[i] == langdata[j].Desc[i]);
+					REQUIRE(langdata[0].ArbDesc[i] == langdata[j].ArbDesc[i]);
 				}
 			}
 			// Check that our value is different than wx (this test may need
@@ -184,7 +185,7 @@ SUITE(TestMisc)
 			{
 				for (size_t j = 0; j < MAX_LANGS; ++j)
 				{
-					CHECK(langdata[i].Desc[j] != langdata[i].ArbDesc[j]);
+					REQUIRE(langdata[i].Desc[j] != langdata[i].ArbDesc[j]);
 				}
 			}
 		}
@@ -194,49 +195,49 @@ SUITE(TestMisc)
 #endif
 
 
-	TEST(VerifyColor)
+	SECTION("VerifyColor")
 	{
 		if (!g_bMicroTest)
 		{
 #ifdef __WXMSW__
-			CHECK(wxSYS_COLOUR_SCROLLBAR == COLOR_SCROLLBAR);
-			CHECK(wxSYS_COLOUR_DESKTOP == COLOR_BACKGROUND);
-			CHECK(wxSYS_COLOUR_ACTIVECAPTION == COLOR_ACTIVECAPTION);
-			CHECK(wxSYS_COLOUR_INACTIVECAPTION == COLOR_INACTIVECAPTION);
-			CHECK(wxSYS_COLOUR_MENU == COLOR_MENU);
-			CHECK(wxSYS_COLOUR_WINDOW == COLOR_WINDOW);
-			CHECK(wxSYS_COLOUR_WINDOWFRAME == COLOR_WINDOWFRAME);
-			CHECK(wxSYS_COLOUR_MENUTEXT == COLOR_MENUTEXT);
-			CHECK(wxSYS_COLOUR_WINDOWTEXT == COLOR_WINDOWTEXT);
-			CHECK(wxSYS_COLOUR_CAPTIONTEXT == COLOR_CAPTIONTEXT);
-			CHECK(wxSYS_COLOUR_ACTIVEBORDER == COLOR_ACTIVEBORDER);
-			CHECK(wxSYS_COLOUR_INACTIVEBORDER == COLOR_INACTIVEBORDER);
-			CHECK(wxSYS_COLOUR_APPWORKSPACE == COLOR_APPWORKSPACE);
-			CHECK(wxSYS_COLOUR_HIGHLIGHT == COLOR_HIGHLIGHT);
-			CHECK(wxSYS_COLOUR_HIGHLIGHTTEXT == COLOR_HIGHLIGHTTEXT);
-			CHECK(wxSYS_COLOUR_BTNFACE == COLOR_BTNFACE);
-			CHECK(wxSYS_COLOUR_BTNSHADOW == COLOR_BTNSHADOW);
-			CHECK(wxSYS_COLOUR_GRAYTEXT == COLOR_GRAYTEXT);
-			CHECK(wxSYS_COLOUR_BTNTEXT == COLOR_BTNTEXT);
-			CHECK(wxSYS_COLOUR_INACTIVECAPTIONTEXT == COLOR_INACTIVECAPTIONTEXT);
-			CHECK(wxSYS_COLOUR_BTNHIGHLIGHT == COLOR_BTNHIGHLIGHT);
-			CHECK(wxSYS_COLOUR_3DDKSHADOW == COLOR_3DDKSHADOW);
-			CHECK(wxSYS_COLOUR_3DLIGHT == COLOR_3DLIGHT);
-			CHECK(wxSYS_COLOUR_INFOTEXT == COLOR_INFOTEXT);
-			CHECK(wxSYS_COLOUR_INFOBK == COLOR_INFOBK);
-			//CHECK(wxSYS_COLOUR_LISTBOX == );
-			CHECK(wxSYS_COLOUR_HOTLIGHT == COLOR_HOTLIGHT);
-			CHECK(wxSYS_COLOUR_GRADIENTACTIVECAPTION == COLOR_GRADIENTACTIVECAPTION);
-			CHECK(wxSYS_COLOUR_GRADIENTINACTIVECAPTION == COLOR_GRADIENTINACTIVECAPTION);
-			//CHECK(wxSYS_COLOUR_MENUHILIGHT == );
-			//CHECK(wxSYS_COLOUR_MENUBAR == );
-			//CHECK(wxSYS_COLOUR_LISTBOXTEXT == );
+			REQUIRE(wxSYS_COLOUR_SCROLLBAR == COLOR_SCROLLBAR);
+			REQUIRE(wxSYS_COLOUR_DESKTOP == COLOR_BACKGROUND);
+			REQUIRE(wxSYS_COLOUR_ACTIVECAPTION == COLOR_ACTIVECAPTION);
+			REQUIRE(wxSYS_COLOUR_INACTIVECAPTION == COLOR_INACTIVECAPTION);
+			REQUIRE(wxSYS_COLOUR_MENU == COLOR_MENU);
+			REQUIRE(wxSYS_COLOUR_WINDOW == COLOR_WINDOW);
+			REQUIRE(wxSYS_COLOUR_WINDOWFRAME == COLOR_WINDOWFRAME);
+			REQUIRE(wxSYS_COLOUR_MENUTEXT == COLOR_MENUTEXT);
+			REQUIRE(wxSYS_COLOUR_WINDOWTEXT == COLOR_WINDOWTEXT);
+			REQUIRE(wxSYS_COLOUR_CAPTIONTEXT == COLOR_CAPTIONTEXT);
+			REQUIRE(wxSYS_COLOUR_ACTIVEBORDER == COLOR_ACTIVEBORDER);
+			REQUIRE(wxSYS_COLOUR_INACTIVEBORDER == COLOR_INACTIVEBORDER);
+			REQUIRE(wxSYS_COLOUR_APPWORKSPACE == COLOR_APPWORKSPACE);
+			REQUIRE(wxSYS_COLOUR_HIGHLIGHT == COLOR_HIGHLIGHT);
+			REQUIRE(wxSYS_COLOUR_HIGHLIGHTTEXT == COLOR_HIGHLIGHTTEXT);
+			REQUIRE(wxSYS_COLOUR_BTNFACE == COLOR_BTNFACE);
+			REQUIRE(wxSYS_COLOUR_BTNSHADOW == COLOR_BTNSHADOW);
+			REQUIRE(wxSYS_COLOUR_GRAYTEXT == COLOR_GRAYTEXT);
+			REQUIRE(wxSYS_COLOUR_BTNTEXT == COLOR_BTNTEXT);
+			REQUIRE(wxSYS_COLOUR_INACTIVECAPTIONTEXT == COLOR_INACTIVECAPTIONTEXT);
+			REQUIRE(wxSYS_COLOUR_BTNHIGHLIGHT == COLOR_BTNHIGHLIGHT);
+			REQUIRE(wxSYS_COLOUR_3DDKSHADOW == COLOR_3DDKSHADOW);
+			REQUIRE(wxSYS_COLOUR_3DLIGHT == COLOR_3DLIGHT);
+			REQUIRE(wxSYS_COLOUR_INFOTEXT == COLOR_INFOTEXT);
+			REQUIRE(wxSYS_COLOUR_INFOBK == COLOR_INFOBK);
+			//REQUIRE(wxSYS_COLOUR_LISTBOX == );
+			REQUIRE(wxSYS_COLOUR_HOTLIGHT == COLOR_HOTLIGHT);
+			REQUIRE(wxSYS_COLOUR_GRADIENTACTIVECAPTION == COLOR_GRADIENTACTIVECAPTION);
+			REQUIRE(wxSYS_COLOUR_GRADIENTINACTIVECAPTION == COLOR_GRADIENTINACTIVECAPTION);
+			//REQUIRE(wxSYS_COLOUR_MENUHILIGHT == );
+			//REQUIRE(wxSYS_COLOUR_MENUBAR == );
+			//REQUIRE(wxSYS_COLOUR_LISTBOXTEXT == );
 #endif
 		}
 	}
 
 
-	TEST(C99PrintfToSame)
+	SECTION("C99PrintfToSame")
 	{
 		if (!g_bMicroTest)
 		{
@@ -252,13 +253,13 @@ SUITE(TestMisc)
 			sprintf(buffer, "%s", str.c_str());
 			swprintf(wbuffer, 100, L"%s", wstr.c_str());
 #endif
-			CHECK(str == buffer);
-			CHECK(wstr == wbuffer);
+			REQUIRE(str == buffer);
+			REQUIRE(wstr == wbuffer);
 		}
 	}
 
 
-	TEST(C99PrintfToOpposite)
+	SECTION("C99PrintfToOpposite")
 	{
 		if (!g_bMicroTest)
 		{
@@ -274,19 +275,19 @@ SUITE(TestMisc)
 			sprintf(buffer, "%S", wstr.c_str());
 			swprintf(wbuffer, 100, L"%S", str.c_str());
 #endif
-			CHECK(str == buffer);
-			CHECK(wstr == wbuffer);
+			REQUIRE(str == buffer);
+			REQUIRE(wstr == wbuffer);
 		}
 	}
 
 
-	TEST(ARBConfigFiles)
+	SECTION("ARBConfigFiles")
 	{
 		ARBConfig config;
 		CConfigHandler handler;
 		ARBVersion version;
 		config.Default(&handler, &version);
-		CHECK(version.IsSet());
-		CHECK(version == ARBAgilityRecordBook::GetCurrentDocVersion());
+		REQUIRE(version.IsSet());
+		REQUIRE(version == ARBAgilityRecordBook::GetCurrentDocVersion());
 	}
 }

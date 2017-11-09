@@ -1,9 +1,10 @@
-10/22/2017: v3.2.2.<development>
+11/9/2017: v3.2.2.<development>
 - Bumped Configuration v55:
   - Updated CKC events
   - Fixed AKC Triple Q titles to repeat.
 - New features / Enhancements:
   - Added format clarification in run time popup help.
+  - Changed from UnitTest++ to Catch.
 - Bug fixes:
   - Fixed the sort order of multiQs (AKC QQ/QQQs).
   - Allow '0' as a valid NumberOfDogs in a run. (default is now -1)

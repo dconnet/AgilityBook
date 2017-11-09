@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigLevel)
+TEST_CASE("ConfigLevel")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestConfigLevel)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestConfigLevel)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestConfigLevel)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestConfigLevel)
 	}
 
 
-	TEST(Clear)
+	SECTION("Clear")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestConfigLevel)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -89,7 +90,7 @@ SUITE(TestConfigLevel)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -102,7 +103,7 @@ SUITE(TestConfigLevel)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -112,7 +113,7 @@ SUITE(TestConfigLevel)
 	}
 
 
-	TEST(Update)
+	SECTION("Update")
 	{
 		if (!g_bMicroTest)
 		{
@@ -126,9 +127,9 @@ SUITE(TestConfigLevel)
 }
 
 
-SUITE(TestConfigLevelList)
+TEST_CASE("ConfigLevelList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -141,7 +142,7 @@ SUITE(TestConfigLevelList)
 	}
 
 
-	TEST(VerifyLevel)
+	SECTION("VerifyLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -153,7 +154,7 @@ SUITE(TestConfigLevelList)
 	}
 
 
-	TEST(FindLevel)
+	SECTION("FindLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -165,7 +166,7 @@ SUITE(TestConfigLevelList)
 	}
 
 
-	TEST(FindSubLevel)
+	SECTION("FindSubLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -177,7 +178,7 @@ SUITE(TestConfigLevelList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

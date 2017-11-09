@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2017-10-18 Add FindTitleCompleteName test.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
@@ -29,9 +30,9 @@
 #endif
 
 
-SUITE(TestConfigVenue)
+TEST_CASE("ConfigVenue")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -41,7 +42,7 @@ SUITE(TestConfigVenue)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -51,7 +52,7 @@ SUITE(TestConfigVenue)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -61,7 +62,7 @@ SUITE(TestConfigVenue)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -72,7 +73,7 @@ SUITE(TestConfigVenue)
 	}
 
 
-	TEST(Clear)
+	SECTION("Clear")
 	{
 		if (!g_bMicroTest)
 		{
@@ -82,7 +83,7 @@ SUITE(TestConfigVenue)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -92,7 +93,7 @@ SUITE(TestConfigVenue)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -106,7 +107,7 @@ SUITE(TestConfigVenue)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -116,7 +117,7 @@ SUITE(TestConfigVenue)
 	}
 
 
-	TEST(Update)
+	SECTION("Update")
 	{
 		if (!g_bMicroTest)
 		{
@@ -130,9 +131,9 @@ SUITE(TestConfigVenue)
 }
 
 
-SUITE(TestConfigVenueList)
+TEST_CASE("ConfigVenueList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -146,7 +147,7 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -156,7 +157,7 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(VerifyVenue)
+	SECTION("VerifyVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -166,7 +167,7 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(VerifyMultiQ)
+	SECTION("VerifyMultiQ")
 	{
 		if (!g_bMicroTest)
 		{
@@ -179,7 +180,7 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(VerifyLevel)
+	SECTION("VerifyLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -192,7 +193,7 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(VerifyEvent)
+	SECTION("VerifyEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -207,22 +208,22 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(FindTitleCompleteName)
+	SECTION("FindTitleCompleteName")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfig config;
 			CConfigHandler handler;
 			config.Default(&handler);
-			CHECK(config.GetVenues().FindTitleCompleteName(L"AKC", L"[NA] Novice Agility", true));
-			CHECK(config.GetVenues().FindTitleCompleteName(L"AKC", L"Novice Agility [NA]", false));
-			CHECK(config.GetVenues().FindTitleCompleteName(L"AKC", L"[MACH] Master Agility Champion", true));
-			CHECK(config.GetVenues().FindTitleCompleteName(L"AKC", L"Master Agility Champion [MACH]", false));
+			REQUIRE(config.GetVenues().FindTitleCompleteName(L"AKC", L"[NA] Novice Agility", true));
+			REQUIRE(config.GetVenues().FindTitleCompleteName(L"AKC", L"Novice Agility [NA]", false));
+			REQUIRE(config.GetVenues().FindTitleCompleteName(L"AKC", L"[MACH] Master Agility Champion", true));
+			REQUIRE(config.GetVenues().FindTitleCompleteName(L"AKC", L"Master Agility Champion [MACH]", false));
 		}
 	}
 
 
-	TEST(FindTitle)
+	SECTION("FindTitle")
 	{
 		if (!g_bMicroTest)
 		{
@@ -235,7 +236,7 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(DeleteTitle)
+	SECTION("DeleteTitle")
 	{
 		if (!g_bMicroTest)
 		{
@@ -245,7 +246,7 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -257,7 +258,7 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(FindEvent)
+	SECTION("FindEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -274,7 +275,7 @@ SUITE(TestConfigVenueList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

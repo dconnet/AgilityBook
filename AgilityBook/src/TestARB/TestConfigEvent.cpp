@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigEvent)
+TEST_CASE("ConfigEvent")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -93,7 +94,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -103,7 +104,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(Update)
+	SECTION("Update")
 	{
 		if (!g_bMicroTest)
 		{
@@ -116,7 +117,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(FindAllEvents)
+	SECTION("FindAllEvents")
 	{
 		if (!g_bMicroTest)
 		{
@@ -131,7 +132,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(VerifyEvent)
+	SECTION("VerifyEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -144,7 +145,7 @@ SUITE(TestConfigEvent)
 	}
 
 
-	TEST(FindEvent)
+	SECTION("FindEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -159,9 +160,9 @@ SUITE(TestConfigEvent)
 }
 
 
-SUITE(TestConfigEventList)
+TEST_CASE("ConfigEventList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -175,7 +176,7 @@ SUITE(TestConfigEventList)
 	}
 
 
-	TEST(ReorderBy)
+	SECTION("ReorderBy")
 	{
 		if (!g_bMicroTest)
 		{
@@ -186,7 +187,7 @@ SUITE(TestConfigEventList)
 	}
 
 
-	TEST(VerifyEvent)
+	SECTION("VerifyEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -200,7 +201,7 @@ SUITE(TestConfigEventList)
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -219,7 +220,7 @@ SUITE(TestConfigEventList)
 	}
 
 
-	TEST(RenameDivision)
+	SECTION("RenameDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -231,7 +232,7 @@ SUITE(TestConfigEventList)
 	}
 
 
-	TEST(DeleteDivision)
+	SECTION("DeleteDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -241,7 +242,7 @@ SUITE(TestConfigEventList)
 	}
 
 
-	TEST(RenameLevel)
+	SECTION("RenameLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -254,7 +255,7 @@ SUITE(TestConfigEventList)
 	}
 
 
-	TEST(DeleteLevel)
+	SECTION("DeleteLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -266,7 +267,7 @@ SUITE(TestConfigEventList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

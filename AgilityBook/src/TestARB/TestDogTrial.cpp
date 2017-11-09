@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestDogTrial)
+TEST_CASE("DogTrial")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -39,7 +40,7 @@ SUITE(TestDogTrial)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -49,7 +50,7 @@ SUITE(TestDogTrial)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -59,7 +60,7 @@ SUITE(TestDogTrial)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -70,7 +71,7 @@ SUITE(TestDogTrial)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -80,7 +81,7 @@ SUITE(TestDogTrial)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -94,7 +95,7 @@ SUITE(TestDogTrial)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -104,7 +105,7 @@ SUITE(TestDogTrial)
 	}
 
 
-	TEST(SetMultiQs)
+	SECTION("SetMultiQs")
 	{
 		if (!g_bMicroTest)
 		{
@@ -114,7 +115,7 @@ SUITE(TestDogTrial)
 	}
 
 
-	TEST(GetSpeedPoints)
+	SECTION("GetSpeedPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -127,7 +128,7 @@ SUITE(TestDogTrial)
 	}
 
 
-	TEST(HasVenue)
+	SECTION("HasVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -138,9 +139,9 @@ SUITE(TestDogTrial)
 }
 
 
-SUITE(TestDogTrialList)
+TEST_CASE("DogTrialList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -154,7 +155,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -163,7 +164,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -173,7 +174,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(NumTrialsInVenue)
+	SECTION("NumTrialsInVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -183,7 +184,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(RenameVenue)
+	SECTION("RenameVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -195,7 +196,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(DeleteVenue)
+	SECTION("DeleteVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -205,7 +206,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(NumOtherPointsInUse)
+	SECTION("NumOtherPointsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -215,7 +216,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(RenameOtherPoints)
+	SECTION("RenameOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -227,7 +228,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(DeleteOtherPoints)
+	SECTION("DeleteOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -237,7 +238,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(NumMultiHostedTrialsInDivision)
+	SECTION("NumMultiHostedTrialsInDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -250,7 +251,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(NumRunsInDivision)
+	SECTION("NumRunsInDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -262,7 +263,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(RenameDivision)
+	SECTION("RenameDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -275,7 +276,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(DeleteDivision)
+	SECTION("DeleteDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -288,7 +289,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(NumLevelsInUse)
+	SECTION("NumLevelsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -301,7 +302,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(RenameLevel)
+	SECTION("RenameLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -315,7 +316,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(DeleteLevel)
+	SECTION("DeleteLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -328,7 +329,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(NumEventsInUse)
+	SECTION("NumEventsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -340,7 +341,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(RenameEvent)
+	SECTION("RenameEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -353,7 +354,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(DeleteEvent)
+	SECTION("DeleteEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -365,7 +366,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(AddTrial)
+	SECTION("AddTrial")
 	{
 		if (!g_bMicroTest)
 		{
@@ -375,7 +376,7 @@ SUITE(TestDogTrialList)
 	}
 
 
-	TEST(DeleteTrial)
+	SECTION("DeleteTrial")
 	{
 		if (!g_bMicroTest)
 		{

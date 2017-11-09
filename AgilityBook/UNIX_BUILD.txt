@@ -52,15 +52,6 @@ For now we are getting it from the src/ directory.
   make
 #  sudo apt-get install tidy
 
-  
-UNIT TESTS
-For now we are getting it from:
-1. wget http://sourceforge.net/project/platformdownload.php?group_id=158151
-2. extract UnitTests.zip to: src/UnitTests++
-3. cd src/UnitTests++
-4. make
-# sudo apt-get install libunittest++-dev 
-
 Compiling Resources Manually
 - This will go in the makefiles
 1. in the root of the build directory:

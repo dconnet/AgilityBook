@@ -23,7 +23,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Recursively make in these subdirectories
 ##########
-SUBDIRS = UnitTest++ ARBCommon ARB LibArchive LibTidyHtml TestARB ARBHelp Win
+SUBDIRS = ARBCommon ARB LibArchive LibTidyHtml TestARB ARBHelp Win
 
 ##########
 # Compile flags, list include directories

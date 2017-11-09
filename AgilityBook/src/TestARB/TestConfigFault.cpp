@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -43,165 +44,169 @@ ConfigFaultData::ConfigFaultData()
 }
 
 
-SUITE(TestConfigFault)
+TEST_CASE("ConfigFault")
 {
-	TEST(New)
+	ConfigFaultData data;
+
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault = ARBConfigFault::New();
-			CHECK(!!fault.get());
+			REQUIRE(!!fault.get());
 		}
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
 			fault1->SetName(L"Fault!");
 			ARBConfigFaultPtr fault2 = fault1->Clone();
-			CHECK(!!fault2.get());
-			CHECK(fault1.get() != fault2.get());
-			CHECK(*fault1 == *fault2);
+			REQUIRE(!!fault2.get());
+			REQUIRE(fault1.get() != fault2.get());
+			REQUIRE(*fault1 == *fault2);
 			fault1->SetName(L"Here");
-			CHECK(fault1->GetName() != fault2->GetName());
+			REQUIRE(fault1->GetName() != fault2->GetName());
 		}
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
 			fault1->SetName(L"Fault!");
 			ARBConfigFaultPtr fault2 = ARBConfigFault::New();
-			CHECK(*fault1 != *fault2);
+			REQUIRE(*fault1 != *fault2);
 			*fault1 = *fault2;
-			CHECK(*fault1 == *fault2);
+			REQUIRE(*fault1 == *fault2);
 		}
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
 			fault1->SetName(L"Fault!");
-			CHECK(L"Fault!" == fault1->GetGenericName());
+			REQUIRE(L"Fault!" == fault1->GetGenericName());
 		}
 	}
 
 
-	TEST_FIXTURE(ConfigFaultData, Load1)
+	SECTION("Load1")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(fault1->Load(ConfigFault1, ARBVersion(1, 0), callback));
+			REQUIRE(fault1->Load(data.ConfigFault1, ARBVersion(1, 0), callback));
 			std::wstring name = fault1->GetGenericName();
-			CHECK(!name.empty());
+			REQUIRE(!name.empty());
 		}
 	}
 
 
-	TEST_FIXTURE(ConfigFaultData, Load2)
+	SECTION("Load2")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(fault1->Load(ConfigFault2, ARBVersion(2, 0), callback));
+			REQUIRE(fault1->Load(data.ConfigFault2, ARBVersion(2, 0), callback));
 			std::wstring name = fault1->GetGenericName();
-			CHECK(!name.empty());
+			REQUIRE(!name.empty());
 		}
 	}
 
 
-	TEST_FIXTURE(ConfigFaultData, Load3)
+	SECTION("Load3")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(!fault1->Load(ConfigFault2, ARBVersion(1, 0), callback));
+			REQUIRE(!fault1->Load(data.ConfigFault2, ARBVersion(1, 0), callback));
 			std::wstring name = fault1->GetGenericName();
-			CHECK(name.empty());
+			REQUIRE(name.empty());
 		}
 	}
 
 
-	TEST_FIXTURE(ConfigFaultData, Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			fault1->Load(ConfigFault2, ARBVersion(2, 0), callback);
+			fault1->Load(data.ConfigFault2, ARBVersion(2, 0), callback);
 			ElementNodePtr ele = ElementNode::New();
-			CHECK(fault1->Save(ele));
+			REQUIRE(fault1->Save(ele));
 		}
 	}
 }
 
 
-SUITE(TestConfigFaultList)
+TEST_CASE("ConfigFaultList")
 {
-	TEST_FIXTURE(ConfigFaultData, Load1)
+	ConfigFaultData data;
+
+	SECTION("Load1")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultList faultlist;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
-			CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
+			REQUIRE(faultlist.Load(data.ConfigFault1, ARBVersion(1, 0), callback));
+			REQUIRE(faultlist.Load(data.ConfigFault2, ARBVersion(2, 0), callback));
 			ElementNodePtr ele = ElementNode::New(L"Doesnt matter");
 			ele->SetValue(L"a fault");
-			CHECK(!faultlist.Load(ele, ARBVersion(2, 0), callback));
-			CHECK_EQUAL(2u, faultlist.size());
+			REQUIRE(!faultlist.Load(ele, ARBVersion(2, 0), callback));
+			REQUIRE(2u == faultlist.size());
 		}
 	}
 
 
-	TEST_FIXTURE(ConfigFaultData, Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultList faultlist;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
-			CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
-			CHECK(faultlist.FindFault(L"Refusal"));
-			CHECK(!faultlist.FindFault(L"refusal"));
+			REQUIRE(faultlist.Load(data.ConfigFault1, ARBVersion(1, 0), callback));
+			REQUIRE(faultlist.Load(data.ConfigFault2, ARBVersion(2, 0), callback));
+			REQUIRE(faultlist.FindFault(L"Refusal"));
+			REQUIRE(!faultlist.FindFault(L"refusal"));
 		}
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultList faultlist;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(faultlist.AddFault(L"fault"));
-			CHECK_EQUAL(1u, faultlist.size());
-			CHECK(faultlist.AddFault(L"fault2"));
-			CHECK_EQUAL(2u, faultlist.size());
-			CHECK(faultlist.AddFault(L"fault"));
-			CHECK_EQUAL(3u, faultlist.size());
-			CHECK(faultlist.DeleteFault(L"fault"));
-			CHECK_EQUAL(2u, faultlist.size());
+			REQUIRE(faultlist.AddFault(L"fault"));
+			REQUIRE(1u == faultlist.size());
+			REQUIRE(faultlist.AddFault(L"fault2"));
+			REQUIRE(2u == faultlist.size());
+			REQUIRE(faultlist.AddFault(L"fault"));
+			REQUIRE(3u == faultlist.size());
+			REQUIRE(faultlist.DeleteFault(L"fault"));
+			REQUIRE(2u == faultlist.size());
 		}
 	}
 }

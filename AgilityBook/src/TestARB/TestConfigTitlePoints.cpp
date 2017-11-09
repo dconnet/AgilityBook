@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigTitlePoints)
+TEST_CASE("ConfigTitlePoints")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -39,7 +40,7 @@ SUITE(TestConfigTitlePoints)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -49,7 +50,7 @@ SUITE(TestConfigTitlePoints)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -59,7 +60,7 @@ SUITE(TestConfigTitlePoints)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -70,7 +71,7 @@ SUITE(TestConfigTitlePoints)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -80,7 +81,7 @@ SUITE(TestConfigTitlePoints)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -94,7 +95,7 @@ SUITE(TestConfigTitlePoints)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -105,9 +106,9 @@ SUITE(TestConfigTitlePoints)
 }
 
 
-SUITE(TestConfigTitlePointsList)
+TEST_CASE("ConfigTitlePointsList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -121,7 +122,7 @@ SUITE(TestConfigTitlePointsList)
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -131,7 +132,7 @@ SUITE(TestConfigTitlePointsList)
 	}
 
 
-	TEST(GetTitlePoints)
+	SECTION("GetTitlePoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -141,7 +142,7 @@ SUITE(TestConfigTitlePointsList)
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -153,7 +154,7 @@ SUITE(TestConfigTitlePointsList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

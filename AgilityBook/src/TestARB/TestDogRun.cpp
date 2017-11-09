@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestDogRun)
+TEST_CASE("DogRun")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -94,7 +95,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -104,7 +105,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(NumOtherPointsInUse)
+	SECTION("NumOtherPointsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -114,7 +115,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(RenameOtherPoints)
+	SECTION("RenameOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -126,7 +127,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(DeleteOtherPoints)
+	SECTION("DeleteOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -136,7 +137,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(GetSpeedPoints)
+	SECTION("GetSpeedPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -146,7 +147,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(GetTitlePoints)
+	SECTION("GetTitlePoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -160,7 +161,7 @@ SUITE(TestDogRun)
 	}
 
 
-	TEST(GetScore)
+	SECTION("GetScore")
 	{
 		if (!g_bMicroTest)
 		{
@@ -171,9 +172,9 @@ SUITE(TestDogRun)
 }
 
 
-SUITE(TestDogRunList)
+TEST_CASE("DogRunList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -188,7 +189,7 @@ SUITE(TestDogRunList)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -197,7 +198,7 @@ SUITE(TestDogRunList)
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -207,7 +208,7 @@ SUITE(TestDogRunList)
 	}
 
 
-	TEST(GetStartDate)
+	SECTION("GetStartDate")
 	{
 		if (!g_bMicroTest)
 		{
@@ -217,7 +218,7 @@ SUITE(TestDogRunList)
 	}
 
 
-	TEST(GetEndDate)
+	SECTION("GetEndDate")
 	{
 		if (!g_bMicroTest)
 		{
@@ -227,7 +228,7 @@ SUITE(TestDogRunList)
 	}
 
 
-	TEST(AddRun)
+	SECTION("AddRun")
 	{
 		if (!g_bMicroTest)
 		{
@@ -237,7 +238,7 @@ SUITE(TestDogRunList)
 	}
 
 
-	TEST(DeleteRun)
+	SECTION("DeleteRun")
 	{
 		if (!g_bMicroTest)
 		{

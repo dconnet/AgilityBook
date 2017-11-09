@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestDogClub)
+TEST_CASE("DogClub")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestDogClub)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestDogClub)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestDogClub)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestDogClub)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestDogClub)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -93,7 +94,7 @@ SUITE(TestDogClub)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -104,9 +105,9 @@ SUITE(TestDogClub)
 }
 
 
-SUITE(TestDogClubList)
+TEST_CASE("DogClubList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -120,7 +121,7 @@ SUITE(TestDogClubList)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -129,7 +130,7 @@ SUITE(TestDogClubList)
 	}
 
 
-	TEST(GetPrimaryClub)
+	SECTION("GetPrimaryClub")
 	{
 		if (!g_bMicroTest)
 		{
@@ -139,7 +140,7 @@ SUITE(TestDogClubList)
 	}
 
 
-	TEST(GetPrimaryClubName)
+	SECTION("GetPrimaryClubName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -149,7 +150,7 @@ SUITE(TestDogClubList)
 	}
 
 
-	TEST(GetPrimaryClubVenue)
+	SECTION("GetPrimaryClubVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -159,7 +160,7 @@ SUITE(TestDogClubList)
 	}
 
 
-	TEST(FindEvent)
+	SECTION("FindEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -177,7 +178,7 @@ SUITE(TestDogClubList)
 	}
 
 
-	TEST(FindVenue)
+	SECTION("FindVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -189,7 +190,7 @@ SUITE(TestDogClubList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestDog)
+TEST_CASE("Dog")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -93,7 +94,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -103,7 +104,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(RenameVenue)
+	SECTION("RenameVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -115,7 +116,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(DeleteVenue)
+	SECTION("DeleteVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -125,7 +126,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(RenameDivision)
+	SECTION("RenameDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -138,7 +139,7 @@ SUITE(TestDog)
 	}
 
 
-	TEST(DeleteDivision)
+	SECTION("DeleteDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -152,9 +153,9 @@ SUITE(TestDog)
 }
 
 
-SUITE(TestDogList)
+TEST_CASE("DogList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -168,7 +169,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -177,7 +178,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(SetMultiQs)
+	SECTION("SetMultiQs")
 	{
 		if (!g_bMicroTest)
 		{
@@ -187,7 +188,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumExistingPointsInVenue)
+	SECTION("NumExistingPointsInVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -197,7 +198,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumRegNumsInVenue)
+	SECTION("NumRegNumsInVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -207,7 +208,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumTitlesInVenue)
+	SECTION("NumTitlesInVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -217,7 +218,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumTrialsInVenue)
+	SECTION("NumTrialsInVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -227,7 +228,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(RenameVenue)
+	SECTION("RenameVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -239,7 +240,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(DeleteVenue)
+	SECTION("DeleteVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -249,7 +250,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumOtherPointsInUse)
+	SECTION("NumOtherPointsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -259,7 +260,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(RenameOtherPoints)
+	SECTION("RenameOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -271,7 +272,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(DeleteOtherPoints)
+	SECTION("DeleteOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -281,7 +282,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumMultiQsInUse)
+	SECTION("NumMultiQsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -293,7 +294,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(RenameMultiQs)
+	SECTION("RenameMultiQs")
 	{
 		if (!g_bMicroTest)
 		{
@@ -306,7 +307,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(DeleteMultiQs)
+	SECTION("DeleteMultiQs")
 	{
 		if (!g_bMicroTest)
 		{
@@ -318,7 +319,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumMultiHostedTrialsInDivision)
+	SECTION("NumMultiHostedTrialsInDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -331,7 +332,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumExistingPointsInDivision)
+	SECTION("NumExistingPointsInDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -343,7 +344,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumRunsInDivision)
+	SECTION("NumRunsInDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -355,7 +356,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(RenameDivision)
+	SECTION("RenameDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -368,7 +369,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(DeleteDivision)
+	SECTION("DeleteDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -381,7 +382,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumLevelsInUse)
+	SECTION("NumLevelsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -394,7 +395,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(RenameLevel)
+	SECTION("RenameLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -408,7 +409,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(DeleteLevel)
+	SECTION("DeleteLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -421,7 +422,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumTitlesInUse)
+	SECTION("NumTitlesInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -433,7 +434,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(RenameTitle)
+	SECTION("RenameTitle")
 	{
 		if (!g_bMicroTest)
 		{
@@ -446,7 +447,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(DeleteTitle)
+	SECTION("DeleteTitle")
 	{
 		if (!g_bMicroTest)
 		{
@@ -458,7 +459,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(NumEventsInUse)
+	SECTION("NumEventsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -470,7 +471,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(RenameEvent)
+	SECTION("RenameEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -483,7 +484,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(DeleteEvent)
+	SECTION("DeleteEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -495,7 +496,7 @@ SUITE(TestDogList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,11 @@
 #endif
 
 
-SUITE(TestAgilityRecordBook)
+TEST_CASE("AgilityRecordBook")
 {
-	TEST(GetCurrentDocVersion)
+	//TODO: Setup
+
+	SECTION("GetCurrentDocVersion")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +41,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(ctor)
+	SECTION("ctor")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +51,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(clear)
+	SECTION("clear")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +61,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +82,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -96,7 +99,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(Default)
+	SECTION("Default")
 	{
 		if (!g_bMicroTest)
 		{
@@ -106,7 +109,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(Update)
+	SECTION("Update")
 	{
 		if (!g_bMicroTest)
 		{
@@ -120,7 +123,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllClubNames)
+	SECTION("GetAllClubNames")
 	{
 		if (!g_bMicroTest)
 		{
@@ -133,7 +136,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllTrialLocations)
+	SECTION("GetAllTrialLocations")
 	{
 		if (!g_bMicroTest)
 		{
@@ -146,7 +149,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllEventSubNames)
+	SECTION("GetAllEventSubNames")
 	{
 		if (!g_bMicroTest)
 		{
@@ -159,7 +162,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllHeights)
+	SECTION("GetAllHeights")
 	{
 		if (!g_bMicroTest)
 		{
@@ -169,7 +172,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllCallNames)
+	SECTION("GetAllCallNames")
 	{
 		if (!g_bMicroTest)
 		{
@@ -179,7 +182,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllBreeds)
+	SECTION("GetAllBreeds")
 	{
 		if (!g_bMicroTest)
 		{
@@ -189,7 +192,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllJudges)
+	SECTION("GetAllJudges")
 	{
 		if (!g_bMicroTest)
 		{
@@ -202,7 +205,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllHandlers)
+	SECTION("GetAllHandlers")
 	{
 		if (!g_bMicroTest)
 		{
@@ -212,7 +215,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllPartners)
+	SECTION("GetAllPartners")
 	{
 		if (!g_bMicroTest)
 		{
@@ -224,7 +227,7 @@ SUITE(TestAgilityRecordBook)
 	}
 
 
-	TEST(GetAllFaultTypes)
+	SECTION("GetAllFaultTypes")
 	{
 		if (!g_bMicroTest)
 		{
@@ -240,27 +243,24 @@ SUITE(TestAgilityRecordBook)
 #include <wx/url.h>
 #define CHECK_LEAK 1
 
-SUITE(TestHttp)
+TEST_CASE("HttpRead")
 {
-	TEST(Read)
+	if (g_bMicroTest)
 	{
-		if (g_bMicroTest)
-		{
 #if CHECK_LEAK
-			wxURL::SetDefaultProxy(L"proxy.eng.vmware.com:3128");
+		wxURL::SetDefaultProxy(L"proxy.eng.vmware.com:3128");
 #endif
-			wxURL url(L"http://www.agilityrecordbook.com/version.txt");
+		wxURL url(L"http://www.agilityrecordbook.com/version.txt");
 #if !CHECK_LEAK
-			url.SetProxy(L"proxy.eng.vmware.com:3128");
+		url.SetProxy(L"proxy.eng.vmware.com:3128");
 #endif
-			wxInputStream* stream = url.GetInputStream();
-			CHECK(stream && stream->IsOk());
-			std::wstring res;
-			wxStringOutputStream outStream(&res);
-			stream->Read(outStream);
-			delete stream;
-			CHECK(!res.empty());
-		}
+		wxInputStream* stream = url.GetInputStream();
+		CHECK(stream && stream->IsOk());
+		std::wstring res;
+		wxStringOutputStream outStream(&res);
+		stream->Read(outStream);
+		delete stream;
+		CHECK(!res.empty());
 	}
 }
 #endif

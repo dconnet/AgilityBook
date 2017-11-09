@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2013-07-29 Created
  */
 
@@ -24,14 +25,14 @@
 #endif
 
 
-SUITE(TestArchive)
+TEST_CASE("Archive")
 {
 #ifdef WIN32
 	static char const* FileData1 = "This is test1\r\nOk";
 	static char const* FileData2 = "This is test2\r\nOk\r\n";
 #endif
 
-	TEST(ExtractFileFromRes)
+	SECTION("ExtractFileFromRes")
 	{
 		if (!g_bMicroTest)
 		{
@@ -40,20 +41,20 @@ SUITE(TestArchive)
 			{
 				std::ostringstream data;
 #ifdef WIN32
-				CHECK(archive.ExtractFile(L"test1.txt", data));
-				CHECK(data.str() == FileData1);
+				REQUIRE(archive.ExtractFile(L"test1.txt", data));
+				REQUIRE(data.str() == FileData1);
 #else
-				CHECK(!archive.ExtractFile(L"test1.txt", data));
+				REQUIRE(!archive.ExtractFile(L"test1.txt", data));
 #endif
 			}
 
 			{
 				std::ostringstream data;
 #ifdef WIN32
-				CHECK(archive.ExtractFile(L"test2.txt", data));
-				CHECK(data.str() == FileData2);
+				REQUIRE(archive.ExtractFile(L"test2.txt", data));
+				REQUIRE(data.str() == FileData2);
 #else
-				CHECK(!archive.ExtractFile(L"test2.txt", data));
+				REQUIRE(!archive.ExtractFile(L"test2.txt", data));
 #endif
 			}
 		}
@@ -67,17 +68,17 @@ SUITE(TestArchive)
 		return std::wstring();
 	}
 
-	TEST(ReplaceFile)
+	SECTION("ReplaceFile")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring file = CreateZip();
-			CHECK(!file.empty());
+			REQUIRE(!file.empty());
 			if (!file.empty())
 			{
 				CLibArchive archive(file);
 				std::istringstream data(FileData3);
-				CHECK(archive.ReplaceFile(L"test1.txt", data));
+				REQUIRE(archive.ReplaceFile(L"test1.txt", data));
 				_unlink(StringUtil::stringA(file).c_str());
 			}
 			TODO_TEST
@@ -86,12 +87,12 @@ SUITE(TestArchive)
 	}
 
 
-	TEST(ExtractFile)
+	SECTION("ExtractFile")
 	{
 		//if (!g_bMicroTest)
 		{
 			std::wstring file = CreateZip();
-			CHECK(!file.empty());
+			REQUIRE(!file.empty());
 
 			if (!file.empty())
 			{
@@ -99,14 +100,14 @@ SUITE(TestArchive)
 
 				{
 					std::ostringstream data;
-					CHECK(archive.ExtractFile(L"test1.txt", data));
-					CHECK(data.str() == FileData1);
+					REQUIRE(archive.ExtractFile(L"test1.txt", data));
+					REQUIRE(data.str() == FileData1);
 				}
 
 				{
 					std::ostringstream data;
-					CHECK(archive.ExtractFile(L"test2.txt", data));
-					CHECK(data.str() == FileData2);
+					REQUIRE(archive.ExtractFile(L"test2.txt", data));
+					REQUIRE(data.str() == FileData2);
 				}
 
 				_unlink(StringUtil::stringA(file).c_str());

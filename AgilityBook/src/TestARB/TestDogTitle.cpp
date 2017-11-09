@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestDogTitle)
+TEST_CASE("DogTitle")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestDogTitle)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestDogTitle)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestDogTitle)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestDogTitle)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestDogTitle)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -93,7 +94,7 @@ SUITE(TestDogTitle)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -104,9 +105,9 @@ SUITE(TestDogTitle)
 }
 
 
-SUITE(TestDogTitleList)
+TEST_CASE("DogTitleList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -120,7 +121,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -129,7 +130,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -139,7 +140,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(NumTitlesInVenue)
+	SECTION("NumTitlesInVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -149,7 +150,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(FindTitle)
+	SECTION("FindTitle")
 	{
 		if (!g_bMicroTest)
 		{
@@ -162,7 +163,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(FindMaxInstance)
+	SECTION("FindMaxInstance")
 	{
 		if (!g_bMicroTest)
 		{
@@ -174,7 +175,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(RenameVenue)
+	SECTION("RenameVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -186,7 +187,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(DeleteVenue)
+	SECTION("DeleteVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -196,7 +197,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(NumTitlesInUse)
+	SECTION("NumTitlesInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -208,7 +209,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(RenameTitle)
+	SECTION("RenameTitle")
 	{
 		if (!g_bMicroTest)
 		{
@@ -221,7 +222,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(AddTitle)
+	SECTION("AddTitle")
 	{
 		if (!g_bMicroTest)
 		{
@@ -231,7 +232,7 @@ SUITE(TestDogTitleList)
 	}
 
 
-	TEST(DeleteTitle)
+	SECTION("DeleteTitle")
 	{
 		if (!g_bMicroTest)
 		{

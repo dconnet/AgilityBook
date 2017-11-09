@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2008-01-18 Created empty file
  */
 
@@ -25,9 +26,9 @@
 #endif
 
 
-SUITE(TestDogRunScoring)
+TEST_CASE("DogRunScoring")
 {
-	TEST(TranslateConfigScoring)
+	SECTION("TranslateConfigScoring")
 	{
 		if (!g_bMicroTest)
 		{
@@ -37,7 +38,7 @@ SUITE(TestDogRunScoring)
 	}
 
 
-	TEST(ctor)
+	SECTION("ctor")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestDogRunScoring)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestDogRunScoring)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestDogRunScoring)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -85,7 +86,7 @@ SUITE(TestDogRunScoring)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -95,7 +96,7 @@ SUITE(TestDogRunScoring)
 	}
 
 
-	TEST(GetMinYPS)
+	SECTION("GetMinYPS")
 	{
 		if (!g_bMicroTest)
 		{
@@ -107,7 +108,7 @@ SUITE(TestDogRunScoring)
 	}
 
 
-	TEST(GetYPS)
+	SECTION("GetYPS")
 	{
 		if (!g_bMicroTest)
 		{
@@ -119,7 +120,7 @@ SUITE(TestDogRunScoring)
 	}
 
 
-	TEST(GetObstaclesPS)
+	SECTION("GetObstaclesPS")
 	{
 		if (!g_bMicroTest)
 		{
@@ -129,7 +130,7 @@ SUITE(TestDogRunScoring)
 	}
 
 
-	TEST(GetTimeFaults)
+	SECTION("GetTimeFaults")
 	{
 		if (!g_bMicroTest)
 		{

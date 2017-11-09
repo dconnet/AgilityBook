@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigDivision)
+TEST_CASE("ConfigDivision")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestConfigDivision)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestConfigDivision)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestConfigDivision)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestConfigDivision)
 	}
 
 
-	TEST(Clear)
+	SECTION("Clear")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestConfigDivision)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -89,7 +90,7 @@ SUITE(TestConfigDivision)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -103,7 +104,7 @@ SUITE(TestConfigDivision)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -113,7 +114,7 @@ SUITE(TestConfigDivision)
 	}
 
 
-	TEST(Update)
+	SECTION("Update")
 	{
 		if (!g_bMicroTest)
 		{
@@ -127,9 +128,9 @@ SUITE(TestConfigDivision)
 }
 
 
-SUITE(TestConfigDivisionList)
+TEST_CASE("ConfigDivisionList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -143,7 +144,7 @@ SUITE(TestConfigDivisionList)
 	}
 
 
-	TEST(Reorder)
+	SECTION("Reorder")
 	{
 		if (!g_bMicroTest)
 		{
@@ -154,7 +155,7 @@ SUITE(TestConfigDivisionList)
 	}
 
 
-	TEST(VerifyLevel)
+	SECTION("VerifyLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -166,7 +167,7 @@ SUITE(TestConfigDivisionList)
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -178,7 +179,7 @@ SUITE(TestConfigDivisionList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

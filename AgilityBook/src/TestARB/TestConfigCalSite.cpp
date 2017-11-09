@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigCalSite)
+TEST_CASE("ConfigCalSite")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestConfigCalSite)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestConfigCalSite)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestConfigCalSite)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestConfigCalSite)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -82,7 +83,7 @@ SUITE(TestConfigCalSite)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -92,7 +93,7 @@ SUITE(TestConfigCalSite)
 	}
 
 
-	TEST(GetFormattedURL)
+	SECTION("GetFormattedURL")
 	{
 		if (!g_bMicroTest)
 		{
@@ -104,7 +105,7 @@ SUITE(TestConfigCalSite)
 	}
 
 
-	TEST(LocationCodes)
+	SECTION("LocationCodes")
 	{
 		if (!g_bMicroTest)
 		{
@@ -117,7 +118,7 @@ SUITE(TestConfigCalSite)
 	}
 
 
-	TEST(VenueCodes)
+	SECTION("VenueCodes")
 	{
 		if (!g_bMicroTest)
 		{
@@ -131,9 +132,9 @@ SUITE(TestConfigCalSite)
 }
 
 
-SUITE(TestConfigCalSiteList)
+TEST_CASE("ConfigCalSiteList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -146,7 +147,7 @@ SUITE(TestConfigCalSiteList)
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -156,7 +157,7 @@ SUITE(TestConfigCalSiteList)
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -168,7 +169,7 @@ SUITE(TestConfigCalSiteList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

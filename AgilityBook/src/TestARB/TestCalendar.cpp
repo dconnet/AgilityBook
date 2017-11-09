@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-13 Created
  */
@@ -60,19 +61,21 @@ CalData::CalData()
 }
 
 
-SUITE(TestCalendar)
+TEST_CASE("Calendar")
 {
-	TEST(New)
+	CalData data;
+
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			CHECK(!!cal.get());
+			REQUIRE(!!cal.get());
 		}
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -80,18 +83,18 @@ SUITE(TestCalendar)
 			cal->SetStartDate(ARBDate(2007, 9, 1));
 			cal->SetLocation(L"Here");
 			ARBCalendarPtr cal2 = cal->Clone();
-			CHECK(!!cal2.get());
-			CHECK(cal.get() != cal2.get());
-			CHECK(*cal == *cal2);
-			CHECK(cal->GetStartDate() == cal2->GetStartDate());
-			CHECK(cal->GetLocation() == cal2->GetLocation());
+			REQUIRE(!!cal2.get());
+			REQUIRE(cal.get() != cal2.get());
+			REQUIRE(*cal == *cal2);
+			REQUIRE(cal->GetStartDate() == cal2->GetStartDate());
+			REQUIRE(cal->GetLocation() == cal2->GetLocation());
 			cal->SetLocation(L"Here2");
-			CHECK(cal->GetLocation() != cal2->GetLocation());
+			REQUIRE(cal->GetLocation() != cal2->GetLocation());
 		}
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -99,37 +102,37 @@ SUITE(TestCalendar)
 			cal1->SetStartDate(ARBDate(2007, 9, 1));
 			cal1->SetLocation(L"Here");
 			ARBCalendarPtr cal2 = ARBCalendar::New();
-			CHECK(*cal1 != *cal2);
+			REQUIRE(*cal1 != *cal2);
 			*cal1 = *cal2;
-			CHECK(*cal1 == *cal2);
+			REQUIRE(*cal1 == *cal2);
 		}
 	}
 
 
-	TEST_FIXTURE(CalData, Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			cal->Load(CalData2, ARBVersion(2, 0), callback);
+			cal->Load(data.CalData2, ARBVersion(2, 0), callback);
 			ARBCalendarPtr cal2 = cal->Clone();
-			CHECK(cal.get() != cal2.get());
-			CHECK(*cal == *cal2);
+			REQUIRE(cal.get() != cal2.get());
+			REQUIRE(*cal == *cal2);
 			ARBDate n = ARBDate::Today();
 			cal2->SetStartDate(n);
 			cal2->SetEndDate(n+1);
-			CHECK(*cal < *cal2);
-			CHECK(*cal < cal2->GetStartDate());
-			CHECK(*cal != *cal2);
-			CHECK(!(*cal > *cal2));
-			CHECK(!(*cal > cal2->GetStartDate()));
+			REQUIRE(*cal < *cal2);
+			REQUIRE(*cal < cal2->GetStartDate());
+			REQUIRE(*cal != *cal2);
+			REQUIRE(!(*cal > *cal2));
+			REQUIRE(!(*cal > cal2->GetStartDate()));
 		}
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -137,118 +140,118 @@ SUITE(TestCalendar)
 			cal1->SetClub(L"Way");
 			cal1->SetVenue(L"No");
 			cal1->SetLocation(L"There");
-			CHECK(L"No Way There" == cal1->GetGenericName());
+			REQUIRE(L"No Way There" == cal1->GetGenericName());
 		}
 	}
 
 
-	TEST_FIXTURE(CalData, Load1)
+	SECTION("Load1")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(cal->Load(CalData1, ARBVersion(1, 0), callback));
-			CHECK_EQUAL(ARBCalendar::ePlanning, cal->GetEntered());
+			REQUIRE(cal->Load(data.CalData1, ARBVersion(1, 0), callback));
+			REQUIRE(ARBCalendar::ePlanning == cal->GetEntered());
 			std::wstring name = cal->GetGenericName();
-			CHECK(!name.empty());
+			REQUIRE(!name.empty());
 		}
 	}
 
 
-	TEST_FIXTURE(CalData, Load2)
+	SECTION("Load2")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(cal->Load(CalData2, ARBVersion(2, 0), callback));
-			CHECK_EQUAL(ARBCalendar::ePlanning, cal->GetEntered());
+			REQUIRE(cal->Load(data.CalData2, ARBVersion(2, 0), callback));
+			REQUIRE(ARBCalendar::ePlanning == cal->GetEntered());
 		}
 	}
 
 
-	TEST_FIXTURE(CalData, Load3)
+	SECTION("Load3")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(cal->Load(CalData1a, ARBVersion(1, 0), callback));
+			REQUIRE(cal->Load(data.CalData1a, ARBVersion(1, 0), callback));
 			// These are not equal as 'Entered' isn't parsed in 1.0.
-			CHECK(ARBCalendar::ePlanning != cal->GetEntered());
+			REQUIRE(ARBCalendar::ePlanning != cal->GetEntered());
 		}
 	}
 
 
-	TEST_FIXTURE(CalData, Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			cal->Load(CalData2, ARBVersion(2, 0), callback);
+			cal->Load(data.CalData2, ARBVersion(2, 0), callback);
 			ElementNodePtr ele = ElementNode::New();
-			CHECK(cal->Save(ele));
+			REQUIRE(cal->Save(ele));
 		}
 	}
 
 
-	TEST(IsBefore)
+	SECTION("IsBefore")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
 			cal->SetStartDate(ARBDate(2007, 9, 1));
 			cal->SetEndDate(ARBDate(2007, 9, 3));
-			CHECK(!cal->IsBefore(ARBDate(2007, 8, 31)));
-			CHECK(!cal->IsBefore(cal->GetStartDate()));
-			CHECK(!cal->IsBefore(cal->GetEndDate()));
-			CHECK(cal->IsBefore(ARBDate(2007, 9, 4)));
+			REQUIRE(!cal->IsBefore(ARBDate(2007, 8, 31)));
+			REQUIRE(!cal->IsBefore(cal->GetStartDate()));
+			REQUIRE(!cal->IsBefore(cal->GetEndDate()));
+			REQUIRE(cal->IsBefore(ARBDate(2007, 9, 4)));
 		}
 	}
 
 
-	TEST(InRange)
+	SECTION("InRange")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
 			cal->SetStartDate(ARBDate(2007, 9, 1));
 			cal->SetEndDate(ARBDate(2007, 9, 3));
-			CHECK(cal->InRange(cal->GetStartDate()));
-			CHECK(cal->InRange(cal->GetEndDate()));
-			CHECK(cal->InRange(ARBDate(2007, 9, 2)));
-			CHECK(!cal->InRange(ARBDate(2007, 9, 4)));
+			REQUIRE(cal->InRange(cal->GetStartDate()));
+			REQUIRE(cal->InRange(cal->GetEndDate()));
+			REQUIRE(cal->InRange(ARBDate(2007, 9, 2)));
+			REQUIRE(!cal->InRange(ARBDate(2007, 9, 4)));
 		}
 	}
 
 
-	TEST(IsRangeOverlapped)
+	SECTION("IsRangeOverlapped")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
 			cal->SetStartDate(ARBDate(2007, 9, 1));
 			cal->SetEndDate(ARBDate(2007, 9, 3));
-			CHECK(cal->IsRangeOverlapped(cal->GetStartDate(), cal->GetEndDate()));
+			REQUIRE(cal->IsRangeOverlapped(cal->GetStartDate(), cal->GetEndDate()));
 			ARBDate d1(2007, 8, 31);
 			ARBDate d2(2007, 9, 2);
 			ARBDate d3(2007, 9, 4);
 			ARBDate d4(2007, 9, 5);
-			CHECK(cal->IsRangeOverlapped(d1, d2));
-			CHECK(cal->IsRangeOverlapped(d2, d3));
-			CHECK(!cal->IsRangeOverlapped(d3, d4));
-			CHECK(cal->IsRangeOverlapped(d1, d4));
+			REQUIRE(cal->IsRangeOverlapped(d1, d2));
+			REQUIRE(cal->IsRangeOverlapped(d2, d3));
+			REQUIRE(!cal->IsRangeOverlapped(d3, d4));
+			REQUIRE(cal->IsRangeOverlapped(d1, d4));
 		}
 	}
 
 
-	TEST(IsMatch)
+	SECTION("IsMatch")
 	{
 		if (!g_bMicroTest)
 		{
@@ -261,19 +264,19 @@ SUITE(TestCalendar)
 
 			ARBCalendarPtr cal2;
 
-			CHECK(!cal1->IsMatch(cal2, true));
+			REQUIRE(!cal1->IsMatch(cal2, true));
 
 			cal2 = cal1->Clone();
 			cal2->SetLocation(L"Here");
-			CHECK(!cal1->IsMatch(cal2, true));
-			CHECK(cal1->IsMatch(cal2, false));
+			REQUIRE(!cal1->IsMatch(cal2, true));
+			REQUIRE(cal1->IsMatch(cal2, false));
 			cal2->SetEndDate(cal2->GetEndDate() + 1);
-			CHECK(!cal1->IsMatch(cal2, false));
+			REQUIRE(!cal1->IsMatch(cal2, false));
 		}
 	}
 
 
-	TEST(Update)
+	SECTION("Update")
 	{
 		if (!g_bMicroTest)
 		{
@@ -288,25 +291,27 @@ SUITE(TestCalendar)
 			cal1->SetLocation(L"Turlock");
 			cal1->SetClub(L"PASA");
 			cal1->SetVenue(L"ASCA");
-			CHECK(*cal1 != *cal2);
-			CHECK(cal1->Update(cal2));
-			CHECK(*cal1 == *cal2);
+			REQUIRE(*cal1 != *cal2);
+			REQUIRE(cal1->Update(cal2));
+			REQUIRE(*cal1 == *cal2);
 		}
 	}
 }
 
 
-SUITE(TestCalendarList)
+TEST_CASE("CalendarList")
 {
-	TEST_FIXTURE(CalData, Load)
+	CalData data;
+
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarList callist;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(callist.Load(CalData1, ARBVersion(1, 0), callback));
-			CHECK(callist.Load(CalData2, ARBVersion(2, 0), callback));
+			REQUIRE(callist.Load(data.CalData1, ARBVersion(1, 0), callback));
+			REQUIRE(callist.Load(data.CalData2, ARBVersion(2, 0), callback));
 			ElementNodePtr ele = ElementNode::New(L"Doesnt matter");
 			ele->SetValue(L"These are some notes");
 			ele->AddAttrib(ATTRIB_CAL_START, ARBDate(2006, 9, 4));
@@ -315,21 +320,21 @@ SUITE(TestCalendarList)
 			ele->AddAttrib(ATTRIB_CAL_CLUB, L"PASA");
 			ele->AddAttrib(ATTRIB_CAL_VENUE, L"ASCA");
 			ele->AddAttrib(L"PlanOn", L"n");
-			CHECK(!callist.Load(ele, ARBVersion(2, 0), callback));
-			CHECK_EQUAL(2u, callist.size());
+			REQUIRE(!callist.Load(ele, ARBVersion(2, 0), callback));
+			REQUIRE(2u == callist.size());
 		}
 	}
 
 
-	TEST_FIXTURE(CalData, Load2)
+	SECTION("Load2")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBCalendarList callist;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(callist.Load(CalData1, ARBVersion(1, 0), callback));
-			CHECK(callist.Load(CalData2, ARBVersion(2, 0), callback));
+			REQUIRE(callist.Load(data.CalData1, ARBVersion(1, 0), callback));
+			REQUIRE(callist.Load(data.CalData2, ARBVersion(2, 0), callback));
 			ElementNodePtr ele = ElementNode::New(TREE_CALENDAR);
 			ele->SetValue(L"These are some notes");
 			ele->AddAttrib(L"DateStrt", ARBDate(2006, 9, 4));
@@ -338,13 +343,13 @@ SUITE(TestCalendarList)
 			ele->AddAttrib(ATTRIB_CAL_CLUB, L"PASA");
 			ele->AddAttrib(ATTRIB_CAL_VENUE, L"ASCA");
 			ele->AddAttrib(L"PlanOn", L"n");
-			CHECK(!callist.Load(ele, ARBVersion(2, 0), callback));
-			CHECK_EQUAL(2u, callist.size());
+			REQUIRE(!callist.Load(ele, ARBVersion(2, 0), callback));
+			REQUIRE(2u == callist.size());
 		}
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -363,14 +368,14 @@ SUITE(TestCalendarList)
 
 			ARBCalendarList callist2;
 			callist.Clone(callist2);
-			CHECK(callist == callist2);
+			REQUIRE(callist == callist2);
 			callist.sort();
-			CHECK(callist != callist2);
+			REQUIRE(callist != callist2);
 		}
 	}
 
 
-	TEST(Entered)
+	SECTION("Entered")
 	{
 		if (!g_bMicroTest)
 		{
@@ -384,20 +389,20 @@ SUITE(TestCalendarList)
 			cal2->SetEndDate(ARBDate(2005, 4, 27));
 			callist.AddCalendar(cal2);
 			std::vector<ARBCalendarPtr> lst;
-			CHECK_EQUAL(0u, callist.GetAllEntered(lst));
+			REQUIRE(0u == callist.GetAllEntered(lst));
 			cal1->SetEntered(ARBCalendar::ePlanning);
-			CHECK_EQUAL(0u, callist.GetAllEntered(lst));
+			REQUIRE(0u == callist.GetAllEntered(lst));
 			cal1->SetEntered(ARBCalendar::ePending);
-			CHECK_EQUAL(1u, callist.GetAllEntered(lst));
+			REQUIRE(1u == callist.GetAllEntered(lst));
 			cal1->SetEntered(ARBCalendar::ePlanning);
-			CHECK_EQUAL(0u, callist.GetAllEntered(lst));
+			REQUIRE(0u == callist.GetAllEntered(lst));
 			cal1->SetEntered(ARBCalendar::eEntered);
-			CHECK_EQUAL(1u, callist.GetAllEntered(lst));
+			REQUIRE(1u == callist.GetAllEntered(lst));
 		}
 	}
 
 
-	TEST(Trim)
+	SECTION("Trim")
 	{
 		if (!g_bMicroTest)
 		{
@@ -411,16 +416,16 @@ SUITE(TestCalendarList)
 			cal2->SetEndDate(ARBDate(2005, 4, 27));
 			callist.AddCalendar(cal2);
 			callist.TrimEntries(ARBDate(2005, 3, 25));
-			CHECK_EQUAL(2u, callist.size());
+			REQUIRE(2u == callist.size());
 			callist.TrimEntries(ARBDate(2005, 3, 27));
-			CHECK_EQUAL(2u, callist.size());
+			REQUIRE(2u == callist.size());
 			callist.TrimEntries(ARBDate(2005, 3, 28));
-			CHECK_EQUAL(1u, callist.size());
+			REQUIRE(1u == callist.size());
 		}
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -438,19 +443,19 @@ SUITE(TestCalendarList)
 			callist.AddCalendar(cal2);
 			callist.sort();
 			ARBCalendarPtr found;
-			CHECK(callist.FindCalendar(cal1, true, &found));
-			CHECK(!!found.get());
-			CHECK(found.get() == cal1.get());
+			REQUIRE(callist.FindCalendar(cal1, true, &found));
+			REQUIRE(!!found.get());
+			REQUIRE(found.get() == cal1.get());
 			ARBCalendarPtr clone = found->Clone();
-			CHECK(callist.FindCalendar(clone, true, &found));
-			CHECK(!!found.get());
-			CHECK(found.get() != clone.get());
-			CHECK(*found == *clone);
+			REQUIRE(callist.FindCalendar(clone, true, &found));
+			REQUIRE(!!found.get());
+			REQUIRE(found.get() != clone.get());
+			REQUIRE(*found == *clone);
 		}
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{
@@ -468,25 +473,25 @@ SUITE(TestCalendarList)
 			callist.AddCalendar(cal2);
 			callist.sort();
 			ARBCalendarPtr cal3 = callist[0]->Clone();
-			CHECK(*cal2 == *cal3);
+			REQUIRE(*cal2 == *cal3);
 			cal3->SetNote(L"Test");
-			CHECK(*cal2 != *cal3);
+			REQUIRE(*cal2 != *cal3);
 			callist.AddCalendar(cal3);
 			callist.AddCalendar(cal1->Clone());
 			callist.sort();
-			CHECK_EQUAL(4u, callist.size());
-			CHECK(callist.DeleteCalendar(cal1));
-			CHECK_EQUAL(3u, callist.size());
-			CHECK(callist.DeleteCalendar(cal1));
-			CHECK_EQUAL(2u, callist.size());
-			CHECK(!callist.DeleteCalendar(cal1));
-			CHECK_EQUAL(2u, callist.size());
-			CHECK(*callist[0] != *callist[1]);
+			REQUIRE(4u == callist.size());
+			REQUIRE(callist.DeleteCalendar(cal1));
+			REQUIRE(3u == callist.size());
+			REQUIRE(callist.DeleteCalendar(cal1));
+			REQUIRE(2u == callist.size());
+			REQUIRE(!callist.DeleteCalendar(cal1));
+			REQUIRE(2u == callist.size());
+			REQUIRE(*callist[0] != *callist[1]);
 			ARBCalendarList callist2;
 			callist.Clone(callist2);
-			CHECK(callist == callist2);
-			CHECK(callist[0].get() != callist2[0].get());
-			CHECK(*callist[0] == *callist2[0]);
+			REQUIRE(callist == callist2);
+			REQUIRE(callist[0].get() != callist2[0].get());
+			REQUIRE(*callist[0] == *callist2[0]);
 		}
 	}
 }

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-13 Created
  */
@@ -59,49 +60,51 @@ TestInfoItemData::TestInfoItemData()
 }
 
 
-SUITE(TestInfoItem)
+TEST_CASE("InfoItem")
 {
-	TEST(New)
+	TestInfoItemData data;
+
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
-			CHECK(!!info.get());
+			REQUIRE(!!info.get());
 		}
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
 			info->SetName(L"Testing");
 			ARBInfoItemPtr info2 = info->Clone();
-			CHECK(!!info2.get());
-			CHECK(info.get() != info2.get());
-			CHECK(*info == *info2);
+			REQUIRE(!!info2.get());
+			REQUIRE(info.get() != info2.get());
+			REQUIRE(*info == *info2);
 			info->SetName(L"Test2");
-			CHECK(info->GetName() != info2->GetName());
+			REQUIRE(info->GetName() != info2->GetName());
 		}
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info1 = ARBInfoItem::New();
 			info1->SetName(L"Testing");
 			ARBInfoItemPtr info2 = ARBInfoItem::New();
-			CHECK(*info1 != *info2);
+			REQUIRE(*info1 != *info2);
 			*info1 = *info2;
-			CHECK(*info1 == *info2);
+			REQUIRE(*info1 == *info2);
 		}
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -109,72 +112,74 @@ SUITE(TestInfoItem)
 			info1->SetName(L"A");
 			ARBInfoItemPtr info2 = ARBInfoItem::New();
 			info2->SetName(L"B");
-			CHECK(*info1 < *info2);
-			CHECK(!(*info1 > *info2));
+			REQUIRE(*info1 < *info2);
+			REQUIRE(!(*info1 > *info2));
 		}
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info1 = ARBInfoItem::New();
 			info1->SetName(L"A");
-			CHECK(info1->GetGenericName() == L"A");
+			REQUIRE(info1->GetGenericName() == L"A");
 		}
 	}
 
 
-	TEST_FIXTURE(TestInfoItemData, Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(info->Load(data, ARBVersion(1, 0), callback, TREE_CLUBINFO));
+			REQUIRE(info->Load(data.data, ARBVersion(1, 0), callback, TREE_CLUBINFO));
 			std::wstring name = info->GetGenericName();
-			CHECK(!name.empty());
+			REQUIRE(!name.empty());
 		}
 	}
 
 
-	TEST_FIXTURE(TestInfoItemData, Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(info->Load(data, ARBVersion(2, 0), callback, TREE_CLUBINFO));
+			REQUIRE(info->Load(data.data, ARBVersion(2, 0), callback, TREE_CLUBINFO));
 			ElementNodePtr ele = ElementNode::New();
-			CHECK(info->Save(ele, TREE_CLUBINFO));
+			REQUIRE(info->Save(ele, TREE_CLUBINFO));
 		}
 	}
 }
 
 
-SUITE(TestInfoItemList)
+TEST_CASE("InfoItemList")
 {
-	TEST_FIXTURE(TestInfoItemData, Load)
+	TestInfoItemData data;
+
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemList infolist(TREE_CLUBINFO);
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(infolist.Load(data, ARBVersion(2, 0), callback));
+			REQUIRE(infolist.Load(data.data, ARBVersion(2, 0), callback));
 			ElementNodePtr ele = ElementNode::New(L"Doesnt matter");
 			ele->SetValue(L"These are some notes");
 			ele->AddAttrib(L"Name", L"PASA");
-			CHECK(!infolist.Load(ele, ARBVersion(2, 0), callback));
-			CHECK_EQUAL(1u, infolist.size());
+			REQUIRE(!infolist.Load(ele, ARBVersion(2, 0), callback));
+			REQUIRE(1u == infolist.size());
 		}
 	}
 
 
-	TEST(Load2)
+	SECTION("Load2")
 	{
 		if (!g_bMicroTest)
 		{
@@ -183,12 +188,12 @@ SUITE(TestInfoItemList)
 			ARBInfoItemList infolist(TREE_CLUBINFO);
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(!infolist.Load(ele, ARBVersion(2, 0), callback));
+			REQUIRE(!infolist.Load(ele, ARBVersion(2, 0), callback));
 		}
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -198,65 +203,65 @@ SUITE(TestInfoItemList)
 			info1->SetComment(L"A note");
 			ARBInfoItemPtr info2 = info1->Clone();
 			info2->SetName(L"Test1");
-			CHECK(infolist.AddItem(info1));
-			CHECK(infolist.AddItem(info2));
+			REQUIRE(infolist.AddItem(info1));
+			REQUIRE(infolist.AddItem(info2));
 
 			ARBInfoItemList infolist2(TREE_CLUBINFO);
 			infolist.Clone(infolist2);
-			CHECK(infolist == infolist2);
+			REQUIRE(infolist == infolist2);
 			infolist.sort();
-			CHECK(infolist != infolist2);
+			REQUIRE(infolist != infolist2);
 		}
 	}
 
 
-	TEST_FIXTURE(TestInfoItemData, GetAllItems)
+	SECTION("GetAllItems")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
+			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
 			std::set<std::wstring> items;
-			CHECK_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
+			REQUIRE(4u == info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
 		}
 	}
 
 
-	TEST_FIXTURE(TestInfoItemData, CondenseContent)
+	SECTION("CondenseContent")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
+			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
 			std::set<std::wstring> items;
 			items.insert(L"Club1");
 			items.insert(L"Club3");
 			info.GetInfo(ARBInfo::eClubInfo).CondenseContent(items);
 			items.clear();
-			CHECK_EQUAL(3u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
+			REQUIRE(3u == info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
 		}
 	}
 
 
-	TEST_FIXTURE(TestInfoItemData, Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
-			CHECK(info.GetInfo(ARBInfo::eClubInfo).FindItem(L"Club3"));
-			CHECK(!info.GetInfo(ARBInfo::eClubInfo).FindItem(L"Club3xc"));
+			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
+			REQUIRE(info.GetInfo(ARBInfo::eClubInfo).FindItem(L"Club3"));
+			REQUIRE(!info.GetInfo(ARBInfo::eClubInfo).FindItem(L"Club3xc"));
 		}
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{
@@ -266,52 +271,54 @@ SUITE(TestInfoItemList)
 			info1->SetComment(L"A note");
 			ARBInfoItemPtr info2 = info1->Clone();
 			info2->SetName(L"Test1");
-			CHECK(infolist.AddItem(info1));
-			CHECK(infolist.AddItem(info2));
+			REQUIRE(infolist.AddItem(info1));
+			REQUIRE(infolist.AddItem(info2));
 			infolist.sort();
 			ARBInfoItemPtr info3 = infolist[0]->Clone();
-			CHECK(*info2 == *info3);
+			REQUIRE(*info2 == *info3);
 			info3->SetComment(L"Test comments");
-			CHECK(*info2 != *info3);
-			CHECK(!infolist.AddItem(info3));
-			CHECK(!infolist.AddItem(info1->Clone()));
+			REQUIRE(*info2 != *info3);
+			REQUIRE(!infolist.AddItem(info3));
+			REQUIRE(!infolist.AddItem(info1->Clone()));
 			info3->SetName(L"Test3");
-			CHECK(infolist.AddItem(info3));
+			REQUIRE(infolist.AddItem(info3));
 			infolist.sort();
-			CHECK_EQUAL(3u, infolist.size());
-			CHECK(infolist.DeleteItem(info1));
-			CHECK_EQUAL(2u, infolist.size());
-			CHECK(!infolist.DeleteItem(info1));
-			CHECK_EQUAL(2u, infolist.size());
-			CHECK(*infolist[0] != *infolist[1]);
+			REQUIRE(3u == infolist.size());
+			REQUIRE(infolist.DeleteItem(info1));
+			REQUIRE(2u == infolist.size());
+			REQUIRE(!infolist.DeleteItem(info1));
+			REQUIRE(2u == infolist.size());
+			REQUIRE(*infolist[0] != *infolist[1]);
 			ARBInfoItemList infolist2(TREE_CLUBINFO);
 			infolist.Clone(infolist2);
-			CHECK(infolist == infolist2);
-			CHECK(infolist[0].get() != infolist2[0].get());
-			CHECK(*infolist[0] == *infolist2[0]);
+			REQUIRE(infolist == infolist2);
+			REQUIRE(infolist[0].get() != infolist2[0].get());
+			REQUIRE(*infolist[0] == *infolist2[0]);
 		}
 	}
 }
 
 
-SUITE(TestInfo)
+TEST_CASE("Info")
 {
-	TEST_FIXTURE(TestInfoItemData, Load)
+	TestInfoItemData data;
+
+	SECTION("""Load")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
-			CHECK_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).size());
-			CHECK_EQUAL(2u, info.GetInfo(ARBInfo::eJudgeInfo).size());
-			CHECK_EQUAL(1u, info.GetInfo(ARBInfo::eLocationInfo).size());
+			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
+			REQUIRE(4u == info.GetInfo(ARBInfo::eClubInfo).size());
+			REQUIRE(2u == info.GetInfo(ARBInfo::eJudgeInfo).size());
+			REQUIRE(1u == info.GetInfo(ARBInfo::eLocationInfo).size());
 
 			ARBInfo info2(info);
-			CHECK(info == info2);
-			CHECK(info.GetInfo(ARBInfo::eClubInfo)[0].get() != info2.GetInfo(ARBInfo::eClubInfo)[0].get());
-			CHECK(*info.GetInfo(ARBInfo::eClubInfo)[0] == *info2.GetInfo(ARBInfo::eClubInfo)[0]);
+			REQUIRE(info == info2);
+			REQUIRE(info.GetInfo(ARBInfo::eClubInfo)[0].get() != info2.GetInfo(ARBInfo::eClubInfo)[0].get());
+			REQUIRE(*info.GetInfo(ARBInfo::eClubInfo)[0] == *info2.GetInfo(ARBInfo::eClubInfo)[0]);
 		}
 	}
 }

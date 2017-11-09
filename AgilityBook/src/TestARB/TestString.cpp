@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-27 Remove WIN32 ifdef from tests.
  * 2008-06-29 Created
  */
@@ -27,40 +28,40 @@
 #endif
 
 
-SUITE(TestString)
+TEST_CASE("String")
 {
-	TEST(Convert_ToWide)
+	SECTION("Convert_ToWide")
 	{
 		if (!g_bMicroTest)
 		{
 			std::string s("narrow");
 			std::wstring s1 = StringUtil::stringW(s);
-			CHECK(L"narrow" == s1);
+			REQUIRE(L"narrow" == s1);
 #if defined(__WXWINDOWS__)
 			wxString s2 = StringUtil::stringWX(s);
-			CHECK(L"narrow" == s2);
+			REQUIRE(L"narrow" == s2);
 #endif
 		}
 	}
 
 
-	TEST(Convert_ToNarrow)
+	SECTION("Convert_ToNarrow")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring s(L"wide");
 			std::string s1 = StringUtil::stringA(s);
-			CHECK("wide" == s1);
+			REQUIRE("wide" == s1);
 #if defined(__WXWINDOWS__)
 			wxString s2 = StringUtil::stringWX(s);
-			CHECK(L"wide" == s2);
+			REQUIRE(L"wide" == s2);
 #endif
 		}
 	}
 
 
 	// We know this will fail using wcstombs.
-	TEST(Convert_Multi)
+	SECTION("Convert_Multi")
 	{
 		if (!g_bMicroTest)
 		{
@@ -68,14 +69,14 @@ SUITE(TestString)
 			wchar_t w = 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
 			std::wstring s(1, w);
 			std::string s2 = StringUtil::stringA(s);
-			CHECK(s.length() == 1);
+			REQUIRE(s.length() == 1);
 			// MBCS: 0, UTF8: 3
-			CHECK(s2.length() == 3);
+			REQUIRE(s2.length() == 3);
 		}
 	}
 
 
-	TEST(Convert_Multi2)
+	SECTION("Convert_Multi2")
 	{
 		if (!g_bMicroTest)
 		{
@@ -83,107 +84,107 @@ SUITE(TestString)
 			wchar_t w = 0x00f7; // Division sign
 			std::wstring s(1, w);
 			std::string s2 = StringUtil::stringA(s);
-			CHECK(s.length() == 1);
+			REQUIRE(s.length() == 1);
 			// MBCS: 1, UTF8: 2
-			CHECK(s2.length() > 0);
+			REQUIRE(s2.length() > 0);
 		}
 	}
 
 
-	TEST(AtolGoodData)
+	SECTION("AtolGoodData")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring s1(L"123");
 			long a1 = StringUtil::ToCLong(s1);
-			CHECK(a1 == 123);
-			CHECK(StringUtil::ToCLong(s1, a1));
+			REQUIRE(a1 == 123);
+			REQUIRE(StringUtil::ToCLong(s1, a1));
 		}
 	}
 
 
-	TEST(AtolBadData)
+	SECTION("AtolBadData")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring s2(L"12-3");
 			long a2 = StringUtil::ToCLong(s2);
-			CHECK(a2 == 12);
-			CHECK(!StringUtil::ToCLong(s2, a2));
-			CHECK(a2 == 12);
-			CHECK(!StringUtil::ToCLong(s2, a2, true));
-			CHECK(a2 == 12);
+			REQUIRE(a2 == 12);
+			REQUIRE(!StringUtil::ToCLong(s2, a2));
+			REQUIRE(a2 == 12);
+			REQUIRE(!StringUtil::ToCLong(s2, a2, true));
+			REQUIRE(a2 == 12);
 		}
 	}
 
 
-	TEST(AtodGoodData)
+	SECTION("AtodGoodData")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToCDouble(s1);
-			CHECK(a1 == 12.3);
-			CHECK(StringUtil::ToCDouble(s1, a1));
+			REQUIRE(a1 == 12.3);
+			REQUIRE(StringUtil::ToCDouble(s1, a1));
 		}
 	}
 
 
-	TEST(AtodBadData)
+	SECTION("AtodBadData")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring s2(L"1.3-12");
 			double a2;
-			CHECK(!StringUtil::ToCDouble(s2, a2));
-			CHECK(a2 == 1.3);
+			REQUIRE(!StringUtil::ToCDouble(s2, a2));
+			REQUIRE(a2 == 1.3);
 		}
 	}
 
 
-	TEST(AtodUS)
+	SECTION("AtodUS")
 	{
 		if (!g_bMicroTest)
 		{
 #if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_ENGLISH_US);
 #else
-			CHECK(setlocale(LC_ALL, "english-us"));
+			REQUIRE(setlocale(LC_ALL, "english-us"));
 #endif
 			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToDouble(s1);
-			CHECK(a1 == 12.3);
+			REQUIRE(a1 == 12.3);
 			std::wstring s2(L"1.3-12");
 			double a2;
 			bool bParsed = StringUtil::ToDouble(s2, a2);
-			CHECK(a2 == 1.3);
-			CHECK(!bParsed);
+			REQUIRE(a2 == 1.3);
+			REQUIRE(!bParsed);
 		}
 	}
 
 
-	TEST(AtodFR)
+	SECTION("AtodFR")
 	{
 		if (!g_bMicroTest)
 		{
 #if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_FRENCH);
 #else
-			CHECK(setlocale(LC_ALL, "french"));
+			REQUIRE(setlocale(LC_ALL, "french"));
 #endif
 			std::wstring s1(L"12,3");
 			double a1 = StringUtil::ToDouble(s1);
-			CHECK(a1 == 12.3);
+			REQUIRE(a1 == 12.3);
 			std::wstring s2(L"1,3-12");
 			double a2;
 			bool bParsed = StringUtil::ToDouble(s2, a2);
-			CHECK(a2 == 1.3);
-			CHECK(!bParsed);
+			REQUIRE(a2 == 1.3);
+			REQUIRE(!bParsed);
 		}
 	}
 
 
-	TEST(AtodFR2)
+	SECTION("AtodFR2")
 	{
 		if (!g_bMicroTest)
 		{
@@ -191,47 +192,47 @@ SUITE(TestString)
 #if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_FRENCH);
 #else
-			CHECK(setlocale(LC_ALL, "french"));
+			REQUIRE(setlocale(LC_ALL, "french"));
 #endif
 			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToDouble(s1);
-			CHECK(a1 == 12.3);
+			REQUIRE(a1 == 12.3);
 		}
 	}
 
 
-	TEST(ReplaceA)
+	SECTION("ReplaceA")
 	{
 		if (!g_bMicroTest)
 		{
 			std::string s("This is a test");
 			std::string s2 = StringUtil::Replace(s, "is a", "");
-			CHECK("This  test" == s2);
+			REQUIRE("This  test" == s2);
 			s2 = StringUtil::Replace(s2, " test", "good");
-			CHECK("This good" == s2);
+			REQUIRE("This good" == s2);
 		}
 	}
 
 
-	TEST(ReplaceW)
+	SECTION("ReplaceW")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring s(L"This is a test");
 			std::wstring s2 = StringUtil::Replace(s, L"is a", L"");
-			CHECK(L"This  test" == s2);
+			REQUIRE(L"This  test" == s2);
 			s2 = StringUtil::Replace(s2, L" test", L"good");
-			CHECK(L"This good" == s2);
+			REQUIRE(L"This good" == s2);
 		}
 	}
 
 
-	TEST(Formatting)
+	SECTION("Formatting")
 	{
 		if (!g_bMicroTest)
 		{
 #if defined(__WXWINDOWS__)
-			CHECK(L"two one" == wxString::Format(L"%2$s %1$s", L"one", L"two"));
+			REQUIRE(L"two one" == wxString::Format(L"%2$s %1$s", L"one", L"two"));
 #else
 #pragma PRAGMA_TODO(Write formatting test)
 #endif
@@ -239,31 +240,31 @@ SUITE(TestString)
 	}
 
 
-	TEST(Trim)
+	SECTION("Trim")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring str(L"  xyx  ");
-			CHECK(StringUtil::Trim(str) == L"xyx");
-			CHECK(StringUtil::TrimLeft(str) == L"xyx  ");
-			CHECK(StringUtil::TrimRight(str) == L"  xyx");
+			REQUIRE(StringUtil::Trim(str) == L"xyx");
+			REQUIRE(StringUtil::TrimLeft(str) == L"xyx  ");
+			REQUIRE(StringUtil::TrimRight(str) == L"  xyx");
 		}
 	}
 
 
-	TEST(TrimChar)
+	SECTION("TrimChar")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring str(L"\"xyx\"");
-			CHECK(StringUtil::Trim(str, '"') == L"xyx");
-			CHECK(StringUtil::TrimLeft(str, '"') == L"xyx\"");
-			CHECK(StringUtil::TrimRight(str, '"') == L"\"xyx");
+			REQUIRE(StringUtil::Trim(str, '"') == L"xyx");
+			REQUIRE(StringUtil::TrimLeft(str, '"') == L"xyx\"");
+			REQUIRE(StringUtil::TrimRight(str, '"') == L"\"xyx");
 		}
 	}
 
 
-	TEST(Sort)
+	SECTION("Sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -282,15 +283,15 @@ SUITE(TestString)
 					}
 					);
 
-				CHECK(items[0] == L"1a");
-				CHECK(items[1] == L"2a");
-				CHECK(items[2] == L"10a");
+				REQUIRE(items[0] == L"1a");
+				REQUIRE(items[1] == L"2a");
+				REQUIRE(items[2] == L"10a");
 			}
 		}
 	}
 
 
-	TEST(Sort2)
+	SECTION("Sort2")
 	{
 		if (!g_bMicroTest)
 		{
@@ -310,18 +311,18 @@ SUITE(TestString)
 					}
 					);
 
-				CHECK(items[0] == L"2a");
-				CHECK(items[1] == L"a");
-				CHECK(items[2] == L"Aa");
+				REQUIRE(items[0] == L"2a");
+				REQUIRE(items[1] == L"a");
+				REQUIRE(items[2] == L"Aa");
 				// Case insensitive - so these should be same order as inserted
-				CHECK(items[3] == L"bob");
-				CHECK(items[4] == L"Bob");
+				REQUIRE(items[3] == L"bob");
+				REQUIRE(items[4] == L"Bob");
 			}
 		}
 	}
 
 
-	TEST(Sort3)
+	SECTION("Sort3")
 	{
 		if (!g_bMicroTest)
 		{
@@ -343,12 +344,12 @@ SUITE(TestString)
 					}
 					);
 
-				CHECK(items[0] == L"2a");
-				CHECK(items[1] == L"a");
-				CHECK(items[2] == L"Aa");
+				REQUIRE(items[0] == L"2a");
+				REQUIRE(items[1] == L"a");
+				REQUIRE(items[2] == L"Aa");
 				// Case insensitive - so these should be same order as inserted
-				CHECK(items[3] == L"Bob");
-				CHECK(items[4] == L"bob");
+				REQUIRE(items[3] == L"Bob");
+				REQUIRE(items[4] == L"bob");
 			}
 		}
 	}

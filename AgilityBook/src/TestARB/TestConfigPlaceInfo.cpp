@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigPlaceInfo)
+TEST_CASE("ConfigPlaceInfo")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -39,7 +40,7 @@ SUITE(TestConfigPlaceInfo)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -49,7 +50,7 @@ SUITE(TestConfigPlaceInfo)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -59,7 +60,7 @@ SUITE(TestConfigPlaceInfo)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -70,7 +71,7 @@ SUITE(TestConfigPlaceInfo)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -80,7 +81,7 @@ SUITE(TestConfigPlaceInfo)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -93,7 +94,7 @@ SUITE(TestConfigPlaceInfo)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -104,9 +105,9 @@ SUITE(TestConfigPlaceInfo)
 }
 
 
-SUITE(TestConfigPlaceInfoList)
+TEST_CASE("ConfigPlaceInfoList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -119,7 +120,7 @@ SUITE(TestConfigPlaceInfoList)
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -129,7 +130,7 @@ SUITE(TestConfigPlaceInfoList)
 	}
 
 
-	TEST(GetPlaceInfo)
+	SECTION("GetPlaceInfo")
 	{
 		if (!g_bMicroTest)
 		{
@@ -139,7 +140,7 @@ SUITE(TestConfigPlaceInfoList)
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -151,7 +152,7 @@ SUITE(TestConfigPlaceInfoList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

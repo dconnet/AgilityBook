@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-13 Created
  */
@@ -41,21 +42,21 @@ public:
 };
 
 
-SUITE(TestErrorCallback)
+TEST_CASE("ErrorCallback")
 {
-	TEST(Callback)
+	SECTION("Callback")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wostringstream msg;
 			ARBErrorCallback err(msg);
 			err.LogMessage(L"Testing1");
-			CHECK(msg.str() == L"Testing1");
+			REQUIRE(msg.str() == L"Testing1");
 		}
 	}
 
 
-	TEST(Derived)
+	SECTION("Derived")
 	{
 		if (!g_bMicroTest)
 		{
@@ -63,8 +64,8 @@ SUITE(TestErrorCallback)
 			ErrorCallback err(emsg);
 			err.LogMessage(L"Testing1");
 			std::wstring msg = emsg.str();
-			CHECK(msg == err.m_Msg);
-			CHECK(msg == L"Testing1");
+			REQUIRE(msg == err.m_Msg);
+			REQUIRE(msg == L"Testing1");
 		}
 	}
 }

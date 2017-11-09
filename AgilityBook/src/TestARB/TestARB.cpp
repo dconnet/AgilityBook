@@ -9,6 +9,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-27 Added test duration to verbose option.
  * 2013-08-18 Reuse Win/LanguageManager
  * 2012-03-16 Renamed LoadXML functions, added stream version.
@@ -20,6 +21,7 @@
 
 #include "stdafx.h"
 #include "Platform/SetupMessages.h"
+#define CATCH_CONFIG_RUNNER
 #include "TestARB.h"
 
 #include "ConfigHandler.h"
@@ -29,7 +31,6 @@
 #include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
-#include "TestReporterStdout.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -44,33 +45,6 @@
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
-
-
-class CReporterVerbose : public UnitTest::TestReporterStdout
-{
-public:
-	CReporterVerbose(bool bVerbose)
-		: m_bVerbose(bVerbose)
-	{}
-	virtual void ReportTestStart(UnitTest::TestDetails const& test);
-	virtual void ReportTestFinish(UnitTest::TestDetails const& test, float secondsElapsed);
-private:
-	bool m_bVerbose;
-};
-
-
-void CReporterVerbose::ReportTestStart(UnitTest::TestDetails const& test)
-{
-	if (m_bVerbose)
-		printf("%s:%d: %s:%s started\n", test.filename, test.lineNumber, test.suiteName, test.testName);
-}
-
-
-void CReporterVerbose::ReportTestFinish(UnitTest::TestDetails const& test, float secondsElapsed)
-{
-	if (m_bVerbose)
-		printf("%s:%d: %s:%s finished in %f seconds\n", test.filename, test.lineNumber, test.suiteName, test.testName, secondsElapsed);
-}
 
 
 bool g_bMicroTest = false;
@@ -189,6 +163,8 @@ int main(int argc, char** argv)
 #ifdef _WIN32
 	_set_error_mode(_OUT_TO_MSGBOX);
 #endif
+
+	int ac = argc;
 	bool bVerbose = false;
 	if (argc >= 2)
 	{
@@ -201,16 +177,36 @@ int main(int argc, char** argv)
 			}
 			if (0 == strcmp(argv[i], "micro"))
 			{
+				--ac;
 				g_bMicroTest = true;
 				continue;
 			}
-			fprintf(stderr, "Usage: %s [micro] [verbose]\n", argv[0]);
-			return -1;
+			//fprintf(stderr, "Usage: %s [micro] [verbose]\n", argv[0]);
+			//return -1;
+		}
+	}
+
+	bool bClean = false;
+	char** av = argv;
+	if (bVerbose || g_bMicroTest)
+	{
+		bClean = true;
+		av = new char*[ac];
+		av[0] = argv[0];
+		int iNew = 1;
+		for (int i = 1; i < argc; ++i)
+		{
+			if (0 == strcmp(argv[i], "verbose"))
+				av[iNew++] = "-s";
+			else if (0 == strcmp(argv[i], "micro"))
+				continue;
+			else
+				av[iNew++] = argv[i];
 		}
 	}
 
 #if defined(__WXWINDOWS__)
-	wxInitializer initializer(argc, argv);
+	wxInitializer initializer(ac, av);
 #if defined(__WXMSW__)
 	// By default, the path directories are tweaked to remove debug/release.
 	// I assume my files are in the same location as the binary.
@@ -250,14 +246,15 @@ int main(int argc, char** argv)
 	int rc = -1;
 	if (bRunTests)
 	{
-		CReporterVerbose reporter(bVerbose);
-		UnitTest::TestRunner runner(reporter);
-		rc = runner.RunTestsIf(UnitTest::Test::GetTestList(), nullptr, UnitTest::True(), 0);
+		rc = Catch::Session().run(ac, av);
 	}
 
 	Element::Terminate();
 	delete g_LangMgr;
 	g_LangMgr = nullptr;
+
+	if (bClean)
+		delete[] av;
 
 	return rc;
 }

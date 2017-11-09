@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-05-06 Updated for changed Q order.
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown Q type.
@@ -29,61 +30,61 @@
 #endif
 
 
-SUITE(TestARBQ)
+TEST_CASE("ARBQ")
 {
-	TEST(ctor)
+	SECTION("ctor")
 	{
 		// Note: If this fails, it's likely the language catalog is not
 		// properly setup.
 		if (!g_bMicroTest)
 		{
 			ARB_Q q;
-			CHECK(L"" == q.str());
+			REQUIRE(L"" == q.str());
 
 			ARB_Q q1(ARB_Q::eQ_Q);
-			CHECK(L"Q" == q1.str());
+			REQUIRE(L"Q" == q1.str());
 		}
 	}
 
 
-	TEST(Types)
+	SECTION("Types")
 	{
 		if (!g_bMicroTest)
 		{
 			// FYI: None of the code assumes any order. This is just to make
 			// sure I didn't add/remove something and forget.
-			CHECK_EQUAL(7, ARB_Q::GetNumValidTypes());
-			CHECK(L"SQ, Q, NQ, E, DNR, NA" == ARB_Q::GetValidTypes());
-			CHECK(ARB_Q(ARB_Q::eQ_UNK) == ARB_Q::GetValidType(0));
-			CHECK(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(6));
-			CHECK(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(2));
-			CHECK(ARB_Q(ARB_Q::eQ_NQ) == ARB_Q::GetValidType(3));
-			CHECK(ARB_Q(ARB_Q::eQ_E) == ARB_Q::GetValidType(4));
-			CHECK(ARB_Q(ARB_Q::eQ_DNR) == ARB_Q::GetValidType(5));
-			CHECK(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(1));
+			REQUIRE(7 == ARB_Q::GetNumValidTypes());
+			REQUIRE(L"SQ, Q, NQ, E, DNR, NA" == ARB_Q::GetValidTypes());
+			REQUIRE(ARB_Q(ARB_Q::eQ_UNK) == ARB_Q::GetValidType(0));
+			REQUIRE(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(6));
+			REQUIRE(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(2));
+			REQUIRE(ARB_Q(ARB_Q::eQ_NQ) == ARB_Q::GetValidType(3));
+			REQUIRE(ARB_Q(ARB_Q::eQ_E) == ARB_Q::GetValidType(4));
+			REQUIRE(ARB_Q(ARB_Q::eQ_DNR) == ARB_Q::GetValidType(5));
+			REQUIRE(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(1));
 
 			std::vector<std::wstring> types;
 			ARB_Q::GetValidTypes(types);
-			CHECK_EQUAL(7u, types.size());
+			REQUIRE(7u == types.size());
 		}
 	}
 
 
-	TEST(Equality)
+	SECTION("Equality")
 	{
 		if (!g_bMicroTest)
 		{
 			ARB_Q q1(ARB_Q::eQ_Q);
 			ARB_Q q2(ARB_Q::eQ_NQ);
-			CHECK(q1 != q2);
+			REQUIRE(q1 != q2);
 			q2 = ARB_Q::eQ_Q;
-			CHECK(q1 == q2);
-			CHECK(q1.Qualified());
+			REQUIRE(q1 == q2);
+			REQUIRE(q1.Qualified());
 		}
 	}
 
 
-	TEST(Comparison)
+	SECTION("Comparison")
 	{
 		if (!g_bMicroTest)
 		{
@@ -94,37 +95,37 @@ SUITE(TestARBQ)
 			ARB_Q dnr(ARB_Q::eQ_DNR);
 			ARB_Q sq(ARB_Q::eQ_SuperQ);
 
-			CHECK(na < dnr);
-			CHECK(dnr < e);
-			CHECK(e < nq);
-			CHECK(nq < q);
-			CHECK(q < sq);
-			CHECK(q <= q);
+			REQUIRE(na < dnr);
+			REQUIRE(dnr < e);
+			REQUIRE(e < nq);
+			REQUIRE(nq < q);
+			REQUIRE(q < sq);
+			REQUIRE(q <= q);
 		}
 	}
 
 
-	TEST(Qualified)
+	SECTION("Qualified")
 	{
 		if (!g_bMicroTest)
 		{
 			ARB_Q na(ARB_Q::eQ_NA);
-			CHECK(!na.Qualified());
+			REQUIRE(!na.Qualified());
 			ARB_Q q(ARB_Q::eQ_Q);
-			CHECK(q.Qualified());
+			REQUIRE(q.Qualified());
 			ARB_Q nq(ARB_Q::eQ_NQ);
-			CHECK(!nq.Qualified());
+			REQUIRE(!nq.Qualified());
 			ARB_Q e(ARB_Q::eQ_E);
-			CHECK(!e.Qualified());
+			REQUIRE(!e.Qualified());
 			ARB_Q dnr(ARB_Q::eQ_DNR);
-			CHECK(!dnr.Qualified());
+			REQUIRE(!dnr.Qualified());
 			ARB_Q sq(ARB_Q::eQ_SuperQ);
-			CHECK(sq.Qualified());
+			REQUIRE(sq.Qualified());
 		}
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -133,8 +134,8 @@ SUITE(TestARBQ)
 			std::wostringstream errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
-			CHECK(q.Load(L"SQ", ver, callback));
-			CHECK(L"SQ" == q.str());
+			REQUIRE(q.Load(L"SQ", ver, callback));
+			REQUIRE(L"SQ" == q.str());
 #else
 #pragma PRAGMA_TODO(implement non-wx version)
 #endif
@@ -142,7 +143,7 @@ SUITE(TestARBQ)
 	}
 
 
-	TEST(LoadFail)
+	SECTION("LoadFail")
 	{
 		if (!g_bMicroTest)
 		{
@@ -151,8 +152,8 @@ SUITE(TestARBQ)
 			std::wostringstream errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
-			CHECK(!q.Load(L"attrib", ver, callback));
-			CHECK(L"" == q.str());
+			REQUIRE(!q.Load(L"attrib", ver, callback));
+			REQUIRE(L"" == q.str());
 #else
 #pragma PRAGMA_TODO(implement non-wx version)
 #endif
@@ -160,30 +161,30 @@ SUITE(TestARBQ)
 	}
 
 
-	TEST(SaveValid)
+	SECTION("SaveValid")
 	{
 		if (!g_bMicroTest)
 		{
 			ARB_Q q(ARB_Q::eQ_Q);
 			ElementNodePtr ele = ElementNode::New(L"test");
-			CHECK(q.Save(ele, L"attrib"));
+			REQUIRE(q.Save(ele, L"attrib"));
 			std::wstring str;
-			CHECK(ElementNode::eFound == ele->GetAttrib(L"attrib", str));
-			CHECK(L"Q" == str);
+			REQUIRE(ElementNode::eFound == ele->GetAttrib(L"attrib", str));
+			REQUIRE(L"Q" == str);
 		}
 	}
 
 
-	TEST(SaveUnknown)
+	SECTION("SaveUnknown")
 	{
 		if (!g_bMicroTest)
 		{
 			ARB_Q q;
 			ElementNodePtr ele = ElementNode::New(L"test");
-			CHECK(q.Save(ele, L"attrib"));
+			REQUIRE(q.Save(ele, L"attrib"));
 			std::wstring str;
-			CHECK(ElementNode::eNotFound == ele->GetAttrib(L"attrib", str));
-			CHECK(L"" == str);
+			REQUIRE(ElementNode::eNotFound == ele->GetAttrib(L"attrib", str));
+			REQUIRE(L"" == str);
 		}
 	}
 }

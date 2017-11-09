@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestDogExistingPoints)
+TEST_CASE("DogExistingPoints")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestDogExistingPoints)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestDogExistingPoints)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestDogExistingPoints)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestDogExistingPoints)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestDogExistingPoints)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -93,7 +94,7 @@ SUITE(TestDogExistingPoints)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -103,7 +104,7 @@ SUITE(TestDogExistingPoints)
 	}
 
 
-	TEST(GetPointTypeName)
+	SECTION("GetPointTypeName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -114,9 +115,9 @@ SUITE(TestDogExistingPoints)
 }
 
 
-SUITE(TestDogExistingPointsList)
+TEST_CASE("DogExistingPointsList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -130,7 +131,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -139,7 +140,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -149,7 +150,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(HasPoints)
+	SECTION("HasPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -167,7 +168,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(ExistingPoints)
+	SECTION("ExistingPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -185,7 +186,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(NumExistingPointsInVenue)
+	SECTION("NumExistingPointsInVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -195,7 +196,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(RenameVenue)
+	SECTION("RenameVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -207,7 +208,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(DeleteVenue)
+	SECTION("DeleteVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -217,7 +218,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(NumExistingPointsInDivision)
+	SECTION("NumExistingPointsInDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -229,7 +230,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(RenameDivision)
+	SECTION("RenameDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -242,7 +243,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(DeleteDivision)
+	SECTION("DeleteDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -254,7 +255,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(NumLevelsInUse)
+	SECTION("NumLevelsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -267,7 +268,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(RenameLevel)
+	SECTION("RenameLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -281,7 +282,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(DeleteLevel)
+	SECTION("DeleteLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -294,7 +295,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(NumEventsInUse)
+	SECTION("NumEventsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -306,7 +307,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(RenameEvent)
+	SECTION("RenameEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -319,7 +320,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(DeleteEvent)
+	SECTION("DeleteEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -331,7 +332,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(NumOtherPointsInUse)
+	SECTION("NumOtherPointsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -341,7 +342,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(RenameOtherPoints)
+	SECTION("RenameOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -353,7 +354,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(DeleteOtherPoints)
+	SECTION("DeleteOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -363,7 +364,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(NumMultiQsInUse)
+	SECTION("NumMultiQsInUse")
 	{
 		if (!g_bMicroTest)
 		{
@@ -375,7 +376,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(RenameMultiQs)
+	SECTION("RenameMultiQs")
 	{
 		if (!g_bMicroTest)
 		{
@@ -388,7 +389,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(DeleteMultiQs)
+	SECTION("DeleteMultiQs")
 	{
 		if (!g_bMicroTest)
 		{
@@ -400,7 +401,7 @@ SUITE(TestDogExistingPointsList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

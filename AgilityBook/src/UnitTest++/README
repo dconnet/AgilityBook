@@ -1,8 +1,0 @@
-These files are all the original UnitTest files, except Makefile.in (and README)
-Note: docs/UnitTest++.html is from v1.4.
-Note: src/* is UnitTest++/* from 2.0.0
-
-1.5 switched to using CMake. I don't. Makefile.in is ARB's makefile.
-
-The files in src/Posix have been copied into src with the prefix 'posix_'
-to avoid some makefile issues.

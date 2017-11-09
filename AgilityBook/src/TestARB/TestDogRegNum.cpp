@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestDogRegNum)
+TEST_CASE("DogRegNum")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestDogRegNum)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestDogRegNum)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestDogRegNum)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestDogRegNum)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestDogRegNum)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -93,7 +94,7 @@ SUITE(TestDogRegNum)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -104,9 +105,9 @@ SUITE(TestDogRegNum)
 }
 
 
-SUITE(TestDogRegNumList)
+TEST_CASE("DogRegNumList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -120,7 +121,7 @@ SUITE(TestDogRegNumList)
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -130,7 +131,7 @@ SUITE(TestDogRegNumList)
 	}
 
 
-	TEST(NumRegNumsInVenue)
+	SECTION("NumRegNumsInVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -140,7 +141,7 @@ SUITE(TestDogRegNumList)
 	}
 
 
-	TEST(RenameVenue)
+	SECTION("RenameVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -152,7 +153,7 @@ SUITE(TestDogRegNumList)
 	}
 
 
-	TEST(DeleteVenue)
+	SECTION("DeleteVenue")
 	{
 		if (!g_bMicroTest)
 		{
@@ -162,7 +163,7 @@ SUITE(TestDogRegNumList)
 	}
 
 
-	TEST(FindRegNum)
+	SECTION("FindRegNum")
 	{
 		if (!g_bMicroTest)
 		{
@@ -174,7 +175,7 @@ SUITE(TestDogRegNumList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

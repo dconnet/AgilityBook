@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2013-10-07 Added leap year tests.
  * 2012-10-26 Changed ARBDate::GetTime to avoid time_t when possible.
  * 2009-10-30 Add support for localized dates.
@@ -27,94 +28,94 @@
 #endif
 
 
-SUITE(TestDate)
+TEST_CASE("Date")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate d;
-			CHECK(!d.IsValid());
+			REQUIRE(!d.IsValid());
 		}
 	}
 
 
 #if defined(__WXWINDOWS__)
-	TEST(wxDate)
+	SECTION("wxDate")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate d(1999, 3, 27);
 			wxDateTime wxD;
 			d.GetDate(wxD);
-			CHECK_EQUAL(1999, wxD.GetYear());
-			CHECK_EQUAL(3, wxD.GetMonth() + 1); // 'Month' is an enum, starting at 0
-			CHECK_EQUAL(27, wxD.GetDay());
+			REQUIRE(1999 == wxD.GetYear());
+			REQUIRE(3 == wxD.GetMonth() + 1); // 'Month' is an enum, starting at 0
+			REQUIRE(27 == wxD.GetDay());
 		}
 	}
 #endif
 
 
-	TEST(Valid)
+	SECTION("Valid")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate d(1999, 3, 27);
-			CHECK_EQUAL(1999, d.GetYear());
-			CHECK_EQUAL(3, d.GetMonth());
-			CHECK_EQUAL(27, d.GetDay());
+			REQUIRE(1999 == d.GetYear());
+			REQUIRE(3 == d.GetMonth());
+			REQUIRE(27 == d.GetDay());
 		}
 	}
 
 
-	TEST(Bad)
+	SECTION("Bad")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate d(1999, 3, 42);
-			CHECK(!d.IsValid());
+			REQUIRE(!d.IsValid());
 		}
 	}
 
 
-	TEST(Equality)
+	SECTION("Equality")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate d1(1999, 3, 27);
 			ARBDate d2(1999, 3, 27);
-			CHECK(d1 == d2);
+			REQUIRE(d1 == d2);
 		}
 	}
 
 
-	TEST(Less)
+	SECTION("Less")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate d1(1999, 3, 27);
 			ARBDate d2(1999, 4, 27);
-			CHECK(d1 < d2);
+			REQUIRE(d1 < d2);
 		}
 	}
 
 
-	TEST(Between)
+	SECTION("Between")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate d1(1999, 3, 27);
 			ARBDate d2(1999, 4, 27);
 			ARBDate d3(1999, 5, 27);
-			CHECK(d2.isBetween(d1, d3));
-			CHECK(d2.isBetween(d3, d1));
-			CHECK(!d1.isBetween(d2, d3));
-			CHECK(!d1.isBetween(d3, d2));
+			REQUIRE(d2.isBetween(d1, d3));
+			REQUIRE(d2.isBetween(d3, d1));
+			REQUIRE(!d1.isBetween(d2, d3));
+			REQUIRE(!d1.isBetween(d3, d2));
 		}
 	}
 
 
-	TEST(String)
+	SECTION("String")
 	{
 		if (!g_bMicroTest)
 		{
@@ -126,41 +127,41 @@ SUITE(TestDate)
 #if defined(__WXWINDOWS__)
 				wxLocale locale(wxLANGUAGE_ENGLISH_UK);
 #else
-				CHECK(setlocale(LC_ALL, "english-uk"));
+				REQUIRE(setlocale(LC_ALL, "english-uk"));
 #endif
-				CHECK(L"02/03/1999" == d.GetString(ARBDate::eCurrentLocale));
+				REQUIRE(L"02/03/1999" == d.GetString(ARBDate::eCurrentLocale));
 			}
 			{
 #if defined(__WXWINDOWS__)
 				wxLocale locale(wxLANGUAGE_ENGLISH_US);
 #else
-				CHECK(setlocale(LC_ALL, "english-us"));
+				REQUIRE(setlocale(LC_ALL, "english-us"));
 #endif
 #ifdef __WXMAC__
-				CHECK(L"03/02/1999" == d.GetString(ARBDate::eCurrentLocale));
+				REQUIRE(L"03/02/1999" == d.GetString(ARBDate::eCurrentLocale));
 #else
-				CHECK(L"3/2/1999" == d.GetString(ARBDate::eCurrentLocale));
+				REQUIRE(L"3/2/1999" == d.GetString(ARBDate::eCurrentLocale));
 #endif
 			}
 #endif
-			CHECK(L"03-02-1999" == d.GetString(ARBDate::eDashMMDDYYYY));
-			CHECK(L"03/02/1999" == d.GetString(ARBDate::eSlashMMDDYYYY));
-			CHECK(L"1999-03-02" == d.GetString(ARBDate::eDashYYYYMMDD));
-			CHECK(L"1999/03/02" == d.GetString(ARBDate::eSlashYYYYMMDD));
-			CHECK(L"02-03-1999" == d.GetString(ARBDate::eDashDDMMYYYY));
-			CHECK(L"02/03/1999" == d.GetString(ARBDate::eSlashDDMMYYYY));
-			CHECK(L"3-2-1999" == d.GetString(ARBDate::eDashMDY));
-			CHECK(L"3/2/1999" == d.GetString(ARBDate::eSlashMDY));
-			CHECK(L"1999-3-2" == d.GetString(ARBDate::eDashYMD));
-			CHECK(L"1999/3/2" == d.GetString(ARBDate::eSlashYMD));
-			CHECK(L"2-3-1999" == d.GetString(ARBDate::eDashDMY));
-			CHECK(L"2/3/1999" == d.GetString(ARBDate::eSlashDMY));
-			CHECK(L"19990302" == d.GetString(ARBDate::eYYYYMMDD));
+			REQUIRE(L"03-02-1999" == d.GetString(ARBDate::eDashMMDDYYYY));
+			REQUIRE(L"03/02/1999" == d.GetString(ARBDate::eSlashMMDDYYYY));
+			REQUIRE(L"1999-03-02" == d.GetString(ARBDate::eDashYYYYMMDD));
+			REQUIRE(L"1999/03/02" == d.GetString(ARBDate::eSlashYYYYMMDD));
+			REQUIRE(L"02-03-1999" == d.GetString(ARBDate::eDashDDMMYYYY));
+			REQUIRE(L"02/03/1999" == d.GetString(ARBDate::eSlashDDMMYYYY));
+			REQUIRE(L"3-2-1999" == d.GetString(ARBDate::eDashMDY));
+			REQUIRE(L"3/2/1999" == d.GetString(ARBDate::eSlashMDY));
+			REQUIRE(L"1999-3-2" == d.GetString(ARBDate::eDashYMD));
+			REQUIRE(L"1999/3/2" == d.GetString(ARBDate::eSlashYMD));
+			REQUIRE(L"2-3-1999" == d.GetString(ARBDate::eDashDMY));
+			REQUIRE(L"2/3/1999" == d.GetString(ARBDate::eSlashDMY));
+			REQUIRE(L"19990302" == d.GetString(ARBDate::eYYYYMMDD));
 		}
 	}
 
 
-	TEST(Add)
+	SECTION("Add")
 	{
 		if (!g_bMicroTest)
 		{
@@ -168,16 +169,16 @@ SUITE(TestDate)
 			ARBDate d2(1999, 3, 30);
 			long days = 3;
 			ARBDate dt1 = d1 + days;
-			CHECK(dt1 == d2);
+			REQUIRE(dt1 == d2);
 			ARBDate dt2 = d1;
 			dt2 += days;
-			CHECK(dt2 == d2);
-			CHECK(dt1 == dt2);
+			REQUIRE(dt2 == d2);
+			REQUIRE(dt1 == dt2);
 		}
 	}
 
 
-	TEST(Subtract)
+	SECTION("Subtract")
 	{
 		if (!g_bMicroTest)
 		{
@@ -185,25 +186,25 @@ SUITE(TestDate)
 			ARBDate d2(1999, 3, 27);
 			long days = 3;
 			ARBDate dt1 = d1 - days;
-			CHECK(dt1 == d2);
+			REQUIRE(dt1 == d2);
 			ARBDate dt2 = d1;
 			dt2 -= days;
-			CHECK(dt2 == d2);
-			CHECK(dt1 == dt2);
+			REQUIRE(dt2 == d2);
+			REQUIRE(dt1 == dt2);
 		}
 	}
 
 
-	TEST(FromString)
+	SECTION("FromString")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate d = ARBDate::FromString(L"1999-3-27", ARBDate::eDashYYYYMMDD);
-			CHECK(d.IsValid());
+			REQUIRE(d.IsValid());
 			ARBDate d2(1999, 3, 27);
-			CHECK(d == d2);
+			REQUIRE(d == d2);
 			d = ARBDate::FromString(L"1999-3-27", ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
-			CHECK(!d.IsValid());
+			REQUIRE(!d.IsValid());
 			//TODO: Add more complete tests (test each format, bad formats, etc)
 		}
 	}
@@ -212,7 +213,7 @@ SUITE(TestDate)
 #if !defined(__WXWINDOWS__)
 #pragma PRAGMA_TODO(need non-wx support in libarb - currently it asserts)
 #else
-	TEST(FromStringUK)
+	SECTION("FromStringUK")
 	{
 		if (!g_bMicroTest)
 		{
@@ -220,11 +221,11 @@ SUITE(TestDate)
 #if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_ENGLISH_UK);
 #else
-			CHECK(setlocale(LC_ALL, "english-uk"));
+			REQUIRE(setlocale(LC_ALL, "english-uk"));
 #endif
 			ARBDate d = ARBDate::FromString(L"27/3/1999", ARBDate::eCurrentLocale);
-			CHECK(d.IsValid());
-			CHECK(d == d2);
+			REQUIRE(d.IsValid());
+			REQUIRE(d == d2);
 		}
 	}
 #endif
@@ -233,7 +234,7 @@ SUITE(TestDate)
 #if !defined(__WXWINDOWS__)
 #pragma PRAGMA_TODO(need non-wx support in libarb - currently it asserts)
 #else
-	TEST(FromStringUS)
+	SECTION("FromStringUS")
 	{
 		if (!g_bMicroTest)
 		{
@@ -241,47 +242,47 @@ SUITE(TestDate)
 #if defined(__WXWINDOWS__)
 			wxLocale locale(wxLANGUAGE_ENGLISH_US);
 #else
-			CHECK(setlocale(LC_ALL, "english-us"));
+			REQUIRE(setlocale(LC_ALL, "english-us"));
 #endif
 			ARBDate d = ARBDate::FromString(L"3/27/1999", ARBDate::eCurrentLocale);
-			CHECK(d.IsValid());
-			CHECK(d == d2);
+			REQUIRE(d.IsValid());
+			REQUIRE(d == d2);
 		}
 	}
 #endif
 
 
-	TEST(ValidDateString)
+	SECTION("ValidDateString")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate d1(1999, 3, 30);
 			ARBDate d2(1999, 3, 27);
 			std::wstring s = ARBDate::GetValidDateString(d1, d2);
-			CHECK(L"[1999-3-30-1999-3-27]" == s);
+			REQUIRE(L"[1999-3-30-1999-3-27]" == s);
 			d1.clear();
 			s = ARBDate::GetValidDateString(d1, d2);
-			CHECK(L"[*-1999-3-27]" == s);
+			REQUIRE(L"[*-1999-3-27]" == s);
 			s = ARBDate::GetValidDateString(d2, d1);
-			CHECK(L"[1999-3-27-*]" == s);
+			REQUIRE(L"[1999-3-27-*]" == s);
 		}
 	}
 
 
-	TEST(DayOfWeek)
+	SECTION("DayOfWeek")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate dSun(2009, 4, 12);
 			ARBDate dMon(2009, 4, 13);
-			CHECK(0 == dSun.GetDayOfWeek(ARBDate::eSunday));
-			CHECK(1 == dMon.GetDayOfWeek(ARBDate::eSunday));
-			CHECK(0 == dMon.GetDayOfWeek(ARBDate::eMonday));
+			REQUIRE(0 == dSun.GetDayOfWeek(ARBDate::eSunday));
+			REQUIRE(1 == dMon.GetDayOfWeek(ARBDate::eSunday));
+			REQUIRE(0 == dMon.GetDayOfWeek(ARBDate::eMonday));
 		}
 	}
 
 
-	TEST(DayOfYear)
+	SECTION("DayOfYear")
 	{
 		if (!g_bMicroTest)
 		{
@@ -289,15 +290,15 @@ SUITE(TestDate)
 			ARBDate d2(2009, 2, 1);
 			ARBDate d3(2009, 12, 31);
 			ARBDate d4(2004, 12, 31);
-			CHECK(1 == d1.GetDayOfYear());
-			CHECK(32 == d2.GetDayOfYear());
-			CHECK(365 == d3.GetDayOfYear());
-			CHECK(366 == d4.GetDayOfYear());
+			REQUIRE(1 == d1.GetDayOfYear());
+			REQUIRE(32 == d2.GetDayOfYear());
+			REQUIRE(365 == d3.GetDayOfYear());
+			REQUIRE(366 == d4.GetDayOfYear());
 		}
 	}
 
 
-	TEST(DSTDate)
+	SECTION("DSTDate")
 	{
 		if (!g_bMicroTest)
 		{
@@ -307,13 +308,13 @@ SUITE(TestDate)
 			d1.GetDate(t1);
 			time_t t2;
 			d2.GetDate(t2);
-			CHECK(d1 == ARBDate(t1));
-			CHECK(d2 == ARBDate(t2));
+			REQUIRE(d1 == ARBDate(t1));
+			REQUIRE(d2 == ARBDate(t2));
 		}
 	}
 
 
-	TEST(LeapYear)
+	SECTION("LeapYear")
 	{
 		if (!g_bMicroTest)
 		{
@@ -330,7 +331,7 @@ SUITE(TestDate)
 			for (size_t i = 0; i < ARRAY_SIZE(sDates); ++i)
 			{
 				ARBDate d1(sDates[i].yr, 1, 1);
-				CHECK(d1.isLeap() == sDates[i].isLeep);
+				REQUIRE(d1.isLeap() == sDates[i].isLeep);
 			}
 		}
 	}

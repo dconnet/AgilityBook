@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2010-02-07 Created
  */
 
@@ -23,7 +24,7 @@
 #endif
 
 
-SUITE(TestMsgDigest)
+TEST_CASE("MsgDigest")
 {
 	// String
 	static char const* RawString = "This is a test of a string";
@@ -32,35 +33,35 @@ SUITE(TestMsgDigest)
 	static std::wstring DigestStringSHA256(L"5d2819684143b99d8b9c9a254e1b5584529a3fe947862e8ae15e246eda292c37");
 
 
-	TEST(RawDecode)
+	SECTION("RawDecode")
 	{
 		if (!g_bMicroTest)
 		{
 			std::stringstream buffer(RawString);
 			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigestMD5);
-			CHECK(digest == DigestStringMD5);
+			REQUIRE(digest == DigestStringMD5);
 		}
 	}
 
 
-	TEST(RawDecodeSha1)
+	SECTION("RawDecodeSha1")
 	{
 		if (!g_bMicroTest)
 		{
 			std::stringstream buffer(RawString);
 			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigestSHA1);
-			CHECK(digest == DigestStringSHA1);
+			REQUIRE(digest == DigestStringSHA1);
 		}
 	}
 
 
-	TEST(RawDecodeSha256)
+	SECTION("RawDecodeSha256")
 	{
 		if (!g_bMicroTest)
 		{
 			std::stringstream buffer(RawString);
 			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigestSHA256);
-			CHECK(digest == DigestStringSHA256);
+			REQUIRE(digest == DigestStringSHA256);
 		}
 	}
 }

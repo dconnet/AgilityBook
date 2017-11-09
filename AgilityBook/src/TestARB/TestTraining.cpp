@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-13 Created
  */
@@ -64,130 +65,134 @@ static void CreateTrainingList(ARBTrainingList& trainlist)
 }
 
 
-SUITE(TestTraining)
+TEST_CASE("Training")
 {
-	TEST(New)
+	TestTrainingData data;
+
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
-			CHECK(!!train.get());
+			REQUIRE(!!train.get());
 		}
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
 			train->SetDate(ARBDate(2007, 9, 1));
 			ARBTrainingPtr train2 = train->Clone();
-			CHECK(!!train2.get());
-			CHECK(train.get() != train2.get());
-			CHECK(*train == *train2);
-			CHECK(train->GetDate() == train2->GetDate());
+			REQUIRE(!!train2.get());
+			REQUIRE(train.get() != train2.get());
+			REQUIRE(*train == *train2);
+			REQUIRE(train->GetDate() == train2->GetDate());
 		}
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train1 = ARBTraining::New();
 			train1->SetDate(ARBDate(2007, 9, 1));
 			ARBTrainingPtr train2 = ARBTraining::New();
-			CHECK(*train1 != *train2);
+			REQUIRE(*train1 != *train2);
 			*train1 = *train2;
-			CHECK(*train1 == *train2);
+			REQUIRE(*train1 == *train2);
 		}
 	}
 
 
-	TEST_FIXTURE(TestTrainingData, Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(train->Load(TrainingData, ARBVersion(2, 0), callback));
+			REQUIRE(train->Load(data.TrainingData, ARBVersion(2, 0), callback));
 			ARBTrainingPtr train2 = train->Clone();
-			CHECK(train.get() != train2.get());
-			CHECK(*train == *train2);
-			CHECK(train->GetDate() == train2->GetDate());
+			REQUIRE(train.get() != train2.get());
+			REQUIRE(*train == *train2);
+			REQUIRE(train->GetDate() == train2->GetDate());
 			ARBDate n = ARBDate::Today();
 			train2->SetDate(n);
-			CHECK(*train < *train2);
-			CHECK(*train != *train2);
-			CHECK(!(*train > *train2));
+			REQUIRE(*train < *train2);
+			REQUIRE(*train != *train2);
+			REQUIRE(!(*train > *train2));
 		}
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
 			train->SetDate(ARBDate(2007, 3, 13));
-			CHECK(L"3/13/2007" == train->GetGenericName());
+			REQUIRE(L"3/13/2007" == train->GetGenericName());
 		}
 	}
 
-	TEST_FIXTURE(TestTrainingData, Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(train->Load(TrainingData, ARBVersion(1, 0), callback));
+			REQUIRE(train->Load(data.TrainingData, ARBVersion(1, 0), callback));
 			std::wstring name = train->GetGenericName();
-			CHECK(!name.empty());
+			REQUIRE(!name.empty());
 		}
 	}
 
 
-	TEST_FIXTURE(TestTrainingData, Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(train->Load(TrainingData, ARBVersion(2, 0), callback));
+			REQUIRE(train->Load(data.TrainingData, ARBVersion(2, 0), callback));
 			ElementNodePtr ele = ElementNode::New();
-			CHECK(train->Save(ele));
+			REQUIRE(train->Save(ele));
 		}
 	}
 }
 
 
-SUITE(TestTrainingList)
+TEST_CASE("TrainingList")
 {
-	TEST_FIXTURE(TestTrainingData, Load)
+	TestTrainingData data;
+
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingList train;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(train.Load(TrainingData, ARBVersion(1, 0), callback));
-			CHECK(train.Load(TrainingData, ARBVersion(2, 0), callback));
-			CHECK_EQUAL(2u, train.size());
+			REQUIRE(train.Load(data.TrainingData, ARBVersion(1, 0), callback));
+			REQUIRE(train.Load(data.TrainingData, ARBVersion(2, 0), callback));
+			REQUIRE(2u == train.size());
 			ElementNodePtr ele = ElementNode::New(L"Doesnt matter");
 			ele->SetValue(L"These are some notes");
 			ele->AddAttrib(ATTRIB_TRAINING_NAME, L"Hollister, CA");
 			ele->AddAttrib(ATTRIB_TRAINING_SUBNAME, L"PASA");
-			CHECK(!train.Load(ele, ARBVersion(2, 0), callback));
-			CHECK_EQUAL(2u, train.size());
+			REQUIRE(!train.Load(ele, ARBVersion(2, 0), callback));
+			REQUIRE(2u == train.size());
 		}
 	}
 
 
-	TEST_FIXTURE(TestTrainingData, Load2)
+	SECTION("Load2")
 	{
 		if (!g_bMicroTest)
 		{
@@ -198,15 +203,15 @@ SUITE(TestTrainingList)
 			ARBTrainingList train;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(!train.Load(ele, ARBVersion(2, 0), callback));
+			REQUIRE(!train.Load(ele, ARBVersion(2, 0), callback));
 			ele->AddAttrib(ATTRIB_TRAINING_DATE, L"2008-1-13");
-			CHECK(train.Load(ele, ARBVersion(2, 0), callback));
-			CHECK_EQUAL(1u, train.size());
+			REQUIRE(train.Load(ele, ARBVersion(2, 0), callback));
+			REQUIRE(1u == train.size());
 		}
 	}
 
 
-	TEST(sort)
+	SECTION("sort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -223,39 +228,39 @@ SUITE(TestTrainingList)
 
 			ARBTrainingList trainlist2;
 			trainlist.Clone(trainlist2);
-			CHECK(trainlist == trainlist2);
+			REQUIRE(trainlist == trainlist2);
 
 			trainlist.sort();
-			CHECK(trainlist != trainlist2);
+			REQUIRE(trainlist != trainlist2);
 		}
 	}
 
 
-	TEST(GetAllNames)
+	SECTION("GetAllNames")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingList trainlist;
 			CreateTrainingList(trainlist);
 			std::set<std::wstring> names;
-			CHECK_EQUAL(2u, trainlist.GetAllNames(names));
+			REQUIRE(2u == trainlist.GetAllNames(names));
 		}
 	}
 
 
-	TEST(GetAllSubNames)
+	SECTION("GetAllSubNames")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBTrainingList trainlist;
 			CreateTrainingList(trainlist);
 			std::set<std::wstring> names;
-			CHECK_EQUAL(3u, trainlist.GetAllSubNames(names));
+			REQUIRE(3u == trainlist.GetAllSubNames(names));
 		}
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -264,14 +269,14 @@ SUITE(TestTrainingList)
 
 			ARBTrainingPtr train = trainlist[0]->Clone();
 
-			CHECK(trainlist.FindTraining(train));
+			REQUIRE(trainlist.FindTraining(train));
 			train->SetNote(L"a change");
-			CHECK(!trainlist.FindTraining(train));
+			REQUIRE(!trainlist.FindTraining(train));
 		}
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{
@@ -287,25 +292,25 @@ SUITE(TestTrainingList)
 			trainlist.AddTraining(train2);
 			trainlist.sort();
 			ARBTrainingPtr train3 = trainlist[0]->Clone();
-			CHECK(*train2 == *train3);
+			REQUIRE(*train2 == *train3);
 			train3->SetNote(L"Test");
-			CHECK(*train2 != *train3);
+			REQUIRE(*train2 != *train3);
 			trainlist.AddTraining(train3);
 			trainlist.AddTraining(train1->Clone());
 			trainlist.sort();
-			CHECK_EQUAL(4u, trainlist.size());
-			CHECK(trainlist.DeleteTraining(train1));
-			CHECK_EQUAL(3u, trainlist.size());
-			CHECK(trainlist.DeleteTraining(train1));
-			CHECK_EQUAL(2u, trainlist.size());
-			CHECK(!trainlist.DeleteTraining(train1));
-			CHECK_EQUAL(2u, trainlist.size());
-			CHECK(*trainlist[0] != *trainlist[1]);
+			REQUIRE(4u == trainlist.size());
+			REQUIRE(trainlist.DeleteTraining(train1));
+			REQUIRE(3u == trainlist.size());
+			REQUIRE(trainlist.DeleteTraining(train1));
+			REQUIRE(2u == trainlist.size());
+			REQUIRE(!trainlist.DeleteTraining(train1));
+			REQUIRE(2u == trainlist.size());
+			REQUIRE(*trainlist[0] != *trainlist[1]);
 			ARBTrainingList trainlist2;
 			trainlist.Clone(trainlist2);
-			CHECK(trainlist == trainlist2);
-			CHECK(trainlist[0].get() != trainlist2[0].get());
-			CHECK(*trainlist[0] == *trainlist2[0]);
+			REQUIRE(trainlist == trainlist2);
+			REQUIRE(trainlist[0].get() != trainlist2[0].get());
+			REQUIRE(*trainlist[0] == *trainlist2[0]);
 		}
 	}
 }

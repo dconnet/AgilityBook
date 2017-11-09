@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigScoring)
+TEST_CASE("ConfigScoring")
 {
-	TEST(GetScoringStyleStr)
+	SECTION("GetScoringStyleStr")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestConfigScoring)
 	}
 
 
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestConfigScoring)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestConfigScoring)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -68,7 +69,7 @@ SUITE(TestConfigScoring)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestConfigScoring)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -89,7 +90,7 @@ SUITE(TestConfigScoring)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -103,7 +104,7 @@ SUITE(TestConfigScoring)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -113,7 +114,7 @@ SUITE(TestConfigScoring)
 	}
 
 
-	TEST(IsValidOn)
+	SECTION("IsValidOn")
 	{
 		if (!g_bMicroTest)
 		{
@@ -124,9 +125,9 @@ SUITE(TestConfigScoring)
 }
 
 
-SUITE(TestConfigScoringList)
+TEST_CASE("ConfigScoringList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -140,7 +141,7 @@ SUITE(TestConfigScoringList)
 	}
 
 
-	TEST(FindAllEvents)
+	SECTION("FindAllEvents")
 	{
 		if (!g_bMicroTest)
 		{
@@ -155,7 +156,7 @@ SUITE(TestConfigScoringList)
 	}
 
 
-	TEST(FindEvent)
+	SECTION("FindEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -169,7 +170,7 @@ SUITE(TestConfigScoringList)
 	}
 
 
-	TEST(VerifyEvent)
+	SECTION("VerifyEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -182,7 +183,7 @@ SUITE(TestConfigScoringList)
 	}
 
 
-	TEST(Add)
+	SECTION("Add")
 	{
 		if (!g_bMicroTest)
 		{

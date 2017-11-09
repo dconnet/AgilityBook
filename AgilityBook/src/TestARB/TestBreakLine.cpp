@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2012-07-25 Add 2 multiline CSV tests.
  * 2010-10-17 Created
  */
@@ -53,7 +54,7 @@ bool VerifyFields(
 }
 
 
-SUITE(TestBreakLine)
+TEST_CASE("BreakLine")
 {
 	// String
 	static wchar_t const* record4 = L"fld;fld;;fld";
@@ -69,105 +70,105 @@ SUITE(TestBreakLine)
 	static wchar_t const* recordMore3c = L"Line3\";field3";
 
 
-	TEST(BreakLine)
+	SECTION("BreakLine")
 	{
 		std::vector<std::wstring> fields;
-		CHECK(4 == BreakLine(';', record4, fields));
-		CHECK(4 == fields.size());
-		CHECK(4 == BreakLine(';', record4, fields, true));
-		CHECK(3 == fields.size());
-		CHECK(7 == BreakLine(';', record7, fields));
-		CHECK(7 == fields.size());
-		CHECK(7 == BreakLine(';', record7, fields, true));
-		CHECK(6 == fields.size());
+		REQUIRE(4 == BreakLine(';', record4, fields));
+		REQUIRE(4 == fields.size());
+		REQUIRE(4 == BreakLine(';', record4, fields, true));
+		REQUIRE(3 == fields.size());
+		REQUIRE(7 == BreakLine(';', record7, fields));
+		REQUIRE(7 == fields.size());
+		REQUIRE(7 == BreakLine(';', record7, fields, true));
+		REQUIRE(6 == fields.size());
 	}
 
 
-	TEST(ReadCSV)
+	SECTION("ReadCSV")
 	{
 		std::vector<std::wstring> fields;
-		CHECK(DataError == ReadCSV(';', L"f\";", fields));
-		CHECK(DataError == ReadCSV(';', record7, fields));
-		CHECK(DataOk == ReadCSV(';', record5, fields));
-		CHECK(5 == fields.size());
+		REQUIRE(DataError == ReadCSV(';', L"f\";", fields));
+		REQUIRE(DataError == ReadCSV(';', record7, fields));
+		REQUIRE(DataOk == ReadCSV(';', record5, fields));
+		REQUIRE(5 == fields.size());
 		if (5 == fields.size())
 		{
 			std::vector<std::wstring> fields2;
 			GetFields(fields2);
-			CHECK(VerifyFields(fields, fields2));
+			REQUIRE(VerifyFields(fields, fields2));
 		}
 	}
 
 
-	TEST(ReadCSVMultiLine1)
+	SECTION("ReadCSVMultiLine1")
 	{
 		std::vector<std::wstring> fields;
-		CHECK(DataNeedMore == ReadCSV(';', recordMore1a, fields));
-		CHECK(DataOk == ReadCSV(';', recordMore2a, fields, true));
-		CHECK(5 == fields.size());
+		REQUIRE(DataNeedMore == ReadCSV(';', recordMore1a, fields));
+		REQUIRE(DataOk == ReadCSV(';', recordMore2a, fields, true));
+		REQUIRE(5 == fields.size());
 		if (5 == fields.size())
 		{
 			std::vector<std::wstring> fields2;
 			GetFields(fields2);
-			CHECK(VerifyFields(fields, fields2));
+			REQUIRE(VerifyFields(fields, fields2));
 		}
 	}
 
 
-	TEST(ReadCSVMultiLine2)
+	SECTION("ReadCSVMultiLine2")
 	{
 		std::vector<std::wstring> fields;
-		CHECK(DataNeedMore == ReadCSV(';', recordMore1b, fields));
-		CHECK(DataOk == ReadCSV(';', recordMore2b, fields, true));
-		CHECK(4 == fields.size());
+		REQUIRE(DataNeedMore == ReadCSV(';', recordMore1b, fields));
+		REQUIRE(DataOk == ReadCSV(';', recordMore2b, fields, true));
+		REQUIRE(4 == fields.size());
 		if (4 == fields.size())
 		{
-			CHECK(fields[0] == L"2010-10-30");
-			CHECK(fields[1] == L"Name");
-			CHECK(fields[2] == L"Subname");
-			CHECK(fields[3] == L"Line 1\nLine 2");
+			REQUIRE(fields[0] == L"2010-10-30");
+			REQUIRE(fields[1] == L"Name");
+			REQUIRE(fields[2] == L"Subname");
+			REQUIRE(fields[3] == L"Line 1\nLine 2");
 		}
 	}
 
 
-	TEST(ReadCSVMultiLine3)
+	SECTION("ReadCSVMultiLine3")
 	{
 		std::vector<std::wstring> fields;
-		CHECK(DataNeedMore == ReadCSV(';', recordMore1c, fields));
-		CHECK(DataNeedMore == ReadCSV(';', recordMore2c, fields, true));
-		CHECK(DataOk == ReadCSV(';', recordMore3c, fields, true));
-		CHECK(3 == fields.size());
+		REQUIRE(DataNeedMore == ReadCSV(';', recordMore1c, fields));
+		REQUIRE(DataNeedMore == ReadCSV(';', recordMore2c, fields, true));
+		REQUIRE(DataOk == ReadCSV(';', recordMore3c, fields, true));
+		REQUIRE(3 == fields.size());
 		if (3 == fields.size())
 		{
-			CHECK(fields[0] == L"field1");
-			CHECK(fields[1] == L"Line1\nLine2\nLine3");
-			CHECK(fields[2] == L"field3");
+			REQUIRE(fields[0] == L"field1");
+			REQUIRE(fields[1] == L"Line1\nLine2\nLine3");
+			REQUIRE(fields[2] == L"field3");
 		}
 	}
 
 
-	TEST(ReadCSVMultiLine4)
+	SECTION("ReadCSVMultiLine4")
 	{
 		std::vector<std::wstring> fields;
-		CHECK(DataNeedMore == ReadCSV(';', recordMore1c, fields));
-		CHECK(DataNeedMore == ReadCSV(';', recordMore2c, fields, true));
-		CHECK(DataNeedMore == ReadCSV(';', recordMore2cb, fields, true));
-		CHECK(DataOk == ReadCSV(';', recordMore3c, fields, true));
-		CHECK(3 == fields.size());
+		REQUIRE(DataNeedMore == ReadCSV(';', recordMore1c, fields));
+		REQUIRE(DataNeedMore == ReadCSV(';', recordMore2c, fields, true));
+		REQUIRE(DataNeedMore == ReadCSV(';', recordMore2cb, fields, true));
+		REQUIRE(DataOk == ReadCSV(';', recordMore3c, fields, true));
+		REQUIRE(3 == fields.size());
 		if (3 == fields.size())
 		{
-			CHECK(fields[0] == L"field1");
-			CHECK(fields[1] == L"Line1\nLine2\n\nLine3");
-			CHECK(fields[2] == L"field3");
+			REQUIRE(fields[0] == L"field1");
+			REQUIRE(fields[1] == L"Line1\nLine2\n\nLine3");
+			REQUIRE(fields[2] == L"field3");
 		}
 	}
 
 
-	TEST(WriteCSV)
+	SECTION("WriteCSV")
 	{
 		std::vector<std::wstring> fields;
 		GetFields(fields);
 		std::wstring data = WriteCSV(';', fields);
-		CHECK(data == record5);
+		REQUIRE(data == record5);
 	}
 }

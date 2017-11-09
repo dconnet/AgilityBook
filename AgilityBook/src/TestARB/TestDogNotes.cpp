@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestDogNotes)
+TEST_CASE("DogNotes")
 {
-	TEST(MetaData)
+	SECTION("MetaData")
 	{
 		if (!g_bMicroTest)
 		{
@@ -40,7 +41,7 @@ SUITE(TestDogNotes)
 	}
 
 
-	TEST(ctor)
+	SECTION("ctor")
 	{
 		if (!g_bMicroTest)
 		{
@@ -51,7 +52,7 @@ SUITE(TestDogNotes)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -61,7 +62,7 @@ SUITE(TestDogNotes)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -72,7 +73,7 @@ SUITE(TestDogNotes)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -86,7 +87,7 @@ SUITE(TestDogNotes)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{

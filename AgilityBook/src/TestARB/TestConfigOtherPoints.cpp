@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigOtherPoints)
+TEST_CASE("ConfigOtherPoints")
 {
-	TEST(GetTallyValidValues)
+	SECTION("GetTallyValidValues")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestConfigOtherPoints)
 	}
 
 
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestConfigOtherPoints)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestConfigOtherPoints)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -68,7 +69,7 @@ SUITE(TestConfigOtherPoints)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestConfigOtherPoints)
 	}
 
 
-	TEST(Clear)
+	SECTION("Clear")
 	{
 		if (!g_bMicroTest)
 		{
@@ -89,7 +90,7 @@ SUITE(TestConfigOtherPoints)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -99,7 +100,7 @@ SUITE(TestConfigOtherPoints)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -112,7 +113,7 @@ SUITE(TestConfigOtherPoints)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -123,9 +124,9 @@ SUITE(TestConfigOtherPoints)
 }
 
 
-SUITE(TestConfigOtherPointsList)
+TEST_CASE("ConfigOtherPointsList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -138,7 +139,7 @@ SUITE(TestConfigOtherPointsList)
 	}
 
 
-	TEST(VerifyOtherPoints)
+	SECTION("VerifyOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -148,7 +149,7 @@ SUITE(TestConfigOtherPointsList)
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -160,7 +161,7 @@ SUITE(TestConfigOtherPointsList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

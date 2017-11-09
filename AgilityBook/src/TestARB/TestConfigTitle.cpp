@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigTitle)
+TEST_CASE("ConfigTitle")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(Clear)
+	SECTION("Clear")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -89,7 +90,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -102,7 +103,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -112,7 +113,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(IsValidOn)
+	SECTION("IsValidOn")
 	{
 		if (!g_bMicroTest)
 		{
@@ -122,7 +123,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(GetNiceName)
+	SECTION("GetNiceName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -132,7 +133,7 @@ SUITE(TestConfigTitle)
 	}
 
 
-	TEST(GetCompleteName)
+	SECTION("GetCompleteName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -147,9 +148,9 @@ SUITE(TestConfigTitle)
 }
 
 
-SUITE(TestConfigTitleList)
+TEST_CASE("ConfigTitleList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -163,7 +164,7 @@ SUITE(TestConfigTitleList)
 	}
 
 
-	TEST(ReorderBy)
+	SECTION("ReorderBy")
 	{
 		if (!g_bMicroTest)
 		{
@@ -174,7 +175,7 @@ SUITE(TestConfigTitleList)
 	}
 
 
-	TEST(FindTitleCompleteName)
+	SECTION("FindTitleCompleteName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -189,7 +190,7 @@ SUITE(TestConfigTitleList)
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -201,7 +202,7 @@ SUITE(TestConfigTitleList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

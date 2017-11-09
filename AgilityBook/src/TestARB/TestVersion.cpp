@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2012-07-30 Add CVersionNum tests.
  * 2011-08-22 ARBVersion was only using 16 instead of 32bits.
  * 2008-01-12 Created
@@ -26,71 +27,71 @@
 #endif
 
 
-SUITE(TestVersion)
+TEST_CASE("Version")
 {
-	TEST(ctor)
+	SECTION("ctor")
 	{
 		if (!g_bMicroTest)
 		{
 			unsigned short maj = 0, minor = 0;
 			ARBVersion v;
-			CHECK(maj == v.Major());
-			CHECK(minor == v.Minor());
+			REQUIRE(maj == v.Major());
+			REQUIRE(minor == v.Minor());
 
 			maj = 1;
 			minor = 2;
 			ARBVersion v2(maj, minor);
-			CHECK(maj == v2.Major());
-			CHECK(minor == v2.Minor());
+			REQUIRE(maj == v2.Major());
+			REQUIRE(minor == v2.Minor());
 		}
 	}
 
 
-	TEST(str)
+	SECTION("str")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBVersion v(1, 2);
-			CHECK(L"1.2" == v.str());
+			REQUIRE(L"1.2" == v.str());
 		}
 	}
 
 
-	TEST(Comparison)
+	SECTION("Comparison")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBVersion v1(1, 2);
 			ARBVersion v2(2, 1);
-			CHECK(v1 < v2);
+			REQUIRE(v1 < v2);
 		}
 	}
 
 
-	TEST(Bounds)
+	SECTION("Bounds")
 	{
 		if (!g_bMicroTest)
 		{
 			unsigned short maj = 0xefff;
 			unsigned short min = 0xeffe;
 			ARBVersion v1(maj, min);
-			CHECK(v1.Major() == maj);
-			CHECK(v1.Minor() == min);
+			REQUIRE(v1.Major() == maj);
+			REQUIRE(v1.Minor() == min);
 		}
 	}
 
-	TEST(VerParse)
+	SECTION("VerParse")
 	{
 		if (!g_bMicroTest)
 		{
 			CVersionNum v(false);
-			CHECK(v.Parse(L"1.2.3.4"));
+			REQUIRE(v.Parse(L"1.2.3.4"));
 			CVersionNum::VERSION_NUMBER ver;
 			v.GetVersion(ver);
-			CHECK(ver.part1 == 1);
-			CHECK(ver.part2 == 2);
-			CHECK(ver.part3 == 3);
-			CHECK(ver.part4 == 4);
+			REQUIRE(ver.part1 == 1);
+			REQUIRE(ver.part2 == 2);
+			REQUIRE(ver.part3 == 3);
+			REQUIRE(ver.part4 == 4);
 		}
 	}
 }

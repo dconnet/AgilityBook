@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-13 Created
  */
@@ -28,7 +29,7 @@
 #pragma PRAGMA_TODO(need non-wx support in libarb - currently it asserts)
 #else
 
-SUITE(TestBinaryData)
+TEST_CASE("BinaryData")
 {
 	// This is an small gif file.
 	static const size_t RawDataSize = 84;
@@ -52,28 +53,28 @@ SUITE(TestBinaryData)
 	static const std::wstring EncodedString(L"eJwLycgsVgCiRIWS1OIShfw0IKu4pCgzLx0AeIAJIw==");
 
 
-	TEST(RawDecode)
+	SECTION("RawDecode")
 	{
 		if (!g_bMicroTest)
 		{
 			unsigned char* outData = nullptr;
 			size_t bytes;
-			CHECK(BinaryData::Decode(EncodedData, outData, bytes));
-			CHECK(!!outData);
-			CHECK_EQUAL(RawDataSize, bytes);
-			CHECK_EQUAL(0, memcmp(RawData, outData, bytes));
+			REQUIRE(BinaryData::Decode(EncodedData, outData, bytes));
+			REQUIRE(!!outData);
+			REQUIRE(RawDataSize == bytes);
+			REQUIRE(0 == memcmp(RawData, outData, bytes));
 			BinaryData::Release(outData);
 		}
 	}
 
 
-	TEST(RawEncode)
+	SECTION("RawEncode")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring str;
-			CHECK(BinaryData::Encode(RawData, RawDataSize, str));
-			CHECK(EncodedData == str);
+			REQUIRE(BinaryData::Encode(RawData, RawDataSize, str));
+			REQUIRE(EncodedData == str);
 		}
 	}
 
@@ -81,37 +82,37 @@ SUITE(TestBinaryData)
 	//TODO: Test Encode(FILE*, std::wstring& outdata)
 
 
-	TEST(StringDecode)
+	SECTION("StringDecode")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring str;
-			CHECK(BinaryData::DecodeString(EncodedString, str));
-			CHECK(RawString == str);
+			REQUIRE(BinaryData::DecodeString(EncodedString, str));
+			REQUIRE(RawString == str);
 		}
 	}
 
 
-	TEST(StringEncode)
+	SECTION("StringEncode")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring str;
-			CHECK(BinaryData::EncodeString(RawString, str));
-			CHECK(EncodedString == str);
+			REQUIRE(BinaryData::EncodeString(RawString, str));
+			REQUIRE(EncodedString == str);
 		}
 	}
 
-	TEST(RoundTrip)
+	SECTION("RoundTrip")
 	{
 		if (!g_bMicroTest)
 		{
 			std::wstring str;
-			CHECK(BinaryData::EncodeString(RawString, str));
-			CHECK(EncodedString == str);
+			REQUIRE(BinaryData::EncodeString(RawString, str));
+			REQUIRE(EncodedString == str);
 			std::wstring str2;
-			CHECK(BinaryData::DecodeString(str, str2));
-			CHECK(RawString == str2);
+			REQUIRE(BinaryData::DecodeString(str, str2));
+			REQUIRE(RawString == str2);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgilityBook", "AgilityBook.vcxproj", "{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
 EndProject
@@ -16,8 +16,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxARB", "LibwxARB.vcxproj", "{09C48F16-0C9D-4A44-925D-7C02E33341DD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxArchive", "LibwxArchive.vcxproj", "{0B172FDD-7B2E-4D76-A32C-1B2F627CCF1C}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest++", "UnitTest++.vcxproj", "{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxARBCommon", "LibwxARBCommon.vcxproj", "{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}"
 EndProject
@@ -87,14 +85,6 @@ Global
 		{0B172FDD-7B2E-4D76-A32C-1B2F627CCF1C}.Release|Win32.Build.0 = Release|Win32
 		{0B172FDD-7B2E-4D76-A32C-1B2F627CCF1C}.Release|x64.ActiveCfg = Release|x64
 		{0B172FDD-7B2E-4D76-A32C-1B2F627CCF1C}.Release|x64.Build.0 = Release|x64
-		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Debug|Win32.Build.0 = Debug|Win32
-		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Debug|x64.ActiveCfg = Debug|x64
-		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Debug|x64.Build.0 = Debug|x64
-		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Release|Win32.ActiveCfg = Release|Win32
-		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Release|Win32.Build.0 = Release|Win32
-		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Release|x64.ActiveCfg = Release|x64
-		{64A4FEFE-0461-4E95-8CC1-91EF5F57DBC6}.Release|x64.Build.0 = Release|x64
 		{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}.Debug|Win32.Build.0 = Debug|Win32
 		{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}.Debug|x64.ActiveCfg = Debug|x64
@@ -114,5 +104,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC6AD878-D29B-413C-BDDF-B2F7B5AE9E6F}
 	EndGlobalSection
 EndGlobal

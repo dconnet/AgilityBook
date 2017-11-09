@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
  */
@@ -26,9 +27,9 @@
 #endif
 
 
-SUITE(TestConfigMultiQ)
+TEST_CASE("ConfigMultiQ")
 {
-	TEST(New)
+	SECTION("New")
 	{
 		if (!g_bMicroTest)
 		{
@@ -38,7 +39,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(Clone)
+	SECTION("Clone")
 	{
 		if (!g_bMicroTest)
 		{
@@ -48,7 +49,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(OpEqual)
+	SECTION("OpEqual")
 	{
 		if (!g_bMicroTest)
 		{
@@ -58,7 +59,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(Compare)
+	SECTION("Compare")
 	{
 		if (!g_bMicroTest)
 		{
@@ -69,7 +70,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(GenName)
+	SECTION("GenName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -79,7 +80,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -93,7 +94,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -103,7 +104,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(Match)
+	SECTION("Match")
 	{
 		if (!g_bMicroTest)
 		{
@@ -115,7 +116,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(RenameDivision)
+	SECTION("RenameDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -127,7 +128,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(DeleteDivision)
+	SECTION("DeleteDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -137,7 +138,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(RenameLevel)
+	SECTION("RenameLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -150,7 +151,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(DeleteLevel)
+	SECTION("DeleteLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -160,7 +161,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(RenameEvent)
+	SECTION("RenameEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -172,7 +173,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(DeleteEvent)
+	SECTION("DeleteEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -182,7 +183,7 @@ SUITE(TestConfigMultiQ)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{
@@ -201,9 +202,9 @@ SUITE(TestConfigMultiQ)
 }
 
 
-SUITE(TestConfigMultiQList)
+TEST_CASE("ConfigMultiQList")
 {
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -217,7 +218,7 @@ SUITE(TestConfigMultiQList)
 	}
 
 
-	TEST(Find)
+	SECTION("Find")
 	{
 		if (!g_bMicroTest)
 		{
@@ -233,7 +234,7 @@ SUITE(TestConfigMultiQList)
 	}
 
 
-	TEST(RenameDivision)
+	SECTION("RenameDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -245,7 +246,7 @@ SUITE(TestConfigMultiQList)
 	}
 
 
-	TEST(DeleteDivision)
+	SECTION("DeleteDivision")
 	{
 		if (!g_bMicroTest)
 		{
@@ -255,7 +256,7 @@ SUITE(TestConfigMultiQList)
 	}
 
 
-	TEST(RenameLevel)
+	SECTION("RenameLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -268,7 +269,7 @@ SUITE(TestConfigMultiQList)
 	}
 
 
-	TEST(DeleteLevel)
+	SECTION("DeleteLevel")
 	{
 		if (!g_bMicroTest)
 		{
@@ -278,7 +279,7 @@ SUITE(TestConfigMultiQList)
 	}
 
 
-	TEST(RenameEvent)
+	SECTION("RenameEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -290,7 +291,7 @@ SUITE(TestConfigMultiQList)
 	}
 
 
-	TEST(DeleteEvent)
+	SECTION("DeleteEvent")
 	{
 		if (!g_bMicroTest)
 		{
@@ -300,7 +301,7 @@ SUITE(TestConfigMultiQList)
 	}
 
 
-	TEST(AddDelete)
+	SECTION("AddDelete")
 	{
 		if (!g_bMicroTest)
 		{

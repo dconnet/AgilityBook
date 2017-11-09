@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2014-09-12 Add CKCSC.
  * 2013-01-13 Added more recurring tests for new style.
  * 2012-07-30 Added tests for checking recurring title styles.
@@ -87,38 +88,38 @@ const wchar_t* const gc_Configs[] =
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
 
-SUITE(TestConfig)
+TEST_CASE("Config")
 {
-	TEST(Equality)
+	SECTION("Equality")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfig config1, config2;
-			CHECK(config1 == config2);
+			REQUIRE(config1 == config2);
 			CConfigHandler handler;
 			config1.Default(&handler);
-			CHECK(config1 != config2);
+			REQUIRE(config1 != config2);
 			ARBConfig config3(config1);
-			CHECK(config1 == config3);
+			REQUIRE(config1 == config3);
 		}
 	}
 
 
-	TEST(Clear)
+	SECTION("Clear")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfig config1, config2;
 			CConfigHandler handler;
 			config1.Default(&handler);
-			CHECK(config1 != config2);
+			REQUIRE(config1 != config2);
 			config1.clear();
-			CHECK(config1 == config2);
+			REQUIRE(config1 == config2);
 		}
 	}
 
 
-	TEST(LoadFault)
+	SECTION("LoadFault")
 	{
 		if (!g_bMicroTest)
 		{
@@ -126,21 +127,21 @@ SUITE(TestConfig)
 			ARBConfig config;
 			std::wostringstream err;
 			ARBErrorCallback callback(err);
-			CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(1,0), callback));
-			CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(2,0), callback));
-			CHECK(!config.LoadFault(data, ARBVersion(1,0), callback));
-			CHECK(!config.LoadFault(data, ARBVersion(2,0), callback));
+			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(2,0), callback));
+			REQUIRE(!config.LoadFault(data, ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadFault(data, ARBVersion(2,0), callback));
 			data->SetName(TREE_FAULTTYPE);
 			data->SetValue(L"A fault");
-			CHECK(!config.LoadFault(data, ARBVersion(1,0), callback));
-			CHECK(config.LoadFault(data, ARBVersion(2,0), callback));
+			REQUIRE(!config.LoadFault(data, ARBVersion(1,0), callback));
+			REQUIRE(config.LoadFault(data, ARBVersion(2,0), callback));
 			data->AddAttrib(L"Name", L"A fault");
-			CHECK(config.LoadFault(data, ARBVersion(1,0), callback));
+			REQUIRE(config.LoadFault(data, ARBVersion(1,0), callback));
 		}
 	}
 
 
-	TEST(LoadOtherPoints)
+	SECTION("LoadOtherPoints")
 	{
 		if (!g_bMicroTest)
 		{
@@ -148,21 +149,21 @@ SUITE(TestConfig)
 			ARBConfig config;
 			std::wostringstream err;
 			ARBErrorCallback callback(err);
-			CHECK(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1,0), callback));
-			CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
 			data->SetName(TREE_OTHERPTS);
-			CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
 			data->AddAttrib(ATTRIB_OTHERPTS_NAME, L"Some Breed points");
-			CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
 			data->AddAttrib(ATTRIB_OTHERPTS_COUNT, L"2");
-			CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
 			data->AddAttrib(ATTRIB_OTHERPTS_COUNT, L"All");
-			CHECK(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
 		}
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
@@ -170,15 +171,15 @@ SUITE(TestConfig)
 			{
 				ElementNodePtr tree = LoadXMLData(i);
 				// This probably means a config file is missing from res/CompileDatListTest.txt.
-				CHECK(tree);
+				REQUIRE(tree);
 				ARBConfig config;
-				CHECK(LoadConfigFromTree(tree, config));
+				REQUIRE(LoadConfigFromTree(tree, config));
 			}
 		}
 	}
 
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -186,65 +187,65 @@ SUITE(TestConfig)
 			CConfigHandler handler;
 			config.Default(&handler);
 			ElementNodePtr tree = ElementNode::New();
-			CHECK(config.Save(tree));
-			CHECK_EQUAL(1, tree->GetNodeCount(ElementNode::Element_Node));
+			REQUIRE(config.Save(tree));
+			REQUIRE(1 == tree->GetNodeCount(ElementNode::Element_Node));
 			int idx = tree->FindElement(TREE_CONFIG);
-			CHECK(idx >= 0);
+			REQUIRE(idx >= 0);
 		}
 	}
 
 
-	TEST(Default)
+	SECTION("Default")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBConfig config;
-			CHECK_EQUAL(0u, config.GetCalSites().size());
-			CHECK_EQUAL(0u, config.GetActions().size());
-			CHECK_EQUAL(0u, config.GetFaults().size());
-			CHECK_EQUAL(0u, config.GetOtherPoints().size());
-			CHECK_EQUAL(0u, config.GetVenues().size());
+			REQUIRE(0u == config.GetCalSites().size());
+			REQUIRE(0u == config.GetActions().size());
+			REQUIRE(0u == config.GetFaults().size());
+			REQUIRE(0u == config.GetOtherPoints().size());
+			REQUIRE(0u == config.GetVenues().size());
 			CConfigHandler handler;
 			config.Default(&handler);
-			CHECK_EQUAL(0u, config.GetCalSites().size());
-			CHECK_EQUAL(163u, config.GetActions().size());
-			CHECK_EQUAL(0u, config.GetFaults().size());
-			CHECK_EQUAL(5u, config.GetOtherPoints().size());
-			CHECK_EQUAL(15u, config.GetVenues().size());
-			CHECK(config.GetVenues().FindVenue(L"AAC"));
-			CHECK(config.GetVenues().FindVenue(L"AKC"));
-			CHECK(config.GetVenues().FindVenue(L"ASCA"));
-			CHECK(config.GetVenues().FindVenue(L"CKC"));
-			CHECK(config.GetVenues().FindVenue(L"CKCSC"));
-			CHECK(config.GetVenues().FindVenue(L"CPE"));
-			CHECK(config.GetVenues().FindVenue(L"DOCNA"));
-			CHECK(config.GetVenues().FindVenue(L"FCI"));
-			CHECK(config.GetVenues().FindVenue(L"NADAC"));
-			CHECK(config.GetVenues().FindVenue(L"SCC"));
-			CHECK(config.GetVenues().FindVenue(L"TDAA"));
-			CHECK(config.GetVenues().FindVenue(L"UKC"));
-			CHECK(config.GetVenues().FindVenue(L"UKI"));
-			CHECK(config.GetVenues().FindVenue(L"USDAA"));
-			CHECK(config.GetVenues().FindVenue(L"VALOR"));
+			REQUIRE(0u == config.GetCalSites().size());
+			REQUIRE(163u == config.GetActions().size());
+			REQUIRE(0u == config.GetFaults().size());
+			REQUIRE(5u == config.GetOtherPoints().size());
+			REQUIRE(15u == config.GetVenues().size());
+			REQUIRE(config.GetVenues().FindVenue(L"AAC"));
+			REQUIRE(config.GetVenues().FindVenue(L"AKC"));
+			REQUIRE(config.GetVenues().FindVenue(L"ASCA"));
+			REQUIRE(config.GetVenues().FindVenue(L"CKC"));
+			REQUIRE(config.GetVenues().FindVenue(L"CKCSC"));
+			REQUIRE(config.GetVenues().FindVenue(L"CPE"));
+			REQUIRE(config.GetVenues().FindVenue(L"DOCNA"));
+			REQUIRE(config.GetVenues().FindVenue(L"FCI"));
+			REQUIRE(config.GetVenues().FindVenue(L"NADAC"));
+			REQUIRE(config.GetVenues().FindVenue(L"SCC"));
+			REQUIRE(config.GetVenues().FindVenue(L"TDAA"));
+			REQUIRE(config.GetVenues().FindVenue(L"UKC"));
+			REQUIRE(config.GetVenues().FindVenue(L"UKI"));
+			REQUIRE(config.GetVenues().FindVenue(L"USDAA"));
+			REQUIRE(config.GetVenues().FindVenue(L"VALOR"));
 		}
 	}
 
 
-	TEST(GetDTD)
+	SECTION("GetDTD")
 	{
 		if (!g_bMicroTest)
 		{
 			CConfigHandler handler;
 			std::string dtd = ARBConfig::GetDTD(&handler);
-			CHECK(0 != dtd.length());
+			REQUIRE(0 != dtd.length());
 			std::string::size_type pos = dtd.find("\r\n");
 			// Expectations: dtd should be in OS-specific line ending (if SVN is set right)
-			CHECK(pos == std::string::npos);
+			REQUIRE(pos == std::string::npos);
 		}
 	}
 
 
-	TEST(GetTitleNiceName)
+	SECTION("GetTitleNiceName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -252,12 +253,12 @@ SUITE(TestConfig)
 			CConfigHandler handler;
 			config.Default(&handler);
 			std::wstring nice = config.GetTitleNiceName(L"AKC", L"MX");
-			CHECK(0 != nice.length());
+			REQUIRE(0 != nice.length());
 		}
 	}
 
 
-	TEST(GetCompleteName)
+	SECTION("GetCompleteName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -280,18 +281,18 @@ SUITE(TestConfig)
 			for (size_t i = 0; sc_Titles[i].pVenue; ++i)
 			{
 				ARBConfigTitlePtr configTitle;
-				CHECK(config.GetVenues().FindTitle(sc_Titles[i].pVenue, sc_Titles[i].pTitle, &configTitle));
+				REQUIRE(config.GetVenues().FindTitle(sc_Titles[i].pVenue, sc_Titles[i].pTitle, &configTitle));
 				if (!configTitle)
 					continue;
 
 				std::wstring name = configTitle->GetCompleteName(-1);
-				CHECK(name == sc_Titles[i].pResult);
+				REQUIRE(name == sc_Titles[i].pResult);
 			}
 		}
 	}
 
 
-	TEST(GetTitleCompleteName)
+	SECTION("GetTitleCompleteName")
 	{
 		if (!g_bMicroTest)
 		{
@@ -300,26 +301,26 @@ SUITE(TestConfig)
 			config.Default(&handler);
 
 			ARBConfigTitlePtr configTitle;
-			CHECK(config.GetVenues().FindTitle(L"AKC", L"MX", &configTitle));
+			REQUIRE(config.GetVenues().FindTitle(L"AKC", L"MX", &configTitle));
 
 			ARBDogTitlePtr title = ARBDogTitle::New();
 			title->SetVenue(L"AKC");
 			title->SetName(L"MX", 1, configTitle);
 			// [MX] desc
 			std::wstring name1 = config.GetTitleCompleteName(title);
-			CHECK(0 != name1.length());
+			REQUIRE(0 != name1.length());
 			// desc [MX]
 			std::wstring name2 = config.GetTitleCompleteName(title, false);
-			CHECK(0 != name2.length());
-			CHECK(name1 != name2);
+			REQUIRE(0 != name2.length());
+			REQUIRE(name1 != name2);
 			std::wstring nice = config.GetTitleNiceName(L"AKC", L"MX");
 			nice += L" [MX]";
-			CHECK(nice == name2);
+			REQUIRE(nice == name2);
 		}
 	}
 
 
-	TEST(RecurringTitle)
+	SECTION("RecurringTitle")
 	{
 		if (!g_bMicroTest)
 		{
@@ -357,20 +358,20 @@ SUITE(TestConfig)
 			for (size_t i = 0; sc_Titles[i].pVenue; ++i)
 			{
 				ARBConfigTitlePtr configTitle;
-				CHECK(config.GetVenues().FindTitle(sc_Titles[i].pVenue, sc_Titles[i].pTitle, &configTitle));
+				REQUIRE(config.GetVenues().FindTitle(sc_Titles[i].pVenue, sc_Titles[i].pTitle, &configTitle));
 
 				ARBDogTitlePtr title = ARBDogTitle::New();
 				title->SetVenue(sc_Titles[i].pVenue);
 
 				title->SetName(sc_Titles[i].pTitle, sc_Titles[i].repeat, configTitle);
 				std::wstring result = title->GetGenericName();
-				CHECK(result == sc_Titles[i].pResult);
+				REQUIRE(result == sc_Titles[i].pResult);
 			}
 		}
 	}
 
 
-	TEST(Update)
+	SECTION("Update")
 	{
 		if (!g_bMicroTest)
 		{

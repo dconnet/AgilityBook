@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-09 Convert from UnitTest++ to Catch
  * 2017-08-03 Added basic read verification
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -35,31 +36,31 @@
 #endif
 
 
-SUITE(TestElement)
+TEST_CASE("Element")
 {
-	TEST(Name)
+	SECTION("Name")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
-			CHECK(L"name" == ele->GetName());
+			REQUIRE(L"name" == ele->GetName());
 		}
 	}
 
 
-	TEST(Value)
+	SECTION("Value")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
 			std::wstring str = L"This random & text @#$@()<>";
 			ele->SetValue(str);
-			CHECK(str == ele->GetValue());
+			REQUIRE(str == ele->GetValue());
 		}
 	}
 
 
-	TEST(AddAttrib)
+	SECTION("AddAttrib")
 	{
 		if (!g_bMicroTest)
 		{
@@ -67,17 +68,17 @@ SUITE(TestElement)
 			bool b = true;
 			ele->AddAttrib(L"name", b);
 			ElementNode::AttribLookup rc = ele->GetAttrib(L"name", b);
-			CHECK_EQUAL(ElementNode::eFound, rc);
-			CHECK(b);
+			REQUIRE(ElementNode::eFound == rc);
+			REQUIRE(b);
 			std::wstring s;
 			rc = ele->GetAttrib(L"name", s);
-			CHECK_EQUAL(ElementNode::eFound, rc);
-			CHECK(L"y" == s);
+			REQUIRE(ElementNode::eFound == rc);
+			REQUIRE(L"y" == s);
 		}
 	}
 
 
-	TEST(AddAttribShort)
+	SECTION("AddAttribShort")
 	{
 		if (!g_bMicroTest)
 		{
@@ -86,15 +87,15 @@ SUITE(TestElement)
 			ele->AddAttrib(L"test", i);
 			std::wstring s;
 			ele->GetAttrib(L"test", s);
-			CHECK(L"42" == s);
+			REQUIRE(L"42" == s);
 			i = 0;
 			ele->GetAttrib(L"test", i);
-			CHECK_EQUAL(42, i);
+			REQUIRE(42 == i);
 		}
 	}
 
 
-	TEST(AddAttribLong)
+	SECTION("AddAttribLong")
 	{
 		if (!g_bMicroTest)
 		{
@@ -103,15 +104,15 @@ SUITE(TestElement)
 			ele->AddAttrib(L"test", i);
 			std::wstring s;
 			ele->GetAttrib(L"test", s);
-			CHECK(L"42" == s);
+			REQUIRE(L"42" == s);
 			i = 0;
 			ele->GetAttrib(L"test", i);
-			CHECK_EQUAL(42, i);
+			REQUIRE(42 == i);
 		}
 	}
 
 
-	TEST(AddAttribDbl)
+	SECTION("AddAttribDbl")
 	{
 		if (!g_bMicroTest)
 		{
@@ -120,23 +121,23 @@ SUITE(TestElement)
 			ele->AddAttrib(L"test", i);
 			std::wstring s;
 			ele->GetAttrib(L"test", s);
-			CHECK(L"42.45" == s);
+			REQUIRE(L"42.45" == s);
 			i = 0.0;
 			ele->GetAttrib(L"test", i);
-			CHECK_EQUAL(42.45, i);
+			REQUIRE(42.45 == i);
 
 			i = 42.446;
 			ele->AddAttrib(L"test", i, 3);
 			ele->GetAttrib(L"test", s);
-			CHECK(L"42.446" == s);
+			REQUIRE(L"42.446" == s);
 			i = 0.0;
 			ele->GetAttrib(L"test", i);
-			CHECK_EQUAL(42.446, i);
+			REQUIRE(42.446 == i);
 		}
 	}
 
 
-	TEST(AddAttribDate)
+	SECTION("AddAttribDate")
 	{
 		if (!g_bMicroTest)
 		{
@@ -144,15 +145,15 @@ SUITE(TestElement)
 			ele->AddAttrib(L"test", L"1999-03-27");
 			ARBDate d;
 			ElementNode::AttribLookup rc = ele->GetAttrib(L"test", d);
-			CHECK_EQUAL(ElementNode::eFound, rc);
-			CHECK_EQUAL(1999, d.GetYear());
-			CHECK_EQUAL(3, d.GetMonth());
-			CHECK_EQUAL(27, d.GetDay());
+			REQUIRE(ElementNode::eFound == rc);
+			REQUIRE(1999 == d.GetYear());
+			REQUIRE(3 == d.GetMonth());
+			REQUIRE(27 == d.GetDay());
 		}
 	}
 
 
-	TEST(AddAttribBadDate)
+	SECTION("AddAttribBadDate")
 	{
 		if (!g_bMicroTest)
 		{
@@ -160,121 +161,121 @@ SUITE(TestElement)
 			ele->AddAttrib(L"test", L"1999-99-27");
 			ARBDate d;
 			ElementNode::AttribLookup rc = ele->GetAttrib(L"test", d);
-			CHECK_EQUAL(ElementNode::eInvalidValue, rc);
+			REQUIRE(ElementNode::eInvalidValue == rc);
 		}
 	}
 
 
-	TEST(BadAttrib)
+	SECTION("BadAttrib")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
 			ele->AddAttrib(L"test", L"junk");
 			ele->AddAttrib(L"test", L"junk2");
-			CHECK_EQUAL(1, ele->GetAttribCount());
+			REQUIRE(1 == ele->GetAttribCount());
 		}
 	}
 
 
-	TEST(ReallyBadAttrib)
+	SECTION("ReallyBadAttrib")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
 			std::wstring attrib;
-			CHECK(!ele->AddAttrib(attrib, L"test"));
+			REQUIRE(!ele->AddAttrib(attrib, L"test"));
 		}
 	}
 
 
-	TEST(RemoveAttrib)
+	SECTION("RemoveAttrib")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
 			ele->AddAttrib(L"test", L"junk");
-			CHECK_EQUAL(1, ele->GetAttribCount());
-			CHECK(!ele->RemoveAttrib(L"test1"));
-			CHECK_EQUAL(1, ele->GetAttribCount());
-			CHECK(ele->RemoveAttrib(L"test"));
-			CHECK_EQUAL(0, ele->GetAttribCount());
+			REQUIRE(1 == ele->GetAttribCount());
+			REQUIRE(!ele->RemoveAttrib(L"test1"));
+			REQUIRE(1 == ele->GetAttribCount());
+			REQUIRE(ele->RemoveAttrib(L"test"));
+			REQUIRE(0 == ele->GetAttribCount());
 		}
 	}
 
 
-	TEST(RemoveAllAttribs)
+	SECTION("RemoveAllAttribs")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
 			ele->AddAttrib(L"test", L"junk");
 			ele->AddAttrib(L"test1", L"junk");
-			CHECK_EQUAL(2, ele->GetAttribCount());
+			REQUIRE(2 == ele->GetAttribCount());
 			ele->RemoveAllAttribs();
-			CHECK_EQUAL(0, ele->GetAttribCount());
+			REQUIRE(0 == ele->GetAttribCount());
 		}
 	}
 
 
-	TEST(AddElement)
+	SECTION("AddElement")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
 			ElementNodePtr newEle = ele->AddElementNode(L"test");
-			CHECK(L"test" == newEle->GetName());
-			CHECK_EQUAL(1, ele->GetElementCount());
+			REQUIRE(L"test" == newEle->GetName());
+			REQUIRE(1 == ele->GetElementCount());
 			ElementNodePtr ele2 = ele->GetElementNode(0);
-			CHECK_EQUAL(newEle.get(), ele2.get());
+			REQUIRE(newEle.get() == ele2.get());
 		}
 	}
 
 
-	TEST(AddElementAt)
+	SECTION("AddElementAt")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
 			ele->AddElementNode(L"test1");
 			ele->AddElementNode(L"test2", 0);
-			CHECK_EQUAL(2, ele->GetElementCount());
+			REQUIRE(2 == ele->GetElementCount());
 			ElementNodePtr newEle = ele->GetElementNode(0);
-			CHECK(L"test2" == newEle->GetName());
+			REQUIRE(L"test2" == newEle->GetName());
 			newEle = ele->GetElementNode(1);
-			CHECK(L"test1" == newEle->GetName());
+			REQUIRE(L"test1" == newEle->GetName());
 		}
 	}
 
 
-	TEST(RemoveElement)
+	SECTION("RemoveElement")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
 			ele->AddElementNode(L"test1");
 			ele->AddElementNode(L"test2");
-			CHECK_EQUAL(2, ele->GetElementCount());
+			REQUIRE(2 == ele->GetElementCount());
 			ele->RemoveElement(0);
-			CHECK_EQUAL(1, ele->GetElementCount());
+			REQUIRE(1 == ele->GetElementCount());
 		}
 	}
 
 
-	TEST(FindElement)
+	SECTION("FindElement")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(L"name");
 			ele->AddElementNode(L"test1");
 			ele->AddElementNode(L"test2");
-			CHECK_EQUAL(2, ele->GetElementCount());
-			CHECK_EQUAL(1, ele->FindElement(L"test2"));
+			REQUIRE(2 == ele->GetElementCount());
+			REQUIRE(1 == ele->FindElement(L"test2"));
 		}
 	}
 
 
-	TEST(FindElementFrom)
+	SECTION("FindElementFrom")
 	{
 		if (!g_bMicroTest)
 		{
@@ -283,27 +284,27 @@ SUITE(TestElement)
 			ele->AddElementNode(L"test2");
 			ele->AddElementNode(L"test1");
 			ele->AddElementNode(L"test2");
-			CHECK_EQUAL(4, ele->GetElementCount());
-			CHECK_EQUAL(3, ele->FindElement(L"test2", 2));
+			REQUIRE(4 == ele->GetElementCount());
+			REQUIRE(3 == ele->FindElement(L"test2", 2));
 		}
 	}
 
 
-	TEST(Load)
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr tree = LoadXMLData();
 
-			CHECK(L"DefaultConfig" == tree->GetName());
-			CHECK_EQUAL(1, tree->GetAttribCount());
+			REQUIRE(L"DefaultConfig" == tree->GetName());
+			REQUIRE(1 == tree->GetAttribCount());
 			int config = tree->FindElement(TREE_CONFIG);
-			CHECK(0 <= config);
+			REQUIRE(0 <= config);
 		}
 	}
 
 
-	TEST(LoadXML)
+	SECTION("LoadXML")
 	{
 		if (!g_bMicroTest)
 		{
@@ -316,24 +317,24 @@ SUITE(TestElement)
 
 			std::wostringstream errMsg;
 			ElementNodePtr tree(ElementNode::New());
-			CHECK(tree->LoadXML(data, errMsg));
+			REQUIRE(tree->LoadXML(data, errMsg));
 
 			std::wstring str;
-			CHECK(tree->GetName() == L"Test");
-			CHECK(tree->GetAttribCount() == 1);
-			CHECK(tree->GetAttrib(L"attrib", str) == ElementNode::eFound);
-			CHECK(str == L"a");
-			CHECK(tree->GetElementCount() == 2);
-			CHECK(tree->GetElementNode(0)->GetAttribCount() == 0);
-			CHECK(tree->GetElementNode(1)->GetAttribCount() == 1);
-			CHECK(tree->GetElementNode(1)->GetAttrib(L"ele", str) == ElementNode::eFound);
-			CHECK(str == L"2");
-			CHECK(tree->GetElementNode(0)->GetValue() == L"Content");
-			CHECK(tree->GetElementNode(1)->GetValue() == L"More content");
+			REQUIRE(tree->GetName() == L"Test");
+			REQUIRE(tree->GetAttribCount() == 1);
+			REQUIRE(tree->GetAttrib(L"attrib", str) == ElementNode::eFound);
+			REQUIRE(str == L"a");
+			REQUIRE(tree->GetElementCount() == 2);
+			REQUIRE(tree->GetElementNode(0)->GetAttribCount() == 0);
+			REQUIRE(tree->GetElementNode(1)->GetAttribCount() == 1);
+			REQUIRE(tree->GetElementNode(1)->GetAttrib(L"ele", str) == ElementNode::eFound);
+			REQUIRE(str == L"2");
+			REQUIRE(tree->GetElementNode(0)->GetValue() == L"Content");
+			REQUIRE(tree->GetElementNode(1)->GetValue() == L"More content");
 		}
 	}
 
-	TEST(Save)
+	SECTION("Save")
 	{
 		if (!g_bMicroTest)
 		{
@@ -341,12 +342,12 @@ SUITE(TestElement)
 
 			std::wstring tmpFile(L"data.tmp");
 			std::stringstream tmp1;
-			CHECK(tree->SaveXML(tmpFile));
-			CHECK(tree->SaveXML(tmp1));
+			REQUIRE(tree->SaveXML(tmpFile));
+			REQUIRE(tree->SaveXML(tmp1));
 
 			ElementNodePtr tree2(ElementNode::New());
 			std::wostringstream errs;
-			CHECK(tree2->LoadXML(tmpFile.c_str(), errs));
+			REQUIRE(tree2->LoadXML(tmpFile.c_str(), errs));
 
 #if defined(__WXWINDOWS__)
 			wxRemoveFile(tmpFile.c_str());
@@ -355,11 +356,11 @@ SUITE(TestElement)
 #endif
 
 			std::stringstream tmp2;
-			CHECK(tree2->SaveXML(tmp2));
+			REQUIRE(tree2->SaveXML(tmp2));
 
 			std::string tmp1data = tmp1.str();
 			std::string tmp2data = tmp2.str();
-			CHECK(tmp1data == tmp2data);
+			REQUIRE(tmp1data == tmp2data);
 		}
 	}
 }
