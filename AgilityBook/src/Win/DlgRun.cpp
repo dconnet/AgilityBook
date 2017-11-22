@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-21 Update title points when InClass changes.
  * 2015-11-01 Compute score for NA runs also.
  * 2015-01-01 Changed pixels to dialog units.
  * 2013-05-19 Make last div/level/height/handler dog-aware.
@@ -1167,6 +1168,7 @@ CDlgRun::CDlgRun(
 	m_ctrlInClass = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
 		CGenericValidator(&m_InClass));
+	BIND_OR_CONNECT_CTRL(m_ctrlInClass, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnInClassChange);
 	m_ctrlInClass->SetHelpText(_("HIDC_RUNSCORE_IN_CLASS"));
 	m_ctrlInClass->SetToolTip(_("HIDC_RUNSCORE_IN_CLASS"));
 
@@ -2916,6 +2918,14 @@ void CDlgRun::OnPlaceChange(wxCommandEvent& evt)
 {
 	m_Place = static_cast<short>(wxAtol(m_ctrlPlace->GetValue()));
 	m_Run->SetPlace(m_Place);
+	SetTitlePoints();
+}
+
+
+void CDlgRun::OnInClassChange(wxCommandEvent& evt)
+{
+	m_InClass = static_cast<short>(wxAtol(m_ctrlInClass->GetValue()));
+	m_Run->SetInClass(m_InClass);
 	SetTitlePoints();
 }
 

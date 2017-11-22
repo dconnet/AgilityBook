@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-21 Update title points when InClass changes.
  * 2012-05-07 Added autocompletion to combo boxes.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-03-16 Merged DlgRun* into here.
@@ -255,6 +256,7 @@ private:
 	void OnOpenChange(wxCommandEvent& evt);
 	void OnCloseChange(wxCommandEvent& evt);
 	void OnPlaceChange(wxCommandEvent& evt);
+	void OnInClassChange(wxCommandEvent& evt);
 	void OnBonusChange(wxCommandEvent& evt);
 	// Comments
 	void OnCommentsFaults(wxCommandEvent& evt);

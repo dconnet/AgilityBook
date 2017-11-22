@@ -1,4 +1,4 @@
-11/9/2017: v3.2.2.<development>
+11/21/2017: v3.2.2.<development>
 - Bumped Configuration v55:
   - Updated CKC events
   - Fixed AKC Triple Q titles to repeat.
@@ -8,6 +8,7 @@
 - Bug fixes:
   - Fixed the sort order of multiQs (AKC QQ/QQQs).
   - Allow '0' as a valid NumberOfDogs in a run. (default is now -1)
+  - Update title points when InClass changes. (affected UKI points in Run dlg)
 
 4/9/2017: v3.2.1.100
 - New features / Enhancements:
