@@ -153,7 +153,10 @@ def main():
 
 	# Running the 2nd signtool too quickly results in a file-in-use error
 	if signSHA1 and signSHA256 and sleepTime > 0:
-		time.sleep(sleepTime)
+		if testOnly:
+			print('sleep', sleepTime)
+		else:
+			time.sleep(sleepTime)
 
 	# Add dual sign for modern OSs
 	if signSHA256:
