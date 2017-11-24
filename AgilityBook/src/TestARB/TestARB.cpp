@@ -188,6 +188,8 @@ int main(int argc, char** argv)
 
 	bool bClean = false;
 	char** av = argv;
+	char verbose[3] = "-s";
+
 	if (bVerbose || g_bMicroTest)
 	{
 		bClean = true;
@@ -197,7 +199,7 @@ int main(int argc, char** argv)
 		for (int i = 1; i < argc; ++i)
 		{
 			if (0 == strcmp(argv[i], "verbose"))
-				av[iNew++] = "-s";
+				av[iNew++] = verbose;
 			else if (0 == strcmp(argv[i], "micro"))
 				continue;
 			else

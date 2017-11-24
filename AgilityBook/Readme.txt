@@ -44,6 +44,16 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_MEDIACTRL to 0 (currently 1)
   - Set wxUSE_INKEDIT to 1 (currently 0)
 
+include/geometry.h
+include/mousestate.h
+include/html/htmlcell.h
+  - These files have a number of comma operator issues (found via xcode9)
+
+configure.in: line 1347 (darwin case)
+Add
+    CPPFLAGS="-D__ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES=1 $CPPFLAGS"
+before AC_MSG_CHECKING line (fixes macOS 10.13 SDK issue)
+
 >diff -c datavcmn.cpp.orig datavcmn.cpp
 *** datavcmn.cpp.orig	Tue Mar 15 09:54:08 2016
 --- datavcmn.cpp	Tue Mar 15 09:54:13 2016

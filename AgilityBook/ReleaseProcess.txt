@@ -32,7 +32,10 @@ Run Doxygen and fix any warnings/errors it reports.
 - cd ...\AgilityBook
 - doxygen AgilityBook.dox
 
-Do a full rebuild and verify it.
+Commit all changes to SVN.
+(note: if doing this on official build machine, can skip this commit)
+
+Switch to build machine, do a full rebuild and verify it.
 - cd src\Projects\Installer
 - 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.0 -b fullupdate' [runs VC10 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*

@@ -14,9 +14,6 @@
       location = "group:ARB/ARB.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:UnitTest/UnitTest.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:TestARB/TestARB.xcodeproj">
    </FileRef>
    <FileRef
