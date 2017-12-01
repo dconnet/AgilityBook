@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-30 Remove image list from placement list (not needed)
  * 2016-01-16 Cleaned up new/edit/delete buttons.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-06-16 Show time fault multiplier in point games.
@@ -344,7 +345,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	m_ctrlPlacement = new CReportListCtrl(this,
 		wxDefaultPosition, wxDefaultSize,
-		true, CReportListCtrl::eNoSortHeader, true);
+		true, CReportListCtrl::eNoSortHeader, true, false);
 	BIND_OR_CONNECT_CTRL(m_ctrlPlacement, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgConfigEventMethod::OnItemchangedPlacement);
 	BIND_OR_CONNECT_CTRL(m_ctrlPlacement, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgConfigEventMethod::OnItemActivatedPlacement);
 	BIND_OR_CONNECT_CTRL(m_ctrlPlacement, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgConfigEventMethod::OnKeydownPlacement);

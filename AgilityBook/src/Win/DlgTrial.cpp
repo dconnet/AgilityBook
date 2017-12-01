@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-11-30 Remove image list from club list (not needed)
  * 2015-01-01 Changed pixels to dialog units.
  * 2014-02-20 Trial start date was not properly saved.
  * 2012-05-22 Change KillFocus handler to text change handler.
@@ -211,7 +212,7 @@ CDlgTrial::CDlgTrial(
 
 	m_ctrlClubs = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(DEF_CTRL_WIDTH, DEF_CTRL_HEIGHT)),
-		true, CReportListCtrl::eNoSortHeader, true);
+		true, CReportListCtrl::eNoSortHeader, true, false);
 	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgTrial::OnItemSelectedClubs);
 	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgTrial::OnItemActivatedClubs);
 	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgTrial::OnKeydownClubs);

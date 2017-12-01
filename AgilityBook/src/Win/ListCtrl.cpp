@@ -99,12 +99,11 @@ bool CReportListCtrl::Create(
 	}
 	BIND_OR_CONNECT(wxEVT_COMMAND_LIST_DELETE_ITEM, wxListEventHandler, CReportListCtrl::OnDeleteItem);
 
-	m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
-
 	// Make the blank one the 1st icon so if an icon isn't set in a list
 	// it will use this by default
 	if (bHasImageList || sortHeader == eSortHeader)
 	{
+		m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
 		m_imgSortUp = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrHeaderUp));
 		m_imgSortDn = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrHeaderDown));
@@ -381,11 +380,11 @@ CCheckListCtrl::CCheckListCtrl(
 	if (!bHasChecks)
 		flags |= wxLC_SINGLE_SEL;
 	Create(parent, wxID_ANY, pos, size, flags);
-	m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 	if (bHasChecks)
 	{
 		BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckListCtrl::OnClick);
 		BIND_OR_CONNECT(wxEVT_KEY_DOWN, wxKeyEventHandler, CCheckListCtrl::OnKeyDown);
+		m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
 		m_imgNoCheck = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrUnChecked));
 		m_imgChecked = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrChecked));
