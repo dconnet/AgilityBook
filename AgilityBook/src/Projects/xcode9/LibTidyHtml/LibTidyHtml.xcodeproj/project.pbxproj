@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E110B4FF177FD089004071B5 /* LibTidyHtml.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4FE177FD089004071B5 /* LibTidyHtml.h */; };
 		E1243CB91B8A4B4B00B632E5 /* gdoc.c in Sources */ = {isa = PBXBuildFile; fileRef = E1243CB71B8A4B4B00B632E5 /* gdoc.c */; };
 		E1243CBA1B8A4B4B00B632E5 /* gdoc.h in Headers */ = {isa = PBXBuildFile; fileRef = E1243CB81B8A4B4B00B632E5 /* gdoc.h */; };
 		E1243CBD1B8A4B8B00B632E5 /* sprtf.c in Sources */ = {isa = PBXBuildFile; fileRef = E1243CBB1B8A4B8B00B632E5 /* sprtf.c */; };
 		E1243CBE1B8A4B8B00B632E5 /* sprtf.h in Headers */ = {isa = PBXBuildFile; fileRef = E1243CBC1B8A4B8B00B632E5 /* sprtf.h */; };
+		E15895181FD4B62A0097A70F /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = E15895161FD4B62A0097A70F /* platform.h */; };
+		E15895191FD4B62A0097A70F /* buffio.h in Headers */ = {isa = PBXBuildFile; fileRef = E15895171FD4B62A0097A70F /* buffio.h */; };
 		E1650E701CB98FE900277070 /* language_en_gb.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E671CB98FE900277070 /* language_en_gb.h */; };
 		E1650E711CB98FE900277070 /* language_en.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E681CB98FE900277070 /* language_en.h */; };
 		E1650E721CB98FE900277070 /* language_es_mx.h in Headers */ = {isa = PBXBuildFile; fileRef = E1650E691CB98FE900277070 /* language_es_mx.h */; };
@@ -30,10 +31,8 @@
 		E1796492176927F0003AE489 /* access.c in Sources */ = {isa = PBXBuildFile; fileRef = E1796454176927F0003AE489 /* access.c */; };
 		E1796493176927F0003AE489 /* access.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796455176927F0003AE489 /* access.h */; };
 		E1796494176927F0003AE489 /* alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = E1796456176927F0003AE489 /* alloc.c */; };
-		E1796495176927F0003AE489 /* attrask.c in Sources */ = {isa = PBXBuildFile; fileRef = E1796457176927F0003AE489 /* attrask.c */; };
 		E1796496176927F0003AE489 /* attrdict.c in Sources */ = {isa = PBXBuildFile; fileRef = E1796458176927F0003AE489 /* attrdict.c */; };
 		E1796497176927F0003AE489 /* attrdict.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796459176927F0003AE489 /* attrdict.h */; };
-		E1796498176927F0003AE489 /* attrget.c in Sources */ = {isa = PBXBuildFile; fileRef = E179645A176927F0003AE489 /* attrget.c */; };
 		E1796499176927F0003AE489 /* attrs.c in Sources */ = {isa = PBXBuildFile; fileRef = E179645B176927F0003AE489 /* attrs.c */; };
 		E179649A176927F0003AE489 /* attrs.h in Headers */ = {isa = PBXBuildFile; fileRef = E179645C176927F0003AE489 /* attrs.h */; };
 		E179649B176927F0003AE489 /* buffio.c in Sources */ = {isa = PBXBuildFile; fileRef = E179645D176927F0003AE489 /* buffio.c */; };
@@ -48,8 +47,6 @@
 		E17964A4176927F0003AE489 /* fileio.c in Sources */ = {isa = PBXBuildFile; fileRef = E1796466176927F0003AE489 /* fileio.c */; };
 		E17964A5176927F0003AE489 /* fileio.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796467176927F0003AE489 /* fileio.h */; };
 		E17964A6176927F0003AE489 /* forward.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796468176927F0003AE489 /* forward.h */; };
-		E17964A7176927F0003AE489 /* iconvtc.c in Sources */ = {isa = PBXBuildFile; fileRef = E1796469176927F0003AE489 /* iconvtc.c */; };
-		E17964A8176927F0003AE489 /* iconvtc.h in Headers */ = {isa = PBXBuildFile; fileRef = E179646A176927F0003AE489 /* iconvtc.h */; };
 		E17964A9176927F0003AE489 /* istack.c in Sources */ = {isa = PBXBuildFile; fileRef = E179646B176927F0003AE489 /* istack.c */; };
 		E17964AA176927F0003AE489 /* lexer.c in Sources */ = {isa = PBXBuildFile; fileRef = E179646C176927F0003AE489 /* lexer.c */; };
 		E17964AB176927F0003AE489 /* lexer.h in Headers */ = {isa = PBXBuildFile; fileRef = E179646D176927F0003AE489 /* lexer.h */; };
@@ -72,8 +69,9 @@
 		E17964BD176927F0003AE489 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = E179647F176927F0003AE489 /* utf8.c */; };
 		E17964BE176927F0003AE489 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796480176927F0003AE489 /* utf8.h */; };
 		E17964BF176927F0003AE489 /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796481176927F0003AE489 /* version.h */; };
-		E17964C0176927F0003AE489 /* win32tc.c in Sources */ = {isa = PBXBuildFile; fileRef = E1796482176927F0003AE489 /* win32tc.c */; };
-		E17964C1176927F0003AE489 /* win32tc.h in Headers */ = {isa = PBXBuildFile; fileRef = E1796483176927F0003AE489 /* win32tc.h */; };
+		E19F42C91FD4B6CC0089D47A /* messageobj.h in Headers */ = {isa = PBXBuildFile; fileRef = E19F42C61FD4B6CC0089D47A /* messageobj.h */; };
+		E19F42CA1FD4B6CC0089D47A /* messageobj.c in Sources */ = {isa = PBXBuildFile; fileRef = E19F42C71FD4B6CC0089D47A /* messageobj.c */; };
+		E19F42CB1FD4B6CC0089D47A /* language_pt_br.h in Headers */ = {isa = PBXBuildFile; fileRef = E19F42C81FD4B6CC0089D47A /* language_pt_br.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +80,8 @@
 		E1243CB81B8A4B4B00B632E5 /* gdoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gdoc.h; sourceTree = "<group>"; };
 		E1243CBB1B8A4B8B00B632E5 /* sprtf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sprtf.c; sourceTree = "<group>"; };
 		E1243CBC1B8A4B8B00B632E5 /* sprtf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprtf.h; sourceTree = "<group>"; };
+		E15895161FD4B62A0097A70F /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
+		E15895171FD4B62A0097A70F /* buffio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffio.h; sourceTree = "<group>"; };
 		E1650E671CB98FE900277070 /* language_en_gb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_en_gb.h; sourceTree = "<group>"; };
 		E1650E681CB98FE900277070 /* language_en.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_en.h; sourceTree = "<group>"; };
 		E1650E691CB98FE900277070 /* language_es_mx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_es_mx.h; sourceTree = "<group>"; };
@@ -101,10 +101,8 @@
 		E1796454176927F0003AE489 /* access.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = access.c; sourceTree = "<group>"; };
 		E1796455176927F0003AE489 /* access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = access.h; sourceTree = "<group>"; };
 		E1796456176927F0003AE489 /* alloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = alloc.c; sourceTree = "<group>"; };
-		E1796457176927F0003AE489 /* attrask.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attrask.c; sourceTree = "<group>"; };
 		E1796458176927F0003AE489 /* attrdict.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attrdict.c; sourceTree = "<group>"; };
 		E1796459176927F0003AE489 /* attrdict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attrdict.h; sourceTree = "<group>"; };
-		E179645A176927F0003AE489 /* attrget.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attrget.c; sourceTree = "<group>"; };
 		E179645B176927F0003AE489 /* attrs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attrs.c; sourceTree = "<group>"; };
 		E179645C176927F0003AE489 /* attrs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attrs.h; sourceTree = "<group>"; };
 		E179645D176927F0003AE489 /* buffio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffio.c; sourceTree = "<group>"; };
@@ -119,8 +117,6 @@
 		E1796466176927F0003AE489 /* fileio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fileio.c; sourceTree = "<group>"; };
 		E1796467176927F0003AE489 /* fileio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileio.h; sourceTree = "<group>"; };
 		E1796468176927F0003AE489 /* forward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forward.h; sourceTree = "<group>"; };
-		E1796469176927F0003AE489 /* iconvtc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = iconvtc.c; sourceTree = "<group>"; };
-		E179646A176927F0003AE489 /* iconvtc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iconvtc.h; sourceTree = "<group>"; };
 		E179646B176927F0003AE489 /* istack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = istack.c; sourceTree = "<group>"; };
 		E179646C176927F0003AE489 /* lexer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lexer.c; sourceTree = "<group>"; };
 		E179646D176927F0003AE489 /* lexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lexer.h; sourceTree = "<group>"; };
@@ -143,8 +139,9 @@
 		E179647F176927F0003AE489 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utf8.c; sourceTree = "<group>"; };
 		E1796480176927F0003AE489 /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
 		E1796481176927F0003AE489 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
-		E1796482176927F0003AE489 /* win32tc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = win32tc.c; sourceTree = "<group>"; };
-		E1796483176927F0003AE489 /* win32tc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32tc.h; sourceTree = "<group>"; };
+		E19F42C61FD4B6CC0089D47A /* messageobj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messageobj.h; sourceTree = "<group>"; };
+		E19F42C71FD4B6CC0089D47A /* messageobj.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = messageobj.c; sourceTree = "<group>"; };
+		E19F42C81FD4B6CC0089D47A /* language_pt_br.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_pt_br.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +220,8 @@
 		E179644D176927F0003AE489 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				E15895171FD4B62A0097A70F /* buffio.h */,
+				E15895161FD4B62A0097A70F /* platform.h */,
 				E1796450176927F0003AE489 /* tidy.h */,
 				E179644E176927F0003AE489 /* tidybuffio.h */,
 				E1796451176927F0003AE489 /* tidyenum.h */,
@@ -237,10 +236,8 @@
 				E1796454176927F0003AE489 /* access.c */,
 				E1796455176927F0003AE489 /* access.h */,
 				E1796456176927F0003AE489 /* alloc.c */,
-				E1796457176927F0003AE489 /* attrask.c */,
 				E1796458176927F0003AE489 /* attrdict.c */,
 				E1796459176927F0003AE489 /* attrdict.h */,
-				E179645A176927F0003AE489 /* attrget.c */,
 				E179645B176927F0003AE489 /* attrs.c */,
 				E179645C176927F0003AE489 /* attrs.h */,
 				E179645D176927F0003AE489 /* buffio.c */,
@@ -257,14 +254,13 @@
 				E1796468176927F0003AE489 /* forward.h */,
 				E1243CB71B8A4B4B00B632E5 /* gdoc.c */,
 				E1243CB81B8A4B4B00B632E5 /* gdoc.h */,
-				E1796469176927F0003AE489 /* iconvtc.c */,
-				E179646A176927F0003AE489 /* iconvtc.h */,
 				E179646B176927F0003AE489 /* istack.c */,
 				E1650E671CB98FE900277070 /* language_en_gb.h */,
 				E1650E681CB98FE900277070 /* language_en.h */,
 				E1650E691CB98FE900277070 /* language_es_mx.h */,
 				E1650E6A1CB98FE900277070 /* language_es.h */,
 				E1650E6B1CB98FE900277070 /* language_fr.h */,
+				E19F42C81FD4B6CC0089D47A /* language_pt_br.h */,
 				E1650E6C1CB98FE900277070 /* language_zh_cn.h */,
 				E1650E6D1CB98FE900277070 /* language.c */,
 				E1650E6E1CB98FE900277070 /* language.h */,
@@ -274,6 +270,8 @@
 				E1796470176927F0003AE489 /* mappedio.h */,
 				E1650E6F1CB98FE900277070 /* message.c */,
 				E1796471176927F0003AE489 /* message.h */,
+				E19F42C71FD4B6CC0089D47A /* messageobj.c */,
+				E19F42C61FD4B6CC0089D47A /* messageobj.h */,
 				E1796472176927F0003AE489 /* parser.c */,
 				E1796473176927F0003AE489 /* parser.h */,
 				E1796474176927F0003AE489 /* pprint.c */,
@@ -292,8 +290,6 @@
 				E179647F176927F0003AE489 /* utf8.c */,
 				E1796480176927F0003AE489 /* utf8.h */,
 				E1796481176927F0003AE489 /* version.h */,
-				E1796482176927F0003AE489 /* win32tc.c */,
-				E1796483176927F0003AE489 /* win32tc.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -311,6 +307,7 @@
 				E1796490176927F0003AE489 /* tidy.h in Headers */,
 				E179648E176927F0003AE489 /* tidybuffio.h in Headers */,
 				E1796491176927F0003AE489 /* tidyenum.h in Headers */,
+				E15895181FD4B62A0097A70F /* platform.h in Headers */,
 				E179648F176927F0003AE489 /* tidyplatform.h in Headers */,
 				E1796493176927F0003AE489 /* access.h in Headers */,
 				E1243CBA1B8A4B4B00B632E5 /* gdoc.h in Headers */,
@@ -325,12 +322,14 @@
 				E17964A1176927F0003AE489 /* config.h in Headers */,
 				E17964A3176927F0003AE489 /* entities.h in Headers */,
 				E17964A5176927F0003AE489 /* fileio.h in Headers */,
+				E15895191FD4B62A0097A70F /* buffio.h in Headers */,
 				E17964A6176927F0003AE489 /* forward.h in Headers */,
-				E17964A8176927F0003AE489 /* iconvtc.h in Headers */,
 				E17964AB176927F0003AE489 /* lexer.h in Headers */,
+				E19F42C91FD4B6CC0089D47A /* messageobj.h in Headers */,
 				E17964AE176927F0003AE489 /* mappedio.h in Headers */,
 				E17964AF176927F0003AE489 /* message.h in Headers */,
 				E17964B1176927F0003AE489 /* parser.h in Headers */,
+				E19F42CB1FD4B6CC0089D47A /* language_pt_br.h in Headers */,
 				E17964B3176927F0003AE489 /* pprint.h in Headers */,
 				E17964B5176927F0003AE489 /* streamio.h in Headers */,
 				E17964B8176927F0003AE489 /* tags.h in Headers */,
@@ -340,8 +339,6 @@
 				E17964BC176927F0003AE489 /* tmbstr.h in Headers */,
 				E17964BE176927F0003AE489 /* utf8.h in Headers */,
 				E17964BF176927F0003AE489 /* version.h in Headers */,
-				E17964C1176927F0003AE489 /* win32tc.h in Headers */,
-				E110B4FF177FD089004071B5 /* LibTidyHtml.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,9 +396,7 @@
 				E1796484176927F0003AE489 /* LibTidyHtml.cpp in Sources */,
 				E1796492176927F0003AE489 /* access.c in Sources */,
 				E1796494176927F0003AE489 /* alloc.c in Sources */,
-				E1796495176927F0003AE489 /* attrask.c in Sources */,
 				E1796496176927F0003AE489 /* attrdict.c in Sources */,
-				E1796498176927F0003AE489 /* attrget.c in Sources */,
 				E1796499176927F0003AE489 /* attrs.c in Sources */,
 				E179649B176927F0003AE489 /* buffio.c in Sources */,
 				E1243CB91B8A4B4B00B632E5 /* gdoc.c in Sources */,
@@ -413,7 +408,6 @@
 				E1650E761CB98FE900277070 /* language.c in Sources */,
 				E1650E781CB98FE900277070 /* message.c in Sources */,
 				E17964A4176927F0003AE489 /* fileio.c in Sources */,
-				E17964A7176927F0003AE489 /* iconvtc.c in Sources */,
 				E17964A9176927F0003AE489 /* istack.c in Sources */,
 				E17964AA176927F0003AE489 /* lexer.c in Sources */,
 				E17964AD176927F0003AE489 /* mappedio.c in Sources */,
@@ -422,10 +416,10 @@
 				E17964B4176927F0003AE489 /* streamio.c in Sources */,
 				E17964B6176927F0003AE489 /* tagask.c in Sources */,
 				E17964B7176927F0003AE489 /* tags.c in Sources */,
+				E19F42CA1FD4B6CC0089D47A /* messageobj.c in Sources */,
 				E17964BA176927F0003AE489 /* tidylib.c in Sources */,
 				E17964BB176927F0003AE489 /* tmbstr.c in Sources */,
 				E17964BD176927F0003AE489 /* utf8.c in Sources */,
-				E17964C0176927F0003AE489 /* win32tc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

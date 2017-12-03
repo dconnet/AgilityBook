@@ -188,7 +188,6 @@
 		E1E4E87E1E36778B00D88326 /* AgilityBook16@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E4E83D1E36778B00D88326 /* AgilityBook16@2.png */; };
 		E1E4E87F1E36778B00D88326 /* AgilityBook32@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E4E83E1E36778B00D88326 /* AgilityBook32@2.png */; };
 		E1E4E8801E36778B00D88326 /* AgilityBook48@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E4E83F1E36778B00D88326 /* AgilityBook48@2.png */; };
-		E1E4E8831E36778B00D88326 /* CalEmpty@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E4E8421E36778B00D88326 /* CalEmpty@2.png */; };
 		E1E4E8841E36778B00D88326 /* calendar@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E4E8431E36778B00D88326 /* calendar@2.png */; };
 		E1E4E8851E36778B00D88326 /* CalEntered@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E4E8441E36778B00D88326 /* CalEntered@2.png */; };
 		E1E4E8861E36778B00D88326 /* CalEnteredTentative@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E4E8451E36778B00D88326 /* CalEnteredTentative@2.png */; };
@@ -548,7 +547,6 @@
 		E1E4E83D1E36778B00D88326 /* AgilityBook16@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AgilityBook16@2.png"; path = "../../../../Win/res/AgilityBook16@2.png"; sourceTree = "<group>"; };
 		E1E4E83E1E36778B00D88326 /* AgilityBook32@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AgilityBook32@2.png"; path = "../../../../Win/res/AgilityBook32@2.png"; sourceTree = "<group>"; };
 		E1E4E83F1E36778B00D88326 /* AgilityBook48@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AgilityBook48@2.png"; path = "../../../../Win/res/AgilityBook48@2.png"; sourceTree = "<group>"; };
-		E1E4E8421E36778B00D88326 /* CalEmpty@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CalEmpty@2.png"; path = "../../../../Win/res/CalEmpty@2.png"; sourceTree = "<group>"; };
 		E1E4E8431E36778B00D88326 /* calendar@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "calendar@2.png"; path = "../../../../Win/res/calendar@2.png"; sourceTree = "<group>"; };
 		E1E4E8441E36778B00D88326 /* CalEntered@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CalEntered@2.png"; path = "../../../../Win/res/CalEntered@2.png"; sourceTree = "<group>"; };
 		E1E4E8451E36778B00D88326 /* CalEnteredTentative@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CalEnteredTentative@2.png"; path = "../../../../Win/res/CalEnteredTentative@2.png"; sourceTree = "<group>"; };
@@ -679,7 +677,6 @@
 				E1E4E83D1E36778B00D88326 /* AgilityBook16@2.png */,
 				E1E4E83E1E36778B00D88326 /* AgilityBook32@2.png */,
 				E1E4E83F1E36778B00D88326 /* AgilityBook48@2.png */,
-				E1E4E8421E36778B00D88326 /* CalEmpty@2.png */,
 				E1E4E8431E36778B00D88326 /* calendar@2.png */,
 				E1E4E8441E36778B00D88326 /* CalEntered@2.png */,
 				E1E4E8451E36778B00D88326 /* CalEnteredTentative@2.png */,
@@ -1234,7 +1231,6 @@
 				E1A3278B1A29222F00DD356D /* training.png in Resources */,
 				E1A327021A29007C00DD356D /* AgilityBook16.png in Resources */,
 				E1E4E8861E36778B00D88326 /* CalEnteredTentative@2.png in Resources */,
-				E1E4E8831E36778B00D88326 /* CalEmpty@2.png in Resources */,
 				E1A327981A29222F00DD356D /* venue_tdaa.png in Resources */,
 				E1E4E8971E36778B00D88326 /* NoteNote@2.png in Resources */,
 				E1E4E8B71E36778B00D88326 /* venue_docna@2.png in Resources */,

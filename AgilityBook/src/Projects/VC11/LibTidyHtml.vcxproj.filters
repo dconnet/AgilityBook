@@ -29,13 +29,7 @@
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\alloc.c">
       <Filter>tidy</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrask.c">
-      <Filter>tidy</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrdict.c">
-      <Filter>tidy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrget.c">
       <Filter>tidy</Filter>
     </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrs.c">
@@ -60,9 +54,6 @@
       <Filter>tidy</Filter>
     </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\gdoc.c">
-      <Filter>tidy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\iconvtc.c">
       <Filter>tidy</Filter>
     </ClCompile>
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\istack.c">
@@ -107,7 +98,7 @@
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\utf8.c">
       <Filter>tidy</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\win32tc.c">
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\messageobj.c">
       <Filter>tidy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -157,9 +148,6 @@
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\gdoc.h">
-      <Filter>tidy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\iconvtc.h">
       <Filter>tidy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\language.h">
@@ -219,7 +207,10 @@
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\version.h">
       <Filter>tidy</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\win32tc.h">
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_pt_br.h">
+      <Filter>tidy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\messageobj.h">
       <Filter>tidy</Filter>
     </ClInclude>
   </ItemGroup>

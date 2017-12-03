@@ -115,9 +115,7 @@
     <ClCompile Include="..\..\LibTidyHtml\LibTidyHtml.cpp" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\access.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\alloc.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrask.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrdict.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrget.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrs.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\buffio.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\charsets.c" />
@@ -127,11 +125,11 @@
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\fileio.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\gdoc.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\istack.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\iconvtc.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\language.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\lexer.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\mappedio.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\message.c" />
+    <ClCompile Include="..\..\LibTidyHtml\tidy\src\messageobj.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\parser.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\pprint.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\sprtf.c" />
@@ -141,7 +139,6 @@
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\tidylib.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\tmbstr.c" />
     <ClCompile Include="..\..\LibTidyHtml\tidy\src\utf8.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\win32tc.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\LibTidyHtml\LibTidyHtml.h" />
@@ -162,17 +159,18 @@
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\fileio.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\forward.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\gdoc.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\iconvtc.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\language.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_en.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_en_gb.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_es.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_es_mx.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_fr.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_pt_br.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_zh_cn.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\lexer.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\mappedio.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\message.h" />
+    <ClInclude Include="..\..\LibTidyHtml\tidy\src\messageobj.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\parser.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\pprint.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\sprtf.h" />
@@ -182,7 +180,6 @@
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\tmbstr.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\utf8.h" />
     <ClInclude Include="..\..\LibTidyHtml\tidy\src\version.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\win32tc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
