@@ -726,9 +726,6 @@
     <Image Include="..\..\Win\res\AgilityBook48%402.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>
-    <Image Include="..\..\Win\res\CalEmpty%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
     <Image Include="..\..\Win\res\calendar%402.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-12-01 Tweak scaling to avoid roundoff.
  * 2015-08-22 Expose LOAD_BITMAP_PNG for use in OnCreateBitmap.
  * 2013-10-13 Changed ImageManager to an art provider.
  * 2012-12-29 Created (separated from IconList).
@@ -100,23 +101,26 @@ void LoadLocalBitmap(
 {
 	wxLogNull suppress;
 	unsigned int scale = DPI::GetScale(pWindow);
+	unsigned int rescale = 1;
 	if (scale > 100)
 	{
 		wxString s(pImageName);
 		s += L"_2";
 		outBmp = wxBitmap(s, wxBITMAP_TYPE_PNG_RESOURCE);
 		if (outBmp.IsOk())
-			scale /= 2;
+			rescale = 2;
 		else
 			outBmp = wxBitmap(pImageName, wxBITMAP_TYPE_PNG_RESOURCE);
 	}
 	else
 		outBmp = wxBitmap(pImageName, wxBITMAP_TYPE_PNG_RESOURCE);
 
-	if (100 != scale && outBmp.IsOk())
+	if (100 * rescale != scale && outBmp.IsOk())
 	{
 		wxImage image = outBmp.ConvertToImage();
-		image.Rescale(outBmp.GetWidth() * scale / 100, outBmp.GetHeight() * scale / 100);
+		int x = (outBmp.GetWidth() * scale / 100) / rescale;
+		int y = (outBmp.GetHeight() * scale / 100) / rescale;
+		image.Rescale(x, y);
 		outBmp = wxBitmap(image);
 	}
 }

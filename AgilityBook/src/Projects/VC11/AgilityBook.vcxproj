@@ -376,7 +376,6 @@
     <Image Include="..\..\Win\res\AgilityBook16%402.png" />
     <Image Include="..\..\Win\res\AgilityBook32%402.png" />
     <Image Include="..\..\Win\res\AgilityBook48%402.png" />
-    <Image Include="..\..\Win\res\CalEmpty%402.png" />
     <Image Include="..\..\Win\res\calendar%402.png" />
     <Image Include="..\..\Win\res\CalEntered%402.png" />
     <Image Include="..\..\Win\res\CalEnteredTentative%402.png" />

@@ -44,9 +44,8 @@ Switch to build machine, do a full rebuild and verify it.
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
       compiler: vc10, vc11, vc12 (default: vc10)
-- Run 'GenMSI.py /all' to create w32/x64 installers and auto-update
-  Misc\Installations\InstallGUIDs.csv
-  - Run '..\SignStuff.py created.msi' for both installers
+- Run 'GenMSI.py /all' to create w32/x64 installers (and sign them)
+  and auto-update Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
 
 Commit all changes to SVN.
