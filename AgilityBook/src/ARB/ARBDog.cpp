@@ -653,6 +653,7 @@ int ARBDogList::RenameTitle(
 
 
 int ARBDogList::DeleteTitle(
+		ARBConfigVenuePtr inVenueConfig,
 		std::wstring const& inVenue,
 		std::wstring const& inTitle)
 {
@@ -664,7 +665,7 @@ int ARBDogList::DeleteTitle(
 		while (pTitle)
 		{
 			++count;
-			(*iter)->GetTitles().DeleteTitle(pTitle);
+			(*iter)->GetTitles().DeleteTitle(inVenueConfig, pTitle);
 			(*iter)->GetTitles().FindTitle(inVenue, inTitle, &pTitle);
 		}
 	}

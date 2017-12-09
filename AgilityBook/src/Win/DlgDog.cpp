@@ -1406,7 +1406,9 @@ void CDlgDog::OnTitleDelete(wxCommandEvent& evt)
 	if (0 <= i)
 	{
 		CDlgDogDataTitlePtr pTitle = GetTitleData(i);
-		m_Titles.DeleteTitle(pTitle->GetData());
+		ARBConfigVenuePtr venue;
+		m_pDoc->Book().GetConfig().GetVenues().FindVenue(pTitle->GetData()->GetVenue(), &venue);
+		m_Titles.DeleteTitle(venue, pTitle->GetData());
 		m_ctrlTitles->DeleteItem(i);
 		UpdateTitleButtons();
 	}

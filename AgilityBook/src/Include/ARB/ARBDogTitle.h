@@ -287,8 +287,11 @@ public:
 
 	/**
 	 * Delete a title, remove any dependent objects.
+	 * @param inVenue Venue that has title being deleted.
 	 * @param inTitle Title being deleted.
 	 * @return Was it removed?
 	 */
-	bool DeleteTitle(ARBDogTitlePtr inTitle);
+	bool DeleteTitle(
+			ARBConfigVenuePtr inVenue,
+			ARBDogTitlePtr inTitle);
 };

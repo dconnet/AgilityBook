@@ -1,6 +1,9 @@
-12/3/2017: v3.2.3.<development>
+12/9/2017: v3.2.3.<development>
+- Bumped Configuration v56:
+  - AKC Triple Q titles don't repeat.
 - Bug fixes:
   - Fix black box on systems >100% but less than 200% scaling.
+  - Fix problem when a previous recurring title was deleted.
 
 11/23/2017: v3.2.2.101
 - Bumped Configuration v55:

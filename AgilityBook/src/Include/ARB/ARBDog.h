@@ -497,11 +497,13 @@ public:
 
 	/**
 	 * Delete a title, remove any dependent objects.
+	 * @param inVenueConfig Venue that has title being deleted.
 	 * @param inVenue Venue title is in.
 	 * @param inTitle Title name being deleted.
 	 * @return Number of items removed.
 	 */
 	int DeleteTitle(
+			ARBConfigVenuePtr inVenueConfig,
 			std::wstring const& inVenue,
 			std::wstring const& inTitle);
 

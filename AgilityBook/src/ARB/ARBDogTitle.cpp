@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-12-09 Fixed recurring title issue when not-last title was deleted.
  * 2015-04-26 Fixed recurring title name (startat wasn't being written)
  * 2013-01-13 Added new recurring title suffix style.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -517,17 +518,41 @@ bool ARBDogTitleList::AddTitle(ARBDogTitlePtr inTitle)
 }
 
 
-bool ARBDogTitleList::DeleteTitle(ARBDogTitlePtr inTitle)
+bool ARBDogTitleList::DeleteTitle(
+		ARBConfigVenuePtr inVenue,
+		ARBDogTitlePtr inTitle)
 {
+	bool bDeleted = false;
 	if (!inTitle)
-		return false;
+		return bDeleted;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (*(*iter) == *inTitle)
 		{
 			erase(iter);
-			return true;
+			bDeleted = true;
+			break;
 		}
 	}
-	return false;
+
+	// Fix recurring titles.
+	ARBConfigTitlePtr title;
+	if (inVenue && inVenue->GetTitles().FindTitle(inTitle->GetRawName(), &title) && title->IsRecurring())
+	{
+		std::vector<ARBDogTitlePtr> titles;
+		for (iterator iter = begin(); iter != end(); ++iter)
+		{
+			if ((*iter)->GetVenue() == inVenue->GetName() && (*iter)->GetRawName() == title->GetName())
+			{
+				titles.push_back(*iter);
+			}
+		}
+		// Titles are already sorted.
+		short instance = 1;
+		for (auto iter = titles.begin(); iter != titles.end(); ++iter, ++instance)
+		{
+			(*iter)->SetName(title->GetName(), instance, title);
+		}
+	}
+	return bDeleted;
 }

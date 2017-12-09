@@ -1516,7 +1516,7 @@ bool ARBConfigActionDeleteTitle::Apply(
 					if (!ioCallBack.CanContinue())
 						return bChanged;
 					ioInfo << msg << L"\n";
-					ioDogs->DeleteTitle(m_Venue, m_OldName);
+					ioDogs->DeleteTitle(venue, m_Venue, m_OldName);
 				}
 			}
 			bChanged = true;
