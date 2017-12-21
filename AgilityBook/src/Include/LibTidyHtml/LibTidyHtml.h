@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-12-19 Added pRawFileBaseName for debugging.
  * 2013-06-10 Separated from Win/CalendarSiteUSDAA.cpp
  */
 
@@ -21,4 +22,5 @@
 
 extern ElementNodePtr TidyHtmlData(
 		std::string const& data,
-		std::wostringstream& err);
+		std::wostringstream& err,
+		std::string const* pRawFileBaseName = nullptr);

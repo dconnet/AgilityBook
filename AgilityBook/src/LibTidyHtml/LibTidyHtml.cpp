@@ -10,6 +10,8 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-12-19 Added pRawFileBaseName for debugging.
+ *            Fixed tidy calls to properly quote "&" from web data.
  * 2013-06-10 Separated from Win/CalendarSiteUSDAA.cpp
  */
 
@@ -19,6 +21,8 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "tidy/include/tidy.h"
+#include "tidy/include/tidybuffio.h"
+#include <fstream>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -29,73 +33,98 @@
 
 ElementNodePtr TidyHtmlData(
 		std::string const& data,
-		std::wostringstream& err)
+		std::wostringstream& err,
+		std::string const* pRawFileBaseName)
 {
 	ElementNodePtr tree;
 
 	if (!data.empty())
 	{
 		TidyDoc tdoc = tidyCreate();
+
 		tidyOptSetBool(tdoc, TidyXhtmlOut, yes);
 		tidyOptSetBool(tdoc, TidyNumEntities, yes);
+		tidyOptSetBool(tdoc, TidyQuoteAmpersand, yes);
+
+		TidyBuffer errbuf = { 0 };
+		if (0 > tidySetErrorBuffer(tdoc, &errbuf))
+		{
+			tidyRelease(tdoc);
+			return tree;
+		}
+
 		if (0 > tidyParseString(tdoc, data.c_str()))
 		{
+			if (errbuf.size > 0)
+			{
+				std::string errmsg((const char*)errbuf.bp, errbuf.size);
+				err << L"TIDY Error: " << StringUtil::stringW(errmsg);
+			}
+			tidyBufFree(&errbuf);
 			tidyRelease(tdoc);
 			return tree;
 		}
+
 		if (0 > tidyCleanAndRepair(tdoc))
 		{
+			if (errbuf.size > 0)
+			{
+				std::string errmsg((const char*)errbuf.bp, errbuf.size);
+				err << L"TIDY Error: " << StringUtil::stringW(errmsg);
+			}
+			tidyBufFree(&errbuf);
 			tidyRelease(tdoc);
 			return tree;
 		}
-		tidyRunDiagnostics(tdoc);
-		uint len = 0;
-		if (tidySaveString(tdoc, nullptr, &len) != -ENOMEM)
-		{
-			tidyRelease(tdoc);
-			return tree;
-		}
-		char* pData = new char[len+1];
-		strncpy(pData, data.c_str(), len);
-		if (0 > tidySaveString(tdoc, pData, &len))
-		{
-			tidyRelease(tdoc);
-			delete [] pData;
-			return tree;
-		}
-		tidyRelease(tdoc);
-		// Note, Tidy does not null terminate the buffer.
-		pData[len] = 0;
 
-#ifdef _DEBUG
-//Test code to look at 'tidy'd data
-//{
-//std::string out(inAddress);
-//out += ".out";
-//wxFFile raw(StringUtil::stringWX(out), L"wb");
-//raw.Write(pData, strlen(pData));
-//}
-#endif
+		tidyRunDiagnostics(tdoc);
+		tidyOptSetBool(tdoc, TidyForceOutput, yes);
+
+		TidyBuffer output = { 0 };
+		if (0 > tidySaveBuffer(tdoc, &output))
+		{
+			if (errbuf.size > 0)
+			{
+				std::string errmsg((const char*)errbuf.bp, errbuf.size);
+				err << L"TIDY Error: " << StringUtil::stringW(errmsg);
+			}
+			tidyBufFree(&errbuf);
+			tidyBufFree(&output);
+			tidyRelease(tdoc);
+			return tree;
+		}
+
+		if (pRawFileBaseName && !pRawFileBaseName->empty())
+		{
+			std::string out(*pRawFileBaseName);
+			out += ".out";
+			std::ofstream file(out.c_str(), std::ios_base::out | std::ios_base::binary);
+			if (file.is_open())
+			{
+				file.write((const char*)output.bp, output.size);
+				file.close();
+			}
+		}
 
 		tree = ElementNode::New();
-		if (!tree->LoadXML(pData, len, err))
+		if (!tree->LoadXML((const char*)output.bp, output.size, err))
 		{
 			tree.reset();
 		}
 		else
 		{
-#ifdef _DEBUG
-//Test code to look at xml data
-//{
-//std::string out(inAddress);
-//out += ".tree";
-//wxFFileOutputStream raw(StringUtil::stringWX(out), L"wb");
-//tree->SaveXML(raw);
-//}
-#endif
+			if (pRawFileBaseName && !pRawFileBaseName->empty())
+			{
+				std::string out(*pRawFileBaseName);
+				out += ".tree";
+				std::ofstream file(out.c_str(), std::ios_base::out | std::ios_base::binary);
+				tree->SaveXML(file);
+			}
 		}
-		delete [] pData;
-		pData = nullptr;
+
+		tidyBufFree(&errbuf);
+		tidyBufFree(&output);
+		tidyRelease(tdoc);
 	}
 	return tree;
 }

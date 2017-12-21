@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-12-19 Tweaked default width a little.
  * 2014-12-31 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-02-11 Ported to wxWidgets.
@@ -30,6 +31,8 @@
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
+
+static int _defWidth = 250;
 
 /////////////////////////////////////////////////////////////////////////////
 // I used the wxProgressDialog as a guide
@@ -118,9 +121,9 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	m_ctrlMessage = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlMessage->Wrap(-1);
 
-	m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDLG_UNIT(this, wxSize(230 ,-1)), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+	m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDLG_UNIT(this, wxSize(_defWidth,-1)), wxGA_HORIZONTAL|wxGA_SMOOTH)));
 	for (int nBar = 1; nBar < nBars; ++nBar)
-		m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDLG_UNIT(this, wxSize(230,-1)), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+		m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDLG_UNIT(this, wxSize(_defWidth,-1)), wxGA_HORIZONTAL|wxGA_SMOOTH)));
 
 	// Sizers
 

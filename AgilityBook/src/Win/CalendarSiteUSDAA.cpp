@@ -48,6 +48,7 @@
 #define GENERATE_TESTDATA	0
 #define USE_TESTDATA 		0
 #define TESTDATANAME		L"c:\\AgilityBook\\testdata\\usdaa-raw"
+#define DEBUG_TIDY			1
 #if GENERATE_TESTDATA && USE_TESTDATA
 #error "Choose one!"
 #endif
@@ -129,7 +130,7 @@ std::wstring CCalendarSiteUSDAA::GetDescription() const
 
 
 size_t CCalendarSiteUSDAA::GetLocationCodes(
-			std::map<std::wstring, std::wstring>& locCodes) const
+		std::map<std::wstring, std::wstring>& locCodes) const
 {
 	locCodes.clear();
 	return locCodes.size();
@@ -137,7 +138,7 @@ size_t CCalendarSiteUSDAA::GetLocationCodes(
 
 
 size_t CCalendarSiteUSDAA::GetVenueCodes(
-			std::map<std::wstring, std::wstring>& venueCodes) const
+		std::map<std::wstring, std::wstring>& venueCodes) const
 {
 	venueCodes.clear();
 	venueCodes[L"USDAA"] = L"USDAA";
@@ -182,14 +183,18 @@ static ElementNodePtr ReadData(
 
 	if (!data.empty())
 	{
+		std::string debug;
 #if GENERATE_TESTDATA
-{
-wxFFile raw(outTestData.c_str(), L"wb");
-raw.Write(data.c_str(), data.length());
-}
+#if DEBUG_TIDY
+		debug = StringUtil::stringA(outTestData);
+#endif
+		{
+			wxFFile raw(outTestData.c_str(), L"wb");
+			raw.Write(data.c_str(), data.length());
+		}
 #endif
 		std::wostringstream err;
-		tree = TidyHtmlData(data, err);
+		tree = TidyHtmlData(data, err, &debug);
 		if (!tree)
 		{
 			wxString msg(StringUtil::stringWX(err.str()));
