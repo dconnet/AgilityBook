@@ -344,10 +344,10 @@ bool CAgilityBookApp::OnInit()
 
 	int x, y;
 	x = y = wxDefaultCoord;
-	wxConfig::Get()->Read(CFG_SETTINGS_LASTXPOS, &x, x);
-	wxConfig::Get()->Read(CFG_SETTINGS_LASTYPOS, &y, y);
-	x = DPI::Scale(x);
-	y = DPI::Scale(y);
+	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTXPOS, &x, x))
+		x = DPI::Scale(x);
+	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTYPOS, &y, y))
+		y = DPI::Scale(y);
 
 	bool bCompute = false;
 	wxMouseState mouseState = ::wxGetMouseState();
