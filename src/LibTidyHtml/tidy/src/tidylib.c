@@ -1433,11 +1433,11 @@ static ctmbstr integrity = "\nPanic - tree has lost its integrity\n";
 
 int         TY_(DocParseStream)( TidyDocImpl* doc, StreamIn* in )
 {
+    int bomEnc;
     Bool xmlIn = cfgBool( doc, TidyXmlTags );
     TidyConfigChangeCallback callback = doc->pConfigChangeCallback;
     
     doc->pConfigChangeCallback = NULL;
-    int bomEnc;
 
     assert( doc != NULL && in != NULL );
     assert( doc->docIn == NULL );
