@@ -1,3 +1,5 @@
+12/27/2017: v3.2.4.<development>
+
 12/27/2017: v3.2.3.102
 - Note: Moved source code from SourceForge to GitHub
 - Bumped Configuration v56:
