@@ -1,0 +1,25 @@
+# Ignore MSW build directory
+/bin/*
+
+/src/Projects/**/AgilityBook.VC.db
+/src/Projects/**/ipch/*
+/src/Projects/**/*.sdf
+/src/Projects/**/*.suo
+/src/Projects/**/*.user
+
+# Ignore (recommended) Mac build directory (and generated files)
+/build-cocoa/*
+/build-cocoa-debug/*
+
+/autom4te.cache/*
+/configure
+
+/src/Projects/xcode9/**/xcuserdata/*
+/src/Projects/xcode9/build/*
+
+# Ignore vim tmp files
+*.swp
+
+# Ignore doxygen generated directory
+/docs/*
+/DoxWarnings.log

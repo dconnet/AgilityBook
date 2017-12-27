@@ -19,6 +19,7 @@ import datetime
 import os
 import string
 import sys
+import time
 
 
 class LockFile:
@@ -44,6 +45,8 @@ class LockFile:
 			return 0
 		try:
 			os.close(self.m_fd)
+			self.m_fd = None
+			time.sleep(1)
 			os.remove(self.m_filename)
 			return 1
 		except OSError:

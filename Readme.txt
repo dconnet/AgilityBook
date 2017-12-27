@@ -26,7 +26,7 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 python: https://www.python.org
-Currently using version 3.5.1
+Currently using version 3.6.4
 - Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
@@ -86,185 +86,13 @@ before AC_MSG_CHECKING line (fixes macOS 10.13 SDK issue)
       delete m_privateContextMenu;
   }
 
-=== Changes to 3.0.2:
--[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
-  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
-  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
-    the library is compiled one way and the users do something different.
-  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
-  - Set wxUSE_MEDIACTRL to 0 (currently 1)
-  - Set wxUSE_INKEDIT to 1 (currently 0)
--[win]- src/msw/bmpcbox.cpp
-    cross ported changes from trunk to fix hi-dpi issue with combo
-c:\devtools\wx\wxWidgets-3.0.2\src\msw>diff -c bmpcbox.cpp.orig bmpcbox.cpp
-*** bmpcbox.cpp.orig    Mon Oct 06 13:34:04 2014
---- bmpcbox.cpp Thu Jan 01 19:47:56 2015
-***************
-*** 409,415 ****
-
-      // Draw default for item -1, which means 'focus rect only'
-      if ( pos == -1 )
-!         return FALSE;
-
-      int flags = 0;
-      if ( lpDrawItem->itemState & ODS_COMBOBOXEDIT )
---- 409,415 ----
-
-      // Draw default for item -1, which means 'focus rect only'
-      if ( pos == -1 )
-!         return false;
-
-      int flags = 0;
-      if ( lpDrawItem->itemState & ODS_COMBOBOXEDIT )
-***************
-*** 449,457 ****
-      LPMEASUREITEMSTRUCT lpMeasureItem = (LPMEASUREITEMSTRUCT) item;
-      int pos = lpMeasureItem->itemID;
-
-!     // Measure item height if item list is not empty,
-      // otherwise leave default system value.
-!     if ( pos >= 0 )
-      {
-          lpMeasureItem->itemHeight = wxBitmapComboBoxBase::MeasureItem(pos);
-      }
---- 449,457 ----
-      LPMEASUREITEMSTRUCT lpMeasureItem = (LPMEASUREITEMSTRUCT) item;
-      int pos = lpMeasureItem->itemID;
-
-!     // Measure edit field height if item list is not empty,
-      // otherwise leave default system value.
-!     if ( m_usedImgSize.y >= 0 || pos >= 0 )
-      {
-          lpMeasureItem->itemHeight = wxBitmapComboBoxBase::MeasureItem(pos);
-      }
-
-=== Changes for support VC14: https://forums.wxwidgets.org/viewtopic.php?t=40491
-1) <wxdir>\src\zlib\gzguts.h - line 102
-change:
-#ifdef _MSC_VER
-#  define snprintf _snprintf
-#endif
-
-to:
-#if (defined(_MSC_VER) && (_MSC_VER < 1900))
-  #define snprintf _snprintf
-#endif
-
-2) <wxdir>\src\tiff\libtiff\tif_config.h - line 367
-change:
-#define snprintf _snprintf
-
-to:
-#if (defined(_MSC_VER) && (_MSC_VER < 1900))
-  #define snprintf _snprintf
-#endif
-
-3) <wxdir>\include\wx\propgrid\advprops.h - line 453
-change:
-wxDateTime GetDateValue() const
-{
-    //return m_valueDateTime;
-    return m_value;
-}
-
-to:
-wxDateTime GetDateValue() const
-{
-    //return m_valueDateTime;
-    return m_value.GetDateTime();
-}
-
-=== Changes for support 64bit xcode: http://goharsha.com/blog/compiling-wxwidgets-3-0-2-mac-os-x-yosemite/
--[mac]- src/osx/webview_webkit.mm
-(note, fixed in wx3.0.3)
-src/osx/webview_webkit.mm: - line 31
-change:
-#include <WebKit/WebKit.h>
-to:
-#include <WebKit/WebKitLegacy.h>
-
-=== Changes to support ink in richedit
--[win]- src/msw/textctrl.cpp
->diff -c textctrl.cpp.orig textctrl.cpp
-*** textctrl.cpp.orig   Mon Oct 06 14:34:04 2014
---- textctrl.cpp        Thu Oct 22 14:35:14 2015
-***************
-*** 76,81 ****
---- 76,85 ----
-
-  #endif // wxUSE_RICHEDIT
-
-+ #if wxUSE_INKEDIT
-+     #include <wx/dynlib.h>
-+ #endif
-+
-  #include "wx/msw/missing.h"
-
-  // FIXME-VC6: This seems to be only missing from VC6 headers.
-***************
-*** 339,344 ****
---- 343,353 ----
-          m_dropTarget = NULL;
-      }
-  #endif // wxUSE_DRAG_AND_DROP && wxUSE_RICHEDIT
-+
-+ #if wxUSE_INKEDIT && wxUSE_RICHEDIT
-+     if (m_isInkEdit)
-+         DissociateHandle();
-+ #endif
-
-      delete m_privateContextMenu;
-  }
-
-
-=== Changes to 3.0.1
--[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
-  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
-  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
-    the library is compiled one way and the users do something different.
-  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
-  - Set wxUSE_MEDIACTRL to 0 (currently 1)
-
-=== Changes to 3.0.0:
--[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
-  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
-  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
-    the library is compiled one way and the users do something different.
-  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
-  - Set wxUSE_MEDIACTRL to 0 (currently 1)
--[win]- src/msw/combobox.cpp
-    http://trac.wxwidgets.org/changeset/75196
-c:\devtools\wx\wxWidgets-3.0.0\src\msw>diff -c combobox.cpp.orig combobox.cpp
-*** combobox.cpp.orig   Fri Nov 15 08:20:58 2013
---- combobox.cpp        Fri Nov 15 08:21:19 2013
-***************
-*** 683,689 ****
-      // our own one. So we must explicitly check the HWND value too here and
-      // avoid eating the events from the listbox as otherwise it is rendered
-      // inoperative, see #15647.
-!     if ( id == GetId() && hWnd != GetHWND() )
-      {
-          // Must be the case described above.
-          return NULL;
---- 683,689 ----
-      // our own one. So we must explicitly check the HWND value too here and
-      // avoid eating the events from the listbox as otherwise it is rendered
-      // inoperative, see #15647.
-!     if ( id == GetId() && hWnd && hWnd != GetHWND() )
-      {
-          // Must be the case described above.
-          return NULL;
-
-=== wx2.9.x: Not supported
--  ARBv3 does not support pre 2.9. It uses new features.
-
 To build for VC, see ./src/Projects/CompileWX.py
 To build for Mac, see ./build/setupwx
 
 --------------------
 
 poedit: http://www.poedit.net
-Cross platform editor for modifying .po files. Currently using 1.6.10.
+Cross platform editor for modifying .po files. Currently using 2.0.5.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -289,19 +117,19 @@ Useful for figuring out how a lay a dialog out.
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.56.0. There is no need
+ARB has been built and tested using Boost version 1.66.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr,
 weak_ptr and make_shared templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
-above. The default directory when unpacked is boost_1_56_0 (of course,
+above. The default directory when unpacked is boost_1_66_0 (of course,
 this will vary based on boost version). Set BOOST_ROOT to point to this
 directory. The projects use this environment variable.
 
 --------------------
 
 Windows Installer XML toolset: http://wixtoolset.org/
-Currently using Version 3.9.1006.0 (as of ARB v2.4.5).
+Currently using Version 3.11 (as of ARB v3.2.2).
 - Install votive [optional]
 - (1), run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
@@ -311,7 +139,7 @@ Currently using Version 3.9.1006.0 (as of ARB v2.4.5).
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.8.
+Used to create source code documentation. AgilityBook.dox uses v1.8.13.
 [Install to default location]
 
 --------------------
@@ -387,6 +215,12 @@ Microsoft Visual Studio 2015 (VC14)
    If 'vc140_xp' is set as the target platform, it appears to work, but the
    compilation of WX is not targeted at that platform, so it's not supported.
 
+Microsoft Visual Studio 2017 (VC14.1)
+===================================
+   It works, no additional notes. But only targets Vista+.
+   If 'vc141_xp' is set as the target platform, it appears to work, but the
+   compilation of WX is not targeted at that platform, so it's not supported.
+
 
 Xcode
 =====
@@ -397,12 +231,12 @@ sudo port upgrade outdated
 initial: sudo port install autoconf
          sudo port install subversion
          sudo port install git
-         sudo port install python35
-         sudo port install py35-readline
-         sudo port select --set python3 python35
+         sudo port install python36
+         sudo port install py36-readline
+         sudo port select --set python3 python36
 
 The xcode projects were used as follows:
-.../xcode7: Xcode 7.x on OSX10.11
+.../xcode7: Xcode 7.x on OSX10.11 (still applies to xcode9)
             From release notes: "The Xcode build system no longer automatically
             inherits the environment used to launch the app when running in the
             IDE" This means my use of $WXBASE is now broken. To fix, run this
@@ -424,9 +258,9 @@ OSX 10.9:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
-setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_56_0
+setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_66_0
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.2
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.0
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -446,9 +280,9 @@ OSX 10.10+:
     <string>sh</string>
     <string>-c</string>
     <string>
-    launchctl setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_56_0
+    launchctl setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_66_0
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.0.2
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.0
     </string>
   </array>
   <key>RunAtLoad</key>

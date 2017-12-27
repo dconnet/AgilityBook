@@ -1,4 +1,5 @@
-12/19/2017: v3.2.3.<development>
+12/27/2017: v3.2.3.102
+- Note: Moved source code from SourceForge to GitHub
 - Bumped Configuration v56:
   - AKC Triple Q titles don't repeat.
 - Bug fixes:

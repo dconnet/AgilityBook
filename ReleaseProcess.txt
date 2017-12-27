@@ -4,8 +4,8 @@ On new year, update copyright year in:
 - License.txt
 - configure.in
 - src/Include/VersionNumber.h
-- src/Projects/xcode7/AgilityBook/AgilityBook/AgilityBook-Info.plist
-- src/Projects/xcode7/ARBHelp/ARBHelp/ARBHelp-Info.plist
+- src/Projects/xcode9/AgilityBook/AgilityBook/AgilityBook-Info.plist
+- src/Projects/xcode9/ARBHelp/ARBHelp/ARBHelp-Info.plist
 
 Files to change before marking files for release:
 - If file version has changed (arb version, not build number):
@@ -21,7 +21,7 @@ Files to change before marking files for release:
 - History.txt
   Update program version and date, along with any comments.
   - Reflect these changes into help/html/HistoryData.html
-  - Run "src\UpdateHistory.py -h -w"
+  - Run "src\UpdateHistory.py -w"
     (note: while a help file is no longer actually generated, continue doing
     this as the website pulls it's data from this too. And at some point, I
     may reinstate the help file [-h: arbhelp, -w: website])
@@ -32,7 +32,7 @@ Run Doxygen and fix any warnings/errors it reports.
 - cd ...\AgilityBook
 - doxygen AgilityBook.dox
 
-Commit all changes to SVN.
+Commit all changes to GitHub.
 (note: if doing this on official build machine, can skip this commit)
 
 Switch to build machine, do a full rebuild and verify it.
@@ -48,14 +48,14 @@ Switch to build machine, do a full rebuild and verify it.
   and auto-update Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
 
-Commit all changes to SVN.
+Commit all changes to GitHub.
 
 Pull files onto Mac and build there (see MAC_BUILD.txt)
 - Update Version (x.y.z) and Build (n) in xcode project General settings
   (unless this was done as prep for a new release below)
 - Update CFBundleVersion in xcode plist files (build number), this can be
   done in Xcode in the 'General' page for ARBHelp and AgilityBook.
-On Mac10.9:
+  (preferable to edit files on build machine step above for single commit)
 - export PATH=$WXWIN/build-cocoa:$PATH
 - cd .../AgilityBook
 - autoconf
@@ -63,40 +63,32 @@ On Mac10.9:
 - mkdir build-cocoa
 - cd build-cocoa
 - ../configure
-Both:
 - make dist
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
   - Name it AgilityBook-n_n_n_n-mac.dmg
   - After dragging in image, rename the mount point. (AgilityBook x.y.z)
   - Unmount and 'Convert' in DU (save as same name) to compress.
 
-Commit all changes to SVN (should just be the xcode project).
+Commit all changes to GitHub (should just be the xcode project).
 
-Tag SubVersion repository
- - /tags/vn.n.n.n
+Create git branch for release: 'vn.n.n'
+ (note, this is a change from prior SVN style. If a rebuild is required because
+ of a muckup, it will be done on the branch)
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Copy a backup of released files to \AgilityBook\test\[vc10/vc10x64]
   Currently, I only archive vc10/x64 - the exe's that are released to the wild.
-- Use SVN to export AgilityBook\ to distrib\AgilityBook\ directory
-  - (in svn export, select the 'trunk' directory)
-  - Zip AgilityBook to AgilityBook-n_n_n_n-src.zip
-  - Delete AgilityBook directory
-- Readme1st.vn.n.n.n.txt
-  - Copy Misc/Instructions.txt to Readme1st.vn.n.n.n.txt and modify [if needed]
+- Use GitHub webpage to download zip file
+  - Rename to AgilityBook-n_n_n_n-src.zip
 
-SourceForge:
-- Upload all files (https://sourceforge.net/projects/agilitybook/files/)
-  - Readme1st.vn.n.n.n.txt
+GitHub:
+- Create release on vn.n.n.n branch
+  - Use History to create release notes, these will be the same as the announcement below.
   - AgilityBook-n_n_n_n-src.zip
   - AgilityBook-n_n_n_n-win.zip
   - AgilityBook-n_n_n_n-x64.zip
   - AgilityBook-n_n_n_n-mac.dmg
-- Set default file information (sets up file to auto-download)
-  - Windows: -x64
-  - Mac: -mac
-  - Others: -src
 
 Web Site:
 - Upload msi zip files and dmg to files/
@@ -120,9 +112,10 @@ In Yahoo
 
 Backup:
 - Backup development directory onto CD.
-  - Remove unnecessary files (build relics, svn)
+  - Remove unnecessary files (build relics, leave .git - complete backup!)
 
 Prepare for next release:
+- Switch back to master
 - Update version number
   - This is done by editing .../include/VersionNumber.h
 - Update History.txt
