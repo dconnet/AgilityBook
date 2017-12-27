@@ -36,21 +36,21 @@ ARCHIVES = libtidyhtml
 libtidyhtml_SRCS = LibTidyHtml.cpp \
 	tidy/src/access.c \
 	tidy/src/alloc.c \
-	tidy/src/attrask.c \
 	tidy/src/attrdict.c \
-	tidy/src/attrget.c \
 	tidy/src/attrs.c \
 	tidy/src/buffio.c \
+	tidy/src/charsets.c \
 	tidy/src/clean.c \
 	tidy/src/config.c \
 	tidy/src/entities.c \
 	tidy/src/fileio.c \
 	tidy/src/gdoc.c \
 	tidy/src/istack.c \
-	tidy/src/lexer.c \
 	tidy/src/language.c \
+	tidy/src/lexer.c \
 	tidy/src/mappedio.c \
 	tidy/src/message.c \
+	tidy/src/messageobj.c \
 	tidy/src/parser.c \
 	tidy/src/pprint.c \
 	tidy/src/sprtf.c \
