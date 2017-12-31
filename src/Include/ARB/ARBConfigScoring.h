@@ -216,6 +216,14 @@ public:
 	{
 		m_bTimeFaultsOver = inBool;
 	}
+	bool ComputeTitlingPointsRawFaults() const
+	{
+		return m_bTitlingPointsRawFaults;
+	}
+	void SetComputeTitlingPointsRawFaults(bool inBool)
+	{
+		m_bTitlingPointsRawFaults = inBool;
+	}
 	bool SubtractTimeFaultsFromScore() const
 	{
 		return m_bSubtractTimeFaults;
@@ -334,6 +342,7 @@ private:
 	bool m_bCleanQ;
 	bool m_bTimeFaultsUnder;
 	bool m_bTimeFaultsOver;
+	bool m_bTitlingPointsRawFaults; // On T+F runs, use raw faults for titling
 	bool m_bSubtractTimeFaults;
 	short m_TimeFaultMultiplier;
 	std::wstring m_Note;

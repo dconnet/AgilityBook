@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-12-31 Add support for using raw faults when determining title points.
  * 2017-11-30 Remove image list from placement list (not needed)
  * 2016-01-16 Cleaned up new/edit/delete buttons.
  * 2015-01-01 Changed pixels to dialog units.
@@ -147,6 +148,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_ctrlSubtractTimeFaults(nullptr)
 	, m_ctrlTimeFaultsUnder(nullptr)
 	, m_ctrlTimeFaultsOver(nullptr)
+	, m_ctrlTimeFaultsTitlingPts(nullptr)
 	, m_ctrlPointsOpeningText(nullptr)
 	, m_ctrlPointsOpening(nullptr)
 	, m_ctrlPointsClosingText(nullptr)
@@ -162,6 +164,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_SubtractTimeFaults(m_pScoring->SubtractTimeFaultsFromScore())
 	, m_TimeFaultsUnder(m_pScoring->ComputeTimeFaultsUnder())
 	, m_TimeFaultsOver(m_pScoring->ComputeTimeFaultsOver())
+	, m_TitlingPointsRawFaults(m_pScoring->ComputeTitlingPointsRawFaults())
 	, m_OpeningPts(m_pScoring->GetRequiredOpeningPoints())
 	, m_ClosingPts(m_pScoring->GetRequiredClosingPoints())
 {
@@ -423,6 +426,14 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlTimeFaultsOver->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"));
 	m_ctrlTimeFaultsOver->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"));
 
+	m_ctrlTimeFaultsTitlingPts = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_TitlingPointsRawFaults));
+	BIND_OR_CONNECT_CTRL(m_ctrlTimeFaultsTitlingPts, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnComputeTimeFaults);
+	m_ctrlTimeFaultsTitlingPts->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"));
+	m_ctrlTimeFaultsTitlingPts->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"));
+
 	m_ctrlPointsOpeningText = new wxStaticText(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_OPENING_PTS"),
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -514,6 +525,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	sizerCol2->Add(m_ctrlSubtractTimeFaults, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerCol2->Add(m_ctrlTimeFaultsUnder, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerCol2->Add(m_ctrlTimeFaultsOver, 0, wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerCol2->Add(m_ctrlTimeFaultsTitlingPts, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxFlexGridSizer* sizerPoints = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerPoints->SetFlexibleDirection(wxBOTH);
@@ -545,7 +557,6 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	}
 
 	UpdateControls();
-	UpdateButtons();
 
 	SetSizer(bSizer);
 	Layout();
@@ -625,6 +636,7 @@ void CDlgConfigEventMethod::UpdateControls()
 		m_ctrlSubtractTimeFaults->Show(false);
 		m_ctrlTimeFaultsUnder->Show(false);
 		m_ctrlTimeFaultsOver->Show(false);
+		m_ctrlTimeFaultsTitlingPts->Show(false);
 		m_ctrlMultiplyText->Show(false);
 		m_ctrlMultiply->Show(false);
 	}
@@ -642,6 +654,7 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlSubtractTimeFaults->Show(false);
 			m_ctrlTimeFaultsUnder->Show(false);
 			m_ctrlTimeFaultsOver->Show(false);
+			m_ctrlTimeFaultsTitlingPts->Show(false);
 			m_ctrlMultiplyText->Show(false);
 			m_ctrlMultiply->Show(false);
 			break;
@@ -657,6 +670,7 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlSubtractTimeFaults->Show(false);
 			m_ctrlTimeFaultsUnder->Show(false);
 			m_ctrlTimeFaultsOver->Show(false);
+			m_ctrlTimeFaultsTitlingPts->Show(false);
 			m_ctrlMultiplyText->Show(true);
 			m_ctrlMultiply->Show(true);
 			break;
@@ -670,6 +684,7 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlSubtractTimeFaults->Show(true);
 			m_ctrlTimeFaultsUnder->Show(true);
 			m_ctrlTimeFaultsOver->Show(true);
+			m_ctrlTimeFaultsTitlingPts->Show(false);
 			m_ctrlMultiplyText->Show(true);
 			m_ctrlMultiply->Show(true);
 			m_ctrlPointsOpeningText->SetLabel(_("IDC_CONFIG_EVENT_OPENING_PTS"));
@@ -684,6 +699,7 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlSubtractTimeFaults->Show(true);
 			m_ctrlTimeFaultsUnder->Show(true);
 			m_ctrlTimeFaultsOver->Show(true);
+			m_ctrlTimeFaultsTitlingPts->Show(false);
 			m_ctrlMultiplyText->Show(true);
 			m_ctrlMultiply->Show(true);
 			m_ctrlPointsOpeningText->SetLabel(_("IDS_SCORING_REQUIRED_POINTS"));
@@ -698,11 +714,13 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlSubtractTimeFaults->Show(false);
 			m_ctrlTimeFaultsUnder->Show(true);
 			m_ctrlTimeFaultsOver->Show(true);
+			m_ctrlTimeFaultsTitlingPts->Show(true);
 			m_ctrlMultiplyText->Show(true);
 			m_ctrlMultiply->Show(true);
 			break;
 		}
 	}
+	UpdateButtons();
 }
 
 
@@ -797,6 +815,7 @@ void CDlgConfigEventMethod::OnValidTo(wxCommandEvent& evt)
 
 void CDlgConfigEventMethod::OnSelchangeType(wxCommandEvent& evt)
 {
+	TransferDataFromWindow();
 	UpdateControls();
 	Layout();
 	GetSizer()->Fit(this);
@@ -1008,6 +1027,7 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		m_pScoring->SetQsMustBeClean(m_TimeFaultsCleanQ);
 		m_pScoring->SetComputeTimeFaultsUnder(m_TimeFaultsUnder);
 		m_pScoring->SetComputeTimeFaultsOver(m_TimeFaultsOver);
+		m_pScoring->SetComputeTitlingPointsRawFaults(m_TitlingPointsRawFaults);
 		m_pScoring->SetTimeFaultMultiplier(m_Multiply);
 		break;
 	}

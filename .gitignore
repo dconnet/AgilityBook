@@ -1,11 +1,12 @@
 # Ignore MSW build directory
 /bin/*
 
-/src/Projects/**/AgilityBook.VC.db
-/src/Projects/**/ipch/*
+/src/Projects/**/*.opendb
 /src/Projects/**/*.sdf
 /src/Projects/**/*.suo
 /src/Projects/**/*.user
+/src/Projects/**/*.VC.*
+/src/Projects/**/ipch/*
 
 # Ignore (recommended) Mac build directory (and generated files)
 /build-cocoa/*

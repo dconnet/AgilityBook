@@ -1,4 +1,7 @@
-12/27/2017: v3.2.4.<development>
+12/31/2017: v3.2.4.<development>
+- Bumped Configuration v57:
+  - Updated USDAA Master Challenge classes.
+    (Note: Title acronyms are not official. Unknown at this point.)
 
 12/27/2017: v3.2.3.102
 - Note: Moved source code from SourceForge to GitHub

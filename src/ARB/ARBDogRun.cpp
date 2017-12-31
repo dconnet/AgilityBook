@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-12-31 Add support for using raw faults when determining title points.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2016-01-06 Add support for named lifetime points.
  * 2015-11-27 Changed generic name to use subname if set.
@@ -628,7 +629,18 @@ double ARBDogRun::GetTitlePoints(
 						if (0.0 > score)
 							score = 0.0;
 					}
-					pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
+					bool bCompute = true;
+					if (inScoring->ComputeTitlingPointsRawFaults())
+					{
+						score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
+
+						// If using raw faults for determining title points, this implies that
+						// the run must be under SCT.
+						if (m_Scoring.GetTime() + score > m_Scoring.GetSCT())
+							bCompute = false;
+					}
+					if (bCompute)
+						pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 				}
 			}
 			else

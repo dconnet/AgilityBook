@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-27 11:08-0800\n"
-"PO-Revision-Date: 2017-12-27 11:08-0800\n"
+"POT-Creation-Date: 2017-12-31 15:26-0800\n"
+"PO-Revision-Date: 2017-12-31 15:27-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -2076,7 +2076,7 @@ msgstr "Required Points"
 msgid "IDS_COL_POINTS"
 msgstr "Points"
 
-#: Win/DlgAssignColumns.cpp:278 Win/DlgConfigEventMethod.cpp:354
+#: Win/DlgAssignColumns.cpp:278 Win/DlgConfigEventMethod.cpp:356
 #: Win/DlgListViewer.cpp:1150 Win/DlgListViewer.cpp:1218 Win/DlgRun.cpp:194
 #: Win/Print.cpp:274 Win/Print.cpp:279 Win/Print.cpp:285 Win/Print.cpp:291
 #: Win/Print.cpp:297
@@ -2973,8 +2973,8 @@ msgstr ""
 msgid "HIDC_CONFIG_EVENT_NOTES"
 msgstr "Notes about the current scoring method."
 
-#: Win/DlgConfigEvent.cpp:549 Win/DlgConfigEventMethod.cpp:190
-#: Win/DlgConfigEventMethod.cpp:712 Win/FilterOptions.cpp:207
+#: Win/DlgConfigEvent.cpp:549 Win/DlgConfigEventMethod.cpp:192
+#: Win/DlgConfigEventMethod.cpp:729 Win/FilterOptions.cpp:207
 #: Win/FilterOptions.cpp:291 Win/FilterOptions.cpp:389
 #: Win/FilterOptions.cpp:397 Win/FilterOptions.cpp:428
 msgid "IDS_ALL"
@@ -3066,214 +3066,224 @@ msgid "IDS_NAME_IN_USE"
 msgstr "Name is already in use."
 
 # DlgConfigEventMethod
-#: Win/DlgConfigEventMethod.cpp:170
+#: Win/DlgConfigEventMethod.cpp:172
 msgid "IDD_CONFIG_EVENT_METHOD"
 msgstr "Method Configuration"
 
-#: Win/DlgConfigEventMethod.cpp:180
+#: Win/DlgConfigEventMethod.cpp:182
 msgid "IDC_CONFIG_EVENT_DIVISION"
 msgstr "&Division"
 
-#: Win/DlgConfigEventMethod.cpp:188 Win/DlgConfigEventMethod.cpp:189
+#: Win/DlgConfigEventMethod.cpp:190 Win/DlgConfigEventMethod.cpp:191
 msgid "HIDC_CONFIG_EVENT_DIVISION"
 msgstr "Division this scoring method applies to."
 
-#: Win/DlgConfigEventMethod.cpp:206
+#: Win/DlgConfigEventMethod.cpp:208
 msgid "IDC_CONFIG_EVENT_LEVEL"
 msgstr "&Level"
 
-#: Win/DlgConfigEventMethod.cpp:213 Win/DlgConfigEventMethod.cpp:214
+#: Win/DlgConfigEventMethod.cpp:215 Win/DlgConfigEventMethod.cpp:216
 msgid "HIDC_CONFIG_EVENT_LEVEL"
 msgstr "Level this scoring method applies to."
 
-#: Win/DlgConfigEventMethod.cpp:217
+#: Win/DlgConfigEventMethod.cpp:219
 msgid "IDC_CONFIG_EVENT_DATE_VALID_FROM"
 msgstr "Valid &From"
 
-#: Win/DlgConfigEventMethod.cpp:220 Win/DlgConfigEventMethod.cpp:221
+#: Win/DlgConfigEventMethod.cpp:222 Win/DlgConfigEventMethod.cpp:223
 msgid "HIDC_CONFIG_EVENT_DATE_VALID_FROM"
 msgstr ""
 "Enable/disable the setting of a date. This allows for evolving rule changes."
 
-#: Win/DlgConfigEventMethod.cpp:236 Win/DlgConfigEventMethod.cpp:237
+#: Win/DlgConfigEventMethod.cpp:238 Win/DlgConfigEventMethod.cpp:239
 msgid "HIDC_CONFIG_EVENT_DATE_START"
 msgstr "Date this scoring method becomes valid."
 
-#: Win/DlgConfigEventMethod.cpp:244
+#: Win/DlgConfigEventMethod.cpp:246
 msgid "IDC_CONFIG_EVENT_DATE_VALID_TO"
 msgstr "Valid &To"
 
-#: Win/DlgConfigEventMethod.cpp:247 Win/DlgConfigEventMethod.cpp:248
+#: Win/DlgConfigEventMethod.cpp:249 Win/DlgConfigEventMethod.cpp:250
 msgid "HIDC_CONFIG_EVENT_DATE_VALID_TO"
 msgstr ""
 "Enable/disable the setting of a date. This allows for evolving rule changes."
 
-#: Win/DlgConfigEventMethod.cpp:263 Win/DlgConfigEventMethod.cpp:264
+#: Win/DlgConfigEventMethod.cpp:265 Win/DlgConfigEventMethod.cpp:266
 msgid "HIDC_CONFIG_EVENT_DATE_END"
 msgstr "Date this scoring method is valid until."
 
-#: Win/DlgConfigEventMethod.cpp:271
+#: Win/DlgConfigEventMethod.cpp:273
 msgid "IDC_CONFIG_EVENT_TYPE"
 msgstr "&Scoring Style"
 
-#: Win/DlgConfigEventMethod.cpp:279 Win/DlgConfigEventMethod.cpp:280
+#: Win/DlgConfigEventMethod.cpp:281 Win/DlgConfigEventMethod.cpp:282
 msgid "HIDC_CONFIG_EVENT_TYPE"
 msgstr "Scoring style of this scoring method."
 
-#: Win/DlgConfigEventMethod.cpp:301
+#: Win/DlgConfigEventMethod.cpp:303
 msgid "IDC_CONFIG_EVENT_DROP_FRACTIONS"
 msgstr "Drop time fractions for faults"
 
-#: Win/DlgConfigEventMethod.cpp:304 Win/DlgConfigEventMethod.cpp:305
+#: Win/DlgConfigEventMethod.cpp:306 Win/DlgConfigEventMethod.cpp:307
 msgid "HIDC_CONFIG_EVENT_DROP_FRACTIONS"
 msgstr "When computing time faults, should the fractions be dropped?"
 
-#: Win/DlgConfigEventMethod.cpp:308
+#: Win/DlgConfigEventMethod.cpp:310
 msgid "IDC_CONFIG_EVENT_BONUSTITLE"
 msgstr "Has Bonus Title Points"
 
-#: Win/DlgConfigEventMethod.cpp:311 Win/DlgConfigEventMethod.cpp:312
+#: Win/DlgConfigEventMethod.cpp:313 Win/DlgConfigEventMethod.cpp:314
 msgid "HIDC_CONFIG_EVENT_BONUSTITLE"
 msgstr ""
 "Does this scoring method have extra titling points? This would apply to "
 "venues like NADAC that have a bonus feature that allows the dog to earn 15 "
 "point Qs."
 
-#: Win/DlgConfigEventMethod.cpp:315
+#: Win/DlgConfigEventMethod.cpp:317
 msgid "IDC_CONFIG_EVENT_SUPERQ"
 msgstr "Has Super Qs"
 
-#: Win/DlgConfigEventMethod.cpp:318 Win/DlgConfigEventMethod.cpp:319
+#: Win/DlgConfigEventMethod.cpp:320 Win/DlgConfigEventMethod.cpp:321
 msgid "HIDC_CONFIG_EVENT_SUPERQ"
 msgstr "Does this scoring method have Super Qs?"
 
-#: Win/DlgConfigEventMethod.cpp:322
+#: Win/DlgConfigEventMethod.cpp:324
 msgid "IDC_CONFIG_EVENT_SPEED"
 msgstr "Has Speed Points"
 
-#: Win/DlgConfigEventMethod.cpp:326 Win/DlgConfigEventMethod.cpp:327
+#: Win/DlgConfigEventMethod.cpp:328 Win/DlgConfigEventMethod.cpp:329
 msgid "HIDC_CONFIG_EVENT_SPEED"
 msgstr ""
 "Does this scoring method have Speed points? (In AKC, these are MACH points.) "
 "Speed points are computed as full seconds under SCT."
 
-#: Win/DlgConfigEventMethod.cpp:330
+#: Win/DlgConfigEventMethod.cpp:332
 msgid "IDC_CONFIG_EVENT_TF_MULTIPLY"
 msgstr "Time Fault &Multiplier"
 
-#: Win/DlgConfigEventMethod.cpp:337 Win/DlgConfigEventMethod.cpp:338
+#: Win/DlgConfigEventMethod.cpp:339 Win/DlgConfigEventMethod.cpp:340
 msgid "HIDC_CONFIG_EVENT_TF_MULTIPLY"
 msgstr "Multiply any time faults by a weighting factor."
 
-#: Win/DlgConfigEventMethod.cpp:341
+#: Win/DlgConfigEventMethod.cpp:343
 msgid "IDC_CONFIG_EVENT_PLACEMENT"
 msgstr "Speed Point &Placement Multipliers"
 
-#: Win/DlgConfigEventMethod.cpp:352 Win/DlgConfigEventMethod.cpp:353
+#: Win/DlgConfigEventMethod.cpp:354 Win/DlgConfigEventMethod.cpp:355
 msgid "HIDC_CONFIG_EVENT_PLACEMENT"
 msgstr ""
 "List of placement multipliers used when computing speed points. If there are "
 "no entries, then placements will not affect speed points."
 
-#: Win/DlgConfigEventMethod.cpp:355
+#: Win/DlgConfigEventMethod.cpp:357
 msgid "IDS_COL_MULTIPLIER"
 msgstr "Multiplier"
 
-#: Win/DlgConfigEventMethod.cpp:372
+#: Win/DlgConfigEventMethod.cpp:374
 msgid "IDC_CONFIG_EVENT_PLACEMENT_NEW"
 msgstr "New..."
 
-#: Win/DlgConfigEventMethod.cpp:375 Win/DlgConfigEventMethod.cpp:376
+#: Win/DlgConfigEventMethod.cpp:377 Win/DlgConfigEventMethod.cpp:378
 msgid "HIDC_CONFIG_EVENT_PLACEMENT_NEW"
 msgstr "Add a new Speed Point Multiplier. Placements must be unique."
 
-#: Win/DlgConfigEventMethod.cpp:380
+#: Win/DlgConfigEventMethod.cpp:382
 msgid "IDC_CONFIG_EVENT_PLACEMENT_EDIT"
 msgstr "Edit..."
 
-#: Win/DlgConfigEventMethod.cpp:383 Win/DlgConfigEventMethod.cpp:384
+#: Win/DlgConfigEventMethod.cpp:385 Win/DlgConfigEventMethod.cpp:386
 msgid "HIDC_CONFIG_EVENT_PLACEMENT_EDIT"
 msgstr "Edit the currently selected Speed Point Multiplier."
 
-#: Win/DlgConfigEventMethod.cpp:388
+#: Win/DlgConfigEventMethod.cpp:390
 msgid "IDC_CONFIG_EVENT_PLACEMENT_DELETE"
 msgstr "Delete"
 
-#: Win/DlgConfigEventMethod.cpp:391 Win/DlgConfigEventMethod.cpp:392
+#: Win/DlgConfigEventMethod.cpp:393 Win/DlgConfigEventMethod.cpp:394
 msgid "HIDC_CONFIG_EVENT_PLACEMENT_DELETE"
 msgstr "Delete the currently selected Speed Point Multiplier."
 
-#: Win/DlgConfigEventMethod.cpp:396
+#: Win/DlgConfigEventMethod.cpp:398
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"
 msgstr "Time+Fault runs must be clean to Q"
 
-#: Win/DlgConfigEventMethod.cpp:399 Win/DlgConfigEventMethod.cpp:400
+#: Win/DlgConfigEventMethod.cpp:401 Win/DlgConfigEventMethod.cpp:402
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"
 msgstr "For TimePlusFault runs, the run must be clean to earn titling points."
 
-#: Win/DlgConfigEventMethod.cpp:403
+#: Win/DlgConfigEventMethod.cpp:405
 msgid "IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"
 msgstr "Subtract time faults from score"
 
-#: Win/DlgConfigEventMethod.cpp:407 Win/DlgConfigEventMethod.cpp:408
+#: Win/DlgConfigEventMethod.cpp:409 Win/DlgConfigEventMethod.cpp:410
 msgid "HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"
 msgstr "Subtract any time faults from the points earned."
 
-#: Win/DlgConfigEventMethod.cpp:411
+#: Win/DlgConfigEventMethod.cpp:413
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_UNDER"
 msgstr "Compute time faults under SCT"
 
-#: Win/DlgConfigEventMethod.cpp:415 Win/DlgConfigEventMethod.cpp:416
+#: Win/DlgConfigEventMethod.cpp:417 Win/DlgConfigEventMethod.cpp:418
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"
 msgstr "Add time faults for the number of seconds under course time."
 
-#: Win/DlgConfigEventMethod.cpp:419
+#: Win/DlgConfigEventMethod.cpp:421
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_OVER"
 msgstr "Compute time faults over SCT"
 
-#: Win/DlgConfigEventMethod.cpp:423 Win/DlgConfigEventMethod.cpp:424
+#: Win/DlgConfigEventMethod.cpp:425 Win/DlgConfigEventMethod.cpp:426
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"
 msgstr "Add time faults for the number of seconds over course time."
 
-#: Win/DlgConfigEventMethod.cpp:427 Win/DlgConfigEventMethod.cpp:675
+#: Win/DlgConfigEventMethod.cpp:429
+msgid "IDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"
+msgstr "Compute titling points using raw faults"
+
+#: Win/DlgConfigEventMethod.cpp:433 Win/DlgConfigEventMethod.cpp:434
+msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"
+msgstr ""
+"Compute titling points using raw faults. This implies that a run must be "
+"under SCT to qualify."
+
+#: Win/DlgConfigEventMethod.cpp:437 Win/DlgConfigEventMethod.cpp:689
 msgid "IDC_CONFIG_EVENT_OPENING_PTS"
 msgstr "Required &Opening"
 
-#: Win/DlgConfigEventMethod.cpp:434 Win/DlgConfigEventMethod.cpp:435
+#: Win/DlgConfigEventMethod.cpp:444 Win/DlgConfigEventMethod.cpp:445
 msgid "HIDC_CONFIG_EVENT_OPENING_PTS"
 msgstr ""
 "Number of opening points required in order to qualify. For events without "
 "closing points, this is the total number of points required."
 
-#: Win/DlgConfigEventMethod.cpp:438
+#: Win/DlgConfigEventMethod.cpp:448
 msgid "IDC_CONFIG_EVENT_CLOSING_PTS"
 msgstr "Required &Closing"
 
-#: Win/DlgConfigEventMethod.cpp:445 Win/DlgConfigEventMethod.cpp:446
+#: Win/DlgConfigEventMethod.cpp:455 Win/DlgConfigEventMethod.cpp:456
 msgid "HIDC_CONFIG_EVENT_CLOSING_PTS"
 msgstr "Number of closing points required in order to qualify."
 
-#: Win/DlgConfigEventMethod.cpp:689 Win/DlgRun.cpp:2368
+#: Win/DlgConfigEventMethod.cpp:704 Win/DlgRun.cpp:2368
 msgid "IDS_SCORING_REQUIRED_POINTS"
 msgstr "Required Points"
 
-#: Win/DlgConfigEventMethod.cpp:902 Win/DlgRun.cpp:3215
+#: Win/DlgConfigEventMethod.cpp:920 Win/DlgRun.cpp:3215
 msgid "IDS_SELECT_DIVISION"
 msgstr "Please select a Division."
 
-#: Win/DlgConfigEventMethod.cpp:909 Win/DlgRun.cpp:3224
+#: Win/DlgConfigEventMethod.cpp:927 Win/DlgRun.cpp:3224
 msgid "IDS_SELECT_LEVEL"
 msgstr "Please select a Level."
 
-#: Win/DlgConfigEventMethod.cpp:916
+#: Win/DlgConfigEventMethod.cpp:934
 msgid "IDS_SELECT_STYLE"
 msgstr "Please select a Style."
 
-#: Win/DlgConfigEventMethod.cpp:930
+#: Win/DlgConfigEventMethod.cpp:948
 msgid "IDS_CONFIGEVENT_DATEORDER"
 msgstr "Valid From date is before the Valid To date"
 
-#: Win/DlgConfigEventMethod.cpp:943
+#: Win/DlgConfigEventMethod.cpp:961
 msgid "IDS_CONFIGEVENT_PLACEMENT0"
 msgstr ""
 "In order to use a placement of 0, you must specify places that have values. "

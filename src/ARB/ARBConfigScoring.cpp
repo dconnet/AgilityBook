@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2017-12-31 Add support for using raw faults when determining title points.
  * 2016-01-06 Add support for named lifetime points.
  * 2011-07-31 Allow a time fault multipler of 0.
  * 2011-01-08 Added test around a debug message.
@@ -133,6 +134,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_bCleanQ(false)
 	, m_bTimeFaultsUnder(false)
 	, m_bTimeFaultsOver(false)
+	, m_bTitlingPointsRawFaults(false)
 	, m_bSubtractTimeFaults(false)
 	, m_TimeFaultMultiplier(1)
 	, m_Note()
@@ -160,6 +162,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_bCleanQ(rhs.m_bCleanQ)
 	, m_bTimeFaultsUnder(rhs.m_bTimeFaultsUnder)
 	, m_bTimeFaultsOver(rhs.m_bTimeFaultsOver)
+	, m_bTitlingPointsRawFaults(rhs.m_bTitlingPointsRawFaults)
 	, m_bSubtractTimeFaults(rhs.m_bSubtractTimeFaults)
 	, m_TimeFaultMultiplier(rhs.m_TimeFaultMultiplier)
 	, m_Note(rhs.m_Note)
@@ -205,6 +208,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_bCleanQ = rhs.m_bCleanQ;
 		m_bTimeFaultsUnder = rhs.m_bTimeFaultsUnder;
 		m_bTimeFaultsOver = rhs.m_bTimeFaultsOver;
+		m_bTitlingPointsRawFaults = rhs.m_bTitlingPointsRawFaults;
 		m_bSubtractTimeFaults = rhs.m_bSubtractTimeFaults;
 		m_TimeFaultMultiplier = rhs.m_TimeFaultMultiplier;
 		m_Note = rhs.m_Note;
@@ -234,6 +238,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_bCleanQ == rhs.m_bCleanQ
 		&& m_bTimeFaultsUnder == rhs.m_bTimeFaultsUnder
 		&& m_bTimeFaultsOver == rhs.m_bTimeFaultsOver
+		&& m_bTitlingPointsRawFaults == rhs.m_bTitlingPointsRawFaults
 		&& m_bSubtractTimeFaults == rhs.m_bSubtractTimeFaults
 		&& m_TimeFaultMultiplier == rhs.m_TimeFaultMultiplier
 		&& m_Note == rhs.m_Note
@@ -366,6 +371,11 @@ bool ARBConfigScoring::Load(
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_OVER, Localization()->ValidValuesBool().c_str()));
+		return false;
+	}
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_TITLING_PTS, m_bTitlingPointsRawFaults))
+	{
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_TITLING_PTS, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults))
@@ -549,6 +559,8 @@ bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 		scoring->AddAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder);
 	if (m_bTimeFaultsOver)
 		scoring->AddAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver);
+	if (m_bTitlingPointsRawFaults)
+		scoring->AddAttrib(ATTRIB_SCORING_TIMEFAULTS_TITLING_PTS, m_bTitlingPointsRawFaults);
 	if (m_bSubtractTimeFaults)
 		scoring->AddAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults);
 	// Don't write this if it's 1 for backwards compatibility.

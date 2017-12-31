@@ -511,11 +511,12 @@
     <Xml Include="..\..\Win\res\DefaultConfig.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\History.txt" />
-    <None Include="..\..\..\License.txt" />
-    <None Include="..\..\..\Readme.txt" />
-    <None Include="..\..\..\ReleaseProcess.txt" />
-    <None Include="..\..\..\Todo.txt" />
+    <Text Include="..\..\..\History.txt" />
+    <Text Include="..\..\..\License.txt" />
+    <Text Include="..\..\..\README.md" />
+    <Text Include="..\..\..\Readme-Build.txt" />
+    <Text Include="..\..\..\ReleaseProcess.txt" />
+    <Text Include="..\..\..\Todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Win\AgilityBook.rc" />

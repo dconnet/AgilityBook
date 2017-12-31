@@ -692,22 +692,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\History.txt" />
-    <None Include="..\..\..\License.txt" />
-    <None Include="..\..\..\Readme.txt" />
-    <None Include="..\..\..\ReleaseProcess.txt" />
-    <None Include="..\..\..\Todo.txt" />
-    <None Include="..\..\Win\res\AgilityBook.rc2">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\Win\res\AgilityRecordBook.dtd">
-      <Filter>Resource Files</Filter>
-    </None>
-    <Xml Include="..\..\Win\res\DefaultConfig.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\..\Win\res\AccConfirm%402.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>
@@ -1088,8 +1072,27 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Win\res\AgilityBook.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Win\res\AgilityRecordBook.dtd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <Xml Include="..\..\Win\res\DefaultConfig.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
     <ResourceCompile Include="..\..\Win\AgilityBook.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\History.txt" />
+    <Text Include="..\..\..\License.txt" />
+    <Text Include="..\..\..\README.md" />
+    <Text Include="..\..\..\Readme-Build.txt" />
+    <Text Include="..\..\..\ReleaseProcess.txt" />
+    <Text Include="..\..\..\Todo.txt" />
   </ItemGroup>
 </Project>

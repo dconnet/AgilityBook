@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-27 11:07-0800\n"
-"PO-Revision-Date: 2017-12-27 11:08-0800\n"
+"POT-Creation-Date: 2017-12-31 15:26-0800\n"
+"PO-Revision-Date: 2017-12-31 15:26-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -787,52 +787,57 @@ msgstr "Aucun fichier associé trouvé."
 #: Win/AgilityBookDoc.cpp:2101
 #, fuzzy
 msgid "IDS_FILEPROP_NAME"
-msgstr "SousDegré"
+msgstr "File name: %1$s"
 
 #: Win/AgilityBookDoc.cpp:2103
 #, fuzzy
 msgid "IDS_FILEPROP_READONLY"
-msgstr "%1$s points pour la vie avec %2$s fautes"
+msgstr "File name: %1$s [readonly]"
 
 #: Win/AgilityBookDoc.cpp:2108
 #, fuzzy
 msgid "IDS_FILEPROP_SIZE"
-msgstr "%1$s points avec %2$s fautes"
+msgstr "File size: %1$lld bytes"
 
 #: Win/AgilityBookDoc.cpp:2113
 #, fuzzy
 msgid "IDS_FILEPROP_CREATED"
-msgstr "%1$s points avec %2$s fautes"
+msgstr "Created: %1$s"
 
 #: Win/AgilityBookDoc.cpp:2114
 #, fuzzy
 msgid "IDS_FILEPROP_MODIFIED"
-msgstr "%1$s points pour la vie avec %2$s fautes"
+msgstr "Modified: %1$s"
 
 #: Win/AgilityBookDoc.cpp:2122
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION"
-msgstr "%1$s points pour la vie avec %2$s fautes"
+msgstr "Configuration: %1$hd"
 
 #: Win/AgilityBookDoc.cpp:2124
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
-msgstr "Pas des mises a jour."
+msgstr "Configuration: %1$hd (Current: %2$hd)"
 
 #: Win/AgilityBookDoc.cpp:2130
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION"
-msgstr "Version %1$s accesible. Voulez-vous le telecharger? "
+msgstr "Document version: %1$s"
 
 #: Win/AgilityBookDoc.cpp:2132
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION_CURRENT"
-msgstr "Impossible de determiner information version"
+msgstr "Document version: %1$s (Current: %2$s)"
 
 #: Win/AgilityBookDoc.cpp:2141
 #, fuzzy
 msgid "IDS_FILEPROP_FILEWRITTEN"
-msgstr "%1$s points pour la vie avec %2$s fautes"
+msgstr ""
+"File written on:\n"
+"OS: %1$s\n"
+"Platform: %2$s\n"
+"Local time: %3$s\n"
+"ARB: %4$s"
 
 #: Win/AgilityBookDoc.cpp:2152
 msgid "IDS_FILE_PROPERTIES"
@@ -2091,7 +2096,7 @@ msgstr "Points exigé"
 msgid "IDS_COL_POINTS"
 msgstr "Points"
 
-#: Win/DlgAssignColumns.cpp:278 Win/DlgConfigEventMethod.cpp:354
+#: Win/DlgAssignColumns.cpp:278 Win/DlgConfigEventMethod.cpp:356
 #: Win/DlgListViewer.cpp:1150 Win/DlgListViewer.cpp:1218 Win/DlgRun.cpp:194
 #: Win/Print.cpp:274 Win/Print.cpp:279 Win/Print.cpp:285 Win/Print.cpp:291
 #: Win/Print.cpp:297
@@ -2991,8 +2996,8 @@ msgstr ""
 msgid "HIDC_CONFIG_EVENT_NOTES"
 msgstr "Les notes concernant la méthode couramment sélectionnée."
 
-#: Win/DlgConfigEvent.cpp:549 Win/DlgConfigEventMethod.cpp:190
-#: Win/DlgConfigEventMethod.cpp:712 Win/FilterOptions.cpp:207
+#: Win/DlgConfigEvent.cpp:549 Win/DlgConfigEventMethod.cpp:192
+#: Win/DlgConfigEventMethod.cpp:729 Win/FilterOptions.cpp:207
 #: Win/FilterOptions.cpp:291 Win/FilterOptions.cpp:389 Win/FilterOptions.cpp:397
 #: Win/FilterOptions.cpp:428
 msgid "IDS_ALL"
@@ -3084,227 +3089,239 @@ msgid "IDS_NAME_IN_USE"
 msgstr "Ce nom existe deja."
 
 # DlgConfigEventMethod
-#: Win/DlgConfigEventMethod.cpp:170
+#: Win/DlgConfigEventMethod.cpp:172
 msgid "IDD_CONFIG_EVENT_METHOD"
 msgstr "Paramètres de la méthode"
 
-#: Win/DlgConfigEventMethod.cpp:180
+#: Win/DlgConfigEventMethod.cpp:182
 msgid "IDC_CONFIG_EVENT_DIVISION"
 msgstr "Niveau &conducteur"
 
-#: Win/DlgConfigEventMethod.cpp:188 Win/DlgConfigEventMethod.cpp:189
+#: Win/DlgConfigEventMethod.cpp:190 Win/DlgConfigEventMethod.cpp:191
 msgid "HIDC_CONFIG_EVENT_DIVISION"
 msgstr "Le niveau du conducteur pour lequel cette méthode sapplique."
 
-#: Win/DlgConfigEventMethod.cpp:206
+#: Win/DlgConfigEventMethod.cpp:208
 msgid "IDC_CONFIG_EVENT_LEVEL"
 msgstr "&Degré"
 
-#: Win/DlgConfigEventMethod.cpp:213 Win/DlgConfigEventMethod.cpp:214
+#: Win/DlgConfigEventMethod.cpp:215 Win/DlgConfigEventMethod.cpp:216
 msgid "HIDC_CONFIG_EVENT_LEVEL"
 msgstr "Le degré pour lequel cette méthode sapplique."
 
-#: Win/DlgConfigEventMethod.cpp:217
+#: Win/DlgConfigEventMethod.cpp:219
 msgid "IDC_CONFIG_EVENT_DATE_VALID_FROM"
 msgstr "&Valide du"
 
-#: Win/DlgConfigEventMethod.cpp:220 Win/DlgConfigEventMethod.cpp:221
+#: Win/DlgConfigEventMethod.cpp:222 Win/DlgConfigEventMethod.cpp:223
 msgid "HIDC_CONFIG_EVENT_DATE_VALID_FROM"
 msgstr ""
 "Activer ou désactiver lattribution de la date. Ceci permet de faire évoluer de "
 "changements de règle."
 
-#: Win/DlgConfigEventMethod.cpp:236 Win/DlgConfigEventMethod.cpp:237
+#: Win/DlgConfigEventMethod.cpp:238 Win/DlgConfigEventMethod.cpp:239
 msgid "HIDC_CONFIG_EVENT_DATE_START"
 msgstr "Date jusqu'à laquelle cette méthode est valide."
 
-#: Win/DlgConfigEventMethod.cpp:244
+#: Win/DlgConfigEventMethod.cpp:246
 msgid "IDC_CONFIG_EVENT_DATE_VALID_TO"
 msgstr "Valide &jusqu'au"
 
-#: Win/DlgConfigEventMethod.cpp:247 Win/DlgConfigEventMethod.cpp:248
+#: Win/DlgConfigEventMethod.cpp:249 Win/DlgConfigEventMethod.cpp:250
 msgid "HIDC_CONFIG_EVENT_DATE_VALID_TO"
 msgstr ""
 "Activer ou désactiver lattribution de la date. Ceci permet de faire évoluer de "
 "changements de règle."
 
-#: Win/DlgConfigEventMethod.cpp:263 Win/DlgConfigEventMethod.cpp:264
+#: Win/DlgConfigEventMethod.cpp:265 Win/DlgConfigEventMethod.cpp:266
 msgid "HIDC_CONFIG_EVENT_DATE_END"
 msgstr "Date à quand cette méthode est valide."
 
-#: Win/DlgConfigEventMethod.cpp:271
+#: Win/DlgConfigEventMethod.cpp:273
 msgid "IDC_CONFIG_EVENT_TYPE"
 msgstr "&Style de Comptage"
 
-#: Win/DlgConfigEventMethod.cpp:279 Win/DlgConfigEventMethod.cpp:280
+#: Win/DlgConfigEventMethod.cpp:281 Win/DlgConfigEventMethod.cpp:282
 msgid "HIDC_CONFIG_EVENT_TYPE"
 msgstr "Le type de cette méthode de calcul."
 
-#: Win/DlgConfigEventMethod.cpp:301
+#: Win/DlgConfigEventMethod.cpp:303
 msgid "IDC_CONFIG_EVENT_DROP_FRACTIONS"
 msgstr "Compter les secondes entières pour les pénalités"
 
-#: Win/DlgConfigEventMethod.cpp:304 Win/DlgConfigEventMethod.cpp:305
+#: Win/DlgConfigEventMethod.cpp:306 Win/DlgConfigEventMethod.cpp:307
 msgid "HIDC_CONFIG_EVENT_DROP_FRACTIONS"
 msgstr ""
 "En calculant les fautes de temps, est-ce que les fractions sont supprimées?"
 
-#: Win/DlgConfigEventMethod.cpp:308
+#: Win/DlgConfigEventMethod.cpp:310
 #, fuzzy
 msgid "IDC_CONFIG_EVENT_BONUSTITLE"
 msgstr "Points bonus?"
 
-#: Win/DlgConfigEventMethod.cpp:311 Win/DlgConfigEventMethod.cpp:312
+#: Win/DlgConfigEventMethod.cpp:313 Win/DlgConfigEventMethod.cpp:314
 msgid "HIDC_CONFIG_EVENT_BONUSTITLE"
 msgstr ""
 "Cette méthode a-t-elle es points qualifiants supplémentaires? Ceci "
 "s'appliquerait aux organisations comme NADAC qui utilisent des bonus qui "
 "permettent au chien de gagner 15 points Q supplémentaires."
 
-#: Win/DlgConfigEventMethod.cpp:315
+#: Win/DlgConfigEventMethod.cpp:317
 msgid "IDC_CONFIG_EVENT_SUPERQ"
 msgstr "Super Q?"
 
-#: Win/DlgConfigEventMethod.cpp:318 Win/DlgConfigEventMethod.cpp:319
+#: Win/DlgConfigEventMethod.cpp:320 Win/DlgConfigEventMethod.cpp:321
 msgid "HIDC_CONFIG_EVENT_SUPERQ"
 msgstr "Cette méthode a-t-elle des points Super Q?"
 
-#: Win/DlgConfigEventMethod.cpp:322
+#: Win/DlgConfigEventMethod.cpp:324
 msgid "IDC_CONFIG_EVENT_SPEED"
 msgstr "Points vitesse?"
 
-#: Win/DlgConfigEventMethod.cpp:326 Win/DlgConfigEventMethod.cpp:327
+#: Win/DlgConfigEventMethod.cpp:328 Win/DlgConfigEventMethod.cpp:329
 msgid "HIDC_CONFIG_EVENT_SPEED"
 msgstr ""
 "Cette méthode a-t-elle des points de vitesse? (Dans AKC, ce sont les points de "
 "MACH.) Les points de vitesse sont calculés comme les secondes pleines sous TPS."
 
-#: Win/DlgConfigEventMethod.cpp:330
+#: Win/DlgConfigEventMethod.cpp:332
 msgid "IDC_CONFIG_EVENT_TF_MULTIPLY"
 msgstr "Multiplicateur pour pénalités temps"
 
-#: Win/DlgConfigEventMethod.cpp:337 Win/DlgConfigEventMethod.cpp:338
+#: Win/DlgConfigEventMethod.cpp:339 Win/DlgConfigEventMethod.cpp:340
 msgid "HIDC_CONFIG_EVENT_TF_MULTIPLY"
 msgstr "Multiplier toutes les fautes de temps par un facteur."
 
-#: Win/DlgConfigEventMethod.cpp:341
+#: Win/DlgConfigEventMethod.cpp:343
 msgid "IDC_CONFIG_EVENT_PLACEMENT"
 msgstr "Multiplicateur pour points de vitesse et de Classements"
 
-#: Win/DlgConfigEventMethod.cpp:352 Win/DlgConfigEventMethod.cpp:353
+#: Win/DlgConfigEventMethod.cpp:354 Win/DlgConfigEventMethod.cpp:355
 msgid "HIDC_CONFIG_EVENT_PLACEMENT"
 msgstr ""
 "La liste de multiplicateurs pour le classement utilisé en calculant les points "
 "vitesse. S'il n'y a pas d'entrée, le classement n'affecte pas les points de "
 "vitesse."
 
-#: Win/DlgConfigEventMethod.cpp:355
+#: Win/DlgConfigEventMethod.cpp:357
 msgid "IDS_COL_MULTIPLIER"
 msgstr "Multiplicateur"
 
-#: Win/DlgConfigEventMethod.cpp:372
+#: Win/DlgConfigEventMethod.cpp:374
 msgid "IDC_CONFIG_EVENT_PLACEMENT_NEW"
 msgstr "Nouveau..."
 
-#: Win/DlgConfigEventMethod.cpp:375 Win/DlgConfigEventMethod.cpp:376
+#: Win/DlgConfigEventMethod.cpp:377 Win/DlgConfigEventMethod.cpp:378
 msgid "HIDC_CONFIG_EVENT_PLACEMENT_NEW"
 msgstr ""
 "Ajouter un nouveau multiplicateur point de vitesse. Les Classements doivent "
 "être uniques."
 
-#: Win/DlgConfigEventMethod.cpp:380
+#: Win/DlgConfigEventMethod.cpp:382
 msgid "IDC_CONFIG_EVENT_PLACEMENT_EDIT"
 msgstr "Édition..."
 
-#: Win/DlgConfigEventMethod.cpp:383 Win/DlgConfigEventMethod.cpp:384
+#: Win/DlgConfigEventMethod.cpp:385 Win/DlgConfigEventMethod.cpp:386
 msgid "HIDC_CONFIG_EVENT_PLACEMENT_EDIT"
 msgstr "Éditer le multiplicateur point de vitesse sélectionné."
 
-#: Win/DlgConfigEventMethod.cpp:388
+#: Win/DlgConfigEventMethod.cpp:390
 msgid "IDC_CONFIG_EVENT_PLACEMENT_DELETE"
 msgstr "Supprimer"
 
-#: Win/DlgConfigEventMethod.cpp:391 Win/DlgConfigEventMethod.cpp:392
+#: Win/DlgConfigEventMethod.cpp:393 Win/DlgConfigEventMethod.cpp:394
 msgid "HIDC_CONFIG_EVENT_PLACEMENT_DELETE"
 msgstr "Supprimer le multiplicateur point de vitesse sélectionné."
 
-#: Win/DlgConfigEventMethod.cpp:396
+#: Win/DlgConfigEventMethod.cpp:398
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"
 msgstr "Zéro fautes seul qualifiants"
 
-#: Win/DlgConfigEventMethod.cpp:399 Win/DlgConfigEventMethod.cpp:400
+#: Win/DlgConfigEventMethod.cpp:401 Win/DlgConfigEventMethod.cpp:402
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"
 msgstr ""
 "Pour les parcours TimePlusFault, le parcours doit être sans faute pour gagner "
 "des points cumulatifs."
 
-#: Win/DlgConfigEventMethod.cpp:403
+#: Win/DlgConfigEventMethod.cpp:405
 msgid "IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"
 msgstr "Déduire pénalités temps du résultat"
 
-#: Win/DlgConfigEventMethod.cpp:407 Win/DlgConfigEventMethod.cpp:408
+#: Win/DlgConfigEventMethod.cpp:409 Win/DlgConfigEventMethod.cpp:410
 msgid "HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"
 msgstr "Soustraire toutes fautes du temps des points gagnés."
 
-#: Win/DlgConfigEventMethod.cpp:411
+#: Win/DlgConfigEventMethod.cpp:413
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_UNDER"
 msgstr "Calculer pénalités temps sous TPS"
 
-#: Win/DlgConfigEventMethod.cpp:415 Win/DlgConfigEventMethod.cpp:416
+#: Win/DlgConfigEventMethod.cpp:417 Win/DlgConfigEventMethod.cpp:418
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"
 msgstr ""
 "Ajouter des fautes de temps pour le nombre de secondes sous le temps de "
 "parcours."
 
-#: Win/DlgConfigEventMethod.cpp:419
+#: Win/DlgConfigEventMethod.cpp:421
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_OVER"
 msgstr "Calculer penalités temps au-dessus TPS"
 
-#: Win/DlgConfigEventMethod.cpp:423 Win/DlgConfigEventMethod.cpp:424
+#: Win/DlgConfigEventMethod.cpp:425 Win/DlgConfigEventMethod.cpp:426
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"
 msgstr ""
 "Ajouter des fautes de temps pour le nombre de secondes au-dessus du temps de "
 "parcours."
 
-#: Win/DlgConfigEventMethod.cpp:427 Win/DlgConfigEventMethod.cpp:675
+#: Win/DlgConfigEventMethod.cpp:429
+#, fuzzy
+msgid "IDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"
+msgstr "Compute titling points using raw faults"
+
+#: Win/DlgConfigEventMethod.cpp:433 Win/DlgConfigEventMethod.cpp:434
+#, fuzzy
+msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"
+msgstr ""
+"Compute titling points using raw faults. This implies that a run must be under "
+"SCT to qualify."
+
+#: Win/DlgConfigEventMethod.cpp:437 Win/DlgConfigEventMethod.cpp:689
 msgid "IDC_CONFIG_EVENT_OPENING_PTS"
 msgstr "Exigé pour débuter"
 
-#: Win/DlgConfigEventMethod.cpp:434 Win/DlgConfigEventMethod.cpp:435
+#: Win/DlgConfigEventMethod.cpp:444 Win/DlgConfigEventMethod.cpp:445
 msgid "HIDC_CONFIG_EVENT_OPENING_PTS"
 msgstr ""
 "Le nombre de points d'ouverture nécessaire pour qualifier. Pour les épreuves "
 "sans points de clôture, ceci est le nombre total de points nécessaires."
 
-#: Win/DlgConfigEventMethod.cpp:438
+#: Win/DlgConfigEventMethod.cpp:448
 msgid "IDC_CONFIG_EVENT_CLOSING_PTS"
 msgstr "Exigé pour finir"
 
-#: Win/DlgConfigEventMethod.cpp:445 Win/DlgConfigEventMethod.cpp:446
+#: Win/DlgConfigEventMethod.cpp:455 Win/DlgConfigEventMethod.cpp:456
 msgid "HIDC_CONFIG_EVENT_CLOSING_PTS"
 msgstr "Le nombre de points de clôture nécessaires pour qualifier."
 
-#: Win/DlgConfigEventMethod.cpp:689 Win/DlgRun.cpp:2368
+#: Win/DlgConfigEventMethod.cpp:704 Win/DlgRun.cpp:2368
 msgid "IDS_SCORING_REQUIRED_POINTS"
 msgstr "Points Necessaire"
 
-#: Win/DlgConfigEventMethod.cpp:902 Win/DlgRun.cpp:3215
+#: Win/DlgConfigEventMethod.cpp:920 Win/DlgRun.cpp:3215
 msgid "IDS_SELECT_DIVISION"
 msgstr "Choisissez un nouveau conducteur."
 
-#: Win/DlgConfigEventMethod.cpp:909 Win/DlgRun.cpp:3224
+#: Win/DlgConfigEventMethod.cpp:927 Win/DlgRun.cpp:3224
 msgid "IDS_SELECT_LEVEL"
 msgstr "Choisissez un degré."
 
-#: Win/DlgConfigEventMethod.cpp:916
+#: Win/DlgConfigEventMethod.cpp:934
 msgid "IDS_SELECT_STYLE"
 msgstr "Choisissez une méthode calculation points"
 
-#: Win/DlgConfigEventMethod.cpp:930
+#: Win/DlgConfigEventMethod.cpp:948
 msgid "IDS_CONFIGEVENT_DATEORDER"
 msgstr "Date commencement doit etre avant date fermeture."
 
-#: Win/DlgConfigEventMethod.cpp:943
+#: Win/DlgConfigEventMethod.cpp:961
 msgid "IDS_CONFIGEVENT_PLACEMENT0"
 msgstr ""
 "Pour une rang de 0, il faut des endroits specifiés ou que les points vitesses "
@@ -3551,14 +3568,13 @@ msgstr ""
 #: Win/DlgConfigTitle.cpp:161
 #, fuzzy
 msgid "IDC_CONFIG_TITLE_SHOW_FIRST"
-msgstr "Valide &jusqu'au"
+msgstr "Show &multiple copy indicator on first title"
 
 #: Win/DlgConfigTitle.cpp:164 Win/DlgConfigTitle.cpp:165
 #, fuzzy
 msgid "HIDC_CONFIG_TITLE_SHOW_FIRST"
 msgstr ""
-"Activer ou désactiver lattribution de la date. Ceci permet d e faire évoluer "
-"les changements de récompense."
+"Show the repeating value on the first instance of the title like AKC's FTC1."
 
 #: Win/DlgConfigTitle.cpp:168
 msgid "IDC_CONFIG_TITLE_STARTAT"
@@ -3568,22 +3584,19 @@ msgstr "C&ommencer par:"
 #, fuzzy
 msgid "HIDC_CONFIG_TITLE_MULTIPLE_STARTAT"
 msgstr ""
-"Permettre la création multiple pour cette récompense. Par exemple, MACH, "
-"MACH-2, etc. D'habitude, c'est 2. Dans quelques cas, comme par exemple pour "
-"NADAC, cela peut commencer plus haut."
+"Set the starting value for a title. Note, this should be the value for the "
+"first copy of the title even if that is not shown."
 
 #: Win/DlgConfigTitle.cpp:179
 #, fuzzy
 msgid "IDC_CONFIG_TITLE_INCREMENT"
-msgstr "Valide &jusqu'au"
+msgstr "Increment &by:"
 
 #: Win/DlgConfigTitle.cpp:186 Win/DlgConfigTitle.cpp:187
 #, fuzzy
 msgid "HIDC_CONFIG_TITLE_MULTIPLE_INC"
 msgstr ""
-"Permettre la création multiple pour cette récompense. Par exemple, MACH, "
-"MACH-2, etc. D'habitude, c'est 2. Dans quelques cas, comme par exemple pour "
-"NADAC, cela peut commencer plus haut."
+"Value to increment repeating title. This allows NADAC's EAC-600, EAC-800, etc."
 
 #: Win/DlgConfigTitle.cpp:190
 msgid "IDC_CONFIG_TITLE_STYLE"
@@ -3610,27 +3623,29 @@ msgstr "chiffre romain"
 #: Win/DlgConfigTitle.cpp:220
 #, fuzzy
 msgid "IDC_CONFIG_TITLE_SEP"
-msgstr "&Nom"
+msgstr "F&ormat:"
 
 #: Win/DlgConfigTitle.cpp:226 Win/DlgConfigTitle.cpp:227
 #, fuzzy
 msgid "HIDC_CONFIG_TITLE_SEP"
-msgstr "Abréviation pour la récompense."
+msgstr ""
+"When a title allows multiple copies, set the formatting for the multiple after "
+"the title."
 
 #: Win/DlgConfigTitle.cpp:233
 #, fuzzy
 msgid "IDS_CONFIG_TITLE_SEP_NONE"
-msgstr "aucun"
+msgstr "No space"
 
 #: Win/DlgConfigTitle.cpp:234
 #, fuzzy
 msgid "IDS_CONFIG_TITLE_SEP_SPACE"
-msgstr "chiffre arabe"
+msgstr "Space"
 
 #: Win/DlgConfigTitle.cpp:235
 #, fuzzy
 msgid "IDS_CONFIG_TITLE_SEP_HYPHEN"
-msgstr "chiffre arabe"
+msgstr "Hyphen"
 
 #: Win/DlgConfigTitle.cpp:250
 msgid "IDC_CONFIG_TITLE_VALID_FROM"

@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2017-12-31 File version 14.5
+           Added 'TFfaults' to 'Scoring'.
 2016-01-06 File version 14.4
 		   Added 'LifetimeNames' to 'Venue'. Removed 'LifetimeName' from Venue.
            Renamed 'LifeTime' to 'LifetimePoints', added 'Name', 'SpeedPts'.
@@ -423,6 +425,10 @@ dropped. (AKC and CPE do this.)
 Time+Faults style events (USDAA Time Gamble). They are also used to specify
 faults in ScoreThenTime events (DOCNA Strategic gamble).
 
+'TFfaults' is used to make Time+Faults runs use the actual faults when
+computing titling points. Otherwise the faults used are T+F over SCT.
+Note: TFfault=y implies that the run must be under SCT.
+
 'subtractFT' will cause the time faults to be subtracted from the run's score.
 
 The 'superQ', 'speedPts' and 'bonusPts' attributes enable built-in
@@ -472,6 +478,7 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 		cleanQ (y|n) 'n'
 		underTF (y|n) 'n'
 		overTF (y|n) 'n'
+		TFfaults (y|n) 'n'
 		subtractTF (y|n) 'n'
 		superQ (y|n) 'n'
 		speedPts (y|n) 'n'

@@ -71,6 +71,7 @@ private:
 	wxCheckBox* m_ctrlSubtractTimeFaults;
 	wxCheckBox* m_ctrlTimeFaultsUnder;
 	wxCheckBox* m_ctrlTimeFaultsOver;
+	wxCheckBox* m_ctrlTimeFaultsTitlingPts;
 	wxStaticText* m_ctrlPointsOpeningText;
 	CTextCtrl* m_ctrlPointsOpening;
 	wxStaticText* m_ctrlPointsClosingText;
@@ -86,6 +87,7 @@ private:
 	bool m_SubtractTimeFaults;
 	bool m_TimeFaultsUnder;
 	bool m_TimeFaultsOver;
+	bool m_TitlingPointsRawFaults;
 	short m_OpeningPts;
 	short m_ClosingPts;
 
