@@ -1,3 +1,5 @@
+1/1/2018: v3.2.5.<development>
+
 1/1/2018: v3.2.4.103
 - Bumped file version to 12.5
   - Added a 'use faults' to T+F runs for determining title points.
