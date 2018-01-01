@@ -1,4 +1,6 @@
-12/31/2017: v3.2.4.<development>
+1/1/2018: v3.2.4.103
+- Bumped file version to 12.5
+  - Added a 'use faults' to T+F runs for determining title points.
 - Bumped Configuration v57:
   - Updated USDAA Master Challenge classes.
     (Note: Title acronyms are not official. Unknown at this point.)
