@@ -530,13 +530,16 @@ bool CDlgListCtrl::Create(
 	m_ctrlList = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 80)),
 		true, CReportListCtrl::eNoSortHeader, true, bHasImageList);
-	m_imgTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
-	m_imgPlan = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCheck));
-	m_imgPlanTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPlanTentative));
-	m_imgPending = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPending));
-	m_imgPendingTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPendingTentative));
-	m_imgEntered = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalEntered));
-	m_imgEnteredTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalEnteredTentative));
+	if (bHasImageList)
+	{
+		m_imgTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
+		m_imgPlan = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCheck));
+		m_imgPlanTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPlanTentative));
+		m_imgPending = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPending));
+		m_imgPendingTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPendingTentative));
+		m_imgEntered = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalEntered));
+		m_imgEnteredTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalEnteredTentative));
+	}
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgListCtrl::OnItemSelected);
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgListCtrl::OnItemActivated);
 	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgListCtrl::OnKeyDown);

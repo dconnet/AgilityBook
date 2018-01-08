@@ -1,4 +1,6 @@
-1/1/2018: v3.2.5.<development>
+1/7/2018: v3.2.5.<development>
+- Bug fixes:
+  - Fix 'Can add icon' message when adding a fault.
 
 1/1/2018: v3.2.4.103
 - Bumped file version to 12.5
