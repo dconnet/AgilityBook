@@ -71,6 +71,7 @@ Training Log:
 
  *
  * Revision History
+ * 2018-01-19 Added missing Speed points to F/T runs export fields.
  * 2014-12-30 Changed pixels to dialog units.
  * 2012-12-23 Changed default Runs view columns.
  * 2012-05-07 Added autocompletion to combo boxes.
@@ -638,7 +639,7 @@ static int const idxRunsFaultsTime[] = {
 	IO_RUNS_SCT,			IO_RUNS_TOTAL_FAULTS,	IO_RUNS_PLACE,
 	IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,			IO_RUNS_Q,
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
-	IO_RUNS_FAULTS,
+	IO_RUNS_FAULTS,			IO_RUNS_SPEED,
 -1};
 static int const idxRunsTimeFaults[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
