@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2018-01-27 Fix vcvarsall now changing directory.
 # 2017-09-19 Rename vc15 to vc141, fix GetCompilerPaths tuple name
 # 2017-01-24 Changed GetCompilerPaths api.
 # 2016-11-22 Added vc141, removed vc9. Changed GetCompilerPaths api.
@@ -429,6 +430,7 @@ def main():
 			for s in samples:
 				if os.access(os.environ['WXWIN'] + '\\samples\\' + s, os.F_OK):
 					print('cd /d "' + os.environ['WXWIN'] + '\\samples\\' + s + '"', file=bat)
+					print('set "VSCMD_START_DIR=%CD%"', file=bat)
 					if release:
 						print(setenv_rel, file=bat)
 						print(build_rel + ' ' + build_flags, file=bat)
@@ -441,6 +443,7 @@ def main():
 				else:
 					print('ERROR: sample "' + s + '" does not exist')
 		else:
+			print('set "VSCMD_START_DIR=%CD%"', file=bat)
 			if release:
 				print(setenv_rel, file=bat)
 				print(build_rel + ' ' + build_flags, file=bat)

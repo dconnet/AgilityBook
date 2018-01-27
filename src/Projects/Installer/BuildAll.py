@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2018-01-27 Fix vcvarsall now changing directory.
 # 2017-09-19 Rename vc15 to vc141, fix GetCompilerPaths tuple name
 # 2017-04-09 Updated for vc141
 # 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
@@ -336,6 +337,7 @@ def main():
 		cmds32 = (
 			r'title ' + compiler + ' ' + configuration + ' ' + platform,
 			r'cd ..\\' + compiler,
+			r'set "VSCMD_START_DIR=%CD%"',
 			r'call ' + vcvarsall,
 			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + platform)
 
@@ -350,6 +352,7 @@ def main():
 		cmds64 = (
 			r'title ' + compiler + ' ' + configuration + ' ' + platform,
 			r'cd ..\\' + compiler,
+			r'set "VSCMD_START_DIR=%CD%"',
 			r'call ' + vcvarsall,
 			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + platform)
 
