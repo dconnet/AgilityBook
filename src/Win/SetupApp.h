@@ -10,6 +10,7 @@
  * @file
  *
  * Revision History
+ * 2018-01-28 Add debug reporting.
  * 2013-11-26 Fixed language initialization structure.
  * 2013-08-22 Fixed issue with ctor auto-cast.
  * 2013-08-18 Merged language management in.
@@ -22,6 +23,15 @@
 
 #include "ImageManager.h"
 #include "LanguageManager.h"
+
+#if wxUSE_DEBUGREPORT && wxUSE_ON_FATAL_EXCEPTION
+#define USE_DBGREPORT 1
+#else
+#define USE_DBGREPORT 0
+#endif
+#if USE_DBGREPORT
+#include <wx/debugrpt.h>
+#endif
 
 
 class CBaseApp : public wxApp
@@ -44,11 +54,25 @@ protected:
 			LanguageCatalog useLangCatalog = eLanguageCatalogNone);
 	~CBaseApp();
 
+#if USE_DBGREPORT
+	void GenerateReport(wxDebugReport::Context ctx);
+#endif
+
+	virtual wxString GetReportName() const { return GetAppName(); }
+
 	// wxApp virtual
 	// Will init Element, ImageManager, wxApp::SetAppName and wxConfig::Set.
 	// If OnInit fails, BaseAppCleanup will be called before returning.
 	virtual bool OnInit();
 	virtual int OnExit();
+#if USE_DBGREPORT
+	virtual void OnFatalException();
+#endif
+
+#if USE_DBGREPORT
+	// Allow derived program ability to add files
+	virtual bool OnAddFileDebugReport(wxDebugReport* report) { return false; }
+#endif
 
 	// CBaseApp virtual
 	// Note: If called before creating a frame, config needs to be deleted.

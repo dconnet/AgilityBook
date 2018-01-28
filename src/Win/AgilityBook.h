@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-01-28 Add debug reporting.
  * 2014-05-18 Added AutoCheckProgram
  * 2013-11-26 Fixed language initialization structure.
  * 2008-12-14 Ported to wxWidgets.
@@ -49,8 +50,14 @@ public:
 	CHtmlEasyPrinting* GetHtmlPrinter();
 
 protected:
+	virtual wxString GetReportName() const { return wxT("AgilityBook"); }
+
 	virtual bool OnInit();
 	virtual int OnExit();
+
+#if USE_DBGREPORT
+	virtual bool OnAddFileDebugReport(wxDebugReport* report);
+#endif
 
 	virtual void BaseAppCleanup(bool deleteConfig = false);
 

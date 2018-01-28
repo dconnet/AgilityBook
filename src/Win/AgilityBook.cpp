@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-01-28 Add debug reporting.
  * 2014-07-08 Properly cleanup on early exit.
  * 2014-05-18 Moved startup check to AutoCheckProgram
  * 2013-11-26 Fixed language initialization structure.
@@ -46,6 +47,7 @@
 #include "SetupAppARB.h"
 #include "TabView.h"
 
+#include "ARB/ARBDebug.h"
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
@@ -57,6 +59,7 @@
 #include <wx/config.h>
 #include <wx/display.h>
 #include <wx/docview.h>
+#include <wx/ffile.h>
 #include <wx/file.h>
 #include <wx/fileconf.h>
 #include <wx/fs_arc.h>
@@ -490,6 +493,46 @@ int CAgilityBookApp::OnExit()
 	m_Prn = nullptr;
 	return CBaseApp::OnExit();
 }
+
+
+#if USE_DBGREPORT
+bool CAgilityBookApp::OnAddFileDebugReport(wxDebugReport* report)
+{
+	{
+		wxFileName fn(report->GetDirectory(), wxT("ARBInfo.txt"));
+		wxFFile file(fn.GetFullPath(), wxT("w"));
+		if (file.IsOpened())
+		{
+			wxDateTime dt = wxDateTime::Now();
+			file.Write(dt.FormatISODate() + wxT(' ') + dt.FormatISOTime());
+			file.Write(wxT("\n\nSystem Information\n"));
+			file.Write(ARBDebug::GetSystemInfo());
+			file.Write(wxT("\nRegistry dump\n"));
+			file.Write(ARBDebug::GetRegistryInfo());
+		}
+		report->AddFile(fn.GetFullName(), wxT("System information and registry dump of this application"));
+	}
+
+	if (m_manager)
+	{
+		wxDocument* doc = m_manager->GetCurrentDocument();
+		if (doc)
+		{
+			wxString filename = doc->GetFilename();
+			if (!filename.empty())
+			{
+				wxFileName fn(filename);
+				if (fn.FileExists())
+				{
+					report->AddFile(fn.GetFullPath(), wxT("Current ARB File"));
+				}
+			}
+		}
+	}
+
+	return true;
+}
+#endif
 
 
 void CAgilityBookApp::BaseAppCleanup(bool deleteConfig)

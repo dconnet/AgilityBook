@@ -55,6 +55,7 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBConfigTitle.cpp \
 	ARBConfigTitlePoints.cpp \
 	ARBConfigVenue.cpp \
+	ARBDebug.cpp \
 	ARBDog.cpp \
 	ARBDogClub.cpp \
 	ARBDogExistingPoints.cpp \

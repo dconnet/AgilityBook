@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * 2018-01-28 Add debug reporting.
  * 2014-11-16 Add support to language initialization for embedding MO files.
  * 2014-07-08 Cleanup config if intialization fails.
  * 2013-11-26 Fixed language initialization structure.
@@ -28,6 +29,7 @@
 
 #include <wx/config.h>
 #include <wx/dir.h>
+#include <wx/ffile.h>
 #include <wx/fileconf.h>
 #include <wx/stdpaths.h>
 
@@ -51,6 +53,9 @@ CBaseApp::CBaseApp(
 {
 	if (m_BaseRegName.empty())
 		m_BaseRegName = m_BaseAppName;
+#if USE_DBGREPORT
+	wxHandleFatalExceptions();
+#endif
 	m_langMgr = new CLanguageManager(
 			eLanguageCatalogNone != useLangCatalog ? this : nullptr,
 			eLanguageCatalogEmbedded == useLangCatalog);
@@ -61,6 +66,58 @@ CBaseApp::~CBaseApp()
 {
 	delete m_langMgr;
 }
+
+
+#if USE_DBGREPORT
+class BaseAppDebugReport : public wxDebugReportCompress
+{
+	wxString m_reportName;
+public:
+	BaseAppDebugReport(wxString reportName) : m_reportName(reportName)
+	{
+	}
+
+	virtual wxString GetReportName() const { return m_reportName; }
+};
+
+
+void CBaseApp::GenerateReport(wxDebugReport::Context ctx)
+{
+	wxDebugReportCompress *report = new BaseAppDebugReport(GetReportName());
+
+	// Add all standard files: currently this means just a minidump and an
+	// XML file with system info and stack trace
+	report->AddAll(ctx);
+
+	// Allow derived apps to add additional files.
+	if (!OnAddFileDebugReport(report))
+	{
+		// Add a test file containing the date of the crash
+		wxFileName fn(report->GetDirectory(), wxT("timestamp.my"));
+		wxFFile file(fn.GetFullPath(), wxT("w"));
+		if (file.IsOpened())
+		{
+			wxDateTime dt = wxDateTime::Now();
+			file.Write(dt.FormatISODate() + wxT(' ') + dt.FormatISOTime());
+			file.Close();
+		}
+		report->AddFile(fn.GetFullName(), wxT("Timestamp of this report"));
+	}
+
+	// Calling Show() is not mandatory, but is more polite
+	if (wxDebugReportPreviewStd().Show(*report))
+	{
+		if (report->Process())
+		{
+			wxLogMessage(wxT("Report generated in \"%s\"."), report->GetCompressedFileName().c_str());
+			report->Reset();
+		}
+	}
+	//else: user cancelled the report
+
+	delete report;
+}
+#endif
 
 
 bool CBaseApp::OnInit()
@@ -141,6 +198,14 @@ int CBaseApp::OnExit()
 	BaseAppCleanup();
 	return wxApp::OnExit();
 }
+
+
+#if USE_DBGREPORT
+void CBaseApp::OnFatalException()
+{
+	GenerateReport(wxDebugReport::Context_Exception);
+}
+#endif
 
 
 void CBaseApp::BaseAppCleanup(bool deleteConfig)

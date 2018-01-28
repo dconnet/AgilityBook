@@ -30,11 +30,6 @@ public:
 	virtual bool TransferDataFromWindow();
 
 private:
-	void DumpGroup(
-			std::wostringstream* data,
-			wxString const& group,
-			std::vector<std::wstring>* items);
-
 	CDlgARBHelp* m_Parent;
 	wxRadioBox* m_DiskChoices;
 };
