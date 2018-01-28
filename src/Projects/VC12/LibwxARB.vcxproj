@@ -115,6 +115,7 @@
     <ClCompile Include="..\..\ARB\ARBConfigTitle.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigTitlePoints.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigVenue.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDebug.cpp" />
     <ClCompile Include="..\..\ARB\ARBDog.cpp" />
     <ClCompile Include="..\..\ARB\ARBDogClub.cpp" />
     <ClCompile Include="..\..\ARB\ARBDogExistingPoints.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="..\..\Include\ARB\ARBConfigTitle.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigTitlePoints.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigVenue.h" />
+    <ClInclude Include="..\..\Include\ARB\ARBDebug.h" />
     <ClInclude Include="..\..\Include\ARB\ARBDog.h" />
     <ClInclude Include="..\..\Include\ARB\ARBDogClub.h" />
     <ClInclude Include="..\..\Include\ARB\ARBDogExistingPoints.h" />
