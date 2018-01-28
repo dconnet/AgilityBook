@@ -46,6 +46,8 @@
 		E110B4F3177FCFCC004071B5 /* ARBStructure.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4CC177FCFCC004071B5 /* ARBStructure.h */; };
 		E110B4F4177FCFCC004071B5 /* ARBTraining.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4CD177FCFCC004071B5 /* ARBTraining.h */; };
 		E110B4F5177FCFCC004071B5 /* ARBTypes2.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4CE177FCFCC004071B5 /* ARBTypes2.h */; };
+		E161B7CA201E78FE000CCF24 /* ARBDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = E161B7C9201E78FE000CCF24 /* ARBDebug.h */; };
+		E161B7CC201E7916000CCF24 /* ARBDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E161B7CB201E7916000CCF24 /* ARBDebug.cpp */; };
 		E19B6352166C090F004DEDA4 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B62F4166C090F004DEDA4 /* ARB_Q.cpp */; };
 		E19B6354166C090F004DEDA4 /* ARBAgilityRecordBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B62F6166C090F004DEDA4 /* ARBAgilityRecordBook.cpp */; };
 		E19B6356166C090F004DEDA4 /* ARBBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B62F8166C090F004DEDA4 /* ARBBase.cpp */; };
@@ -137,6 +139,8 @@
 		E110B4CC177FCFCC004071B5 /* ARBStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBStructure.h; sourceTree = "<group>"; };
 		E110B4CD177FCFCC004071B5 /* ARBTraining.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBTraining.h; sourceTree = "<group>"; };
 		E110B4CE177FCFCC004071B5 /* ARBTypes2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBTypes2.h; sourceTree = "<group>"; };
+		E161B7C9201E78FE000CCF24 /* ARBDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBDebug.h; sourceTree = "<group>"; };
+		E161B7CB201E7916000CCF24 /* ARBDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDebug.cpp; sourceTree = "<group>"; };
 		E19B62EB166C08B9004DEDA4 /* libARB.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libARB.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B62F4166C090F004DEDA4 /* ARB_Q.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARB_Q.cpp; sourceTree = "<group>"; };
 		E19B62F6166C090F004DEDA4 /* ARBAgilityRecordBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBAgilityRecordBook.cpp; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 				E110B4BA177FCFCC004071B5 /* ARBConfigTitle.h */,
 				E110B4BB177FCFCC004071B5 /* ARBConfigTitlePoints.h */,
 				E110B4BC177FCFCC004071B5 /* ARBConfigVenue.h */,
+				E161B7C9201E78FE000CCF24 /* ARBDebug.h */,
 				E110B4BD177FCFCC004071B5 /* ARBDog.h */,
 				E110B4BE177FCFCC004071B5 /* ARBDogClub.h */,
 				E110B4BF177FCFCC004071B5 /* ARBDogExistingPoints.h */,
@@ -299,6 +304,7 @@
 				E19B631A166C090F004DEDA4 /* ARBConfigTitle.cpp */,
 				E19B631C166C090F004DEDA4 /* ARBConfigTitlePoints.cpp */,
 				E19B631E166C090F004DEDA4 /* ARBConfigVenue.cpp */,
+				E161B7CB201E7916000CCF24 /* ARBDebug.cpp */,
 				E19B6322166C090F004DEDA4 /* ARBDog.cpp */,
 				E19B6324166C090F004DEDA4 /* ARBDogClub.cpp */,
 				E19B6326166C090F004DEDA4 /* ARBDogExistingPoints.cpp */,
@@ -398,6 +404,7 @@
 				E110B4F0177FCFCC004071B5 /* ARBInfo.h in Headers */,
 				E110B4F1177FCFCC004071B5 /* ARBInfoItem.h in Headers */,
 				E110B4F2177FCFCC004071B5 /* ARBLocalization.h in Headers */,
+				E161B7CA201E78FE000CCF24 /* ARBDebug.h in Headers */,
 				E110B4F3177FCFCC004071B5 /* ARBStructure.h in Headers */,
 				E110B4F4177FCFCC004071B5 /* ARBTraining.h in Headers */,
 				E110B4F5177FCFCC004071B5 /* ARBTypes2.h in Headers */,
@@ -480,6 +487,7 @@
 				E19B6380166C090F004DEDA4 /* ARBDog.cpp in Sources */,
 				E19B6382166C090F004DEDA4 /* ARBDogClub.cpp in Sources */,
 				E19B6384166C090F004DEDA4 /* ARBDogExistingPoints.cpp in Sources */,
+				E161B7CC201E7916000CCF24 /* ARBDebug.cpp in Sources */,
 				E19B6386166C090F004DEDA4 /* ARBDogNotes.cpp in Sources */,
 				E19B6388166C090F004DEDA4 /* ARBDogReferenceRun.cpp in Sources */,
 				E19B638A166C090F004DEDA4 /* ARBDogRegNum.cpp in Sources */,
