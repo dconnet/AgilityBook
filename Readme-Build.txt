@@ -37,12 +37,17 @@ Make sure WXWIN is set to wxWidgets root directory.
 
 === Changes to 3.1.0:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
-  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
+  - Set WXWIN_COMPATIBILITY_3_0 to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSE_MEDIACTRL to 0 (currently 1)
   - Set wxUSE_INKEDIT to 1 (currently 0)
+
+include/msvc/wx/setup.h: line 67
+Add
+    #elif _MSC_VER >= 1910 && _MSC_VER < 2000
+        #define wxCOMPILER_PREFIX vc141
 
 include/geometry.h
 include/mousestate.h
