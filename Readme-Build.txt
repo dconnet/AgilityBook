@@ -30,10 +30,39 @@ Currently using version 3.6.4
 - Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.1.0.
+I'm currently using version 3.1.1.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
+
+=== Changes to 3.1.1:
+-[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
+  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
+  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
+  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+  - Set wxUSE_INKEDIT to 1 (currently 0)
+
+> src/msw/textctrl.cpp
+>svn diff
+Index: textctrl.cpp
+===================================================================
+--- textctrl.cpp        (revision 113)
++++ textctrl.cpp        (working copy)
+@@ -337,6 +337,11 @@
+     }
+ #endif // wxUSE_DRAG_AND_DROP && wxUSE_RICHEDIT
+
++#if wxUSE_INKEDIT && wxUSE_RICHEDIT
++    if (m_isInkEdit)
++        DissociateHandle();
++#endif
++
+     delete m_privateContextMenu;
+ }
 
 === Changes to 3.1.0:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
@@ -49,9 +78,9 @@ Add
     #elif _MSC_VER >= 1910 && _MSC_VER < 2000
         #define wxCOMPILER_PREFIX vc141
 
-include/geometry.h
-include/mousestate.h
-include/html/htmlcell.h
+include/wx/geometry.h
+include/wx/mousestate.h
+include/wx/html/htmlcell.h
   - These files have a number of comma operator issues (found via xcode9)
 
 configure.in: line 1347 (darwin case)
@@ -265,7 +294,7 @@ OSX 10.9:
 ===
 setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_66_0
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.0
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.1
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -287,7 +316,7 @@ OSX 10.10+:
     <string>
     launchctl setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_66_0
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.0
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.1
     </string>
   </array>
   <key>RunAtLoad</key>

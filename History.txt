@@ -1,6 +1,7 @@
-1/28/2018: v3.2.5.<development>
+2/19/2018: v3.2.5.<development>
 - New features / Enhancements:
   - Enable crash dump reporting.
+  - Update to wx3.1.1
 - Bug fixes:
   - Fix 'Can add icon' message when adding a fault.
   - Add Speed points to exportable columns.
