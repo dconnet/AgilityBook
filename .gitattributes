@@ -4,3 +4,4 @@
 *.po eol=lf
 *.xml eol=lf
 *.sh eol=lf
+*.in eol=lf
