@@ -3,3 +3,4 @@
 *.lsl eol=lf
 *.po eol=lf
 *.xml eol=lf
+*.sh eol=lf

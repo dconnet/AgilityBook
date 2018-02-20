@@ -24,10 +24,10 @@ multiple versions simultaneously with different settings
 
 extract the tar to a directory (i.e ~/wx/wxWidgets-n.n.n [$WXWIN])
 - Apply all patches noted in Readme.txt
-- See build/setupwx and build/setwxpath.
-  - setupwx: Makes configuring WX easy.
+- See build/setupwx.sh and build/setwxpath.sh.
+  - setupwx.sh: Makes configuring WX easy.
     [Note: the configure output should show all libraries as either 'builtin' or 'no']
-  - setwxpath: Makes configuring build environment easy.
+  - setwxpath.sh: Makes configuring build environment easy.
 > cd <build directory>
   - Name will always be "build-[ansi|unicode][-debug]"
 > make
@@ -35,7 +35,7 @@ extract the tar to a directory (i.e ~/wx/wxWidgets-n.n.n [$WXWIN])
 Now you need to put this version of wx-config on your path so when you make
 agilitybook it picks this version of wxMac
 > export PATH=$WXWIN/build-unicode:$PATH
-(use ". ./setwxpath 2.8 unicode" to do this)
+(use ". ./setwxpath.sh 2.8 unicode" to do this)
 
 3. Build agilitybook as universal binary for PPC and Intel 32 bit architectures
 > cd AgilityBook/

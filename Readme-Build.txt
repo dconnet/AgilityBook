@@ -121,7 +121,7 @@ before AC_MSG_CHECKING line (fixes macOS 10.13 SDK issue)
   }
 
 To build for VC, see ./src/Projects/CompileWX.py
-To build for Mac, see ./build/setupwx
+To build for Mac, see ./build/setupwx.sh
 
 --------------------
 
