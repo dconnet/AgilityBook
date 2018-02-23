@@ -17,6 +17,7 @@
 
 /src/Projects/xcode9/**/xcuserdata/*
 /src/Projects/xcode9/build/*
+.DS_Store
 
 # Ignore vim tmp files
 *.swp
