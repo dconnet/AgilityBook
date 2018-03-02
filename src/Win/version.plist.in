@@ -10,7 +10,5 @@
 	<string>@PACKAGE_VERSION@</string>
 	<key>ProjectName</key>
 	<string>@PACKAGE_NAME@</string>
-	<key>SourceVersion</key>
-	<string>@SVN_VERSION@</string>
 </dict>
 </plist>
