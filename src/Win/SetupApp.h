@@ -78,9 +78,10 @@ protected:
 	// Note: If called before creating a frame, config needs to be deleted.
 	virtual void BaseAppCleanup(bool deleteConfig = false); // So dlg apps can cleanup.
 
+public:
+
 	// Language control
 
-public:
 	/**
 	 * Display a user interface to select a language.
 	 */
@@ -90,6 +91,10 @@ public:
 	 */
 	std::wstring CurrentLanguage() const;
 	int CurrentLanguageId() const;
+
+	// Are we running in standalone mode? (wxConfig is using .info file)
+
+	bool IsStandloneMode() const { return m_bStandalone; }
 
 protected:
 	// ILanguageCallback interface
@@ -130,6 +135,8 @@ protected:
 	wxString m_ConfigTest; // For testing readonly (default: 'Settings/isLocal')
 	// If '.info' isn't writable, fall back to system default. (default: true)
 	bool m_bFallback;
+	// .info is in use for wxConfig
+	bool m_bStandalone;
 
 private:
 	CLanguageManager* m_langMgr;

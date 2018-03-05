@@ -49,6 +49,7 @@ CBaseApp::CBaseApp(
 	, m_bReadOnlyInfo(false)
 	, m_ConfigTest(wxT("Settings/isLocal"))
 	, m_bFallback(true)
+	, m_bStandalone(false)
 	, m_langMgr(nullptr)
 {
 	if (m_BaseRegName.empty())
@@ -180,7 +181,10 @@ bool CBaseApp::OnInit()
 			}
 
 			if (!pBaseConfig)
+			{
 				pBaseConfig = new wxConfig(m_BaseRegName, m_VendorName);
+				m_bStandalone = true;
+			}
 			wxConfig::Set(pBaseConfig);
 			bConfigSet = true;
 		}

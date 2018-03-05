@@ -508,7 +508,8 @@ bool CUpdateInfo::CheckProgram(
 		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 		{
 			bool bGotoWeb = false;
-			if (m_NewFile.empty())
+			// If running in standalone mode, just go to the web.
+			if (m_NewFile.empty() || wxGetApp().IsStandloneMode())
 				bGotoWeb = true;
 			else
 			{
