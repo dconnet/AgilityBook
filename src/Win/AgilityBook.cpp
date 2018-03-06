@@ -379,8 +379,8 @@ bool CAgilityBookApp::OnInit()
 	}
 
 	CMainFrame *frame = new CMainFrame(m_manager);
-	int width, height;
-	frame->GetSize(&width, &height);
+	int width = DPI::Scale(600);
+	int height = DPI::Scale(400);
 	int defWidth = width;
 	int defHeight = height;
 	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTCX, &width, width))
