@@ -354,7 +354,7 @@ void CDlgFindLinks::Edit()
 	if (0 <= nItem)
 	{
 		CDlgFindLinksDataPtr data = GetItemLinkData(nItem);
-		CDlgSelectURL dlg(data->m_Link, this);
+		CDlgSelectURL dlg(data->m_Link, true, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			std::wstring newName = dlg.Name();

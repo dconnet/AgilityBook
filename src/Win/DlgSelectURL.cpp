@@ -39,6 +39,24 @@ CDlgSelectURL::CDlgSelectURL(
 	, m_Name(StringUtil::stringWX(name))
 	, m_textCtrl(nullptr)
 {
+	Init(pParent, false);
+}
+
+
+CDlgSelectURL::CDlgSelectURL(
+		std::wstring const& name,
+		bool bAllowEmpty,
+		wxWindow* pParent)
+	: wxDialog()
+	, m_Name(StringUtil::stringWX(name))
+	, m_textCtrl(nullptr)
+{
+	Init(pParent, bAllowEmpty);
+}
+
+
+void CDlgSelectURL::Init(wxWindow* pParent, bool bAllowEmpty)
+{
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_SELECT_URL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
@@ -47,7 +65,7 @@ CDlgSelectURL::CDlgSelectURL(
 
 	m_textCtrl = new CTextCtrl(this, wxID_ANY, m_Name,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 170), -1), 0,
-		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
+		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH | (bAllowEmpty ? 0 : TRIMVALIDATOR_NONEMPTY), _("IDS_ENTER_NAME")));
 	m_textCtrl->SetHelpText(_("HIDC_SELECTURL_NAME"));
 	m_textCtrl->SetToolTip(_("HIDC_SELECTURL_NAME"));
 

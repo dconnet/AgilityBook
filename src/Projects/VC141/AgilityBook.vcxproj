@@ -509,7 +509,9 @@
     <Image Include="..\..\Win\res\AgilityBook.ico" />
     <None Include="..\..\Win\res\AgilityBook.rc2" />
     <None Include="..\..\Win\res\AgilityRecordBook.dtd" />
-    <Xml Include="..\..\Win\res\DefaultConfig.xml" />
+    <Xml Include="..\..\Win\res\DefaultConfig.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\History.txt" />

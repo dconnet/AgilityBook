@@ -1,4 +1,7 @@
-Last Updated: 1/19/2018
+Last Updated: 4/7/2018
+
+- Tweaks to Find-Links dialog:
+  - Ability to go directly to run with link (or at least the trial)
 
 - Add AKC Invitational point accumulation (QQs add 10pts)
 
