@@ -16,6 +16,7 @@
 /configure
 
 /src/Projects/xcode9/**/xcuserdata/*
+/src/Projects/xcode9/**/xcshareddata/*
 /src/Projects/xcode9/build/*
 .DS_Store
 
