@@ -537,26 +537,30 @@ long CAgilityBookRunsView::CSortColumn::LookupColumn(long iCol) const
 }
 
 
-// The wx functions take a 'long'. Which means we can't pass pointers on 64bit.
-// So, we use a global. Since this is only used in one place, we don't have
-// any threading issues.
-static struct
+struct RunsSortInfo : public SortInfo
 {
 	CAgilityBookRunsView* pThis;
-	int nCol;
-} s_SortInfo;
+
+	RunsSortInfo(CAgilityBookRunsView* This, int nCol)
+		: SortInfo(nCol), pThis(This)
+	{
+	}
+};
 
 
-int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
+int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	CAgilityBookRunsViewDataPtr pRun1 = s_SortInfo.pThis->GetItemRunDataByData(static_cast<long>(item1));
-	CAgilityBookRunsViewDataPtr pRun2 = s_SortInfo.pThis->GetItemRunDataByData(static_cast<long>(item2));
+	RunsSortInfo const* pInfo = dynamic_cast<RunsSortInfo const*>(pSortInfo);
+	assert(pInfo);
+
+	CAgilityBookRunsViewDataPtr pRun1 = std::dynamic_pointer_cast<CAgilityBookRunsViewData, CListData>(item1);
+	CAgilityBookRunsViewDataPtr pRun2 = std::dynamic_pointer_cast<CAgilityBookRunsViewData, CListData>(item2);
 
 	int nRet = 0;
-	int iCol = std::abs(s_SortInfo.nCol);
+	int iCol = std::abs(pInfo->nCol);
 	// Col 0 is special: it has the icons. Instead of saving it,
 	// we simply ignore it - so iCol is always off by 1.
-	switch (s_SortInfo.pThis->m_Columns[iCol - 1])
+	switch (pInfo->pThis->m_Columns[iCol - 1])
 	{
 	default:
 		break;
@@ -1101,7 +1105,7 @@ int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 		}
 		break;
 	}
-	if (0 > s_SortInfo.nCol)
+	if (0 > pInfo->nCol)
 		nRet *= -1;
 	return nRet;
 }
@@ -1460,14 +1464,6 @@ CAgilityBookRunsViewDataPtr CAgilityBookRunsView::GetItemRunData(long index) con
 }
 
 
-CAgilityBookRunsViewDataPtr CAgilityBookRunsView::GetItemRunDataByData(wxUIntPtr data) const
-{
-	if (!m_Ctrl)
-		return CAgilityBookRunsViewDataPtr();
-	return std::dynamic_pointer_cast<CAgilityBookRunsViewData, CListData>(m_Ctrl->GetDataByData(data));
-}
-
-
 bool CAgilityBookRunsView::GetUnifiedTrial(
 		ARBDogPtr& pDog,
 		ARBDogTrialPtr& pTrial,
@@ -1614,9 +1610,8 @@ void CAgilityBookRunsView::LoadData()
 
 	if (m_SortColumn.IsSorted())
 	{
-		s_SortInfo.pThis = this;
-		s_SortInfo.nCol = m_SortColumn.GetColumn();
-		m_Ctrl->SortItems(CompareRuns, 0);
+		RunsSortInfo sortInfo(this, m_SortColumn.GetColumn());
+		m_Ctrl->SortItems(CompareRuns, &sortInfo);
 		if (0 == m_SortColumn.GetColumn())
 			m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), 0);
 		else
@@ -1660,9 +1655,8 @@ void CAgilityBookRunsView::OnCtrlColumnClick(wxListEvent& evt)
 		if (m_SortColumn.GetColumn() == evt.GetColumn())
 			nBackwards = -1;
 		m_SortColumn.SetColumn(evt.GetColumn() * nBackwards);
-		s_SortInfo.pThis = this;
-		s_SortInfo.nCol = m_SortColumn.GetColumn();
-		m_Ctrl->SortItems(CompareRuns, 0);
+		RunsSortInfo sortInfo(this, m_SortColumn.GetColumn());
+		m_Ctrl->SortItems(CompareRuns, &sortInfo);
 		m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
 
 		if (0 <= m_Ctrl->GetFirstSelected())
@@ -1675,7 +1669,7 @@ void CAgilityBookRunsView::OnCtrlItemSelected(wxListEvent& evt)
 {
 	if (m_Ctrl && !m_bSuppressSelect && 1 == m_Ctrl->GetSelectedItemCount())
 	{
-		CAgilityBookRunsViewDataPtr pData = GetItemRunDataByData(evt.GetData());
+		CAgilityBookRunsViewDataPtr pData = GetItemRunData(evt.GetIndex());
 		if (pData)
 		{
 			CAgilityBookTreeData* pTreeData = GetDocument()->GetTreeView()->FindData(pData->GetRun());
@@ -2010,9 +2004,8 @@ bool CAgilityBookRunsView::OnCmd(int id)
 		m_SortColumn.SetSorted(!m_SortColumn.IsSorted());
 		if (m_SortColumn.IsSorted())
 		{
-			s_SortInfo.pThis = this;
-			s_SortInfo.nCol = m_SortColumn.GetColumn();
-			m_Ctrl->SortItems(CompareRuns, 0);
+			RunsSortInfo sortInfo(this, m_SortColumn.GetColumn());
+			m_Ctrl->SortItems(CompareRuns, &sortInfo);
 			m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
 
 			if (0 <= m_Ctrl->GetFirstSelected())

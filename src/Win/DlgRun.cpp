@@ -202,11 +202,17 @@ static struct
 };
 static int const scNumRefRunColumns = sizeof(scRefRunColumns) / sizeof(scRefRunColumns[0]);
 
-static struct
+struct RunSortInfo : public SortInfo
 {
 	CDlgRun* pThis;
 	CColumnOrder* pCols;
-} s_SortInfo;
+
+	RunSortInfo(CDlgRun* This, CColumnOrder* cols)
+		: pThis(This)
+		, pCols(cols)
+	{
+	}
+};
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -304,16 +310,20 @@ std::wstring CDlgDogRefRunData::OnNeedText(long iCol) const
 }
 
 
-int wxCALLBACK CompareRefRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
+int wxCALLBACK CompareRefRuns(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	CDlgDogRefRunDataPtr pData1 = s_SortInfo.pThis->GetReferenceDataByData(static_cast<long>(item1));
-	CDlgDogRefRunDataPtr pData2 = s_SortInfo.pThis->GetReferenceDataByData(static_cast<long>(item2));
+	RunSortInfo const* pInfo = dynamic_cast<RunSortInfo const*>(pSortInfo);
+	assert(pInfo);
+
+	CDlgDogRefRunDataPtr pData1 = std::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(item1);
+	CDlgDogRefRunDataPtr pData2 = std::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(item2);
+
 	ARBDogReferenceRunPtr pTitle1 = pData1->GetData();
 	ARBDogReferenceRunPtr pTitle2 = pData2->GetData();
 	int rc = 0;
-	for (int i = 0; i < s_SortInfo.pCols->GetSize(); ++i)
+	for (int i = 0; i < pInfo->pCols->GetSize(); ++i)
 	{
-		int col = s_SortInfo.pCols->GetColumnAt(i);
+		int col = pInfo->pCols->GetColumnAt(i);
 		switch (col)
 		{
 		default:
@@ -368,7 +378,7 @@ int wxCALLBACK CompareRefRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 		}
 		if (rc)
 		{
-			if (s_SortInfo.pCols->IsDescending(col))
+			if (pInfo->pCols->IsDescending(col))
 				rc *= -1;
 			break;
 		}
@@ -2434,12 +2444,6 @@ void CDlgRun::SetFaultsText()
 }
 
 
-CDlgDogRefRunDataPtr CDlgRun::GetReferenceDataByData(long index) const
-{
-	return std::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(m_ctrlRefRuns->GetDataByData(index));
-}
-
-
 CDlgDogRefRunDataPtr CDlgRun::GetReferenceData(long index) const
 {
 	return std::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(m_ctrlRefRuns->GetData(index));
@@ -2556,9 +2560,8 @@ void CDlgRun::ListRefRuns()
 	}
 	for (index = 0; index < scNumRefRunColumns; ++index)
 		m_ctrlRefRuns->SetColumnWidth(index, wxLIST_AUTOSIZE_USEHEADER);
-	s_SortInfo.pThis = this;
-	s_SortInfo.pCols = &m_sortRefRuns;
-	m_ctrlRefRuns->SortItems(CompareRefRuns, 0);
+	RunSortInfo sortInfo(this, &m_sortRefRuns);
+	m_ctrlRefRuns->SortItems(CompareRefRuns, &sortInfo);
 
 	if (pSelected)
 	{
@@ -2948,11 +2951,10 @@ void CDlgRun::OnCommentsFaults(wxCommandEvent& evt)
 
 void CDlgRun::OnRefRunColumnClick(wxListEvent& evt)
 {
-	s_SortInfo.pThis = this;
 	m_sortRefRuns.SetColumnOrder(evt.GetColumn());
 	SetRefRunColumnHeaders();
-	s_SortInfo.pCols = &m_sortRefRuns;
-	m_ctrlRefRuns->SortItems(CompareRefRuns, 0);
+	RunSortInfo sortInfo(this, &m_sortRefRuns);
+	m_ctrlRefRuns->SortItems(CompareRefRuns, &sortInfo);
 	m_sortRefRuns.Save();
 }
 

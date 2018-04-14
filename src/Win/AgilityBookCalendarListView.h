@@ -51,7 +51,7 @@ private:
 
 class CAgilityBookCalendarListView : public CAgilityBookBaseExtraView
 {
-	friend int wxCALLBACK CompareCalendar(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
+	friend int wxCALLBACK CompareCalendar(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
 	friend class CAgilityBookCalendarListViewData;
 	friend class CFindCalendar;
 	DECLARE_CLASS(CAgilityBookCalendarListView)
@@ -100,7 +100,6 @@ public:
 
 private:
 	CAgilityBookCalendarListViewDataPtr GetItemCalData(long index) const;
-	CAgilityBookCalendarListViewDataPtr GetItemCalDataByData(wxUIntPtr data) const;
 	void SetupColumns();
 	void LoadData();
 	bool OnCmd(int id);

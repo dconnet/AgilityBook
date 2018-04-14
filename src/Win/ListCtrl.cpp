@@ -56,7 +56,6 @@ CReportListCtrl::CReportListCtrl(
 	, m_imgEmpty(-1)
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
-	, m_NextId(1)
 {
 	Create(parent, wxDefaultPosition, wxDefaultSize, bSingleSel, sortHeader, bHasBorder, bHasImageList);
 }
@@ -75,7 +74,6 @@ CReportListCtrl::CReportListCtrl(
 	, m_imgEmpty(-1)
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
-	, m_NextId(1)
 {
 	Create(parent, pos, size, bSingleSel, sortHeader, bHasBorder, bHasImageList);
 }
@@ -90,10 +88,12 @@ bool CReportListCtrl::Create(
 		bool bHasBorder,
 		bool bHasImageList)
 {
-	if (!CListCtrl::Create(parent, wxID_ANY, pos, size, wxLC_REPORT
+	long style = wxLC_REPORT | wxLC_VIRTUAL
 		| (bSingleSel ? wxLC_SINGLE_SEL : 0)
 		| ((sortHeader == eSortHeader) ? 0 : (sortHeader == eNoSortHeader) ? wxLC_NO_SORT_HEADER : wxLC_NO_HEADER)
-		| (bHasBorder ? wxBORDER : wxNO_BORDER)))
+		| (bHasBorder ? wxBORDER : wxNO_BORDER);
+
+	if (!CListCtrl::Create(parent, wxID_ANY, pos, size, style))
 	{
 		return false;
 	}
@@ -110,6 +110,51 @@ bool CReportListCtrl::Create(
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 	return true;
+}
+
+wxItemAttr* CReportListCtrl::OnGetItemAttr(long item) const
+{
+	return nullptr;
+}
+
+
+wxItemAttr* CReportListCtrl::OnGetItemColumnAttr(long item, long column) const
+{
+	return nullptr;
+}
+
+
+int CReportListCtrl::OnGetItemColumnImage(long item, long column) const
+{
+	int index = -1;
+	if (0 <= item && item < m_items.size())
+	{
+		wxListItem info;
+		m_items[item]->OnNeedListItem(column, info);
+		if (info.GetMask() & wxLIST_MASK_IMAGE)
+			index = info.GetImage();
+	}
+	return index;
+}
+
+
+int CReportListCtrl::OnGetItemImage(long item) const
+{
+	return OnGetItemColumnImage(item, 0);
+}
+
+
+wxString CReportListCtrl::OnGetItemText(long item, long column) const
+{
+	wxString text;
+	if (0 <= item && item < m_items.size())
+	{
+		wxListItem info;
+		m_items[item]->OnNeedListItem(column, info);
+		if (info.GetMask() & wxLIST_MASK_TEXT)
+			text = info.GetText();
+	}
+	return text;
 }
 
 
@@ -139,6 +184,18 @@ void CReportListCtrl::SetColumnSort(long column, int iconDirection)
 }
 
 
+bool CReportListCtrl::SortItems(CListCtrlCompare fnSortCallBack, SortInfo const* pSortInfo)
+{
+	std::stable_sort(m_items.begin(), m_items.end(), [fnSortCallBack, pSortInfo](CListDataPtr const& one, CListDataPtr const& two)
+					 {
+						 return fnSortCallBack(one, two, pSortInfo) < 0;
+					 }
+	);
+	Refresh();
+	return true;
+}
+
+
 long CReportListCtrl::InsertItem(CListDataPtr inData)
 {
 	return InsertItem(GetItemCount(), inData);
@@ -147,29 +204,19 @@ long CReportListCtrl::InsertItem(CListDataPtr inData)
 
 long CReportListCtrl::InsertItem(long index, CListDataPtr inData)
 {
-	if (!inData)
-		return -1;
-	wxListItem info;
-	info.SetId(index);
-	info.SetMask(wxLIST_MASK_DATA);
-	info.SetData(m_NextId);
-	m_OwnerData[m_NextId] = inData;
-	++m_NextId;
-	inData->OnNeedListItem(0, info);
+	long item = -1;
 
-	long item = CListCtrl::InsertItem(info);
-
-	if (0 <= item)
+	if (inData)
 	{
-		long nCols = GetColumnCount();
-		for (long iCol = 1; iCol < nCols; ++iCol)
+		if (m_items.size() <= index)
+			m_items.push_back(inData);
+		else
 		{
-			wxListItem info2;
-			info2.SetId(item);
-			info2.SetColumn(iCol);
-			inData->OnNeedListItem(iCol, info2);
-			SetItem(info2);
+			if (index < 0)
+				index = 0;
+			m_items.insert(m_items.begin() + index, inData);
 		}
+		SetItemCount(static_cast<long>(m_items.size()));
 	}
 
 	return item;
@@ -232,45 +279,14 @@ void CReportListCtrl::SetSelection(
 }
 
 
-CListDataPtr CReportListCtrl::GetDataByData(wxUIntPtr data) const
-{
-	CListDataPtr ptr;
-	if (0 < data)
-	{
-		DataMap::const_iterator iter = m_OwnerData.find(data);
-		if (iter != m_OwnerData.end())
-			ptr = iter->second;
-	}
-	return ptr;
-}
-
-
 CListDataPtr CReportListCtrl::GetData(long item) const
 {
 	CListDataPtr ptr;
 	if (0 <= item && item < GetItemCount())
-		ptr = GetDataByData(static_cast<long>(GetItemData(item)));
-	return ptr;
-}
-
-
-bool CReportListCtrl::SetData(long item, CListDataPtr inData)
-{
-	bool bSet = false;
-	if (0 <= item && item < GetItemCount())
 	{
-		bSet = true;
-		long data = static_cast<long>(GetItemData(item));
-		if (0 < data)
-			m_OwnerData[data] = inData;
-		else
-		{
-			SetItemData(item, m_NextId);
-			m_OwnerData[m_NextId] = inData;
-			++m_NextId;
-		}
+		ptr = m_items[item];
 	}
-	return bSet;
+	return ptr;
 }
 
 
@@ -350,12 +366,11 @@ void CReportListCtrl::RefreshItem(long item)
 
 void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 {
-	wxUIntPtr data = evt.GetData();
-	if (0 < data)
+	long index = evt.GetIndex();
+	if (0 <= index && index < m_items.size())
 	{
-		DataMap::iterator iter = m_OwnerData.find(data);
-		if (iter != m_OwnerData.end())
-			m_OwnerData.erase(iter);
+		auto iter = m_items.begin() + index;
+		m_items.erase(iter);
 	}
 	evt.Skip();
 }

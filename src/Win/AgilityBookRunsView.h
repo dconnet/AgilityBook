@@ -50,7 +50,7 @@ private:
 
 class CAgilityBookRunsView : public CAgilityBookBaseExtraView
 {
-	friend int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
+	friend int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
 	friend class CAgilityBookRunsViewData;
 	friend class CFindRuns;
 	DECLARE_CLASS(CAgilityBookRunsView)
@@ -101,7 +101,6 @@ public:
 
 private:
 	CAgilityBookRunsViewDataPtr GetItemRunData(long index) const;
-	CAgilityBookRunsViewDataPtr GetItemRunDataByData(wxUIntPtr data) const;
 	bool GetUnifiedTrial(
 			ARBDogPtr& pDog,
 			ARBDogTrialPtr& pTrial,

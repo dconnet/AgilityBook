@@ -68,11 +68,8 @@ public:
 	~CDlgDog();
 
 	CDlgDogDataTitlePtr GetTitleData(long index) const;
-	CDlgDogDataTitlePtr GetTitleDataByData(long index) const;
 	CDlgDogDataRegNumPtr GetRegNumData(long index) const;
-	CDlgDogDataRegNumPtr GetRegNumDataByData(long index) const;
 	CDlgDogDataPointPtr GetPointData(long index) const;
-	CDlgDogDataPointPtr GetPointDataByData(long index) const;
 private:
 	void UpdateAge();
 	void UpdateDeceased();

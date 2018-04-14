@@ -122,28 +122,37 @@ static struct
 static int const nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
 
 
-static struct
+struct FindSortInfo : public SortInfo
 {
 	CDlgFindLinks* pThis;
 	CColumnOrder* pCols;
-} s_SortInfo;
 
-
-int wxCALLBACK CompareLinks(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
-{
-	int rc = 0;
-	CDlgFindLinksDataPtr pData1 = s_SortInfo.pThis->GetItemLinkDataByData(static_cast<long>(item1));
-	CDlgFindLinksDataPtr pData2 = s_SortInfo.pThis->GetItemLinkDataByData(static_cast<long>(item2));
-
-	for (int i = 0; i < s_SortInfo.pCols->GetSize(); ++i)
+	FindSortInfo(CDlgFindLinks* This, CColumnOrder* cols)
+		: pThis(This)
+		, pCols(cols)
 	{
-		int col = s_SortInfo.pCols->GetColumnAt(i);
+	}
+};
+
+
+int wxCALLBACK CompareLinks(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
+{
+	FindSortInfo const* pInfo = dynamic_cast<FindSortInfo const*>(pSortInfo);
+	assert(pInfo);
+
+	int rc = 0;
+	CDlgFindLinksDataPtr pData1 = std::dynamic_pointer_cast<CDlgFindLinksData, CListData>(item1);
+	CDlgFindLinksDataPtr pData2 = std::dynamic_pointer_cast<CDlgFindLinksData, CListData>(item2);
+
+	for (int i = 0; i < pInfo->pCols->GetSize(); ++i)
+	{
+		int col = pInfo->pCols->GetColumnAt(i);
 		std::wstring str1 = pData1->OnNeedText(col);
 		std::wstring str2 = pData2->OnNeedText(col);
 		rc = StringUtil::CompareNoCase(str1, str2);
 		if (rc)
 		{
-			if (s_SortInfo.pCols->IsDescending(col))
+			if (pInfo->pCols->IsDescending(col))
 				rc *= -1;
 			break;
 		}
@@ -283,9 +292,8 @@ CDlgFindLinks::CDlgFindLinks(
 	}
 	for (int iCol = 0; iCol < nColLinkInfo; ++iCol)
 		m_ctrlLinks->SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
-	s_SortInfo.pThis = this;
-	s_SortInfo.pCols = &m_sortLinks;
-	m_ctrlLinks->SortItems(CompareLinks, 0);
+	FindSortInfo sortInfo(this, &m_sortLinks);
+	m_ctrlLinks->SortItems(CompareLinks, &sortInfo);
 	SetColumnHeaders();
 
 	if (0 < m_Data.size())
@@ -299,12 +307,6 @@ CDlgFindLinks::CDlgFindLinks(
 CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkData(long item)
 {
 	return std::dynamic_pointer_cast<CDlgFindLinksData, CListData>(m_ctrlLinks->GetData(item));
-}
-
-
-CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkDataByData(long data)
-{
-	return std::dynamic_pointer_cast<CDlgFindLinksData, CListData>(m_ctrlLinks->GetDataByData(data));
 }
 
 
@@ -371,11 +373,10 @@ void CDlgFindLinks::Edit()
 
 void CDlgFindLinks::OnColumnClick(wxListEvent& evt)
 {
-	s_SortInfo.pThis = this;
 	m_sortLinks.SetColumnOrder(evt.GetColumn());
 	SetColumnHeaders();
-	s_SortInfo.pCols = &m_sortLinks;
-	m_ctrlLinks->SortItems(CompareLinks, 0);
+	FindSortInfo sortInfo(this, &m_sortLinks);
+	m_ctrlLinks->SortItems(CompareLinks, &sortInfo);
 	m_sortLinks.Save();
 }
 

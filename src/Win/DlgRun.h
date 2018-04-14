@@ -81,7 +81,6 @@ public:
 			wxWindow* pParent = nullptr,
 			int iSelectPage = 0);
 
-	CDlgDogRefRunDataPtr GetReferenceDataByData(long index) const;
 private:
 	CDlgDogDivData* GetDivisionData(int index) const;
 	CDlgDogLevelData* GetLevelData(int index) const;

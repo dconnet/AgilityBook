@@ -50,7 +50,7 @@ class CAgilityBookTrainingView : public CAgilityBookBaseExtraView
 {
 	friend class CAgilityBookTrainingViewData;
 	friend class CFindTraining;
-	friend int wxCALLBACK CompareTraining(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
+	friend int wxCALLBACK CompareTraining(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
 	DECLARE_CLASS(CAgilityBookTrainingView)
 	CAgilityBookTrainingView(
 			CTabView* pTabView,

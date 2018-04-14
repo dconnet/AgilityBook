@@ -159,8 +159,6 @@ public:
 			std::vector<CFindItemInfo> const& inItems,
 			wxWindow* pParent = nullptr);
 
-	CDlgListViewerDataPtr GetDataByData(long data) const;
-
 private:
 	bool Create(
 			std::wstring const& inCaption,

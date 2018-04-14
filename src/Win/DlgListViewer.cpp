@@ -1034,22 +1034,31 @@ int CDlgListViewerDataItem::Compare(
 /////////////////////////////////////////////////////////////////////////////
 // CDlgListViewer dialog
 
-static struct
+struct ListSortInfo : public SortInfo
 {
 	CDlgListViewer* pThis;
-	int nCol;
-} s_SortInfo;
+
+	ListSortInfo(CDlgListViewer* This, int nCol)
+		: SortInfo(nCol)
+		, pThis(This)
+	{
+	}
+};
 
 
-int wxCALLBACK CompareRows(wxIntPtr item1, wxIntPtr item2, wxIntPtr item3)
+int wxCALLBACK CompareRows(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	CDlgListViewerDataPtr pRow1 = s_SortInfo.pThis->GetDataByData(static_cast<long>(item1));
-	CDlgListViewerDataPtr pRow2 = s_SortInfo.pThis->GetDataByData(static_cast<long>(item2));
+	ListSortInfo const* pInfo = dynamic_cast<ListSortInfo const*>(pSortInfo);
+	assert(pInfo);
+
+	CDlgListViewerDataPtr pRow1 = std::dynamic_pointer_cast<CDlgListViewerData, CListData>(item1);
+	CDlgListViewerDataPtr pRow2 = std::dynamic_pointer_cast<CDlgListViewerData, CListData>(item2);
+
 	if (!pRow1 || !pRow2)
 		return 0;
-	int iCol = std::abs(s_SortInfo.nCol);
+	int iCol = std::abs(pInfo->nCol);
 	int nRet = pRow1->Compare(pRow2, iCol - 1);
-	if (0 > s_SortInfo.nCol)
+	if (0 > pInfo->nCol)
 		nRet *= -1;
 	return nRet;
 }
@@ -1395,12 +1404,6 @@ CDlgListViewer::CDlgListViewer(
 }
 
 
-CDlgListViewerDataPtr CDlgListViewer::GetDataByData(long data) const
-{
-	return std::dynamic_pointer_cast<CDlgListViewerData, CListData>(m_ctrlList->GetDataByData(data));
-}
-
-
 bool CDlgListViewer::Create(
 		std::wstring const& inCaption,
 		wxWindow* pParent)
@@ -1457,9 +1460,8 @@ bool CDlgListViewer::Create(
 
 void CDlgListViewer::FinishCreate()
 {
-	s_SortInfo.pThis = this;
-	s_SortInfo.nCol = m_SortColumn;
-	m_ctrlList->SortItems(CompareRows, 0);
+	ListSortInfo sortInfo(this, m_SortColumn);
+	m_ctrlList->SortItems(CompareRows, &sortInfo);
 	m_ctrlList->SetColumnSort(std::abs(m_SortColumn) - 1, m_SortColumn);
 	m_ctrlCopy->Enable(0 < m_ctrlList->GetItemCount());
 }
@@ -1472,9 +1474,8 @@ void CDlgListViewer::OnColumnClick(wxListEvent& evt)
 	if (m_SortColumn == evt.GetColumn() + 1)
 		nBackwards = -1;
 	m_SortColumn = (evt.GetColumn() + 1) * nBackwards;
-	s_SortInfo.pThis = this;
-	s_SortInfo.nCol = m_SortColumn;
-	m_ctrlList->SortItems(CompareRows, 0);
+	ListSortInfo sortInfo(this, m_SortColumn);
+	m_ctrlList->SortItems(CompareRows, &sortInfo);
 	m_ctrlList->SetColumnSort(std::abs(m_SortColumn) - 1, m_SortColumn);
 }
 

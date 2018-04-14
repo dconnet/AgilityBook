@@ -31,7 +31,6 @@ typedef std::shared_ptr<CDlgFindLinksData> CDlgFindLinksDataPtr;
 
 class CDlgFindLinks : public wxDialog
 {
-	friend int wxCALLBACK CompareLinks(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
 public:
 	CDlgFindLinks(
 			ARBDogList& inDogs,
@@ -41,7 +40,6 @@ public:
 
 private:
 	CDlgFindLinksDataPtr GetItemLinkData(long item);
-	CDlgFindLinksDataPtr GetItemLinkDataByData(long data);
 	int GetImageIndex(std::wstring const& inLink);
 	void SetColumnHeaders();
 	void UpdateButtons();

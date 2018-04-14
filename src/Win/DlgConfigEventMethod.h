@@ -30,7 +30,6 @@ typedef std::shared_ptr<CDlgConfigureDataPlacement> CDlgConfigureDataPlacementPt
 
 class CDlgConfigEventMethod : public wxDialog
 {
-	friend int wxCALLBACK ComparePlacement(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
 public:
 	CDlgConfigEventMethod(
 			ARBConfigVenuePtr pVenue,
@@ -40,7 +39,6 @@ public:
 private:
 	ARBConfigScoring::ScoringStyle GetType(int index) const;
 	CDlgConfigureDataPlacementPtr GetPlacementData(int index) const;
-	CDlgConfigureDataPlacementPtr GetPlacementDataByData(int index) const;
 	void UpdateButtons();
 	void UpdateControls();
 	void FillLevelList();

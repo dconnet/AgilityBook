@@ -97,16 +97,10 @@ std::wstring CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 }
 
 
-static struct
+int wxCALLBACK ComparePlacement(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	CDlgConfigEventMethod* pThis;
-} s_SortInfo;
-
-
-int wxCALLBACK ComparePlacement(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
-{
-	CDlgConfigureDataPlacementPtr place1 = s_SortInfo.pThis->GetPlacementDataByData(static_cast<long>(item1));
-	CDlgConfigureDataPlacementPtr place2 = s_SortInfo.pThis->GetPlacementDataByData(static_cast<long>(item2));
+	CDlgConfigureDataPlacementPtr place1 = std::dynamic_pointer_cast<CDlgConfigureDataPlacement, CListData>(item1);
+	CDlgConfigureDataPlacementPtr place2 = std::dynamic_pointer_cast<CDlgConfigureDataPlacement, CListData>(item2);
 	return place1->Place() > place2->Place();
 }
 
@@ -365,8 +359,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 			(*iterPlace)->GetPlace(), (*iterPlace)->GetValue()));
 		m_ctrlPlacement->InsertItem(pData);
 	}
-	s_SortInfo.pThis = this;
-	m_ctrlPlacement->SortItems(ComparePlacement, 0);
+	m_ctrlPlacement->SortItems(ComparePlacement);
 	m_ctrlPlacement->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 	m_ctrlPlacement->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
 	m_ctrlPlacement->Show(m_SpeedPts);
@@ -583,12 +576,6 @@ CDlgConfigureDataPlacementPtr CDlgConfigEventMethod::GetPlacementData(int index)
 }
 
 
-CDlgConfigureDataPlacementPtr CDlgConfigEventMethod::GetPlacementDataByData(int index) const
-{
-	return std::dynamic_pointer_cast<CDlgConfigureDataPlacement, CListData>(m_ctrlPlacement->GetDataByData(index));
-}
-
-
 void CDlgConfigEventMethod::UpdateButtons()
 {
 	bool bEdit = false;
@@ -786,8 +773,7 @@ void CDlgConfigEventMethod::DoPlacementEdit()
 	{
 		pData->Place(dlg.GetPlace());
 		pData->Value(dlg.GetValue());
-		s_SortInfo.pThis = this;
-		m_ctrlPlacement->SortItems(ComparePlacement, 0);
+		m_ctrlPlacement->SortItems(ComparePlacement);
 		m_ctrlPlacement->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 		m_ctrlPlacement->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
 		UpdateButtons();
@@ -884,8 +870,7 @@ void CDlgConfigEventMethod::OnPlacementNew(wxCommandEvent& evt)
 		CDlgConfigureDataPlacementPtr pData(new CDlgConfigureDataPlacement(
 			dlg.GetPlace(), dlg.GetValue()));
 		m_ctrlPlacement->InsertItem(pData);
-		s_SortInfo.pThis = this;
-		m_ctrlPlacement->SortItems(ComparePlacement, 0);
+		m_ctrlPlacement->SortItems(ComparePlacement);
 		m_ctrlPlacement->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 		m_ctrlPlacement->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
 		UpdateButtons();

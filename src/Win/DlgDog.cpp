@@ -80,12 +80,19 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-static struct
+struct DogSortInfo : public SortInfo
 {
 	CDlgDog* pThis;
 	CAgilityBookDoc* pDoc;
 	CColumnOrder* pCols;
-} s_SortInfo;
+
+	DogSortInfo(CDlgDog* This, CAgilityBookDoc* doc, CColumnOrder* cols)
+		: pThis(This)
+		, pDoc(doc)
+		, pCols(cols)
+	{
+	}
+};
 
 
 static struct
@@ -225,16 +232,19 @@ void CDlgDogDataTitle::OnNeedListItem(long iCol, wxListItem& info) const
 }
 
 
-int wxCALLBACK CompareTitles(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
+int wxCALLBACK CompareTitles(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	CDlgDogDataTitlePtr pData1 = s_SortInfo.pThis->GetTitleDataByData(static_cast<long>(item1));
-	CDlgDogDataTitlePtr pData2 = s_SortInfo.pThis->GetTitleDataByData(static_cast<long>(item2));
+	DogSortInfo const* pInfo = dynamic_cast<DogSortInfo const*>(pSortInfo);
+	assert(pInfo);
+
+	CDlgDogDataTitlePtr pData1 = std::dynamic_pointer_cast<CDlgDogDataTitle, CListData>(item1);
+	CDlgDogDataTitlePtr pData2 = std::dynamic_pointer_cast<CDlgDogDataTitle, CListData>(item2);
 	ARBDogTitlePtr pTitle1 = pData1->GetData();
 	ARBDogTitlePtr pTitle2 = pData2->GetData();
 	int rc = 0;
-	for (int i = 0; i < s_SortInfo.pCols->GetSize(); ++i)
+	for (int i = 0; i < pInfo->pCols->GetSize(); ++i)
 	{
-		int col = s_SortInfo.pCols->GetColumnAt(i);
+		int col = pInfo->pCols->GetColumnAt(i);
 		switch (col)
 		{
 		case 0: // Received and hidden
@@ -271,8 +281,8 @@ int wxCALLBACK CompareTitles(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 			break;
 		case 4: // nice name
 			{
-				std::wstring name1 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
-				std::wstring name2 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
+				std::wstring name1 = pInfo->pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
+				std::wstring name2 = pInfo->pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
 				if (name1 < name2)
 					rc = -1;
 				else if (name1 > name2)
@@ -282,7 +292,7 @@ int wxCALLBACK CompareTitles(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 		}
 		if (rc)
 		{
-			if (s_SortInfo.pCols->IsDescending(col))
+			if (pInfo->pCols->IsDescending(col))
 				rc *= -1;
 			break;
 		}
@@ -335,16 +345,19 @@ std::wstring CDlgDogDataRegNum::OnNeedText(long iCol) const
 }
 
 
-int wxCALLBACK CompareRegNums(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
+int wxCALLBACK CompareRegNums(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	CDlgDogDataRegNumPtr pData1 = s_SortInfo.pThis->GetRegNumDataByData(static_cast<long>(item1));
-	CDlgDogDataRegNumPtr pData2 = s_SortInfo.pThis->GetRegNumDataByData(static_cast<long>(item2));
+	DogSortInfo const* pInfo = dynamic_cast<DogSortInfo const*>(pSortInfo);
+	assert(pInfo);
+
+	CDlgDogDataRegNumPtr pData1 = std::dynamic_pointer_cast<CDlgDogDataRegNum, CListData>(item1);
+	CDlgDogDataRegNumPtr pData2 = std::dynamic_pointer_cast<CDlgDogDataRegNum, CListData>(item2);
 	ARBDogRegNumPtr pRegNum1 = pData1->GetData();
 	ARBDogRegNumPtr pRegNum2 = pData2->GetData();
 	int rc = 0;
-	for (int i = 0; i < s_SortInfo.pCols->GetSize(); ++i)
+	for (int i = 0; i < pInfo->pCols->GetSize(); ++i)
 	{
-		int col = s_SortInfo.pCols->GetColumnAt(i);
+		int col = pInfo->pCols->GetColumnAt(i);
 		switch (col)
 		{
 		default:
@@ -381,7 +394,7 @@ int wxCALLBACK CompareRegNums(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 		}
 		if (rc)
 		{
-			if (s_SortInfo.pCols->IsDescending(col))
+			if (pInfo->pCols->IsDescending(col))
 				rc *= -1;
 			break;
 		}
@@ -452,16 +465,19 @@ std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
 }
 
 
-int wxCALLBACK ComparePoints(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
+int wxCALLBACK ComparePoints(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	CDlgDogDataPointPtr pData1 = s_SortInfo.pThis->GetPointDataByData(static_cast<long>(item1));
-	CDlgDogDataPointPtr pData2 = s_SortInfo.pThis->GetPointDataByData(static_cast<long>(item2));
+	DogSortInfo const* pInfo = dynamic_cast<DogSortInfo const*>(pSortInfo);
+	assert(pInfo);
+
+	CDlgDogDataPointPtr pData1 = std::dynamic_pointer_cast<CDlgDogDataPoint, CListData>(item1);
+	CDlgDogDataPointPtr pData2 = std::dynamic_pointer_cast<CDlgDogDataPoint, CListData>(item2);
 	ARBDogExistingPointsPtr pExistingPoints1 = pData1->GetData();
 	ARBDogExistingPointsPtr pExistingPoints2 = pData2->GetData();
 	int rc = 0;
-	for (int i = 0; i < s_SortInfo.pCols->GetSize(); ++i)
+	for (int i = 0; i < pInfo->pCols->GetSize(); ++i)
 	{
-		int col = s_SortInfo.pCols->GetColumnAt(i);
+		int col = pInfo->pCols->GetColumnAt(i);
 		switch (col)
 		{
 
@@ -535,7 +551,7 @@ int wxCALLBACK ComparePoints(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 		}
 		if (rc)
 		{
-			if (s_SortInfo.pCols->IsDescending(col))
+			if (pInfo->pCols->IsDescending(col))
 				rc *= -1;
 			break;
 		}
@@ -983,33 +999,15 @@ CDlgDogDataTitlePtr CDlgDog::GetTitleData(long index) const
 }
 
 
-CDlgDogDataTitlePtr CDlgDog::GetTitleDataByData(long index) const
-{
-	return std::dynamic_pointer_cast<CDlgDogDataTitle, CListData>(m_ctrlTitles->GetDataByData(index));
-}
-
-
 CDlgDogDataRegNumPtr CDlgDog::GetRegNumData(long index) const
 {
 	return std::dynamic_pointer_cast<CDlgDogDataRegNum, CListData>(m_ctrlRegNums->GetData(index));
 }
 
 
-CDlgDogDataRegNumPtr CDlgDog::GetRegNumDataByData(long index) const
-{
-	return std::dynamic_pointer_cast<CDlgDogDataRegNum, CListData>(m_ctrlRegNums->GetDataByData(index));
-}
-
-
 CDlgDogDataPointPtr CDlgDog::GetPointData(long index) const
 {
 	return std::dynamic_pointer_cast<CDlgDogDataPoint, CListData>(m_ctrlPoints->GetData(index));
-}
-
-
-CDlgDogDataPointPtr CDlgDog::GetPointDataByData(long index) const
-{
-	return std::dynamic_pointer_cast<CDlgDogDataPoint, CListData>(m_ctrlPoints->GetDataByData(index));
 }
 
 
@@ -1079,10 +1077,8 @@ void CDlgDog::ListTitles()
 	}
 	for (i = 0; i < nColTitleInfo; ++i)
 		m_ctrlTitles->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
-	s_SortInfo.pThis = this;
-	s_SortInfo.pDoc = m_pDoc;
-	s_SortInfo.pCols = &m_sortTitles;
-	m_ctrlTitles->SortItems(CompareTitles, 0);
+	DogSortInfo sortInfo(this, m_pDoc, &m_sortTitles);
+	m_ctrlTitles->SortItems(CompareTitles, &sortInfo);
 	if (pSelected)
 	{
 		for (i = 0; i < m_ctrlTitles->GetItemCount(); ++i)
@@ -1166,10 +1162,8 @@ void CDlgDog::ListRegNums()
 	}
 	for (i = 0; i < nColRegNumInfo; ++i)
 		m_ctrlRegNums->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
-	s_SortInfo.pThis = this;
-	s_SortInfo.pDoc = m_pDoc;
-	s_SortInfo.pCols = &m_sortRegNums;
-	m_ctrlRegNums->SortItems(CompareRegNums, 0);
+	DogSortInfo sortInfo(this, m_pDoc, &m_sortRegNums);
+	m_ctrlRegNums->SortItems(CompareRegNums, &sortInfo);
 	if (pSelected)
 	{
 		for (i = 0; i < m_ctrlRegNums->GetItemCount(); ++i)
@@ -1259,10 +1253,8 @@ void CDlgDog::ListExistingPoints()
 	if (bSetWidth)
 		for (i = 0; i < nColExistingPointsInfo; ++i)
 			m_ctrlPoints->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
-	s_SortInfo.pThis = this;
-	s_SortInfo.pDoc = m_pDoc;
-	s_SortInfo.pCols = &m_sortPoints;
-	m_ctrlPoints->SortItems(ComparePoints, 0);
+	DogSortInfo sortInfo(this, m_pDoc, &m_sortPoints);
+	m_ctrlPoints->SortItems(ComparePoints, &sortInfo);
 	if (pSelected)
 	{
 		for (i = 0; i < m_ctrlPoints->GetItemCount(); ++i)
@@ -1351,10 +1343,8 @@ void CDlgDog::OnTitleColumnClick(wxListEvent& evt)
 {
 	m_sortTitles.SetColumnOrder(evt.GetColumn());
 	SetColumnTitleHeaders();
-	s_SortInfo.pThis = this;
-	s_SortInfo.pDoc = m_pDoc;
-	s_SortInfo.pCols = &m_sortTitles;
-	m_ctrlTitles->SortItems(CompareTitles, 0);
+	DogSortInfo sortInfo(this, m_pDoc, &m_sortTitles);
+	m_ctrlTitles->SortItems(CompareTitles, &sortInfo);
 	m_sortTitles.Save();
 }
 
@@ -1427,10 +1417,8 @@ void CDlgDog::OnRegNumColumnClick(wxListEvent& evt)
 {
 	m_sortRegNums.SetColumnOrder(evt.GetColumn());
 	SetColumnRegNumHeaders();
-	s_SortInfo.pThis = this;
-	s_SortInfo.pDoc = m_pDoc;
-	s_SortInfo.pCols = &m_sortRegNums;
-	m_ctrlRegNums->SortItems(CompareRegNums, 0);
+	DogSortInfo sortInfo(this, m_pDoc, &m_sortRegNums);
+	m_ctrlRegNums->SortItems(CompareRegNums, &sortInfo);
 	m_sortRegNums.Save();
 }
 
@@ -1496,10 +1484,8 @@ void CDlgDog::OnPointsColumnClick(wxListEvent& evt)
 {
 	m_sortPoints.SetColumnOrder(evt.GetColumn());
 	SetColumnPointsHeaders();
-	s_SortInfo.pThis = this;
-	s_SortInfo.pDoc = m_pDoc;
-	s_SortInfo.pCols = &m_sortPoints;
-	m_ctrlPoints->SortItems(ComparePoints, 0);
+	DogSortInfo sortInfo(this, m_pDoc, &m_sortPoints);
+	m_ctrlPoints->SortItems(ComparePoints, &sortInfo);
 	m_sortPoints.Save();
 }
 

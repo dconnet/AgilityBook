@@ -181,28 +181,32 @@ long CAgilityBookTrainingView::CSortColumn::LookupColumn(long iCol) const
 }
 
 
-// The wx functions take a 'long'. Which means we can't pass pointers on 64bit.
-// So, we use a global. Since this is only used in one place, we don't have
-// any threading issues.
-static struct
+struct TrainingSortInfo : public SortInfo
 {
 	CAgilityBookTrainingView* pThis;
-	int nCol;
-} s_SortInfo;
 
 
-int wxCALLBACK CompareTraining(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
+	TrainingSortInfo(CAgilityBookTrainingView* This, int nCol)
+		: SortInfo(nCol)
+		, pThis(This)
+	{
+	}
+};
+
+
+int wxCALLBACK CompareTraining(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	if (0 == s_SortInfo.nCol)
+	TrainingSortInfo const* pInfo = dynamic_cast<TrainingSortInfo const*>(pSortInfo);
+	assert(pInfo);
+
+	if (0 == pInfo->nCol)
 		return 0;
-	CListDataPtr pRawItem1 = s_SortInfo.pThis->m_Ctrl->GetDataByData(static_cast<long>(item1));
-	CListDataPtr pRawItem2 = s_SortInfo.pThis->m_Ctrl->GetDataByData(static_cast<long>(item2));
-	CAgilityBookTrainingViewDataPtr pItem1 = std::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem1);
-	CAgilityBookTrainingViewDataPtr pItem2 = std::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem2);
+	CAgilityBookTrainingViewDataPtr pItem1 = std::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(item1);
+	CAgilityBookTrainingViewDataPtr pItem2 = std::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(item2);
 
 	int nRet = 0;
-	int iCol = std::abs(s_SortInfo.nCol);
-	switch (s_SortInfo.pThis->m_Columns[iCol-1])
+	int iCol = std::abs(pInfo->nCol);
+	switch (pInfo->pThis->m_Columns[iCol-1])
 	{
 	case IO_LOG_DATE:
 		if (pItem1->GetTraining()->GetDate() < pItem2->GetTraining()->GetDate())
@@ -220,7 +224,7 @@ int wxCALLBACK CompareTraining(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData
 		nRet = StringUtil::CompareNoCase(pItem1->GetTraining()->GetNote(), pItem2->GetTraining()->GetNote());
 		break;
 	}
-	if (0 > s_SortInfo.nCol)
+	if (0 > pInfo->nCol)
 		nRet *= -1;
 	return nRet;
 }
@@ -564,9 +568,8 @@ void CAgilityBookTrainingView::LoadData()
 	if (m_Ctrl->IsShownOnScreen())
 		UpdateMessages();
 
-	s_SortInfo.pThis = this;
-	s_SortInfo.nCol = m_SortColumn.GetColumn();
-	m_Ctrl->SortItems(CompareTraining, 0);
+	TrainingSortInfo sortInfo(this, m_SortColumn.GetColumn());
+	m_Ctrl->SortItems(CompareTraining, &sortInfo);
 	m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()) - 1, m_SortColumn.GetColumn());
 	// Now make sure the selected item is visible.
 	if (0 <= m_Ctrl->GetFirstSelected())
@@ -587,9 +590,8 @@ void CAgilityBookTrainingView::OnCtrlColumnClick(wxListEvent& evt)
 	if (m_SortColumn.GetColumn() == evt.GetColumn() + 1)
 		nBackwards = -1;
 	m_SortColumn.SetColumn((evt.GetColumn() + 1) * nBackwards);
-	s_SortInfo.pThis = this;
-	s_SortInfo.nCol = m_SortColumn.GetColumn();
-	m_Ctrl->SortItems(CompareTraining, 0);
+	TrainingSortInfo sortInfo(this, m_SortColumn.GetColumn());
+	m_Ctrl->SortItems(CompareTraining, &sortInfo);
 	m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()) - 1, m_SortColumn.GetColumn());
 }
 

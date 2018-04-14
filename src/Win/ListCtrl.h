@@ -26,6 +26,23 @@
 
 ARB_TYPEDEF(CListData)
 
+struct SortInfo
+{
+	int nCol;
+
+	SortInfo()
+		: nCol(0)
+	{
+	}
+	SortInfo(int col)
+		: nCol(col)
+	{
+	}
+	virtual ~SortInfo()
+	{
+	}
+};
+typedef int (wxCALLBACK *CListCtrlCompare)(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
 
 // wxListView adds some convenient functions to wxListCtrl
 class CReportListCtrl : public CListCtrl
@@ -57,6 +74,8 @@ public:
 	}
 
 	void SetColumnSort(long column, int iconDirection);
+
+	bool SortItems(CListCtrlCompare fnSortCallBack, SortInfo const* pSortInfo = nullptr);
 
 	long InsertItem(CListDataPtr inData);
 	long InsertItem(long index, CListDataPtr inData);
@@ -104,13 +123,8 @@ public:
 			bool bEnsureVisible = false,
 			bool bSetFocus = true);
 
-	/// Return listdata using data value
-	CListDataPtr GetDataByData(wxUIntPtr data) const;
 	/// Return listdata by list id
 	CListDataPtr GetData(long item) const;
-	bool SetData(
-			long item,
-			CListDataPtr inData);
 
 	std::wstring GetPrintDataAsHtmlTable(bool bFirstLineIsHeader = false) const;
 
@@ -145,23 +159,23 @@ protected:
 			SortHeader sortHeader,
 			bool bHasBorder,
 			bool bHasImageList);
+	virtual wxItemAttr* OnGetItemAttr(long item) const;
+	virtual wxItemAttr* OnGetItemColumnAttr(long item, long column) const;
+	virtual int OnGetItemColumnImage(long item, long column) const;
+	virtual int OnGetItemImage(long item) const;
+	virtual wxString OnGetItemText(long item, long column) const;
+
 	wxImageList m_ImageList;
 	int m_imgEmpty;
 	int m_imgSortUp;
 	int m_imgSortDn;
-	// Instead of putting the data in the control, we put keys in. Currently,
-	// wxWidgets sorts using 'long's for data - this will cause a problem on
-	// 64bit systems if we try to put an object in - a 64bit ptr won't fit
-	// in a long. This has a nice side benefit that we don't have to do
-	// memory management of objects within list items!
-	int m_NextId;
-	typedef std::map<wxUIntPtr, CListDataPtr> DataMap;
-	DataMap m_OwnerData;
+	std::vector<CListDataPtr> m_items;
 
 private:
 	void OnDeleteItem(wxListEvent& evt);
-	// Hide wxListCtrl insertions - note, this will not prevent insertion since
+	// Hide wxListCtrl apis - note, this will not prevent usage since
 	// these are NOT virtual! Do not implement.
+	bool SortItems(wxListCtrlCompare fnSortCallBack, wxIntPtr data);
 	long InsertItem(const wxListItem& info);
 	long InsertItem(long index, const wxString& label);
 	long InsertItem(long index, int imageIndex);
