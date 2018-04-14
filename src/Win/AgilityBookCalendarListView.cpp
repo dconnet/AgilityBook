@@ -310,25 +310,28 @@ long CAgilityBookCalendarListView::CSortColumn::LookupColumn(long iCol) const
 }
 
 
-// The wx functions take a 'long'. Which means we can't pass pointers on 64bit.
-// So, we use a global. Since this is only used in one place, we don't have
-// any threading issues.
-// NOTE: As of wx2.9.1, looks like this is fixed.
-static struct
+struct CalListSortInfo : public SortInfo
 {
 	CAgilityBookCalendarListView* pThis;
-	int nCol;
-} s_SortInfo;
 
-int wxCALLBACK CompareCalendar(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
+	CalListSortInfo(CAgilityBookCalendarListView* This, int nCol)
+		: SortInfo(nCol), pThis(This)
+	{
+	}
+};
+
+int wxCALLBACK CompareCalendar(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	if (0 == s_SortInfo.nCol)
+	CalListSortInfo const* pInfo = dynamic_cast<CalListSortInfo const*>(pSortInfo);
+	assert(pInfo);
+
+	if (0 == pInfo->nCol)
 		return 0;
-	CAgilityBookCalendarListViewDataPtr pItem1 = s_SortInfo.pThis->GetItemCalDataByData(static_cast<long>(item1));
-	CAgilityBookCalendarListViewDataPtr pItem2 = s_SortInfo.pThis->GetItemCalDataByData(static_cast<long>(item2));
+	CAgilityBookCalendarListViewDataPtr pItem1 = std::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(item1);
+	CAgilityBookCalendarListViewDataPtr pItem2 = std::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(item2);
 	int nRet = 0;
-	int iCol = std::abs(s_SortInfo.nCol);
-	switch (s_SortInfo.pThis->m_Columns[iCol-1])
+	int iCol = std::abs(pInfo->nCol);
+	switch (pInfo->pThis->m_Columns[iCol-1])
 	{
 	case IO_CAL_START_DATE:
 		if (pItem1->GetCalendar()->GetStartDate() < pItem2->GetCalendar()->GetStartDate())
@@ -389,7 +392,7 @@ int wxCALLBACK CompareCalendar(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData
 		nRet = StringUtil::CompareNoCase(pItem1->GetCalendar()->GetNote(), pItem2->GetCalendar()->GetNote());
 		break;
 	}
-	if (0 > s_SortInfo.nCol)
+	if (0 > pInfo->nCol)
 		nRet *= -1;
 	return nRet;
 }
@@ -687,14 +690,6 @@ CAgilityBookCalendarListViewDataPtr CAgilityBookCalendarListView::GetItemCalData
 }
 
 
-CAgilityBookCalendarListViewDataPtr CAgilityBookCalendarListView::GetItemCalDataByData(wxUIntPtr data) const
-{
-	if (!m_Ctrl)
-		return CAgilityBookCalendarListViewDataPtr();
-	return std::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(m_Ctrl->GetDataByData(data));
-}
-
-
 void CAgilityBookCalendarListView::SetupColumns()
 {
 	if (!m_Ctrl)
@@ -814,9 +809,8 @@ void CAgilityBookCalendarListView::LoadData()
 	if (m_Ctrl->IsShownOnScreen())
 		UpdateMessages();
 
-	s_SortInfo.pThis = this;
-	s_SortInfo.nCol = m_SortColumn.GetColumn();
-	m_Ctrl->SortItems(CompareCalendar, 0);
+	CalListSortInfo sortInfo(this, m_SortColumn.GetColumn());
+	m_Ctrl->SortItems(CompareCalendar, &sortInfo);
 	m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()) - 1, m_SortColumn.GetColumn());
 	// Now make sure the selected item is visible.
 	if (0 <= m_Ctrl->GetFirstSelected())
@@ -851,9 +845,8 @@ void CAgilityBookCalendarListView::OnCtrlColumnClick(wxListEvent& evt)
 	if (m_SortColumn.GetColumn() == evt.GetColumn() + 1)
 		nBackwards = -1;
 	m_SortColumn.SetColumn((evt.GetColumn() + 1) * nBackwards);
-	s_SortInfo.pThis = this;
-	s_SortInfo.nCol = m_SortColumn.GetColumn();
-	m_Ctrl->SortItems(CompareCalendar, 0);
+	CalListSortInfo sortInfo(this, m_SortColumn.GetColumn());
+	m_Ctrl->SortItems(CompareCalendar, &sortInfo);
 	m_Ctrl->SetColumnSort(std::abs(m_SortColumn.GetColumn()) - 1, m_SortColumn.GetColumn());
 }
 
@@ -862,7 +855,7 @@ void CAgilityBookCalendarListView::OnCtrlItemSelected(wxListEvent& evt)
 {
 	if (m_Ctrl && !m_bSuppressSelect && 1 == m_Ctrl->GetSelectedItemCount())
 	{
-		CAgilityBookCalendarListViewDataPtr pData = GetItemCalDataByData(evt.GetData());
+		CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(evt.GetIndex());
 		if (pData && pData->GetCalendar() && pData->GetCalendar()->GetStartDate().IsValid())
 		{
 			GetDocument()->SetCalenderDate(pData->GetCalendar()->GetStartDate());

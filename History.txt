@@ -1,10 +1,12 @@
-4/7/2018: v3.2.5.<development>
+4/14/2018: v3.2.5.<development>
 - Bumped Configuration v58:
   - Added NADAC Barrelers
 - New features / Enhancements:
   - Enable crash dump reporting.
   - Update to wx3.1.1
   - Allow clearing a Linked file in the Find-Links dialog.
+  - Changed to a virtual list to speed up Runs loading.
+    (note: side effect is autosizing columns only works on what is visible)
 - Bug fixes:
   - Fix 'Can add icon' message when adding a fault.
   - Add Speed points to exportable columns.
