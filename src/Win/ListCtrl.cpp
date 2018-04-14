@@ -210,11 +210,15 @@ long CReportListCtrl::InsertItem(long index, CListDataPtr inData)
 	if (inData)
 	{
 		if (m_items.size() <= index)
+		{
+			item = static_cast<long>(m_items.size());
 			m_items.push_back(inData);
+		}
 		else
 		{
 			if (index < 0)
 				index = 0;
+			item = index;
 			m_items.insert(m_items.begin() + index, inData);
 		}
 		SetItemCount(static_cast<long>(m_items.size()));
