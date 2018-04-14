@@ -172,6 +172,7 @@ protected:
 	std::vector<CListDataPtr> m_items;
 
 private:
+	void OnDeleteAllItems(wxListEvent& evt);
 	void OnDeleteItem(wxListEvent& evt);
 	// Hide wxListCtrl apis - note, this will not prevent usage since
 	// these are NOT virtual! Do not implement.

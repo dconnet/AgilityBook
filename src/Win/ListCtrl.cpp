@@ -97,6 +97,7 @@ bool CReportListCtrl::Create(
 	{
 		return false;
 	}
+	BIND_OR_CONNECT(wxEVT_COMMAND_LIST_DELETE_ALL_ITEMS, wxListEventHandler, CReportListCtrl::OnDeleteAllItems);
 	BIND_OR_CONNECT(wxEVT_COMMAND_LIST_DELETE_ITEM, wxListEventHandler, CReportListCtrl::OnDeleteItem);
 
 	// Make the blank one the 1st icon so if an icon isn't set in a list
@@ -364,6 +365,14 @@ void CReportListCtrl::RefreshItem(long item)
 }
 
 
+void CReportListCtrl::OnDeleteAllItems(wxListEvent& evt)
+{
+	m_items.clear();
+	SetItemCount(0);
+	evt.Skip();
+}
+
+
 void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 {
 	long index = evt.GetIndex();
@@ -371,6 +380,7 @@ void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 	{
 		auto iter = m_items.begin() + index;
 		m_items.erase(iter);
+		SetItemCount(static_cast<long>(m_items.size()));
 	}
 	evt.Skip();
 }
