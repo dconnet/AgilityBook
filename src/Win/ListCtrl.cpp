@@ -128,7 +128,7 @@ wxItemAttr* CReportListCtrl::OnGetItemColumnAttr(long item, long column) const
 int CReportListCtrl::OnGetItemColumnImage(long item, long column) const
 {
 	int index = -1;
-	if (0 <= item && item < m_items.size())
+	if (0 <= item && item < static_cast<long>(m_items.size()))
 	{
 		wxListItem info;
 		m_items[item]->OnNeedListItem(column, info);
@@ -148,7 +148,7 @@ int CReportListCtrl::OnGetItemImage(long item) const
 wxString CReportListCtrl::OnGetItemText(long item, long column) const
 {
 	wxString text;
-	if (0 <= item && item < m_items.size())
+	if (0 <= item && item < static_cast<long>(m_items.size()))
 	{
 		wxListItem info;
 		m_items[item]->OnNeedListItem(column, info);
@@ -209,7 +209,7 @@ long CReportListCtrl::InsertItem(long index, CListDataPtr inData)
 
 	if (inData)
 	{
-		if (m_items.size() <= index)
+		if (static_cast<long>(m_items.size()) <= index)
 		{
 			item = static_cast<long>(m_items.size());
 			m_items.push_back(inData);
@@ -380,7 +380,7 @@ void CReportListCtrl::OnDeleteAllItems(wxListEvent& evt)
 void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 {
 	long index = evt.GetIndex();
-	if (0 <= index && index < m_items.size())
+	if (0 <= index && index < static_cast<long>(m_items.size()))
 	{
 		auto iter = m_items.begin() + index;
 		m_items.erase(iter);
