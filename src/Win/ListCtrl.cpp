@@ -222,6 +222,7 @@ long CReportListCtrl::InsertItem(long index, CListDataPtr inData)
 			m_items.insert(m_items.begin() + index, inData);
 		}
 		SetItemCount(static_cast<long>(m_items.size()));
+		Refresh();
 	}
 
 	return item;
