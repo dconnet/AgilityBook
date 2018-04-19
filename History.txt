@@ -1,4 +1,4 @@
-4/14/2018: v3.2.5.<development>
+4/19/2018: v3.2.5.<development>
 - Bumped Configuration v58:
   - Added NADAC Barrelers
 - New features / Enhancements:
@@ -10,6 +10,7 @@
 - Bug fixes:
   - Fix 'Can add icon' message when adding a fault.
   - Add Speed points to exportable columns.
+  - Fixed parsing numbers in English locales with a non"." decimal separator.
 
 1/1/2018: v3.2.4.103
 - Bumped file version to 12.5

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-04-19 Fixed string/double parsing for locales.
  * 2014-11-17 Enhanced FormatBytes
  * 2014-06-24 Added CompareNoCase.
  * 2012-08-12 Moved FormatBytes to StringUtil
@@ -62,8 +63,8 @@ namespace StringUtil
 	/// @note This function differs from the others - instead of only
 	/// parsing in the current locale, this will also fall back to English
 	/// ('.' for decimal)
-	bool ToDouble(std::wstring const& inStr, double& outValue);
-	double ToDouble(std::wstring const& inStr);
+	bool ToDouble(std::wstring const& inStr, double& outValue, bool bUseDefaultLocale = true);
+	double ToDouble(std::wstring const& inStr, bool bUseDefaultLocale = true);
 
 	// These functions mimic wx2.9.x. They allow wx2.8 usage.
 	// The ToC<type> use the "C" locale.
@@ -130,9 +131,11 @@ namespace StringUtil
 	 * @param inSize Number of bytes
 	 * @param inPrec Precision (passed to ARBDouble::ToString)
 	 * @param inSizeStyle Use SI, binary, or programmer (true!) units
+	 * @param bUseDefaultLocale Use the default locale, or use the current one.
 	 */
 	std::wstring FormatBytes(
 			double inSize,
 			int inPrec = 2,
-			ByteSizeStyle inSizeStyle = eBytesBinary);
+			ByteSizeStyle inSizeStyle = eBytesBinary,
+			bool bUseDefaultLocale = true);
 };

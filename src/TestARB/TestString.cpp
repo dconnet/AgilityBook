@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-04-19 Fixed string/double parsing for locales.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-27 Remove WIN32 ifdef from tests.
  * 2008-06-29 Created
@@ -152,11 +153,11 @@ TEST_CASE("String")
 			REQUIRE(setlocale(LC_ALL, "english-us"));
 #endif
 			std::wstring s1(L"12.3");
-			double a1 = StringUtil::ToDouble(s1);
+			double a1 = StringUtil::ToDouble(s1, false);
 			REQUIRE(a1 == 12.3);
 			std::wstring s2(L"1.3-12");
 			double a2;
-			bool bParsed = StringUtil::ToDouble(s2, a2);
+			bool bParsed = StringUtil::ToDouble(s2, a2, false);
 			REQUIRE(a2 == 1.3);
 			REQUIRE(!bParsed);
 		}
@@ -173,11 +174,11 @@ TEST_CASE("String")
 			REQUIRE(setlocale(LC_ALL, "french"));
 #endif
 			std::wstring s1(L"12,3");
-			double a1 = StringUtil::ToDouble(s1);
+			double a1 = StringUtil::ToDouble(s1, false);
 			REQUIRE(a1 == 12.3);
 			std::wstring s2(L"1,3-12");
 			double a2;
-			bool bParsed = StringUtil::ToDouble(s2, a2);
+			bool bParsed = StringUtil::ToDouble(s2, a2, false);
 			REQUIRE(a2 == 1.3);
 			REQUIRE(!bParsed);
 		}
@@ -195,7 +196,7 @@ TEST_CASE("String")
 			REQUIRE(setlocale(LC_ALL, "french"));
 #endif
 			std::wstring s1(L"12.3");
-			double a1 = StringUtil::ToDouble(s1);
+			double a1 = StringUtil::ToDouble(s1, false);
 			REQUIRE(a1 == 12.3);
 		}
 	}

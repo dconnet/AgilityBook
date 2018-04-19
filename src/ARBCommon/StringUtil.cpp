@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-04-19 Fixed string/double parsing for locales.
  * 2015-11-13 Added zetta and yotta bytes.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-11-17 Enhanced FormatBytes (added true units as they're meant to be!)
@@ -318,12 +319,17 @@ unsigned long ToULong(std::wstring const& inStr)
 }
 
 
-bool ToDouble(std::wstring const& inStr, double& outValue)
+bool ToDouble(std::wstring const& inStr, double& outValue, bool bUseDefaultLocale)
 {
 	bool rc = false;
 #if defined(__WXWINDOWS__) && !USE_CRT
 	wxString s(inStr.c_str());
-	rc = s.ToDouble(&outValue);
+	{
+		std::auto_ptr<wxLocale> locale;
+		if (bUseDefaultLocale)
+			locale.reset(new wxLocale(wxLANGUAGE_DEFAULT, 0));
+		rc = s.ToDouble(&outValue);
+	}
 #else
 	wchar_t* end = nullptr;
 	outValue = wcstod(inStr.c_str(), &end);
@@ -366,10 +372,10 @@ bool ToDouble(std::wstring const& inStr, double& outValue)
 }
 
 
-double ToDouble(std::wstring const& inStr)
+double ToDouble(std::wstring const& inStr, bool bUseDefaultLocale)
 {
 	double val = 0.0;
-	ToDouble(inStr, val);
+	ToDouble(inStr, val, bUseDefaultLocale);
 	return val;
 }
 
@@ -784,7 +790,8 @@ std::wstring Replace(
 std::wstring FormatBytes(
 		double inSize,
 		int inPrec,
-		ByteSizeStyle inSizeStyle)
+		ByteSizeStyle inSizeStyle,
+		bool bUseDefaultLocale)
 {
 	// byte, kilo, mega, giga, tera, peta, exa, zetta, yotta
 	// Note: bronto, geop are next. Don't know the binary units, or the abbrev
@@ -828,7 +835,7 @@ std::wstring FormatBytes(
 	}
 	std::wstring form(sc_units[unitIndex].units[index]);
 
-	std::wstring val = ARBDouble::ToString(inSize, inPrec, ARBDouble::eDefault, ARBDouble::eStrip) + form;
+	std::wstring val = ARBDouble::ToString(inSize, inPrec, bUseDefaultLocale ? ARBDouble::eDefault : ARBDouble::eCurrent, ARBDouble::eStrip) + form;
 	return val;
 }
 

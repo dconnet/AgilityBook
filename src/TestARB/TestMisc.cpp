@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-04-19 Fixed string/double parsing for locales.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-01 Added ARBConfig/ARBBook version test.
  * 2015-04-04 Add C99 printf test.
@@ -104,13 +105,14 @@ TEST_CASE("Misc")
 	{
 		if (!g_bMicroTest)
 		{
+			wxLocale locale(wxLANGUAGE_ENGLISH);
 			for (size_t i = 0; i < ARRAY_SIZE(sc_FormatUnits); ++i)
 			{
 				for (size_t iPrec = 0; iPrec < NUM_PREC; ++iPrec)
 				{
-					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesBinary) == sc_FormatUnits[i].unitBinary[iPrec]);
-					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesSI) == sc_FormatUnits[i].unitSI[iPrec]);
-					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesTrue) == sc_FormatUnits[i].unitTrue[iPrec]);
+					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesBinary, false) == sc_FormatUnits[i].unitBinary[iPrec]);
+					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesSI, false) == sc_FormatUnits[i].unitSI[iPrec]);
+					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesTrue, false) == sc_FormatUnits[i].unitTrue[iPrec]);
 				}
 			}
 		}
