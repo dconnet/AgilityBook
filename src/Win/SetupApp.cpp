@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * 2018-04-20 Use wxTranslations instead of wxLocale.
  * 2018-01-28 Add debug reporting.
  * 2014-11-16 Add support to language initialization for embedding MO files.
  * 2014-07-08 Cleanup config if intialization fails.
@@ -190,7 +191,7 @@ bool CBaseApp::OnInit()
 		}
 	}
 
-	bool rc = InitLocale();
+	bool rc = InitLanguage();
 	if (!rc && bConfigSet)
 		BaseAppCleanup(true);
 	return rc;
@@ -240,13 +241,13 @@ std::wstring CBaseApp::CurrentLanguage() const
 }
 
 
-int CBaseApp::CurrentLanguageId() const
+wxLanguage CBaseApp::CurrentLanguageId() const
 {
 	return m_langMgr->CurrentLanguageId();
 }
 
 
-int CBaseApp::OnGetLanguage() const
+wxLanguage CBaseApp::OnGetLanguage() const
 {
 	return m_langMgr->GetDefaultLanguage();
 }
@@ -270,7 +271,7 @@ wxString CBaseApp::OnGetLanguageDir() const
 }
 
 
-void CBaseApp::OnSetLanguage(int langId)
+void CBaseApp::OnSetLanguage(wxLanguage langId)
 {
 }
 
@@ -300,9 +301,9 @@ bool CBaseApp::OnCreateIconBundle(
 }
 
 
-bool CBaseApp::InitLocale()
+bool CBaseApp::InitLanguage()
 {
-	return m_langMgr->InitLocale();
+	return m_langMgr->InitLanguage();
 }
 
 

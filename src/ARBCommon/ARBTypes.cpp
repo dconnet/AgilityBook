@@ -55,7 +55,7 @@
 std::wstring ARBDouble::ToString(
 		double inValue,
 		int inPrec,
-		LocaleType eUseDefaultLocale,
+		bool bUseCurrentLocale,
 		ZeroStrip eStripZeros)
 {
 #if !defined(__WXWINDOWS__)
@@ -63,7 +63,7 @@ std::wstring ARBDouble::ToString(
 #endif
 	std::wstring retVal;
 	wchar_t pt = '.';
-	if (eNone == eUseDefaultLocale)
+	if (!bUseCurrentLocale)
 	{
 		// When we don't want locales, avoid the wx functions as they use them.
 		std::wostringstream str;
@@ -75,9 +75,6 @@ std::wstring ARBDouble::ToString(
 #if defined(__WXWINDOWS__)
 	else
 	{
-		wxLocale* locale = nullptr;
-		if (eDefault == eUseDefaultLocale)
-			locale = new wxLocale(wxLANGUAGE_DEFAULT, 0);
 		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
 		if (0 < decimalPt.length())
 			pt = decimalPt.GetChar(0);
@@ -87,7 +84,6 @@ std::wstring ARBDouble::ToString(
 		else
 			tmp = wxString::Format(L"%g", inValue);
 		retVal = StringUtil::stringW(tmp);
-		delete locale;
 	}
 #endif
 	if (eAsIs != eStripZeros)
@@ -134,7 +130,7 @@ std::wstring ARBDouble::ToString(
 		int inPrec,
 		ARBDouble::ZeroStrip eStripZeros)
 {
-	return ARBDouble::ToString(inValue, inPrec, eDefault, eStripZeros);
+	return ARBDouble::ToString(inValue, inPrec, true, eStripZeros);
 }
 
 

@@ -62,12 +62,6 @@ class ARBDouble
 	ARBDouble();
 	~ARBDouble();
 public:
-	enum LocaleType
-	{
-		eNone,		///< Use '.' in numbers always.
-		eCurrent,	///< Use current locale.
-		eDefault	///< Use default (system) locale.
-	};
 	/// How to handle trailing zeros
 	enum ZeroStrip
 	{
@@ -82,7 +76,7 @@ public:
 	static std::wstring ToString(
 			double inValue,
 			int inPrec = 2,
-			LocaleType eUseDefaultLocale = eDefault,
+			bool bUseCurrentLocale = true,
 			ZeroStrip eStripZeros = eCompatible);
 	static std::wstring ToString(
 			double inValue,

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-04-20 Use wxTranslations instead of wxLocale.
  * 2014-11-14 Add support for embedded MO files on Win32.
  * 2014-07-07 Fixed SetLang returning failure if the lang was the same.
  * 2013-11-26 Fixed language initialization structure.
@@ -45,6 +46,7 @@ CLanguageManager::CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded)
 	: m_pCallback(pCallback)
 	, m_CurLang(wxLANGUAGE_DEFAULT)
 	, m_dirLang()
+	, m_dirLangDefault()
 	, m_dirLoadedLang()
 	, m_locale(nullptr)
 #if defined(WIN32)
@@ -53,28 +55,30 @@ CLanguageManager::CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded)
 	, m_bEmbedded(false)
 #endif
 {
+	if (!m_bEmbedded)
+		m_dirLangDefault = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+	wxTranslations::Set(new wxTranslations);
 }
 
 
 CLanguageManager::~CLanguageManager()
 {
-	delete m_locale;
 }
 
 
-int CLanguageManager::GetDefaultLanguage() const
+wxLanguage CLanguageManager::GetDefaultLanguage() const
 {
 	if (!m_pCallback || m_pCallback->OnGetLangConfigName().empty())
 		return wxLANGUAGE_ENGLISH_US;
 
-	int lang = m_CurLang;
+	wxLanguage lang = m_CurLang;
 
 	wxString langStr = wxConfig::Get()->Read(m_pCallback->OnGetLangConfigName(), wxEmptyString);
 	if (!langStr.empty())
 	{
 		const wxLanguageInfo* langInfo = wxLocale::FindLanguageInfo(langStr);
 		if (langInfo)
-			lang = langInfo->Language;
+			lang = static_cast<wxLanguage>(langInfo->Language);
 	}
 
 	return lang;
@@ -88,35 +92,54 @@ wxString CLanguageManager::GetDefaultCatalogName() const
 }
 
 
-wxString CLanguageManager::GetDefaultLanguageDir() const
-{
-	if (m_bEmbedded)
-		return wxString();
-	return wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
-}
-
-
-bool CLanguageManager::InitLocale()
+bool CLanguageManager::InitLanguage()
 {
 	bool bInit = true;
-	if (m_pCallback)
+
+	if (!m_bEmbedded && m_pCallback)
 	{
 		m_dirLang = m_pCallback->OnGetLanguageDir();
+		wxFileTranslationsLoader* loader = new wxFileTranslationsLoader;
+		loader->AddCatalogLookupPathPrefix(m_dirLang);
+		wxTranslations::Get()->SetLoader(loader);
+	}
+#if defined(WIN32)
+	else if (m_bEmbedded)
+	{
+		wxTranslations::Get()->SetLoader(new wxResourceTranslationsLoader);
+	}
+#endif
 
-		int lang = m_pCallback->OnGetLanguage();
+	m_locale = new wxLocale(wxLANGUAGE_DEFAULT); // Initialize wx with the default system settings
+
+	if (m_pCallback)
+	{
+		wxLanguage lang = m_pCallback->OnGetLanguage();
 		if (wxLANGUAGE_DEFAULT == lang)
 		{
-			wxLocale* tmp = new wxLocale(wxLANGUAGE_DEFAULT);
-			int lang2 = tmp->GetLanguage();
-			delete tmp;
-			// Set the initial language to the system default.
-			SetLang(lang2);
-			// If we don't support that language (lookup fails)...
-			if (wxString(L"IDD_LANGUAGE") == _("IDD_LANGUAGE"))
+			wxLanguage lang2 = lang;
 			{
-				// ... force English.
-				SetLang(wxLANGUAGE_ENGLISH_US);
+				wxLocale tmp(wxLANGUAGE_DEFAULT);
+				lang2 = static_cast<wxLanguage>(tmp.GetLanguage());
 			}
+			// See if we have this language...
+			bool bSet = false;
+			wxArrayString files = wxTranslations::Get()->GetAvailableTranslations(m_pCallback->OnGetCatalogName());
+			for (auto it = files.begin(); !bSet && it != files.end(); ++it)
+			{
+				wxLanguageInfo const* info = wxLocale::FindLanguageInfo(*it);
+				if (info)
+				{
+					if (info->Language == lang2)
+					{
+						bSet = true;
+						SetLang(lang2);
+					}
+				}
+			}
+			// Oh well... English it is.
+			if (!bSet)
+				SetLang(wxLANGUAGE_ENGLISH_US);
 			bInit = SelectLanguage();
 		}
 		else
@@ -124,8 +147,7 @@ bool CLanguageManager::InitLocale()
 	}
 	else
 	{
-		m_locale = new wxLocale();
-		m_locale->Init();
+		wxTranslations::Get()->SetLanguage(wxLANGUAGE_DEFAULT);
 	}
 	return bInit;
 }
@@ -137,62 +159,19 @@ bool CLanguageManager::SelectLanguage(wxWindow* parent)
 }
 
 
-#if defined(WIN32)
-BOOL CALLBACK EnumResourceProc(HMODULE hModule, LPCTSTR lpszType, LPTSTR lpszName, LONG_PTR lParam)
-{
-	std::vector<wxString>* pFiles = reinterpret_cast<std::vector<wxString>*>(lParam);
-	pFiles->push_back(lpszName);
-	return TRUE;
-}
-#endif
-
-
-int CLanguageManager::SelectLang(wxWindow* parent)
+wxLanguage CLanguageManager::SelectLang(wxWindow* parent)
 {
 	if (!m_pCallback)
 		return wxLANGUAGE_ENGLISH_US;
 
-	int lang = m_CurLang;
+	wxLanguage lang = m_CurLang;
 
 	int idxLang = -1;
-	std::vector<int> langId;
+	std::vector<wxLanguage> langId;
 	wxArrayString choices;
 
-	std::vector<wxString> files;
-#if defined(WIN32)
-	if (m_bEmbedded)
-	{
-		// Note: Resource names are the basename+langid.
-		// See wxResourceTranslationsLoader for more information.
-		std::vector<wxString> resourceNames;
-		::EnumResourceNames(nullptr, L"MOFILE", EnumResourceProc, reinterpret_cast<LONG_PTR>(&resourceNames));
-		wxString base = GetDefaultCatalogName();
-		base.MakeUpper();
-		for (std::vector<wxString>::iterator it = resourceNames.begin(); it != resourceNames.end(); ++it)
-		{
-			if (0 == it->Find(base))
-				files.push_back(it->Mid(base.length() + 1));
-			else
-				assert(0);
-		}
-	}
-	else
-#endif
-	{
-		wxDir dir(m_dirLang);
-		if (dir.IsOpened())
-		{
-			wxString filename;
-			bool cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_DIRS);
-			while (cont)
-			{
-				files.push_back(filename);
-				cont = dir.GetNext(&filename);
-			}
-		}
-	}
-
-	for (std::vector<wxString>::iterator it = files.begin(); it != files.end(); ++it)
+	wxArrayString files = wxTranslations::Get()->GetAvailableTranslations(m_pCallback->OnGetCatalogName());
+	for (auto it = files.begin(); it != files.end(); ++it)
 	{
 		wxLanguageInfo const* info = wxLocale::FindLanguageInfo(*it);
 		if (info)
@@ -204,7 +183,7 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 			wchar_t* x1 = _("French");
 #endif
 			choices.Add(wxGetTranslation(info->Description));
-			langId.push_back(info->Language);
+			langId.push_back(static_cast<wxLanguage>(info->Language));
 			if (info->Language == lang)
 				idxLang = static_cast<int>(langId.size()) - 1;
 		}
@@ -239,36 +218,26 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 }
 
 
-bool CLanguageManager::SetLang(int langId)
+bool CLanguageManager::SetLang(wxLanguage langId)
 {
 	if (!m_pCallback)
 		return false;
 
-	// If the same, then we did succeed.
+	// If the same, then we did succeed - but return fail so we don't do anything.
 	if (langId == m_CurLang)
-		return true;
+		return false;
 
 	m_CurLang = langId;
-	if (m_locale)
-		delete m_locale;
-	m_locale = new wxLocale();
 
-	if (!m_bEmbedded)
+	bool rc = false;
 	{
-		m_locale->AddCatalogLookupPathPrefix(m_dirLang);
+		wxLocale locale(m_CurLang);
+		rc = wxTranslations::Get()->AddCatalog(m_pCallback->OnGetCatalogName(), m_CurLang);
 	}
-
-	m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT);
-
-#if defined(WIN32)
-	if (m_bEmbedded)
-		wxTranslations::Get()->SetLoader(new wxResourceTranslationsLoader);
-#endif
-
-	bool rc = m_locale->AddCatalog(m_pCallback->OnGetCatalogName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 	if (rc)
 	{
-		m_dirLoadedLang = m_locale->GetCanonicalName();
+		wxTranslations::Get()->SetLanguage(m_CurLang);
+		m_dirLoadedLang = wxLocale::GetLanguageCanonicalName(m_CurLang);
 		if (2 < m_dirLoadedLang.length())
 			m_dirLoadedLang = m_dirLoadedLang.substr(0, 2);
 		m_pCallback->OnSetLanguage(m_CurLang);

@@ -10,6 +10,7 @@
  * @file
  *
  * Revision History
+ * 2018-04-20 Use wxTranslations instead of wxLocale.
  * 2018-01-28 Add debug reporting.
  * 2013-11-26 Fixed language initialization structure.
  * 2013-08-22 Fixed issue with ctor auto-cast.
@@ -90,7 +91,7 @@ public:
 	 * Currectly selected language.
 	 */
 	std::wstring CurrentLanguage() const;
-	int CurrentLanguageId() const;
+	wxLanguage CurrentLanguageId() const;
 
 	// Are we running in standalone mode? (wxConfig is using .info file)
 
@@ -98,11 +99,11 @@ public:
 
 protected:
 	// ILanguageCallback interface
-	virtual int OnGetLanguage() const;
+	virtual wxLanguage OnGetLanguage() const;
 	virtual wxString OnGetCatalogName() const;
 	virtual wxString OnGetLangConfigName() const;
 	virtual wxString OnGetLanguageDir() const;
-	virtual void OnSetLanguage(int langId);
+	virtual void OnSetLanguage(wxLanguage langId);
 	virtual void OnErrorMessage(wxString const& msg) const;
 
 	// IImageManagerCallback interface
@@ -116,7 +117,7 @@ protected:
 			const wxArtClient& client,
 			wxIconBundle& outIcon);
 
-	virtual bool InitLocale();
+	virtual bool InitLanguage();
 	virtual int SelectLang(wxWindow* parent = nullptr);
 
 	// Vendor name (default: 'dcon Software')

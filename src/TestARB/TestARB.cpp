@@ -66,7 +66,7 @@ public:
 	{
 #if defined(__WXWINDOWS__)
 		m_langMgr = new CLanguageManager(this, true);
-		m_langMgr->InitLocale();
+		m_langMgr->InitLanguage();
 #endif
 	}
 	~CLangManager()
@@ -76,14 +76,14 @@ public:
 #endif
 	}
 
-	bool SetLang(int langId);
+	bool SetLang(wxLanguage langId);
 
 private:
 	CLocalization& m_Localization;
 
 #if defined(__WXWINDOWS__)
 	// ILanguageCallback interface
-	virtual int OnGetLanguage() const
+	virtual wxLanguage OnGetLanguage() const
 	{
 		return m_langMgr->GetDefaultLanguage();
 	}
@@ -105,7 +105,7 @@ private:
 		return m_langMgr->GetDefaultLanguageDir();
 #endif
 	}
-	virtual void OnSetLanguage(int langId)
+	virtual void OnSetLanguage(wxLanguage langId)
 	{
 		if (!m_Localization.Load())
 		{
@@ -137,7 +137,7 @@ private:
 static CLangManager* g_LangMgr = nullptr;
 
 
-bool CLangManager::SetLang(int langId)
+bool CLangManager::SetLang(wxLanguage langId)
 {
 #if defined(__WXWINDOWS__)
 	return m_langMgr->SetLang(langId);
@@ -151,7 +151,7 @@ bool CLangManager::SetLang(int langId)
 }
 
 
-void SetLang(int langId)
+void SetLang(wxLanguage langId)
 {
 	if (g_LangMgr)
 		g_LangMgr->SetLang(langId);

@@ -38,7 +38,7 @@ extern size_t gc_NumConfigs;
 
 
 extern bool g_bMicroTest;
-extern void SetLang(int langId);
+extern void SetLang(wxLanguage langId);
 
 extern ElementNodePtr LoadXMLData(size_t id = 0); // 0 is default config
 

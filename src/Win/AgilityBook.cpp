@@ -546,9 +546,9 @@ void CAgilityBookApp::BaseAppCleanup(bool deleteConfig)
 }
 
 
-int CAgilityBookApp::OnGetLanguage() const
+wxLanguage CAgilityBookApp::OnGetLanguage() const
 {
-	int lang = CurrentLanguageId();
+	wxLanguage lang = CurrentLanguageId();
 
 	// Introduced in 2.1.
 	wxString langStr = wxConfig::Get()->Read(OnGetLangConfigName(), wxEmptyString);
@@ -578,7 +578,7 @@ int CAgilityBookApp::OnGetLanguage() const
 	{
 		const wxLanguageInfo* langInfo = wxLocale::FindLanguageInfo(langStr);
 		if (langInfo)
-			lang = langInfo->Language;
+			lang = static_cast<wxLanguage>(langInfo->Language);
 	}
 
 	return lang;
@@ -591,7 +591,7 @@ wxString CAgilityBookApp::OnGetLangConfigName() const
 }
 
 
-void CAgilityBookApp::OnSetLanguage(int langId)
+void CAgilityBookApp::OnSetLanguage(wxLanguage langId)
 {
 	if (!m_Localization.Load())
 	{
@@ -622,10 +622,10 @@ bool CAgilityBookApp::OnCreateIconBundle(
 }
 
 
-bool CAgilityBookApp::InitLocale()
+bool CAgilityBookApp::InitLanguage()
 {
 	IARBLocalization::Init(&m_Localization);
-	return CBaseApp::InitLocale();
+	return CBaseApp::InitLanguage();
 }
 
 

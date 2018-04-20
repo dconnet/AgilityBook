@@ -1457,6 +1457,8 @@ void CAgilityBookOptions::GetImportExportDateFormat(
 	else
 		section = CFG_KEY_EXPORT;
 	outFormat = static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(sc_ImportExportFormat)));
+	if (ARBDate::eReserved14 == outFormat)
+		outFormat = ARBDate::eLocale;
 }
 
 

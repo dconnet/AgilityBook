@@ -129,7 +129,7 @@ TEST_CASE("Date")
 #else
 				REQUIRE(setlocale(LC_ALL, "english-uk"));
 #endif
-				REQUIRE(L"02/03/1999" == d.GetString(ARBDate::eCurrentLocale));
+				REQUIRE(L"02/03/1999" == d.GetString(ARBDate::eLocale));
 			}
 			{
 #if defined(__WXWINDOWS__)
@@ -138,9 +138,9 @@ TEST_CASE("Date")
 				REQUIRE(setlocale(LC_ALL, "english-us"));
 #endif
 #ifdef __WXMAC__
-				REQUIRE(L"03/02/1999" == d.GetString(ARBDate::eCurrentLocale));
+				REQUIRE(L"03/02/1999" == d.GetString(ARBDate::eLocale));
 #else
-				REQUIRE(L"3/2/1999" == d.GetString(ARBDate::eCurrentLocale));
+				REQUIRE(L"3/2/1999" == d.GetString(ARBDate::eLocale));
 #endif
 			}
 #endif
@@ -223,7 +223,7 @@ TEST_CASE("Date")
 #else
 			REQUIRE(setlocale(LC_ALL, "english-uk"));
 #endif
-			ARBDate d = ARBDate::FromString(L"27/3/1999", ARBDate::eCurrentLocale);
+			ARBDate d = ARBDate::FromString(L"27/3/1999", ARBDate::eLocale);
 			REQUIRE(d.IsValid());
 			REQUIRE(d == d2);
 		}
@@ -244,7 +244,7 @@ TEST_CASE("Date")
 #else
 			REQUIRE(setlocale(LC_ALL, "english-us"));
 #endif
-			ARBDate d = ARBDate::FromString(L"3/27/1999", ARBDate::eCurrentLocale);
+			ARBDate d = ARBDate::FromString(L"3/27/1999", ARBDate::eLocale);
 			REQUIRE(d.IsValid());
 			REQUIRE(d == d2);
 		}

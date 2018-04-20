@@ -61,9 +61,9 @@ protected:
 
 	virtual void BaseAppCleanup(bool deleteConfig = false);
 
-	virtual int OnGetLanguage() const;
+	virtual wxLanguage OnGetLanguage() const;
 	virtual wxString OnGetLangConfigName() const;
-	virtual void OnSetLanguage(int langId);
+	virtual void OnSetLanguage(wxLanguage langId);
 
 	// IImageManagerCallback interface
 	virtual bool OnCreateBitmap(
@@ -76,7 +76,7 @@ protected:
 			const wxArtClient& client,
 			wxIconBundle& outIcon);
 
-	virtual bool InitLocale();
+	virtual bool InitLanguage();
 
 	DECLARE_EVENT_TABLE()
 	void OnQueryEndSession(wxCloseEvent& evt);

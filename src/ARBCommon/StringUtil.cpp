@@ -319,16 +319,13 @@ unsigned long ToULong(std::wstring const& inStr)
 }
 
 
-bool ToDouble(std::wstring const& inStr, double& outValue, bool bUseDefaultLocale)
+bool ToDouble(std::wstring const& inStr, double& outValue)
 {
 	bool rc = false;
 	wchar_t pt = L'.';
 #if defined(__WXWINDOWS__) && !USE_CRT
 	wxString s(inStr.c_str());
 	{
-		std::auto_ptr<wxLocale> locale;
-		if (bUseDefaultLocale)
-			locale.reset(new wxLocale(wxLANGUAGE_DEFAULT, 0));
 		rc = s.ToDouble(&outValue);
 
 		// Get the decimal pt while using the appropriate locale
@@ -378,10 +375,10 @@ bool ToDouble(std::wstring const& inStr, double& outValue, bool bUseDefaultLocal
 }
 
 
-double ToDouble(std::wstring const& inStr, bool bUseDefaultLocale)
+double ToDouble(std::wstring const& inStr)
 {
 	double val = 0.0;
-	ToDouble(inStr, val, bUseDefaultLocale);
+	ToDouble(inStr, val);
 	return val;
 }
 
@@ -796,8 +793,7 @@ std::wstring Replace(
 std::wstring FormatBytes(
 		double inSize,
 		int inPrec,
-		ByteSizeStyle inSizeStyle,
-		bool bUseDefaultLocale)
+		ByteSizeStyle inSizeStyle)
 {
 	// byte, kilo, mega, giga, tera, peta, exa, zetta, yotta
 	// Note: bronto, geop are next. Don't know the binary units, or the abbrev
@@ -841,7 +837,7 @@ std::wstring FormatBytes(
 	}
 	std::wstring form(sc_units[unitIndex].units[index]);
 
-	std::wstring val = ARBDouble::ToString(inSize, inPrec, bUseDefaultLocale ? ARBDouble::eDefault : ARBDouble::eCurrent, ARBDouble::eStrip) + form;
+	std::wstring val = ARBDouble::ToString(inSize, inPrec, ARBDouble::eStrip) + form;
 	return val;
 }
 

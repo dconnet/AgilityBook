@@ -208,16 +208,12 @@ ARBDate ARBDate::FromString(
 		ARBDate::DateFormat inFormat)
 {
 	ARBDate date;
-	if (eLocale == inFormat || eCurrentLocale == inFormat)
+	if (eLocale == inFormat)
 	{
 #if defined(__WXWINDOWS__)
-		wxLocale* locale = nullptr;
-		if (eLocale == inFormat)
-			locale = new wxLocale(wxLANGUAGE_DEFAULT, 0);
 		wxDateTime dt;
 		if (dt.ParseDate(inDate.c_str()))
 			date.SetDate(dt.GetYear(), static_cast<int>(dt.GetMonth())+1, dt.GetDay());
-		delete locale;
 #else
 #pragma PRAGMA_TODO(parse date using locale)
 		assert(0);
@@ -399,18 +395,6 @@ std::wstring ARBDate::GetString(
 	switch (inFormat)
 	{
 	case eLocale:
-		{
-#if defined(__WXWINDOWS__)
-			wxLocale locale(wxLANGUAGE_DEFAULT, 0);
-			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
-			date = dt.FormatDate();
-#else
-#pragma PRAGMA_TODO(format date using locale)
-			assert(0);
-#endif
-		}
-		break;
-	case eCurrentLocale:
 		{
 #if defined(__WXWINDOWS__)
 			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);

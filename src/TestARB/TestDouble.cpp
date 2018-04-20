@@ -46,63 +46,63 @@ static void RunDblTests()
 
 	// ARBDouble always strips 0s unless prec ==2, unless =".00"
 	double p = 3.14159265358979323846;
-	std::wstring s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent);
+	std::wstring s = ARBDouble::ToString(p, 2);
 	REQUIRE(FormNumber(L"3", decimalPt, L"14") == s);
-	s = ARBDouble::ToString(p, 4, ARBDouble::eCurrent);
+	s = ARBDouble::ToString(p, 4);
 	REQUIRE(FormNumber(L"3", decimalPt, L"1416") == s);
 
 	// eCompatible
 
 	p = 2.1;
-	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent);
+	s = ARBDouble::ToString(p, 0);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
-	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent);
+	s = ARBDouble::ToString(p, 2);
 	REQUIRE(FormNumber(L"2", decimalPt, L"10") == s);
-	s = ARBDouble::ToString(p, 3, ARBDouble::eCurrent);
+	s = ARBDouble::ToString(p, 3);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
 
 	p = 2;
-	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent);
+	s = ARBDouble::ToString(p, 0);
 	REQUIRE(L"2" == s);
-	s = ARBDouble::ToString(p, 1, ARBDouble::eCurrent);
+	s = ARBDouble::ToString(p, 1);
 	REQUIRE(L"2" == s);
-	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent);
+	s = ARBDouble::ToString(p, 2);
 	REQUIRE(L"2" == s);
 
 	// eStrip
 
 	p = 2.1;
-	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 0, ARBDouble::eStrip);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
-	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 2, ARBDouble::eStrip);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
-	s = ARBDouble::ToString(p, 3, ARBDouble::eCurrent, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 3, ARBDouble::eStrip);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
 
 	p = 2;
-	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 0, ARBDouble::eStrip);
 	REQUIRE(L"2" == s);
-	s = ARBDouble::ToString(p, 1, ARBDouble::eCurrent, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 1, ARBDouble::eStrip);
 	REQUIRE(L"2" == s);
-	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 2, ARBDouble::eStrip);
 	REQUIRE(L"2" == s);
 
 	// eAsIs
 
 	p = 2.1;
-	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 0, ARBDouble::eAsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
-	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 2, ARBDouble::eAsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"10") == s);
-	s = ARBDouble::ToString(p, 3, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 3, ARBDouble::eAsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"100") == s);
 
 	p = 2;
-	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 0, ARBDouble::eAsIs);
 	REQUIRE(L"2" == s);
-	s = ARBDouble::ToString(p, 1, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 1, ARBDouble::eAsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"0") == s);
-	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 2, ARBDouble::eAsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"00") == s);
 }
 

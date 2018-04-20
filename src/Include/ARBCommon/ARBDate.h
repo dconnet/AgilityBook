@@ -44,7 +44,7 @@ public:
 	 */
 	typedef enum
 	{
-		eLocale			= 0,	///< System locale (output only)
+		eLocale			= 0,	///< System (current) locale (output only)
 		// Leading zeros
 		eDashMMDDYYYY	= 1,	///< MM-DD-YYYY
 		eSlashMMDDYYYY	= 2,	///< MM/DD/YYYY
@@ -62,7 +62,7 @@ public:
 		eSlashDMY		= 12,	///< D/M/Y
 		// New formats...
 		eYYYYMMDD		= 13,	///< YYYYMMDD (output only)
-		eCurrentLocale	= 14,	///< Current locale (output only)
+		eReserved14		= 14,	///< was eCurrentLocale
 		eVerbose		= 15,	///< "%A, %B %d, %Y" (output only)
 	} DateFormat;
 
