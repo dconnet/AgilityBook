@@ -138,7 +138,7 @@ CDlgFind::CDlgFind(
 	bSizerBtns->Add(m_btnFind, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 	bSizerBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(bSizerBtns, 0, wxEXPAND | wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
 	Layout();
