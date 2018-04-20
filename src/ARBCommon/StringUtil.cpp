@@ -322,6 +322,7 @@ unsigned long ToULong(std::wstring const& inStr)
 bool ToDouble(std::wstring const& inStr, double& outValue, bool bUseDefaultLocale)
 {
 	bool rc = false;
+	wchar_t pt = L'.';
 #if defined(__WXWINDOWS__) && !USE_CRT
 	wxString s(inStr.c_str());
 	{
@@ -329,6 +330,14 @@ bool ToDouble(std::wstring const& inStr, double& outValue, bool bUseDefaultLocal
 		if (bUseDefaultLocale)
 			locale.reset(new wxLocale(wxLANGUAGE_DEFAULT, 0));
 		rc = s.ToDouble(&outValue);
+
+		// Get the decimal pt while using the appropriate locale
+		if (!rc)
+		{
+			wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
+			if (0 < decimalPt.length())
+				pt = decimalPt.GetChar(0);
+		}
 	}
 #else
 	wchar_t* end = nullptr;
@@ -339,12 +348,9 @@ bool ToDouble(std::wstring const& inStr, double& outValue, bool bUseDefaultLocal
 	{
 		// This may have failed for 2 reasons:
 		// - Bad data.
-		// - Different decimal point from Locale.
-		wchar_t pt = L'.';
+		// - Different decimal point from Locale (using "." in non"." locale)
 #if defined(__WXWINDOWS__) && !USE_CRT
-		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
-		if (0 < decimalPt.length())
-			pt = decimalPt.GetChar(0);
+		// Code moved above
 #else
 		{
 			struct lconv* l = localeconv();
