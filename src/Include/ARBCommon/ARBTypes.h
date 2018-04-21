@@ -32,6 +32,7 @@
  * 2003-09-01 Added 'operator+=' and 'operator-=' to ARBDouble.
  */
 
+#include <locale>
 #include <set>
 #include <sstream>
 #include <string>
@@ -52,6 +53,62 @@
 ARB_TYPEDEF(Element)
 ARB_TYPEDEF2(ElementNode)
 ARB_TYPEDEF2(ElementText)
+
+// Numeric conversion methods all use wxWidgets by default.
+// This is useful for testing.
+#define USE_CRT 0
+
+
+/**
+ * Wrapper class to handle locale. Typical use is:
+ *
+ * #if defined(__WXWINDOWS__) && !USE_CRT
+ * wxLocale locale(wxLANGUAGE_FRENCH);
+ * #else
+ * CLocaleWrapper locale(LC_ALL, "french");
+ * #endif
+ *
+ * or:
+ *
+ * #if defined(__WXWINDOWS__) && !USE_CRT
+ * wxLocale locale(wxLANGUAGE_FRENCH, wxLOCALE_DONT_LOAD_DEFAULT);
+ * #else
+ * CLocaleWrapper locale(LC_NUMERIC, "french");
+ * #endif
+ *
+ * However, use GetDecimalPt regardless of defines.
+ */
+class CLocaleWrapper
+{
+	int m_category;
+	char* m_pOldLocale;
+
+public:
+	CLocaleWrapper(int category, const char* locale)
+		: m_category(category)
+	{
+		m_pOldLocale = setlocale(category, locale);
+	}
+	~CLocaleWrapper()
+	{
+		setlocale(m_category, m_pOldLocale);
+	}
+
+	static wchar_t GetDecimalPt()
+	{
+		wchar_t pt = L'.';
+#if defined(__WXWINDOWS__) && !USE_CRT
+		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
+		if (0 < decimalPt.length())
+			pt = decimalPt.GetChar(0);
+#else
+		struct lconv* l = localeconv();
+		if (l && l->decimal_point)
+			pt = *(l->decimal_point);
+#endif
+		return pt;
+	}
+};
 
 
 /**

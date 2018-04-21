@@ -58,34 +58,35 @@ std::wstring ARBDouble::ToString(
 		bool bUseCurrentLocale,
 		ZeroStrip eStripZeros)
 {
-#if !defined(__WXWINDOWS__)
-	eUseDefaultLocale = eNone;
-#endif
 	std::wstring retVal;
-	wchar_t pt = '.';
+
+#if defined(__WXWINDOWS__) && !USE_CRT
+	std::auto_ptr<wxLocale> locale;
 	if (!bUseCurrentLocale)
-	{
-		// When we don't want locales, avoid the wx functions as they use them.
-		std::wostringstream str;
-		if (0 < inPrec)
-			str.precision(inPrec);
-		str << std::fixed << inValue;
-		retVal = str.str();
-	}
-#if defined(__WXWINDOWS__)
+		locale.reset(new wxLocale(wxLANGUAGE_ENGLISH_US, wxLOCALE_DONT_LOAD_DEFAULT));
+
+	wxString tmp;
+	if (0 < inPrec)
+		tmp = wxString::Format(L"%.*f", inPrec, inValue);
 	else
-	{
-		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
-		if (0 < decimalPt.length())
-			pt = decimalPt.GetChar(0);
-		wxString tmp;
-		if (0 < inPrec)
-			tmp = wxString::Format(L"%.*f", inPrec, inValue);
-		else
-			tmp = wxString::Format(L"%g", inValue);
-		retVal = StringUtil::stringW(tmp);
-	}
+		tmp = wxString::Format(L"%g", inValue);
+	retVal = StringUtil::stringW(tmp);
+
+#else
+	std::auto_ptr<CLocaleWrapper> locale;
+	if (!bUseCurrentLocale)
+		locale.reset(new CLocaleWrapper(LC_NUMERIC, "C"));
+
+	wchar_t buffer[100]; // This should be big enough. Not going to worry about it...
+	if (0 < inPrec)
+		swprintf_s(buffer, _countof(buffer), L"%.*f", inPrec, inValue);
+	else
+		swprintf_s(buffer, _countof(buffer), L"%g", inValue);
+	retVal = buffer;
 #endif
+
+	wchar_t pt = CLocaleWrapper::GetDecimalPt();
+
 	if (eAsIs != eStripZeros)
 	{
 		std::wstring::size_type pos = retVal.find(pt);

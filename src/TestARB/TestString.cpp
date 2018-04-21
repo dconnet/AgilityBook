@@ -146,10 +146,10 @@ TEST_CASE("String")
 	{
 		if (!g_bMicroTest)
 		{
-#if defined(__WXWINDOWS__)
-			wxLocale locale(wxLANGUAGE_ENGLISH_US);
+#if defined(__WXWINDOWS__) && !USE_CRT
+			wxLocale locale(wxLANGUAGE_ENGLISH_US, wxLOCALE_DONT_LOAD_DEFAULT);
 #else
-			REQUIRE(setlocale(LC_ALL, "english-us"));
+			CLocaleWrapper locale(LC_NUMERIC, "english-us");
 #endif
 			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToDouble(s1);
@@ -167,10 +167,10 @@ TEST_CASE("String")
 	{
 		if (!g_bMicroTest)
 		{
-#if defined(__WXWINDOWS__)
-			wxLocale locale(wxLANGUAGE_FRENCH);
+#if defined(__WXWINDOWS__) && !USE_CRT
+			wxLocale locale(wxLANGUAGE_FRENCH, wxLOCALE_DONT_LOAD_DEFAULT);
 #else
-			REQUIRE(setlocale(LC_ALL, "french"));
+			CLocaleWrapper locale(LC_NUMERIC, "french");
 #endif
 			std::wstring s1(L"12,3");
 			double a1 = StringUtil::ToDouble(s1);
@@ -189,10 +189,10 @@ TEST_CASE("String")
 		if (!g_bMicroTest)
 		{
 			// Even in French, I want to have "." separators parse properly.
-#if defined(__WXWINDOWS__)
-			wxLocale locale(wxLANGUAGE_FRENCH);
+#if defined(__WXWINDOWS__) && !USE_CRT
+			wxLocale locale(wxLANGUAGE_FRENCH, wxLOCALE_DONT_LOAD_DEFAULT);
 #else
-			REQUIRE(setlocale(LC_ALL, "french"));
+			CLocaleWrapper locale(LC_NUMERIC, "french");
 #endif
 			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToDouble(s1);

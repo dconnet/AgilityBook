@@ -32,7 +32,6 @@
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
 #include <algorithm>
-#include <locale>
 #include <sstream>
 #if defined(__WXWINDOWS__)
 #include <wx/mstream.h>
@@ -58,10 +57,6 @@
 #pragma PRAGMA_TODO(This will not produce UTF8, hence will fail tests)
 #endif
 #endif
-
-// Conversion methods all use wxWidgets by default.
-// This is useful for testing.
-#define USE_CRT 0
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -331,15 +326,15 @@ bool ToDouble(std::wstring const& inStr, double& outValue)
 		// Get the decimal pt while using the appropriate locale
 		if (!rc)
 		{
-			wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
-			if (0 < decimalPt.length())
-				pt = decimalPt.GetChar(0);
+			pt = CLocaleWrapper::GetDecimalPt();
 		}
 	}
 #else
-	wchar_t* end = nullptr;
-	outValue = wcstod(inStr.c_str(), &end);
-	rc = (!end || !*end);
+	{
+		wchar_t* end = nullptr;
+		outValue = wcstod(inStr.c_str(), &end);
+		rc = (!end || !*end);
+	}
 #endif
 	if (!rc)
 	{
@@ -349,24 +344,19 @@ bool ToDouble(std::wstring const& inStr, double& outValue)
 #if defined(__WXWINDOWS__) && !USE_CRT
 		// Code moved above
 #else
-		{
-			struct lconv* l = localeconv();
-			if (l && l->decimal_point)
-				pt = *(l->decimal_point);
-		}
+		pt = CLocaleWrapper::GetDecimalPt();
 #endif
 		// So we only reparse if the incoming string does not contain
 		// the locale's decimal point.
 		if (pt != L'.' && std::wstring::npos == inStr.find(pt))
 		{
 #if defined(__WXWINDOWS__) && !USE_CRT
-			wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
+			wxLocale locale(wxLANGUAGE_ENGLISH_US, wxLOCALE_DONT_LOAD_DEFAULT);
 			rc = s.ToDouble(&outValue);
 #else
+			CLocaleWrapper locale(LC_NUMERIC, "C");
 			wchar_t* end = nullptr;
-			_locale_t locale = _create_locale(LC_NUMERIC, "C");
-			outValue = _wcstod_l(inStr.c_str(), &end, locale);
-			_free_locale(locale);
+			outValue = wcstod(inStr.c_str(), &end);
 			rc = (!end || !*end);
 #endif
 		}
@@ -397,10 +387,9 @@ bool ToCLong(std::wstring const& inStr, long& outValue, bool bRetry)
 	}
 	return bOk;
 #else
+	CLocaleWrapper locale(LC_NUMERIC, "C");
 	wchar_t* end = nullptr;
-	_locale_t locale = _create_locale(LC_NUMERIC, "C");
-	outValue = _wcstol_l(inStr.c_str(), &end, 10, locale);
-	_free_locale(locale);
+	outValue = wcstol(inStr.c_str(), &end, 10);
 	return !end || !*end;
 #endif
 }
@@ -428,10 +417,9 @@ bool ToCULong(std::wstring const& inStr, unsigned long& outValue, bool bRetry)
 	}
 	return bOk;
 #else
+	CLocaleWrapper locale(LC_NUMERIC, "C");
 	wchar_t* end = nullptr;
-	_locale_t locale = _create_locale(LC_NUMERIC, "C");
-	outValue = _wcstoul_l(inStr.c_str(), &end, 10, locale);
-	_free_locale(locale);
+	outValue = wcstoul(inStr.c_str(), &end, 10);
 	return !end || !*end;
 #endif
 }
@@ -452,10 +440,9 @@ bool ToCDouble(std::wstring const& inStr, double& outValue)
 	// is for parsing an actual number in Element.
 	return stringWX(inStr).ToCDouble(&outValue);
 #else
+	CLocaleWrapper locale(LC_NUMERIC, "C");
 	wchar_t* end = nullptr;
-	_locale_t locale = _create_locale(LC_NUMERIC, "C");
-	outValue = _wcstod_l(inStr.c_str(), &end, locale);
-	_free_locale(locale);
+	outValue = wcstod(inStr.c_str(), &end);
 	return !end || !*end;
 #endif
 }
