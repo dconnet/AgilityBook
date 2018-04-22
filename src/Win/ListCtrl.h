@@ -141,10 +141,19 @@ public:
 			long oldIndex,
 			long newIndex)
 	{
+		if (oldIndex == newIndex)
+			return;
+		assert(0 <= oldIndex && oldIndex < m_items.size());
+		assert(0 <= newIndex && newIndex < m_items.size());
+		if (!(0 <= oldIndex && oldIndex < m_items.size()))
+			return;
+		if (!(0 <= newIndex && newIndex < m_items.size()))
+			return;
 		long data1 = static_cast<long>(GetItemData(oldIndex));
 		long data2 = static_cast<long>(GetItemData(newIndex));
 		SetItemData(oldIndex, data2);
 		SetItemData(newIndex, data1);
+		std::swap(m_items[oldIndex], m_items[newIndex]);
 		SetSelection(newIndex);
 		RefreshItem(oldIndex);
 		RefreshItem(newIndex);
