@@ -63,6 +63,7 @@ CLanguageManager::CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded)
 
 CLanguageManager::~CLanguageManager()
 {
+	delete m_locale;
 }
 
 
