@@ -143,14 +143,14 @@ public:
 	{
 		if (oldIndex == newIndex)
 			return;
-		assert(0 <= oldIndex && oldIndex < m_items.size());
-		assert(0 <= newIndex && newIndex < m_items.size());
-		if (!(0 <= oldIndex && oldIndex < m_items.size()))
+		assert(0 <= oldIndex && oldIndex < static_cast<long>(m_items.size()));
+		assert(0 <= newIndex && newIndex < static_cast<long>(m_items.size()));
+		if (!(0 <= oldIndex && oldIndex < static_cast<long>(m_items.size())))
 			return;
-		if (!(0 <= newIndex && newIndex < m_items.size()))
+		if (!(0 <= newIndex && newIndex < static_cast<long>(m_items.size())))
 			return;
-		long data1 = static_cast<long>(GetItemData(oldIndex));
-		long data2 = static_cast<long>(GetItemData(newIndex));
+		wxUIntPtr data1 = GetItemData(oldIndex);
+		wxUIntPtr data2 = GetItemData(newIndex);
 		SetItemData(oldIndex, data2);
 		SetItemData(newIndex, data1);
 		std::swap(m_items[oldIndex], m_items[newIndex]);
