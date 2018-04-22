@@ -37,6 +37,20 @@ class LockFile:
 			os.write(self.m_fd, b"%d" % self.m_pid)
 			return 1
 		except OSError:
+			try:
+				now = time.time()
+				st = os.stat(self.m_filename)
+				# If the lock file is older than 300 seconds, just nuke it.
+				# Probably left from a killed build.
+				print(now - st.st_ctime)
+				if now - st.st_ctime > 300:
+					os.remove(self.m_filename)
+					self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
+					os.write(self.m_fd, b"%d" % self.m_pid)
+					return 1
+			except OSError:
+				self.m_fd = None
+				return 0
 			self.m_fd = None
 			return 0
 
