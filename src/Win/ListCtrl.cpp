@@ -385,7 +385,6 @@ void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 	{
 		auto iter = m_items.begin() + index;
 		m_items.erase(iter);
-		SetItemCount(static_cast<long>(m_items.size()));
 	}
 	evt.Skip();
 }
