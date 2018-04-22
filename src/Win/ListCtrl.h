@@ -151,8 +151,8 @@ public:
 			return;
 		wxUIntPtr data1 = GetItemData(oldIndex);
 		wxUIntPtr data2 = GetItemData(newIndex);
-		SetItemData(oldIndex, data2);
-		SetItemData(newIndex, data1);
+		SetItemPtrData(oldIndex, data2);
+		SetItemPtrData(newIndex, data1);
 		std::swap(m_items[oldIndex], m_items[newIndex]);
 		SetSelection(newIndex);
 		RefreshItem(oldIndex);
