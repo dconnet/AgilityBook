@@ -61,7 +61,7 @@ std::wstring ARBDouble::ToString(
 	std::wstring retVal;
 
 #if defined(__WXWINDOWS__) && !USE_CRT
-	std::auto_ptr<wxLocale> locale;
+	std::unique_ptr<wxLocale> locale;
 	if (!bUseCurrentLocale)
 		locale.reset(new wxLocale(wxLANGUAGE_ENGLISH_US, wxLOCALE_DONT_LOAD_DEFAULT));
 
@@ -73,7 +73,7 @@ std::wstring ARBDouble::ToString(
 	retVal = StringUtil::stringW(tmp);
 
 #else
-	std::auto_ptr<CLocaleWrapper> locale;
+	std::unique_ptr<CLocaleWrapper> locale;
 	if (!bUseCurrentLocale)
 		locale.reset(new CLocaleWrapper(LC_NUMERIC, "C"));
 
