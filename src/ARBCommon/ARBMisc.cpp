@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-04-26 Moved ShortToRoman from ARBConfigTitle.
  * 2014-06-19 Added IsWin7OrBetter.
  * 2013-07-17 Created
  */
@@ -19,6 +20,7 @@
 
 #include "ARBCommon/StringUtil.h"
 #include <iostream>
+#include <math.h>
 #include <sstream>
 
 // For testing in ARB
@@ -325,4 +327,76 @@ bool IsWin7OrBetter()
 #else
 	return false;
 #endif
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+/*
+// Roman number conversion (modified from C# code on CodeProject)
+static short RomanDigit(wchar_t digit)
+{
+	switch (digit)
+	{
+	case 'I':
+		return 1;
+	case 'V':
+		return 5;
+	case 'X':
+		return 10;
+	case 'L':
+		return 50;
+	case 'C':
+		return 100;
+	case 'D':
+		return 500;
+	case 'M':
+		return 1000;
+	default :
+		//We're in a limited world - don't worry about out-of-range
+		//throw new ArgumentOutOfRangeException("digit");
+		return 0;
+	}
+}
+static short RomanToShort(std::wstring number)
+{
+	short result = 0;
+	short oldValue = 1000;
+	for (std::wstring::const_iterator index = number.begin(); index != number.end(); ++index)
+	{
+		short newValue = RomanDigit(*index);
+		if (newValue > oldValue)
+			result = result + newValue - 2 * oldValue;
+		else
+			result += newValue;
+		oldValue = newValue;
+	}
+	return result;
+}
+*/
+
+std::wstring ShortToRoman(short value)
+{
+	static const wchar_t* romanDigits[9][4] =
+	{
+		{L"M",    L"C",    L"X",    L"I"   },
+		{L"MM",   L"CC",   L"XX",   L"II"  },
+		{L"MMM",  L"CCC",  L"XXX",  L"III" },
+		{nullptr, L"CD",   L"XL",   L"IV"  },
+		{nullptr, L"D",    L"L",    L"V"   },
+		{nullptr, L"DC",   L"LX",   L"VI"  },
+		{nullptr, L"DCC",  L"LXX",  L"VII" },
+		{nullptr, L"DCCC", L"LXXX", L"VIII"},
+		{nullptr, L"CM",   L"XC",   L"IX"  }
+	};
+	std::wostringstream result;
+	for (int index = 0; index < 4; ++index)
+	{
+		short power = static_cast<short>(pow(10.0, 3 - index));
+		short digit = value / power;
+		value -= digit * power;
+		if (digit > 0)
+			result << romanDigits[digit-1][index];
+	}
+	return result.str();
 }

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-04-26 Added roman numeral tests.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-01 Added ARBConfig/ARBBook version test.
  * 2015-04-04 Add C99 printf test.
@@ -284,11 +285,70 @@ TEST_CASE("Misc")
 
 	SECTION("ARBConfigFiles")
 	{
-		ARBConfig config;
-		CConfigHandler handler;
-		ARBVersion version;
-		config.Default(&handler, &version);
-		REQUIRE(version.IsSet());
-		REQUIRE(version == ARBAgilityRecordBook::GetCurrentDocVersion());
+		if (!g_bMicroTest)
+		{
+			ARBConfig config;
+			CConfigHandler handler;
+			ARBVersion version;
+			config.Default(&handler, &version);
+			REQUIRE(version.IsSet());
+			REQUIRE(version == ARBAgilityRecordBook::GetCurrentDocVersion());
+		}
+	}
+
+
+	SECTION("RomanNumerals")
+	{
+		if (!g_bMicroTest)
+		{
+			static struct
+			{
+				short val;
+				wchar_t const* roman;
+			} testValues[] =
+			{
+				{ -42, L"" },
+				{ 0, L""},
+				{ 1, L"I"},
+				{ 2, L"II" },
+				{ 3, L"III" },
+				{ 5, L"V" },
+				{ 6, L"VI" },
+				{ 7, L"VII" },
+				{ 8, L"VIII" },
+				{ 4, L"IV" },
+				{ 9, L"IX" },
+				{ 10, L"X" },
+				{ 11, L"XI" },
+				{ 13, L"XIII" },
+				{ 14, L"XIV" },
+				{ 18, L"XVIII" },
+				{ 19, L"XIX" },
+				{ 20, L"XX" },
+				{ 28, L"XXVIII" },
+				{ 29, L"XXIX" },
+				{ 39, L"XXXIX" },
+				{ 40, L"XL" },
+				{ 49, L"XLIX" },
+				{ 50, L"L" },
+				{ 53, L"LIII" },
+				{ 57, L"LVII" },
+				{ 59, L"LIX" },
+				{ 79, L"LXXIX" },
+				{ 90, L"XC" },
+				{ 99, L"XCIX" },
+				{ 100, L"C" },
+				{ 200, L"CC" },
+				{ 499, L"CDXCIX" },
+				{ 500, L"D" },
+				{ 999, L"CMXCIX" },
+				{ 2999, L"MMCMXCIX" },
+				{ 3999, L"MMMCMXCIX" }
+			};
+			for (size_t i = 0; i < _countof(testValues); ++i)
+			{
+				REQUIRE(ShortToRoman(testValues[i].val) == testValues[i].roman);
+			}
+		}
 	}
 }

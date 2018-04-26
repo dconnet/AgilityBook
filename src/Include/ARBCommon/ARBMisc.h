@@ -48,3 +48,8 @@ std::wstring GetOSInfo(bool bVerbose = true);
  * Are we running on Win7 or better?
  */
 bool IsWin7OrBetter();
+
+/**
+ * Translate a short to a Roman numeral
+ */
+std::wstring ShortToRoman(short value);
