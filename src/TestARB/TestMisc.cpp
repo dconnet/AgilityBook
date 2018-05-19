@@ -106,7 +106,7 @@ TEST_CASE("Misc")
 		if (!g_bMicroTest)
 		{
 			wxLocale locale(wxLANGUAGE_ENGLISH);
-			for (size_t i = 0; i < ARRAY_SIZE(sc_FormatUnits); ++i)
+			for (size_t i = 0; i < _countof(sc_FormatUnits); ++i)
 			{
 				for (size_t iPrec = 0; iPrec < NUM_PREC; ++iPrec)
 				{
@@ -345,7 +345,7 @@ TEST_CASE("Misc")
 				{ 2999, L"MMCMXCIX" },
 				{ 3999, L"MMMCMXCIX" }
 			};
-			for (size_t i = 0; i < ARRAY_SIZE(testValues); ++i)
+			for (size_t i = 0; i < _countof(testValues); ++i)
 			{
 				REQUIRE(ShortToRoman(testValues[i].val) == testValues[i].roman);
 			}

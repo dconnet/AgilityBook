@@ -281,7 +281,7 @@ void CMainFrame::OnStatusBarContextMenu(wxContextMenuEvent& evt)
 		assert(pDoc);
 		if (pDoc)
 		{
-			for (int i = 0; i < ARRAY_SIZE(ids); ++i)
+			for (int i = 0; i < _countof(ids); ++i)
 			{
 				if (statusbar->GetFieldRect(ids[i], rect) && rect.Contains(point))
 				{
@@ -323,7 +323,7 @@ void CMainFrame::OnStatusBarDblClick(wxMouseEvent& evt)
 		assert(pDoc);
 		if (pDoc)
 		{
-			for (int i = 0; i < ARRAY_SIZE(ids); ++i)
+			for (int i = 0; i < _countof(ids); ++i)
 			{
 				if (statusbar->GetFieldRect(ids[i], rect) && rect.Contains(point))
 				{

@@ -1298,7 +1298,7 @@ static const struct
 	{CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, true},
 	{CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, false},
 };
-static const size_t sc_KeysCount = ARRAY_SIZE(sc_Keys);
+static const size_t sc_KeysCount = _countof(sc_Keys);
 
 
 void CAgilityBookOptions::CleanLastItems(std::wstring const& callName)

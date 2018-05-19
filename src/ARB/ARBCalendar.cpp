@@ -112,7 +112,7 @@ public:
 			char buffer[100];
 			Write("BEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-PT");
 #ifdef ARB_HAS_SECURE_SPRINTF
-			sprintf_s(buffer, ARRAY_SIZE(buffer), "%d", inDaysBefore * 24 * 60);
+			sprintf_s(buffer, _countof(buffer), "%d", inDaysBefore * 24 * 60);
 #else
 			sprintf(buffer, "%d", inDaysBefore * 24 * 60);
 #endif
@@ -301,7 +301,7 @@ void ARBiCal::DoDTSTAMP()
 #endif
 		char buffer[50];
 #ifdef ARB_HAS_SECURE_SPRINTF
-		sprintf_s(buffer, ARRAY_SIZE(buffer),
+		sprintf_s(buffer, _countof(buffer),
 			"DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
 			pTime->tm_year + 1900,
 			pTime->tm_mon + 1,

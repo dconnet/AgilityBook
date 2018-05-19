@@ -794,9 +794,9 @@ std::wstring FormatBytes(
 		size_t numUnits;
 		double base;
 	} sc_units[] = {
-		{sc_unitsSI, ARRAY_SIZE(sc_unitsSI), 1000.0},
-		{sc_unitsBinary, ARRAY_SIZE(sc_unitsBinary), 1024.0},
-		{sc_unitsTrue, ARRAY_SIZE(sc_unitsTrue), 1024.0},
+		{sc_unitsSI, _countof(sc_unitsSI), 1000.0},
+		{sc_unitsBinary, _countof(sc_unitsBinary), 1024.0},
+		{sc_unitsTrue, _countof(sc_unitsTrue), 1024.0},
 	};
 
 	size_t unitIndex = 0;
