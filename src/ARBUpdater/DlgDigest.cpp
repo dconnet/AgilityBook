@@ -162,7 +162,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 			{ARBMsgDigest::ARBDigestSHA1, &m_SHA1, nullptr},
 			{ARBMsgDigest::ARBDigestSHA256, &m_SHA256, nullptr},
 		};
-		for (size_t i = 0; i < _countof(types); ++i)
+		for (size_t i = 0; i < ARRAY_SIZE(types); ++i)
 		{
 			wxFileInputStream file(m_File);
 			wxStdInputStream stdfile(file);
@@ -378,7 +378,7 @@ void CDlgDigest::OnBrowse(wxCommandEvent& evt)
 			{ARBMsgDigest::ARBDigestSHA1, &m_SHA1, nullptr},
 			{ARBMsgDigest::ARBDigestSHA256, &m_SHA256, nullptr},
 		};
-		for (size_t i = 0; i < _countof(types); ++i)
+		for (size_t i = 0; i < ARRAY_SIZE(types); ++i)
 		{
 			wxFileInputStream file(m_File);
 			wxStdInputStream stdfile(file);

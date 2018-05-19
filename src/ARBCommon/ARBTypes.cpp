@@ -79,9 +79,9 @@ std::wstring ARBDouble::ToString(
 
 	wchar_t buffer[100]; // This should be big enough. Not going to worry about it...
 	if (0 < inPrec)
-		swprintf_s(buffer, _countof(buffer), L"%.*f", inPrec, inValue);
+		swprintf_s(buffer, ARRAY_SIZE(buffer), L"%.*f", inPrec, inValue);
 	else
-		swprintf_s(buffer, _countof(buffer), L"%g", inValue);
+		swprintf_s(buffer, ARRAY_SIZE(buffer), L"%g", inValue);
 	retVal = buffer;
 #endif
 

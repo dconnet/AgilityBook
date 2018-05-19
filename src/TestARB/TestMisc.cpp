@@ -345,7 +345,7 @@ TEST_CASE("Misc")
 				{ 2999, L"MMCMXCIX" },
 				{ 3999, L"MMMCMXCIX" }
 			};
-			for (size_t i = 0; i < _countof(testValues); ++i)
+			for (size_t i = 0; i < ARRAY_SIZE(testValues); ++i)
 			{
 				REQUIRE(ShortToRoman(testValues[i].val) == testValues[i].roman);
 			}
