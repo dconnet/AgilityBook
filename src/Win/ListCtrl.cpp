@@ -366,6 +366,7 @@ void CReportListCtrl::RefreshItem(long item)
 			data->OnNeedListItem(iCol, info);
 			SetItem(info);
 		}
+		CListCtrl::RefreshItem(item);
 	}
 }
 
