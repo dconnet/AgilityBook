@@ -72,9 +72,9 @@ class CAgilityBookCalendarListViewData : public CListData
 public:
 	CAgilityBookCalendarListViewData(
 			CAgilityBookCalendarListView* pView,
-			ARBCalendarPtr pCal)
+			ARBCalendarPtr const& inCal)
 		: m_pView(pView)
-		, m_pCal(pCal)
+		, m_pCal(inCal)
 	{
 	}
 

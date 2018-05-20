@@ -194,7 +194,7 @@ public:
 	 * @return Success
 	 * @post The T element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const
+	bool Save(ElementNodePtr const& ioTree) const
 	{
 		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin();
 			iter != ARBVector<T>::end();
@@ -225,7 +225,7 @@ public:
 	 * @return Success
 	 * @post The T element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree, ARBConfig const& inConfig) const
+	bool Save(ElementNodePtr const& ioTree, ARBConfig const& inConfig) const
 	{
 		for (typename ARBVectorSaveConfig<T>::const_iterator iter = ARBVectorSaveConfig<T>::begin();
 			iter != ARBVectorSaveConfig<T>::end();

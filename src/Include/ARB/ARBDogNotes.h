@@ -82,7 +82,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -92,7 +92,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogNotes element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.

@@ -197,13 +197,13 @@ bool CReportListCtrl::SortItems(CListCtrlCompare fnSortCallBack, SortInfo const*
 }
 
 
-long CReportListCtrl::InsertItem(CListDataPtr inData)
+long CReportListCtrl::InsertItem(CListDataPtr const& inData)
 {
 	return InsertItem(GetItemCount(), inData);
 }
 
 
-long CReportListCtrl::InsertItem(long index, CListDataPtr inData)
+long CReportListCtrl::InsertItem(long index, CListDataPtr const& inData)
 {
 	long item = -1;
 

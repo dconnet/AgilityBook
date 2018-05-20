@@ -86,7 +86,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -96,7 +96,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigEvent element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Update this configuration from inEventNew.
@@ -107,7 +107,7 @@ public:
 	 */
 	bool Update(
 			int indent,
-			ARBConfigEventPtr inEventNew,
+			ARBConfigEventPtr const& inEventNew,
 			std::wstring& ioInfo);
 
 	/**
@@ -253,7 +253,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -366,7 +366,7 @@ public:
 	 * @param inEvent Event to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddEvent(ARBConfigEventPtr inEvent);
+	bool AddEvent(ARBConfigEventPtr const& inEvent);
 
 	/**
 	 * Delete an event.

@@ -112,7 +112,7 @@ void ARBConfigLevel::clear()
 
 
 bool ARBConfigLevel::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -141,7 +141,7 @@ bool ARBConfigLevel::Load(
 }
 
 
-bool ARBConfigLevel::Save(ElementNodePtr ioTree) const
+bool ARBConfigLevel::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -158,7 +158,7 @@ bool ARBConfigLevel::Save(ElementNodePtr ioTree) const
 
 bool ARBConfigLevel::Update(
 		int indent,
-		ARBConfigLevelPtr inLevelNew,
+		ARBConfigLevelPtr const& inLevelNew,
 		std::wstring& ioInfo)
 {
 	std::wstring info;
@@ -238,7 +238,7 @@ bool ARBConfigLevel::Update(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigLevelList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -361,7 +361,7 @@ bool ARBConfigLevelList::AddLevel(
 }
 
 
-bool ARBConfigLevelList::AddLevel(ARBConfigLevelPtr inLevel)
+bool ARBConfigLevelList::AddLevel(ARBConfigLevelPtr const& inLevel)
 {
 	if (!inLevel || 0 == inLevel->GetName().length())
 		return false;

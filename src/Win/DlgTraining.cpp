@@ -42,24 +42,24 @@ END_EVENT_TABLE()
 
 
 CDlgTraining::CDlgTraining(
-		ARBTrainingPtr pTraining,
+		ARBTrainingPtr const& inTraining,
 		CAgilityBookDoc* pDoc,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_pTraining(pTraining)
+	, m_pTraining(inTraining)
 	, m_pDoc(pDoc)
 	, m_datePicker(nullptr)
-	, m_Name(StringUtil::stringWX(pTraining->GetName()))
-	, m_SubName(StringUtil::stringWX(pTraining->GetSubName()))
-	, m_Notes(StringUtil::stringWX(pTraining->GetNote()))
+	, m_Name(StringUtil::stringWX(inTraining->GetName()))
+	, m_SubName(StringUtil::stringWX(inTraining->GetSubName()))
+	, m_Notes(StringUtil::stringWX(inTraining->GetNote()))
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_TRAINING"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxDateTime date(wxDateTime::Now());
-	if (pTraining->GetDate().IsValid())
-		pTraining->GetDate().GetDate(date);
+	if (inTraining->GetDate().IsValid())
+		inTraining->GetDate().GetDate(date);
 
 	wxArrayString names, subnames;
 

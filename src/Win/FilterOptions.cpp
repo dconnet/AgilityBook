@@ -497,14 +497,14 @@ bool CFilterOptions::IsDateVisible(
 
 bool CFilterOptions::IsTitleVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBDogTitlePtr pTitle) const
+		ARBDogTitlePtr const& inTitle) const
 {
-	if (!CAgilityBookOptions::GetViewHiddenTitles() && pTitle->IsHidden())
+	if (!CAgilityBookOptions::GetViewHiddenTitles() && inTitle->IsHidden())
 		return false;
-	if (!pTitle->GetDate().IsValid()
-	|| !IsDateVisible(pTitle->GetDate(), pTitle->GetDate()))
+	if (!inTitle->GetDate().IsValid()
+	|| !IsDateVisible(inTitle->GetDate(), inTitle->GetDate()))
 		return false;
-	return IsVenueVisible(venues, pTitle->GetVenue());
+	return IsVenueVisible(venues, inTitle->GetVenue());
 }
 
 
@@ -573,15 +573,15 @@ bool CFilterOptions::IsVenueLevelVisible(
 
 bool CFilterOptions::IsTrialVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBDogTrialPtr pTrial) const
+		ARBDogTrialPtr const& inTrial) const
 {
 	// Yes, it seems backwards, but it is correct.
-	if (!IsDateVisible(pTrial->GetEndDate(), pTrial->GetStartDate()))
+	if (!IsDateVisible(inTrial->GetEndDate(), inTrial->GetStartDate()))
 		return false;
 	if (!m_bViewAllVenues)
 	{
-		for (ARBDogClubList::const_iterator iterClub = pTrial->GetClubs().begin();
-			iterClub != pTrial->GetClubs().end();
+		for (ARBDogClubList::const_iterator iterClub = inTrial->GetClubs().begin();
+			iterClub != inTrial->GetClubs().end();
 			++iterClub)
 		{
 			if (IsVenueVisible(venues, (*iterClub)->GetVenue()))
@@ -596,11 +596,11 @@ bool CFilterOptions::IsTrialVisible(
 // Return type should be the same as ARBBase::m_nFiltered
 unsigned short CFilterOptions::IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun) const
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun) const
 {
 	unsigned short nVisible = 0;
-	if (!IsDateVisible(pRun->GetDate(), pRun->GetDate()))
+	if (!IsDateVisible(inRun->GetDate(), inRun->GetDate()))
 		return nVisible;
 	nVisible = (0x1 << ARBBase::eFilter) | (0x1 << ARBBase::eIgnoreQ);
 	if (!m_bViewAllVenues)
@@ -611,15 +611,15 @@ unsigned short CFilterOptions::IsRunVisible(
 		// ASCA/NoviceB is enabled, since the division/level names match, the
 		// AKC run will actually show up. So we need to make sure the venue
 		// of the filter matches too.
-		if (IsDateVisible(pTrial->GetRuns().GetEndDate(), pTrial->GetRuns().GetStartDate()))
+		if (IsDateVisible(inTrial->GetRuns().GetEndDate(), inTrial->GetRuns().GetStartDate()))
 		{
 			for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
 				iter != venues.end();
 				++iter)
 			{
 				bool bCheck = false;
-				for (ARBDogClubList::const_iterator iterClub = pTrial->GetClubs().begin();
-					iterClub != pTrial->GetClubs().end();
+				for (ARBDogClubList::const_iterator iterClub = inTrial->GetClubs().begin();
+					iterClub != inTrial->GetClubs().end();
 					++iterClub)
 				{
 					if ((*iter).venue == (*iterClub)->GetVenue())
@@ -629,8 +629,8 @@ unsigned short CFilterOptions::IsRunVisible(
 					}
 				}
 				if (bCheck
-				&& pRun->GetDivision() == (*iter).division
-				&& pRun->GetLevel() == (*iter).level)
+				&& inRun->GetDivision() == (*iter).division
+				&& inRun->GetLevel() == (*iter).level)
 				{
 					nVisible = (0x1 << ARBBase::eFilter) | (0x1 << ARBBase::eIgnoreQ);
 					break;
@@ -644,8 +644,8 @@ unsigned short CFilterOptions::IsRunVisible(
 		// Only set the full filter, not the IgnoreQ filter.
 		nVisible &= ~(0x1 << ARBBase::eFilter);
 		bool bQualifying = eViewRunsQs == m_eRuns;
-		if ((pRun->GetQ().Qualified() && bQualifying)
-		|| (!pRun->GetQ().Qualified() && !bQualifying))
+		if ((inRun->GetQ().Qualified() && bQualifying)
+		|| (!inRun->GetQ().Qualified() && !bQualifying))
 			nVisible |= (0x1 << ARBBase::eFilter);
 	}
 	return nVisible;
@@ -659,11 +659,11 @@ unsigned short CFilterOptions::IsRunVisible(
 // the novice run to appear in the nadac points listing when it shouldn't.
 bool CFilterOptions::IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBConfigVenuePtr pVenue,
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun) const
+		ARBConfigVenuePtr const& inVenue,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun) const
 {
-	if (1 >= pTrial->GetClubs().size())
+	if (1 >= inTrial->GetClubs().size())
 		return true;
 	bool bVisible = true;
 	if (!m_bViewAllVenues)
@@ -673,10 +673,10 @@ bool CFilterOptions::IsRunVisible(
 			iter != venues.end();
 			++iter)
 		{
-			if (pTrial->HasVenue(pVenue->GetName())
-			&& pVenue->GetName() == (*iter).venue
-			&& pRun->GetDivision() == (*iter).division
-			&& pRun->GetLevel() == (*iter).level)
+			if (inTrial->HasVenue(inVenue->GetName())
+			&& inVenue->GetName() == (*iter).venue
+			&& inRun->GetDivision() == (*iter).division
+			&& inRun->GetLevel() == (*iter).level)
 			{
 				bVisible = true;
 				break;
@@ -689,18 +689,18 @@ bool CFilterOptions::IsRunVisible(
 
 bool CFilterOptions::IsCalendarVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBCalendarPtr pCal) const
+		ARBCalendarPtr const& inCal) const
 {
 	if (!m_bAllDates)
 	{
 		if (m_bStartDate)
 		{
-			if (pCal->GetEndDate() < m_dateStartDate)
+			if (inCal->GetEndDate() < m_dateStartDate)
 				return false;
 		}
 		if (m_bEndDate)
 		{
-			if (pCal->GetStartDate() > m_dateEndDate)
+			if (inCal->GetStartDate() > m_dateEndDate)
 				return false;
 		}
 	}
@@ -712,7 +712,7 @@ bool CFilterOptions::IsCalendarVisible(
 			iter != venues.end();
 			++iter)
 		{
-			if (pCal->GetVenue() == (*iter).venue)
+			if (inCal->GetVenue() == (*iter).venue)
 			{
 				bVisible = true;
 				break;
@@ -725,18 +725,18 @@ bool CFilterOptions::IsCalendarVisible(
 
 bool CFilterOptions::IsTrainingLogVisible(
 		std::set<std::wstring> const& names,
-		ARBTrainingPtr pTraining) const
+		ARBTrainingPtr const& inTraining) const
 {
 	if (!m_bAllDates)
 	{
 		if (m_bStartDate)
 		{
-			if (pTraining->GetDate() < m_dateStartDate)
+			if (inTraining->GetDate() < m_dateStartDate)
 				return false;
 		}
 		if (m_bEndDate)
 		{
-			if (pTraining->GetDate() > m_dateEndDate)
+			if (inTraining->GetDate() > m_dateEndDate)
 				return false;
 		}
 	}
@@ -748,7 +748,7 @@ bool CFilterOptions::IsTrainingLogVisible(
 			iter != names.end();
 			++iter)
 		{
-			if (pTraining->GetName() == *iter)
+			if (inTraining->GetName() == *iter)
 			{
 				bVisible = true;
 				break;

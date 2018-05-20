@@ -52,7 +52,7 @@
 class CTitleTitleData : public wxClientData
 {
 public:
-	CTitleTitleData(ARBConfigTitlePtr title) : m_Title(title) {}
+	CTitleTitleData(ARBConfigTitlePtr const& inTitle) : m_Title(inTitle) {}
 	ARBConfigTitlePtr m_Title;
 };
 
@@ -63,15 +63,15 @@ BEGIN_EVENT_TABLE(CDlgTitle, wxDialog)
 END_EVENT_TABLE()
 
 
-// If pTitle is NULL, we're creating a new entry. Otherwise, we're editing an existing.
+// If inTitle is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgTitle::CDlgTitle(
 		ARBConfig const& config,
 		ARBDogTitleList& titles,
-		ARBDogTitlePtr pTitle,
+		ARBDogTitlePtr const& inTitle,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Titles(titles)
-	, m_pTitle(pTitle)
+	, m_pTitle(inTitle)
 	, m_newTitle()
 	, m_ctrlDate(nullptr)
 	, m_ctrlReceived(nullptr)
@@ -306,7 +306,7 @@ void CDlgTitle::FillTitleInfo()
 
 
 short CDlgTitle::GetInstance(
-		ARBConfigTitlePtr pTitle,
+		ARBConfigTitlePtr const& inTitle,
 		std::vector<short>* outMissing) const
 {
 	short instance = 0;
@@ -314,13 +314,13 @@ short CDlgTitle::GetInstance(
 	if (wxNOT_FOUND != index)
 	{
 		ARBConfigVenuePtr pVenue = m_ctrlVenues->GetVenue(index);
-		if (pVenue && pTitle->IsRecurring())
+		if (pVenue && inTitle->IsRecurring())
 		{
-			if (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
+			if (m_pTitle && m_pTitle->GetRawName() == inTitle->GetName())
 				instance = m_pTitle->GetInstance();
 			else
 			{
-				instance = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName(), outMissing) + 1;
+				instance = m_Titles.FindMaxInstance(pVenue->GetName(), inTitle->GetName(), outMissing) + 1;
 			}
 		}
 	}

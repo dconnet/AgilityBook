@@ -62,7 +62,7 @@ class CDlgDog : public wxDialog
 public:
 	CDlgDog(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr pDog,
+			ARBDogPtr const& inDog,
 			wxWindow* pParent = nullptr,
 			int iSelectPage = 0);
 	~CDlgDog();

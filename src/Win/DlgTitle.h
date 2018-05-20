@@ -31,7 +31,7 @@ public:
 	CDlgTitle(
 			ARBConfig const& config,
 			ARBDogTitleList& titles,
-			ARBDogTitlePtr pTitle,
+			ARBDogTitlePtr const& inTitle,
 			wxWindow* pParent = nullptr);
 
 	// Returns existing title or the newly created one.
@@ -43,7 +43,7 @@ private:
 	void FillTitles(bool bIniting = false);
 	void FillTitleInfo();
 	short GetInstance(
-			ARBConfigTitlePtr pTitle,
+			ARBConfigTitlePtr const& inTitle,
 			std::vector<short>* outMissing = nullptr) const;
 
 	ARBDogTitleList& m_Titles;

@@ -127,7 +127,7 @@ std::wstring ARBConfigPlaceInfo::GetGenericName() const
 
 
 bool ARBConfigPlaceInfo::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -153,7 +153,7 @@ bool ARBConfigPlaceInfo::Load(
 }
 
 
-bool ARBConfigPlaceInfo::Save(ElementNodePtr ioTree) const
+bool ARBConfigPlaceInfo::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -169,7 +169,7 @@ bool ARBConfigPlaceInfo::Save(ElementNodePtr ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigPlaceInfoList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

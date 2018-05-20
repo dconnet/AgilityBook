@@ -257,7 +257,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 
 bool ARBConfigScoring::Load(
 		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -507,7 +507,7 @@ bool ARBConfigScoring::Load(
 }
 
 
-bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
+bool ARBConfigScoring::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -605,7 +605,7 @@ bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 
 bool ARBConfigScoringList::Load(
 		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

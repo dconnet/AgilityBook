@@ -91,7 +91,7 @@ public:
 	bool Load(
 			ARBConfig const& inConfig,
 			ARBDogClubList const& inClubs,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -104,7 +104,7 @@ public:
 	 * @post The ARBDogRun element will be created in ioTree.
 	 */
 	bool Save(
-			ElementNodePtr ioTree,
+			ElementNodePtr const& ioTree,
 			ARBDogTrial const* pTrial,
 			ARBConfig const& inConfig) const;
 
@@ -138,7 +138,7 @@ public:
 	 * @param inScoring Scoring method used.
 	 * @return Number of Speed points earned.
 	 */
-	short GetSpeedPoints(ARBConfigScoringPtr inScoring) const;
+	short GetSpeedPoints(ARBConfigScoringPtr const& inScoring) const;
 
 	/**
 	 * Get the number of title points earned in this run.
@@ -147,7 +147,7 @@ public:
 	 * @return Number of title points earned.
 	 */
 	double GetTitlePoints(
-			ARBConfigScoringPtr inScoring,
+			ARBConfigScoringPtr const& inScoring,
 			bool* outClean = nullptr) const;
 
 	/**
@@ -157,7 +157,7 @@ public:
 	* @return Number of lifetime points earned.
 	*/
 	double GetLifetimePoints(
-			ARBConfigScoringPtr inScoring,
+			ARBConfigScoringPtr const& inScoring,
 			std::wstring const& inLifetimeName) const;
 
 	/**
@@ -165,21 +165,21 @@ public:
 	* @param inScoring Scoring method used.
 	* @return Number of placement points earned.
 	*/
-	double GetPlacementPoints(ARBConfigScoringPtr inScoring) const;
+	double GetPlacementPoints(ARBConfigScoringPtr const& inScoring) const;
 
 	/**
 	 * Get the score for this run.
 	 * @param inScoring Scoring method used.
 	 * @return Total score for this run. The meaning of a score varies by event.
 	 */
-	double GetScore(ARBConfigScoringPtr inScoring) const;
+	double GetScore(ARBConfigScoringPtr const& inScoring) const;
 
 	/*
 	 * Getters/setters.
 	 */
 	size_t GetMultiQs(std::vector<ARBConfigMultiQPtr>& outMultiQs) const;
 	void ClearMultiQs();
-	void AddMultiQ(ARBConfigMultiQPtr inMultiQ);
+	void AddMultiQ(ARBConfigMultiQPtr const& inMultiQ);
 	ARBDate const& GetDate() const
 	{
 		return m_Date;
@@ -406,7 +406,7 @@ public:
 	bool Load(
 			ARBConfig const& inConfig,
 			ARBDogClubList const& inClubs,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -419,7 +419,7 @@ public:
 	 * @post The T element will be created in ioTree.
 	 */
 	bool Save(
-			ElementNodePtr ioTree,
+			ElementNodePtr const& ioTree,
 			ARBDogTrial const* pTrial,
 			ARBConfig const& inConfig) const;
 
@@ -444,7 +444,7 @@ public:
 	 * @param inRun Run to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddRun(ARBDogRunPtr inRun);
+	bool AddRun(ARBDogRunPtr const& inRun);
 
 	/**
 	 * Delete a run.
@@ -452,5 +452,5 @@ public:
 	 * @return Whether run was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteRun(ARBDogRunPtr inRun);
+	bool DeleteRun(ARBDogRunPtr const& inRun);
 };

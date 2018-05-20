@@ -192,7 +192,7 @@ size_t ARBDogTrial::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 bool ARBDogTrial::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -243,7 +243,7 @@ bool ARBDogTrial::Load(
 
 
 bool ARBDogTrial::Save(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		ARBConfig const& inConfig) const
 {
 	assert(ioTree);
@@ -399,7 +399,7 @@ ARBDate ARBDogTrial::GetEndDate() const
 
 bool ARBDogTrialList::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -615,7 +615,7 @@ int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 
 
 int ARBDogTrialList::NumRunsInDivision(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inDiv) const
 {
 	int count = 0;
@@ -635,7 +635,7 @@ int ARBDogTrialList::NumRunsInDivision(
 
 
 int ARBDogTrialList::RenameDivision(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inOldDiv,
 		std::wstring const& inNewDiv)
 {
@@ -864,7 +864,7 @@ int ARBDogTrialList::DeleteEvent(
 }
 
 
-bool ARBDogTrialList::AddTrial(ARBDogTrialPtr inTrial)
+bool ARBDogTrialList::AddTrial(ARBDogTrialPtr const& inTrial)
 {
 	bool bAdded = false;
 	if (inTrial)
@@ -877,7 +877,7 @@ bool ARBDogTrialList::AddTrial(ARBDogTrialPtr inTrial)
 
 
 bool ARBDogTrialList::AddTrial(
-		ARBDogTrialPtr inTrial,
+		ARBDogTrialPtr const& inTrial,
 		bool inDescending)
 {
 	bool bAdded = AddTrial(inTrial);
@@ -887,7 +887,7 @@ bool ARBDogTrialList::AddTrial(
 }
 
 
-bool ARBDogTrialList::DeleteTrial(ARBDogTrialPtr inTrial)
+bool ARBDogTrialList::DeleteTrial(ARBDogTrialPtr const& inTrial)
 {
 	if (inTrial)
 	{

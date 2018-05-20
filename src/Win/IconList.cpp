@@ -101,13 +101,13 @@ bool CIconList::Create(wxWindow* pWindow)
 }
 
 
-int CIconList::Trial(ARBConfig& config, ARBDogTrialPtr pTrial) const
+int CIconList::Trial(ARBConfig& config, ARBDogTrialPtr const& inTrial) const
 {
 	int idxIcon = IndexTrial();
-	if (pTrial)
+	if (inTrial)
 	{
 		ARBDogClubPtr pClub;
-		if (pTrial->GetClubs().GetPrimaryClub(&pClub))
+		if (inTrial->GetClubs().GetPrimaryClub(&pClub))
 		{
 			ARBConfigVenuePtr pVenue;
 			if (config.GetVenues().FindVenue(pClub->GetVenue(), &pVenue))

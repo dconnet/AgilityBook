@@ -372,7 +372,7 @@ public:
 	 * @note This will not test the calling element, only it's children.
 	 */
 	bool FindElementDeep(
-			ElementNodePtr& outParentNode,
+			ElementNode const*& outParentNode,
 			int& outElementIndex,
 			std::wstring const& inName,
 			std::wstring const* inValue = nullptr) const;
@@ -450,7 +450,6 @@ public:
 protected:
 	void RemoveAllTextNodes();
 
-	ElementNodeWPtr m_Me;
 	std::wstring m_Name;
 	typedef std::map<std::wstring, std::wstring> MyAttributes;
 	std::wstring m_Value;
@@ -485,6 +484,5 @@ public:
 	virtual void SetValue(double inValue, int inPrec = 2);
 
 protected:
-	ElementTextWPtr m_Me;
 	std::wstring m_Value;
 };

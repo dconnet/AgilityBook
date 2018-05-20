@@ -122,7 +122,7 @@ class CAgilityBookTreeDataDog : public CAgilityBookTreeData
 public:
 	CAgilityBookTreeDataDog(
 			CAgilityBookTreeView* pTree,
-			ARBDogPtr pDog);
+			ARBDogPtr const& inDog);
 	~CAgilityBookTreeDataDog();
 
 	virtual CTreeDataType GetType() const
@@ -180,7 +180,7 @@ class CAgilityBookTreeDataTrial : public CAgilityBookTreeData
 public:
 	CAgilityBookTreeDataTrial(
 			CAgilityBookTreeView* pTree,
-			ARBDogTrialPtr pTrial);
+			ARBDogTrialPtr const& inTrial);
 
 	virtual CTreeDataType GetType() const
 	{
@@ -242,7 +242,7 @@ class CAgilityBookTreeDataRun : public CAgilityBookTreeData
 public:
 	CAgilityBookTreeDataRun(
 			CAgilityBookTreeView* pTree,
-			ARBDogRunPtr pRun);
+			ARBDogRunPtr const& inRun);
 	~CAgilityBookTreeDataRun();
 
 	virtual CTreeDataType GetType() const

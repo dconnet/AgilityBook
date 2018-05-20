@@ -122,49 +122,53 @@ public:
 	CIconList const& GetImageList() const	{return m_ImageList;}
 	CAgilityBookTreeData* GetCurrentTreeItem() const;
 	CAgilityBookTreeData* GetTreeItem(wxTreeItemId hItem) const;
-	bool SelectDog(ARBDogPtr);
+	bool SelectDog(ARBDogPtr const& inDog);
 
-	CAgilityBookTreeData* FindData(ARBBasePtr pBase) const
+	CAgilityBookTreeData* FindData(ARBBasePtr const& inBase) const
 	{
-		return FindData(m_Ctrl->GetRootItem(), pBase);
+		return FindData(m_Ctrl->GetRootItem(), inBase);
 	}
 	CAgilityBookTreeData* FindData(
 			wxTreeItemId hItem,
-			ARBBasePtr pBase) const;
-	CAgilityBookTreeData* FindData(ARBDogPtr pDog) const
+			ARBBasePtr const& inBase) const;
+	CAgilityBookTreeData* FindData(ARBDogPtr const& inDog) const
 	{
-		return FindData(m_Ctrl->GetRootItem(), pDog);
+		return FindData(m_Ctrl->GetRootItem(), inDog);
 	}
 	CAgilityBookTreeData* FindData(
 			wxTreeItemId hItem,
-			ARBDogPtr pDog) const;
-	CAgilityBookTreeData* FindData(ARBDogTrialPtr pTrial) const
+			ARBDogPtr const& inDog) const;
+	CAgilityBookTreeData* FindData(ARBDogTrialPtr const& inTrial) const
 	{
-		return FindData(m_Ctrl->GetRootItem(), pTrial);
+		return FindData(m_Ctrl->GetRootItem(), inTrial);
 	}
 	CAgilityBookTreeData* FindData(
 			wxTreeItemId hItem,
-			ARBDogTrialPtr pTrial) const;
-	CAgilityBookTreeData* FindData(ARBDogRunPtr pRun) const
+			ARBDogTrialPtr const& inTrial) const;
+	CAgilityBookTreeData* FindData(ARBDogRunPtr const& inRun) const
 	{
-		return FindData(m_Ctrl->GetRootItem(), pRun);
+		return FindData(m_Ctrl->GetRootItem(), inRun);
 	}
 	CAgilityBookTreeData* FindData(
 			wxTreeItemId hItem,
-			ARBDogRunPtr pRun) const;
+			ARBDogRunPtr const& inRun) const;
 
 	wxTreeItemId InsertDog(
-			ARBDogPtr pDog,
+			ARBDogPtr const& inDog,
 			bool bSelect = false);
 	wxTreeItemId InsertTrial(
-			ARBDogTrialPtr pTrial,
+			ARBDogTrialPtr const& inTrial,
 			wxTreeItemId hParent);
 	wxTreeItemId InsertRun(
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun,
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun,
 			wxTreeItemId hParent);
 	bool PasteDog(bool& bLoaded);
-	bool PasteRuns(ARBDogPtr pDog, ARBDogTrialPtr pTrial, bool& bLoaded, bool* bTreeSelectionSet = nullptr);
+	bool PasteRuns(
+			ARBDogPtr const& inDog,
+			ARBDogTrialPtr const& inTrial,
+			bool& bLoaded,
+			bool* bTreeSelectionSet = nullptr);
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
 	std::wstring GetPrintLine(wxTreeItemId hItem) const;

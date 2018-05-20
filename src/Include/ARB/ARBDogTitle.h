@@ -77,7 +77,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -87,7 +87,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogTitle element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -141,7 +141,7 @@ public:
 	void SetName(
 			std::wstring const& inName,
 			short inInstance,
-			ARBConfigTitlePtr inConfigTitle);
+			ARBConfigTitlePtr const& inConfigTitle);
 	void Rename(std::wstring const& inName)
 	{
 		m_Name = inName;
@@ -199,7 +199,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -283,7 +283,7 @@ public:
 	 * @param inTitle Title to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddTitle(ARBDogTitlePtr inTitle);
+	bool AddTitle(ARBDogTitlePtr const& inTitle);
 
 	/**
 	 * Delete a title, remove any dependent objects.
@@ -292,6 +292,6 @@ public:
 	 * @return Was it removed?
 	 */
 	bool DeleteTitle(
-			ARBConfigVenuePtr inVenue,
-			ARBDogTitlePtr inTitle);
+			ARBConfigVenuePtr const& inVenue,
+			ARBDogTitlePtr const& inTitle);
 };

@@ -55,10 +55,10 @@ public:
 
 CQualifyingComboBox::CQualifyingComboBox(
 		wxWindow* parent,
-		ARBDogReferenceRunPtr refRun,
+		ARBDogReferenceRunPtr const& inRefRun,
 		wxValidator const& validator)
 	: wxChoice()
-	, m_refRun(refRun)
+	, m_refRun(inRefRun)
 	, m_Run()
 {
 	wxChoice::Create(parent, wxID_ANY,
@@ -70,11 +70,11 @@ CQualifyingComboBox::CQualifyingComboBox(
 
 CQualifyingComboBox::CQualifyingComboBox(
 		wxWindow* parent,
-		ARBDogRunPtr run,
+		ARBDogRunPtr const& inRun,
 		wxValidator const& validator)
 	: wxChoice()
 	, m_refRun()
-	, m_Run(run)
+	, m_Run(inRun)
 {
 	wxChoice::Create(parent, wxID_ANY,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
@@ -85,26 +85,26 @@ CQualifyingComboBox::CQualifyingComboBox(
 
 CQualifyingComboBox::CQualifyingComboBox(
 		wxWindow* parent,
-		ARBDogRunPtr run,
-		ARBConfigScoringPtr scoring,
+		ARBDogRunPtr const& inRun,
+		ARBConfigScoringPtr const& inScoring,
 		wxValidator const& validator)
 	: wxChoice()
 	, m_refRun()
-	, m_Run(run)
+	, m_Run(inRun)
 {
 	wxChoice::Create(parent, wxID_ANY,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
 		0, nullptr, 0, validator);
-	ResetContent(scoring);
+	ResetContent(inScoring);
 }
 
 
-void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr scoring)
+void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr const& inScoring)
 {
 	Clear();
 	bool bHasTitling = true;
-	if (scoring)
-		bHasTitling = (0 < scoring->GetTitlePoints().size() || 0 < scoring->GetLifetimePoints().size());
+	if (inScoring)
+		bHasTitling = (0 < inScoring->GetTitlePoints().size() || 0 < inScoring->GetLifetimePoints().size());
 	ARB_Q curQ = ARB_Q::eQ_UNK;
 	if (m_refRun)
 		curQ = m_refRun->GetQ();
@@ -115,7 +115,7 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr scoring)
 	for (int index = 0; index < nQs; ++index)
 	{
 		ARB_Q q = ARB_Q::GetValidType(index);
-		if (scoring && ARB_Q::eQ_SuperQ == q && !scoring->HasSuperQ())
+		if (inScoring && ARB_Q::eQ_SuperQ == q && !inScoring->HasSuperQ())
 			continue;
 		// Allow non-titling runs to only have certain types.
 		// 0 is special - it's the Unknown case.

@@ -112,13 +112,13 @@ LifeTimePointInfo::LifeTimePointInfo(
 /////////////////////////////////////////////////////////////////////////////
 
 OtherPtInfo::OtherPtInfo(
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun,
 		double points,
 		bool bScore,
 		double score)
-	: m_pTrial(pTrial)
-	, m_pRun(pRun)
+	: m_pTrial(inTrial)
+	, m_pRun(inRun)
 	, m_pExisting()
 	, m_Points(points)
 	, m_bScore(bScore)
@@ -137,15 +137,15 @@ OtherPtInfo::OtherPtInfo(
 }
 
 
-OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr pExisting)
+OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr const& inExisting)
 	: m_pTrial()
 	, m_pRun()
-	, m_pExisting(pExisting)
-	, m_Venue(pExisting->GetVenue())
-	, m_Div(pExisting->GetDivision())
-	, m_Level(pExisting->GetLevel())
-	, m_Event(pExisting->GetEvent())
-	, m_Points(pExisting->GetPoints())
+	, m_pExisting(inExisting)
+	, m_Venue(inExisting->GetVenue())
+	, m_Div(inExisting->GetDivision())
+	, m_Level(inExisting->GetLevel())
+	, m_Event(inExisting->GetEvent())
+	, m_Points(inExisting->GetPoints())
 	, m_bScore(false)
 	, m_Score(0.0)
 {
@@ -257,7 +257,7 @@ std::wstring CPointsDataText::GetHtml(
 }
 
 
-bool CPointsDataText::IsEqual(CPointsDataBasePtr /*inData*/)
+bool CPointsDataText::IsEqual(CPointsDataBasePtr const& /*inData*/)
 {
 	return false;
 }
@@ -300,7 +300,7 @@ std::wstring CPointsDataHeader::GetHtml(
 }
 
 
-bool CPointsDataHeader::IsEqual(CPointsDataBasePtr /*inData*/)
+bool CPointsDataHeader::IsEqual(CPointsDataBasePtr const& /*inData*/)
 {
 	return ARBDate::Today() == m_today;
 }
@@ -309,9 +309,9 @@ bool CPointsDataHeader::IsEqual(CPointsDataBasePtr /*inData*/)
 
 CPointsDataDog::CPointsDataDog(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr pDog)
+		ARBDogPtr const& inDog)
 	: CPointsDataBase(pDoc)
-	, m_pDog(pDog)
+	, m_pDog(inDog)
 {
 }
 
@@ -377,7 +377,7 @@ void CPointsDataDog::Details() const
 }
 
 
-bool CPointsDataDog::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataDog::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataDogPtr inDog = std::dynamic_pointer_cast<CPointsDataDog, CPointsDataBase>(inData);
 	if (inDog)
@@ -390,11 +390,11 @@ bool CPointsDataDog::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataVenue::CPointsDataVenue(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue)
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue)
 	: CPointsDataBase(pDoc)
-	, m_pDog(pDog)
-	, m_pVenue(pVenue)
+	, m_pDog(inDog)
+	, m_pVenue(inVenue)
 {
 }
 
@@ -489,7 +489,7 @@ void CPointsDataVenue::Details() const
 }
 
 
-bool CPointsDataVenue::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataVenue::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataVenuePtr inVenue = std::dynamic_pointer_cast<CPointsDataVenue, CPointsDataBase>(inData);
 	if (inVenue)
@@ -502,11 +502,11 @@ bool CPointsDataVenue::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataTitle::CPointsDataTitle(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr pDog,
-		ARBDogTitlePtr pTitle)
+		ARBDogPtr const& inDog,
+		ARBDogTitlePtr const& inTitle)
 	: CPointsDataBase(pDoc)
-	, m_pDog(pDog)
-	, m_pTitle(pTitle)
+	, m_pDog(inDog)
+	, m_pTitle(inTitle)
 {
 }
 
@@ -575,7 +575,7 @@ void CPointsDataTitle::Details() const
 }
 
 
-bool CPointsDataTitle::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataTitle::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataTitlePtr inTitle = std::dynamic_pointer_cast<CPointsDataTitle, CPointsDataBase>(inData);
 	if (inTitle)
@@ -589,14 +589,14 @@ bool CPointsDataTitle::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataEvent::CPointsDataEvent(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr inDog,
+		ARBDogPtr const& inDog,
 		std::list<RunInfo>& inMatching,
-		ARBConfigVenuePtr inVenue,
-		ARBConfigDivisionPtr inDiv,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigDivisionPtr const& inDiv,
 		int inDivIdx,
-		ARBConfigLevelPtr inLevel,
+		ARBConfigLevelPtr const& inLevel,
 		int inLevelIdx,
-		ARBConfigEventPtr inEvent,
+		ARBConfigEventPtr const& inEvent,
 		int inEventIdx,
 		std::wstring const& inRunCount,
 		std::wstring const& inQcount,
@@ -705,7 +705,7 @@ void CPointsDataEvent::Details() const
 }
 
 
-bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataEvent::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataEventPtr inEvent = std::dynamic_pointer_cast<CPointsDataEvent, CPointsDataBase>(inData);
 	if (inEvent)
@@ -721,7 +721,7 @@ bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataLifetime::CPointsDataLifetime(
 		CAgilityBookDoc* pDoc,
-		ARBConfigVenuePtr inVenue)
+		ARBConfigVenuePtr const& inVenue)
 	: CPointsDataBase(pDoc)
 	, m_LifetimeName()
 	, m_Venue(inVenue)
@@ -733,8 +733,8 @@ CPointsDataLifetime::CPointsDataLifetime(
 
 CPointsDataLifetime::CPointsDataLifetime(
 		CAgilityBookDoc* pDoc,
-		ARBConfigLifetimeNamePtr inLifetimeName,
-		ARBConfigVenuePtr inVenue)
+		ARBConfigLifetimeNamePtr const& inLifetimeName,
+		ARBConfigVenuePtr const& inVenue)
 	: CPointsDataBase(pDoc)
 	, m_LifetimeName(inLifetimeName)
 	, m_Venue(inVenue)
@@ -829,7 +829,7 @@ void CPointsDataLifetime::Details() const
 }
 
 
-bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataLifetimePtr inLife = std::dynamic_pointer_cast<CPointsDataLifetime, CPointsDataBase>(inData);
 	if (inLife)
@@ -842,7 +842,7 @@ bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 		CAgilityBookDoc* pDoc,
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inName)
 	: CPointsDataLifetime(pDoc, inVenue)
 	, m_Name(inName)
@@ -851,8 +851,8 @@ CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 		CAgilityBookDoc* pDoc,
-		ARBConfigLifetimeNamePtr inLifetimeName,
-		ARBConfigVenuePtr inVenue,
+		ARBConfigLifetimeNamePtr const& inLifetimeName,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inName)
 	: CPointsDataLifetime(pDoc, inLifetimeName, inVenue)
 	, m_Name(inName)
@@ -905,7 +905,7 @@ std::wstring CPointsDataLifetimeByName::GetHtml(
 }
 
 
-bool CPointsDataLifetimeByName::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataLifetimeByName::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataLifetimeByNamePtr inLife = std::dynamic_pointer_cast<CPointsDataLifetimeByName, CPointsDataBase>(inData);
 	if (inLife)
@@ -919,9 +919,9 @@ bool CPointsDataLifetimeByName::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataMultiQs::CPointsDataMultiQs(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr inDog,
-		ARBConfigVenuePtr inVenue,
-		ARBConfigMultiQPtr inMultiQ,
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigMultiQPtr const& inMultiQ,
 		std::set<MultiQdata> const& inMQs)
 	: CPointsDataBase(pDoc)
 	, m_Dog(inDog)
@@ -994,7 +994,7 @@ void CPointsDataMultiQs::Details() const
 }
 
 
-bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataMultiQsPtr inMulti = std::dynamic_pointer_cast<CPointsDataMultiQs, CPointsDataBase>(inData);
 	if (inMulti)
@@ -1008,8 +1008,8 @@ bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataSpeedPts::CPointsDataSpeedPts(
 		CAgilityBookDoc* pDoc,
-		ARBConfigVenuePtr inVenue,
-		ARBConfigDivisionPtr inDiv,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigDivisionPtr const& inDiv,
 		int inPts)
 	: CPointsDataBase(pDoc)
 	, m_Venue(inVenue)
@@ -1049,7 +1049,7 @@ std::wstring CPointsDataSpeedPts::GetHtml(
 }
 
 
-bool CPointsDataSpeedPts::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataSpeedPts::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataSpeedPtsPtr inPts = std::dynamic_pointer_cast<CPointsDataSpeedPts, CPointsDataBase>(inData);
 	if (inPts)
@@ -1135,7 +1135,7 @@ void CPointsDataOtherPointsTallyAll::Details() const
 }
 
 
-bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataOtherPointsTallyAllPtr inPts = std::dynamic_pointer_cast<CPointsDataOtherPointsTallyAll, CPointsDataBase>(inData);
 	if (inPts)
@@ -1205,7 +1205,7 @@ void CPointsDataOtherPointsTallyAllByEvent::Details() const
 }
 
 
-bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataOtherPointsTallyAllByEventPtr inPts = std::dynamic_pointer_cast<CPointsDataOtherPointsTallyAllByEvent, CPointsDataBase>(inData);
 	if (inPts)
@@ -1275,7 +1275,7 @@ void CPointsDataOtherPointsTallyLevel::Details() const
 }
 
 
-bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataOtherPointsTallyLevelPtr inPts = std::dynamic_pointer_cast<CPointsDataOtherPointsTallyLevel, CPointsDataBase>(inData);
 	if (inPts)
@@ -1351,7 +1351,7 @@ void CPointsDataOtherPointsTallyLevelByEvent::Details() const
 }
 
 
-bool CPointsDataOtherPointsTallyLevelByEvent::IsEqual(CPointsDataBasePtr inData)
+bool CPointsDataOtherPointsTallyLevelByEvent::IsEqual(CPointsDataBasePtr const& inData)
 {
 	CPointsDataOtherPointsTallyLevelByEventPtr inPts = std::dynamic_pointer_cast<CPointsDataOtherPointsTallyLevelByEvent, CPointsDataBase>(inData);
 	if (inPts)
@@ -1415,17 +1415,17 @@ private:
 
 void CPointsDataItems::InsertVenueHeader(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr inDog,
-		ARBConfigVenuePtr pVenue)
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue)
 {
 	m_Lines.push_back(CPointsDataText::CreateListBlankLine(pDoc));
-	m_Lines.push_back(std::make_shared<CPointsDataVenue>(pDoc, inDog, pVenue));
+	m_Lines.push_back(std::make_shared<CPointsDataVenue>(pDoc, inDog, inVenue));
 }
 
 
 void CPointsDataItems::LoadData(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr inDog)
+		ARBDogPtr const& inDog)
 {
 	clear();
 

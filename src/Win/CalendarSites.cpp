@@ -433,7 +433,7 @@ protected:
 class CPluginConfigData : public CPluginData
 {
 public:
-	CPluginConfigData(CAgilityBookDoc* pDoc, ARBConfigCalSitePtr inSite)
+	CPluginConfigData(CAgilityBookDoc* pDoc, ARBConfigCalSitePtr const& inSite)
 		: m_pDoc(pDoc)
 		, m_OrigSite(inSite)
 		, m_Site(inSite->Clone())
@@ -544,8 +544,8 @@ bool CPluginConfigData::Delete()
 class CPluginDllData : public CPluginData
 {
 public:
-	CPluginDllData(CalSiteDataPtr calData)
-		: m_CalData(calData)
+	CPluginDllData(CalSiteDataPtr const& inCalData)
+		: m_CalData(inCalData)
 	{
 		assert(m_CalData);
 		SetNameDesc();
@@ -629,8 +629,8 @@ private:
 class CPluginCalData : public CPluginBase
 {
 public:
-	CPluginCalData(ARBCalendarPtr cal)
-		: m_Cal(cal)
+	CPluginCalData(ARBCalendarPtr const& inCal)
+		: m_Cal(inCal)
 	{
 		{
 			std::wostringstream str;

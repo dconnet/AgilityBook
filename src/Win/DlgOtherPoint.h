@@ -25,11 +25,11 @@ class CDlgOtherPoint : public wxDialog
 public:
 	CDlgOtherPoint(
 			ARBConfig& config,
-			ARBDogRunOtherPointsPtr pRunOther,
+			ARBDogRunOtherPointsPtr const& inRunOther,
 			wxWindow* pParent = nullptr);
 
 private:
-	void LoadPoints(ARBConfigOtherPointsPtr inOther);
+	void LoadPoints(ARBConfigOtherPointsPtr const& inOther);
 
 	ARBConfig& m_Config;
 	ARBDogRunOtherPointsPtr m_pRunOther;

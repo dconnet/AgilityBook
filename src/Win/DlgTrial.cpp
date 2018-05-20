@@ -61,7 +61,7 @@
 class CListTrialData : public CListData
 {
 public:
-	CListTrialData(ARBDogClubPtr club) : m_Club(club) {}
+	CListTrialData(ARBDogClubPtr const& inClub) : m_Club(inClub) {}
 	virtual std::wstring OnNeedText(long iCol) const;
 	ARBDogClubPtr GetClub() const	{return m_Club;}
 private:
@@ -93,19 +93,19 @@ END_EVENT_TABLE()
 
 CDlgTrial::CDlgTrial(
 		CAgilityBookDoc* pDoc,
-		ARBDogTrialPtr pTrial,
+		ARBDogTrialPtr const& inTrial,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_dateStart(pTrial->GetStartDate())
-	, m_Verified(pTrial->IsVerified())
-	, m_Location(StringUtil::stringWX(pTrial->GetLocation()))
-	, m_Notes(StringUtil::stringWX(pTrial->GetNote()))
+	, m_dateStart(inTrial->GetStartDate())
+	, m_Verified(inTrial->IsVerified())
+	, m_Location(StringUtil::stringWX(inTrial->GetLocation()))
+	, m_Notes(StringUtil::stringWX(inTrial->GetNote()))
 	, m_ctrlLocationInfo(nullptr)
 	, m_ctrlEdit(nullptr)
 	, m_ctrlDelete(nullptr)
 	, m_ctrlClubNotes(nullptr)
 	, m_pDoc(pDoc)
-	, m_pTrial(pTrial)
+	, m_pTrial(inTrial)
 	, m_Clubs()
 	, m_bRunsDeleted(false)
 {

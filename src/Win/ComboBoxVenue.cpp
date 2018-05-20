@@ -39,7 +39,7 @@ IMPLEMENT_CLASS(CVenueComboBox, wxComboBox)
 class CVenueComboData : public wxClientData
 {
 public:
-	CVenueComboData(ARBConfigVenuePtr venue) : m_Venue(venue) {}
+	CVenueComboData(ARBConfigVenuePtr const& inVenue) : m_Venue(inVenue) {}
 	ARBConfigVenuePtr m_Venue;
 };
 

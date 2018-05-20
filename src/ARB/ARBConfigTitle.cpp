@@ -40,7 +40,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 ElementNode::AttribLookup LoadTitleStyle(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,
 		ARBTitleStyle& ioStyle)
@@ -95,7 +95,7 @@ ElementNode::AttribLookup LoadTitleStyle(
 
 
 void SaveTitleStyle(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		wchar_t const* inAttrib,
 		ARBTitleStyle inStyle)
 {
@@ -122,7 +122,7 @@ void SaveTitleStyle(
 /////////////////////////////////////////////////////////////////////////////
 
 ElementNode::AttribLookup LoadTitleSeparator(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,
 		ARBTitleStyle inStyle,
@@ -158,7 +158,7 @@ ElementNode::AttribLookup LoadTitleSeparator(
 
 
 void SaveTitleSeparator(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		wchar_t const* inAttrib,
 		ARBTitleSeparator inSep)
 {
@@ -354,7 +354,7 @@ void ARBConfigTitle::clear()
 
 
 bool ARBConfigTitle::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -430,7 +430,7 @@ bool ARBConfigTitle::Load(
 }
 
 
-bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
+bool ARBConfigTitle::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -517,7 +517,7 @@ std::wstring ARBConfigTitle::GetCompleteName(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigTitleList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		bool inCheckDups)
@@ -618,7 +618,7 @@ bool ARBConfigTitleList::AddTitle(
 }
 
 
-bool ARBConfigTitleList::AddTitle(ARBConfigTitlePtr inTitle)
+bool ARBConfigTitleList::AddTitle(ARBConfigTitlePtr const& inTitle)
 {
 	if (!inTitle || 0 == inTitle->GetName().length())
 		return false;

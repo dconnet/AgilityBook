@@ -94,7 +94,7 @@ public:
 			wxView* sender,
 			wxObject* inHint = nullptr);
 
-	bool IsTrial(ARBDogTrialPtr pTrial) const;
+	bool IsTrial(ARBDogTrialPtr const& inTrial) const;
 
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 	void GetPrintLine(long item, std::vector<std::wstring>& line) const;

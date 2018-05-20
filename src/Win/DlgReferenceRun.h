@@ -30,11 +30,11 @@ class CDlgReferenceRun : public wxDialog
 public:
 	CDlgReferenceRun(
 			CAgilityBookDoc* pDoc,
-			ARBDogRunPtr inRun,
+			ARBDogRunPtr const& inRun,
 			std::set<std::wstring> const& inHeights,
 			std::set<std::wstring> const& inNames,
 			std::set<std::wstring> const& inBreeds,
-			ARBDogReferenceRunPtr ref,
+			ARBDogReferenceRunPtr const& inRef,
 			wxWindow* pParent = nullptr);
 
 private:

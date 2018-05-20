@@ -75,9 +75,9 @@ class CDlgRun : public wxDialog
 public:
 	CDlgRun(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr pDog,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun,
+			ARBDogPtr const& inDog,
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun,
 			wxWindow* pParent = nullptr,
 			int iSelectPage = 0);
 
@@ -91,7 +91,7 @@ private:
 	void FillEvents(bool bOnEventChange);
 	void FillSubNames();
 	void FillJudges();
-	void SetEventDesc(ARBConfigEventPtr inEvent);
+	void SetEventDesc(ARBConfigEventPtr const& inEvent);
 	void SetPartnerText();
 	void SetMinYPS();
 	void SetYPS();

@@ -57,11 +57,11 @@ END_EVENT_TABLE()
 
 
 CDlgCalendar::CDlgCalendar(
-		ARBCalendarPtr pCal,
+		ARBCalendarPtr const& inCal,
 		CAgilityBookDoc* pDoc,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_pCal(pCal)
+	, m_pCal(inCal)
 	, m_pDoc(pDoc)
 	, m_Span(0)
 	, m_dateStart(ARBDate::Today())

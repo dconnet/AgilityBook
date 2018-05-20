@@ -51,7 +51,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -60,7 +60,7 @@ public:
 	 * @param ioTree Parent element.
 	 * @return Success
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Get the formatted URL to use to request data.
@@ -148,7 +148,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -182,7 +182,7 @@ public:
 	 * @param inSite Site to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddSite(ARBConfigCalSitePtr inSite);
+	bool AddSite(ARBConfigCalSitePtr const& inSite);
 
 	/**
 	 * Delete a site.

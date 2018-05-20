@@ -108,7 +108,7 @@ bool CClipboardDataReader::IsFormatAvailable(eClipFormat clpFmt)
 
 bool CClipboardDataReader::GetData(
 		eClipFormat clpFmt,
-		ElementNodePtr outTree)
+		ElementNodePtr const& outTree)
 {
 	outTree->clear();
 	if (!wxTheClipboard->IsSupported(GetClipboardFormat(clpFmt)) || !Open())
@@ -225,7 +225,7 @@ CClipboardDataWriter::~CClipboardDataWriter()
 
 bool CClipboardDataWriter::AddData(
 		eClipFormat clpFmt,
-		ElementNodePtr inTree)
+		ElementNodePtr const& inTree)
 {
 	if (!m_bOkay)
 		return false;

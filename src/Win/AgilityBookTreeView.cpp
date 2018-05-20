@@ -463,12 +463,12 @@ CAgilityBookTreeData* CAgilityBookTreeView::GetTreeItem(wxTreeItemId hItem) cons
 }
 
 
-bool CAgilityBookTreeView::SelectDog(ARBDogPtr dog)
+bool CAgilityBookTreeView::SelectDog(ARBDogPtr const& inDog)
 {
 	bool bSelected = false;
 	if (m_Ctrl)
 	{
-		CAgilityBookTreeData* pData = FindData(m_Ctrl->GetRootItem(), dog);
+		CAgilityBookTreeData* pData = FindData(m_Ctrl->GetRootItem(), inDog);
 		if (pData)
 		{
 			bSelected = true;
@@ -482,15 +482,15 @@ bool CAgilityBookTreeView::SelectDog(ARBDogPtr dog)
 
 CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		wxTreeItemId hItem,
-		ARBBasePtr pBase) const
+		ARBBasePtr const& inBase) const
 {
-	if (!pBase || !m_Ctrl)
+	if (!inBase || !m_Ctrl)
 		return nullptr;
 	CAgilityBookTreeData* pData = nullptr;
 	if (m_Ctrl->GetRootItem() != hItem)
 	{
 		CAgilityBookTreeData* pCheck = dynamic_cast<CAgilityBookTreeData*>(m_Ctrl->GetItemData(hItem));
-		if (pCheck && pCheck->GetARBBase() == pBase)
+		if (pCheck && pCheck->GetARBBase() == inBase)
 			pData = pCheck;
 	}
 	if (!pData)
@@ -499,7 +499,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(hItem, cookie);
 		while (hChildItem.IsOk() && !pData)
 		{
-			pData = FindData(hChildItem, pBase);
+			pData = FindData(hChildItem, inBase);
 			hChildItem = m_Ctrl->GetNextChild(hItem, cookie);
 		}
 	}
@@ -509,9 +509,9 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 
 CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		wxTreeItemId hItem,
-		ARBDogPtr pDog) const
+		ARBDogPtr const& inDog) const
 {
-	if (!pDog || !m_Ctrl)
+	if (!inDog || !m_Ctrl)
 		return nullptr;
 	CAgilityBookTreeData* pData = nullptr;
 	if (m_Ctrl->GetRootItem() != hItem)
@@ -519,7 +519,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		CAgilityBookTreeDataDog* pCheck = dynamic_cast<CAgilityBookTreeDataDog*>(m_Ctrl->GetItemData(hItem));
 		// Don't use virtual 'GetDog' on pCheck as that can give back a parent
 		// node which isn't what we want here. We want the real dog node.
-		if (pCheck && pCheck->GetDog() == pDog)
+		if (pCheck && pCheck->GetDog() == inDog)
 			pData = pCheck;
 	}
 	if (!pData)
@@ -528,7 +528,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(hItem, cookie);
 		while (hChildItem.IsOk() && !pData)
 		{
-			pData = FindData(hChildItem, pDog);
+			pData = FindData(hChildItem, inDog);
 			hChildItem = m_Ctrl->GetNextChild(hItem, cookie);
 		}
 	}
@@ -538,15 +538,15 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 
 CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		wxTreeItemId hItem,
-		ARBDogTrialPtr pTrial) const
+		ARBDogTrialPtr const& inTrial) const
 {
-	if (!pTrial || !m_Ctrl)
+	if (!inTrial || !m_Ctrl)
 		return nullptr;
 	CAgilityBookTreeData* pData = nullptr;
 	if (m_Ctrl->GetRootItem() != hItem)
 	{
 		CAgilityBookTreeDataTrial* pCheck = dynamic_cast<CAgilityBookTreeDataTrial*>(m_Ctrl->GetItemData(hItem));
-		if (pCheck && pCheck->GetTrial() == pTrial)
+		if (pCheck && pCheck->GetTrial() == inTrial)
 			pData = pCheck;
 	}
 	if (!pData)
@@ -555,7 +555,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(hItem, cookie);
 		while (hChildItem.IsOk() && !pData)
 		{
-			pData = FindData(hChildItem, pTrial);
+			pData = FindData(hChildItem, inTrial);
 			hChildItem = m_Ctrl->GetNextChild(hItem, cookie);
 		}
 	}
@@ -565,15 +565,15 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 
 CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		wxTreeItemId hItem,
-		ARBDogRunPtr pRun) const
+		ARBDogRunPtr const& inRun) const
 {
-	if (!pRun || !m_Ctrl)
+	if (!inRun || !m_Ctrl)
 		return nullptr;
 	CAgilityBookTreeData* pData = nullptr;
 	if (m_Ctrl->GetRootItem() != hItem)
 	{
 		CAgilityBookTreeDataRun* pCheck = dynamic_cast<CAgilityBookTreeDataRun*>(m_Ctrl->GetItemData(hItem));
-		if (pCheck && pCheck->GetRun() == pRun)
+		if (pCheck && pCheck->GetRun() == inRun)
 			pData = pCheck;
 	}
 	if (!pData)
@@ -582,7 +582,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(hItem, cookie);
 		while (hChildItem.IsOk() && !pData)
 		{
-			pData = FindData(hChildItem, pRun);
+			pData = FindData(hChildItem, inRun);
 			hChildItem = m_Ctrl->GetNextChild(hItem, cookie);
 		}
 	}
@@ -591,21 +591,21 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 
 
 wxTreeItemId CAgilityBookTreeView::InsertDog(
-		ARBDogPtr pDog,
+		ARBDogPtr const& inDog,
 		bool bSelect)
 {
 	wxTreeItemId hItem;
-	if (pDog && m_Ctrl)
+	if (inDog && m_Ctrl)
 	{
-		CAgilityBookTreeDataDog* pDataDog = new CAgilityBookTreeDataDog(this, pDog);
+		CAgilityBookTreeDataDog* pDataDog = new CAgilityBookTreeDataDog(this, inDog);
 		int idxImage = pDataDog->OnNeedIcon();
 		hItem = m_Ctrl->AppendItem(
 			m_Ctrl->GetRootItem(),
 			StringUtil::stringWX(pDataDog->OnNeedText()),
 			idxImage, idxImage,
 			pDataDog);
-		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
-			iterTrial != pDog->GetTrials().end();
+		for (ARBDogTrialList::const_iterator iterTrial = inDog->GetTrials().begin();
+			iterTrial != inDog->GetTrials().end();
 			++iterTrial)
 		{
 			InsertTrial((*iterTrial), hItem);
@@ -620,13 +620,13 @@ wxTreeItemId CAgilityBookTreeView::InsertDog(
 
 
 wxTreeItemId CAgilityBookTreeView::InsertTrial(
-		ARBDogTrialPtr pTrial,
+		ARBDogTrialPtr const& inTrial,
 		wxTreeItemId hParent)
 {
 	wxTreeItemId hTrial;
-	if (pTrial && !pTrial->IsFiltered() && m_Ctrl)
+	if (inTrial && !inTrial->IsFiltered() && m_Ctrl)
 	{
-		CAgilityBookTreeDataTrial* pDataTrial = new CAgilityBookTreeDataTrial(this, pTrial);
+		CAgilityBookTreeDataTrial* pDataTrial = new CAgilityBookTreeDataTrial(this, inTrial);
 		int idxImage = pDataTrial->OnNeedIcon();
 		hTrial = m_Ctrl->AppendItem(
 			hParent,
@@ -637,11 +637,11 @@ wxTreeItemId CAgilityBookTreeView::InsertTrial(
 		int state = pDataTrial->GetTrial()->IsVerified() ? m_idxChecked : m_idxEmpty;
 		m_Ctrl->SetItemState(hTrial, state);
 #endif
-		for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-			iterRun != pTrial->GetRuns().end();
+		for (ARBDogRunList::const_iterator iterRun = inTrial->GetRuns().begin();
+			iterRun != inTrial->GetRuns().end();
 			++iterRun)
 		{
-			InsertRun(pTrial, (*iterRun), hTrial);
+			InsertRun(inTrial, (*iterRun), hTrial);
 		}
 	}
 	return hTrial;
@@ -649,14 +649,14 @@ wxTreeItemId CAgilityBookTreeView::InsertTrial(
 
 
 wxTreeItemId CAgilityBookTreeView::InsertRun(
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun,
 		wxTreeItemId hParent)
 {
 	wxTreeItemId hRun;
-	if (pRun && !pRun->IsFiltered() && m_Ctrl)
+	if (inRun && !inRun->IsFiltered() && m_Ctrl)
 	{
-		CAgilityBookTreeDataRun* pDataRun = new CAgilityBookTreeDataRun(this, pRun);
+		CAgilityBookTreeDataRun* pDataRun = new CAgilityBookTreeDataRun(this, inRun);
 		int idxImage = pDataRun->OnNeedIcon();
 		hRun = m_Ctrl->AppendItem(
 			hParent,
@@ -715,12 +715,16 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 }
 
 
-bool CAgilityBookTreeView::PasteRuns(ARBDogPtr pDog, ARBDogTrialPtr pTrial, bool& bLoaded, bool* bTreeSelectionSet)
+bool CAgilityBookTreeView::PasteRuns(
+		ARBDogPtr const& inDog,
+		ARBDogTrialPtr const& inTrial,
+		bool& bLoaded,
+		bool* bTreeSelectionSet)
 {
-	if (!m_Ctrl || !pDog || !pTrial)
+	if (!m_Ctrl || !inDog || !inTrial)
 		return false;
 
-	CAgilityBookTreeData* pData = FindData(pTrial);
+	CAgilityBookTreeData* pData = FindData(inTrial);
 	if (!pData)
 		return false;
 
@@ -740,7 +744,7 @@ bool CAgilityBookTreeView::PasteRuns(ARBDogPtr pDog, ARBDogTrialPtr pTrial, bool
 				ARBDogRunPtr pRun(ARBDogRun::New());
 				if (pRun)
 				{
-					if (pRun->Load(GetDocument()->Book().GetConfig(), pTrial->GetClubs(), element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+					if (pRun->Load(GetDocument()->Book().GetConfig(), inTrial->GetClubs(), element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 						runs.push_back(pRun);
 				}
 			}
@@ -753,26 +757,26 @@ bool CAgilityBookTreeView::PasteRuns(ARBDogPtr pDog, ARBDogTrialPtr pTrial, bool
 				for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 				{
 					ARBDogRunPtr pRun = *iter;
-					if (!pTrial->GetRuns().AddRun(pRun))
+					if (!inTrial->GetRuns().AddRun(pRun))
 					{
 						++nFailed;
 						wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 					}
 					else
-						GetDocument()->ResetVisibility(venues, pTrial, pRun);
+						GetDocument()->ResetVisibility(venues, inTrial, pRun);
 				}
 				if (runs.size() == nFailed)
 					bLoaded = false;
 				else
 				{
-					pTrial->GetRuns().sort();
-					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					inTrial->GetRuns().sort();
+					inDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 					Freeze();
 					wxTreeItemId hItem;
 					for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 					{
 						ARBDogRunPtr pRun = *iter;
-						hItem = InsertRun(pTrial, pRun, pData->GetId());
+						hItem = InsertRun(inTrial, pRun, pData->GetId());
 					}
 					Thaw();
 					Refresh();
@@ -791,7 +795,7 @@ bool CAgilityBookTreeView::PasteRuns(ARBDogPtr pDog, ARBDogTrialPtr pTrial, bool
 					}
 					if (bOk)
 					{
-						pTrial->SetMultiQs(GetDocument()->Book().GetConfig());
+						inTrial->SetMultiQs(GetDocument()->Book().GetConfig());
 						CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
 						GetDocument()->UpdateAllViews(nullptr, &hint);
 					}

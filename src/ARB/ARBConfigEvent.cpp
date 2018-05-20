@@ -129,7 +129,7 @@ bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 
 bool ARBConfigEvent::Load(
 		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -186,7 +186,7 @@ bool ARBConfigEvent::Load(
 }
 
 
-bool ARBConfigEvent::Save(ElementNodePtr ioTree) const
+bool ARBConfigEvent::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -227,7 +227,7 @@ bool ARBConfigEvent::Save(ElementNodePtr ioTree) const
 
 bool ARBConfigEvent::Update(
 		int indent,
-		ARBConfigEventPtr inEventNew,
+		ARBConfigEventPtr const& inEventNew,
 		std::wstring& ioInfo)
 {
 	std::wstring info;
@@ -354,7 +354,7 @@ void ARBConfigEvent::SetSubNames(std::set<std::wstring> const& inNames)
 
 bool ARBConfigEventList::Load(
 		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -595,7 +595,7 @@ bool ARBConfigEventList::FindEvent(
 }
 
 
-bool ARBConfigEventList::AddEvent(ARBConfigEventPtr inEvent)
+bool ARBConfigEventList::AddEvent(ARBConfigEventPtr const& inEvent)
 {
 	if (!inEvent
 	|| 0 == inEvent->GetName().length()

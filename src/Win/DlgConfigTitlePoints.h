@@ -38,7 +38,7 @@ public:
 	};
 
 	CDlgConfigTitlePoints(
-			ARBConfigVenuePtr inVenue,
+			ARBConfigVenuePtr const& inVenue,
 			double inValue, // Faults or Place
 			double inPoints,
 			ETitlePointType inType,
@@ -46,8 +46,8 @@ public:
 			wxWindow* pParent = nullptr);
 
 	CDlgConfigTitlePoints(
-			ARBConfigVenuePtr inVenue,
-			ARBConfigLifetimePointsPtr inLifetime,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigLifetimePointsPtr const& inLifetime,
 			wxWindow* pParent = nullptr);
 
 	double Faults() const			{return m_Faults;}

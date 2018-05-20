@@ -42,15 +42,15 @@ BEGIN_EVENT_TABLE(CDlgClub, wxDialog)
 END_EVENT_TABLE()
 
 
-// If pClub is NULL, we're creating a new entry. Otherwise, we're editing an existing.
+// If inClub is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgClub::CDlgClub(
 		CAgilityBookDoc* pDoc,
 		ARBDogClubList& inClubs,
-		ARBDogClubPtr pClub,
+		ARBDogClubPtr const& inClub,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
-	, m_pClub(pClub)
+	, m_pClub(inClub)
 	, m_ctrlClubs(nullptr)
 	, m_ctrlVenues(nullptr)
 	, m_Club()

@@ -39,8 +39,8 @@
 class CReorderListData : public wxClientData
 {
 public:
-	CReorderListData(ARBDogPtr pDog)
-		: m_pDog(pDog)
+	CReorderListData(ARBDogPtr const& inDog)
+		: m_pDog(inDog)
 	{
 	}
 	ARBDogPtr m_pDog;
@@ -50,8 +50,8 @@ public:
 class CReorderTreeData : public wxTreeItemData
 {
 public:
-	CReorderTreeData(ARBDogRunPtr pRun)
-		: m_pRun(pRun)
+	CReorderTreeData(ARBDogRunPtr const& inRun)
+		: m_pRun(inRun)
 	{
 	}
 	ARBDogRunPtr m_pRun;
@@ -83,14 +83,14 @@ CDlgReorder::CDlgReorder(
 
 CDlgReorder::CDlgReorder(
 		CAgilityBookDoc* pDoc,
-		ARBDogTrialPtr trial,
-		ARBDogRunPtr run,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Dogs(nullptr)
-	, m_Trial(trial)
-	, m_Run(run)
+	, m_Trial(inTrial)
+	, m_Run(inRun)
 	, m_ctrlList(nullptr)
 	, m_ctrlTree(nullptr)
 	, m_ctrlUp(nullptr)

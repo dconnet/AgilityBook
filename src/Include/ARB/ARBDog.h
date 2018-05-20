@@ -84,7 +84,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -96,7 +96,7 @@ public:
 	 * @post The ARBDog element will be created in ioTree.
 	 */
 	bool Save(
-			ElementNodePtr ioTree,
+			ElementNodePtr const& ioTree,
 			ARBConfig const& inConfig) const;
 
 	/**
@@ -124,7 +124,7 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameDivision(
-			ARBConfigVenuePtr inVenue,
+			ARBConfigVenuePtr const& inVenue,
 			std::wstring const& inOldDiv,
 			std::wstring const& inNewDiv);
 
@@ -256,7 +256,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -395,7 +395,7 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumExistingPointsInDivision(
-			ARBConfigVenuePtr inVenue,
+			ARBConfigVenuePtr const& inVenue,
 			std::wstring const& inDiv) const;
 
 	/**
@@ -406,7 +406,7 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumRunsInDivision(
-			ARBConfigVenuePtr inVenue,
+			ARBConfigVenuePtr const& inVenue,
 			std::wstring const& inDiv) const;
 
 	/**
@@ -417,7 +417,7 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameDivision(
-			ARBConfigVenuePtr inVenue,
+			ARBConfigVenuePtr const& inVenue,
 			std::wstring const& inOldDiv,
 			std::wstring const& inNewDiv);
 
@@ -503,7 +503,7 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteTitle(
-			ARBConfigVenuePtr inVenueConfig,
+			ARBConfigVenuePtr const& inVenueConfig,
 			std::wstring const& inVenue,
 			std::wstring const& inTitle);
 
@@ -567,7 +567,7 @@ public:
 	 * @param inDog Dog to add.
 	 * @return Whetehr the object was added.
 	 */
-	bool AddDog(ARBDogPtr inDog);
+	bool AddDog(ARBDogPtr const& inDog);
 
 	/**
 	 * Delete a dog.
@@ -575,5 +575,5 @@ public:
 	 * @return Whether dog was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteDog(ARBDogPtr inDog);
+	bool DeleteDog(ARBDogPtr const& inDog);
 };

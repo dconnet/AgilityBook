@@ -92,7 +92,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig& ioConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -102,7 +102,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigDivision element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Update this configuration from inVenueNew.
@@ -113,7 +113,7 @@ public:
 	 */
 	bool Update(
 			int indent,
-			ARBConfigVenuePtr inVenueNew,
+			ARBConfigVenuePtr const& inVenueNew,
 			std::wstring& ioInfo);
 
 	/*
@@ -232,7 +232,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig& ioConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -350,7 +350,7 @@ public:
 	 * @param inVenue Venue to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddVenue(ARBConfigVenuePtr inVenue);
+	bool AddVenue(ARBConfigVenuePtr const& inVenue);
 
 	/**
 	 * Delete a venue.

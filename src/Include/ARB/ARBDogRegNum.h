@@ -74,7 +74,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -84,7 +84,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRegNum element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -157,7 +157,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -217,7 +217,7 @@ public:
 	 * @param inRegNum Registration number object
 	 * @return Whether the object was added.
 	 */
-	bool AddRegNum(ARBDogRegNumPtr inRegNum);
+	bool AddRegNum(ARBDogRegNumPtr const& inRegNum);
 
 	/**
 	 * Delete a registration number.

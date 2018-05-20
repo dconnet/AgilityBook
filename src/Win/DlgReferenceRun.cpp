@@ -50,26 +50,26 @@ END_EVENT_TABLE()
 
 CDlgReferenceRun::CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
-		ARBDogRunPtr inRun,
+		ARBDogRunPtr const& inRun,
 		std::set<std::wstring> const& inHeights,
 		std::set<std::wstring> const& inNames,
 		std::set<std::wstring> const& inBreeds,
-		ARBDogReferenceRunPtr ref,
+		ARBDogReferenceRunPtr const& inRef,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Run(inRun)
-	, m_Ref(ref)
-	, m_Place(ref->GetPlace())
-	, m_Q(ref->GetQ())
-	, m_Time(ref->GetTime())
+	, m_Ref(inRef)
+	, m_Place(inRef->GetPlace())
+	, m_Q(inRef->GetQ())
+	, m_Time(inRef->GetTime())
 	, m_ctrlTime(nullptr)
 	, m_ctrlYPS(nullptr)
-	, m_Points(StringUtil::stringWX(ref->GetScore()))
-	, m_Height(StringUtil::stringWX(ref->GetHeight()))
-	, m_Name(StringUtil::stringWX(ref->GetName()))
-	, m_Breed(StringUtil::stringWX(ref->GetBreed()))
-	, m_Notes(StringUtil::stringWX(ref->GetNote()))
+	, m_Points(StringUtil::stringWX(inRef->GetScore()))
+	, m_Height(StringUtil::stringWX(inRef->GetHeight()))
+	, m_Name(StringUtil::stringWX(inRef->GetName()))
+	, m_Breed(StringUtil::stringWX(inRef->GetBreed()))
+	, m_Notes(StringUtil::stringWX(inRef->GetNote()))
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

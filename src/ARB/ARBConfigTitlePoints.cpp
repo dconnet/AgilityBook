@@ -174,7 +174,7 @@ std::wstring ARBConfigTitlePoints::GetGenericName() const
 
 
 bool ARBConfigTitlePoints::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		ARBConfigLifetimePointsList& ioLifetimePoints)
@@ -217,7 +217,7 @@ bool ARBConfigTitlePoints::Load(
 }
 
 
-bool ARBConfigTitlePoints::Save(ElementNodePtr ioTree) const
+bool ARBConfigTitlePoints::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -250,7 +250,7 @@ bool ARBConfigTitlePoints::SetPoints(double inPoints)
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigTitlePointsList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		ARBConfigLifetimePointsList& ioLifetimePoints)

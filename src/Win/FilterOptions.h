@@ -187,7 +187,7 @@ public:
 			ARBDate const& endDate) const;
 	bool IsTitleVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBDogTitlePtr pTitle) const;
+			ARBDogTitlePtr const& inTitle) const;
 	bool IsVenueVisible(
 			std::vector<CVenueFilter> const& venues,
 			std::wstring const& venue) const;
@@ -202,22 +202,22 @@ public:
 			std::wstring const& level) const;
 	bool IsTrialVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBDogTrialPtr pTrial) const;
+			ARBDogTrialPtr const& inTrial) const;
 	unsigned short IsRunVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun) const;
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun) const;
 	bool IsRunVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBConfigVenuePtr pVenue,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun) const;
+			ARBConfigVenuePtr const& inVenue,
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun) const;
 	bool IsCalendarVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBCalendarPtr pCal) const;
+			ARBCalendarPtr const& inCal) const;
 	bool IsTrainingLogVisible(
 			std::set<std::wstring> const& names,
-			ARBTrainingPtr pTraining) const;
+			ARBTrainingPtr const& inTraining) const;
 
 	// Filtering: Calendar
 	CCalendarViewFilter FilterCalendarView() const

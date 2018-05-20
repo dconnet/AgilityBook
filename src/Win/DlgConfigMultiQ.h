@@ -29,8 +29,8 @@ class CDlgConfigMultiQ : public wxDialog
 {
 public:
 	CDlgConfigMultiQ(
-			ARBConfigVenuePtr inVenue,
-			ARBConfigMultiQPtr inMultiQ,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigMultiQPtr const& inMultiQ,
 			wxWindow* pParent = nullptr);
 
 private:

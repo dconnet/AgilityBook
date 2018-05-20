@@ -156,7 +156,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -166,7 +166,7 @@ public:
 	 * @return Success
 	 * @post The ARBCalendar element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Generate vEvent/vTask entries for iCalendar.
@@ -183,7 +183,7 @@ public:
 	 * @param inCal Object to test for equality.
 	 * @param inMatchExact Match the entire entry, or just start end dates, venue, clubname.
 	 */
-	bool IsMatch(ARBCalendarPtr inCal, bool inMatchExact) const;
+	bool IsMatch(ARBCalendarPtr const& inCal, bool inMatchExact) const;
 
 	/**
 	 * Update the existing entry.
@@ -191,7 +191,7 @@ public:
 	 * @return Entry was updated
 	 * @note This will not update the entry or confirmation status.
 	 */
-	bool Update(ARBCalendarPtr inCal);
+	bool Update(ARBCalendarPtr const& inCal);
 
 	/**
 	 * Is this calendar entry (start and end dates) before a given date?
@@ -401,7 +401,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -434,7 +434,7 @@ public:
 	 * @note Equality is tested by value, not pointer.
 	 */
 	bool FindCalendar(
-			ARBCalendarPtr inCal,
+			ARBCalendarPtr const& inCal,
 			bool inMatchExact,
 			ARBCalendarPtr* outCal = nullptr) const;
 
@@ -443,7 +443,7 @@ public:
 	 * @param inCal Entry to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddCalendar(ARBCalendarPtr inCal);
+	bool AddCalendar(ARBCalendarPtr const& inCal);
 
 	/**
 	 * Delete a calendar entry.
@@ -451,5 +451,5 @@ public:
 	 * @return Object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteCalendar(ARBCalendarPtr inCal);
+	bool DeleteCalendar(ARBCalendarPtr const& inCal);
 };

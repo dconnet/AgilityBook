@@ -42,8 +42,8 @@
 class CDlgDivSelectData : public wxClientData
 {
 public:
-	CDlgDivSelectData(ARBConfigDivisionPtr pDiv)
-		: m_pDiv(pDiv)
+	CDlgDivSelectData(ARBConfigDivisionPtr const& inDiv)
+		: m_pDiv(inDiv)
 	{
 	}
 	ARBConfigDivisionPtr m_pDiv;
@@ -54,16 +54,16 @@ public:
 class CDlgEventSelectData : public wxClientData
 {
 public:
-	CDlgEventSelectData(ARBConfigLevelPtr pLevel)
-		: m_pLevel(pLevel)
+	CDlgEventSelectData(ARBConfigLevelPtr const& inLevel)
+		: m_pLevel(inLevel)
 		, m_pSubLevel()
 	{
 	}
 	CDlgEventSelectData(
-			ARBConfigLevelPtr pLevel,
-			ARBConfigSubLevelPtr pSubLevel)
-		: m_pLevel(pLevel)
-		, m_pSubLevel(pSubLevel)
+			ARBConfigLevelPtr const& inLevel,
+			ARBConfigSubLevelPtr const& inSubLevel)
+		: m_pLevel(inLevel)
+		, m_pSubLevel(inSubLevel)
 	{
 	}
 	ARBConfigLevelPtr m_pLevel;
@@ -78,7 +78,7 @@ END_EVENT_TABLE()
 
 
 CDlgEventSelect::CDlgEventSelect(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		ARBDate const& inDate,
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,

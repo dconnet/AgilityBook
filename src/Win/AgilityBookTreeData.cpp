@@ -402,9 +402,9 @@ std::vector<long> const& CAgilityBookTreeData::GetRunColumns() const
 
 CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(
 		CAgilityBookTreeView* pTree,
-		ARBDogPtr pDog)
+		ARBDogPtr const& inDog)
 	: CAgilityBookTreeData(pTree)
-	, m_pDog(pDog)
+	, m_pDog(inDog)
 {
 }
 
@@ -647,9 +647,9 @@ void CAgilityBookTreeDataDog::Properties()
 
 CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 		CAgilityBookTreeView* pTree,
-		ARBDogTrialPtr pTrial)
+		ARBDogTrialPtr const& inTrial)
 	: CAgilityBookTreeData(pTree)
-	, m_pTrial(pTrial)
+	, m_pTrial(inTrial)
 	, m_idxIcon(-1)
 {
 	m_idxIcon = m_pTree->GetImageList().IndexTrial();
@@ -979,9 +979,9 @@ void CAgilityBookTreeDataTrial::Properties()
 
 CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(
 		CAgilityBookTreeView* pTree,
-		ARBDogRunPtr pRun)
+		ARBDogRunPtr const& inRun)
 	: CAgilityBookTreeData(pTree)
-	, m_pRun(pRun)
+	, m_pRun(inRun)
 {
 }
 

@@ -119,7 +119,7 @@ size_t ARBInfoItem::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 
 bool ARBInfoItem::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		std::wstring const& inItemName)
@@ -143,7 +143,7 @@ bool ARBInfoItem::Load(
 
 
 bool ARBInfoItem::Save(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		std::wstring const& inItemName) const
 {
 	assert(ioTree);
@@ -185,7 +185,7 @@ ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
 
 
 bool ARBInfoItemList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -197,7 +197,7 @@ bool ARBInfoItemList::Load(
 }
 
 
-bool ARBInfoItemList::Save(ElementNodePtr ioTree) const
+bool ARBInfoItemList::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -323,7 +323,7 @@ bool ARBInfoItemList::AddItem(
 }
 
 
-bool ARBInfoItemList::AddItem(ARBInfoItemPtr inItem)
+bool ARBInfoItemList::AddItem(ARBInfoItemPtr const& inItem)
 {
 	bool bAdded = false;
 	if (inItem && !FindItem(inItem->GetName()))
@@ -335,7 +335,7 @@ bool ARBInfoItemList::AddItem(ARBInfoItemPtr inItem)
 }
 
 
-bool ARBInfoItemList::DeleteItem(ARBInfoItemPtr inItem)
+bool ARBInfoItemList::DeleteItem(ARBInfoItemPtr const& inItem)
 {
 	if (inItem)
 	{

@@ -108,15 +108,15 @@ END_EVENT_TABLE()
 
 CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		ARBConfig& config,
-		ARBConfigOtherPointsPtr pOther,
+		ARBConfigOtherPointsPtr const& inOther,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Config(config)
-	, m_pOther(pOther)
-	, m_Name(StringUtil::stringWX(pOther->GetName()))
+	, m_pOther(inOther)
+	, m_Name(StringUtil::stringWX(inOther->GetName()))
 	, m_ctrlTally(nullptr)
-	, m_Default(pOther->GetDefault())
-	, m_Desc(StringUtil::stringWX(pOther->GetDescription()))
+	, m_Default(inOther->GetDefault())
+	, m_Desc(StringUtil::stringWX(inOther->GetDescription()))
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

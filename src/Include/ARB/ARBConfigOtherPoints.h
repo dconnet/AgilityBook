@@ -93,7 +93,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -103,7 +103,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigOtherPoints element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -165,7 +165,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -191,7 +191,7 @@ public:
 	 * @param inOther Name of OtherPoints to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddOtherPoints(ARBConfigOtherPointsPtr inOther);
+	bool AddOtherPoints(ARBConfigOtherPointsPtr const& inOther);
 
 	/**
 	 * Delete an object.

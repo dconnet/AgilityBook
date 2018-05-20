@@ -137,16 +137,16 @@ static short GetCurrentConfigVersion()
 
 static void UpdateFutureTrials(
 		ARBConfig const& config,
-		ARBDogPtr pDog,
-		ARBDogTitlePtr title)
+		ARBDogPtr const& inDog,
+		ARBDogTitlePtr const& inTitle)
 {
 	// Find all trials in the future in the same venue.
 	std::vector<ARBDogTrialPtr> trials;
-	for (ARBDogTrialList::iterator i = pDog->GetTrials().begin();
-		i != pDog->GetTrials().end();
+	for (ARBDogTrialList::iterator i = inDog->GetTrials().begin();
+		i != inDog->GetTrials().end();
 		++i)
 	{
-		if ((*i)->HasVenue(title->GetVenue())
+		if ((*i)->HasVenue(inTitle->GetVenue())
 		&& 0 < (*i)->GetRuns().size())
 		{
 			ARBDate d1 = (*((*i)->GetRuns().begin()))->GetDate();
@@ -400,11 +400,11 @@ ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 }
 
 
-void CAgilityBookDoc::SetCurrentDog(ARBDogPtr pDog, bool bSuppressHints)
+void CAgilityBookDoc::SetCurrentDog(ARBDogPtr const& inDog, bool bSuppressHints)
 {
-	if (m_pCurrentDog != pDog)
+	if (m_pCurrentDog != inDog)
 	{
-		m_pCurrentDog = pDog;
+		m_pCurrentDog = inDog;
 
 		if (!bSuppressHints)
 		{
@@ -443,23 +443,23 @@ ARBDogRunPtr CAgilityBookDoc::GetCurrentRun() const
 }
 
 
-bool CAgilityBookDoc::AddTitle(ARBDogPtr pDog)
+bool CAgilityBookDoc::AddTitle(ARBDogPtr const& inDog)
 {
-	if (pDog)
+	if (inDog)
 	{
-		CDlgTitle dlgTitle(Book().GetConfig(), pDog->GetTitles(), ARBDogTitlePtr());
+		CDlgTitle dlgTitle(Book().GetConfig(), inDog->GetTitles(), ARBDogTitlePtr());
 		if (wxID_OK == dlgTitle.ShowModal())
 		{
 			std::vector<CVenueFilter> venues;
 			CFilterOptions::Options().GetFilterVenue(venues);
 			ResetVisibility(venues, dlgTitle.GetNewTitle());
-			UpdateFutureTrials(Book().GetConfig(), pDog, dlgTitle.GetNewTitle());
+			UpdateFutureTrials(Book().GetConfig(), inDog, dlgTitle.GetNewTitle());
 			CUpdateHint hint(UPDATE_POINTS_VIEW);
 			UpdateAllViews(nullptr, &hint);
 			Modify(true);
 			if (CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
 			{
-				CDlgDog dlgDog(this, pDog, wxGetApp().GetTopWindow(), 1);
+				CDlgDog dlgDog(this, inDog, wxGetApp().GetTopWindow(), 1);
 				dlgDog.ShowModal();
 			}
 			return true;
@@ -475,11 +475,11 @@ bool CAgilityBookDoc::AddTitle(ARBDogPtr pDog)
  * be NULL.
  */
 
-void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
+void CAgilityBookDoc::AddTrial(ARBDogRunPtr const& inSelectedRun)
 {
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
+	CAgilityBookTreeData* pData = pTree->FindData(inSelectedRun);
 	if (pData)
 	{
 		pTree->EnsureVisible(pData->GetId());
@@ -493,11 +493,11 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 }
 
 
-void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
+void CAgilityBookDoc::AddRun(ARBDogRunPtr const& inSelectedRun)
 {
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
+	CAgilityBookTreeData* pData = pTree->FindData(inSelectedRun);
 	if (pData)
 	{
 		pTree->EnsureVisible(pData->GetId());
@@ -511,11 +511,11 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 }
 
 
-void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
+void CAgilityBookDoc::EditRun(ARBDogRunPtr const& inRun)
 {
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(pRun);
+	CAgilityBookTreeData* pData = pTree->FindData(inRun);
 	if (pData)
 	{
 		pTree->EnsureVisible(pData->GetId());
@@ -529,11 +529,11 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 }
 
 
-void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
+void CAgilityBookDoc::DeleteRun(ARBDogRunPtr const& inRun)
 {
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(pRun);
+	CAgilityBookTreeData* pData = pTree->FindData(inRun);
 	if (pData)
 	{
 		pTree->EnsureVisible(pData->GetId());
@@ -750,7 +750,7 @@ bool CAgilityBookDoc::ImportARBTrainingEntry(
 }
 
 
-bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
+bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* pParent)
 {
 	wxBusyCursor wait;
 	bool bOk = false;
@@ -1047,7 +1047,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 }
 
 
-bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
+bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr const& inTree, wxWindow* pParent)
 {
 	wxBusyCursor wait;
 	bool bOk = false;
@@ -1080,7 +1080,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 }
 
 
-bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
+bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr const& inTree, wxWindow* pParent)
 {
 	wxBusyCursor wait;
 	bool bOk = false;
@@ -1147,13 +1147,13 @@ bool CAgilityBookDoc::ResetVisibility()
 
 bool CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
-		ARBDogPtr pDog)
+		ARBDogPtr const& inDog)
 {
 	bool bChanged = false;
-	for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
+	for (ARBDogTrialList::iterator iterTrial = inDog->GetTrials().begin(); iterTrial != inDog->GetTrials().end(); ++iterTrial)
 		bChanged |= ResetVisibility(venues, *iterTrial);
 
-	for (ARBDogTitleList::iterator iterTitle = pDog->GetTitles().begin(); iterTitle != pDog->GetTitles().end(); ++iterTitle)
+	for (ARBDogTitleList::iterator iterTitle = inDog->GetTitles().begin(); iterTitle != inDog->GetTitles().end(); ++iterTitle)
 		bChanged |= ResetVisibility(venues, *iterTitle);
 	return bChanged;
 }
@@ -1161,24 +1161,24 @@ bool CAgilityBookDoc::ResetVisibility(
 
 bool CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
-		ARBDogTrialPtr pTrial)
+		ARBDogTrialPtr const& inTrial)
 {
 	bool bChanged = false;
-	bool bVisTrial = CFilterOptions::Options().IsTrialVisible(venues, pTrial);
-	pTrial->SetFiltered(!bVisTrial);
+	bool bVisTrial = CFilterOptions::Options().IsTrialVisible(venues, inTrial);
+	inTrial->SetFiltered(!bVisTrial);
 	int nVisible = 0;
-	for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
+	for (ARBDogRunList::iterator iterRun = inTrial->GetRuns().begin(); iterRun != inTrial->GetRuns().end(); ++iterRun)
 	{
-		bChanged |= ResetVisibility(venues, pTrial, *iterRun);
+		bChanged |= ResetVisibility(venues, inTrial, *iterRun);
 		if (!(*iterRun)->IsFiltered())
 			++nVisible;
 	}
-	if (0 == nVisible && 0 < pTrial->GetRuns().size())
+	if (0 == nVisible && 0 < inTrial->GetRuns().size())
 	{
-		if (!pTrial->IsAnyFiltered())
+		if (!inTrial->IsAnyFiltered())
 		{
 			bChanged = true;
-			pTrial->SetFiltered(true);
+			inTrial->SetFiltered(true);
 		}
 	}
 	return bChanged;
@@ -1187,22 +1187,22 @@ bool CAgilityBookDoc::ResetVisibility(
 
 bool CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun)
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun)
 {
 	bool bChanged = false;
-	unsigned short nVisRun = CFilterOptions::Options().IsRunVisible(venues, pTrial, pRun);
+	unsigned short nVisRun = CFilterOptions::Options().IsRunVisible(venues, inTrial, inRun);
 	bool bFilter = (nVisRun & (0x1 << ARBBase::eFilter)) ? false : true;
 	bool bIgnore = (nVisRun & (0x1 << ARBBase::eIgnoreQ)) ? false : true;
-	if (pRun->IsFiltered(ARBBase::eFilter) != bFilter)
+	if (inRun->IsFiltered(ARBBase::eFilter) != bFilter)
 	{
 		bChanged = true;
-		pRun->SetFiltered(ARBBase::eFilter, bFilter);
+		inRun->SetFiltered(ARBBase::eFilter, bFilter);
 	}
-	if (pRun->IsFiltered(ARBBase::eIgnoreQ) != bIgnore)
+	if (inRun->IsFiltered(ARBBase::eIgnoreQ) != bIgnore)
 	{
 		bChanged = true;
-		pRun->SetFiltered(ARBBase::eIgnoreQ, bIgnore);
+		inRun->SetFiltered(ARBBase::eIgnoreQ, bIgnore);
 	}
 	return bChanged;
 }
@@ -1210,14 +1210,14 @@ bool CAgilityBookDoc::ResetVisibility(
 
 bool CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
-		ARBDogTitlePtr pTitle)
+		ARBDogTitlePtr const& inTitle)
 {
 	bool bChanged = false;
-	bool bVisTitle = CFilterOptions::Options().IsTitleVisible(venues, pTitle);
-	if (pTitle->IsAnyFiltered() != !bVisTitle)
+	bool bVisTitle = CFilterOptions::Options().IsTitleVisible(venues, inTitle);
+	if (inTitle->IsAnyFiltered() != !bVisTitle)
 	{
 		bChanged = true;
-		pTitle->SetFiltered(!bVisTitle);
+		inTitle->SetFiltered(!bVisTitle);
 	}
 	return bChanged;
 }
@@ -1225,14 +1225,14 @@ bool CAgilityBookDoc::ResetVisibility(
 
 bool CAgilityBookDoc::ResetVisibility(
 		std::set<std::wstring>& names,
-		ARBTrainingPtr pTraining)
+		ARBTrainingPtr const& inTraining)
 {
 	bool bChanged = false;
-	bool bVisTraining = CFilterOptions::Options().IsTrainingLogVisible(names, pTraining);
-	if (pTraining->IsAnyFiltered() != !bVisTraining)
+	bool bVisTraining = CFilterOptions::Options().IsTrainingLogVisible(names, inTraining);
+	if (inTraining->IsAnyFiltered() != !bVisTraining)
 	{
 		bChanged = true;
-		pTraining->SetFiltered(!bVisTraining);
+		inTraining->SetFiltered(!bVisTraining);
 	}
 	return bChanged;
 }

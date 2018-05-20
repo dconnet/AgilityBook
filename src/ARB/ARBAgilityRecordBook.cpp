@@ -171,7 +171,7 @@ ARBAgilityRecordBook::~ARBAgilityRecordBook()
 // @todo: Relax strictness when reading data and handle errors better.
 //  - note, we actually have relaxed some things...
 bool ARBAgilityRecordBook::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -350,7 +350,7 @@ static std::wstring GetTimeStamp()
 }
 
 
-bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
+bool ARBAgilityRecordBook::Save(ElementNodePtr const& outTree,
 		std::wstring const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
@@ -745,7 +745,7 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(
 
 size_t ARBAgilityRecordBook::GetAllEventSubNames(
 		std::wstring const& inVenue,
-		ARBConfigEventPtr inEvent,
+		ARBConfigEventPtr const& inEvent,
 		std::set<std::wstring>& outNames) const
 {
 	outNames.clear();

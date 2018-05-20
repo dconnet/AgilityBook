@@ -38,7 +38,7 @@ class CDlgTrial : public wxDialog
 public:
 	CDlgTrial(
 			CAgilityBookDoc* pDoc,
-			ARBDogTrialPtr pTrial,
+			ARBDogTrialPtr const& inTrial,
 			wxWindow* pParent = nullptr);
 
 	bool RunsWereDeleted() const		{return m_bRunsDeleted;}

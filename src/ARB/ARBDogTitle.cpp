@@ -167,7 +167,7 @@ size_t ARBDogTitle::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 bool ARBDogTitle::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -272,7 +272,7 @@ bool ARBDogTitle::Load(
 }
 
 
-bool ARBDogTitle::Save(ElementNodePtr ioTree) const
+bool ARBDogTitle::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -310,7 +310,7 @@ bool ARBDogTitle::Save(ElementNodePtr ioTree) const
 void ARBDogTitle::SetName(
 		std::wstring const& inName,
 		short inInstance,
-		ARBConfigTitlePtr inConfigTitle)
+		ARBConfigTitlePtr const& inConfigTitle)
 {
 	m_Name = inName;
 	m_Instance = inInstance;
@@ -325,7 +325,7 @@ void ARBDogTitle::SetName(
 
 bool ARBDogTitleList::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -505,7 +505,7 @@ int ARBDogTitleList::RenameTitle(
 }
 
 
-bool ARBDogTitleList::AddTitle(ARBDogTitlePtr inTitle)
+bool ARBDogTitleList::AddTitle(ARBDogTitlePtr const& inTitle)
 {
 	bool bAdded = false;
 	if (inTitle)
@@ -519,8 +519,8 @@ bool ARBDogTitleList::AddTitle(ARBDogTitlePtr inTitle)
 
 
 bool ARBDogTitleList::DeleteTitle(
-		ARBConfigVenuePtr inVenue,
-		ARBDogTitlePtr inTitle)
+		ARBConfigVenuePtr const& inVenue,
+		ARBDogTitlePtr const& inTitle)
 {
 	bool bDeleted = false;
 	if (!inTitle)

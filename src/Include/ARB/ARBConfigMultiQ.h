@@ -76,7 +76,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigVenue const& inVenue,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -86,7 +86,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigMultiQ element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Does this multi-q configuration match the given set of runs?
@@ -271,7 +271,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigVenue const& inVenue,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -353,12 +353,12 @@ public:
 	 * @param inMultiQ MultiQ to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddMultiQ(ARBConfigMultiQPtr inMultiQ);
+	bool AddMultiQ(ARBConfigMultiQPtr const& inMultiQ);
 
 	/**
 	 * Delete an MultiQ.
 	 * @param inMultiQ Name of MultiQ to delete.
 	 * @return Whether object was deleted or not.
 	 */
-	bool DeleteMultiQ(ARBConfigMultiQPtr inMultiQ);
+	bool DeleteMultiQ(ARBConfigMultiQPtr const& inMultiQ);
 };

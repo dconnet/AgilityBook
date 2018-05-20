@@ -97,7 +97,7 @@ public:
 	virtual bool OnPrintPage(int pageNum);
 
 private:
-	std::wstring GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDogRunPtr run, int code);
+	std::wstring GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun, int code);
 	void PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect);
 
 	double m_OneInch;
@@ -373,7 +373,7 @@ static const struct
 static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
 
 
-static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr ref, int code)
+static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr const& inRef, int code)
 {
 	switch (code)
 	{
@@ -381,22 +381,22 @@ static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr ref, i
 	case CODE_REFPLACE2:
 	case CODE_REFPLACE3:
 	case CODE_REFPLACE4:
-		if (0 < ref->GetPlace())
-			text << ref->GetPlace();
+		if (0 < inRef->GetPlace())
+			text << inRef->GetPlace();
 		break;
 	case CODE_REFQ1:
 	case CODE_REFQ2:
 	case CODE_REFQ3:
 	case CODE_REFQ4:
-		if ((ARB_Q::eQ)ref->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)ref->GetQ() != ARB_Q::eQ_NA)
-			text << ref->GetQ().str();
+		if ((ARB_Q::eQ)inRef->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)inRef->GetQ() != ARB_Q::eQ_NA)
+			text << inRef->GetQ().str();
 		break;
 	case CODE_REFTIME1:
 	case CODE_REFTIME2:
 	case CODE_REFTIME3:
 	case CODE_REFTIME4:
 		{
-			double val = ref->GetTime();
+			double val = inRef->GetTime();
 			if (0.0 < val)
 				text << ARBDouble::ToString(val);
 		}
@@ -405,29 +405,29 @@ static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr ref, i
 	case CODE_REFSCORE2:
 	case CODE_REFSCORE3:
 	case CODE_REFSCORE4:
-		text << ref->GetScore();
+		text << inRef->GetScore();
 		break;
 	case CODE_REFHT1:
 	case CODE_REFHT2:
 	case CODE_REFHT3:
 	case CODE_REFHT4:
-		text << ref->GetHeight();
+		text << inRef->GetHeight();
 		break;
 	case CODE_REF1:
 	case CODE_REF2:
 	case CODE_REF3:
 	case CODE_REF4:
-		text << ref->GetName();
-		if (!ref->GetBreed().empty())
-			text << L"/" << ref->GetBreed();
-		if (!ref->GetNote().empty())
-			text << L"/" << ref->GetNote();
+		text << inRef->GetName();
+		if (!inRef->GetBreed().empty())
+			text << L"/" << inRef->GetBreed();
+		if (!inRef->GetNote().empty())
+			text << L"/" << inRef->GetNote();
 		break;
 	}
 }
 
 
-std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDogRunPtr run, int code)
+std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun, int code)
 {
 	std::wostringstream text;
 	switch (code)
@@ -435,19 +435,19 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 	default:
 		break;
 	case CODE_DOG:
-		if (dog)
-			text << dog->GetCallName();
+		if (inDog)
+			text << inDog->GetCallName();
 		break;
 	case CODE_DATE:
-		if (run)
-			text << run->GetDate().GetString();
+		if (inRun)
+			text << inRun->GetDate().GetString();
 		break;
 	case CODE_VENUE:
-		if (trial)
+		if (inTrial)
 		{
 			int i = 0;
-			for (ARBDogClubList::iterator iter = trial->GetClubs().begin();
-				iter != trial->GetClubs().end();
+			for (ARBDogClubList::iterator iter = inTrial->GetClubs().begin();
+				iter != inTrial->GetClubs().end();
 				++iter, ++i)
 			{
 				if (0 < i)
@@ -457,11 +457,11 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 			break;
 		}
 	case CODE_CLUB:
-		if (trial)
+		if (inTrial)
 		{
 			int i = 0;
-			for (ARBDogClubList::iterator iter = trial->GetClubs().begin();
-				iter != trial->GetClubs().end();
+			for (ARBDogClubList::iterator iter = inTrial->GetClubs().begin();
+				iter != inTrial->GetClubs().end();
 				++iter, ++i)
 			{
 				if (0 < i)
@@ -471,28 +471,28 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 			break;
 		}
 	case CODE_DIV:
-		if (run)
+		if (inRun)
 		{
-			std::wstring div = run->GetDivision();
-			std::wstring lvl = run->GetLevel();
-			std::wstring evt = run->GetEvent();
-			if (m_config && trial)
+			std::wstring div = inRun->GetDivision();
+			std::wstring lvl = inRun->GetLevel();
+			std::wstring evt = inRun->GetEvent();
+			if (m_config && inTrial)
 			{
-				std::wstring venue = trial->GetClubs().GetPrimaryClubVenue();
+				std::wstring venue = inTrial->GetClubs().GetPrimaryClubVenue();
 				ARBConfigVenuePtr pVenue;
 				if (m_config->GetVenues().FindVenue(venue, &pVenue))
 				{
 					ARBConfigEventPtr pEvent;
-					if (pVenue->GetEvents().FindEvent(run->GetEvent(), &pEvent))
+					if (pVenue->GetEvents().FindEvent(inRun->GetEvent(), &pEvent))
 					{
 						ARBConfigDivisionPtr pDiv;
-						if (pVenue->GetDivisions().FindDivision(run->GetDivision(), &pDiv))
+						if (pVenue->GetDivisions().FindDivision(inRun->GetDivision(), &pDiv))
 						{
 							ARBConfigLevelPtr pLevel;
-							if (pDiv->GetLevels().FindSubLevel(run->GetLevel(), &pLevel))
+							if (pDiv->GetLevels().FindSubLevel(inRun->GetLevel(), &pLevel))
 							{
 								ARBConfigSubLevelPtr pSubLevel;
-								if (pLevel->GetSubLevels().FindSubLevel(run->GetLevel(), &pSubLevel))
+								if (pLevel->GetSubLevels().FindSubLevel(inRun->GetLevel(), &pSubLevel))
 								{
 									lvl = pSubLevel->GetShortName();
 									if (lvl.empty())
@@ -505,7 +505,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 										lvl = pLevel->GetName();
 								}
 							}
-							else if (pDiv->GetLevels().FindLevel(run->GetLevel(), &pLevel))
+							else if (pDiv->GetLevels().FindLevel(inRun->GetLevel(), &pLevel))
 							{
 								lvl = pLevel->GetShortName();
 								if (lvl.empty())
@@ -518,7 +518,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 						}
 
 						if (pEvent->HasSubNames())
-							evt = run->GetSubName();
+							evt = inRun->GetSubName();
 						if (evt.empty())
 						{
 							evt = pEvent->GetShortName();
@@ -532,143 +532,143 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 		}
 		break;
 	case CODE_LOCATION:
-		if (trial)
-			text << trial->GetLocation();
+		if (inTrial)
+			text << inTrial->GetLocation();
 		break;
 	case CODE_HEIGHT:
-		if (run)
-			text << run->GetHeight();
+		if (inRun)
+			text << inRun->GetHeight();
 		break;
 	case CODE_JUDGE:
-		if (run)
-			text << run->GetJudge();
+		if (inRun)
+			text << inRun->GetJudge();
 		break;
 	case CODE_HANDLER:
-		if (run)
-			text << run->GetHandler();
+		if (inRun)
+			text << inRun->GetHandler();
 		break;
 	case CODE_CONDITIONS:
-		if (run)
-			text << run->GetConditions();
+		if (inRun)
+			text << inRun->GetConditions();
 		break;
 	case CODE_Q:
-		if (run)
+		if (inRun)
 		{
-			if ((ARB_Q::eQ)run->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)run->GetQ() != ARB_Q::eQ_NA)
-				text << run->GetQ().str();
+			if ((ARB_Q::eQ)inRun->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)inRun->GetQ() != ARB_Q::eQ_NA)
+				text << inRun->GetQ().str();
 		}
 		break;
 	case CODE_SCT:
-		if (run)
+		if (inRun)
 		{
-			double val = run->GetScoring().GetSCT();
+			double val = inRun->GetScoring().GetSCT();
 			if (0.0 < val)
 				text << ARBDouble::ToString(val);
 		}
 		break;
 	case CODE_YARDS:
-		if (run)
+		if (inRun)
 		{
-			double val = run->GetScoring().GetYards();
+			double val = inRun->GetScoring().GetYards();
 			if (0.0 < val)
 				text << ARBDouble::ToString(val, 0);
 		}
 		break;
 	case CODE_OPEN:
-		if (run)
+		if (inRun)
 		{
-			switch (run->GetScoring().GetType())
+			switch (inRun->GetScoring().GetType())
 			{
 			default:
 				break;
 			case ARBDogRunScoring::eTypeByOpenClose:
-				if (0 < run->GetScoring().GetNeedOpenPts())
-					text << run->GetScoring().GetNeedOpenPts();
+				if (0 < inRun->GetScoring().GetNeedOpenPts())
+					text << inRun->GetScoring().GetNeedOpenPts();
 				text << L" / ";
-				if (0 < run->GetScoring().GetNeedClosePts())
-					text << run->GetScoring().GetNeedClosePts();
+				if (0 < inRun->GetScoring().GetNeedClosePts())
+					text << inRun->GetScoring().GetNeedClosePts();
 				break;
 			case ARBDogRunScoring::eTypeByPoints:
-				if (0 < run->GetScoring().GetNeedOpenPts())
-					text << run->GetScoring().GetNeedOpenPts();
+				if (0 < inRun->GetScoring().GetNeedOpenPts())
+					text << inRun->GetScoring().GetNeedOpenPts();
 				break;
 			}
 		}
 		break;
 	case CODE_TIME:
-		if (run)
+		if (inRun)
 		{
-			double val = run->GetScoring().GetTime();
+			double val = inRun->GetScoring().GetTime();
 			if (0.0 < val)
 				text << ARBDouble::ToString(val);
 		}
 		break;
 	case CODE_FAULTS:
-		if (trial && run)
+		if (inTrial && inRun)
 		{
 			ARBConfigScoringPtr pScoring;
-			if (m_config && trial->GetClubs().GetPrimaryClub())
+			if (m_config && inTrial->GetClubs().GetPrimaryClub())
 				m_config->GetVenues().FindEvent(
-					trial->GetClubs().GetPrimaryClubVenue(),
-					run->GetEvent(),
-					run->GetDivision(),
-					run->GetLevel(),
-					run->GetDate(),
+					inTrial->GetClubs().GetPrimaryClubVenue(),
+					inRun->GetEvent(),
+					inRun->GetDivision(),
+					inRun->GetLevel(),
+					inRun->GetDate(),
 					nullptr,
 					&pScoring);
-			double timeFaults = run->GetScoring().GetTimeFaults(pScoring);
-			if (run->GetQ().AllowTally()
-			|| (0 < run->GetScoring().GetCourseFaults() || 0.0 < timeFaults))
+			double timeFaults = inRun->GetScoring().GetTimeFaults(pScoring);
+			if (inRun->GetQ().AllowTally()
+			|| (0 < inRun->GetScoring().GetCourseFaults() || 0.0 < timeFaults))
 			{
-				text << run->GetScoring().GetCourseFaults();
+				text << inRun->GetScoring().GetCourseFaults();
 				if (0.0 < timeFaults)
 					text << L"+" << ARBDouble::ToString(timeFaults, 0);
 			}
 		}
 		break;
 	case CODE_SCORE:
-		if (run)
+		if (inRun)
 		{
-			switch (run->GetScoring().GetType())
+			switch (inRun->GetScoring().GetType())
 			{
 			default:
 				break;
 			case ARBDogRunScoring::eTypeByOpenClose:
-				if (0 < run->GetScoring().GetOpenPts())
-					text << run->GetScoring().GetOpenPts();
+				if (0 < inRun->GetScoring().GetOpenPts())
+					text << inRun->GetScoring().GetOpenPts();
 				text << L" / ";
-				if (0 < run->GetScoring().GetClosePts())
-					text << run->GetScoring().GetClosePts();
+				if (0 < inRun->GetScoring().GetClosePts())
+					text << inRun->GetScoring().GetClosePts();
 				break;
 			case ARBDogRunScoring::eTypeByPoints:
-				if (0 < run->GetScoring().GetOpenPts())
-					text << run->GetScoring().GetOpenPts();
+				if (0 < inRun->GetScoring().GetOpenPts())
+					text << inRun->GetScoring().GetOpenPts();
 				break;
 			}
 		}
 		break;
 	case CODE_PLACE:
-		if (run && 0 < run->GetPlace())
-			text << run->GetPlace();
+		if (inRun && 0 < inRun->GetPlace())
+			text << inRun->GetPlace();
 		break;
 	case CODE_INCLASS:
-		if (run && 0 <= run->GetInClass())
-			text << run->GetInClass();
+		if (inRun && 0 <= inRun->GetInClass())
+			text << inRun->GetInClass();
 		break;
 	case CODE_QD:
-		if (run && 0 <= run->GetDogsQd())
-			text << run->GetDogsQd();
+		if (inRun && 0 <= inRun->GetDogsQd())
+			text << inRun->GetDogsQd();
 		break;
 	case CODE_COMMENTS:
-		if (run)
-			text << run->GetNote();
+		if (inRun)
+			text << inRun->GetNote();
 		break;
 	case CODE_OTHER:
-		if (run && 0 < run->GetOtherPoints().size())
+		if (inRun && 0 < inRun->GetOtherPoints().size())
 		{
 			int i = 0;
-			for (ARBDogRunOtherPointsList::iterator iter = run->GetOtherPoints().begin();
-				iter != run->GetOtherPoints().end();
+			for (ARBDogRunOtherPointsList::iterator iter = inRun->GetOtherPoints().begin();
+				iter != inRun->GetOtherPoints().end();
 				++iter, ++i)
 			{
 				if (0 < i)
@@ -683,8 +683,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 	case CODE_REFSCORE1:
 	case CODE_REFHT1:
 	case CODE_REF1:
-		if (run && 0 < run->GetReferenceRuns().size())
-			RefRunHelper(text, run->GetReferenceRuns()[0], code);
+		if (inRun && 0 < inRun->GetReferenceRuns().size())
+			RefRunHelper(text, inRun->GetReferenceRuns()[0], code);
 		break;
 	case CODE_REFPLACE2:
 	case CODE_REFQ2:
@@ -692,8 +692,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 	case CODE_REFSCORE2:
 	case CODE_REFHT2:
 	case CODE_REF2:
-		if (run && 1 < run->GetReferenceRuns().size())
-			RefRunHelper(text, run->GetReferenceRuns()[1], code);
+		if (inRun && 1 < inRun->GetReferenceRuns().size())
+			RefRunHelper(text, inRun->GetReferenceRuns()[1], code);
 		break;
 	case CODE_REFPLACE3:
 	case CODE_REFQ3:
@@ -701,8 +701,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 	case CODE_REFSCORE3:
 	case CODE_REFHT3:
 	case CODE_REF3:
-		if (run && 2 < run->GetReferenceRuns().size())
-			RefRunHelper(text, run->GetReferenceRuns()[2], code);
+		if (inRun && 2 < inRun->GetReferenceRuns().size())
+			RefRunHelper(text, inRun->GetReferenceRuns()[2], code);
 		break;
 	case CODE_REFPLACE4:
 	case CODE_REFQ4:
@@ -710,8 +710,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr dog, ARBDogTrialPtr trial, ARBDo
 	case CODE_REFSCORE4:
 	case CODE_REFHT4:
 	case CODE_REF4:
-		if (run && 3 < run->GetReferenceRuns().size())
-			RefRunHelper(text, run->GetReferenceRuns()[3], code);
+		if (inRun && 3 < inRun->GetReferenceRuns().size())
+			RefRunHelper(text, inRun->GetReferenceRuns()[3], code);
 		break;
 	}
 	return text.str();

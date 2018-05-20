@@ -29,7 +29,7 @@ public:
 	CDlgClub(
 			CAgilityBookDoc* pDoc,
 			ARBDogClubList& inClubs,
-			ARBDogClubPtr pClub,
+			ARBDogClubPtr const& inClub,
 			wxWindow* pParent = nullptr);
 
 	std::wstring Club() const;

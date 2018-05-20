@@ -23,11 +23,11 @@ class CDlgConfigLifetimeName : public wxDialog
 public:
 	// New
 	CDlgConfigLifetimeName(
-			ARBConfigVenuePtr inVenue,
+			ARBConfigVenuePtr const& inVenue,
 			wxWindow* pParent = nullptr);
 	// Existing
 	CDlgConfigLifetimeName(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inName,
 		wxWindow* pParent = nullptr);
 

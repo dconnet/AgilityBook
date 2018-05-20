@@ -114,7 +114,7 @@ void ARBConfigDivision::clear()
 
 bool ARBConfigDivision::Load(
 		ARBConfigVenue& ioVenue,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -150,7 +150,7 @@ bool ARBConfigDivision::Load(
 }
 
 
-bool ARBConfigDivision::Save(ElementNodePtr ioTree) const
+bool ARBConfigDivision::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -167,7 +167,7 @@ bool ARBConfigDivision::Save(ElementNodePtr ioTree) const
 
 bool ARBConfigDivision::Update(
 		int indent,
-		ARBConfigDivisionPtr inDivNew,
+		ARBConfigDivisionPtr const& inDivNew,
 		std::wstring& ioInfo)
 {
 	std::wstring info;
@@ -247,7 +247,7 @@ bool ARBConfigDivision::Update(
 
 bool ARBConfigDivisionList::Load(
 		ARBConfigVenue& ioVenue,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -343,7 +343,7 @@ bool ARBConfigDivisionList::AddDivision(
 }
 
 
-bool ARBConfigDivisionList::AddDivision(ARBConfigDivisionPtr inDiv)
+bool ARBConfigDivisionList::AddDivision(ARBConfigDivisionPtr const& inDiv)
 {
 	if (!inDiv
 	|| 0 == inDiv->GetName().length()

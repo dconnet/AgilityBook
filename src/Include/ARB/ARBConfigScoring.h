@@ -108,7 +108,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -118,7 +118,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigOtherPoints element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Determine if this method is valid on the given date.
@@ -377,7 +377,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 

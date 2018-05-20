@@ -24,7 +24,7 @@ class CDlgConfigOtherPoints : public wxDialog
 public:
 	CDlgConfigOtherPoints(
 			ARBConfig& config,
-			ARBConfigOtherPointsPtr pOther,
+			ARBConfigOtherPointsPtr const& inOther,
 			wxWindow* pParent = nullptr);
 
 	bool IsNameOkay(std::wstring const& name) const;

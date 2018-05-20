@@ -27,7 +27,7 @@ public:
 	CDlgRegNum(
 			ARBConfig const& config,
 			ARBDogRegNumList& regnums,
-			ARBDogRegNumPtr pRegNum,
+			ARBDogRegNumPtr const& inRegNum,
 			wxWindow* pParent = nullptr);
 
 private:

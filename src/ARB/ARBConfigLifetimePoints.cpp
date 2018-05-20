@@ -165,7 +165,7 @@ std::wstring ARBConfigLifetimePoints::GetGenericName() const
 
 
 bool ARBConfigLifetimePoints::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -205,7 +205,7 @@ bool ARBConfigLifetimePoints::Load(
 }
 
 
-bool ARBConfigLifetimePoints::Save(ElementNodePtr ioTree) const
+bool ARBConfigLifetimePoints::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -223,7 +223,7 @@ bool ARBConfigLifetimePoints::Save(ElementNodePtr ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigLifetimePointsList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

@@ -102,7 +102,7 @@
 #endif
 
 #elif __USE_EXPAT
-#define XML_STATIC
+//#define XML_STATIC -> defined in .props file
 #include "expat.h"
 #pragma comment(lib, "libexpatMT.lib")
 #pragma message ( "Compiling Element with expat " STRING(XML_MAJOR_VERSION) "." STRING(XML_MINOR_VERSION) "." STRING(XML_MICRO_VERSION))
@@ -315,27 +315,27 @@ public:
 };
 
 
-static void ReadDoc(xmlNode* inNode, ElementNodePtr tree)
+static void ReadDoc(xmlNode* inNode, ElementNode& tree)
 {
 	if (!inNode)
 		return;
 	for (xmlAttr* attrib = inNode->properties; attrib; attrib = attrib->next)
 	{
-		tree->AddAttrib(StringDOM(attrib->name), StringDOM(attrib->children->content));
+		tree.AddAttrib(StringDOM(attrib->name), StringDOM(attrib->children->content));
 	}
 	for (xmlNode* child = inNode->children; child; child = child->next)
 	{
 		if (child->type == XML_ELEMENT_NODE)
 		{
-			if (tree->HasTextNodes())
-				tree->RemoveAllElements();
-			ElementNodePtr subtree = tree->AddElementNode(StringDOM(child->name));
-			ReadDoc(child, subtree);
+			if (tree.HasTextNodes())
+				tree.RemoveAllElements();
+			ElementNodePtr subtree = tree.AddElementNode(StringDOM(child->name));
+			ReadDoc(child, *subtree);
 		}
 		else if (child->type == XML_TEXT_NODE)
 		{
-			if (tree->HasTextNodes() || 0 == tree->GetElementCount())
-				tree->SetValue(StringDOM(child->content));
+			if (tree.HasTextNodes() || 0 == tree.GetElementCount())
+				tree.SetValue(StringDOM(child->content));
 		}
 	}
 }
@@ -384,7 +384,7 @@ static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffe
 
 #elif __USE_POCO
 
-static void ReadDoc(Poco::XML::Document* pDoc, Poco::XML::Node* inNode, ElementNodePtr tree)
+static void ReadDoc(Poco::XML::Document* pDoc, Poco::XML::Node* inNode, ElementNode& tree)
 {
 	if (!inNode)
 		return;
@@ -395,7 +395,7 @@ static void ReadDoc(Poco::XML::Document* pDoc, Poco::XML::Node* inNode, ElementN
 		for (unsigned long i = 0; i < attribs->length(); ++i)
 		{
 			Poco::XML::Node* pItem = attribs->item(i);
-			tree->AddAttrib(StringUtil::stringW(pItem->nodeName()), StringUtil::stringW(pItem->nodeValue()));
+			tree.AddAttrib(StringUtil::stringW(pItem->nodeName()), StringUtil::stringW(pItem->nodeValue()));
 		}
 	}
 
@@ -405,18 +405,18 @@ static void ReadDoc(Poco::XML::Document* pDoc, Poco::XML::Node* inNode, ElementN
 		{
 		case Poco::XML::Node::ELEMENT_NODE:
 			{
-				if (tree->HasTextNodes())
-					tree->RemoveAllElements();
-				ElementNodePtr subtree = tree->AddElementNode(StringUtil::stringW(pChild->nodeName()));
-				ReadDoc(pDoc, pChild, subtree);
+				if (tree.HasTextNodes())
+					tree.RemoveAllElements();
+				ElementNodePtr subtree = tree.AddElementNode(StringUtil::stringW(pChild->nodeName()));
+				ReadDoc(pDoc, pChild, *subtree);
 			}
 			break;
 		case Poco::XML::Node::TEXT_NODE:
-			if (tree->HasTextNodes() || 0 == tree->GetElementCount())
+			if (tree.HasTextNodes() || 0 == tree.GetElementCount())
 			{
 				std::wstring content = StringUtil::stringW(pChild->nodeValue());
 				if (!content.empty())
-					tree->SetValue(content);
+					tree.SetValue(content);
 			}
 			break;
 		}
@@ -460,24 +460,24 @@ static void CreateDoc(Poco::XML::Document* pDoc, Poco::XML::Element* node, Eleme
 
 #elif __USE_WX
 
-static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
+static void ReadDoc(wxXmlNode* node, ElementNode& tree)
 {
 	wxXmlAttribute* attribs = node->GetAttributes();
 	while (attribs)
 	{
-		tree->AddAttrib(StringUtil::stringW(attribs->GetName()), StringUtil::stringW(attribs->GetValue()));
+		tree.AddAttrib(StringUtil::stringW(attribs->GetName()), StringUtil::stringW(attribs->GetValue()));
 		attribs = attribs->GetNext();
 	}
 	std::wstring content = StringUtil::stringW(node->GetNodeContent());
 	if (!content.empty())
-		tree->SetValue(content);
+		tree.SetValue(content);
 	wxXmlNode* child = node->GetChildren();
 	while (child)
 	{
 		if (wxXML_ELEMENT_NODE == child->GetType())
 		{
-			ElementNodePtr subtree = tree->AddElementNode(StringUtil::stringW(child->GetName()));
-			ReadDoc(child, subtree);
+			ElementNodePtr subtree = tree.AddElementNode(StringUtil::stringW(child->GetName()));
+			ReadDoc(child, *subtree);
 		}
 		child = child->GetNext();
 	}
@@ -559,7 +559,6 @@ static void LogMessage(std::wostringstream& msg)
 ElementNodePtr ElementNode::New()
 {
 	ElementNodePtr pNode(new ElementNode());
-	pNode->m_Me = pNode;
 	return pNode;
 }
 
@@ -567,7 +566,6 @@ ElementNodePtr ElementNode::New()
 ElementNodePtr ElementNode::New(std::wstring const& inText)
 {
 	ElementNodePtr pNode(new ElementNode(inText));
-	pNode->m_Me = pNode;
 	return pNode;
 }
 
@@ -1212,7 +1210,7 @@ int ElementNode::FindElement(
 
 
 bool ElementNode::FindElementDeep(
-		ElementNodePtr& outParentNode,
+		ElementNode const*& outParentNode,
 		int& outElementIndex,
 		std::wstring const& inName,
 		std::wstring const* inValue) const
@@ -1226,7 +1224,7 @@ bool ElementNode::FindElementDeep(
 		if (element->GetName() == inName &&
 		(!inValue || (inValue && element->GetValue() == *inValue)))
 		{
-			outParentNode = m_Me.lock();
+			outParentNode = this;
 			outElementIndex = i;
 			return true;
 		}
@@ -1240,16 +1238,16 @@ bool ElementNode::FindElementDeep(
 #if __USE_LIBXML2
 
 static bool LoadXMLNode(
-		ElementNodePtr node,
+		ElementNode& node,
 		xmlDocPtr inSource,
 		std::wostringstream& ioErrMsg)
 {
-	node->clear();
+	node.clear();
 
 	xmlNode* root = xmlDocGetRootElement(inSource);
 	if (!root)
 		return false;
-	node->SetName(StringDOM(root->name));
+	node.SetName(StringDOM(root->name));
 	ReadDoc(root, node);
 	return true;
 }
@@ -1258,8 +1256,8 @@ static bool LoadXMLNode(
 
 struct CExpatData
 {
-	ElementNodePtr m_root;
-	std::list<ElementNodePtr> m_elements;
+	ElementNode* m_root;
+	std::list<ElementNode*> m_elements;
 	std::string m_data;
 };
 
@@ -1268,14 +1266,14 @@ static void XMLCALL ExpatStart(void *data, const char *el, const char **attr)
 	CExpatData* pData = reinterpret_cast<CExpatData*>(data);
 	pData->m_data.clear();
 
-	ElementNodePtr node;
+	ElementNode* node;
 	if (pData->m_elements.size() == 0)
 	{
 		node = pData->m_root;
 		node->SetName(StringUtil::stringW(std::string(el)));
 	}
 	else
-		node = pData->m_elements.front()->AddElementNode(StringUtil::stringW(std::string(el)));
+		node = pData->m_elements.front()->AddElementNode(StringUtil::stringW(std::string(el))).get();
 	pData->m_elements.push_front(node);
 
 	for (int i = 0; attr[i]; i += 2) {
@@ -1304,11 +1302,11 @@ static void XMLCALL ExpatHandleData(void* data, const char* content, int length)
 #elif __USE_POCO
 
 static bool LoadXMLNode(
-		ElementNodePtr node,
+		ElementNode& node,
 		Poco::XML::Document* pDoc,
 		std::wostringstream& ioErrMsg)
 {
-	node->clear();
+	node.clear();
 
 	if (!pDoc)
 		return false;
@@ -1317,7 +1315,7 @@ static bool LoadXMLNode(
 	if (!pNode)
 		return false;
 
-	node->SetName(StringUtil::stringW(pNode->nodeName()));
+	node.SetName(StringUtil::stringW(pNode->nodeName()));
 	ReadDoc(pDoc, pNode, node);
 	return true;
 }
@@ -1325,15 +1323,15 @@ static bool LoadXMLNode(
 #elif __USE_WX
 
 static bool LoadXMLNode(
-		ElementNodePtr node,
+		ElementNode& node,
 		wxXmlDocument& inSource,
 		std::wostringstream& ioErrMsg)
 {
-	node->clear();
+	node.clear();
 
 	if (!inSource.GetRoot())
 		return false;
-	node->SetName(StringUtil::stringW(inSource.GetRoot()->GetName()));
+	node.SetName(StringUtil::stringW(inSource.GetRoot()->GetName()));
 	ReadDoc(inSource.GetRoot(), node);
 	return true;
 }
@@ -1352,7 +1350,7 @@ bool ElementNode::LoadXML(
 
 #if __USE_LIBXML2
 	char buffer[1024];
-	inStream.read(buffer, ARRAYSIZE(buffer));
+	inStream.read(buffer, _countof(buffer));
 	int res = static_cast<int>(inStream.gcount());
 	if (0 >= res)
 		return false;
@@ -1363,7 +1361,7 @@ bool ElementNode::LoadXML(
 
 	for (;;)
 	{
-		inStream.read(buffer, ARRAYSIZE(buffer));
+		inStream.read(buffer, _countof(buffer));
 		res = static_cast<int>(inStream.gcount());
 		if (0 >= res)
 			break;
@@ -1380,7 +1378,7 @@ bool ElementNode::LoadXML(
 	bool rc = false;
 	if (source)
 	{
-		rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+		rc = LoadXMLNode(*this, source, ioErrMsg);
 		xmlFreeDoc(source);
 	}
 	return rc;
@@ -1392,14 +1390,14 @@ bool ElementNode::LoadXML(
 		return false;
 
 	CExpatData data;
-	data.m_root = m_Me.lock();
+	data.m_root = this;
 	XML_SetUserData(source, &data);
 	XML_SetElementHandler(source, ExpatStart, ExpatEnd);
 	XML_SetCharacterDataHandler(source, ExpatHandleData);
 
 	bool bOk = true;
 	while (bOk) {
-		inStream.read(buffer, ARRAYSIZE(buffer));
+		inStream.read(buffer, _countof(buffer));
 		int len = static_cast<int>(inStream.gcount());
 		if (0 >= len)
 			break;
@@ -1421,7 +1419,7 @@ bool ElementNode::LoadXML(
 		Poco::XML::DOMParser parser;
 		Poco::XML::AutoPtr<Poco::XML::Document> pDoc = parser.parse(&source);
 		pDoc->normalize();
-		return LoadXMLNode(m_Me.lock(), pDoc, ioErrMsg);
+		return LoadXMLNode(*this, pDoc, ioErrMsg);
 	}
 	catch (Poco::Exception& e)
 	{
@@ -1446,7 +1444,7 @@ bool ElementNode::LoadXML(
 		chain.SetLog(nullptr);
 		return false;
 	}
-	return LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+	return LoadXMLNode(*this, source, ioErrMsg);
 
 #else
 #error No idea what XML parser you want!
@@ -1463,7 +1461,7 @@ bool ElementNode::LoadXML(
 		return false;
 #if __USE_LIBXML2
 	xmlDocPtr source = xmlReadMemory(inData, static_cast<int>(nData), nullptr, nullptr, 0);
-	bool rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+	bool rc = LoadXMLNode(*this, source, ioErrMsg);
 	if (source)
 		xmlFreeDoc(source);
 	return rc;
@@ -1483,7 +1481,7 @@ bool ElementNode::LoadXML(
 #if __USE_LIBXML2
 	std::string filename = StringUtil::stringA(inFileName);
 	xmlDocPtr source = xmlReadFile(filename.c_str(), nullptr, 0);
-	bool rc = LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+	bool rc = LoadXMLNode(*this, source, ioErrMsg);
 	if (source)
 		xmlFreeDoc(source);
 	return rc;
@@ -1656,7 +1654,6 @@ bool ElementNode::SaveXML(
 ElementTextPtr ElementText::New()
 {
 	ElementTextPtr pText(new ElementText());
-	pText->m_Me = pText;
 	return pText;
 }
 
@@ -1664,7 +1661,6 @@ ElementTextPtr ElementText::New()
 ElementTextPtr ElementText::New(std::wstring const& inText)
 {
 	ElementTextPtr pText(new ElementText(inText));
-	pText->m_Me = pText;
 	return pText;
 }
 

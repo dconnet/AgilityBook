@@ -85,7 +85,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigVenue& ioVenue,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -95,7 +95,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigDivision element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Update this configuration from inDivNew.
@@ -106,7 +106,7 @@ public:
 	 */
 	bool Update(
 			int indent,
-			ARBConfigDivisionPtr inDivNew,
+			ARBConfigDivisionPtr const& inDivNew,
 			std::wstring& ioInfo);
 
 	/*
@@ -162,7 +162,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigVenue& ioVenue,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -207,7 +207,7 @@ public:
 	 * @param inDiv Division to add.
 	 * @return Pointer to object, NULL if name already exists or is empty.
 	 */
-	bool AddDivision(ARBConfigDivisionPtr inDiv);
+	bool AddDivision(ARBConfigDivisionPtr const& inDiv);
 
 	/**
 	 * Delete the division.

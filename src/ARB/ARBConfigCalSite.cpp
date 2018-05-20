@@ -105,7 +105,7 @@ bool ARBConfigCalSite::operator==(ARBConfigCalSite const& rhs) const
 
 
 bool ARBConfigCalSite::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -167,7 +167,7 @@ bool ARBConfigCalSite::Load(
 }
 
 
-bool ARBConfigCalSite::Save(ElementNodePtr ioTree) const
+bool ARBConfigCalSite::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -319,7 +319,7 @@ bool ARBConfigCalSite::RemoveAllVenueCodes()
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigCalSiteList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -400,7 +400,7 @@ bool ARBConfigCalSiteList::AddSite(
 }
 
 
-bool ARBConfigCalSiteList::AddSite(ARBConfigCalSitePtr inSite)
+bool ARBConfigCalSiteList::AddSite(ARBConfigCalSitePtr const& inSite)
 {
 	if (!inSite)
 		return false;

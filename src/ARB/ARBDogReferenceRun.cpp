@@ -153,7 +153,7 @@ size_t ARBDogReferenceRun::GetSearchStrings(std::set<std::wstring>& ioStrings) c
 
 bool ARBDogReferenceRun::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -205,7 +205,7 @@ bool ARBDogReferenceRun::Load(
 }
 
 
-bool ARBDogReferenceRun::Save(ElementNodePtr ioTree) const
+bool ARBDogReferenceRun::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -244,7 +244,7 @@ bool ARBDogReferenceRun::Save(ElementNodePtr ioTree) const
 
 bool ARBDogReferenceRunList::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -256,7 +256,7 @@ bool ARBDogReferenceRunList::Load(
 }
 
 
-bool ARBDogReferenceRunList::AddReferenceRun(ARBDogReferenceRunPtr inRef)
+bool ARBDogReferenceRunList::AddReferenceRun(ARBDogReferenceRunPtr const& inRef)
 {
 	bool bAdded = false;
 	if (inRef)
@@ -268,7 +268,7 @@ bool ARBDogReferenceRunList::AddReferenceRun(ARBDogReferenceRunPtr inRef)
 }
 
 
-bool ARBDogReferenceRunList::DeleteReferenceRun(ARBDogReferenceRunPtr inRef)
+bool ARBDogReferenceRunList::DeleteReferenceRun(ARBDogReferenceRunPtr const& inRef)
 {
 	if (inRef)
 	{

@@ -88,7 +88,7 @@ bool ARBConfigFault::operator==(ARBConfigFault const& rhs) const
 
 
 bool ARBConfigFault::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -110,7 +110,7 @@ bool ARBConfigFault::Load(
 }
 
 
-bool ARBConfigFault::Save(ElementNodePtr ioTree) const
+bool ARBConfigFault::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -124,7 +124,7 @@ bool ARBConfigFault::Save(ElementNodePtr ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigFaultList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

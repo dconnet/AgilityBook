@@ -32,8 +32,8 @@ class CDlgConfigEventMethod : public wxDialog
 {
 public:
 	CDlgConfigEventMethod(
-			ARBConfigVenuePtr pVenue,
-			ARBConfigScoringPtr pScoring,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigScoringPtr const& inScoring,
 			wxWindow* pParent = nullptr);
 
 private:

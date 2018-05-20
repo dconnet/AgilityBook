@@ -116,7 +116,7 @@ void ARBConfig::clear()
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadFault(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -135,7 +135,7 @@ bool ARBConfig::LoadFault(
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadOtherPoints(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -150,7 +150,7 @@ bool ARBConfig::LoadOtherPoints(
 
 
 bool ARBConfig::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -202,7 +202,7 @@ bool ARBConfig::Load(
 }
 
 
-bool ARBConfig::Save(ElementNodePtr ioTree) const
+bool ARBConfig::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -277,7 +277,7 @@ std::wstring ARBConfig::GetTitleNiceName(
 
 
 std::wstring ARBConfig::GetTitleCompleteName(
-		ARBDogTitlePtr inTitle,
+		ARBDogTitlePtr const& inTitle,
 		bool bAbbrevFirst) const
 {
 	if (!inTitle)

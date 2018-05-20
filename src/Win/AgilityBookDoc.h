@@ -67,9 +67,9 @@ struct CVenueFilter;
 class CUpdateHint : public wxObject
 {
 public:
-	CUpdateHint(unsigned int hint, ARBBasePtr pObj = ARBBasePtr())
+	CUpdateHint(unsigned int hint, ARBBasePtr const& inObj = ARBBasePtr())
 		: m_Hint(hint)
-		, m_pObj(pObj)
+		, m_pObj(inObj)
 	{
 	}
 	bool IsSet(unsigned int bit) const
@@ -110,17 +110,17 @@ public:
 
 	// Data
 	ARBDogPtr GetCurrentDog() const;
-	void SetCurrentDog(ARBDogPtr pDog, bool bSuppressHints = false);
+	void SetCurrentDog(ARBDogPtr const& inDog, bool bSuppressHints = false);
 	ARBDogTrialPtr GetCurrentTrial() const;
 	ARBDogRunPtr GetCurrentRun() const;
 	ARBAgilityRecordBook& Book()			{return m_Records;}
 
-	bool AddTitle(ARBDogPtr pDog);
+	bool AddTitle(ARBDogPtr const& inDog);
 	// These are called from the Runs view so the tree view can do the add.
-	void AddTrial(ARBDogRunPtr pSelectedRun);
-	void AddRun(ARBDogRunPtr pSelectedRun);
-	void EditRun(ARBDogRunPtr pRun);
-	void DeleteRun(ARBDogRunPtr pRun);
+	void AddTrial(ARBDogRunPtr const& inSelectedRun);
+	void AddRun(ARBDogRunPtr const& inSelectedRun);
+	void EditRun(ARBDogRunPtr const& inRun);
+	void DeleteRun(ARBDogRunPtr const& inRun);
 
 	bool CreateTrialFromCalendar(
 			ARBCalendar const& cal,
@@ -143,9 +143,9 @@ public:
 			long& nDuplicate,
 			long& nSkipped);
 
-	bool ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent);
-	bool ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent);
-	bool ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent);
+	bool ImportARBRunData(ElementNodePtr const& inTree, wxWindow* pParent);
+	bool ImportARBCalData(ElementNodePtr const& inTree, wxWindow* pParent);
+	bool ImportARBLogData(ElementNodePtr const& inTree, wxWindow* pParent);
 
 	/**
 	 * Reset the visibility of all objects.
@@ -157,20 +157,20 @@ public:
 	bool ResetVisibility();
 	bool ResetVisibility(
 			std::vector<CVenueFilter>& venues,
-			ARBDogPtr pDog);
+			ARBDogPtr const& inDog);
 	bool ResetVisibility(
 			std::vector<CVenueFilter>& venues,
-			ARBDogTrialPtr pTrial);
+			ARBDogTrialPtr const& inTrial);
 	bool ResetVisibility(
 			std::vector<CVenueFilter>& venues,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun);
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun);
 	bool ResetVisibility(
 			std::vector<CVenueFilter>& venues,
-			ARBDogTitlePtr pTitle);
+			ARBDogTitlePtr const& inTitle);
 	bool ResetVisibility(
 			std::set<std::wstring>& names,
-			ARBTrainingPtr pTraining);
+			ARBTrainingPtr const& inTraining);
 
 	bool ShowPointsAsHtml(bool bHtml);
 	void BackupFile(wxString const& lpszPathName);

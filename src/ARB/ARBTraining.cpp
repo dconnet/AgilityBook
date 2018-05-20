@@ -137,7 +137,7 @@ size_t ARBTraining::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 
 bool ARBTraining::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -170,7 +170,7 @@ bool ARBTraining::Load(
 }
 
 
-bool ARBTraining::Save(ElementNodePtr ioTree) const
+bool ARBTraining::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -189,7 +189,7 @@ bool ARBTraining::Save(ElementNodePtr ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBTrainingList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -257,7 +257,7 @@ size_t ARBTrainingList::GetAllSubNames(std::set<std::wstring>& outSubNames) cons
 }
 
 
-bool ARBTrainingList::FindTraining(ARBTrainingPtr inTraining) const
+bool ARBTrainingList::FindTraining(ARBTrainingPtr const& inTraining) const
 {
 	if (inTraining)
 	{
@@ -271,7 +271,7 @@ bool ARBTrainingList::FindTraining(ARBTrainingPtr inTraining) const
 }
 
 
-bool ARBTrainingList::AddTraining(ARBTrainingPtr inTraining)
+bool ARBTrainingList::AddTraining(ARBTrainingPtr const& inTraining)
 {
 	bool bAdded = false;
 	if (inTraining)
@@ -283,7 +283,7 @@ bool ARBTrainingList::AddTraining(ARBTrainingPtr inTraining)
 }
 
 
-bool ARBTrainingList::DeleteTraining(ARBTrainingPtr inTraining)
+bool ARBTrainingList::DeleteTraining(ARBTrainingPtr const& inTraining)
 {
 	if (inTraining)
 	{

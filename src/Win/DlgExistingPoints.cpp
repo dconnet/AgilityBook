@@ -49,8 +49,8 @@
 class CDlgPointsVenueData : public wxClientData
 {
 public:
-	CDlgPointsVenueData(ARBConfigVenuePtr venue)
-		: m_Venue(venue)
+	CDlgPointsVenueData(ARBConfigVenuePtr const& inVenue)
+		: m_Venue(inVenue)
 	{
 	}
 	ARBConfigVenuePtr m_Venue;
@@ -59,8 +59,8 @@ public:
 class CDlgPointsDivisionData : public wxClientData
 {
 public:
-	CDlgPointsDivisionData(ARBConfigDivisionPtr div)
-		: m_Div(div)
+	CDlgPointsDivisionData(ARBConfigDivisionPtr const& inDiv)
+		: m_Div(inDiv)
 	{
 	}
 	ARBConfigDivisionPtr m_Div;
@@ -69,16 +69,16 @@ public:
 class CDlgPointsLevelData : public wxClientData
 {
 public:
-	CDlgPointsLevelData(ARBConfigLevelPtr level)
-		: m_Level(level)
+	CDlgPointsLevelData(ARBConfigLevelPtr const& inLevel)
+		: m_Level(inLevel)
 		, m_SubLevel()
 	{
 	}
 	CDlgPointsLevelData(
-			ARBConfigLevelPtr level,
-			ARBConfigSubLevelPtr subLevel)
-		: m_Level(level)
-		, m_SubLevel(subLevel)
+			ARBConfigLevelPtr const& inLevel,
+			ARBConfigSubLevelPtr const& inSubLevel)
+		: m_Level(inLevel)
+		, m_SubLevel(inSubLevel)
 	{
 	}
 	ARBConfigLevelPtr m_Level;
@@ -88,8 +88,8 @@ public:
 class CDlgPointsEventData : public wxClientData
 {
 public:
-	CDlgPointsEventData(ARBConfigEventPtr evt)
-		: m_Event(evt)
+	CDlgPointsEventData(ARBConfigEventPtr const& inEvt)
+		: m_Event(inEvt)
 	{
 	}
 	ARBConfigEventPtr m_Event;
@@ -98,14 +98,14 @@ public:
 class CDlgPointsTypeNameData : public wxClientData
 {
 public:
-	CDlgPointsTypeNameData(ARBConfigOtherPointsPtr other)
-		: m_Other(other)
+	CDlgPointsTypeNameData(ARBConfigOtherPointsPtr const& inOther)
+		: m_Other(inOther)
 		, m_Lifetime(nullptr)
 	{
 	}
-	CDlgPointsTypeNameData(ARBConfigLifetimeNamePtr other)
+	CDlgPointsTypeNameData(ARBConfigLifetimeNamePtr const& inOther)
 		: m_Other(nullptr)
-		, m_Lifetime(other)
+		, m_Lifetime(inOther)
 	{
 	}
 	ARBConfigOtherPointsPtr m_Other;
@@ -115,8 +115,8 @@ public:
 class CDlgPointsMultiQData : public wxClientData
 {
 public:
-	CDlgPointsMultiQData(ARBConfigMultiQPtr multiQ)
-		: m_MultiQ(multiQ)
+	CDlgPointsMultiQData(ARBConfigMultiQPtr const& inMultiQ)
+		: m_MultiQ(inMultiQ)
 	{
 	}
 	ARBConfigMultiQPtr m_MultiQ;
@@ -143,16 +143,16 @@ END_EVENT_TABLE()
 // ARBDogExistingPoints::eMQ:
 //  Venue  MultiQ
 
-// If pExistingPoints is NULL, we're creating a new entry. Otherwise, we're editing an existing.
+// If inExistingPoints is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgExistingPoints::CDlgExistingPoints(
 		CAgilityBookDoc* pDoc,
 		ARBDogExistingPointsList& points,
-		ARBDogExistingPointsPtr pExistingPoints,
+		ARBDogExistingPointsPtr const& inExistingPoints,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_PointsList(points)
-	, m_pExistingPoints(pExistingPoints)
+	, m_pExistingPoints(inExistingPoints)
 	, m_Date()
 	, m_Points(0.0)
 	, m_Comments()

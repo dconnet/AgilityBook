@@ -176,7 +176,7 @@ bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
 
 bool ARBDogExistingPoints::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -423,7 +423,7 @@ bool ARBDogExistingPoints::Load(
 }
 
 
-bool ARBDogExistingPoints::Save(ElementNodePtr ioTree) const
+bool ARBDogExistingPoints::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -488,7 +488,7 @@ bool ARBDogExistingPoints::Save(ElementNodePtr ioTree) const
 
 bool ARBDogExistingPointsList::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -555,10 +555,10 @@ bool ARBDogExistingPointsList::HasPoints(std::wstring const& inVenue) const
 
 
 bool ARBDogExistingPointsList::HasPoints(
-		ARBConfigVenuePtr inVenue,
-		ARBConfigDivisionPtr inDiv,
-		ARBConfigLevelPtr inLevel,
-		ARBConfigEventPtr inEvent,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigDivisionPtr const& inDiv,
+		ARBConfigLevelPtr const& inLevel,
+		ARBConfigEventPtr const& inEvent,
 		ARBDate inDateFrom,
 		ARBDate inDateTo,
 		bool inHasLifetime) const
@@ -608,11 +608,11 @@ bool ARBDogExistingPointsList::HasPoints(
 
 double ARBDogExistingPointsList::ExistingPoints(
 		ARBDogExistingPoints::PointType inType,
-		ARBConfigVenuePtr inVenue,
-		ARBConfigMultiQPtr inMultiQ,
-		ARBConfigDivisionPtr inDiv,
-		ARBConfigLevelPtr inLevel,
-		ARBConfigEventPtr inEvent,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigMultiQPtr const& inMultiQ,
+		ARBConfigDivisionPtr const& inDiv,
+		ARBConfigLevelPtr const& inLevel,
+		ARBConfigEventPtr const& inEvent,
 		ARBDate inDateFrom,
 		ARBDate inDateTo) const
 {
@@ -646,11 +646,11 @@ double ARBDogExistingPointsList::ExistingPoints(
 
 
 double ARBDogExistingPointsList::ExistingLifetimePoints(
-		ARBConfigLifetimeNamePtr inName,
-		ARBConfigVenuePtr inVenue,
-		ARBConfigDivisionPtr inDiv,
-		ARBConfigLevelPtr inLevel,
-		ARBConfigEventPtr inEvent,
+		ARBConfigLifetimeNamePtr const& inName,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigDivisionPtr const& inDiv,
+		ARBConfigLevelPtr const& inLevel,
+		ARBConfigEventPtr const& inEvent,
 		ARBDate inDateFrom,
 		ARBDate inDateTo) const
 {
@@ -729,7 +729,7 @@ int ARBDogExistingPointsList::DeleteVenue(std::wstring const& inVenue)
 
 
 int ARBDogExistingPointsList::NumExistingPointsInDivision(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inDiv) const
 {
 	int count = 0;
@@ -1057,7 +1057,7 @@ int ARBDogExistingPointsList::DeleteMultiQs(
 }
 
 
-bool ARBDogExistingPointsList::AddExistingPoints(ARBDogExistingPointsPtr inExistingPoints)
+bool ARBDogExistingPointsList::AddExistingPoints(ARBDogExistingPointsPtr const& inExistingPoints)
 {
 	bool bAdded = false;
 	if (inExistingPoints)
@@ -1069,7 +1069,7 @@ bool ARBDogExistingPointsList::AddExistingPoints(ARBDogExistingPointsPtr inExist
 }
 
 
-bool ARBDogExistingPointsList::DeleteExistingPoints(ARBDogExistingPointsPtr inExistingPoints)
+bool ARBDogExistingPointsList::DeleteExistingPoints(ARBDogExistingPointsPtr const& inExistingPoints)
 {
 	if (inExistingPoints)
 	{

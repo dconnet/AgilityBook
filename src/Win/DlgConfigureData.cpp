@@ -55,9 +55,9 @@ CDlgConfigureDataBase::CDlgConfigureDataBase(CDlgConfigVenue* pDlg)
 
 ////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr venue)
+CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr const& inVenue)
 	: CDlgConfigureDataBase(nullptr)
-	, m_Venue(venue)
+	, m_Venue(inVenue)
 {
 }
 
@@ -97,9 +97,9 @@ std::wstring CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr fault)
+CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr const& inFault)
 	: CDlgConfigureDataBase(nullptr)
-	, m_Fault(fault)
+	, m_Fault(inFault)
 {
 }
 
@@ -117,9 +117,9 @@ std::wstring CDlgConfigureDataFault::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints)
+CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr const& inOtherPoints)
 	: CDlgConfigureDataBase(nullptr)
-	, m_OtherPoints(otherPoints)
+	, m_OtherPoints(inOtherPoints)
 {
 }
 
@@ -139,9 +139,9 @@ std::wstring CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 
 CDlgConfigureDataDivision::CDlgConfigureDataDivision(
 		CDlgConfigVenue* pDlg,
-		ARBConfigDivisionPtr div)
+		ARBConfigDivisionPtr const& inDiv)
 	: CDlgConfigureDataBase(pDlg)
-	, m_Div(div)
+	, m_Div(inDiv)
 {
 }
 
@@ -267,11 +267,11 @@ CDlgConfigureDataBase* CDlgConfigureDataDivision::DoMove(bool bUp)
 
 CDlgConfigureDataLevel::CDlgConfigureDataLevel(
 		CDlgConfigVenue* pDlg,
-		ARBConfigDivisionPtr div,
-		ARBConfigLevelPtr level)
+		ARBConfigDivisionPtr const& inDiv,
+		ARBConfigLevelPtr const& inLevel)
 	: CDlgConfigureDataBase(pDlg)
-	, m_Division(div)
-	, m_Level(level)
+	, m_Division(inDiv)
+	, m_Level(inLevel)
 {
 }
 
@@ -431,13 +431,13 @@ CDlgConfigureDataBase* CDlgConfigureDataLevel::DoMove(bool bUp)
 
 CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
 		CDlgConfigVenue* pDlg,
-		ARBConfigDivisionPtr div,
-		ARBConfigLevelPtr level,
-		ARBConfigSubLevelPtr subLevel)
+		ARBConfigDivisionPtr const& inDiv,
+		ARBConfigLevelPtr const& inLevel,
+		ARBConfigSubLevelPtr const& inSubLevel)
 	: CDlgConfigureDataBase(pDlg)
-	, m_Division(div)
-	, m_Level(level)
-	, m_SubLevel(subLevel)
+	, m_Division(inDiv)
+	, m_Level(inLevel)
+	, m_SubLevel(inSubLevel)
 {
 }
 
@@ -532,9 +532,9 @@ CDlgConfigureDataBase* CDlgConfigureDataSubLevel::DoMove(bool bUp)
 
 CDlgConfigureDataTitle::CDlgConfigureDataTitle(
 		CDlgConfigVenue* pDlg,
-		ARBConfigTitlePtr title)
+		ARBConfigTitlePtr const& inTitle)
 	: CDlgConfigureDataBase(pDlg)
-	, m_Title(title)
+	, m_Title(inTitle)
 {
 }
 
@@ -660,7 +660,7 @@ CDlgConfigureDataBase* CDlgConfigureDataTitle::DoMove(bool bUp)
 
 CDlgConfigureDataEvent::CDlgConfigureDataEvent(
 		CDlgConfigVenue* pDlg,
-		ARBConfigEventPtr inEvent)
+		ARBConfigEventPtr const& inEvent)
 	: CDlgConfigureDataBase(pDlg)
 	, m_Event(inEvent)
 {
@@ -742,9 +742,9 @@ CDlgConfigureDataBase* CDlgConfigureDataEvent::DoMove(bool bUp)
 
 CDlgConfigureDataLifetimeName::CDlgConfigureDataLifetimeName(
 		CDlgConfigVenue* pDlg,
-		ARBConfigLifetimeNamePtr name)
+		ARBConfigLifetimeNamePtr const& inName)
 	: CDlgConfigureDataBase(pDlg)
-	, m_pName(name)
+	, m_pName(inName)
 {
 }
 
@@ -833,9 +833,9 @@ CDlgConfigureDataBase* CDlgConfigureDataLifetimeName::DoMove(bool bUp)
 
 CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(
 		CDlgConfigVenue* pDlg,
-		ARBConfigMultiQPtr multiq)
+		ARBConfigMultiQPtr const& inMultiq)
 	: CDlgConfigureDataBase(pDlg)
-	, m_MultiQ(multiq)
+	, m_MultiQ(inMultiq)
 {
 }
 

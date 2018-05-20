@@ -25,7 +25,7 @@ class CDlgPartner : public wxDialog
 {
 public:
 	CDlgPartner(
-			ARBDogRunPartnerPtr partner,
+			ARBDogRunPartnerPtr const& inPartner,
 			std::set<std::wstring> const& inHandlers,
 			std::set<std::wstring> const& inDogs,
 			wxWindow* pParent = nullptr);

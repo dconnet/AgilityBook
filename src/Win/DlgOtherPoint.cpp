@@ -43,7 +43,7 @@
 class COtherPointData : public wxClientData
 {
 public:
-	COtherPointData(ARBConfigOtherPointsPtr other)
+	COtherPointData(ARBConfigOtherPointsPtr const& other)
 		: pOther(other)
 	{
 	}
@@ -59,14 +59,14 @@ END_EVENT_TABLE()
 
 CDlgOtherPoint::CDlgOtherPoint(
 		ARBConfig& config,
-		ARBDogRunOtherPointsPtr pRunOther,
+		ARBDogRunOtherPointsPtr const& inRunOther,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Config(config)
-	, m_pRunOther(pRunOther)
+	, m_pRunOther(inRunOther)
 	, m_ctrlOtherPoints(nullptr)
 	, m_ctrlDesc(nullptr)
-	, m_Points(pRunOther->GetPoints())
+	, m_Points(inRunOther->GetPoints())
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
@@ -140,7 +140,7 @@ CDlgOtherPoint::CDlgOtherPoint(
 DEFINE_ON_INIT(CDlgOtherPoint)
 
 
-void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr inOther)
+void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr const& inOther)
 {
 	m_ctrlOtherPoints->Clear();
 	m_ctrlDesc->SetValue(L"");

@@ -69,9 +69,9 @@ public:
 	 */
 	bool Load(
 			short inConfigVersion,
-			ARBConfigEventPtr inEvent,
-			ARBConfigScoringPtr inEventScoring,
-			ElementNodePtr inTree,
+			ARBConfigEventPtr const& inEvent,
+			ARBConfigScoringPtr const& inEventScoring,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -81,7 +81,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRunScoring element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Get the minimum YPS for the run (yards/sct).
@@ -131,7 +131,7 @@ public:
 	 * Compute the number of time faults based on the scoring configuration.
 	 * @param inScoring Configuration to use.
 	 */
-	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
+	double GetTimeFaults(ARBConfigScoringPtr const& inScoring) const;
 
 	/**
 	 * Getters/setters.

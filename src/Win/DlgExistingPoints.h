@@ -37,7 +37,7 @@ public:
 	CDlgExistingPoints(
 			CAgilityBookDoc* pDoc,
 			ARBDogExistingPointsList& points,
-			ARBDogExistingPointsPtr pExistingPoints,
+			ARBDogExistingPointsPtr const& inExistingPoints,
 			wxWindow* pParent = nullptr);
 
 private:

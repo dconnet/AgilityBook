@@ -48,8 +48,8 @@ END_EVENT_TABLE()
 
 
 CDlgConfigMultiQ::CDlgConfigMultiQ(
-		ARBConfigVenuePtr inVenue,
-		ARBConfigMultiQPtr inMultiQ,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigMultiQPtr const& inMultiQ,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pVenue(inVenue)

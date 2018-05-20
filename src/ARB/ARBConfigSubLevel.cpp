@@ -96,7 +96,7 @@ bool ARBConfigSubLevel::operator==(ARBConfigSubLevel const& rhs) const
 
 
 bool ARBConfigSubLevel::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -114,7 +114,7 @@ bool ARBConfigSubLevel::Load(
 }
 
 
-bool ARBConfigSubLevel::Save(ElementNodePtr ioTree) const
+bool ARBConfigSubLevel::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -129,7 +129,7 @@ bool ARBConfigSubLevel::Save(ElementNodePtr ioTree) const
 
 bool ARBConfigSubLevel::Update(
 		int indent,
-		ARBConfigSubLevelPtr inLevelNew,
+		ARBConfigSubLevelPtr const& inLevelNew,
 		std::wstring& ioInfo)
 {
 	std::wstring info;
@@ -150,7 +150,7 @@ bool ARBConfigSubLevel::Update(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigSubLevelList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

@@ -35,8 +35,8 @@ class CDlgConfigEvent : public wxDialog
 public:
 	CDlgConfigEvent(
 			bool bNewEntry,
-			ARBConfigVenuePtr pVenue,
-			ARBConfigEventPtr pEvent,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigEventPtr const& inEvent,
 			wxWindow* pParent = nullptr);
 	~CDlgConfigEvent();
 
@@ -48,14 +48,14 @@ private:
 	CConfigEventDataTitlePoints* GetTitleData(int index) const;
 	CConfigEventDataLifetimePoints* GetLifetimeData(int index) const;
 	CConfigEventDataPlaceInfo* GetPlacementData(int index) const;
-	wxString GetListName(ARBConfigScoringPtr pScoring) const;
+	wxString GetListName(ARBConfigScoringPtr const& inScoring) const;
 	void EnableSubnameControls();
 	void EditSubname();
 	void EnablePointsControls();
 	void FillSubNames(bool bInit = false);
 	void FillControls();
 	void FillMethodList();
-	void FillTitlePoints(ARBConfigScoringPtr pScoring);
+	void FillTitlePoints(ARBConfigScoringPtr const& inScoring);
 	bool SaveControls();
 	void EditMethod();
 	void EditPoints();

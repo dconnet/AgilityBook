@@ -128,7 +128,7 @@ size_t ARBDogRunPartner::GetSearchStrings(std::set<std::wstring>& ioStrings) con
 
 bool ARBDogRunPartner::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -155,7 +155,7 @@ bool ARBDogRunPartner::Load(
 }
 
 
-bool ARBDogRunPartner::Save(ElementNodePtr ioTree) const
+bool ARBDogRunPartner::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -172,7 +172,7 @@ bool ARBDogRunPartner::Save(ElementNodePtr ioTree) const
 
 bool ARBDogRunPartnerList::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -184,7 +184,7 @@ bool ARBDogRunPartnerList::Load(
 }
 
 
-bool ARBDogRunPartnerList::AddPartner(ARBDogRunPartnerPtr inPartner)
+bool ARBDogRunPartnerList::AddPartner(ARBDogRunPartnerPtr const& inPartner)
 {
 	bool bAdded = false;
 	if (inPartner)

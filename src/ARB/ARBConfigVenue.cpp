@@ -164,7 +164,7 @@ void ARBConfigVenue::clear()
 
 bool ARBConfigVenue::Load(
 		ARBConfig& ioConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -330,7 +330,7 @@ bool ARBConfigVenue::Load(
 }
 
 
-bool ARBConfigVenue::Save(ElementNodePtr ioTree) const
+bool ARBConfigVenue::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -363,7 +363,7 @@ bool ARBConfigVenue::Save(ElementNodePtr ioTree) const
 
 bool ARBConfigVenue::Update(
 		int indent,
-		ARBConfigVenuePtr inVenueNew,
+		ARBConfigVenuePtr const& inVenueNew,
 		std::wstring& ioInfo)
 {
 	std::wstring info;
@@ -638,7 +638,7 @@ bool ARBConfigVenue::Update(
 
 bool ARBConfigVenueList::Load(
 		ARBConfig& ioConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -822,7 +822,7 @@ bool ARBConfigVenueList::AddVenue(
 }
 
 
-bool ARBConfigVenueList::AddVenue(ARBConfigVenuePtr inVenue)
+bool ARBConfigVenueList::AddVenue(ARBConfigVenuePtr const& inVenue)
 {
 	if (!inVenue)
 		return false;

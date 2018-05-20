@@ -119,7 +119,7 @@ size_t ARBDogClub::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 bool ARBDogClub::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -157,7 +157,7 @@ bool ARBDogClub::Load(
 }
 
 
-bool ARBDogClub::Save(ElementNodePtr ioTree) const
+bool ARBDogClub::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -173,7 +173,7 @@ bool ARBDogClub::Save(ElementNodePtr ioTree) const
 
 bool ARBDogClubList::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

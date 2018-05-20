@@ -103,7 +103,7 @@ size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<std::wstring>& ioStrings)
 
 bool ARBDogRunOtherPoints::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -125,7 +125,7 @@ bool ARBDogRunOtherPoints::Load(
 }
 
 
-bool ARBDogRunOtherPoints::Save(ElementNodePtr ioTree) const
+bool ARBDogRunOtherPoints::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -140,7 +140,7 @@ bool ARBDogRunOtherPoints::Save(ElementNodePtr ioTree) const
 
 bool ARBDogRunOtherPointsList::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -152,7 +152,7 @@ bool ARBDogRunOtherPointsList::Load(
 }
 
 
-bool ARBDogRunOtherPointsList::AddOtherPoints(ARBDogRunOtherPointsPtr inOther)
+bool ARBDogRunOtherPointsList::AddOtherPoints(ARBDogRunOtherPointsPtr const& inOther)
 {
 	bool bAdded = false;
 	if (inOther)

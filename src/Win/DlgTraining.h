@@ -26,7 +26,7 @@ class CDlgTraining : public wxDialog
 {
 public:
 	CDlgTraining(
-			ARBTrainingPtr pTraining,
+			ARBTrainingPtr const& inTraining,
 			CAgilityBookDoc* pDoc,
 			wxWindow* pParent = nullptr);
 

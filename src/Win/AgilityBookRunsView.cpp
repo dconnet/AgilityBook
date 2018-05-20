@@ -88,13 +88,13 @@ class CAgilityBookRunsViewData : public CListData
 public:
 	CAgilityBookRunsViewData(
 			CAgilityBookRunsView* pView,
-			ARBDogPtr pDog,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun)
+			ARBDogPtr const& inDog,
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun)
 		: m_pView(pView)
-		, m_pDog(pDog)
-		, m_pTrial(pTrial)
-		, m_pRun(pRun)
+		, m_pDog(inDog)
+		, m_pTrial(inTrial)
+		, m_pRun(inRun)
 	{
 	}
 	~CAgilityBookRunsViewData()
@@ -1422,19 +1422,19 @@ void CAgilityBookRunsView::OnUpdate(
 }
 
 
-bool CAgilityBookRunsView::IsTrial(ARBDogTrialPtr pTrial) const
+bool CAgilityBookRunsView::IsTrial(ARBDogTrialPtr const& inTrial) const
 {
-	if (pTrial)
+	if (inTrial)
 	{
 		// Same number of runs... maybe?
-		if (pTrial->GetRuns().size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
+		if (inTrial->GetRuns().size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
 		{
 			// Get the first run in the list and see if that's in the trial.
 			CAgilityBookRunsViewDataPtr pData = GetItemRunData(0);
 			if (pData && pData->GetRun())
 			{
-				for (ARBDogRunList::const_iterator iter = pTrial->GetRuns().begin();
-					iter != pTrial->GetRuns().end();
+				for (ARBDogRunList::const_iterator iter = inTrial->GetRuns().begin();
+					iter != inTrial->GetRuns().end();
 					++iter)
 				{
 					if (*iter == pData->GetRun())

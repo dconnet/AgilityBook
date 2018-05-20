@@ -68,7 +68,7 @@ public:
 
 	bool GetData(
 			eClipFormat clpFmt,
-			ElementNodePtr outTree);
+			ElementNodePtr const& outTree);
 
 	bool GetData(std::wstring& outData);
 };
@@ -106,7 +106,7 @@ public:
 
 	bool AddData(
 			eClipFormat clpFmt,
-			ElementNodePtr inTree);
+			ElementNodePtr const& inTree);
 
 	// Used to write special data.
 	bool AddData(

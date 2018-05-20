@@ -48,7 +48,7 @@ END_EVENT_TABLE()
 
 
 CDlgConfigLifetimeName::CDlgConfigLifetimeName(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)
@@ -61,7 +61,7 @@ CDlgConfigLifetimeName::CDlgConfigLifetimeName(
 
 
 CDlgConfigLifetimeName::CDlgConfigLifetimeName(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inName,
 		wxWindow* pParent)
 	: wxDialog()

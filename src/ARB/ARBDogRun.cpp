@@ -286,7 +286,7 @@ size_t ARBDogRun::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 bool ARBDogRun::Load(
 		ARBConfig const& inConfig,
 		ARBDogClubList const& inClubs,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -424,7 +424,7 @@ bool ARBDogRun::Load(
 
 
 bool ARBDogRun::Save(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		ARBDogTrial const* pTrial,
 		ARBConfig const& inConfig) const
 {
@@ -557,7 +557,7 @@ int ARBDogRun::DeleteOtherPoints(std::wstring const& inName)
 }
 
 
-short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr inScoring) const
+short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr const& inScoring) const
 {
 	short pts = 0;
 	if (inScoring && inScoring->HasSpeedPts())
@@ -595,7 +595,7 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr inScoring) const
 
 
 double ARBDogRun::GetTitlePoints(
-		ARBConfigScoringPtr inScoring,
+		ARBConfigScoringPtr const& inScoring,
 		bool* outClean) const
 {
 	double pts = 0.0;
@@ -703,7 +703,7 @@ double ARBDogRun::GetTitlePoints(
 
 
 double ARBDogRun::GetLifetimePoints(
-		ARBConfigScoringPtr inScoring,
+		ARBConfigScoringPtr const& inScoring,
 		std::wstring const& inLifetimeName) const
 {
 	double pts = 0.0;
@@ -788,7 +788,7 @@ double ARBDogRun::GetLifetimePoints(
 }
 
 
-double ARBDogRun::GetPlacementPoints(ARBConfigScoringPtr inScoring) const
+double ARBDogRun::GetPlacementPoints(ARBConfigScoringPtr const& inScoring) const
 {
 	double pts = 0.0;
 	if (!inScoring->GetPlacements().GetPlaceInfo(GetPlace(), pts))
@@ -797,7 +797,7 @@ double ARBDogRun::GetPlacementPoints(ARBConfigScoringPtr inScoring) const
 }
 
 
-double ARBDogRun::GetScore(ARBConfigScoringPtr inScoring) const
+double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 {
 	double pts = 0.0;
 	switch (m_Scoring.GetType())
@@ -848,7 +848,7 @@ void ARBDogRun::ClearMultiQs()
 }
 
 
-void ARBDogRun::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
+void ARBDogRun::AddMultiQ(ARBConfigMultiQPtr const& inMultiQ)
 {
 	m_pMultiQs.insert(inMultiQ);
 }
@@ -886,7 +886,7 @@ void ARBDogRun::RemoveLink(std::wstring const& inLink)
 bool ARBDogRunList::Load(
 		ARBConfig const& inConfig,
 		ARBDogClubList const& inClubs,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -899,7 +899,7 @@ bool ARBDogRunList::Load(
 
 
 bool ARBDogRunList::Save(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		ARBDogTrial const* pTrial,
 		ARBConfig const& inConfig) const
 {
@@ -971,7 +971,7 @@ ARBDate ARBDogRunList::GetEndDate() const
 }
 
 
-bool ARBDogRunList::AddRun(ARBDogRunPtr inRun)
+bool ARBDogRunList::AddRun(ARBDogRunPtr const& inRun)
 {
 	bool bAdded = false;
 	if (inRun)
@@ -983,7 +983,7 @@ bool ARBDogRunList::AddRun(ARBDogRunPtr inRun)
 }
 
 
-bool ARBDogRunList::DeleteRun(ARBDogRunPtr inRun)
+bool ARBDogRunList::DeleteRun(ARBDogRunPtr const& inRun)
 {
 	if (inRun)
 	{

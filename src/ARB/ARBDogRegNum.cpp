@@ -120,7 +120,7 @@ size_t ARBDogRegNum::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 bool ARBDogRegNum::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -177,7 +177,7 @@ bool ARBDogRegNum::Load(
 }
 
 
-bool ARBDogRegNum::Save(ElementNodePtr ioTree) const
+bool ARBDogRegNum::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -198,7 +198,7 @@ bool ARBDogRegNum::Save(ElementNodePtr ioTree) const
 
 bool ARBDogRegNumList::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -321,7 +321,7 @@ bool ARBDogRegNumList::AddRegNum(
 }
 
 
-bool ARBDogRegNumList::AddRegNum(ARBDogRegNumPtr inRegNum)
+bool ARBDogRegNumList::AddRegNum(ARBDogRegNumPtr const& inRegNum)
 {
 	bool bAdded = false;
 	if (inRegNum)

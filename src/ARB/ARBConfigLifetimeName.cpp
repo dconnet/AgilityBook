@@ -87,7 +87,7 @@ bool ARBConfigLifetimeName::operator==(ARBConfigLifetimeName const& rhs) const
 
 
 bool ARBConfigLifetimeName::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -100,7 +100,7 @@ bool ARBConfigLifetimeName::Load(
 }
 
 
-bool ARBConfigLifetimeName::Save(ElementNodePtr ioTree) const
+bool ARBConfigLifetimeName::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -114,7 +114,7 @@ bool ARBConfigLifetimeName::Save(ElementNodePtr ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigLifetimeNameList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

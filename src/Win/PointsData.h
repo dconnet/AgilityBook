@@ -86,12 +86,12 @@ private:
 #endif
 public:
 	OtherPtInfo(
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun,
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun,
 			double points,
 			bool bScore, // m_Score is valid
 			double score);
-	OtherPtInfo(ARBDogExistingPointsPtr pExisting);
+	OtherPtInfo(ARBDogExistingPointsPtr const& inExisting);
 	~OtherPtInfo();
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
@@ -125,7 +125,7 @@ public:
 	virtual bool HasDetails() const {return false;}
 	virtual void Details() const	{}
 	/// Equality testing (to locate previous entries)
-	virtual bool IsEqual(CPointsDataBasePtr inData) = 0;
+	virtual bool IsEqual(CPointsDataBasePtr const& inData) = 0;
 
 protected:
 	CAgilityBookDoc* m_pDoc;
@@ -149,7 +149,7 @@ public:
 		return m_Html;
 	}
 	virtual bool IsVisible() const						{return false;}
-	virtual bool IsEqual(CPointsDataBasePtr /*inData*/)	{return false;}
+	virtual bool IsEqual(CPointsDataBasePtr const& /*inData*/)	{return false;}
 
 protected:
 	std::wstring m_Html;
@@ -182,7 +182,7 @@ public:
 
 	virtual std::wstring OnNeedText(int inCol) const;
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 private:
 	bool m_UseInHtml;
@@ -203,7 +203,7 @@ public:
 
 	virtual std::wstring OnNeedText(int inCol) const;
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	ARBDate m_today;
@@ -218,13 +218,13 @@ class CPointsDataDog : public CPointsDataBase
 public:
 	CPointsDataDog(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr pDog);
+			ARBDogPtr const& inDog);
 
 	virtual std::wstring OnNeedText(int inCol) const;
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	ARBDogPtr m_pDog;
@@ -241,14 +241,14 @@ class CPointsDataVenue : public CPointsDataBase
 public:
 	CPointsDataVenue(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr pDog,
-			ARBConfigVenuePtr pVenue);
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue);
 
 	virtual std::wstring OnNeedText(int inCol) const;
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	ARBDogPtr m_pDog;
@@ -266,14 +266,14 @@ class CPointsDataTitle : public CPointsDataBase
 public:
 	CPointsDataTitle(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr pDog,
-			ARBDogTitlePtr pTitle);
+			ARBDogPtr const& inDog,
+			ARBDogTitlePtr const& inTitle);
 
 	virtual std::wstring OnNeedText(int inCol) const;
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	ARBDogPtr m_pDog;
@@ -292,14 +292,14 @@ class CPointsDataEvent : public CPointsDataBase
 public:
 	CPointsDataEvent(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr inDog,
+			ARBDogPtr const& inDog,
 			std::list<RunInfo>& inMatching,
-			ARBConfigVenuePtr inVenue,
-			ARBConfigDivisionPtr inDiv,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigDivisionPtr const& inDiv,
 			int inDivIdx,
-			ARBConfigLevelPtr inLevel,
+			ARBConfigLevelPtr const& inLevel,
 			int inLevelIdx,
-			ARBConfigEventPtr inEvent,
+			ARBConfigEventPtr const& inEvent,
 			int inEventIdx,
 			std::wstring const& inRunCount,
 			std::wstring const& inQcount,
@@ -311,7 +311,7 @@ public:
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	ARBDogPtr m_Dog;
@@ -341,11 +341,11 @@ class CPointsDataLifetime : public CPointsDataBase
 public:
 	CPointsDataLifetime(
 			CAgilityBookDoc* pDoc,
-			ARBConfigVenuePtr inVenue);
+			ARBConfigVenuePtr const& inVenue);
 	CPointsDataLifetime(
 			CAgilityBookDoc* pDoc,
-			ARBConfigLifetimeNamePtr inLifetimeName,
-			ARBConfigVenuePtr inVenue);
+			ARBConfigLifetimeNamePtr const& inLifetimeName,
+			ARBConfigVenuePtr const& inVenue);
 	void AddLifetimeInfo(
 			std::wstring const& inDiv,
 			std::wstring const& inLevel,
@@ -356,7 +356,7 @@ public:
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	ARBConfigLifetimeNamePtr m_LifetimeName;	///< null implies Placement
@@ -380,12 +380,12 @@ public:
 	*/
 	CPointsDataLifetimeByName(
 			CAgilityBookDoc* pDoc,
-			ARBConfigVenuePtr inVenue,
+			ARBConfigVenuePtr const& inVenue,
 			std::wstring const& inName);
 	CPointsDataLifetimeByName(
 			CAgilityBookDoc* pDoc,
-			ARBConfigLifetimeNamePtr inLifetimeName,
-			ARBConfigVenuePtr inVenue,
+			ARBConfigLifetimeNamePtr const& inLifetimeName,
+			ARBConfigVenuePtr const& inVenue,
 			std::wstring const& inName);
 
 	// Adds are limited by inSort1 == m_Name
@@ -397,7 +397,7 @@ public:
 
 	virtual std::wstring OnNeedText(int inCol) const;
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	std::wstring m_Name;
@@ -414,16 +414,16 @@ class CPointsDataMultiQs : public CPointsDataBase
 public:
 	CPointsDataMultiQs(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr inDog,
-			ARBConfigVenuePtr inVenue,
-			ARBConfigMultiQPtr inMultiQ,
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigMultiQPtr const& inMultiQ,
 			std::set<MultiQdata> const& inMQs);
 
 	virtual std::wstring OnNeedText(int inCol) const;
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	ARBDogPtr m_Dog;
@@ -444,13 +444,13 @@ class CPointsDataSpeedPts : public CPointsDataBase
 public:
 	CPointsDataSpeedPts(
 			CAgilityBookDoc* pDoc,
-			ARBConfigVenuePtr inVenue,
-			ARBConfigDivisionPtr inDiv,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigDivisionPtr const& inDiv,
 			int inPts);
 
 	virtual std::wstring OnNeedText(int inCol) const;
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	ARBConfigVenuePtr m_Venue;
@@ -489,7 +489,7 @@ public:
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	std::wstring m_Name;
@@ -508,7 +508,7 @@ public:
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	std::wstring m_Event;
@@ -527,7 +527,7 @@ public:
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	std::wstring m_Level;
@@ -547,7 +547,7 @@ public:
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr inData);
+	virtual bool IsEqual(CPointsDataBasePtr const& inData);
 
 protected:
 	std::wstring m_Level;
@@ -565,7 +565,7 @@ public:
 
 	void LoadData(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr inDog);
+			ARBDogPtr const& inDog);
 	void clear();
 
 	size_t NumLines() const;
@@ -611,8 +611,8 @@ private:
 
 	void InsertVenueHeader(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr inDog,
-			ARBConfigVenuePtr pVenue);
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue);
 
 	std::vector<CPointsDataBasePtr> m_Lines;
 };

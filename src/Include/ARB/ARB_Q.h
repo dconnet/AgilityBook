@@ -169,7 +169,7 @@ public:
 	 * @post The ARB_Q attribute will be added to ioTree.
 	 */
 	bool Save(
-			ElementNodePtr ioTree,
+			ElementNodePtr const& ioTree,
 			wchar_t const* const inAttribName) const;
 
 private:

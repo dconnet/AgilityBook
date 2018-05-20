@@ -219,8 +219,8 @@ struct RunSortInfo : public SortInfo
 class CDlgDogDivData : public wxClientData
 {
 public:
-	CDlgDogDivData(ARBConfigDivisionPtr div)
-		: m_Div(div)
+	CDlgDogDivData(ARBConfigDivisionPtr const& inDiv)
+		: m_Div(inDiv)
 	{
 	}
 	ARBConfigDivisionPtr m_Div;
@@ -230,16 +230,16 @@ public:
 class CDlgDogLevelData : public wxClientData
 {
 public:
-	CDlgDogLevelData(ARBConfigLevelPtr pLevel)
-		: m_pLevel(pLevel)
+	CDlgDogLevelData(ARBConfigLevelPtr const& inLevel)
+		: m_pLevel(inLevel)
 		, m_pSubLevel()
 	{
 	}
 	CDlgDogLevelData(
-			ARBConfigLevelPtr pLevel,
-			ARBConfigSubLevelPtr pSubLevel)
-		: m_pLevel(pLevel)
-		, m_pSubLevel(pSubLevel)
+			ARBConfigLevelPtr const& inLevel,
+			ARBConfigSubLevelPtr const& inSubLevel)
+		: m_pLevel(inLevel)
+		, m_pSubLevel(inSubLevel)
 	{
 	}
 	ARBConfigLevelPtr m_pLevel;
@@ -251,9 +251,9 @@ public:
 class CDlgDogRefRunData : public CListData
 {
 public:
-	CDlgDogRefRunData(ARBDogRunPtr run, ARBDogReferenceRunPtr refRun)
-		: m_Run(run)
-		, m_RefRun(refRun)
+	CDlgDogRefRunData(ARBDogRunPtr const& inRun, ARBDogReferenceRunPtr const& inRefRun)
+		: m_Run(inRun)
+		, m_RefRun(inRefRun)
 	{
 	}
 	virtual std::wstring OnNeedText(long iCol) const;
@@ -393,7 +393,7 @@ class CMetaDataDisplay : public CTextCtrl
 public:
 	CMetaDataDisplay(
 			wxWindow* parent,
-			ARBDogRunPtr pRun);
+			ARBDogRunPtr const& inRun);
 	~CMetaDataDisplay();
 
 	bool HasMetafileSupport() const
@@ -443,14 +443,14 @@ END_EVENT_TABLE()
 
 CMetaDataDisplay::CMetaDataDisplay(
 		wxWindow* parent,
-		ARBDogRunPtr pRun)
-	: m_Run(pRun)
+		ARBDogRunPtr const& inRun)
+	: m_Run(inRun)
 #ifdef HAS_ENHMETAFILE
 	, m_metaFile(nullptr)
 	, m_metaFileBack(nullptr)
 #endif
 	, m_ViewText(true)
-	, m_Insert(pRun->GetCRCD().empty())
+	, m_Insert(inRun->GetCRCD().empty())
 {
 	CTextCtrl::Create(parent, wxID_ANY,
 		StringUtil::stringWX(m_Run->GetCRCD()),
@@ -684,38 +684,38 @@ END_EVENT_TABLE()
 
 CDlgRun::CDlgRun(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr pDog,
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun,
+		ARBDogPtr const& inDog,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun,
 		wxWindow* pParent,
 		int iSelectPage)
 	: wxDialog()
 	, m_pDoc(pDoc)
-	, m_pDog(pDog)
-	, m_pTrial(pTrial)
-	, m_pRealRun(pRun)
-	, m_Run(pRun->Clone())
+	, m_pDog(inDog)
+	, m_pTrial(inTrial)
+	, m_pRealRun(inRun)
+	, m_Run(inRun->Clone())
 	, m_pRefRunMe()
 	, m_Club()
 	, m_pVenue()
 	, m_panelScore(nullptr)
-	, m_Date(pRun->GetDate())
+	, m_Date(inRun->GetDate())
 	, m_ctrlDivisions(nullptr)
 	, m_ctrlLevels(nullptr)
 	, m_ctrlEvents(nullptr)
 	, m_ctrlSubNamesText(nullptr)
 	, m_ctrlSubNames(nullptr)
-	, m_SubName(StringUtil::stringWX(pRun->GetSubName()))
+	, m_SubName(StringUtil::stringWX(inRun->GetSubName()))
 	, m_ctrlTable(nullptr)
 	, m_Table(false)
 	, m_ctrlHeight(nullptr)
-	, m_Height(StringUtil::stringWX(pRun->GetHeight()))
+	, m_Height(StringUtil::stringWX(inRun->GetHeight()))
 	, m_ctrlJudge(nullptr)
-	, m_Judge(StringUtil::stringWX(pRun->GetJudge()))
+	, m_Judge(StringUtil::stringWX(inRun->GetJudge()))
 	, m_ctrlHandler(nullptr)
-	, m_Handler(StringUtil::stringWX(pRun->GetHandler()))
+	, m_Handler(StringUtil::stringWX(inRun->GetHandler()))
 	, m_ctrlConditions(nullptr)
-	, m_Conditions(StringUtil::stringWX(pRun->GetConditions()))
+	, m_Conditions(StringUtil::stringWX(inRun->GetConditions()))
 	, m_ctrlDesc(nullptr)
 	, m_ctrlPartnerEdit(nullptr)
 	, m_ctrlPartner(nullptr)
@@ -733,7 +733,7 @@ CDlgRun::CDlgRun(
 	, m_ctrlClosing(nullptr)
 	, m_Closing(0)
 	, m_ctrlObstacles(nullptr)
-	, m_Obstacles(pRun->GetScoring().GetObstacles())
+	, m_Obstacles(inRun->GetScoring().GetObstacles())
 	, m_ctrlTimeText(nullptr)
 	, m_ctrlTime(nullptr)
 	, m_Time(0.0)
@@ -748,21 +748,21 @@ CDlgRun::CDlgRun(
 	, m_Close(0)
 	, m_ctrlObstaclesPS(nullptr)
 	, m_ctrlPlace(nullptr)
-	, m_Place(pRun->GetPlace())
+	, m_Place(inRun->GetPlace())
 	, m_ctrlInClass(nullptr)
-	, m_InClass(pRun->GetInClass())
+	, m_InClass(inRun->GetInClass())
 	, m_ctrlDogsQd(nullptr)
-	, m_DogsQd(pRun->GetDogsQd())
+	, m_DogsQd(inRun->GetDogsQd())
 	, m_ctrlQ(nullptr)
 	, m_ctrlBonusPtsText(nullptr)
 	, m_ctrlBonusTitlePts(nullptr)
-	, m_BonusTitlePts(pRun->GetScoring().GetBonusTitlePts())
+	, m_BonusTitlePts(inRun->GetScoring().GetBonusTitlePts())
 	, m_ctrlSpeedPtsText(nullptr)
 	, m_ctrlSpeedPts(nullptr)
 	, m_ctrlTitlePointsText(nullptr)
 	, m_ctrlTitlePoints(nullptr)
 	, m_ctrlScore(nullptr)
-	, m_Comments(StringUtil::stringWX(pRun->GetNote()))
+	, m_Comments(StringUtil::stringWX(inRun->GetNote()))
 	, m_sortRefRuns(L"RefRuns")
 	, m_idxRefRunPage(-1)
 	, m_ctrlFaultsList(nullptr)
@@ -795,7 +795,7 @@ CDlgRun::CDlgRun(
 
 	m_clrBack = GetBackgroundColour();
 
-	pTrial->GetClubs().GetPrimaryClub(&m_Club);
+	m_pTrial->GetClubs().GetPrimaryClub(&m_Club);
 	assert(!!m_Club.get());
 	pDoc->Book().GetConfig().GetVenues().FindVenue(m_Club->GetVenue(), &m_pVenue);
 	assert(!!m_pVenue.get());
@@ -887,7 +887,7 @@ CDlgRun::CDlgRun(
 	textClub->Wrap(-1);
 
 	wxStaticText* textLocation = new wxStaticText(m_panelScore, wxID_ANY,
-		Pad(pTrial->GetLocation()),
+		Pad(m_pTrial->GetLocation()),
 		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
 	textLocation->Wrap(-1);
 
@@ -2015,7 +2015,7 @@ void CDlgRun::FillJudges()
 }
 
 
-void CDlgRun::SetEventDesc(ARBConfigEventPtr inEvent)
+void CDlgRun::SetEventDesc(ARBConfigEventPtr const& inEvent)
 {
 	wxString desc;
 	if (inEvent)

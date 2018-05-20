@@ -576,16 +576,14 @@ void CWizardImport::UpdatePreview()
 
 
 static ARBDogRunPtr CreateRun(
-		ARBDogRunPtr pRun,
-		ARBConfigScoringPtr pScoring)
+		ARBDogRunPtr const& inRun,
+		ARBConfigScoringPtr const& inScoring)
 {
-	if (!pRun)
-	{
-		pRun = ARBDogRunPtr(ARBDogRun::New());
-		pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()),
-			pScoring->DropFractions());
-	}
-	return pRun;
+	if (inRun)
+		return inRun;
+	ARBDogRunPtr run = ARBDogRunPtr(ARBDogRun::New());
+	run->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(inScoring->GetScoringStyle()), inScoring->DropFractions());
+	return run;
 }
 
 
@@ -601,24 +599,21 @@ static std::wstring GetPrimaryVenue(std::wstring const& venues)
 }
 
 
-static ARBCalendarPtr CreateCal(ARBCalendarPtr pCal)
+static ARBCalendarPtr CreateCal(ARBCalendarPtr const& inCal)
 {
-	if (!pCal)
-	{
-		pCal = ARBCalendarPtr(ARBCalendar::New());
-	}
-	return pCal;
+	if (inCal)
+		return inCal;
+	return ARBCalendarPtr(ARBCalendar::New());
 }
 
 
-static ARBTrainingPtr CreateLog(ARBTrainingPtr pLog)
+static ARBTrainingPtr CreateLog(ARBTrainingPtr const& inLog)
 {
-	if (!pLog)
-	{
-		pLog = ARBTrainingPtr(ARBTraining::New());
-		pLog->SetDate(ARBDate::Today());
-	}
-	return pLog;
+	if (inLog)
+		return inLog;
+	ARBTrainingPtr log = ARBTrainingPtr(ARBTraining::New());
+	log->SetDate(ARBDate::Today());
+	return log;
 }
 
 

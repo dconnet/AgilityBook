@@ -1909,7 +1909,7 @@ bool ARBConfigActionDeleteLifetimeName::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigActionList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

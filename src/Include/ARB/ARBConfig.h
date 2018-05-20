@@ -79,7 +79,7 @@ public:
 	 * @return Success
 	 */
 	bool LoadFault(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -94,7 +94,7 @@ public:
 	 * @return Success
 	 */
 	bool LoadOtherPoints(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -107,7 +107,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -117,7 +117,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfig element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Set the configuration to the default (DefaultConfig.xml)
@@ -149,7 +149,7 @@ public:
 	 * @return Complete name of title (name + longname).
 	 */
 	std::wstring GetTitleCompleteName(
-			ARBDogTitlePtr inTitle,
+			ARBDogTitlePtr const& inTitle,
 			bool bAbbrevFirst = true) const;
 
 	/**

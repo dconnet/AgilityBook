@@ -34,7 +34,7 @@ class CDlgCalendar : public wxDialog
 {
 public:
 	CDlgCalendar(
-			ARBCalendarPtr pCal,
+			ARBCalendarPtr const& inCal,
 			CAgilityBookDoc* pDoc,
 			wxWindow* pParent = nullptr);
 

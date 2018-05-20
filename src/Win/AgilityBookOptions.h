@@ -57,7 +57,7 @@ struct CFontInfo
 class CAgilityBookOptions
 {
 public:
-	static bool ImportSettings(ElementNodePtr tree);
+	static bool ImportSettings(ElementNodePtr const& inTree);
 	static ElementNodePtr ExportSettings();
 
 	// Calendar options
@@ -170,33 +170,33 @@ public:
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options
 	static std::wstring GetLastEnteredDivision(
-			ARBDogPtr pDog,
-			ARBConfigVenuePtr pVenue);
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue);
 	static void SetLastEnteredDivision(
-			ARBDogPtr pDog,
-			ARBConfigVenuePtr pVenue,
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue,
 			wchar_t const* inLast);
 	static std::wstring GetLastEnteredLevel(
-			ARBDogPtr pDog,
-			ARBConfigVenuePtr pVenue);
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue);
 	static void SetLastEnteredLevel(
-			ARBDogPtr pDog,
-			ARBConfigVenuePtr pVenue,
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue,
 			wchar_t const* inLast);
 	static std::wstring GetLastEnteredHeight(
-			ARBDogPtr pDog,
-			ARBConfigVenuePtr pVenue);
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue);
 	static void SetLastEnteredHeight(
-			ARBDogPtr pDog,
-			ARBConfigVenuePtr pVenue,
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue,
 			wchar_t const* inLast);
 	static std::wstring GetLastEnteredRefHeight();
 	static void SetLastEnteredRefHeight(wchar_t const* inLast);
 	static std::wstring GetLastEnteredJudge();
 	static void SetLastEnteredJudge(wchar_t const* inLast);
-	static std::wstring GetLastEnteredHandler(ARBDogPtr pDog);
+	static std::wstring GetLastEnteredHandler(ARBDogPtr const& inDog);
 	static void SetLastEnteredHandler(
-			ARBDogPtr pDog,
+			ARBDogPtr const& inDog,
 			wchar_t const* inLast);
 	static void CleanLastItems(std::wstring const& callName);
 	static void CleanLastItems(std::wstring const& oldCallName, std::wstring const& newCallName);

@@ -82,7 +82,7 @@ void ARBInfo::clear()
 
 
 bool ARBInfo::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -115,12 +115,12 @@ bool ARBInfo::Load(
 }
 
 
-bool ARBInfo::Save(ElementNodePtr ioTree) const
+bool ARBInfo::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
 		return false;
-	ElementNodePtr info = ioTree->AddElementNode(TREE_INFO);
+	ElementNodePtr const& info = ioTree->AddElementNode(TREE_INFO);
 	if (!m_ClubInfo.Save(info))
 		return false;
 	if (!m_JudgeInfo.Save(info))

@@ -62,9 +62,9 @@ class CAgilityBookTrainingViewData : public CListData
 public:
 	CAgilityBookTrainingViewData(
 			CAgilityBookTrainingView* pView,
-			ARBTrainingPtr pTraining)
+			ARBTrainingPtr const& inTraining)
 		: m_pView(pView)
-		, m_pTraining(pTraining)
+		, m_pTraining(inTraining)
 	{
 	}
 	~CAgilityBookTrainingViewData()

@@ -65,7 +65,7 @@ typedef unsigned char *POINTER;
 /* UINT2 defines a two byte word */
 typedef unsigned short UINT2;
 /* UINT4 defines a four byte word */
-typedef wxUint32 UINT4;
+typedef uint32_t UINT4;
 
 typedef struct
 {

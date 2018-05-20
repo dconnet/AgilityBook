@@ -445,7 +445,7 @@ void CDlgConfigure::DoEdit()
 
 
 wxTreeItemId CDlgConfigure::FindCurrentVenue(
-		ARBConfigVenuePtr pVenue,
+		ARBConfigVenuePtr const& inVenue,
 		bool bSet)
 {
 	wxTreeItemId hCurrent;
@@ -455,7 +455,7 @@ wxTreeItemId CDlgConfigure::FindCurrentVenue(
 		item = m_ctrlItems->GetNextChild(m_hItemVenues, cookie))
 	{
 		CDlgConfigureDataVenue* pData = dynamic_cast<CDlgConfigureDataVenue*>(GetData(item));
-		if (pData && pData->GetVenue() == pVenue)
+		if (pData && pData->GetVenue() == inVenue)
 		{
 			hCurrent = item;
 			break;
@@ -472,7 +472,7 @@ wxTreeItemId CDlgConfigure::FindCurrentVenue(
 
 
 wxTreeItemId CDlgConfigure::FindCurrentFault(
-		ARBConfigFaultPtr pFault,
+		ARBConfigFaultPtr const& inFault,
 		bool bSet)
 {
 	wxTreeItemId hCurrent;
@@ -482,7 +482,7 @@ wxTreeItemId CDlgConfigure::FindCurrentFault(
 		item = m_ctrlItems->GetNextChild(m_hItemFaults, cookie))
 	{
 		CDlgConfigureDataFault* pData = dynamic_cast<CDlgConfigureDataFault*>(GetData(item));
-		if (pData && pData->GetFault() == pFault)
+		if (pData && pData->GetFault() == inFault)
 		{
 			hCurrent = item;
 			break;
@@ -499,7 +499,7 @@ wxTreeItemId CDlgConfigure::FindCurrentFault(
 
 
 wxTreeItemId CDlgConfigure::FindCurrentOtherPoints(
-		ARBConfigOtherPointsPtr pOther,
+		ARBConfigOtherPointsPtr const& inOther,
 		bool bSet)
 {
 	wxTreeItemId hCurrent;
@@ -509,7 +509,7 @@ wxTreeItemId CDlgConfigure::FindCurrentOtherPoints(
 		item = m_ctrlItems->GetNextChild(m_hItemOtherPts, cookie))
 	{
 		CDlgConfigureDataOtherPoints* pData = dynamic_cast<CDlgConfigureDataOtherPoints*>(GetData(item));
-		if (pData && pData->GetOtherPoints() == pOther)
+		if (pData && pData->GetOtherPoints() == inOther)
 		{
 			hCurrent = item;
 			break;

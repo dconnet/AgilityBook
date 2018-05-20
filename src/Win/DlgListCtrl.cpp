@@ -90,10 +90,10 @@ class CDlgListCtrlDataCalendar : public CDlgListCtrlData
 public:
 	CDlgListCtrlDataCalendar(
 			CDlgListCtrl* parent,
-			ARBCalendarPtr pCal)
+			ARBCalendarPtr const& inCal)
 		: CDlgListCtrlData(parent->m_ctrlList)
 		, m_Parent(parent)
-		, m_pCal(pCal)
+		, m_pCal(inCal)
 	{
 	}
 	virtual bool HasIcon() const				{return true;}
@@ -174,18 +174,18 @@ public:
 			CDlgListCtrl* pDlg,
 			CReportListCtrl* ctrl,
 			CAgilityBookDoc* pDoc,
-			ARBDogRunPtr pRun,
+			ARBDogRunPtr const& inRun,
 			std::set<std::wstring>& faults);
 	CDlgListCtrlDataFaults(
 			CDlgListCtrl* pDlg,
 			CReportListCtrl* list,
 			CAgilityBookDoc* pDoc,
-			ARBDogRunPtr pRun,
+			ARBDogRunPtr const& inRun,
 			std::wstring fault)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
 		, m_pDlg(pDlg)
-		, m_pRun(pRun)
+		, m_pRun(inRun)
 		, m_Fault(fault)
 	{
 	}
@@ -205,15 +205,15 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 		CDlgListCtrl* pDlg,
 		CReportListCtrl* ctrl,
 		CAgilityBookDoc* pDoc,
-		ARBDogRunPtr pRun,
+		ARBDogRunPtr const& inRun,
 		std::set<std::wstring>& faults)
 {
 	faults.clear();
 	pDoc->Book().GetAllFaultTypes(faults);
-	if (pRun)
+	if (inRun)
 	{
-		for (ARBDogFaultList::const_iterator iterFault = pRun->GetFaults().begin();
-			iterFault != pRun->GetFaults().end();
+		for (ARBDogFaultList::const_iterator iterFault = inRun->GetFaults().begin();
+			iterFault != inRun->GetFaults().end();
 			++iterFault)
 		{
 			faults.insert((*iterFault));
@@ -261,12 +261,12 @@ public:
 	CDlgListCtrlDataOtherPoints(
 			CReportListCtrl* list,
 			ARBConfig& config,
-			ARBDogRunPtr pRun,
-			ARBDogRunOtherPointsPtr pOther)
+			ARBDogRunPtr const& inRun,
+			ARBDogRunOtherPointsPtr const& inOther)
 		: CDlgListCtrlData(list)
 		, m_pConfig(config)
-		, m_pRun(pRun)
-		, m_Other(pOther)
+		, m_pRun(inRun)
+		, m_Other(inOther)
 	{
 	}
 	virtual std::wstring OnNeedText(long iCol) const;
@@ -317,12 +317,12 @@ public:
 	CDlgListCtrlDataPartners(
 			CDlgListCtrl* pDlg,
 			CReportListCtrl* list,
-			ARBDogRunPtr pRun,
-			ARBDogRunPartnerPtr pPartner)
+			ARBDogRunPtr const& inRun,
+			ARBDogRunPartnerPtr const& inPartner)
 		: CDlgListCtrlData(list)
 		, m_pDlg(pDlg)
-		, m_pRun(pRun)
-		, m_Partner(pPartner)
+		, m_pRun(inRun)
+		, m_Partner(inPartner)
 	{
 	}
 	virtual std::wstring OnNeedText(long iCol) const;
@@ -427,7 +427,7 @@ CDlgListCtrl::CDlgListCtrl(
 CDlgListCtrl::CDlgListCtrl(
 		CDlgListCtrl::WhatToList inType,
 		CAgilityBookDoc* pDoc,
-		ARBDogRunPtr run,
+		ARBDogRunPtr const& inRun,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
@@ -443,7 +443,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_CalEntries(nullptr)
 	, m_pTabView(nullptr)
 	, m_pConfig(nullptr)
-	, m_pRun(run)
+	, m_pRun(inRun)
 {
 	int nCols = 0;
 	std::vector<CDlgListCtrlDataPtr> items;
@@ -482,7 +482,7 @@ CDlgListCtrl::CDlgListCtrl(
 // OtherPoints
 CDlgListCtrl::CDlgListCtrl(
 		ARBConfig& pConfig,
-		ARBDogRunPtr run,
+		ARBDogRunPtr const& inRun,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
@@ -498,7 +498,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_CalEntries(nullptr)
 	, m_pTabView(nullptr)
 	, m_pConfig(&pConfig)
-	, m_pRun(run)
+	, m_pRun(inRun)
 {
 	Create(StringUtil::stringW(_("IDS_OTHERPOINTS")), pParent, false);
 

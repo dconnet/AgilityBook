@@ -568,7 +568,7 @@ size_t ARBCalendar::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 
 bool ARBCalendar::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -720,7 +720,7 @@ bool ARBCalendar::Load(
 }
 
 
-bool ARBCalendar::Save(ElementNodePtr ioTree) const
+bool ARBCalendar::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -836,7 +836,7 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 }
 
 
-bool ARBCalendar::IsMatch(ARBCalendarPtr inCal, bool inMatchExact) const
+bool ARBCalendar::IsMatch(ARBCalendarPtr const& inCal, bool inMatchExact) const
 {
 	if (!inCal)
 		return false;
@@ -852,7 +852,7 @@ bool ARBCalendar::IsMatch(ARBCalendarPtr inCal, bool inMatchExact) const
 }
 
 
-bool ARBCalendar::Update(ARBCalendarPtr inCal)
+bool ARBCalendar::Update(ARBCalendarPtr const& inCal)
 {
 	if (!inCal)
 		return false;
@@ -928,7 +928,7 @@ bool ARBCalendar::Update(ARBCalendarPtr inCal)
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBCalendarList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -1006,7 +1006,7 @@ int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 
 
 bool ARBCalendarList::FindCalendar(
-		ARBCalendarPtr inCal,
+		ARBCalendarPtr const& inCal,
 		bool inMatchExact,
 		ARBCalendarPtr* outCal) const
 {
@@ -1028,7 +1028,7 @@ bool ARBCalendarList::FindCalendar(
 }
 
 
-bool ARBCalendarList::AddCalendar(ARBCalendarPtr inCal)
+bool ARBCalendarList::AddCalendar(ARBCalendarPtr const& inCal)
 {
 	bool bAdded = false;
 	if (inCal)
@@ -1040,7 +1040,7 @@ bool ARBCalendarList::AddCalendar(ARBCalendarPtr inCal)
 }
 
 
-bool ARBCalendarList::DeleteCalendar(ARBCalendarPtr inCal)
+bool ARBCalendarList::DeleteCalendar(ARBCalendarPtr const& inCal)
 {
 	if (inCal)
 	{

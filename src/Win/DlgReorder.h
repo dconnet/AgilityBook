@@ -33,8 +33,8 @@ public:
 			wxWindow* pParent = nullptr);
 	CDlgReorder(
 			CAgilityBookDoc* pDoc,
-			ARBDogTrialPtr trial,
-			ARBDogRunPtr run,
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun,
 			wxWindow* pParent = nullptr);
 
 private:

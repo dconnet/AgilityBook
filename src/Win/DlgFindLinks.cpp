@@ -47,14 +47,14 @@ class CDlgFindLinksData : public CListData
 {
 public:
 	CDlgFindLinksData(
-			ARBDogPtr pDog,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun,
+			ARBDogPtr const& inDog,
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun,
 			std::wstring const& inLink,
 			int image)
-		: m_pDog(pDog)
-		, m_pTrial(pTrial)
-		, m_pRun(pRun)
+		: m_pDog(inDog)
+		, m_pTrial(inTrial)
+		, m_pRun(inRun)
 		, m_OldLink(inLink)
 		, m_Link(inLink)
 		, m_Image(image)

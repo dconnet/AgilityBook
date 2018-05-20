@@ -74,7 +74,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -84,7 +84,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogReferenceRun element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Getters/setters.
@@ -184,7 +184,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -193,7 +193,7 @@ public:
 	 * @param inRef Object to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddReferenceRun(ARBDogReferenceRunPtr inRef);
+	bool AddReferenceRun(ARBDogReferenceRunPtr const& inRef);
 
 	/**
 	 * Delete a reference run.
@@ -201,5 +201,5 @@ public:
 	 * @return Whether object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteReferenceRun(ARBDogReferenceRunPtr inRef);
+	bool DeleteReferenceRun(ARBDogReferenceRunPtr const& inRef);
 };

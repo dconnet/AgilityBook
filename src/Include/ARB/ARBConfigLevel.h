@@ -81,7 +81,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -91,7 +91,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigLevel element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Update this configuration from inLevelNew.
@@ -102,7 +102,7 @@ public:
 	 */
 	bool Update(
 			int indent,
-			ARBConfigLevelPtr inLevelNew,
+			ARBConfigLevelPtr const& inLevelNew,
 			std::wstring& ioInfo);
 
 	/*
@@ -156,7 +156,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -213,7 +213,7 @@ public:
 	 * @param inLevel Level to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddLevel(ARBConfigLevelPtr inLevel);
+	bool AddLevel(ARBConfigLevelPtr const& inLevel);
 
 	/**
 	 * Delete a level.

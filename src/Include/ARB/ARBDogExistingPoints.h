@@ -83,7 +83,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -93,7 +93,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogExistingPoints element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Type of points.
@@ -239,7 +239,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -267,10 +267,10 @@ public:
 	 * @return Whether any existing points exist.
 	 */
 	bool HasPoints(
-			ARBConfigVenuePtr inVenue,
-			ARBConfigDivisionPtr inDiv,
-			ARBConfigLevelPtr inLevel,
-			ARBConfigEventPtr inEvent,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigDivisionPtr const& inDiv,
+			ARBConfigLevelPtr const& inLevel,
+			ARBConfigEventPtr const& inEvent,
 			ARBDate inDateFrom,
 			ARBDate inDateTo,
 			bool inHasLifetime) const;
@@ -289,11 +289,11 @@ public:
 	 */
 	double ExistingPoints(
 			ARBDogExistingPoints::PointType inType,
-			ARBConfigVenuePtr inVenue,
-			ARBConfigMultiQPtr inMultiQ,
-			ARBConfigDivisionPtr inDiv,
-			ARBConfigLevelPtr inLevel,
-			ARBConfigEventPtr inEvent,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigMultiQPtr const& inMultiQ,
+			ARBConfigDivisionPtr const& inDiv,
+			ARBConfigLevelPtr const& inLevel,
+			ARBConfigEventPtr const& inEvent,
 			ARBDate inDateFrom,
 			ARBDate inDateTo) const;
 
@@ -309,11 +309,11 @@ public:
 	 * @return The number of existing points.
 	 */
 	double ExistingLifetimePoints(
-			ARBConfigLifetimeNamePtr inName,
-			ARBConfigVenuePtr inVenue,
-			ARBConfigDivisionPtr inDiv,
-			ARBConfigLevelPtr inLevel,
-			ARBConfigEventPtr inEvent,
+			ARBConfigLifetimeNamePtr const& inName,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigDivisionPtr const& inDiv,
+			ARBConfigLevelPtr const& inLevel,
+			ARBConfigEventPtr const& inEvent,
 			ARBDate inDateFrom,
 			ARBDate inDateTo) const;
 
@@ -349,7 +349,7 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumExistingPointsInDivision(
-			ARBConfigVenuePtr inVenue,
+			ARBConfigVenuePtr const& inVenue,
 			std::wstring const& inDiv) const;
 
 	/**
@@ -539,7 +539,7 @@ public:
 	 * @param inExistingPoints Object to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
+	bool AddExistingPoints(ARBDogExistingPointsPtr const& inExistingPoints);
 
 	/**
 	 * Delete an existing point object.
@@ -547,5 +547,5 @@ public:
 	 * @return Whether object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
+	bool DeleteExistingPoints(ARBDogExistingPointsPtr const& inExistingPoints);
 };

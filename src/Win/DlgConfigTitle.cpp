@@ -80,7 +80,7 @@ END_EVENT_TABLE()
 
 
 CDlgConfigTitle::CDlgConfigTitle(
-		ARBConfigTitlePtr inTitle,
+		ARBConfigTitlePtr const& inTitle,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Title(inTitle)

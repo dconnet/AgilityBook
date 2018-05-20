@@ -41,15 +41,15 @@ BEGIN_EVENT_TABLE(CDlgRegNum, wxDialog)
 END_EVENT_TABLE()
 
 
-// If pRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.
+// If inRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgRegNum::CDlgRegNum(
 		ARBConfig const& config,
 		ARBDogRegNumList& regnums,
-		ARBDogRegNumPtr pRegNum,
+		ARBDogRegNumPtr const& inRegNum,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_RegNums(regnums)
-	, m_pRegNum(pRegNum)
+	, m_pRegNum(inRegNum)
 	, m_ctrlVenues(nullptr)
 	, m_Venue()
 	, m_RegNum()

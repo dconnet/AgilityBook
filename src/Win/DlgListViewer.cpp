@@ -137,7 +137,7 @@ public:
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 
 	virtual int Compare(
-			CDlgListViewerDataPtr pRow2,
+			CDlgListViewerDataPtr const& inRow2,
 			int inCol) const = 0;
 };
 
@@ -156,8 +156,8 @@ class CDlgListViewerDataExisting : public CDlgListViewerData
 	friend class CDlgListViewerDataMultiQ;
 public:
 	CDlgListViewerDataExisting(
-			CDlgListViewerDataColumnsPtr inColData,
-			ARBDogExistingPointsPtr inExisting)
+			CDlgListViewerDataColumnsPtr const& inColData,
+			ARBDogExistingPointsPtr const& inExisting)
 		: m_ColData(inColData)
 		, m_Existing(inExisting)
 	{
@@ -166,7 +166,7 @@ public:
 	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
-			CDlgListViewerDataPtr pRow2,
+			CDlgListViewerDataPtr const& inRow2,
 			int inCol) const;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
@@ -215,11 +215,11 @@ class CDlgListViewerDataRun : public CDlgListViewerData
 	friend class CDlgListViewerDataExisting;
 public:
 	CDlgListViewerDataRun(
-			CDlgListViewerDataColumnsPtr inColData,
-			ARBDogPtr inDog,
-			ARBDogTrialPtr inTrial,
-			ARBDogRunPtr inRun,
-			ARBConfigScoringPtr inScoring,
+			CDlgListViewerDataColumnsPtr const& inColData,
+			ARBDogPtr const& inDog,
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun,
+			ARBConfigScoringPtr const& inScoring,
 			ScoringRunInfo::eScoringDetail inScoringDetail)
 		: m_ColData(inColData)
 		, m_Dog(inDog)
@@ -237,7 +237,7 @@ public:
 	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
-			CDlgListViewerDataPtr pRow2,
+			CDlgListViewerDataPtr const& inRow2,
 			int inCol) const;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
@@ -345,9 +345,9 @@ class CDlgListViewerDataMultiQ : public CDlgListViewerData
 	friend class CDlgListViewerDataExisting;
 public:
 	CDlgListViewerDataMultiQ(
-			CDlgListViewerDataColumnsPtr inColData,
+			CDlgListViewerDataColumnsPtr const& inColData,
 			ARBDate const& inDate,
-			ARBDogTrialPtr inTrial)
+			ARBDogTrialPtr const& inTrial)
 		: m_ColData(inColData)
 		, m_Date(inDate)
 		, m_Trial(inTrial)
@@ -357,7 +357,7 @@ public:
 	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
-			CDlgListViewerDataPtr pRow2,
+			CDlgListViewerDataPtr const& inRow2,
 			int inCol) const;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
@@ -392,12 +392,12 @@ std::wstring CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 /////////////////////////////////////////////////////////////////////////////
 
 int CDlgListViewerDataExisting::Compare(
-		CDlgListViewerDataPtr pRow2,
+		CDlgListViewerDataPtr const& inRow2,
 		int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataRunPtr pDataRun = std::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataMultiQPtr pDataMultiQ = std::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(inRow2);
+	CDlgListViewerDataRunPtr pDataRun = std::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(inRow2);
+	CDlgListViewerDataMultiQPtr pDataMultiQ = std::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(inRow2);
 	if (!pDataExisting && !pDataRun && !pDataMultiQ)
 		return 0;
 	std::wstring str1, str2;
@@ -463,7 +463,7 @@ int CDlgListViewerDataExisting::Compare(
 	case COL_RUN_MQ_SPEED:
 	case COL_RUN_MQ_PARTNERS:
 		str1 = OnNeedText(inCol);
-		str2 = pRow2->OnNeedText(inCol);
+		str2 = inRow2->OnNeedText(inCol);
 		break;
 	}
 	if (str1 < str2)
@@ -477,11 +477,11 @@ int CDlgListViewerDataExisting::Compare(
 /////////////////////////////////////////////////////////////////////////////
 
 int CDlgListViewerDataRun::Compare(
-		CDlgListViewerDataPtr pRow2,
+		CDlgListViewerDataPtr const& inRow2,
 		int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataRunPtr pDataRun = std::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(inRow2);
+	CDlgListViewerDataRunPtr pDataRun = std::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(inRow2);
 	if (!pDataExisting && !pDataRun)
 		return 0;
 	std::wstring str1, str2;
@@ -609,7 +609,7 @@ int CDlgListViewerDataRun::Compare(
 	case COL_RUN_MQ_JUDGE:
 	case COL_RUN_MQ_PARTNERS:
 		str1 = OnNeedText(inCol);
-		str2 = pRow2->OnNeedText(inCol);
+		str2 = inRow2->OnNeedText(inCol);
 		break;
 	}
 	if (str1 < str2)
@@ -622,11 +622,11 @@ int CDlgListViewerDataRun::Compare(
 
 
 int CDlgListViewerDataMultiQ::Compare(
-		CDlgListViewerDataPtr pRow2,
+		CDlgListViewerDataPtr const& inRow2,
 		int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataMultiQPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(inRow2);
+	CDlgListViewerDataMultiQPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(inRow2);
 	if (!pDataExisting && !pData)
 		return 0;
 	std::wstring str1, str2;
@@ -652,7 +652,7 @@ int CDlgListViewerDataMultiQ::Compare(
 	case COL_RUN_MQ_CLUB:
 	case COL_RUN_MQ_LOCATION:
 		str1 = OnNeedText(inCol);
-		str2 = pRow2->OnNeedText(inCol);
+		str2 = inRow2->OnNeedText(inCol);
 		break;
 	}
 	if (str1 < str2)
@@ -669,7 +669,7 @@ class CDlgListViewerDataLifetime : public CDlgListViewerData
 {
 public:
 	CDlgListViewerDataLifetime(
-			CDlgListViewerDataColumnsPtr inColData,
+			CDlgListViewerDataColumnsPtr const& inColData,
 			LifeTimePointInfoPtr const& info)
 		: m_ColData(inColData)
 		, m_info(info)
@@ -679,7 +679,7 @@ public:
 	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
-			CDlgListViewerDataPtr pRow2,
+			CDlgListViewerDataPtr const& inRow2,
 			int inCol) const;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
@@ -714,10 +714,10 @@ std::wstring CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 
 
 int CDlgListViewerDataLifetime::Compare(
-		CDlgListViewerDataPtr pRow2,
+		CDlgListViewerDataPtr const& inRow2,
 		int inCol) const
 {
-	CDlgListViewerDataLifetimePtr pData = std::dynamic_pointer_cast<CDlgListViewerDataLifetime, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataLifetimePtr pData = std::dynamic_pointer_cast<CDlgListViewerDataLifetime, CDlgListViewerData>(inRow2);
 	if (!pData)
 		return 0;
 	std::wstring str1, str2;
@@ -754,7 +754,7 @@ class CDlgListViewerDataOther : public CDlgListViewerData
 {
 public:
 	CDlgListViewerDataOther(
-			CDlgListViewerDataColumnsPtr inColData,
+			CDlgListViewerDataColumnsPtr const& inColData,
 			OtherPtInfo const& info)
 		: m_ColData(inColData)
 		, m_info(info)
@@ -764,7 +764,7 @@ public:
 	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
-			CDlgListViewerDataPtr pRow2,
+			CDlgListViewerDataPtr const& inRow2,
 			int inCol) const;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
@@ -821,10 +821,10 @@ std::wstring CDlgListViewerDataOther::OnNeedText(long iCol) const
 
 
 int CDlgListViewerDataOther::Compare(
-		CDlgListViewerDataPtr pRow2,
+		CDlgListViewerDataPtr const& inRow2,
 		int inCol) const
 {
-	CDlgListViewerDataOtherPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataOther, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataOtherPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataOther, CDlgListViewerData>(inRow2);
 	if (!pData)
 		return 0;
 	std::wstring str1, str2;
@@ -919,7 +919,7 @@ class CDlgListViewerDataItem : public CDlgListViewerData
 {
 public:
 	CDlgListViewerDataItem(
-			CDlgListViewerDataColumnsPtr inColData,
+			CDlgListViewerDataColumnsPtr const& inColData,
 			CFindItemInfo const& info)
 		: m_ColData(inColData)
 		, m_info(info)
@@ -929,7 +929,7 @@ public:
 	virtual std::wstring OnNeedText(long iCol) const;
 	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
-			CDlgListViewerDataPtr pRow2,
+			CDlgListViewerDataPtr const& inRow2,
 			int inCol) const;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
@@ -974,10 +974,10 @@ std::wstring CDlgListViewerDataItem::OnNeedText(long iCol) const
 
 
 int CDlgListViewerDataItem::Compare(
-		CDlgListViewerDataPtr pRow2,
+		CDlgListViewerDataPtr const& inRow2,
 		int inCol) const
 {
-	CDlgListViewerDataItemPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataItem, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataItemPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataItem, CDlgListViewerData>(inRow2);
 	if (!pData)
 		return 0;
 	std::wstring str1, str2;
@@ -1068,11 +1068,11 @@ int wxCALLBACK CompareRows(CListDataPtr const& item1, CListDataPtr const& item2,
 static void InsertRun(
 		CAgilityBookDoc* pDoc,
 		CReportListCtrl* ctrlList,
-		CDlgListViewerDataColumnsPtr pColData,
+		CDlgListViewerDataColumnsPtr const& pColData,
 		int& iItem,
-		ARBDogPtr pDog,
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun,
+		ARBDogPtr const& pDog,
+		ARBDogTrialPtr const& pTrial,
+		ARBDogRunPtr const& pRun,
 		ScoringRunInfo::eScoringDetail scoringDetail)
 {
 	ARBConfigScoringPtr pScoring;

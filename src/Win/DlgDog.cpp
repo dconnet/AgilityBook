@@ -155,9 +155,9 @@ class CDlgDogDataTitle : public CListData
 public:
 	CDlgDogDataTitle(
 			CDlgDog* pDlg,
-			ARBDogTitlePtr title)
+			ARBDogTitlePtr const& inTitle)
 		: m_pDlg(pDlg)
-		, m_Title(title)
+		, m_Title(inTitle)
 	{
 	}
 	virtual std::wstring OnNeedText(long iCol) const;
@@ -307,9 +307,9 @@ class CDlgDogDataRegNum : public CListData
 public:
 	CDlgDogDataRegNum(
 			CDlgDog* pDlg,
-			ARBDogRegNumPtr regnum)
+			ARBDogRegNumPtr const& inRegnum)
 		: m_pDlg(pDlg)
-		, m_RegNum(regnum)
+		, m_RegNum(inRegnum)
 	{
 	}
 	virtual std::wstring OnNeedText(long iCol) const;
@@ -409,7 +409,7 @@ class CDlgDogDataPoint : public CListData
 public:
 	CDlgDogDataPoint(
 			CDlgDog* pDlg,
-			ARBDogExistingPointsPtr pts)
+			ARBDogExistingPointsPtr const& pts)
 		: m_pDlg(pDlg)
 		, m_Pts(pts)
 	{
@@ -568,12 +568,12 @@ END_EVENT_TABLE()
 
 CDlgDog::CDlgDog(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr pDog,
+		ARBDogPtr const& inDog,
 		wxWindow* pParent,
 		int iSelectPage)
 	: wxDialog()
 	, m_pDoc(pDoc)
-	, m_pDog(pDog)
+	, m_pDog(inDog)
 	, m_viewHidden(CAgilityBookOptions::GetViewHiddenTitles())
 	, m_imgTitlesEmpty(-1)
 	, m_imgTitlesTitled(-1)
@@ -581,13 +581,13 @@ CDlgDog::CDlgDog(
 	, m_imgTitlesHidden(-1)
 	, m_imgTitlesTitledHidden(-1)
 	, m_imgTitlesTitledHiddenReceived(-1)
-	, m_CallName(StringUtil::stringWX(pDog->GetCallName()))
-	, m_Breed(StringUtil::stringWX(pDog->GetBreed()))
-	, m_RegName(StringUtil::stringWX(pDog->GetRegisteredName()))
-	, m_DOB(pDog->GetDOB())
-	, m_IsDeceased(pDog->GetDeceased().IsValid())
-	, m_Deceased(pDog->GetDeceased())
-	, m_Notes(StringUtil::stringWX(pDog->GetNote()))
+	, m_CallName(StringUtil::stringWX(inDog->GetCallName()))
+	, m_Breed(StringUtil::stringWX(inDog->GetBreed()))
+	, m_RegName(StringUtil::stringWX(inDog->GetRegisteredName()))
+	, m_DOB(inDog->GetDOB())
+	, m_IsDeceased(inDog->GetDeceased().IsValid())
+	, m_Deceased(inDog->GetDeceased())
+	, m_Notes(StringUtil::stringWX(inDog->GetNote()))
 	, m_ctrlAge(nullptr)
 	, m_ctrlDDay(nullptr)
 	, m_ctrlTitles(nullptr)
@@ -617,9 +617,9 @@ CDlgDog::CDlgDog(
 		m_Deceased.SetToday();
 	m_pDog->GetTitles().Clone(m_Titles);
 	m_sortTitles.Initialize(nColTitleInfo);
-	pDog->GetRegNums().Clone(m_RegNums);
+	inDog->GetRegNums().Clone(m_RegNums);
 	m_sortRegNums.Initialize(nColRegNumInfo);
-	pDog->GetExistingPoints().Clone(m_ExistingPoints);
+	inDog->GetExistingPoints().Clone(m_ExistingPoints);
 	m_sortPoints.Initialize(nColExistingPointsInfo);
 
 	// Controls (these are done first to control tab order)

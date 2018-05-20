@@ -40,7 +40,7 @@ public:
 	CDlgConfigVenue(
 			ARBAgilityRecordBook const& book,
 			ARBConfig const& config,
-			ARBConfigVenuePtr pVenue,
+			ARBConfigVenuePtr const& inVenue,
 			wxWindow* pParent = nullptr);
 	~CDlgConfigVenue();
 
@@ -62,22 +62,22 @@ private:
 	void UpdateButtons();
 	/*
 	int FindCurrentDivision(
-			ARBConfigDivisionPtr pDiv,
+			ARBConfigDivisionPtr const& inDiv,
 			bool bSet);
 	HTREEITEM FindCurrentLevel(
-			ARBConfigLevelPtr pLevel,
+			ARBConfigLevelPtr const& inLevel,
 			bool bSet);
 	HTREEITEM FindCurrentSubLevel(
-			ARBConfigSubLevelPtr pSubLevel,
+			ARBConfigSubLevelPtr const& inSubLevel,
 			bool bSet);
 	int FindCurrentTitle(
-			ARBConfigTitlePtr pTitle,
+			ARBConfigTitlePtr const& nTitle,
 			bool bSet);
 	int FindCurrentEvent(
-			ARBConfigEventPtr pEvent,
+			ARBConfigEventPtr const& nEvent,
 			bool bSet);
 	int FindCurrentMultiQ(
-			ARBConfigMultiQPtr pMultiQ,
+			ARBConfigMultiQPtr const& inMultiQ,
 			bool bSet);
 	*/
 

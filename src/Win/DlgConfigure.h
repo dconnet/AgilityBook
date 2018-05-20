@@ -50,13 +50,13 @@ private:
 	void LoadData(eAction dataToLoad);
 	void DoEdit();
 	wxTreeItemId FindCurrentVenue(
-			ARBConfigVenuePtr pVenue,
+			ARBConfigVenuePtr const& inVenue,
 			bool bSet);
 	wxTreeItemId FindCurrentFault(
-			ARBConfigFaultPtr pFault,
+			ARBConfigFaultPtr const& inFault,
 			bool bSet);
 	wxTreeItemId FindCurrentOtherPoints(
-			ARBConfigOtherPointsPtr pOther,
+			ARBConfigOtherPointsPtr const& inOther,
 			bool bSet);
 
 	CAgilityBookDoc* m_pDoc;

@@ -82,7 +82,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback,
 			std::wstring const& inItemName);
@@ -93,7 +93,7 @@ public:
 	 * @param inItemName Name of collection being saved.
 	 */
 	bool Save(
-			ElementNodePtr ioTree,
+			ElementNodePtr const& ioTree,
 			std::wstring const& inItemName) const;
 
 	/*
@@ -160,7 +160,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -168,7 +168,7 @@ public:
 	 * Save a items entry
 	 * @param ioTree Parent element.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Sort the list by name.
@@ -216,14 +216,14 @@ public:
 	 * @param inItem Item to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddItem(ARBInfoItemPtr inItem);
+	bool AddItem(ARBInfoItemPtr const& inItem);
 
 	/**
 	 * Delete a item.
 	 * @param inItem Object to delete.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteItem(ARBInfoItemPtr inItem);
+	bool DeleteItem(ARBInfoItemPtr const& inItem);
 
 private:
 	std::wstring m_ItemName;

@@ -151,9 +151,9 @@ bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 
 bool ARBDogRunScoring::Load(
 		short inConfigVersion,
-		ARBConfigEventPtr inEvent,
-		ARBConfigScoringPtr inEventScoring,
-		ElementNodePtr inTree,
+		ARBConfigEventPtr const& inEvent,
+		ARBConfigScoringPtr const& inEventScoring,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -263,7 +263,7 @@ bool ARBDogRunScoring::Load(
 }
 
 
-bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
+bool ARBDogRunScoring::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -395,7 +395,7 @@ bool ARBDogRunScoring::GetObstaclesPS(
 }
 
 
-double ARBDogRunScoring::GetTimeFaults(ARBConfigScoringPtr inScoring) const
+double ARBDogRunScoring::GetTimeFaults(ARBConfigScoringPtr const& inScoring) const
 {
 	double timeFaults = 0.0;
 	if (eTypeByTime == m_type

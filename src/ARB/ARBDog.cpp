@@ -193,7 +193,7 @@ size_t ARBDog::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 bool ARBDog::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -274,7 +274,7 @@ bool ARBDog::Load(
 
 
 bool ARBDog::Save(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		ARBConfig const& inConfig) const
 {
 	assert(ioTree);
@@ -335,7 +335,7 @@ int ARBDog::DeleteVenue(std::wstring const& inVenue)
 
 
 int ARBDog::RenameDivision(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inOldDiv,
 		std::wstring const& inNewDiv)
 {
@@ -359,7 +359,7 @@ int ARBDog::DeleteDivision(
 
 bool ARBDogList::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -538,7 +538,7 @@ int ARBDogList::NumMultiHostedTrialsInDivision(
 
 
 int ARBDogList::NumExistingPointsInDivision(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inDiv) const
 {
 	int count = 0;
@@ -549,7 +549,7 @@ int ARBDogList::NumExistingPointsInDivision(
 
 
 int ARBDogList::NumRunsInDivision(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inDiv) const
 {
 	int count = 0;
@@ -560,7 +560,7 @@ int ARBDogList::NumRunsInDivision(
 
 
 int ARBDogList::RenameDivision(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inOldDiv,
 		std::wstring const& inNewDiv)
 {
@@ -653,7 +653,7 @@ int ARBDogList::RenameTitle(
 
 
 int ARBDogList::DeleteTitle(
-		ARBConfigVenuePtr inVenueConfig,
+		ARBConfigVenuePtr const& inVenueConfig,
 		std::wstring const& inVenue,
 		std::wstring const& inTitle)
 {
@@ -743,7 +743,7 @@ int ARBDogList::DeleteLifetimeName(
 }
 
 
-bool ARBDogList::AddDog(ARBDogPtr inDog)
+bool ARBDogList::AddDog(ARBDogPtr const& inDog)
 {
 	bool bAdded = false;
 	if (inDog)
@@ -755,7 +755,7 @@ bool ARBDogList::AddDog(ARBDogPtr inDog)
 }
 
 
-bool ARBDogList::DeleteDog(ARBDogPtr inDog)
+bool ARBDogList::DeleteDog(ARBDogPtr const& inDog)
 {
 	if (inDog)
 	{

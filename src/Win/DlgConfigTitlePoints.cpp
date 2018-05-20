@@ -42,7 +42,7 @@ END_EVENT_TABLE()
 
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
-		ARBConfigVenuePtr inVenue,
+		ARBConfigVenuePtr const& inVenue,
 		double inValue, // Faults or Place
 		double inPoints,
 		ETitlePointType inType,
@@ -72,8 +72,8 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
-		ARBConfigVenuePtr inVenue,
-		ARBConfigLifetimePointsPtr inLifetime,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigLifetimePointsPtr const& inLifetime,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)

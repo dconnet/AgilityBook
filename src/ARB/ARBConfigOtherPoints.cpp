@@ -127,7 +127,7 @@ void ARBConfigOtherPoints::clear()
 
 
 bool ARBConfigOtherPoints::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -174,7 +174,7 @@ bool ARBConfigOtherPoints::Load(
 }
 
 
-bool ARBConfigOtherPoints::Save(ElementNodePtr ioTree) const
+bool ARBConfigOtherPoints::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -206,7 +206,7 @@ bool ARBConfigOtherPoints::Save(ElementNodePtr ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigOtherPointsList::Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -248,7 +248,7 @@ bool ARBConfigOtherPointsList::FindOtherPoints(
 }
 
 
-bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPointsPtr inOther)
+bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPointsPtr const& inOther)
 {
 	// Global uniqueness must be ensured by the calling function.
 	bool bAdded = false;

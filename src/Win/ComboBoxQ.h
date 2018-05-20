@@ -26,19 +26,19 @@ DECLARE_CLASS(CQualifyingComboBox)
 public:
 	CQualifyingComboBox(
 			wxWindow* parent,
-			ARBDogReferenceRunPtr refRun,
+			ARBDogReferenceRunPtr const& inRefRun,
 			wxValidator const& validator = wxDefaultValidator);
 	CQualifyingComboBox(
 			wxWindow* parent,
-			ARBDogRunPtr run,
+			ARBDogRunPtr const& inRun,
 			wxValidator const& validator = wxDefaultValidator);
 	CQualifyingComboBox(
 			wxWindow* parent,
-			ARBDogRunPtr run,
-			ARBConfigScoringPtr scoring,
+			ARBDogRunPtr const& inRun,
+			ARBConfigScoringPtr const& inScoring,
 			wxValidator const& validator = wxDefaultValidator);
 
-	void ResetContent(ARBConfigScoringPtr scoring);
+	void ResetContent(ARBConfigScoringPtr const& inScoring);
 	ARB_Q GetQ(int index) const;
 
 private:

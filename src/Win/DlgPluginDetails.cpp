@@ -42,11 +42,11 @@ END_EVENT_TABLE()
 
 CDlgPluginDetails::CDlgPluginDetails(
 		ARBConfig& inConfig,
-		ARBConfigCalSitePtr calSite,
+		ARBConfigCalSitePtr const& inCalSite,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Config(inConfig)
-	, m_OrigCalSite(calSite)
+	, m_OrigCalSite(inCalSite)
 	, m_CalSite()
 	, m_strName()
 	, m_strDesc()
@@ -58,13 +58,13 @@ CDlgPluginDetails::CDlgPluginDetails(
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CALENDAR_PLUGIN_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
-	if (calSite)
+	if (m_OrigCalSite)
 	{
-		m_CalSite = calSite->Clone();
-		m_strName = StringUtil::stringWX(calSite->GetName());
-		m_strDesc = StringUtil::stringWX(calSite->GetDescription());
-		m_strSearch = StringUtil::stringWX(calSite->GetSearchURL());
-		m_strHelp = StringUtil::stringWX(calSite->GetHelpURL());
+		m_CalSite = m_OrigCalSite->Clone();
+		m_strName = StringUtil::stringWX(m_OrigCalSite->GetName());
+		m_strDesc = StringUtil::stringWX(m_OrigCalSite->GetDescription());
+		m_strSearch = StringUtil::stringWX(m_OrigCalSite->GetSearchURL());
+		m_strHelp = StringUtil::stringWX(m_OrigCalSite->GetHelpURL());
 	}
 	else
 		m_CalSite = ARBConfigCalSite::New();

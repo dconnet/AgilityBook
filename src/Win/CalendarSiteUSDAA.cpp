@@ -246,7 +246,7 @@ std::string CCalendarSiteUSDAA::Process(
 	// we want to look for a Level4 Header containing "Event Calendar"
 	// The data we want is then contained in the 'table' tag that follows.
 	int nEntries = 0;
-	ElementNodePtr parentElement;
+	ElementNode const* parentElement = nullptr;
 	int idxEventCalH4tag = -1;
 	static const std::wstring tag(L"h4");
 	static const std::wstring name(L"Event Calendar");
@@ -382,12 +382,12 @@ std::string CCalendarSiteUSDAA::Process(
 		{
 			static const std::wstring tag2(L"h3");
 			static const std::wstring name2(L"General Event Information");
-			ElementNodePtr parent;
+			ElementNode const* parent;
 			int idxEventCalH3tag = -1;
 			if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
 			{
 				int idxFieldset;
-				ElementNodePtr parentFieldset;
+				ElementNode const* parentFieldset;
 				if (parent->FindElementDeep(parentFieldset, idxFieldset, L"fieldset"))
 				{
 					ElementNodePtr fieldset = parentFieldset->GetElementNode(idxFieldset);
@@ -418,7 +418,7 @@ std::string CCalendarSiteUSDAA::Process(
 							case 3: // Closing date
 								{
 									int idxDate;
-									ElementNodePtr parentCloseDate;
+									ElementNode const* parentCloseDate;
 									if (div->FindElementDeep(parentCloseDate, idxDate, L"span"))
 									{
 										ElementNodePtr closeDate = parentCloseDate->GetElementNode(idxDate);
@@ -432,7 +432,7 @@ std::string CCalendarSiteUSDAA::Process(
 							case 5: // Secretary
 								{
 									int idxHref;
-									ElementNodePtr parentTagA;
+									ElementNode const* parentTagA;
 									if (div->FindElementDeep(parentTagA, idxHref, L"a"))
 									{
 										ElementNodePtr tagA = parentTagA->GetElementNode(idxHref);

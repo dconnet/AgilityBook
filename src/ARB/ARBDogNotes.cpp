@@ -136,7 +136,7 @@ size_t ARBDogNotes::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 bool ARBDogNotes::Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -195,7 +195,7 @@ bool ARBDogNotes::Load(
 }
 
 
-bool ARBDogNotes::Save(ElementNodePtr ioTree) const
+bool ARBDogNotes::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)

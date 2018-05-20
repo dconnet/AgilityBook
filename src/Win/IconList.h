@@ -47,7 +47,7 @@ public:
 	int FCI() const			{return m_idxVenueFCI;}
 	int SCC() const			{return m_idxVenueSCC;}
 
-	int Trial(ARBConfig& config, ARBDogTrialPtr pTrial) const;
+	int Trial(ARBConfig& config, ARBDogTrialPtr const& inTrial) const;
 
 protected:
 	int m_idxEmpty;

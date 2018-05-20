@@ -54,12 +54,12 @@ public:
 	CDlgListCtrl(
 			WhatToList inType,
 			CAgilityBookDoc* pDoc,
-			ARBDogRunPtr run,
+			ARBDogRunPtr const& inRun,
 			wxWindow* pParent = nullptr);
 	// OtherPoints
 	CDlgListCtrl(
 			ARBConfig& pConfig,
-			ARBDogRunPtr run,
+			ARBDogRunPtr const& inRun,
 			wxWindow* pParent = nullptr);
 
 	void GetAllPartners(

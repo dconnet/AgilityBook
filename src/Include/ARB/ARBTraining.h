@@ -91,7 +91,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -101,7 +101,7 @@ public:
 	 * @return Success
 	 * @post The ARBTraining element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -163,7 +163,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -192,14 +192,14 @@ public:
 	 * @return Whether object is in the list.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool FindTraining(ARBTrainingPtr inTraining) const;
+	bool FindTraining(ARBTrainingPtr const& inTraining) const;
 
 	/**
 	 * Add a training object to the list.
 	 * @param inTraining Object to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddTraining(ARBTrainingPtr inTraining);
+	bool AddTraining(ARBTrainingPtr const& inTraining);
 
 	/**
 	 * Delete a training object.
@@ -207,5 +207,5 @@ public:
 	 * @return Object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteTraining(ARBTrainingPtr inTraining);
+	bool DeleteTraining(ARBTrainingPtr const& inTraining);
 };

@@ -106,7 +106,7 @@ bool ARBConfigMultiQ::operator==(ARBConfigMultiQ const& rhs) const
 
 bool ARBConfigMultiQ::Load(
 		ARBConfigVenue const& inVenue,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -216,7 +216,7 @@ bool ARBConfigMultiQ::Load(
 }
 
 
-bool ARBConfigMultiQ::Save(ElementNodePtr ioTree) const
+bool ARBConfigMultiQ::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -522,7 +522,7 @@ bool ARBConfigMultiQ::GetItem(
 
 bool ARBConfigMultiQList::Load(
 		ARBConfigVenue const& inVenue,
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -653,7 +653,7 @@ int ARBConfigMultiQList::DeleteEvent(std::wstring const& inEvent)
 }
 
 
-bool ARBConfigMultiQList::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
+bool ARBConfigMultiQList::AddMultiQ(ARBConfigMultiQPtr const& inMultiQ)
 {
 	if (!inMultiQ
 	|| FindMultiQ(*inMultiQ))
@@ -663,7 +663,7 @@ bool ARBConfigMultiQList::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
 }
 
 
-bool ARBConfigMultiQList::DeleteMultiQ(ARBConfigMultiQPtr inMultiQ)
+bool ARBConfigMultiQList::DeleteMultiQ(ARBConfigMultiQPtr const& inMultiQ)
 {
 	if (inMultiQ)
 	{

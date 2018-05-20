@@ -48,9 +48,9 @@ public:
 	{
 	}
 	ScoringRunInfo(
-			ARBDogPtr inDog,
-			ARBDogTrialPtr inTrial,
-			ARBDogRunPtr inRun,
+			ARBDogPtr const& inDog,
+			ARBDogTrialPtr const& inTrial,
+			ARBDogRunPtr const& inRun,
 			eScoringDetail inScoringDetail)
 		: m_Dog(inDog)
 		, m_Trial(inTrial)
@@ -70,11 +70,11 @@ class RunInfoData
 	friend class CDlgListViewer;
 public:
 	RunInfoData(
-			ARBDogPtr inDog,
-			ARBConfigVenuePtr inVenue,
-			ARBConfigDivisionPtr inDiv,
-			ARBConfigLevelPtr inLevel,
-			ARBConfigEventPtr inEvent)
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigDivisionPtr const& inDiv,
+			ARBConfigLevelPtr const& inLevel,
+			ARBConfigEventPtr const& inEvent)
 		: m_Dog(inDog)
 		, m_Venue(inVenue)
 		, m_Div(inDiv)
@@ -95,9 +95,9 @@ class MultiQInfoData
 	friend class CDlgListViewer;
 public:
 	MultiQInfoData(
-			ARBDogPtr inDog,
-			ARBConfigVenuePtr inVenue,
-			ARBConfigMultiQPtr inMultiQ)
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigMultiQPtr const& inMultiQ)
 		: m_Dog(inDog)
 		, m_Venue(inVenue)
 		, m_MultiQ(inMultiQ)

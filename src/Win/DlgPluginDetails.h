@@ -26,7 +26,7 @@ class CDlgPluginDetails : public wxDialog
 public:
 	CDlgPluginDetails(
 			ARBConfig& inConfig,
-			ARBConfigCalSitePtr calSite,
+			ARBConfigCalSitePtr const& inCalSite,
 			wxWindow* pParent = nullptr);
 
 private:

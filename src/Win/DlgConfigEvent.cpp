@@ -68,8 +68,8 @@
 class CConfigEventDataLifetimePoints : public wxClientData
 {
 public:
-	CConfigEventDataLifetimePoints(ARBConfigLifetimePointsPtr data)
-		: m_Data(data)
+	CConfigEventDataLifetimePoints(ARBConfigLifetimePointsPtr const& inData)
+		: m_Data(inData)
 	{
 	}
 	ARBConfigLifetimePointsPtr GetData() const	{return m_Data;}
@@ -81,8 +81,8 @@ private:
 class CConfigEventDataPlaceInfo : public wxClientData
 {
 public:
-	CConfigEventDataPlaceInfo(ARBConfigPlaceInfoPtr data)
-		: m_Data(data)
+	CConfigEventDataPlaceInfo(ARBConfigPlaceInfoPtr const& inData)
+		: m_Data(inData)
 	{
 	}
 	ARBConfigPlaceInfoPtr GetData() const	{return m_Data;}
@@ -94,8 +94,8 @@ private:
 class CConfigEventDataScoring : public wxClientData
 {
 public:
-	CConfigEventDataScoring(ARBConfigScoringPtr data)
-		: m_Data(data)
+	CConfigEventDataScoring(ARBConfigScoringPtr const& inData)
+		: m_Data(inData)
 	{
 	}
 	ARBConfigScoringPtr GetData() const	{return m_Data;}
@@ -107,8 +107,8 @@ private:
 class CConfigEventDataTitlePoints : public wxClientData
 {
 public:
-	CConfigEventDataTitlePoints(ARBConfigTitlePointsPtr data)
-		: m_Data(data)
+	CConfigEventDataTitlePoints(ARBConfigTitlePointsPtr const& inData)
+		: m_Data(inData)
 	{
 	}
 	ARBConfigTitlePointsPtr GetData() const	{return m_Data;}
@@ -125,13 +125,13 @@ END_EVENT_TABLE()
 
 CDlgConfigEvent::CDlgConfigEvent(
 		bool bNewEntry,
-		ARBConfigVenuePtr pVenue,
-		ARBConfigEventPtr pEvent,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigEventPtr const& inEvent,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_bNewEntry(bNewEntry)
-	, m_pVenue(pVenue)
-	, m_pEvent(pEvent)
+	, m_pVenue(inVenue)
+	, m_pEvent(inEvent)
 	, m_DlgFixup()
 	, m_Scorings()
 	, m_Name(StringUtil::stringWX(m_pEvent->GetName()))
@@ -167,7 +167,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	assert(m_pVenue);
 	assert(m_pEvent);
 	// Copy the existing scorings.
-	pEvent->GetScorings().Clone(m_Scorings);
+	m_pEvent->GetScorings().Clone(m_Scorings);
 
 	// Controls (these are done first to control tab order)
 
@@ -544,20 +544,20 @@ CConfigEventDataPlaceInfo* CDlgConfigEvent::GetPlacementData(int index) const
 }
 
 
-wxString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
+wxString CDlgConfigEvent::GetListName(ARBConfigScoringPtr const& inScoring) const
 {
 	wxString all = _("IDS_ALL");
 	wxString str;
-	if (pScoring->GetDivision() == WILDCARD_DIVISION)
+	if (inScoring->GetDivision() == WILDCARD_DIVISION)
 		str = all;
 	else
-		str = StringUtil::stringWX(pScoring->GetDivision());
+		str = StringUtil::stringWX(inScoring->GetDivision());
 	str += L" / ";
-	if (pScoring->GetLevel() == WILDCARD_LEVEL)
+	if (inScoring->GetLevel() == WILDCARD_LEVEL)
 		str += all;
 	else
-		str += StringUtil::stringWX(pScoring->GetLevel());
-	wxString validStr = StringUtil::stringWX(ARBDate::GetValidDateString(pScoring->GetValidFrom(), pScoring->GetValidTo()));
+		str += StringUtil::stringWX(inScoring->GetLevel());
+	wxString validStr = StringUtil::stringWX(ARBDate::GetValidDateString(inScoring->GetValidFrom(), inScoring->GetValidTo()));
 	if (0 < validStr.length())
 	{
 		str += L" ";
@@ -817,7 +817,7 @@ void CDlgConfigEvent::FillMethodList()
 }
 
 
-void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
+void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr const& inScoring)
 {
 	ARBConfigTitlePointsPtr pOldTitle;
 	ARBConfigLifetimePointsPtr pOldLifetime;
@@ -842,8 +842,8 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 		}
 	}
 	m_ctrlPointsList->Clear();
-	for (ARBConfigTitlePointsList::const_iterator iter = pScoring->GetTitlePoints().begin();
-		iter != pScoring->GetTitlePoints().end();
+	for (ARBConfigTitlePointsList::const_iterator iter = inScoring->GetTitlePoints().begin();
+		iter != inScoring->GetTitlePoints().end();
 		++iter)
 	{
 		ARBConfigTitlePointsPtr pTitle = (*iter);
@@ -855,8 +855,8 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 				m_ctrlPointsList->SetSelection(idx);
 		}
 	}
-	for (ARBConfigLifetimePointsList::const_iterator iter2 = pScoring->GetLifetimePoints().begin();
-		iter2 != pScoring->GetLifetimePoints().end();
+	for (ARBConfigLifetimePointsList::const_iterator iter2 = inScoring->GetLifetimePoints().begin();
+		iter2 != inScoring->GetLifetimePoints().end();
 		++iter2)
 	{
 		ARBConfigLifetimePointsPtr pLife = (*iter2);
@@ -868,8 +868,8 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 				m_ctrlPointsList->SetSelection(idx);
 		}
 	}
-	for (ARBConfigPlaceInfoList::const_iterator iter3 = pScoring->GetPlacements().begin();
-		iter3 != pScoring->GetPlacements().end();
+	for (ARBConfigPlaceInfoList::const_iterator iter3 = inScoring->GetPlacements().begin();
+		iter3 != inScoring->GetPlacements().end();
 		++iter3)
 	{
 		ARBConfigPlaceInfoPtr pPlace = (*iter3);

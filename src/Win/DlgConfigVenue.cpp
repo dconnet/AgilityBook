@@ -217,13 +217,13 @@ END_EVENT_TABLE()
 CDlgConfigVenue::CDlgConfigVenue(
 		ARBAgilityRecordBook const& book,
 		ARBConfig const& config,
-		ARBConfigVenuePtr pVenue,
+		ARBConfigVenuePtr const& inVenue,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Book(book)
 	, m_Config(config)
-	, m_pVenueOrig(pVenue)
-	, m_pVenue(pVenue->Clone())
+	, m_pVenueOrig(inVenue)
+	, m_pVenue(inVenue->Clone())
 	, m_DlgFixup()
 	, m_Name(StringUtil::stringWX(m_pVenue->GetName()))
 	, m_LongName(StringUtil::stringWX(m_pVenue->GetLongName()))

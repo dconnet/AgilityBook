@@ -40,12 +40,12 @@ enum ARBTitleStyle
 };
 
 ElementNode::AttribLookup LoadTitleStyle(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,
 		ARBTitleStyle& ioStyle);
 void SaveTitleStyle(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		wchar_t const* inAttrib,
 		ARBTitleStyle inStyle);
 
@@ -58,13 +58,13 @@ enum ARBTitleSeparator
 };
 
 ElementNode::AttribLookup LoadTitleSeparator(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,
 		ARBTitleStyle inStyle,
 		ARBTitleSeparator& ioSep);
 void SaveTitleSeparator(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		wchar_t const* inAttrib,
 		ARBTitleSeparator inSep);
 
@@ -138,7 +138,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -148,7 +148,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigTitle element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr ioTree) const;
+	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Determine if this method is valid on the given date.
@@ -325,7 +325,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr inTree,
+			ElementNodePtr const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback,
 			bool inCheckDups = false);
@@ -376,7 +376,7 @@ public:
 	 * @param inTitle Title to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddTitle(ARBConfigTitlePtr inTitle);
+	bool AddTitle(ARBConfigTitlePtr const& inTitle);
 
 	/**
 	 * Delete a title.

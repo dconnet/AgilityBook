@@ -77,8 +77,8 @@ public:
 
 	bool SortItems(CListCtrlCompare fnSortCallBack, SortInfo const* pSortInfo = nullptr);
 
-	long InsertItem(CListDataPtr inData);
-	long InsertItem(long index, CListDataPtr inData);
+	long InsertItem(CListDataPtr const& inData);
+	long InsertItem(long index, CListDataPtr const& inData);
 
 	/**
 	 * Returns the first selected item.

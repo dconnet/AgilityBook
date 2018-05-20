@@ -94,7 +94,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ElementNodePtr inTree,
+		ElementNodePtr const& inTree,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -108,7 +108,7 @@ public:
 	 * @param ioCallback Error processing callback
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr inTree, ARBErrorCallback& ioCallback)
+	bool Load(ElementNodePtr const& inTree, ARBErrorCallback& ioCallback)
 	{
 		return Load(inTree, true, true, true, true, true, ioCallback);
 	}
@@ -125,7 +125,7 @@ public:
 	 * @return Success
 	 */
 	bool Save(
-		ElementNodePtr outTree,
+		ElementNodePtr const& outTree,
 		std::wstring const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
@@ -193,7 +193,7 @@ public:
 	 */
 	size_t GetAllEventSubNames(
 			std::wstring const& inVenue,
-			ARBConfigEventPtr inEvent,
+			ARBConfigEventPtr const& inEvent,
 			std::set<std::wstring>& outNames) const;
 
 	/**

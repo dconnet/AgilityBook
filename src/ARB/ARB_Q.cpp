@@ -133,7 +133,7 @@ bool ARB_Q::Load(
 
 
 bool ARB_Q::Save(
-		ElementNodePtr ioTree,
+		ElementNodePtr const& ioTree,
 		wchar_t const* const inAttribName) const
 {
 	assert(!!inAttribName);

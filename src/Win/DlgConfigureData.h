@@ -55,7 +55,7 @@ protected:
 class CDlgConfigureDataVenue : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataVenue(ARBConfigVenuePtr venue);
+	CDlgConfigureDataVenue(ARBConfigVenuePtr const& inVenue);
 	ARBConfigVenuePtr GetVenue() const			{return m_Venue;}
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
@@ -71,7 +71,7 @@ protected:
 class CDlgConfigureDataFault : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataFault(ARBConfigFaultPtr fault);
+	CDlgConfigureDataFault(ARBConfigFaultPtr const& inFault);
 	ARBConfigFaultPtr GetFault() const			{return m_Fault;}
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
@@ -87,7 +87,7 @@ protected:
 class CDlgConfigureDataOtherPoints : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints);
+	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr const& inOtherPoints);
 	ARBConfigOtherPointsPtr GetOtherPoints() const	{return m_OtherPoints;}
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
@@ -105,7 +105,7 @@ class CDlgConfigureDataDivision : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataDivision(
 			CDlgConfigVenue* pDlg,
-			ARBConfigDivisionPtr div);
+			ARBConfigDivisionPtr const& inDiv);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Div;}
 	virtual std::wstring OnNeedText() const;
 	virtual std::wstring OnNeedText(int iColumn) const;
@@ -129,8 +129,8 @@ class CDlgConfigureDataLevel : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataLevel(
 			CDlgConfigVenue* pDlg,
-			ARBConfigDivisionPtr div,
-			ARBConfigLevelPtr level);
+			ARBConfigDivisionPtr const& inDiv,
+			ARBConfigLevelPtr const& inLevel);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
 	virtual std::wstring OnNeedText() const;
@@ -156,9 +156,9 @@ class CDlgConfigureDataSubLevel : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataSubLevel(
 			CDlgConfigVenue* pDlg,
-			ARBConfigDivisionPtr div,
-			ARBConfigLevelPtr level,
-			ARBConfigSubLevelPtr subLevel);
+			ARBConfigDivisionPtr const& inDiv,
+			ARBConfigLevelPtr const& inLevel,
+			ARBConfigSubLevelPtr const& inSubLevel);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
 	ARBConfigSubLevelPtr GetSubLevel() const	{return m_SubLevel;}
@@ -183,7 +183,7 @@ class CDlgConfigureDataTitle : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataTitle(
 			CDlgConfigVenue* pDlg,
-			ARBConfigTitlePtr title);
+			ARBConfigTitlePtr const& inTitle);
 	ARBConfigTitlePtr GetTitle() const			{return m_Title;}
 	virtual std::wstring OnNeedText() const;
 	virtual std::wstring OnNeedText(int iColumn) const;
@@ -206,7 +206,7 @@ class CDlgConfigureDataEvent : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataEvent(
 			CDlgConfigVenue* pDlg,
-			ARBConfigEventPtr inEvent);
+			ARBConfigEventPtr const& inEvent);
 	ARBConfigEventPtr GetEvent() const			{return m_Event;}
 	virtual std::wstring OnNeedText() const;
 	virtual std::wstring OnNeedText(int iColumn) const;
@@ -229,7 +229,7 @@ class CDlgConfigureDataLifetimeName : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataLifetimeName(
 			CDlgConfigVenue* pDlg,
-			ARBConfigLifetimeNamePtr name);
+			ARBConfigLifetimeNamePtr const& inName);
 	ARBConfigLifetimeNamePtr GetLifetimeName() const	{return m_pName;}
 	virtual std::wstring OnNeedText() const;
 	virtual std::wstring OnNeedText(int iColumn) const;
@@ -252,7 +252,7 @@ class CDlgConfigureDataMultiQ : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataMultiQ(
 			CDlgConfigVenue* pDlg,
-			ARBConfigMultiQPtr multiq);
+			ARBConfigMultiQPtr const& inMultiq);
 	ARBConfigMultiQPtr GetMultiQ() const		{return m_MultiQ;}
 	virtual std::wstring OnNeedText() const;
 	virtual std::wstring OnNeedText(int iColumn) const;

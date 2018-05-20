@@ -137,7 +137,7 @@ namespace
 };
 
 
-static void ExportConfigItem(wxString const& entry, ElementNodePtr tree)
+static void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree)
 {
 	switch (wxConfig::Get()->GetEntryType(entry))
 	{
@@ -145,14 +145,14 @@ static void ExportConfigItem(wxString const& entry, ElementNodePtr tree)
 		break;
 	case wxConfigBase::Type_String:
 		{
-			ElementNodePtr item = tree->AddElementNode(StringUtil::stringW(entry));
+			ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
 			item->AddAttrib(L"type", L"s");
 			item->SetValue(wxConfig::Get()->Read(entry, wxEmptyString));
 		}
 		break;
 	case wxConfigBase::Type_Boolean:
 		{
-			ElementNodePtr item = tree->AddElementNode(StringUtil::stringW(entry));
+			ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
 			item->AddAttrib(L"type", L"b");
 			bool val;
 			wxConfig::Get()->Read(entry, &val);
@@ -161,7 +161,7 @@ static void ExportConfigItem(wxString const& entry, ElementNodePtr tree)
 		break;
 	case wxConfigBase::Type_Integer:
 		{
-			ElementNodePtr item = tree->AddElementNode(StringUtil::stringW(entry));
+			ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
 			item->AddAttrib(L"type", L"i");
 			long val;
 			wxConfig::Get()->Read(entry, &val);
@@ -170,7 +170,7 @@ static void ExportConfigItem(wxString const& entry, ElementNodePtr tree)
 		break;
 	case wxConfigBase::Type_Float:
 		{
-			ElementNodePtr item = tree->AddElementNode(StringUtil::stringW(entry));
+			ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
 			item->AddAttrib(L"type", L"f");
 			double val;
 			wxConfig::Get()->Read(entry, &val);
@@ -181,12 +181,12 @@ static void ExportConfigItem(wxString const& entry, ElementNodePtr tree)
 }
 
 
-static void ExportConfig(wxString const& key, ElementNodePtr root)
+static void ExportConfig(wxString const& key, ElementNodePtr const& inRoot)
 {
 	if (!wxConfig::Get()->HasGroup(key))
 		return;
 
-	ElementNodePtr tree = root->AddElementNode(StringUtil::stringW(key));
+	ElementNodePtr tree = inRoot->AddElementNode(StringUtil::stringW(key));
 	tree->AddAttrib(L"type", L"g");
 
 	wxString path = wxConfig::Get()->GetPath();
@@ -214,7 +214,7 @@ static void ExportConfig(wxString const& key, ElementNodePtr root)
 
 
 static ElementNodePtr FindElementName(
-		ElementNodePtr tree,
+		ElementNodePtr const& inTree,
 		long numConfigs,
 		std::wstring const& name,
 		const wchar_t *const eleItem,
@@ -223,11 +223,11 @@ static ElementNodePtr FindElementName(
 	for (long i = 0; i < numConfigs; ++i)
 	{
 		std::wstring configName = StringUtil::stringW(wxString::Format(L"%s%ld", eleItem, i));
-		int idxConfig = tree->FindElement(configName);
+		int idxConfig = inTree->FindElement(configName);
 		if (0 <= idxConfig
-		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
+		&& Element::Element_Node == inTree->GetElement(idxConfig)->GetType())
 		{
-			ElementNodePtr nodeConfig = tree->GetElementNode(idxConfig);
+			ElementNodePtr nodeConfig = inTree->GetElementNode(idxConfig);
 			int idxName = nodeConfig->FindElement(L"name");
 			if (0 <= idxName
 			&& name == nodeConfig->GetElementNode(idxName)->GetValue())
@@ -240,18 +240,18 @@ static ElementNodePtr FindElementName(
 }
 
 
-static void ImportConfig(ElementNodePtr tree, bool bClobberFilters);
+static void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters);
 
 
 // Return true to invoke clobber code below.
-static bool ImportColumnInfo(ElementNodePtr tree)
+static bool ImportColumnInfo(ElementNodePtr const& inTree)
 {
 	// Only "Config#" are merged (unless we clobber).
-	int idxNum = tree->FindElement(L"numConfigs");
+	int idxNum = inTree->FindElement(L"numConfigs");
 	if (0 > idxNum)
 		return false;
 	long numConfigs = 0;
-	tree->GetElementNode(idxNum)->GetAttrib(L"val", numConfigs);
+	inTree->GetElementNode(idxNum)->GetAttrib(L"val", numConfigs);
 	if (0 >= numConfigs)
 		return false;
 
@@ -278,11 +278,11 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 	for (long i = 0; i < numConfigs; ++i)
 	{
 		std::wstring configName = StringUtil::stringW(wxString::Format(L"Config%ld", i));
-		int idxConfig = tree->FindElement(configName);
+		int idxConfig = inTree->FindElement(configName);
 		if (0 <= idxConfig
-		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
+		&& Element::Element_Node == inTree->GetElement(idxConfig)->GetType())
 		{
-			ElementNodePtr nodeConfig = tree->GetElementNode(idxConfig);
+			ElementNodePtr nodeConfig = inTree->GetElementNode(idxConfig);
 			int idxName = nodeConfig->FindElement(L"name");
 			if (0 > idxName)
 				continue; // Ignore no-name configs.
@@ -322,12 +322,12 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 
 
 // We will not merge the current named filter selection
-static bool MergeFilters(ElementNodePtr tree)
+static bool MergeFilters(ElementNodePtr const& inTree)
 {
-	int idx = tree->FindElement(L"Common");
+	int idx = inTree->FindElement(L"Common");
 	if (0 > idx)
 		return false;
-	ElementNodePtr nodeCommon = tree->GetElementNode(idx);
+	ElementNodePtr nodeCommon = inTree->GetElementNode(idx);
 	if (!nodeCommon)
 		return false;
 	idx = nodeCommon->FindElement(L"numFilters");
@@ -358,11 +358,11 @@ static bool MergeFilters(ElementNodePtr tree)
 	for (long i = 0; i < numFilters; ++i)
 	{
 		std::wstring configName = StringUtil::stringW(wxString::Format(L"Filter%ld", i));
-		int idxFilter = tree->FindElement(configName);
+		int idxFilter = inTree->FindElement(configName);
 		if (0 <= idxFilter
-		&& Element::Element_Node == tree->GetElement(idxFilter)->GetType())
+		&& Element::Element_Node == inTree->GetElement(idxFilter)->GetType())
 		{
-			ElementNodePtr nodeFilter = tree->GetElementNode(idxFilter);
+			ElementNodePtr nodeFilter = inTree->GetElementNode(idxFilter);
 			int idxName = nodeFilter->FindElement(L"Name");
 			if (0 > idxName)
 				continue; // Ignore no-name filters.
@@ -401,15 +401,15 @@ static bool MergeFilters(ElementNodePtr tree)
 }
 
 
-static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
+static void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters)
 {
 	std::wstring type;
-	if (ElementNode::eFound != tree->GetAttrib(L"type", type))
+	if (ElementNode::eFound != inTree->GetAttrib(L"type", type))
 		return;
 	if (L"g" == type)
 	{
 		wxString path = wxConfig::Get()->GetPath();
-		wxConfig::Get()->SetPath(StringUtil::stringWX(tree->GetName()));
+		wxConfig::Get()->SetPath(StringUtil::stringWX(inTree->GetName()));
 		// When importing config info, treat ColumnInfo differently.
 		// We don't want to wipe out existing items. We want to add the new
 		// names. If we find an existing name, the specified format will
@@ -417,20 +417,20 @@ static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 		// import only "Import" data and not touch "Export" (depending on
 		// what's in the file we're reading, of course!)
 		bool bClobber = true;
-		if (tree->GetName() == L"ColumnInfo")
+		if (inTree->GetName() == L"ColumnInfo")
 		{
-			bClobber = ImportColumnInfo(tree);
+			bClobber = ImportColumnInfo(inTree);
 		}
-		else if (!bClobberFilters && tree->GetName().substr(0, 6) == L"Filter")
+		else if (!bClobberFilters && inTree->GetName().substr(0, 6) == L"Filter")
 		{
 			bClobber = false;
 		}
 		if (bClobber)
 		{
-			bool bCommon = (tree->GetName() == L"Common");
-			for (int i = 0; i < tree->GetElementCount(); ++i)
+			bool bCommon = (inTree->GetName() == L"Common");
+			for (int i = 0; i < inTree->GetElementCount(); ++i)
 			{
-				ElementNodePtr node = tree->GetElementNode(i);
+				ElementNodePtr node = inTree->GetElementNode(i);
 				if (!node)
 					continue;
 				bool bSkip = false;
@@ -448,44 +448,44 @@ static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 	}
 	else if (L"s" == type)
 	{
-		wxConfig::Get()->Write(StringUtil::stringWX(tree->GetName()), tree->GetValue().c_str());
+		wxConfig::Get()->Write(StringUtil::stringWX(inTree->GetName()), inTree->GetValue().c_str());
 	}
 	else if (L"b" == type)
 	{
 		bool val;
-		tree->GetAttrib(L"val", val);
-		wxConfig::Get()->Write(StringUtil::stringWX(tree->GetName()), val);
+		inTree->GetAttrib(L"val", val);
+		wxConfig::Get()->Write(StringUtil::stringWX(inTree->GetName()), val);
 	}
 	else if (L"i" == type)
 	{
 		long val;
-		tree->GetAttrib(L"val", val);
-		wxConfig::Get()->Write(StringUtil::stringWX(tree->GetName()), val);
+		inTree->GetAttrib(L"val", val);
+		wxConfig::Get()->Write(StringUtil::stringWX(inTree->GetName()), val);
 	}
 	else if (L"f" == type)
 	{
 		double val;
-		tree->GetAttrib(L"val", val);
-		wxConfig::Get()->Write(StringUtil::stringWX(tree->GetName()), val);
+		inTree->GetAttrib(L"val", val);
+		wxConfig::Get()->Write(StringUtil::stringWX(inTree->GetName()), val);
 	}
 }
 
 
-bool CAgilityBookOptions::ImportSettings(ElementNodePtr tree)
+bool CAgilityBookOptions::ImportSettings(ElementNodePtr const& inree)
 {
-	if (!tree || tree->GetName() != L"AgilityBookSettings")
+	if (!inree || inree->GetName() != L"AgilityBookSettings")
 		return false;
 	// Version numbers aren't needed yet.
 	ARBVersion version;
-	if (ElementNode::eFound != tree->GetAttrib(ATTRIB_BOOK_VERSION, version))
+	if (ElementNode::eFound != inree->GetAttrib(ATTRIB_BOOK_VERSION, version))
 		return false;
 	std::wstring pgmVersion;
-	if (ElementNode::eFound != tree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, pgmVersion))
+	if (ElementNode::eFound != inree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, pgmVersion))
 		return false;
-	bool bClobberFilters = MergeFilters(tree);
-	for (int i = 0; i < tree->GetElementCount(); ++i)
+	bool bClobberFilters = MergeFilters(inree);
+	for (int i = 0; i < inree->GetElementCount(); ++i)
 	{
-		ElementNodePtr ele = tree->GetElementNode(i);
+		ElementNodePtr ele = inree->GetElementNode(i);
 		if (!ele)
 			continue;
 		ImportConfig(ele, bClobberFilters);
@@ -1133,23 +1133,23 @@ void CAgilityBookOptions::SetCalendarFontInfo(CFontInfo const& info)
 // Last entered options
 
 static wxString GetLastKey(
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue,
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue,
 		wchar_t const* keyGroup,
 		wchar_t const* keyDefault,
 		bool bFallback)
 {
 	assert(keyGroup && keyDefault);
 	wxString key(keyDefault);
-	if (pDog && !pDog->GetCallName().empty())
+	if (inDog && !inDog->GetCallName().empty())
 	{
 		// The 'Clean' routines below have "knowledge" of
 		//  <key>/<dog>/<venue> order.
 		key = keyGroup;
-		key << L"/" << pDog->GetCallName().c_str();
-		if (pVenue && !pVenue->GetName().empty())
+		key << L"/" << inDog->GetCallName().c_str();
+		if (inVenue && !inVenue->GetName().empty())
 		{
-			key << L"/" << pVenue->GetName().c_str();
+			key << L"/" << inVenue->GetName().c_str();
 		}
 		// Fall back
 		if (bFallback && !wxConfig::Get()->Exists(key))
@@ -1160,24 +1160,24 @@ static wxString GetLastKey(
 
 
 static std::wstring GetLastValue(
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue,
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue,
 		wchar_t const* keyDog,
 		wchar_t const* keyDefault)
 {
-	wxString key = GetLastKey(pDog, pVenue, keyDog, keyDefault, true);
+	wxString key = GetLastKey(inDog, inVenue, keyDog, keyDefault, true);
 	return StringUtil::stringW(wxConfig::Get()->Read(key, wxString()));
 }
 
 
 static void WriteLastValue(
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue,
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue,
 		wchar_t const* keyDog,
 		wchar_t const* keyDefault,
 		wchar_t const* inLast)
 {
-	wxString key = GetLastKey(pDog, pVenue, keyDog, keyDefault, false);
+	wxString key = GetLastKey(inDog, inVenue, keyDog, keyDefault, false);
 	if (inLast)
 	{
 		wxConfig::Get()->Write(key, inLast);
@@ -1190,53 +1190,53 @@ static void WriteLastValue(
 
 
 std::wstring CAgilityBookOptions::GetLastEnteredDivision(
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue)
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue)
 {
-	return GetLastValue(pDog, pVenue, CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION);
+	return GetLastValue(inDog, inVenue, CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION);
 }
 
 
 void CAgilityBookOptions::SetLastEnteredDivision(
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue,
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue,
 		wchar_t const* inLast)
 {
-	WriteLastValue(pDog, pVenue, CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION, inLast);
+	WriteLastValue(inDog, inVenue, CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION, inLast);
 }
 
 
 std::wstring CAgilityBookOptions::GetLastEnteredLevel(
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue)
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue)
 {
-	return GetLastValue(pDog, pVenue, CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL);
+	return GetLastValue(inDog, inVenue, CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL);
 }
 
 
 void CAgilityBookOptions::SetLastEnteredLevel(
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue,
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue,
 		wchar_t const* inLast)
 {
-	WriteLastValue(pDog, pVenue, CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL, inLast);
+	WriteLastValue(inDog, inVenue, CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL, inLast);
 }
 
 
 std::wstring CAgilityBookOptions::GetLastEnteredHeight(
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue)
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue)
 {
-	return GetLastValue(pDog, pVenue, CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT);
+	return GetLastValue(inDog, inVenue, CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT);
 }
 
 
 void CAgilityBookOptions::SetLastEnteredHeight(
-		ARBDogPtr pDog,
-		ARBConfigVenuePtr pVenue,
+		ARBDogPtr const& inDog,
+		ARBConfigVenuePtr const& inVenue,
 		wchar_t const* inLast)
 {
-	WriteLastValue(pDog, pVenue, CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, inLast);
+	WriteLastValue(inDog, inVenue, CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, inLast);
 }
 
 
@@ -1270,17 +1270,17 @@ void CAgilityBookOptions::SetLastEnteredJudge(wchar_t const* inLast)
 }
 
 
-std::wstring CAgilityBookOptions::GetLastEnteredHandler(ARBDogPtr pDog)
+std::wstring CAgilityBookOptions::GetLastEnteredHandler(ARBDogPtr const& inDog)
 {
-	return GetLastValue(pDog, ARBConfigVenuePtr(), CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER);
+	return GetLastValue(inDog, ARBConfigVenuePtr(), CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER);
 }
 
 
 void CAgilityBookOptions::SetLastEnteredHandler(
-		ARBDogPtr pDog,
+		ARBDogPtr const& inDog,
 		wchar_t const* inLast)
 {
-	WriteLastValue(pDog, ARBConfigVenuePtr(), CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, inLast);
+	WriteLastValue(inDog, ARBConfigVenuePtr(), CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, inLast);
 }
 
 

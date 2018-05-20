@@ -106,7 +106,7 @@
 class CAgilityBookPointsViewData : public CListData
 {
 public:
-	CAgilityBookPointsViewData(CPointsDataBasePtr inData, int imgIndex)
+	CAgilityBookPointsViewData(CPointsDataBasePtr const& inData, int imgIndex)
 		: m_Data(inData)
 		, m_imgIndex(imgIndex)
 	{
@@ -124,7 +124,7 @@ public:
 	{
 		m_Data->Details();
 	}
-	virtual bool IsEqual(CPointsDataBasePtr inData)
+	virtual bool IsEqual(CPointsDataBasePtr const& inData)
 	{
 		return m_Data->IsEqual(inData);
 	}

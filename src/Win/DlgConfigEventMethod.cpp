@@ -52,8 +52,8 @@
 class CDlgConfigureMethodDataDivision : public wxClientData
 {
 public:
-	CDlgConfigureMethodDataDivision(ARBConfigDivisionPtr div)
-		: m_Div(div)
+	CDlgConfigureMethodDataDivision(ARBConfigDivisionPtr const& inDiv)
+		: m_Div(inDiv)
 	{
 	}
 	ARBConfigDivisionPtr m_Div;
@@ -113,12 +113,12 @@ END_EVENT_TABLE()
 
 
 CDlgConfigEventMethod::CDlgConfigEventMethod(
-		ARBConfigVenuePtr pVenue,
-		ARBConfigScoringPtr pScoring,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigScoringPtr const& inScoring,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_pVenue(pVenue)
-	, m_pScoring(pScoring)
+	, m_pVenue(inVenue)
+	, m_pScoring(inScoring)
 	, m_PlaceInfo()
 	, m_ctrlDivision(nullptr)
 	, m_ctrlLevel(nullptr)

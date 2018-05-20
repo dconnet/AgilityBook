@@ -40,15 +40,15 @@ END_EVENT_TABLE()
 
 
 CDlgPartner::CDlgPartner(
-		ARBDogRunPartnerPtr partner,
+		ARBDogRunPartnerPtr const& inPartner,
 		std::set<std::wstring> const& inHandlers,
 		std::set<std::wstring> const& inDogs,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_Handler(StringUtil::stringWX(partner->GetHandler()))
-	, m_Dog(StringUtil::stringWX(partner->GetDog()))
-	, m_RegNum(StringUtil::stringWX(partner->GetRegNum()))
-	, m_Partner(partner)
+	, m_Handler(StringUtil::stringWX(inPartner->GetHandler()))
+	, m_Dog(StringUtil::stringWX(inPartner->GetDog()))
+	, m_RegNum(StringUtil::stringWX(inPartner->GetRegNum()))
+	, m_Partner(inPartner)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
