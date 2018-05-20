@@ -62,19 +62,23 @@ ARB_TYPEDEF2(ElementText)
 /**
  * Wrapper class to handle locale. Typical use is:
  *
+ * ```
  * #if defined(__WXWINDOWS__) && !USE_CRT
  * wxLocale locale(wxLANGUAGE_FRENCH);
  * #else
  * CLocaleWrapper locale(LC_ALL, "french");
  * #endif
+ * ```
  *
  * or:
  *
+ * ```
  * #if defined(__WXWINDOWS__) && !USE_CRT
  * wxLocale locale(wxLANGUAGE_FRENCH, wxLOCALE_DONT_LOAD_DEFAULT);
  * #else
  * CLocaleWrapper locale(LC_NUMERIC, "french");
  * #endif
+ * ```
  *
  * However, use GetDecimalPt regardless of defines.
  */

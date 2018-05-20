@@ -58,7 +58,7 @@ extern ReadStatus ReadCSV(
 		std::wstring inRecord,
 		std::vector<std::wstring>& ioFields,
 		bool bContinuation = false,
-		std::wstring newLine = L"\n");
+		std::wstring newLine = std::wstring(L"\n"));
 
 
 /**
