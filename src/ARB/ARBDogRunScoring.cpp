@@ -163,8 +163,6 @@ bool ARBDogRunScoring::Load(
 	|| inTree->GetName() == TREE_BY_POINTS))
 		return false;
 
-	std::wstring attrib;
-
 	m_bRoundTimeFaults = inEventScoring->DropFractions();
 	std::wstring const& name = inTree->GetName();
 	inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
