@@ -1,7 +1,11 @@
-*.dox eol=lf
-*.dtd eol=lf
-*.lsl eol=lf
-*.po eol=lf
-*.xml eol=lf
-*.sh eol=lf
-*.in eol=lf
+*.dox  eol=lf
+*.dtd  eol=lf
+*.in   eol=lf
+*.lsl  binary
+*.po   eol=lf
+*.sh   eol=lf
+*.xml  eol=lf
+
+# Don't include stuff which is only used with Git in the archives.
+.gitattributes export-ignore
+.gitignore     export-ignore
