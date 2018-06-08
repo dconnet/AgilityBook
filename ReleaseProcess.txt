@@ -79,8 +79,8 @@ Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Copy a backup of released files to \AgilityBook\test\[vc10/vc10x64]
   Currently, I only archive vc10/x64 - the exe's that are released to the wild.
-- Use GitHub webpage to download zip file
-  - Rename to AgilityBook-n_n_n_n-src.zip
+- Generate zip file (github's zip has unix EOLs):
+  - git archive master --prefix='AgilityBook/' --format=zip > AgilityBook-n_n_n_n-src.zip
 
 GitHub:
 - Create release on vn.n.n.n branch
