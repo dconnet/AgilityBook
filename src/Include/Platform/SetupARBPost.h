@@ -27,6 +27,7 @@
 #if defined(__WXMAC__)
 #include <AvailabilityMacros.h>
 #endif
+#include <cstdint>
 
 // If not present, pick up boost's. Now we can use std::tr1::shared_ptr
 #if _MSC_VER < 1700 && (!defined(_HAS_TR1) || !_HAS_TR1)
