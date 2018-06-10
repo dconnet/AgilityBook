@@ -192,14 +192,7 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 			str = _("IDS_TITLEPOINT_LIFETIME_NAME");
 		}
 		int index = m_ctrlLifetimeName->Append(str);
-#ifdef __WXMSW__
-#pragma warning (push)
-#pragma warning (disable : 4312) // 'reinterpret_cast': conversion from 'int' to 'void *' of greater size
-#endif
-		m_ctrlLifetimeName->SetClientData(index, reinterpret_cast<void*>(bDefault ? 1 : 0));
-#ifdef __WXMSW__
-#pragma warning (pop)
-#endif
+		m_ctrlLifetimeName->SetClientData(index, reinterpret_cast<void*>(static_cast<uintptr_t>(bDefault ? 1 : 0)));
 		if (str == m_LifetimeName || (m_LifetimeName.empty() && bDefault))
 		{
 			m_ctrlLifetimeName->SetSelection(index);
