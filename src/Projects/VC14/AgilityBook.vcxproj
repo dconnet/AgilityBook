@@ -78,7 +78,6 @@
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4302;4311;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreBuildEvent>
       <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
@@ -94,7 +93,6 @@
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4302;4311;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreBuildEvent>
       <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
@@ -110,7 +108,6 @@
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4302;4311;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreBuildEvent>
       <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
@@ -129,7 +126,6 @@
     <ClCompile>
       <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4302;4311;4312;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreBuildEvent>
       <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>

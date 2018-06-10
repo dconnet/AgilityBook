@@ -122,7 +122,6 @@
 #endif
 
 #include "Platform/arbWarningPush.h"
-#pragma warning(disable : 4355)
 
 #include <wx/zipstrm.h>
 
