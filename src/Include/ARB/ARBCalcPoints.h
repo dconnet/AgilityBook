@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-06-23 Added USDAA Top10.
  * 2011-07-31 Created
  */
 
@@ -20,6 +21,7 @@ ARB_TYPEDEF(ARBCalcPoints)
 ARB_TYPEDEF(ARBCalcPointsNormal)
 ARB_TYPEDEF(ARBCalcPointsT2B)
 ARB_TYPEDEF(ARBCalcPointsUKI)
+ARB_TYPEDEF(ARBCalcPointsTop10USDAA)
 
 
 enum ARBPointsType
@@ -28,6 +30,7 @@ enum ARBPointsType
 	ePointsTypeNormal = 0, ///< Original points computation.
 	ePointsTypeT2B,        ///< AKC/T2B: based on percentage of SCT.
 	ePointsTypeUKI,        ///< UKI: points based on placement.
+	ePointsTypeTop10USDAA, ///< USDAA: Top10 points based on placement/inclass
 	ePointsTypeMax
 };
 
@@ -116,6 +119,26 @@ protected:
 public:
 	static ARBCalcPointsUKIPtr New();
 	virtual ARBPointsType GetType() const	{return ePointsTypeUKI;}
+	virtual std::wstring GetGenericName(double points, double faults) const;
+	virtual double GetPoints(
+			double inPoints,
+			double inTime,
+			double inSCT,
+			short inPlace,
+			short inClass) const;
+};
+
+
+/**
+ * Calculate Top Ten points based on placement (USDAA).
+ */
+class ARBCalcPointsTop10USDAA : public ARBCalcPoints
+{
+protected:
+	ARBCalcPointsTop10USDAA();
+public:
+	static ARBCalcPointsTop10USDAAPtr New();
+	virtual ARBPointsType GetType() const	{return ePointsTypeTop10USDAA;}
 	virtual std::wstring GetGenericName(double points, double faults) const;
 	virtual double GetPoints(
 			double inPoints,

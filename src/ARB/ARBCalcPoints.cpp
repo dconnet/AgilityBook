@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-06-23 Added USDAA Top10.
  * 2011-07-31 Created
  */
 
@@ -44,6 +45,9 @@ ARBCalcPointsPtr ARBCalcPoints::New(ARBPointsType type)
 		break;
 	case ePointsTypeUKI:
 		p = ARBCalcPointsUKI::New();
+		break;
+	case ePointsTypeTop10USDAA:
+		p = ARBCalcPointsTop10USDAA::New();
 		break;
 	}
 	return p;
@@ -222,4 +226,52 @@ double ARBCalcPointsUKI::GetPoints(
 			pts = 12.0 - (inPlace - 1);
 	}
 	return pts;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBCalcPointsTop10USDAA_concrete : public ARBCalcPointsTop10USDAA
+{
+public:
+	ARBCalcPointsTop10USDAA_concrete() {}
+};
+
+
+ARBCalcPointsTop10USDAAPtr ARBCalcPointsTop10USDAA::New()
+{
+	return std::make_shared<ARBCalcPointsTop10USDAA_concrete>();
+}
+
+
+ARBCalcPointsTop10USDAA::ARBCalcPointsTop10USDAA()
+{
+}
+
+
+std::wstring ARBCalcPointsTop10USDAA::GetGenericName(double points, double faults) const
+{
+	return StringUtil::GetTranslation(arbT("IDS_TITLEPOINT_TOP10_USDAA"));
+}
+
+
+double ARBCalcPointsTop10USDAA::GetPoints(
+		double inPoints,
+		double inTime,
+		double inSCT,
+		short inPlace,
+		short inClass) const
+{
+	int numPlaces = 0;
+	if (2 <= inClass && inClass <= 3)
+		numPlaces = 1;
+	else if (4 <= inClass && inClass <= 5)
+		numPlaces = 2;
+	else if (6 <= inClass && inClass <= 10)
+		numPlaces = 3;
+	else if (10 < inClass)
+		numPlaces = ((inClass - 1) / 10) + 3;
+
+	if (numPlaces < 1 || inPlace < 1 || inPlace > numPlaces)
+		return 0.0;
+	return (numPlaces - inPlace) * 2 + 1;
 }
