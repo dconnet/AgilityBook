@@ -33,7 +33,8 @@ wxWidgets: http://www.wxwidgets.org/
 I'm currently using version 3.1.1.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
-   in src/Win/res/fr_FR)
+   in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
+   must match the wx version number being used.
 
 === Changes to 3.1.1:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
