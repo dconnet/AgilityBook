@@ -1,4 +1,6 @@
-5/19/2018: v3.2.6.<development>
+8/7/2018: v3.2.6.<development>
+- Bumped Configuration v59:
+  - Cleaned up comments in AKC Std/JWW.
 
 5/19/2018: v3.2.5.104
 - Bumped Configuration v58:
