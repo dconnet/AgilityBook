@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-08-15 Changed ARBVersion to use std::array
  * 2016-09-04 Add a ToString wrapper.
  * 2015-12-22 Changed bAlwaysStripZeros to eStripZeros.
  * 2015-11-01 Added clear and IsSet.
@@ -32,6 +33,7 @@
  * 2003-09-01 Added 'operator+=' and 'operator-=' to ARBDouble.
  */
 
+#include <array>
 #include <locale>
 #include <set>
 #include <sstream>
@@ -159,21 +161,20 @@ public:
  * from reading newer files. Differences in minor numbers allows an older
  * version to read the newer file, but warns that some information may be
  * lost if the file is saved.
- *
- * This class is assuming that a short==16 bits and long==32 bits.
  */
 class ARBVersion
 {
+	typedef std::array<unsigned short, 2> VERSION_ARB;
 public:
 	ARBVersion()
-		: m_Version(0)
+		: m_Version({ 0, 0 })
 	{
 	}
 
 	ARBVersion(
 			unsigned short major,
 			unsigned short minor)
-		: m_Version(MakeVersion(major, minor))
+		: m_Version({ major, minor })
 	{
 	}
 
@@ -219,30 +220,23 @@ public:
 
 	void clear()
 	{
-		m_Version = 0;
+		m_Version = { 0, 0 };
 	}
 	bool IsSet()
 	{
-		return m_Version > 0;
+		return m_Version > VERSION_ARB({0, 0});
 	}
 
 	unsigned short Major() const
 	{
-		return static_cast<unsigned short>(m_Version >> 16);
+		return m_Version[0];
 	}
 	unsigned short Minor() const
 	{
-		return static_cast<unsigned short>(m_Version & 0xffff);
+		return m_Version[1];
 	}
 	std::wstring str() const;
 
 private:
-	unsigned long MakeVersion(
-			unsigned short major,
-			unsigned short minor)
-	{
-		return (major<<16) | minor;
-	}
-
-	unsigned long m_Version;
+	VERSION_ARB m_Version;
 };

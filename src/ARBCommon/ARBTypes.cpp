@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-08-15 Changed ARBVersion to use std::array
  * 2016-09-04 Add a ToString wrapper.
  * 2015-12-22 Changed bAlwaysStripZeros to eStripZeros.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
@@ -155,22 +156,19 @@ bool ARBDouble::equal(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBVersion::ARBVersion(std::wstring inStr)
-	: m_Version(0)
+	: m_Version({ 0, 0 })
 {
-	unsigned short major = 0;
-	unsigned short minor = 0;
 	std::wstring::size_type pos = inStr.find('.');
 	if (std::wstring::npos != pos)
 	{
-		major = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
+		m_Version[0] = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
 		inStr = inStr.substr(pos+1);
-		minor = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
+		m_Version[1] = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
 	}
 	else
 	{
-		major = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
+		m_Version[0] = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
 	}
-	m_Version = MakeVersion(major, minor);
 }
 
 std::wstring ARBVersion::str() const

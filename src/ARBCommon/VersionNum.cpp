@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-08-15 Changed VERSION_NUMBER to std::array
  * 2012-07-28 Crap, v2.3.6 was hosed. Fix version parsing.
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -41,10 +42,7 @@ CVersionNum::CVersionNum(bool bAutoLoad)
 	if (bAutoLoad)
 	{
 		m_Valid = true;
-		m_Version.part1 = ARB_VER_MAJOR;
-		m_Version.part2 = ARB_VER_MINOR;
-		m_Version.part3 = ARB_VER_DOT;
-		m_Version.part4 = ARB_VER_BUILD;
+		m_Version = { ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD };
 	}
 }
 
@@ -73,15 +71,10 @@ bool CVersionNum::Parse(std::wstring inVer)
 	std::vector<std::wstring> fields;
 	if (4 == BreakLine(L'.', inVer, fields))
 		m_Valid = true;
-	unsigned short* parts[4] = {
-		&m_Version.part1,
-		&m_Version.part2,
-		&m_Version.part3,
-		&m_Version.part4
-	};
+	m_Version = { 0, 0, 0, 0 };
 	for (size_t i = 0; i < fields.size(); ++i)
 	{
-		*(parts[i]) = static_cast<unsigned short>(StringUtil::ToCLong(fields[i]));
+		m_Version[i] = static_cast<unsigned short>(StringUtil::ToCLong(fields[i]));
 	}
 	return m_Valid;
 }
@@ -94,39 +87,20 @@ void CVersionNum::Assign(
 		unsigned short inBuild)
 {
 	m_Valid = true;
-	m_Version.part1 = inMajor;
-	m_Version.part2 = inMinor;
-	m_Version.part3 = inDot;
-	m_Version.part4 = inBuild;
+	m_Version = { inMajor, inMinor, inDot, inBuild };
 }
 
 
 // Equality is based solely on the version number, not any language aspects.
 bool CVersionNum::operator==(CVersionNum const& rhs) const
 {
-	return m_Version.part1 == rhs.m_Version.part1
-		&& m_Version.part2 == rhs.m_Version.part2
-		&& m_Version.part3 == rhs.m_Version.part3
-		&& m_Version.part4 == rhs.m_Version.part4;
+	return m_Version == rhs.m_Version;
 }
 
 
 bool CVersionNum::operator<(CVersionNum const& rhs) const
 {
-	if (m_Version.part1 < rhs.m_Version.part1
-	|| (m_Version.part1 == rhs.m_Version.part1
-		&& m_Version.part2 < rhs.m_Version.part2)
-	|| (m_Version.part1 == rhs.m_Version.part1
-		&& m_Version.part2 == rhs.m_Version.part2
-		&& m_Version.part3 < rhs.m_Version.part3)
-	|| (m_Version.part1 == rhs.m_Version.part1
-		&& m_Version.part2 == rhs.m_Version.part2
-		&& m_Version.part3 == rhs.m_Version.part3
-		&& m_Version.part4 < rhs.m_Version.part4))
-	{
-		return true;
-	}
-	return false;
+	return m_Version < rhs.m_Version;
 }
 
 
@@ -138,20 +112,7 @@ bool CVersionNum::operator<=(CVersionNum const& rhs) const
 
 bool CVersionNum::operator>(CVersionNum const& rhs) const
 {
-	if (m_Version.part1 > rhs.m_Version.part1
-	|| (m_Version.part1 == rhs.m_Version.part1
-		&& m_Version.part2 > rhs.m_Version.part2)
-	|| (m_Version.part1 == rhs.m_Version.part1
-		&& m_Version.part2 == rhs.m_Version.part2
-		&& m_Version.part3 > rhs.m_Version.part3)
-	|| (m_Version.part1 == rhs.m_Version.part1
-		&& m_Version.part2 == rhs.m_Version.part2
-		&& m_Version.part3 == rhs.m_Version.part3
-		&& m_Version.part4 > rhs.m_Version.part4))
-	{
-		return true;
-	}
-	return false;
+	return m_Version > rhs.m_Version;
 }
 
 
@@ -164,17 +125,17 @@ bool CVersionNum::operator>=(CVersionNum const& rhs) const
 void CVersionNum::clear()
 {
 	m_Valid = false;
-	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
+	m_Version = { 0, 0, 0, 0 };
 }
 
 
 std::wstring CVersionNum::GetVersionString() const
 {
 	std::wostringstream str;
-	str << m_Version.part1
-		<< L"." << m_Version.part2
-		<< L"." << m_Version.part3
-		<< L"." << m_Version.part4;
+	str << m_Version[0]
+		<< L"." << m_Version[1]
+		<< L"." << m_Version[2]
+		<< L"." << m_Version[3];
 	return str.str();
 }
 

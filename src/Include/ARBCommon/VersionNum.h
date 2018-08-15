@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-08-15 Changed VERSION_NUMBER to std::array
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
  * 2009-01-28 Removed Windows VERSIONNUM support (use VersionNumber.h)
  * 2009-01-01 Ported to wxWidgets.
@@ -19,19 +20,14 @@
  * 2004-03-04 Created
  */
 
+#include <array>
 #include <string>
 
 
 class CVersionNum
 {
 public:
-	typedef struct
-	{
-		unsigned short part1;
-		unsigned short part2;
-		unsigned short part3;
-		unsigned short part4;
-	} VERSION_NUMBER;
+	typedef std::array<unsigned short, 4> VERSION_NUMBER;
 
 	CVersionNum(bool bAutoLoad);
 	CVersionNum(CVersionNum const& rhs);

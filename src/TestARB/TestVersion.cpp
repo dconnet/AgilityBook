@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-08-15 Changed VERSION_NUMBER to std::array, added more CVersionNum tests.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2012-07-30 Add CVersionNum tests.
  * 2011-08-22 ARBVersion was only using 16 instead of 32bits.
@@ -27,7 +28,7 @@
 #endif
 
 
-TEST_CASE("Version")
+TEST_CASE("ARBVersion")
 {
 	SECTION("ctor")
 	{
@@ -57,6 +58,18 @@ TEST_CASE("Version")
 	}
 
 
+	SECTION("str2")
+	{
+		if (!g_bMicroTest)
+		{
+			ARBVersion v(L"1.2");
+			REQUIRE(v.Major() == 1);
+			REQUIRE(v.Minor() == 2);
+			REQUIRE(L"1.2" == v.str());
+		}
+	}
+
+
 	SECTION("Comparison")
 	{
 		if (!g_bMicroTest)
@@ -79,7 +92,11 @@ TEST_CASE("Version")
 			REQUIRE(v1.Minor() == min);
 		}
 	}
+}
 
+
+TEST_CASE("VersionNum")
+{
 	SECTION("VerParse")
 	{
 		if (!g_bMicroTest)
@@ -88,10 +105,39 @@ TEST_CASE("Version")
 			REQUIRE(v.Parse(L"1.2.3.4"));
 			CVersionNum::VERSION_NUMBER ver;
 			v.GetVersion(ver);
-			REQUIRE(ver.part1 == 1);
-			REQUIRE(ver.part2 == 2);
-			REQUIRE(ver.part3 == 3);
-			REQUIRE(ver.part4 == 4);
+			REQUIRE(ver[0] == 1);
+			REQUIRE(ver[1] == 2);
+			REQUIRE(ver[2] == 3);
+			REQUIRE(ver[3] == 4);
+
+			REQUIRE_FALSE(v.Parse(L"2.3.4"));
+			REQUIRE(ver[0] == 1);
+			REQUIRE(ver[1] == 2);
+			REQUIRE(ver[2] == 3);
+			REQUIRE(ver[3] == 4);
 		}
+	}
+
+
+	SECTION("VerEq")
+	{
+		CVersionNum v1(false), v2(false);
+		v1.Assign(1, 2, 3, 4);
+		v2.Assign(1, 2, 3, 4);
+		REQUIRE(v1 == v2);
+	}
+
+
+	SECTION("VerComp")
+	{
+		CVersionNum v1(false), v2(false);
+		v1.Assign(1, 2, 3, 4);
+		v2.Assign(2, 1, 3, 4);
+		REQUIRE(v1 < v2);
+		REQUIRE(v2 > v1);
+
+		v2.Assign(1, 2, 3, 5);
+		REQUIRE(v1 < v2);
+		REQUIRE(v2 > v1);
 	}
 }
