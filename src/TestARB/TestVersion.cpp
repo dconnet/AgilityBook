@@ -101,7 +101,7 @@ TEST_CASE("VersionNum")
 	{
 		if (!g_bMicroTest)
 		{
-			CVersionNum v(false);
+			CVersionNum v;
 			REQUIRE(v.Parse(L"1.2.3.4"));
 			CVersionNum::VERSION_NUMBER ver;
 			v.GetVersion(ver);
@@ -119,9 +119,34 @@ TEST_CASE("VersionNum")
 	}
 
 
+	SECTION("VerCtor")
+	{
+		if (!g_bMicroTest)
+		{
+			CVersionNum v(L"1.2.3.4");
+			CVersionNum::VERSION_NUMBER ver;
+			v.GetVersion(ver);
+			REQUIRE(ver[0] == 1);
+			REQUIRE(ver[1] == 2);
+			REQUIRE(ver[2] == 3);
+			REQUIRE(ver[3] == 4);
+		}
+	}
+
+
+	SECTION("VerCtor2")
+	{
+		if (!g_bMicroTest)
+		{
+			CVersionNum v(L"1.2.3");
+			REQUIRE_FALSE(v.Valid());
+		}
+	}
+
+
 	SECTION("VerEq")
 	{
-		CVersionNum v1(false), v2(false);
+		CVersionNum v1, v2;
 		v1.Assign(1, 2, 3, 4);
 		v2.Assign(1, 2, 3, 4);
 		REQUIRE(v1 == v2);
@@ -130,7 +155,7 @@ TEST_CASE("VersionNum")
 
 	SECTION("VerComp")
 	{
-		CVersionNum v1(false), v2(false);
+		CVersionNum v1, v2;
 		v1.Assign(1, 2, 3, 4);
 		v2.Assign(2, 1, 3, 4);
 		REQUIRE(v1 < v2);

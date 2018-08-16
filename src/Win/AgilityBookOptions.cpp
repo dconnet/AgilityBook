@@ -49,6 +49,7 @@
 
 #include "DlgAssignColumns.h"
 #include "RegItems.h"
+#include "VersionNumber.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBCalendar.h"
@@ -497,7 +498,7 @@ bool CAgilityBookOptions::ImportSettings(ElementNodePtr const& inree)
 ElementNodePtr CAgilityBookOptions::ExportSettings()
 {
 	wxBusyCursor wait;
-	CVersionNum ver(true);
+	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	std::wstring verstr = ver.GetVersionString();
 	ElementNodePtr tree(ElementNode::New(L"AgilityBookSettings"));
 	tree->AddAttrib(ATTRIB_BOOK_VERSION, ARBAgilityRecordBook::GetCurrentDocVersion());
@@ -1968,7 +1969,7 @@ void CAgilityBookOptions::SuppressCalSite(
 
 CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(std::wstring const& filename)
 {
-	CVersionNum ver(false);
+	CVersionNum ver;
 	if (!filename.empty())
 	{
 		wxString section(CFG_KEY_CALSITES2);
@@ -1995,7 +1996,7 @@ void CAgilityBookOptions::SuppressCalSitePermanently(
 	else
 	{
 		// If we're clearing one, make sure we haven't written a different version
-		CVersionNum ver(false);
+		CVersionNum ver;
 		std::wstring str = StringUtil::stringW(wxConfig::Get()->Read(section, wxString()));
 		if (!str.empty())
 			ver.Parse(str);

@@ -29,34 +29,82 @@ class CVersionNum
 public:
 	typedef std::array<unsigned short, 4> VERSION_NUMBER;
 
-	CVersionNum(bool bAutoLoad);
-	CVersionNum(CVersionNum const& rhs);
-	CVersionNum& operator=(CVersionNum const& rhs);
+	CVersionNum()
+		: m_Valid(false)
+		, m_Version()
+	{
+	}
+	CVersionNum(
+			unsigned short inMajor,
+			unsigned short inMinor,
+			unsigned short inDot,
+			unsigned short inBuild)
+		: m_Valid(true)
+		, m_Version({ inMajor, inMinor, inDot, inBuild })
+	{
+	}
+	CVersionNum(std::wstring const& inVer)
+		: m_Valid(false)
+		, m_Version()
+	{
+		m_Valid = Parse(inVer);
+	}
+	CVersionNum(CVersionNum const& rhs)
+		: m_Valid(rhs.m_Valid)
+		, m_Version(rhs.m_Version)
+	{
+	}
+	CVersionNum& operator=(CVersionNum const& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_Valid = rhs.m_Valid;
+			m_Version = rhs.m_Version;
+		}
+		return *this;
+	}
 
 	/**
 	 * Parse a version number, must be in form "n.n.n.n".
 	 */
-	bool Parse(std::wstring inVer);
+	bool Parse(std::wstring const& inVer);
 
 	void Assign(
 			unsigned short inMajor,
 			unsigned short inMinor,
 			unsigned short inDot,
-			unsigned short inBuild);
+			unsigned short inBuild)
+	{
+		m_Valid = true;
+		m_Version = { inMajor, inMinor, inDot, inBuild };
+	}
 
 	/**
 	 * Equality is based solely on the version number, not any language aspects.
 	 */
-	bool operator==(CVersionNum const& rhs) const;
-	bool operator<(CVersionNum const& rhs) const;
-	bool operator<=(CVersionNum const& rhs) const;
-	bool operator>(CVersionNum const& rhs) const;
-	bool operator>=(CVersionNum const& rhs) const;
+	bool operator==(CVersionNum const& rhs) const { return m_Version == rhs.m_Version; }
+	bool operator<(CVersionNum const& rhs) const { return m_Version < rhs.m_Version; }
+	bool operator<=(CVersionNum const& rhs) const { return operator==(rhs) || rhs.operator>(*this); }
+	bool operator>(CVersionNum const& rhs) const { return m_Version > rhs.m_Version; }
+	bool operator>=(CVersionNum const& rhs) const { return operator==(rhs) || rhs.operator<(*this); }
 
-	void clear();
-	bool Valid() const						{return m_Valid;}
+	void clear()
+	{
+		m_Valid = false;
+		m_Version = { 0, 0, 0, 0 };
+	}
+
+	bool Valid() const
+	{
+		return m_Valid;
+	}
+
 	std::wstring GetVersionString() const;
-	void GetVersion(VERSION_NUMBER& outVer) const;
+
+	void GetVersion(VERSION_NUMBER& outVer) const
+	{
+		outVer = m_Version;
+	}
 
 private:
 	bool m_Valid;

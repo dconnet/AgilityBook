@@ -41,6 +41,7 @@
 #include "Print.h"
 #include "RegItems.h"
 #include "TabView.h"
+#include "VersionNumber.h"
 
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
@@ -554,7 +555,7 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 
 	// Me.
 	{
-		CVersionNum ver(true);
+		CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 		str << wxStandardPaths::Get().GetExecutablePath()
 #ifdef ARB_64BIT
 			<< L" (64-bit): ";

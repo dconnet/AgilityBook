@@ -103,6 +103,7 @@
 #include "DlgProgress.h"
 #include "ReadHttp.h"
 #include "RegItems.h"
+#include "VersionNumber.h"
 #include <fstream>
 
 #include "ARBCommon/ARBMisc.h"
@@ -218,7 +219,7 @@ void CUpdateInfo::CleanupUpdate()
 /////////////////////////////////////////////////////////////////////////////
 
 CUpdateInfo::CUpdateInfo()
-	: m_VersionNum(false)
+	: m_VersionNum()
 	, m_VerConfig(0)
 	, m_size(0)
 	, m_hash()
@@ -466,7 +467,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					// The 'enable' attribute is in case we prematurely disable
 					bool bEnable = false;
 					node->GetAttrib(L"enable", bEnable);
-					CVersionNum vernum(false);
+					CVersionNum vernum;
 					vernum.Parse(ver);
 					if (vernum.Valid())
 					{
@@ -701,7 +702,7 @@ bool CUpdateInfo::IsOutOfDate()
 	// If we haven't parsed the internet file yet, assume we're out-of-date.
 	if (!m_VersionNum.Valid())
 		return true;
-	CVersionNum verThis(true);
+	CVersionNum verThis(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	assert(verThis.Valid());
 	if (verThis < m_VersionNum)
 		return true;

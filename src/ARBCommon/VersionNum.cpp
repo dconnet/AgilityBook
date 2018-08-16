@@ -27,7 +27,6 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/BreakLine.h"
 #include "ARBCommon/StringUtil.h"
-#include "VersionNumber.h"
 #include <sstream>
 
 #ifdef __WXMSW__
@@ -35,37 +34,7 @@
 #endif
 
 
-CVersionNum::CVersionNum(bool bAutoLoad)
-	: m_Valid(false)
-	, m_Version()
-{
-	if (bAutoLoad)
-	{
-		m_Valid = true;
-		m_Version = { ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD };
-	}
-}
-
-
-CVersionNum::CVersionNum(CVersionNum const& rhs)
-	: m_Valid(rhs.m_Valid)
-	, m_Version(rhs.m_Version)
-{
-}
-
-
-CVersionNum& CVersionNum::operator=(CVersionNum const& rhs)
-{
-	if (this != &rhs)
-	{
-		m_Valid = rhs.m_Valid;
-		m_Version = rhs.m_Version;
-	}
-	return *this;
-}
-
-
-bool CVersionNum::Parse(std::wstring inVer)
+bool CVersionNum::Parse(std::wstring const& inVer)
 {
 	clear();
 	std::vector<std::wstring> fields;
@@ -80,55 +49,6 @@ bool CVersionNum::Parse(std::wstring inVer)
 }
 
 
-void CVersionNum::Assign(
-		unsigned short inMajor,
-		unsigned short inMinor,
-		unsigned short inDot,
-		unsigned short inBuild)
-{
-	m_Valid = true;
-	m_Version = { inMajor, inMinor, inDot, inBuild };
-}
-
-
-// Equality is based solely on the version number, not any language aspects.
-bool CVersionNum::operator==(CVersionNum const& rhs) const
-{
-	return m_Version == rhs.m_Version;
-}
-
-
-bool CVersionNum::operator<(CVersionNum const& rhs) const
-{
-	return m_Version < rhs.m_Version;
-}
-
-
-bool CVersionNum::operator<=(CVersionNum const& rhs) const
-{
-	return operator==(rhs) || rhs.operator>(*this);
-}
-
-
-bool CVersionNum::operator>(CVersionNum const& rhs) const
-{
-	return m_Version > rhs.m_Version;
-}
-
-
-bool CVersionNum::operator>=(CVersionNum const& rhs) const
-{
-	return operator==(rhs) || rhs.operator<(*this);
-}
-
-
-void CVersionNum::clear()
-{
-	m_Valid = false;
-	m_Version = { 0, 0, 0, 0 };
-}
-
-
 std::wstring CVersionNum::GetVersionString() const
 {
 	std::wostringstream str;
@@ -137,10 +57,4 @@ std::wstring CVersionNum::GetVersionString() const
 		<< L"." << m_Version[2]
 		<< L"." << m_Version[3];
 	return str.str();
-}
-
-
-void CVersionNum::GetVersion(VERSION_NUMBER& outVer) const
-{
-	outVer = m_Version;
 }

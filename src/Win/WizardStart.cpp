@@ -41,6 +41,7 @@
 #include "AgilityBookOptions.h"
 #include "ConfigHandler.h"
 #include "DlgMessage.h"
+#include "VersionNumber.h"
 #include "Wizard.h"
 
 #include "ARBCommon/Element.h"
@@ -570,7 +571,7 @@ bool CWizardStart::DoWizardFinish()
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					CVersionNum ver(true);
+					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, true, false, false, false, false))
@@ -680,7 +681,7 @@ bool CWizardStart::DoWizardFinish()
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					CVersionNum ver(true);
+					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, false, true, false, false, false))
@@ -709,7 +710,7 @@ bool CWizardStart::DoWizardFinish()
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					CVersionNum ver(true);
+					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, false, false, true, false, false))
@@ -773,7 +774,7 @@ bool CWizardStart::DoWizardFinish()
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					CVersionNum ver(true);
+					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
@@ -835,7 +836,7 @@ bool CWizardStart::DoWizardFinish()
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					CVersionNum ver(true);
+					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr settings = CAgilityBookOptions::ExportSettings();
 					if (settings)

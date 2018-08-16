@@ -16,6 +16,8 @@
 #include "stdafx.h"
 #include "ARB/ARBDebug.h"
 
+#include "VersionNumber.h"
+
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
@@ -41,7 +43,7 @@ std::wstring ARBDebug::GetSystemInfo()
 
 	// Me.
 	{
-		CVersionNum ver(true);
+		CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 		str << wxStandardPaths::Get().GetExecutablePath()
 #ifdef ARB_64BIT
 			<< L" (64-bit): ";

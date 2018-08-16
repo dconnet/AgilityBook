@@ -301,7 +301,7 @@ bool CProgressMeter::HasCanceled() const
 CalSiteData::CalSiteData(ICalendarSite* pSite)
 	: m_pSite(pSite)
 	, m_id()
-	, m_Version(false)
+	, m_Version()
 	, m_LocCodes()
 	, m_VenueCodes()
 {

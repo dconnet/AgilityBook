@@ -95,6 +95,7 @@
 #include "RegItems.h"
 #include "TabView.h"
 #include "UpdateInfo.h"
+#include "VersionNumber.h"
 #include "Wizard.h"
 
 #include "ARBCommon/ARBMsgDigest.h"
@@ -1602,7 +1603,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 {
 	wxBusyCursor wait;
 
-	CVersionNum ver(true);
+	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	std::wstring verstr = ver.GetVersionString();
 	bool bAlreadyWarned = false;
 	bool bOk = false;
