@@ -42,6 +42,7 @@ public:
 			const wxString& name = wxListCtrlNameStr)
 		: wxListView(parent, id, pos, size, style, validator, name)
 	{
+		EnableSystemTheme();
 	}
 	bool SetColumnWidth(int col, int width)
 	{
@@ -79,6 +80,7 @@ public:
 			const wxString& name = wxTreeCtrlNameStr)
 		: wxTreeCtrl(parent, id, pos, size, style, validator, name)
 	{
+		EnableSystemTheme();
 	}
 	int GetItemState(const wxTreeItemId& item)
 	{
