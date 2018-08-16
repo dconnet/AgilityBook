@@ -20,7 +20,7 @@
 #include "stdafx.h"
 #include "TestARB.h"
 
-#include "ARB/ARBTypes2.h"
+#include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/VersionNum.h"
 
 #ifdef __WXMSW__
