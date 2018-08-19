@@ -75,7 +75,7 @@ public:
 	CTreeCtrl(wxWindow* parent, wxWindowID id = wxID_ANY,
 			const wxPoint& pos = wxDefaultPosition,
 			const wxSize& size = wxDefaultSize,
-			long style = wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT,
+			long style = wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT | wxTR_NO_LINES,
 			const wxValidator& validator = wxDefaultValidator,
 			const wxString& name = wxTreeCtrlNameStr)
 		: wxTreeCtrl(parent, id, pos, size, style, validator, name)

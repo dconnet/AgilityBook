@@ -142,7 +142,7 @@ CDlgConfigure::CDlgConfigure(
 
 	m_ctrlItems = new CTreeCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(215, 215)),
-		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
+		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_NO_LINES|wxTR_SINGLE);
 	m_ctrlItems->SetImageList(&m_ImageList);
 	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgConfigure::OnSelectionChanged);
 	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CDlgConfigure::OnItemActivated);

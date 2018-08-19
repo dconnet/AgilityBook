@@ -292,7 +292,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 
 	m_ctrlItems = new CTreeCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(170, 135)),
-		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
+		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_NO_LINES|wxTR_SINGLE);
 	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgConfigVenue::OnSelectionChanged);
 	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CDlgConfigVenue::OnItemActivated);
 	//m_ctrlItems->SetHelpText(_(""));

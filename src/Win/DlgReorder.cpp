@@ -123,7 +123,7 @@ void CDlgReorder::Init(wxWindow* pParent)
 	{
 		ctrl = m_ctrlTree = new CTreeCtrl(this, wxID_ANY,
 			wxDefaultPosition, wxDLG_UNIT(this, wxSize(145, -1)),
-			wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
+			wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_NO_LINES|wxTR_SINGLE);
 		m_ctrlTree->SetQuickBestSize(false);
 		BIND_OR_CONNECT_CTRL(m_ctrlTree, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgReorder::OnTreeSelected);
 		m_ctrlTree->SetHelpText(_("HIDC_REORDER_LIST"));
