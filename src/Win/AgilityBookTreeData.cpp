@@ -469,7 +469,8 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(int id, bool& ioEnable) const
 bool CAgilityBookTreeDataDog::OnCmd(
 		int id,
 		bool& bModified,
-		bool* bTreeSelectionSet)
+		bool* bTreeSelectionSet,
+		bool bSilent)
 {
 	static bool bPrompt = true;
 	bool bHandled = true;
@@ -489,9 +490,9 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		}
 		break;
 	case wxID_CUT:
-		OnCmd(wxID_COPY, bModified, bTreeSelectionSet);
+		OnCmd(wxID_COPY, bModified, bTreeSelectionSet, bSilent);
 		bPrompt = false;
-		OnCmd(ID_AGILITY_DELETE_DOG, bModified, bTreeSelectionSet);
+		OnCmd(ID_AGILITY_DELETE_DOG, bModified, bTreeSelectionSet, bSilent);
 		bPrompt = true;
 		bModified = true;
 		break;
@@ -756,7 +757,8 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(int id, bool& ioEnable) const
 bool CAgilityBookTreeDataTrial::OnCmd(
 		int id,
 		bool& bModified,
-		bool* bTreeSelectionSet)
+		bool* bTreeSelectionSet,
+		bool bSilent)
 {
 	static bool bPrompt = true;
 	bool bHandled = true;
@@ -776,9 +778,9 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 		}
 		break;
 	case wxID_CUT:
-		OnCmd(wxID_COPY, bModified, bTreeSelectionSet);
+		OnCmd(wxID_COPY, bModified, bTreeSelectionSet, bSilent);
 		bPrompt = false;
-		OnCmd(ID_AGILITY_DELETE_TRIAL, bModified, bTreeSelectionSet);
+		OnCmd(ID_AGILITY_DELETE_TRIAL, bModified, bTreeSelectionSet, bSilent);
 		bPrompt = true;
 		bModified = true;
 		break;
@@ -1116,9 +1118,9 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(int id, bool& ioEnable) const
 bool CAgilityBookTreeDataRun::OnCmd(
 		int id,
 		bool& bModified,
-		bool* bTreeSelectionSet)
+		bool* bTreeSelectionSet,
+		bool bSilent)
 {
-	static bool bPrompt = true;
 	bool bHandled = true;
 	switch (id)
 	{
@@ -1137,10 +1139,9 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		}
 		break;
 	case wxID_CUT:
-		OnCmd(wxID_COPY, bModified, bTreeSelectionSet);
-		bPrompt = false;
-		OnCmd(ID_AGILITY_DELETE_RUN, bModified, bTreeSelectionSet);
-		bPrompt = true;
+		OnCmd(wxID_COPY, bModified, bTreeSelectionSet, bSilent);
+		bSilent = true;
+		OnCmd(ID_AGILITY_DELETE_RUN, bModified, bTreeSelectionSet, bSilent);
 		bModified = true;
 		break;
 	case wxID_COPY:
@@ -1179,7 +1180,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		m_pTree->GetDocument()->AddTitle(GetDataDog()->GetDog());
 		break;
 	case ID_AGILITY_DELETE_RUN:
-		if (!bPrompt
+		if (bSilent
 		|| wxYES == wxMessageBox(_("IDS_DELETE_EVENT_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 		{
 			ARBDogTrialPtr pTrial = GetTrial();

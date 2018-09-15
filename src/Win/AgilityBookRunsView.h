@@ -107,7 +107,7 @@ private:
 			bool bSelectionOnly = true) const;
 	void SetupColumns();
 	void LoadData();
-	bool OnCmd(int id);
+	bool OnCmd(int id, bool bSilent = false);
 
 	CReportListCtrl* m_Ctrl;
 	int m_imgCourse;

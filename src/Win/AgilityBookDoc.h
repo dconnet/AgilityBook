@@ -120,7 +120,7 @@ public:
 	void AddTrial(ARBDogRunPtr const& inSelectedRun);
 	void AddRun(ARBDogRunPtr const& inSelectedRun);
 	void EditRun(ARBDogRunPtr const& inRun);
-	void DeleteRun(ARBDogRunPtr const& inRun);
+	void DeleteRun(ARBDogRunPtr const& inRun, bool bSilent);
 
 	bool CreateTrialFromCalendar(
 			ARBCalendar const& cal,

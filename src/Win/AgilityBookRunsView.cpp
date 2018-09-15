@@ -1728,7 +1728,7 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	switch (evt.GetId())
 	{
 	case wxID_CUT:
-		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
+		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
 		break;
 	case wxID_COPY:
 		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
@@ -1775,7 +1775,7 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
 		break;
 	case ID_AGILITY_DELETE_RUN:
-		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
+		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
 		break;
 	case ID_AGILITY_PRINT_RUNS:
 		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
@@ -1802,7 +1802,7 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 }
 
 
-bool CAgilityBookRunsView::OnCmd(int id)
+bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 {
 	if (!m_Ctrl)
 		return false;
@@ -1814,10 +1814,10 @@ bool CAgilityBookRunsView::OnCmd(int id)
 		break;
 
 	case wxID_CUT:
-		if (1 == m_Ctrl->GetSelectedItemCount())
+		if (0 < m_Ctrl->GetSelectedItemCount())
 		{
 			OnCmd(wxID_COPY);
-			OnCmd(ID_AGILITY_DELETE_RUN);
+			OnCmd(ID_AGILITY_DELETE_RUN, true);
 		}
 		break;
 
@@ -1968,9 +1968,22 @@ bool CAgilityBookRunsView::OnCmd(int id)
 
 	case ID_AGILITY_DELETE_RUN:
 		{
-			CAgilityBookRunsViewDataPtr pData = GetItemRunData(m_Ctrl->GetSelection(true));
-			if (pData)
-				GetDocument()->DeleteRun(pData->GetRun());
+			std::vector<long> indices;
+			if (0 < m_Ctrl->GetSelection(indices))
+			{
+				std::vector<ARBDogRunPtr> toDelete;
+				for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+				{
+					CAgilityBookRunsViewDataPtr pData = GetItemRunData(*iter);
+					if (pData && pData->GetRun())
+						toDelete.push_back(pData->GetRun());
+				}
+				for (auto ptr : toDelete)
+				{
+					GetDocument()->DeleteRun(ptr, bSilent);
+					bSilent = true;
+				}
+			}
 		}
 		break;
 

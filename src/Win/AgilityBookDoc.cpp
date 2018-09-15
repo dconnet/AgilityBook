@@ -530,7 +530,7 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr const& inRun)
 }
 
 
-void CAgilityBookDoc::DeleteRun(ARBDogRunPtr const& inRun)
+void CAgilityBookDoc::DeleteRun(ARBDogRunPtr const& inRun, bool bSilent)
 {
 	CTREEVIEW* pTree = GETTREEVIEW();
 	assert(pTree);
@@ -539,7 +539,7 @@ void CAgilityBookDoc::DeleteRun(ARBDogRunPtr const& inRun)
 	{
 		pTree->EnsureVisible(pData->GetId());
 		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_DELETE_RUN, bModified, nullptr))
+		if (pData->OnCmd(ID_AGILITY_DELETE_RUN, bModified, nullptr, bSilent))
 		{
 			if (bModified)
 				Modify(true);

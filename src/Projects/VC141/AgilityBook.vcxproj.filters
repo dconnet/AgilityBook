@@ -22,6 +22,15 @@
     <Filter Include="Header Files\Include\Platform">
       <UniqueIdentifier>{ae2b4116-22a7-4fb6-bffd-ce5d205e38bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Lang">
+      <UniqueIdentifier>{316b896f-cac0-4af6-913d-6904803f66ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Lang\en_US">
+      <UniqueIdentifier>{93d983de-9284-4aee-8462-d42df1a86af7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Lang\fr_FR">
+      <UniqueIdentifier>{c642b822-d4a1-406a-8074-0665072b0380}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Win\AgilityBook.cpp">
@@ -1081,6 +1090,18 @@
     <Xml Include="..\..\Win\res\DefaultConfig.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <None Include="..\..\lang\en_US\arb.po">
+      <Filter>Resource Files\Lang\en_US</Filter>
+    </None>
+    <None Include="..\..\lang\fr_FR\arb.po">
+      <Filter>Resource Files\Lang\fr_FR</Filter>
+    </None>
+    <None Include="..\..\lang\CompileDatafile.py">
+      <Filter>Resource Files\Lang</Filter>
+    </None>
+    <None Include="..\..\lang\CompileLang.py">
+      <Filter>Resource Files\Lang</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Win\AgilityBook.rc">
@@ -1094,5 +1115,8 @@
     <Text Include="..\..\..\Readme-Build.txt" />
     <Text Include="..\..\..\ReleaseProcess.txt" />
     <Text Include="..\..\..\Todo.txt" />
+    <Text Include="..\..\lang\CompileDatList.txt">
+      <Filter>Resource Files\Lang</Filter>
+    </Text>
   </ItemGroup>
 </Project>

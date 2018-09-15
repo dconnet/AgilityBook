@@ -99,7 +99,8 @@ public:
 	virtual bool OnCmd(
 			int id,
 			bool& bModified,
-			bool* bTreeSelectionSet) = 0; // Returns true if data modified
+			bool* bTreeSelectionSet,
+			bool bSilent = false) = 0; // Returns true if data modified
 	virtual std::wstring OnNeedText() const = 0;
 	virtual int OnNeedIcon() const = 0;
 
@@ -163,7 +164,8 @@ public:
 	virtual bool OnCmd(
 			int id,
 			bool& bModified,
-			bool* bTreeSelectionSet);
+			bool* bTreeSelectionSet,
+			bool bSilent = false);
 	virtual std::wstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
@@ -224,7 +226,8 @@ public:
 	virtual bool OnCmd(
 			int id,
 			bool& bModified,
-			bool* bTreeSelectionSet);
+			bool* bTreeSelectionSet,
+			bool bSilent = false);
 	virtual std::wstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
@@ -291,7 +294,8 @@ public:
 	virtual bool OnCmd(
 			int id,
 			bool& bModified,
-			bool* bTreeSelectionSet);
+			bool* bTreeSelectionSet,
+			bool bSilent = false);
 	virtual std::wstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
