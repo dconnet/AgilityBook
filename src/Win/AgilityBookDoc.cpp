@@ -112,9 +112,6 @@
 #endif
 
 
-#define CTREEVIEW CAgilityBookTreeView
-#define GETTREEVIEW GetTreeView
-
 IMPLEMENT_DYNAMIC_CLASS(CAgilityBookDoc, wxDocument)
 
 /////////////////////////////////////////////////////////////////////////////
@@ -274,7 +271,7 @@ void CAgilityBookDoc::OnStatusDog(wxCommandEvent& evt)
 	&& evt.GetId() < static_cast<int>(m_StatusData->dogs.size()) + baseID
 	&& m_StatusData->dogs[evt.GetId()-baseID] != GetCurrentDog())
 	{
-		CTREEVIEW* pTree = GETTREEVIEW();
+		CAgilityBookTreeView* pTree = GetTreeView();
 		if (pTree)
 			pTree->SelectDog(m_StatusData->dogs[evt.GetId()-baseID]);
 	}
@@ -314,7 +311,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 		switch (id)
 		{
 		case STATUS_DOG:
-			if (GETTREEVIEW() && 1 < m_Records.GetDogs().size())
+			if (GetTreeView() && 1 < m_Records.GetDogs().size())
 			{
 				ARBDogPtr curDog = GetCurrentDog();
 				wxMenu* menu = new wxMenu();
@@ -422,7 +419,7 @@ void CAgilityBookDoc::SetCurrentDog(ARBDogPtr const& inDog, bool bSuppressHints)
 ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial() const
 {
 	ARBDogTrialPtr pTrial;
-	CTREEVIEW* pTree = GETTREEVIEW();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
 		pTrial = pTree->GetCurrentTreeItem()->GetTrial();
@@ -436,7 +433,7 @@ ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial() const
 ARBDogRunPtr CAgilityBookDoc::GetCurrentRun() const
 {
 	ARBDogRunPtr pRun;
-	CTREEVIEW* pTree = GETTREEVIEW();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
 		pRun = pTree->GetCurrentTreeItem()->GetRun();
@@ -478,7 +475,7 @@ bool CAgilityBookDoc::AddTitle(ARBDogPtr const& inDog)
 
 void CAgilityBookDoc::AddTrial(ARBDogRunPtr const& inSelectedRun)
 {
-	CTREEVIEW* pTree = GETTREEVIEW();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(inSelectedRun);
 	if (pData)
@@ -496,7 +493,7 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr const& inSelectedRun)
 
 void CAgilityBookDoc::AddRun(ARBDogRunPtr const& inSelectedRun)
 {
-	CTREEVIEW* pTree = GETTREEVIEW();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(inSelectedRun);
 	if (pData)
@@ -514,7 +511,7 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr const& inSelectedRun)
 
 void CAgilityBookDoc::EditRun(ARBDogRunPtr const& inRun)
 {
-	CTREEVIEW* pTree = GETTREEVIEW();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(inRun);
 	if (pData)
@@ -532,7 +529,7 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr const& inRun)
 
 void CAgilityBookDoc::DeleteRun(ARBDogRunPtr const& inRun, bool bSilent)
 {
-	CTREEVIEW* pTree = GETTREEVIEW();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(inRun);
 	if (pData)
@@ -1923,7 +1920,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 					pTab->SetCurTab(IDX_PANE_RUNS);
 				if (m_Records.GetDogs().AddDog(dog))
 				{
-					CTREEVIEW* pTree = GETTREEVIEW();
+					CAgilityBookTreeView* pTree = GetTreeView();
 					if (pTree)
 						pTree->InsertDog(dog, true);
 				}
