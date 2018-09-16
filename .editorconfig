@@ -1,0 +1,21 @@
+# See editorconfig.org for rules
+
+# Visual Studio 2017 will automatically use these
+
+# Subdirectories can override these settings, make sure this is not set in those
+root = true
+
+[*]
+end_of_line = crlf
+trim_trailing_whitespace = true
+insert_final_newline = true
+indent_style = tab
+indent_size = 4
+tab_width = 4
+
+# We can target different files with different options
+# [*.{c,h,cpp,hpp}]
+
+# indent_style: tab / space
+# end_of_line: lf / cr / crlf
+# charset: latin1 / utf-8 / utf-8-bom / utf-16be / utf-16le

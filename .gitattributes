@@ -1,3 +1,5 @@
+*      text=auto
+
 *.dox  eol=lf
 *.dtd  eol=lf
 *.in   eol=lf
@@ -5,6 +7,12 @@
 *.po   eol=lf
 *.sh   eol=lf
 *.xml  eol=lf
+
+# Sources
+*.c    text
+*.cpp  text
+*.h    text
+*.hpp  text
 
 # Don't include stuff which is only used with Git in the archives.
 .gitattributes export-ignore
