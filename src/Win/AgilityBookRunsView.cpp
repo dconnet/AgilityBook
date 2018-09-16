@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-09-15 Refactored how tree/list handle common actions.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2015-11-27 Use subname for event, if set.
  * 2015-11-01 Compute score for NA runs also.
@@ -1198,10 +1199,16 @@ BEGIN_EVENT_TABLE(CAgilityBookRunsView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_EDIT_FIND_NEXT, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_EDIT_FIND_PREVIOUS, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_EDIT_FIND_PREVIOUS, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_AGILITY_EDIT_DOG, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_AGILITY_EDIT_DOG, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_NEW_TITLE, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_NEW_TITLE, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_AGILITY_EDIT_TRIAL, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_AGILITY_EDIT_TRIAL, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_NEW_TRIAL, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_NEW_TRIAL, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_AGILITY_PRINT_TRIAL, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_AGILITY_PRINT_TRIAL, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_EDIT_RUN, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_AGILITY_EDIT_RUN, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_NEW_RUN, CAgilityBookRunsView::OnViewUpdateCmd)
@@ -1213,15 +1220,23 @@ BEGIN_EVENT_TABLE(CAgilityBookRunsView, CAgilityBookBaseExtraView)
 	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_SORTRUNS, CAgilityBookRunsView::OnViewUpdateCmd)
-	EVT_MENU(ID_UNSORT, CAgilityBookRunsView::OnViewCmd)
-	EVT_UPDATE_UI(ID_UNSORT, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_SORTRUNS, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_UNSORT, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_UNSORT, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_TABLE_IN_YPS, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_EXPAND, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_EXPAND, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_COLLAPSE, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_COLLAPSE, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_EXPAND_ALL, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_EXPAND_ALL, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_COLLAPSE_ALL, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_COLLAPSE_ALL, CAgilityBookRunsView::OnViewCmd)
 	EVT_MENU(wxID_PRINT, CAgilityBookRunsView::OnPrint)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookRunsView::OnPreview)
 END_EVENT_TABLE()
@@ -1385,6 +1400,7 @@ void CAgilityBookRunsView::OnUpdate(
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	bool bLoad = false;
+	ARBDogRunPtr pRun;
 	if (hint)
 	{
 		if (hint->IsEqual(UPDATE_LANG_CHANGE) || hint->IsEqual(UPDATE_CUSTOMIZE))
@@ -1397,28 +1413,38 @@ void CAgilityBookRunsView::OnUpdate(
 		|| hint->IsEqual(UPDATE_OPTIONS))
 		{
 			bLoad = true;
+			if (hint->IsSet(UPDATE_RUNS_SELECTION_VIEW))
+				pRun = std::dynamic_pointer_cast<ARBDogRun, ARBBase>(hint->GetObj());
 		}
 		else if (hint->IsSet(UPDATE_RUNS_SELECTION_VIEW))
 		{
-			ARBDogRunPtr pRun = std::dynamic_pointer_cast<ARBDogRun, ARBBase>(hint->GetObj());
-			if (pRun)
-			{
-				for (int i = 0; i < m_Ctrl->GetItemCount(); ++i)
-				{
-					CAgilityBookRunsViewDataPtr pData = GetItemRunData(i);
-					if (pData && pData->GetRun() == pRun)
-					{
-						m_Ctrl->SetSelection(i, true);
-						break;
-					}
-				}
-			}
+			SetSelectedRun(std::dynamic_pointer_cast<ARBDogRun, ARBBase>(hint->GetObj()));
 		}
 	}
 	else
 		bLoad = true;
 	if (bLoad)
+	{
 		LoadData();
+		SetSelectedRun(pRun);
+	}
+}
+
+
+void CAgilityBookRunsView::SetSelectedRun(ARBDogRunPtr pRun)
+{
+	if (pRun)
+	{
+		for (int i = 0; i < m_Ctrl->GetItemCount(); ++i)
+		{
+			CAgilityBookRunsViewDataPtr pData = GetItemRunData(i);
+			if (pData && pData->GetRun() == pRun)
+			{
+				m_Ctrl->SetSelection(i, true);
+				break;
+			}
+		}
+	}
 }
 
 
@@ -1725,80 +1751,86 @@ void CAgilityBookRunsView::OnViewContextMenu(wxContextMenuEvent& evt)
 
 void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 {
+	bool bEnable = false;
 	switch (evt.GetId())
 	{
 	case wxID_CUT:
-		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
+		bEnable = (0 < m_Ctrl->GetSelectedItemCount());
 		break;
 	case wxID_COPY:
-		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
+		bEnable = (0 < m_Ctrl->GetSelectedItemCount());
 		break;
 	case wxID_PASTE:
 		if (CClipboardDataReader::IsFormatAvailable(eFormatRun))
 		{
 			ARBDogPtr pDog;
 			ARBDogTrialPtr pTrial;
-			bool bIsTrial = GetUnifiedTrial(pDog, pTrial, false);
-			evt.Enable(bIsTrial);
+			bEnable = GetUnifiedTrial(pDog, pTrial, false);
 		}
 		break;
 	case wxID_SELECTALL:
-		evt.Enable(m_Ctrl->CanSelectAll());
+		bEnable = (m_Ctrl->CanSelectAll());
 		break;
 	case ID_REORDER:
 		{
-			bool bEnable = false;
 			std::vector<long> indices;
 			if (1 == m_Ctrl->GetSelection(indices))
 			{
 				CAgilityBookRunsViewDataPtr pData = GetItemRunData(indices[0]);
 				bEnable = pData && pData->GetTrial();
 			}
-			evt.Enable(bEnable);
 		}
 		break;
 	case wxID_FIND:
 	case ID_EDIT_FIND_NEXT:
 	case ID_EDIT_FIND_PREVIOUS:
-		evt.Enable(true);
+		bEnable = true;
+		break;
+	case ID_AGILITY_EDIT_DOG:
+		bEnable = (1 == m_Ctrl->GetSelectedItemCount());
 		break;
 	case ID_AGILITY_NEW_TITLE:
-		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
+		bEnable = (1 == m_Ctrl->GetSelectedItemCount());
 		break;
 	case ID_AGILITY_NEW_TRIAL:
-		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
+		bEnable = (1 == m_Ctrl->GetSelectedItemCount());
+		break;
+	case ID_AGILITY_PRINT_TRIAL:
+		{
+			std::vector<long> indices;
+			if (1 == m_Ctrl->GetSelection(indices))
+			{
+				CAgilityBookRunsViewDataPtr pData = GetItemRunData(indices[0]);
+				bEnable = (pData && pData->GetTrial() && 0 < pData->GetTrial()->GetRuns().size());
+			}
+		}
 		break;
 	case ID_AGILITY_EDIT_RUN:
-		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
+		bEnable = (1 == m_Ctrl->GetSelectedItemCount());
 		break;
 	case ID_AGILITY_NEW_RUN:
-		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
+		bEnable = (1 == m_Ctrl->GetSelectedItemCount());
 		break;
 	case ID_AGILITY_DELETE_RUN:
-		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
+		bEnable = (0 < m_Ctrl->GetSelectedItemCount());
 		break;
 	case ID_AGILITY_PRINT_RUNS:
-		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
+		bEnable = (0 < m_Ctrl->GetSelectedItemCount());
 		break;
 	case ID_VIEW_CUSTOMIZE:
-		evt.Enable(true);
+		bEnable = true;
 		break;
 	case ID_UNSORT:
-		evt.Enable(m_SortColumn.IsSorted());
+		bEnable = m_SortColumn.IsSorted();
 		break;
 	case ID_VIEW_SORTRUNS:
-		evt.Enable(true);
-		break;
 	case ID_VIEW_RUNS_BY_TRIAL:
-		evt.Enable(true);
-		break;
 	case ID_VIEW_TABLE_IN_YPS:
-		evt.Enable(true);
-		break;
 	case ID_VIEW_RUNTIME_IN_OPS:
-		evt.Enable(true);
+		bEnable = true;
 		break;
 	}
+	evt.Enable(bEnable);
 }
 
 
@@ -1934,10 +1966,18 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 		}
 		break;
 
+	case ID_AGILITY_EDIT_DOG:
+		{
+			CAgilityBookRunsViewDataPtr pData = GetItemRunData(m_Ctrl->GetSelection(true));
+			if (pData && pData->GetDog())
+				GetDocument()->EditDog(pData->GetDog());
+		}
+		break;
+
 	case ID_AGILITY_NEW_TITLE:
 		{
 			CAgilityBookRunsViewDataPtr pData = GetItemRunData(m_Ctrl->GetSelection(true));
-			if (pData)
+			if (pData && pData->GetDog())
 				GetDocument()->AddTitle(pData->GetDog());
 		}
 		break;
@@ -1945,16 +1985,40 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 	case ID_AGILITY_NEW_TRIAL:
 		{
 			CAgilityBookRunsViewDataPtr pData = GetItemRunData(m_Ctrl->GetSelection(true));
-			if (pData)
-				GetDocument()->AddTrial(pData->GetRun());
+			if (pData && pData->GetDog())
+				GetDocument()->EditTrial(pData->GetDog(), nullptr);
+		}
+		break;
+
+	case ID_AGILITY_PRINT_TRIAL:
+		{
+			CAgilityBookRunsViewDataPtr pData = GetItemRunData(m_Ctrl->GetSelection(true));
+			if (pData && pData->GetTrial())
+			{
+				ARBDogPtr dog = pData->GetDog();
+				std::vector<RunInfo> runs;
+				for (ARBDogRunList::iterator iRun = pData->GetTrial()->GetRuns().begin(); iRun != pData->GetTrial()->GetRuns().end(); ++iRun)
+				{
+					runs.push_back(RunInfo(dog, pData->GetTrial(), *iRun));
+				}
+				PrintRuns(&(GetDocument()->Book().GetConfig()), runs);
+			}
+		}
+		break;
+
+	case ID_AGILITY_EDIT_TRIAL:
+		{
+			CAgilityBookRunsViewDataPtr pData = GetItemRunData(m_Ctrl->GetSelection(true));
+			if (pData && pData->GetTrial())
+				GetDocument()->EditTrial(pData->GetDog(), pData->GetTrial());
 		}
 		break;
 
 	case ID_AGILITY_EDIT_RUN:
 		{
 			CAgilityBookRunsViewDataPtr pData = GetItemRunData(m_Ctrl->GetSelection(true));
-			if (pData)
-				GetDocument()->EditRun(pData->GetRun());
+			if (pData && pData->GetRun())
+				GetDocument()->EditRun(pData->GetDog(), pData->GetTrial(), pData->GetRun());
 		}
 		break;
 
@@ -1962,7 +2026,7 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 		{
 			CAgilityBookRunsViewDataPtr pData = GetItemRunData(m_Ctrl->GetSelection(true));
 			if (pData)
-				GetDocument()->AddRun(pData->GetRun());
+				GetDocument()->EditRun(pData->GetDog(), pData->GetTrial(), nullptr);
 		}
 		break;
 
@@ -1978,11 +2042,7 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 					if (pData && pData->GetRun())
 						toDelete.push_back(pData->GetRun());
 				}
-				for (auto ptr : toDelete)
-				{
-					GetDocument()->DeleteRun(ptr, bSilent);
-					bSilent = true;
-				}
+				GetDocument()->DeleteRuns(toDelete, bSilent);
 			}
 		}
 		break;

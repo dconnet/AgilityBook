@@ -107,6 +107,7 @@ private:
 			bool bSelectionOnly = true) const;
 	void SetupColumns();
 	void LoadData();
+	void SetSelectedRun(ARBDogRunPtr pRun);
 	bool OnCmd(int id, bool bSilent = false);
 
 	CReportListCtrl* m_Ctrl;

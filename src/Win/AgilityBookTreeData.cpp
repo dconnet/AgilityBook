@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-09-15 Refactored how tree/list handle common actions.
  * 2015-11-27 Use subname for event, if set.
  * 2012-09-09 Added 'titlePts' to 'Placement'.
  * 2012-03-03 Fixed new unearned titles from showing up in view.
@@ -57,12 +58,7 @@
 #include "AgilityBookTreeView.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
-#include "DlgDog.h"
 #include "DlgOptions.h"
-#include "DlgReorder.h"
-#include "DlgRun.h"
-#include "DlgTitle.h"
-#include "DlgTrial.h"
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "PointsData.h"
@@ -79,307 +75,7 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-
-static bool EditDog(
-		CAgilityBookTreeDataDog* pDogData,
-		CAgilityBookTreeView* pTree,
-		bool* bTreeSelectionSet,
-		int nPage = 0)
-{
-	bool bAdd = false;
-	ARBDogPtr pDog;
-	if (pDogData)
-		pDog = pDogData->GetDog();
-	if (!pDog)
-	{
-		bAdd = true;
-		pDog = ARBDogPtr(ARBDog::New());
-	}
-	bool bOk = false;
-	CDlgDog dlg(pTree->GetDocument(), pDog, wxGetApp().GetTopWindow(), nPage);
-	if (wxID_OK == dlg.ShowModal())
-	{
-		pDogData = nullptr; // Tree may have reloaded.
-		bOk = true;
-		if (bAdd)
-		{
-			if (!pTree->GetDocument()->Book().GetDogs().AddDog(pDog))
-			{
-				bOk = false;
-			}
-			else
-			{
-				wxTreeItemId hItem = pTree->InsertDog(pDog);
-				pTree->SelectItem(hItem);
-				if (bTreeSelectionSet)
-					*bTreeSelectionSet = true;
-			}
-		}
-		// No need to refresh item here - CDlgDog::OnOk will call the document
-		// ResetVisibility which causes a tree load. Note: If the dog dlg gets
-		// more intelligent (reset is only needed if changing titles/etc), then
-		// we may need this. The problem is that pDogData may be deleted.
-		// Need a way to track that pDogData is gone...
-		//else
-		//	pTree->RefreshItem(pDogData->GetId());
-	}
-	return bOk;
-}
-
-
-static bool EditTrial(
-		CAgilityBookTreeDataDog* pDogData,
-		CAgilityBookTreeDataTrial* pTrialData,
-		CAgilityBookTreeView* pTree,
-		bool* bTreeSelectionSet)
-{
-	assert(pDogData && pDogData->GetDog());
-	bool bAdd = false;
-	ARBDogPtr pDog = pDogData->GetDog();
-	ARBDogTrialPtr pTrial;
-	if (pTrialData)
-		pTrial = pTrialData->GetTrial();
-	if (!pTrial)
-	{
-		bAdd = true;
-		pTrial = ARBDogTrialPtr(ARBDogTrial::New());
-	}
-	bool bOk = false;
-	CDlgTrial dlg(pTree->GetDocument(), pTrial, wxGetApp().GetTopWindow());
-	if (wxID_OK == dlg.ShowModal())
-	{
-		bOk = true;
-		std::vector<CVenueFilter> venues;
-		CFilterOptions::Options().GetFilterVenue(venues);
-		if (bAdd)
-		{
-			if (!pDog->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst()))
-			{
-				bOk = false;
-				wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-			}
-			else
-			{
-				pTree->GetDocument()->ResetVisibility(venues, pTrial);
-				// Even though we will reset the tree, go ahead and add/select
-				// the item into the tree here. That will make sure when the
-				// tree is reloaded, that the new item is selected.
-				wxTreeItemId hItem = pTree->InsertTrial(pTrial, pDogData->GetId());
-				if (!hItem.IsOk())
-				{
-					wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-				}
-				else
-				{
-					pTree->SelectItem(hItem);
-					if (bTreeSelectionSet)
-						*bTreeSelectionSet = true;
-				}
-			}
-		}
-		else
-		{
-			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-			pTree->GetDocument()->ResetVisibility(venues, pTrial);
-			if (pTrialData)
-				pTree->RefreshItem(pTrialData->GetId());
-			if (dlg.RunsWereDeleted())
-			{
-				if (bTreeSelectionSet)
-					*bTreeSelectionSet = true;
-			}
-		}
-		// We have to update the tree even when we add above as it may have
-		// caused the trial to be reordered.
-		if (bOk)
-		{
-			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-			pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
-		}
-	}
-	return bOk;
-}
-
-
-static bool EditRun(
-		CAgilityBookTreeDataDog* pDogData,
-		CAgilityBookTreeDataTrial* pTrialData,
-		CAgilityBookTreeDataRun* pRunData,
-		CAgilityBookTreeView* pTree,
-		bool* bTreeSelectionSet)
-{
-	assert(pDogData && pDogData->GetDog());
-	assert(pTrialData && pTrialData->GetTrial());
-	bool bOk = false;
-	bool bAdd = false;
-	ARBDogRunPtr pRun;
-	if (pRunData)
-		pRun = pRunData->GetRun();
-	if (!pRun)
-	{
-		ARBDogClubPtr pClub;
-		if (!pTrialData->GetTrial()->GetClubs().GetPrimaryClub(&pClub))
-		{
-			wxMessageBox(_("IDS_NEED_CLUB"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
-			return false;
-		}
-		if (!pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
-		{
-			wxMessageBox(wxString::Format(_("IDS_VENUE_CONFIG_MISSING"), pClub->GetVenue().c_str()),
-				wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-			return false;
-		}
-		bAdd = true;
-		pRun = ARBDogRunPtr(ARBDogRun::New());
-		ARBDate date = pTrialData->GetTrial()->GetEndDate();
-		// If this is the first run, the date won't be set.
-		if (!date.IsValid())
-			date.SetToday();
-		pRun->SetDate(date);
-	}
-	CDlgRun dlg(pTree->GetDocument(), pTrialData->GetDog(), pTrialData->GetTrial(), pRun);
-	if (wxID_OK == dlg.ShowModal())
-	{
-		bOk = true;
-		std::vector<CVenueFilter> venues;
-		CFilterOptions::Options().GetFilterVenue(venues);
-		if (bAdd)
-		{
-			if (!pTrialData->GetTrial()->GetRuns().AddRun(pRun))
-			{
-				bOk = false;
-				wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-			}
-			else
-			{
-				// When adding a new trial, we need to reset the multiQs.
-				// The edit dialog does it in OnOK, but we don't add the run
-				// until after the dialog is done.
-				pTrialData->GetTrial()->SetMultiQs(pTree->GetDocument()->Book().GetConfig());
-				pTrialData->GetTrial()->GetRuns().sort();
-				pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-				pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pRun);
-				// Even though we will reset the tree, go ahead and add/select
-				// the item into the tree here. That will make sure when the
-				// tree is reloaded, that the new item is selected.
-				wxTreeItemId hItem = pTree->InsertRun(pTrialData->GetTrial(), pRun, pTrialData->GetId());
-				if (!hItem.IsOk())
-				{
-					if (CFilterOptions::Options().IsFilterEnabled())
-						wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-				}
-				else
-				{
-					pTree->SelectItem(hItem);
-					if (bTreeSelectionSet)
-						*bTreeSelectionSet = true;
-				}
-			}
-		}
-		else
-		{
-			pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-			pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pRun);
-		}
-		// We have to update the tree even when we add above as it may have
-		// caused the trial to be reordered.
-		if (bOk)
-		{
-			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-			pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
-		}
-	}
-	return bOk;
-}
-
 ////////////////////////////////////////////////////////////////////////////
-
-bool CAgilityBookTreeData::CanPaste() const
-{
-	bool bEnable = false;
-	if (CClipboardDataReader::IsFormatAvailable(eFormatDog))
-		bEnable = true;
-	else if (GetTrial()
-	&& CClipboardDataReader::IsFormatAvailable(eFormatRun))
-		bEnable = true;
-	else if (GetDog()
-	&& CClipboardDataReader::IsFormatAvailable(eFormatTrial))
-		bEnable = true;
-	return bEnable;
-}
-
-
-bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
-{
-	bool bLoaded = false;
-	wxBusyCursor wait;
-	ElementNodePtr tree(ElementNode::New());
-	CClipboardDataReader clpData;
-	ARBDogTrialPtr pTrial = GetTrial();
-	ARBDogPtr pDog = GetDog();
-	if (m_pTree->PasteDog(bLoaded))
-	{
-		// Done.
-	}
-	else if (pTrial
-	&& clpData.GetData(eFormatRun, tree) && m_pTree->PasteRuns(pDog, pTrial, bLoaded, bTreeSelectionSet))
-	{
-		// Done.
-	}
-	else if (pDog
-	&& clpData.GetData(eFormatTrial, tree))
-	{
-		if (CLIPDATA == tree->GetName())
-		{
-			ARBDogTrialPtr pNewTrial(ARBDogTrial::New());
-			if (pNewTrial)
-			{
-				CErrorCallback err;
-				if (pNewTrial->Load(m_pTree->GetDocument()->Book().GetConfig(), tree->GetNthElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
-				{
-					bLoaded = true;
-					std::vector<CVenueFilter> venues;
-					CFilterOptions::Options().GetFilterVenue(venues);
-					if (!pDog->GetTrials().AddTrial(pNewTrial, !CAgilityBookOptions::GetNewestDatesFirst()))
-					{
-						bLoaded = false;
-						wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-					}
-					else
-					{
-						m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
-						m_pTree->Freeze();
-						wxTreeItemId hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetId());
-						m_pTree->Thaw();
-						m_pTree->Refresh();
-						bool bOk = true;
-						if (!hItem.IsOk())
-						{
-							bOk = false;
-							wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-						}
-						else
-						{
-							m_pTree->SelectItem(hItem);
-							if (bTreeSelectionSet)
-								*bTreeSelectionSet = true;
-						}
-						if (bOk)
-						{
-							pNewTrial->SetMultiQs(m_pTree->GetDocument()->Book().GetConfig());
-							CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-							m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
-						}
-					}
-				}
-				else if (0 < err.m_ErrMsg.str().length())
-					wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
-			}
-		}
-	}
-	return bLoaded;
-}
-
 
 std::vector<long> const& CAgilityBookTreeData::GetDogColumns() const
 {
@@ -411,178 +107,6 @@ CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(
 
 CAgilityBookTreeDataDog::~CAgilityBookTreeDataDog()
 {
-}
-
-
-bool CAgilityBookTreeDataDog::OnUpdateCmd(int id, bool& ioEnable) const
-{
-	bool bHandled = true;
-	bool bEnable = false;
-	switch (id)
-	{
-	default:
-		bHandled = false;
-		break;
-	case wxID_DUPLICATE:
-	case wxID_CUT:
-	case wxID_COPY:
-		bEnable = true;
-		break;
-	case wxID_PASTE:
-		bEnable = CanPaste();
-		break;
-	case ID_AGILITY_EDIT_DOG:
-	case ID_AGILITY_NEW_TITLE:
-	case ID_AGILITY_NEW_TRIAL:
-	case ID_AGILITY_DELETE_DOG:
-		bEnable = true;
-		break;
-	case ID_REORDER:
-		if (m_pTree && 1 < m_pTree->GetDocument()->Book().GetDogs().size())
-			bEnable = true;
-		break;
-	case ID_EXPAND:
-		if (GetId().IsOk() && m_pTree && m_pTree->ItemHasChildren(GetId()))
-		{
-			if (!m_pTree->IsExpanded(GetId()))
-				bEnable = true;
-		}
-		break;
-	case ID_COLLAPSE:
-		if (GetId().IsOk() && m_pTree && m_pTree->ItemHasChildren(GetId()))
-		{
-			if (m_pTree->IsExpanded(GetId()))
-				bEnable = true;
-		}
-		break;
-	case ID_EXPAND_ALL:
-	case ID_COLLAPSE_ALL:
-		if (GetId().IsOk() && m_pTree && m_pTree->ItemHasChildren(GetId()))
-			bEnable = true;
-		break;
-	}
-	ioEnable = bEnable;
-	return bHandled;
-}
-
-
-bool CAgilityBookTreeDataDog::OnCmd(
-		int id,
-		bool& bModified,
-		bool* bTreeSelectionSet,
-		bool bSilent)
-{
-	static bool bPrompt = true;
-	bool bHandled = true;
-	switch (id)
-	{
-	default:
-		bHandled = false;
-		break;
-	case wxID_DUPLICATE:
-		if (GetDog())
-		{
-			ARBDogPtr pDog = GetDog()->Clone();
-			m_pTree->GetDocument()->Book().GetDogs().AddDog(pDog);
-			bModified = true;
-			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
-			m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
-		}
-		break;
-	case wxID_CUT:
-		OnCmd(wxID_COPY, bModified, bTreeSelectionSet, bSilent);
-		bPrompt = false;
-		OnCmd(ID_AGILITY_DELETE_DOG, bModified, bTreeSelectionSet, bSilent);
-		bPrompt = true;
-		bModified = true;
-		break;
-	case wxID_COPY:
-		{
-			CClipboardDataWriter clpData;
-			if (clpData.isOkay())
-			{
-				wxBusyCursor wait;
-				ElementNodePtr tree(ElementNode::New(CLIPDATA));
-				GetDog()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
-				clpData.AddData(eFormatDog, tree);
-				clpData.AddData(m_pTree->GetPrintLine(GetId()));
-				clpData.CommitData();
-			}
-		}
-		break;
-	case wxID_PASTE:
-		if (DoPaste(bTreeSelectionSet))
-			bModified = true;
-		break;
-	case ID_AGILITY_EDIT_DOG:
-		EditDog(this, m_pTree, bTreeSelectionSet);
-		break;
-	case ID_AGILITY_NEW_TRIAL:
-		if (EditTrial(this, nullptr, m_pTree, bTreeSelectionSet))
-			bModified = true;
-		break;
-	case ID_AGILITY_NEW_TITLE:
-		assert(GetDog());
-		m_pTree->GetDocument()->AddTitle(GetDog());
-		break;
-	case ID_AGILITY_DELETE_DOG:
-		if (!bPrompt
-		|| wxYES == wxMessageBox(_("IDS_DELETE_DOG_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
-		{
-			if (GetId().IsOk() && m_pTree->GetDocument()->Book().GetDogs().DeleteDog(m_pDog))
-			{
-				CAgilityBookOptions::CleanLastItems(m_pDog->GetCallName());
-				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
-				// Delete() will cause this object to be deleted.
-				m_pTree->Delete(GetId());
-				bModified = true;
-				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
-				pDoc->UpdateAllViews(nullptr, &hint);
-			}
-		}
-		break;
-
-	case ID_REORDER:
-		if (m_pTree)
-		{
-			CDlgReorder dlg(m_pTree->GetDocument(), &(m_pTree->GetDocument()->Book().GetDogs()));
-			dlg.ShowModal();
-		}
-		break;
-
-	case ID_EXPAND:
-		if (GetId().IsOk())
-		{
-			m_pTree->Expand(GetId());
-			m_pTree->EnsureVisible(GetId());
-		}
-		break;
-
-	case ID_EXPAND_ALL:
-		if (GetId().IsOk())
-		{
-			m_pTree->ExpandAllChildren(GetId());
-			m_pTree->EnsureVisible(GetId());
-		}
-		break;
-
-	case ID_COLLAPSE:
-		if (GetId().IsOk())
-		{
-			m_pTree->Collapse(GetId());
-			m_pTree->EnsureVisible(GetId());
-		}
-		break;
-
-	case ID_COLLAPSE_ALL:
-		if (GetId().IsOk())
-		{
-			m_pTree->CollapseAllChildren(GetId());
-			m_pTree->EnsureVisible(GetId());
-		}
-		break;
-	}
-	return bHandled;
 }
 
 
@@ -634,14 +158,64 @@ int CAgilityBookTreeDataDog::OnNeedIcon() const
 
 void CAgilityBookTreeDataDog::Properties()
 {
-	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
-	// This may delete 'this'.
-	bool bModified = false;
-	if (OnCmd(ID_AGILITY_EDIT_DOG, bModified, nullptr))
+	m_pTree->GetDocument()->EditDog(GetDog());
+}
+
+
+bool CAgilityBookTreeDataDog::DoCopy()
+{
+	bool bCopied = false;
+	if (GetDog())
 	{
+		CClipboardDataWriter clpData;
+		if (clpData.isOkay())
+		{
+			wxBusyCursor wait;
+			ElementNodePtr tree(ElementNode::New(CLIPDATA));
+			GetDog()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
+			clpData.AddData(eFormatDog, tree);
+			clpData.AddData(m_pTree->GetPrintLine(GetId()));
+			clpData.CommitData();
+			bCopied = true;
+		}
+	}
+	return bCopied;
+}
+
+
+bool CAgilityBookTreeDataDog::DoDuplicate()
+{
+	if (!GetDog())
+		return false;
+	ARBDogPtr pDog = GetDog()->Clone();
+	m_pTree->GetDocument()->Book().GetDogs().AddDog(pDog);
+	CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
+	m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
+	m_pTree->GetDocument()->Modify(true);
+	return true;
+}
+
+
+bool CAgilityBookTreeDataDog::DoDelete(bool bSilent)
+{
+	bool bModified = false;
+	if (bSilent
+	|| wxYES == wxMessageBox(_("IDS_DELETE_DOG_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
+	{
+		CAgilityBookDoc* pDoc = m_pTree->GetDocument();
+		if (GetId().IsOk() && pDoc->Book().GetDogs().DeleteDog(m_pDog))
+		{
+			CAgilityBookOptions::CleanLastItems(m_pDog->GetCallName());
+			// Delete() will cause this object to be deleted.
+			m_pTree->Delete(GetId());
+			bModified = true;
+			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+			pDoc->UpdateAllViews(nullptr, &hint);
+		}
 		if (bModified)
 			pDoc->Modify(true);
 	}
+	return bModified;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -708,153 +282,6 @@ CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
 	CAgilityBookTreeDataDog* pDog = dynamic_cast<CAgilityBookTreeDataDog*>(pData);
 	assert(pDog);
 	return pDog;
-}
-
-
-bool CAgilityBookTreeDataTrial::OnUpdateCmd(int id, bool& ioEnable) const
-{
-	bool bHandled = true;
-	bool bEnable = false;
-	switch (id)
-	{
-	default:
-		bHandled = false;
-		break;
-	case wxID_DUPLICATE:
-	case wxID_CUT:
-	case wxID_COPY:
-		bEnable = true;
-		break;
-	case wxID_PASTE:
-		bEnable = CanPaste();
-		break;
-	case ID_AGILITY_EDIT_TRIAL:
-	case ID_AGILITY_NEW_TRIAL:
-		bEnable = true;
-		break;
-	case ID_AGILITY_NEW_RUN:
-		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
-			bEnable = true;
-		break;
-	case ID_AGILITY_NEW_TITLE:
-	case ID_AGILITY_DELETE_TRIAL:
-		bEnable = true;
-		break;
-	case ID_REORDER:
-		if (GetTrial() && 1 < GetTrial()->GetRuns().size())
-			bEnable = true;
-		break;
-	case ID_AGILITY_PRINT_TRIAL:
-		if (GetTrial() && 0 < GetTrial()->GetRuns().size())
-			bEnable = true;
-		break;
-	}
-	ioEnable = bEnable;
-	return bHandled;
-}
-
-
-bool CAgilityBookTreeDataTrial::OnCmd(
-		int id,
-		bool& bModified,
-		bool* bTreeSelectionSet,
-		bool bSilent)
-{
-	static bool bPrompt = true;
-	bool bHandled = true;
-	switch (id)
-	{
-	default:
-		bHandled = false;
-		break;
-	case wxID_DUPLICATE:
-		if (GetTrial())
-		{
-			ARBDogTrialPtr pTrial = GetTrial()->Clone();
-			GetDog()->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst());
-			bModified = true;
-			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
-			m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
-		}
-		break;
-	case wxID_CUT:
-		OnCmd(wxID_COPY, bModified, bTreeSelectionSet, bSilent);
-		bPrompt = false;
-		OnCmd(ID_AGILITY_DELETE_TRIAL, bModified, bTreeSelectionSet, bSilent);
-		bPrompt = true;
-		bModified = true;
-		break;
-	case wxID_COPY:
-		{
-			CClipboardDataWriter clpData;
-			if (clpData.isOkay())
-			{
-				wxBusyCursor wait;
-				ElementNodePtr tree(ElementNode::New(CLIPDATA));
-				GetTrial()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
-				clpData.AddData(eFormatTrial, tree);
-				clpData.AddData(m_pTree->GetPrintLine(GetId()));
-				clpData.CommitData();
-			}
-		}
-		break;
-	case wxID_PASTE:
-		if (DoPaste(bTreeSelectionSet))
-			bModified = true;
-		break;
-	case ID_AGILITY_EDIT_TRIAL:
-		if (EditTrial(GetDataDog(), this, m_pTree, bTreeSelectionSet))
-			bModified = true;
-		break;
-	case ID_AGILITY_NEW_TRIAL:
-		if (EditTrial(GetDataDog(), nullptr, m_pTree, bTreeSelectionSet))
-			bModified = true;
-		break;
-	case ID_AGILITY_NEW_RUN:
-		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
-			if (EditRun(GetDataDog(), this, nullptr, m_pTree, bTreeSelectionSet))
-				bModified = true;
-		break;
-	case ID_AGILITY_NEW_TITLE:
-		assert(GetDataDog() && GetDataDog()->GetDog());
-		m_pTree->GetDocument()->AddTitle(GetDataDog()->GetDog());
-		break;
-	case ID_AGILITY_DELETE_TRIAL:
-		if (!bPrompt
-		|| wxYES == wxMessageBox(_("IDS_DELETE_TRIAL_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
-		{
-			if (GetId() && GetDog()->GetTrials().DeleteTrial(m_pTrial))
-			{
-				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
-				// Delete() will cause this object to be deleted.
-				m_pTree->Delete(GetId());
-				bModified = true;
-				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
-				pDoc->UpdateAllViews(nullptr, &hint);
-			}
-		}
-		break;
-	case ID_REORDER:
-		if (GetTrial())
-		{
-			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial(), GetRun());
-			dlg.ShowModal();
-		}
-		break;
-	case ID_AGILITY_PRINT_TRIAL:
-		if (GetTrial() && 0 < GetTrial()->GetRuns().size())
-		{
-			ARBDogPtr dog = GetDog();
-			std::vector<RunInfo> runs;
-			for (ARBDogRunList::iterator iRun = GetTrial()->GetRuns().begin(); iRun != GetTrial()->GetRuns().end(); ++iRun)
-			{
-				runs.push_back(RunInfo(dog, GetTrial(), *iRun));
-			}
-			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), runs);
-		}
-		break;
-	}
-	return bHandled;
 }
 
 
@@ -967,14 +394,57 @@ int CAgilityBookTreeDataTrial::OnNeedIcon() const
 
 void CAgilityBookTreeDataTrial::Properties()
 {
-	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
-	// This may delete 'this'.
-	bool bModified = false;
-	if (OnCmd(ID_AGILITY_EDIT_TRIAL, bModified, nullptr))
+	if (GetTrial())
+		m_pTree->GetDocument()->EditTrial(GetDog(), GetTrial());
+}
+
+
+bool CAgilityBookTreeDataTrial::DoCopy()
+{
+	bool bCopied = false;
+	if (GetTrial())
 	{
-		if (bModified)
-			pDoc->Modify(true);
+		CClipboardDataWriter clpData;
+		if (clpData.isOkay())
+		{
+			wxBusyCursor wait;
+			ElementNodePtr tree(ElementNode::New(CLIPDATA));
+			GetTrial()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
+			clpData.AddData(eFormatTrial, tree);
+			clpData.AddData(m_pTree->GetPrintLine(GetId()));
+			clpData.CommitData();
+			bCopied = true;
+		}
 	}
+	return bCopied;
+}
+
+
+bool CAgilityBookTreeDataTrial::DoDuplicate()
+{
+	if (!GetTrial())
+		return false;
+	ARBDogTrialPtr pTrial = GetTrial()->Clone();
+	GetDog()->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst());
+	CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
+	m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
+	m_pTree->GetDocument()->Modify(true);
+	return true;
+}
+
+
+bool CAgilityBookTreeDataTrial::DoDelete(bool bSilent)
+{
+	if (!m_pTrial)
+		return false;
+
+	wxTreeItemId id = GetId();
+	if (!m_pTree->GetDocument()->DeleteTrial(GetDog(), GetTrial(), bSilent))
+		return false;
+
+	// Delete() will cause this object to be deleted.
+	m_pTree->Delete(GetId());
+	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1073,157 +543,6 @@ CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
 }
 
 
-bool CAgilityBookTreeDataRun::OnUpdateCmd(int id, bool& ioEnable) const
-{
-	bool bHandled = true;
-	bool bEnable = false;
-	switch (id)
-	{
-	default:
-		bHandled = false;
-		break;
-	case wxID_DUPLICATE:
-	case wxID_CUT:
-	case wxID_COPY:
-		bEnable = true;
-		break;
-	case wxID_PASTE:
-		bEnable = CanPaste();
-		break;
-	case ID_AGILITY_EDIT_RUN:
-	case ID_AGILITY_NEW_TRIAL:
-		bEnable = true;
-		break;
-	case ID_AGILITY_NEW_RUN:
-		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
-			bEnable = true;
-		break;
-	case ID_AGILITY_NEW_TITLE:
-	case ID_AGILITY_DELETE_RUN:
-		bEnable = true;
-		break;
-	case ID_REORDER:
-		if (GetTrial() && 1 < GetTrial()->GetRuns().size())
-			bEnable = true;
-		break;
-	case ID_AGILITY_PRINT_RUNS:
-		bEnable = true;
-		break;
-	}
-	ioEnable = bEnable;
-	return bHandled;
-}
-
-
-bool CAgilityBookTreeDataRun::OnCmd(
-		int id,
-		bool& bModified,
-		bool* bTreeSelectionSet,
-		bool bSilent)
-{
-	bool bHandled = true;
-	switch (id)
-	{
-	default:
-		bHandled = false;
-		break;
-	case wxID_DUPLICATE:
-		if (GetRun())
-		{
-			ARBDogRunPtr pRun = GetRun()->Clone();
-			GetTrial()->GetRuns().AddRun(pRun);
-			GetTrial()->GetRuns().sort();
-			bModified = true;
-			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
-			m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
-		}
-		break;
-	case wxID_CUT:
-		OnCmd(wxID_COPY, bModified, bTreeSelectionSet, bSilent);
-		bSilent = true;
-		OnCmd(ID_AGILITY_DELETE_RUN, bModified, bTreeSelectionSet, bSilent);
-		bModified = true;
-		break;
-	case wxID_COPY:
-		{
-			CClipboardDataWriter clpData;
-			if (clpData.isOkay())
-			{
-				wxBusyCursor wait;
-				ElementNodePtr tree(ElementNode::New(CLIPDATA));
-				GetRun()->Save(tree, nullptr, m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
-				clpData.AddData(eFormatRun, tree);
-				clpData.AddData(m_pTree->GetPrintLine(GetId()));
-				clpData.CommitData();
-			}
-		}
-		break;
-	case wxID_PASTE:
-		if (DoPaste(bTreeSelectionSet))
-			bModified = true;
-		break;
-	case ID_AGILITY_EDIT_RUN:
-		if (EditRun(GetDataDog(), GetDataTrial(), this, m_pTree, bTreeSelectionSet))
-			bModified = true;
-		break;
-	case ID_AGILITY_NEW_TRIAL:
-		if (EditTrial(GetDataDog(), nullptr, m_pTree, bTreeSelectionSet))
-			bModified = true;
-		break;
-	case ID_AGILITY_NEW_RUN:
-		if (GetTrial() && GetTrial()->GetClubs().GetPrimaryClub())
-			if (EditRun(GetDataDog(), GetDataTrial(), nullptr, m_pTree, bTreeSelectionSet))
-				bModified = true;
-		break;
-	case ID_AGILITY_NEW_TITLE:
-		assert(GetDataDog() && GetDataDog()->GetDog());
-		m_pTree->GetDocument()->AddTitle(GetDataDog()->GetDog());
-		break;
-	case ID_AGILITY_DELETE_RUN:
-		if (bSilent
-		|| wxYES == wxMessageBox(_("IDS_DELETE_EVENT_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
-		{
-			ARBDogTrialPtr pTrial = GetTrial();
-			ARBDate startDate = pTrial->GetStartDate();
-			if (GetId().IsOk() && pTrial->GetRuns().DeleteRun(m_pRun))
-			{
-				m_pTree->RefreshItem(m_pTree->GetItemParent(GetId()));
-				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
-				ARBDogPtr pDog = GetDog();
-				// Delete() will cause this object to be deleted.
-				m_pTree->Delete(GetId());
-				pTrial->SetMultiQs(pDoc->Book().GetConfig());
-				unsigned int updateHint = UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW;
-				if (pTrial->GetStartDate() != startDate)
-				{
-					updateHint |= UPDATE_TREE_VIEW;
-					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-				}
-				bModified = true;
-				CUpdateHint hint(updateHint);
-				pDoc->UpdateAllViews(nullptr, &hint);
-			}
-		}
-		break;
-	case ID_REORDER:
-		if (GetTrial())
-		{
-			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial(), GetRun());
-			dlg.ShowModal();
-		}
-		break;
-	case ID_AGILITY_PRINT_RUNS:
-		{
-			std::vector<RunInfo> runs;
-			runs.push_back(RunInfo(GetDog(), GetTrial(), m_pRun));
-			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), runs);
-		}
-		break;
-	}
-	return bHandled;
-}
-
-
 std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 {
 	std::wostringstream str;
@@ -1293,12 +612,49 @@ int CAgilityBookTreeDataRun::OnNeedIcon() const
 
 void CAgilityBookTreeDataRun::Properties()
 {
-	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
-	// This may delete 'this'.
-	bool bModified = false;
-	if (OnCmd(ID_AGILITY_EDIT_RUN, bModified, nullptr))
+	if (GetRun())
+		m_pTree->GetDocument()->EditRun(GetDog(), GetTrial(), GetRun());
+}
+
+
+bool CAgilityBookTreeDataRun::DoCopy()
+{
+	bool bCopied = false;
+	if (GetRun())
 	{
-		if (bModified)
-			pDoc->Modify(true);
+		CClipboardDataWriter clpData;
+		if (clpData.isOkay())
+		{
+			wxBusyCursor wait;
+			ElementNodePtr tree(ElementNode::New(CLIPDATA));
+			GetRun()->Save(tree, nullptr, m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
+			clpData.AddData(eFormatRun, tree);
+			clpData.AddData(m_pTree->GetPrintLine(GetId()));
+			clpData.CommitData();
+			bCopied = true;
+		}
 	}
+	return bCopied;
+}
+
+
+bool CAgilityBookTreeDataRun::DoDuplicate()
+{
+	if (!GetRun())
+		return false;
+	ARBDogRunPtr pRun = GetRun()->Clone();
+	GetTrial()->GetRuns().AddRun(pRun);
+	GetTrial()->GetRuns().sort();
+	CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
+	m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
+	m_pTree->GetDocument()->Modify(true);
+	return true;
+}
+
+
+bool CAgilityBookTreeDataRun::DoDelete(bool bSilent)
+{
+	if (!GetRun())
+		return false;
+	return m_pTree->GetDocument()->DeleteRuns({ GetRun() }, bSilent);
 }

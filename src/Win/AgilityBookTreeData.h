@@ -95,19 +95,13 @@ public:
 	}
 
 	virtual MenuIdentityPopup GetMenuID() const = 0;
-	virtual bool OnUpdateCmd(int id, bool& ioEnable) const = 0;
-	virtual bool OnCmd(
-			int id,
-			bool& bModified,
-			bool* bTreeSelectionSet,
-			bool bSilent = false) = 0; // Returns true if data modified
 	virtual std::wstring OnNeedText() const = 0;
 	virtual int OnNeedIcon() const = 0;
 
 	virtual void Properties() = 0;
-
-	bool CanPaste() const;
-	bool DoPaste(bool* bTreeSelectionSet);
+	virtual bool DoCopy() = 0;
+	virtual bool DoDuplicate() = 0;
+	virtual bool DoDelete(bool bSilent) = 0;
 
 protected:
 	CAgilityBookTreeView* m_pTree;
@@ -160,16 +154,13 @@ public:
 	{
 		return IdMenuDog;
 	}
-	virtual bool OnUpdateCmd(int id, bool& ioEnable) const;
-	virtual bool OnCmd(
-			int id,
-			bool& bModified,
-			bool* bTreeSelectionSet,
-			bool bSilent = false);
 	virtual std::wstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
+	virtual bool DoCopy();
+	virtual bool DoDuplicate();
+	virtual bool DoDelete(bool bSilent);
 
 private:
 	ARBDogPtr m_pDog;
@@ -222,16 +213,13 @@ public:
 	{
 		return IdMenuTrial;
 	}
-	virtual bool OnUpdateCmd(int id, bool& ioEnable) const;
-	virtual bool OnCmd(
-			int id,
-			bool& bModified,
-			bool* bTreeSelectionSet,
-			bool bSilent = false);
 	virtual std::wstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
+	virtual bool DoCopy();
+	virtual bool DoDuplicate();
+	virtual bool DoDelete(bool bSilent);
 
 private:
 	ARBDogTrialPtr m_pTrial;
@@ -290,16 +278,13 @@ public:
 	{
 		return IdMenuRun;
 	}
-	virtual bool OnUpdateCmd(int id, bool& ioEnable) const;
-	virtual bool OnCmd(
-			int id,
-			bool& bModified,
-			bool* bTreeSelectionSet,
-			bool bSilent = false);
 	virtual std::wstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
+	virtual bool DoCopy();
+	virtual bool DoDuplicate();
+	virtual bool DoDelete(bool bSilent);
 
 private:
 	ARBDogRunPtr m_pRun;

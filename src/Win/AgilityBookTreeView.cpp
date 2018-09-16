@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-09-15 Refactored how tree/list handle common actions.
  * 2014-04-11 Fix switching dogs
  * 2013-04-22 Changing dogs didn't update runs when viewing all runs.
  * 2012-10-03 Fixed a printing problem in the tree.
@@ -51,6 +52,7 @@
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
 #include "DlgFind.h"
+#include "DlgReorder.h"
 #include "DPI.h"
 #include "FilterOptions.h"
 #include "Globals.h"
@@ -772,10 +774,17 @@ bool CAgilityBookTreeView::PasteRuns(
 					inTrial->GetRuns().sort();
 					inDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 					Freeze();
+					unsigned int iHint = 0;
+					ARBBasePtr pBase;
 					wxTreeItemId hItem;
 					for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 					{
 						ARBDogRunPtr pRun = *iter;
+						if (!pBase)
+						{
+							iHint |= UPDATE_RUNS_SELECTION_VIEW;
+							pBase = pRun;
+						}
 						hItem = InsertRun(inTrial, pRun, pData->GetId());
 					}
 					Thaw();
@@ -796,7 +805,7 @@ bool CAgilityBookTreeView::PasteRuns(
 					if (bOk)
 					{
 						inTrial->SetMultiQs(GetDocument()->Book().GetConfig());
-						CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+						CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW | iHint, pBase);
 						GetDocument()->UpdateAllViews(nullptr, &hint);
 					}
 				}
@@ -1160,65 +1169,79 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		evt.Skip();
 		return;
 	}
+
 	bool bEnable = false;
+	CAgilityBookTreeData* pData = GetCurrentTreeItem();
+	wxTreeItemId item = m_Ctrl->GetSelection();
+
 	switch (evt.GetId())
 	{
-	default:
-		{
-			CAgilityBookTreeData* pData = GetCurrentTreeItem();
-			if (pData)
-			{
-				pData->OnUpdateCmd(evt.GetId(), bEnable);
-			}
-			else
-			{
-				if (wxID_PASTE == evt.GetId()
-				&& CClipboardDataReader::IsFormatAvailable(eFormatDog))
-				{
-					bEnable = true;
-				}
-			}
-		}
+	case wxID_DUPLICATE:
+	case wxID_CUT:
+	case wxID_COPY:
+		bEnable = !!pData;
 		break;
+
+	case wxID_PASTE:
+		if (CClipboardDataReader::IsFormatAvailable(eFormatDog))
+			bEnable = true;
+		else if (pData && pData->GetDog() && CClipboardDataReader::IsFormatAvailable(eFormatTrial))
+			bEnable = true;
+		else if (pData && pData->GetTrial() && CClipboardDataReader::IsFormatAvailable(eFormatRun))
+			bEnable = true;
+		break;
+
+	case ID_REORDER:
+		if (pData && pData->GetTrial() && 1 < pData->GetTrial()->GetRuns().size())
+			bEnable = true;
+		else if (1 < GetDocument()->Book().GetDogs().size())
+			bEnable = true;
+		break;
+
 	case wxID_FIND:
 	case ID_EDIT_FIND_NEXT:
 	case ID_EDIT_FIND_PREVIOUS:
 		bEnable = true;
 		break;
-	case ID_EXPAND:
-		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk() && m_Ctrl->ItemHasChildren(item))
-			{
-				if (!m_Ctrl->IsExpanded(item))
-					bEnable = true;
-			}
-		}
+
+	case ID_AGILITY_EDIT_DOG:
+	case ID_AGILITY_DELETE_DOG:
+		bEnable = (pData && pData->GetDog());
 		break;
-	case ID_EXPAND_ALL:
-		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk() && m_Ctrl->ItemHasChildren(item))
-				bEnable = true;
-		}
+
+	case ID_AGILITY_NEW_TITLE:
+		bEnable = (pData && pData->GetDog());
 		break;
-	case ID_COLLAPSE:
-		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk() && m_Ctrl->ItemHasChildren(item))
-			{
-				if (m_Ctrl->IsExpanded(item))
-					bEnable = true;
-			}
-		}
+
+	case ID_AGILITY_EDIT_TRIAL:
+		bEnable = (pData && pData->GetTrial());
 		break;
-	case ID_COLLAPSE_ALL:
-		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk() && m_Ctrl->ItemHasChildren(item))
-				bEnable = true;
-		}
+
+	case ID_AGILITY_NEW_TRIAL:
+		bEnable = (pData && pData->GetDog());
 		break;
+
+	case ID_AGILITY_DELETE_TRIAL:
+		bEnable = (pData && pData->GetTrial());
+		break;
+
+	case ID_AGILITY_PRINT_TRIAL:
+		bEnable = (pData && pData->GetTrial() && 0 < pData->GetTrial()->GetRuns().size());
+		break;
+
+	case ID_AGILITY_EDIT_RUN:
+		bEnable = (pData && pData->GetRun());
+		break;
+
+	case ID_AGILITY_NEW_RUN:
+		bEnable = (pData && pData->GetTrial() && pData->GetTrial()->GetClubs().GetPrimaryClub());
+		break;
+
+	case ID_AGILITY_DELETE_RUN:
+	case ID_AGILITY_PRINT_RUNS:
+		bEnable = (pData && pData->GetRun());
+		break;
+
 	case ID_VIEW_CUSTOMIZE:
 	case ID_VIEW_SORTRUNS:
 	case ID_VIEW_RUNS_BY_TRIAL:
@@ -1226,7 +1249,24 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_VIEW_RUNTIME_IN_OPS:
 		bEnable = true;
 		break;
+
+	case ID_EXPAND:
+		bEnable = (item.IsOk() && m_Ctrl->ItemHasChildren(item) && !m_Ctrl->IsExpanded(item));
+		break;
+
+	case ID_COLLAPSE:
+		bEnable = (item.IsOk() && m_Ctrl->ItemHasChildren(item) && m_Ctrl->IsExpanded(item));
+		break;
+
+	case ID_EXPAND_ALL:
+		bEnable = (item.IsOk() && m_Ctrl->ItemHasChildren(item));
+		break;
+
+	case ID_COLLAPSE_ALL:
+		bEnable = (item.IsOk() && m_Ctrl->ItemHasChildren(item));
+		break;
 	}
+
 	evt.Enable(bEnable);
 }
 
@@ -1237,31 +1277,121 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		return false;
 
 	bool bHandled = false;
+	CAgilityBookTreeData* pData = GetCurrentTreeItem();
+
 	switch (id)
 	{
-	default:
+	case wxID_DUPLICATE:
+		bHandled = true;
+		if (pData)
+			pData->DoDuplicate();
+		break;
+
+	case wxID_CUT:
+		bHandled = true;
+		if (pData && pData->DoCopy())
 		{
-			m_bInDelete = (id == ID_AGILITY_DELETE_DOG
-				|| id == ID_AGILITY_DELETE_TITLE
-				|| id == ID_AGILITY_DELETE_TRIAL
-				|| id == ID_AGILITY_DELETE_RUN
-				|| id == ID_AGILITY_DELETE_CALENDAR
-				|| id == ID_AGILITY_DELETE_TRAINING);
-			CAgilityBookTreeData* pData = GetCurrentTreeItem();
-			if (pData)
-			{
-				bool bModified = false;
-				bHandled = pData->OnCmd(id, bModified, nullptr);
-				if (bModified)
-					GetDocument()->Modify(true);
-			}
-			else if (wxID_PASTE == id)
-			{
-				wxBusyCursor wait;
-				bool bLoaded = false;
-				PasteDog(bLoaded);
-			}
+			m_bInDelete = true;
+			pData->DoDelete(true);
 			m_bInDelete = false;
+		}
+		break;
+
+	case wxID_COPY:
+		bHandled = true;
+		if (pData)
+			pData->DoCopy();
+		break;
+
+	case wxID_PASTE:
+		bHandled = true;
+		if (pData)
+		{
+			bool bLoaded = false;
+			wxBusyCursor wait;
+			ElementNodePtr tree(ElementNode::New());
+			CClipboardDataReader clpData;
+			ARBDogTrialPtr pTrial = pData->GetTrial();
+			ARBDogPtr pDog = pData->GetDog();
+			if (PasteDog(bLoaded))
+			{
+				// Done.
+			}
+			else if (pTrial
+			&& clpData.GetData(eFormatRun, tree) && PasteRuns(pDog, pTrial, bLoaded, nullptr))
+			{
+				// Done.
+			}
+			else if (pDog
+			&& clpData.GetData(eFormatTrial, tree))
+			{
+				if (CLIPDATA == tree->GetName())
+				{
+					ARBDogTrialPtr pNewTrial(ARBDogTrial::New());
+					if (pNewTrial)
+					{
+						CErrorCallback err;
+						if (pNewTrial->Load(GetDocument()->Book().GetConfig(), tree->GetNthElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+						{
+							bLoaded = true;
+							std::vector<CVenueFilter> venues;
+							CFilterOptions::Options().GetFilterVenue(venues);
+							if (!pDog->GetTrials().AddTrial(pNewTrial, !CAgilityBookOptions::GetNewestDatesFirst()))
+							{
+								bLoaded = false;
+								wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+							}
+							else
+							{
+								GetDocument()->ResetVisibility(venues, pNewTrial);
+								Freeze();
+								wxTreeItemId hItem = InsertTrial(pNewTrial, pData->GetDataDog()->GetId());
+								Thaw();
+								Refresh();
+								bool bOk = true;
+								if (!hItem.IsOk())
+								{
+									bOk = false;
+									wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+								}
+								else
+								{
+									SelectItem(hItem);
+								}
+								if (bOk)
+								{
+									pNewTrial->SetMultiQs(GetDocument()->Book().GetConfig());
+									CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+									GetDocument()->UpdateAllViews(nullptr, &hint);
+								}
+							}
+						}
+						else if (0 < err.m_ErrMsg.str().length())
+							wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+					}
+				}
+			}
+			if (bLoaded)
+				GetDocument()->Modify(true);
+		}
+		else
+		{
+			wxBusyCursor wait;
+			bool bLoaded = false;
+			PasteDog(bLoaded);
+		}
+		break;
+
+	case ID_REORDER:
+		if (pData && pData->GetTrial())
+		{
+			CDlgReorder dlg(GetDocument(), pData->GetTrial(), pData->GetRun());
+			dlg.ShowModal();
+		}
+		else
+		{
+			CDlgReorder dlg(GetDocument(), &(GetDocument()->Book().GetDogs()));
+			dlg.ShowModal();
 		}
 		break;
 
@@ -1295,51 +1425,99 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		}
 		break;
 
-	case ID_EXPAND:
+	case ID_AGILITY_EDIT_DOG:
+		if (pData)
+			GetDocument()->EditDog(pData->GetDog());
+		break;
+
+	case ID_AGILITY_DELETE_DOG:
 		bHandled = true;
+		if (pData)
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk())
+			CAgilityBookTreeDataDog* pDataDog = dynamic_cast<CAgilityBookTreeDataDog*>(pData);
+			if (pDataDog)
 			{
-				m_Ctrl->Expand(item);
-				m_Ctrl->EnsureVisible(item);
+				m_bInDelete = true;
+				pDataDog->DoDelete(false);
+				m_bInDelete = false;
 			}
 		}
 		break;
 
-	case ID_EXPAND_ALL:
-		bHandled = true;
+	case ID_AGILITY_NEW_TITLE:
+		if (pData && pData->GetDog())
+			GetDocument()->AddTitle(pData->GetDog());
+		break;
+
+	case ID_AGILITY_EDIT_TRIAL:
+		if (pData && pData->GetTrial())
+			GetDocument()->EditTrial(pData->GetDog(), pData->GetTrial());
+		break;
+
+	case ID_AGILITY_NEW_TRIAL:
+		if (pData && pData->GetDog())
+			GetDocument()->EditTrial(pData->GetDog(), nullptr);
+		break;
+
+	case ID_AGILITY_DELETE_TRIAL:
+		if (pData)
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk())
+			m_bInDelete = true;
+			CAgilityBookTreeData* pTrialData = FindData(pData->GetTrial());
+			if (GetDocument()->DeleteTrial(pData->GetDog(), pData->GetTrial()))
 			{
-				m_Ctrl->ExpandAllChildren(item);
-				m_Ctrl->EnsureVisible(item);
+				// Delete() will cause 'pData' to be deleted.
+				if (pTrialData)
+					Delete(pTrialData->GetId());
+				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+				GetDocument()->UpdateAllViews(nullptr, &hint);
 			}
+			m_bInDelete = false;
 		}
 		break;
 
-	case ID_COLLAPSE:
-		bHandled = true;
+	case ID_AGILITY_PRINT_TRIAL:
+		if (pData && pData->GetTrial())
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk())
+			ARBDogPtr dog = pData->GetDog();
+			std::vector<RunInfo> runs;
+			for (ARBDogRunList::iterator iRun = pData->GetTrial()->GetRuns().begin(); iRun != pData->GetTrial()->GetRuns().end(); ++iRun)
 			{
-				m_Ctrl->Collapse(item);
-				m_Ctrl->EnsureVisible(item);
+				runs.push_back(RunInfo(dog, pData->GetTrial(), *iRun));
 			}
+			PrintRuns(&(GetDocument()->Book().GetConfig()), runs);
 		}
 		break;
 
-	case ID_COLLAPSE_ALL:
+	case ID_AGILITY_EDIT_RUN:
 		bHandled = true;
+		if (pData && pData->GetRun())
+			GetDocument()->EditRun(pData->GetDog(), pData->GetTrial(), pData->GetRun());
+		break;
+
+	case ID_AGILITY_NEW_RUN:
+		bHandled = true;
+		if (pData && pData->GetTrial() && pData->GetTrial()->GetClubs().GetPrimaryClub())
+			GetDocument()->EditRun(pData->GetDog(), pData->GetTrial(), nullptr);
+		break;
+
+	case ID_AGILITY_DELETE_RUN:
+		bHandled = true;
+		if (pData && pData->GetRun())
 		{
-			wxTreeItemId item = m_Ctrl->GetSelection();
-			if (item.IsOk())
-			{
-				m_Ctrl->CollapseAllChildren(item);
-				m_Ctrl->EnsureVisible(item);
-			}
+			m_bInDelete = true;
+			GetDocument()->DeleteRuns({ pData->GetRun() });
+			m_bInDelete = false;
+		}
+		break;
+
+	case ID_AGILITY_PRINT_RUNS:
+		bHandled = true;
+		if (pData && pData->GetRun())
+		{
+			std::vector<RunInfo> runs;
+			runs.push_back(RunInfo(pData->GetDog(), pData->GetTrial(), pData->GetRun()));
+			PrintRuns(&(GetDocument()->Book().GetConfig()), runs);
 		}
 		break;
 
@@ -1385,6 +1563,54 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		{
 			CUpdateHint hint(UPDATE_RUNS_VIEW);
 			GetDocument()->UpdateAllViews(nullptr, &hint);
+		}
+		break;
+
+	case ID_EXPAND:
+		bHandled = true;
+		{
+			wxTreeItemId item = m_Ctrl->GetSelection();
+			if (item.IsOk())
+			{
+				m_Ctrl->Expand(item);
+				m_Ctrl->EnsureVisible(item);
+			}
+		}
+		break;
+
+	case ID_COLLAPSE:
+		bHandled = true;
+		{
+			wxTreeItemId item = m_Ctrl->GetSelection();
+			if (item.IsOk())
+			{
+				m_Ctrl->Collapse(item);
+				m_Ctrl->EnsureVisible(item);
+			}
+		}
+		break;
+
+	case ID_EXPAND_ALL:
+		bHandled = true;
+		{
+			wxTreeItemId item = m_Ctrl->GetSelection();
+			if (item.IsOk())
+			{
+				m_Ctrl->ExpandAllChildren(item);
+				m_Ctrl->EnsureVisible(item);
+			}
+		}
+		break;
+
+	case ID_COLLAPSE_ALL:
+		bHandled = true;
+		{
+			wxTreeItemId item = m_Ctrl->GetSelection();
+			if (item.IsOk())
+			{
+				m_Ctrl->CollapseAllChildren(item);
+				m_Ctrl->EnsureVisible(item);
+			}
 		}
 		break;
 	}

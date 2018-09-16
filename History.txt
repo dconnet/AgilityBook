@@ -4,6 +4,8 @@
 - New features / Enhancements:
   - Enable Cutting/Deleting multiple items at once.
   - Suppress confirmation prompt when Cutting (assumption is a paste is coming)
+- Bug fixes:
+  - Fix run selection after pasting.
 
 5/19/2018: v3.2.5.104
 - Bumped Configuration v58:

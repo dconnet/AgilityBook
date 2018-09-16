@@ -115,12 +115,12 @@ public:
 	ARBDogRunPtr GetCurrentRun() const;
 	ARBAgilityRecordBook& Book()			{return m_Records;}
 
+	bool EditDog(ARBDogPtr const& inDog, int nPage = 0);
 	bool AddTitle(ARBDogPtr const& inDog);
-	// These are called from the Runs view so the tree view can do the add.
-	void AddTrial(ARBDogRunPtr const& inSelectedRun);
-	void AddRun(ARBDogRunPtr const& inSelectedRun);
-	void EditRun(ARBDogRunPtr const& inRun);
-	void DeleteRun(ARBDogRunPtr const& inRun, bool bSilent);
+	bool EditTrial(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial);
+	bool DeleteTrial(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, bool bSilent = false);
+	bool EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun);
+	bool DeleteRuns(std::vector<ARBDogRunPtr> const& inRuns, bool bSilent = false);
 
 	bool CreateTrialFromCalendar(
 			ARBCalendar const& cal,

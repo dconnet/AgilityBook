@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-09-15 Refactored how tree/list handle common actions.
  * 2015-12-31 Add wx version to file-written-on section in File Properties.
  * 2015-11-25 Oops, Mac doesn't have '__super'.
  * 2015-10-29 Add Save override. Check if file was externally modified.
@@ -69,8 +70,8 @@
 #include "AgilityBookCalendarView.h"
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookTrainingView.h"
 #include "AgilityBookRunsView.h"
+#include "AgilityBookTrainingView.h"
 #include "AgilityBookTreeData.h"
 #include "AgilityBookTreeView.h"
 #include "ClipBoard.h"
@@ -85,6 +86,7 @@
 #include "DlgListViewer.h"
 #include "DlgMessage.h"
 #include "DlgOptions.h"
+#include "DlgRun.h"
 #include "DlgSelectDog.h"
 #include "DlgTitle.h"
 #include "DlgTraining.h"
@@ -441,6 +443,46 @@ ARBDogRunPtr CAgilityBookDoc::GetCurrentRun() const
 }
 
 
+bool CAgilityBookDoc::EditDog(ARBDogPtr const& inDog, int nPage)
+{
+	bool bAdd = false;
+	ARBDogPtr pDog = inDog;
+	if (!pDog)
+	{
+		bAdd = true;
+		pDog = ARBDogPtr(ARBDog::New());
+	}
+	bool bOk = false;
+	CDlgDog dlg(this, pDog, wxGetApp().GetTopWindow(), nPage);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		bOk = true;
+		if (bAdd)
+		{
+			if (!Book().GetDogs().AddDog(pDog))
+			{
+				bOk = false;
+			}
+			else
+			{
+				CAgilityBookTreeView* pTree = GetTreeView();
+				assert(pTree);
+				wxTreeItemId hItem = pTree->InsertDog(pDog);
+				pTree->SelectItem(hItem);
+			}
+		}
+		// No need to refresh item here - CDlgDog::OnOk will call the document
+		// ResetVisibility which causes a tree load. Note: If the dog dlg gets
+		// more intelligent (reset is only needed if changing titles/etc), then
+		// we may need this. The problem is that pDogData may be deleted.
+		// Need a way to track that pDogData is gone...
+		//else
+		//	pTree->RefreshItem(pDogData->GetId());
+	}
+	return bOk;
+}
+
+
 bool CAgilityBookDoc::AddTitle(ARBDogPtr const& inDog)
 {
 	if (inDog)
@@ -467,81 +509,243 @@ bool CAgilityBookDoc::AddTitle(ARBDogPtr const& inDog)
 }
 
 
-/**
- * Called from the Runs view. Since the run is visible in that view and visible
- * runs are controlled by the selected item in the tree, 'pData' should never
- * be NULL.
- */
-
-void CAgilityBookDoc::AddTrial(ARBDogRunPtr const& inSelectedRun)
+bool CAgilityBookDoc::EditTrial(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial)
 {
-	CAgilityBookTreeView* pTree = GetTreeView();
-	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(inSelectedRun);
-	if (pData)
+	assert(inDog);
+	bool bAdd = false;
+	ARBDogTrialPtr pTrial = inTrial;
+	if (!pTrial)
 	{
-		pTree->EnsureVisible(pData->GetId());
-		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_NEW_TRIAL, bModified, nullptr))
+		bAdd = true;
+		pTrial = ARBDogTrialPtr(ARBDogTrial::New());
+	}
+	bool bOk = false;
+	CDlgTrial dlg(this, pTrial, wxGetApp().GetTopWindow());
+	if (wxID_OK == dlg.ShowModal())
+	{
+		CAgilityBookTreeView* pTree = GetTreeView();
+		assert(pTree);
+		bOk = true;
+		std::vector<CVenueFilter> venues;
+		CFilterOptions::Options().GetFilterVenue(venues);
+		if (bAdd)
 		{
-			if (bModified)
-				Modify(true);
+			if (!inDog->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst()))
+			{
+				bOk = false;
+				wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+			}
+			else
+			{
+				ResetVisibility(venues, pTrial);
+				// Even though we will reset the tree, go ahead and add/select
+				// the item into the tree here. That will make sure when the
+				// tree is reloaded, that the new item is selected.
+				CAgilityBookTreeData* pDogData = pTree->FindData(inDog);
+				assert(pDogData);
+				wxTreeItemId hItem = pTree->InsertTrial(pTrial, pDogData->GetId());
+				if (!hItem.IsOk())
+				{
+					wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+				}
+				else
+				{
+					pTree->SelectItem(hItem);
+					//if (bTreeSelectionSet)
+					//	*bTreeSelectionSet = true;
+				}
+			}
+		}
+		else
+		{
+			inDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			ResetVisibility(venues, pTrial);
+			CAgilityBookTreeData* pTrialData = pTree->FindData(pTrial);
+			if (pTrialData)
+				pTree->RefreshItem(pTrialData->GetId());
+			//if (dlg.RunsWereDeleted())
+			//{
+			//	if (bTreeSelectionSet)
+			//		*bTreeSelectionSet = true;
+			//}
+		}
+		// We have to update the tree even when we add above as it may have
+		// caused the trial to be reordered.
+		if (bOk)
+		{
+			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+			UpdateAllViews(nullptr, &hint);
 		}
 	}
+	return bOk;
 }
 
 
-void CAgilityBookDoc::AddRun(ARBDogRunPtr const& inSelectedRun)
+bool CAgilityBookDoc::DeleteTrial(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, bool bSilent)
 {
-	CAgilityBookTreeView* pTree = GetTreeView();
-	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(inSelectedRun);
-	if (pData)
+	if (!inDog || !inTrial)
+		return false;
+
+	bool bDeleted = false;
+	if (bSilent
+	|| wxYES == wxMessageBox(_("IDS_DELETE_TRIAL_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 	{
-		pTree->EnsureVisible(pData->GetId());
-		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_NEW_RUN, bModified, nullptr))
+		if (inDog->GetTrials().DeleteTrial(inTrial))
 		{
-			if (bModified)
-				Modify(true);
+			// Note: Do not send hint here. The caller must sent it.
+			// (the tree needs to delete the item before sending the hint)
+			Modify(true);
+			bDeleted = true;
 		}
 	}
+	return bDeleted;
 }
 
 
-void CAgilityBookDoc::EditRun(ARBDogRunPtr const& inRun)
+bool CAgilityBookDoc::EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun)
 {
+	assert(inDog);
+	assert(inTrial);
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(inRun);
-	if (pData)
+	bool bOk = false;
+	bool bAdd = false;
+	ARBDogRunPtr pRun = inRun;
+	if (!pRun)
 	{
-		pTree->EnsureVisible(pData->GetId());
-		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_EDIT_RUN, bModified, nullptr))
+		ARBDogClubPtr pClub;
+		if (!inTrial->GetClubs().GetPrimaryClub(&pClub))
 		{
-			if (bModified)
-				Modify(true);
+			wxMessageBox(_("IDS_NEED_CLUB"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			return false;
+		}
+		if (!Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
+		{
+			wxMessageBox(wxString::Format(_("IDS_VENUE_CONFIG_MISSING"), pClub->GetVenue().c_str()),
+				wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+			return false;
+		}
+		bAdd = true;
+		pRun = ARBDogRunPtr(ARBDogRun::New());
+		ARBDate date = inTrial->GetEndDate();
+		// If this is the first run, the date won't be set.
+		if (!date.IsValid())
+			date.SetToday();
+		pRun->SetDate(date);
+	}
+	CDlgRun dlg(this, inDog, inTrial, pRun);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		bOk = true;
+		std::vector<CVenueFilter> venues;
+		CFilterOptions::Options().GetFilterVenue(venues);
+		if (bAdd)
+		{
+			if (!inTrial->GetRuns().AddRun(pRun))
+			{
+				bOk = false;
+				wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+			}
+			else
+			{
+				// When adding a new trial, we need to reset the multiQs.
+				// The edit dialog does it in OnOK, but we don't add the run
+				// until after the dialog is done.
+				inTrial->SetMultiQs(Book().GetConfig());
+				inTrial->GetRuns().sort();
+				inDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+				ResetVisibility(venues, inTrial, pRun);
+				// Even though we will reset the tree, go ahead and add/select
+				// the item into the tree here. That will make sure when the
+				// tree is reloaded, that the new item is selected.
+				CAgilityBookTreeData* pTrialData = pTree->FindData(inTrial);
+				wxTreeItemId hItem = pTree->InsertRun(inTrial, pRun, pTrialData->GetId());
+				if (!hItem.IsOk())
+				{
+					if (CFilterOptions::Options().IsFilterEnabled())
+						wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+				}
+				else
+				{
+					pTree->SelectItem(hItem);
+					//if (bTreeSelectionSet)
+					//	*bTreeSelectionSet = true;
+				}
+			}
+		}
+		else
+		{
+			inDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			ResetVisibility(venues, inTrial, pRun);
+		}
+		// We have to update the tree even when we add above as it may have
+		// caused the trial to be reordered.
+		if (bOk)
+		{
+			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+			UpdateAllViews(nullptr, &hint);
 		}
 	}
+	return bOk;
 }
 
 
-void CAgilityBookDoc::DeleteRun(ARBDogRunPtr const& inRun, bool bSilent)
+bool CAgilityBookDoc::DeleteRuns(std::vector<ARBDogRunPtr> const& inRuns, bool bSilent)
 {
+	if (inRuns.empty())
+		return false;
+
 	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(inRun);
-	if (pData)
+
+	bool bUpdate = false;
+	unsigned int updateHint = UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW;
+	std::set<ARBDogPtr> sortTrials;
+	std::set<wxTreeItemId> refreshItems;
+
+	for (auto inRun : inRuns)
 	{
-		pTree->EnsureVisible(pData->GetId());
-		bool bModified = false;
-		if (pData->OnCmd(ID_AGILITY_DELETE_RUN, bModified, nullptr, bSilent))
+		CAgilityBookTreeData* pData = pTree->FindData(inRun);
+		if (!pData)
+			continue;
+		if (bSilent
+		|| wxYES == wxMessageBox(_("IDS_DELETE_EVENT_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 		{
-			if (bModified)
+			ARBDogTrialPtr pTrial = pData->GetTrial();
+			ARBDate startDate = pTrial->GetStartDate();
+			if (pTrial->GetRuns().DeleteRun(pData->GetRun()))
+			{
+				bUpdate = true;
+				refreshItems.insert(pTree->GetItemParent(pData->GetId()));
+				ARBDogPtr pDog = pData->GetDog();
+				// Delete() will cause 'pData' to be deleted.
+				pTree->Delete(pData->GetId());
+				pData = nullptr;
+				pTrial->SetMultiQs(Book().GetConfig());
+				if (pTrial->GetStartDate() != startDate)
+				{
+					updateHint |= UPDATE_TREE_VIEW;
+					sortTrials.insert(pDog);
+				}
 				Modify(true);
+			}
+			bSilent = true; // Only prompt on the first run
 		}
 	}
+
+	if (bUpdate)
+	{
+		for (auto id : refreshItems)
+			pTree->RefreshItem(id);
+
+		for (auto pDog : sortTrials)
+			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+
+		CUpdateHint hint(updateHint);
+		UpdateAllViews(nullptr, &hint);
+	}
+
+	return bUpdate;
 }
 
 
