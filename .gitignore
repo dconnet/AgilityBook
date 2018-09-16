@@ -1,6 +1,7 @@
 # Ignore MSW build directory
 /bin/*
 
+/src/Projects/**/.vs/
 /src/Projects/**/*.opendb
 /src/Projects/**/*.sdf
 /src/Projects/**/*.suo
@@ -8,9 +9,11 @@
 /src/Projects/**/*.VC.*
 /src/Projects/**/ipch/*
 
-# Ignore (recommended) Mac build directory (and generated files)
+# Ignore (recommended and things I do) Mac build directory (and generated files)
 /build-cocoa/*
 /build-cocoa-debug/*
+/build-rel/*
+/build-debug/*
 
 /autom4te.cache/*
 /configure
