@@ -18,10 +18,10 @@
 /autom4te.cache/*
 /configure
 
-/src/Projects/xcode9/**/xcuserdata/*
-/src/Projects/xcode9/**/xcshareddata/*
-/src/Projects/xcode9/build/*
+xcuserdata/
+/src/Projects/xcode*/build/*
 .DS_Store
+*~.nib
 
 # Ignore vim tmp files
 *.swp
