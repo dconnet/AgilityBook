@@ -443,7 +443,7 @@ bool CAgilityBookTreeDataTrial::DoDelete(bool bSilent)
 		return false;
 
 	// Delete() will cause this object to be deleted.
-	m_pTree->Delete(GetId());
+	m_pTree->Delete(id);
 	return true;
 }
 
