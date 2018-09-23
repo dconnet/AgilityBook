@@ -94,9 +94,9 @@ bool CARBUpdaterApp::OnInit()
 		ZeroMemory(&info, sizeof(info));
 		info.cbSize = sizeof(info);
 		info.fMask = SEE_MASK_NOCLOSEPROCESS;
-		info.lpVerb = _T("open");
+		info.lpVerb = L"open";
 		info.lpFile = file.wx_str();
-		info.lpParameters = _T("/qb START_APP=1");
+		info.lpParameters = L"/qb START_APP=1";
 		info.nShow = SW_SHOWNORMAL;
 		if (ShellExecuteEx(&info))
 		{

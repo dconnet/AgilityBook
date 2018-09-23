@@ -102,7 +102,7 @@ bool CReadHttp::ReadHttpFile(
 		if (!stream || !stream->IsOk())
 		*/
 		{
-			outErrMsg += _T("Error reading ");
+			outErrMsg += L"Error reading ";
 			outErrMsg += m_address;
 			delete stream;
 			return false;
@@ -141,7 +141,7 @@ bool CReadHttp::ReadHttpFile(
 	}
 	if (stream->GetLastError() == wxSTREAM_READ_ERROR)
 	{
-		outErrMsg += _T("Error reading ");
+		outErrMsg += L"Error reading ";
 		outErrMsg += m_address;
 	}
 	delete stream;

@@ -665,7 +665,7 @@ bool CUpdateInfo::CheckProgram(
 							SHELLEXECUTEINFO info;
 							ZeroMemory(&info, sizeof(info));
 							info.cbSize = sizeof(info);
-							info.lpVerb = _T("open");
+							info.lpVerb = L"open";
 							info.lpFile = updater.wx_str();
 							info.lpParameters = args.wx_str();
 							info.nShow = SW_SHOWNORMAL;
