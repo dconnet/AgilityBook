@@ -308,6 +308,8 @@ BEGIN_EVENT_TABLE(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
 	EVT_MENU(wxID_COPY, CAgilityBookTrainingView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_PASTE, CAgilityBookTrainingView::OnViewUpdateCmd)
 	EVT_MENU(wxID_PASTE, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_DELETE, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(wxID_DELETE, CAgilityBookTrainingView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_SELECTALL, CAgilityBookTrainingView::OnViewUpdateCmd)
 	EVT_MENU(wxID_SELECTALL, CAgilityBookTrainingView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_FIND, CAgilityBookTrainingView::OnViewUpdateCmd)
@@ -666,6 +668,7 @@ void CAgilityBookTrainingView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_AGILITY_EDIT_TRAINING:
 		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
 		break;
+	case wxID_DELETE:
 	case ID_AGILITY_DELETE_TRAINING:
 		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
 		break;
@@ -865,6 +868,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 		}
 		break;
 
+	case wxID_DELETE:
 	case ID_AGILITY_DELETE_TRAINING:
 		{
 			std::vector<long> indices;

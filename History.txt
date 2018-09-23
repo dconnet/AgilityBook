@@ -4,6 +4,7 @@
 - New features / Enhancements:
   - Enable Cutting/Deleting multiple items at once.
   - Suppress confirmation prompt when Cutting (assumption is a paste is coming)
+  - Enable 'DEL' for deleting.
 - Bug fixes:
   - Fix run selection after pasting.
 

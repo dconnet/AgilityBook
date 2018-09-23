@@ -198,6 +198,8 @@ BEGIN_EVENT_TABLE(CAgilityBookTreeView, CAgilityBookBaseExtraView)
 	EVT_MENU(wxID_COPY, CAgilityBookTreeView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_PASTE, CAgilityBookTreeView::OnViewUpdateCmd)
 	EVT_MENU(wxID_PASTE, CAgilityBookTreeView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_DELETE, CAgilityBookTreeView::OnViewUpdateCmd)
+	EVT_MENU(wxID_DELETE, CAgilityBookTreeView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_SELECTALL, CAgilityBookTreeView::OnViewUpdateCmd)
 	EVT_MENU(wxID_SELECTALL, CAgilityBookTreeView::OnViewCmd)
 	EVT_UPDATE_UI(ID_REORDER, CAgilityBookTreeView::OnViewUpdateCmd)
@@ -1179,6 +1181,7 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case wxID_DUPLICATE:
 	case wxID_CUT:
 	case wxID_COPY:
+	case wxID_DELETE:
 		bEnable = !!pData;
 		break;
 
@@ -1276,19 +1279,21 @@ bool CAgilityBookTreeView::OnCmd(int id)
 	if (!m_Ctrl)
 		return false;
 
-	bool bHandled = false;
+	bool bHandled = true;
 	CAgilityBookTreeData* pData = GetCurrentTreeItem();
 
 	switch (id)
 	{
+	default:
+		bHandled = false;
+		break;
+
 	case wxID_DUPLICATE:
-		bHandled = true;
 		if (pData)
 			pData->DoDuplicate();
 		break;
 
 	case wxID_CUT:
-		bHandled = true;
 		if (pData && pData->DoCopy())
 		{
 			m_bInDelete = true;
@@ -1298,13 +1303,11 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case wxID_COPY:
-		bHandled = true;
 		if (pData)
 			pData->DoCopy();
 		break;
 
 	case wxID_PASTE:
-		bHandled = true;
 		if (pData)
 		{
 			bool bLoaded = false;
@@ -1382,6 +1385,15 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		}
 		break;
 
+	case wxID_DELETE:
+		if (pData)
+		{
+			m_bInDelete = true;
+			pData->DoDelete(false);
+			m_bInDelete = false;
+		}
+		break;
+
 	case ID_REORDER:
 		if (pData && pData->GetTrial())
 		{
@@ -1396,7 +1408,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case wxID_FIND:
-		bHandled = true;
 		{
 			CDlgFind dlg(m_Callback, m_Ctrl);
 			dlg.ShowModal();
@@ -1404,7 +1415,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_EDIT_FIND_NEXT:
-		bHandled = true;
 		{
 			m_Callback.SearchDown(true);
 			if (m_Callback.Text().empty())
@@ -1415,7 +1425,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_EDIT_FIND_PREVIOUS:
-		bHandled = true;
 		{
 			m_Callback.SearchDown(false);
 			if (m_Callback.Text().empty())
@@ -1431,7 +1440,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_AGILITY_DELETE_DOG:
-		bHandled = true;
 		if (pData)
 		{
 			CAgilityBookTreeDataDog* pDataDog = dynamic_cast<CAgilityBookTreeDataDog*>(pData);
@@ -1490,19 +1498,16 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_AGILITY_EDIT_RUN:
-		bHandled = true;
 		if (pData && pData->GetRun())
 			GetDocument()->EditRun(pData->GetDog(), pData->GetTrial(), pData->GetRun());
 		break;
 
 	case ID_AGILITY_NEW_RUN:
-		bHandled = true;
 		if (pData && pData->GetTrial() && pData->GetTrial()->GetClubs().GetPrimaryClub())
 			GetDocument()->EditRun(pData->GetDog(), pData->GetTrial(), nullptr);
 		break;
 
 	case ID_AGILITY_DELETE_RUN:
-		bHandled = true;
 		if (pData && pData->GetRun())
 		{
 			m_bInDelete = true;
@@ -1512,7 +1517,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_AGILITY_PRINT_RUNS:
-		bHandled = true;
 		if (pData && pData->GetRun())
 		{
 			std::vector<RunInfo> runs;
@@ -1522,7 +1526,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_VIEW_CUSTOMIZE:
-		bHandled = true;
 		{
 			CDlgAssignColumns dlg(CAgilityBookOptions::eView, m_Ctrl, GetDocument(), IO_TYPE_VIEW_TREE_DOG);
 			dlg.ShowModal();
@@ -1530,14 +1533,12 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_VIEW_SORTRUNS:
-		bHandled = true;
 		CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
 		GetDocument()->SortDates();
 		LoadData();
 		break;
 
 	case ID_VIEW_RUNS_BY_TRIAL:
-		bHandled = true;
 		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 			CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewRunsByList);
 		else
@@ -1549,7 +1550,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_VIEW_TABLE_IN_YPS:
-		bHandled = true;
 		CAgilityBookOptions::SetTableInYPS(!CAgilityBookOptions::GetTableInYPS());
 		{
 			CUpdateHint hint(UPDATE_RUNS_VIEW);
@@ -1558,7 +1558,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_VIEW_RUNTIME_IN_OPS:
-		bHandled = true;
 		CAgilityBookOptions::SetRunTimeInOPS(!CAgilityBookOptions::GetRunTimeInOPS());
 		{
 			CUpdateHint hint(UPDATE_RUNS_VIEW);
@@ -1567,7 +1566,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_EXPAND:
-		bHandled = true;
 		{
 			wxTreeItemId item = m_Ctrl->GetSelection();
 			if (item.IsOk())
@@ -1579,7 +1577,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_COLLAPSE:
-		bHandled = true;
 		{
 			wxTreeItemId item = m_Ctrl->GetSelection();
 			if (item.IsOk())
@@ -1591,7 +1588,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_EXPAND_ALL:
-		bHandled = true;
 		{
 			wxTreeItemId item = m_Ctrl->GetSelection();
 			if (item.IsOk())
@@ -1603,7 +1599,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_COLLAPSE_ALL:
-		bHandled = true;
 		{
 			wxTreeItemId item = m_Ctrl->GetSelection();
 			if (item.IsOk())

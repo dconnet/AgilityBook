@@ -1173,6 +1173,8 @@ BEGIN_EVENT_TABLE(CAgilityBookCalendarView, CAgilityBookBaseExtraView)
 	EVT_MENU(wxID_COPY, CAgilityBookCalendarView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_PASTE, CAgilityBookCalendarView::OnViewUpdateCmd)
 	EVT_MENU(wxID_PASTE, CAgilityBookCalendarView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_DELETE, CAgilityBookCalendarView::OnViewUpdateCmd)
+	EVT_MENU(wxID_DELETE, CAgilityBookCalendarView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_SELECTALL, CAgilityBookCalendarView::OnViewUpdateCmd)
 	EVT_MENU(wxID_SELECTALL, CAgilityBookCalendarView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_FIND, CAgilityBookCalendarView::OnViewUpdateCmd)
@@ -1637,6 +1639,7 @@ void CAgilityBookCalendarView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		case ID_AGILITY_EDIT_CALENDAR:
 			bEnable = m_Ctrl->CanEdit();
 			break;
+		case wxID_DELETE:
 		case ID_AGILITY_DELETE_CALENDAR:
 			bEnable = m_Ctrl->CanDelete();
 			break;
@@ -1666,6 +1669,7 @@ void CAgilityBookCalendarView::OnViewCmd(wxCommandEvent& evt)
 	case ID_AGILITY_EDIT_CALENDAR:
 		m_Ctrl->OnEdit(GetDocument());
 		break;
+	case wxID_DELETE:
 	case ID_AGILITY_DELETE_CALENDAR:
 		m_Ctrl->OnDelete(GetDocument());
 		break;

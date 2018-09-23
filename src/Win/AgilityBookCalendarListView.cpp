@@ -475,6 +475,8 @@ BEGIN_EVENT_TABLE(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
 	EVT_MENU(wxID_COPY, CAgilityBookCalendarListView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_PASTE, CAgilityBookCalendarListView::OnViewUpdateCmd)
 	EVT_MENU(wxID_PASTE, CAgilityBookCalendarListView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_DELETE, CAgilityBookCalendarListView::OnViewUpdateCmd)
+	EVT_MENU(wxID_DELETE, CAgilityBookCalendarListView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_SELECTALL, CAgilityBookCalendarListView::OnViewUpdateCmd)
 	EVT_MENU(wxID_SELECTALL, CAgilityBookCalendarListView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_FIND, CAgilityBookCalendarListView::OnViewUpdateCmd)
@@ -930,6 +932,7 @@ void CAgilityBookCalendarListView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_AGILITY_EDIT_CALENDAR:
 		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
 		break;
+	case wxID_DELETE:
 	case ID_AGILITY_DELETE_CALENDAR:
 		{
 			bool bEnable = false;
@@ -1179,6 +1182,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 		}
 		break;
 
+	case wxID_DELETE:
 	case ID_AGILITY_DELETE_CALENDAR:
 		{
 			std::vector<long> indices;

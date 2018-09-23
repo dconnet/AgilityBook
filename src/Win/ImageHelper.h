@@ -128,6 +128,7 @@ namespace ImageHelper
 #define ImageMgrAbout				wxART_MAKE_ART_ID(ImageMgrAbout)
 #define ImageMgrCopy				wxART_MAKE_ART_ID(ImageMgrCopy)
 #define ImageMgrCut					wxART_MAKE_ART_ID(ImageMgrCut)
+#define ImageMgrDelete				wxART_MAKE_ART_ID(ImageMgrDelete)
 #define ImageMgrNew					wxART_MAKE_ART_ID(ImageMgrNew)
 #define ImageMgrOpen				wxART_MAKE_ART_ID(ImageMgrOpen)
 #define ImageMgrPaste				wxART_MAKE_ART_ID(ImageMgrPaste)

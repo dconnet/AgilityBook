@@ -281,6 +281,8 @@ bool DoCreateBitmap(
 		LOAD_BITMAP_PNG(pWindow, toolbarCopy, outBmp);
 	else if (id == ImageMgrCut)
 		LOAD_BITMAP_PNG(pWindow, toolbarCut, outBmp);
+	else if (id == ImageMgrDelete)
+		LOAD_BITMAP_PNG(pWindow, toolbarDelete, outBmp);
 	else if (id == ImageMgrNew)
 		LOAD_BITMAP_PNG(pWindow, toolbarNew, outBmp);
 	else if (id == ImageMgrOpen)

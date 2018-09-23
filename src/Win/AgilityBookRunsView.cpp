@@ -1189,6 +1189,8 @@ BEGIN_EVENT_TABLE(CAgilityBookRunsView, CAgilityBookBaseExtraView)
 	EVT_MENU(wxID_COPY, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_PASTE, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(wxID_PASTE, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_DELETE, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(wxID_DELETE, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_SELECTALL, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(wxID_SELECTALL, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_REORDER, CAgilityBookRunsView::OnViewUpdateCmd)
@@ -1811,6 +1813,7 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_AGILITY_NEW_RUN:
 		bEnable = (1 == m_Ctrl->GetSelectedItemCount());
 		break;
+	case wxID_DELETE:
 	case ID_AGILITY_DELETE_RUN:
 		bEnable = (0 < m_Ctrl->GetSelectedItemCount());
 		break;
@@ -2030,6 +2033,7 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 		}
 		break;
 
+	case wxID_DELETE:
 	case ID_AGILITY_DELETE_RUN:
 		{
 			std::vector<long> indices;
