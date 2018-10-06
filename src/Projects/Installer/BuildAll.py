@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2018-10-06 Dropping support for pre VS2017 (and XP).
 # 2018-01-27 Fix vcvarsall now changing directory.
 # 2017-09-19 Rename vc15 to vc141, fix GetCompilerPaths tuple name
 # 2017-04-09 Updated for vc141
@@ -26,7 +27,7 @@
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config: 'release' or 'debug' (default, release)
    -t:       Testing, just print commands to run
-   compiler: vc10, vc11, vc12, vc14, vc141 (default: vc10)
+   compiler: vc141 (default: vc141)
 """
 
 import getopt
@@ -144,63 +145,7 @@ def GetCompilerPaths(c):
 	platformDir = ''
 	platform = ''
 
-	if c == 'vc10':
-		baseDir = GetVSDir("10.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = 'x86'
-		platformDir = 'vc100'
-		platform = 'Win32'
-
-	elif c == 'vc10x64':
-		baseDir = GetVSDir("10.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetX64Target(baseDir)
-		platformDir = 'vc100'
-		platform = 'x64'
-
-	elif c == 'vc11':
-		baseDir = GetVSDir("11.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = 'x86'
-		platformDir = 'vc110'
-		platform = 'Win32'
-
-	elif c == 'vc11x64':
-		baseDir = GetVSDir("11.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetX64Target(baseDir)
-		platformDir = 'vc110'
-		platform = 'x64'
-
-	elif c == 'vc12':
-		baseDir = GetVSDir("12.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = 'x86'
-		platformDir = 'vc120'
-		platform = 'Win32'
-
-	elif c == 'vc12x64':
-		baseDir = GetVSDir("12.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetX64Target(baseDir)
-		platformDir = 'vc120'
-		platform = 'x64'
-
-	elif c == 'vc14':
-		baseDir = GetVSDir("14.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = 'x86'
-		platformDir = 'vc140'
-		platform = 'Win32'
-
-	elif c == 'vc14x64':
-		baseDir = GetVSDir("14.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetX64Target(baseDir)
-		platformDir = 'vc140'
-		platform = 'x64'
-
-	elif c == 'vc141':
+	if c == 'vc141':
 		#vcvarsall [arch]
 		#vcvarsall [arch] [version]
 		#vcvarsall [arch] [platform_type] [version]
@@ -310,7 +255,7 @@ def main():
 			return 1
 
 	if 0 == len(compilers):
-		AddCompilers(compilers, 'vc10')
+		AddCompilers(compilers, 'vc141')
 
 	if 0 == len(compilers) or len(wxwin) == 0:
 		print('Usage:', __doc__)
@@ -326,7 +271,7 @@ def main():
 		RunCmds(cmds)
 
 	# Targets:
-	# VC10/VC11/VC12
+	# VC141
 	#  Configuration: 'Release'/'Debug'
 	#  Platform: Win32, x64
 	#  Targets: AgilityBook, ARBHelp, ARBUpdater, LibARB, LibTidy, TestARB

@@ -218,37 +218,19 @@ Microsoft Visual Studio 2008 (VC9) + SP1
 
 Microsoft Visual Studio 2010 (VC10)
 ===================================
-   It works, no additional notes.
-   [x86: UNICODE and MBCS] [note: MBCS support has been dropped]
-   [x64: UNICODE only]
--- Old Express notes (ARB has moved to VC10Pro)
-   - Must install Win7-.Net4 SDK first, in order to get x64 compiler
-     (project won't open otherwise)
-   - Turn on Expert Settings (Tools->Settings->Expert Settings)
-   - Modify \Program Files\Microsoft Visual Studio 10.0\Common7\Tools\VCVarsQueryRegistry.bat:
-     In the function GetWindowsSdkDirHelper, remove the "\7.0A" from the key
-     path and change the value name to "CurrentInstallFolder". This will
-     properly bring in the current SDK version.
-   - Make sure you set the SDK in Platform Toolset (project properties)
-     [this is done for ARB]
+   Not supported. (Dropping XP support, using more C++11 features)
 
 Microsoft Visual Studio 2012 (VC11)
 ===================================
-   It works, no additional notes. But only targets Vista+.
-   If 'vc110_xp' is set as the target platform, it appears to work, but the
-   compilation of WX is not targeted at that platform, so it's not supported.
+   Not supported. (Dropping XP support, using more C++11 features)
 
 Microsoft Visual Studio 2013 (VC12)
 ===================================
-   It works, no additional notes. But only targets Vista+.
-   If 'vc120_xp' is set as the target platform, it appears to work, but the
-   compilation of WX is not targeted at that platform, so it's not supported.
+   Not supported. (Dropping XP support, using more C++11 features)
 
 Microsoft Visual Studio 2015 (VC14)
 ===================================
-   It works, no additional notes. But only targets Vista+.
-   If 'vc140_xp' is set as the target platform, it appears to work, but the
-   compilation of WX is not targeted at that platform, so it's not supported.
+   Not supported. (Dropping XP support, using more C++11 features)
 
 Microsoft Visual Studio 2017 (VC14.1)
 ===================================

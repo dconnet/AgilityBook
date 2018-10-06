@@ -51,7 +51,7 @@
 # 2007-10-31 Changed from WiX to InnoSetup
 # 2007-03-07 Created
 
-"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC[10|11|12|14|15]]
+"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC141]]
 	wix: Override internal wix path (c:\Tools\wix3)
 	user: Create msi as a per-user install (default: per-machine)
 	32: Create 32bit Unicode msi
@@ -59,7 +59,7 @@
 	all: Create all of them (default)
 	notidy: Do not clean up generated files
 	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
-	VC: Generate msi using specified vc version (Default: 10)
+	VC: Generate msi using specified vc version (Default: 141)
 """
 
 import datetime
@@ -360,7 +360,7 @@ def main():
 	b64 = 0
 	tidy = 1
 	testing = 0
-	vcver = '10'
+	vcver = '141'
 	platformTools = '100'
 	if 1 == len(sys.argv):
 		print('Setting /32 /test')
@@ -389,20 +389,8 @@ def main():
 			tidy = 0
 		elif o == '/test':
 			testing = 1
-		elif o == '/VC10':
-			vcver = '10'
-			platformTools = '100'
-		elif o == '/VC11':
-			vcver = '11'
-			platformTools = '110'
-		elif o == '/VC12':
-			vcver = '12'
-			platformTools = '120'
-		elif o == '/VC14':
-			vcver = '14'
-			platformTools = '140'
-		elif o == '/VC15':
-			vcver = '15'
+		elif o == '/VC141':
+			vcver = '141'
 			platformTools = '141'
 		else:
 			error = 1

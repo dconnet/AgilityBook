@@ -17,7 +17,8 @@
  * framework, then include SetupARBPost.h
  *
  * Revision History
- * 2016-09-27 Increase minimun WINVER to 0x502
+ * 2018-10-06 Dropping support for pre VS2017 (and XP).
+ * 2016-09-27 Increase minimum WINVER to 0x502
  * 2014-05-16 Updated to reflect non-support for VC9, moved HAS macros to Post.
  * 2013-01-27 Split/moved stdafx.h.
  * 2013-01-01 Added _VARIADIC_MAX for vc11.
@@ -58,8 +59,8 @@
 // _M_X64: Defined for x64 processors
 // _M_IA64: Defined for Itanium processor family
 
-#if _MSC_VER < 1500
-	#error pre-VC9 is not supported.
+#if _MSC_VER < 1910
+	#error pre-VC141 is not supported.
 #endif // End VC-elifs
 
 #ifndef VC_EXTRALEAN
@@ -83,17 +84,9 @@
 	#error pre-IE5.5 is not supported.
 #endif
 
-// Unless overridden, target XP by default.
+// Unless overridden, target Win7 by default.
 #ifndef WINVER
-	#if _MSC_VER >= 1700
-		#define WINVER	0x0601
-	#elif defined(_M_IA64)
-		#define WINVER	0x0502
-	#elif defined(_M_X64)
-		#define WINVER	0x0502
-	#else //x86
-		#define WINVER	0x0502
-	#endif
+	#define WINVER	0x0601
 #endif
 
 #ifndef _WIN32_WINNT
@@ -112,27 +105,13 @@
 // Error checking
 // VC10: Minimum system: x86 - XP SP2, x64 - XP, Itanium - Server 2003 SP1
 // VC11: Minimum system: Vista (Can target XP using platform toolset 'v110_xp')
-#if _MSC_VER >= 1800
+#if _MSC_VER >= 1910
 	#if WINVER < 0x0600
 		#error VC12 minimum version is 0x0600
 	#endif
 	// Note: VC12 now has true variadic macros.
-#elif _MSC_VER >= 1700
-	#if WINVER < 0x0600
-		#error VC11 minimum version is 0x0600
-	#endif
-	// VC11 changed how make_shared works. Default is 5. I need 6.
-	#define _VARIADIC_MAX 6
-#elif _MSC_VER >= 1600
-	#if defined(_M_IA64) && WINVER < 0x0502
-		#error Itanium minimum version is 0x0502
-	#elif defined(_M_X64) && WINVER < 0x0502
-		#error x64 minimum version is 0x0502
-	#elif WINVER < 0x0502
-		#error VC10 minimum version is 0x0502
-	#endif
 #else
-	#error Go away. Only VC10+ supported.
+	#error Go away. Only VC141+ supported.
 #endif
 
 #else // _WIN32

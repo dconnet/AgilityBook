@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2018-10-06 Dropping support for pre VS2017 (and XP).
 # 2018-01-27 Fix vcvarsall now changing directory.
 # 2017-09-19 Rename vc15 to vc141, fix GetCompilerPaths tuple name
 # 2017-01-24 Changed GetCompilerPaths api.
@@ -38,12 +39,12 @@
 """CompileWX.py -w wxwin [-e] [-a] [-p] [-d] [-m] [-s name]* [-r config] compiler*
 	-w wxwin: Root of wx tree, normally %WXWIN%
 	-e:       Just show the environment, don't do it
-	-a:       Compile all (vc10, vc10x64)
+	-a:       Compile all (vc141, vc141x64)
 	-d:       Compile as DLLs (default: static)
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
 	-r config: config: release/debug
-	compiler: vc10, vc10x64, vc11, vc11x64, vc12, vc12x64, vc14, vc14x64, vc141, vc141x64
+	compiler: vc141, vc141x64
 """
 
 import getopt
@@ -117,63 +118,7 @@ def GetCompilerPaths(c):
 	platformDir = ''
 	platform = ''
 
-	if c == 'vc10':
-		baseDir = GetVSDir("10.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = 'x86'
-		platformDir = 'vc100'
-		platform = 'Win32'
-
-	elif c == 'vc10x64':
-		baseDir = GetVSDir("10.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetX64Target(baseDir)
-		platformDir = 'vc100'
-		platform = 'x64'
-
-	elif c == 'vc11':
-		baseDir = GetVSDir("11.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = 'x86'
-		platformDir = 'vc110'
-		platform = 'Win32'
-
-	elif c == 'vc11x64':
-		baseDir = GetVSDir("11.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetX64Target(baseDir)
-		platformDir = 'vc110'
-		platform = 'x64'
-
-	elif c == 'vc12':
-		baseDir = GetVSDir("12.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = 'x86'
-		platformDir = 'vc120'
-		platform = 'Win32'
-
-	elif c == 'vc12x64':
-		baseDir = GetVSDir("12.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetX64Target(baseDir)
-		platformDir = 'vc120'
-		platform = 'x64'
-
-	elif c == 'vc14':
-		baseDir = GetVSDir("14.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = 'x86'
-		platformDir = 'vc140'
-		platform = 'Win32'
-
-	elif c == 'vc14x64':
-		baseDir = GetVSDir("14.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetX64Target(baseDir)
-		platformDir = 'vc140'
-		platform = 'x64'
-
-	elif c == 'vc141':
+	if c == 'vc141':
 		#vcvarsall [arch]
 		#vcvarsall [arch] [version]
 		#vcvarsall [arch] [platform_type] [version]
@@ -219,27 +164,7 @@ def AddCompiler(compilers, c):
 		return False
 
 	# Sanity test
-	if c == 'vc10x64':
-		if not useUnicode:
-			print('ERROR: VC10x64 does not do MBCS')
-			return False
-
-	elif c == 'vc11x64':
-		if not useUnicode:
-			print('ERROR: VC11x64 does not do MBCS')
-			return False
-
-	elif c == 'vc12x64':
-		if not useUnicode:
-			print('ERROR: VC12x64 does not do MBCS')
-			return False
-
-	elif c == 'vc14x64':
-		if not useUnicode:
-			print('ERROR: VC14x64 does not do MBCS')
-			return False
-
-	elif c == 'vc141x64':
+	if c == 'vc141x64':
 		if not useUnicode:
 			print('ERROR: VC141x64 does not do MBCS')
 			return False
@@ -302,8 +227,8 @@ def main():
 		elif '-w' == o:
 			wxwin = a
 		elif '-a' == o:
-			AddCompiler(compilers, 'vc10')
-			AddCompiler(compilers, 'vc10x64')
+			AddCompiler(compilers, 'vc141')
+			AddCompiler(compilers, 'vc141x64')
 		elif '-d' == o:
 			useStatic = False
 		elif '-m' == o:

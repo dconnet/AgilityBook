@@ -1,4 +1,6 @@
-9/15/2018: v3.2.6.<development>
+9/15/2018: v3.3.0.<development>
+- Notes:
+  - Windows XP support dropped, VC10/11/12/14 dropped.
 - Bumped Configuration v59:
   - Cleaned up comments in AKC Std/JWW.
 - New features / Enhancements:

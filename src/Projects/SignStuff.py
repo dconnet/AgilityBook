@@ -12,6 +12,7 @@
 # This script, by default, will only sign when on the build machine.
 #
 # Revision History
+# 2018-10-06 Dropping XP support, remove dual signing.
 # 2017-10-29 Added -2,-t,-e options.
 # 2017-04-09 Fix MSI signing.
 # 2016-12-23 Add test to only target dll/exe. Allows script to be put into common project properties.
@@ -44,7 +45,6 @@ CertName = 'David Connet'
 SignTool = 'signtool.exe'
 SignSHA1cmd = '/t http://timestamp.comodoca.com /v'
 SignSHA256cmd = '/fd sha256 /tr http://timestamp.comodoca.com/?td=sha256 /td sha256 /as /v'
-signSHA1 = True
 signSHA256 = True
 sleepTime = 5
 
@@ -76,7 +76,7 @@ def CheckDualSign(filename):
 
 def main():
 	global BuildMachine, CertName, SignTool
-	global SignSHA1cmd, SignSHA256cmd, signSHA1, signSHA256
+	global SignSHA1cmd, SignSHA256cmd, signSHA256
 	global sleepTime
 
 	if 'SIGNTOOL_EXE' in os.environ:
@@ -89,7 +89,7 @@ def main():
 	password = ''
 	testOnly = False
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 's:n:f:p:12t:e')
+		opts, args = getopt.getopt(sys.argv[1:], 's:n:f:p:t:e')
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
@@ -105,12 +105,6 @@ def main():
 			pfxFile = a
 		elif '-p' == o:
 			password = a
-		elif '-1' == o:
-			signSHA1 = True
-			signSHA256 = False
-		elif '-2' == o:
-			signSHA1 = False
-			signSHA256 = True
 		elif '-t' == o:
 			sleepTime = int(a)
 		elif '-e' == o:
@@ -147,18 +141,7 @@ def main():
 	cmdSHA1 = command + ' ' + SignSHA1cmd + ' "' + filename + '"'
 	cmdSHA256 = command + ' ' + SignSHA256cmd + ' "' + filename + '"'
 
-	# Sign with sha1 (for XP)
-	if signSHA1:
-		Run(cmdSHA1, testOnly)
-
-	# Running the 2nd signtool too quickly results in a file-in-use error
-	if signSHA1 and signSHA256 and sleepTime > 0:
-		if testOnly:
-			print('sleep', sleepTime)
-		else:
-			time.sleep(sleepTime)
-
-	# Add dual sign for modern OSs
+	# Sign with sha256
 	if signSHA256:
 		Run(cmdSHA256, testOnly)
 

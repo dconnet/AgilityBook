@@ -37,13 +37,13 @@ Commit all changes to GitHub.
 
 Switch to build machine, do a full rebuild and verify it.
 - cd src\Projects\Installer
-- 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.1 -b fullupdate' [runs VC10 compile]
+- 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.1 -b fullupdate' [runs VC141 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
       -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.0.0'
                 Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
-      compiler: vc10, vc11, vc12 (default: vc10)
+      compiler: vc141 (default: vc141)
 - Run 'GenMSI.py /all' to create w32/x64 installers (and sign them)
   and auto-update Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
@@ -77,8 +77,8 @@ Create git branch for release: 'vn.n.n'
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
-- Copy a backup of released files to \AgilityBook\test\[vc10/vc10x64]
-  Currently, I only archive vc10/x64 - the exe's that are released to the wild.
+- Copy a backup of released files to \AgilityBook\test\[vc141/vc141x64]
+  Currently, I only archive vc141/x64 - the exe's that are released to the wild.
 - Generate zip file (github's zip has unix EOLs):
   - git archive master --prefix="AgilityBook/" --format=zip > AgilityBook-n_n_n_n-src.zip
 
