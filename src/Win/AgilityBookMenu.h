@@ -39,12 +39,12 @@ public:
 	CAgilityBookMenu();
 
 	void CreateMainMenu(
-		wxFrame* pFrame,
-		wxMenu* pRecent);
+			wxFrame* pFrame,
+			wxMenu* pRecent);
 
 	wxMenu* CreatePopup(
-		wxWindow* pWindow,
-		MenuIdentityPopup idMenu);
+			wxWindow* pWindow,
+			MenuIdentityPopup idMenu);
 
 	void UpdateMenu();
 };

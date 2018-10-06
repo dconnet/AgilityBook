@@ -185,14 +185,6 @@ static const CMenuHelper::ItemData sc_Items[] =
 };
 static const size_t sc_ItemsCount = sizeof(sc_Items) / sizeof(sc_Items[0]);
 
-struct ItemAccel
-{
-	int id;
-	bool bCtrl;
-	bool bAlt;
-	bool bShift;
-	wchar_t const* keyCode;
-};
 static const CMenuHelper::ItemAccel sc_Accels[] =
 {
 	{wxID_NEW,               true, false, false, L"N"},
