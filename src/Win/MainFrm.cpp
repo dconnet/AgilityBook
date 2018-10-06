@@ -165,7 +165,6 @@ static void SetStatusBarWidths(
 CMainFrame::CMainFrame(wxDocManager* manager)
 	: wxDocParentFrame(manager, nullptr, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
-	, m_menus()
 {
 	SetIcons(CImageManager::Get()->GetIconBundle(ImageMgrAppBundle));
 //#if wxUSE_HELP
@@ -176,7 +175,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	wxMenu *menuRecent = new wxMenu;
 	manager->FileHistoryUseMenu(menuRecent);
 	manager->FileHistoryAddFilesToMenu();
-	CreateMainMenu(m_menus, this, menuRecent);
+	wxGetApp().GetMenus().CreateMainMenu(this, menuRecent);
 
 	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
 	if (statusbar)
@@ -475,7 +474,7 @@ void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 			CUpdateHint hint(UPDATE_LANG_CHANGE);
 			GetDocumentManager()->GetCurrentDocument()->UpdateAllViews(nullptr, &hint);
 		}
-		m_menus.UpdateMenu();
+		wxGetApp().GetMenus().UpdateMenu();
 
 		CAgilityBookBaseView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseView);
 		std::wstring msg;

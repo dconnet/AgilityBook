@@ -42,8 +42,23 @@ public:
 		char const* artId;		///< Toolbar/menu bitmap artid (wxArtId/wxString)
 	};
 
+	struct ItemAccel
+	{
+		int id;
+		bool bCtrl;
+		bool bAlt;
+		bool bShift;
+		wchar_t const* keyCode;
+	};
+
 	CMenuHelper();
 	~CMenuHelper();
+
+	void LoadAccelerators(
+			ItemAccel const defAccelItems[],
+			size_t numDefAccelItems);
+
+	void SaveAccelerators();
 
 	void CreateMenu(
 			wxFrame* pFrame,
@@ -62,9 +77,10 @@ public:
 			bool doTranslation,
 			wxMenu* mruMenu = nullptr);
 
+	// Note: Before calling this, make sure to call LoadAccelerators
 	void UpdateMenu();
 
-	static void DoMenuItem(
+	void DoMenuItem(
 			wxWindow* pWindow,
 			wxMenu* menu,
 			int id,
@@ -72,7 +88,7 @@ public:
 			wxString const& desc,
 			wxArtID const& artId = wxArtID());
 
-	static void DoMenuItem(
+	void DoMenuItem(
 			wxWindow* pWindow,
 			wxMenu* menu,
 			int id,
@@ -125,6 +141,7 @@ private:
 		{
 		}
 	};
+	std::vector<ItemAccel> m_accelItems;
 
 	void Menu(
 			wxWindow* pWindow,

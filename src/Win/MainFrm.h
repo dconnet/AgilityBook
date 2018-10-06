@@ -18,7 +18,6 @@
  */
 
 #include "AgilityBookMenu.h"
-#include "MenuHelper.h"
 #include <wx/dnd.h>
 #include <wx/docview.h>
 
@@ -67,7 +66,6 @@ private:
 		virtual void Notify();
 	} m_timerStartup;
 	wxDocManager* m_manager;
-	CMenuHelper m_menus;
 	int m_Widths[NUM_STATUS_FIELDS];
 
 private:

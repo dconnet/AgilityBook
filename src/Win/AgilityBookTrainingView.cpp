@@ -628,7 +628,7 @@ void CAgilityBookTrainingView::OnViewContextMenu(wxContextMenuEvent& evt)
 	wxPoint point;
 	if (GetMenuPosition(point, *m_Ctrl, evt))
 	{
-		wxMenu* menu = CreatePopup(m_Ctrl, IdMenuTraining);
+		wxMenu* menu = wxGetApp().GetMenus().CreatePopup(m_Ctrl, IdMenuTraining);
 		m_Ctrl->PopupMenu(menu, point);
 		delete menu;
 	}

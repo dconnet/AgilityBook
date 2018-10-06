@@ -184,6 +184,7 @@ CAgilityBookApp::CAgilityBookApp()
 	, m_manager(nullptr)
 	, m_printDialogData(nullptr)
 	, m_Prn(nullptr)
+	, m_menus()
 {
 	m_BaseInfoName = ARB_CONFIG_INFO;
 }

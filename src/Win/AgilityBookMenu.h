@@ -16,7 +16,7 @@
  * 2008-12-14 Created
  */
 
-class CMenuHelper;
+#include "MenuHelper.h"
 
 enum MenuIdentityPopup
 {
@@ -31,13 +31,24 @@ enum MenuIdentityPopup
 };
 
 
-extern void CreateMainMenu(
-		CMenuHelper& menus,
+class CAgilityBookMenu
+{
+	CMenuHelper m_menus;
+
+public:
+	CAgilityBookMenu();
+
+	void CreateMainMenu(
 		wxFrame* pFrame,
 		wxMenu* pRecent);
 
+	wxMenu* CreatePopup(
+		wxWindow* pWindow,
+		MenuIdentityPopup idMenu);
 
-extern wxMenu* CreatePopup(wxWindow* pWindow, MenuIdentityPopup idMenu);
+	void UpdateMenu();
+};
+
 
 enum
 {

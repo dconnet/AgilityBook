@@ -21,6 +21,7 @@
 #include "MenuHelper.h"
 
 #include "ImageHelper.h"
+#include <set>
 #include <wx/artprov.h>
 #include <wx/frame.h>
 
@@ -28,6 +29,30 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+static wxString GetAccelString(std::vector<CMenuHelper::ItemAccel> const& accelItems, int id)
+{
+	wxString str;
+	for (auto iter = accelItems.begin(); iter != accelItems.end(); ++iter)
+	{
+		if ((*iter).id == id)
+		{
+			if ((*iter).bCtrl)
+				str << _("Ctrl+");
+			if ((*iter).bAlt)
+				str << _("Alt+");
+			if ((*iter).bShift)
+				str << _("Shift+");
+			str << (*iter).keyCode;
+			break;
+		}
+	}
+	if (str.empty())
+		return str;
+	return wxString(L"\t") + str;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 CMenuHelper::CMenuHelper()
 	: m_Frame(nullptr)
@@ -66,7 +91,7 @@ void CMenuHelper::DoMenuItem(
 		wxMenu* subMenu,
 		wxArtID const& artId)
 {
-	wxMenuItem* item = new wxMenuItem(menu, id, label, desc, kind, subMenu);
+	wxMenuItem* item = new wxMenuItem(menu, id, label + GetAccelString(m_accelItems, id), desc, kind, subMenu);
 	if (!artId.empty() && kind == wxITEM_NORMAL)
 	{
 		wxBitmap bmp = ImageHelper::GetBitmap(pWindow, artId, wxART_MENU);
@@ -166,6 +191,37 @@ void CMenuHelper::Menu(
 			}
 		}
 	}
+}
+
+
+void CMenuHelper::LoadAccelerators(
+		ItemAccel const defAccelItems[],
+		size_t numDefAccelItems)
+{
+	m_accelItems.clear();
+	for (size_t index = 0; index < numDefAccelItems; ++index)
+		m_accelItems.push_back(defAccelItems[index]);
+
+#pragma PRAGMA_TODO(Load custom accelerators)
+
+#ifdef _DEBUG
+	// Sanity checking
+	std::set<int> ids;
+	for (auto iter = m_accelItems.begin(); iter != m_accelItems.end(); ++iter)
+	{
+		// Must have a code (assuming valid string for WX)
+		assert((*iter).keyCode);
+		// Only list id once
+		assert(ids.find((*iter).id) == ids.end());
+		ids.insert((*iter).id);
+	}
+#endif
+}
+
+
+void CMenuHelper::SaveAccelerators()
+{
+#pragma PRAGMA_TODO(Save custom accelerators)
 }
 
 
@@ -303,7 +359,7 @@ void CMenuHelper::DoSubMenu(wxMenu* parent, MenuHandle const& handle)
 	}
 	for (std::vector<TranslationData>::const_iterator data = handle.items.begin(); data != handle.items.end(); ++data)
 	{
-		handle.pMenu->SetLabel(data->id, wxGetTranslation(data->name.c_str()));
+		handle.pMenu->SetLabel(data->id, wxGetTranslation(data->name.c_str()) + GetAccelString(m_accelItems, data->id));
 		handle.pMenu->SetHelpString(data->id, wxGetTranslation(data->desc.c_str()));
 	}
 }
@@ -315,7 +371,7 @@ void CMenuHelper::UpdateMenu()
 	{
 		for (std::vector<MenuHandle>::iterator i = m_MenuData.begin(); i != m_MenuData.end(); ++i)
 		{
-			m_MenuBar->SetMenuLabel(i->idx, wxGetTranslation(i->item.c_str()));
+			m_MenuBar->SetMenuLabel(i->idx, wxGetTranslation(i->item.c_str()) + GetAccelString(m_accelItems, i->idx));
 			DoSubMenu(nullptr, *i);
 		}
 

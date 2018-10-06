@@ -27,7 +27,7 @@
 #include "AgilityBookMenu.h"
 
 #include "ImageHelper.h"
-#include "MainFrm.h"
+#include "MenuHelper.h"
 #include <wx/artprov.h>
 #include <wx/config.h>
 
@@ -185,6 +185,44 @@ static const CMenuHelper::ItemData sc_Items[] =
 };
 static const size_t sc_ItemsCount = sizeof(sc_Items) / sizeof(sc_Items[0]);
 
+struct ItemAccel
+{
+	int id;
+	bool bCtrl;
+	bool bAlt;
+	bool bShift;
+	wchar_t const* keyCode;
+};
+static const CMenuHelper::ItemAccel sc_Accels[] =
+{
+	{wxID_NEW,               true, false, false, L"N"},
+	{wxID_OPEN,              true, false, false, L"O"},
+	{wxID_SAVE,              true, false, false, L"S"},
+	{wxID_SAVEAS,           false, false, false, L"F12"},
+	{ID_FILE_EXPORT_WIZARD,  true, false, false, L"E"},
+	{wxID_PRINT,             true, false, false, L"P"},
+	{wxID_PREVIEW,           true,  true, false, L"P"},
+	{wxID_CUT,               true, false, false, L"X"},
+	{wxID_COPY,              true, false, false, L"C"},
+	{wxID_PASTE,             true, false, false, L"V"},
+	{wxID_DELETE,           false, false, false, L"Del"},
+	{wxID_SELECTALL,         true, false, false, L"A"},
+	{wxID_FIND,              true, false, false, L"F"},
+	{ID_EDIT_FIND_NEXT,     false, false, false, L"F3"},
+	{ID_EDIT_FIND_PREVIOUS, false, false,  true, L"F3"},
+	{ID_AGILITY_NEW_RUN,     true, false, false, L"R"},
+	{ID_NOTES_JUDGES,        true, false, false, L"J"},
+	{wxID_PREFERENCES,      false, false, false, L"F7"},
+	{ID_BOOK_NOTEBOOK,       true, false, false, L"1"},
+	{ID_BOOK_LISTBOOK,       true, false, false, L"2"},
+	{ID_BOOK_CHOICEBOOK,     true, false, false, L"3"},
+	{ID_BOOK_TREEBOOK,       true, false, false, L"4"},
+	{ID_BOOK_TOOLBOOK,       true, false, false, L"5"},
+	{ID_NEXT_PANE,          false, false, false, L"F6"},
+	{ID_PREV_PANE,          false, false,  true, L"F6"},
+};
+static const size_t sc_AccelsCount = _countof(sc_Accels);
+
 static const int sc_toolbarItems[] =
 {
 	wxID_NEW,
@@ -201,21 +239,27 @@ static const int sc_toolbarItems[] =
 	wxID_CUT,
 	wxID_COPY,
 	wxID_PASTE,
+	wxID_DELETE,
 	0,
 	wxID_PREVIEW,
 	wxID_PRINT,
 	0,
 	wxID_ABOUT
 };
-static const size_t sc_toolbarItemsCount = sizeof(sc_toolbarItems) / sizeof(sc_toolbarItems[0]);
+static const size_t sc_toolbarItemsCount = _countof(sc_toolbarItems);
 
 
-void CreateMainMenu(
-		CMenuHelper& menus,
+CAgilityBookMenu::CAgilityBookMenu()
+{
+}
+
+
+void CAgilityBookMenu::CreateMainMenu(
 		wxFrame* pFrame,
 		wxMenu* pRecent)
 {
-	menus.CreateMenu(pFrame, sc_Items, sc_ItemsCount, sc_toolbarItems, sc_toolbarItemsCount, true, pRecent);
+	m_menus.LoadAccelerators(sc_Accels, sc_AccelsCount);
+	m_menus.CreateMenu(pFrame, sc_Items, sc_ItemsCount, sc_toolbarItems, sc_toolbarItemsCount, true, pRecent);
 }
 
 
@@ -224,22 +268,27 @@ void CreateMainMenu(
 // to fix the text on language change.
 
 // Create New submenu with dog/title/trial/run
-static wxMenu* CreateNewMenu(wxWindow* pWindow, bool incRun)
+static wxMenu* CreateNewMenu(
+		CMenuHelper& menus,
+		wxWindow* pWindow,
+		bool incRun)
 {
 	wxMenu* menu = new wxMenu;
-	CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_NEW_DOG, _("MenuDogNew"), _("DescDogNew"), ImageMgrDog);
-	CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_NEW_TITLE, _("MenuTitleNew"), _("DescTitleNew"), ImageMgrTitle);
+	menus.DoMenuItem(pWindow, menu, ID_AGILITY_NEW_DOG, _("MenuDogNew"), _("DescDogNew"), ImageMgrDog);
+	menus.DoMenuItem(pWindow, menu, ID_AGILITY_NEW_TITLE, _("MenuTitleNew"), _("DescTitleNew"), ImageMgrTitle);
 	menu->AppendSeparator();
-	CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_NEW_TRIAL, _("MenuTrialNew"), _("DescTrialNew"), ImageMgrTrial);
+	menus.DoMenuItem(pWindow, menu, ID_AGILITY_NEW_TRIAL, _("MenuTrialNew"), _("DescTrialNew"), ImageMgrTrial);
 	if (incRun)
 	{
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_NEW_RUN, _("MenuRunNew"), _("DescRunNew"), ImageMgrRuns);
+		menus.DoMenuItem(pWindow, menu, ID_AGILITY_NEW_RUN, _("MenuRunNew"), _("DescRunNew"), ImageMgrRuns);
 	}
 	return menu;
 }
 
 
-wxMenu* CreatePopup(wxWindow* pWindow, MenuIdentityPopup idMenu)
+wxMenu* CAgilityBookMenu::CreatePopup(
+		wxWindow* pWindow,
+		MenuIdentityPopup idMenu)
 {
 	wxMenu* menu = new wxMenu;
 
@@ -254,99 +303,106 @@ wxMenu* CreatePopup(wxWindow* pWindow, MenuIdentityPopup idMenu)
 		break;
 
 	case IdMenuDog:
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_DOG, _("MenuDogProperties"), _("DescDogProperties"), ImageMgrDog);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_DOG, _("MenuDogProperties"), _("DescDogProperties"), ImageMgrDog);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
-		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(pWindow, false));
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_DOG, _("MenuDogDelete"), _("DescDogDelete"));
+		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(m_menus, pWindow, false));
+		m_menus.DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		m_menus.DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
+		m_menus.DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_DOG, _("MenuDogDelete"), _("DescDogDelete"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
+		m_menus.DoMenuItem(pWindow, menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_EXPAND, _("MenuViewExpand"), _("DescViewExpand"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_COLLAPSE, _("MenuViewCollapse"), _("DescViewCollapse"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_EXPAND_ALL, _("MenuViewExpandAll"), _("DescViewExpandAll"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_COLLAPSE_ALL, _("MenuViewCollapseAll"), _("DescViewCollapseAll"));
+		m_menus.DoMenuItem(pWindow, menu, ID_EXPAND, _("MenuViewExpand"), _("DescViewExpand"));
+		m_menus.DoMenuItem(pWindow, menu, ID_COLLAPSE, _("MenuViewCollapse"), _("DescViewCollapse"));
+		m_menus.DoMenuItem(pWindow, menu, ID_EXPAND_ALL, _("MenuViewExpandAll"), _("DescViewExpandAll"));
+		m_menus.DoMenuItem(pWindow, menu, ID_COLLAPSE_ALL, _("MenuViewCollapseAll"), _("DescViewCollapseAll"));
 		break;
 
 	case IdMenuTrial:
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_TRIAL, _("MenuTrialProperties"), _("DescTrialProperties"), ImageMgrTrial);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_TRIAL, _("MenuTrialProperties"), _("DescTrialProperties"), ImageMgrTrial);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
-		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(pWindow, true));
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_TRIAL, _("MenuTrialDelete"), _("DescTrialDelete"));
+		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(m_menus, pWindow, true));
+		m_menus.DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		m_menus.DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
+		m_menus.DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_TRIAL, _("MenuTrialDelete"), _("DescTrialDelete"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
+		m_menus.DoMenuItem(pWindow, menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_EXPAND, _("MenuViewExpand"), _("DescViewExpand"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_COLLAPSE, _("MenuViewCollapse"), _("DescViewCollapse"));
+		m_menus.DoMenuItem(pWindow, menu, ID_EXPAND, _("MenuViewExpand"), _("DescViewExpand"));
+		m_menus.DoMenuItem(pWindow, menu, ID_COLLAPSE, _("MenuViewCollapse"), _("DescViewCollapse"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_PRINT_TRIAL, _("MenuTrialPrintRuns"), _("DescTrialPrintRuns"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_PRINT_TRIAL, _("MenuTrialPrintRuns"), _("DescTrialPrintRuns"));
 		break;
 
 	case IdMenuRun:
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_RUN, _("MenuRunProperties"), _("DescRunProperties"), ImageMgrRuns);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_RUN, _("MenuRunProperties"), _("DescRunProperties"), ImageMgrRuns);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
-		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(pWindow, true));
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_RUN, _("MenuRunDelete"), _("DescRunDelete"));
+		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(m_menus, pWindow, true));
+		m_menus.DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		m_menus.DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
+		m_menus.DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_RUN, _("MenuRunDelete"), _("DescRunDelete"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
+		m_menus.DoMenuItem(pWindow, menu, ID_REORDER, _("MenuEditReorder"), _("DescEditReorder"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_PRINT_TRIAL, _("MenuTrialPrintRuns"), _("DescTrialPrintRuns"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_PRINT_RUNS, _("MenuRunPrintRuns"), _("DescRunPrintRuns"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_PRINT_TRIAL, _("MenuTrialPrintRuns"), _("DescTrialPrintRuns"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_PRINT_RUNS, _("MenuRunPrintRuns"), _("DescRunPrintRuns"));
 		break;
 
 	case IdMenuPoints:
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_DETAILS, _("MenuDetails"), _("DescDetails"));
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
+		m_menus.DoMenuItem(pWindow, menu, ID_DETAILS, _("MenuDetails"), _("DescDetails"));
+		m_menus.DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopySelection"), _("DescEditCopy"), ImageMgrCopy);
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_COPY_TITLES_LIST, _("MenuEditCopyTitles"), _("DescEditCopyTitles"));
+		m_menus.DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopySelection"), _("DescEditCopy"), ImageMgrCopy);
+		m_menus.DoMenuItem(pWindow, menu, ID_COPY_TITLES_LIST, _("MenuEditCopyTitles"), _("DescEditCopyTitles"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_SELECTALL, _("MenuEditSelectAll"), _("DescEditSelectAll"));
+		m_menus.DoMenuItem(pWindow, menu, wxID_SELECTALL, _("MenuEditSelectAll"), _("DescEditSelectAll"));
 		break;
 
 	case IdMenuCalendar:
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_CALENDAR, _("MenuCalendarProperties"), _("DescCalendarProperties"), ImageMgrCalendar);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_CALENDAR, _("MenuCalendarProperties"), _("DescCalendarProperties"), ImageMgrCalendar);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_NEW_CALENDAR, _("MenuNew"), _("DescCalendarNew"), ImageMgrCalendar);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_CALENDAR, _("MenuCalendarDelete"), _("DescCalendarDelete"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_NEW_CALENDAR, _("MenuNew"), _("DescCalendarNew"), ImageMgrCalendar);
+		m_menus.DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		m_menus.DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
+		m_menus.DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_CALENDAR, _("MenuCalendarDelete"), _("DescCalendarDelete"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_UPDATE_CALENDAR, _("MenuCalendarUpdate"), _("DescCalendarUpdate"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_EXPORT_CALENDAR, _("MenuCalendarExport"), _("DescCalendarExport"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_UPDATE_CALENDAR, _("MenuCalendarUpdate"), _("DescCalendarUpdate"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_EXPORT_CALENDAR, _("MenuCalendarExport"), _("DescCalendarExport"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_CREATEENTRY_CALENDAR, _("MenuCalendarTrialEntry"), _("DescCalendarTrialEntry"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_CREATEENTRY_CALENDAR, _("MenuCalendarTrialEntry"), _("DescCalendarTrialEntry"));
 		break;
 
 	case IdMenuTraining:
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_TRAINING, _("MenuTrainingProperties"), _("DescTrainingProperties"), ImageMgrTraining);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_EDIT_TRAINING, _("MenuTrainingProperties"), _("DescTrainingProperties"), ImageMgrTraining);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_NEW_TRAINING, _("MenuNew"), _("DescTrainingNew"), ImageMgrTraining);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
-		CMenuHelper::DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
-		CMenuHelper::DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_TRAINING, _("MenuTrainingDelete"), _("DescTrainingDelete"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_NEW_TRAINING, _("MenuNew"), _("DescTrainingNew"), ImageMgrTraining);
+		m_menus.DoMenuItem(pWindow, menu, wxID_CUT, _("MenuEditCut"), _("DescEditCut"), ImageMgrCut);
+		m_menus.DoMenuItem(pWindow, menu, wxID_COPY, _("MenuEditCopy"), _("DescEditCopy"), ImageMgrCopy);
+		m_menus.DoMenuItem(pWindow, menu, wxID_PASTE, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste);
+		m_menus.DoMenuItem(pWindow, menu, wxID_DUPLICATE, _("MenuEditDuplicate"), _("DescEditDuplicate"));
+		m_menus.DoMenuItem(pWindow, menu, ID_AGILITY_DELETE_TRAINING, _("MenuTrainingDelete"), _("DescTrainingDelete"));
 		break;
 	}
 
 	return menu;
+}
+
+
+void CAgilityBookMenu::UpdateMenu()
+{
+	m_menus.LoadAccelerators(sc_Accels, sc_AccelsCount);
+	m_menus.UpdateMenu();
 }

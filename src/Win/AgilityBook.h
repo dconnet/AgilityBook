@@ -20,6 +20,7 @@
  * 2004-06-02 Moved ShellExecute code here.
  */
 
+#include "AgilityBookMenu.h"
 #include "ARBCommon/ARBUtils.h"
 #include "Localization.h"
 #include "SetupApp.h"
@@ -48,6 +49,7 @@ public:
 	wxPrintDialogData* GetPrintData();
 	void SavePrintData(wxPrintDialogData const& data);
 	CHtmlEasyPrinting* GetHtmlPrinter();
+	CAgilityBookMenu& GetMenus() { return m_menus; }
 
 protected:
 	virtual wxString GetReportName() const { return wxT("AgilityBook"); }
@@ -88,6 +90,7 @@ protected:
 	CAgilityBookDocManager* m_manager;
 	wxPrintDialogData* m_printDialogData;
 	CHtmlEasyPrinting* m_Prn;
+	CAgilityBookMenu m_menus;
 };
 
 DECLARE_APP(CAgilityBookApp)
