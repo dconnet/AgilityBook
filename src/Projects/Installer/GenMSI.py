@@ -337,7 +337,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, plat
 			RmMinusRF(cabcache)
 		if not testing:
 			WriteCode(baseMsi, ver4Dot, code, vcver)
-		runcmd(r'python ..\SignStuff.py -1 ' + baseMsi)
+		runcmd(r'python ..\SignStuff.py ' + baseMsi)
 	else:
 		print(baseDir + r'\AgilityBook.exe does not exist, MSI skipped')
 
@@ -361,7 +361,7 @@ def main():
 	tidy = 1
 	testing = 0
 	vcver = '141'
-	platformTools = '100'
+	platformTools = '141'
 	if 1 == len(sys.argv):
 		print('Setting /32 /test')
 		b32 = 1

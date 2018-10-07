@@ -7,8 +7,8 @@
   <String Id="Lang3" Localizable="no">en_US</String>
   <String Id="Description">Agility Record Book</String>
   <String Id="Comments">Track all your agility records in one convenient place.</String>
-  <String Id="OnNT">This application only runs on Windows NT and above</String>
-  <String Id="On64NT">This application only runs on 64bit Windows systems</String>
+  <String Id="OnNT">This application only runs on Windows 7 and above</String>
+  <String Id="On64NT">This application only runs on 64bit Windows 7 and above</String>
   <String Id="ARB_AlreadyUpdated">Another version of [ProductName] is already installed. Installation of this version cannot continue. To remove the existing version of [ProductName], use Add/Remove Programs on the Control Panel.</String>
   <String Id="ARB_NoDowngrade">A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product.</String>
   <String Id="FeatureCompleteDesc">Main Agility Record Book files</String>

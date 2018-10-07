@@ -170,9 +170,9 @@ Revision History
 
 	<!-- Launch Conditions -->
 <?if $(sys.BUILDARCH)=x64?>
-	<Condition Message="!(loc.On64NT)">Installed Or VersionNT&gt;=600 Or (VersionNT=502 And ServicePackLevel&gt;=1)</Condition>
+	<Condition Message="!(loc.On64NT)">Installed Or VersionNT&gt;=601</Condition>
 <?else?>
-	<Condition Message="!(loc.OnNT)">Installed Or VersionNT&gt;=600 Or (VersionNT=501 And ServicePackLevel&gt;=2) Or (VersionNT=502 And ServicePackLevel&gt;=1)</Condition>
+	<Condition Message="!(loc.OnNT)">Installed Or VersionNT&gt;=601</Condition>
 <?endif?>
 
 	<!-- When checked the v1 guid, include ["0.0.0" < ver < "2.0.0"] -->

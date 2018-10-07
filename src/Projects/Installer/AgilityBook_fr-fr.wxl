@@ -7,8 +7,8 @@
   <String Id="Lang3" Localizable="no">fr_FR</String>
   <String Id="Description">Agility Record Book</String>
   <String Id="Comments">Suivez tous vos résultats d'agility dans un seul endroit.</String>
-  <String Id="OnNT">Ce logiciel fonctionne uniquement sous Windows NT ou plus récent.</String>
-  <String Id="On64NT">Ce logiciel fonctionne uniquement sous système Windows 64bit.</String>
+  <String Id="OnNT">Ce logiciel fonctionne uniquement sous Windows 7 ou plus récent.</String>
+  <String Id="On64NT">Ce logiciel fonctionne uniquement sous Windows 7 64bit.</String>
   <String Id="ARB_AlreadyUpdated">Un autre version de [ProductName] est déjà installée. L'installation de cette version ne peut pas continuer. Pour supprimer la version installée, utilisez "Supprimer un programme" dans le panneau de configuration.</String>
   <String Id="ARB_NoDowngrade">Un version plus récente de [ProductName] est déjà installée. Pour installer une version plus ancienne, supprimez d'abord la version installée.</String>
   <String Id="FeatureCompleteDesc">Fichiers "Agility Record Book" principaux</String>
