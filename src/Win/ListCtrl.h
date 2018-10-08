@@ -118,10 +118,8 @@ public:
 			long index,
 			bool bEnsureVisible = false,
 			bool bSetFocus = true);
-	void SetSelection(
-			std::vector<long>& indices,
-			bool bEnsureVisible = false,
-			bool bSetFocus = true);
+	void SetSelection(std::vector<long>& indices);
+	void ClearSelection();
 
 	/// Return listdata by list id
 	CListDataPtr GetData(long item) const;
