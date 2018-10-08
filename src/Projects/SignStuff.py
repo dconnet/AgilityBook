@@ -18,13 +18,11 @@
 # 2016-12-23 Add test to only target dll/exe. Allows script to be put into common project properties.
 # 2016-07-05 Fix variables
 # 2016-07-01 Created
-"""SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] [-1] [-2] [-e] [-t sleepTime] target
+"""SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] [-e] [-t sleepTime] target
 	-s signtool: Full path to signtool.exe (Default: SignTool is assumed in PATH)
 	-n CertName: Name of installed cert
 	-f pfx_file: Path to PFX file (Default: use named cert)
 	-p password: Password for PFX file
-	-1: Only sign with SHA1 (msi)
-	-2: Only sign with SHA256
 	-t: Sleep time (default 5) - when signing with both SHA1/SHA256
     -e: Just show the environment, don't do it
 	target: exe to sign
