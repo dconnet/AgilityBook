@@ -18,12 +18,11 @@
 # 2016-12-23 Add test to only target dll/exe. Allows script to be put into common project properties.
 # 2016-07-05 Fix variables
 # 2016-07-01 Created
-"""SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] [-e] [-t sleepTime] target
+"""SignStuff.py [-s signtool] [-n CertName] [-f pfx_file] [-p password] [-e] target
 	-s signtool: Full path to signtool.exe (Default: SignTool is assumed in PATH)
 	-n CertName: Name of installed cert
 	-f pfx_file: Path to PFX file (Default: use named cert)
 	-p password: Password for PFX file
-	-t: Sleep time (default 5) - when signing with both SHA1/SHA256
     -e: Just show the environment, don't do it
 	target: exe to sign
 Note: The -n/-f options will override the build machine name check
@@ -42,9 +41,7 @@ CertName = 'David Connet'
 
 SignTool = 'signtool.exe'
 SignSHA1cmd = '/t http://timestamp.comodoca.com /v'
-SignSHA256cmd = '/fd sha256 /tr http://timestamp.comodoca.com/?td=sha256 /td sha256 /as /v'
-signSHA256 = True
-sleepTime = 5
+SignSHA256cmd = '/fd sha256 /tr http://timestamp.comodoca.com/?td=sha256 /td sha256 /v'
 
 validExt = ['.dll', '.exe', '.msi']
 
@@ -67,15 +64,9 @@ def CheckFiletype(filename):
 	return False
 
 
-def CheckDualSign(filename):
-	fileext = os.path.splitext(filename)[-1].lower()
-	return not (fileext == '.msi')
-
-
 def main():
 	global BuildMachine, CertName, SignTool
-	global SignSHA1cmd, SignSHA256cmd, signSHA256
-	global sleepTime
+	global SignSHA1cmd, SignSHA256cmd
 
 	if 'SIGNTOOL_EXE' in os.environ:
 		sign = os.environ['SIGNTOOL_EXE']
@@ -87,7 +78,7 @@ def main():
 	password = ''
 	testOnly = False
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 's:n:f:p:t:e')
+		opts, args = getopt.getopt(sys.argv[1:], 's:n:f:p:e')
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
@@ -103,8 +94,6 @@ def main():
 			pfxFile = a
 		elif '-p' == o:
 			password = a
-		elif '-t' == o:
-			sleepTime = int(a)
 		elif '-e' == o:
 			testOnly = True
 
@@ -116,10 +105,6 @@ def main():
 	if not CheckFiletype(filename):
 		# Quietly exit. No error.
 		return 0
-
-	# If dual signing not supported (msi), forcibly turn it off
-	if signSHA256 and not CheckDualSign(filename):
-		signSHA256 = False
 
 	# Just do a simple compare.
 	# Don't care about unicode weirdness with machine names.
@@ -140,8 +125,7 @@ def main():
 	cmdSHA256 = command + ' ' + SignSHA256cmd + ' "' + filename + '"'
 
 	# Sign with sha256
-	if signSHA256:
-		Run(cmdSHA256, testOnly)
+	Run(cmdSHA256, testOnly)
 
 	return 0
 
