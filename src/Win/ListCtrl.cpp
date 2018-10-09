@@ -194,7 +194,6 @@ bool CReportListCtrl::SortItems(CListCtrlCompare fnSortCallBack, SortInfo const*
 	long itemFocus = GetFocusedItem();
 	std::vector<long> items;
 	GetSelection(items);
-	Focus(-1);
 	ClearSelection();
 
 	// Translate selection indices to data pointers.
