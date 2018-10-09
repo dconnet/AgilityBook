@@ -1,4 +1,4 @@
-10/8/2018: v3.3.0.<development>
+10/9/2018: v3.3.0.<development>
 - Notes:
   - Windows XP support dropped, VC10/11/12/14 dropped.
 - Bumped Configuration v59:
@@ -7,6 +7,7 @@
   - Enable Cutting/Deleting multiple items at once.
   - Suppress confirmation prompt when Cutting (assumption is a paste is coming)
   - Enable 'DEL' for deleting.
+  - Change PrintRuns view to autoclose after printing runs.
 - Bug fixes:
   - Fix run selection after pasting.
   - Fix selected items when sorting.

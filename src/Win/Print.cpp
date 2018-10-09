@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-10-09 Change PrintRuns view to autoclose after printing runs.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2017-07-16 Moved RingBinder to top of file (easier to find).
  * 2015-11-27 Use subname for event, if set.
@@ -1040,7 +1041,7 @@ bool PrintRuns(
 		ARBConfig const* inConfig,
 		std::vector<RunInfo> const& inRuns)
 {
-	wxPrintPreviewBase *preview = new wxPrintPreview(
+	wxPrintPreviewBase *preview = new CPrintPreview(
 		new CPrintRuns(inConfig, inRuns), // preview
 		new CPrintRuns(inConfig, inRuns), // printer
 		wxGetApp().GetPrintData());
