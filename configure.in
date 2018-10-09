@@ -73,7 +73,14 @@ case `uname` in
 Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
 
-	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++11 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++11 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
 		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++11 -stdlib=libc++")
