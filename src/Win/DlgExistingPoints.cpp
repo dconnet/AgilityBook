@@ -31,12 +31,12 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "Globals.h"
-#include "Validators.h"
-#include "Widgets.h"
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogExistingPoints.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Validators.h"
+#include "LibARBWin/Widgets.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 

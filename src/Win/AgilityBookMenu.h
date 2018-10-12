@@ -16,7 +16,7 @@
  * 2008-12-14 Created
  */
 
-#include "MenuHelper.h"
+#include "LibARBWin/MenuHelper.h"
 
 enum MenuIdentityPopup
 {

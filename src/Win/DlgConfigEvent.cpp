@@ -49,14 +49,14 @@
 #include "DlgConfigTitlePoints.h"
 #include "DlgConfigure.h"
 #include "DlgName.h"
-#include "ListData.h"
-#include "Validators.h"
-#include "Widgets.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfigEvent.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ListData.h"
+#include "LibARBWin/Validators.h"
+#include "LibARBWin/Widgets.h"
 #include <algorithm>
 #include <wx/statline.h>
 

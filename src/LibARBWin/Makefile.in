@@ -1,0 +1,79 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for the ARBWin subdirectory                                         #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES += -I$(TOPSRCDIR)/src/Include
+
+##########
+# List of programs and archives to link
+##########
+ARCHIVES = libarbwin
+
+##########
+# Source files for each target
+##########
+libarbwin_SRCS = ARBWinUtilities.cpp \
+	CheckLink.cpp \
+	CheckTreeCtrl.cpp \
+	ColumnOrder.cpp \
+	DlgAuthenticate.cpp \
+	DlgProgress.cpp \
+	DPI.cpp \
+	ImageHelperBase.cpp \
+	ImageManager.cpp \
+	LanguageManager.cpp \
+	ListCtrl.cpp \
+	ListData.cpp \
+	MenuHelper.cpp \
+	ReadHttp.cpp \
+	RichEditCtrl2.cpp \
+	SetupApp.cpp \
+	SpreadSheet.cpp \
+	TaskbarProgress.cpp \
+	Validators.cpp \
+	Widgets.cpp
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+#arbwin_LIBS =
+# prog1_LDFLAGS = -L/path/to/extralib
+
+##########
+# Precompiled headers
+##########
+PRECOMP_HEADER = $(TOPSRCDIR)/src/ARBWin/stdafx.h
+
+
+##########
+# Stuff to install
+##########
+#INSTALL_BIN = libarbwin
+#INSTALL_MAN = prog1.5
+
+@NAM_RULES@
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

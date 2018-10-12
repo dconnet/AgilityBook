@@ -27,11 +27,11 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ConfigHandler.h"
-#include "Widgets.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Widgets.h"
 #include <wx/filedlg.h>
 
 #ifdef __WXMSW__

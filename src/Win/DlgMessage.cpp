@@ -17,9 +17,8 @@
 #include "stdafx.h"
 #include "DlgMessage.h"
 
-#include "Widgets.h"
-
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

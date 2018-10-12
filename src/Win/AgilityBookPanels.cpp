@@ -30,10 +30,10 @@
 #include "AgilityBookRunsView.h"
 #include "AgilityBookTreeView.h"
 #include "CommonView.h"
-#include "DPI.h"
 #include "RegItems.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DPI.h"
 #include <wx/config.h>
 #include <wx/object.h>
 #include <wx/splitter.h>

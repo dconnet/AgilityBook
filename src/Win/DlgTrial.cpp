@@ -37,13 +37,13 @@
 #include "AgilityBookDoc.h"
 #include "DlgClub.h"
 #include "DlgInfoNote.h"
-#include "ListCtrl.h"
-#include "ListData.h"
 #include "NoteButton.h"
-#include "RichEditCtrl2.h"
-#include "Validators.h"
 
 #include "ARB/ARBDogTrial.h"
+#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ListData.h"
+#include "LibARBWin/RichEditCtrl2.h"
+#include "LibARBWin/Validators.h"
 #include <set>
 #include <wx/datectrl.h>
 #include <wx/valgen.h>

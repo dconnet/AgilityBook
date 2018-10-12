@@ -24,9 +24,9 @@
 #include "AgilityBook.h"
 #include "DlgQueryDetail.h"
 #include "Globals.h"
-#include "ListCtrl.h"
 
 #include "ARB/ARBConfig.h"
+#include "LibARBWin/ListCtrl.h"
 #include <algorithm>
 #include <wx/listctrl.h>
 

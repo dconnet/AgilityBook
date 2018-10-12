@@ -25,7 +25,8 @@
 
 #include "CommonView.h"
 #include "DlgFind.h"
-#include "ListCtrl.h"
+
+#include "LibARBWin/ListCtrl.h"
 #include <wx/docview.h>
 class CAgilityBookTrainingView;
 class CAgilityBookTrainingViewData;

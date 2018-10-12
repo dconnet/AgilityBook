@@ -17,8 +17,8 @@
  * 2003-12-10 Created
  */
 
-#include "SpreadSheet.h"
 #include "ARB/ARBCalendar.h"
+#include "LibARBWin/SpreadSheet.h"
 #include <vector>
 #include <wx/wizard.h>
 class CAgilityBookDoc;

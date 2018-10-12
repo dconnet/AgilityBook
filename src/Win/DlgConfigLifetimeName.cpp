@@ -29,12 +29,12 @@
 #include "DlgConfigLifetimeName.h"
 
 #include "AgilityBook.h"
-#include "Validators.h"
-#include "Widgets.h"
 
 #include "ARB/ARBConfigLifetimeName.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Validators.h"
+#include "LibARBWin/Widgets.h"
 #include <wx/datectrl.h>
 
 #ifdef __WXMSW__

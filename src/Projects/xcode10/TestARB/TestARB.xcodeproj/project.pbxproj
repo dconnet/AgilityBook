@@ -56,9 +56,9 @@
 		E15106E018089179002AC401 /* TestString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AF18089179002AC401 /* TestString.cpp */; };
 		E15106E118089179002AC401 /* TestTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106B018089179002AC401 /* TestTraining.cpp */; };
 		E15106E218089179002AC401 /* TestVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106B118089179002AC401 /* TestVersion.cpp */; };
-		E15106E518089670002AC401 /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106E418089670002AC401 /* LanguageManager.cpp */; };
 		E193AC671809B399008C6257 /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E193AC661809B399008C6257 /* libARBCommon.a */; };
 		E193AC691809B39E008C6257 /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E193AC681809B39E008C6257 /* libARB.a */; };
+		E19851D22170E6FD003E7B92 /* libLibARBWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19851D12170E6FD003E7B92 /* libLibARBWin.a */; };
 		E1EE26B61809B3EA002E7A5F /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1EE26B41809B3EA002E7A5F /* libLibArchive.a */; };
 		E1EE26B71809B3EA002E7A5F /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */; };
 /* End PBXBuildFile section */
@@ -130,9 +130,9 @@
 		E15106AF18089179002AC401 /* TestString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestString.cpp; sourceTree = "<group>"; };
 		E15106B018089179002AC401 /* TestTraining.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestTraining.cpp; sourceTree = "<group>"; };
 		E15106B118089179002AC401 /* TestVersion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestVersion.cpp; sourceTree = "<group>"; };
-		E15106E418089670002AC401 /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageManager.cpp; path = ../../../Win/LanguageManager.cpp; sourceTree = "<group>"; };
 		E193AC661809B399008C6257 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E193AC681809B39E008C6257 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
+		E19851D12170E6FD003E7B92 /* libLibARBWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibARBWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EE26B41809B3EA002E7A5F /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/AgilityBook/Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
 		E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../build/AgilityBook/Build/Products/Debug/libLibTidyHtml.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +146,7 @@
 				E1EE26B71809B3EA002E7A5F /* libLibTidyHtml.a in Frameworks */,
 				E193AC691809B39E008C6257 /* libARB.a in Frameworks */,
 				E193AC671809B399008C6257 /* libARBCommon.a in Frameworks */,
+				E19851D22170E6FD003E7B92 /* libLibARBWin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +162,7 @@
 				E193AC661809B399008C6257 /* libARBCommon.a */,
 				E151065818089169002AC401 /* Source */,
 				E151064D1808913A002AC401 /* Products */,
+				E19851D02170E6FD003E7B92 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,7 +178,6 @@
 			isa = PBXGroup;
 			children = (
 				E151065918089179002AC401 /* TestARB */,
-				E15106E318089651002AC401 /* Win */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -242,12 +243,12 @@
 			path = ../../../TestARB;
 			sourceTree = "<group>";
 		};
-		E15106E318089651002AC401 /* Win */ = {
+		E19851D02170E6FD003E7B92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E15106E418089670002AC401 /* LanguageManager.cpp */,
+				E19851D12170E6FD003E7B92 /* libLibARBWin.a */,
 			);
-			name = Win;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,7 +374,6 @@
 				E15106E018089179002AC401 /* TestString.cpp in Sources */,
 				E15106E118089179002AC401 /* TestTraining.cpp in Sources */,
 				E15106E218089179002AC401 /* TestVersion.cpp in Sources */,
-				E15106E518089670002AC401 /* LanguageManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

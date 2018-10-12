@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{73C15F6D-530F-4B95-9A2C-81AD1958573F}</ProjectGuid>
+    <RootNamespace>LibwxARBWin</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonRelease32.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebug32.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonRelease64.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebug64.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\LibARBWin\ARBWinUtilities.cpp" />
+    <ClCompile Include="..\..\LibARBWin\CheckLink.cpp" />
+    <ClCompile Include="..\..\LibARBWin\CheckTreeCtrl.cpp" />
+    <ClCompile Include="..\..\LibARBWin\ColumnOrder.cpp" />
+    <ClCompile Include="..\..\LibARBWin\DlgAuthenticate.cpp" />
+    <ClCompile Include="..\..\LibARBWin\DlgProgress.cpp" />
+    <ClCompile Include="..\..\LibARBWin\DPI.cpp" />
+    <ClCompile Include="..\..\LibARBWin\ImageHelperBase.cpp" />
+    <ClCompile Include="..\..\LibARBWin\ImageManager.cpp" />
+    <ClCompile Include="..\..\LibARBWin\LanguageManager.cpp" />
+    <ClCompile Include="..\..\LibARBWin\ListCtrl.cpp" />
+    <ClCompile Include="..\..\LibARBWin\ListData.cpp" />
+    <ClCompile Include="..\..\LibARBWin\MenuHelper.cpp" />
+    <ClCompile Include="..\..\LibARBWin\ReadHttp.cpp" />
+    <ClCompile Include="..\..\LibARBWin\RichEditCtrl2.cpp" />
+    <ClCompile Include="..\..\LibARBWin\SetupApp.cpp" />
+    <ClCompile Include="..\..\LibARBWin\SpreadSheet.cpp" />
+    <ClCompile Include="..\..\LibARBWin\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MultiProcessorCompilation>
+    </ClCompile>
+    <ClCompile Include="..\..\LibARBWin\TaskbarProgress.cpp" />
+    <ClCompile Include="..\..\LibARBWin\Validators.cpp" />
+    <ClCompile Include="..\..\LibARBWin\Widgets.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Include\LibARBWin\ARBWinUtilities.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\CheckLink.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\CheckTreeCtrl.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ColumnOrder.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\DlgAuthenticate.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\DlgProgress.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\DPI.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ImageHelperBase.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ImageManager.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\LanguageManager.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ListCtrl.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ListData.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\MenuHelper.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ReadHttp.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\RegItemsBase.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\RichEditCtrl2.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\SetupApp.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\SpreadSheet.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\TaskbarProgress.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\Validators.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\Widgets.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupMessages.h" />
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\Include\VersionNumber.h" />
+    <ClInclude Include="..\..\LibARBWin\stdafx.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

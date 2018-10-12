@@ -45,9 +45,9 @@
 #include "AgilityBookDoc.h"
 #include "DlgName.h"
 #include "ImageHelper.h"
-#include "Widgets.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Widgets.h"
 #include <algorithm>
 
 #ifdef __WXMSW__

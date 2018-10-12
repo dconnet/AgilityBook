@@ -22,9 +22,9 @@
 #include "DlgFault.h"
 
 #include "AgilityBook.h"
-#include "Validators.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Validators.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -25,11 +25,11 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "Widgets.h"
 
 #include "ARB/ARBDog.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

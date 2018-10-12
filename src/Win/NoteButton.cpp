@@ -18,8 +18,9 @@
 #include "stdafx.h"
 #include "NoteButton.h"
 
-#include "DPI.h"
 #include "ImageHelper.h"
+
+#include "LibARBWin/DPI.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

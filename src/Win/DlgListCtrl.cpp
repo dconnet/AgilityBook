@@ -38,8 +38,6 @@
 #include "DlgOtherPoint.h"
 #include "DlgPartner.h"
 #include "ImageHelper.h"
-#include "ListCtrl.h"
-#include "ListData.h"
 
 #include "ARB/ARBCalendar.h"
 #include "ARB/ARBConfigVenue.h"
@@ -47,6 +45,8 @@
 #include "ARB/ARBDogRunOtherPoints.h"
 #include "ARB/ARBDogRunPartner.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ListData.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

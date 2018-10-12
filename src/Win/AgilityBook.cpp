@@ -38,12 +38,10 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "DPI.h"
 #include "ImageHelper.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
-#include "SetupApp.h"
 #include "SetupAppARB.h"
 #include "TabView.h"
 
@@ -51,6 +49,8 @@
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DPI.h"
+#include "LibARBWin/SetupApp.h"
 #include <stdexcept>
 #include <vector>
 #include <wx/choicdlg.h>
@@ -180,6 +180,7 @@ CAgilityBookApp::CAgilityBookApp()
 	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, eLanguageCatalogEmbedded)
 	, m_bShutdownSocket(false)
 	, m_Localization()
+	, m_imageHelper()
 	, m_UpdateInfo()
 	, m_manager(nullptr)
 	, m_printDialogData(nullptr)
@@ -610,7 +611,7 @@ bool CAgilityBookApp::OnCreateBitmap(
 		const wxSize& size,
 		wxBitmap& outBmp)
 {
-	return ImageHelper::DoCreateBitmap(GetTopWindow(), id, client, size, outBmp);
+	return m_imageHelper.DoCreateBitmap(GetTopWindow(), id, client, size, outBmp);
 }
 
 
@@ -619,7 +620,7 @@ bool CAgilityBookApp::OnCreateIconBundle(
 		const wxArtClient& client,
 		wxIconBundle& outIcon)
 {
-	return ImageHelper::DoCreateIconBundle(GetTopWindow(), id, client, outIcon);
+	return m_imageHelper.DoCreateIconBundle(GetTopWindow(), id, client, outIcon);
 }
 
 

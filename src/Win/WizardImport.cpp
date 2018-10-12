@@ -45,12 +45,12 @@
 #include "AgilityBookOptions.h"
 #include "DlgAssignColumns.h"
 #include "DlgMessage.h"
-#include "DlgProgress.h"
 #include "Globals.h"
-#include "ListCtrl.h"
 #include "Wizard.h"
 
 #include "ARBCommon/BreakLine.h"
+#include "LibARBWin/DlgProgress.h"
+#include "LibARBWin/ListCtrl.h"
 #include <wx/spinctrl.h>
 #include <wx/textfile.h>
 

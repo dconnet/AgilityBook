@@ -29,11 +29,11 @@
 #include "DlgConfigTitle.h"
 
 #include "AgilityBook.h"
-#include "Validators.h"
-#include "Widgets.h"
 
 #include "ARB/ARBConfigTitle.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Validators.h"
+#include "LibARBWin/Widgets.h"
 #include <wx/datectrl.h>
 
 #ifdef __WXMSW__

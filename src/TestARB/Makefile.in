@@ -80,13 +80,12 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestQ.cpp \
 	TestString.cpp \
 	TestTraining.cpp \
-	TestVersion.cpp \
-	../Win/LanguageManager.cpp
+	TestVersion.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon/ -larbcommon -L$(TOPBUILDDIR)/src/ARB/ -larb -L$(TOPBUILDDIR)/src/LibArchive/ -larchive
+@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/LibArchive -larchive
 
 ##########
 # Precompiled headers

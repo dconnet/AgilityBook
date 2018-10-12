@@ -1,0 +1,510 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E198518F2170E5C5003E7B92 /* ReadHttp.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517A2170E5C5003E7B92 /* ReadHttp.h */; };
+		E19851902170E5C5003E7B92 /* RichEditCtrl2.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517B2170E5C5003E7B92 /* RichEditCtrl2.h */; };
+		E19851912170E5C5003E7B92 /* ImageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517C2170E5C5003E7B92 /* ImageManager.h */; };
+		E19851922170E5C5003E7B92 /* MenuHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517D2170E5C5003E7B92 /* MenuHelper.h */; };
+		E19851932170E5C5003E7B92 /* SpreadSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517E2170E5C5003E7B92 /* SpreadSheet.h */; };
+		E19851942170E5C5003E7B92 /* DlgAuthenticate.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517F2170E5C5003E7B92 /* DlgAuthenticate.h */; };
+		E19851952170E5C5003E7B92 /* ListData.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851802170E5C5003E7B92 /* ListData.h */; };
+		E19851962170E5C5003E7B92 /* LanguageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851812170E5C5003E7B92 /* LanguageManager.h */; };
+		E19851972170E5C5003E7B92 /* ListCtrl.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851822170E5C5003E7B92 /* ListCtrl.h */; };
+		E19851982170E5C5003E7B92 /* ARBWinUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851832170E5C5003E7B92 /* ARBWinUtilities.h */; };
+		E19851992170E5C5003E7B92 /* SetupApp.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851842170E5C5003E7B92 /* SetupApp.h */; };
+		E198519A2170E5C5003E7B92 /* TaskbarProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851852170E5C5003E7B92 /* TaskbarProgress.h */; };
+		E198519B2170E5C5003E7B92 /* DlgProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851862170E5C5003E7B92 /* DlgProgress.h */; };
+		E198519C2170E5C5003E7B92 /* RegItemsBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851872170E5C5003E7B92 /* RegItemsBase.h */; };
+		E198519D2170E5C5003E7B92 /* ColumnOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851882170E5C5003E7B92 /* ColumnOrder.h */; };
+		E198519E2170E5C5003E7B92 /* DPI.h in Headers */ = {isa = PBXBuildFile; fileRef = E19851892170E5C5003E7B92 /* DPI.h */; };
+		E198519F2170E5C5003E7B92 /* ImageHelperBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E198518A2170E5C5003E7B92 /* ImageHelperBase.h */; };
+		E19851A02170E5C5003E7B92 /* CheckLink.h in Headers */ = {isa = PBXBuildFile; fileRef = E198518B2170E5C5003E7B92 /* CheckLink.h */; };
+		E19851A12170E5C5003E7B92 /* Validators.h in Headers */ = {isa = PBXBuildFile; fileRef = E198518C2170E5C5003E7B92 /* Validators.h */; };
+		E19851A22170E5C5003E7B92 /* Widgets.h in Headers */ = {isa = PBXBuildFile; fileRef = E198518D2170E5C5003E7B92 /* Widgets.h */; };
+		E19851A32170E5C5003E7B92 /* CheckTreeCtrl.h in Headers */ = {isa = PBXBuildFile; fileRef = E198518E2170E5C5003E7B92 /* CheckTreeCtrl.h */; };
+		E19851B02170E5DE003E7B92 /* ImageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851A42170E5DD003E7B92 /* ImageManager.cpp */; };
+		E19851B12170E5DE003E7B92 /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851A52170E5DD003E7B92 /* LanguageManager.cpp */; };
+		E19851B22170E5DE003E7B92 /* ARBWinUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851A62170E5DD003E7B92 /* ARBWinUtilities.cpp */; };
+		E19851B32170E5DE003E7B92 /* ColumnOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851A72170E5DE003E7B92 /* ColumnOrder.cpp */; };
+		E19851B42170E5DE003E7B92 /* CheckTreeCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851A82170E5DE003E7B92 /* CheckTreeCtrl.cpp */; };
+		E19851B52170E5DE003E7B92 /* DPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851A92170E5DE003E7B92 /* DPI.cpp */; };
+		E19851B62170E5DE003E7B92 /* ListCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851AA2170E5DE003E7B92 /* ListCtrl.cpp */; };
+		E19851B72170E5DE003E7B92 /* DlgAuthenticate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851AB2170E5DE003E7B92 /* DlgAuthenticate.cpp */; };
+		E19851B82170E5DE003E7B92 /* ListData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851AC2170E5DE003E7B92 /* ListData.cpp */; };
+		E19851B92170E5DE003E7B92 /* DlgProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851AD2170E5DE003E7B92 /* DlgProgress.cpp */; };
+		E19851BA2170E5DE003E7B92 /* CheckLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851AE2170E5DE003E7B92 /* CheckLink.cpp */; };
+		E19851BB2170E5DE003E7B92 /* ImageHelperBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851AF2170E5DE003E7B92 /* ImageHelperBase.cpp */; };
+		E19851C42170E5EE003E7B92 /* SetupApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851BC2170E5ED003E7B92 /* SetupApp.cpp */; };
+		E19851C52170E5EE003E7B92 /* RichEditCtrl2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851BD2170E5EE003E7B92 /* RichEditCtrl2.cpp */; };
+		E19851C62170E5EE003E7B92 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851BE2170E5EE003E7B92 /* MenuHelper.cpp */; };
+		E19851C72170E5EE003E7B92 /* SpreadSheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851BF2170E5EE003E7B92 /* SpreadSheet.cpp */; };
+		E19851C82170E5EE003E7B92 /* ReadHttp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851C02170E5EE003E7B92 /* ReadHttp.cpp */; };
+		E19851C92170E5EE003E7B92 /* Validators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851C12170E5EE003E7B92 /* Validators.cpp */; };
+		E19851CA2170E5EE003E7B92 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851C22170E5EE003E7B92 /* Widgets.cpp */; };
+		E19851CB2170E5EE003E7B92 /* TaskbarProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19851C32170E5EE003E7B92 /* TaskbarProgress.cpp */; };
+		E1CAE55F16B5BF3800B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE55D16B5BF3800B33FE5 /* stdafx.cpp */; };
+		E1CAE56016B5BF3800B33FE5 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE55E16B5BF3800B33FE5 /* stdafx.h */; };
+		E1CAE56816B5BF4900B33FE5 /* arbWarningPop.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56216B5BF4900B33FE5 /* arbWarningPop.h */; };
+		E1CAE56916B5BF4900B33FE5 /* arbWarningPush.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56316B5BF4900B33FE5 /* arbWarningPush.h */; };
+		E1CAE56A16B5BF4900B33FE5 /* SetupARBPost.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56416B5BF4900B33FE5 /* SetupARBPost.h */; };
+		E1CAE56B16B5BF4900B33FE5 /* SetupARBPre.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56516B5BF4900B33FE5 /* SetupARBPre.h */; };
+		E1CAE56D16B5BF4900B33FE5 /* SetupWX.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56716B5BF4900B33FE5 /* SetupWX.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E198517A2170E5C5003E7B92 /* ReadHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadHttp.h; sourceTree = "<group>"; };
+		E198517B2170E5C5003E7B92 /* RichEditCtrl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichEditCtrl2.h; sourceTree = "<group>"; };
+		E198517C2170E5C5003E7B92 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
+		E198517D2170E5C5003E7B92 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
+		E198517E2170E5C5003E7B92 /* SpreadSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadSheet.h; sourceTree = "<group>"; };
+		E198517F2170E5C5003E7B92 /* DlgAuthenticate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgAuthenticate.h; sourceTree = "<group>"; };
+		E19851802170E5C5003E7B92 /* ListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListData.h; sourceTree = "<group>"; };
+		E19851812170E5C5003E7B92 /* LanguageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageManager.h; sourceTree = "<group>"; };
+		E19851822170E5C5003E7B92 /* ListCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListCtrl.h; sourceTree = "<group>"; };
+		E19851832170E5C5003E7B92 /* ARBWinUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBWinUtilities.h; sourceTree = "<group>"; };
+		E19851842170E5C5003E7B92 /* SetupApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupApp.h; sourceTree = "<group>"; };
+		E19851852170E5C5003E7B92 /* TaskbarProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskbarProgress.h; sourceTree = "<group>"; };
+		E19851862170E5C5003E7B92 /* DlgProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgProgress.h; sourceTree = "<group>"; };
+		E19851872170E5C5003E7B92 /* RegItemsBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegItemsBase.h; sourceTree = "<group>"; };
+		E19851882170E5C5003E7B92 /* ColumnOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnOrder.h; sourceTree = "<group>"; };
+		E19851892170E5C5003E7B92 /* DPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPI.h; sourceTree = "<group>"; };
+		E198518A2170E5C5003E7B92 /* ImageHelperBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelperBase.h; sourceTree = "<group>"; };
+		E198518B2170E5C5003E7B92 /* CheckLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckLink.h; sourceTree = "<group>"; };
+		E198518C2170E5C5003E7B92 /* Validators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Validators.h; sourceTree = "<group>"; };
+		E198518D2170E5C5003E7B92 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
+		E198518E2170E5C5003E7B92 /* CheckTreeCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckTreeCtrl.h; sourceTree = "<group>"; };
+		E19851A42170E5DD003E7B92 /* ImageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageManager.cpp; sourceTree = "<group>"; };
+		E19851A52170E5DD003E7B92 /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LanguageManager.cpp; sourceTree = "<group>"; };
+		E19851A62170E5DD003E7B92 /* ARBWinUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBWinUtilities.cpp; sourceTree = "<group>"; };
+		E19851A72170E5DE003E7B92 /* ColumnOrder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColumnOrder.cpp; sourceTree = "<group>"; };
+		E19851A82170E5DE003E7B92 /* CheckTreeCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckTreeCtrl.cpp; sourceTree = "<group>"; };
+		E19851A92170E5DE003E7B92 /* DPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DPI.cpp; sourceTree = "<group>"; };
+		E19851AA2170E5DE003E7B92 /* ListCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListCtrl.cpp; sourceTree = "<group>"; };
+		E19851AB2170E5DE003E7B92 /* DlgAuthenticate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgAuthenticate.cpp; sourceTree = "<group>"; };
+		E19851AC2170E5DE003E7B92 /* ListData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListData.cpp; sourceTree = "<group>"; };
+		E19851AD2170E5DE003E7B92 /* DlgProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgProgress.cpp; sourceTree = "<group>"; };
+		E19851AE2170E5DE003E7B92 /* CheckLink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckLink.cpp; sourceTree = "<group>"; };
+		E19851AF2170E5DE003E7B92 /* ImageHelperBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageHelperBase.cpp; sourceTree = "<group>"; };
+		E19851BC2170E5ED003E7B92 /* SetupApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetupApp.cpp; sourceTree = "<group>"; };
+		E19851BD2170E5EE003E7B92 /* RichEditCtrl2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RichEditCtrl2.cpp; sourceTree = "<group>"; };
+		E19851BE2170E5EE003E7B92 /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuHelper.cpp; sourceTree = "<group>"; };
+		E19851BF2170E5EE003E7B92 /* SpreadSheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpreadSheet.cpp; sourceTree = "<group>"; };
+		E19851C02170E5EE003E7B92 /* ReadHttp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReadHttp.cpp; sourceTree = "<group>"; };
+		E19851C12170E5EE003E7B92 /* Validators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Validators.cpp; sourceTree = "<group>"; };
+		E19851C22170E5EE003E7B92 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
+		E19851C32170E5EE003E7B92 /* TaskbarProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TaskbarProgress.cpp; sourceTree = "<group>"; };
+		E19B62EB166C08B9004DEDA4 /* libARBWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libARBWin.a; path = libLibARBWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E19B65D2166C1054004DEDA4 /* IProgressMeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IProgressMeter.h; sourceTree = "<group>"; };
+		E19B65D4166C1054004DEDA4 /* VersionNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNumber.h; sourceTree = "<group>"; };
+		E1CAE55D16B5BF3800B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
+		E1CAE55E16B5BF3800B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		E1CAE56216B5BF4900B33FE5 /* arbWarningPop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPop.h; sourceTree = "<group>"; };
+		E1CAE56316B5BF4900B33FE5 /* arbWarningPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPush.h; sourceTree = "<group>"; };
+		E1CAE56416B5BF4900B33FE5 /* SetupARBPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPost.h; sourceTree = "<group>"; };
+		E1CAE56516B5BF4900B33FE5 /* SetupARBPre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPre.h; sourceTree = "<group>"; };
+		E1CAE56716B5BF4900B33FE5 /* SetupWX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupWX.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E19B62E8166C08B9004DEDA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E110B4A7177FCFCC004071B5 /* LibARBWin */ = {
+			isa = PBXGroup;
+			children = (
+				E19851832170E5C5003E7B92 /* ARBWinUtilities.h */,
+				E198518B2170E5C5003E7B92 /* CheckLink.h */,
+				E198518E2170E5C5003E7B92 /* CheckTreeCtrl.h */,
+				E19851882170E5C5003E7B92 /* ColumnOrder.h */,
+				E198517F2170E5C5003E7B92 /* DlgAuthenticate.h */,
+				E19851862170E5C5003E7B92 /* DlgProgress.h */,
+				E19851892170E5C5003E7B92 /* DPI.h */,
+				E198518A2170E5C5003E7B92 /* ImageHelperBase.h */,
+				E198517C2170E5C5003E7B92 /* ImageManager.h */,
+				E19851812170E5C5003E7B92 /* LanguageManager.h */,
+				E19851822170E5C5003E7B92 /* ListCtrl.h */,
+				E19851802170E5C5003E7B92 /* ListData.h */,
+				E198517D2170E5C5003E7B92 /* MenuHelper.h */,
+				E198517A2170E5C5003E7B92 /* ReadHttp.h */,
+				E19851872170E5C5003E7B92 /* RegItemsBase.h */,
+				E198517B2170E5C5003E7B92 /* RichEditCtrl2.h */,
+				E19851842170E5C5003E7B92 /* SetupApp.h */,
+				E198517E2170E5C5003E7B92 /* SpreadSheet.h */,
+				E19851852170E5C5003E7B92 /* TaskbarProgress.h */,
+				E198518C2170E5C5003E7B92 /* Validators.h */,
+				E198518D2170E5C5003E7B92 /* Widgets.h */,
+			);
+			path = LibARBWin;
+			sourceTree = "<group>";
+		};
+		E19B62E0166C08B9004DEDA4 = {
+			isa = PBXGroup;
+			children = (
+				E19B62F2166C08FF004DEDA4 /* Source */,
+				E19B62EC166C08B9004DEDA4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E19B62EC166C08B9004DEDA4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E19B62EB166C08B9004DEDA4 /* libARBWin.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E19B62F2166C08FF004DEDA4 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E19B65D0166C1054004DEDA4 /* Include */,
+				E19B62F3166C090F004DEDA4 /* LibARBWin */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		E19B62F3166C090F004DEDA4 /* LibARBWin */ = {
+			isa = PBXGroup;
+			children = (
+				E19851A62170E5DD003E7B92 /* ARBWinUtilities.cpp */,
+				E19851AE2170E5DE003E7B92 /* CheckLink.cpp */,
+				E19851A82170E5DE003E7B92 /* CheckTreeCtrl.cpp */,
+				E19851A72170E5DE003E7B92 /* ColumnOrder.cpp */,
+				E19851AB2170E5DE003E7B92 /* DlgAuthenticate.cpp */,
+				E19851AD2170E5DE003E7B92 /* DlgProgress.cpp */,
+				E19851A92170E5DE003E7B92 /* DPI.cpp */,
+				E19851AF2170E5DE003E7B92 /* ImageHelperBase.cpp */,
+				E19851A42170E5DD003E7B92 /* ImageManager.cpp */,
+				E19851A52170E5DD003E7B92 /* LanguageManager.cpp */,
+				E19851AA2170E5DE003E7B92 /* ListCtrl.cpp */,
+				E19851AC2170E5DE003E7B92 /* ListData.cpp */,
+				E19851BE2170E5EE003E7B92 /* MenuHelper.cpp */,
+				E19851C02170E5EE003E7B92 /* ReadHttp.cpp */,
+				E19851BD2170E5EE003E7B92 /* RichEditCtrl2.cpp */,
+				E19851BC2170E5ED003E7B92 /* SetupApp.cpp */,
+				E19851BF2170E5EE003E7B92 /* SpreadSheet.cpp */,
+				E1CAE55D16B5BF3800B33FE5 /* stdafx.cpp */,
+				E1CAE55E16B5BF3800B33FE5 /* stdafx.h */,
+				E19851C32170E5EE003E7B92 /* TaskbarProgress.cpp */,
+				E19851C12170E5EE003E7B92 /* Validators.cpp */,
+				E19851C22170E5EE003E7B92 /* Widgets.cpp */,
+			);
+			name = LibARBWin;
+			path = ../../../LibARBWin;
+			sourceTree = "<group>";
+		};
+		E19B65D0166C1054004DEDA4 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				E110B4A7177FCFCC004071B5 /* LibARBWin */,
+				E1CAE56116B5BF4900B33FE5 /* Platform */,
+				E19B65D2166C1054004DEDA4 /* IProgressMeter.h */,
+				E19B65D4166C1054004DEDA4 /* VersionNumber.h */,
+			);
+			name = Include;
+			path = ../../../Include;
+			sourceTree = "<group>";
+		};
+		E1CAE56116B5BF4900B33FE5 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				E1CAE56216B5BF4900B33FE5 /* arbWarningPop.h */,
+				E1CAE56316B5BF4900B33FE5 /* arbWarningPush.h */,
+				E1CAE56416B5BF4900B33FE5 /* SetupARBPost.h */,
+				E1CAE56516B5BF4900B33FE5 /* SetupARBPre.h */,
+				E1CAE56716B5BF4900B33FE5 /* SetupWX.h */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E19B62E9166C08B9004DEDA4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E198519E2170E5C5003E7B92 /* DPI.h in Headers */,
+				E19851902170E5C5003E7B92 /* RichEditCtrl2.h in Headers */,
+				E19851A12170E5C5003E7B92 /* Validators.h in Headers */,
+				E19851932170E5C5003E7B92 /* SpreadSheet.h in Headers */,
+				E1CAE56016B5BF3800B33FE5 /* stdafx.h in Headers */,
+				E19851972170E5C5003E7B92 /* ListCtrl.h in Headers */,
+				E19851A22170E5C5003E7B92 /* Widgets.h in Headers */,
+				E19851A02170E5C5003E7B92 /* CheckLink.h in Headers */,
+				E198519A2170E5C5003E7B92 /* TaskbarProgress.h in Headers */,
+				E1CAE56816B5BF4900B33FE5 /* arbWarningPop.h in Headers */,
+				E19851922170E5C5003E7B92 /* MenuHelper.h in Headers */,
+				E19851982170E5C5003E7B92 /* ARBWinUtilities.h in Headers */,
+				E1CAE56916B5BF4900B33FE5 /* arbWarningPush.h in Headers */,
+				E198519B2170E5C5003E7B92 /* DlgProgress.h in Headers */,
+				E1CAE56A16B5BF4900B33FE5 /* SetupARBPost.h in Headers */,
+				E19851992170E5C5003E7B92 /* SetupApp.h in Headers */,
+				E19851912170E5C5003E7B92 /* ImageManager.h in Headers */,
+				E19851962170E5C5003E7B92 /* LanguageManager.h in Headers */,
+				E19851A32170E5C5003E7B92 /* CheckTreeCtrl.h in Headers */,
+				E198518F2170E5C5003E7B92 /* ReadHttp.h in Headers */,
+				E198519C2170E5C5003E7B92 /* RegItemsBase.h in Headers */,
+				E19851952170E5C5003E7B92 /* ListData.h in Headers */,
+				E19851942170E5C5003E7B92 /* DlgAuthenticate.h in Headers */,
+				E1CAE56B16B5BF4900B33FE5 /* SetupARBPre.h in Headers */,
+				E198519D2170E5C5003E7B92 /* ColumnOrder.h in Headers */,
+				E198519F2170E5C5003E7B92 /* ImageHelperBase.h in Headers */,
+				E1CAE56D16B5BF4900B33FE5 /* SetupWX.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E19B62EA166C08B9004DEDA4 /* LibARBWin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E19B62EF166C08B9004DEDA4 /* Build configuration list for PBXNativeTarget "LibARBWin" */;
+			buildPhases = (
+				E19B62E7166C08B9004DEDA4 /* Sources */,
+				E19B62E8166C08B9004DEDA4 /* Frameworks */,
+				E19B62E9166C08B9004DEDA4 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LibARBWin;
+			productName = LibARBWin;
+			productReference = E19B62EB166C08B9004DEDA4 /* libARBWin.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E19B62E2166C08B9004DEDA4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = "David Connet";
+			};
+			buildConfigurationList = E19B62E5166C08B9004DEDA4 /* Build configuration list for PBXProject "LibARBWin" */;
+			compatibilityVersion = "Xcode 10.0";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E19B62E0166C08B9004DEDA4;
+			productRefGroup = E19B62EC166C08B9004DEDA4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E19B62EA166C08B9004DEDA4 /* LibARBWin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E19B62E7166C08B9004DEDA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E19851BB2170E5DE003E7B92 /* ImageHelperBase.cpp in Sources */,
+				E19851C92170E5EE003E7B92 /* Validators.cpp in Sources */,
+				E1CAE55F16B5BF3800B33FE5 /* stdafx.cpp in Sources */,
+				E19851CB2170E5EE003E7B92 /* TaskbarProgress.cpp in Sources */,
+				E19851B02170E5DE003E7B92 /* ImageManager.cpp in Sources */,
+				E19851BA2170E5DE003E7B92 /* CheckLink.cpp in Sources */,
+				E19851C62170E5EE003E7B92 /* MenuHelper.cpp in Sources */,
+				E19851B12170E5DE003E7B92 /* LanguageManager.cpp in Sources */,
+				E19851C42170E5EE003E7B92 /* SetupApp.cpp in Sources */,
+				E19851B32170E5DE003E7B92 /* ColumnOrder.cpp in Sources */,
+				E19851B52170E5DE003E7B92 /* DPI.cpp in Sources */,
+				E19851B22170E5DE003E7B92 /* ARBWinUtilities.cpp in Sources */,
+				E19851B62170E5DE003E7B92 /* ListCtrl.cpp in Sources */,
+				E19851B82170E5DE003E7B92 /* ListData.cpp in Sources */,
+				E19851B42170E5DE003E7B92 /* CheckTreeCtrl.cpp in Sources */,
+				E19851B92170E5DE003E7B92 /* DlgProgress.cpp in Sources */,
+				E19851C52170E5EE003E7B92 /* RichEditCtrl2.cpp in Sources */,
+				E19851C72170E5EE003E7B92 /* SpreadSheet.cpp in Sources */,
+				E19851B72170E5DE003E7B92 /* DlgAuthenticate.cpp in Sources */,
+				E19851C82170E5EE003E7B92 /* ReadHttp.cpp in Sources */,
+				E19851CA2170E5EE003E7B92 /* Widgets.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E19B62ED166C08B9004DEDA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.1.1/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.1/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E19B62EE166C08B9004DEDA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.1.1/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.1/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E19B62F0166C08B9004DEDA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E19B62F1166C08B9004DEDA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E19B62E5166C08B9004DEDA4 /* Build configuration list for PBXProject "LibARBWin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E19B62ED166C08B9004DEDA4 /* Debug */,
+				E19B62EE166C08B9004DEDA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E19B62EF166C08B9004DEDA4 /* Build configuration list for PBXNativeTarget "LibARBWin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E19B62F0166C08B9004DEDA4 /* Debug */,
+				E19B62F1166C08B9004DEDA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E19B62E2166C08B9004DEDA4 /* Project object */;
+}

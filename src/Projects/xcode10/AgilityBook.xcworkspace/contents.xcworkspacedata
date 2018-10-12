@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:LibARBWin/LibARBWin.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:LibTidyHtml/LibTidyHtml.xcodeproj">
    </FileRef>
    <FileRef

@@ -35,7 +35,7 @@
 #include <stdexcept>
 
 #if defined(__WXWINDOWS__)
-#include "../Win/LanguageManager.h"
+#include "LibARBWin/LanguageManager.h"
 #include <wx/app.h>
 #include <wx/fs_arc.h>
 #include <wx/fs_mem.h>

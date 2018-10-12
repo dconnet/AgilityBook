@@ -24,13 +24,13 @@
 
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
-#include "ReadHttp.h"
 
 #include "ARB/ARBStructure.h"
 #include "ARBCommon/BreakLine.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
+#include "LibARBWin/ReadHttp.h"
 #include "LibTidyHtml/LibTidyHtml.h"
 #include <errno.h>
 #include <wx/ffile.h>

@@ -157,17 +157,13 @@
     <ClCompile Include="..\..\Win\AgilityBookTreeView.cpp" />
     <ClCompile Include="..\..\Win\CalendarSites.cpp" />
     <ClCompile Include="..\..\Win\CalendarSiteUSDAA.cpp" />
-    <ClCompile Include="..\..\Win\CheckLink.cpp" />
-    <ClCompile Include="..\..\Win\CheckTreeCtrl.cpp" />
     <ClCompile Include="..\..\Win\ClipBoard.cpp" />
-    <ClCompile Include="..\..\Win\ColumnOrder.cpp" />
     <ClCompile Include="..\..\Win\ComboBoxQ.cpp" />
     <ClCompile Include="..\..\Win\ComboBoxVenue.cpp" />
     <ClCompile Include="..\..\Win\CommonView.cpp" />
     <ClCompile Include="..\..\Win\ConfigHandler.cpp" />
     <ClCompile Include="..\..\Win\DlgAbout.cpp" />
     <ClCompile Include="..\..\Win\DlgAssignColumns.cpp" />
-    <ClCompile Include="..\..\Win\DlgAuthenticate.cpp" />
     <ClCompile Include="..\..\Win\DlgCalendar.cpp" />
     <ClCompile Include="..\..\Win\DlgCalendarQueryDetail.cpp" />
     <ClCompile Include="..\..\Win\DlgClub.cpp" />
@@ -205,7 +201,6 @@
     <ClCompile Include="..\..\Win\DlgPartner.cpp" />
     <ClCompile Include="..\..\Win\DlgPluginDetails.cpp" />
     <ClCompile Include="..\..\Win\DlgPointsViewSort.cpp" />
-    <ClCompile Include="..\..\Win\DlgProgress.cpp" />
     <ClCompile Include="..\..\Win\DlgQueryDetail.cpp" />
     <ClCompile Include="..\..\Win\DlgReferenceRun.cpp" />
     <ClCompile Include="..\..\Win\DlgRegNum.cpp" />
@@ -216,26 +211,16 @@
     <ClCompile Include="..\..\Win\DlgTitle.cpp" />
     <ClCompile Include="..\..\Win\DlgTraining.cpp" />
     <ClCompile Include="..\..\Win\DlgTrial.cpp" />
-    <ClCompile Include="..\..\Win\DPI.cpp" />
     <ClCompile Include="..\..\Win\FilterOptions.cpp" />
     <ClCompile Include="..\..\Win\Globals.cpp" />
     <ClCompile Include="..\..\Win\IconList.cpp" />
     <ClCompile Include="..\..\Win\ImageHelper.cpp" />
-    <ClCompile Include="..\..\Win\ImageManager.cpp" />
-    <ClCompile Include="..\..\Win\LanguageManager.cpp" />
-    <ClCompile Include="..\..\Win\ListCtrl.cpp" />
-    <ClCompile Include="..\..\Win\ListData.cpp" />
     <ClCompile Include="..\..\Win\Localization.cpp" />
     <ClCompile Include="..\..\Win\MainFrm.cpp" />
-    <ClCompile Include="..\..\Win\MenuHelper.cpp" />
     <ClCompile Include="..\..\Win\NamedColumns.cpp" />
     <ClCompile Include="..\..\Win\NoteButton.cpp" />
     <ClCompile Include="..\..\Win\PointsData.cpp" />
     <ClCompile Include="..\..\Win\Print.cpp" />
-    <ClCompile Include="..\..\Win\ReadHttp.cpp" />
-    <ClCompile Include="..\..\Win\RichEditCtrl2.cpp" />
-    <ClCompile Include="..\..\Win\SetupApp.cpp" />
-    <ClCompile Include="..\..\Win\SpreadSheet.cpp" />
     <ClCompile Include="..\..\Win\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -247,11 +232,8 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MultiProcessorCompilation>
     </ClCompile>
     <ClCompile Include="..\..\Win\TabView.cpp" />
-    <ClCompile Include="..\..\Win\TaskbarProgress.cpp" />
     <ClCompile Include="..\..\Win\UpdateInfo.cpp" />
-    <ClCompile Include="..\..\Win\Validators.cpp" />
     <ClCompile Include="..\..\Win\ValidatorsQ.cpp" />
-    <ClCompile Include="..\..\Win\Widgets.cpp" />
     <ClCompile Include="..\..\Win\Wizard.cpp" />
     <ClCompile Include="..\..\Win\WizardExport.cpp" />
     <ClCompile Include="..\..\Win\WizardImport.cpp" />
@@ -282,17 +264,13 @@
     <ClInclude Include="..\..\Win\AgilityBookTreeView.h" />
     <ClInclude Include="..\..\Win\CalendarSites.h" />
     <ClInclude Include="..\..\Win\CalendarSiteUSDAA.h" />
-    <ClInclude Include="..\..\Win\CheckLink.h" />
-    <ClInclude Include="..\..\Win\CheckTreeCtrl.h" />
     <ClInclude Include="..\..\Win\ClipBoard.h" />
-    <ClInclude Include="..\..\Win\ColumnOrder.h" />
     <ClInclude Include="..\..\Win\ComboBoxQ.h" />
     <ClInclude Include="..\..\Win\ComboBoxVenue.h" />
     <ClInclude Include="..\..\Win\CommonView.h" />
     <ClInclude Include="..\..\Win\ConfigHandler.h" />
     <ClInclude Include="..\..\Win\DlgAbout.h" />
     <ClInclude Include="..\..\Win\DlgAssignColumns.h" />
-    <ClInclude Include="..\..\Win\DlgAuthenticate.h" />
     <ClInclude Include="..\..\Win\DlgCalendar.h" />
     <ClInclude Include="..\..\Win\DlgCalendarQueryDetail.h" />
     <ClInclude Include="..\..\Win\DlgClub.h" />
@@ -330,7 +308,6 @@
     <ClInclude Include="..\..\Win\DlgPartner.h" />
     <ClInclude Include="..\..\Win\DlgPluginDetails.h" />
     <ClInclude Include="..\..\Win\DlgPointsViewSort.h" />
-    <ClInclude Include="..\..\Win\DlgProgress.h" />
     <ClInclude Include="..\..\Win\DlgQueryDetail.h" />
     <ClInclude Include="..\..\Win\DlgReferenceRun.h" />
     <ClInclude Include="..\..\Win\DlgRegNum.h" />
@@ -341,34 +318,21 @@
     <ClInclude Include="..\..\Win\DlgTitle.h" />
     <ClInclude Include="..\..\Win\DlgTraining.h" />
     <ClInclude Include="..\..\Win\DlgTrial.h" />
-    <ClInclude Include="..\..\Win\DPI.h" />
     <ClInclude Include="..\..\Win\FilterOptions.h" />
     <ClInclude Include="..\..\Win\Globals.h" />
     <ClInclude Include="..\..\Win\IconList.h" />
     <ClInclude Include="..\..\Win\ImageHelper.h" />
-    <ClInclude Include="..\..\Win\ImageManager.h" />
-    <ClInclude Include="..\..\Win\LanguageManager.h" />
-    <ClInclude Include="..\..\Win\ListCtrl.h" />
-    <ClInclude Include="..\..\Win\ListData.h" />
     <ClInclude Include="..\..\Win\Localization.h" />
     <ClInclude Include="..\..\Win\MainFrm.h" />
-    <ClInclude Include="..\..\Win\MenuHelper.h" />
     <ClInclude Include="..\..\Win\NamedColumns.h" />
     <ClInclude Include="..\..\Win\NoteButton.h" />
     <ClInclude Include="..\..\Win\PointsData.h" />
-    <ClInclude Include="..\..\Win\ReadHttp.h" />
     <ClInclude Include="..\..\Win\RegItems.h" />
-    <ClInclude Include="..\..\Win\RichEditCtrl2.h" />
-    <ClInclude Include="..\..\Win\SetupApp.h" />
     <ClInclude Include="..\..\Win\SetupAppARB.h" />
-    <ClInclude Include="..\..\Win\SpreadSheet.h" />
     <ClInclude Include="..\..\Win\stdafx.h" />
     <ClInclude Include="..\..\Win\TabView.h" />
-    <ClInclude Include="..\..\Win\TaskbarProgress.h" />
     <ClInclude Include="..\..\Win\UpdateInfo.h" />
-    <ClInclude Include="..\..\Win\Validators.h" />
     <ClInclude Include="..\..\Win\ValidatorsQ.h" />
-    <ClInclude Include="..\..\Win\Widgets.h" />
     <ClInclude Include="..\..\Win\Wizard.h" />
     <ClInclude Include="..\..\Win\WizardExport.h" />
     <ClInclude Include="..\..\Win\WizardImport.h" />
@@ -559,6 +523,9 @@
     </ProjectReference>
     <ProjectReference Include="LibwxARBCommon.vcxproj">
       <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
+    </ProjectReference>
+    <ProjectReference Include="LibwxARBWin.vcxproj">
+      <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
     </ProjectReference>
     <ProjectReference Include="LibwxArchive.vcxproj">
       <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>

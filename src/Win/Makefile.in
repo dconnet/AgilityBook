@@ -53,17 +53,13 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	AgilityBookTreeView.cpp \
 	CalendarSites.cpp \
 	CalendarSiteUSDAA.cpp \
-	CheckLink.cpp \
-	CheckTreeCtrl.cpp \
 	ClipBoard.cpp \
-	ColumnOrder.cpp \
 	ComboBoxQ.cpp \
 	ComboBoxVenue.cpp \
 	CommonView.cpp \
 	ConfigHandler.cpp \
 	DlgAbout.cpp \
 	DlgAssignColumns.cpp \
-	DlgAuthenticate.cpp \
 	DlgCalendar.cpp \
 	DlgCalendarQueryDetail.cpp \
 	DlgClub.cpp \
@@ -101,7 +97,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgPartner.cpp \
 	DlgPluginDetails.cpp \
 	DlgPointsViewSort.cpp \
-	DlgProgress.cpp \
 	DlgQueryDetail.cpp \
 	DlgReferenceRun.cpp \
 	DlgRegNum.cpp \
@@ -112,32 +107,19 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgTitle.cpp \
 	DlgTraining.cpp \
 	DlgTrial.cpp \
-	DPI.cpp \
 	FilterOptions.cpp \
 	Globals.cpp \
 	IconList.cpp \
 	ImageHelper.cpp \
-	ImageManager.cpp \
-	LanguageManager.cpp \
-	ListCtrl.cpp \
-	ListData.cpp \
 	Localization.cpp \
 	MainFrm.cpp \
-	MenuHelper.cpp \
 	NamedColumns.cpp \
 	NoteButton.cpp \
 	PointsData.cpp \
 	Print.cpp \
-	ReadHttp.cpp \
-	RichEditCtrl2.cpp \
-	SetupApp.cpp \
-	SpreadSheet.cpp \
 	TabView.cpp \
-	TaskbarProgress.cpp \
 	UpdateInfo.cpp \
-	Validators.cpp \
 	ValidatorsQ.cpp \
-	Widgets.cpp \
 	Wizard.cpp \
 	WizardExport.cpp \
 	WizardImport.cpp \
@@ -146,7 +128,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/src/LibArchive -larchive
+@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/src/LibArchive -larchive
 
 ##########
 # Precompiled headers

@@ -107,7 +107,6 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "CheckLink.h"
 #include "ClipBoard.h"
 #include "ComboBoxQ.h"
 #include "DlgCRCDViewer.h"
@@ -115,14 +114,9 @@
 #include "DlgListCtrl.h"
 #include "DlgReferenceRun.h"
 #include "DlgSelectURL.h"
-#include "DPI.h"
 #include "Globals.h"
 #include "ImageHelper.h"
-#include "ListCtrl.h"
-#include "ListData.h"
 #include "NoteButton.h"
-#include "RichEditCtrl2.h"
-#include "Validators.h"
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBConfigOtherPoints.h"
@@ -131,6 +125,12 @@
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/CheckLink.h"
+#include "LibARBWin/DPI.h"
+#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ListData.h"
+#include "LibARBWin/RichEditCtrl2.h"
+#include "LibARBWin/Validators.h"
 #include <algorithm>
 #include <set>
 #include <wx/datectrl.h>

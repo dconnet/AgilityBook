@@ -32,13 +32,13 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "CheckTreeCtrl.h"
-#include "Validators.h"
-#include "Widgets.h"
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/CheckTreeCtrl.h"
+#include "LibARBWin/Validators.h"
+#include "LibARBWin/Widgets.h"
 #include <wx/datectrl.h>
 
 #ifdef __WXMSW__

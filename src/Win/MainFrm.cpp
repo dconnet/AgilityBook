@@ -34,7 +34,6 @@
 #include "AgilityBookMenu.h"
 #include "CommonView.h"
 #include "DlgMessage.h"
-#include "DPI.h"
 #include "Globals.h"
 #include "ImageHelper.h"
 #include "PointsData.h"
@@ -45,6 +44,7 @@
 
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DPI.h"
 #include <wx/config.h>
 #include <wx/dnd.h>
 #include <wx/platinfo.h>
