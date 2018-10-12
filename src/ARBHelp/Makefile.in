@@ -38,17 +38,12 @@ PROGRAMS = @PACKAGE_HLP_SHORTNAME@
 	DlgPageDecode.cpp \
 	DlgPageEncode.cpp \
 	DlgPageEncodeFiles.cpp \
-	DlgPageEncodeFinish.cpp \
-	../Win/ImageHelper.cpp \
-	../Win/ImageManager.cpp \
-	../Win/LanguageManager.cpp \
-	../Win/SetupApp.cpp \
-	../Win/Widgets.cpp
+	DlgPageEncodeFinish.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon/ -larbcommon -L$(TOPBUILDDIR)/src/ARB/ -larb
+@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibARBWin -larbwin
 
 ##########
 # Precompiled headers
