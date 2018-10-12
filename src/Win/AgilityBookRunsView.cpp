@@ -66,7 +66,6 @@
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "ImageHelper.h"
-#include "ListData.h"
 #include "MainFrm.h"
 #include "PointsData.h"
 #include "Print.h"
@@ -74,6 +73,7 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/Element.h"
+#include "LibARBWin/ListData.h"
 #include <algorithm>
 #include <wx/config.h>
 

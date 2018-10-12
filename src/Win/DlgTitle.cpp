@@ -34,12 +34,12 @@
 
 #include "AgilityBook.h"
 #include "ComboBoxVenue.h"
-#include "RichEditCtrl2.h"
-#include "Validators.h"
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogTitle.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/RichEditCtrl2.h"
+#include "LibARBWin/Validators.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 

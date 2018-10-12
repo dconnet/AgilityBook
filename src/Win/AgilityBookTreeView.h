@@ -30,9 +30,9 @@
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "IconList.h"
-#include "Widgets.h"
 
 #include "ARB/ARBBase.h"
+#include "LibARBWin/Widgets.h"
 #include <vector>
 #include <wx/docview.h>
 class CAgilityBookTreeData;

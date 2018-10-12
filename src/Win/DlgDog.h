@@ -38,12 +38,12 @@
  * 2003-08-18 Added a deceased date for a dog.
  */
 
-#include "ColumnOrder.h"
 #include "ARB/ARBDogExistingPoints.h"
 #include "ARB/ARBDogRegNum.h"
 #include "ARB/ARBDogTitle.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/ARBTypes.h"
+#include "LibARBWin/ColumnOrder.h"
 #include <wx/listctrl.h>
 class CAgilityBookDoc;
 class CDlgDogDataTitle;

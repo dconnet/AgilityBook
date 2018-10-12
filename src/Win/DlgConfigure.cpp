@@ -43,12 +43,12 @@
 #include "DlgName.h"
 #include "ImageHelper.h"
 #include "Globals.h"
-#include "Widgets.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

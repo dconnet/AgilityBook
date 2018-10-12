@@ -26,10 +26,11 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookPanels.h"
-#include "DPI.h"
 #include "ImageHelper.h"
 #include "MainFrm.h"
 #include "RegItems.h"
+
+#include "LibARBWin/DPI.h"
 #include <wx/choicebk.h>
 #include <wx/config.h>
 #include <wx/listbook.h>

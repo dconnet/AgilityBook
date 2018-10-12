@@ -19,14 +19,8 @@
     <Filter Include="Include\Platform">
       <UniqueIdentifier>{23b8e184-6287-4af6-b7bb-6e1a9d26da89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ARB">
-      <UniqueIdentifier>{3d1151f5-cba9-4e60-9e19-663f5abe1c84}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Win\LanguageManager.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\TestARB\ConfigHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -176,9 +170,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Win\LanguageManager.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\TestARB\ConfigHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>

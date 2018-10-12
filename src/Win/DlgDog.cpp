@@ -63,14 +63,14 @@
 #include "DlgTitle.h"
 #include "FilterOptions.h"
 #include "ImageHelper.h"
-#include "ListCtrl.h"
-#include "ListData.h"
-#include "Validators.h"
-#include <wx/datectrl.h>
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDog.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ListData.h"
+#include "LibARBWin/Validators.h"
+#include <wx/datectrl.h>
 #include <wx/dateevt.h>
 #include <wx/notebook.h>
 

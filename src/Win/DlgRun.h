@@ -48,9 +48,9 @@
  * 2004-02-14 Added Table-in-YPS flag.
  */
 
-#include "ColumnOrder.h"
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/ColumnOrder.h"
 #include <wx/listctrl.h>
 class CAgilityBookDoc;
 class CDlgDogDivData;

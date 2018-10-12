@@ -25,13 +25,13 @@
 
 #include "AgilityBook.h"
 #include "DlgConfigOtherPoints.h"
-#include "RichEditCtrl2.h"
-#include "Validators.h"
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBConfigOtherPoints.h"
 #include "ARB/ARBDogRunOtherPoints.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/RichEditCtrl2.h"
+#include "LibARBWin/Validators.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

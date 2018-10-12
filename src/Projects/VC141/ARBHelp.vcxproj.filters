@@ -24,24 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Win\DPI.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\ImageHelper.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\ImageManager.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\LanguageManager.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\SetupApp.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\Widgets.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ARBHelp\ARBHelp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,25 +57,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Win\DPI.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\ImageHelper.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\ImageManager.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\LanguageManager.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\SetupApp.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\SetupAppARB.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\Widgets.h">
       <Filter>ARB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ARBHelp\ARBHelp.h">

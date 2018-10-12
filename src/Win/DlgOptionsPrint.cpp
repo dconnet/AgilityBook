@@ -22,8 +22,9 @@
 #include "DlgOptionsPrint.h"
 
 #include "AgilityBook.h"
-#include "Validators.h"
-#include "Widgets.h"
+
+#include "LibARBWin/Validators.h"
+#include "LibARBWin/Widgets.h"
 #include <math.h>
 
 #ifdef __WXMSW__

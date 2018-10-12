@@ -22,8 +22,8 @@
 
 #include "DlgPageDecode.h"
 
-#include "../Win/SetupApp.h"
 #include "../Win/SetupAppARB.h"
+#include "LibARBWin/SetupApp.h"
 #include <wx/cmdline.h>
 #include <wx/config.h>
 

@@ -20,11 +20,11 @@
 #include "IconList.h"
 
 #include "AgilityBook.h"
-#include "DPI.h"
 #include "ImageHelper.h"
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogTrial.h"
+#include "LibARBWin/DPI.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

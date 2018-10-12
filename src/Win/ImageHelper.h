@@ -20,48 +20,27 @@
  * 2012-12-29 Created.
  */
 
-#include "ImageManager.h"
+#include "LibARBWin/ImageHelperBase.h"
+#include "LibARBWin/ImageManager.h"
 
-// Helper functions called from IImageManagerCallback interfaces
 
-namespace ImageHelper
+class CImageHelper
 {
-	extern wxSize GetScaledSize(wxWindow* pWindow, int logical);
-	extern wxSize GetScaledSize(wxWindow* pWindow, wxSize const& szLogical);
+public:
+	CImageHelper() {}
 
-	extern wxBitmap GetBitmap(
-			wxWindow* pWindow,
-			const wxArtID& id,
-			const wxArtClient& client = wxART_OTHER,
-			const wxSize& size = wxDefaultSize);
-
-	extern wxIcon GetIcon(
-			wxWindow* pWindow,
-			const wxArtID& id,
-			const wxArtClient& client = wxART_OTHER,
-			const wxSize& size = wxDefaultSize);
-
-	extern wxIcon CreateIconFromBitmap(const wxBitmap& bitmap);
-
-	extern bool DoCreateBitmap(
+	bool DoCreateBitmap(
 			wxWindow* pWindow,
 			const wxArtID& id,
 			const wxArtClient& client,
 			const wxSize& size,
 			wxBitmap& outBmp);
 
-	extern bool DoCreateIconBundle(
+	bool DoCreateIconBundle(
 			wxWindow* pWindow,
 			const wxArtID& id,
 			const wxArtClient& client,
 			wxIconBundle& outIcon);
-
-#if defined(__WINDOWS__)
-	extern void LoadLocalBitmap(
-			wxWindow* pWindow,
-			wchar_t const* const pImageName,
-			wxBitmap& outBmp);
-#endif
 };
 
 
@@ -69,15 +48,6 @@ namespace ImageHelper
 #define ImageMgrApp					wxART_MAKE_ART_ID(ImageMgrApp)
 #define ImageMgrApp48				wxART_MAKE_ART_ID(ImageMgrApp48)
 #define ImageMgrApp256				wxART_MAKE_ART_ID(ImageMgrApp256)
-
-#define ImageMgrBlank				wxART_MAKE_ART_ID(ImageMgrBlank)
-#define ImageMgrChecked				wxART_MAKE_ART_ID(ImageMgrChecked)
-#define ImageMgrUnChecked			wxART_MAKE_ART_ID(ImageMgrUnChecked)
-#define ImageMgrCheck				wxART_MAKE_ART_ID(ImageMgrCheck)
-#define ImageMgrQuestion			wxART_MAKE_ART_ID(ImageMgrQuestion)
-
-#define ImageMgrHeaderDown			wxART_MAKE_ART_ID(ImageMgrHeaderDown)
-#define ImageMgrHeaderUp			wxART_MAKE_ART_ID(ImageMgrHeaderUp)
 
 #define ImageMgrRuns 				wxART_MAKE_ART_ID(ImageMgrRuns)
 #define ImageMgrPoints				wxART_MAKE_ART_ID(ImageMgrPoints)
@@ -135,26 +105,3 @@ namespace ImageHelper
 #define ImageMgrPreview				wxART_MAKE_ART_ID(ImageMgrPreview)
 #define ImageMgrPrint				wxART_MAKE_ART_ID(ImageMgrPrint)
 #define ImageMgrSave				wxART_MAKE_ART_ID(ImageMgrSave)
-
-
-#if defined(__WINDOWS__)
-#define LOAD_BITMAP_PNG(pWindow, name, outBmp)	ImageHelper::LoadLocalBitmap(pWindow, L#name, outBmp)
-#define LOAD_BUNDLE_PNG(pWindow, name, outIcon) \
-	{ \
-		wxBitmap bmp; \
-		ImageHelper::LoadLocalBitmap(pWindow, L#name, bmp); \
-		outIcon.AddIcon(ImageHelper::CreateIconFromBitmap(bmp)); \
-	}
-
-#else
-#if !defined(__WXOSX__)
-// OSX auto-loads @2 images.
-#pragma PRAGMA_FIXME(This is not likely to load the correct image);
-#endif
-#define LOAD_BITMAP_PNG(pWindow, name, outBmp)	outBmp = wxBITMAP_PNG(name)
-#define LOAD_BUNDLE_PNG(pWindow, name, outIcon) \
-	{ \
-		wxBitmap bmp = wxBITMAP_PNG(name); \
-		outIcon.AddIcon(ImageHelper::CreateIconFromBitmap(bmp)); \
-	}
-#endif

@@ -41,13 +41,13 @@
 #include "DlgFind.h"
 #include "DlgTraining.h"
 #include "FilterOptions.h"
-#include "ListData.h"
 #include "MainFrm.h"
 #include "Print.h"
 #include "RegItems.h"
 
 #include "ARB/ARBTraining.h"
 #include "ARBCommon/Element.h"
+#include "LibARBWin/ListData.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__

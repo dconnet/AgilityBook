@@ -28,11 +28,10 @@
 #include "stdafx.h"
 #include "DlgOptionsCalendar.h"
 
-#include "Widgets.h"
-
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Widgets.h"
 #include <wx/colordlg.h>
 #include <wx/valgen.h>
 

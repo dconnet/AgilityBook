@@ -34,13 +34,13 @@
 #include "DlgConfigure.h"
 #include "DlgConfigureData.h"
 #include "DlgName.h"
-#include "ListCtrl.h"
-#include "ListData.h"
-#include "Validators.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfigEvent.h"
 #include "ARB/ARBConfigVenue.h"
+#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ListData.h"
+#include "LibARBWin/Validators.h"
 #include <wx/datectrl.h>
 
 #ifdef __WXMSW__

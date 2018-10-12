@@ -36,12 +36,12 @@
 #include "ComboBoxVenue.h"
 #include "DlgInfoNote.h"
 #include "NoteButton.h"
-#include "RichEditCtrl2.h"
-#include "Validators.h"
 
 #include "ARB/ARBCalendar.h"
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/RichEditCtrl2.h"
+#include "LibARBWin/Validators.h"
 #include <set>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>

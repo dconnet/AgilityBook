@@ -53,7 +53,6 @@
 #include "DlgDog.h"
 #include "DlgFind.h"
 #include "DlgReorder.h"
-#include "DPI.h"
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "ImageHelper.h"
@@ -66,6 +65,7 @@
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DPI.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__

@@ -16,7 +16,10 @@
  *
  * Revision History
  * 2010-04-11 Separated from AgilityBookOptions.cpp.
+ * 2018-10-11 Separated common items into LibARBWin
  */
+
+#include "LibARBWin/RegItemsBase.h"
 
 
 //Calendar
@@ -357,17 +360,6 @@ inline wxString CFG_SELECTION_DOG(int n)
 //	Obsolete(2.0.0.0) DW ShowSplash
 //	Obsolete(2.0.0.0) ST Splash
 
-//Sorting:
-//	ST [key]Order (ColumnOrder.cpp)
-inline wxString CFG_SORTING_ORDER(wxString const& item)
-{
-	return L"Sorting/" + item + L"Order";
-}
-//	ST [key]Sort (ColumnOrder.cpp)
-inline wxString CFG_SORTING_SORT(wxString const& item)
-{
-	return L"Sorting/" + item + L"Sort";
-}
 //	DW Calendar (AgilityBookCalendarListView.cpp)
 #define CFG_SORTING_CALENDAR			L"Sorting/Calendar"
 //	DW Runs (AgilityBookRunsView.cpp)

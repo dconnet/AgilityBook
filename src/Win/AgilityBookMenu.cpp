@@ -27,7 +27,8 @@
 #include "AgilityBookMenu.h"
 
 #include "ImageHelper.h"
-#include "MenuHelper.h"
+
+#include "LibARBWin/MenuHelper.h"
 #include <wx/artprov.h>
 #include <wx/config.h>
 

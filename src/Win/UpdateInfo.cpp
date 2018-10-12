@@ -100,8 +100,6 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ConfigHandler.h"
-#include "DlgProgress.h"
-#include "ReadHttp.h"
 #include "RegItems.h"
 #include "VersionNumber.h"
 #include <fstream>
@@ -110,6 +108,8 @@
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
+#include "LibARBWin/DlgProgress.h"
+#include "LibARBWin/ReadHttp.h"
 #include "LibArchive/LibArchive.h"
 #include <wx/config.h>
 #include <wx/filedlg.h>

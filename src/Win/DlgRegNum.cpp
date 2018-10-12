@@ -24,12 +24,12 @@
 
 #include "AgilityBook.h"
 #include "ComboBoxVenue.h"
-#include "Validators.h"
-#include "Widgets.h"
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogRegNum.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Validators.h"
+#include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

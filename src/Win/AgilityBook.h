@@ -21,10 +21,12 @@
  */
 
 #include "AgilityBookMenu.h"
-#include "ARBCommon/ARBUtils.h"
+#include "ImageHelper.h"
 #include "Localization.h"
-#include "SetupApp.h"
 #include "UpdateInfo.h"
+
+#include "ARBCommon/ARBUtils.h"
+#include "LibARBWin/SetupApp.h"
 class CAgilityBookDoc;
 class CAgilityBookDocManager;
 class CHtmlEasyPrinting;
@@ -86,6 +88,7 @@ protected:
 
 	bool m_bShutdownSocket;
 	CLocalization m_Localization;
+	CImageHelper m_imageHelper;
 	CUpdateInfo m_UpdateInfo;
 	CAgilityBookDocManager* m_manager;
 	wxPrintDialogData* m_printDialogData;

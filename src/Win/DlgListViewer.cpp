@@ -34,7 +34,6 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ClipBoard.h"
-#include "ListCtrl.h"
 #include "FilterOptions.h"
 
 #include "ARB/ARBConfig.h"
@@ -43,6 +42,7 @@
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/ListCtrl.h"
 #include <algorithm>
 
 #ifdef __WXMSW__

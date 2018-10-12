@@ -78,16 +78,7 @@
     <ClCompile Include="..\..\Win\CalendarSiteUSDAA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\CheckLink.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\CheckTreeCtrl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\ClipBoard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\ColumnOrder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\ComboBoxQ.cpp">
@@ -106,9 +97,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\DlgAssignColumns.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\DlgAuthenticate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\DlgCalendar.cpp">
@@ -222,9 +210,6 @@
     <ClCompile Include="..\..\Win\DlgPointsViewSort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\DlgProgress.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\DlgQueryDetail.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -255,9 +240,6 @@
     <ClCompile Include="..\..\Win\DlgTrial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\DPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\FilterOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -270,25 +252,10 @@
     <ClCompile Include="..\..\Win\ImageHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\ImageManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\LanguageManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\ListCtrl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\ListData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\Localization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\MainFrm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\MenuHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\NamedColumns.cpp">
@@ -303,37 +270,16 @@
     <ClCompile Include="..\..\Win\Print.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\ReadHttp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\RichEditCtrl2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\SetupApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\SpreadSheet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\TabView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\TaskbarProgress.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\UpdateInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\Validators.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\ValidatorsQ.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\Widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\Wizard.cpp">
@@ -395,16 +341,7 @@
     <ClInclude Include="..\..\Win\CalendarSiteUSDAA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\CheckLink.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\CheckTreeCtrl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\ClipBoard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\ColumnOrder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\ComboBoxQ.h">
@@ -423,9 +360,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\DlgAssignColumns.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\DlgAuthenticate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\DlgCalendar.h">
@@ -539,9 +473,6 @@
     <ClInclude Include="..\..\Win\DlgPointsViewSort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\DlgProgress.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\DlgQueryDetail.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -572,9 +503,6 @@
     <ClInclude Include="..\..\Win\DlgTrial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\DPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\FilterOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -587,25 +515,10 @@
     <ClInclude Include="..\..\Win\ImageHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\ImageManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\LanguageManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\ListCtrl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\ListData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\Localization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\MainFrm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\MenuHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\NamedColumns.h">
@@ -617,22 +530,10 @@
     <ClInclude Include="..\..\Win\PointsData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\ReadHttp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\RegItems.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\RichEditCtrl2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\SetupApp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\SetupAppARB.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\SpreadSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\stdafx.h">
@@ -641,19 +542,10 @@
     <ClInclude Include="..\..\Win\TabView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\TaskbarProgress.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\UpdateInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\Validators.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\ValidatorsQ.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\Widgets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\Wizard.h">

@@ -26,10 +26,10 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ComboBoxVenue.h"
-#include "Validators.h"
 
 #include "ARB/ARBDogClub.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Validators.h"
 #include <set>
 
 #ifdef __WXMSW__

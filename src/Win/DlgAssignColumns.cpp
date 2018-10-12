@@ -96,9 +96,9 @@ Training Log:
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "ListCtrl.h"
-#include "Validators.h"
 
+#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/Validators.h"
 #include <wx/listctrl.h>
 
 #ifdef __WXMSW__

@@ -121,12 +121,6 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MultiProcessorCompilation>
     </ClCompile>
-    <ClCompile Include="..\..\Win\DPI.cpp" />
-    <ClCompile Include="..\..\Win\ImageHelper.cpp" />
-    <ClCompile Include="..\..\Win\ImageManager.cpp" />
-    <ClCompile Include="..\..\Win\LanguageManager.cpp" />
-    <ClCompile Include="..\..\Win\SetupApp.cpp" />
-    <ClCompile Include="..\..\Win\Widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Win\res\AgilityBook.ico" />
@@ -151,13 +145,7 @@
     <ClInclude Include="..\..\Include\ICalendarSite.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
-    <ClInclude Include="..\..\Win\DPI.h" />
-    <ClInclude Include="..\..\Win\ImageHelper.h" />
-    <ClInclude Include="..\..\Win\ImageManager.h" />
-    <ClInclude Include="..\..\Win\LanguageManager.h" />
-    <ClInclude Include="..\..\Win\SetupApp.h" />
     <ClInclude Include="..\..\Win\SetupAppARB.h" />
-    <ClInclude Include="..\..\Win\Widgets.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="LibwxARB.vcxproj">
@@ -165,6 +153,9 @@
     </ProjectReference>
     <ProjectReference Include="LibwxARBCommon.vcxproj">
       <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
+    </ProjectReference>
+    <ProjectReference Include="LibwxARBWin.vcxproj">
+      <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
