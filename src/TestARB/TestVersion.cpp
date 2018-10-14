@@ -185,4 +185,31 @@ TEST_CASE("VersionNum")
 			REQUIRE(v.Valid());
 		}
 	}
+
+
+	SECTION("Parse0")
+	{
+		if (!g_bMicroTest)
+		{
+			CVersionNum v(L"0.0.0.0");
+			REQUIRE_FALSE(v.Valid());
+
+			v.Parse(L"1.2.3.4");
+			REQUIRE(v.Valid());
+			CVersionNum::VERSION_NUMBER ver;
+			v.GetVersion(ver);
+			REQUIRE(ver[0] == 1);
+			REQUIRE(ver[1] == 2);
+			REQUIRE(ver[2] == 3);
+			REQUIRE(ver[3] == 4);
+
+			v.Parse(L"0.0.0.0");
+			REQUIRE_FALSE(v.Valid());
+			v.GetVersion(ver);
+			REQUIRE(ver[0] == 0);
+			REQUIRE(ver[1] == 0);
+			REQUIRE(ver[2] == 0);
+			REQUIRE(ver[3] == 0);
+		}
+	}
 }

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-10-14 Treat a 0.0.0.0 vernum as not valid, even when specifically set.
  * 2018-08-15 Changed VERSION_NUMBER to std::array
  * 2012-07-28 Crap, v2.3.6 was hosed. Fix version parsing.
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
@@ -39,11 +40,13 @@ bool CVersionNum::Parse(std::wstring const& inVer)
 	clear();
 	std::vector<std::wstring> fields;
 	if (4 == BreakLine(L'.', inVer, fields))
-		m_Valid = true;
-	m_Version = { 0, 0, 0, 0 };
-	for (size_t i = 0; i < fields.size(); ++i)
 	{
-		m_Version[i] = static_cast<unsigned short>(StringUtil::ToCLong(fields[i]));
+		VERSION_NUMBER version = { 0, 0, 0, 0 };
+		for (size_t i = 0; i < fields.size(); ++i)
+		{
+			version[i] = static_cast<unsigned short>(StringUtil::ToCLong(fields[i]));
+		}
+		Assign(version[0], version[1], version[2], version[3]);
 	}
 	return m_Valid;
 }
