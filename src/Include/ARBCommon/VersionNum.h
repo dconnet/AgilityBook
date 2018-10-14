@@ -75,7 +75,7 @@ public:
 			unsigned short inDot,
 			unsigned short inBuild)
 	{
-		m_Valid = true;
+		m_Valid = (inMajor > 0 || inMinor > 0 || inDot > 0 || inBuild > 0);
 		m_Version = { inMajor, inMinor, inDot, inBuild };
 	}
 

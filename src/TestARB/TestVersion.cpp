@@ -146,23 +146,43 @@ TEST_CASE("VersionNum")
 
 	SECTION("VerEq")
 	{
-		CVersionNum v1, v2;
-		v1.Assign(1, 2, 3, 4);
-		v2.Assign(1, 2, 3, 4);
-		REQUIRE(v1 == v2);
+		if (!g_bMicroTest)
+		{
+			CVersionNum v1, v2;
+			v1.Assign(1, 2, 3, 4);
+			v2.Assign(1, 2, 3, 4);
+			REQUIRE(v1 == v2);
+		}
 	}
 
 
 	SECTION("VerComp")
 	{
-		CVersionNum v1, v2;
-		v1.Assign(1, 2, 3, 4);
-		v2.Assign(2, 1, 3, 4);
-		REQUIRE(v1 < v2);
-		REQUIRE(v2 > v1);
+		if (!g_bMicroTest)
+		{
+			CVersionNum v1, v2;
+			v1.Assign(1, 2, 3, 4);
+			v2.Assign(2, 1, 3, 4);
+			REQUIRE(v1 < v2);
+			REQUIRE(v2 > v1);
 
-		v2.Assign(1, 2, 3, 5);
-		REQUIRE(v1 < v2);
-		REQUIRE(v2 > v1);
+			v2.Assign(1, 2, 3, 5);
+			REQUIRE(v1 < v2);
+			REQUIRE(v2 > v1);
+		}
+	}
+
+
+	SECTION("VerAssign")
+	{
+		if (!g_bMicroTest)
+		{
+			CVersionNum v(L"1.2.3.4");
+			REQUIRE(v.Valid());
+			v.Assign(0, 0, 0, 0);
+			REQUIRE_FALSE(v.Valid());
+			v.Assign(0, 0, 0, 1);
+			REQUIRE(v.Valid());
+		}
 	}
 }
