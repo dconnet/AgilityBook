@@ -21,9 +21,12 @@
 #include "stdafx.h"
 #include "LibARBWin/MenuHelper.h"
 
+#include "ARBCommon/ARBUtils.h"
 #include "LibARBWin/ImageHelperBase.h"
+#include "LibARBWin/RegItemsBase.h"
 #include <set>
 #include <wx/artprov.h>
+#include <wx/config.h>
 #include <wx/frame.h>
 
 #if defined(__WXMSW__)
@@ -203,7 +206,10 @@ void CMenuHelper::LoadAccelerators(
 	for (size_t index = 0; index < numDefAccelItems; ++index)
 		m_accelItems.push_back(defAccelItems[index]);
 
+	{
+		CConfigPathHelper config(CFG_KEY_ACCELERATORS);
 #pragma PRAGMA_TODO(Load custom accelerators)
+	}
 
 #ifdef _DEBUG
 	// Sanity checking
@@ -222,7 +228,15 @@ void CMenuHelper::LoadAccelerators(
 
 void CMenuHelper::SaveAccelerators()
 {
+	CConfigPathHelper config(CFG_KEY_ACCELERATORS);
+
+	// Clear existing
+
+	// Save
+	for (auto iter = m_accelItems.begin(); iter != m_accelItems.end(); ++iter)
+	{
 #pragma PRAGMA_TODO(Save custom accelerators)
+	}
 }
 
 

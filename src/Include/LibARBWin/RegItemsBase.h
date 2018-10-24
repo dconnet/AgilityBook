@@ -19,13 +19,21 @@
 
 
 //Sorting:
+#define CFG_KEY_SORTING					L"Sorting"
 //	ST [key]Order (ColumnOrder.cpp)
 inline wxString CFG_SORTING_ORDER(wxString const& item)
 {
-	return L"Sorting/" + item + L"Order";
+	wxString order;
+	order << CFG_KEY_SORTING L"/" << item << L"Order";
+	return order;
 }
 //	ST [key]Sort (ColumnOrder.cpp)
 inline wxString CFG_SORTING_SORT(wxString const& item)
 {
-	return L"Sorting/" + item + L"Sort";
+	wxString order;
+	order << CFG_KEY_SORTING L"/" << item << L"Sort";
+	return order;
 }
+
+#define CFG_KEY_ACCELERATORS	L"Accelerators"
+#define CFG_KEY_RECENT_FILES	L"Recent File List" // Named this way for compatibility with existing MFC app

@@ -47,6 +47,7 @@
 
 #include "ARB/ARBDebug.h"
 #include "ARBCommon/ARBMisc.h"
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/DPI.h"
@@ -317,9 +318,10 @@ bool CAgilityBookApp::OnInit()
 
 	m_manager = new CAgilityBookDocManager(CAgilityBookOptions::GetMRUFileCount());
 	m_manager->SetMaxDocsOpen(1);
-	wxConfig::Get()->SetPath(L"Recent File List"); // Named this way for compatibility with existing MFC app
-	m_manager->FileHistoryLoad(*wxConfig::Get());
-	wxConfig::Get()->SetPath(L"..");
+	{
+		CConfigPathHelper config(CFG_KEY_RECENT_FILES);
+		m_manager->FileHistoryLoad(*wxConfig::Get());
+	}
 
 	(void)new wxDocTemplate(m_manager, L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
@@ -484,9 +486,10 @@ bool CAgilityBookApp::OnInit()
 
 int CAgilityBookApp::OnExit()
 {
-	wxConfig::Get()->SetPath(L"Recent File List");
-	m_manager->FileHistorySave(*wxConfig::Get());
-	wxConfig::Get()->SetPath(L"..");
+	{
+		CConfigPathHelper config(CFG_KEY_RECENT_FILES);
+		m_manager->FileHistorySave(*wxConfig::Get());
+	}
 	delete m_manager;
 	m_manager = nullptr;
 	delete m_printDialogData;

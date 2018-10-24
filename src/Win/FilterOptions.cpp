@@ -316,7 +316,7 @@ void CFilterOptions::Save()
 	{
 		for (int n = nFilters; n < m_nFilters; ++n)
 		{
-			wxConfig::Get()->DeleteGroup(CFG_KEY_FILTER(n, false));
+			wxConfig::Get()->DeleteGroup(CFG_KEY_FILTER_N(n, false));
 		}
 	}
 	int index = 0;
@@ -809,7 +809,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 		, bViewAllNames(true)
 		, nameFilter()
 {
-	wxString section = CFG_KEY_FILTER(index);
+	wxString section = CFG_KEY_FILTER_N(index);
 
 	filterName = wxConfig::Get()->Read(section + CFG_FILTER_ITEM_NAME, filterName);
 	calView.m_Filter = static_cast<unsigned short>(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_CAL, static_cast<long>(calView.m_Filter)));
@@ -889,7 +889,7 @@ bool CFilterOptions::CFilterOptionData::operator==(
 
 bool CFilterOptions::CFilterOptionData::Save(int index)
 {
-	wxString section = CFG_KEY_FILTER(index);
+	wxString section = CFG_KEY_FILTER_N(index);
 
 	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_NAME, filterName);
 	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_CAL, static_cast<long>(calView.m_Filter));

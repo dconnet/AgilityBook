@@ -10,6 +10,20 @@
  * License: See License.txt
  */
 
+
+/**
+ * Helper to reset wxConfig path
+ */
+class CConfigPathHelper
+{
+	wxString m_path;
+
+public:
+	CConfigPathHelper(wxString const& key);
+	~CConfigPathHelper();
+};
+
+/////////////////////////////////////////////////////////////////////////////
 // Debugging performance aid
 
 #ifndef USE_STACKTRACER

@@ -19,6 +19,7 @@
 #include "VersionNumber.h"
 
 #include "ARBCommon/ARBMisc.h"
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include <wx/config.h>
@@ -118,8 +119,7 @@ size_t ARBDebug::DumpRegistryGroup(
 {
 	size_t added = 0; // Added to outData
 
-	if (!inGroup.empty())
-		wxConfig::Get()->SetPath(inGroup);
+	CConfigPathHelper config(inGroup);
 
 	wxString str;
 	long dummy;
@@ -185,9 +185,6 @@ size_t ARBDebug::DumpRegistryGroup(
 			added += DumpRegistryGroup(str, outData, outItems);
 		} while (wxConfig::Get()->GetNextGroup(str, dummy));
 	}
-
-	if (!inGroup.empty())
-		wxConfig::Get()->SetPath(L"..");
 
 	return added;
 }
