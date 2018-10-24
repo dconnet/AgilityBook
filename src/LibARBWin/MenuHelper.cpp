@@ -228,11 +228,11 @@ void CMenuHelper::LoadAccelerators(
 
 void CMenuHelper::SaveAccelerators()
 {
-	CConfigPathHelper config(CFG_KEY_ACCELERATORS);
-
 	// Clear existing
+	wxConfig::Get()->DeleteGroup(CFG_KEY_ACCELERATORS);
 
 	// Save
+	CConfigPathHelper config(CFG_KEY_ACCELERATORS);
 	for (auto iter = m_accelItems.begin(); iter != m_accelItems.end(); ++iter)
 	{
 #pragma PRAGMA_TODO(Save custom accelerators)
