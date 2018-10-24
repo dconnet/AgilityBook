@@ -206,9 +206,18 @@ void CMenuHelper::LoadAccelerators(
 	for (size_t index = 0; index < numDefAccelItems; ++index)
 		m_accelItems.push_back(defAccelItems[index]);
 
+	if (wxConfig::Get()->HasGroup(CFG_KEY_ACCELERATORS))
 	{
 		CConfigPathHelper config(CFG_KEY_ACCELERATORS);
+		wxString entry;
+		long index = 0;
+		if (wxConfig::Get()->GetFirstEntry(entry, index))
+		{
+			do
+			{
 #pragma PRAGMA_TODO(Load custom accelerators)
+			} while (wxConfig::Get()->GetNextEntry(entry, index));
+		}
 	}
 
 #ifdef _DEBUG
