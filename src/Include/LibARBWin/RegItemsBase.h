@@ -36,4 +36,11 @@ inline wxString CFG_SORTING_SORT(wxString const& item)
 }
 
 #define CFG_KEY_ACCELERATORS	L"Accelerators"
+// ST
+#define CFG_ACCEL_KEYCODE		L"KeyCode"
+// ST
+#define CFG_ACCEL_ID			L"id"
+// DW (bitmask for alt/ctrl/shift modifiers)
+#define CFG_ACCEL_MOD			L"mod"
+
 #define CFG_KEY_RECENT_FILES	L"Recent File List" // Named this way for compatibility with existing MFC app

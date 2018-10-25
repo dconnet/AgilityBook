@@ -45,16 +45,18 @@ public:
 
 	struct ItemAccel
 	{
+		wchar_t const* idStr; // Unique string that is stored to avoid using the id (that could change)
 		int id;
 		bool bCtrl;
 		bool bAlt;
 		bool bShift;
-		wchar_t const* keyCode;
+		wchar_t const* keyCode; // If null, this entry is only used for idStr/id mapping
 	};
 
 	CMenuHelper();
 	~CMenuHelper();
 
+	// The default accel list must contain all possible accelerators.
 	void LoadAccelerators(
 			ItemAccel const defAccelItems[],
 			size_t numDefAccelItems);
@@ -142,7 +144,40 @@ private:
 		{
 		}
 	};
-	std::vector<ItemAccel> m_accelItems;
+	struct AccelData
+	{
+		wxString idStr;
+		int id;
+		bool bCtrl;
+		bool bAlt;
+		bool bShift;
+		wxString keyCode;
+
+		AccelData()
+			: idStr()
+			, id(0)
+			, bCtrl(false)
+			, bAlt(false)
+			, bShift(false)
+			, keyCode()
+		{}
+		AccelData(ItemAccel const& accel)
+			: idStr(accel.idStr)
+			, id(accel.id)
+			, bCtrl(accel.bCtrl)
+			, bAlt(accel.bAlt)
+			, bShift(accel.bShift)
+			, keyCode(accel.keyCode)
+		{}
+	};
+
+	long ToBitmask(AccelData const& accel);
+	void FromBitmask(long mask, AccelData& accel);
+	wxString GetAccelString(std::vector<AccelData> const& accelData, int id);
+	int TranslateId(
+			wxString const& idStr,
+			ItemAccel const defAccelItems[], 
+			size_t numDefAccelItems);
 
 	void Menu(
 			wxWindow* pWindow,
@@ -161,4 +196,6 @@ private:
 	bool m_doTranslation;
 	std::vector<MenuHandle> m_MenuData;
 	std::vector<TranslationData> m_ToolbarData;
+	bool m_bModified;
+	std::vector<AccelData> m_accelData;
 };

@@ -34,28 +34,6 @@
 #endif
 
 
-static wxString GetAccelString(std::vector<CMenuHelper::ItemAccel> const& accelItems, int id)
-{
-	wxString str;
-	for (auto iter = accelItems.begin(); iter != accelItems.end(); ++iter)
-	{
-		if ((*iter).id == id)
-		{
-			if ((*iter).bCtrl)
-				str << _("Ctrl+");
-			if ((*iter).bAlt)
-				str << _("Alt+");
-			if ((*iter).bShift)
-				str << _("Shift+");
-			str << (*iter).keyCode;
-			break;
-		}
-	}
-	if (str.empty())
-		return str;
-	return wxString(L"\t") + str;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 CMenuHelper::CMenuHelper()
@@ -64,6 +42,8 @@ CMenuHelper::CMenuHelper()
 	, m_doTranslation(false)
 	, m_MenuData()
 	, m_ToolbarData()
+	, m_bModified(false)
+	, m_accelData()
 {
 }
 
@@ -73,157 +53,49 @@ CMenuHelper::~CMenuHelper()
 }
 
 
-void CMenuHelper::DoMenuItem(
-		wxWindow* pWindow,
-		wxMenu* menu,
-		int id,
-		wxString const& label,
-		wxString const& desc,
-		wxArtID const& artId)
-{
-	DoMenuItem(pWindow, menu, id, label, desc, wxITEM_NORMAL, nullptr, artId);
-}
-
-
-void CMenuHelper::DoMenuItem(
-		wxWindow* pWindow,
-		wxMenu* menu,
-		int id,
-		wxString const& label,
-		wxString const& desc,
-		wxItemKind kind,
-		wxMenu* subMenu,
-		wxArtID const& artId)
-{
-	wxMenuItem* item = new wxMenuItem(menu, id, label + GetAccelString(m_accelItems, id), desc, kind, subMenu);
-	if (!artId.empty() && kind == wxITEM_NORMAL)
-	{
-		wxBitmap bmp = ImageHelper::GetBitmap(pWindow, artId, wxART_MENU);
-		if (bmp.IsOk())
-			item->SetBitmap(bmp);
-	}
-	menu->Append(item);
-}
-
-
-void CMenuHelper::Menu(
-		wxWindow* pWindow,
-		MenuHandle& handle,
-		size_t& index,
-		size_t level,
-		wxMenu* mruMenu,
-		bool& mruAdded,
-		ItemData const items[],
-		size_t numItems)
-{
-	for (++index; index < numItems && level == items[index].menuLevel; ++index)
-	{
-		if (MENU_SEP & items[index].flags)
-			handle.pMenu->AppendSeparator();
-		else if ((MENU_ITEM | MENU_MRU | MENU_HELP) & items[index].flags)
-		{
-			assert(items[index].menu);
-			if (MENU_MRU & items[index].flags)
-			{
-				assert(mruMenu);
-				assert(!mruAdded);
-				mruAdded = true;
-				wxString name;
-				MenuHandle subhandle(mruMenu, static_cast<int>(handle.pMenu->GetMenuItemCount()));
-				if (m_doTranslation)
-				{
-					name = wxGetTranslation(items[index].menu);
-					subhandle.item = items[index].menu;
-				}
-				else
-				{
-					name = items[index].menu;
-				}
-				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
-					name,
-					wxString(),
-					wxITEM_NORMAL,
-					mruMenu,
-					items[index].artId);
-				handle.subMenus.push_back(subhandle);
-			}
-			else if (0 == items[index].id)
-			{
-				size_t idxMenu = index;
-				MenuHandle subhandle(static_cast<int>(handle.pMenu->GetMenuItemCount()));
-				Menu(pWindow, subhandle, index, level + 1, mruMenu, mruAdded, items, numItems);
-				wxString name;
-				if (m_doTranslation)
-				{
-					name = wxGetTranslation(items[idxMenu].menu);
-					subhandle.item = items[idxMenu].menu;
-				}
-				else
-				{
-					name = items[idxMenu].menu;
-				}
-				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
-					name,
-					wxString(),
-					wxITEM_NORMAL,
-					subhandle.pMenu,
-					items[idxMenu].artId);
-				--index;
-				handle.subMenus.push_back(subhandle);
-			}
-			else
-			{
-				wxString name;
-				wxString help;
-				if (m_doTranslation)
-				{
-					name = wxGetTranslation(items[index].menu);
-					help = wxGetTranslation(items[index].help);
-					handle.items.push_back(TranslationData(items[index].id, items[index].menu, items[index].help));
-				}
-				else
-				{
-					name = items[index].menu;
-					help = items[index].help;
-				}
-				DoMenuItem(pWindow, handle.pMenu, items[index].id,
-					name,
-					help,
-					items[index].kind,
-					nullptr,
-					items[index].artId);
-			}
-		}
-	}
-}
-
-
 void CMenuHelper::LoadAccelerators(
 		ItemAccel const defAccelItems[],
 		size_t numDefAccelItems)
 {
-	m_accelItems.clear();
-	for (size_t index = 0; index < numDefAccelItems; ++index)
-		m_accelItems.push_back(defAccelItems[index]);
+	m_accelData.clear();
 
 	if (wxConfig::Get()->HasGroup(CFG_KEY_ACCELERATORS))
 	{
 		CConfigPathHelper config(CFG_KEY_ACCELERATORS);
 		wxString entry;
 		long index = 0;
-		if (wxConfig::Get()->GetFirstEntry(entry, index))
+		if (wxConfig::Get()->GetFirstGroup(entry, index))
 		{
 			do
 			{
-#pragma PRAGMA_TODO(Load custom accelerators)
-			} while (wxConfig::Get()->GetNextEntry(entry, index));
+				CConfigPathHelper configEntry(entry);
+				AccelData accel;
+				accel.idStr = wxConfig::Get()->Read(L"id", wxString());
+				accel.id = TranslateId(accel.idStr, defAccelItems, numDefAccelItems);
+				accel.keyCode = wxConfig::Get()->Read(L"KeyCode", wxString());
+				if (0 != accel.id && !accel.keyCode.empty())
+				{
+					long mask = 0;
+					wxConfig::Get()->Read(L"mod", &mask);
+					FromBitmask(mask, accel);
+					if (std::find_if(m_accelData.begin(), m_accelData.end(), [&accel](AccelData const& arg) {return arg.id == accel.id; }) == m_accelData.end())
+						m_accelData.push_back(accel);
+				}
+			} while (wxConfig::Get()->GetNextGroup(entry, index));
 		}
+	}
+
+	if (m_accelData.empty())
+	{
+		for (size_t index = 0; index < numDefAccelItems; ++index)
+			if (defAccelItems[index].keyCode)
+				m_accelData.push_back(AccelData(defAccelItems[index]));
 	}
 
 #ifdef _DEBUG
 	// Sanity checking
 	std::set<int> ids;
-	for (auto iter = m_accelItems.begin(); iter != m_accelItems.end(); ++iter)
+	for (auto iter = m_accelData.begin(); iter != m_accelData.end(); ++iter)
 	{
 		// Must have a code (assuming valid string for WX)
 		assert((*iter).keyCode);
@@ -237,14 +109,25 @@ void CMenuHelper::LoadAccelerators(
 
 void CMenuHelper::SaveAccelerators()
 {
-	// Clear existing
-	wxConfig::Get()->DeleteGroup(CFG_KEY_ACCELERATORS);
-
-	// Save
-	CConfigPathHelper config(CFG_KEY_ACCELERATORS);
-	for (auto iter = m_accelItems.begin(); iter != m_accelItems.end(); ++iter)
+	if (m_bModified)
 	{
-#pragma PRAGMA_TODO(Save custom accelerators)
+		// Clear existing
+		wxConfig::Get()->DeleteGroup(CFG_KEY_ACCELERATORS);
+
+		CConfigPathHelper config(CFG_KEY_ACCELERATORS);
+
+		// Save
+		int nKey = 1;
+		for (auto iter = m_accelData.begin(); iter != m_accelData.end(); ++iter)
+		{
+			wxString key = wxString::Format(L"Item%d", nKey++);
+			CConfigPathHelper configKey(key);
+			wxConfig::Get()->Write(L"KeyCode", iter->keyCode);
+			wxConfig::Get()->Write(L"id", iter->idStr);
+			wxConfig::Get()->Write(L"mod", ToBitmask(*iter));
+		}
+
+		m_bModified = false;
 	}
 }
 
@@ -371,31 +254,13 @@ void CMenuHelper::CreateMenu(
 }
 
 
-void CMenuHelper::DoSubMenu(wxMenu* parent, MenuHandle const& handle)
-{
-	if (parent)
-	{
-		parent->FindItemByPosition(handle.idx)->SetItemLabel(wxGetTranslation(handle.item.c_str()));
-	}
-	for (std::vector<MenuHandle>::const_iterator data = handle.subMenus.begin(); data != handle.subMenus.end(); ++data)
-	{
-		DoSubMenu(handle.pMenu, *data);
-	}
-	for (std::vector<TranslationData>::const_iterator data = handle.items.begin(); data != handle.items.end(); ++data)
-	{
-		handle.pMenu->SetLabel(data->id, wxGetTranslation(data->name.c_str()) + GetAccelString(m_accelItems, data->id));
-		handle.pMenu->SetHelpString(data->id, wxGetTranslation(data->desc.c_str()));
-	}
-}
-
-
 void CMenuHelper::UpdateMenu()
 {
 	if (m_doTranslation)
 	{
 		for (std::vector<MenuHandle>::iterator i = m_MenuData.begin(); i != m_MenuData.end(); ++i)
 		{
-			m_MenuBar->SetMenuLabel(i->idx, wxGetTranslation(i->item.c_str()) + GetAccelString(m_accelItems, i->idx));
+			m_MenuBar->SetMenuLabel(i->idx, wxGetTranslation(i->item.c_str()) + GetAccelString(m_accelData, i->idx));
 			DoSubMenu(nullptr, *i);
 		}
 
@@ -414,5 +279,213 @@ void CMenuHelper::UpdateMenu()
 				}
 			}
 		}
+	}
+}
+
+
+void CMenuHelper::DoMenuItem(
+		wxWindow* pWindow,
+		wxMenu* menu,
+		int id,
+		wxString const& label,
+		wxString const& desc,
+		wxArtID const& artId)
+{
+	DoMenuItem(pWindow, menu, id, label, desc, wxITEM_NORMAL, nullptr, artId);
+}
+
+
+void CMenuHelper::DoMenuItem(
+		wxWindow* pWindow,
+		wxMenu* menu,
+		int id,
+		wxString const& label,
+		wxString const& desc,
+		wxItemKind kind,
+		wxMenu* subMenu,
+		wxArtID const& artId)
+{
+	wxMenuItem* item = new wxMenuItem(menu, id, label + GetAccelString(m_accelData, id), desc, kind, subMenu);
+	if (!artId.empty() && kind == wxITEM_NORMAL)
+	{
+		wxBitmap bmp = ImageHelper::GetBitmap(pWindow, artId, wxART_MENU);
+		if (bmp.IsOk())
+			item->SetBitmap(bmp);
+	}
+	menu->Append(item);
+}
+
+
+long CMenuHelper::ToBitmask(AccelData const& accel)
+{
+	long modifiers = 0;
+	if (accel.bAlt)
+		modifiers |= 0x1;
+	if (accel.bCtrl)
+		modifiers |= 0x2;
+	if (accel.bShift)
+		modifiers |= 0x4;
+	return modifiers;
+}
+
+
+void CMenuHelper::FromBitmask(long mask, AccelData& accel)
+{
+	accel.bAlt = (mask & 0x1);
+	accel.bCtrl = (mask & 0x2);
+	accel.bShift = (mask & 0x4);
+}
+
+
+wxString CMenuHelper::GetAccelString(std::vector<AccelData> const& accelItems, int id)
+{
+	wxString str;
+	for (auto iter = accelItems.begin(); iter != accelItems.end(); ++iter)
+	{
+		if ((*iter).id == id)
+		{
+			if ((*iter).bCtrl)
+				str << _("Ctrl+");
+			if ((*iter).bAlt)
+				str << _("Alt+");
+			if ((*iter).bShift)
+				str << _("Shift+");
+			str << (*iter).keyCode;
+			break;
+		}
+	}
+	if (str.empty())
+		return str;
+	return wxString(L"\t") + str;
+}
+
+
+int CMenuHelper::TranslateId(
+		wxString const& idStr,
+		ItemAccel const defAccelItems[],
+		size_t numDefAccelItems)
+{
+	int id = 0;
+	if (!idStr.empty())
+	{
+		for (size_t n = 0; n < numDefAccelItems; ++n)
+		{
+			if (idStr == defAccelItems[n].idStr)
+			{
+				id = defAccelItems[n].id;
+				break;
+			}
+		}
+	}
+	return id;
+}
+
+
+void CMenuHelper::Menu(
+		wxWindow* pWindow,
+		MenuHandle& handle,
+		size_t& index,
+		size_t level,
+		wxMenu* mruMenu,
+		bool& mruAdded,
+		ItemData const items[],
+		size_t numItems)
+{
+	for (++index; index < numItems && level == items[index].menuLevel; ++index)
+	{
+		if (MENU_SEP & items[index].flags)
+			handle.pMenu->AppendSeparator();
+		else if ((MENU_ITEM | MENU_MRU | MENU_HELP) & items[index].flags)
+		{
+			assert(items[index].menu);
+			if (MENU_MRU & items[index].flags)
+			{
+				assert(mruMenu);
+				assert(!mruAdded);
+				mruAdded = true;
+				wxString name;
+				MenuHandle subhandle(mruMenu, static_cast<int>(handle.pMenu->GetMenuItemCount()));
+				if (m_doTranslation)
+				{
+					name = wxGetTranslation(items[index].menu);
+					subhandle.item = items[index].menu;
+				}
+				else
+				{
+					name = items[index].menu;
+				}
+				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
+					name,
+					wxString(),
+					wxITEM_NORMAL,
+					mruMenu,
+					items[index].artId);
+				handle.subMenus.push_back(subhandle);
+			}
+			else if (0 == items[index].id)
+			{
+				size_t idxMenu = index;
+				MenuHandle subhandle(static_cast<int>(handle.pMenu->GetMenuItemCount()));
+				Menu(pWindow, subhandle, index, level + 1, mruMenu, mruAdded, items, numItems);
+				wxString name;
+				if (m_doTranslation)
+				{
+					name = wxGetTranslation(items[idxMenu].menu);
+					subhandle.item = items[idxMenu].menu;
+				}
+				else
+				{
+					name = items[idxMenu].menu;
+				}
+				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
+					name,
+					wxString(),
+					wxITEM_NORMAL,
+					subhandle.pMenu,
+					items[idxMenu].artId);
+				--index;
+				handle.subMenus.push_back(subhandle);
+			}
+			else
+			{
+				wxString name;
+				wxString help;
+				if (m_doTranslation)
+				{
+					name = wxGetTranslation(items[index].menu);
+					help = wxGetTranslation(items[index].help);
+					handle.items.push_back(TranslationData(items[index].id, items[index].menu, items[index].help));
+				}
+				else
+				{
+					name = items[index].menu;
+					help = items[index].help;
+				}
+				DoMenuItem(pWindow, handle.pMenu, items[index].id,
+					name,
+					help,
+					items[index].kind,
+					nullptr,
+					items[index].artId);
+			}
+		}
+	}
+}
+
+
+void CMenuHelper::DoSubMenu(wxMenu* parent, MenuHandle const& handle)
+{
+	if (parent)
+	{
+		parent->FindItemByPosition(handle.idx)->SetItemLabel(wxGetTranslation(handle.item.c_str()));
+	}
+	for (std::vector<MenuHandle>::const_iterator data = handle.subMenus.begin(); data != handle.subMenus.end(); ++data)
+	{
+		DoSubMenu(handle.pMenu, *data);
+	}
+	for (std::vector<TranslationData>::const_iterator data = handle.items.begin(); data != handle.items.end(); ++data)
+	{
+		handle.pMenu->SetLabel(data->id, wxGetTranslation(data->name.c_str()) + GetAccelString(m_accelData, data->id));
+		handle.pMenu->SetHelpString(data->id, wxGetTranslation(data->desc.c_str()));
 	}
 }
