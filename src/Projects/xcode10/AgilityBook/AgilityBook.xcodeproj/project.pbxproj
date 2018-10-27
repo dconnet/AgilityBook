@@ -578,6 +578,7 @@
 			children = (
 				E1CE611E17ECB2BF0026B41B /* libARB.a */,
 				E1CE611F17ECB2BF0026B41B /* libARBCommon.a */,
+				E19851CC2170E6AD003E7B92 /* libLibARBWin.a */,
 				E1CE612017ECB2BF0026B41B /* libLibArchive.a */,
 				E1CE612117ECB2BF0026B41B /* libLibTidyHtml.a */,
 				E19B63C5166C096E004DEDA4 /* Source */,
@@ -597,7 +598,6 @@
 		E19B63BE166C096E004DEDA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E19851CC2170E6AD003E7B92 /* libLibARBWin.a */,
 				E19B63BF166C096E004DEDA4 /* Cocoa.framework */,
 				E19B63C1166C096E004DEDA4 /* Other Frameworks */,
 			);
@@ -1324,6 +1324,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty",
 					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,
@@ -1417,6 +1418,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty",
 					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,

@@ -156,10 +156,11 @@
 		E15106431808913A002AC401 = {
 			isa = PBXGroup;
 			children = (
-				E1EE26B41809B3EA002E7A5F /* libLibArchive.a */,
-				E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */,
 				E193AC681809B39E008C6257 /* libARB.a */,
 				E193AC661809B399008C6257 /* libARBCommon.a */,
+				E19851D12170E6FD003E7B92 /* libLibARBWin.a */,
+				E1EE26B41809B3EA002E7A5F /* libLibArchive.a */,
+				E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */,
 				E151065818089169002AC401 /* Source */,
 				E151064D1808913A002AC401 /* Products */,
 				E19851D02170E6FD003E7B92 /* Frameworks */,
@@ -246,7 +247,6 @@
 		E19851D02170E6FD003E7B92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E19851D12170E6FD003E7B92 /* libLibARBWin.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -429,8 +429,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty",
 					"-I$SRCROOT/../../..",
-					"-I$SRCROOT/../../../UnitTest++/src",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.1/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
@@ -523,8 +523,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty",
 					"-I$SRCROOT/../../..",
-					"-I$SRCROOT/../../../UnitTest++/src",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.1/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",

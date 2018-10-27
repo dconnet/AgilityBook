@@ -85,7 +85,7 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/LibArchive -larchive
+@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/3rdParty/LibArchive -larchive
 
 ##########
 # Precompiled headers

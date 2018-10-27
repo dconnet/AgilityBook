@@ -81,6 +81,7 @@
 			children = (
 				E1CE612617ECB2CA0026B41B /* libARB.a */,
 				E1CE612717ECB2CA0026B41B /* libARBCommon.a */,
+				E19851CE2170E6E8003E7B92 /* libLibARBWin.a */,
 				E19B6608166C1640004DEDA4 /* ARBHelp */,
 				E19B6601166C1640004DEDA4 /* Frameworks */,
 				E19B65FF166C1640004DEDA4 /* Products */,
@@ -98,7 +99,6 @@
 		E19B6601166C1640004DEDA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E19851CE2170E6E8003E7B92 /* libLibARBWin.a */,
 				E19B6602166C1640004DEDA4 /* Cocoa.framework */,
 				E19B6604166C1640004DEDA4 /* Other Frameworks */,
 			);

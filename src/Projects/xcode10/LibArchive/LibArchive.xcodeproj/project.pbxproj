@@ -14,10 +14,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E110B4F7177FD00C004071B5 /* LibArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibArchive.h; sourceTree = "<group>"; };
-		E124BBA916BD8F10006FBF2D /* LibArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibArchive.cpp; path = ../../../LibArchive/LibArchive.cpp; sourceTree = "<group>"; };
-		E124BBAD16BD8F10006FBF2D /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../../LibArchive/stdafx.cpp; sourceTree = "<group>"; };
-		E124BBAE16BD8F10006FBF2D /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../LibArchive/stdafx.h; sourceTree = "<group>"; };
+		E110B4F7177FD00C004071B5 /* LibArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibArchive.h; path = ../../3rdParty/LibArchive/LibArchive.h; sourceTree = "<group>"; };
+		E124BBA916BD8F10006FBF2D /* LibArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibArchive.cpp; path = ../../../3rdParty/LibArchive/src/LibArchive.cpp; sourceTree = "<group>"; };
+		E124BBAD16BD8F10006FBF2D /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../../3rdParty/LibArchive/src/stdafx.cpp; sourceTree = "<group>"; };
+		E124BBAE16BD8F10006FBF2D /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../3rdParty/LibArchive/src/stdafx.h; sourceTree = "<group>"; };
 		E161079516BD89D3006B9BC0 /* libLibArchive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibArchive.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -204,6 +204,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.1/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
@@ -259,6 +260,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.1/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
