@@ -76,7 +76,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../LibTidyHtml/tidy/include;../../LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -86,7 +86,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../LibTidyHtml/tidy/include;../../LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -96,7 +96,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../LibTidyHtml/tidy/include;../../LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -105,7 +105,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../LibTidyHtml/tidy/include;../../LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -113,74 +113,74 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\LibTidyHtml\LibTidyHtml.cpp" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\access.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\alloc.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrdict.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\attrs.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\buffio.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\charsets.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\clean.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\config.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\entities.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\fileio.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\gdoc.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\istack.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\language.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\lexer.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\mappedio.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\message.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\messageobj.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\parser.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\pprint.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\sprtf.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\streamio.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tagask.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tags.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tidylib.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\tmbstr.c" />
-    <ClCompile Include="..\..\LibTidyHtml\tidy\src\utf8.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\src\LibTidyHtml.cpp" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\access.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\alloc.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\attrdict.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\attrs.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\buffio.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\charsets.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\clean.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\config.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\entities.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\fileio.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\gdoc.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\istack.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\language.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\lexer.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\mappedio.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\message.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\messageobj.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\parser.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\pprint.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\sprtf.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\streamio.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\tagask.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\tags.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\tidylib.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\tmbstr.c" />
+    <ClCompile Include="..\..\3rdParty\LibTidyHtml\tidy\src\utf8.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Include\LibTidyHtml\LibTidyHtml.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\LibTidyHtml.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
-    <ClInclude Include="..\..\LibTidyHtml\stdafx.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidy.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidybuffio.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidyenum.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\include\tidyplatform.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\access.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrdict.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\attrs.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\charsets.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\clean.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\config.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\entities.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\fileio.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\forward.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\gdoc.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_en.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_en_gb.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_es.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_es_mx.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_fr.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_pt_br.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\language_zh_cn.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\lexer.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\mappedio.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\message.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\messageobj.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\parser.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\pprint.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\sprtf.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\streamio.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\tags.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\tidy-int.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\tmbstr.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\utf8.h" />
-    <ClInclude Include="..\..\LibTidyHtml\tidy\src\version.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\src\stdafx.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\include\tidy.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\include\tidybuffio.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\include\tidyenum.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\include\tidyplatform.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\access.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\attrdict.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\attrs.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\charsets.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\clean.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\config.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\entities.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\fileio.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\forward.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\gdoc.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\language.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\language_en.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\language_en_gb.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\language_es.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\language_es_mx.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\language_fr.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\language_pt_br.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\language_zh_cn.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\lexer.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\mappedio.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\message.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\messageobj.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\parser.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\pprint.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\sprtf.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\streamio.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\tags.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\tidy-int.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\tmbstr.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\utf8.h" />
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\version.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

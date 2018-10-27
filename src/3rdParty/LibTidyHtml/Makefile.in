@@ -1,7 +1,7 @@
 ################################################################################
 # File: Makefile                                                               #
 ################################################################################
-# Makefile for the ARB subdirectory                                            #
+# Makefile for the LibTidyHtml subdirectory                                    #
 ################################################################################
 
 ################################################################################
@@ -23,34 +23,60 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include
+INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(SRCDIR)/src -I$(SRCDIR)/tidy/include -I$(SRCDIR)/tidy/src -DSUPPORT_UTF16_ENCODINGS -DSUPPORT_ASIAN_ENCODINGS -DSUPPORT_ACCESSIBILITY_CHECKS
 
 ##########
 # List of programs and archives to link
 ##########
-ARCHIVES = libarchive
+ARCHIVES = libtidyhtml
 
 ##########
 # Source files for each target
 ##########
-libarchive_SRCS = LibArchive.cpp
+libtidyhtml_SRCS = src/LibTidyHtml.cpp \
+	tidy/src/access.c \
+	tidy/src/alloc.c \
+	tidy/src/attrdict.c \
+	tidy/src/attrs.c \
+	tidy/src/buffio.c \
+	tidy/src/charsets.c \
+	tidy/src/clean.c \
+	tidy/src/config.c \
+	tidy/src/entities.c \
+	tidy/src/fileio.c \
+	tidy/src/gdoc.c \
+	tidy/src/istack.c \
+	tidy/src/language.c \
+	tidy/src/lexer.c \
+	tidy/src/mappedio.c \
+	tidy/src/message.c \
+	tidy/src/messageobj.c \
+	tidy/src/parser.c \
+	tidy/src/pprint.c \
+	tidy/src/sprtf.c \
+	tidy/src/streamio.c \
+	tidy/src/tagask.c \
+	tidy/src/tags.c \
+	tidy/src/tidylib.c \
+	tidy/src/tmbstr.c \
+	tidy/src/utf8.c
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-#archive_LIBS =
+#tidyhtml_LIBS =
 # prog1_LDFLAGS = -L/path/to/extralib
 
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/LibArchive/stdafx.h
+#PRECOMP_HEADER = $(TOPSRCDIR)/src/LibTidyHtml/stdafx.h
 
 
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = libarchive
+#INSTALL_BIN = libtidyhtml
 #INSTALL_MAN = prog1.5
 
 @NAM_RULES@

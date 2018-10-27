@@ -20,8 +20,8 @@
 
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
-#include "tidy/include/tidy.h"
-#include "tidy/include/tidybuffio.h"
+#include "tidy.h"
+#include "tidybuffio.h"
 #include <fstream>
 
 #ifdef __WXMSW__

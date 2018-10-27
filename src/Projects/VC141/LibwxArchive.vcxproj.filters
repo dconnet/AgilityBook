@@ -10,28 +10,25 @@
       <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
     </Filter>
     <Filter Include="Include">
-      <UniqueIdentifier>{44685349-4c38-4855-9a58-3ab6cc606b0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Include\LibArchive">
-      <UniqueIdentifier>{16816342-5452-4ae0-ba60-dfaa1d395309}</UniqueIdentifier>
+      <UniqueIdentifier>{6ab1c24e-7eed-4186-9de5-6016efa9bbed}</UniqueIdentifier>
     </Filter>
     <Filter Include="Include\Platform">
       <UniqueIdentifier>{8f2688f8-f779-4b25-a1da-2ee6ebdfe382}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\LibArchive\LibArchive.cpp">
+    <ClCompile Include="..\..\3rdParty\LibArchive\src\LibArchive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\LibArchive\stdafx.cpp">
+    <ClCompile Include="..\..\3rdParty\LibArchive\src\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\LibArchive\stdafx.h">
+    <ClInclude Include="..\..\3rdParty\LibArchive\src\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\LibArchive\LibArchive.h">
+    <ClInclude Include="..\..\3rdParty\LibArchive\LibArchive.h">
       <Filter>Include\LibArchive</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
