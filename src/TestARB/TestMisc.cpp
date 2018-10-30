@@ -357,7 +357,7 @@ TEST_CASE("Misc")
 
 	SECTION("ConfigPath")
 	{
-		//if (!g_bMicroTest)
+		if (!g_bMicroTest)
 		{
 			wxFileConfig config;
 			auto old = wxConfig::Set(&config);
