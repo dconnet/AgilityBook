@@ -1,6 +1,4 @@
-#ifdef _MSC_VER
 #pragma once
-#endif
 
 /*
  * Copyright (c) David Connet. All Rights Reserved.

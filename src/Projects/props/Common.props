@@ -15,7 +15,7 @@
       <StringPooling>true</StringPooling>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <AdditionalOptions>/Zm202 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm202 /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>

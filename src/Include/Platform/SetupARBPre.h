@@ -1,6 +1,4 @@
-#ifdef _MSC_VER
 #pragma once
-#endif
 
 /*
  * Copyright (c) David Connet. All Rights Reserved.
@@ -46,6 +44,7 @@
 // 1310: VC7.1 http://msdn2.microsoft.com/en-us/library/b0084kay(VS.71).aspx
 // 1400: VC8.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.80%29.aspx
 // 1500: VC9.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.90%29.aspx
+//       VC9.0 _MSC_FULL_VER == 150030729 (Visual Studio 2008, SP1)
 // 1600: VC10.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.100%29.aspx
 // 1700: VC11.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.110%29.aspx
 // 1800: VC12.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.120%29.aspx
@@ -55,6 +54,12 @@
 // > Starting with VS "15" Preview 5, the Visual C++ Team is monotonically updating the value of the built-in preprocessor macro _MSC_VER at every Visual C++ toolset update. 
 //
 // 1910: VC14.1 Visual Studio 2017
+// 1911: VC14.11 Visual Studio 2017 version 15.3
+// 1912: VC14.12 Visual Studio 2017 version 15.5
+// 1913: VC14.13 Visual Studio 2017 version 15.6
+// 1914: VC14.14 Visual Studio 2017 version 15.7
+// 1915: VC14.15 Visual Studio 2017 version 15.8
+//
 // _M_IX86: Defined for x86 (value specifies processor)
 // _M_X64: Defined for x64 processors
 // _M_IA64: Defined for Itanium processor family
@@ -76,42 +81,16 @@
 // WinServer2003sp1, WinXPsp2 WINVER >= 0x0502 _WIN32_WINNT_WS03
 // WinServer2003, WinXP       WINVER >= 0x0501 _WIN32_WINNT_WINXP
 
-#ifndef _WIN32_IE
-	#define _WIN32_IE 0x0600	// Minimum IE, 6.0
-#endif
-
-#if _WIN32_IE < _WIN32_IE_IE55
-	#error pre-IE5.5 is not supported.
-#endif
-
 // Unless overridden, target Win7 by default.
-#ifndef WINVER
-	#define WINVER	0x0601
+#ifndef NTDDI_VERSION
+#define NTDDI_VERSION NTDDI_WIN7
+#define _WIN32_WINNT 0x601
 #endif
+#include <sdkddkver.h>
 
-#ifndef _WIN32_WINNT
-	#define _WIN32_WINNT	WINVER
-#endif
-
-#if WINVER != _WIN32_WINNT
-	#error WINVER is different than _WIN32_WINNT
-#endif
-
-// Win9x not supported
-#ifdef _WIN32_WINDOWS
-	#undef _WIN32_WINDOWS
-#endif
-
-// Error checking
-// VC10: Minimum system: x86 - XP SP2, x64 - XP, Itanium - Server 2003 SP1
-// VC11: Minimum system: Vista (Can target XP using platform toolset 'v110_xp')
-#if _MSC_VER >= 1910
-	#if WINVER < 0x0600
-		#error VC12 minimum version is 0x0600
-	#endif
-	// Note: VC12 now has true variadic macros.
-#else
-	#error Go away. Only VC141+ supported.
+// Error checking (no support for pre-Win7)
+#if WINVER < 0x0600
+	#error Minimum supported OS is Windows 7.
 #endif
 
 #else // _WIN32
