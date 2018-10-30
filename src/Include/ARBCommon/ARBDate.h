@@ -102,9 +102,6 @@ public:
 	{
 	}
 	explicit ARBDate(time_t inTime);
-#if defined(ARB_HAS_32_AND_64_BIT_TIMET)
-	explicit ARBDate(__time64_t inTime);
-#endif
 #if defined(__WXWINDOWS__)
 	ARBDate(wxDateTime const& inTime)
 	{

@@ -650,33 +650,16 @@ bool ARBConfigVenueList::Load(
 }
 
 
-#ifndef ARB_HAS_LAMBDA
-class SortConfigVenue
-{
-public:
-	SortConfigVenue() {}
-	bool operator()(ARBConfigVenuePtr const& one, ARBConfigVenuePtr const& two) const
-	{
-		return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
-	}
-};
-#endif
-
-
 void ARBConfigVenueList::sort()
 {
 	if (2 > size())
 		return;
-#ifdef ARB_HAS_LAMBDA
 	std::stable_sort(begin(), end(),
 		[](ARBConfigVenuePtr const& one, ARBConfigVenuePtr const& two)
 		{
 			return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
 		}
 	);
-#else
-	std::stable_sort(begin(), end(), SortConfigVenue());
-#endif
 }
 
 

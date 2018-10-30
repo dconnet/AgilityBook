@@ -181,33 +181,16 @@ bool ARBConfigPlaceInfoList::Load(
 }
 
 
-#ifndef ARB_HAS_LAMBDA
-class SortConfigPlaceInfo
-{
-public:
-	SortConfigPlaceInfo() {}
-	bool operator()(ARBConfigPlaceInfoPtr const& one, ARBConfigPlaceInfoPtr const& two) const
-	{
-		return one->GetPlace() < two->GetPlace();
-	}
-};
-#endif
-
-
 void ARBConfigPlaceInfoList::sort()
 {
 	if (2 > size())
 		return;
-#ifdef ARB_HAS_LAMBDA
 	std::stable_sort(begin(), end(),
 		[](ARBConfigPlaceInfoPtr const& one, ARBConfigPlaceInfoPtr const& two)
 		{
 			return one->GetPlace() < two->GetPlace();
 		}
 	);
-#else
-	std::stable_sort(begin(), end(), SortConfigPlaceInfo());
-#endif
 }
 
 

@@ -324,22 +324,6 @@ ARBDate::ARBDate(time_t inTime)
 }
 
 
-#if defined(ARB_HAS_32_AND_64_BIT_TIMET)
-ARBDate::ARBDate(__time64_t inTime)
-	: m_Julian(0)
-{
-	if (0 != inTime)
-	{
-		struct tm* pTime = _localtime64(&inTime);
-		m_Julian = GregorianToSdn(
-			pTime->tm_year + 1900,
-			pTime->tm_mon + 1,
-			pTime->tm_mday);
-	}
-}
-#endif
-
-
 void ARBDate::SetToday()
 {
 	time_t t;

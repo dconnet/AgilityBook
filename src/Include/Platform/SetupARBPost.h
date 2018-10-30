@@ -15,6 +15,7 @@
  * before include wx headers causes issues in msvc)
  *
  * Revision History
+ * 2018-10-30 Removed unnecessary macros as we require C++11 mode now.
  * 2015-04-04 Add support for C99 printf formats. (Breaking change)
  * 2014-05-16 Moved HAS macros here.
  * 2013-01-27 Split/moved stdafx.h.
@@ -27,47 +28,7 @@
 #endif
 #include <cstdint>
 
-// If not present, pick up boost's. Now we can use std::tr1::shared_ptr
-#if _MSC_VER < 1700 && (!defined(_HAS_TR1) || !_HAS_TR1)
-#if defined(__WXMAC__) && defined(MAC_OS_X_VERSION_10_9) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_9
-#define __USE_BOOST	0
-#else //mac
-#define __USE_BOOST	1
-#endif
-#else //vc
-#define __USE_BOOST	0
-#endif
-
-#if __USE_BOOST
-// Boost can also be included by tweaking the include path and
-// including <memory>:
-//  boost-root/boost/tr1/tr1
-//  boost-root
-//  other standard library replacements (like STLport)
-//  your regular standard library
-// (see <boost>/doc/html/boost_tr1/usage.html)
-// Including memory.hpp is the preferred method over include path order.
-#include <boost/version.hpp>
-#if BOOST_VERSION < 103800
-#error Minimum supported version of Boost: 1.38.0
-#endif
-#include <boost/tr1/memory.hpp>
-#include <boost/tr1/tuple.hpp>
-#include <boost/make_shared.hpp>
-namespace std
-{
-	using boost::make_shared;
-	using boost::shared_ptr;
-	using boost::weak_ptr;
-	using boost::dynamic_pointer_cast;
-	using tr1::tuple;
-	using tr1::get;
-};
-
-#else
 #include <tuple>
-
-#endif
 
 #include <assert.h>
 
@@ -79,23 +40,12 @@ namespace std
 #define arbT(x)	x
 #endif
 
-#if !(defined(_MSC_VER) && _MSC_VER >= 1400)
+#if !defined(_MSC_VER)
 #define _countof(buf) (sizeof(buf) / sizeof(buf[0]))
 #endif
 
 
 // Compiler configuration
-
-// ARB_HAS_32_AND_64_BIT_TIMET
-// This define means the compiler has 2 time_ts
-// time_t: 32bits
-// __time64_t: 64bits
-#if _MSC_VER >= 1300 && _MSC_VER < 1400
-// VC6: time_t is 32bits
-// VC7: time_t is 32bits, and __time64_t is 64
-// VC8+: time_t is 64bit
-#define ARB_HAS_32_AND_64_BIT_TIMET
-#endif
 
 // ARB_HAS_SECURE_LOCALTIME
 //  _localtime64_s(struct tm*, time_t*)
@@ -151,20 +101,6 @@ namespace std
 //  Supports ofstream(wchar_t*) (MS does, xcode 4.5 doesn't)
 #ifdef _MSC_VER
 #define ARB_HAS_OSTREAM_WCHAR
-#endif
-
-// ARB_HAS_LAMBDA
-//  Supports lambda functions
-#if (defined(_MSC_VER) && _MSC_VER >= 1600) || (defined(MAC_OS_X_VERSION_10_9) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_9)
-#define ARB_HAS_LAMBDA
-#endif
-
-// ARB_HAS_NULLPTR
-//  nullptr support (see SetupARBPost.h for setting wx-based platforms)
-#if (defined(_MSC_VER) && _MSC_VER >= 1600) || (defined(MAC_OS_X_VERSION_10_9) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_9)
-#define ARB_HAS_NULLPTR
-#else
-#define nullptr NULL
 #endif
 
 // Copied from WinUser.h for Win8.1 DPI per-monitor support

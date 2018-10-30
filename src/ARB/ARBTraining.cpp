@@ -201,33 +201,16 @@ bool ARBTrainingList::Load(
 }
 
 
-#ifndef ARB_HAS_LAMBDA
-class SortTraining
-{
-public:
-	SortTraining() {}
-	bool operator()(ARBTrainingPtr const& one, ARBTrainingPtr const& two) const
-	{
-		return one->GetDate() < two->GetDate();
-	}
-};
-#endif
-
-
 void ARBTrainingList::sort()
 {
 	if (2 > size())
 		return;
-#ifdef ARB_HAS_LAMBDA
 	std::stable_sort(begin(), end(),
 		[](ARBTrainingPtr const& one, ARBTrainingPtr const& two)
 		{
 			return one->GetDate() < two->GetDate();
 		}
 	);
-#else
-	std::stable_sort(begin(), end(), SortTraining());
-#endif
 }
 
 

@@ -219,33 +219,16 @@ bool ARBDogRegNumList::Load(
 }
 
 
-#ifndef ARB_HAS_LAMBDA
-class SortRegNum
-{
-public:
-	SortRegNum() {}
-	bool operator()(ARBDogRegNumPtr const& one, ARBDogRegNumPtr const& two) const
-	{
-		return StringUtil::CompareNoCase(one->GetVenue(), two->GetVenue()) < 0;
-	}
-};
-#endif
-
-
 void ARBDogRegNumList::sort()
 {
 	if (2 > size())
 		return;
-#ifdef ARB_HAS_LAMBDA
 	std::stable_sort(begin(), end(),
 		[](ARBDogRegNumPtr const& one, ARBDogRegNumPtr const& two)
 		{
 			return StringUtil::CompareNoCase(one->GetVenue(), two->GetVenue()) < 0;
 		}
 	);
-#else
-	std::stable_sort(begin(), end(), SortRegNum());
-#endif
 }
 
 

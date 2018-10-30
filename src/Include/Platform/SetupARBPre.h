@@ -106,7 +106,6 @@
 
 #endif // _WIN32
 
-
 // These are needed in order to generate a decent pragma message
 #define STRING2(x) #x
 #define STRING(x) STRING2(x)
@@ -120,6 +119,22 @@
 	private: \
 		cls(cls const&); \
 		cls& operator=(cls const&);
+
+
+// MSVC Note: you must pass "/Zc:__cplusplus" in VS2017 so the macro gets set
+// to the proper value. Without that (as of 15.8.8), it is set to 199711L.
+// As of 15.8.8, MS defines __cplusplus (when /Z option is used):
+// Defaults to C++14 201402L
+// /std:c++14        201402L
+// /std:c++17        201703L
+// /std:c++latest    201704L
+// Without /Z option (or with it disabled):
+//                   199711L
+
+#if !defined(__cplusplus) || __cplusplus < 201103
+#pragma message(FILE_LINE "ERROR: __cplusplus is defined as " STRING(__cplusplus))
+#error Compiler must support C++11
+#endif
 
 
 // Compiler configuration (moved to SetupARBPost.h)
