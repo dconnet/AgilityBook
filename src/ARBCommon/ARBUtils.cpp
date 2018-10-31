@@ -4,6 +4,15 @@
  * License: See License.txt
  */
 
+/**
+ * @file
+ * @brief Global functions
+ * @author David Connet
+ *
+ * Revision History
+ * 2018-10-30 Moved some utils from ARBWin.
+ */
+
 #include "stdafx.h"
 #include "ARBCommon/ARBUtils.h"
 
@@ -32,4 +41,72 @@ CConfigPathHelper::CConfigPathHelper(wxString const& key)
 CConfigPathHelper::~CConfigPathHelper()
 {
 	wxConfig::Get()->SetPath(m_path);
+}
+
+
+bool CreateBackupFile(
+		wxString const& inFilename,
+		int nBackups)
+{
+	bool bChanged = false;
+	if (0 < nBackups)
+	{
+		// First find a hole.
+		int nHole = -1;
+		int i;
+		for (i = 1; i <= nBackups; ++i)
+		{
+			wxString backup = wxString::Format(L"%s.bck%d", inFilename.c_str(), i);
+			if (!wxFile::Exists(backup))
+			{
+				nHole = i;
+				break;
+			}
+		}
+		if (-1 == nHole)
+			nHole = nBackups;
+		// Then shift all the files into the hole.
+		for (i = nHole; i > 1; --i)
+		{
+			wxString backup = wxString::Format(L"%s.bck%d", inFilename.c_str(), i);
+			if (wxFile::Exists(backup))
+				wxRemoveFile(backup);
+			wxString filename = wxString::Format(L"%s.bck%d", inFilename.c_str(), i-1);
+			wxRenameFile(filename, backup);
+			bChanged = true;
+		}
+		// File may not exist if doing a 'save as'
+		if (wxFile::Exists(inFilename))
+		{
+			bChanged = true;
+			wxString backup = inFilename + L".bck1";
+			wxCopyFile(inFilename, backup, false);
+		}
+	}
+	return bChanged;
+}
+
+
+bool GetFileTimes(
+		wxFileName const& filename,
+		wxDateTime* dtAccess,
+		wxDateTime* dtMod,
+		wxDateTime* dtCreate)
+{
+#if defined(__WXMSW__)
+	// Using wx to get the times on network files is really slow.
+	// I suspect it's the win32 CreateFile/GetFileTime apis.
+	struct __stat64 s;
+	if (0 != _tstat64(filename.GetFullPath().wx_str(), &s))
+		return false;
+	if (dtAccess)
+		*dtAccess = wxDateTime(s.st_atime);
+	if (dtMod)
+		*dtMod = wxDateTime(s.st_mtime);
+	if (dtCreate)
+		*dtCreate = wxDateTime(s.st_ctime);
+	return true;
+#else
+	return filename.GetTimes(dtAccess, dtMod, dtCreate);
+#endif
 }
