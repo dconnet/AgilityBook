@@ -9,6 +9,7 @@
 # run via the post-build. So we pad a blank in the quotes and strip it here.
 #
 # Revision History
+# 2018-11-16 Added ARM64 support.
 # 2016-06-10 Convert to Python3
 # 2014-11-19 DAT file is now embedded on Windows. Don't generate file here.
 # 2011-01-22 Allow 32bit to run on 64bit.
@@ -57,7 +58,7 @@ def main():
 	targetname = str.strip(sys.argv[3])
 	platform = sys.argv[4]
 
-	if not "Win32" == platform and not "x64" == platform and not "Mac" == platform:
+	if not "Win32" == platform and not "x64" == platform and not "ARM64" == platform and not "Mac" == platform:
 		print('Unknown platform:', platform)
 		return 1
 
@@ -83,6 +84,14 @@ def main():
 			return RunCommand(cmd, 0)
 		# 64bit on Wow64 (32bit cmd shell spawned from msdev)
 		elif os.getenv('PROCESSOR_ARCHITEW6432', '') == "AMD64":
+			cmd = [os.path.join(executableDir, targetname + '.exe')]
+			return RunCommand(cmd, 0)
+		else:
+			print('WARNING: Unable to run ' + platform + ' binary on ' + os.environ['PROCESSOR_ARCHITECTURE'])
+			return 0
+	
+	elif "ARM64" == platform:
+		if os.getenv('PROCESSOR_ARCHITECTURE', '') == "ARM64":
 			cmd = [os.path.join(executableDir, targetname + '.exe')]
 			return RunCommand(cmd, 0)
 		else:

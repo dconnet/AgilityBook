@@ -28,9 +28,6 @@
     <ClInclude Include="..\..\3rdParty\LibArchive\src\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdParty\LibArchive\LibArchive.h">
-      <Filter>Include\LibArchive</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
@@ -48,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\Platform\SetupWX.h">
       <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\LibArchive\LibArchive.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

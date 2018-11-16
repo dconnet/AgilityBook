@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2018-11-16 Added ARM64 support.
 # 2018-10-06 Dropping support for pre VS2017 (and XP).
 # 2018-01-27 Fix vcvarsall now changing directory.
 # 2017-09-19 Rename vc15 to vc141, fix GetCompilerPaths tuple name
@@ -59,7 +60,6 @@ import win32con
 tmpfile = 'tmpcomp' + os.environ['USERDOMAIN'] + '.bat'
 
 compileIt = True
-hasPrefix = True
 useStatic = True
 useUnicode = True
 
@@ -97,16 +97,43 @@ def GetVSDir(version):
 	return vsdir
 
 
-def GetX64Target(vcBase):
-	target = 'x86_amd64'
-
+# Return vcvarsall target
+def GetTarget(vcBase, bIs64Bit, bIsARM):
 	# 64bit on 64bit
+	b64On64 = False
 	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
 		# Note: We used to check for the existence of <vcBase>\VC\bin\amd64.
 		# VS2017 moved that directory. Just assume that if we're compiling
 		# for 64bit on 64bit that the user installed that. With current VS,
 		# that's just done - not like older versions where it was a choice.
-		target = 'amd64'
+		b64On64 = True
+
+	target = ''
+
+	if bIs64Bit and bIsARM:
+		if b64On64:
+			target = 'amd64_arm64'
+		else:
+			target = 'x86_arm64'
+
+	elif bIs64Bit and not bIsARM:
+		if b64On64:
+			target = 'amd64'
+		else:
+			target = 'x86_amd64'
+
+	elif not bIs64Bit and bIsARM:
+		if b64On64:
+			target = 'amd64_arm'
+		else:
+			target = 'x86_arm'
+
+	elif not bIs64Bit and not bIsARM:
+		if b64On64:
+			target = 'amd64_x86'
+		else:
+			target = 'x86'
+
 	return target
 
 
@@ -127,7 +154,7 @@ def GetCompilerPaths(c):
 		# [version] : full Windows 10 SDK number (e.g. 10.0.10240.0) or "8.1" to use the Windows 8.1 SDK.
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = 'x86'
+		target = GetTarget(baseDir, False, False)
 		# Can target specific SDKs
 		#extraargs = ' 10.0.14393.0'
 		platformDir = 'vc141'
@@ -136,9 +163,16 @@ def GetCompilerPaths(c):
 	elif c == 'vc141x64':
 		baseDir = GetVSDir("15.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetX64Target(baseDir)
+		target = GetTarget(baseDir, True, False)
 		platformDir = 'vc141'
 		platform = 'x64'
+
+	elif c == 'vc141arm64':
+		baseDir = GetVSDir("15.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, True, True)
+		platformDir = 'vc141'
+		platform = 'ARM64'
 
 	else:
 		print('ERROR: Unknown target: ' + c)
@@ -173,40 +207,8 @@ def AddCompiler(compilers, c):
 	return True
 
 
-def getversion(file):
-	numParts = 4
-	ver = '0'
-	ver2 = '0'
-	for i in range(1, numParts):
-		ver = ver + '.0'
-		ver2 = ver2 + '_0'
-	resStr = [
-		'#define wxMAJOR_VERSION',
-		'#define wxMINOR_VERSION',
-		'#define wxRELEASE_NUMBER',
-		'#define wxSUBRELEASE_NUMBER'
-		]
-	found = 0;
-	version = ['0', '0', '0', '0']
-	res = open(file, 'r')
-	while (1):
-		line = res.readline()
-		if line:
-			line = line.strip()
-			for i in range(0, 4):
-				pos = line.find(resStr[i])
-				if 0 == pos:
-					found = found + 1
-					version[i] = line[pos+len(resStr[i]):].strip()
-			if found == 4:
-				break
-		else:
-			break
-	return version
-
-
 def main():
-	global compileIt, hasPrefix, useStatic, useUnicode
+	global compileIt, useStatic, useUnicode
 
 	wxwin = ''
 	samples = set()
@@ -262,18 +264,6 @@ def main():
 		print('ERROR: ' + os.environ['WXWIN'] + ' doesn\'t exist')
 		return 1
 
-	wxInclude = os.environ['WXWIN'] + r'\include\wx\version.h'
-	if not os.access(wxInclude, os.F_OK):
-		print('ERROR: ' + wxInclude + ' doesn\'t exist')
-		return 1
-	version = getversion(wxInclude)
-	if version[0] == '2' and version[1] == '8':
-		hasPrefix = False
-
-	x64Target = 'x64'
-	if not hasPrefix:
-		x64Target = 'amd64'
-
 	for c in args:
 		if not AddCompiler(compilers, c):
 			print('Usage:', __doc__)
@@ -313,15 +303,14 @@ def main():
 		resetColor = False
 
 		# Note: Look into using COMPILER_VERSION instead of COMPILER_PREFIX
-		if hasPrefix:
-			cfg = ' COMPILER_PREFIX=' + platformDir
-		else:
-			cfg = ' CFG=_' + platformDir
+		cfg = ' COMPILER_PREFIX=' + platformDir
 
 		setenv_rel = 'call ' + vcvarsall
 		cppflags = common_cppflags
 		if platform == 'x64':
-			target_cpu = ' TARGET_CPU=' + x64Target
+			target_cpu = ' TARGET_CPU=x64'
+		elif platform == 'ARM64':
+			target_cpu = ' TARGET_CPU=ARM64'
 
 		build_rel = ''
 		build_dbg = ''
@@ -335,10 +324,7 @@ def main():
 		# Note: Setting DEBUG_FLAG here sets wxDEBUG_LEVEL during the library
 		# compile but has no effect on users of the library - make sure
 		# wx/msw/setup.h is set. (This is not 'configure'!)
-		if hasPrefix:
-			build_rel += ' DEBUG_INFO=0'
-		else:
-			build_dbg += ' DEBUG_INFO=1'
+		build_rel += ' DEBUG_INFO=0'
 		build_flags = ' UNICODE='
 		if useUnicode:
 			build_flags += '1'
