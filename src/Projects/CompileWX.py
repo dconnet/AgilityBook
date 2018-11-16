@@ -45,7 +45,7 @@
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
 	-r config: config: release/debug
-	compiler: vc141, vc141x64
+	compiler: vc141, vc141x64, vc141arm64
 """
 
 import getopt
