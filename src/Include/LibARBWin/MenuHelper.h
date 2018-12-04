@@ -50,7 +50,7 @@ public:
 		bool bCtrl;
 		bool bAlt;
 		bool bShift;
-		wchar_t const* keyCode; // If null, this entry is only used for idStr/id mapping
+		int keyCode; // wxKeyCode: If 0, this entry is only used for idStr/id mapping
 	};
 
 	CMenuHelper();
@@ -151,7 +151,7 @@ private:
 		bool bCtrl;
 		bool bAlt;
 		bool bShift;
-		wxString keyCode;
+		int keyCode;
 
 		AccelData()
 			: idStr()

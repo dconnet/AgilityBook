@@ -33,6 +33,113 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// See wxMenuItem::SetItemLabel() for set of special keys
+static struct
+{
+	int wxCode;
+	const wchar_t* special;
+} s_codeMapping[] = {
+	{WXK_F1, L"F1"},
+	{WXK_F2, L"F2"},
+	{WXK_F3, L"F3"},
+	{WXK_F4, L"F4"},
+	{WXK_F5, L"F5"},
+	{WXK_F6, L"F6"},
+	{WXK_F7, L"F7"},
+	{WXK_F8, L"F8"},
+	{WXK_F9, L"F9"},
+	{WXK_F10, L"F10"},
+	{WXK_F11, L"F11"},
+	{WXK_F12, L"F12"},
+	{WXK_DELETE, L"Del"},
+	{WXK_BACK, L"Back"},
+	{WXK_INSERT, L"Ins"},
+	{WXK_RETURN, L"Enter"},
+	{WXK_PAGEUP, L"PgUp"},
+	{WXK_PAGEDOWN, L"PgDn"},
+	{WXK_LEFT, L"Left"},
+	{WXK_RIGHT, L"Right"},
+	{WXK_UP, L"Up"},
+	{WXK_DOWN, L"Down"},
+	{WXK_HOME, L"Home"},
+	{WXK_END, L"End"},
+	{WXK_SPACE, L"Space"},
+	{WXK_TAB, L"Tab"},
+	{WXK_ESCAPE, L"Esc"},
+	{WXK_CANCEL, L"Cancel"},
+	{WXK_CLEAR, L"Clear"},
+	{WXK_MENU, L"Menu"},
+	{WXK_PAUSE, L"Pause"},
+	{WXK_CAPITAL, L"Capital"},
+	{WXK_SELECT, L"Select"},
+	{WXK_PRINT, L"Print"},
+	{WXK_EXECUTE, L"Execute"},
+	{WXK_SNAPSHOT, L"Snapshot"},
+	{WXK_HELP, L"Help"},
+	{WXK_ADD, L"Add"},
+	{WXK_SEPARATOR, L"Separator"},
+	{WXK_SUBTRACT, L"Subtract"},
+	{WXK_DECIMAL, L"Decimal"},
+	{WXK_DIVIDE, L"Divide"},
+	{WXK_NUMLOCK, L"Num_lock"},
+	{WXK_SCROLL, L"Scroll_lock"},
+	{WXK_NUMPAD_SPACE, L"KP_Space"},
+	{WXK_NUMPAD_TAB, L"KP_Tab"},
+	{WXK_NUMPAD_ENTER, L"KP_Enter"},
+	{WXK_NUMPAD_HOME, L"KP_Home"},
+	{WXK_NUMPAD_LEFT, L"KP_Left"},
+	{WXK_NUMPAD_UP, L"KP_Up"},
+	{WXK_NUMPAD_RIGHT, L"KP_Right"},
+	{WXK_NUMPAD_DOWN, L"KP_Down"},
+	{WXK_NUMPAD_PAGEUP, L"KP_PageUp"},
+	{WXK_NUMPAD_PAGEDOWN, L"KP_PageDown"},
+	{WXK_NUMPAD_PAGEUP, L"KP_Prior"},
+	{WXK_NUMPAD_PAGEDOWN, L"KP_Next"},
+	{WXK_NUMPAD_END, L"KP_End"},
+	{WXK_NUMPAD_BEGIN, L"KP_Begin"},
+	{WXK_NUMPAD_INSERT, L"KP_Insert"},
+	{WXK_NUMPAD_DELETE, L"KP_Delete"},
+	{WXK_NUMPAD_EQUAL, L"KP_Equal"},
+	{WXK_NUMPAD_MULTIPLY, L"KP_Multiply"},
+	{WXK_NUMPAD_ADD, L"KP_Add"},
+	{WXK_NUMPAD_SEPARATOR, L"KP_Separator"},
+	{WXK_NUMPAD_SUBTRACT, L"KP_Subtract"},
+	{WXK_NUMPAD_DECIMAL, L"KP_Decimal"},
+	{WXK_NUMPAD_DIVIDE, L"KP_Divide"},
+	{WXK_WINDOWS_LEFT, L"Windows_Left"},
+	{WXK_WINDOWS_RIGHT, L"Windows_Right"},
+	{WXK_WINDOWS_MENU, L"Windows_Menu"},
+	{WXK_NUMPAD0, L"KP_0"},
+	{WXK_NUMPAD1, L"KP_1"},
+	{WXK_NUMPAD2, L"KP_2"},
+	{WXK_NUMPAD3, L"KP_3"},
+	{WXK_NUMPAD4, L"KP_4"},
+	{WXK_NUMPAD5, L"KP_5"},
+	{WXK_NUMPAD6, L"KP_6"},
+	{WXK_NUMPAD7, L"KP_7"},
+	{WXK_NUMPAD8, L"KP_8"},
+	{WXK_NUMPAD9, L"KP_9"},
+};
+
+static int SpecialToCode(wxString const& special)
+{
+	for (auto item : s_codeMapping)
+	{
+		if (special == item.special)
+			return item.wxCode;
+	}
+	return 0;
+}
+
+static const wchar_t* CodeToSpecial(int code)
+{
+	for (auto item : s_codeMapping)
+	{
+		if (code == item.wxCode)
+			return item.special;
+	}
+	return nullptr;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -72,8 +179,8 @@ void CMenuHelper::LoadAccelerators(
 				AccelData accel;
 				accel.idStr = wxConfig::Get()->Read(L"id", wxString());
 				accel.id = TranslateId(accel.idStr, defAccelItems, numDefAccelItems);
-				accel.keyCode = wxConfig::Get()->Read(L"KeyCode", wxString());
-				if (0 != accel.id && !accel.keyCode.empty())
+				accel.keyCode = SpecialToCode(wxConfig::Get()->Read(L"KeyCode", wxString()));
+				if (0 != accel.id && accel.keyCode)
 				{
 					long mask = 0;
 					wxConfig::Get()->Read(L"mod", &mask);
@@ -99,6 +206,8 @@ void CMenuHelper::LoadAccelerators(
 	{
 		// Must have a code (assuming valid string for WX)
 		assert((*iter).keyCode);
+		// Check that we know how to translate wxKeyCode to string
+		assert(!GetAccelString(m_accelData, (*iter).id).empty());
 		// Only list id once
 		assert(ids.find((*iter).id) == ids.end());
 		ids.insert((*iter).id);
@@ -122,7 +231,8 @@ void CMenuHelper::SaveAccelerators()
 		{
 			wxString key = wxString::Format(L"Item%d", nKey++);
 			CConfigPathHelper configKey(key);
-			wxConfig::Get()->Write(L"KeyCode", iter->keyCode);
+			assert(CodeToSpecial(iter->keyCode));
+			wxConfig::Get()->Write(L"KeyCode", CodeToSpecial(iter->keyCode));
 			wxConfig::Get()->Write(L"id", iter->idStr);
 			wxConfig::Get()->Write(L"mod", ToBitmask(*iter));
 		}
@@ -206,6 +316,28 @@ void CMenuHelper::CreateMenu(
 		bool doTranslation,
 		wxMenu* mruMenu)
 {
+	// Load accelerators first. Not all of these are necessarily in the main menu.
+	// This ensures all accelerators are registered.
+	if (m_accelData.size() > 0)
+	{
+		wxAcceleratorEntry* entries = new wxAcceleratorEntry[m_accelData.size()];
+		for (size_t n = 0; n < m_accelData.size(); ++n)
+		{
+			int flags = wxACCEL_NORMAL;
+			if (m_accelData[n].bAlt)
+				flags |= wxACCEL_ALT;
+			if (m_accelData[n].bCtrl)
+				flags |= wxACCEL_CTRL;
+			if (m_accelData[n].bShift)
+				flags |= wxACCEL_SHIFT;
+			entries[n].Set(flags, m_accelData[n].keyCode , m_accelData[n].id);
+		}
+		wxAcceleratorTable* accel = new wxAcceleratorTable(int(m_accelData.size()), entries);
+		pFrame->SetAcceleratorTable(*accel);
+		delete accel;
+		delete[] entries;
+	}
+
 	CreateMenu(pFrame, menuItems, numMenuItems, doTranslation, mruMenu);
 
 	if (0 < numMenuItems && 0 < numToolbarItems)
@@ -350,7 +482,17 @@ wxString CMenuHelper::GetAccelString(std::vector<AccelData> const& accelItems, i
 				str << _("Alt+");
 			if ((*iter).bShift)
 				str << _("Shift+");
-			str << (*iter).keyCode;
+			if (32 <= (*iter).keyCode && (*iter).keyCode < 127)
+				str << wxString::Format(L"%c", (*iter).keyCode);
+			else
+			{
+				const wchar_t* special = CodeToSpecial((*iter).keyCode);
+				assert(special);
+				if (special)
+					str << special;
+				else
+					str << L"?";
+			}
 			break;
 		}
 	}
