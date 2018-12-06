@@ -17,7 +17,6 @@
  */
 
 #include "stdafx.h"
-#include "Platform/SetupMessages.h"
 #include "DlgDigest.h"
 
 #include "../Win/SetupAppARB.h"

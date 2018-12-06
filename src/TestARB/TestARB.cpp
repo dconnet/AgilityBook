@@ -20,7 +20,6 @@
  */
 
 #include "stdafx.h"
-#include "Platform/SetupMessages.h"
 #define CATCH_CONFIG_RUNNER
 #include "TestARB.h"
 
