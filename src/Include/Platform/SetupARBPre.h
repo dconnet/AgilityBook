@@ -115,11 +115,6 @@
 #define PRAGMA_TODO(x) message( FILE_LINE "TODO: " #x )
 #define PRAGMA_FIXME(x) message( FILE_LINE "FIXME: " #x )
 
-#define DECLARE_NO_COPY_IMPLEMENTED(cls) \
-	private: \
-		cls(cls const&); \
-		cls& operator=(cls const&);
-
 
 // MSVC Note: you must pass "/Zc:__cplusplus" in VS2017 so the macro gets set
 // to the proper value. Without that (as of 15.8.8), it is set to 199711L.
@@ -134,6 +129,19 @@
 #if !defined(__cplusplus) || __cplusplus < 201103
 #pragma message(FILE_LINE "ERROR: __cplusplus is defined as " STRING(__cplusplus))
 #error Compiler must support C++11
+#endif
+
+
+#if __cplusplus >= 199711
+#define DECLARE_NO_COPY_IMPLEMENTED(cls) \
+	private: \
+		cls(cls const&) = delete; \
+		cls& operator=(cls const&) = delete;
+#else
+#define DECLARE_NO_COPY_IMPLEMENTED(cls) \
+	private: \
+		cls(cls const&); \
+		cls& operator=(cls const&);
 #endif
 
 

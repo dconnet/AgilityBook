@@ -130,9 +130,8 @@ private:
 	}
 	int m_CurLang;
 #endif
-private:
-	CLangManager(CLangManager const&);
-	CLangManager& operator=(CLangManager const&);
+
+	DECLARE_NO_COPY_IMPLEMENTED(CLangManager);
 };
 static CLangManager* g_LangMgr = nullptr;
 

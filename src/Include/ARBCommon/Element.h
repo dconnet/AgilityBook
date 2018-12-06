@@ -124,8 +124,7 @@ class ElementNode : public Element
 private:
 	ElementNode();
 	ElementNode(std::wstring const& inName);
-	ElementNode(ElementNode const&); // Not implemented
-	ElementNode& operator=(ElementNode const&); // Not implemented
+	DECLARE_NO_COPY_IMPLEMENTED(ElementNode);
 
 public:
 	static ElementNodePtr New();
@@ -463,8 +462,7 @@ class ElementText : public Element
 private:
 	ElementText();
 	ElementText(std::wstring const& inText);
-	ElementText(ElementText const&); // Not implemented
-	ElementText& operator=(ElementText const&); // Not implemented
+	DECLARE_NO_COPY_IMPLEMENTED(ElementText);
 
 public:
 	static ElementTextPtr New();

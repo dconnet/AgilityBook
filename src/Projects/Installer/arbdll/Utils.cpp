@@ -106,8 +106,8 @@ public:
 
 	HANDLE& m_Handle;
 private:
-	CHandle(CHandle const&);
-	CHandle& operator=(CHandle const&);
+	CHandle(CHandle const&) = delete;
+	CHandle& operator=(CHandle const&) = delete;
 };
 
 

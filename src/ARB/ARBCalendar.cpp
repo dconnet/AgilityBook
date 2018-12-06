@@ -141,9 +141,7 @@ private:
 
 	std::ostream& m_ioStream;
 	int m_Version;
-	// Not implemented
-	ARBiCal(ARBiCal const& rhs);
-	ARBiCal& operator=(ARBiCal const& rhs);
+	DECLARE_NO_COPY_IMPLEMENTED(ARBiCal);
 };
 
 

@@ -106,10 +106,8 @@ private:
 
 class CalSiteData
 {
-private:
 	// Copy semantics don't work well with our cleanup code!
-	CalSiteData(CalSiteData const&);
-	CalSiteData& operator=(CalSiteData const&);
+	DECLARE_NO_COPY_IMPLEMENTED(CalSiteData);
 public:
 	CalSiteData(ICalendarSite* pSite);
 	~CalSiteData();

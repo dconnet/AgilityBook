@@ -284,11 +284,6 @@ public:
 		return std::wstring();
 	}
 
-// Intentionally not implemented!
-private:
-	ARBAgilityRecordBook(ARBAgilityRecordBook const&);
-	ARBAgilityRecordBook& operator=(ARBAgilityRecordBook const&);
-
 private:
 	ARBCalendarList m_Calendar;
 	ARBTrainingList m_Training;
@@ -296,4 +291,6 @@ private:
 	ARBInfo m_Info;
 	ARBDogList m_Dogs;
 	mutable std::vector<std::wstring> m_FileInfo;
+
+	DECLARE_NO_COPY_IMPLEMENTED(ARBAgilityRecordBook);
 };

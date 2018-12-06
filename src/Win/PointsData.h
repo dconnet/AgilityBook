@@ -82,7 +82,7 @@ class OtherPtInfo
 {
 #if _MSC_VER >= 1400
 private:
-	OtherPtInfo(); // Not implemented, needed for <list>
+	OtherPtInfo() = delete; // Not implemented, needed for <list>
 #endif
 public:
 	OtherPtInfo(
