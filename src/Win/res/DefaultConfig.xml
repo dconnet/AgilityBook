@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2018-08-07 Configuration version 59.
+2018-12-07 Configuration version 59.
            Cleaned up comments in AKC Std/JWW.
+           Added lifetime points to NADAC extreme games.
 2018-04-07 Configuration version 58.
            Added NADAC Barrelers
 2017-12-31 File version 14.5, tweaked T+F titling points.
@@ -188,7 +189,7 @@ Revision History:
            Added new Config/Action: DeleteTitle
 -->
 
-  <Configuration version="58">
+  <Configuration version="59">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -3695,60 +3696,76 @@ Was called Wild Card briefly.</Desc>
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Hoopers" ShortName="ExHoopers">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Gaters" ShortName="ExGaters">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Barrel Racing" ShortName="ExBarrel">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Beginners Agility">
