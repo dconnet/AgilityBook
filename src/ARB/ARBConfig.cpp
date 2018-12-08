@@ -196,6 +196,11 @@ bool ARBConfig::Load(
 			// This was moved here in version 3.
 			LoadOtherPoints(element, inVersion, ioCallback);
 		}
+		else
+		{
+			// This can happen when editing DefaultConfig.xml
+			assert(!"Unexpected element");
+		}
 	}
 	m_Venues.sort();
 	return true;
