@@ -4,9 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2018-12-07 Configuration version 59.
+2018-12-08 Configuration version 59.
            Cleaned up comments in AKC Std/JWW.
            Added lifetime points to NADAC extreme games.
+           Fix ASCA ACE Senior Dog title abbreviations.
 2018-04-07 Configuration version 58.
            Added NADAC Barrelers
 2017-12-31 File version 14.5, tweaked T+F titling points.
@@ -355,6 +356,33 @@ Revision History:
     <Action Config="55" Div="Standard" OldName="Excellent B" NewName="Master" Venue="CKC" Verb="RenameLevel" />
     <Action Config="55" Div="Selected" OldName="Excellent A" NewName="Excellent" Venue="CKC" Verb="RenameLevel" />
     <Action Config="55" Div="Selected" OldName="Excellent B" NewName="Master" Venue="CKC" Verb="RenameLevel" />
+    <Action Config="59" OldName="RVA-N" NewName="RSDA-N" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-N-OP" NewName="RSDA-N-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-N-SP" NewName="RSDA-N-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-O" NewName="RSDA-O" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-O-OP" NewName="RSDA-O-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-O-SP" NewName="RSDA-O-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-E" NewName="RSDA-E" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-E-OP" NewName="RSDA-E-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-E-SP" NewName="RSDA-E-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-N" NewName="JSDA-N" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-N-OP" NewName="JSDA-N-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-N-SP" NewName="JSDA-N-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-O" NewName="JSDA-O" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-O-OP" NewName="JSDA-O-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-O-SP" NewName="JSDA-O-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-E" NewName="JSDA-E" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-E-OP" NewName="JSDA-E-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-E-SP" NewName="JSDA-E-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-N" NewName="GSDA-N" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-N-OP" NewName="GSDA-N-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-N-SP" NewName="GSDA-N-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-O" NewName="GSDA-O" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-O-OP" NewName="GSDA-O-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-O-SP" NewName="GSDA-O-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-E" NewName="GSDA-E" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-E-OP" NewName="GSDA-E-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-E-SP" NewName="GSDA-E-SP" Venue="ASCA" Verb="RenameTitle" />
 
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <LifetimeNames/>
@@ -982,33 +1010,33 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Elite Jumpers Superior Performance" Name="JSA-E-SP">JSA-E plus 200 Points</Titles>
       <Titles LongName="Elite Gamblers Superior Performance" Name="GSA-E-SP">GSA-E plus 200 Points</Titles>
       <Titles LongName="Agility Competitor Extraordinaire" Name="ACE" Prefix="y" Sep="h" StartAt="1" Style="r">R*A-E plus 200 pts, G*A-E plus 100 pts, J*A-E plus 100 pts</Titles>
-      <Titles LongName="Novice Regular" Name="RVA-N">30 Points</Titles>
-      <Titles LongName="Novice Jumpers" Name="JVA-N">20 Points</Titles>
-      <Titles LongName="Novice Gamblers" Name="GVA-N">20 Points</Titles>
-      <Titles LongName="Novice Regular Outstanding Performance" Name="RVA-N-OP">RVA-N plus 100 Points</Titles>
-      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JVA-N-OP">JVA-N plus 50 Points</Titles>
-      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GVA-N-OP">GVA-N plus 50 Points</Titles>
-      <Titles LongName="Novice Regular Superior Performance" Name="RVA-N-SP">RVA-N plus 200 Points</Titles>
-      <Titles LongName="Novice Jumpers Superior Performance" Name="JVA-N-SP">JVA-N plus 100 Points</Titles>
-      <Titles LongName="Novice Gamblers Superior Performance" Name="GVA-N-SP">GVA-N plus 100 Points</Titles>
-      <Titles LongName="Open Regular" Name="RVA-O">30 Points</Titles>
-      <Titles LongName="Open Jumpers" Name="JVA-O">20 Points</Titles>
-      <Titles LongName="Open Gamblers" Name="GVA-O">20 Points</Titles>
-      <Titles LongName="Open Regular Outstanding Performance" Name="RVA-O-OP">RVA-O plus 100 Points</Titles>
-      <Titles LongName="Open Jumpers Outstanding Performance" Name="JVA-O-OP">JVA-O plus 50 Points</Titles>
-      <Titles LongName="Open Gamblers Outstanding Performance" Name="GVA-O-OP">GVA-O plus 50 Points</Titles>
-      <Titles LongName="Open Regular Superior Performance" Name="RVA-O-SP">RVA-O plus 200 Points</Titles>
-      <Titles LongName="Open Jumpers Superior Performance" Name="JVA-O-SP">JVA-O plus 100 Points</Titles>
-      <Titles LongName="Open Gamblers Superior Performance" Name="GVA-O-SP">GVA-O plus 100 Points</Titles>
-      <Titles LongName="Elite Regular" Name="RVA-E">30 Points</Titles>
-      <Titles LongName="Elite Jumpers" Name="JVA-E">20 Points</Titles>
-      <Titles LongName="Elite Gamblers" Name="GVA-E">20 Points</Titles>
-      <Titles LongName="Elite Regular Outstanding Performance" Name="RVA-E-OP">RVA-E plus 200 Points</Titles>
-      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JVA-E-OP">JVA-E plus 100 Points</Titles>
-      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GVA-E-OP">GVA-E plus 100 Points</Titles>
-      <Titles LongName="Elite Regular Superior Performance" Name="RVA-E-SP">RVA-E plus 400 Points</Titles>
-      <Titles LongName="Elite Jumpers Superior Performance" Name="JVA-E-SP">JVA-E plus 200 Points</Titles>
-      <Titles LongName="Elite Gamblers Superior Performance" Name="GVA-E-SP">GVA-E plus 200 Points</Titles>
+      <Titles LongName="Novice Regular" Name="RSDA-N">30 Points</Titles>
+      <Titles LongName="Novice Jumpers" Name="JSDA-N">20 Points</Titles>
+      <Titles LongName="Novice Gamblers" Name="GSDA-N">20 Points</Titles>
+      <Titles LongName="Novice Regular Outstanding Performance" Name="RSDA-N-OP">RSDA-N plus 100 Points</Titles>
+      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JSDA-N-OP">JSDA-N plus 50 Points</Titles>
+      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GSDA-N-OP">GSDA-N plus 50 Points</Titles>
+      <Titles LongName="Novice Regular Superior Performance" Name="RSDA-N-SP">RSDA-N plus 200 Points</Titles>
+      <Titles LongName="Novice Jumpers Superior Performance" Name="JSDA-N-SP">JSDA-N plus 100 Points</Titles>
+      <Titles LongName="Novice Gamblers Superior Performance" Name="GSDA-N-SP">GSDA-N plus 100 Points</Titles>
+      <Titles LongName="Open Regular" Name="RSDA-O">30 Points</Titles>
+      <Titles LongName="Open Jumpers" Name="JSDA-O">20 Points</Titles>
+      <Titles LongName="Open Gamblers" Name="GSDA-O">20 Points</Titles>
+      <Titles LongName="Open Regular Outstanding Performance" Name="RSDA-O-OP">RSDA-O plus 100 Points</Titles>
+      <Titles LongName="Open Jumpers Outstanding Performance" Name="JSDA-O-OP">JSDA-O plus 50 Points</Titles>
+      <Titles LongName="Open Gamblers Outstanding Performance" Name="GSDA-O-OP">GSDA-O plus 50 Points</Titles>
+      <Titles LongName="Open Regular Superior Performance" Name="RSDA-O-SP">RSDA-O plus 200 Points</Titles>
+      <Titles LongName="Open Jumpers Superior Performance" Name="JSDA-O-SP">JSDA-O plus 100 Points</Titles>
+      <Titles LongName="Open Gamblers Superior Performance" Name="GSDA-O-SP">GSDA-O plus 100 Points</Titles>
+      <Titles LongName="Elite Regular" Name="RSDA-E">30 Points</Titles>
+      <Titles LongName="Elite Jumpers" Name="JSDA-E">20 Points</Titles>
+      <Titles LongName="Elite Gamblers" Name="GSDA-E">20 Points</Titles>
+      <Titles LongName="Elite Regular Outstanding Performance" Name="RSDA-E-OP">RSDA-E plus 200 Points</Titles>
+      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JSDA-E-OP">JSDA-E plus 100 Points</Titles>
+      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GSDA-E-OP">GSDA-E plus 100 Points</Titles>
+      <Titles LongName="Elite Regular Superior Performance" Name="RSDA-E-SP">RSDA-E plus 400 Points</Titles>
+      <Titles LongName="Elite Jumpers Superior Performance" Name="JSDA-E-SP">JSDA-E plus 200 Points</Titles>
+      <Titles LongName="Elite Gamblers Superior Performance" Name="GSDA-E-SP">GSDA-E plus 200 Points</Titles>
       <Division Name="Standard" ShortName="Std">
         <Level Name="Novice">
           <SubLevel Name="Novice A" ShortName="NovA"/>

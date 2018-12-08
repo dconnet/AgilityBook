@@ -212,7 +212,7 @@ TEST_CASE("Config")
 			CConfigHandler handler;
 			config.Default(&handler);
 			REQUIRE(0u == config.GetCalSites().size());
-			REQUIRE(163u == config.GetActions().size());
+			REQUIRE(190u == config.GetActions().size());
 			REQUIRE(0u == config.GetFaults().size());
 			REQUIRE(5u == config.GetOtherPoints().size());
 			REQUIRE(15u == config.GetVenues().size());
