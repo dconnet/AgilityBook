@@ -40,7 +40,7 @@ wxSize GetScaledSize(wxWindow* pWindow, int logical)
 wxSize GetScaledSize(wxWindow* pWindow, wxSize const& szLogical)
 {
 	wxSize sz(szLogical);
-#if defined(__WINDOWS__)
+#if defined(__WINDOWS__) && !wxCHECK_VERSION(3, 1, 2)
 	unsigned int scale = DPI::GetScale(pWindow);
 	if (scale > 100)
 	{
