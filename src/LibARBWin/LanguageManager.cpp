@@ -234,7 +234,10 @@ bool CLanguageManager::SetLang(wxLanguage langId)
 	bool rc = false;
 	{
 		wxLocale locale(m_CurLang);
-		rc = wxTranslations::Get()->AddCatalog(m_pCallback->OnGetCatalogName(), m_CurLang);
+		if (m_CurLang == wxLANGUAGE_ENGLISH_US)
+			rc = wxTranslations::Get()->AddCatalog(m_pCallback->OnGetCatalogName(), wxLANGUAGE_USER_DEFINED);
+		else
+			rc = wxTranslations::Get()->AddCatalog(m_pCallback->OnGetCatalogName());
 	}
 	if (rc)
 	{
