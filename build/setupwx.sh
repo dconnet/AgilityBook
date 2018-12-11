@@ -6,6 +6,7 @@
 # (I put this script in my home dir)
 #
 # History
+# 2018-12-11 Upgraded 3.1.1 to 3.1.2
 # 2018-02-19 Upgraded 3.1.0 to 3.1.1
 # 2016-11-29 Removed wx3.0 support
 # 2016-02-29 Added wx3.1 support
@@ -26,7 +27,7 @@ if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
 	VERSION="--disable-compat28 --disable-compat30"
 elif test "x$1" = "x3.1"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.1
+	WXWIN=~/devtools/wx/wxWidgets-3.1.2
 	VERSION="--disable-compat28 --disable-compat30"
 else
 	echo $USAGE
