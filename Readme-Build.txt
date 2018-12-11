@@ -36,6 +36,25 @@ Make sure WXWIN is set to wxWidgets root directory.
    in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
    must match the wx version number being used.
 
+=== Changes to 3.1.2:
+  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
+  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
+  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+  - Set wxUSE_INKEDIT to 1 (currently 0)
+
+> src/msw/textctrl.cpp
+diff textctrl.old textctrl.cpp
+339a340,344
+> #if wxUSE_INKEDIT && wxUSE_RICHEDIT
+>     if (m_isInkEdit)
+>         DissociateHandle();
+> #endif
+>
+
 === Changes to 3.1.1:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
