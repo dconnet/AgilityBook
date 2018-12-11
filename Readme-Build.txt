@@ -26,11 +26,11 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 python: https://www.python.org
-Currently using version 3.6.4
+Currently using version 3.7.1
 - Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.1.1.
+I'm currently using version 3.1.2.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
@@ -171,19 +171,19 @@ Useful for figuring out how a lay a dialog out.
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.66.0. There is no need
+ARB has been built and tested using Boost version 1.68.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr,
 weak_ptr and make_shared templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
-above. The default directory when unpacked is boost_1_66_0 (of course,
+above. The default directory when unpacked is boost_1_68_0 (of course,
 this will vary based on boost version). Set BOOST_ROOT to point to this
 directory. The projects use this environment variable.
 
 --------------------
 
 Windows Installer XML toolset: http://wixtoolset.org/
-Currently using Version 3.11 (as of ARB v3.2.2).
+Currently using Version 3.11.1 (as of ARB v3.2.4).
 - Install votive [optional]
 - (1), run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
@@ -193,7 +193,7 @@ Currently using Version 3.11 (as of ARB v3.2.2).
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.13.
+Used to create source code documentation. AgilityBook.dox uses v1.8.14.
 [Install to default location]
 
 --------------------
@@ -294,9 +294,9 @@ OSX 10.9:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
-setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_66_0
+setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_68_0
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.1
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.2
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -316,9 +316,9 @@ OSX 10.10+:
     <string>sh</string>
     <string>-c</string>
     <string>
-    launchctl setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_66_0
+    launchctl setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_68_0
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.1
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.2
     </string>
   </array>
   <key>RunAtLoad</key>

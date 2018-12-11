@@ -1,4 +1,4 @@
-12/8/2018: v3.3.0.<development>
+12/11/2018: v3.3.0.<development>
 - Notes:
   - Windows XP support dropped, VC10/11/12/14 dropped.
 - Bumped Configuration v59:
@@ -6,6 +6,7 @@
   - Added lifetime points to NADAC extreme games.
   - Fix ASCA ACE Senior Dog title abbreviations.
 - New features / Enhancements:
+  - Update to wx3.1.2
   - Enable Cutting/Deleting multiple items at once.
   - Suppress confirmation prompt when Cutting (assumption is a paste is coming)
   - Enable 'DEL' for deleting.
