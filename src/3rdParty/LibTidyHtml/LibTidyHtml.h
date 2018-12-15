@@ -12,15 +12,15 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-12-19 Added pRawFileBaseName for debugging.
  * 2013-06-10 Separated from Win/CalendarSiteUSDAA.cpp
  */
 
 #include "ARBCommon/Element.h"
 #include <string>
-#include <sstream>
 
 extern ElementNodePtr TidyHtmlData(
 		std::string const& data,
-		std::wostringstream& err,
+		fmt::wmemory_buffer& err,
 		std::string const* pRawFileBaseName = nullptr);

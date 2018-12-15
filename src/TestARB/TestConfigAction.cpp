@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
@@ -609,7 +610,7 @@ TEST_CASE("ConfigAction")
 		{
 			ElementNodePtr actions = CreateActionList();
 			ARBConfigActionList lst;
-			std::wostringstream err;
+			fmt::wmemory_buffer err;
 			ARBErrorCallback callback(err);
 			for (int i = 0; i < actions->GetElementCount(); ++i)
 			{

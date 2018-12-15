@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2012-10-26 Changed ARBDate::GetTime to avoid time_t when possible.
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
  * 2011-12-30 Added eVerbose to GetString.
@@ -27,10 +28,11 @@
 
 #include "stdafx.h"
 #include "ARBCommon/ARBDate.h"
-#include <sstream>
-#include <time.h>
 
 #include "ARBCommon/StringUtil.h"
+#include "fmt/printf.h"
+#include <time.h>
+
 #if defined(__WXWINDOWS__)
 #include <wx/datetime.h>
 #include <wx/intl.h>
@@ -390,30 +392,10 @@ std::wstring ARBDate::GetString(
 		}
 		break;
 	case eDashMMDDYYYY:		///< MM-DD-YYYY
-		{
-			std::wostringstream buf;
-			buf.fill(L'0');
-			buf.width(2);
-			buf << mon << L'-';
-			buf.width(2);
-			buf << day << L'-';
-			buf.width(4);
-			buf << yr;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%02d-%02d-%04d", mon, day, yr);
 		break;
 	case eYYYYMMDD:
-		{
-			std::wostringstream buf;
-			buf.fill(L'0');
-			buf.width(4);
-			buf << yr;
-			buf.width(2);
-			buf << mon;
-			buf.width(2);
-			buf << day;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%04d%02d%02d", yr, mon, day);
 		break;
 	case eVerbose:
 		{
@@ -426,113 +408,39 @@ std::wstring ARBDate::GetString(
 #endif
 		}
 		break;
-	default:				///< YYYY-MM-DD or MM/DD/YYYY
+	default:
 	case eSlashMMDDYYYY:	///< MM/DD/YYYY
-		{
-			std::wostringstream buf;
-			buf.fill(L'0');
-			buf.width(2);
-			buf << mon << L'/';
-			buf.width(2);
-			buf << day << L'/';
-			buf.width(4);
-			buf << yr;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%02d/%02d/%04d", mon, day, yr);
 		break;
 	case eDashYYYYMMDD:		///< YYYY-MM-DD
-		{
-			std::wostringstream buf;
-			buf.fill(L'0');
-			buf.width(4);
-			buf << yr << L'-';
-			buf.width(2);
-			buf << mon << L'-';
-			buf.width(2);
-			buf << day;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%04d-%02d-%02d", yr, mon, day);
 		break;
 	case eSlashYYYYMMDD:	///< YYYY/MM/DD
-		{
-			std::wostringstream buf;
-			buf.fill(L'0');
-			buf.width(4);
-			buf << yr << L'/';
-			buf.width(2);
-			buf << mon << L'/';
-			buf.width(2);
-			buf << day;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%04d/%02d/%02d", yr, mon, day);
 		break;
 	case eDashDDMMYYYY:		///< DD-MM-YYYY
-		{
-			std::wostringstream buf;
-			buf.fill(L'0');
-			buf.width(2);
-			buf << day << L'-';
-			buf.width(2);
-			buf << mon << L'-';
-			buf.width(4);
-			buf << yr;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%02d-%02d-%04d", day, mon, yr);
 		break;
 	case eSlashDDMMYYYY:	///< DD/MM/YYYY
-		{
-			std::wostringstream buf;
-			buf.fill(L'0');
-			buf.width(2);
-			buf << day << L'/';
-			buf.width(2);
-			buf << mon << L'/';
-			buf.width(4);
-			buf << yr;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%02d/%02d/%04d", day, mon, yr);
 		break;
 	case eDashMDY:	///< M-D-Y
-		{
-			std::wostringstream buf;
-			buf << mon << L'-' << day << L'-' << yr;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%d-%d-%d", mon, day, yr);
 		break;
 	case eSlashMDY:	///< M/D/Y
-		{
-			std::wostringstream buf;
-			buf << mon << L'/' << day << L'/' << yr;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%d/%d/%d", mon, day, yr);
 		break;
 	case eDashYMD:	///< Y-M-D
-		{
-			std::wostringstream buf;
-			buf << yr << L'-' << mon << L'-' << day;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%d-%d-%d", yr, mon, day);
 		break;
 	case eSlashYMD:	///< Y/M/D
-		{
-			std::wostringstream buf;
-			buf << yr << L'/' << mon << L'/' << day;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%d/%d/%d", yr, mon, day);
 		break;
 	case eDashDMY:	///< D-M-Y
-		{
-			std::wostringstream buf;
-			buf << day << L'-' << mon << L'-' << yr;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%d-%d-%d", day, mon, yr);
 		break;
 	case eSlashDMY:	///< D/M/Y
-		{
-			std::wostringstream buf;
-			buf << day << L'/' << mon << L'/' << yr;
-			date = buf.str();
-		}
+		date = fmt::sprintf(L"%d/%d/%d", day, mon, yr);
 		break;
 	}
 	return date;

@@ -17,6 +17,12 @@ LibArchive: zlib v1.2.11: My wrapper to hide zlib
 - zlib is only compiled in the non wxWidget case.
 -- #include "LibArchive/LibArchive.h"
 
+LibFmt: fmtlib v5.2.1
+.../LibFmt/
+- https://github.com/fmtlib/fmt/releases
+- http://fmtlib.net/dev/index.html
+- Only README.rst, LICENSE.rst, include, src
+
 LibTidyHtml: tidy v5.6.0: My wrapper to hide tidy
 .../LibTidyHtml/
 - https://github.com/htacg/tidy-html5/releases

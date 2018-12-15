@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-04-26 Added roman numeral tests.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-01 Added ARBConfig/ARBBook version test.
@@ -32,6 +33,7 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/StringUtil.h"
+#include "fmt/printf.h"
 
 #include <stdarg.h>
 #include <wx/fileconf.h>
@@ -154,7 +156,7 @@ TEST_CASE("Misc")
 				std::wstring Desc[MAX_LANGS];
 				std::wstring ArbDesc[MAX_LANGS];
 			} langdata[MAX_LANGS];
-			std::wostringstream out;
+			fmt::wmemory_buffer out;
 			for (size_t i = 0; i < MAX_LANGS; ++i)
 			{
 				SetLang(langs[i].langid);
@@ -166,8 +168,9 @@ TEST_CASE("Misc")
 					{
 						langdata[i].Desc[j] = info->Description;
 						langdata[i].ArbDesc[j] = wxGetTranslation(info->Description);
-						out << i << L" " << j << L" "
-							<< langdata[i].Desc[j] << L" " << langdata[i].ArbDesc[j] << L"\n";
+						fmt::format_to(out, L"{} {} {} {}\n",
+							i, j,
+							langdata[i].Desc[j], langdata[i].ArbDesc[j]);
 					}
 				}
 			}
@@ -247,16 +250,10 @@ TEST_CASE("Misc")
 		{
 			std::string str("str");
 			std::wstring wstr(L"str");
-			char buffer[100];
-			wchar_t wbuffer[100];
 
-#ifdef ARB_HAS_C99_PRINTF_SPECS
-			sprintf(buffer, "%s", str.c_str());
-			swprintf(wbuffer, 100, L"%ls", wstr.c_str());
-#else
-			sprintf(buffer, "%s", str.c_str());
-			swprintf(wbuffer, 100, L"%s", wstr.c_str());
-#endif
+			std::string buffer = fmt::sprintf("%s", str);
+			std::wstring wbuffer = fmt::sprintf(L"%ls", wstr);
+
 			REQUIRE(str == buffer);
 			REQUIRE(wstr == wbuffer);
 		}
@@ -269,16 +266,10 @@ TEST_CASE("Misc")
 		{
 			std::string str("str");
 			std::wstring wstr(L"str");
-			char buffer[100];
-			wchar_t wbuffer[100];
 
-#ifdef ARB_HAS_C99_PRINTF_SPECS
-			sprintf(buffer, "%ls", wstr.c_str());
-			swprintf(wbuffer, 100, L"%s", str.c_str());
-#else
-			sprintf(buffer, "%S", wstr.c_str());
-			swprintf(wbuffer, 100, L"%S", str.c_str());
-#endif
+			std::string buffer = fmt::sprintf("%ls", wstr);
+			std::wstring wbuffer = fmt::sprintf(L"%s", str);
+
 			REQUIRE(str == buffer);
 			REQUIRE(wstr == wbuffer);
 		}

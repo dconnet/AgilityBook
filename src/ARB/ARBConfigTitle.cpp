@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-04-26 Moved ShortToRoman to ARBCommon/ARBMisc.cpp
  * 2015-04-26 Fixed recurring title name on instance 0 (new title dialog)
  * 2013-01-13 Added new recurring title suffix style.
@@ -31,6 +32,7 @@
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/Element.h"
+#include "fmt/printf.h"
 #include <algorithm>
 
 #ifdef __WXMSW__
@@ -210,7 +212,7 @@ std::wstring ARBTitleInstance::TitleInstance(
 		ARBTitleStyle style,
 		ARBTitleSeparator sep) const
 {
-	std::wostringstream str;
+	std::wstring str;
 	if (bShowInstanceOne || 1 < instance)
 	{
 		// If we're showing in the selection menu (new title), there is no
@@ -226,14 +228,14 @@ std::wstring ARBTitleInstance::TitleInstance(
 		case eTitleStyleNone:
 			break;
 		case eTitleStyleNumber:
-			str << GetSeparator(sep) << value;
+			str = fmt::format(L"{}{}", GetSeparator(sep), value);
 			break;
 		case eTitleStyleRoman:
-			str << GetSeparator(sep) << ShortToRoman(value);
+			str = fmt::format(L"{}{}", GetSeparator(sep), ShortToRoman(value));
 			break;
 		}
 	}
-	return str.str();
+	return str;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -465,9 +467,7 @@ bool ARBConfigTitle::Save(ElementNodePtr const& ioTree) const
 
 std::wstring ARBConfigTitle::GetTitleName(short inInstance) const
 {
-	std::wostringstream buffer;
-	buffer << m_Name << TitleInstance(0 > inInstance ? false : m_MultipleOnFirst, inInstance, m_MultipleStartAt, m_MultipleIncrement, m_MultipleStyle, m_MultipleSeparator);
-	return buffer.str();
+	return fmt::format(L"{}{}", m_Name, TitleInstance(0 > inInstance ? false : m_MultipleOnFirst, inInstance, m_MultipleStartAt, m_MultipleIncrement, m_MultipleStyle, m_MultipleSeparator));
 }
 
 
@@ -476,42 +476,37 @@ std::wstring ARBConfigTitle::GetCompleteName(
 		bool bAbbrevFirst,
 		bool bAddDates) const
 {
-	std::wostringstream buffer;
-	buffer << TitleInstance(0 > inInstance ? false : m_MultipleOnFirst, inInstance, m_MultipleStartAt, m_MultipleIncrement, m_MultipleStyle, m_MultipleSeparator);
+	fmt::wmemory_buffer buffer;
+	fmt::format_to(buffer, L"{}", TitleInstance(0 > inInstance ? false : m_MultipleOnFirst, inInstance, m_MultipleStartAt, m_MultipleIncrement, m_MultipleStyle, m_MultipleSeparator));
 	// Special formatting used in configuration dialogs.
 	if (0 > inInstance && 0 < m_MultipleStartAt)
 	{
-		buffer << L"+";
+		fmt::format_to(buffer, L"+");
 	}
-	std::wostringstream name;
+	fmt::wmemory_buffer name;
 	if (0 < m_LongName.length())
 	{
 		if (bAbbrevFirst)
 		{
-			name << L"[" << m_Name
-				<< buffer.str()
-				<< L"] ";
+			fmt::format_to(name, L"[{}{}] ", m_Name, fmt::to_string(buffer));
 		}
-		name << m_LongName;
+		fmt::format_to(name, L"{}", m_LongName);
 		if (!bAbbrevFirst)
 		{
-			name << L" [" << m_Name
-				<< buffer.str()
-				<< L"]";
+			fmt::format_to(name, L" [{}{}]", m_Name, fmt::to_string(buffer));
 		}
 	}
 	else
 	{
-		name << m_Name
-			<< buffer.str();
+		fmt::format_to(name, L"{}{}", m_Name, fmt::to_string(buffer));
 	}
 	if (bAddDates)
 	{
 		std::wstring dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
 		if (!dates.empty())
-			name << L" " << dates;
+			fmt::format_to(name, L" {}", dates);
 	}
-	return name.str();
+	return fmt::to_string(name);
 }
 
 /////////////////////////////////////////////////////////////////////////////

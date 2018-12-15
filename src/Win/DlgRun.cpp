@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-21 Update title points when InClass changes.
  * 2015-11-01 Compute score for NA runs also.
  * 2015-01-01 Changed pixels to dialog units.
@@ -266,22 +267,22 @@ private:
 
 std::wstring CDlgDogRefRunData::OnNeedText(long iCol) const
 {
-	std::wostringstream str;
+	std::wstring str;
 	switch (iCol)
 	{
 	default:
 		break;
 	case 0: // Q
-		str << m_RefRun->GetQ();
+		str = fmt::format(L"{}", m_RefRun->GetQ());
 		break;
 	case 1: // Place
-		str << m_RefRun->GetPlace();
+		str = fmt::format(L"{}", m_RefRun->GetPlace());
 		break;
 	case 2: // Score
-		str << m_RefRun->GetScore();
+		str = m_RefRun->GetScore();
 		break;
 	case 3: // Time
-		str << ARBDouble::ToString(m_RefRun->GetTime());
+		str = ARBDouble::ToString(m_RefRun->GetTime());
 		break;
 	case 4: // YPS
 		{
@@ -289,24 +290,24 @@ std::wstring CDlgDogRefRunData::OnNeedText(long iCol) const
 			double yps;
 			if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), time, yps))
 			{
-				str << ARBDouble::ToString(yps, 3);
+				str = ARBDouble::ToString(yps, 3);
 			}
 		}
 		break;
 	case 5: // Name
-		str << m_RefRun->GetName();
+		str = m_RefRun->GetName();
 		break;
 	case 6: // Height
-		str << m_RefRun->GetHeight();
+		str = m_RefRun->GetHeight();
 		break;
 	case 7: // Breed
-		str << m_RefRun->GetBreed();
+		str = m_RefRun->GetBreed();
 		break;
 	case 8: // Note
-		str << StringUtil::Replace(m_RefRun->GetNote(), L"\n", L" ");
+		str = StringUtil::Replace(m_RefRun->GetNote(), L"\n", L" ");
 		break;
 	}
-	return str.str();
+	return str;
 }
 
 

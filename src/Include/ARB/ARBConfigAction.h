@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2016-06-17 Add support for Lifetime names.
  * 2013-01-11 Fix filters on configuration import.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -24,6 +25,7 @@
 
 #include "ARB/ARBBase.h"
 #include "ARB/ARBTypes2.h"
+#include "fmt/format.h"
 
 
 class IConfigActionCallback
@@ -117,7 +119,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const = 0;
 
 	/**
@@ -157,7 +159,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -186,7 +188,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -213,7 +215,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -242,7 +244,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 	virtual bool Update(
@@ -275,7 +277,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 private:
@@ -306,7 +308,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -336,7 +338,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -368,7 +370,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 	virtual bool Update(
@@ -404,7 +406,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -447,7 +449,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 	virtual bool Update(
@@ -495,7 +497,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -529,7 +531,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -563,7 +565,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -597,7 +599,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -627,7 +629,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -659,7 +661,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -689,7 +691,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
@@ -721,7 +723,7 @@ public:
 	int Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 	/**

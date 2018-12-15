@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2012-07-10 Fix serialization. Broken in 4/15 wxString checkin.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-08-26 Fixed streaming wxString to otstringstream.
@@ -28,6 +29,7 @@
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
+#include "fmt/format.h"
 #include "LibARBWin/Widgets.h"
 #include <algorithm>
 #include <wx/ffile.h>
@@ -103,7 +105,7 @@ CDlgPageDecode::CDlgPageDecode()
 void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 {
 	wxBusyCursor wait;
-	std::wostringstream editData;
+	fmt::wmemory_buffer editData;
 	std::wstring data = StringUtil::stringW(m_ctrlEncoded->GetValue());
 
 	// Make sure this is synchronized (order of decoding) with
@@ -123,7 +125,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 		dataIn.clear();
 		data = StringUtil::Trim(data);
 
-		editData << L"Any temporary files created will be deleted upon closing this window.\n\n";
+		fmt::format_to(editData, L"Any temporary files created will be deleted upon closing this window.\n\n");
 
 		static const struct
 		{
@@ -144,7 +146,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				{
 					size_t posData = pos + sc_sections[idx].begin.length();
 					// Dump the preceding data.
-					editData << data.substr(0, posData) << L"\n";
+					fmt::format_to(editData, L"{}\n", data.substr(0, posData));
 					// Trim preceding
 					data = data.substr(posData);
 					data = StringUtil::TrimLeft(data);
@@ -158,7 +160,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 					std::wstring dataOut;
 					BinaryData::DecodeString(dataIn, dataOut);
 					dataIn.clear();
-					editData << dataOut << sc_sections[idx].end << L"\n\n";
+					fmt::format_to(editData, L"{}{}\n\n", dataOut, sc_sections[idx].end);
 					dataOut.clear();
 				}
 			}
@@ -171,7 +173,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 			{
 				std::wstring::size_type posData = pos + wcslen(STREAM_FILE_BEGIN);
 				// Dump the preceding data (but not identifier.
-				editData << data.substr(0, pos); // New line included
+				fmt::format_to(editData, L"{}", data.substr(0, pos)); // New line included
 				// Trim preceding
 				data = data.substr(posData);
 				data = StringUtil::TrimLeft(data);
@@ -194,27 +196,25 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				{
 					output.Write(binData, nBytes);
 					output.Close();
-					editData << L"File written to: " << tempname.wx_str() << L"\n\n";
+					fmt::format_to(editData, L"File written to: {}\n\n", tempname.wx_str());
 				}
 				else
 				{
 					std::string tmp(reinterpret_cast<char*>(binData), nBytes);
-					editData << STREAM_FILE_BEGIN << L"\n"
-						<< StringUtil::stringWX(tmp)
-						<< STREAM_FILE_END << L"\n\n";
+					fmt::format_to(editData, L"{}\n{}{}\n\n", STREAM_FILE_BEGIN, StringUtil::stringWX(tmp), STREAM_FILE_END);
 				}
 				BinaryData::Release(binData);
 			}
 		}
-		editData << data;
+		fmt::format_to(editData, L"{}", data);
 	}
 
 	else
 	{
-		editData << L"Error in data: Unable to find " << STREAM_DATA_BEGIN;
+		fmt::format_to(editData, L"Error in data: Unable to find {}", STREAM_DATA_BEGIN);
 	}
 
-	m_ctrlDecoded->SetValue(editData.str().c_str());
+	m_ctrlDecoded->SetValue(fmt::to_string(editData));
 }
 
 

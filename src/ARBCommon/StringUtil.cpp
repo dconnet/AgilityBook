@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-04-19 Fixed string/double parsing for locales.
  * 2015-11-13 Added zetta and yotta bytes.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
@@ -31,6 +32,7 @@
 
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
+#include "fmt/format.h"
 #include <algorithm>
 #include <sstream>
 #if defined(__WXWINDOWS__)
@@ -680,6 +682,7 @@ std::wstring ToUpper(std::wstring const& inStr)
 
 
 template <typename T, typename S> T ReplaceImpl(
+		T const& format,
 		T const& inStr,
 		T const& inReplace,
 		T const& inReplaceWith)
@@ -695,19 +698,19 @@ template <typename T, typename S> T ReplaceImpl(
 		{
 			if (0 < pos)
 			{
-				str << text.substr(0, pos);
+				fmt::format_to(str, format, text.substr(0, pos));
 			}
 			if (!inReplaceWith.empty())
-				str << inReplaceWith;
+				fmt::format_to(str, format, inReplaceWith);
 			text = text.substr(pos+inReplace.length(), T::npos);
 		}
 		else
 		{
-			str << text;
+			fmt::format_to(str, format, text);
 			text.erase();
 		}
 	}
-	return str.str();
+	return fmt::to_string(str);
 }
 
 
@@ -716,7 +719,7 @@ std::string Replace(
 		std::string const& inReplace,
 		std::string const& inReplaceWith)
 {
-	return ReplaceImpl<std::string, std::ostringstream>(inStr, inReplace, inReplaceWith);
+	return ReplaceImpl<std::string, fmt::memory_buffer>("{}", inStr, inReplace, inReplaceWith);
 }
 
 
@@ -725,7 +728,7 @@ std::wstring Replace(
 		std::wstring const& inReplace,
 		std::wstring const& inReplaceWith)
 {
-	return ReplaceImpl<std::wstring, std::wostringstream>(inStr, inReplace, inReplaceWith);
+	return ReplaceImpl<std::wstring, fmt::wmemory_buffer>(L"{}", inStr, inReplace, inReplaceWith);
 }
 
 

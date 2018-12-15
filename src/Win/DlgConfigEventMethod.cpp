@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-12-31 Add support for using raw faults when determining title points.
  * 2017-11-30 Remove image list from placement list (not needed)
  * 2016-01-16 Cleaned up new/edit/delete buttons.
@@ -81,19 +82,19 @@ protected:
 
 std::wstring CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 {
-	std::wostringstream str;
+	std::wstring str;
 	switch (iColumn)
 	{
 	default:
 		break;
 	case 0:
-		str << m_Place;
+		str = fmt::format(L"{}", m_Place);
 		break;
 	case 1:
-		str << m_Value;
+		str = fmt::format(L"}|", m_Value);
 		break;
 	}
-	return str.str();
+	return str;
 }
 
 

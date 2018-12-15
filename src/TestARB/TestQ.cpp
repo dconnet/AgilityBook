@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-05-06 Updated for changed Q order.
  * 2015-03-15 Fixed Unknown-Q usage.
@@ -131,7 +132,7 @@ TEST_CASE("ARBQ")
 		{
 #if defined(__WXWINDOWS__)
 			ARB_Q q;
-			std::wostringstream errmsg;
+			fmt::wmemory_buffer errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			REQUIRE(q.Load(L"SQ", ver, callback));
@@ -149,7 +150,7 @@ TEST_CASE("ARBQ")
 		{
 #if defined(__WXWINDOWS__)
 			ARB_Q q(ARB_Q::eQ_Q);
-			std::wostringstream errmsg;
+			fmt::wmemory_buffer errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			REQUIRE(!q.Load(L"attrib", ver, callback));

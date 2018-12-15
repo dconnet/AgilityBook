@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2014-09-12 Add CKCSC.
  * 2013-01-13 Added more recurring tests for new style.
@@ -129,7 +130,7 @@ TEST_CASE("Config")
 		{
 			ElementNodePtr data = ElementNode::New();
 			ARBConfig config;
-			std::wostringstream err;
+			fmt::wmemory_buffer err;
 			ARBErrorCallback callback(err);
 			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(1,0), callback));
 			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(2,0), callback));
@@ -151,7 +152,7 @@ TEST_CASE("Config")
 		{
 			ElementNodePtr data = ElementNode::New();
 			ARBConfig config;
-			std::wostringstream err;
+			fmt::wmemory_buffer err;
 			ARBErrorCallback callback(err);
 			REQUIRE(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1,0), callback));
 			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));

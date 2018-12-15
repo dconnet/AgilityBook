@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-07-25 Adhere to RFC4180 and use CRLF between records.
@@ -49,6 +50,7 @@
 #include "ARB/ARBDogTrial.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/BreakLine.h"
+#include "fmt/printf.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListCtrl.h"
 #include <wx/valgen.h>
@@ -656,11 +658,7 @@ void CWizardExport::UpdatePreview()
 										data += AddPreviewData(iLine, idx, pRun->GetConditions());
 										break;
 									case IO_RUNS_COURSE_FAULTS:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetCourseFaults();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetCourseFaults()));
 										break;
 									case IO_RUNS_TIME:
 										data += AddPreviewData(iLine, idx, ARBDouble::ToString(pRun->GetScoring().GetTime()));
@@ -699,9 +697,7 @@ void CWizardExport::UpdatePreview()
 											short ob = pRun->GetScoring().GetObstacles();
 											if (0 < ob)
 											{
-												std::wostringstream str;
-												str << ob;
-												data += AddPreviewData(iLine, idx, str.str());
+												data += AddPreviewData(iLine, idx, fmt::format(L"{}", ob));
 											}
 											else
 											{
@@ -739,80 +735,56 @@ void CWizardExport::UpdatePreview()
 										}
 										break;
 									case IO_RUNS_REQ_OPENING:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetNeedOpenPts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetNeedOpenPts()));
 										break;
 									case IO_RUNS_REQ_CLOSING:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetNeedClosePts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetNeedClosePts()));
 										break;
 									case IO_RUNS_OPENING:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetOpenPts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetOpenPts()));
 										break;
 									case IO_RUNS_CLOSING:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetClosePts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetClosePts()));
 										break;
 									case IO_RUNS_REQ_POINTS:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetNeedOpenPts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetNeedOpenPts()));
 										break;
 									case IO_RUNS_POINTS:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetOpenPts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetOpenPts()));
 										break;
 									case IO_RUNS_PLACE:
 										{
-											std::wostringstream str;
+											std::wstring str;
 											short place = pRun->GetPlace();
 											if (0 > place)
-												str << L"?";
+												str = L"?";
 											else if (0 == place)
-												str << L"-";
+												str = L"-";
 											else
-												str << place;
-											data += AddPreviewData(iLine, idx, str.str());
+												str = fmt::format(L"{}", place);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_IN_CLASS:
 										{
-											std::wostringstream str;
+											std::wstring str;
 											short inClass = pRun->GetInClass();
 											if (0 > inClass)
-												str << L"?";
+												str = L"?";
 											else
-												str << inClass;
-											data += AddPreviewData(iLine, idx, str.str());
+												str = fmt::format(L"{}", inClass);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_DOGSQD:
 										{
-											std::wostringstream str;
+											std::wstring str;
 											short qd = pRun->GetDogsQd();
 											if (0 > qd)
-												str << L"?";
+												str = L"?";
 											else
-												str << qd;
-											data += AddPreviewData(iLine, idx, str.str());
+												str = fmt::format(L"{}", qd);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_Q:
@@ -855,12 +827,10 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_TITLE_POINTS:
 										{
-											std::wostringstream str;
 											double pts = 0.0;
 											if (pRun->GetQ().Qualified())
 												pts = pRun->GetTitlePoints(pScoring);
-											str << pts;
-											data += AddPreviewData(iLine, idx, str.str());
+											data += AddPreviewData(iLine, idx, fmt::format(L"{}", pts));
 										}
 										break;
 									case IO_RUNS_COMMENTS:

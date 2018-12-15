@@ -12,6 +12,7 @@
  * File Format: See below.
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2014-03-05 Change wxFileSystem usage to CLibArchive.
  * 2013-12-05 Remove "?os=..." from url (website redesign)
  * 2013-10-30 Fixed a problem where arbupdater was spawned hidden.
@@ -343,7 +344,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		 *      enable (0|1) '1'
 		 *      >
 		 */
-		std::wostringstream errMsg2;
+		fmt::wmemory_buffer errMsg2;
 		ElementNodePtr tree(ElementNode::New());
 		bool bOk = false;
 		{
@@ -355,9 +356,9 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 			if (bVerbose)
 			{
 				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), VersionFile().c_str());
-				if (0 < errMsg2.str().length())
+				if (0 < errMsg2.size())
 				{
-					msg << L"\n\n" << errMsg2.str().c_str();
+					msg << L"\n\n" << fmt::to_string(errMsg2);
 				}
 				wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
@@ -783,7 +784,7 @@ void CUpdateInfo::CheckConfig(
 			{
 				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				ElementNodePtr tree(ElementNode::New());
-				std::wostringstream errMsg2;
+				fmt::wmemory_buffer errMsg2;
 				bool bOk = false;
 				{
 					wxBusyCursor wait;
@@ -792,10 +793,10 @@ void CUpdateInfo::CheckConfig(
 				if (!bOk)
 				{
 					wxString msg2 = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());
-					if (0 < errMsg2.str().length())
+					if (0 < errMsg2.size())
 					{
 						msg2 += L"\n\n";
-						msg2 += errMsg2.str().c_str();
+						msg2 += fmt::to_string(errMsg2);
 					}
 					wxMessageBox(msg2, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
@@ -811,8 +812,8 @@ void CUpdateInfo::CheckConfig(
 						ARBAgilityRecordBook book;
 						if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 						{
-							if (0 < err.m_ErrMsg.str().length())
-								wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+							if (0 < err.m_ErrMsg.size())
+								wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 						}
 						else
 						{

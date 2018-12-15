@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-08-20 Alter how header is generated/handled.
  * 2014-04-23 Scroll to position of clicked link on page load.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -32,6 +33,7 @@
 #include "Print.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "fmt/printf.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -81,7 +83,7 @@ void CHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 			{
 				bDidIt = true;
 				CPointsDataBasePtr item = m_pView->m_Items->GetLine(nItem);
-				m_tag << L"ref" << index.c_str();
+				m_tag << L"ref" << index;
 				item->Details();
 				m_tag.clear();
 			}
@@ -255,8 +257,8 @@ wxString CAgilityBookHtmlView::RawHtml(
 		bool bFragment,
 		bool bNoInternalLinks) const
 {
-	std::wostringstream data;
-	data << L"<html>\n";
+	fmt::wmemory_buffer data;
+	fmt::format_to(data, L"<html>\n");
 
 	size_t nItems = m_Items->NumLines();
 	if (!bFragment)
@@ -264,21 +266,21 @@ wxString CAgilityBookHtmlView::RawHtml(
 		if (0 < nItems)
 		{
 			CPointsDataBasePtr item = m_Items->GetLine(0);
-			data << item->GetHtml(0, bNoInternalLinks);
+			fmt::format_to(data, L"{}", item->GetHtml(0, bNoInternalLinks));
 		}
-		data << L"<body>\n";
+		fmt::format_to(data, L"<body>\n");
 	}
 
 	for (size_t nItem = 1; nItem < nItems; ++nItem)
 	{
 		CPointsDataBasePtr item = m_Items->GetLine(nItem);
-		data << item->GetHtml(nItem, bNoInternalLinks);
+		fmt::format_to(data, L"{}", item->GetHtml(nItem, bNoInternalLinks));
 	}
 	if (!bFragment)
-		data << L"</body></html>";
-	data << L"\n";
+		fmt::format_to(data, L"</body></html>");
+	fmt::format_to(data, L"\n");
 
-	return StringUtil::stringWX(data.str());
+	return StringUtil::stringWX(fmt::to_string(data));
 }
 
 

@@ -17,7 +17,6 @@
  */
 
 #include "ARBCommon/ARBTypes.h"
-#include <sstream>
 #include <wx/wizard.h>
 class CDlgARBHelp;
 

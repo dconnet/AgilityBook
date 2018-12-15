@@ -196,9 +196,6 @@
     <ProjectReference Include="LibwxARB.vcxproj">
       <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
     </ProjectReference>
-    <ProjectReference Include="LibwxARBCommon.vcxproj">
-      <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
-    </ProjectReference>
     <ProjectReference Include="LibwxARBWin.vcxproj">
       <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
     </ProjectReference>

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-10-29 Add Save override.
  * 2012-09-29 Strip the Runs View.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -93,7 +94,7 @@ class CErrorCallback : public ARBErrorCallback
 public:
 	CErrorCallback();
 	virtual bool OnError(wchar_t const* const pMsg);
-	std::wostringstream m_ErrMsg;
+	fmt::wmemory_buffer m_ErrMsg;
 };
 
 

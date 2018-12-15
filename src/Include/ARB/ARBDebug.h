@@ -12,9 +12,11 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-01-28 Created
  */
 
+#include "fmt/format.h"
 
 
 /**
@@ -35,6 +37,6 @@ public:
 	 */
 	static size_t DumpRegistryGroup(
 		wxString const& inGroup,
-		std::wostringstream* outData,
+		fmt::wmemory_buffer* outData,
 		std::vector<std::wstring>* outItems);
 };

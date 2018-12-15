@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-12-19 Added pRawFileBaseName for debugging.
  *            Fixed tidy calls to properly quote "&" from web data.
  * 2013-06-10 Separated from Win/CalendarSiteUSDAA.cpp
@@ -33,7 +34,7 @@
 
 ElementNodePtr TidyHtmlData(
 		std::string const& data,
-		std::wostringstream& err,
+		fmt::wmemory_buffer& err,
 		std::string const* pRawFileBaseName)
 {
 	ElementNodePtr tree;
@@ -58,7 +59,7 @@ ElementNodePtr TidyHtmlData(
 			if (errbuf.size > 0)
 			{
 				std::string errmsg((const char*)errbuf.bp, errbuf.size);
-				err << L"TIDY Error: " << StringUtil::stringW(errmsg);
+				fmt::format_to(err, L"TIDY Error: {}", StringUtil::stringW(errmsg));
 			}
 			tidyBufFree(&errbuf);
 			tidyRelease(tdoc);
@@ -70,7 +71,7 @@ ElementNodePtr TidyHtmlData(
 			if (errbuf.size > 0)
 			{
 				std::string errmsg((const char*)errbuf.bp, errbuf.size);
-				err << L"TIDY Error: " << StringUtil::stringW(errmsg);
+				fmt::format_to(err, L"TIDY Error: {}", StringUtil::stringW(errmsg));
 			}
 			tidyBufFree(&errbuf);
 			tidyRelease(tdoc);
@@ -86,7 +87,7 @@ ElementNodePtr TidyHtmlData(
 			if (errbuf.size > 0)
 			{
 				std::string errmsg((const char*)errbuf.bp, errbuf.size);
-				err << L"TIDY Error: " << StringUtil::stringW(errmsg);
+				fmt::format_to(err, L"TIDY Error: {}", StringUtil::stringW(errmsg));
 			}
 			tidyBufFree(&errbuf);
 			tidyBufFree(&output);

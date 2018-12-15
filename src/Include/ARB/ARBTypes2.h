@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2016-01-06 Added ARBConfigLifetimeName.
  * 2013-04-15 Moved ARB specific things out of ARBTypes.h
  * 2012-09-09 Added ARBVectorNoSave.
@@ -19,6 +20,7 @@
 
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/Element.h"
+#include "fmt/format.h"
 class ARBConfig;
 
 
@@ -245,7 +247,7 @@ public:
 class ARBErrorCallback
 {
 public:
-	ARBErrorCallback(std::wostringstream& ioErrMsg)
+	ARBErrorCallback(fmt::wmemory_buffer& ioErrMsg)
 		: m_ErrMsg(ioErrMsg)
 	{
 	}
@@ -270,11 +272,11 @@ public:
 	 */
 	virtual void LogMessage(std::wstring const& inMsg)
 	{
-		m_ErrMsg << inMsg;
+		fmt::format_to(m_ErrMsg, L"{}", inMsg);
 	}
 
 protected:
-	std::wostringstream& m_ErrMsg;
+	fmt::wmemory_buffer& m_ErrMsg;
 
 	DECLARE_NO_COPY_IMPLEMENTED(ARBErrorCallback);
 };

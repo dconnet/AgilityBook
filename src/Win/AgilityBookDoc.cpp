@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
  * 2015-12-31 Add wx version to file-written-on section in File Properties.
  * 2015-11-25 Oops, Mac doesn't have '__super'.
@@ -833,7 +834,7 @@ void CConfigActionCallback::PostDelete(std::wstring const& msg) const
 bool CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 {
 	unsigned int iHint = 0;
-	std::wostringstream info;
+	fmt::wmemory_buffer info;
 	CConfigActionCallback callback;
 	bool bChanges = false;
 	{
@@ -853,7 +854,7 @@ bool CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	if (bChanges)
 	{
 		CAgilityBookOptions::CleanLastItems(m_Records.GetConfig());
-		CDlgMessage dlg(info.str(), wxGetApp().GetTopWindow());
+		CDlgMessage dlg(fmt::to_string(info), wxGetApp().GetTopWindow());
 		dlg.ShowModal();
 		Modify(true);
 		CUpdateHint hint(UPDATE_CONFIG | iHint);
@@ -960,8 +961,8 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 	ARBAgilityRecordBook book;
 	if (book.Load(inTree, false, false, true, true, true, err))
 	{
-		if (0 < err.m_ErrMsg.str().length())
-			wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		if (0 < err.m_ErrMsg.size())
+			wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		int countDog = 0;
 		int countRegNumsAdded = 0;
 		int countRegNumsUpdated = 0;
@@ -1243,8 +1244,8 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
-	else if (0 < err.m_ErrMsg.str().length())
-		wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+	else if (0 < err.m_ErrMsg.size())
+		wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -1257,8 +1258,8 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr const& inTree, wxWindow* p
 	ARBAgilityRecordBook book;
 	if (book.Load(inTree, true, false, false, false, false, err))
 	{
-		if (0 < err.m_ErrMsg.str().length())
-			wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		if (0 < err.m_ErrMsg.size())
+			wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 
 		long nAdded = 0;
 		long nUpdated = 0;
@@ -1276,8 +1277,8 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr const& inTree, wxWindow* p
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
-	else if (0 < err.m_ErrMsg.str().length())
-		wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+	else if (0 < err.m_ErrMsg.size())
+		wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -1290,8 +1291,8 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr const& inTree, wxWindow* p
 	ARBAgilityRecordBook book;
 	if (book.Load(inTree, false, true, false, false, false, err))
 	{
-		if (0 < err.m_ErrMsg.str().length())
-			wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		if (0 < err.m_ErrMsg.size())
+			wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 
 		long nAdded = 0;
 		long nUpdated = 0;
@@ -1309,8 +1310,8 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr const& inTree, wxWindow* p
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
-	else if (0 < err.m_ErrMsg.str().length())
-		wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+	else if (0 < err.m_ErrMsg.size())
+		wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -1649,7 +1650,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		wxBusyCursor wait;
 
 		STACK_TICKLE(stack, L"PreLoadXML");
-		std::wostringstream err;
+		fmt::wmemory_buffer err;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
 		if (!tree->LoadXML(filename, err))
@@ -1657,9 +1658,9 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 			// This string is in fr/fr.po
 			wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
-			if (0 < err.str().length())
+			if (0 < err.size())
 			{
-				msg << L"\n\n" << StringUtil::stringWX(err.str());
+				msg << L"\n\n" << StringUtil::stringWX(fmt::to_string(err));
 			}
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
@@ -1672,17 +1673,17 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 			wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
-			if (0 < callback.m_ErrMsg.str().length())
+			if (0 < callback.m_ErrMsg.size())
 			{
-				msg << L"\n\n" << StringUtil::stringWX(callback.m_ErrMsg.str());
+				msg << L"\n\n" << StringUtil::stringWX(fmt::to_string(callback.m_ErrMsg));
 			}
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
-		else if (0 < callback.m_ErrMsg.str().length())
+		else if (0 < callback.m_ErrMsg.size())
 		{
 			wxString msg(_("IDS_NONFATAL_MSGS"));
-			msg << L"\n\n" << StringUtil::stringWX(callback.m_ErrMsg.str());
+			msg << L"\n\n" << StringUtil::stringWX(fmt::to_string(callback.m_ErrMsg));
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		}
 		STACK_TICKLE(stack, L"PostLoad");
@@ -1804,6 +1805,8 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 {
 	wxBusyCursor wait;
 
+	STACK_TRACE(stack, L"CAgilityBookDoc::DoSave");
+
 	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	std::wstring verstr = ver.GetVersionString();
 	bool bAlreadyWarned = false;
@@ -1812,6 +1815,8 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 	// First, we have to push all the class data into a tree.
 	if (m_Records.Save(tree, verstr, true, true, true, true, true))
 	{
+		STACK_TICKLE(stack, L"PostTreeSave");
+
 		BackupFile(filename);
 		// Then we can stream that tree out as XML.
 		if (tree->SaveXML(StringUtil::stringW(filename)))

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-13 Created
@@ -30,7 +31,7 @@ class ErrorCallback : public ARBErrorCallback
 public:
 	std::wstring m_Msg;
 
-	ErrorCallback(std::wostringstream& inMsg) : ARBErrorCallback(inMsg)
+	ErrorCallback(fmt::wmemory_buffer& inMsg) : ARBErrorCallback(inMsg)
 	{
 	}
 
@@ -48,10 +49,10 @@ TEST_CASE("ErrorCallback")
 	{
 		if (!g_bMicroTest)
 		{
-			std::wostringstream msg;
+			fmt::wmemory_buffer msg;
 			ARBErrorCallback err(msg);
 			err.LogMessage(L"Testing1");
-			REQUIRE(msg.str() == L"Testing1");
+			REQUIRE(fmt::to_string(msg) == L"Testing1");
 		}
 	}
 
@@ -60,10 +61,10 @@ TEST_CASE("ErrorCallback")
 	{
 		if (!g_bMicroTest)
 		{
-			std::wostringstream emsg;
+			fmt::wmemory_buffer emsg;
 			ErrorCallback err(emsg);
 			err.LogMessage(L"Testing1");
-			std::wstring msg = emsg.str();
+			std::wstring msg = fmt::to_string(emsg);
 			REQUIRE(msg == err.m_Msg);
 			REQUIRE(msg == L"Testing1");
 		}

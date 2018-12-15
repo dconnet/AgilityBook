@@ -495,7 +495,7 @@ msgstr "Action: Deleting Lifetime Name '%1$s' from %3$d events [%2$s]"
 
 #: TestARB/Local.cpp:817 Win/Localization.cpp:596
 msgid "IDS_TITLEPOINTSNAME"
-msgstr "%1$s points avec %2$s fautes"
+msgstr "%1$g points avec %2$g fautes"
 
 #: TestARB/Local.cpp:828 Win/DlgAssignColumns.cpp:405 Win/Localization.cpp:602
 msgid "IDS_COL_SPEED"
@@ -504,7 +504,7 @@ msgstr "Vitesse"
 #: TestARB/Local.cpp:830 TestARB/Local.cpp:843 Win/Localization.cpp:604
 #: Win/Localization.cpp:612
 msgid "IDS_LIFETITLEPOINTSNAME"
-msgstr "%1$s points pour la vie avec %2$s fautes"
+msgstr "%1$s points pour la vie avec %2$g fautes"
 
 #: TestARB/Local.cpp:855 Win/Localization.cpp:619
 msgid "IDS_PLACEMENTPOINTSNAME"
@@ -1689,7 +1689,7 @@ msgstr "%1$d entrés"
 
 #: Win/AgilityBookTreeData.cpp:144
 msgid "IDS_YEARS"
-msgstr "%1$s ans"
+msgstr "{} ans"
 
 #: Win/AgilityBookTreeData.cpp:203
 msgid "IDS_DELETE_DOG_DATA"

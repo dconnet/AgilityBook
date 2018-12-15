@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2016-06-19 Add a blank icon to fix issue on Mac.
  * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -778,7 +779,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		ARBConfig& update = dlg.GetConfig();
 		// Update our current config (not runs, later)
 		bool bUpdated = false;
-		std::wostringstream info;
+		fmt::wmemory_buffer info;
 		CDlgConfigCallback callback;
 		if (0 < update.GetActions().Apply(m_Config, nullptr, info, callback))
 		{
@@ -791,7 +792,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		// Update the config.
 		if (m_Config.Update(0, update, info) || bUpdated)
 		{
-			CDlgMessage dlgMsg(info.str(), this);
+			CDlgMessage dlgMsg(fmt::to_string(info), this);
 			dlgMsg.ShowModal();
 			LoadData(eVenues);
 			LoadData(eFaults);

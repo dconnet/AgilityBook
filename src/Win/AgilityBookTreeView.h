@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-08 Ported to wxWidgets.
  * 2008-11-19 Added SelectDog()
@@ -181,7 +182,7 @@ private:
 	void DoSelectionChange(wxTreeItemId hItem);
 	void LoadData();
 	void PrintLine(
-			std::wostringstream& data,
+			fmt::wmemory_buffer& data,
 			wxTreeItemId id,
 			int indent) const;
 	std::wstring GetPrintDataAsHtmlTable() const;

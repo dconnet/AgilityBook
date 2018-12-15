@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-13 Created
@@ -114,7 +115,7 @@ TEST_CASE("Calendar")
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			cal->Load(data.CalData2, ARBVersion(2, 0), callback);
 			ARBCalendarPtr cal2 = cal->Clone();
@@ -150,7 +151,7 @@ TEST_CASE("Calendar")
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(cal->Load(data.CalData1, ARBVersion(1, 0), callback));
 			REQUIRE(ARBCalendar::ePlanning == cal->GetEntered());
@@ -165,7 +166,7 @@ TEST_CASE("Calendar")
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(cal->Load(data.CalData2, ARBVersion(2, 0), callback));
 			REQUIRE(ARBCalendar::ePlanning == cal->GetEntered());
@@ -178,7 +179,7 @@ TEST_CASE("Calendar")
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(cal->Load(data.CalData1a, ARBVersion(1, 0), callback));
 			// These are not equal as 'Entered' isn't parsed in 1.0.
@@ -192,7 +193,7 @@ TEST_CASE("Calendar")
 		if (!g_bMicroTest)
 		{
 			ARBCalendarPtr cal = ARBCalendar::New();
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			cal->Load(data.CalData2, ARBVersion(2, 0), callback);
 			ElementNodePtr ele = ElementNode::New();
@@ -308,7 +309,7 @@ TEST_CASE("CalendarList")
 		if (!g_bMicroTest)
 		{
 			ARBCalendarList callist;
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(callist.Load(data.CalData1, ARBVersion(1, 0), callback));
 			REQUIRE(callist.Load(data.CalData2, ARBVersion(2, 0), callback));
@@ -331,7 +332,7 @@ TEST_CASE("CalendarList")
 		if (!g_bMicroTest)
 		{
 			ARBCalendarList callist;
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(callist.Load(data.CalData1, ARBVersion(1, 0), callback));
 			REQUIRE(callist.Load(data.CalData2, ARBVersion(2, 0), callback));

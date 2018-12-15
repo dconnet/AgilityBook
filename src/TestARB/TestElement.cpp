@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2017-08-03 Added basic read verification
  * 2012-03-16 Renamed LoadXML functions, added stream version.
@@ -315,7 +316,7 @@ TEST_CASE("Element")
 					<< "<ele ele='2'>More content</ele>"
 				<< "</Test>";
 
-			std::wostringstream errMsg;
+			fmt::wmemory_buffer errMsg;
 			ElementNodePtr tree(ElementNode::New());
 			REQUIRE(tree->LoadXML(data, errMsg));
 
@@ -346,7 +347,7 @@ TEST_CASE("Element")
 			REQUIRE(tree->SaveXML(tmp1));
 
 			ElementNodePtr tree2(ElementNode::New());
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			REQUIRE(tree2->LoadXML(tmpFile.c_str(), errs));
 
 #if defined(__WXWINDOWS__)

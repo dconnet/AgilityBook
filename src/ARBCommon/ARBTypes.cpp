@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-08-15 Changed ARBVersion to use std::array
  * 2016-09-04 Add a ToString wrapper.
  * 2015-12-22 Changed bAlwaysStripZeros to eStripZeros.
@@ -36,9 +37,8 @@
 
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
-#include <iostream>
+#include "fmt/printf.h"
 #include <math.h>
-#include <sstream>
 #include <time.h>
 
 #if defined(__WXWINDOWS__)
@@ -65,26 +65,16 @@ std::wstring ARBDouble::ToString(
 	std::unique_ptr<wxLocale> locale;
 	if (!bUseCurrentLocale)
 		locale.reset(new wxLocale(wxLANGUAGE_ENGLISH_US, wxLOCALE_DONT_LOAD_DEFAULT));
-
-	wxString tmp;
-	if (0 < inPrec)
-		tmp = wxString::Format(L"%.*f", inPrec, inValue);
-	else
-		tmp = wxString::Format(L"%g", inValue);
-	retVal = StringUtil::stringW(tmp);
-
 #else
 	std::unique_ptr<CLocaleWrapper> locale;
 	if (!bUseCurrentLocale)
 		locale.reset(new CLocaleWrapper(LC_NUMERIC, "C"));
-
-	wchar_t buffer[100]; // This should be big enough. Not going to worry about it...
-	if (0 < inPrec)
-		swprintf_s(buffer, _countof(buffer), L"%.*f", inPrec, inValue);
-	else
-		swprintf_s(buffer, _countof(buffer), L"%g", inValue);
-	retVal = buffer;
 #endif
+
+	if (0 < inPrec)
+		retVal = fmt::sprintf(L"%.*f", inPrec, inValue);
+	else
+		retVal = fmt::sprintf(L"%g", inValue);
 
 	wchar_t pt = CLocaleWrapper::GetDecimalPt();
 
@@ -173,7 +163,5 @@ ARBVersion::ARBVersion(std::wstring inStr)
 
 std::wstring ARBVersion::str() const
 {
-	std::wostringstream buffer;
-	buffer << Major() << L"." << Minor();
-	return buffer.str();
+	return fmt::format(L"{}.{}", Major(), Minor());
 }

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
@@ -104,7 +105,7 @@ TEST_CASE("ConfigFault")
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(fault1->Load(data.ConfigFault1, ARBVersion(1, 0), callback));
 			std::wstring name = fault1->GetGenericName();
@@ -118,7 +119,7 @@ TEST_CASE("ConfigFault")
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(fault1->Load(data.ConfigFault2, ARBVersion(2, 0), callback));
 			std::wstring name = fault1->GetGenericName();
@@ -132,7 +133,7 @@ TEST_CASE("ConfigFault")
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(!fault1->Load(data.ConfigFault2, ARBVersion(1, 0), callback));
 			std::wstring name = fault1->GetGenericName();
@@ -146,7 +147,7 @@ TEST_CASE("ConfigFault")
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			fault1->Load(data.ConfigFault2, ARBVersion(2, 0), callback);
 			ElementNodePtr ele = ElementNode::New();
@@ -165,7 +166,7 @@ TEST_CASE("ConfigFaultList")
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultList faultlist;
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(faultlist.Load(data.ConfigFault1, ARBVersion(1, 0), callback));
 			REQUIRE(faultlist.Load(data.ConfigFault2, ARBVersion(2, 0), callback));
@@ -182,7 +183,7 @@ TEST_CASE("ConfigFaultList")
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultList faultlist;
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(faultlist.Load(data.ConfigFault1, ARBVersion(1, 0), callback));
 			REQUIRE(faultlist.Load(data.ConfigFault2, ARBVersion(2, 0), callback));
@@ -197,7 +198,7 @@ TEST_CASE("ConfigFaultList")
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultList faultlist;
-			std::wostringstream errs;
+			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(faultlist.AddFault(L"fault"));
 			REQUIRE(1u == faultlist.size());

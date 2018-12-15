@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-10-26 Added option to prevent auto-update user query.
@@ -28,6 +29,7 @@
 #include "ARB/ARBConfigOtherPoints.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARB/ARBTypes2.h"
+#include "fmt/format.h"
 
 
 /**
@@ -162,7 +164,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfig const& inConfigNew,
-			std::wostringstream& ioInfo);
+			fmt::wmemory_buffer& ioInfo);
 
 	/*
 	 * Getters.

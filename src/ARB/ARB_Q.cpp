@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-05-05 Reorder "NA" lower in list.
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown state.
@@ -49,19 +50,19 @@ static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 
 std::wstring ARB_Q::GetValidTypes()
 {
-	std::wostringstream types;
+	fmt::wmemory_buffer types;
 	bool bComma = false;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (sc_Qs[i].trans)
 		{
 			if (bComma)
-				types << L", ";
+				fmt::format_to(types, L", ");
 			bComma = true;
-			types << StringUtil::GetTranslation(sc_Qs[i].trans);
+			fmt::format_to(types, L"{}", StringUtil::GetTranslation(sc_Qs[i].trans));
 		}
 	}
-	return types.str();
+	return fmt::to_string(types);
 }
 
 

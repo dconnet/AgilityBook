@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2010-03-28 Created.
  */
 
@@ -50,9 +51,7 @@ CNamedColumns::CNamedColumns(CAgilityBookOptions::ColumnOrder eOrder)
 		data.configName = wxConfig::Get()->Read(name + CFG_CI_CONFIG_NAME, wxEmptyString);
 		for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		{
-			std::wostringstream configname;
-			configname << name << data.configName;
-			CDlgAssignColumns::GetColumnOrder(m_eOrder, i, configname.str(), data.m_Columns[i]);
+			CDlgAssignColumns::GetColumnOrder(m_eOrder, i, fmt::format(L"{}{}", name, data.configName), data.m_Columns[i]);
 		}
 		m_Configs.push_back(data);
 	}
@@ -102,9 +101,7 @@ void CNamedColumns::Save()
 		wxConfig::Get()->Write(name + CFG_CI_CONFIG_NAME, (*iConfig).configName.c_str());
 		for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		{
-			std::wostringstream configname;
-			configname << name << (*iConfig).configName;
-			CDlgAssignColumns::SetColumnOrder(m_eOrder, i, configname.str(), (*iConfig).m_Columns[i]);
+			CDlgAssignColumns::SetColumnOrder(m_eOrder, i, fmt::format(L"{}{}", name, (*iConfig).configName), (*iConfig).m_Columns[i]);
 		}
 	}
 	m_numConfigs = nConfigs;

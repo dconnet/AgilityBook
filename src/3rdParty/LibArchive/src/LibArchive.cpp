@@ -28,7 +28,6 @@
 #include "Poco/Zip/ZipStream.h"
 #include "Poco/StreamCopier.h"
 #include <fstream>
-#include <sstream>
 
 #include "Platform/arbWarningPop.h"
 
