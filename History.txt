@@ -1,10 +1,11 @@
-12/11/2018: v3.3.0.<development>
+12/15/2018: v3.3.0.<development>
 - Notes:
   - Windows XP support dropped, VC10/11/12/14 dropped.
 - Bumped Configuration v59:
   - Cleaned up comments in AKC Std/JWW.
   - Added lifetime points to NADAC extreme games.
   - Fix ASCA ACE Senior Dog title abbreviations.
+  - Updated USDAA Master Challenge for 2019.
 - New features / Enhancements:
   - Update to wx3.1.2
   - Enable Cutting/Deleting multiple items at once.

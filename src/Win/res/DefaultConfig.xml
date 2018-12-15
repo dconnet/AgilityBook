@@ -4,10 +4,11 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2018-12-08 Configuration version 59.
+2018-12-15 Configuration version 59.
            Cleaned up comments in AKC Std/JWW.
            Added lifetime points to NADAC extreme games.
            Fix ASCA ACE Senior Dog title abbreviations.
+           Updated USDAA Master Challenge for 2019.
 2018-04-07 Configuration version 58.
            Added NADAC Barrelers
 2017-12-31 File version 14.5, tweaked T+F titling points.
@@ -4344,18 +4345,18 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Relay Champion - Gold" Name="RCH-Gold">35 qualifying scores in Masters Relay class</Titles>
       <Titles LongName="Relay Champion - Platinum" Name="RCH-Platinum">50 qualifying scores in Masters Relay class</Titles>
       <Titles LongName="Relay Champion - Diamond" Name="RCH-Diamond">100 qualifying scores in Masters Relay class</Titles>
-      <Titles LongName="MC Standard Agility Champion" Name="MCSACH">20 titling points in MC Masters Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Bronze" Name="MCSACH-Bronze">30 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Silver" Name="MCSACH-Silver">50 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Gold" Name="MCSACH-Gold">70 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Platinum" Name="MCSACH-Platinum">100 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Diamond" Name="MCSACH-Diamond">200 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Jumpers Champion" Name="MCJCH">20 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Bronze" Name="MCJCH-Bronze">30 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Silver" Name="MCJCH-Silver">50 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Gold" Name="MCJCH-Gold">70 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Platinum" Name="MCJCH-Platinum">100 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Diamond" Name="MCJCH-Diamond">200 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Standard Agility Champion" Name="MCSACH">10 titling points in MC Masters Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Bronze" Name="MCSACH-Bronze">15 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Silver" Name="MCSACH-Silver">25 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Gold" Name="MCSACH-Gold">35 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Platinum" Name="MCSACH-Platinum">50 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Diamond" Name="MCSACH-Diamond">100 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Jumpers Champion" Name="MCJCH">10 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Bronze" Name="MCJCH-Bronze">15 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Silver" Name="MCJCH-Silver">25 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Gold" Name="MCJCH-Gold">35 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Platinum" Name="MCJCH-Platinum">50 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Diamond" Name="MCJCH-Diamond">100 titling points in MC Jumpers class</Titles>
       <Titles LongName="Lifetime Achievement Award Bronze" Name="LAA Bronze">150 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 15 qualifying scores in each standard and nonstandard classes.
 [Before 1/1/2007, minimums had to come from Ch]</Titles>
       <Titles LongName="Lifetime Achievement Award Silver" Name="LAA Silver">250 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 25 qualifying scores in each standard and nonstandard classes.
@@ -4443,18 +4444,18 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Performance Relay Champion - Gold" Name="PRCHG">35 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Platinum" Name="PRCHP">50 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Diamond" Name="PRCHD">100 qualifying scores in PRM</Titles>
-      <Titles LongName="MC Performance Standard Champion" Name="MCPSCH">20 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Bronze" Name="MCPSCHB">30 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Silver" Name="MCPSCHS">50 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Gold" Name="MCPSCHG">70 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Platinum" Name="MCPSCHP">100 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Diamond" Name="MCPSCHD">200 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Jumpers Champion" Name="MCPJCH">20 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Bronze" Name="MCPJCHB">30 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Silver" Name="MCPJCHS">50 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Gold" Name="MCPJCHG">70 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Platinum" Name="MCPJCHP">100 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Diamond" Name="MCPJCHD">200 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Standard Champion" Name="MCPSCH">10 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Bronze" Name="MCPSCHB">15 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Silver" Name="MCPSCHS">25 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Gold" Name="MCPSCHG">35 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Platinum" Name="MCPSCHP">50 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Diamond" Name="MCPSCHD">100 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Jumpers Champion" Name="MCPJCH">10 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Bronze" Name="MCPJCHB">15 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Silver" Name="MCPJCHS">25 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Gold" Name="MCPJCHG">35 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Platinum" Name="MCPJCHP">50 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Diamond" Name="MCPJCHD">100 qualifying scores in MC Performance Jumpers</Titles>
       <Titles LongName="Performance Tournament Master" Name="PTM">10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.
 [Before 9/22/2006] 10 qualifying scores in Performance Grand Prix of Dog Agility® tournament.</Titles>
       <Titles LongName="Performance Tournament Master - Bronze" Name="PTMB">15 qualifying scores in tournament competition with at least 3 qualifying scores in each tournament.
@@ -4562,7 +4563,11 @@ TG3 + 10 Qs in at least 5 games
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" type="TimePlusFaults">
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
@@ -4587,7 +4592,11 @@ TG3 + 10 Qs in at least 5 games
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
@@ -4624,7 +4633,11 @@ TG3 + 10 Qs in at least 5 games
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" type="TimePlusFaults">
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
@@ -4650,7 +4663,11 @@ TG3 + 10 Qs in at least 5 games
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
@@ -4910,15 +4927,23 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
         </Scoring>
       </Event>
       <Event Name="Biathlon">
-        <Desc>This tracks Master Challenge overall status for all both events.</Desc>
+        <Desc>This tracks Master Challenge overall status for both events.</Desc>
+        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2019-1-1" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-12-31" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Nationals" ValidFrom="2012-1-1" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2019-1-1" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
         <Scoring Division="Performance" Level="Nationals" ValidFrom="2012-1-1" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" type="TimePlusFaults">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
       </Event>
       <Event Name="Jokers Wild">
         <Desc>Nationals Event</Desc>
