@@ -1349,7 +1349,7 @@ bool CAgilityBookRunsView::GetMessage(std::wstring& msg) const
 				++nIgnoredRuns;
 		}
 	}
-	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_RUNS_QS"), m_Ctrl->GetItemCount(), m_Ctrl->GetItemCount() - nIgnoredRuns, nQs));
+	msg = fmt::format(_("IDS_NUM_RUNS_QS").wx_str(), m_Ctrl->GetItemCount(), m_Ctrl->GetItemCount() - nIgnoredRuns, nQs);
 	return true;
 }
 

@@ -410,7 +410,7 @@ void CDlgOptionsCalendar::Save()
 
 static std::wstring ForDisplay(std::wstring const& text)
 {
-	return StringUtil::stringW(wxString::Format(_("IDS_CALENDAR_DISPLAY_COLOR"), text.c_str()));
+	return fmt::format(_("IDS_CALENDAR_DISPLAY_COLOR").wx_str(), text);
 }
 
 

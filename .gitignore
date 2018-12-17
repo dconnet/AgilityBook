@@ -1,6 +1,8 @@
 # Ignore MSW build directory
 /bin/*
 
+/src/lang/**/*.mo
+
 /src/Projects/**/.vs/
 /src/Projects/**/*.opendb
 /src/Projects/**/*.sdf

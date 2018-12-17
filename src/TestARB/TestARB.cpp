@@ -109,12 +109,7 @@ private:
 	{
 		if (!m_Localization.Load())
 		{
-#if defined(__WXWINDOWS__)
-			wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), OnGetCatalogName().c_str());
-			std::string msg(str.ToAscii());
-#else
-			std::string msg("ERROR: Unable to load localization");
-#endif
+			std::string msg = fmt::format("ERROR: Unable to load '{}.mo'.", OnGetCatalogName().ToAscii());
 			std::cerr << msg << "\n";
 			throw std::runtime_error(msg);
 		}

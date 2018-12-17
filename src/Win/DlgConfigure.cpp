@@ -695,7 +695,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 			std::wstring name(pVenueData->GetVenue()->GetName());
 			while (m_Config.GetVenues().FindVenue(name))
 			{
-				name = StringUtil::stringW(wxString::Format(_("IDS_COPYOF"), name.c_str()));
+				name = fmt::format(_("IDS_COPYOF").wx_str(), name);
 			}
 			ARBConfigVenuePtr pNewVenue;
 			if (m_Config.GetVenues().AddVenue(name, &pNewVenue))
@@ -739,7 +739,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 			std::wstring name(pOtherData->GetOtherPoints()->GetName());
 			while (m_Config.GetOtherPoints().FindOtherPoints(name))
 			{
-				name = StringUtil::stringW(wxString::Format(_("IDS_COPYOF"), name.c_str()));
+				name = fmt::format(_("IDS_COPYOF").wx_str(), name);
 			}
 			ARBConfigOtherPointsPtr pOther = pOtherData->GetOtherPoints()->Clone();
 			pOther->SetName(name);

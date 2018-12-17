@@ -2299,44 +2299,44 @@ void CAgilityBookDoc::OnUpdateFileProperties(wxUpdateUIEvent& evt)
 
 void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 {
-	wxString str;
+	fmt::wmemory_buffer str;
 
 	wxString filename = GetFilename();
 	if (!filename.empty())
 	{
 		if (wxFileName::IsFileWritable(filename))
-			str << wxString::Format(_("IDS_FILEPROP_NAME"), filename) << L"\n";
+			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_NAME").wx_str(), filename));
 		else
-			str << wxString::Format(_("IDS_FILEPROP_READONLY"), filename) << L"\n";
+			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_READONLY").wx_str(), filename));
 
 		wxFileName file(filename);
 		if (file.IsOk())
 		{
-			str << wxString::Format(_("IDS_FILEPROP_SIZE"), file.GetSize().GetValue()) << L"\n";
+			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_SIZE").wx_str(), file.GetSize().GetValue()));
 
 			wxDateTime timeCreate, timeMod;
 			if (GetFileTimes(file, nullptr, &timeMod, &timeCreate))
 			{
-				str << wxString::Format(_("IDS_FILEPROP_CREATED"), StringUtil::stringW(timeCreate.FormatISOCombined())) << L"\n";
-				str << wxString::Format(_("IDS_FILEPROP_MODIFIED"), StringUtil::stringW(timeMod.FormatISOCombined())) << L"\n";
+				fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_CREATED").wx_str(), timeCreate.FormatISOCombined().wx_str()));
+				fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_MODIFIED").wx_str(), timeMod.FormatISOCombined().wx_str()));
 			}
 		}
 	}
 
-	str << L"\n";
+	fmt::format_to(str, L"\n");
 
 	if (Book().GetConfig().GetVersion() == GetCurrentConfigVersion())
-		str << wxString::Format(_("IDS_FILEPROP_CONFIGURATION"), Book().GetConfig().GetVersion()) << L"\n";
+		fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_CONFIGURATION").wx_str(), Book().GetConfig().GetVersion()));
 	else
-		str << wxString::Format(_("IDS_FILEPROP_CONFIGURATION_CURRENT"), Book().GetConfig().GetVersion(), GetCurrentConfigVersion()) << L"\n";
+		fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_CONFIGURATION_CURRENT").wx_str(), Book().GetConfig().GetVersion(), GetCurrentConfigVersion()));
 
 	if (!Book().GetFileInfo(ARBAgilityRecordBook::fileInfoBook).empty())
 	{
 		ARBVersion ver(Book().GetFileInfo(ARBAgilityRecordBook::fileInfoBook));
 		if (ver == ARBAgilityRecordBook::GetCurrentDocVersion())
-			str << wxString::Format(_("IDS_FILEPROP_VERSION"), ver.str()) << L"\n";
+			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_VERSION").wx_str(), ver.str()));
 		else
-			str << wxString::Format(_("IDS_FILEPROP_VERSION_CURRENT"), ver.str(), ARBAgilityRecordBook::GetCurrentDocVersion().str()) << L"\n";
+			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_VERSION_CURRENT").wx_str(), ver.str(), ARBAgilityRecordBook::GetCurrentDocVersion().str()));
 	}
 
 	if (!Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS).empty()
@@ -2344,21 +2344,16 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 	|| !Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp).empty()
 	|| !Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion).empty())
 	{
-		str << L"\n"
-			<< wxString::Format(_("IDS_FILEPROP_FILEWRITTEN"),
+		fmt::format_to(str, L"\n{}\n{}\n", fmt::format(_("IDS_FILEPROP_FILEWRITTEN").wx_str(),
 				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS),
 				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform),
 				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp),
-				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion))
-			<< L"\n"
-			<< wxVERSION_STRING << L"\n";
+				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion)),
+			wxVERSION_STRING);
 	}
 
-	if (!str.empty())
-	{
-		CDlgMessage dlg(StringUtil::stringW(str), wxGetApp().GetTopWindow(), _("IDS_FILE_PROPERTIES").wc_str());
-		dlg.ShowModal();
-	}
+	CDlgMessage dlg(fmt::to_string(str), wxGetApp().GetTopWindow(), _("IDS_FILE_PROPERTIES").wc_str());
+	dlg.ShowModal();
 }
 
 

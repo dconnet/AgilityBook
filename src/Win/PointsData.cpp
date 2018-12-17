@@ -731,7 +731,7 @@ std::wstring CPointsDataLifetime::OnNeedText(int inCol) const
 			std::wstring lifetime = m_LifetimeName->GetName();
 			if (lifetime.empty())
 				lifetime = _("IDS_TITLEPOINT_LIFETIME_NAME");
-			fmt::format_to(str, L"{}", fmt::sprintf(_("IDS_LIFETIME_POINTS").wx_str(), lifetime));
+			fmt::format_to(str, _("IDS_LIFETIME_POINTS").wx_str(), lifetime);
 		}
 		else
 			fmt::format_to(str, L"{}", StringUtil::stringW(_("IDS_PLACEMENT_POINTS")));
@@ -775,7 +775,7 @@ void CPointsDataLifetime::Details() const
 		std::wstring lifetime = m_LifetimeName->GetName();
 		if (lifetime.empty())
 			lifetime = _("IDS_TITLEPOINT_LIFETIME_NAME");
-		str = StringUtil::stringW(wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str()));
+		str = fmt::format(_("IDS_LIFETIME_POINTS").wx_str(), lifetime);
 	}
 	else
 		str = StringUtil::stringW(_("IDS_PLACEMENT_POINTS"));
@@ -971,7 +971,7 @@ std::wstring CPointsDataSpeedPts::OnNeedText(int inCol) const
 		str = m_Div->GetName();
 		break;
 	case 7:
-		str = StringUtil::stringW(wxString::Format(_("IDS_POINTS_SPEED"), m_Pts));
+		str = fmt::format(_("IDS_POINTS_SPEED").wx_str(), m_Pts);
 		break;
 	}
 	return str;
@@ -1619,46 +1619,44 @@ void CPointsDataItems::LoadData(
 						// Now we deal with the visible runs.
 						if (0 < points || 0 < allmatching.size())
 						{
-							wxString strRunCount = wxString::Format(_("IDS_POINTS_RUNS_JUDGES"),
-								static_cast<int>(allmatching.size()),
-								static_cast<int>(judges.size()));
+							fmt::wmemory_buffer strRunCount;
+							fmt::format_to(strRunCount, _("IDS_POINTS_RUNS_JUDGES").wx_str(),
+								allmatching.size(),
+								judges.size());
 							if (pEvent->HasPartner() && 0 < partners.size())
 							{
-								strRunCount += wxString::Format(_("IDS_POINTS_PARTNERS"),
-									static_cast<int>(partners.size()));
+								fmt::format_to(strRunCount, _("IDS_POINTS_PARTNERS").wx_str(), partners.size());
 							}
 							double percentQs = 0.0;
 							if (0 < allmatching.size())
 								percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(allmatching.size())) * 100;
-							wxString strQcount = wxString::Format(_("IDS_POINTS_QS"),
+							fmt::wmemory_buffer strQcount;
+							fmt::format_to(strQcount, _("IDS_POINTS_QS"),
 								nCleanQ + nNotCleanQ,
 								static_cast<int>(percentQs));
 							if (0 < nCleanQ)
 							{
-								strQcount += wxString::Format(_("IDS_POINTS_CLEAN"), nCleanQ);
+								fmt::format_to(strQcount, _("IDS_POINTS_CLEAN").wx_str(), nCleanQ);
 							}
 							if (0 < judgesQ.size())
 							{
-								strQcount += wxString::Format(_("IDS_POINTS_JUDGES"),
-									static_cast<int>(judgesQ.size()));
+								fmt::format_to(strQcount, _("IDS_POINTS_JUDGES").wx_str(), judgesQ.size());
 							}
 							if (pEvent->HasPartner() && 0 < partnersQ.size())
 							{
-								strQcount += wxString::Format(_("IDS_POINTS_PARTNERS"),
-									static_cast<int>(partnersQ.size()));
+								fmt::format_to(strQcount, _("IDS_POINTS_PARTNERS").wx_str(), partnersQ.size());
 							}
-							std::wstring strPts;
+							std::wstring strPts = fmt::format(L"{}", points + nExistingSQ);
 							std::wstring strSuperQ;
-							strPts = fmt::format(L"{}{}", points, nExistingSQ);
 							if (hasSQs)
 							{
 								SQs += nExistingSQ;
-								strSuperQ = wxString::Format(_("IDS_POINTS_SQS"), SQs);
+								strSuperQ = fmt::format(_("IDS_POINTS_SQS").wx_str(), SQs);
 							}
 							std::wstring strSpeed;
 							if (bHasSpeedPts && 0 < speedPtsEvent)
 							{
-								strSpeed = wxString::Format(_("IDS_POINTS_SPEED_SUBTOTAL"), speedPtsEvent);
+								strSpeed = fmt::format(_("IDS_POINTS_SPEED_SUBTOTAL").wx_str(), speedPtsEvent);
 							}
 							items.push_back(new CPointsDataEvent(pDoc,
 								!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? inDog : ARBDogPtr(),
@@ -1667,8 +1665,8 @@ void CPointsDataItems::LoadData(
 								pDiv, idxDiv,
 								pLevel, idxLevel,
 								pEvent, idxEvent,
-								StringUtil::stringW(strRunCount),
-								StringUtil::stringW(strQcount),
+								fmt::to_string(strRunCount),
+								fmt::to_string(strQcount),
 								strPts,
 								strSuperQ,
 								strSpeed));

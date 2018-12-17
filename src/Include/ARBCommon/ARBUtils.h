@@ -17,6 +17,7 @@
  * 2018-10-30 Moved some utils from ARBWin.
  */
 
+#include "fmt/printf.h"
 
 /**
  * Helper to reset wxConfig path
@@ -78,17 +79,17 @@ public:
 	{
 		fTics = fTickle = GetTickCount();
 		++fIndent;
-		OutputDebugString(wxString::Format(L"%*s%s: Enter\n", fIndent, L" ", fMsg).wx_str());		
+		OutputDebugString(fmt::sprintf(L"%*s%s: Enter\n", fIndent, L" ", fMsg).c_str());		
 	}
 	void Tickle(wxString const& msg)
 	{
 		DWORD dw = GetTickCount();
-		OutputDebugString(wxString::Format(L"%*s%s: Tickle [%d]\n", fIndent, L" ", msg, dw - fTickle).wx_str());
+		OutputDebugString(fmt::sprintf(L"%*s%s: Tickle [%d]\n", fIndent, L" ", msg, dw - fTickle).c_str());
 		fTickle = dw;
 	}
 	~CStackTracer()
 	{
-		OutputDebugString(wxString::Format(L"%*s%s: Leave [%d]\n", fIndent, L" ", fMsg, GetTickCount() - fTics).wx_str());
+		OutputDebugString(fmt::sprintf(L"%*s%s: Leave [%d]\n", fIndent, L" ", fMsg, GetTickCount() - fTics).c_str());
 		--fIndent;
 	}
 private:

@@ -221,7 +221,7 @@ static ElementNodePtr FindElementName(
 {
 	for (long i = 0; i < numConfigs; ++i)
 	{
-		std::wstring configName = StringUtil::stringW(wxString::Format(L"%s%ld", eleItem, i));
+		std::wstring configName = fmt::format(L"{}{}", eleItem, i);
 		int idxConfig = inTree->FindElement(configName);
 		if (0 <= idxConfig
 		&& Element::Element_Node == inTree->GetElement(idxConfig)->GetType())
@@ -276,7 +276,7 @@ static bool ImportColumnInfo(ElementNodePtr const& inTree)
 	long added = 0;
 	for (long i = 0; i < numConfigs; ++i)
 	{
-		std::wstring configName = StringUtil::stringW(wxString::Format(CFG_KEY_CONFIG L"%ld", i));
+		std::wstring configName = fmt::format(CFG_KEY_CONFIG L"{}", i);
 		int idxConfig = inTree->FindElement(configName);
 		if (0 <= idxConfig
 		&& Element::Element_Node == inTree->GetElement(idxConfig)->GetType())
@@ -304,7 +304,7 @@ static bool ImportColumnInfo(ElementNodePtr const& inTree)
 			else
 			{
 				name = nodeConfig->GetName();
-				std::wstring newName = StringUtil::stringW(wxString::Format(CFG_KEY_CONFIG L"%ld", numExistingConfigs + added));
+				std::wstring newName = fmt::format(CFG_KEY_CONFIG L"{}", numExistingConfigs + added);
 				++added;
 				nodeConfig->SetName(newName);
 				ImportConfig(nodeConfig, false);
@@ -354,7 +354,7 @@ static bool MergeFilters(ElementNodePtr const& inTree)
 	long added = 0;
 	for (long i = 0; i < numFilters; ++i)
 	{
-		std::wstring configName = StringUtil::stringW(wxString::Format(CFG_KEY_FILTER L"%ld", i));
+		std::wstring configName = fmt::format(CFG_KEY_FILTER L"{}", i);
 		int idxFilter = inTree->FindElement(configName);
 		if (0 <= idxFilter
 		&& Element::Element_Node == inTree->GetElement(idxFilter)->GetType())
@@ -382,7 +382,7 @@ static bool MergeFilters(ElementNodePtr const& inTree)
 			else
 			{
 				name = nodeFilter->GetName();
-				std::wstring newName = StringUtil::stringW(wxString::Format(CFG_KEY_FILTER L"%ld", numExistingFilters + added));
+				std::wstring newName = fmt::format(CFG_KEY_FILTER L"{}", numExistingFilters + added);
 				++added;
 				nodeFilter->SetName(newName);
 				ImportConfig(nodeFilter, true);

@@ -370,8 +370,8 @@ void CMainFrame::OnDPIChanged(wxDPIChangedEvent& evt)
 #ifdef _DEBUG
 	wxSize old = evt.GetOldDPI();
 	wxSize newsz = evt.GetNewDPI();
-	wxString str = wxString::Format(L"DPI Old: %d,%d  New: %d,%d\n", old.x, old.y, newsz.x, newsz.y);
-	OutputDebugString(str.wc_str());
+	std::wstring str = fmt::format(L"DPI Old: {},{}  New: {},{}\n", old.x, old.y, newsz.x, newsz.y);
+	OutputDebugString(str.c_str());
 #endif
 
 	evt.Skip();

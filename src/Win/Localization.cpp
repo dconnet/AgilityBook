@@ -61,10 +61,10 @@ bool CLocalization::Load()
 	m_InvalidDivLevel = _("IDS_INVALID_DIV_LEVEL");
 	m_InvalidEventName = _("IDS_INVALID_EVENT_NAME");
 
-	m_InvalidRoot = StringUtil::stringW(wxString::Format(_("IDS_INVALID_ROOT"), TREE_BOOK));
-	m_MissingConfig = StringUtil::stringW(wxString::Format(_("IDS_MISSING_CONFIG"), TREE_CONFIG));
-	m_InvalidConfig = StringUtil::stringW(wxString::Format(_("IDS_INVALID_CONFIG"), TREE_CONFIG));
-	m_InvalidVenueConfig = StringUtil::stringW(wxString::Format(_("IDS_INVALID_VENUE_CONFIG"), TREE_DIVISION, TREE_EVENT));
+	m_InvalidRoot = fmt::format(_("IDS_INVALID_ROOT").wx_str(), TREE_BOOK);
+	m_MissingConfig = fmt::format(_("IDS_MISSING_CONFIG").wx_str(), TREE_CONFIG);
+	m_InvalidConfig = fmt::format(_("IDS_INVALID_CONFIG").wx_str(), TREE_CONFIG);
+	m_InvalidVenueConfig = fmt::format(_("IDS_INVALID_VENUE_CONFIG").wx_str(), TREE_DIVISION, TREE_EVENT);
 	m_InvalidDivName = _("IDS_INVALID_DIV_NAME");
 	m_InvalidVenueName = _("IDS_INVALID_VENUE_NAME");
 	m_InvalidLifetimeName = _("IDS_INVALID_LIFETIME_NAME");
@@ -114,9 +114,9 @@ std::wstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped)
 {
 	return fmt::format(L"{}: {}, {}, {}",
 		_("IDS_UPDATE_CALSITES").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nNew),
-		fmt::sprintf(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nNew),
+		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -124,8 +124,8 @@ std::wstring CLocalization::UpdateFaults(int nNew, int nSkipped) const
 {
 	return fmt::format(L"{}: {}, {}",
 		_("IDS_COL_FAULTS").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nNew),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nNew),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -133,9 +133,9 @@ std::wstring CLocalization::UpdateOtherPts(int nNew, int nUpdated, int nSkipped)
 {
 	return fmt::format(L"{}: {}, {}, {}",
 		_("IDS_OTHERPOINTS").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nNew),
-		fmt::sprintf(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nNew),
+		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -143,9 +143,9 @@ std::wstring CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) c
 {
 	return fmt::format(L"{}: {}, {}, {}",
 		_("IDS_COL_VENUES").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nNew),
-		fmt::sprintf(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nNew),
+		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -153,8 +153,8 @@ std::wstring CLocalization::UpdateLifetimeNames(int nNew, int nSkipped) const
 {
 	return fmt::format(L"{}: {}, {}",
 		_("IDS_LIFETIMENAMES").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nNew),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nNew),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -162,9 +162,9 @@ std::wstring CLocalization::UpdateDivisions(int nAdded, int nUpdated, int nSkipp
 {
 	return fmt::format(L"{}: {}, {}, {}",
 		_("IDS_COL_DIVISIONS").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
-		fmt::sprintf(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
+		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -180,9 +180,9 @@ std::wstring CLocalization::UpdateEvents(int nAdded, int nUpdated, int nSkipped)
 {
 	return fmt::format(L"{}: {}, {}, {}",
 		_("IDS_COL_EVENTS").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
-		fmt::sprintf(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
+		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -198,9 +198,9 @@ std::wstring CLocalization::UpdateMultiqs(int nAdded, int nDeleted, int nSkipped
 {
 	return fmt::format(L"{}: {}, {}, {}",
 		_("IDS_COL_MULTIQS").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
-		fmt::sprintf(_("IDS_UPDATE_DELETED").wx_str(), nDeleted),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
+		fmt::format(_("IDS_UPDATE_DELETED").wx_str(), nDeleted),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -216,9 +216,9 @@ std::wstring CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped)
 {
 	return fmt::format(L"{}: {}, {}, {}",
 		_("IDS_COL_LEVELS").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
-		fmt::sprintf(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
+		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -234,9 +234,9 @@ std::wstring CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped)
 {
 	return fmt::format(L"{}: {}, {}, {}",
 		_("IDS_TITLES").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
-		fmt::sprintf(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
+		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -252,9 +252,9 @@ std::wstring CLocalization::UpdateSubLevels(int nAdded, int nUpdated, int nSkipp
 {
 	return fmt::format(L"{}: {}, {}, {}",
 		_("IDS_SUBLEVEL_NAME").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
-		fmt::sprintf(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
+		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
@@ -270,16 +270,16 @@ std::wstring CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, 
 {
 	return fmt::format(L" {}: {}, {}, {}, {}",
 		_("IDS_UPDATE_RULES").wx_str(),
-		fmt::sprintf(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
-		fmt::sprintf(_("IDS_UPDATE_DELETED").wx_str(), nDeleted),
-		fmt::sprintf(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::sprintf(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
+		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nAdded),
+		fmt::format(_("IDS_UPDATE_DELETED").wx_str(), nDeleted),
+		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
+		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
 }
 
 
 std::wstring CLocalization::ActionDeleteCalPlugin(std::wstring const& name) const
 {
-	return fmt::sprintf(_("IDS_ACTION_DELETE_CALPLUGIN").wx_str(), name);
+	return fmt::format(_("IDS_ACTION_DELETE_CALPLUGIN").wx_str(), name);
 }
 
 
@@ -289,10 +289,10 @@ std::wstring CLocalization::ActionRenameOtherPoints(
 		int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_OTHERPTS").wx_str(), oldName, newName));
+	fmt::format_to(buffer, _("IDS_ACTION_RENAME_OTHERPTS").wx_str(), oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_OTHERPTS2").wx_str(), nChanges));
+		fmt::format_to(buffer, _("IDS_ACTION_RENAME_OTHERPTS2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -302,13 +302,13 @@ std::wstring CLocalization::ActionPreDeleteOtherPoints(
 		std::wstring const& name,
 		int nChanges) const
 {
-	return fmt::sprintf(_("IDS_ACTION_PREDELETE_OTHERPTS").wx_str(), name, nChanges);
+	return fmt::format(_("IDS_ACTION_PREDELETE_OTHERPTS").wx_str(), name, nChanges);
 }
 
 
 std::wstring CLocalization::ActionDeleteOtherPoints(std::wstring const& name) const
 {
-	return fmt::sprintf(_("IDS_ACTION_DELETE_OTHERPTS").wx_str(), name);
+	return fmt::format(_("IDS_ACTION_DELETE_OTHERPTS").wx_str(), name);
 }
 
 
@@ -318,10 +318,10 @@ std::wstring CLocalization::ActionRenameVenue(
 		int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_VENUE").wx_str(), oldName, newName));
+	fmt::format_to(buffer, _("IDS_ACTION_RENAME_VENUE").wx_str(), oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_VENUE2").wx_str(), nChanges));
+		fmt::format_to(buffer, _("IDS_ACTION_RENAME_VENUE2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -331,13 +331,13 @@ std::wstring CLocalization::ActionPreDeleteVenue(
 		std::wstring const& name,
 		int nChanges) const
 {
-	return fmt::sprintf(_("IDS_ACTION_PREDELETE_VENUE").wx_str(), name, nChanges);
+	return fmt::format(_("IDS_ACTION_PREDELETE_VENUE").wx_str(), name, nChanges);
 }
 
 
 std::wstring CLocalization::ActionDeleteVenue(std::wstring const& name) const
 {
-	return fmt::sprintf(_("IDS_ACTION_DELETE_VENUE").wx_str(), name);
+	return fmt::format(_("IDS_ACTION_DELETE_VENUE").wx_str(), name);
 }
 
 
@@ -348,10 +348,10 @@ std::wstring CLocalization::ActionRenameMultiQ(
 		int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_MULTIQ").wx_str(), venue, oldName, newName));
+	fmt::format_to(buffer, _("IDS_ACTION_RENAME_MULTIQ").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_MULTIQ2").wx_str(), nChanges));
+		fmt::format_to(buffer, _("IDS_ACTION_RENAME_MULTIQ2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -362,7 +362,7 @@ std::wstring CLocalization::ActionPreDeleteMultiQ(
 		std::wstring const& name,
 		int nChanges) const
 {
-	return fmt::sprintf(_("IDS_ACTION_PREDELETE_MULTIQ").wx_str(), venue, name, nChanges);
+	return fmt::format(_("IDS_ACTION_PREDELETE_MULTIQ").wx_str(), venue, name, nChanges);
 }
 
 
@@ -370,7 +370,7 @@ std::wstring CLocalization::ActionDeleteMultiQ(
 		std::wstring const& venue,
 		std::wstring const& name) const
 {
-	return fmt::sprintf(_("IDS_ACTION_DELETE_MULTIQ").wx_str(), venue, name);
+	return fmt::format(_("IDS_ACTION_DELETE_MULTIQ").wx_str(), venue, name);
 }
 
 
@@ -381,10 +381,10 @@ std::wstring CLocalization::ActionRenameDivision(
 		int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_DIV").wx_str(), venue, oldName, newName));
+	fmt::format_to(buffer, _("IDS_ACTION_RENAME_DIV").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_DIV2").wx_str(), nChanges));
+		fmt::format_to(buffer, _("IDS_ACTION_RENAME_DIV2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -395,7 +395,7 @@ std::wstring CLocalization::ActionPreDeleteDivision(
 		std::wstring const& name,
 		int nChanges) const
 {
-	return fmt::sprintf(_("IDS_ACTION_PREDELETE_DIV").wx_str(), venue, name, nChanges);
+	return fmt::format(_("IDS_ACTION_PREDELETE_DIV").wx_str(), venue, name, nChanges);
 }
 
 
@@ -403,7 +403,7 @@ std::wstring CLocalization::ActionDeleteDivision(
 		std::wstring const& venue,
 		std::wstring const& name) const
 {
-	return fmt::sprintf(_("IDS_ACTION_DELETE_DIV").wx_str(), venue, name);
+	return fmt::format(_("IDS_ACTION_DELETE_DIV").wx_str(), venue, name);
 }
 
 
@@ -414,10 +414,10 @@ std::wstring CLocalization::ActionRenameLevel(
 		int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_LEVEL").wx_str(), venue, oldName, newName));
+	fmt::format_to(buffer, _("IDS_ACTION_RENAME_LEVEL").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_LEVEL2").wx_str(), nChanges));
+		fmt::format_to(buffer, _("IDS_ACTION_RENAME_LEVEL2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -428,7 +428,7 @@ std::wstring CLocalization::ActionPreDeleteLevel(
 		std::wstring const& name,
 		int nChanges) const
 {
-	return fmt::sprintf(_("IDS_ACTION_PREDELETE_LEVEL").wx_str(), venue, name, nChanges);
+	return fmt::format(_("IDS_ACTION_PREDELETE_LEVEL").wx_str(), venue, name, nChanges);
 }
 
 
@@ -436,7 +436,7 @@ std::wstring CLocalization::ActionDeleteLevel(
 		std::wstring const& venue,
 		std::wstring const& name) const
 {
-	return fmt::sprintf(_("IDS_ACTION_DELETE_LEVEL").wx_str(), venue, name);
+	return fmt::format(_("IDS_ACTION_DELETE_LEVEL").wx_str(), venue, name);
 }
 
 
@@ -447,10 +447,10 @@ std::wstring CLocalization::ActionRenameTitle(
 		int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_TITLE").wx_str(), venue, oldName, newName));
+	fmt::format_to(buffer, _("IDS_ACTION_RENAME_TITLE").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_TITLE2").wx_str(), nChanges));
+		fmt::format_to(buffer, _("IDS_ACTION_RENAME_TITLE2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -461,7 +461,7 @@ std::wstring CLocalization::ActionPreDeleteTitle(
 		std::wstring const& name,
 		int nChanges) const
 {
-	return fmt::sprintf(_("IDS_ACTION_PREDELETE_TITLE").wx_str(), venue, name, nChanges);
+	return fmt::format(_("IDS_ACTION_PREDELETE_TITLE").wx_str(), venue, name, nChanges);
 }
 
 
@@ -469,7 +469,7 @@ std::wstring CLocalization::ActionDeleteTitle(
 		std::wstring const& venue,
 		std::wstring const& name) const
 {
-	return fmt::sprintf(_("IDS_ACTION_DELETE_TITLE").wx_str(), venue, name);
+	return fmt::format(_("IDS_ACTION_DELETE_TITLE").wx_str(), venue, name);
 }
 
 
@@ -480,10 +480,10 @@ std::wstring CLocalization::ActionRenameEvent(
 		int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_EVENT").wx_str(), venue, oldName, newName));
+	fmt::format_to(buffer, _("IDS_ACTION_RENAME_EVENT").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, L"{}", fmt::sprintf(_("IDS_ACTION_RENAME_EVENT2").wx_str(), nChanges));
+		fmt::format_to(buffer, _("IDS_ACTION_RENAME_EVENT2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -494,7 +494,7 @@ std::wstring CLocalization::ActionPreDeleteEvent(
 		std::wstring const& name,
 		int nChanges) const
 {
-	return fmt::sprintf(_("IDS_ACTION_PREDELETE_EVENT").wx_str(), venue, name, nChanges);
+	return fmt::format(_("IDS_ACTION_PREDELETE_EVENT").wx_str(), venue, name, nChanges);
 }
 
 
@@ -502,7 +502,7 @@ std::wstring CLocalization::ActionDeleteEvent(
 		std::wstring const& venue,
 		std::wstring const& name) const
 {
-	return fmt::sprintf(_("IDS_ACTION_DELETE_EVENT").wx_str(), venue, name);
+	return fmt::format(_("IDS_ACTION_DELETE_EVENT").wx_str(), venue, name);
 }
 
 
@@ -513,9 +513,9 @@ std::wstring CLocalization::ActionRenameLifetimeName(
 		int nEventChanges) const
 {
 	if (0 == nEventChanges)
-		return fmt::sprintf(_("IDS_ACTION_RENAME_LIFETIMENAME_0").wx_str(), venue, oldName, newName);
+		return fmt::format(_("IDS_ACTION_RENAME_LIFETIMENAME_0").wx_str(), venue, oldName, newName);
 	else
-		return fmt::sprintf(_("IDS_ACTION_RENAME_LIFETIMENAME_N").wx_str(), venue, oldName, newName, nEventChanges);
+		return fmt::format(_("IDS_ACTION_RENAME_LIFETIMENAME_N").wx_str(), venue, oldName, newName, nEventChanges);
 }
 
 
@@ -525,53 +525,53 @@ std::wstring CLocalization::ActionDeleteLifetimeName(
 		int nEventChanges) const
 {
 	if (0 == nEventChanges)
-		return fmt::sprintf(_("IDS_ACTION_DELETE_LIFETIMENAME_0").wx_str(), venue, name);
+		return fmt::format(_("IDS_ACTION_DELETE_LIFETIMENAME_0").wx_str(), venue, name);
 	else
-		return fmt::sprintf(_("IDS_ACTION_DELETE_LIFETIMENAME_N").wx_str(), venue, name, nEventChanges);
+		return fmt::format(_("IDS_ACTION_DELETE_LIFETIMENAME_N").wx_str(), venue, name, nEventChanges);
 }
 
 
 std::wstring CLocalization::TitlePointsNameFormat(double points, double faults) const
 {
-	return fmt::sprintf(_("IDS_TITLEPOINTSNAME").wx_str(), points, faults);
+	return fmt::format(_("IDS_TITLEPOINTSNAME").wx_str(), points, faults);
 }
 
 
 std::wstring CLocalization::LifetimePointsNameWithSpeedPointsFormat(double faults) const
 {
-	return fmt::sprintf(_("IDS_LIFETITLEPOINTSNAME").wx_str(), StringUtil::GetTranslation(arbT("IDS_COL_SPEED")), faults);
+	return fmt::format(_("IDS_LIFETITLEPOINTSNAME").wx_str(), StringUtil::GetTranslation(arbT("IDS_COL_SPEED")), faults);
 }
 
 
 std::wstring CLocalization::LifetimePointsNameFormat(double points, double faults) const
 {
-	std::wstring dbl1 = fmt::sprintf(L"%g", points);
-	return fmt::sprintf(_("IDS_LIFETITLEPOINTSNAME").wx_str(), dbl1, faults);
+	std::wstring dbl1 = fmt::format(L"{:g}", points);
+	return fmt::format(_("IDS_LIFETITLEPOINTSNAME").wx_str(), dbl1, faults);
 }
 
 
 std::wstring CLocalization::PlacementPointsNameFormat(double points, short place) const
 {
-	std::wstring dbl1 = fmt::sprintf(L"%g", points);
-	return fmt::sprintf(_("IDS_PLACEMENTPOINTSNAME").wx_str(), dbl1, (int)place);
+	std::wstring dbl1 = fmt::format(L"{:g}", points);
+	return fmt::format(_("IDS_PLACEMENTPOINTSNAME").wx_str(), dbl1, (int)place);
 }
 
 
 std::wstring CLocalization::WarnDeletedRuns(int nRuns, std::wstring const& inRunsMsg) const
 {
-	return fmt::format(L"{}\n{}", fmt::sprintf(_("IDS_WARN_DELETED_RUNS").wx_str(), nRuns), inRunsMsg);
+	return fmt::format(L"{}\n{}", fmt::format(_("IDS_WARN_DELETED_RUNS").wx_str(), nRuns), inRunsMsg);
 }
 
 
 std::wstring CLocalization::UpdateTeamRuns(int nRuns, std::wstring const& inRunsMsg) const
 {
-	return fmt::format(L"{}\n{}", fmt::sprintf(_("IDS_UPDATE_TEAM_RUNS").wx_str(), nRuns), inRunsMsg);
+	return fmt::format(L"{}\n{}", fmt::format(_("IDS_UPDATE_TEAM_RUNS").wx_str(), nRuns), inRunsMsg);
 }
 
 
 std::wstring CLocalization::UpdateTableRuns(int nRuns) const
 {
-	return fmt::sprintf(_("IDS_UPDATE_TABLE_RUNS").wx_str(), nRuns);
+	return fmt::format(_("IDS_UPDATE_TABLE_RUNS").wx_str(), nRuns);
 }
 
 
