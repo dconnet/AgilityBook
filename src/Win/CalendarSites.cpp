@@ -997,22 +997,21 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 					}
 					else
 					{
-						std::wstring str(pData->OnNeedText());
-						wxString err = wxString::Format(_("IDS_ERR_PARSING_DATA"), str.c_str());
-						if (!errMsg.size())
+						fmt::wmemory_buffer err;
+						fmt::format_to(err, _("IDS_ERR_PARSING_DATA").wx_str(), pData->OnNeedText());
+						if (0 < errMsg.size())
 						{
-							err << L":\n\t" << fmt::to_string(errMsg);
+							fmt::format_to(err, L":\n\t", fmt::to_string(errMsg));
 						}
 						int flags = wxCENTRE | wxICON_WARNING;
 						if (pData->CanDisable())
 						{
 							flags |= wxYES_NO | wxNO_DEFAULT;
-							err += L"\n\n";
-							err += _("IDS_USE_PLUGIN");
+							fmt::format_to(err, L"\n\n{}", _("IDS_USE_PLUGIN").wx_str());
 						}
 						else
 							flags |= wxOK;
-						if (wxNO == wxMessageBox(err, wxMessageBoxCaptionStr, flags))
+						if (wxNO == wxMessageBox(fmt::to_string(err), wxMessageBoxCaptionStr, flags))
 							pData->Disable();
 						progress.SetForegroundWindow();
 					}
@@ -1079,7 +1078,7 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 		m_pDoc->UpdateAllViews(nullptr, &hint);
 		m_pDoc->Modify(true);
 	}
-	wxString str = wxString::Format(_("IDS_UPDATED_CAL_ITEMS"), nAdded, nUpdated);
+	std::wstring str = fmt::format(_("IDS_UPDATED_CAL_ITEMS").wx_str(), nAdded, nUpdated);
 	wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	UpdateControls();
 }

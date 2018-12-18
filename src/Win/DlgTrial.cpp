@@ -602,8 +602,8 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			}
 			if (0 < nDelete)
 			{
-				wxString msg = wxString::Format(_("IDS_CONFIG_DELETE_RUNS"),
-					static_cast<int>(m_pTrial->GetRuns().size()));
+				std::wstring msg = fmt::format(_("IDS_CONFIG_DELETE_RUNS").wx_str(),
+					m_pTrial->GetRuns().size());
 				if (wxYES != wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 					return;
 				m_pTrial->GetRuns().clear();

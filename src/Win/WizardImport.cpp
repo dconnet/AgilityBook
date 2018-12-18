@@ -393,7 +393,7 @@ bool CWizardImport::DoImportFile()
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_FileName = dlg.GetPath();
-		wxString str = wxString::Format(_("IDS_FILE_PREVIEW"), m_FileName.c_str());
+		std::wstring str = fmt::format(_("IDS_FILE_PREVIEW").wx_str(), m_FileName);
 		m_ctrlPreviewFile->SetLabel(str);
 		m_FileData.clear();
 		m_ExcelData.clear();
@@ -865,8 +865,7 @@ bool CWizardImport::DoWizardFinish()
 				if (!pScoring)
 				{
 					fmt::format_to(errLog, L"{}\n",
-						fmt::sprintf(_("IDS_IMPORT_SKIP_NOCONFIG").wx_str(),
-							static_cast<int>(nItem + 1)));
+						fmt::format(_("IDS_IMPORT_SKIP_NOCONFIG").wx_str(), nItem + 1));
 					++nSkipped;
 					continue;
 				}
@@ -1106,8 +1105,7 @@ bool CWizardImport::DoWizardFinish()
 						pRun->GetDate()))
 					{
 						fmt::format_to(errLog, L"{}\n",
-							fmt::sprintf(_("IDS_IMPORT_SKIP_NOCONFIG").wx_str(),
-								static_cast<int>(nItem + 1)));
+							fmt::format(_("IDS_IMPORT_SKIP_NOCONFIG").wx_str(), nItem + 1));
 						pRun.reset();
 					}
 				}

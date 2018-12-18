@@ -355,12 +355,13 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		{
 			if (bVerbose)
 			{
-				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), VersionFile().c_str());
+				fmt::wmemory_buffer msg;
+				fmt::format_to(msg, _("IDS_LOAD_FAILED").wx_str(), VersionFile());
 				if (0 < errMsg2.size())
 				{
-					msg << L"\n\n" << fmt::to_string(errMsg2);
+					fmt::format_to(msg, L"\n\n{}", fmt::to_string(errMsg2));
 				}
-				wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+				wxMessageBox(fmt::to_string(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
 		}
 		else if (tree->GetName() == L"Data")
@@ -505,7 +506,7 @@ bool CUpdateInfo::CheckProgram(
 			return bNeedsUpdating;
 		}
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO).c_str());
-		wxString msg = wxString::Format(_("IDS_VERSION_AVAILABLE"), m_VersionNum.GetVersionString().c_str());
+		std::wstring msg = fmt::format(_("IDS_VERSION_AVAILABLE").wx_str(), m_VersionNum.GetVersionString());
 		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 		{
 			bool bGotoWeb = false;
@@ -536,12 +537,12 @@ bool CUpdateInfo::CheckProgram(
 #endif
 				if (!bGotoWeb)
 				{
-					wxString errMsg;
+					fmt::wmemory_buffer errMsg;
 					wxFileOutputStream output(filename);
 					if (!output.IsOk())
 					{
 						bGotoWeb = true;
-						errMsg = wxString::Format(_("IDS_CANNOT_OPEN"), filename.c_str());
+						fmt::format_to(errMsg, _("IDS_CANNOT_OPEN").wx_str(), filename.c_str());
 					}
 					else
 					{
@@ -559,9 +560,9 @@ bool CUpdateInfo::CheckProgram(
 							// If user canceled, no message is generated.
 							if (!err.empty())
 							{
-								if (!errMsg.empty())
-									errMsg << L"\n\n";
-								errMsg << err.c_str();
+								if (0 < errMsg.size())
+									fmt::format_to(errMsg, L"\n\n");
+								fmt::format_to(errMsg, L"{}", err);
 							}
 						}
 						output.Close();
@@ -573,25 +574,25 @@ bool CUpdateInfo::CheckProgram(
 							if (ARBMsgDigest::Compute(stdfile, m_hashType) != m_hash)
 							{
 								bGotoWeb = true;
-								if (!errMsg.empty())
-									errMsg << L"\n\n";
-								errMsg << _("IDS_ERROR_DOWNLOAD");
+								if (0 < errMsg.size())
+									fmt::format_to(errMsg, L"\n\n");
+								fmt::format_to(errMsg, L"{}", _("IDS_ERROR_DOWNLOAD").wx_str());
 							}
 						}
 						if (bGotoWeb)
 							::wxRemoveFile(filename);
 						progress->Dismiss();
 					}
-					if (!errMsg.empty() && bGotoWeb)
+					if (0 < errMsg.size() && bGotoWeb)
 					{
-						wxMessageBox(errMsg);
+						wxMessageBox(fmt::to_string(errMsg));
 					}
 				}
 				if (!bGotoWeb)
 				{
 #if defined(__WXMAC__)
 					outClose = true;
-					wxMessageBox(wxString::Format(_("IDS_DOWNLOAD_AND_RESTART"), filename.c_str()));
+					wxMessageBox(fmt::format(_("IDS_DOWNLOAD_AND_RESTART").wx_str(), filename));
 #elif defined(__WXMSW__)
 					wxString msiFilename;
 					{ // Can't remove file until stream is closed.
@@ -792,13 +793,13 @@ void CUpdateInfo::CheckConfig(
 				}
 				if (!bOk)
 				{
-					wxString msg2 = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());
+					fmt::wmemory_buffer msg2;
+					fmt::format_to(msg2, _("IDS_LOAD_FAILED").wx_str(), url);
 					if (0 < errMsg2.size())
 					{
-						msg2 += L"\n\n";
-						msg2 += fmt::to_string(errMsg2);
+						fmt::format_to(msg2, L"\n\n{}", fmt::to_string(errMsg2));
 					}
-					wxMessageBox(msg2, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(fmt::to_string(msg2), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
 				else if (tree->GetName() == L"DefaultConfig")
 				{

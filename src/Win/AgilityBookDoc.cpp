@@ -622,7 +622,7 @@ bool CAgilityBookDoc::EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTr
 		}
 		if (!Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
 		{
-			wxMessageBox(wxString::Format(_("IDS_VENUE_CONFIG_MISSING"), pClub->GetVenue().c_str()),
+			wxMessageBox(fmt::format(_("IDS_VENUE_CONFIG_MISSING").wx_str(), pClub->GetVenue()),
 				wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 			return false;
 		}
@@ -1158,90 +1158,85 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 			m_Records.GetAllTrialLocations(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
 		}
-		wxString str(_("IDS_ADDED"));
+		fmt::wmemory_buffer str;
+		fmt::format_to(str, L"{}", _("IDS_ADDED").wx_str());
 		bool bAdded = false;
 		if (0 < countDog)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_DOGS"), countDog);
+			fmt::format_to(str, _("IDS_ADDED_DOGS").wx_str(), countDog);
 		}
 		if (0 < countRegNumsAdded)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_REGNUMS"), countRegNumsAdded);
+			fmt::format_to(str, _("IDS_ADDED_REGNUMS").wx_str(), countRegNumsAdded);
 		}
 		if (0 < countExistingPts)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_EXISTINGPTS"), countExistingPts);
+			fmt::format_to(str, _("IDS_ADDED_EXISTINGPTS").wx_str(), countExistingPts);
 		}
 		if (0 < countTitlesAdded)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_TITLES"), countTitlesAdded);
+			fmt::format_to(str, _("IDS_ADDED_TITLES").wx_str(), countTitlesAdded);
 		}
 		if (0 < countTrials)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_TRIALS"), countTrials);
+			fmt::format_to(str, _("IDS_ADDED_TRIALS").wx_str(), countTrials);
 		}
 		if (0 < countClubs)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_CLUBS"), countClubs);
+			fmt::format_to(str, _("IDS_ADDED_CLUBS").wx_str(), countClubs);
 		}
 		if (0 < countJudges)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_JUDGES"), countJudges);
+			fmt::format_to(str, _("IDS_ADDED_JUDGES").wx_str(), countJudges);
 		}
 		if (0 < countLocations)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_LOCATIONS"), countLocations);
+			fmt::format_to(str, _("IDS_ADDED_LOCATIONS").wx_str(), countLocations);
 		}
 		bAdded = false;
 		if (0 < countRegNumsUpdated)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			else
-			{
-				str += L"\n";
-				str += _("IDS_UPDATED");
-			}
+				fmt::format_to(str, L"\n{}", _("IDS_UPDATED").wx_str());
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_REGNUMS"), countRegNumsUpdated);
+			fmt::format_to(str, _("IDS_ADDED_REGNUMS").wx_str(), countRegNumsUpdated);
 		}
 		if (0 < countTitlesUpdated)
 		{
 			if (bAdded)
-				str += L", ";
+				fmt::format_to(str, L", ");
 			else
-			{
-				str += L"\n";
-				str += _("IDS_UPDATED");
-			}
+				fmt::format_to(str, L"\n{}", _("IDS_UPDATED").wx_str());
 			bAdded = true;
-			str += wxString::Format(_("IDS_ADDED_TITLES"), countTitlesUpdated);
+			fmt::format_to(str, _("IDS_ADDED_TITLES").wx_str(), countTitlesUpdated);
 		}
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(fmt::to_string(str), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.size())
@@ -1273,7 +1268,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr const& inTree, wxWindow* p
 			Modify(true);
 		}
 
-		wxString str = wxString::Format(_("IDS_UPDATED_CAL_ITEMS"), nAdded, nUpdated);
+		std::wstring str = fmt::format(_("IDS_UPDATED_CAL_ITEMS").wx_str(), nAdded, nUpdated);
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
@@ -1306,7 +1301,7 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr const& inTree, wxWindow* p
 			Modify(true);
 		}
 
-		wxString str = wxString::Format(_("IDS_UPDATED_TRAINING_ITEMS"), nAdded, nUpdated);
+		std::wstring str = fmt::format(_("IDS_UPDATED_TRAINING_ITEMS").wx_str(), nAdded, nUpdated);
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
@@ -1656,13 +1651,13 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		if (!tree->LoadXML(filename, err))
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
-			// This string is in fr/fr.po
-			wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
+			fmt::wmemory_buffer msg;
+			fmt::format_to(msg, _("Cannot open file '{}'.").wx_str(), filename.wx_str());
 			if (0 < err.size())
 			{
-				msg << L"\n\n" << StringUtil::stringWX(fmt::to_string(err));
+				fmt::format_to(msg, L"\n\n{}", fmt::to_string(err));
 			}
-			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(fmt::to_string(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 		STACK_TICKLE(stack, L"PostLoadXML");
@@ -1672,18 +1667,20 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		if (!m_Records.Load(tree, callback))
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
-			wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
+			fmt::wmemory_buffer msg;
+			fmt::format_to(msg, _("Cannot open file '{}'.").wx_str(), filename.wx_str());
 			if (0 < callback.m_ErrMsg.size())
 			{
-				msg << L"\n\n" << StringUtil::stringWX(fmt::to_string(callback.m_ErrMsg));
+				fmt::format_to(msg, L"\n\n{}", fmt::to_string(callback.m_ErrMsg));
 			}
-			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(fmt::to_string(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 		else if (0 < callback.m_ErrMsg.size())
 		{
-			wxString msg(_("IDS_NONFATAL_MSGS"));
-			msg << L"\n\n" << StringUtil::stringWX(fmt::to_string(callback.m_ErrMsg));
+			std::wstring msg = fmt::format(L"{}\n\n{}",
+					_("IDS_NONFATAL_MSGS").wx_str(),
+					fmt::to_string(callback.m_ErrMsg));
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		}
 		STACK_TICKLE(stack, L"PostLoad");
@@ -1827,7 +1824,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 		else
 		{
 			bAlreadyWarned = true;
-			wxString errMsg = wxString::Format(_("IDS_CANNOT_OPEN"), filename.c_str());
+			std::wstring errMsg = fmt::format(_("IDS_CANNOT_OPEN").wx_str(), filename);
 			wxMessageBox(errMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		}
 	}
@@ -1896,7 +1893,7 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	}
 	else
 	{
-		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
+		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_strSearch);
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		return false;
 	}

@@ -174,9 +174,9 @@ DEFINE_ON_INIT(CDlgPluginDetails)
 
 void CDlgPluginDetails::SetCodeText()
 {
-	wxString str = wxString::Format(_("IDC_PLUGINDETAIL_CODES_TEXT"),
-		static_cast<int>(m_CalSite->LocationCodes().size()),
-		static_cast<int>(m_CalSite->VenueCodes().size()));
+	std::wstring str = fmt::format(_("IDC_PLUGINDETAIL_CODES_TEXT").wx_str(),
+		m_CalSite->LocationCodes().size(),
+		m_CalSite->VenueCodes().size());
 	m_ctrlCodes->SetLabel(str);
 }
 

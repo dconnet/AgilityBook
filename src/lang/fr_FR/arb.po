@@ -627,7 +627,7 @@ msgstr "fichier de Agility Record Book"
 #: Win/AgilityBookRunsView.cpp:1180 Win/AgilityBookTrainingView.cpp:290
 #: Win/AgilityBookTreeView.cpp:181
 msgid "IDS_CANNOT_FIND"
-msgstr "Ne peut pas trouver '%1$s'"
+msgstr "Ne peut pas trouver '{}'"
 
 #: Win/AgilityBookCalendarListView.cpp:616 Win/AgilityBookCalendarView.cpp:1302
 msgid "IDS_NUM_EVENTS"
@@ -642,7 +642,7 @@ msgstr "          "
 #: Win/AgilityBookCalendarListView.cpp:1016
 msgid "IDS_NOT_VISIBLE"
 msgstr ""
-"Attention: %1$d nouveaux entrés ne sont pas visible a cause de votre filtrage "
+"Attention: {} nouveaux entrés ne sont pas visible a cause de votre filtrage "
 "choisi."
 
 #: Win/AgilityBookCalendarView.cpp:634 Win/DlgAssignColumns.cpp:304
@@ -804,7 +804,7 @@ msgstr "Il faut créer un club organisateur avant créer des epreuves."
 #: Win/AgilityBookDoc.cpp:625
 msgid "IDS_VENUE_CONFIG_MISSING"
 msgstr ""
-"Impossible de localiser information configuration pour organisation '%1$s'."
+"Impossible de localiser information configuration pour organisation '{}'."
 
 #: Win/AgilityBookDoc.cpp:648 Win/AgilityBookTreeView.cpp:768
 msgid "IDS_CREATERUN_FAILED"
@@ -839,35 +839,35 @@ msgstr "Ajouté "
 
 #: Win/AgilityBookDoc.cpp:1168
 msgid "IDS_ADDED_DOGS"
-msgstr "%1$d chiens"
+msgstr "{} chiens"
 
 #: Win/AgilityBookDoc.cpp:1175 Win/AgilityBookDoc.cpp:1230
 msgid "IDS_ADDED_REGNUMS"
-msgstr "%1$d numeros d'enregistrement"
+msgstr "{} numeros d'enregistrement"
 
 #: Win/AgilityBookDoc.cpp:1182
 msgid "IDS_ADDED_EXISTINGPTS"
-msgstr "%1$d points existant"
+msgstr "{} points existant"
 
 #: Win/AgilityBookDoc.cpp:1189 Win/AgilityBookDoc.cpp:1242
 msgid "IDS_ADDED_TITLES"
-msgstr "%1$d distinctions"
+msgstr "{} distinctions"
 
 #: Win/AgilityBookDoc.cpp:1196
 msgid "IDS_ADDED_TRIALS"
-msgstr "%1$d epreuves"
+msgstr "{} epreuves"
 
 #: Win/AgilityBookDoc.cpp:1203
 msgid "IDS_ADDED_CLUBS"
-msgstr "%1$d clubs"
+msgstr "{} clubs"
 
 #: Win/AgilityBookDoc.cpp:1210
 msgid "IDS_ADDED_JUDGES"
-msgstr "%1$d juges"
+msgstr "{} juges"
 
 #: Win/AgilityBookDoc.cpp:1217
 msgid "IDS_ADDED_LOCATIONS"
-msgstr "%1$d endroits"
+msgstr "{} endroits"
 
 #: Win/AgilityBookDoc.cpp:1227 Win/AgilityBookDoc.cpp:1239
 msgid "IDS_UPDATED"
@@ -875,11 +875,11 @@ msgstr "Mis a jour "
 
 #: Win/AgilityBookDoc.cpp:1276 Win/CalendarSites.cpp:1082
 msgid "IDS_UPDATED_CAL_ITEMS"
-msgstr "%1$d nouveaux entrés calendrier rajouté, %2$d entrés mis a jour."
+msgstr "{0} nouveaux entrés calendrier rajouté, {1} entrés mis a jour."
 
 #: Win/AgilityBookDoc.cpp:1309
 msgid "IDS_UPDATED_TRAINING_ITEMS"
-msgstr "%1$d nouveaux entrés Log Entraînement rajoutés, %2$d entrés mis a jour."
+msgstr "{0} nouveaux entrés Log Entraînement rajoutés, {1} entrés mis a jour."
 
 #: Win/AgilityBookDoc.cpp:1579 Win/DlgDog.cpp:615 Win/DlgFindLinks.cpp:118
 #: Win/DlgListCtrl.cpp:465 Win/DlgListViewer.cpp:1216 Win/Print.cpp:259
@@ -892,8 +892,8 @@ msgstr "Impossible d'ouvrir ce fichier."
 
 #: Win/AgilityBookDoc.cpp:1660 Win/AgilityBookDoc.cpp:1675
 #, c-format
-msgid "Cannot open file '%s'."
-msgstr "Impossible d'ouvrir le fichier « %s »."
+msgid "Cannot open file '{}'."
+msgstr "Impossible d'ouvrir le fichier « {} »."
 
 #: Win/AgilityBookDoc.cpp:1685
 msgid "IDS_NONFATAL_MSGS"
@@ -908,7 +908,7 @@ msgstr ""
 
 #: Win/AgilityBookDoc.cpp:1830 Win/UpdateInfo.cpp:544
 msgid "IDS_CANNOT_OPEN"
-msgstr "Impossible d'ouvrir fichier '%1$s' pour ecriture."
+msgstr "Impossible d'ouvrir fichier '{}' pour ecriture."
 
 #: Win/AgilityBookDoc.cpp:1836
 msgid "IDS_INTERNAL_ERROR"
@@ -1799,7 +1799,7 @@ msgstr ""
 
 #: Win/CalendarSiteUSDAA.cpp:203 Win/CalendarSites.cpp:1001
 msgid "IDS_ERR_PARSING_DATA"
-msgstr "Erreur parsing %1$s data"
+msgstr "Erreur parsing {} data"
 
 #: Win/CalendarSites.cpp:604 Win/CalendarSites.cpp:617
 msgid "IDS_DISABLED"
@@ -1898,9 +1898,9 @@ msgstr "à Propos de"
 #: Win/DlgAbout.cpp:59
 msgid "AboutVersion"
 msgstr ""
-"Version %1$s\n"
+"Version {0}\n"
 "\n"
-"%2$s est Open Source et gratuite a utiliser; nous demandons seulement que vous "
+"{1} est Open Source et gratuite a utiliser; nous demandons seulement que vous "
 "faites une donne de 10 euros ou plus a la SPA ou semblable organisation.\n"
 "\n"
 " SVP envoyez vos rapport d'erreur et suggestions a:"
@@ -5393,7 +5393,7 @@ msgstr "Configurer les codes Endroit et Organisation qui sont permis."
 
 #: Win/DlgPluginDetails.cpp:177
 msgid "IDC_PLUGINDETAIL_CODES_TEXT"
-msgstr "%1$d Code(s) Endroit et %2$d Organisation"
+msgstr "{0} Code(s) Endroit et {1} Organisation"
 
 # DlgPointsViewSort
 #: Win/DlgPointsViewSort.cpp:58
@@ -6300,7 +6300,7 @@ msgid "IDS_CONFIG_DELETE_RUNS"
 msgstr ""
 "Attention!!!\n"
 "\n"
-"Ces changements vont supprimer les %1$d parcours dans la liste; ca que ne peut "
+"Ces changements vont supprimer les {} parcours dans la liste; ca que ne peut "
 "pas etre annulée.\n"
 "\n"
 "Etes-vous sur de continuer?"
@@ -6404,11 +6404,11 @@ msgstr "Version current pas determinable."
 
 #: Win/UpdateInfo.cpp:358 Win/UpdateInfo.cpp:795
 msgid "IDS_LOAD_FAILED"
-msgstr "Impossible de charger '%1$s'."
+msgstr "Impossible de charger '{}'."
 
 #: Win/UpdateInfo.cpp:508
 msgid "IDS_VERSION_AVAILABLE"
-msgstr "Version %1$s accesible. Voulez-vous le telecharger? "
+msgstr "Version {} accesible. Voulez-vous le telecharger? "
 
 #: Win/UpdateInfo.cpp:549
 msgid "IDS_DOWNLOADING"
@@ -6426,7 +6426,7 @@ msgstr "ERREUR: Le fichier téléchargé est corrompu."
 #: Win/UpdateInfo.cpp:594
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
-"%1$s a fini de télécharger. Agility Record Book va fermer pour vous laisser "
+"{} a fini de télécharger. Agility Record Book va fermer pour vous laisser "
 "l'installer."
 
 #: Win/UpdateInfo.cpp:626
@@ -6731,7 +6731,7 @@ msgstr "Fichiers Calc (*.ods)|*.ods|Tous fichiers (*.*)|*.*||"
 
 #: Win/WizardImport.cpp:396
 msgid "IDS_FILE_PREVIEW"
-msgstr "Prevue de %1$s."
+msgstr "Prevue de {}."
 
 #: Win/WizardImport.cpp:421
 msgid "IDS_IMPORT_FAILED"
@@ -6745,7 +6745,7 @@ msgstr "Utilitaire d'Importation"
 #: Win/WizardImport.cpp:868 Win/WizardImport.cpp:1109
 msgid "IDS_IMPORT_SKIP_NOCONFIG"
 msgstr ""
-"Attention: Ligne %1$d: Entré passé, impossible de trouver un entré "
+"Attention: Ligne {}: Entré passé, impossible de trouver un entré "
 "configuration valide"
 
 #: Win/WizardImport.cpp:937

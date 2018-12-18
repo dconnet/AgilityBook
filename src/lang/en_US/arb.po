@@ -622,7 +622,7 @@ msgstr "Agility Record Book file"
 #: Win/AgilityBookRunsView.cpp:1180 Win/AgilityBookTrainingView.cpp:290
 #: Win/AgilityBookTreeView.cpp:181
 msgid "IDS_CANNOT_FIND"
-msgstr "Cannot find '%1$s'"
+msgstr "Cannot find '{}'"
 
 #: Win/AgilityBookCalendarListView.cpp:616 Win/AgilityBookCalendarView.cpp:1302
 msgid "IDS_NUM_EVENTS"
@@ -636,7 +636,7 @@ msgstr "          "
 
 #: Win/AgilityBookCalendarListView.cpp:1016
 msgid "IDS_NOT_VISIBLE"
-msgstr "Warning: %1$d new entries are not visible due to your viewing options."
+msgstr "Warning: {} new entries are not visible due to your viewing options."
 
 #: Win/AgilityBookCalendarView.cpp:634 Win/DlgAssignColumns.cpp:304
 #: Win/DlgAssignColumns.cpp:361 Win/DlgAssignColumns.cpp:412
@@ -796,7 +796,7 @@ msgstr "You must create a hosting club before creating any events."
 
 #: Win/AgilityBookDoc.cpp:625
 msgid "IDS_VENUE_CONFIG_MISSING"
-msgstr "Unable to locate configuration information for the venue '%1$s'."
+msgstr "Unable to locate configuration information for the venue '{}'."
 
 #: Win/AgilityBookDoc.cpp:648 Win/AgilityBookTreeView.cpp:768
 msgid "IDS_CREATERUN_FAILED"
@@ -830,35 +830,35 @@ msgstr "Added "
 
 #: Win/AgilityBookDoc.cpp:1168
 msgid "IDS_ADDED_DOGS"
-msgstr "%1$d dogs"
+msgstr "{} dogs"
 
 #: Win/AgilityBookDoc.cpp:1175 Win/AgilityBookDoc.cpp:1230
 msgid "IDS_ADDED_REGNUMS"
-msgstr "%1$d registration numbers"
+msgstr "{} registration numbers"
 
 #: Win/AgilityBookDoc.cpp:1182
 msgid "IDS_ADDED_EXISTINGPTS"
-msgstr "%1$d existing points"
+msgstr "{} existing points"
 
 #: Win/AgilityBookDoc.cpp:1189 Win/AgilityBookDoc.cpp:1242
 msgid "IDS_ADDED_TITLES"
-msgstr "%1$d titles"
+msgstr "{} titles"
 
 #: Win/AgilityBookDoc.cpp:1196
 msgid "IDS_ADDED_TRIALS"
-msgstr "%1$d trials"
+msgstr "{} trials"
 
 #: Win/AgilityBookDoc.cpp:1203
 msgid "IDS_ADDED_CLUBS"
-msgstr "%1$d clubs"
+msgstr "{} clubs"
 
 #: Win/AgilityBookDoc.cpp:1210
 msgid "IDS_ADDED_JUDGES"
-msgstr "%1$d judges"
+msgstr "{} judges"
 
 #: Win/AgilityBookDoc.cpp:1217
 msgid "IDS_ADDED_LOCATIONS"
-msgstr "%1$d locations"
+msgstr "{} locations"
 
 #: Win/AgilityBookDoc.cpp:1227 Win/AgilityBookDoc.cpp:1239
 msgid "IDS_UPDATED"
@@ -866,11 +866,11 @@ msgstr "Updated "
 
 #: Win/AgilityBookDoc.cpp:1276 Win/CalendarSites.cpp:1082
 msgid "IDS_UPDATED_CAL_ITEMS"
-msgstr "Added %1$d new calendar items, %2$d updated items."
+msgstr "Added {0} new calendar items, {1} updated items."
 
 #: Win/AgilityBookDoc.cpp:1309
 msgid "IDS_UPDATED_TRAINING_ITEMS"
-msgstr "Added %1$d new Training Log items, %2$d updated items."
+msgstr "Added {0} new Training Log items, {1} updated items."
 
 #: Win/AgilityBookDoc.cpp:1579 Win/DlgDog.cpp:615 Win/DlgFindLinks.cpp:118
 #: Win/DlgListCtrl.cpp:465 Win/DlgListViewer.cpp:1216 Win/Print.cpp:259
@@ -883,8 +883,8 @@ msgstr "Sorry, could not open this file."
 
 #: Win/AgilityBookDoc.cpp:1660 Win/AgilityBookDoc.cpp:1675
 #, c-format
-msgid "Cannot open file '%s'."
-msgstr "Cannot open file '%s'."
+msgid "Cannot open file '{}'."
+msgstr "Cannot open file '{}'."
 
 #: Win/AgilityBookDoc.cpp:1685
 msgid "IDS_NONFATAL_MSGS"
@@ -899,7 +899,7 @@ msgstr ""
 
 #: Win/AgilityBookDoc.cpp:1830 Win/UpdateInfo.cpp:544
 msgid "IDS_CANNOT_OPEN"
-msgstr "Unable to open file '%1$s' for writing."
+msgstr "Unable to open file '{}' for writing."
 
 #: Win/AgilityBookDoc.cpp:1836
 msgid "IDS_INTERNAL_ERROR"
@@ -1776,7 +1776,7 @@ msgstr ""
 
 #: Win/CalendarSiteUSDAA.cpp:203 Win/CalendarSites.cpp:1001
 msgid "IDS_ERR_PARSING_DATA"
-msgstr "Error parsing %1$s data"
+msgstr "Error parsing {} data"
 
 #: Win/CalendarSites.cpp:604 Win/CalendarSites.cpp:617
 msgid "IDS_DISABLED"
@@ -1875,9 +1875,9 @@ msgstr "About"
 #: Win/DlgAbout.cpp:59
 msgid "AboutVersion"
 msgstr ""
-"Version %1$s\n"
+"Version {0}\n"
 "\n"
-"%2$s is Open Source and freely distibutable. We only request that you make a "
+"{1} is Open Source and freely distibutable. We only request that you make a "
 "contribution ($10 or more) to your local animal shelter or rescue group.\n"
 "\n"
 "Please send any bug reports or suggestions to:"
@@ -5332,7 +5332,7 @@ msgstr "Configure the Location and Venue codes that are supported."
 
 #: Win/DlgPluginDetails.cpp:177
 msgid "IDC_PLUGINDETAIL_CODES_TEXT"
-msgstr "%1$d Location and %2$d Venue Code(s)"
+msgstr "{0} Location and {1} Venue Code(s)"
 
 # DlgPointsViewSort
 #: Win/DlgPointsViewSort.cpp:58
@@ -6217,7 +6217,7 @@ msgid "IDS_CONFIG_DELETE_RUNS"
 msgstr ""
 "Warning!!!\n"
 "\n"
-"Applying these changes will delete the %1$d runs listed. This action cannot "
+"Applying these changes will delete the {} runs listed. This action cannot "
 "be un-done.\n"
 "\n"
 "Are you sure you want to continue?"
@@ -6323,11 +6323,11 @@ msgstr "Unable to determine current released version."
 
 #: Win/UpdateInfo.cpp:358 Win/UpdateInfo.cpp:795
 msgid "IDS_LOAD_FAILED"
-msgstr "Failed to load '%1$s'."
+msgstr "Failed to load '{}'."
 
 #: Win/UpdateInfo.cpp:508
 msgid "IDS_VERSION_AVAILABLE"
-msgstr "Version %1$s is available. Would you like to download it?"
+msgstr "Version {} is available. Would you like to download it?"
 
 #: Win/UpdateInfo.cpp:549
 msgid "IDS_DOWNLOADING"
@@ -6345,7 +6345,7 @@ msgstr "ERROR: The downloaded file is corrupt."
 #: Win/UpdateInfo.cpp:594
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
-"%1$s is now downloaded. Agility Record Book will now close so you can "
+"{} is now downloaded. Agility Record Book will now close so you can "
 "install it."
 
 #: Win/UpdateInfo.cpp:626
@@ -6647,7 +6647,7 @@ msgstr "Calc Files (*.ods)|*.ods|All Files (*.*)|*.*||"
 
 #: Win/WizardImport.cpp:396
 msgid "IDS_FILE_PREVIEW"
-msgstr "Preview of %1$s."
+msgstr "Preview of {}."
 
 #: Win/WizardImport.cpp:421
 msgid "IDS_IMPORT_FAILED"
@@ -6661,7 +6661,7 @@ msgstr "Import Wizard"
 #: Win/WizardImport.cpp:868 Win/WizardImport.cpp:1109
 msgid "IDS_IMPORT_SKIP_NOCONFIG"
 msgstr ""
-"Warning: Line %1$d: Skipped entry, unable to find a valid configuration entry"
+"Warning: Line {}: Skipped entry, unable to find a valid configuration entry"
 
 #: Win/WizardImport.cpp:937
 msgid "IDS_IMPORT_BAD_DATE_RUN"

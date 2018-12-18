@@ -1177,7 +1177,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 	}
 	if (!bFound)
 	{
-		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
+		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_strSearch);
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
