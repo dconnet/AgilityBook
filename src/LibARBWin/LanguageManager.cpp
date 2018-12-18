@@ -234,10 +234,15 @@ bool CLanguageManager::SetLang(wxLanguage langId)
 	bool rc = false;
 	{
 		wxLocale locale(m_CurLang);
+		// The wx3.1.2 release had an incompatible change in AddCatalog. 3.1.3 restores it.
+#if wxMAJOR_VERSION == 3 && wxMINOR_VERSION == 1 && wxRELEASE_NUMBER == 2
 		if (m_CurLang == wxLANGUAGE_ENGLISH_US)
 			rc = wxTranslations::Get()->AddCatalog(m_pCallback->OnGetCatalogName(), wxLANGUAGE_USER_DEFINED);
 		else
 			rc = wxTranslations::Get()->AddCatalog(m_pCallback->OnGetCatalogName());
+#else
+		rc = wxTranslations::Get()->AddCatalog(m_pCallback->OnGetCatalogName(), m_CurLang);
+#endif
 	}
 	if (rc)
 	{
