@@ -663,13 +663,13 @@ bool CUpdateInfo::CheckProgram(
 						}
 						if (!bGotoWeb)
 						{
-							wxString args = wxString::Format(L"-f \"%s\"", msiFilename.c_str());
+							std::wstring args = fmt::format(L"-f \"{}\"", msiFilename.wx_str());
 							SHELLEXECUTEINFO info;
 							ZeroMemory(&info, sizeof(info));
 							info.cbSize = sizeof(info);
 							info.lpVerb = L"open";
 							info.lpFile = updater.wx_str();
-							info.lpParameters = args.wx_str();
+							info.lpParameters = args.c_str();
 							info.nShow = SW_SHOWNORMAL;
 							if (ShellExecuteEx(&info))
 								outClose = true;

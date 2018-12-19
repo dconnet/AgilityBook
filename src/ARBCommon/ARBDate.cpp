@@ -392,10 +392,10 @@ std::wstring ARBDate::GetString(
 		}
 		break;
 	case eDashMMDDYYYY:		///< MM-DD-YYYY
-		date = fmt::sprintf(L"%02d-%02d-%04d", mon, day, yr);
+		date = fmt::format(L"{:02}-{:02}-{:04}", mon, day, yr);
 		break;
 	case eYYYYMMDD:
-		date = fmt::sprintf(L"%04d%02d%02d", yr, mon, day);
+		date = fmt::format(L"{:04}{:02}{:02}", yr, mon, day);
 		break;
 	case eVerbose:
 		{
@@ -410,37 +410,37 @@ std::wstring ARBDate::GetString(
 		break;
 	default:
 	case eSlashMMDDYYYY:	///< MM/DD/YYYY
-		date = fmt::sprintf(L"%02d/%02d/%04d", mon, day, yr);
+		date = fmt::format(L"{:02}/{:02}/{:04}", mon, day, yr);
 		break;
 	case eDashYYYYMMDD:		///< YYYY-MM-DD
-		date = fmt::sprintf(L"%04d-%02d-%02d", yr, mon, day);
+		date = fmt::format(L"{:04}-{:02}-{:02}", yr, mon, day);
 		break;
 	case eSlashYYYYMMDD:	///< YYYY/MM/DD
-		date = fmt::sprintf(L"%04d/%02d/%02d", yr, mon, day);
+		date = fmt::format(L"{:04}/{:02}/{:02}", yr, mon, day);
 		break;
 	case eDashDDMMYYYY:		///< DD-MM-YYYY
-		date = fmt::sprintf(L"%02d-%02d-%04d", day, mon, yr);
+		date = fmt::format(L"{:02}-{:02}-{:04}", day, mon, yr);
 		break;
 	case eSlashDDMMYYYY:	///< DD/MM/YYYY
-		date = fmt::sprintf(L"%02d/%02d/%04d", day, mon, yr);
+		date = fmt::format(L"{:02}/{:02}/{:04}", day, mon, yr);
 		break;
 	case eDashMDY:	///< M-D-Y
-		date = fmt::sprintf(L"%d-%d-%d", mon, day, yr);
+		date = fmt::format(L"{}-{}-{}", mon, day, yr);
 		break;
 	case eSlashMDY:	///< M/D/Y
-		date = fmt::sprintf(L"%d/%d/%d", mon, day, yr);
+		date = fmt::format(L"{}/{}/{}", mon, day, yr);
 		break;
 	case eDashYMD:	///< Y-M-D
-		date = fmt::sprintf(L"%d-%d-%d", yr, mon, day);
+		date = fmt::format(L"{}-{}-{}", yr, mon, day);
 		break;
 	case eSlashYMD:	///< Y/M/D
-		date = fmt::sprintf(L"%d/%d/%d", yr, mon, day);
+		date = fmt::format(L"{}/{}/{}", yr, mon, day);
 		break;
 	case eDashDMY:	///< D-M-Y
-		date = fmt::sprintf(L"%d-%d-%d", day, mon, yr);
+		date = fmt::format(L"{}-{}-{}", day, mon, yr);
 		break;
 	case eSlashDMY:	///< D/M/Y
-		date = fmt::sprintf(L"%d/%d/%d", day, mon, yr);
+		date = fmt::format(L"{}/{}/{}", day, mon, yr);
 		break;
 	}
 	return date;

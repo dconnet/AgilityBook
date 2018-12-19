@@ -79,17 +79,17 @@ public:
 	{
 		fTics = fTickle = GetTickCount();
 		++fIndent;
-		OutputDebugString(fmt::sprintf(L"%*s%s: Enter\n", fIndent, L" ", fMsg).c_str());		
+		OutputDebugString(fmt::format(L"{:{}s}{}: Enter\n", L" ", fIndent, fMsg).c_str());		
 	}
 	void Tickle(wxString const& msg)
 	{
 		DWORD dw = GetTickCount();
-		OutputDebugString(fmt::sprintf(L"%*s%s: Tickle [%d]\n", fIndent, L" ", msg, dw - fTickle).c_str());
+		OutputDebugString(fmt::format(L"{:{}s}{}: Tickle [{}]\n", L" ", fIndent, msg, dw - fTickle).c_str());
 		fTickle = dw;
 	}
 	~CStackTracer()
 	{
-		OutputDebugString(fmt::sprintf(L"%*s%s: Leave [%d]\n", fIndent, L" ", fMsg, GetTickCount() - fTics).c_str());
+		OutputDebugString(fmt::format(L"{:{}s}{}: Leave [{}]\n", L" ", fIndent, fMsg, GetTickCount() - fTics).c_str());
 		--fIndent;
 	}
 private:

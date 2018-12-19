@@ -932,10 +932,10 @@ bool CWizardImport::DoWizardFinish()
 							else
 							{
 								fmt::format_to(errLog, L"{}\n",
-									fmt::sprintf(
+									fmt::format(
 										_("IDS_IMPORT_BAD_DATE_RUN").wx_str(),
-										static_cast<int>(nItem + 1),
-										static_cast<int>(iCol + 1),
+										nItem + 1,
+										iCol + 1,
 										entry[iCol]));
 								if (pRun)
 									pRun.reset();
@@ -1092,9 +1092,9 @@ bool CWizardImport::DoWizardFinish()
 					if (!m_pDoc->Book().GetConfig().GetVenues().FindVenue(primaryVenue))
 					{
 						fmt::format_to(errLog, L"{}\n",
-							fmt::sprintf(_("IDS_IMPORT_BAD_VENUE").wx_str(),
-								static_cast<int>(nItem + 1),
-								primaryVenue.c_str()));
+							fmt::format(_("IDS_IMPORT_BAD_VENUE").wx_str(),
+								nItem + 1,
+								primaryVenue));
 						pRun.reset();
 					}
 					else if (!m_pDoc->Book().GetConfig().GetVenues().FindEvent(
@@ -1267,9 +1267,9 @@ bool CWizardImport::DoWizardFinish()
 							else
 							{
 								fmt::format_to(errLog, L"{}\n",
-									fmt::sprintf(_("IDS_IMPORT_BAD_DATE_CALSTART").wx_str(),
-										static_cast<int>(nItem + 1),
-										static_cast<int>(iCol + 1),
+									fmt::format(_("IDS_IMPORT_BAD_DATE_CALSTART").wx_str(),
+										nItem + 1,
+										iCol + 1,
 										entry[iCol]));
 								if (pCal)
 									pCal.reset();
@@ -1288,9 +1288,9 @@ bool CWizardImport::DoWizardFinish()
 							else
 							{
 								fmt::format_to(errLog, L"{}\n",
-									fmt::sprintf(_("IDS_IMPORT_BAD_DATE_CALEND").wx_str(),
-										static_cast<int>(nItem + 1),
-										static_cast<int>(iCol + 1),
+									fmt::format(_("IDS_IMPORT_BAD_DATE_CALEND").wx_str(),
+										nItem + 1,
+										iCol + 1,
 										entry[iCol]));
 								if (pCal)
 									pCal.reset();
@@ -1326,9 +1326,9 @@ bool CWizardImport::DoWizardFinish()
 						else
 						{
 							fmt::format_to(errLog, L"{}\n",
-								fmt::sprintf(_("IDS_IMPORT_BAD_CAL_VALUE").wx_str(),
-									static_cast<int>(nItem + 1),
-									static_cast<int>(iCol + 1),
+								fmt::format(_("IDS_IMPORT_BAD_CAL_VALUE").wx_str(),
+									nItem + 1,
+									iCol + 1,
 									entry[iCol]));
 							if (pCal)
 								pCal.reset();
@@ -1358,9 +1358,9 @@ bool CWizardImport::DoWizardFinish()
 							else
 							{
 								fmt::format_to(errLog, L"{}\n",
-									fmt::sprintf(_("IDS_IMPORT_BAD_DATE_CALOPEN").wx_str(),
-										static_cast<int>(nItem + 1),
-										static_cast<int>(iCol + 1),
+									fmt::format(_("IDS_IMPORT_BAD_DATE_CALOPEN").wx_str(),
+										nItem + 1,
+										iCol + 1,
 										entry[iCol]));
 								if (pCal)
 									pCal.reset();
@@ -1379,9 +1379,9 @@ bool CWizardImport::DoWizardFinish()
 							else
 							{
 								fmt::format_to(errLog, L"{}\n",
-									fmt::sprintf(_("IDS_IMPORT_BAD_DATE_CALCLOSE").wx_str(),
-										static_cast<int>(nItem + 1),
-										static_cast<int>(iCol + 1),
+									fmt::format(_("IDS_IMPORT_BAD_DATE_CALCLOSE").wx_str(),
+										nItem + 1,
+										iCol + 1,
 										entry[iCol]));
 								if (pCal)
 									pCal.reset();
@@ -1420,9 +1420,9 @@ bool CWizardImport::DoWizardFinish()
 							else
 							{
 								fmt::format_to(errLog, L"{}\n",
-									fmt::sprintf(_("IDS_IMPORT_BAD_DATE_LOG").wx_str(),
-										static_cast<int>(nItem + 1),
-										static_cast<int>(iCol + 1),
+									fmt::format(_("IDS_IMPORT_BAD_DATE_LOG").wx_str(),
+										nItem + 1,
+										iCol + 1,
 										entry[iCol]));
 								if (pLog)
 									pLog.reset();
@@ -1469,11 +1469,11 @@ bool CWizardImport::DoWizardFinish()
 	if (!errLog.size())
 		fmt::format_to(errLog, L"\n");
 	fmt::format_to(errLog, L"{}\n",
-		fmt::sprintf(_("IDS_IMPORT_STATS").wx_str(),
-			static_cast<int>(nAdded),
-			static_cast<int>(nUpdated),
-			static_cast<int>(nDuplicate),
-			static_cast<int>(nSkipped)));
+		fmt::format(_("IDS_IMPORT_STATS").wx_str(),
+			nAdded,
+			nUpdated,
+			nDuplicate,
+			nSkipped));
 	CDlgMessage dlg(fmt::to_string(errLog), this);
 	dlg.ShowModal();
 	if (0 < nAdded)

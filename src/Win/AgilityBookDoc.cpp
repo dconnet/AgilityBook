@@ -2360,9 +2360,8 @@ void CAgilityBookDoc::OnHelpDebug(wxCommandEvent& evt)
 	wxWindow* parent = wxGetApp().GetTopWindow();
 
 	wxSize x;
-	wxString s;
 	x = parent->ConvertPixelsToDialog(wxSize(400, 0));
-	s << wxString::Format(L"px->dlg %d,%d\n", x.x, x.y);
+	std::wstring s = fmt::format(L"px->dlg {},{}\n", x.x, x.y);
 	wxMessageBox(s);
 
 //	dlg.ShowModal();

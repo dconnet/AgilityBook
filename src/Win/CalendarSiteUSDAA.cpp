@@ -198,9 +198,9 @@ static ElementNodePtr ReadData(
 		tree = TidyHtmlData(data, err, &debug);
 		if (!tree)
 		{
-			wxString msg(StringUtil::stringWX(fmt::to_string(err)));
+			std::wstring msg = fmt::to_string(err);
 			if (msg.empty())
-				msg = wxString::Format(_("IDS_ERR_PARSING_DATA"), inAddress.c_str());
+				msg = fmt::format(_("IDS_ERR_PARSING_DATA").wx_str(), inAddress);
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 		}
 	}

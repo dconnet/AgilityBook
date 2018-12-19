@@ -293,7 +293,7 @@ void ARBiCal::DoDTSTAMP()
 #else
 		struct tm* pTime = localtime(&t);
 #endif
-		std::string buffer = fmt::sprintf("DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
+		std::string buffer = fmt::format("DTSTAMP:{:04}{:02}{:02}T{:02}{:02}{:02}\r\n",
 			pTime->tm_year + 1900,
 			pTime->tm_mon + 1,
 			pTime->tm_mday,

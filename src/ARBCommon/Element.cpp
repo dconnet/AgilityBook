@@ -534,7 +534,7 @@ static std::wstring GetIndentBuffer(int indent)
 	std::wstring str;
 	if (0 < indent)
 	{
-		str = fmt::sprintf(L"%*s", indent, L" ");
+		str = fmt::format(L"{:{}s}", L" ", indent);
 	}
 	return str;
 }

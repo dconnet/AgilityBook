@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:31-0800\n"
-"PO-Revision-Date: 2018-12-17 14:31-0800\n"
+"POT-Creation-Date: 2018-12-18 16:29-0800\n"
+"PO-Revision-Date: 2018-12-18 16:30-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -259,15 +259,15 @@ msgstr "Past"
 msgid "IDS_CALENDAR_NOTENTERED"
 msgstr "Not entered"
 
-#: TestARB/Local.cpp:86 Win/Localization.cpp:84 Win/WizardImport.cpp:1323
+#: TestARB/Local.cpp:86 Win/Localization.cpp:84 Win/WizardImport.cpp:1321
 msgid "IDS_CALENDAR_ENTERED"
 msgstr "Entered"
 
-#: TestARB/Local.cpp:87 Win/Localization.cpp:85 Win/WizardImport.cpp:1318
+#: TestARB/Local.cpp:87 Win/Localization.cpp:85 Win/WizardImport.cpp:1316
 msgid "IDS_CALENDAR_PENDING"
 msgstr "Pending"
 
-#: TestARB/Local.cpp:88 Win/Localization.cpp:86 Win/WizardImport.cpp:1313
+#: TestARB/Local.cpp:88 Win/Localization.cpp:86 Win/WizardImport.cpp:1311
 msgid "IDS_CALENDAR_PLANNING"
 msgstr "Planning"
 
@@ -618,23 +618,23 @@ msgstr "Print Preview"
 msgid "Agility Record Book file"
 msgstr "Agility Record Book file"
 
-#: Win/AgilityBookCalendarListView.cpp:459 Win/AgilityBookDoc.cpp:1899
+#: Win/AgilityBookCalendarListView.cpp:458 Win/AgilityBookDoc.cpp:1896
 #: Win/AgilityBookRunsView.cpp:1180 Win/AgilityBookTrainingView.cpp:290
 #: Win/AgilityBookTreeView.cpp:181
 msgid "IDS_CANNOT_FIND"
 msgstr "Cannot find '{}'"
 
-#: Win/AgilityBookCalendarListView.cpp:616 Win/AgilityBookCalendarView.cpp:1302
+#: Win/AgilityBookCalendarListView.cpp:615 Win/AgilityBookCalendarView.cpp:1302
 msgid "IDS_NUM_EVENTS"
 msgstr "{} events"
 
-#: Win/AgilityBookCalendarListView.cpp:623 Win/AgilityBookCalendarView.cpp:1309
-#: Win/AgilityBookDoc.cpp:1555 Win/AgilityBookHtmlView.cpp:187
+#: Win/AgilityBookCalendarListView.cpp:622 Win/AgilityBookCalendarView.cpp:1309
+#: Win/AgilityBookDoc.cpp:1550 Win/AgilityBookHtmlView.cpp:187
 #: Win/AgilityBookPointsView.cpp:226 Win/AgilityBookTrainingView.cpp:422
 msgid "IDS_INDICATOR_BLANK"
 msgstr "          "
 
-#: Win/AgilityBookCalendarListView.cpp:1016
+#: Win/AgilityBookCalendarListView.cpp:1015
 msgid "IDS_NOT_VISIBLE"
 msgstr "Warning: {} new entries are not visible due to your viewing options."
 
@@ -687,7 +687,7 @@ msgstr "Opens"
 msgid "IDS_COL_CLOSES"
 msgstr "Closes"
 
-#: Win/AgilityBookCalendarView.cpp:641 Win/AgilityBookDoc.cpp:2240
+#: Win/AgilityBookCalendarView.cpp:641 Win/AgilityBookDoc.cpp:2237
 #: Win/DlgAssignColumns.cpp:331 Win/DlgAssignColumns.cpp:341
 #: Win/DlgAssignColumns.cpp:376 Win/DlgAssignColumns.cpp:521
 #: Win/DlgListCtrl.cpp:415
@@ -824,132 +824,131 @@ msgstr "Are you sure you want to continue?"
 msgid "IDS_CONFIG_NO_UPDATE"
 msgstr "No updates were performed. The configurations are the same."
 
-#: Win/AgilityBookDoc.cpp:1161
+#: Win/AgilityBookDoc.cpp:1162
 msgid "IDS_ADDED"
 msgstr "Added "
 
-#: Win/AgilityBookDoc.cpp:1168
+#: Win/AgilityBookDoc.cpp:1169
 msgid "IDS_ADDED_DOGS"
 msgstr "{} dogs"
 
-#: Win/AgilityBookDoc.cpp:1175 Win/AgilityBookDoc.cpp:1230
+#: Win/AgilityBookDoc.cpp:1176 Win/AgilityBookDoc.cpp:1228
 msgid "IDS_ADDED_REGNUMS"
 msgstr "{} registration numbers"
 
-#: Win/AgilityBookDoc.cpp:1182
+#: Win/AgilityBookDoc.cpp:1183
 msgid "IDS_ADDED_EXISTINGPTS"
 msgstr "{} existing points"
 
-#: Win/AgilityBookDoc.cpp:1189 Win/AgilityBookDoc.cpp:1242
+#: Win/AgilityBookDoc.cpp:1190 Win/AgilityBookDoc.cpp:1237
 msgid "IDS_ADDED_TITLES"
 msgstr "{} titles"
 
-#: Win/AgilityBookDoc.cpp:1196
+#: Win/AgilityBookDoc.cpp:1197
 msgid "IDS_ADDED_TRIALS"
 msgstr "{} trials"
 
-#: Win/AgilityBookDoc.cpp:1203
+#: Win/AgilityBookDoc.cpp:1204
 msgid "IDS_ADDED_CLUBS"
 msgstr "{} clubs"
 
-#: Win/AgilityBookDoc.cpp:1210
+#: Win/AgilityBookDoc.cpp:1211
 msgid "IDS_ADDED_JUDGES"
 msgstr "{} judges"
 
-#: Win/AgilityBookDoc.cpp:1217
+#: Win/AgilityBookDoc.cpp:1218
 msgid "IDS_ADDED_LOCATIONS"
 msgstr "{} locations"
 
-#: Win/AgilityBookDoc.cpp:1227 Win/AgilityBookDoc.cpp:1239
+#: Win/AgilityBookDoc.cpp:1226 Win/AgilityBookDoc.cpp:1235
 msgid "IDS_UPDATED"
 msgstr "Updated "
 
-#: Win/AgilityBookDoc.cpp:1276 Win/CalendarSites.cpp:1082
+#: Win/AgilityBookDoc.cpp:1271 Win/CalendarSites.cpp:1081
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "Added {0} new calendar items, {1} updated items."
 
-#: Win/AgilityBookDoc.cpp:1309
+#: Win/AgilityBookDoc.cpp:1304
 msgid "IDS_UPDATED_TRAINING_ITEMS"
 msgstr "Added {0} new Training Log items, {1} updated items."
 
-#: Win/AgilityBookDoc.cpp:1579 Win/DlgDog.cpp:615 Win/DlgFindLinks.cpp:118
+#: Win/AgilityBookDoc.cpp:1574 Win/DlgDog.cpp:615 Win/DlgFindLinks.cpp:118
 #: Win/DlgListCtrl.cpp:465 Win/DlgListViewer.cpp:1216 Win/Print.cpp:259
 msgid "IDS_COL_DOG"
 msgstr "Dog"
 
-#: Win/AgilityBookDoc.cpp:1644
+#: Win/AgilityBookDoc.cpp:1639
 msgid "Sorry, could not open this file."
 msgstr "Sorry, could not open this file."
 
-#: Win/AgilityBookDoc.cpp:1660 Win/AgilityBookDoc.cpp:1675
-#, c-format
+#: Win/AgilityBookDoc.cpp:1655 Win/AgilityBookDoc.cpp:1671
 msgid "Cannot open file '{}'."
 msgstr "Cannot open file '{}'."
 
-#: Win/AgilityBookDoc.cpp:1685
+#: Win/AgilityBookDoc.cpp:1682
 msgid "IDS_NONFATAL_MSGS"
 msgstr ""
 "Warning: Some non-fatal messages were generated while loading the file:"
 
-#: Win/AgilityBookDoc.cpp:1796
+#: Win/AgilityBookDoc.cpp:1793
 msgid "IDS_WARN_FILE_UPDATED"
 msgstr ""
 "Warning: This file has changed since it was opened. Are you sure you want to "
 "overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1830 Win/UpdateInfo.cpp:544
+#: Win/AgilityBookDoc.cpp:1827 Win/UpdateInfo.cpp:545
 msgid "IDS_CANNOT_OPEN"
 msgstr "Unable to open file '{}' for writing."
 
-#: Win/AgilityBookDoc.cpp:1836
+#: Win/AgilityBookDoc.cpp:1833
 msgid "IDS_INTERNAL_ERROR"
 msgstr "Internal error: File not saved."
 
-#: Win/AgilityBookDoc.cpp:1861
+#: Win/AgilityBookDoc.cpp:1858
 msgid "IDS_SEARCH_NOTES"
 msgstr "Search Notes"
 
-#: Win/AgilityBookDoc.cpp:2033
+#: Win/AgilityBookDoc.cpp:2030
 msgid "IDS_NO_LINKED_FILES"
 msgstr "No linked files found."
 
-#: Win/AgilityBookDoc.cpp:2308
+#: Win/AgilityBookDoc.cpp:2305
 msgid "IDS_FILEPROP_NAME"
 msgstr "File name: {}"
 
-#: Win/AgilityBookDoc.cpp:2310
+#: Win/AgilityBookDoc.cpp:2307
 msgid "IDS_FILEPROP_READONLY"
 msgstr "File name: {} [readonly]"
 
-#: Win/AgilityBookDoc.cpp:2315
+#: Win/AgilityBookDoc.cpp:2312
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2320
+#: Win/AgilityBookDoc.cpp:2317
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2321
+#: Win/AgilityBookDoc.cpp:2318
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2329
+#: Win/AgilityBookDoc.cpp:2326
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2331
+#: Win/AgilityBookDoc.cpp:2328
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2337
+#: Win/AgilityBookDoc.cpp:2334
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2339
+#: Win/AgilityBookDoc.cpp:2336
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2347
+#: Win/AgilityBookDoc.cpp:2344
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
 "File written on:\n"
@@ -958,7 +957,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2355
+#: Win/AgilityBookDoc.cpp:2352
 msgid "IDS_FILE_PROPERTIES"
 msgstr "File Properties"
 
@@ -1863,7 +1862,7 @@ msgstr ""
 msgid "IDC_PLUGIN_CLOSE"
 msgstr "Close"
 
-#: Win/CalendarSites.cpp:1011
+#: Win/CalendarSites.cpp:1010
 msgid "IDS_USE_PLUGIN"
 msgstr "Do you want to continue using this plugin?"
 
@@ -6217,8 +6216,8 @@ msgid "IDS_CONFIG_DELETE_RUNS"
 msgstr ""
 "Warning!!!\n"
 "\n"
-"Applying these changes will delete the {} runs listed. This action cannot "
-"be un-done.\n"
+"Applying these changes will delete the {} runs listed. This action cannot be "
+"un-done.\n"
 "\n"
 "Are you sure you want to continue?"
 
@@ -6313,54 +6312,54 @@ msgstr ""
 "The configuration has been updated. Would you like to merge the new one with "
 "your data?"
 
-#: Win/UpdateInfo.cpp:262 Win/UpdateInfo.cpp:776
+#: Win/UpdateInfo.cpp:262 Win/UpdateInfo.cpp:777
 msgid "IDS_HELP_UPDATE"
 msgstr "http://www.agilityrecordbook.com"
 
-#: Win/UpdateInfo.cpp:287 Win/UpdateInfo.cpp:431
+#: Win/UpdateInfo.cpp:287 Win/UpdateInfo.cpp:432
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Unable to determine current released version."
 
-#: Win/UpdateInfo.cpp:358 Win/UpdateInfo.cpp:795
+#: Win/UpdateInfo.cpp:359 Win/UpdateInfo.cpp:797
 msgid "IDS_LOAD_FAILED"
 msgstr "Failed to load '{}'."
 
-#: Win/UpdateInfo.cpp:508
+#: Win/UpdateInfo.cpp:509
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version {} is available. Would you like to download it?"
 
-#: Win/UpdateInfo.cpp:549
+#: Win/UpdateInfo.cpp:550
 msgid "IDS_DOWNLOADING"
 msgstr "Downloading..."
 
-#: Win/UpdateInfo.cpp:570
+#: Win/UpdateInfo.cpp:571
 msgid "IDS_VALIDATING"
 msgstr "Validating..."
 
-#: Win/UpdateInfo.cpp:578 Win/UpdateInfo.cpp:602 Win/UpdateInfo.cpp:610
-#: Win/UpdateInfo.cpp:618
+#: Win/UpdateInfo.cpp:579 Win/UpdateInfo.cpp:603 Win/UpdateInfo.cpp:611
+#: Win/UpdateInfo.cpp:619
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERROR: The downloaded file is corrupt."
 
-#: Win/UpdateInfo.cpp:594
+#: Win/UpdateInfo.cpp:595
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
-"{} is now downloaded. Agility Record Book will now close so you can "
-"install it."
+"{} is now downloaded. Agility Record Book will now close so you can install "
+"it."
 
-#: Win/UpdateInfo.cpp:626
+#: Win/UpdateInfo.cpp:627
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERROR: Unexpected file format, expected MSI file."
 
-#: Win/UpdateInfo.cpp:660 Win/UpdateInfo.cpp:679
+#: Win/UpdateInfo.cpp:661 Win/UpdateInfo.cpp:680
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERROR: Internal error during update process. Procedure was cancelled."
 
-#: Win/UpdateInfo.cpp:830
+#: Win/UpdateInfo.cpp:831
 msgid "IDS_UPDATE_CURRENT"
 msgstr "No updates are available at this time."
 
-#: Win/UpdateInfo.cpp:875
+#: Win/UpdateInfo.cpp:876
 msgid "IDS_INSTALL_BUSY"
 msgstr ""
 "An update is available but cannot be installed at this time. Make sure the "
@@ -6658,52 +6657,52 @@ msgstr "Failed to read data."
 msgid "IDD_WIZARD_IMPORT"
 msgstr "Import Wizard"
 
-#: Win/WizardImport.cpp:868 Win/WizardImport.cpp:1109
+#: Win/WizardImport.cpp:868 Win/WizardImport.cpp:1108
 msgid "IDS_IMPORT_SKIP_NOCONFIG"
 msgstr ""
 "Warning: Line {}: Skipped entry, unable to find a valid configuration entry"
 
-#: Win/WizardImport.cpp:937
+#: Win/WizardImport.cpp:936
 msgid "IDS_IMPORT_BAD_DATE_RUN"
-msgstr "ERROR: Line %1$d, Column %2$d: Invalid run date: %3$s"
+msgstr "ERROR: Line {0}, Column {1}: Invalid run date: {2}"
 
-#: Win/WizardImport.cpp:1096
+#: Win/WizardImport.cpp:1095
 msgid "IDS_IMPORT_BAD_VENUE"
-msgstr "Warning: Line %1$d: Skipped entry, invalid venue name: %2$s"
+msgstr "Warning: Line {0}: Skipped entry, invalid venue name: {1}"
 
-#: Win/WizardImport.cpp:1272
+#: Win/WizardImport.cpp:1270
 msgid "IDS_IMPORT_BAD_DATE_CALSTART"
-msgstr "ERROR: Line %1$d, Column %2$d: Invalid calendar start date: %3$s"
+msgstr "ERROR: Line {0}, Column {1}: Invalid calendar start date: {2}"
 
-#: Win/WizardImport.cpp:1293
+#: Win/WizardImport.cpp:1291
 msgid "IDS_IMPORT_BAD_DATE_CALEND"
-msgstr "ERROR: Line %1$d, Column %2$d: Invalid calendar end date: %3$s"
+msgstr "ERROR: Line {0}, Column {1}: Invalid calendar end date: {2}"
 
-#: Win/WizardImport.cpp:1331
+#: Win/WizardImport.cpp:1329
 msgid "IDS_IMPORT_BAD_CAL_VALUE"
 msgstr ""
-"ERROR: Line %1$d, Column %2$d: Invalid calendar Entered value: %3$s (valid: "
-"N, P or E)"
+"ERROR: Line {0}, Column {1}: Invalid calendar Entered value: {2} (valid: N, "
+"P or E)"
 
-#: Win/WizardImport.cpp:1363
+#: Win/WizardImport.cpp:1361
 msgid "IDS_IMPORT_BAD_DATE_CALOPEN"
-msgstr "ERROR: Line %1$d, Column %2$d: Invalid calendar opening date: %3$s"
+msgstr "ERROR: Line {0}, Column {1}: Invalid calendar opening date: {2}"
 
-#: Win/WizardImport.cpp:1384
+#: Win/WizardImport.cpp:1382
 msgid "IDS_IMPORT_BAD_DATE_CALCLOSE"
-msgstr "ERROR: Line %1$d, Column %2$d: Invalid calendar closing date: %3$s"
+msgstr "ERROR: Line {0}, Column {1}: Invalid calendar closing date: {2}"
 
-#: Win/WizardImport.cpp:1425
+#: Win/WizardImport.cpp:1423
 msgid "IDS_IMPORT_BAD_DATE_LOG"
-msgstr "ERROR: Line %1$d, Column %2$d: Invalid training log date: %3$s"
+msgstr "ERROR: Line {0}, Column {1}: Invalid training log date: {2}"
 
-#: Win/WizardImport.cpp:1474
+#: Win/WizardImport.cpp:1472
 msgid "IDS_IMPORT_STATS"
 msgstr ""
-"%1$d entries added\n"
-"%2$d entries updated\n"
-"%3$d duplicates (not added)\n"
-"%4$d entries skipped"
+"{0} entries added\n"
+"{1} entries updated\n"
+"{2} duplicates (not added)\n"
+"{3} entries skipped"
 
 #: Win/WizardStart.cpp:102
 msgid "IDC_WIZARD_RADIO_BOX"
@@ -7076,7 +7075,7 @@ msgstr ""
 #~ msgstr "Show all runs by list"
 
 #~ msgid "IDS_NUM_DOGS"
-#~ msgstr "%1$d dogs"
+#~ msgstr "{} dogs"
 
 #~ msgid "IDS_ASSCOL_VIEW_TREELIST_TRIAL"
 #~ msgstr "Runs - Trial"
@@ -7097,7 +7096,7 @@ msgstr ""
 #~ msgstr "Display of runs in the Runs view"
 
 #~ msgid "IDS_UPDATE_NEWSUBLEVELS"
-#~ msgstr "%1$d new sub-levels"
+#~ msgstr "{} new sub-levels"
 
 #~ msgid "IDS_SELECT_JUDGE"
 #~ msgstr "Please select a Judge."

@@ -348,7 +348,7 @@ bool CDlgDigest::LoadConfig()
 	}
 
 	m_ConfigVersion = config.GetVersion();
-	m_ctrlConfigVersion->SetLabel(wxString::Format(L"%hd", m_ConfigVersion));
+	m_ctrlConfigVersion->SetLabel(fmt::format(L"{}", m_ConfigVersion));
 
 	m_ctrlCopy->Enable(true);
 

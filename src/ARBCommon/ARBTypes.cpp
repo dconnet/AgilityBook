@@ -72,9 +72,9 @@ std::wstring ARBDouble::ToString(
 #endif
 
 	if (0 < inPrec)
-		retVal = fmt::sprintf(L"%.*f", inPrec, inValue);
+		retVal = fmt::format(L"{:.{}f}", inValue, inPrec);
 	else
-		retVal = fmt::sprintf(L"%g", inValue);
+		retVal = fmt::format(L"{:g}", inValue);
 
 	wchar_t pt = CLocaleWrapper::GetDecimalPt();
 
