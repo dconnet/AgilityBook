@@ -27,7 +27,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty
+INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty -I$(TOPSRCDIR)/src/3rdParty/LibFmt/include
 
 ##########
 # List of programs and archives to link
@@ -128,7 +128,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/src/3rdParty/LibArchive -larchive
+@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/3rdParty/LibFmt -lfmt -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/src/3rdParty/LibArchive -larchive
 
 ##########
 # Precompiled headers

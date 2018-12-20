@@ -99,7 +99,7 @@
 		E19851C12170E5EE003E7B92 /* Validators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Validators.cpp; sourceTree = "<group>"; };
 		E19851C22170E5EE003E7B92 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
 		E19851C32170E5EE003E7B92 /* TaskbarProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TaskbarProgress.cpp; sourceTree = "<group>"; };
-		E19B62EB166C08B9004DEDA4 /* libARBWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libARBWin.a; path = libLibARBWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E19B62EB166C08B9004DEDA4 /* libLibARBWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibARBWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B65D2166C1054004DEDA4 /* IProgressMeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IProgressMeter.h; sourceTree = "<group>"; };
 		E19B65D4166C1054004DEDA4 /* VersionNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNumber.h; sourceTree = "<group>"; };
 		E1CAE55D16B5BF3800B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		E19B62EC166C08B9004DEDA4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E19B62EB166C08B9004DEDA4 /* libARBWin.a */,
+				E19B62EB166C08B9004DEDA4 /* libLibARBWin.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -283,7 +283,7 @@
 			);
 			name = LibARBWin;
 			productName = LibARBWin;
-			productReference = E19B62EB166C08B9004DEDA4 /* libARBWin.a */;
+			productReference = E19B62EB166C08B9004DEDA4 /* libLibARBWin.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -469,6 +469,19 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.2/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -479,6 +492,20 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.2/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

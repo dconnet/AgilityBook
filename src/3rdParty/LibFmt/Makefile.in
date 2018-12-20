@@ -1,7 +1,7 @@
 ################################################################################
 # File: Makefile                                                               #
 ################################################################################
-# Makefile for ARBHelp                                                         #
+# Makefile for the LibFmt subdirectory                                         #
 ################################################################################
 
 ################################################################################
@@ -23,52 +23,38 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty/LibFmt/include
+INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty -I$(SRCDIR)/include -I$(SRCDIR)/src
 
 ##########
 # List of programs and archives to link
 ##########
-PROGRAMS = @PACKAGE_HLP_SHORTNAME@
+ARCHIVES = libfmt
 
 ##########
 # Source files for each target
 ##########
-@PACKAGE_HLP_SHORTNAME@_SRCS = ARBHelp.cpp \
-	DlgARBHelp.cpp \
-	DlgPageDecode.cpp \
-	DlgPageEncode.cpp \
-	DlgPageEncodeFiles.cpp \
-	DlgPageEncodeFinish.cpp
+libfmt_SRCS = src/format.cpp \
+	src/posix.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/3rdParty/LibFmt -lfmt -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/LibARBWin -larbwin
+#fmt_LIBS =
+# prog1_LDFLAGS = -L/path/to/extralib
 
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/ARBHelp/stdafx.h
+#PRECOMP_HEADER = $(TOPSRCDIR)/src/LibFmt/src/stdafx.h
+
 
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = @PACKAGE_HLP_SHORTNAME@
+#INSTALL_BIN = libfmt
+#INSTALL_MAN = prog1.5
 
 @NAM_RULES@
-
-all: @PACKAGE_HLP_SHORTNAME@
-
-dist:: all $(PHONY)
-	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS
-	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/English.lproj
-	cp Info.plist $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/
-	cp version.plist $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/
-	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
-	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/PkgInfo
-	cp @PACKAGE_HLP_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS/@PACKAGE_HLP_SHORTNAME@
-	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
-	cp $(TOPSRCDIR)/src/Win/res/AgilityBook*.png $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
 
 ################################################################################
 # End of File: Makefile                                                        #

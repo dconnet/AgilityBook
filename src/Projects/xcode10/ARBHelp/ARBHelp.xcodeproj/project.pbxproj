@@ -24,6 +24,7 @@
 		E1D2AFE51A2923F0006EA87D /* AgilityBook32.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE11A2923F0006EA87D /* AgilityBook32.png */; };
 		E1D2AFE61A2923F0006EA87D /* AgilityBook48.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE21A2923F0006EA87D /* AgilityBook48.png */; };
 		E1D2AFE71A2923F1006EA87D /* AgilityBook256.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE31A2923F0006EA87D /* AgilityBook256.png */; };
+		E1E2517D21CC5F05004A1D6A /* libLibFmt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E2517C21CC5F05004A1D6A /* libLibFmt.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		E1D2AFE11A2923F0006EA87D /* AgilityBook32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook32.png; path = ../../../../Win/res/AgilityBook32.png; sourceTree = "<group>"; };
 		E1D2AFE21A2923F0006EA87D /* AgilityBook48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook48.png; path = ../../../../Win/res/AgilityBook48.png; sourceTree = "<group>"; };
 		E1D2AFE31A2923F0006EA87D /* AgilityBook256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook256.png; path = ../../../../Win/res/AgilityBook256.png; sourceTree = "<group>"; };
+		E1E2517C21CC5F05004A1D6A /* libLibFmt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibFmt.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1E2517D21CC5F05004A1D6A /* libLibFmt.a in Frameworks */,
 				E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */,
 				E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */,
 				E19851CF2170E6E8003E7B92 /* libLibARBWin.a in Frameworks */,
@@ -99,6 +102,7 @@
 		E19B6601166C1640004DEDA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E1E2517C21CC5F05004A1D6A /* libLibFmt.a */,
 				E19B6602166C1640004DEDA4 /* Cocoa.framework */,
 				E19B6604166C1640004DEDA4 /* Other Frameworks */,
 			);
@@ -471,6 +475,20 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../..",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.2/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -487,6 +505,21 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../Include",
+					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../..",
+					"-isystem",
+					$BOOST_ROOT,
+					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.2/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

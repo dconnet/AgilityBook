@@ -7,22 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E110B4F8177FD00C004071B5 /* LibArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4F7177FD00C004071B5 /* LibArchive.h */; };
-		E124BBAF16BD8F10006FBF2D /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E124BBA916BD8F10006FBF2D /* LibArchive.cpp */; };
-		E124BBB116BD8F10006FBF2D /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E124BBAD16BD8F10006FBF2D /* stdafx.cpp */; };
-		E124BBB216BD8F10006FBF2D /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E124BBAE16BD8F10006FBF2D /* stdafx.h */; };
+		E1B2D1E121CC597600435F76 /* format.cc in Sources */ = {isa = PBXBuildFile; fileRef = E1B2D1E021CC597600435F76 /* format.cc */; };
+		E1B2D1E321CC598500435F76 /* posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = E1B2D1E221CC598500435F76 /* posix.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E110B4F7177FD00C004071B5 /* LibArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibArchive.h; path = ../../3rdParty/LibArchive/LibArchive.h; sourceTree = "<group>"; };
-		E124BBA916BD8F10006FBF2D /* LibArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibArchive.cpp; path = ../../../3rdParty/LibArchive/src/LibArchive.cpp; sourceTree = "<group>"; };
-		E124BBAD16BD8F10006FBF2D /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../../3rdParty/LibArchive/src/stdafx.cpp; sourceTree = "<group>"; };
-		E124BBAE16BD8F10006FBF2D /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../3rdParty/LibArchive/src/stdafx.h; sourceTree = "<group>"; };
-		E161079516BD89D3006B9BC0 /* libLibArchive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibArchive.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1796412176927D2003AE489 /* libLibFmt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibFmt.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B2D1DA21CC58DD00435F76 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; name = include; path = ../../../3rdParty/LibFmt/include; sourceTree = "<group>"; };
+		E1B2D1E021CC597600435F76 /* format.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = format.cc; path = ../../../3rdParty/LibFmt/src/format.cc; sourceTree = "<group>"; };
+		E1B2D1E221CC598500435F76 /* posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = posix.cc; path = ../../../3rdParty/LibFmt/src/posix.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E161079216BD89D3006B9BC0 /* Frameworks */ = {
+		E179640F176927D2003AE489 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -32,130 +29,110 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E110B4F6177FD00C004071B5 /* LibArchive */ = {
+		E1796409176927D2003AE489 = {
 			isa = PBXGroup;
 			children = (
-				E110B4F7177FD00C004071B5 /* LibArchive.h */,
+				E1796419176927DB003AE489 /* Source */,
+				E1796413176927D2003AE489 /* Products */,
 			);
-			name = LibArchive;
-			path = ../../../Include/LibArchive;
 			sourceTree = "<group>";
 		};
-		E110B4F9177FD015004071B5 /* Include */ = {
+		E1796413176927D2003AE489 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E110B4F6177FD00C004071B5 /* LibArchive */,
+				E1796412176927D2003AE489 /* libLibFmt.a */,
 			);
-			name = Include;
+			name = Products;
 			sourceTree = "<group>";
 		};
-		E110B4FA177FD02A004071B5 /* LibArchive */ = {
+		E1796419176927DB003AE489 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				E124BBA916BD8F10006FBF2D /* LibArchive.cpp */,
-				E124BBAD16BD8F10006FBF2D /* stdafx.cpp */,
-				E124BBAE16BD8F10006FBF2D /* stdafx.h */,
-			);
-			name = LibArchive;
-			sourceTree = "<group>";
-		};
-		E124BBA816BD8EE5006FBF2D /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				E110B4F9177FD015004071B5 /* Include */,
-				E110B4FA177FD02A004071B5 /* LibArchive */,
+				E1B2D1DA21CC58DD00435F76 /* include */,
+				E1B2D1DF21CC594B00435F76 /* src */,
 			);
 			name = Source;
 			sourceTree = "<group>";
 		};
-		E161078C16BD89D3006B9BC0 = {
+		E1B2D1DF21CC594B00435F76 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E124BBA816BD8EE5006FBF2D /* Source */,
-				E161079616BD89D3006B9BC0 /* Products */,
+				E1B2D1E221CC598500435F76 /* posix.cc */,
+				E1B2D1E021CC597600435F76 /* format.cc */,
 			);
-			sourceTree = "<group>";
-		};
-		E161079616BD89D3006B9BC0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E161079516BD89D3006B9BC0 /* libLibArchive.a */,
-			);
-			name = Products;
+			name = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		E161079316BD89D3006B9BC0 /* Headers */ = {
+		E1796410176927D2003AE489 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E124BBB216BD8F10006FBF2D /* stdafx.h in Headers */,
-				E110B4F8177FD00C004071B5 /* LibArchive.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		E161079416BD89D3006B9BC0 /* LibArchive */ = {
+		E1796411176927D2003AE489 /* LibFmt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E161079916BD89D3006B9BC0 /* Build configuration list for PBXNativeTarget "LibArchive" */;
+			buildConfigurationList = E1796416176927D2003AE489 /* Build configuration list for PBXNativeTarget "LibFmt" */;
 			buildPhases = (
-				E161079116BD89D3006B9BC0 /* Sources */,
-				E161079216BD89D3006B9BC0 /* Frameworks */,
-				E161079316BD89D3006B9BC0 /* Headers */,
+				E179640E176927D2003AE489 /* Sources */,
+				E179640F176927D2003AE489 /* Frameworks */,
+				E1796410176927D2003AE489 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = LibArchive;
-			productName = LibArchive;
-			productReference = E161079516BD89D3006B9BC0 /* libLibArchive.a */;
+			name = LibFmt;
+			productName = LibFmt;
+			productReference = E1796412176927D2003AE489 /* libLibFmt.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		E161078D16BD89D3006B9BC0 /* Project object */ = {
+		E179640A176927D2003AE489 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "David Connet";
 			};
-			buildConfigurationList = E161079016BD89D3006B9BC0 /* Build configuration list for PBXProject "LibArchive" */;
+			buildConfigurationList = E179640D176927D2003AE489 /* Build configuration list for PBXProject "LibFmt" */;
 			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = E161078C16BD89D3006B9BC0;
-			productRefGroup = E161079616BD89D3006B9BC0 /* Products */;
+			mainGroup = E1796409176927D2003AE489;
+			productRefGroup = E1796413176927D2003AE489 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E161079416BD89D3006B9BC0 /* LibArchive */,
+				E1796411176927D2003AE489 /* LibFmt */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		E161079116BD89D3006B9BC0 /* Sources */ = {
+		E179640E176927D2003AE489 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E124BBAF16BD8F10006FBF2D /* LibArchive.cpp in Sources */,
-				E124BBB116BD8F10006FBF2D /* stdafx.cpp in Sources */,
+				E1B2D1E121CC597600435F76 /* format.cc in Sources */,
+				E1B2D1E321CC598500435F76 /* posix.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		E161079716BD89D3006B9BC0 /* Debug */ = {
+		E1796414176927D2003AE489 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -191,11 +168,11 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -205,6 +182,7 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty",
+					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
@@ -219,7 +197,7 @@
 			};
 			name = Debug;
 		};
-		E161079816BD89D3006B9BC0 /* Release */ = {
+		E1796415176927D2003AE489 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -248,11 +226,11 @@
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -261,6 +239,7 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty",
+					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
@@ -276,7 +255,7 @@
 			};
 			name = Release;
 		};
-		E161079A16BD89D3006B9BC0 /* Debug */ = {
+		E1796417176927D2003AE489 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -300,7 +279,7 @@
 			};
 			name = Debug;
 		};
-		E161079B16BD89D3006B9BC0 /* Release */ = {
+		E1796418176927D2003AE489 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -328,25 +307,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E161079016BD89D3006B9BC0 /* Build configuration list for PBXProject "LibArchive" */ = {
+		E179640D176927D2003AE489 /* Build configuration list for PBXProject "LibFmt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E161079716BD89D3006B9BC0 /* Debug */,
-				E161079816BD89D3006B9BC0 /* Release */,
+				E1796414176927D2003AE489 /* Debug */,
+				E1796415176927D2003AE489 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E161079916BD89D3006B9BC0 /* Build configuration list for PBXNativeTarget "LibArchive" */ = {
+		E1796416176927D2003AE489 /* Build configuration list for PBXNativeTarget "LibFmt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E161079A16BD89D3006B9BC0 /* Debug */,
-				E161079B16BD89D3006B9BC0 /* Release */,
+				E1796417176927D2003AE489 /* Debug */,
+				E1796418176927D2003AE489 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = E161078D16BD89D3006B9BC0 /* Project object */;
+	rootObject = E179640A176927D2003AE489 /* Project object */;
 }
