@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2012-12-29 Update training view properly after a paste.
  * 2011-12-22 Switch to using Bind on wx2.9+.

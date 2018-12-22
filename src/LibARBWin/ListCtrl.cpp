@@ -33,7 +33,7 @@
 #include "stdafx.h"
 #include "LibARBWin/ListCtrl.h"
 
-#include "fmt/printf.h"
+#include "fmt/format.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/ImageHelperBase.h"

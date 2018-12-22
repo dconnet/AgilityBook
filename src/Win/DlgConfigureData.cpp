@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2016-06-19 Add support for Lifetime names.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-11 Ported to wxWidgets.

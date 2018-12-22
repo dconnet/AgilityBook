@@ -40,7 +40,6 @@
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogRunOtherPoints.h"
 #include "ARB/ARBDogTrial.h"
-#include "fmt/printf.h"
 #include "LibARBWin/ListCtrl.h"
 
 #ifdef __WXMSW__

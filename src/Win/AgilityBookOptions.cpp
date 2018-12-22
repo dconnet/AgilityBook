@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2013-06-15 Make default for GetNewestDatesFirst true.
  * 2013-05-19 Make last div/level/height/handler context aware.
  * 2012-12-23 Changed default Runs view columns.

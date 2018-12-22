@@ -2342,10 +2342,10 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 	|| !Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion).empty())
 	{
 		fmt::format_to(str, L"\n{}\n{}\n", fmt::format(_("IDS_FILEPROP_FILEWRITTEN").wx_str(),
-				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS),
-				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform),
-				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp),
-				Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion)),
+			Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS),
+			Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform),
+			Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp),
+			Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion)),
 			wxVERSION_STRING);
 	}
 

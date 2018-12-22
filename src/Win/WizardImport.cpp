@@ -50,7 +50,6 @@
 #include "Wizard.h"
 
 #include "ARBCommon/BreakLine.h"
-#include "fmt/printf.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListCtrl.h"
 #include <wx/spinctrl.h>
@@ -932,8 +931,7 @@ bool CWizardImport::DoWizardFinish()
 							else
 							{
 								fmt::format_to(errLog, L"{}\n",
-									fmt::format(
-										_("IDS_IMPORT_BAD_DATE_RUN").wx_str(),
+									fmt::format(_("IDS_IMPORT_BAD_DATE_RUN").wx_str(),
 										nItem + 1,
 										iCol + 1,
 										entry[iCol]));

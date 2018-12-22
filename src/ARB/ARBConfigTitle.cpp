@@ -32,7 +32,6 @@
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/Element.h"
-#include "fmt/printf.h"
 #include <algorithm>
 
 #ifdef __WXMSW__

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-30 Remove image list from club list (not needed)
  * 2015-01-01 Changed pixels to dialog units.
  * 2014-02-20 Trial start date was not properly saved.

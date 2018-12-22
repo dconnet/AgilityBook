@@ -32,7 +32,6 @@
 
 #include "ARB/ARBStructure.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/printf.h"
 
 #if defined(__WXWINDOWS__)
 #include <wx/string.h>
@@ -554,8 +553,7 @@ std::wstring CLocalization::LifetimePointsNameFormat(double points, double fault
 
 std::wstring CLocalization::PlacementPointsNameFormat(double points, short place) const
 {
-	std::wstring dbl1 = fmt::format(L"{:g}", points);
-	return fmt::format(StringUtil::GetTranslation(arbT("IDS_PLACEMENTPOINTSNAME")), dbl1, (int)place);
+	return fmt::format(StringUtil::GetTranslation(arbT("IDS_PLACEMENTPOINTSNAME")), points, place);
 }
 
 

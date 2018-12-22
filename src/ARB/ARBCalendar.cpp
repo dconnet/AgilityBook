@@ -36,7 +36,6 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/printf.h"
 #include <algorithm>
 
 #ifdef __WXMSW__

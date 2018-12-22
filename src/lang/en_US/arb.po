@@ -588,7 +588,7 @@ msgstr "Speed"
 
 #: TestARB/Local.cpp:558 Win/Localization.cpp:556
 msgid "IDS_PLACEMENTPOINTSNAME"
-msgstr "{0} points with place of {1}"
+msgstr "{0:g} points with place of {1}"
 
 #: TestARB/Local.cpp:564 Win/Localization.cpp:562
 msgid "IDS_WARN_DELETED_RUNS"

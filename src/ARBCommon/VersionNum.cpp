@@ -29,7 +29,7 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/BreakLine.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/printf.h"
+#include "fmt/format.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

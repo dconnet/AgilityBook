@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-09-30 Dbl-click on Filter status area invokes Preferences.
  * 2015-09-12 Clean up status bar sizing. SetStatusBarWidths was broken on Mac.
  * 2015-08-11 Status bar gripper is too small on hiDPI. Kludge.

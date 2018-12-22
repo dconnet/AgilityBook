@@ -542,7 +542,7 @@ bool CUpdateInfo::CheckProgram(
 					if (!output.IsOk())
 					{
 						bGotoWeb = true;
-						fmt::format_to(errMsg, _("IDS_CANNOT_OPEN").wx_str(), filename.c_str());
+						fmt::format_to(errMsg, _("IDS_CANNOT_OPEN").wx_str(), filename.wx_str());
 					}
 					else
 					{

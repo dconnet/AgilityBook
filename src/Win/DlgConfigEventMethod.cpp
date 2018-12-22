@@ -91,7 +91,7 @@ std::wstring CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 		str = fmt::format(L"{}", m_Place);
 		break;
 	case 1:
-		str = fmt::format(L"}|", m_Value);
+		str = fmt::format(L"{}", m_Value);
 		break;
 	}
 	return str;

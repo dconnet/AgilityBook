@@ -48,7 +48,6 @@
 #include "ARB/ARBDog.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/ARBMisc.h"
-#include "fmt/printf.h"
 #include <algorithm>
 #include <map>
 #include <wx/utils.h>
@@ -640,7 +639,7 @@ std::wstring CPointsDataEvent::GetHtml(
 	fmt::wmemory_buffer data;
 	fmt::format_to(data, L"<tr>\n<td>{}</td>\n", Sanitize(OnNeedText(1), true));
 	fmt::format_to(data, L"<td>{}</td>\n", Sanitize(OnNeedText(2), true));
-	fmt::format_to(data, L"<td>{}</td><td>\n", Sanitize(OnNeedText(3), true));
+	fmt::format_to(data, L"<td>{}</td>\n<td>", Sanitize(OnNeedText(3), true));
 	if (!bNoInternalLinks)
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"ref{1}\">", ARB_PROTOCOL, nCurLine);
@@ -734,10 +733,10 @@ std::wstring CPointsDataLifetime::OnNeedText(int inCol) const
 			fmt::format_to(str, _("IDS_LIFETIME_POINTS").wx_str(), lifetime);
 		}
 		else
-			fmt::format_to(str, L"{}", StringUtil::stringW(_("IDS_PLACEMENT_POINTS")));
+			fmt::format_to(str, L"{}", _("IDS_PLACEMENT_POINTS").wx_str());
 		break;
 	case 2:
-		fmt::format_to(str, L"{}: ", StringUtil::stringW(_("IDS_TOTAL")));
+		fmt::format_to(str, L"{}: ", _("IDS_TOTAL").wx_str());
 		if (0 < m_Filtered)
 			fmt::format_to(str, L"{} ({})", m_Lifetime - m_Filtered, m_Lifetime);
 		else
@@ -1109,7 +1108,8 @@ std::wstring CPointsDataOtherPointsTallyAllByEvent::GetHtml(
 		bool bNoInternalLinks) const
 {
 	fmt::wmemory_buffer data;
-	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">", Sanitize(OnNeedText(2), true));
+	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">",
+		Sanitize(OnNeedText(2), true));
 	if (!bNoInternalLinks)
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"ref{1}\">", ARB_PROTOCOL, nCurLine);
@@ -1171,7 +1171,8 @@ std::wstring CPointsDataOtherPointsTallyLevel::GetHtml(
 		bool bNoInternalLinks) const
 {
 	fmt::wmemory_buffer data;
-	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">", Sanitize(OnNeedText(2), true));
+	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">",
+		Sanitize(OnNeedText(2), true));
 	if (!bNoInternalLinks)
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"ref{1}\">", ARB_PROTOCOL, nCurLine);
@@ -1238,7 +1239,7 @@ std::wstring CPointsDataOtherPointsTallyLevelByEvent::GetHtml(
 		bool bNoInternalLinks) const
 {
 	fmt::wmemory_buffer data;
-	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td></td>\n<td align=\"right\">",
+	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td>{}</td>\n<td align=\"right\">",
 		Sanitize(OnNeedText(2), true),
 		Sanitize(OnNeedText(3), true));
 	if (!bNoInternalLinks)

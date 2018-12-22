@@ -53,7 +53,6 @@
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/printf.h"
 #include <fstream>
 #include <list>
 #include <map>

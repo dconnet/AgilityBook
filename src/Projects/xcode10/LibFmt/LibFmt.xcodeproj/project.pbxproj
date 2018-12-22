@@ -181,7 +181,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../3rdParty",
+					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,
@@ -238,7 +238,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../3rdParty",
+					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,
@@ -261,20 +261,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
-				OTHER_CFLAGS = (
-					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../3rdParty",
-					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
-					"-isystem",
-					$BOOST_ROOT,
-					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
-					"-I$WXBASE/wxWidgets-3.1.2/include",
-					"-D_FILE_OFFSET_BITS=64",
-					"-D__WXMAC__",
-					"-D__WXOSX__",
-					"-D__WXOSX_COCOA__",
-					"-DUSE_WXWIDGETS",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -285,21 +271,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
-				OTHER_CFLAGS = (
-					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../3rdParty",
-					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
-					"-isystem",
-					$BOOST_ROOT,
-					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
-					"-I$WXBASE/wxWidgets-3.1.2/include",
-					"-D_FILE_OFFSET_BITS=64",
-					"-DwxDEBUG_LEVEL=0",
-					"-D__WXMAC__",
-					"-D__WXOSX__",
-					"-D__WXOSX_COCOA__",
-					"-DUSE_WXWIDGETS",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

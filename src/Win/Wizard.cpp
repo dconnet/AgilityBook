@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2009-07-24 Center the wizard on the parent.
  * 2009-02-10 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.

@@ -17,7 +17,7 @@
  * 2018-10-30 Moved some utils from ARBWin.
  */
 
-#include "fmt/printf.h"
+#include "fmt/format.h"
 
 /**
  * Helper to reset wxConfig path

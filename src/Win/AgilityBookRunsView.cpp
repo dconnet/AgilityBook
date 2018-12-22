@@ -74,7 +74,6 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/Element.h"
-#include "fmt/printf.h"
 #include "LibARBWin/ListData.h"
 #include <algorithm>
 #include <wx/config.h>

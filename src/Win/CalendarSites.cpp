@@ -40,7 +40,6 @@
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
-#include "fmt/printf.h"
 #include "LibARBWin/CheckTreeCtrl.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListData.h"

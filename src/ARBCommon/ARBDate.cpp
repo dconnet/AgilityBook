@@ -30,7 +30,7 @@
 #include "ARBCommon/ARBDate.h"
 
 #include "ARBCommon/StringUtil.h"
-#include "fmt/printf.h"
+#include "fmt/format.h"
 #include <time.h>
 
 #if defined(__WXWINDOWS__)

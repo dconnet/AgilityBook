@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2016-11-29 Fix sizer assertions.
  * 2014-12-30 Changed pixels to dialog units.
  * 2012-09-23 Fix text wrapping on Mac (wx2.9).

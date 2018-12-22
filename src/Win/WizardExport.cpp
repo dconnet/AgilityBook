@@ -50,7 +50,6 @@
 #include "ARB/ARBDogTrial.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/BreakLine.h"
-#include "fmt/printf.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListCtrl.h"
 #include <wx/valgen.h>

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.

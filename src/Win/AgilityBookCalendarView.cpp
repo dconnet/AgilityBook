@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2016-09-02 Add support for scrolling on touch (or mouse drag).
  * 2013-01-01 Allow the mouse wheel to scroll beyond last entry.
  *            Add better keyboard navigation on Mac.
@@ -690,14 +691,14 @@ void CAgilityBookCalendar::OnCopy()
 	}
 	// The header
 	std::wstring data = fmt::sprintf(L" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s",
-		maxLen[COL_START_DATE], columns[COL_START_DATE].c_str(),
-		maxLen[COL_END_DATE], columns[COL_END_DATE].c_str(),
-		maxLen[COL_VENUE], columns[COL_VENUE].c_str(),
-		maxLen[COL_LOCATION], columns[COL_LOCATION].c_str(),
-		maxLen[COL_CLUB], columns[COL_CLUB].c_str(),
-		maxLen[COL_OPENS], columns[COL_OPENS].c_str(),
-		maxLen[COL_CLOSES], columns[COL_CLOSES].c_str(),
-		maxLen[COL_NOTES], columns[COL_NOTES].c_str());
+		maxLen[COL_START_DATE], columns[COL_START_DATE],
+		maxLen[COL_END_DATE], columns[COL_END_DATE],
+		maxLen[COL_VENUE], columns[COL_VENUE],
+		maxLen[COL_LOCATION], columns[COL_LOCATION],
+		maxLen[COL_CLUB], columns[COL_CLUB],
+		maxLen[COL_OPENS], columns[COL_OPENS],
+		maxLen[COL_CLOSES], columns[COL_CLOSES],
+		maxLen[COL_NOTES], columns[COL_NOTES]);
 	data = StringUtil::Trim(data);
 	data += L"\n";
 

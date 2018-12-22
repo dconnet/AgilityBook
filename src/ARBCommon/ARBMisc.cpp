@@ -20,7 +20,7 @@
 #include "ARBCommon/ARBMisc.h"
 
 #include "ARBCommon/StringUtil.h"
-#include "fmt/printf.h"
+#include "fmt/format.h"
 #include <math.h>
 
 // For testing in ARB
@@ -76,7 +76,7 @@ std::wstring SanitizeStringForHTML(
 			break;
 		case '\n':
 			if (bConvertCR)
-				fmt::format_to(data, L"{}", L"<br/>");
+				fmt::format_to(data, L"<br/>");
 			else
 				fmt::format_to(data, L"{}", inRawData[nChar]);
 			break;
