@@ -182,7 +182,6 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
-					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
@@ -239,7 +238,6 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
-					"-I$SRCROOT/../../..",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
