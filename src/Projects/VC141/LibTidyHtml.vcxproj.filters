@@ -219,7 +219,7 @@
     <ClInclude Include="..\..\3rdParty\LibTidyHtml\src\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdParty\LibTidyHtml\LibTidyHtml.h">
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\include\LibTidyHtml\LibTidyHtml.h">
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\Platform\SetupARBPost.h">
