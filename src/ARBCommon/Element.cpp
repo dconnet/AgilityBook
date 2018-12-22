@@ -12,6 +12,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-08-03 Added initial expat support (reader, not write)
  * 2015-04-04 Add support for C99 printf formats. (Breaking change)
  * 2014-06-09 Move string->arbversion parsing to ARBVersion.
@@ -48,14 +49,14 @@
 
 #include "stdafx.h"
 #include "ARBCommon/Element.h"
-#include <fstream>
-#include <list>
-#include <map>
-#include <sstream>
 
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
+#include <fstream>
+#include <list>
+#include <map>
+#include <sstream>
 
 #if defined(USE_LIBXML2)
 #define __USE_LIBXML2	1
@@ -532,25 +533,18 @@ static std::wstring GetIndentBuffer(int indent)
 	std::wstring str;
 	if (0 < indent)
 	{
-		wchar_t* buffer = new wchar_t[indent + 1];
-#ifdef ARB_HAS_C99_PRINTF_SPECS
-		swprintf(buffer, indent + 1, L"%*ls", indent, L" ");
-#else
-		swprintf(buffer, indent + 1, L"%*s", indent, L" ");
-#endif
-		str = buffer;
-		delete [] buffer;
+		str = fmt::format(L"{:{}s}", L" ", indent);
 	}
 	return str;
 }
 
-static void LogMessage(std::wostringstream& msg)
+static void LogMessage(fmt::wmemory_buffer& msg)
 {
 #if defined(__WXWINDOWS__)
-	wxLogMessage(L"%s", msg.str().c_str());
+	wxLogMessage(L"%s", fmt::to_string(msg).c_str());
 #else
-	msg << L"\n";
-	OutputDebugString(msg.str().c_str());
+	fmt::format_to(msg, L"\n");
+	OutputDebugString(fmt::to_string(msg).c_str());
 #endif
 }
 
@@ -598,17 +592,13 @@ void ElementNode::RemoveAllTextNodes()
 void ElementNode::Dump(int inLevel) const
 {
 	int i;
-	std::wostringstream msg;
-	msg << GetIndentBuffer(inLevel) << m_Name;
+	fmt::wmemory_buffer msg;
+	fmt::format_to(msg, L"{}{}", GetIndentBuffer(inLevel), m_Name);
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		std::wstring name, value;
 		GetNthAttrib(i, name, value);
-		msg << L" "
-			<< name
-			<< L"=\""
-			<< value
-			<< L"\"";
+		fmt::format_to(msg, L" {}=\"{}\"", name, value);
 	}
 	LogMessage(msg);
 	for (i = 0; i < GetElementCount(); ++i)
@@ -970,9 +960,7 @@ bool ElementNode::AddAttrib(
 {
 	if (inName.empty())
 		return false;
-	std::wostringstream str;
-	str << inValue;
-	m_Attribs[inName] = str.str();
+	m_Attribs[inName] = fmt::format(L"{}", inValue);
 	return true;
 }
 
@@ -983,9 +971,7 @@ bool ElementNode::AddAttrib(
 {
 	if (inName.empty())
 		return false;
-	std::wostringstream str;
-	str << inValue;
-	m_Attribs[inName] = str.str();
+	m_Attribs[inName] = fmt::format(L"{}", inValue);
 	return true;
 }
 
@@ -996,9 +982,7 @@ bool ElementNode::AddAttrib(
 {
 	if (inName.empty())
 		return false;
-	std::wostringstream str;
-	str << inValue;
-	m_Attribs[inName] = str.str();
+	m_Attribs[inName] = fmt::format(L"{}", inValue);
 	return true;
 }
 
@@ -1009,9 +993,7 @@ bool ElementNode::AddAttrib(
 {
 	if (inName.empty())
 		return false;
-	std::wostringstream str;
-	str << inValue;
-	m_Attribs[inName] = str.str();
+	m_Attribs[inName] = fmt::format(L"{}", inValue);
 	return true;
 }
 
@@ -1240,7 +1222,7 @@ bool ElementNode::FindElementDeep(
 static bool LoadXMLNode(
 		ElementNode& node,
 		xmlDocPtr inSource,
-		std::wostringstream& ioErrMsg)
+		fmt::wmemory_buffer& ioErrMsg)
 {
 	node.clear();
 
@@ -1304,7 +1286,7 @@ static void XMLCALL ExpatHandleData(void* data, const char* content, int length)
 static bool LoadXMLNode(
 		ElementNode& node,
 		Poco::XML::Document* pDoc,
-		std::wostringstream& ioErrMsg)
+		fmt::wmemory_buffer& ioErrMsg)
 {
 	node.clear();
 
@@ -1325,7 +1307,7 @@ static bool LoadXMLNode(
 static bool LoadXMLNode(
 		ElementNode& node,
 		wxXmlDocument& inSource,
-		std::wostringstream& ioErrMsg)
+		fmt::wmemory_buffer& ioErrMsg)
 {
 	node.clear();
 
@@ -1343,7 +1325,7 @@ static bool LoadXMLNode(
 
 bool ElementNode::LoadXML(
 		std::istream& inStream,
-		std::wostringstream& ioErrMsg)
+		fmt::wmemory_buffer& ioErrMsg)
 {
 	if (!inStream.good())
 		return false;
@@ -1403,7 +1385,7 @@ bool ElementNode::LoadXML(
 			break;
 
 		if (XML_Parse(source, buffer, len, 0) == XML_STATUS_ERROR) {
-			ioErrMsg << L"Parse error at line " << XML_GetCurrentLineNumber(source) << ": " << XML_ErrorString(XML_GetErrorCode(source));
+			fmt::format_to(ioErrMsg, L"Parse error at line {}: {}", XML_GetCurrentLineNumber(source), XML_ErrorString(XML_GetErrorCode(source)));
 			bOk = false;
 			break;
 		}
@@ -1424,7 +1406,7 @@ bool ElementNode::LoadXML(
 	catch (Poco::Exception& e)
 	{
 		std::wstring str = StringUtil::stringW(e.displayText());
-		ioErrMsg << str;
+		fmt::format_to(ioErrMsg, L"{}", str);
 		return false;
 	}
 
@@ -1439,7 +1421,7 @@ bool ElementNode::LoadXML(
 	wxXmlDocument source;
 	if (!source.Load(stream))
 	{
-		ioErrMsg << StringUtil::stringW(log->GetBuffer());
+		fmt::format_to(ioErrMsg, L"{}", log->GetBuffer().wx_str());
 		// This does not call Flush (which displays a dialog). Yea!
 		chain.SetLog(nullptr);
 		return false;
@@ -1455,7 +1437,7 @@ bool ElementNode::LoadXML(
 bool ElementNode::LoadXML(
 		char const* inData,
 		size_t nData,
-		std::wostringstream& ioErrMsg)
+		fmt::wmemory_buffer& ioErrMsg)
 {
 	if (!inData || 0 == nData)
 		return false;
@@ -1474,7 +1456,7 @@ bool ElementNode::LoadXML(
 
 bool ElementNode::LoadXML(
 		wchar_t const* inFileName,
-		std::wostringstream& ioErrMsg)
+		fmt::wmemory_buffer& ioErrMsg)
 {
 	if (!inFileName)
 		return false;
@@ -1679,11 +1661,11 @@ ElementText::ElementText(std::wstring const& inText)
 
 void ElementText::Dump(int inLevel) const
 {
-	std::wostringstream msg;
-	msg << GetIndentBuffer(inLevel) << GetName();
+	fmt::wmemory_buffer msg;
+	fmt::format_to(msg, L"{}{}", GetIndentBuffer(inLevel), GetName());
 	if (0 < m_Value.length())
 	{
-		msg << L": " << m_Value;
+		fmt::format_to(msg, L": {}", m_Value);
 	}
 	LogMessage(msg);
 }
@@ -1730,33 +1712,25 @@ void ElementText::SetValue(wchar_t const* const inValue)
 
 void ElementText::SetValue(short inValue)
 {
-	std::wostringstream str;
-	str << inValue;
-	m_Value = str.str();
+	m_Value = fmt::format(L"{}", inValue);
 }
 
 
 void ElementText::SetValue(unsigned short inValue)
 {
-	std::wostringstream str;
-	str << inValue;
-	m_Value = str.str();
+	m_Value = fmt::format(L"{}", inValue);
 }
 
 
 void ElementText::SetValue(long inValue)
 {
-	std::wostringstream str;
-	str << inValue;
-	m_Value = str.str();
+	m_Value = fmt::format(L"{}", inValue);
 }
 
 
 void ElementText::SetValue(unsigned long inValue)
 {
-	std::wostringstream str;
-	str << inValue;
-	m_Value = str.str();
+	m_Value = fmt::format(L"{}", inValue);
 }
 
 

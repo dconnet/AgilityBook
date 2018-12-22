@@ -16,6 +16,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-12-31 File version 14.5
  * 2016-01-06 File version 14.4
  * 2015-11-27 Fix Qs on runs when titling points are removed from config.
@@ -432,7 +433,7 @@ void ARBAgilityRecordBook::Default(IARBConfigHandler* inHandler)
 bool ARBAgilityRecordBook::Update(
 		int indent,
 		ARBConfig const& inConfigNew,
-		std::wostringstream& ioInfo,
+		fmt::wmemory_buffer& ioInfo,
 		IConfigActionCallback& ioCallBack)
 {
 	int curConfigVersion = m_Config.GetVersion();
@@ -482,7 +483,7 @@ bool ARBAgilityRecordBook::Update(
 		// This actually just synchronizes multiQs.
 		m_Dogs.DeleteMultiQs(m_Config, (*iterVenue)->GetName());
 	}
-	std::wostringstream msgPairsRuns, msgDelRuns;
+	fmt::wmemory_buffer msgPairsRuns, msgDelRuns;
 	int nUpdatedPairsRuns = 0;
 	int nDeletedRuns = 0;
 	for (ARBDogList::iterator iterDog = m_Dogs.begin();
@@ -523,17 +524,12 @@ bool ARBAgilityRecordBook::Update(
 				{
 					// Move pairs run to new team
 					pRun->SetEvent(L"Team");
-					msgPairsRuns << L"   "
-						<< pRun->GetDate().GetString(ARBDate::eISO)
-						<< L" "
-						<< venue
-						<< L" "
-						<< pRun->GetEvent()
-						<< L" "
-						<< pRun->GetDivision()
-						<< L"/"
-						<< pRun->GetLevel()
-						<< L"\n";
+					fmt::format_to(msgPairsRuns, L"   {} {} {} {}/{}\n",
+						pRun->GetDate().GetString(ARBDate::eISO),
+						venue,
+						pRun->GetEvent(),
+						pRun->GetDivision(),
+						pRun->GetLevel());
 					++nUpdatedPairsRuns;
 				}
 				ARBConfigScoringPtr pScoring;
@@ -564,17 +560,12 @@ bool ARBAgilityRecordBook::Update(
 				}
 				else
 				{
-					msgDelRuns << L"   "
-						<< pRun->GetDate().GetString(ARBDate::eISO)
-						<< L" "
-						<< venue
-						<< L" "
-						<< pRun->GetEvent()
-						<< L" "
-						<< pRun->GetDivision()
-						<< L"/"
-						<< pRun->GetLevel()
-						<< L"\n";
+					fmt::format_to(msgDelRuns, L"   {} {} {} {}/{}\n",
+						pRun->GetDate().GetString(ARBDate::eISO),
+						venue,
+						pRun->GetEvent(),
+						pRun->GetDivision(),
+						pRun->GetLevel());
 					++nDeletedRuns;
 					iterRun = pTrial->GetRuns().erase(iterRun);
 				}
@@ -584,15 +575,15 @@ bool ARBAgilityRecordBook::Update(
 	if (0 < nUpdatedPairsRuns)
 	{
 		nChanges += nUpdatedPairsRuns;
-		std::wstring msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, msgPairsRuns.str());
-		ioInfo << L"\n" << msg << L"\n";
+		std::wstring msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, fmt::to_string(msgPairsRuns));
+		fmt::format_to(ioInfo, L"\n{}\n", msg);
 	}
 	if (0 < nDeletedRuns)
 	{
 		nChanges += nDeletedRuns;
-		std::wstring msg = Localization()->WarnDeletedRuns(nDeletedRuns, msgDelRuns.str());
+		std::wstring msg = Localization()->WarnDeletedRuns(nDeletedRuns, fmt::to_string(msgDelRuns));
 		ioCallBack.PostDelete(msg);
-		ioInfo << L"\n" << msg << L"\n";
+		fmt::format_to(ioInfo, L"\n{}\n", msg);
 	}
 
 	// This fixup is only done when upgrading from Config version 2 to 3.
@@ -654,7 +645,7 @@ bool ARBAgilityRecordBook::Update(
 		if (0 < nUpdated)
 		{
 			nChanges += nUpdated;
-			ioInfo << Localization()->UpdateTableRuns(nUpdated) << L"\n";
+			fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateTableRuns(nUpdated));
 		}
 	}
 

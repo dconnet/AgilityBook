@@ -171,6 +171,11 @@
     <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\3rdParty\LibArchive\src\stdafx.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="LibwxARBCommon.vcxproj">
+      <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

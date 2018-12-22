@@ -9,6 +9,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-27 Added test duration to verbose option.
  * 2013-08-18 Reuse Win/LanguageManager
@@ -108,12 +109,7 @@ private:
 	{
 		if (!m_Localization.Load())
 		{
-#if defined(__WXWINDOWS__)
-			wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), OnGetCatalogName().c_str());
-			std::string msg(str.ToAscii());
-#else
-			std::string msg("ERROR: Unable to load localization");
-#endif
+			std::string msg = fmt::format("ERROR: Unable to load '{}.mo'.", OnGetCatalogName().ToAscii());
 			std::cerr << msg << "\n";
 			throw std::runtime_error(msg);
 		}
@@ -262,7 +258,7 @@ int main(int argc, char** argv)
 
 ElementNodePtr LoadXMLData(size_t id)
 {
-	std::wostringstream errMsg;
+	fmt::wmemory_buffer errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
@@ -294,7 +290,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	assert(bOk);
 	if (!bOk || !tree->LoadXML(data, errMsg))
 	{
-		std::wcout << errMsg.str() << std::endl;
+		std::wcout << fmt::to_string(errMsg) << std::endl;
 		tree.reset();
 	}
 	return tree;
@@ -313,7 +309,7 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 	int idx = tree->FindElement(TREE_CONFIG);
 	assert(0 <= idx);
-	std::wostringstream errMsg;
+	fmt::wmemory_buffer errMsg;
 	ARBErrorCallback err(errMsg);
 	return config.Load(tree->GetElementNode(idx), version, err);
 }
@@ -406,11 +402,11 @@ ElementNodePtr CreateActionList()
 </RootNode>";
 
 	ElementNodePtr actions = ElementNode::New();
-	std::wostringstream errmsg;
+	fmt::wmemory_buffer errmsg;
 	bool bParse = actions->LoadXML(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
-		std::wcout << errmsg.str() << std::endl;
+		std::wcout << fmt::to_string(errmsg) << std::endl;
 	}
 	assert(bParse);
 	return actions;

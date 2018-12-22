@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
  * 2014-04-11 Fix switching dogs
  * 2013-04-22 Changing dogs didn't update runs when viewing all runs.
@@ -177,7 +178,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 	}
 	if (!bFound)
 	{
-		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
+		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_strSearch);
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
@@ -709,8 +710,8 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 						GetDocument()->UpdateAllViews(nullptr, &hint);
 					}
 				}
-				else if (0 < err.m_ErrMsg.str().length())
-					wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+				else if (0 < err.m_ErrMsg.size())
+					wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
 		return true;
@@ -812,8 +813,8 @@ bool CAgilityBookTreeView::PasteRuns(
 					}
 				}
 			}
-			if (!bLoaded && 0 < err.m_ErrMsg.str().length())
-				wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			if (!bLoaded && 0 < err.m_ErrMsg.size())
+				wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 		}
 		return true;
 	}
@@ -986,7 +987,7 @@ void CAgilityBookTreeView::LoadData()
 
 
 void CAgilityBookTreeView::PrintLine(
-		std::wostringstream& data,
+		fmt::wmemory_buffer& data,
 		wxTreeItemId id,
 		int indent) const
 {
@@ -994,8 +995,8 @@ void CAgilityBookTreeView::PrintLine(
 	if (id.IsOk() && id != m_Ctrl->GetRootItem())
 	{
 		for (int idx = 0; idx < indent; ++idx)
-			data << spaces;
-		data << m_Ctrl->GetItemText(id).wx_str() << L"<br />\n"; // Note, wxWidgets needs the space before the slash
+			fmt::format_to(data, spaces);
+		fmt::format_to(data, L"{}<br />\n", m_Ctrl->GetItemText(id).wx_str()); // Note, wxWidgets needs the space before the slash
 	}
 	wxTreeItemIdValue cookie;
 	wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(id, cookie);
@@ -1009,11 +1010,11 @@ void CAgilityBookTreeView::PrintLine(
 
 std::wstring CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
 {
-	std::wostringstream data;
-	data << L"<html><body><p>\n";
+	fmt::wmemory_buffer data;
+	fmt::format_to(data, L"<html><body><p>\n");
 	PrintLine(data, m_Ctrl->GetRootItem(), -1);
-	data << L"</p></body></html>\n";
-	return data.str();
+	fmt::format_to(data, L"</p></body></html>\n");
+	return fmt::to_string(data);
 }
 
 
@@ -1369,8 +1370,8 @@ bool CAgilityBookTreeView::OnCmd(int id)
 								}
 							}
 						}
-						else if (0 < err.m_ErrMsg.str().length())
-							wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+						else if (0 < err.m_ErrMsg.size())
+							wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 					}
 				}
 			}

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-10-09 Change PrintRuns view to autoclose after printing runs.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2017-07-16 Moved RingBinder to top of file (easier to find).
@@ -374,7 +375,7 @@ static const struct
 static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
 
 
-static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr const& inRef, int code)
+static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef, int code)
 {
 	switch (code)
 	{
@@ -383,14 +384,14 @@ static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr const&
 	case CODE_REFPLACE3:
 	case CODE_REFPLACE4:
 		if (0 < inRef->GetPlace())
-			text << inRef->GetPlace();
+			fmt::format_to(text, L"{}", inRef->GetPlace());
 		break;
 	case CODE_REFQ1:
 	case CODE_REFQ2:
 	case CODE_REFQ3:
 	case CODE_REFQ4:
 		if ((ARB_Q::eQ)inRef->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)inRef->GetQ() != ARB_Q::eQ_NA)
-			text << inRef->GetQ().str();
+			fmt::format_to(text, L"{}", inRef->GetQ().str());
 		break;
 	case CODE_REFTIME1:
 	case CODE_REFTIME2:
@@ -399,30 +400,30 @@ static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr const&
 		{
 			double val = inRef->GetTime();
 			if (0.0 < val)
-				text << ARBDouble::ToString(val);
+				fmt::format_to(text, L"{}", ARBDouble::ToString(val));
 		}
 		break;
 	case CODE_REFSCORE1:
 	case CODE_REFSCORE2:
 	case CODE_REFSCORE3:
 	case CODE_REFSCORE4:
-		text << inRef->GetScore();
+		fmt::format_to(text, L"{}", inRef->GetScore());
 		break;
 	case CODE_REFHT1:
 	case CODE_REFHT2:
 	case CODE_REFHT3:
 	case CODE_REFHT4:
-		text << inRef->GetHeight();
+		fmt::format_to(text, L"{}", inRef->GetHeight());
 		break;
 	case CODE_REF1:
 	case CODE_REF2:
 	case CODE_REF3:
 	case CODE_REF4:
-		text << inRef->GetName();
+		fmt::format_to(text, L"{}", inRef->GetName());
 		if (!inRef->GetBreed().empty())
-			text << L"/" << inRef->GetBreed();
+			fmt::format_to(text, L"/{}", inRef->GetBreed());
 		if (!inRef->GetNote().empty())
-			text << L"/" << inRef->GetNote();
+			fmt::format_to(text, L"/{}", inRef->GetNote());
 		break;
 	}
 }
@@ -430,18 +431,18 @@ static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr const&
 
 std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun, int code)
 {
-	std::wostringstream text;
+	fmt::wmemory_buffer text;
 	switch (code)
 	{
 	default:
 		break;
 	case CODE_DOG:
 		if (inDog)
-			text << inDog->GetCallName();
+			fmt::format_to(text, L"{}", inDog->GetCallName());
 		break;
 	case CODE_DATE:
 		if (inRun)
-			text << inRun->GetDate().GetString();
+			fmt::format_to(text, L"{}", inRun->GetDate().GetString());
 		break;
 	case CODE_VENUE:
 		if (inTrial)
@@ -452,8 +453,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 				++iter, ++i)
 			{
 				if (0 < i)
-					text << L"/";
-				text << (*iter)->GetVenue();
+					fmt::format_to(text, L"/");
+				fmt::format_to(text, L"{}", (*iter)->GetVenue());
 			}
 			break;
 		}
@@ -466,8 +467,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 				++iter, ++i)
 			{
 				if (0 < i)
-					text << L"/";
-				text << (*iter)->GetName();
+					fmt::format_to(text, L"/");
+				fmt::format_to(text, L"{}", (*iter)->GetName());
 			}
 			break;
 		}
@@ -529,34 +530,34 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 					}
 				}
 			}
-			text << div << L"/" << lvl << L"/" << evt;
+			fmt::format_to(text, L"{}/{}/{}", div, lvl, evt);
 		}
 		break;
 	case CODE_LOCATION:
 		if (inTrial)
-			text << inTrial->GetLocation();
+			fmt::format_to(text, L"{}", inTrial->GetLocation());
 		break;
 	case CODE_HEIGHT:
 		if (inRun)
-			text << inRun->GetHeight();
+			fmt::format_to(text, L"{}", inRun->GetHeight());
 		break;
 	case CODE_JUDGE:
 		if (inRun)
-			text << inRun->GetJudge();
+			fmt::format_to(text, L"{}", inRun->GetJudge());
 		break;
 	case CODE_HANDLER:
 		if (inRun)
-			text << inRun->GetHandler();
+			fmt::format_to(text, L"{}", inRun->GetHandler());
 		break;
 	case CODE_CONDITIONS:
 		if (inRun)
-			text << inRun->GetConditions();
+			fmt::format_to(text, L"{}", inRun->GetConditions());
 		break;
 	case CODE_Q:
 		if (inRun)
 		{
 			if ((ARB_Q::eQ)inRun->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)inRun->GetQ() != ARB_Q::eQ_NA)
-				text << inRun->GetQ().str();
+				fmt::format_to(text, L"{}", inRun->GetQ().str());
 		}
 		break;
 	case CODE_SCT:
@@ -564,7 +565,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 		{
 			double val = inRun->GetScoring().GetSCT();
 			if (0.0 < val)
-				text << ARBDouble::ToString(val);
+				fmt::format_to(text, L"{}", ARBDouble::ToString(val));
 		}
 		break;
 	case CODE_YARDS:
@@ -572,7 +573,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 		{
 			double val = inRun->GetScoring().GetYards();
 			if (0.0 < val)
-				text << ARBDouble::ToString(val, 0);
+				fmt::format_to(text, L"{}", ARBDouble::ToString(val, 0));
 		}
 		break;
 	case CODE_OPEN:
@@ -584,14 +585,14 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 				break;
 			case ARBDogRunScoring::eTypeByOpenClose:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
-					text << inRun->GetScoring().GetNeedOpenPts();
-				text << L" / ";
+					fmt::format_to(text, L"{}", inRun->GetScoring().GetNeedOpenPts());
+				fmt::format_to(text, L" / ");
 				if (0 < inRun->GetScoring().GetNeedClosePts())
-					text << inRun->GetScoring().GetNeedClosePts();
+					fmt::format_to(text, L"{}", inRun->GetScoring().GetNeedClosePts());
 				break;
 			case ARBDogRunScoring::eTypeByPoints:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
-					text << inRun->GetScoring().GetNeedOpenPts();
+					fmt::format_to(text, L"{}", inRun->GetScoring().GetNeedOpenPts());
 				break;
 			}
 		}
@@ -601,7 +602,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 		{
 			double val = inRun->GetScoring().GetTime();
 			if (0.0 < val)
-				text << ARBDouble::ToString(val);
+				fmt::format_to(text, L"{}", ARBDouble::ToString(val));
 		}
 		break;
 	case CODE_FAULTS:
@@ -621,9 +622,9 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 			if (inRun->GetQ().AllowTally()
 			|| (0 < inRun->GetScoring().GetCourseFaults() || 0.0 < timeFaults))
 			{
-				text << inRun->GetScoring().GetCourseFaults();
+				fmt::format_to(text, L"{}", inRun->GetScoring().GetCourseFaults());
 				if (0.0 < timeFaults)
-					text << L"+" << ARBDouble::ToString(timeFaults, 0);
+					fmt::format_to(text, L"+{}", ARBDouble::ToString(timeFaults, 0));
 			}
 		}
 		break;
@@ -636,33 +637,33 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 				break;
 			case ARBDogRunScoring::eTypeByOpenClose:
 				if (0 < inRun->GetScoring().GetOpenPts())
-					text << inRun->GetScoring().GetOpenPts();
-				text << L" / ";
+					fmt::format_to(text, L"{}", inRun->GetScoring().GetOpenPts());
+				fmt::format_to(text, L" / ");
 				if (0 < inRun->GetScoring().GetClosePts())
-					text << inRun->GetScoring().GetClosePts();
+					fmt::format_to(text, L"{}", inRun->GetScoring().GetClosePts());
 				break;
 			case ARBDogRunScoring::eTypeByPoints:
 				if (0 < inRun->GetScoring().GetOpenPts())
-					text << inRun->GetScoring().GetOpenPts();
+					fmt::format_to(text, L"{}", inRun->GetScoring().GetOpenPts());
 				break;
 			}
 		}
 		break;
 	case CODE_PLACE:
 		if (inRun && 0 < inRun->GetPlace())
-			text << inRun->GetPlace();
+			fmt::format_to(text, L"{}", inRun->GetPlace());
 		break;
 	case CODE_INCLASS:
 		if (inRun && 0 <= inRun->GetInClass())
-			text << inRun->GetInClass();
+			fmt::format_to(text, L"{}", inRun->GetInClass());
 		break;
 	case CODE_QD:
 		if (inRun && 0 <= inRun->GetDogsQd())
-			text << inRun->GetDogsQd();
+			fmt::format_to(text, L"{}", inRun->GetDogsQd());
 		break;
 	case CODE_COMMENTS:
 		if (inRun)
-			text << inRun->GetNote();
+			fmt::format_to(text, L"{}", inRun->GetNote());
 		break;
 	case CODE_OTHER:
 		if (inRun && 0 < inRun->GetOtherPoints().size())
@@ -673,8 +674,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 				++iter, ++i)
 			{
 				if (0 < i)
-					text << L" ";
-				text << (*iter)->GetName() << L":" << (*iter)->GetPoints();
+					fmt::format_to(text, L" ");
+				fmt::format_to(text, L"{}:{}", (*iter)->GetName(), (*iter)->GetPoints());
 			}
 		}
 		break;
@@ -715,7 +716,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 			RefRunHelper(text, inRun->GetReferenceRuns()[3], code);
 		break;
 	}
-	return text.str();
+	return fmt::to_string(text);
 }
 
 

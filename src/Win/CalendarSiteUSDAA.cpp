@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2013-08-23 Add error message if tidy error is empty.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2010-11-05 Bump to 2.2.0: USDAA changed the detail page layout.
@@ -193,13 +194,13 @@ static ElementNodePtr ReadData(
 			raw.Write(data.c_str(), data.length());
 		}
 #endif
-		std::wostringstream err;
+		fmt::wmemory_buffer err;
 		tree = TidyHtmlData(data, err, &debug);
 		if (!tree)
 		{
-			wxString msg(StringUtil::stringWX(err.str()));
+			std::wstring msg = fmt::to_string(err);
 			if (msg.empty())
-				msg = wxString::Format(_("IDS_ERR_PARSING_DATA"), inAddress.c_str());
+				msg = fmt::format(_("IDS_ERR_PARSING_DATA").wx_str(), inAddress);
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 		}
 	}

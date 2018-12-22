@@ -175,6 +175,13 @@ clean-default:
 ##########
 # Generic rule to generate the compiled object file.
 ##########
+.cc.o:
+	$(NICE_ECHO) "  Compiling:\t`echo $< | sed 's|$(SRCDIR)/||'`"
+	$(CXX) $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPDEPFLAGS) -c -o $@ $<
+
+##########
+# Generic rule to generate the compiled object file.
+##########
 .cpp.o:
 	$(NICE_ECHO) "  Compiling:\t`echo $< | sed 's|$(SRCDIR)/||'`"
 	$(CXX) $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPDEPFLAGS) -c -o $@ $<

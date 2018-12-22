@@ -16,6 +16,7 @@
  * run, saving it, reloading, and deleting that run. This is by-design.
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2013-05-25 Implement a default date for a trial.
  * 2012-09-09 Added 'titlePts' to 'Placement'.
  * 2012-02-16 Fixed an issue in co-sanctioned trial detection.
@@ -157,14 +158,11 @@ bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 
 std::wstring ARBDogTrial::GetGenericName() const
 {
-	std::wostringstream name;
 	ARBDogClubPtr pClub;
 	if (m_Clubs.GetPrimaryClub(&pClub))
-	{
-		name << pClub->GetVenue() << L" ";
-	}
-	name << m_Location;
-	return name.str();
+		return fmt::format(L"{} {}", pClub->GetVenue(), m_Location);
+	else
+		return m_Location;
 }
 
 

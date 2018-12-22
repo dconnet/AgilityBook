@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2016-04-29 Separate lifetime points from title (run) points.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2014-12-31 Changed pixels to dialog units.
@@ -177,35 +178,35 @@ typedef std::shared_ptr<CDlgListViewerDataExisting> CDlgListViewerDataExistingPt
 
 std::wstring CDlgListViewerDataExisting::OnNeedText(long iCol) const
 {
-	std::wostringstream str;
+	std::wstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
-		str << m_Existing->GetDate().GetString();
+		str = m_Existing->GetDate().GetString();
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
-		str << m_Existing->GetPoints();
+		str = fmt::format(L"{}", m_Existing->GetPoints());
 		break;
 	case COL_RUN_MQ_VENUE:
-		str << m_Existing->GetVenue();
+		str = m_Existing->GetVenue();
 		break;
 	case COL_RUN_MQ_DIV:
-		str << m_Existing->GetDivision();
+		str = m_Existing->GetDivision();
 		break;
 	case COL_RUN_MQ_LEVEL:
-		str << m_Existing->GetLevel();
+		str = m_Existing->GetLevel();
 		break;
 	case COL_RUN_MQ_EVENT:
-		str << m_Existing->GetEvent();
+		str = m_Existing->GetEvent();
 		break;
 	case COL_RUN_MQ_SUBNAME:
-		str << m_Existing->GetSubName();
+		str = m_Existing->GetSubName();
 		break;
 	case COL_RUN_MQ_LOCATION:
-		str << StringUtil::stringW(_("IDS_EXISTING_POINTS"));
+		str = StringUtil::stringW(_("IDS_EXISTING_POINTS"));
 		break;
 	}
-	return str.str();
+	return str;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -252,11 +253,11 @@ typedef std::shared_ptr<CDlgListViewerDataRun> CDlgListViewerDataRunPtr;
 
 std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 {
-	std::wostringstream str;
+	std::wstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
-		str << m_Run->GetDate().GetString();
+		str = m_Run->GetDate().GetString();
 		break;
 	case COL_RUN_MQ_STATUS: // Only happens for scoring detail items.
 		switch (m_ScoringDetail)
@@ -264,78 +265,80 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 		default:
 			break;
 		case ScoringRunInfo::eScoringDeleted:
-			str << _("IDS_DELETED");
+			str = _("IDS_DELETED");
 			break;
 		case ScoringRunInfo::eScoringChanged:
-			str << _("IDS_CHANGED");
+			str = _("IDS_CHANGED");
 			break;
 		}
 		break;
 	case COL_RUN_MQ_DOG: // Only happens for scoring detail items.
 		if (m_Dog)
-			str << m_Dog->GetCallName();
+			str = m_Dog->GetCallName();
 		break;
 	case COL_RUN_MQ_Q:
-		str << m_Run->GetQ().str();
+		str = m_Run->GetQ().str();
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
 		if (m_Run->GetQ().Qualified() && m_Scoring)
-			str << m_Run->GetTitlePoints(m_Scoring);
+			str = fmt::format(L"{}", m_Run->GetTitlePoints(m_Scoring));
 		else
-			str << L"0";
+			str = L"0";
 		break;
 	case COL_RUN_MQ_VENUE:
-		str << m_Trial->GetClubs().GetPrimaryClubVenue();
+		str = m_Trial->GetClubs().GetPrimaryClubVenue();
 		break;
 	case COL_RUN_MQ_DIV:
-		str << m_Run->GetDivision();
+		str = m_Run->GetDivision();
 		break;
 	case COL_RUN_MQ_LEVEL:
-		str << m_Run->GetLevel();
+		str = m_Run->GetLevel();
 		break;
 	case COL_RUN_MQ_EVENT:
-		str << m_Run->GetEvent();
+		str = m_Run->GetEvent();
 		break;
 	case COL_RUN_MQ_SUBNAME:
-		str << m_Run->GetSubName();
+		str = m_Run->GetSubName();
 		break;
 	case COL_RUN_MQ_LOCATION:
-		str << m_Trial->GetLocation();
+		str = m_Trial->GetLocation();
 		break;
 	case COL_RUN_MQ_CLUB:
 		if (m_Trial->GetClubs().GetPrimaryClub())
-			str << m_Trial->GetClubs().GetPrimaryClubName();
+			str = m_Trial->GetClubs().GetPrimaryClubName();
 		break;
 	case COL_RUN_MQ_JUDGE:
-		str << m_Run->GetJudge();
+		str = m_Run->GetJudge();
 		break;
 	case COL_RUN_MQ_PLACE:
-		str << m_Run->GetPlace();
+		str = fmt::format(L"{}", m_Run->GetPlace());
 		break;
 	case COL_RUN_MQ_INCLASS:
-		str << m_Run->GetInClass();
+		str = fmt::format(L"{}", m_Run->GetInClass());
 		break;
 	case COL_RUN_MQ_QD:
-		str << m_Run->GetDogsQd();
+		str = fmt::format(L"{}", m_Run->GetDogsQd());
 		break;
 	case COL_RUN_MQ_SPEED:
 		if (m_Scoring)
-			str << m_Run->GetSpeedPoints(m_Scoring);
+			str = fmt::format(L"{}", m_Run->GetSpeedPoints(m_Scoring));
 		break;
 	case COL_RUN_MQ_PARTNERS:
-		for (ARBDogRunPartnerList::const_iterator iter2 = m_Run->GetPartners().begin();
-			iter2 != m_Run->GetPartners().end();
-			++iter2)
 		{
-			if (iter2 != m_Run->GetPartners().begin())
-				str << L", ";
-			str << (*iter2)->GetHandler();
-			str << L"/";
-			str << (*iter2)->GetDog();
+			fmt::wmemory_buffer buffer;
+			for (ARBDogRunPartnerList::const_iterator iter2 = m_Run->GetPartners().begin();
+				iter2 != m_Run->GetPartners().end();
+				++iter2)
+			{
+				if (iter2 != m_Run->GetPartners().begin())
+					fmt::format_to(buffer, L", ");
+				fmt::format_to(buffer, L"{}/{}", (*iter2)->GetHandler(), (*iter2)->GetDog());
+			}
+			str = fmt::to_string(buffer);
 		}
 		break;
 	}
-	return str.str();
+	return str;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -690,26 +693,26 @@ typedef std::shared_ptr<CDlgListViewerDataLifetime> CDlgListViewerDataLifetimePt
 
 std::wstring CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 {
-	std::wostringstream str;
+	std::wstring str;
 	if (m_info)
 	{
 		switch (m_ColData->GetIndex(iCol))
 		{
 		case COL_OTHER_DIV:
-			str << m_info->sort1;
+			str = m_info->sort1;
 			break;
 		case COL_OTHER_LEVEL:
-			str << m_info->sort2;
+			str = m_info->sort2;
 			break;
 		case COL_OTHER_PTS:
 			if (0 < m_info->filtered)
-				str << m_info->points - m_info->filtered << L" (" << m_info->points << L")";
+				str = fmt::format(L"{} ({})", m_info->points - m_info->filtered, m_info->points);
 			else
-				str << m_info->points;
+				str = fmt::format(L"{}", m_info->points);
 			break;
 		}
 	}
-	return str.str();
+	return str;
 }
 
 
@@ -775,48 +778,48 @@ typedef std::shared_ptr<CDlgListViewerDataOther> CDlgListViewerDataOtherPtr;
 
 std::wstring CDlgListViewerDataOther::OnNeedText(long iCol) const
 {
-	std::wostringstream str;
+	std::wstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_OTHER_DATE:
 		if (m_info.m_pExisting)
-			str << m_info.m_pExisting->GetDate().GetString();
+			str = m_info.m_pExisting->GetDate().GetString();
 		else
-			str << m_info.m_pRun->GetDate().GetString();
+			str = m_info.m_pRun->GetDate().GetString();
 		break;
 	case COL_OTHER_NAME: // Trial/Existing Points
 		if (m_info.m_pExisting)
-			str << m_info.m_pExisting->GetTypeName();
+			str = m_info.m_pExisting->GetTypeName();
 		else
-			str << m_info.m_pTrial->GetLocation();
+			str = m_info.m_pTrial->GetLocation();
 		break;
 	case COL_OTHER_CLUB:
 		if (m_info.m_pExisting)
-			str << L"[" << _("IDS_EXISTING_POINTS") << L"]";
+			str = fmt::format(L"[{}]", _("IDS_EXISTING_POINTS").wx_str());
 		else if (m_info.m_pTrial->GetClubs().GetPrimaryClub())
-			str << m_info.m_pTrial->GetClubs().GetPrimaryClubName();
+			str = m_info.m_pTrial->GetClubs().GetPrimaryClubName();
 		break;
 	case COL_OTHER_VENUE:
-		str << m_info.m_Venue;
+		str = m_info.m_Venue;
 		break;
 	case COL_OTHER_DIV:
-		str << m_info.m_Div;
+		str = m_info.m_Div;
 		break;
 	case COL_OTHER_LEVEL:
-		str << m_info.m_Level;
+		str = m_info.m_Level;
 		break;
 	case COL_OTHER_EVENT:
-		str << m_info.m_Event;
+		str = m_info.m_Event;
 		break;
 	case COL_OTHER_PTS:
-		str << m_info.m_Points;
+		str = fmt::format(L"{}", m_info.m_Points);
 		break;
 	case COL_OTHER_SCORE:
 		if (m_info.m_bScore)
-			str << m_info.m_Score;
+			str = fmt::format(L"{}", m_info.m_Score);
 		break;
 	}
-	return str.str();
+	return str;
 }
 
 

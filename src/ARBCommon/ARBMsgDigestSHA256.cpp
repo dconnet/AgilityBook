@@ -21,7 +21,6 @@
 #include "ARBMsgDigestImpl.h"
 
 #include "ARBCommon/StringUtil.h"
-#include <sstream>
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>

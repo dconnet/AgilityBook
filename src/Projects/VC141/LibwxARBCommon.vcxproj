@@ -185,6 +185,11 @@
     <ClInclude Include="..\..\ARBCommon\stdafx.h" />
     <ClInclude Include="..\..\ARBCommon\ARBMsgDigestImpl.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="LibFmt.vcxproj">
+      <Project>{c28fcb5f-b8a7-4214-9b3f-9d1d9fb6976e}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

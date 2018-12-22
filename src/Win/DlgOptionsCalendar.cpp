@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2010-01-21 Fixed calendar font selection.
@@ -410,7 +411,7 @@ void CDlgOptionsCalendar::Save()
 
 static std::wstring ForDisplay(std::wstring const& text)
 {
-	return StringUtil::stringW(wxString::Format(_("IDS_CALENDAR_DISPLAY_COLOR"), text.c_str()));
+	return fmt::format(_("IDS_CALENDAR_DISPLAY_COLOR").wx_str(), text);
 }
 
 

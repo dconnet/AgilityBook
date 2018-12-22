@@ -106,7 +106,7 @@ bool CARBUpdaterApp::OnInit()
 		else
 		{
 			DWORD x = GetLastError();
-			wxMessageBox(wxString::Format(L"\"%s\" failed: %08x", file.wx_str(), x));
+			wxMessageBox(fmt::format(L"\"{}\" failed: {:08x}", file.wx_str(), x));
 		}
 		// In theory, there could be timing issue here - if ARB starts really
 		// quickly, it could try deleting the file before we exit. ARB will

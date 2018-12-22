@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2012-11-25 Add libxml support back in.
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
  * 2012-03-16 Renamed LoadXML functions, added stream version.
@@ -25,9 +26,9 @@
  */
 
 #include "ARBTypes.h"
+#include "fmt/format.h"
 #include <istream>
 #include <map>
-#include <sstream>
 #include <vector>
 class ARBDate;
 class ARBVersion;
@@ -384,7 +385,7 @@ public:
 	 */
 	bool LoadXML(
 			std::istream& inStream,
-			std::wostringstream& ioErrMsg);
+			fmt::wmemory_buffer& ioErrMsg);
 
 	/**
 	 * Populate this element from the given buffer.
@@ -396,7 +397,7 @@ public:
 	bool LoadXML(
 			char const* inData,
 			size_t nData,
-			std::wostringstream& ioErrMsg);
+			fmt::wmemory_buffer& ioErrMsg);
 
 	/**
 	 * Populate this element from the given file.
@@ -406,7 +407,7 @@ public:
 	 */
 	bool LoadXML(
 			wchar_t const* inFileName,
-			std::wostringstream& ioErrMsg);
+			fmt::wmemory_buffer& ioErrMsg);
 
 	/**
 	 * Save this element to the given output stream.

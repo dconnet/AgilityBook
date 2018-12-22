@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-27 Remove WIN32 ifdef from tests.
  * 2008-06-29 Created
@@ -20,6 +21,7 @@
 
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
+#include "fmt/printf.h"
 #include <algorithm>
 #include <locale>
 
@@ -231,11 +233,9 @@ TEST_CASE("String")
 	{
 		if (!g_bMicroTest)
 		{
-#if defined(__WXWINDOWS__)
-			REQUIRE(L"two one" == wxString::Format(L"%2$s %1$s", L"one", L"two"));
-#else
-#pragma PRAGMA_TODO(Write formatting test)
-#endif
+			REQUIRE(L"two one" == fmt::sprintf(L"%2$s %1$s", L"one", L"two"));
+			REQUIRE(L"two one" == fmt::format(L"{1} {0}", L"one", L"two"));
+			REQUIRE(L"    " == fmt::format(L"{:{}s}", L" ", 4));
 		}
 	}
 

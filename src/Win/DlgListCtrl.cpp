@@ -282,18 +282,18 @@ typedef std::shared_ptr<CDlgListCtrlDataOtherPoints> CDlgListCtrlDataOtherPoints
 
 std::wstring CDlgListCtrlDataOtherPoints::OnNeedText(long iCol) const
 {
-	std::wostringstream str;
+	std::wstring str;
 	switch (iCol)
 	{
 	default:
 	case 0:
-		str << m_Other->GetName();
+		str = m_Other->GetName();
 		break;
 	case 1:
-		str << ARBDouble::ToString(m_Other->GetPoints(), -1);
+		str = ARBDouble::ToString(m_Other->GetPoints(), -1);
 		break;
 	}
-	return str.str();
+	return str;
 }
 
 

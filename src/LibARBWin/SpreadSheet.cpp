@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-10-11 Moved to Win LibARBWin
  * 2012-05-16 Fixed Calc format strings.
  * 2012-02-18 Added eSpreadSheetNumberNoZero
@@ -27,7 +28,7 @@
 
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
-#include <sstream>
+#include "fmt/format.h"
 
 #if HAS_AUTOMATION
 #include "LibARBWin/DlgProgress.h"
@@ -745,9 +746,7 @@ bool CWizardExcelImport::GetData(
 			wxFileName filename(m_FileName);
 			std::wstring msg = filename.GetFullPath();
 			ioProgress->SetCaption(msg);
-			std::wstring str = StringUtil::stringW(wxString::Format(_("Reading %1$d rows and %2$d columns"),
-				static_cast<int>(nRows),
-				static_cast<int>(nCols)));
+			std::wstring str = fmt::format(_("Reading {0} rows and {1} columns").wx_str(), nRows, nCols);
 			ioProgress->SetMessage(str);
 			ioProgress->SetRange(1, nRows);
 			ioProgress->ShowProgress();
@@ -1165,7 +1164,7 @@ bool CWizardCalcImport::GetData(
 		wxFileName filename(m_FileName);
 		std::wstring msg = filename.GetFullPath();
 		ioProgress->SetCaption(msg);
-		std::wstring str = StringUtil::stringW(wxString::Format(_("Reading %1$d rows"), nRows));
+		std::wstring str = fmt::format(_("Reading {} rows").wx_str(), nRows);
 		ioProgress->SetMessage(str);
 		ioProgress->SetRange(1, nRows);
 		ioProgress->ShowProgress();
@@ -1272,13 +1271,13 @@ bool ISpreadSheet::GetRowCol(
 		L"IO",L"IP",L"IQ",L"IR",L"IS",L"IT",L"IU",L"IV",
 	};
 	bool bOk = false;
-	std::wostringstream output;
+	fmt::wmemory_buffer output;
 	outCell.clear();
 	if (inRow < GetMaxRows() && inCol < GetMaxCols())
 	{
-		output << sc_ColumnNames[inCol] << inRow + 1;
+		fmt::format_to(output, L"{}{}", sc_ColumnNames[inCol], inRow + 1);
 		bOk = true;
 	}
-	outCell = output.str();
+	outCell = fmt::to_string(output);
 	return bOk;
 }

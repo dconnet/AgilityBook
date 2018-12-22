@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -424,44 +425,44 @@ private:
 
 std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
 {
-	std::wostringstream text;
+	std::wstring text;
 	switch (iCol)
 	{
 	case 0:
-		text << m_Pts->GetDate().GetString();
+		text = m_Pts->GetDate().GetString();
 		break;
 	case 1: // Type
-		text << ARBDogExistingPoints::GetPointTypeName(m_Pts->GetType());
+		text = ARBDogExistingPoints::GetPointTypeName(m_Pts->GetType());
 		break;
 	case 2: // Points
-		text << m_Pts->GetPoints();
+		text = fmt::format(L"{}", m_Pts->GetPoints());
 		break;
 	case 3: // Other Points
-		text << m_Pts->GetTypeName();
+		text = m_Pts->GetTypeName();
 		break;
 	case 4: // Venue
-		text << m_Pts->GetVenue();
+		text = m_Pts->GetVenue();
 		break;
 	case 5: // MultiQ
-		text << m_Pts->GetMultiQ();
+		text = m_Pts->GetMultiQ();
 		break;
 	case 6: // Division
-		text << m_Pts->GetDivision();
+		text = m_Pts->GetDivision();
 		break;
 	case 7: // Level
-		text << m_Pts->GetLevel();
+		text = m_Pts->GetLevel();
 		break;
 	case 8: // Event
-		text << m_Pts->GetEvent();
+		text = m_Pts->GetEvent();
 		break;
 	case 9: // SubName
-		text << m_Pts->GetSubName();
+		text = m_Pts->GetSubName();
 		break;
 	case 10: // Comment
-		text << StringUtil::Replace(m_Pts->GetComment(), L"\n", L" ");
+		text = StringUtil::Replace(m_Pts->GetComment(), L"\n", L" ");
 		break;
 	}
-	return text.str();
+	return text;
 }
 
 

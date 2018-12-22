@@ -18,6 +18,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2016-06-19 Add support for named/speedpt lifetime points.
  * 2016-01-16 Cleaned up new/edit/delete buttons.
  * 2014-12-31 Changed pixels to dialog units.
@@ -622,12 +623,10 @@ void CDlgConfigEvent::FillControls()
 			// Get info
 			{
 				std::wstring str1, str2;
-				std::wostringstream info;
+				fmt::wmemory_buffer info;
 				ARBConfigScoring::ScoringStyle style = pScoring->GetScoringStyle();
 				str1 = _("IDS_CONFIGEVENT_STYLE");
-				info << str1 << L": "
-					<< ARBConfigScoring::GetScoringStyleStr(style)
-					<< L"\n";
+				fmt::format_to(info, L"{}: {}\n", str1, ARBConfigScoring::GetScoringStyleStr(style));
 				// The following strings should be the same as they are in
 				// the Method Configuration dialog.
 				switch (style)
@@ -638,125 +637,114 @@ void CDlgConfigEvent::FillControls()
 				case ARBConfigScoring::eFaults100ThenTime:
 				case ARBConfigScoring::eFaults200ThenTime:
 					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-					info << str1 << L": "
-						<< pScoring->TimeFaultMultiplier();
+					fmt::format_to(info, L"{}: {}", str1, pScoring->TimeFaultMultiplier());
 					break;
 				case ARBConfigScoring::eOCScoreThenTime:
 					str1 = _("IDS_CONFIGEVENT_REQOPEN");
 					str2 = _("IDS_CONFIGEVENT_REQCLOSE");
-					info << str1 << L": "
-						<< pScoring->GetRequiredOpeningPoints()
-						<< L"; " << str2 << L": "
-						<< pScoring->GetRequiredClosingPoints();
+					fmt::format_to(info, L"{}: {}; {}: {}", str1, pScoring->GetRequiredOpeningPoints(), str2, pScoring->GetRequiredClosingPoints());
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
-						info << L"; " << str1;
+						fmt::format_to(info, L"; {}", str1);
 						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-						info << L"; " << str1 << L": "
-							<< pScoring->TimeFaultMultiplier();
+						fmt::format_to(info, L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
 						if (pScoring->ComputeTimeFaultsUnder())
 						{
 							str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-							info << L"; " << str1;
+							fmt::format_to(info, L"; {}", str1);
 						}
 						if (pScoring->ComputeTimeFaultsOver())
 						{
 							str1 = _("IDS_CONFIGEVENT_TF_OVER");
-							info << L"; " << str1;
+							fmt::format_to(info, L"; {}", str1);
 						}
 					}
 					break;
 				case ARBConfigScoring::eScoreThenTime:
 					str1 = _("IDS_POINTS");
-					info << str1 << L": "
-						<< pScoring->GetRequiredOpeningPoints();
+					fmt::format_to(info, L"{}: {}", str1, pScoring->GetRequiredOpeningPoints());
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
-						info << L"; " << str1;
+						fmt::format_to(info, L"; {}", str1);
 						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-						info << L"; " << str1 << L": "
-							<< pScoring->TimeFaultMultiplier();
+						fmt::format_to(info, L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
 						if (pScoring->ComputeTimeFaultsUnder())
 						{
 							str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-							info << L"; " << str1;
+							fmt::format_to(info, L"; {}", str1);
 						}
 						if (pScoring->ComputeTimeFaultsOver())
 						{
 							str1 = _("IDS_CONFIGEVENT_TF_OVER");
-							info << L"; " << str1;
+							fmt::format_to(info, L"; {}", str1);
 						}
 					}
 					break;
 				case ARBConfigScoring::eTimePlusFaults:
 					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-					info << str1 << L": "
-						<< pScoring->TimeFaultMultiplier();
+					fmt::format_to(info, L"{}: {}", str1, pScoring->TimeFaultMultiplier());
 					if (pScoring->QsMustBeClean())
 					{
 						// This string is slightly different: Just dropped
 						// the 'Time+Fault' at start.
 						str1 = _("IDS_CONFIGEVENT_CLEANQ");
-						info << L"; " << str1;
+						fmt::format_to(info, L"; {}", str1);
 					}
 					if (pScoring->ComputeTimeFaultsUnder()
 						|| pScoring->ComputeTimeFaultsOver())
 					{
 						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-						info << L"; " << str1 << L": "
-							<< pScoring->TimeFaultMultiplier();
+						fmt::format_to(info, L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-						info << L"; " << str1;
+						fmt::format_to(info, L"; {}", str1);
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_OVER");
-						info << L"; " << str1;
+						fmt::format_to(info, L"; {}", str1);
 					}
 					break;
 				}
 				if (pScoring->DropFractions())
 				{
 					str1 = _("IDS_CONFIGEVENT_DROPFRAC");
-					info << L"; " << str1;
+					fmt::format_to(info, L"; {}", str1);
 				}
 				if (pScoring->HasBonusTitlePts())
 				{
 					str1 = _("IDS_CONFIGEVENT_BONUSTITLE");
-					info << L"; " << str1;
+					fmt::format_to(info, L"; {}", str1);
 				}
 				if (pScoring->HasSuperQ())
 				{
 					str1 = _("IDS_CONFIGEVENT_SUPERQ");
-					info << L"; " << str1;
+					fmt::format_to(info, L"; {}", str1);
 				}
 				if (pScoring->HasSpeedPts())
 				{
 					str1 = _("IDS_CONFIGEVENT_SPEEDPTS");
-					info << L"; " << str1;
+					fmt::format_to(info, L"; {}", str1);
 					if (0 < pScoring->GetPlaceInfo().size())
 					{
-						info << L" [";
+						fmt::format_to(info, L" [");
 						int idx = 0;
 						for (ARBConfigPlaceInfoList::iterator iter = pScoring->GetPlaceInfo().begin();
 							iter != pScoring->GetPlaceInfo().end();
 							++idx, ++iter)
 						{
 							if (0 < idx)
-								info << L", ";
-							info << (*iter)->GetPlace()
-								<< L"="
-								<< (*iter)->GetValue();
+								fmt::format_to(info, L", ");
+							fmt::format_to(info, L"{}={}", (*iter)->GetPlace(), (*iter)->GetValue());
 						}
-						info << L"]";
+						fmt::format_to(info, L"]");
 					}
 				}
-				m_ctrlInfo->SetLabel(StringUtil::stringWX(info.str()));
+				m_ctrlInfo->SetLabel(StringUtil::stringWX(fmt::to_string(info)));
 			}
 			// Take care of title points
 			FillTitlePoints(pScoring);

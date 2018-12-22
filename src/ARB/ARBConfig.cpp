@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-11-01 Added ARBVersion to Default().
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -248,7 +249,7 @@ void ARBConfig::Default(IARBConfigHandler* inHandler, ARBVersion* pVersion)
 			int config = tree->FindElement(TREE_CONFIG);
 			if (0 <= config)
 			{
-				std::wostringstream errMsg;
+				fmt::wmemory_buffer errMsg;
 				ARBErrorCallback err(errMsg);
 				Load(tree->GetElementNode(config), version, err);
 			}
@@ -298,7 +299,7 @@ std::wstring ARBConfig::GetTitleCompleteName(
 bool ARBConfig::Update(
 		int indent,
 		ARBConfig const& inConfigNew,
-		std::wostringstream& ioInfo)
+		fmt::wmemory_buffer& ioInfo)
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
 	// Update CalSites. (existing ones are never removed except by an action)
@@ -330,7 +331,7 @@ bool ARBConfig::Update(
 		}
 		if (0 < nNew || 0 < nUpdated)
 		{
-			ioInfo << Localization()->UpdateCalSites(nNew, nUpdated, nSkipped) << L"\n";
+			fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateCalSites(nNew, nUpdated, nSkipped));
 		}
 	}
 
@@ -355,7 +356,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << Localization()->UpdateFaults(nNew, nSkipped) << L"\n";
+		fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateFaults(nNew, nSkipped));
 	}
 
 	// Update OtherPoints.
@@ -390,7 +391,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped) << L"\n";
+		fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped));
 	}
 
 	// Update Venues.
@@ -429,11 +430,11 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << Localization()->UpdateVenues(nNew, nUpdated, nSkipped) << L"\n";
+		fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateVenues(nNew, nUpdated, nSkipped));
 	}
 	if (0 < venueInfo.length())
 	{
-		ioInfo << venueInfo;
+		fmt::format_to(ioInfo, L"{}", venueInfo);
 	}
 	// Even if there are no changes, update the version number so we don't
 	// prompt anymore.

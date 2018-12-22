@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-04-26 Moved ShortToRoman from ARBConfigTitle.
  * 2014-06-19 Added IsWin7OrBetter.
  * 2013-07-17 Created
@@ -19,9 +20,8 @@
 #include "ARBCommon/ARBMisc.h"
 
 #include "ARBCommon/StringUtil.h"
-#include <iostream>
+#include "fmt/format.h"
 #include <math.h>
-#include <sstream>
 
 // For testing in ARB
 //#if defined(__WXWINDOWS__)
@@ -49,19 +49,19 @@ std::wstring SanitizeStringForHTML(
 		pos = inRawData.find_first_of(L"\r\n");
 	if (std::wstring::npos == pos)
 		return inRawData;
-	std::wostringstream data;
+	fmt::wmemory_buffer data;
 	for (size_t nChar = 0; nChar < inRawData.length(); ++nChar)
 	{
 		switch (inRawData[nChar])
 		{
 		case L'&':
-			data << L"&amp;";
+			fmt::format_to(data, L"{}", L"&amp;");
 			break;
 		case L'<':
-			data << L"&lt;";
+			fmt::format_to(data, L"{}", L"&lt;");
 			break;
 		case L'>':
-			data << L"&gt;";
+			fmt::format_to(data, L"{}", L"&gt;");
 			break;
 		case L'\r':
 			if (bConvertCR)
@@ -69,23 +69,23 @@ std::wstring SanitizeStringForHTML(
 				if (nChar + 1 < inRawData.length() && '\n' == inRawData[nChar+1])
 					continue;
 				else
-					data << L"<br/>";
+					fmt::format_to(data, L"{}", L"<br/>");
 			}
 			else
-				data << inRawData[nChar];
+				fmt::format_to(data, L"{}", inRawData[nChar]);
 			break;
 		case '\n':
 			if (bConvertCR)
-				data << L"<br/>";
+				fmt::format_to(data, L"<br/>");
 			else
-				data << inRawData[nChar];
+				fmt::format_to(data, L"{}", inRawData[nChar]);
 			break;
 		default:
-			data << inRawData[nChar];
+			fmt::format_to(data, L"{}", inRawData[nChar]);
 			break;
 		}
 	}
-	return data.str();
+	return fmt::to_string(data);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -140,7 +140,7 @@ bool GetOSInfo(int& verMajor, int& verMinor)
 
 static std::wstring GetOSName()
 {
-	std::wostringstream str;
+	std::wstring str;
 
 	int majVer;
 	int minVer;
@@ -149,35 +149,31 @@ static std::wstring GetOSName()
 
 #if defined(__WXWINDOWS__)
 	wxPlatformInfo info;
-	str << StringUtil::stringW(info.GetOperatingSystemIdName())
-		<< L" "
-		<< majVer
-		<< L"."
-		<< minVer;
+	str = fmt::format(L"{} {}.{}", info.GetOperatingSystemIdName().wx_str(), majVer, minVer);
 
 #elif defined(_WIN32)
 	switch (majVer)
 	{
 	default:
-		str << L"Windows " << majVer << L"." << minVer;
+		str = fmt::format(L"Windows {}.{}", majVer, minVer);
 		break;
 	case 6:
 		switch (minVer)
 		{
 		default:
-			str << L"Windows " << majVer << L"." << minVer;
+			str = fmt::format(L"Windows {}.{}", majVer, minVer);
 			break;
 		case 0:
-			str << L"Windows Vista";
+			str = L"Windows Vista";
 			break;
 		case 1:
-			str << L"Windows 7";
+			str = L"Windows 7";
 			break;
 		case 2:
-			str << L"Windows 8";
+			str = L"Windows 8";
 			break;
 		case 3:
-			str << L"Windows 8.1";
+			str = L"Windows 8.1";
 			break;
 		}
 		break;
@@ -185,16 +181,16 @@ static std::wstring GetOSName()
 		switch (minVer)
 		{
 		default:
-			str << L"Windows " << majVer << L"." << minVer;
+			str = fmt::format(L"Windows {}.{}", majVer, minVer);
 			break;
 		case 2:
-			str << L"Windows XP"; // Not really, 64bitXP, or Server
+			str = L"Windows XP"; // Not really, 64bitXP, or Server
 			break;
 		case 1:
-			str << L"Windows XP";
+			str = L"Windows XP";
 			break;
 		case 0:
-			str << L"Windows 2000";
+			str = L"Windows 2000";
 			break;
 		}
 		break;
@@ -204,7 +200,7 @@ static std::wstring GetOSName()
 #error Unknown OS
 #endif
 
-	return str.str();
+	return str;
 }
 
 
@@ -267,25 +263,19 @@ static std::wstring GetEndiannessName()
 
 std::wstring GetOSInfo(bool bVerbose)
 {
-	std::wostringstream str;
+	fmt::wmemory_buffer str;
 
 	if (bVerbose)
-		str << L"OS: ";
+		fmt::format_to(str, L"OS: ");
 
-	str << GetOSName();
+	fmt::format_to(str, L"{}", GetOSName());
 
 	if (bVerbose)
 	{
-		str << L"\n";
-
-		str << L"Architecture: "
-			<< GetArchName()
-			<< L", "
-			<< GetEndiannessName()
-			<< L"\n";
+		fmt::format_to(str, L"\nArchitecture: %s, %s\n", GetArchName(), GetEndiannessName());
 	}
 
-	return str.str();
+	return fmt::to_string(str);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -389,14 +379,14 @@ std::wstring ShortToRoman(short value)
 		{nullptr, L"DCCC", L"LXXX", L"VIII"},
 		{nullptr, L"CM",   L"XC",   L"IX"  }
 	};
-	std::wostringstream result;
+	fmt::wmemory_buffer result;
 	for (int index = 0; index < 4; ++index)
 	{
 		short power = static_cast<short>(pow(10.0, 3 - index));
 		short digit = value / power;
 		value -= digit * power;
 		if (digit > 0)
-			result << romanDigits[digit-1][index];
+			fmt::format_to(result, L"{}", romanDigits[digit - 1][index]);
 	}
-	return result.str();
+	return fmt::to_string(result);
 }

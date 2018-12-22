@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2015-11-27 Use subname for event, if set.
@@ -118,7 +119,7 @@ protected:
 std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 {
 	short val;
-	std::wostringstream str;
+	std::wstring str;
 	if (0 < iCol && m_pRun)
 	{
 		// Col 0 is special: it has the icons. Instead of saving it,
@@ -129,81 +130,85 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			break;
 
 		case IO_RUNS_REG_NAME:
-			str << m_pDog->GetRegisteredName();
+			str = m_pDog->GetRegisteredName();
 			break;
 		case IO_RUNS_CALL_NAME:
-			str << m_pDog->GetCallName();
+			str = m_pDog->GetCallName();
 			break;
 		case IO_RUNS_DATE:
-			str << m_pRun->GetDate().GetString();
+			str = m_pRun->GetDate().GetString();
 			break;
 		case IO_RUNS_VENUE:
 			{
 				int i = 0;
+				fmt::wmemory_buffer buf;
 				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 					iter != m_pTrial->GetClubs().end();
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << L"/";
-					str << (*iter)->GetVenue();
+						fmt::format_to(buf, L"/");
+					fmt::format_to(buf, L"{}", (*iter)->GetVenue());
 				}
+				str = fmt::to_string(buf);
 			}
 			break;
 		case IO_RUNS_CLUB:
 			{
 				int i = 0;
+				fmt::wmemory_buffer buf;
 				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 					iter != m_pTrial->GetClubs().end();
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << L"/";
-					str << (*iter)->GetName();
+						fmt::format_to(buf, L"/");
+						fmt::format_to(buf, L"{}", (*iter)->GetName());
 				}
+				str = fmt::to_string(buf);
 			}
 			break;
 		case IO_RUNS_LOCATION:
-			str << m_pTrial->GetLocation();
+			str = m_pTrial->GetLocation();
 			break;
 		case IO_RUNS_TRIAL_NOTES:
-			str << m_pTrial->GetNote();
+			str = m_pTrial->GetNote();
 			break;
 		case IO_RUNS_DIVISION:
-			str << m_pRun->GetDivision();
+			str = m_pRun->GetDivision();
 			break;
 		case IO_RUNS_LEVEL:
-			str << m_pRun->GetLevel();
+			str = m_pRun->GetLevel();
 			break;
 		case IO_RUNS_EVENT:
 			if (m_pRun->GetSubName().empty())
-				str << m_pRun->GetEvent();
+				str = m_pRun->GetEvent();
 			else
-				str << m_pRun->GetSubName();
+				str = m_pRun->GetSubName();
 			break;
 		case IO_RUNS_HEIGHT:
-			str << m_pRun->GetHeight();
+			str = m_pRun->GetHeight();
 			break;
 		case IO_RUNS_JUDGE:
-			str << m_pRun->GetJudge();
+			str = m_pRun->GetJudge();
 			break;
 		case IO_RUNS_HANDLER:
-			str << m_pRun->GetHandler();
+			str = m_pRun->GetHandler();
 			break;
 		case IO_RUNS_CONDITIONS:
-			str << m_pRun->GetConditions();
+			str = m_pRun->GetConditions();
 			break;
 		case IO_RUNS_COURSE_FAULTS:
-			str << m_pRun->GetScoring().GetCourseFaults();
+			str = fmt::format(L"{}", m_pRun->GetScoring().GetCourseFaults());
 			break;
 		case IO_RUNS_TIME:
-			str << ARBDouble::ToString(m_pRun->GetScoring().GetTime());
+			str = ARBDouble::ToString(m_pRun->GetScoring().GetTime());
 			break;
 		case IO_RUNS_YARDS:
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
 			&& 0.0 < m_pRun->GetScoring().GetYards())
 			{
-				str << ARBDouble::ToString(m_pRun->GetScoring().GetYards(), 0);
+				str = ARBDouble::ToString(m_pRun->GetScoring().GetYards(), 0);
 			}
 			break;
 		case IO_RUNS_MIN_YPS:
@@ -211,7 +216,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				double yps;
 				if (m_pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 				{
-					str << ARBDouble::ToString(yps, 3);
+					str = ARBDouble::ToString(yps, 3);
 				}
 			}
 			break;
@@ -220,7 +225,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				double yps;
 				if (m_pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 				{
-					str << ARBDouble::ToString(yps, 3);
+					str = ARBDouble::ToString(yps, 3);
 				}
 			}
 			break;
@@ -228,7 +233,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			{
 				short obstacles = m_pRun->GetScoring().GetObstacles();
 				if (0 < obstacles)
-					str << obstacles;
+					str = fmt::format(L"{}", obstacles);
 			}
 			break;
 		case IO_RUNS_OPS:
@@ -236,7 +241,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				double ops;
 				if (m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops))
 				{
-					str << ARBDouble::ToString(ops, 3);
+					str = ARBDouble::ToString(ops, 3);
 				}
 			}
 			break;
@@ -244,7 +249,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
 			&& 0.0 < m_pRun->GetScoring().GetSCT())
 			{
-				str << ARBDouble::ToString(m_pRun->GetScoring().GetSCT());
+				str = ARBDouble::ToString(m_pRun->GetScoring().GetSCT());
 			}
 			break;
 		case IO_RUNS_TOTAL_FAULTS:
@@ -261,67 +266,67 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 						nullptr,
 						&pScoring);
 				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
-				str << ARBDouble::ToString(faults, 0);
+				str = ARBDouble::ToString(faults, 0);
 			}
 			break;
 		case IO_RUNS_REQ_OPENING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetNeedOpenPts();
+				str = fmt::format(L"{}", m_pRun->GetScoring().GetNeedOpenPts());
 			}
 			break;
 		case IO_RUNS_REQ_CLOSING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetNeedClosePts();
+				str = fmt::format(L"{}", m_pRun->GetScoring().GetNeedClosePts());
 			}
 			break;
 		case IO_RUNS_OPENING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetOpenPts();
+				str = fmt::format(L"{}", m_pRun->GetScoring().GetOpenPts());
 			}
 			break;
 		case IO_RUNS_CLOSING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetClosePts();
+				str = fmt::format(L"{}", m_pRun->GetScoring().GetClosePts());
 			}
 			break;
 		case IO_RUNS_REQ_POINTS:
 			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetNeedOpenPts();
+				str = fmt::format(L"{}", m_pRun->GetScoring().GetNeedOpenPts());
 			}
 			break;
 		case IO_RUNS_POINTS:
 			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
 			{
-				str << m_pRun->GetScoring().GetOpenPts();
+				str = fmt::format(L"{}", m_pRun->GetScoring().GetOpenPts());
 			}
 			break;
 		case IO_RUNS_PLACE:
 			val = m_pRun->GetPlace();
 			if (0 > val)
-				str << L"?";
+				str = L"?";
 			else if (0 == val)
-				str << L"-";
+				str = L"-";
 			else
-				str << val;
+				str = fmt::format(L"{}", val);
 			break;
 		case IO_RUNS_IN_CLASS:
 			val = m_pRun->GetInClass();
 			if (0 > val)
-				str << L"?";
+				str = L"?";
 			else
-				str << val;
+				str = fmt::format(L"{}", val);
 			break;
 		case IO_RUNS_DOGSQD:
 			val = m_pRun->GetDogsQd();
 			if (0 > val)
-				str << L"?";
+				str = L"?";
 			else
-				str << m_pRun->GetDogsQd();
+				str = fmt::format(L"{}", m_pRun->GetDogsQd());
 			break;
 		case IO_RUNS_Q:
 			{
@@ -343,20 +348,21 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 					{
 						bSet = true;
 						if (!q.empty())
-							str << q << L"/";
-						str << _("IDS_SQ");
+							str = fmt::format(L"{}/{}", q, _("IDS_SQ").wx_str());
+						else
+							str = _("IDS_SQ").wx_str();
 					}
 					else
 					{
 						if (!q.empty())
 						{
 							bSet = true;
-							str << q;
+							str = q;
 						}
 					}
 				}
 				if (!bSet)
-					str << m_pRun->GetQ().str();
+					str = m_pRun->GetQ().str();
 			}
 			break;
 		case IO_RUNS_SCORE:
@@ -374,7 +380,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 						&pScoring);
 				if (pScoring)
 				{
-					str << ARBDouble::ToString(m_pRun->GetScore(pScoring));
+					str = ARBDouble::ToString(m_pRun->GetScore(pScoring));
 				}
 			}
 			break;
@@ -398,23 +404,25 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 						pts = m_pRun->GetTitlePoints(pScoring);
 					}
 				}
-				str << pts;
+				str = fmt::format(L"{}", pts);
 			}
 			break;
 		case IO_RUNS_COMMENTS:
-			str << StringUtil::Replace(m_pRun->GetNote(), L"\n", L" ");
+			str = StringUtil::Replace(m_pRun->GetNote(), L"\n", L" ");
 			break;
 		case IO_RUNS_FAULTS:
 			{
 				int i = 0;
+				fmt::wmemory_buffer buf;
 				for (ARBDogFaultList::const_iterator iter = m_pRun->GetFaults().begin();
 					iter != m_pRun->GetFaults().end();
 					++i, ++iter)
 				{
 					if (0 < i)
-						str << L", ";
-					str << (*iter);
+						fmt::format_to(buf, L", ");
+					fmt::format_to(buf, L"{}", (*iter));
 				}
+				str = fmt::to_string(buf);
 			}
 			break;
 		case IO_RUNS_SPEED:
@@ -433,14 +441,14 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				{
 					if (pScoring->HasSpeedPts() && m_pRun->GetQ().Qualified())
 					{
-						str << m_pRun->GetSpeedPoints(pScoring);
+						str = fmt::format(L"{}", m_pRun->GetSpeedPoints(pScoring));
 					}
 				}
 			}
 			break;
 		}
 	}
-	return str.str();
+	return str;
 }
 
 
@@ -1168,7 +1176,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 	}
 	if (!bFound)
 	{
-		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
+		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_strSearch);
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
@@ -1340,7 +1348,7 @@ bool CAgilityBookRunsView::GetMessage(std::wstring& msg) const
 				++nIgnoredRuns;
 		}
 	}
-	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_RUNS_QS"), m_Ctrl->GetItemCount(), m_Ctrl->GetItemCount() - nIgnoredRuns, nQs));
+	msg = fmt::format(_("IDS_NUM_RUNS_QS").wx_str(), m_Ctrl->GetItemCount(), m_Ctrl->GetItemCount() - nIgnoredRuns, nQs);
 	return true;
 }
 

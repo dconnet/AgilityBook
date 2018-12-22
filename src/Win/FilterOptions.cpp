@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2013-01-11 Fix filters on configuration import.
  * 2011-10-12 Added better filter change detection.
  * 2011-08-10 Added builtin support for an 'all' filter.
@@ -121,14 +122,14 @@ static void TrainingNames(std::wstring inNames, std::set<std::wstring>& outNames
 
 static wxString TrainingNames(std::set<std::wstring> const& inNames)
 {
-	std::wostringstream names;
+	fmt::wmemory_buffer names;
 	for (std::set<std::wstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
-		if (!names.str().empty())
-			names << L":";
-		names << *iter;
+		if (0 < names.size())
+			fmt::format_to(names, L":");
+		fmt::format_to(names, L"{}", *iter);
 	}
-	return StringUtil::stringWX(names.str());
+	return StringUtil::stringWX(fmt::to_string(names));
 }
 
 /////////////////////////////////////////////////////////////////////////////

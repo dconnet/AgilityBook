@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -174,9 +175,9 @@ DEFINE_ON_INIT(CDlgPluginDetails)
 
 void CDlgPluginDetails::SetCodeText()
 {
-	wxString str = wxString::Format(_("IDC_PLUGINDETAIL_CODES_TEXT"),
-		static_cast<int>(m_CalSite->LocationCodes().size()),
-		static_cast<int>(m_CalSite->VenueCodes().size()));
+	std::wstring str = fmt::format(_("IDC_PLUGINDETAIL_CODES_TEXT").wx_str(),
+		m_CalSite->LocationCodes().size(),
+		m_CalSite->VenueCodes().size());
 	m_ctrlCodes->SetLabel(str);
 }
 

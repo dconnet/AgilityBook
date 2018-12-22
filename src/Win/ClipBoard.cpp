@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-01-26 Ported to wxWidgets.
@@ -120,15 +121,15 @@ bool CClipboardDataReader::GetData(
 		wxTheClipboard->GetData(txtData);
 		data = txtData.GetText().ToUTF8();
 	}
-	std::wostringstream err;
+	fmt::wmemory_buffer err;
 	bool bOk = false;
 	{
 		wxBusyCursor wait;
 		bOk = outTree->LoadXML(data.c_str(), data.length(), err);
 	}
-	if (!bOk && 0 < err.str().length())
+	if (!bOk && 0 < err.size())
 	{
-		wxMessageBox(StringUtil::stringWX(err.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(StringUtil::stringWX(fmt::to_string(err)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 	}
 	return bOk;
 }
@@ -268,26 +269,16 @@ bool CClipboardDataWriter::AddData(
 			size_t lenStartFragment = startFragment.length();
 			size_t lenEndFragment = endFragment.length();
 #endif
-			std::ostringstream out;
-			out.fill('0');
-			out << "Version:0.9\r\nStartHTML:";
-			out.width(8);
-			out << lenHeader << "\r\nEndHTML:";
-			out.width(8);
-			out << lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml
-				<< "\r\nStartFragment:";
-			out.width(8);
-			out << lenHeader + lenStartHtml + lenStartFragment
-				<< "\r\nEndFragment:";
-			out.width(8);
-			out << lenHeader + lenStartHtml + lenStartFragment + lenData << "\r\n";
+			fmt::memory_buffer out;
+			fmt::format_to(out, "Version:0.9\r\nStartHTML:{:08d}\r\n", lenHeader);
+			fmt::format_to(out, "EndHTML:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml);
+			fmt::format_to(out, "StartFragment:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment);
+			fmt::format_to(out, "EndFragment:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment + lenData);
 #ifdef _DEBUG
-			assert(out.str().length() == static_cast<std::string::size_type>(lenHeader));
+			assert(out.size() == static_cast<std::string::size_type>(lenHeader));
 #endif
-			out << startHtml << startFragment
-				<< data
-				<< endFragment << endHtml;
-			data = out.str();
+			fmt::format_to(out, "{}{}{}{}{}", startHtml, startFragment, data, endFragment, endHtml);
+			data = fmt::to_string(out);
 		}
 		wxCustomDataObject* dataObj = new wxCustomDataObject(wxDataFormat(L"HTML Format"));
 		dataObj->SetData(data.length() + 1, data.c_str());

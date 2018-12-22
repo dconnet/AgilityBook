@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-10-11 Moved to Win LibARBWin
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2010-03-28 Moved SetColumnWidth override to CListCtrl.
@@ -32,11 +33,11 @@
 #include "stdafx.h"
 #include "LibARBWin/ListCtrl.h"
 
+#include "fmt/format.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/ListData.h"
-#include <sstream>
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -338,37 +339,37 @@ CListDataPtr CReportListCtrl::GetData(long item) const
 
 
 static void PushData(
-		std::wostringstream& data,
+		fmt::wmemory_buffer& data,
 		CReportListCtrl const* ctrl,
 		int item,
 		bool bBold)
 {
-	data << L"<tr>";
+	fmt::format_to(data, L"<tr>");
 	std::vector<std::wstring> line;
 	ctrl->GetPrintLine(item, line);
 	for (std::vector<std::wstring>::const_iterator i = line.begin(); i != line.end(); ++i)
 	{
 		if (bBold)
-			data << L"<td><strong>" << *i << L"</strong></td>\n";
+			fmt::format_to(data, L"<td><strong>{}</strong></td>\n", *i);
 		else
-			data << L"<td>" << *i << L"</td>\n";
+			fmt::format_to(data, L"<td>{}</td>\n", *i);
 	}
-	data << L"</tr>\n";
+	fmt::format_to(data, L"</tr>\n");
 }
 
 
 std::wstring CReportListCtrl::GetPrintDataAsHtmlTable(bool bFirstLineIsHeader) const
 {
-	std::wostringstream data;
-	data << L"<table border=\"0\">";
+	fmt::wmemory_buffer data;
+	fmt::format_to(data, L"<table border=\"0\">");
 	if (!bFirstLineIsHeader)
 		PushData(data, this, -1, true);
 	for (long item = 0; item < GetItemCount(); ++item)
 	{
 		PushData(data, this, item, bFirstLineIsHeader && item == 0);
 	}
-	data << L"</table>\n";
-	return data.str();
+	fmt::format_to(data, L"</table>\n");
+	return fmt::to_string(data);
 }
 
 

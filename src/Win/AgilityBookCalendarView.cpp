@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2016-09-02 Add support for scrolling on touch (or mouse drag).
  * 2013-01-01 Allow the mouse wheel to scroll beyond last entry.
  *            Add better keyboard navigation on Mac.
@@ -53,6 +54,7 @@
 
 #include "ARB/ARBCalendar.h"
 #include "ARBCommon/StringUtil.h"
+#include "fmt/printf.h"
 #include <wx/dcbuffer.h>
 
 #ifdef __WXMSW__
@@ -236,7 +238,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		// Figure out which month we're on.
 		ARBDate curMonth = FirstDayOfVisibleMonth();
 		curMonth = LastDayOfWeek(curMonth);
-		std::wstring str = StringUtil::stringW(wxString::Format(L"%s %d", m_Months[curMonth.GetMonth()-1].c_str(), curMonth.GetYear()));
+		std::wstring str = fmt::format(L"{} {}", m_Months[curMonth.GetMonth()-1].c_str(), curMonth.GetYear());
 
 		wxRect rHeader;
 		wxRect rWeekDays;
@@ -348,7 +350,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 
 				// Display date (only day now, not full date)
 				//wxString str(day.GetString());
-				str = StringUtil::stringW(wxString::Format(L"%d", day.GetDay()));
+				str = fmt::format(L"{}", day.GetDay());
 				{
 					wxDCClipper clip(*pDC, rect);
 					pDC->DrawLabel(StringUtil::stringWX(str), rect, wxALIGN_TOP|wxALIGN_RIGHT);
@@ -688,15 +690,15 @@ void CAgilityBookCalendar::OnCopy()
 			maxLen[COL_NOTES] = len;
 	}
 	// The header
-	std::wstring data = StringUtil::stringW(wxString::Format(L" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s",
-		maxLen[COL_START_DATE], columns[COL_START_DATE].c_str(),
-		maxLen[COL_END_DATE], columns[COL_END_DATE].c_str(),
-		maxLen[COL_VENUE], columns[COL_VENUE].c_str(),
-		maxLen[COL_LOCATION], columns[COL_LOCATION].c_str(),
-		maxLen[COL_CLUB], columns[COL_CLUB].c_str(),
-		maxLen[COL_OPENS], columns[COL_OPENS].c_str(),
-		maxLen[COL_CLOSES], columns[COL_CLOSES].c_str(),
-		maxLen[COL_NOTES], columns[COL_NOTES].c_str()));
+	std::wstring data = fmt::sprintf(L" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s",
+		maxLen[COL_START_DATE], columns[COL_START_DATE],
+		maxLen[COL_END_DATE], columns[COL_END_DATE],
+		maxLen[COL_VENUE], columns[COL_VENUE],
+		maxLen[COL_LOCATION], columns[COL_LOCATION],
+		maxLen[COL_CLUB], columns[COL_CLUB],
+		maxLen[COL_OPENS], columns[COL_OPENS],
+		maxLen[COL_CLOSES], columns[COL_CLOSES],
+		maxLen[COL_NOTES], columns[COL_NOTES]);
 	data = StringUtil::Trim(data);
 	data += L"\n";
 
@@ -716,7 +718,7 @@ void CAgilityBookCalendar::OnCopy()
 		wxString tentative(L"  ");
 		if (cal->IsTentative())
 			tentative = L"? ";
-		wxString str = wxString::Format(L"%s%*s - %-*s %-*s %-*s %-*s %*s%s%-*s %-*s",
+		std::wstring str = fmt::sprintf(L"%s%*s - %-*s %-*s %-*s %-*s %*s%s%-*s %-*s",
 			tentative.c_str(),
 			maxLen[COL_START_DATE], items[COL_START_DATE].c_str(),
 			maxLen[COL_END_DATE], items[COL_END_DATE].c_str(),
@@ -727,8 +729,7 @@ void CAgilityBookCalendar::OnCopy()
 			(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? L" - " : L"   ",
 			maxLen[COL_CLOSES], items[COL_CLOSES].c_str(),
 			maxLen[COL_NOTES], items[COL_NOTES].c_str());
-		str.Trim();
-		data += str + L"\n";
+		data += StringUtil::TrimRight(str) + L"\n";
 	}
 	clpData.AddData(data);
 	clpData.CommitData();
@@ -1299,7 +1300,7 @@ bool CAgilityBookCalendarView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
-	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_EVENTS"), m_Ctrl->NumEvents()));
+	msg = fmt::format(_("IDS_NUM_EVENTS").wx_str(), m_Ctrl->NumEvents());
 	return true;
 }
 

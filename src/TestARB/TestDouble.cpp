@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-12-22 Added tests for changed ARBDouble parameter.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -21,6 +22,7 @@
 
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
+#include "fmt/format.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -29,9 +31,7 @@
 
 static std::wstring FormNumber(std::wstring const& d1, std::wstring const& dec, std::wstring const& d2)
 {
-	std::wostringstream val;
-	val << d1 << dec << d2;
-	return val.str();
+	return fmt::format(L"{}{}{}", d1, dec, d2);
 }
 
 

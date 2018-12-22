@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2012-02-16 Fix initial focus.
@@ -127,7 +128,7 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 	}
 	else
 	{
-		std::wostringstream errMsg;
+		fmt::wmemory_buffer errMsg;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
 		bool bOk = false;
@@ -138,9 +139,9 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 		if (!bOk)
 		{
 			wxString msg = _("AFX_IDP_FAILED_TO_OPEN_DOC");
-			if (0 < errMsg.str().length())
+			if (0 < errMsg.size())
 			{
-				msg << L"\n\n" << errMsg.str().c_str();
+				msg << L"\n\n" << fmt::to_string(errMsg);
 			}
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
@@ -148,12 +149,12 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 		CErrorCallback err;
 		if (!m_Book.Load(tree, false, false, true, false, false, err))
 		{
-			if (0 < err.m_ErrMsg.str().length())
-				wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			if (0 < err.m_ErrMsg.size())
+				wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
-		else if (0 < err.m_ErrMsg.str().length())
-			wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		else if (0 < err.m_ErrMsg.size())
+			wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return true;
 }

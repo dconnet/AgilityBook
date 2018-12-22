@@ -59,25 +59,6 @@
 #define ARB_HAS_SECURE_MBS_WCS
 #endif
 
-// ARB_HAS_SECURE_SPRINTF
-//  sprintf_s(char*, size_t, const char*, ...)
-#if _MSC_VER >= 1400
-#define ARB_HAS_SECURE_SPRINTF
-#endif
-
-// ARB_HAS_C99_PRINTF_SPECS
-//  %s is narrow, %ls is wide - regardless of UNICODE (C99 breaking change)
-//  (previous VC behavior had %s as the "natural" char)
-//Note: Feature was planned for VC14, removed in VS2015CTP6
-//#if _MSC_VER >= 1900
-// If legacy mode is specified, honor it.
-//#ifndef _CRT_STDIO_LEGACY_WIDE_SPECIFIERS 
-//#define ARB_HAS_C99_PRINTF_SPECS
-//#endif
-#if (defined(MAC_OS_X_VERSION_10_9) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_9)
-#define ARB_HAS_C99_PRINTF_SPECS
-#endif
-
 // ARB_SET_ERASE_RETURNS_ITERATOR
 //  std::set<x>::iterator i = var.begin()...; i = var.erase(i); ...
 //  If not defined, will use "var.erase(i++);" construct

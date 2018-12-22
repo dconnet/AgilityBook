@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2012-07-10 Fix serialization. Broken in 4/15 wxString checkin.
  * 2011-10-19 Add timestamp info on skipped files. Add file size.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -28,6 +29,7 @@
 
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
+#include "fmt/format.h"
 #include "../Win/ImageHelper.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
@@ -86,65 +88,54 @@ void CDlgARBHelp::SetARBFileStatus(std::wstring const& inFileName, bool bInclude
 // DlgPageDecode (decoder)
 std::wstring CDlgARBHelp::GetEncodedData()
 {
-	std::wostringstream rawdata;
+	fmt::wmemory_buffer rawdata;
 	wxLogNull logSuppressor;
 
 	// System information.
 	{
 		std::wstring data;
 		BinaryData::EncodeString(m_SysInfo, data);
-		rawdata << L"\n" << STREAM_SYSTEM_BEGIN << L"\n"
-			<< data
-			<< L"\n" << STREAM_SYSTEM_END << L"\n";
+		fmt::format_to(rawdata, L"\n{}\n{}\n{}\n", STREAM_SYSTEM_BEGIN, data, STREAM_SYSTEM_END);
 	}
 
 	// Registry information.
 	{
 		std::wstring data;
 		BinaryData::EncodeString(m_RegInfo, data);
-		rawdata << L"\n" << STREAM_REGISTRY_BEGIN << L"\n"
-			<< data
-			<< L"\n" << STREAM_REGISTRY_END << L"\n";
+		fmt::format_to(rawdata, L"\n{}\n{}\n{}\n", STREAM_REGISTRY_BEGIN, data, STREAM_REGISTRY_END);
 	}
 
 	// Data files.
 	for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
 	{
-		rawdata << L"\n" << (*iFile).first;
+		fmt::format_to(rawdata, L"\n{}", (*iFile).first);
 		wxFileName fileName((*iFile).first.c_str());
 		wxDateTime dtMod, dtCreate;
 		if (!(*iFile).second)
-			rawdata << L": Skipped";
-		rawdata << L"\n";
+			fmt::format_to(rawdata, L": Skipped");
+		fmt::format_to(rawdata, L"\n");
 		if (fileName.GetTimes(nullptr, &dtMod, &dtCreate))
 		{
-			rawdata << L"Created: " << dtCreate.Format().wx_str() << L"\n"
-				<< L"Modified: " << dtMod.Format().wx_str() << L"\n";
+			fmt::format_to(rawdata, L"Created: {}\n", dtCreate.Format().wx_str());
+			fmt::format_to(rawdata, L"Modified: {}\n", dtMod.Format().wx_str());
 		}
 		wxULongLong size = fileName.GetSize();
 		if (wxInvalidSize != size)
-			rawdata << L"Size: " << StringUtil::stringW(size.ToString()) << L"\n";
+			fmt::format_to(rawdata, L"Size: {}\n", StringUtil::stringW(size.ToString()));
 		if ((*iFile).second)
 		{
 			std::wstring data;
 			if (BinaryData::EncodeFile((*iFile).first, data))
 			{
-				rawdata << STREAM_FILE_BEGIN << L"\n"
-					<< data
-					<< L"\n" << STREAM_FILE_END << L"\n";
+				fmt::format_to(rawdata, L"{}\n{}\n{}\n", STREAM_FILE_BEGIN, data, STREAM_FILE_END);
 			}
 			else
-				rawdata << L"Error: Cannot read file\n";
+				fmt::format_to(rawdata, L"Error: Cannot read file\n");
 		}
 	}
 
 	std::wstring data;
-	BinaryData::EncodeString(rawdata.str(), data);
+	BinaryData::EncodeString(fmt::to_string(rawdata), data);
 
-	std::wostringstream finalData;
-	finalData << L"\n" << STREAM_DATA_BEGIN << L"\n"
-		<< data
-		<< L"\n" << STREAM_DATA_END << L"\n";
-
-	return finalData.str();
+	return fmt::format(L"\n{}\n{}\n{}\n", STREAM_DATA_BEGIN, data, STREAM_DATA_END);
 }

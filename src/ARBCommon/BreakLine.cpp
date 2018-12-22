@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2012-07-25 Fix a CSV read problem with multiline continuation data.
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
  * 2010-10-30 Moved BreakLine from Globals.cpp, added CSV routines.
@@ -18,7 +19,7 @@
 #include "stdafx.h"
 #include "ARBCommon/BreakLine.h"
 
-#include <sstream>
+#include "fmt/format.h"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -112,7 +113,7 @@ ReadStatus ReadCSV(
 			}
 			else
 			{
-				std::wostringstream data;
+				fmt::wmemory_buffer data;
 				std::wstring::iterator iStr = inRecord.begin();
 				if (!bContinuation)
 					++iStr;
@@ -138,7 +139,7 @@ ReadStatus ReadCSV(
 						{
 							if (*(iStr + 1) == L'"')
 							{
-								data << *iStr;
+								fmt::format_to(data, L"{}", *iStr);
 								++iStr;
 							}
 							else if (*(iStr + 1) == inSep)
@@ -147,14 +148,14 @@ ReadStatus ReadCSV(
 							{
 								if (bInQuote)
 									return DataError;
-								data << *iStr;
+								fmt::format_to(data, L"{}", *iStr);
 							}
 						}
 					}
 					else
-						data << *iStr;
+						fmt::format_to(data, L"{}", *iStr);
 				}
-				str = data.str();
+				str = fmt::to_string(data);
 				if (iStr == inRecord.end())
 					inRecord.clear();
 				else
@@ -197,16 +198,16 @@ std::wstring WriteCSV(
 		std::vector<std::wstring> const& inFields)
 {
 	size_t fld = 0;
-	std::wostringstream val;
+	fmt::wmemory_buffer val;
 	for (std::vector<std::wstring>::const_iterator i = inFields.begin();
 		i != inFields.end();
 		++i, ++fld)
 	{
 		if (0 < fld)
-			val << inSep;
-		val << WriteCSVField(inSep, *i);
+			fmt::format_to(val, L"{}", inSep);
+		fmt::format_to(val, L"{}", WriteCSVField(inSep, *i));
 	}
-	return val.str();
+	return fmt::to_string(val);
 }
 
 
@@ -214,31 +215,32 @@ std::wstring WriteCSVField(
 		wchar_t inSep,
 		std::wstring const& inField)
 {
-	std::wostringstream val;
+	fmt::wmemory_buffer val;
 	if (std::wstring::npos != inField.find(L'"')
 	|| std::wstring::npos != inField.find(L'\n')
 	|| std::wstring::npos != inField.find(inSep))
 	{
 		std::wstring str(inField);
-		val << L'"';
+		fmt::format_to(val, L"\"");
 		while (!str.empty())
 		{
 			std::wstring::size_type pos = str.find(L'"');
 			if (std::wstring::npos == pos)
 			{
-				val << str;
+				fmt::format_to(val, L"{}", str);
 				str.clear();
 			}
 			else
 			{
-				val << str.substr(0, pos);
-				val << L"\"\"";
+				fmt::format_to(val, L"{}\"\"", str.substr(0, pos));
 				str = str.substr(pos + 1);
 			}
 		}
-		val << L'"';
+		fmt::format_to(val, L"\"");
 	}
 	else
-		val << inField;
-	return val.str();
+	{
+		fmt::format_to(val, L"{}", inField);
+	}
+	return fmt::to_string(val);
 }

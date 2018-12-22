@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2012-12-29 Update training view properly after a paste.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -287,7 +288,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 	}
 	if (!bFound)
 	{
-		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
+		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_strSearch);
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
@@ -412,7 +413,7 @@ bool CAgilityBookTrainingView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
-	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_TRAINING"), m_Ctrl->GetItemCount()));
+	msg = fmt::format(_("IDS_NUM_TRAINING").wx_str(), m_Ctrl->GetItemCount());
 	return true;
 }
 

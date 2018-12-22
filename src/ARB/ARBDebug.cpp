@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-01-28 Created
  */
 
@@ -26,8 +27,6 @@
 #include <wx/platinfo.h>
 #include <wx/stdpaths.h>
 #include <wx/string.h>
-
-#include <sstream>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -67,9 +66,9 @@ std::wstring ARBDebug::GetSystemInfo()
 
 std::wstring ARBDebug::GetRegistryInfo()
 {
-	std::wostringstream data;
+	fmt::wmemory_buffer data;
 	DumpRegistryGroup(wxEmptyString, &data, nullptr);
-	return data.str();
+	return fmt::to_string(data);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -114,7 +113,7 @@ std::wstring ARBDebug::GetRegistryInfo()
 
 size_t ARBDebug::DumpRegistryGroup(
 		wxString const& inGroup,
-		std::wostringstream* outData,
+		fmt::wmemory_buffer* outData,
 		std::vector<std::wstring>* outItems)
 {
 	size_t added = 0; // Added to outData
@@ -133,15 +132,15 @@ size_t ARBDebug::DumpRegistryGroup(
 				if (outData)
 				{
 					++added;
-					*outData << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" unknown\n";
+					fmt::format_to(*outData, L"{}/{} unknown\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
 				}
 				break;
 			case wxConfigBase::Type_String:
 				if (outData)
 				{
 					++added;
-					*outData << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" string\n";
-					*outData << wxConfig::Get()->Read(str, wxEmptyString).wx_str() << L"\n";
+					fmt::format_to(*outData, L"{}/{} string\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
+					fmt::format_to(*outData, L"{}\n", wxConfig::Get()->Read(str, wxEmptyString).wx_str());
 				}
 				if (outItems)
 					outItems->push_back(StringUtil::stringW(wxConfig::Get()->Read(str, wxEmptyString)));
@@ -150,28 +149,28 @@ size_t ARBDebug::DumpRegistryGroup(
 				if (outData)
 				{
 					++added;
-					*outData << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" bool\n";
+					fmt::format_to(*outData, L"{}/{} bool\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
 					bool b;
 					wxConfig::Get()->Read(str, &b);
-					*outData << b << L"\n";
+					fmt::format_to(*outData, L"{}\n", b);
 				}
 				break;
 			case wxConfigBase::Type_Integer:
 				if (outData)
 				{
 					++added;
-					*outData << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" int\n";
-					*outData << wxConfig::Get()->Read(str, 0L) << L"\n";
+					fmt::format_to(*outData, L"{}/{} int\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
+					fmt::format_to(*outData, L"{}\n", wxConfig::Get()->Read(str, 0L));
 				}
 				break;
 			case wxConfigBase::Type_Float:
 				if (outData)
 				{
 					++added;
-					*outData << wxConfig::Get()->GetPath().wx_str() << L'/' << str.wx_str() << L" float\n";
+					fmt::format_to(*outData, L"{}/{} float\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
 					double d;
 					wxConfig::Get()->Read(str, &d);
-					*outData << d << L"\n";
+					fmt::format_to(*outData, L"{}\n", d);
 				}
 				break;
 			}

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-07-25 Adhere to RFC4180 and use CRLF between records.
@@ -656,11 +657,7 @@ void CWizardExport::UpdatePreview()
 										data += AddPreviewData(iLine, idx, pRun->GetConditions());
 										break;
 									case IO_RUNS_COURSE_FAULTS:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetCourseFaults();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetCourseFaults()));
 										break;
 									case IO_RUNS_TIME:
 										data += AddPreviewData(iLine, idx, ARBDouble::ToString(pRun->GetScoring().GetTime()));
@@ -699,9 +696,7 @@ void CWizardExport::UpdatePreview()
 											short ob = pRun->GetScoring().GetObstacles();
 											if (0 < ob)
 											{
-												std::wostringstream str;
-												str << ob;
-												data += AddPreviewData(iLine, idx, str.str());
+												data += AddPreviewData(iLine, idx, fmt::format(L"{}", ob));
 											}
 											else
 											{
@@ -739,80 +734,56 @@ void CWizardExport::UpdatePreview()
 										}
 										break;
 									case IO_RUNS_REQ_OPENING:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetNeedOpenPts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetNeedOpenPts()));
 										break;
 									case IO_RUNS_REQ_CLOSING:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetNeedClosePts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetNeedClosePts()));
 										break;
 									case IO_RUNS_OPENING:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetOpenPts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetOpenPts()));
 										break;
 									case IO_RUNS_CLOSING:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetClosePts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetClosePts()));
 										break;
 									case IO_RUNS_REQ_POINTS:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetNeedOpenPts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetNeedOpenPts()));
 										break;
 									case IO_RUNS_POINTS:
-										{
-											std::wostringstream str;
-											str << pRun->GetScoring().GetOpenPts();
-											data += AddPreviewData(iLine, idx, str.str());
-										}
+										data += AddPreviewData(iLine, idx, fmt::format(L"{}", pRun->GetScoring().GetOpenPts()));
 										break;
 									case IO_RUNS_PLACE:
 										{
-											std::wostringstream str;
+											std::wstring str;
 											short place = pRun->GetPlace();
 											if (0 > place)
-												str << L"?";
+												str = L"?";
 											else if (0 == place)
-												str << L"-";
+												str = L"-";
 											else
-												str << place;
-											data += AddPreviewData(iLine, idx, str.str());
+												str = fmt::format(L"{}", place);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_IN_CLASS:
 										{
-											std::wostringstream str;
+											std::wstring str;
 											short inClass = pRun->GetInClass();
 											if (0 > inClass)
-												str << L"?";
+												str = L"?";
 											else
-												str << inClass;
-											data += AddPreviewData(iLine, idx, str.str());
+												str = fmt::format(L"{}", inClass);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_DOGSQD:
 										{
-											std::wostringstream str;
+											std::wstring str;
 											short qd = pRun->GetDogsQd();
 											if (0 > qd)
-												str << L"?";
+												str = L"?";
 											else
-												str << qd;
-											data += AddPreviewData(iLine, idx, str.str());
+												str = fmt::format(L"{}", qd);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_Q:
@@ -855,12 +826,10 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_TITLE_POINTS:
 										{
-											std::wostringstream str;
 											double pts = 0.0;
 											if (pRun->GetQ().Qualified())
 												pts = pRun->GetTitlePoints(pScoring);
-											str << pts;
-											data += AddPreviewData(iLine, idx, str.str());
+											data += AddPreviewData(iLine, idx, fmt::format(L"{}", pts));
 										}
 										break;
 									case IO_RUNS_COMMENTS:
@@ -1188,34 +1157,30 @@ void CWizardExport::UpdatePreview()
 						break;
 					case IO_CAL_TASK_NOTES:
 						{
-							std::wstring tmp;
+							fmt::wmemory_buffer tmp;
 							if (pCal->IsTentative())
 							{
-								tmp += Localization()->CalendarTentative();
-								tmp += L" ";
+								fmt::format_to(tmp, L"{} ", Localization()->CalendarTentative());
 							}
 							date = pCal->GetOpeningDate();
 							if (date.IsValid())
 							{
-								tmp += Localization()->CalendarOpens();
-								tmp += L" ";
-								tmp += date.GetString(format);
-								tmp += L" ";
+								fmt::format_to(tmp, L"{} {} ",
+									Localization()->CalendarOpens(),
+									date.GetString(format));
 							}
 							date = pCal->GetClosingDate();
 							if (date.IsValid())
 							{
-								tmp += Localization()->CalendarCloses();
-								tmp += L" ";
-								tmp += date.GetString(format);
-								tmp += L" ";
+								fmt::format_to(tmp, L"{} {} ",
+									Localization()->CalendarCloses(),
+									date.GetString(format));
 							}
-							tmp += StringUtil::stringW(wxString::Format(_("IDS_TRIAL_DATES"),
-								pCal->GetStartDate().GetString(format).c_str(),
-								pCal->GetEndDate().GetString(format).c_str()));
-							tmp += L" ";
-							tmp += pCal->GetNote();
-							data += AddPreviewData(iLine, idx, tmp);
+							fmt::format_to(tmp, _("IDS_TRIAL_DATES").wx_str(),
+								pCal->GetStartDate().GetString(format),
+								pCal->GetEndDate().GetString(format));
+							fmt::format_to(tmp, L" {}", pCal->GetNote());
+							data += AddPreviewData(iLine, idx, fmt::to_string(tmp));
 						}
 						break;
 					case IO_CAL_TASK_PRIORITY:

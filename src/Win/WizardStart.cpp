@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -506,7 +507,7 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					std::wostringstream errMsg;
+					fmt::wmemory_buffer errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					bool bLoadOk = false;
 					{
@@ -516,9 +517,9 @@ bool CWizardStart::DoWizardFinish()
 					if (!bLoadOk)
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.str().length())
+						if (0 < errMsg.size())
 						{
-							msg << L"\n\n" << errMsg.str().c_str();
+							msg << L"\n\n" << fmt::to_string(errMsg);
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -538,7 +539,7 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					std::wostringstream errMsg;
+					fmt::wmemory_buffer errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					bool bLoadOk = false;
 					{
@@ -548,9 +549,9 @@ bool CWizardStart::DoWizardFinish()
 					if (!bLoadOk)
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.str().length())
+						if (0 < errMsg.size())
 						{
-							msg << L"\n\n" << errMsg.str().c_str();
+							msg << L"\n\n" << fmt::to_string(errMsg);
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -648,7 +649,7 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					std::wostringstream errMsg;
+					fmt::wmemory_buffer errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					bool bLoadOk = false;
 					{
@@ -658,9 +659,9 @@ bool CWizardStart::DoWizardFinish()
 					if (!bLoadOk)
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.str().length())
+						if (0 < errMsg.size())
 						{
-							msg << L"\n\n" << errMsg.str().c_str();
+							msg << L"\n\n" << fmt::to_string(errMsg);
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -799,7 +800,7 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					std::wostringstream errMsg;
+					fmt::wmemory_buffer errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					bool bLoadOk = false;
 					{
@@ -813,9 +814,9 @@ bool CWizardStart::DoWizardFinish()
 					else
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.str().length())
+						if (0 < errMsg.size())
 						{
-							msg << L"\n\n" << errMsg.str().c_str();
+							msg << L"\n\n" << fmt::to_string(errMsg);
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}

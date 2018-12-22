@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2017-04-09 Fixed sizer flags, look for config on D:, then fallback to C:.
  * 2015-11-28 Cleaned up UI, added copy command.
  * 2010-02-09 Created
@@ -327,11 +328,11 @@ bool CDlgDigest::LoadConfig()
 
 	ElementNodePtr tree(ElementNode::New());
 
-	std::wostringstream errMsg;
+	fmt::wmemory_buffer errMsg;
 	bool bOk = tree->LoadXML(m_Config.c_str(), errMsg);
 	if (!bOk)
 	{
-		wxMessageBox(errMsg.str().c_str());
+		wxMessageBox(fmt::to_string(errMsg));
 		return false;
 	}
 	if (tree->GetName() != L"DefaultConfig")
@@ -342,12 +343,12 @@ bool CDlgDigest::LoadConfig()
 	ARBErrorCallback err(errMsg);
 	if (!config.Load(tree->GetElementNode(configIdx), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 	{
-		wxMessageBox(errMsg.str().c_str());
+		wxMessageBox(fmt::to_string(errMsg));
 		return false;
 	}
 
 	m_ConfigVersion = config.GetVersion();
-	m_ctrlConfigVersion->SetLabel(wxString::Format(L"%hd", m_ConfigVersion));
+	m_ctrlConfigVersion->SetLabel(fmt::format(L"{}", m_ConfigVersion));
 
 	m_ctrlCopy->Enable(true);
 

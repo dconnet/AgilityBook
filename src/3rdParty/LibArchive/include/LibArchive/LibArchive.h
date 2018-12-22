@@ -50,6 +50,6 @@ public:
 
 private:
 	class CLibArchiveImpl* m_pImpl;
-	CLibArchive& operator=(CLibArchive const& rhs);
-	CLibArchive(CLibArchive const& rhs);
+	CLibArchive& operator=(CLibArchive const& rhs) = delete;
+	CLibArchive(CLibArchive const& rhs) = delete;
 };

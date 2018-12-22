@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -454,7 +455,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 	}
 	if (!bFound)
 	{
-		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
+		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_strSearch);
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
@@ -611,7 +612,7 @@ bool CAgilityBookCalendarListView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
-	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_EVENTS"), m_Ctrl->GetItemCount()));
+	msg = fmt::format(_("IDS_NUM_EVENTS").wx_str(), m_Ctrl->GetItemCount());
 	return true;
 }
 
@@ -1011,7 +1012,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 				GetDocument()->UpdateAllViews(this, &hint);
 				if (0 < nNewIsNotVisible)
 				{
-					wxString msg = wxString::Format(_("IDS_NOT_VISIBLE"), nNewIsNotVisible);
+					std::wstring msg = fmt::format(_("IDS_NOT_VISIBLE").wx_str(), nNewIsNotVisible);
 					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 				}
 			}

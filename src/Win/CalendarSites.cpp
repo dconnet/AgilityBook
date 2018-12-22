@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2014-12-30 Changed pixels to dialog units.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -599,8 +600,7 @@ public:
 	virtual void Disable()
 	{
 		m_CalData->Unload(true);
-		wxString disabled(_("IDS_DISABLED"));
-		m_Name = StringUtil::stringW(wxString::Format(L"%s [%s]", m_Filename.c_str(), disabled.c_str()));
+		m_Name = fmt::format(L"{} [{}]", m_Filename, _("IDS_DISABLED").wx_str());
 	}
 
 private:
@@ -613,8 +613,7 @@ private:
 		}
 		else
 		{
-			wxString disabled(_("IDS_DISABLED"));
-			m_Name = StringUtil::stringW(wxString::Format(L"%s [%s]", m_Filename.c_str(), disabled.c_str()));
+			m_Name = fmt::format(L"{} [{}]", m_Filename, _("IDS_DISABLED").wx_str());
 			m_Desc = L"";
 		}
 	}
@@ -630,46 +629,30 @@ public:
 	CPluginCalData(ARBCalendarPtr const& inCal)
 		: m_Cal(inCal)
 	{
-		{
-			std::wostringstream str;
-			str << m_Cal->GetStartDate().GetString()
-				<< L" "
-				<< m_Cal->GetEndDate().GetString()
-				<< L": "
-				<< m_Cal->GetVenue()
-				<< L" "
-				<< m_Cal->GetLocation()
-				<< L" "
-				<< m_Cal->GetClub();
-			m_Name = str.str();
-		}
-		std::wostringstream desc;
-		desc << m_Cal->GetSecEmail() << L"\n";
+		m_Name = fmt::format(L"{} {}: {} {} {}",
+			m_Cal->GetStartDate().GetString(),
+			m_Cal->GetEndDate().GetString(),
+			m_Cal->GetVenue(),
+			m_Cal->GetLocation(),
+			m_Cal->GetClub());
+		fmt::wmemory_buffer desc;
+		fmt::format_to(desc, L"{}\n", m_Cal->GetSecEmail());
 		if (m_Cal->GetOpeningDate().IsValid())
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_OPENS);
-			desc << str
-				<< L" "
-				<< m_Cal->GetOpeningDate().GetString()
-				<< L"\n";
+			fmt::format_to(desc, L"{} {}\n", str, m_Cal->GetOpeningDate().GetString());
 		}
 		if (m_Cal->GetDrawDate().IsValid())
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_DRAWS);
-			desc << str
-				<< L" "
-				<< m_Cal->GetDrawDate().GetString()
-				<< L"\n";
+			fmt::format_to(desc, L"{} {}\n", str, m_Cal->GetDrawDate().GetString());
 		}
 		if (m_Cal->GetClosingDate().IsValid())
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_CLOSES);
-			desc << str
-				<< L" "
-				<< m_Cal->GetClosingDate().GetString()
-				<< L"\n";
+			fmt::format_to(desc, L"{} {}\n", str, m_Cal->GetClosingDate().GetString());
 		}
-		m_Desc = desc.str();
+		m_Desc = fmt::to_string(desc);
 	}
 
 	virtual std::wstring OnNeedText() const	{return m_Name;}
@@ -981,7 +964,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 				{
 					progress.SetForegroundWindow();
 					ElementNodePtr tree(ElementNode::New());
-					std::wostringstream errMsg;
+					fmt::wmemory_buffer errMsg;
 					bool bOk = false;
 					if (!data.empty())
 					{
@@ -996,9 +979,9 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 						tree.reset();
 						if (bOk)
 						{
-							if (0 < err.m_ErrMsg.str().length())
+							if (0 < err.m_ErrMsg.size())
 							{
-								wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+								wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 								progress.SetForegroundWindow();
 							}
 							for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
@@ -1013,22 +996,21 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 					}
 					else
 					{
-						std::wstring str(pData->OnNeedText());
-						wxString err = wxString::Format(_("IDS_ERR_PARSING_DATA"), str.c_str());
-						if (!errMsg.str().empty())
+						fmt::wmemory_buffer err;
+						fmt::format_to(err, _("IDS_ERR_PARSING_DATA").wx_str(), pData->OnNeedText());
+						if (0 < errMsg.size())
 						{
-							err << L":\n\t" << errMsg.str().c_str();
+							fmt::format_to(err, L":\n\t", fmt::to_string(errMsg));
 						}
 						int flags = wxCENTRE | wxICON_WARNING;
 						if (pData->CanDisable())
 						{
 							flags |= wxYES_NO | wxNO_DEFAULT;
-							err += L"\n\n";
-							err += _("IDS_USE_PLUGIN");
+							fmt::format_to(err, L"\n\n{}", _("IDS_USE_PLUGIN").wx_str());
 						}
 						else
 							flags |= wxOK;
-						if (wxNO == wxMessageBox(err, wxMessageBoxCaptionStr, flags))
+						if (wxNO == wxMessageBox(fmt::to_string(err), wxMessageBoxCaptionStr, flags))
 							pData->Disable();
 						progress.SetForegroundWindow();
 					}
@@ -1095,7 +1077,7 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 		m_pDoc->UpdateAllViews(nullptr, &hint);
 		m_pDoc->Modify(true);
 	}
-	wxString str = wxString::Format(_("IDS_UPDATED_CAL_ITEMS"), nAdded, nUpdated);
+	std::wstring str = fmt::format(_("IDS_UPDATED_CAL_ITEMS").wx_str(), nAdded, nUpdated);
 	wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	UpdateControls();
 }

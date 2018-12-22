@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2018-10-14 Treat a 0.0.0.0 vernum as not valid, even when specifically set.
  * 2018-08-15 Changed VERSION_NUMBER to std::array
  * 2012-07-28 Crap, v2.3.6 was hosed. Fix version parsing.
@@ -28,7 +29,7 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/BreakLine.h"
 #include "ARBCommon/StringUtil.h"
-#include <sstream>
+#include "fmt/format.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -54,10 +55,9 @@ bool CVersionNum::Parse(std::wstring const& inVer)
 
 std::wstring CVersionNum::GetVersionString() const
 {
-	std::wostringstream str;
-	str << m_Version[0]
-		<< L"." << m_Version[1]
-		<< L"." << m_Version[2]
-		<< L"." << m_Version[3];
-	return str.str();
+	return fmt::format(L"{}.{}.{}.{}",
+		m_Version[0],
+		m_Version[1],
+		m_Version[2],
+		m_Version[3]);
 }

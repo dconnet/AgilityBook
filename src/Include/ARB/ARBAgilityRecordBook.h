@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2014-06-09 Add access to write-only data for file-properties purpose.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2007-08-14 Separated DTD defines into ARBStructure.h
@@ -51,6 +52,7 @@
 #include "ARB/ARBStructure.h"
 #include "ARB/ARBTraining.h"
 #include "ARB/ARBTypes2.h"
+#include "fmt/format.h"
 #include <set>
 
 
@@ -153,7 +155,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfig const& inConfigNew,
-			std::wostringstream& ioInfo,
+			fmt::wmemory_buffer& ioInfo,
 			IConfigActionCallback& ioCallBack);
 
 	//

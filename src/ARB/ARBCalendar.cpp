@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-16 Convert to fmt.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2007-08-11 Changed usage of FindCalendar.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -109,14 +110,8 @@ public:
 	{
 		if (1 < m_Version)
 		{
-			char buffer[100];
 			Write("BEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-PT");
-#ifdef ARB_HAS_SECURE_SPRINTF
-			sprintf_s(buffer, _countof(buffer), "%d", inDaysBefore * 24 * 60);
-#else
-			sprintf(buffer, "%d", inDaysBefore * 24 * 60);
-#endif
-			Write(buffer);
+			Write(fmt::format("{}", inDaysBefore * 24 * 60));
 			Write("M\r\nDESCRIPTION:Reminder\r\nEND:VALARM\r\n");
 		}
 	}
@@ -297,26 +292,13 @@ void ARBiCal::DoDTSTAMP()
 #else
 		struct tm* pTime = localtime(&t);
 #endif
-		char buffer[50];
-#ifdef ARB_HAS_SECURE_SPRINTF
-		sprintf_s(buffer, _countof(buffer),
-			"DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
+		std::string buffer = fmt::format("DTSTAMP:{:04}{:02}{:02}T{:02}{:02}{:02}\r\n",
 			pTime->tm_year + 1900,
 			pTime->tm_mon + 1,
 			pTime->tm_mday,
 			pTime->tm_hour,
 			pTime->tm_min,
 			pTime->tm_sec);
-#else
-		sprintf(buffer,
-			"DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
-			pTime->tm_year + 1900,
-			pTime->tm_mon + 1,
-			pTime->tm_mday,
-			pTime->tm_hour,
-			pTime->tm_min,
-			pTime->tm_sec);
-#endif
 		Write(buffer);
 	}
 }
@@ -462,26 +444,26 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 
 std::wstring ARBCalendar::GetUID(eUidType inType) const
 {
-	std::wostringstream str;
+	fmt::wmemory_buffer str;
 	switch (inType)
 	{
 	default:
 		assert(0);
-		str << L"u";
+		fmt::format_to(str, L"u");
 		break;
 	case eUIDvEvent:
-		str << L"e";
+		fmt::format_to(str, L"e");
 		break;
 	case eUIDvTodo:
-		str << L"t";
+		fmt::format_to(str, L"t");
 		break;
 	}
-	str << m_DateStart.GetString(ARBDate::eYYYYMMDD);
-	str << m_DateEnd.GetString(ARBDate::eYYYYMMDD);
-	str << m_DateOpening.GetString(ARBDate::eYYYYMMDD, true);
-	str << m_DateDraw.GetString(ARBDate::eYYYYMMDD, true);
-	str << m_DateClosing.GetString(ARBDate::eYYYYMMDD, true);
-	return str.str();
+	fmt::format_to(str, L"{}", m_DateStart.GetString(ARBDate::eYYYYMMDD));
+	fmt::format_to(str, L"{}", m_DateEnd.GetString(ARBDate::eYYYYMMDD));
+	fmt::format_to(str, L"{}", m_DateOpening.GetString(ARBDate::eYYYYMMDD, true));
+	fmt::format_to(str, L"{}", m_DateDraw.GetString(ARBDate::eYYYYMMDD, true));
+	fmt::format_to(str, L"{}", m_DateClosing.GetString(ARBDate::eYYYYMMDD, true));
+	return fmt::to_string(str);
 }
 
 
@@ -786,45 +768,39 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	ioStream->DoSUMMARY(GetGenericName());
 	ioStream->DoLOCATION(m_Location);
 	{
-		std::wostringstream str;
+		fmt::wmemory_buffer str;
 		if (IsTentative())
-			str << Localization()->CalendarTentative() << L" ";
+			fmt::format_to(str, L"{} ", Localization()->CalendarTentative());
 		switch (GetEntered())
 		{
 		default:
 		case ARBCalendar::eNot:
-			str << Localization()->CalendarStatusN() << L" ";
+			fmt::format_to(str, L"{} ", Localization()->CalendarStatusN());
 			break;
 		case ARBCalendar::eEntered:
-			str << Localization()->CalendarStatusE() << L" ";
+			fmt::format_to(str, L"{} ", Localization()->CalendarStatusE());
 			break;
 		case ARBCalendar::ePending:
-			str << Localization()->CalendarStatusO() << L" ";
+			fmt::format_to(str, L"{} ", Localization()->CalendarStatusO());
 			break;
 		case ARBCalendar::ePlanning:
-			str << Localization()->CalendarStatusP() << L" ";
+			fmt::format_to(str, L"{} ", Localization()->CalendarStatusP());
 			break;
 		}
 		if (m_DateOpening.IsValid())
 		{
-			str << Localization()->CalendarOpens()
-				<< m_DateOpening.GetString(ARBDate::eISO)
-				<< L" ";
+			fmt::format_to(str, L"{}{} ", Localization()->CalendarOpens(), m_DateOpening.GetString(ARBDate::eISO));
 		}
 		if (m_DateDraw.IsValid())
 		{
-			str << Localization()->CalendarDraw()
-				<< m_DateDraw.GetString(ARBDate::eISO)
-				<< L" ";
+			fmt::format_to(str, L"{}{} ", Localization()->CalendarDraw(), m_DateDraw.GetString(ARBDate::eISO));
 		}
 		if (m_DateClosing.IsValid())
 		{
-			str << Localization()->CalendarCloses()
-				<< m_DateClosing.GetString(ARBDate::eISO)
-				<< L" ";
+			fmt::format_to(str, L"{}{} ", Localization()->CalendarCloses(), m_DateClosing.GetString(ARBDate::eISO));
 		}
-		str << GetNote();
-		ioStream->DoDESCRIPTION(str.str());
+		fmt::format_to(str, L"{}", GetNote());
+		ioStream->DoDESCRIPTION(fmt::to_string(str));
 	}
 	if (ePlanning == m_eEntered && m_DateOpening.IsValid())
 		inAlarm += m_DateStart - m_DateOpening;

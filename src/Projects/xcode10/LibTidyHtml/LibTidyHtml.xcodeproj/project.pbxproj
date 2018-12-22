@@ -475,8 +475,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../3rdParty",
-					"-I$SRCROOT/../../..",
+					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
@@ -532,8 +532,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../3rdParty",
-					"-I$SRCROOT/../../..",
+					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
 					"-isystem",
 					$BOOST_ROOT,
 					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
