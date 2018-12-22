@@ -46,8 +46,8 @@
     <ClInclude Include="..\..\Include\Platform\SetupWX.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdParty\LibArchive\LibArchive.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\3rdParty\LibArchive\include\LibArchive\LibArchive.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
