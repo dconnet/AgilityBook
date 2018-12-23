@@ -54,7 +54,6 @@
 
 #include "ARB/ARBCalendar.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/printf.h"
 #include <wx/dcbuffer.h>
 
 #ifdef __WXMSW__
@@ -689,18 +688,25 @@ void CAgilityBookCalendar::OnCopy()
 		if (len > maxLen[COL_NOTES])
 			maxLen[COL_NOTES] = len;
 	}
+
+	const std::wstring fmtspec(L"{}{:>{}} - {:{}} {:{}} {:{}} {:{}} {:>{}}{}{:{}} {:{}}");
+	const std::wstring col1(L"  ");
+	const std::wstring opencloseSep(L"   ");
+	const std::wstring opencloseSep2(L" - ");
+
 	// The header
-	std::wstring data = fmt::sprintf(L" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s",
-		maxLen[COL_START_DATE], columns[COL_START_DATE],
-		maxLen[COL_END_DATE], columns[COL_END_DATE],
-		maxLen[COL_VENUE], columns[COL_VENUE],
-		maxLen[COL_LOCATION], columns[COL_LOCATION],
-		maxLen[COL_CLUB], columns[COL_CLUB],
-		maxLen[COL_OPENS], columns[COL_OPENS],
-		maxLen[COL_CLOSES], columns[COL_CLOSES],
-		maxLen[COL_NOTES], columns[COL_NOTES]);
-	data = StringUtil::Trim(data);
-	data += L"\n";
+	std::wstring data = fmt::format(fmtspec,
+		col1,
+		columns[COL_START_DATE], maxLen[COL_START_DATE],
+		columns[COL_END_DATE], maxLen[COL_END_DATE],
+		columns[COL_VENUE], maxLen[COL_VENUE],
+		columns[COL_LOCATION], maxLen[COL_LOCATION],
+		columns[COL_CLUB], maxLen[COL_CLUB],
+		columns[COL_OPENS], maxLen[COL_OPENS],
+		opencloseSep,
+		columns[COL_CLOSES], maxLen[COL_CLOSES],
+		columns[COL_NOTES], maxLen[COL_NOTES]);
+	data = StringUtil::TrimRight(data) + L"\n";
 
 	// The data
 	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
@@ -718,17 +724,18 @@ void CAgilityBookCalendar::OnCopy()
 		wxString tentative(L"  ");
 		if (cal->IsTentative())
 			tentative = L"? ";
-		std::wstring str = fmt::sprintf(L"%s%*s - %-*s %-*s %-*s %-*s %*s%s%-*s %-*s",
+		assert(col1.length() == tentative.length());
+		std::wstring str = fmt::format(fmtspec,
 			tentative.c_str(),
-			maxLen[COL_START_DATE], items[COL_START_DATE].c_str(),
-			maxLen[COL_END_DATE], items[COL_END_DATE].c_str(),
-			maxLen[COL_VENUE], items[COL_VENUE].c_str(),
-			maxLen[COL_LOCATION], items[COL_LOCATION].c_str(),
-			maxLen[COL_CLUB], items[COL_CLUB].c_str(),
-			maxLen[COL_OPENS], items[COL_OPENS].c_str(),
-			(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? L" - " : L"   ",
-			maxLen[COL_CLOSES], items[COL_CLOSES].c_str(),
-			maxLen[COL_NOTES], items[COL_NOTES].c_str());
+			items[COL_START_DATE], maxLen[COL_START_DATE],
+			items[COL_END_DATE], maxLen[COL_END_DATE],
+			items[COL_VENUE], maxLen[COL_VENUE],
+			items[COL_LOCATION], maxLen[COL_LOCATION],
+			items[COL_CLUB], maxLen[COL_CLUB],
+			items[COL_OPENS], maxLen[COL_OPENS],
+			(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? opencloseSep2 : opencloseSep,
+			items[COL_CLOSES], maxLen[COL_CLOSES],
+			items[COL_NOTES], maxLen[COL_NOTES]);
 		data += StringUtil::TrimRight(str) + L"\n";
 	}
 	clpData.AddData(data);

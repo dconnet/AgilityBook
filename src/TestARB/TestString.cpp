@@ -235,7 +235,8 @@ TEST_CASE("String")
 		{
 			REQUIRE(L"two one" == fmt::sprintf(L"%2$s %1$s", L"one", L"two"));
 			REQUIRE(L"two one" == fmt::format(L"{1} {0}", L"one", L"two"));
-			REQUIRE(L"    " == fmt::format(L"{:{}s}", L" ", 4));
+			REQUIRE(L"    " == fmt::format(L"{:{}}", L" ", 4));
+			REQUIRE(L"000 " == fmt::format(L"{:0>{}}", L" ", 4));
 		}
 	}
 
