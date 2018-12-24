@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2018-12-24 wx default is 3.1.2
 # 2018-10-06 Dropping support for pre VS2017 (and XP).
 # 2018-01-27 Fix vcvarsall now changing directory.
 # 2017-09-19 Rename vc15 to vc141, fix GetCompilerPaths tuple name
@@ -23,7 +24,7 @@
 # 2010-06-11 Support building on x64 OS
 # 2010-05-30 Converted .bat to .py (keeps environment clean!)
 """BuildAll.py -w wxwin [-b type] compiler*
-   -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.1.1)'
+   -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.1.2)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config: 'release' or 'debug' (default, release)
    -t:       Testing, just print commands to run
@@ -42,7 +43,7 @@ import win32api
 import win32con
 
 # ARB is officially released using this branch. This is located under $WXBASE.
-wxBranch = r'\wxWidgets-3.1.1'
+wxBranch = r'\wxWidgets-3.1.2'
 
 testing = False
 
