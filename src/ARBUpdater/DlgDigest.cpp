@@ -414,19 +414,18 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 
 	wxFileName filename(m_File);
 
-	wxString str;
-	str << L"<Platform arch=\"?\" minOS=\"?\" "
-			<< L"ver=\"" << wxString::From8BitData(ARB_VERSION_STRING) << L"\" "
-			<< L"config=\"" << m_ConfigVersion << L"\"\n"
-		<< L"\tfile=\"http://www.agilityrecordbook.com/files/" << filename.GetFullName() << L"\"\n"
-		<< L"\tmd5=\"" << m_MD5 << L"\"\n"
-		<< L"\tsha1=\"" << m_SHA1 << L"\"\n"
-		<< L"\tsize=\"" << m_Size << L"\"\n"
-		<< L"\t/>\n";
+	fmt::wmemory_buffer str;
+	fmt::format_to(str, L"<Platform arch=\"?\" minOS=\"?\" ver=\"{}\" config=\"{}\"\n",
+		wxString::From8BitData(ARB_VERSION_STRING).wx_str(),
+		m_ConfigVersion);
+	fmt::format_to(str, L"\tfile=\"http://www.agilityrecordbook.com/files/{}\"\n", filename.GetFullName().wx_str());
+	fmt::format_to(str, L"\tmd5=\"{}\"\n", m_MD5.wx_str());
+	fmt::format_to(str, L"\tsha1=\"{}\"\n", m_SHA1.wx_str());
+	fmt::format_to(str, L"\tsize=\"{}\"\n\t/>\n", m_Size);
 
 	if (wxTheClipboard->Open())
 	{
-		wxTheClipboard->SetData(new wxTextDataObject(str));
+		wxTheClipboard->SetData(new wxTextDataObject(fmt::to_string(str)));
 		wxTheClipboard->Close();
 		wxMessageBox(L"Copied!", wxMessageBoxCaptionStr, wxOK, this);
 	}

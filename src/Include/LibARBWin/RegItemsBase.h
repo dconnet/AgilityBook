@@ -14,25 +14,23 @@
  * wxConfig must be set up first before using these.
  *
  * Revision History
+ * 2018-12-25 Convert to fmt.
  * 2018-10-11 Separated from RegItems.h.
  */
 
+#include "fmt/format.h"
 
 //Sorting:
 #define CFG_KEY_SORTING					L"Sorting"
 //	ST [key]Order (ColumnOrder.cpp)
-inline wxString CFG_SORTING_ORDER(wxString const& item)
+inline std::wstring CFG_SORTING_ORDER(std::wstring const& item)
 {
-	wxString order;
-	order << CFG_KEY_SORTING L"/" << item << L"Order";
-	return order;
+	return fmt::format(L"{}/{}Order", CFG_KEY_SORTING, item);
 }
 //	ST [key]Sort (ColumnOrder.cpp)
-inline wxString CFG_SORTING_SORT(wxString const& item)
+inline std::wstring CFG_SORTING_SORT(std::wstring const& item)
 {
-	wxString order;
-	order << CFG_KEY_SORTING L"/" << item << L"Sort";
-	return order;
+	return fmt::format(L"{}/{}Sort", CFG_KEY_SORTING, item);
 }
 
 #define CFG_KEY_ACCELERATORS	L"Accelerators"

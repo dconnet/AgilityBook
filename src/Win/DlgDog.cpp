@@ -1037,10 +1037,11 @@ void CDlgDog::SetColumnTitleHeaders()
 {
 	for (int i = 0; i < nColTitleInfo; ++i)
 	{
-		wxString tmp;
+		std::wstring tmp;
 		if (colTitleInfo[i].idText)
-			tmp << wxGetTranslation(colTitleInfo[i].idText) << L" ";
-		tmp << L"(" << m_sortTitles.FindColumnOrder(i) + 1 << L")";
+			tmp = fmt::format(L"{} ({})", wxGetTranslation(colTitleInfo[i].idText).wx_str(),  m_sortTitles.FindColumnOrder(i) + 1);
+		else
+			tmp = fmt::format(L"({})", m_sortTitles.FindColumnOrder(i) + 1);
 		wxListItem col;
 		col.SetMask(wxLIST_MASK_TEXT);
 		col.SetColumn(i);
@@ -1129,10 +1130,11 @@ void CDlgDog::SetColumnRegNumHeaders()
 {
 	for (int i = 0; i < nColRegNumInfo; ++i)
 	{
-		wxString tmp;
+		std::wstring tmp;
 		if (colRegNumInfo[i].idText)
-			tmp << wxGetTranslation(colRegNumInfo[i].idText) << L" ";
-		tmp << L"(" << m_sortRegNums.FindColumnOrder(i) + 1 << L")";
+			tmp = fmt::format(L"{} ({})", wxGetTranslation(colRegNumInfo[i].idText).wx_str(), m_sortRegNums.FindColumnOrder(i) + 1);
+		else
+			tmp = fmt::format(L"({})", m_sortRegNums.FindColumnOrder(i) + 1);
 		wxListItem col;
 		col.SetMask(wxLIST_MASK_TEXT);
 		col.SetColumn(i);
@@ -1217,10 +1219,11 @@ void CDlgDog::SetColumnPointsHeaders()
 {
 	for (int i = 0; i < nColExistingPointsInfo; ++i)
 	{
-		wxString tmp;
+		std::wstring tmp;
 		if (colExistingPointsInfo[i].idText)
-			tmp << wxGetTranslation(colExistingPointsInfo[i].idText) << L" ";
-		tmp << L"(" << m_sortPoints.FindColumnOrder(i) + 1 << L")";
+			tmp = fmt::format(L"{} ({})", wxGetTranslation(colExistingPointsInfo[i].idText).wx_str(), m_sortPoints.FindColumnOrder(i) + 1);
+		else
+			tmp = fmt::format(L"({})", m_sortPoints.FindColumnOrder(i) + 1);
 		wxListItem col;
 		col.SetMask(wxLIST_MASK_TEXT);
 		col.SetColumn(i);
@@ -1292,7 +1295,7 @@ void CDlgDog::UpdatePointsButtons()
 	}
 	m_ctrlPointsEdit->Enable(bEnableEdit);
 	m_ctrlPointsDelete->Enable(bEnableDelete);
-	wxString str;
+	std::wstring str;
 	if (0 < selected)
 	{
 		double total = 0;
@@ -1304,7 +1307,7 @@ void CDlgDog::UpdatePointsButtons()
 			if (pData)
 				total += pData->GetData()->GetPoints();
 		}
-		str << total;
+		str = fmt::format(L"{}", total);
 	}
 	m_ctrlSelectedPts->SetLabel(str);
 }

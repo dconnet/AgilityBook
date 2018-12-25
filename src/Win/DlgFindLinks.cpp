@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2018-12-25 Convert to fmt.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -329,9 +330,9 @@ void CDlgFindLinks::SetColumnHeaders()
 {
 	for (int i = 0; i < nColLinkInfo; ++i)
 	{
-		wxString str;
-		str << wxGetTranslation(colLinkInfo[i].info)
-			<< L" (" << m_sortLinks.FindColumnOrder(i) + 1 << L")";
+		std::wstring str = fmt::format(L"{} ({})",
+			wxGetTranslation(colLinkInfo[i].info).wx_str(),
+			m_sortLinks.FindColumnOrder(i) + 1);
 		wxListItem item;
 		item.SetMask(wxLIST_MASK_TEXT);
 		item.SetText(str);

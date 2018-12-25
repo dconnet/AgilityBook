@@ -45,7 +45,7 @@ public:
 
 private:
 	CAgilityBookHtmlView* m_pView;
-	wxString m_tag;
+	std::wstring m_tag;
 };
 
 

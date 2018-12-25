@@ -70,7 +70,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	}
 	bool rc = false;
 	// Load last settings.
-	wxString str = wxConfig::Get()->Read(CFG_SORTING_ORDER(m_Item), L"");
+	wxString str = wxConfig::Get()->Read(CFG_SORTING_ORDER(m_Item.wx_str()), L"");
 	int i;
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
@@ -82,7 +82,7 @@ bool CColumnOrder::Initialize(int nColumns)
 		else
 			str.Empty();
 	}
-	str = wxConfig::Get()->Read(CFG_SORTING_SORT(m_Item), L"");
+	str = wxConfig::Get()->Read(CFG_SORTING_SORT(m_Item.wx_str()), L"");
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
@@ -100,24 +100,24 @@ bool CColumnOrder::Initialize(int nColumns)
 void CColumnOrder::Save()
 {
 	{
-		wxString str;
+		fmt::wmemory_buffer str;
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)
-				str << L",";
-			str << m_order[i];
+				fmt::format_to(str, L",");
+			fmt::format_to(str, L"{}", m_order[i]);
 		}
-		wxConfig::Get()->Write(CFG_SORTING_ORDER(m_Item), str);
+		wxConfig::Get()->Write(CFG_SORTING_ORDER(m_Item.wx_str()), fmt::to_string(str).c_str());
 	}
 	{
-		wxString str;
+		fmt::wmemory_buffer str;
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)
-				str << L",";
-			str << static_cast<int>(m_bDescending[i]);
+				fmt::format_to(str, L",");
+			fmt::format_to(str, L"{}", static_cast<int>(m_bDescending[i]));
 		}
-		wxConfig::Get()->Write(CFG_SORTING_SORT(m_Item), str);
+		wxConfig::Get()->Write(CFG_SORTING_SORT(m_Item.wx_str()), fmt::to_string(str).c_str());
 	}
 }
 

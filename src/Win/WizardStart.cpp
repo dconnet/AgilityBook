@@ -371,8 +371,7 @@ void CWizardStart::UpdateList(bool bInit)
 		if (wxNOT_FOUND != index)
 			m_ctrlList->SetClientData(index, reinterpret_cast<void*>(size_t(i)));
 	}
-	wxString str;
-	str << LAST_STYLEITEM << m_Style;
+	std::wstring str = fmt::format(L"{}{}", LAST_STYLEITEM, m_Style);
 	long idx = wxConfig::Get()->Read(str, -1L);
 	m_ctrlList->SetSelection(idx);
 	DoUpdateExportList(bInit);
@@ -411,8 +410,7 @@ void CWizardStart::DoUpdateExportList(bool bInit)
 	wxString msg = wxGetTranslation(sc_Items[idx].data[m_Style].desc);
 	m_ctrlDesc->SetLabel(msg);
 
-	wxString str;
-	str << LAST_STYLEITEM << m_Style;
+	std::wstring str = fmt::format(L"{}{}", LAST_STYLEITEM, m_Style);
 	wxConfig::Get()->Write(str, index);
 }
 

@@ -43,6 +43,7 @@
 #include "TabView.h"
 #include "VersionNumber.h"
 
+#include "ARB/ARBDebug.h"
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/DPI.h"
@@ -549,30 +550,8 @@ void CMainFrame::OnPrevPane(wxCommandEvent& evt)
 
 void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 {
-	wxString str;
+	std::wstring str = ARBDebug::GetSystemInfo();
 
-	// OS version
-	str << GetOSInfo().c_str();
-
-	// Me.
-	{
-		CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-		str << wxStandardPaths::Get().GetExecutablePath()
-#ifdef ARB_64BIT
-			<< L" (64-bit): ";
-#else
-			<< L" (32-bit): ";
-#endif
-		if (ver.Valid())
-			str << ver.GetVersionString().c_str();
-		else
-			str << _("IDS_BAD_VERSION");
-		str << L"\n";
-	}
-
-	// wxWidgets
-	str << wxVERSION_STRING << L"\n";
-
-	CDlgMessage dlg(StringUtil::stringW(str), this);
+	CDlgMessage dlg(str, this);
 	dlg.ShowModal();
 }

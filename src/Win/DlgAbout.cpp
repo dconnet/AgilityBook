@@ -159,8 +159,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 void CDlgAbout::OnHelpEmail(wxHyperlinkEvent& evt)
 {
 	wxString url = evt.GetURL();
-	wxString str;
-	str << ARB_VER_MAJOR << L"." << ARB_VER_MINOR << L"." << ARB_VER_DOT;
+	std::wstring str = fmt::format(L"{}.{}.{}", ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT);
 	url.Replace(L"%VERSION%", str);
 	wxLaunchDefaultBrowser(url);
 }

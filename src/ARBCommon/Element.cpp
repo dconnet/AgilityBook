@@ -53,6 +53,7 @@
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
+#include "fmt/printf.h"
 #include <fstream>
 #include <list>
 #include <map>
@@ -143,7 +144,7 @@
 static void OutputDebugString(wchar_t const* msg)
 {
 	if (msg)
-		std::wcout << msg;
+		fmt::print(std::wcout, L"{}", msg);
 }
 #endif
 

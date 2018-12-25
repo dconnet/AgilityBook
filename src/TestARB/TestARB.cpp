@@ -31,6 +31,7 @@
 #include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "fmt/printf.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -110,13 +111,13 @@ private:
 		if (!m_Localization.Load())
 		{
 			std::string msg = fmt::format("ERROR: Unable to load '{}.mo'.", OnGetCatalogName().ToAscii());
-			std::cerr << msg << "\n";
+			fmt::print(std::cerr, "{}\n", msg);
 			throw std::runtime_error(msg);
 		}
 	}
 	virtual void OnErrorMessage(wxString const& msg) const
 	{
-		std::wcerr << msg.wx_str() << std::endl;
+		fmt::print(std::wcerr, L"{}\n", msg.wx_str());
 	}
 	CLanguageManager* m_langMgr;
 #else // __WXWINDOWS__
@@ -290,7 +291,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	assert(bOk);
 	if (!bOk || !tree->LoadXML(data, errMsg))
 	{
-		std::wcout << fmt::to_string(errMsg) << std::endl;
+		fmt::print(std::wcout, L"{}\n", fmt::to_string(errMsg));
 		tree.reset();
 	}
 	return tree;
@@ -406,7 +407,7 @@ ElementNodePtr CreateActionList()
 	bool bParse = actions->LoadXML(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
-		std::wcout << fmt::to_string(errmsg) << std::endl;
+		fmt::print(std::wcout, L"{}\n", fmt::to_string(errmsg));
 	}
 	assert(bParse);
 	return actions;

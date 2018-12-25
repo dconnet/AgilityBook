@@ -44,6 +44,7 @@
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
+#include "fmt/printf.h"
 #include <algorithm>
 
 #ifdef __WXMSW__
@@ -57,7 +58,7 @@
 static void OutputDebugString(wchar_t const* msg)
 {
 	if (msg)
-		std::wcout << msg;
+		fmt::print(std::wcout, L"{}", msg);
 }
 #endif
 

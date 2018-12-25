@@ -82,7 +82,7 @@ void CHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 			{
 				bDidIt = true;
 				CPointsDataBasePtr item = m_pView->m_Items->GetLine(nItem);
-				m_tag << L"ref" << index;
+				m_tag = fmt::format(L"ref{}", index);
 				item->Details();
 				m_tag.clear();
 			}

@@ -669,11 +669,9 @@ void CMetaDataDisplay::OnPaint(wxPaintEvent& evt)
 /////////////////////////////////////////////////////////////////////////////
 
 // This is just to get the text in a sunken static control to look better
-static wxString Pad(std::wstring const& val)
+static std::wstring Pad(std::wstring const& val)
 {
-	wxString padded;
-	padded << (L" ") << StringUtil::stringWX(val) << L" ";
-	return padded;
+	return fmt::format(L" {} ", val);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2121,10 +2119,10 @@ void CDlgRun::SetTitlePoints()
 	}
 	ARB_Q q = m_ctrlQ->GetQ(index);
 
-	wxString strBonus(L"0");
-	wxString strSpeed(L"0");
-	wxString strTitle(L"0");
-	wxString strScore(L"");
+	std::wstring strBonus(L"0");
+	std::wstring strSpeed(L"0");
+	std::wstring strTitle(L"0");
+	std::wstring strScore(L"");
 	ARBConfigScoringPtr pScoring;
 	if (GetScoring(&pScoring))
 	{
@@ -2133,19 +2131,16 @@ void CDlgRun::SetTitlePoints()
 		{
 			if (pScoring->HasBonusTitlePts())
 			{
-				strBonus.clear();
-				strBonus << m_Run->GetScoring().GetBonusTitlePts();
+				strBonus = fmt::format(L"{}", m_Run->GetScoring().GetBonusTitlePts());
 			}
 			if (pScoring->HasSpeedPts())
 			{
-				strSpeed.clear();
-				strSpeed << m_Run->GetSpeedPoints(pScoring);
+				strSpeed = fmt::format(L"{}", m_Run->GetSpeedPoints(pScoring));
 			}
-			strTitle.clear();
-			strTitle << m_Run->GetTitlePoints(pScoring);
+			strTitle = fmt::format(L"{}", m_Run->GetTitlePoints(pScoring));
 		}
 		if (ShouldComputeScore(q))
-			strScore = StringUtil::stringWX(ARBDouble::ToString(m_Run->GetScore(pScoring)));
+			strScore = ARBDouble::ToString(m_Run->GetScore(pScoring));
 	}
 	// Doesn't matter if they're hidden,..
 	m_ctrlBonusTitlePts->ChangeValue(strBonus);
@@ -2527,9 +2522,9 @@ void CDlgRun::SetRefRunColumnHeaders()
 {
 	for (int i = 0; i < scNumRefRunColumns; ++i)
 	{
-		wxString str;
-		str << wxGetTranslation(scRefRunColumns[i].idText)
-			<< L" (" << m_sortRefRuns.FindColumnOrder(i) + 1 << L")";
+		std::wstring str = fmt::format(L"{} ({})",
+			wxGetTranslation(scRefRunColumns[i].idText).wx_str(),
+			m_sortRefRuns.FindColumnOrder(i) + 1);
 		wxListItem item;
 		item.SetMask(wxLIST_MASK_TEXT);
 		item.SetText(str);

@@ -36,31 +36,31 @@
 
 std::wstring ARBDebug::GetSystemInfo()
 {
-	wxString str;
+	fmt::wmemory_buffer str;
 
 	// OS version
-	str << GetOSInfo().c_str();
+	fmt::format_to(str, L"{}", GetOSInfo());
 
 	// Me.
 	{
 		CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-		str << wxStandardPaths::Get().GetExecutablePath()
+		fmt::format_to(str, L"{}{}", wxStandardPaths::Get().GetExecutablePath().wx_str(),
 #ifdef ARB_64BIT
-			<< L" (64-bit): ";
+			L" (64-bit): "
 #else
-			<< L" (32-bit): ";
+			L" (32-bit): "
 #endif
+			);
 		if (ver.Valid())
-			str << ver.GetVersionString().c_str();
+			fmt::format_to(str, L"{}\n", ver.GetVersionString());
 		else
-			str << _("IDS_BAD_VERSION");
-		str << L"\n";
+			fmt::format_to(str, L"{}\n", _("IDS_BAD_VERSION").wx_str());
 	}
 
 	// wxWidgets
-	str << wxVERSION_STRING << L"\n";
+	fmt::format_to(str, L"{}\n", wxVERSION_STRING);
 
-	return StringUtil::stringW(str);
+	return fmt::to_string(str);
 }
 
 
