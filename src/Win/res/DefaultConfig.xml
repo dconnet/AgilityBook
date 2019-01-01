@@ -7,7 +7,7 @@ Revision History:
 2019-01-01 Configuration version 59.
            Cleaned up comments in AKC Std/JWW.
            Added lifetime points to NADAC extreme games.
-           Added Vet to NADAC games, add Gater/Barrreler titles.
+           Added NADAC Gater/Barrreler/AllAroundNATCH titles.
            Fix ASCA ACE Senior Dog title abbreviations.
            Updated USDAA Master Challenge for 2019.
 2018-04-07 Configuration version 58.
@@ -3220,6 +3220,7 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Barrelers Skilled Superior Performance" Name="S-BRS-E">200 points</Titles>
       <Titles LongName="NADAC Agility Trial Champion" Name="NATCH" Prefix="y" StartAt="1">Proficient Elite points: 230 Regular, 130 Chances, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Chances, 100 Jumpers points.</Titles>
       <Titles LongName="NADAC Versatility Champion" Name="Vers-NATCH" StartAt="1">Proficient Elite points: 230 Regular, 130 of each other class. Each subsequent Vers-NATCH requires an additional 200 Regular, 100 of each other class.</Titles>
+      <Titles LongName="All Around NATCH" Name="All Around NATCH" StartAt="1">NATCH, Vers-NATCH, 130 Elite Barrelers, 130 Elite Hoopers</Titles>
       <Titles LongName="Platinum NATCH" Name="Platinum NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index.</Titles>
       <Titles LongName="Platinum Versatility NATCH" Name="Platinum Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
       <Titles LongName="Purple NATCH" Name="Purple NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
@@ -3646,19 +3647,11 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
-        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3677,19 +3670,11 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
-        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3707,19 +3692,11 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
-        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3737,19 +3714,11 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
-        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3763,19 +3732,11 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
-        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3789,19 +3750,11 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Vet Proficient" Level="*" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="10"/>
-          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
-        </Scoring>
-        <Scoring Division="Vet Skilled" Level="*" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
