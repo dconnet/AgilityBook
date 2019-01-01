@@ -4,9 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2018-12-15 Configuration version 59.
+2019-01-01 Configuration version 59.
            Cleaned up comments in AKC Std/JWW.
            Added lifetime points to NADAC extreme games.
+           Added Vet to NADAC games, add Gater/Barrreler titles.
            Fix ASCA ACE Senior Dog title abbreviations.
            Updated USDAA Master Challenge for 2019.
 2018-04-07 Configuration version 58.
@@ -3038,6 +3039,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Intro Weavers Certificate" Name="WV-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Intro Hoopers Certificate" Name="HP-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+      <Titles Inc="100" LongName="Intro Gaters Certificate" Name="GT-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+      <Titles Inc="100" LongName="Intro Barrelers Certificate" Name="BR-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Intro Agility Certificate Outstanding Performance" Name="O-IAC" ValidFrom="2014-1-1">100 points</Titles>
       <Titles LongName="Intro Chances Certificate Outstanding Performance" Name="O-ICC" ValidFrom="2014-1-1">60 points</Titles>
@@ -3046,6 +3049,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Intro Touch N Go Certificate Outstanding Performance" Name="O-TG-I" ValidFrom="2014-1-1">60 points</Titles>
       <Titles LongName="Intro Weavers Certificate Outstanding Performance" Name="O-WV-I" ValidFrom="2014-1-1">60 points</Titles>
       <Titles LongName="Intro Hoopers Certificate Outstanding Performance" Name="O-HP-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Gaters Certificate Outstanding Performance" Name="O-GT-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Barrelers Certificate Outstanding Performance" Name="O-BR-I" ValidFrom="2014-1-1">60 points</Titles>
       <Titles LongName="Intro Agility Certificate Superior Performance" Name="S-IAC" ValidFrom="2014-1-1">200 points</Titles>
       <Titles LongName="Intro Chances Certificate Superior Performance" Name="S-ICC" ValidFrom="2014-1-1">100 points</Titles>
       <Titles LongName="Intro Jumpers Certificate Superior Performance" Name="S-IJC" ValidFrom="2014-1-1">100 points</Titles>
@@ -3053,6 +3058,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Intro Touch N Go Certificate Superior Performance" Name="S-TG-I" ValidFrom="2014-1-1">100 points</Titles>
       <Titles LongName="Intro Weavers Certificate Superior Performance" Name="S-WV-I" ValidFrom="2014-1-1">100 points</Titles>
       <Titles LongName="Intro Hoopers Certificate Superior Performance" Name="S-HP-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Gaters Certificate Superior Performance" Name="S-GT-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Barrelers Certificate Superior Performance" Name="S-BR-I" ValidFrom="2014-1-1">100 points</Titles>
       <Titles Inc="200" LongName="Novice Agility Certificate" Name="NAC" Sep="h" StartAt="200">30 points
 Extended title at 400 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Novice Chances Certificate" Name="NCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
@@ -3067,6 +3074,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Novice Weavers Certificate" Name="WV-N" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Novice Hoopers Certificate" Name="HP-N" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Novice Gaters Certificate" Name="GT-N" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Novice Barrelers Certificate" Name="BR-N" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Agility Certificate Outstanding Performance" Name="O-NAC">100 points</Titles>
       <Titles LongName="Novice Chances Certificate Outstanding Performance" Name="O-NCC" ValidFrom="2004-1-1">60 points</Titles>
@@ -3076,6 +3085,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Touch N Go Certificate Outstanding Performance" Name="O-TG-N">60 points</Titles>
       <Titles LongName="Novice Weavers Certificate Outstanding Performance" Name="O-WV-N">60 points</Titles>
       <Titles LongName="Novice Hoopers Certificate Outstanding Performance" Name="O-HP-N">60 points</Titles>
+      <Titles LongName="Novice Gaters Certificate Outstanding Performance" Name="O-GT-N">60 points</Titles>
+      <Titles LongName="Novice Barrelers Certificate Outstanding Performance" Name="O-BR-N">60 points</Titles>
       <Titles LongName="Novice Agility Certificate Superior Performance" Name="S-NAC">200 points</Titles>
       <Titles LongName="Novice Chances Certificate Superior Performance" Name="S-NCC" ValidFrom="2004-1-1">100 points</Titles>
       <Titles LongName="Novice Gamblers Certificate Superior Performance" Name="S-NGC" ValidTo="2006-1-1">100 points</Titles>
@@ -3084,6 +3095,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Touch N Go Certificate Superior Performance" Name="S-TG-N">100 points</Titles>
       <Titles LongName="Novice Weavers Certificate Superior Performance" Name="S-WV-N">100 points</Titles>
       <Titles LongName="Novice Hoopers Certificate Superior Performance" Name="S-HP-N">100 points</Titles>
+      <Titles LongName="Novice Gaters Certificate Superior Performance" Name="S-GT-N">100 points</Titles>
+      <Titles LongName="Novice Barrelers Certificate Superior Performance" Name="S-BR-N">100 points</Titles>
       <Titles Inc="200" LongName="Open Agility Certificate" Name="OAC" Sep="h" StartAt="200">30 points
 Extended title at 400 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Open Chances Certificate" Name="OCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
@@ -3098,6 +3111,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Open Weavers Certificate" Name="WV-O" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Open Hoopers Certificate" Name="HP-O" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Open Gaters Certificate" Name="GT-O" Sep="h" StartAt="100">30 points
+      <Titles Inc="100" LongName="Open Barrelers Certificate" Name="BR-O" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Agility Certificate Outstanding Performance" Name="O-OAC">100 points</Titles>
       <Titles LongName="Open Chances Certificate Outstanding Performance" Name="O-OCC" ValidFrom="2004-1-1">60 points</Titles>
@@ -3107,6 +3122,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Touch N Go Certificate Outstanding Performance" Name="O-TG-O">60 points</Titles>
       <Titles LongName="Open Weavers Certificate Outstanding Performance" Name="O-WV-O">60 points</Titles>
       <Titles LongName="Open Hoopers Certificate Outstanding Performance" Name="O-HP-O">60 points</Titles>
+      <Titles LongName="Open Gaters Certificate Outstanding Performance" Name="O-GT-O">60 points</Titles>
+      <Titles LongName="Open Barrelers Certificate Outstanding Performance" Name="O-BR-O">60 points</Titles>
       <Titles LongName="Open Agility Certificate Superior Performance" Name="S-OAC">200 points</Titles>
       <Titles LongName="Open Chances Certificate Superior Performance" Name="S-OCC" ValidFrom="2004-1-1">100 points</Titles>
       <Titles LongName="Open Gamblers Certificate Superior Performance" Name="S-OGC" ValidTo="2006-1-1">100 points</Titles>
@@ -3115,6 +3132,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Touch N Go Certificate Superior Performance" Name="S-TG-O">100 points</Titles>
       <Titles LongName="Open Weavers Certificate Superior Performance" Name="S-WV-O">100 points</Titles>
       <Titles LongName="Open Hoopers Certificate Superior Performance" Name="S-HP-O">100 points</Titles>
+      <Titles LongName="Open Gaters Certificate Superior Performance" Name="S-GT-O">100 points</Titles>
+      <Titles LongName="Open Barrelers Certificate Superior Performance" Name="S-BR-O">100 points</Titles>
       <Titles Inc="200" LongName="Elite Agility Certificate" Name="EAC" Sep="h" StartAt="400">30 points
 Extended title at 600 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Elite Chances Certificate" Name="ECC" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
@@ -3129,6 +3148,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Weavers Certificate" Name="WV-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Hoopers Certificate" Name="HP-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Gaters Certificate" Name="GT-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Barrelers Certificate" Name="BR-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Certificate Outstanding Performance" Name="O-EAC">200 points</Titles>
       <Titles LongName="Elite Chances Certificate Outstanding Performance" Name="O-ECC" ValidFrom="2004-1-1">100 points</Titles>
@@ -3138,6 +3159,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Touch N Go Certificate Outstanding Performance" Name="O-TG-E">100 points</Titles>
       <Titles LongName="Elite Weavers Certificate Outstanding Performance" Name="O-WV-E">100 points</Titles>
       <Titles LongName="Elite Hoopers Certificate Outstanding Performance" Name="O-HP-E">100 points</Titles>
+      <Titles LongName="Elite Gaters Certificate Outstanding Performance" Name="O-GT-E">100 points</Titles>
+      <Titles LongName="Elite Barrelers Certificate Outstanding Performance" Name="O-BR-E">100 points</Titles>
       <Titles LongName="Elite Agility Certificate Superior Performance" Name="S-EAC">400 points</Titles>
       <Titles LongName="Elite Chances Certificate Superior Performance" Name="S-ECC" ValidFrom="2004-1-1">200 points</Titles>
       <Titles LongName="Elite Gamblers Certificate Superior Performance" Name="S-EGC" ValidTo="2006-1-1">200 points</Titles>
@@ -3146,6 +3169,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Touch N Go Certificate Superior Performance" Name="S-TG-E">200 points</Titles>
       <Titles LongName="Elite Weavers Certificate Superior Performance" Name="S-WV-E">200 points</Titles>
       <Titles LongName="Elite Hoopers Certificate Superior Performance" Name="S-HP-E">200 points</Titles>
+      <Titles LongName="Elite Gaters Certificate Superior Performance" Name="S-GT-E">200 points</Titles>
+      <Titles LongName="Elite Barrelers Certificate Superior Performance" Name="S-BR-E">200 points</Titles>
       <Titles Inc="200" LongName="Elite Agility Skilled" Name="EAS" Sep="h" StartAt="400">30 points
 Extended title at 600 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Elite Chances Skilled" Name="ECS" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
@@ -3160,6 +3185,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Weavers Skilled" Name="WVS-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Hoopers Skilled" Name="HPS-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Gaters Skilled" Name="GTS-E" Sep="h" StartAt="200">30 points
+      <Titles Inc="100" LongName="Elite Barrelers Skilled" Name="BRS-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Skilled Outstanding Performance" Name="O-EAS">200 points</Titles>
       <Titles LongName="Elite Chances Skilled Outstanding Performance" Name="O-ECS" ValidFrom="2004-1-1">100 points</Titles>
@@ -3169,6 +3196,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Touch N Go Skilled Outstanding Performance" Name="O-TGS-E">100 points</Titles>
       <Titles LongName="Elite Weavers Skilled Outstanding Performance" Name="O-WVS-E">100 points</Titles>
       <Titles LongName="Elite Hoopers Skilled Outstanding Performance" Name="O-HPS-E">100 points</Titles>
+      <Titles LongName="Elite Gaters Skilled Outstanding Performance" Name="O-GTS-E">100 points</Titles>
+      <Titles LongName="Elite Barrelers Skilled Outstanding Performance" Name="O-BRS-E">100 points</Titles>
       <Titles LongName="Elite Agility Skilled Superior Performance" Name="S-EAS">400 points</Titles>
       <Titles LongName="Elite Chances Skilled Superior Performance" Name="S-ECS" ValidFrom="2004-1-1">200 points</Titles>
       <Titles LongName="Elite Gamblers Skilled Superior Performance" Name="S-EGS" ValidTo="2006-1-1">200 points</Titles>
@@ -3177,6 +3206,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Touch N Go Skilled Superior Performance" Name="S-TGS-E">200 points</Titles>
       <Titles LongName="Elite Weavers Skilled Superior Performance" Name="S-WVS-E">200 points</Titles>
       <Titles LongName="Elite Hoopers Skilled Superior Performance" Name="S-HPS-E">200 points</Titles>
+      <Titles LongName="Elite Gaters Skilled Superior Performance" Name="S-GTS-E">200 points</Titles>
+      <Titles LongName="Elite Barrelers Skilled Superior Performance" Name="S-BRS-E">200 points</Titles>
       <Titles LongName="NADAC Agility Trial Champion" Name="NATCH" Prefix="y" StartAt="1">Proficient Elite points: 230 Regular, 130 Chances, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Chances, 100 Jumpers points.</Titles>
       <Titles LongName="NADAC Versatility Champion" Name="Vers-NATCH" StartAt="1">Proficient Elite points: 230 Regular, 130 of each other class. Each subsequent Vers-NATCH requires an additional 200 Regular, 100 of each other class.</Titles>
       <Titles LongName="Platinum NATCH" Name="Platinum NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index.</Titles>
@@ -3605,11 +3636,19 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
+        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3628,11 +3667,19 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
+        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3650,11 +3697,19 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
+        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3672,11 +3727,19 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
+        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3690,11 +3753,19 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
+        <Scoring Division="Vet Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Vet Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3708,11 +3779,19 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
+        <Scoring Division="Vet Proficient" Level="*" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Vet Skilled" Level="*" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
