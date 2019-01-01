@@ -3039,7 +3039,9 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Intro Weavers Certificate" Name="WV-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Intro Hoopers Certificate" Name="HP-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Intro Gaters Certificate" Name="GT-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Intro Barrelers Certificate" Name="BR-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Intro Agility Certificate Outstanding Performance" Name="O-IAC" ValidFrom="2014-1-1">100 points</Titles>
@@ -3074,7 +3076,9 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Novice Weavers Certificate" Name="WV-N" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Novice Hoopers Certificate" Name="HP-N" Sep="h" StartAt="100">30 points
+Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Novice Gaters Certificate" Name="GT-N" Sep="h" StartAt="100">30 points
+Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Novice Barrelers Certificate" Name="BR-N" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Agility Certificate Outstanding Performance" Name="O-NAC">100 points</Titles>
@@ -3111,7 +3115,9 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Open Weavers Certificate" Name="WV-O" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Open Hoopers Certificate" Name="HP-O" Sep="h" StartAt="100">30 points
+Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Open Gaters Certificate" Name="GT-O" Sep="h" StartAt="100">30 points
+Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Open Barrelers Certificate" Name="BR-O" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Agility Certificate Outstanding Performance" Name="O-OAC">100 points</Titles>
@@ -3148,7 +3154,9 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Weavers Certificate" Name="WV-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Hoopers Certificate" Name="HP-E" Sep="h" StartAt="200">30 points
+Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Gaters Certificate" Name="GT-E" Sep="h" StartAt="200">30 points
+Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Barrelers Certificate" Name="BR-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Certificate Outstanding Performance" Name="O-EAC">200 points</Titles>
@@ -3185,7 +3193,9 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Weavers Skilled" Name="WVS-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Hoopers Skilled" Name="HPS-E" Sep="h" StartAt="200">30 points
+Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Gaters Skilled" Name="GTS-E" Sep="h" StartAt="200">30 points
+Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Barrelers Skilled" Name="BRS-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Skilled Outstanding Performance" Name="O-EAS">200 points</Titles>
