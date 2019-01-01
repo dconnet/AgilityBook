@@ -14,6 +14,7 @@
  * user32.dll, winuser.h
  *
  * Revision History
+ * 2019-01-01 GetContentScaleFactor is causing a problem on Mac (wx3.1.2)
  * 2018-10-11 Moved to Win LibARBWin
  * 2014-12-27 Created.
  */
@@ -215,7 +216,12 @@ int UnScale(wxWindow* pWindow, int x)
 unsigned int GetScale(wxWindow* pWindow)
 {
 	//this is basically wxScreenDC::GetPPI()
+#pragma PRAGMA_TODO(Fix on mac)
+#if defined(__WXMAC__)
+	return GetDPI().GetScale(); // GetContentScaleFactor on Mac keeps returning 0 on destroy (and sometimes on create)
+#else
 	return static_cast<unsigned int>(pWindow->GetContentScaleFactor() * 100);
+#endif
 	//return GetDPI().GetScale();
 }
 
