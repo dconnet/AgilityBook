@@ -47,6 +47,7 @@ Switch to build machine, do a full rebuild and verify it.
 - Run 'GenMSI.py /all' to create w32/x64 installers (and sign them)
   and auto-update Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
+- Copy exe files from bin to \AgilityBook\distrib\vN.N.N.N (vc141/vc141x64)
 
 Commit all changes to GitHub.
 
