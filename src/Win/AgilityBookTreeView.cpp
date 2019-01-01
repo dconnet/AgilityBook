@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-01-01 Fix selection on initial load.
  * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
  * 2014-04-11 Fix switching dogs
@@ -969,6 +970,13 @@ void CAgilityBookTreeView::LoadData()
 	{
 		wxTreeItemIdValue cookie;
 		hItem = m_Ctrl->GetFirstChild(m_Ctrl->GetRootItem(), cookie);
+
+		CAgilityBookTreeData* pCurrent = GetTreeItem(hItem);
+		if (pCurrent)
+		{
+			if (pCurrent->GetDog() != GetDocument()->GetCurrentDog())
+				GetDocument()->SetCurrentDog(pCurrent->GetDog());
+		}
 	}
 	m_Ctrl->SelectItem(hItem);
 	m_Ctrl->EnsureVisible(hItem);
