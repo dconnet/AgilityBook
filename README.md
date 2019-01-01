@@ -58,6 +58,7 @@ The binaries for the platforms above can be found in
 
 In theory, it should be able to be compiled on any platform that is supported by
 [wxWidgets](http://wxwidgets.org/).
+Caveat: ARB requires a C++11 compliant compiler due to [fmt](https://github.com/fmtlib/fmt/).
 See [Readme-Build.txt](https://github.com/dconnet/AgilityBook/blob/master/Readme-Build.txt)
 for more information on building the source code.
 
