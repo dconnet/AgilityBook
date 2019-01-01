@@ -56,6 +56,8 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 - Update CFBundleVersion in xcode plist files (build number), this can be
   done in Xcode in the 'General' page for ARBHelp and AgilityBook.
   (preferable to edit files on build machine step above for single commit)
+  - NOTE: xcode is no longer updating CFBundleGetInfoString or
+    CFBundleLongVersionString. Edit the plist files directly.
 - export PATH=$WXWIN/build-cocoa:$PATH
 - cd .../AgilityBook
 - autoconf

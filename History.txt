@@ -1,10 +1,10 @@
-1/1/2019: v3.3.0.<development>
+1/1/2019: v3.3.0.105
 - Notes:
   - Windows XP support dropped, VC10/11/12/14 dropped.
 - Bumped Configuration v59:
   - Cleaned up comments in AKC Std/JWW.
   - Added lifetime points to NADAC extreme games.
-    Added Vet to NADAC games, add Gater/Barrreler titles.
+  - Added NADAC Gater/Barrreler/AllAroundNATCH titles.
   - Fix ASCA ACE Senior Dog title abbreviations.
   - Updated USDAA Master Challenge for 2019.
 - New features / Enhancements:
@@ -16,6 +16,8 @@
 - Bug fixes:
   - Fix run selection after pasting.
   - Fix selected items when sorting.
+  - Fix dog selection when opening a new file with multiple dogs in it.
+  - Fix crash on Mac when closing ARB.
 
 5/19/2018: v3.2.5.104
 - Bumped Configuration v58:
