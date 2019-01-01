@@ -164,7 +164,7 @@ static wxString FILENAME()
 {
 #ifdef __WXMSW__
 	// Why this? Just cause that's how my local system is setup.
-	return L"c:/dcon/www/agilityrecordbook/" + VersionFile();
+	return L"d:/dcon/www/agilityrecordbook/" + VersionFile();
 #else
 	return wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + VersionFile();
 #endif

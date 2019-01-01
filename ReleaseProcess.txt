@@ -86,15 +86,18 @@ Create the files to be distributed (make sure you archive them too)
   - git archive master --prefix="AgilityBook/" --format=zip > AgilityBook-n_n_n_n-src.zip
 
 GitHub:
-- Create release on vn.n.n.n branch
+- Create release on vn.n.n branch
   - Use History to create release notes, these will be the same as the announcement below.
   - AgilityBook-n_n_n_n-src.zip
-  - AgilityBook-n_n_n_n-win.zip
-  - AgilityBook-n_n_n_n-x64.zip
+  - AgilityBook-n_n_n_n-win.msi
+  - AgilityBook-n_n_n_n-x64.msi
   - AgilityBook-n_n_n_n-mac.dmg
 
 Web Site:
 - Upload msi zip files and dmg to files/
+  - AgilityBook-n_n_n_n-win.zip
+  - AgilityBook-n_n_n_n-x64.zip
+  - AgilityBook-n_n_n_n-mac.dmg
 - Update "$fileversion" and "$fileVerNo" in func.php
 - Update version2.xml
   - Run 'ARBUpdater /g' and generate new size and md5/sha1 tags for each file.
