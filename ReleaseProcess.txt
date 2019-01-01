@@ -4,8 +4,8 @@ On new year, update copyright year in:
 - License.txt
 - configure.in
 - src/Include/VersionNumber.h
-- src/Projects/xcode9/AgilityBook/AgilityBook/AgilityBook-Info.plist
-- src/Projects/xcode9/ARBHelp/ARBHelp/ARBHelp-Info.plist
+- src/Projects/xcode*/AgilityBook/AgilityBook/AgilityBook-Info.plist
+- src/Projects/xcode*/ARBHelp/ARBHelp/ARBHelp-Info.plist
 
 Files to change before marking files for release:
 - If file version has changed (arb version, not build number):
