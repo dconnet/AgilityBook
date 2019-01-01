@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * 2019-01-01 Fix standalone detection.
  * 2018-10-11 Moved to Win LibARBWin
  * 2018-04-20 Use wxTranslations instead of wxLocale.
  * 2018-01-28 Add debug reporting.
@@ -170,7 +171,10 @@ bool CBaseApp::OnInit()
 				{
 					pConfig->Write(m_ConfigTest, true); // Write-only value to test info file viability
 					if (pConfig->Flush())
+					{
 						pBaseConfig = pConfig;
+						m_bStandalone = true;
+					}
 					else
 					{
 						// If Flush failed, we can't write the file. Probably readonly.
@@ -183,10 +187,7 @@ bool CBaseApp::OnInit()
 			}
 
 			if (!pBaseConfig)
-			{
 				pBaseConfig = new wxConfig(m_BaseRegName, m_VendorName);
-				m_bStandalone = true;
-			}
 			wxConfig::Set(pBaseConfig);
 			bConfigSet = true;
 		}
