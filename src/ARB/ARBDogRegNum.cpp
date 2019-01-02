@@ -112,9 +112,18 @@ bool ARBDogRegNum::operator==(ARBDogRegNum const& rhs) const
 
 size_t ARBDogRegNum::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 {
+	size_t nItems = 0;
+
 	ioStrings.insert(GetGenericName());
-	ioStrings.insert(GetNote());
-	return 1;
+	++nItems;
+
+	if (0 < m_Note.length())
+	{
+		ioStrings.insert(m_Note);
+		++nItems;
+	}
+
+	return nItems;
 }
 
 

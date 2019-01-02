@@ -953,6 +953,13 @@ void CAgilityBookTreeView::LoadData()
 	{
 		wxTreeItemIdValue cookie;
 		hItem = m_Ctrl->GetFirstChild(m_Ctrl->GetRootItem(), cookie);
+
+		CAgilityBookTreeData* pCurrent = GetTreeItem(hItem);
+		if (pCurrent)
+		{
+			if (pCurrent->GetDog() != GetDocument()->GetCurrentDog())
+				GetDocument()->SetCurrentDog(pCurrent->GetDog());
+		}
 	}
 	m_Ctrl->SelectItem(hItem);
 	m_Ctrl->EnsureVisible(hItem);

@@ -187,11 +187,45 @@ void CReportListCtrl::SetColumnSort(long column, int iconDirection)
 
 bool CReportListCtrl::SortItems(CListCtrlCompare fnSortCallBack, SortInfo const* pSortInfo)
 {
+	// Since the underlaying control doesn't know that we changed item order,
+	// we need to specifically get the selection and reset it after the sort.
+
+	// Get old selection, clear it.
+	long itemFocus = GetFocusedItem();
+	std::vector<long> items;
+	GetSelection(items);
+	ClearSelection();
+
+	// Translate selection indices to data pointers.
+	std::vector<CListDataPtr> realItems;
+	for each (auto item in items)
+		realItems.push_back(GetData(item));
+	CListDataPtr pFocusItem = itemFocus >= 0 ? GetData(itemFocus) : nullptr;
+
 	std::stable_sort(m_items.begin(), m_items.end(), [fnSortCallBack, pSortInfo](CListDataPtr const& one, CListDataPtr const& two)
 					 {
 						 return fnSortCallBack(one, two, pSortInfo) < 0;
 					 }
 	);
+
+	// Now, restore selection/focus.
+	items.clear();
+	for (long index = 0; index < GetItemCount(); ++index)
+	{
+		CListDataPtr data = GetData(index);
+		if (pFocusItem && pFocusItem == data)
+			Focus(index);
+		for each (auto item in realItems)
+		{
+			if (item == data)
+			{
+				items.push_back(index);
+				break;
+			}
+		}
+	}
+	SetSelection(items);
+
 	Refresh();
 	return true;
 }
@@ -255,14 +289,15 @@ void CReportListCtrl::SetSelection(
 {
 	std::vector<long> indices;
 	indices.push_back(index);
-	SetSelection(indices, bEnsureVisible, bSetFocus);
+	SetSelection(indices);
+	if (bEnsureVisible)
+		EnsureVisible(index);
+	if (bSetFocus)
+		Focus(index);
 }
 
 
-void CReportListCtrl::SetSelection(
-		std::vector<long>& indices,
-		bool bEnsureVisible,
-		bool bSetFocus)
+void CReportListCtrl::SetSelection(std::vector<long>& indices)
 {
 	// Clear everything.
 	long item = GetNextSelected(-1);
@@ -278,10 +313,15 @@ void CReportListCtrl::SetSelection(
 		if (index >= 0 && index < GetItemCount())
 		{
 			Select(index);
-			if (bSetFocus)
-				Focus(index);
 		}
 	}
+}
+
+
+void CReportListCtrl::ClearSelection()
+{
+	std::vector<long> indices;
+	SetSelection(indices);
 }
 
 

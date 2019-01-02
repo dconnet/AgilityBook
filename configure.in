@@ -6,14 +6,14 @@
 ################################################################################
 # Initialise autoconf, set package name, version number and contact details.   #
 ################################################################################
-AC_INIT(Agility Record Book, 3.2.5.104, [help@agilityrecordbook.com])
+AC_INIT(Agility Record Book, 3.2.6.105, [help@agilityrecordbook.com])
 
 AC_CONFIG_SRCDIR(src/Win/stdafx.cpp)
 
 AC_SUBST(PACKAGE_ARB_SHORTNAME, "AgilityBook")
 AC_SUBST(PACKAGE_HLP_SHORTNAME, "ARBHelp")
 AC_SUBST(PACKAGE_TEST_SHORTNAME, "testarb")
-AC_SUBST(PACKAGE_COPYRIGHT, "Copyright (c) 2002-2018 David Connet. All Rights Reserved.")
+AC_SUBST(PACKAGE_COPYRIGHT, "Copyright (c) 2002-2019 David Connet. All Rights Reserved.")
 define([svnversion], esyscmd([sh -c "svnversion|tr -d '\n'"]))dnl
 AC_SUBST(SVN_VERSION, "svnversion")
 ################################################################################

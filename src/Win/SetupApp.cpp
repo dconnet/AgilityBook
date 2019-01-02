@@ -169,7 +169,10 @@ bool CBaseApp::OnInit()
 				{
 					pConfig->Write(m_ConfigTest, true); // Write-only value to test info file viability
 					if (pConfig->Flush())
+					{
 						pBaseConfig = pConfig;
+						m_bStandalone = true;
+					}
 					else
 					{
 						// If Flush failed, we can't write the file. Probably readonly.
@@ -182,10 +185,7 @@ bool CBaseApp::OnInit()
 			}
 
 			if (!pBaseConfig)
-			{
 				pBaseConfig = new wxConfig(m_BaseRegName, m_VendorName);
-				m_bStandalone = true;
-			}
 			wxConfig::Set(pBaseConfig);
 			bConfigSet = true;
 		}

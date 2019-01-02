@@ -4,6 +4,12 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2019-01-01 Configuration version 59.
+           Cleaned up comments in AKC Std/JWW.
+           Added lifetime points to NADAC extreme games.
+           Added NADAC Gater/Barrreler/AllAroundNATCH titles.
+           Fix ASCA ACE Senior Dog title abbreviations.
+           Updated USDAA Master Challenge for 2019.
 2018-04-07 Configuration version 58.
            Added NADAC Barrelers
 2017-12-31 File version 14.5, tweaked T+F titling points.
@@ -186,7 +192,7 @@ Revision History:
            Added new Config/Action: DeleteTitle
 -->
 
-  <Configuration version="58">
+  <Configuration version="59">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -352,6 +358,33 @@ Revision History:
     <Action Config="55" Div="Standard" OldName="Excellent B" NewName="Master" Venue="CKC" Verb="RenameLevel" />
     <Action Config="55" Div="Selected" OldName="Excellent A" NewName="Excellent" Venue="CKC" Verb="RenameLevel" />
     <Action Config="55" Div="Selected" OldName="Excellent B" NewName="Master" Venue="CKC" Verb="RenameLevel" />
+    <Action Config="59" OldName="RVA-N" NewName="RSDA-N" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-N-OP" NewName="RSDA-N-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-N-SP" NewName="RSDA-N-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-O" NewName="RSDA-O" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-O-OP" NewName="RSDA-O-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-O-SP" NewName="RSDA-O-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-E" NewName="RSDA-E" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-E-OP" NewName="RSDA-E-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="RVA-E-SP" NewName="RSDA-E-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-N" NewName="JSDA-N" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-N-OP" NewName="JSDA-N-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-N-SP" NewName="JSDA-N-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-O" NewName="JSDA-O" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-O-OP" NewName="JSDA-O-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-O-SP" NewName="JSDA-O-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-E" NewName="JSDA-E" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-E-OP" NewName="JSDA-E-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="JVA-E-SP" NewName="JSDA-E-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-N" NewName="GSDA-N" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-N-OP" NewName="GSDA-N-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-N-SP" NewName="GSDA-N-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-O" NewName="GSDA-O" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-O-OP" NewName="GSDA-O-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-O-SP" NewName="GSDA-O-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-E" NewName="GSDA-E" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-E-OP" NewName="GSDA-E-OP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="59" OldName="GVA-E-SP" NewName="GSDA-E-SP" Venue="ASCA" Verb="RenameTitle" />
 
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <LifetimeNames/>
@@ -680,10 +713,11 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+          <Note>No more than 1R, 1W, 1T</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
-          <Note>No more than 2R, 1W (before 9/1/2006, 2Ws were allowed)</Note>
+          <Note>No more than 2R, 1W, 2T (before 9/1/2006, 2Ws were allowed)</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Nationals" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
@@ -727,10 +761,11 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+          <Note>No more than 1R</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
-          <Note>No more than 2R, 1W (before 9/1/2006, 2Ws were allowed)</Note>
+          <Note>No more than 2R</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Nationals" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
@@ -977,33 +1012,33 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Elite Jumpers Superior Performance" Name="JSA-E-SP">JSA-E plus 200 Points</Titles>
       <Titles LongName="Elite Gamblers Superior Performance" Name="GSA-E-SP">GSA-E plus 200 Points</Titles>
       <Titles LongName="Agility Competitor Extraordinaire" Name="ACE" Prefix="y" Sep="h" StartAt="1" Style="r">R*A-E plus 200 pts, G*A-E plus 100 pts, J*A-E plus 100 pts</Titles>
-      <Titles LongName="Novice Regular" Name="RVA-N">30 Points</Titles>
-      <Titles LongName="Novice Jumpers" Name="JVA-N">20 Points</Titles>
-      <Titles LongName="Novice Gamblers" Name="GVA-N">20 Points</Titles>
-      <Titles LongName="Novice Regular Outstanding Performance" Name="RVA-N-OP">RVA-N plus 100 Points</Titles>
-      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JVA-N-OP">JVA-N plus 50 Points</Titles>
-      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GVA-N-OP">GVA-N plus 50 Points</Titles>
-      <Titles LongName="Novice Regular Superior Performance" Name="RVA-N-SP">RVA-N plus 200 Points</Titles>
-      <Titles LongName="Novice Jumpers Superior Performance" Name="JVA-N-SP">JVA-N plus 100 Points</Titles>
-      <Titles LongName="Novice Gamblers Superior Performance" Name="GVA-N-SP">GVA-N plus 100 Points</Titles>
-      <Titles LongName="Open Regular" Name="RVA-O">30 Points</Titles>
-      <Titles LongName="Open Jumpers" Name="JVA-O">20 Points</Titles>
-      <Titles LongName="Open Gamblers" Name="GVA-O">20 Points</Titles>
-      <Titles LongName="Open Regular Outstanding Performance" Name="RVA-O-OP">RVA-O plus 100 Points</Titles>
-      <Titles LongName="Open Jumpers Outstanding Performance" Name="JVA-O-OP">JVA-O plus 50 Points</Titles>
-      <Titles LongName="Open Gamblers Outstanding Performance" Name="GVA-O-OP">GVA-O plus 50 Points</Titles>
-      <Titles LongName="Open Regular Superior Performance" Name="RVA-O-SP">RVA-O plus 200 Points</Titles>
-      <Titles LongName="Open Jumpers Superior Performance" Name="JVA-O-SP">JVA-O plus 100 Points</Titles>
-      <Titles LongName="Open Gamblers Superior Performance" Name="GVA-O-SP">GVA-O plus 100 Points</Titles>
-      <Titles LongName="Elite Regular" Name="RVA-E">30 Points</Titles>
-      <Titles LongName="Elite Jumpers" Name="JVA-E">20 Points</Titles>
-      <Titles LongName="Elite Gamblers" Name="GVA-E">20 Points</Titles>
-      <Titles LongName="Elite Regular Outstanding Performance" Name="RVA-E-OP">RVA-E plus 200 Points</Titles>
-      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JVA-E-OP">JVA-E plus 100 Points</Titles>
-      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GVA-E-OP">GVA-E plus 100 Points</Titles>
-      <Titles LongName="Elite Regular Superior Performance" Name="RVA-E-SP">RVA-E plus 400 Points</Titles>
-      <Titles LongName="Elite Jumpers Superior Performance" Name="JVA-E-SP">JVA-E plus 200 Points</Titles>
-      <Titles LongName="Elite Gamblers Superior Performance" Name="GVA-E-SP">GVA-E plus 200 Points</Titles>
+      <Titles LongName="Novice Regular" Name="RSDA-N">30 Points</Titles>
+      <Titles LongName="Novice Jumpers" Name="JSDA-N">20 Points</Titles>
+      <Titles LongName="Novice Gamblers" Name="GSDA-N">20 Points</Titles>
+      <Titles LongName="Novice Regular Outstanding Performance" Name="RSDA-N-OP">RSDA-N plus 100 Points</Titles>
+      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JSDA-N-OP">JSDA-N plus 50 Points</Titles>
+      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GSDA-N-OP">GSDA-N plus 50 Points</Titles>
+      <Titles LongName="Novice Regular Superior Performance" Name="RSDA-N-SP">RSDA-N plus 200 Points</Titles>
+      <Titles LongName="Novice Jumpers Superior Performance" Name="JSDA-N-SP">JSDA-N plus 100 Points</Titles>
+      <Titles LongName="Novice Gamblers Superior Performance" Name="GSDA-N-SP">GSDA-N plus 100 Points</Titles>
+      <Titles LongName="Open Regular" Name="RSDA-O">30 Points</Titles>
+      <Titles LongName="Open Jumpers" Name="JSDA-O">20 Points</Titles>
+      <Titles LongName="Open Gamblers" Name="GSDA-O">20 Points</Titles>
+      <Titles LongName="Open Regular Outstanding Performance" Name="RSDA-O-OP">RSDA-O plus 100 Points</Titles>
+      <Titles LongName="Open Jumpers Outstanding Performance" Name="JSDA-O-OP">JSDA-O plus 50 Points</Titles>
+      <Titles LongName="Open Gamblers Outstanding Performance" Name="GSDA-O-OP">GSDA-O plus 50 Points</Titles>
+      <Titles LongName="Open Regular Superior Performance" Name="RSDA-O-SP">RSDA-O plus 200 Points</Titles>
+      <Titles LongName="Open Jumpers Superior Performance" Name="JSDA-O-SP">JSDA-O plus 100 Points</Titles>
+      <Titles LongName="Open Gamblers Superior Performance" Name="GSDA-O-SP">GSDA-O plus 100 Points</Titles>
+      <Titles LongName="Elite Regular" Name="RSDA-E">30 Points</Titles>
+      <Titles LongName="Elite Jumpers" Name="JSDA-E">20 Points</Titles>
+      <Titles LongName="Elite Gamblers" Name="GSDA-E">20 Points</Titles>
+      <Titles LongName="Elite Regular Outstanding Performance" Name="RSDA-E-OP">RSDA-E plus 200 Points</Titles>
+      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JSDA-E-OP">JSDA-E plus 100 Points</Titles>
+      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GSDA-E-OP">GSDA-E plus 100 Points</Titles>
+      <Titles LongName="Elite Regular Superior Performance" Name="RSDA-E-SP">RSDA-E plus 400 Points</Titles>
+      <Titles LongName="Elite Jumpers Superior Performance" Name="JSDA-E-SP">JSDA-E plus 200 Points</Titles>
+      <Titles LongName="Elite Gamblers Superior Performance" Name="GSDA-E-SP">GSDA-E plus 200 Points</Titles>
       <Division Name="Standard" ShortName="Std">
         <Level Name="Novice">
           <SubLevel Name="Novice A" ShortName="NovA"/>
@@ -1400,14 +1435,12 @@ You must enter the SCT (1st place) and your placement to generate the titling po
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
-          <Note>Time Faults only</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
-          <Note>No more than 2R, 1W (before 9/1/2006, 2Ws were allowed)</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
       </Event>
@@ -1416,14 +1449,12 @@ You must enter the SCT (1st place) and your placement to generate the titling po
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
-          <Note>Time Faults only</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
-          <Note>No more than 2R, 1W (before 9/1/2006, 2Ws were allowed)</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
       </Event>
@@ -3009,6 +3040,10 @@ Extended title at 200 points (repeats every 100)</Titles>
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Intro Hoopers Certificate" Name="HP-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Intro Gaters Certificate" Name="GT-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Intro Barrelers Certificate" Name="BR-I" Sep="h" StartAt="100" ValidFrom="2014-1-1">30 points
+Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Intro Agility Certificate Outstanding Performance" Name="O-IAC" ValidFrom="2014-1-1">100 points</Titles>
       <Titles LongName="Intro Chances Certificate Outstanding Performance" Name="O-ICC" ValidFrom="2014-1-1">60 points</Titles>
       <Titles LongName="Intro Jumpers Certificate Outstanding Performance" Name="O-IJC" ValidFrom="2014-1-1">60 points</Titles>
@@ -3016,6 +3051,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Intro Touch N Go Certificate Outstanding Performance" Name="O-TG-I" ValidFrom="2014-1-1">60 points</Titles>
       <Titles LongName="Intro Weavers Certificate Outstanding Performance" Name="O-WV-I" ValidFrom="2014-1-1">60 points</Titles>
       <Titles LongName="Intro Hoopers Certificate Outstanding Performance" Name="O-HP-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Gaters Certificate Outstanding Performance" Name="O-GT-I" ValidFrom="2014-1-1">60 points</Titles>
+      <Titles LongName="Intro Barrelers Certificate Outstanding Performance" Name="O-BR-I" ValidFrom="2014-1-1">60 points</Titles>
       <Titles LongName="Intro Agility Certificate Superior Performance" Name="S-IAC" ValidFrom="2014-1-1">200 points</Titles>
       <Titles LongName="Intro Chances Certificate Superior Performance" Name="S-ICC" ValidFrom="2014-1-1">100 points</Titles>
       <Titles LongName="Intro Jumpers Certificate Superior Performance" Name="S-IJC" ValidFrom="2014-1-1">100 points</Titles>
@@ -3023,6 +3060,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Intro Touch N Go Certificate Superior Performance" Name="S-TG-I" ValidFrom="2014-1-1">100 points</Titles>
       <Titles LongName="Intro Weavers Certificate Superior Performance" Name="S-WV-I" ValidFrom="2014-1-1">100 points</Titles>
       <Titles LongName="Intro Hoopers Certificate Superior Performance" Name="S-HP-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Gaters Certificate Superior Performance" Name="S-GT-I" ValidFrom="2014-1-1">100 points</Titles>
+      <Titles LongName="Intro Barrelers Certificate Superior Performance" Name="S-BR-I" ValidFrom="2014-1-1">100 points</Titles>
       <Titles Inc="200" LongName="Novice Agility Certificate" Name="NAC" Sep="h" StartAt="200">30 points
 Extended title at 400 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Novice Chances Certificate" Name="NCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
@@ -3038,6 +3077,10 @@ Extended title at 200 points (repeats every 100)</Titles>
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Novice Hoopers Certificate" Name="HP-N" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Novice Gaters Certificate" Name="GT-N" Sep="h" StartAt="100">30 points
+Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Novice Barrelers Certificate" Name="BR-N" Sep="h" StartAt="100">30 points
+Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Agility Certificate Outstanding Performance" Name="O-NAC">100 points</Titles>
       <Titles LongName="Novice Chances Certificate Outstanding Performance" Name="O-NCC" ValidFrom="2004-1-1">60 points</Titles>
       <Titles LongName="Novice Gamblers Certificate Outstanding Performance" Name="O-NGC" ValidTo="2006-1-1">60 points (50 pts before 8/1/2005)</Titles>
@@ -3046,6 +3089,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Touch N Go Certificate Outstanding Performance" Name="O-TG-N">60 points</Titles>
       <Titles LongName="Novice Weavers Certificate Outstanding Performance" Name="O-WV-N">60 points</Titles>
       <Titles LongName="Novice Hoopers Certificate Outstanding Performance" Name="O-HP-N">60 points</Titles>
+      <Titles LongName="Novice Gaters Certificate Outstanding Performance" Name="O-GT-N">60 points</Titles>
+      <Titles LongName="Novice Barrelers Certificate Outstanding Performance" Name="O-BR-N">60 points</Titles>
       <Titles LongName="Novice Agility Certificate Superior Performance" Name="S-NAC">200 points</Titles>
       <Titles LongName="Novice Chances Certificate Superior Performance" Name="S-NCC" ValidFrom="2004-1-1">100 points</Titles>
       <Titles LongName="Novice Gamblers Certificate Superior Performance" Name="S-NGC" ValidTo="2006-1-1">100 points</Titles>
@@ -3054,6 +3099,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Touch N Go Certificate Superior Performance" Name="S-TG-N">100 points</Titles>
       <Titles LongName="Novice Weavers Certificate Superior Performance" Name="S-WV-N">100 points</Titles>
       <Titles LongName="Novice Hoopers Certificate Superior Performance" Name="S-HP-N">100 points</Titles>
+      <Titles LongName="Novice Gaters Certificate Superior Performance" Name="S-GT-N">100 points</Titles>
+      <Titles LongName="Novice Barrelers Certificate Superior Performance" Name="S-BR-N">100 points</Titles>
       <Titles Inc="200" LongName="Open Agility Certificate" Name="OAC" Sep="h" StartAt="200">30 points
 Extended title at 400 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Open Chances Certificate" Name="OCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
@@ -3069,6 +3116,10 @@ Extended title at 200 points (repeats every 100)</Titles>
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Open Hoopers Certificate" Name="HP-O" Sep="h" StartAt="100">30 points
 Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Open Gaters Certificate" Name="GT-O" Sep="h" StartAt="100">30 points
+Extended title at 200 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Open Barrelers Certificate" Name="BR-O" Sep="h" StartAt="100">30 points
+Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Agility Certificate Outstanding Performance" Name="O-OAC">100 points</Titles>
       <Titles LongName="Open Chances Certificate Outstanding Performance" Name="O-OCC" ValidFrom="2004-1-1">60 points</Titles>
       <Titles LongName="Open Gamblers Certificate Outstanding Performance" Name="O-OGC" ValidTo="2006-1-1">60 points (50 pts before 8/1/2005)</Titles>
@@ -3077,6 +3128,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Touch N Go Certificate Outstanding Performance" Name="O-TG-O">60 points</Titles>
       <Titles LongName="Open Weavers Certificate Outstanding Performance" Name="O-WV-O">60 points</Titles>
       <Titles LongName="Open Hoopers Certificate Outstanding Performance" Name="O-HP-O">60 points</Titles>
+      <Titles LongName="Open Gaters Certificate Outstanding Performance" Name="O-GT-O">60 points</Titles>
+      <Titles LongName="Open Barrelers Certificate Outstanding Performance" Name="O-BR-O">60 points</Titles>
       <Titles LongName="Open Agility Certificate Superior Performance" Name="S-OAC">200 points</Titles>
       <Titles LongName="Open Chances Certificate Superior Performance" Name="S-OCC" ValidFrom="2004-1-1">100 points</Titles>
       <Titles LongName="Open Gamblers Certificate Superior Performance" Name="S-OGC" ValidTo="2006-1-1">100 points</Titles>
@@ -3085,6 +3138,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Touch N Go Certificate Superior Performance" Name="S-TG-O">100 points</Titles>
       <Titles LongName="Open Weavers Certificate Superior Performance" Name="S-WV-O">100 points</Titles>
       <Titles LongName="Open Hoopers Certificate Superior Performance" Name="S-HP-O">100 points</Titles>
+      <Titles LongName="Open Gaters Certificate Superior Performance" Name="S-GT-O">100 points</Titles>
+      <Titles LongName="Open Barrelers Certificate Superior Performance" Name="S-BR-O">100 points</Titles>
       <Titles Inc="200" LongName="Elite Agility Certificate" Name="EAC" Sep="h" StartAt="400">30 points
 Extended title at 600 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Elite Chances Certificate" Name="ECC" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
@@ -3100,6 +3155,10 @@ Extended title at 300 points (repeats every 100)</Titles>
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Hoopers Certificate" Name="HP-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Elite Gaters Certificate" Name="GT-E" Sep="h" StartAt="200">30 points
+Extended title at 300 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Elite Barrelers Certificate" Name="BR-E" Sep="h" StartAt="200">30 points
+Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Certificate Outstanding Performance" Name="O-EAC">200 points</Titles>
       <Titles LongName="Elite Chances Certificate Outstanding Performance" Name="O-ECC" ValidFrom="2004-1-1">100 points</Titles>
       <Titles LongName="Elite Gamblers Certificate Outstanding Performance" Name="O-EGC" ValidTo="2006-1-1">100 points</Titles>
@@ -3108,6 +3167,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Touch N Go Certificate Outstanding Performance" Name="O-TG-E">100 points</Titles>
       <Titles LongName="Elite Weavers Certificate Outstanding Performance" Name="O-WV-E">100 points</Titles>
       <Titles LongName="Elite Hoopers Certificate Outstanding Performance" Name="O-HP-E">100 points</Titles>
+      <Titles LongName="Elite Gaters Certificate Outstanding Performance" Name="O-GT-E">100 points</Titles>
+      <Titles LongName="Elite Barrelers Certificate Outstanding Performance" Name="O-BR-E">100 points</Titles>
       <Titles LongName="Elite Agility Certificate Superior Performance" Name="S-EAC">400 points</Titles>
       <Titles LongName="Elite Chances Certificate Superior Performance" Name="S-ECC" ValidFrom="2004-1-1">200 points</Titles>
       <Titles LongName="Elite Gamblers Certificate Superior Performance" Name="S-EGC" ValidTo="2006-1-1">200 points</Titles>
@@ -3116,6 +3177,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Touch N Go Certificate Superior Performance" Name="S-TG-E">200 points</Titles>
       <Titles LongName="Elite Weavers Certificate Superior Performance" Name="S-WV-E">200 points</Titles>
       <Titles LongName="Elite Hoopers Certificate Superior Performance" Name="S-HP-E">200 points</Titles>
+      <Titles LongName="Elite Gaters Certificate Superior Performance" Name="S-GT-E">200 points</Titles>
+      <Titles LongName="Elite Barrelers Certificate Superior Performance" Name="S-BR-E">200 points</Titles>
       <Titles Inc="200" LongName="Elite Agility Skilled" Name="EAS" Sep="h" StartAt="400">30 points
 Extended title at 600 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Elite Chances Skilled" Name="ECS" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
@@ -3131,6 +3194,10 @@ Extended title at 300 points (repeats every 100)</Titles>
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Hoopers Skilled" Name="HPS-E" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Elite Gaters Skilled" Name="GTS-E" Sep="h" StartAt="200">30 points
+Extended title at 300 points (repeats every 100)</Titles>
+      <Titles Inc="100" LongName="Elite Barrelers Skilled" Name="BRS-E" Sep="h" StartAt="200">30 points
+Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Skilled Outstanding Performance" Name="O-EAS">200 points</Titles>
       <Titles LongName="Elite Chances Skilled Outstanding Performance" Name="O-ECS" ValidFrom="2004-1-1">100 points</Titles>
       <Titles LongName="Elite Gamblers Skilled Outstanding Performance" Name="O-EGS" ValidTo="2006-1-1">100 points</Titles>
@@ -3139,6 +3206,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Touch N Go Skilled Outstanding Performance" Name="O-TGS-E">100 points</Titles>
       <Titles LongName="Elite Weavers Skilled Outstanding Performance" Name="O-WVS-E">100 points</Titles>
       <Titles LongName="Elite Hoopers Skilled Outstanding Performance" Name="O-HPS-E">100 points</Titles>
+      <Titles LongName="Elite Gaters Skilled Outstanding Performance" Name="O-GTS-E">100 points</Titles>
+      <Titles LongName="Elite Barrelers Skilled Outstanding Performance" Name="O-BRS-E">100 points</Titles>
       <Titles LongName="Elite Agility Skilled Superior Performance" Name="S-EAS">400 points</Titles>
       <Titles LongName="Elite Chances Skilled Superior Performance" Name="S-ECS" ValidFrom="2004-1-1">200 points</Titles>
       <Titles LongName="Elite Gamblers Skilled Superior Performance" Name="S-EGS" ValidTo="2006-1-1">200 points</Titles>
@@ -3147,8 +3216,11 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Touch N Go Skilled Superior Performance" Name="S-TGS-E">200 points</Titles>
       <Titles LongName="Elite Weavers Skilled Superior Performance" Name="S-WVS-E">200 points</Titles>
       <Titles LongName="Elite Hoopers Skilled Superior Performance" Name="S-HPS-E">200 points</Titles>
+      <Titles LongName="Elite Gaters Skilled Superior Performance" Name="S-GTS-E">200 points</Titles>
+      <Titles LongName="Elite Barrelers Skilled Superior Performance" Name="S-BRS-E">200 points</Titles>
       <Titles LongName="NADAC Agility Trial Champion" Name="NATCH" Prefix="y" StartAt="1">Proficient Elite points: 230 Regular, 130 Chances, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Chances, 100 Jumpers points.</Titles>
       <Titles LongName="NADAC Versatility Champion" Name="Vers-NATCH" StartAt="1">Proficient Elite points: 230 Regular, 130 of each other class. Each subsequent Vers-NATCH requires an additional 200 Regular, 100 of each other class.</Titles>
+      <Titles LongName="All Around NATCH" Name="All Around NATCH" StartAt="1">NATCH, Vers-NATCH, 130 Elite Barrelers, 130 Elite Hoopers</Titles>
       <Titles LongName="Platinum NATCH" Name="Platinum NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index.</Titles>
       <Titles LongName="Platinum Versatility NATCH" Name="Platinum Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
       <Titles LongName="Purple NATCH" Name="Purple NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
@@ -3695,60 +3767,76 @@ Was called Wild Card briefly.</Desc>
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Hoopers" ShortName="ExHoopers">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Gaters" ShortName="ExGaters">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Extreme Barrel Racing" ShortName="ExBarrel">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Std Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Std Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Jr Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
       <Event Name="Beginners Agility">
@@ -4299,18 +4387,18 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Relay Champion - Gold" Name="RCH-Gold">35 qualifying scores in Masters Relay class</Titles>
       <Titles LongName="Relay Champion - Platinum" Name="RCH-Platinum">50 qualifying scores in Masters Relay class</Titles>
       <Titles LongName="Relay Champion - Diamond" Name="RCH-Diamond">100 qualifying scores in Masters Relay class</Titles>
-      <Titles LongName="MC Standard Agility Champion" Name="MCSACH">20 titling points in MC Masters Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Bronze" Name="MCSACH-Bronze">30 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Silver" Name="MCSACH-Silver">50 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Gold" Name="MCSACH-Gold">70 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Platinum" Name="MCSACH-Platinum">100 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Diamond" Name="MCSACH-Diamond">200 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Jumpers Champion" Name="MCJCH">20 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Bronze" Name="MCJCH-Bronze">30 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Silver" Name="MCJCH-Silver">50 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Gold" Name="MCJCH-Gold">70 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Platinum" Name="MCJCH-Platinum">100 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Diamond" Name="MCJCH-Diamond">200 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Standard Agility Champion" Name="MCSACH">10 titling points in MC Masters Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Bronze" Name="MCSACH-Bronze">15 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Silver" Name="MCSACH-Silver">25 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Gold" Name="MCSACH-Gold">35 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Platinum" Name="MCSACH-Platinum">50 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Standard Agility Champion - Diamond" Name="MCSACH-Diamond">100 titling points in MC Standard class</Titles>
+      <Titles LongName="MC Jumpers Champion" Name="MCJCH">10 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Bronze" Name="MCJCH-Bronze">15 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Silver" Name="MCJCH-Silver">25 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Gold" Name="MCJCH-Gold">35 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Platinum" Name="MCJCH-Platinum">50 titling points in MC Jumpers class</Titles>
+      <Titles LongName="MC Jumpers Champion - Diamond" Name="MCJCH-Diamond">100 titling points in MC Jumpers class</Titles>
       <Titles LongName="Lifetime Achievement Award Bronze" Name="LAA Bronze">150 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 15 qualifying scores in each standard and nonstandard classes.
 [Before 1/1/2007, minimums had to come from Ch]</Titles>
       <Titles LongName="Lifetime Achievement Award Silver" Name="LAA Silver">250 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 25 qualifying scores in each standard and nonstandard classes.
@@ -4398,18 +4486,18 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Performance Relay Champion - Gold" Name="PRCHG">35 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Platinum" Name="PRCHP">50 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Diamond" Name="PRCHD">100 qualifying scores in PRM</Titles>
-      <Titles LongName="MC Performance Standard Champion" Name="MCPSCH">20 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Bronze" Name="MCPSCHB">30 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Silver" Name="MCPSCHS">50 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Gold" Name="MCPSCHG">70 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Platinum" Name="MCPSCHP">100 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Diamond" Name="MCPSCHD">200 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Jumpers Champion" Name="MCPJCH">20 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Bronze" Name="MCPJCHB">30 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Silver" Name="MCPJCHS">50 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Gold" Name="MCPJCHG">70 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Platinum" Name="MCPJCHP">100 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Diamond" Name="MCPJCHD">200 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Standard Champion" Name="MCPSCH">10 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Bronze" Name="MCPSCHB">15 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Silver" Name="MCPSCHS">25 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Gold" Name="MCPSCHG">35 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Platinum" Name="MCPSCHP">50 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Standard Champion - Diamond" Name="MCPSCHD">100 qualifying scores in MC Performance Standard</Titles>
+      <Titles LongName="MC Performance Jumpers Champion" Name="MCPJCH">10 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Bronze" Name="MCPJCHB">15 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Silver" Name="MCPJCHS">25 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Gold" Name="MCPJCHG">35 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Platinum" Name="MCPJCHP">50 qualifying scores in MC Performance Jumpers</Titles>
+      <Titles LongName="MC Performance Jumpers Champion - Diamond" Name="MCPJCHD">100 qualifying scores in MC Performance Jumpers</Titles>
       <Titles LongName="Performance Tournament Master" Name="PTM">10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.
 [Before 9/22/2006] 10 qualifying scores in Performance Grand Prix of Dog Agility® tournament.</Titles>
       <Titles LongName="Performance Tournament Master - Bronze" Name="PTMB">15 qualifying scores in tournament competition with at least 3 qualifying scores in each tournament.
@@ -4517,7 +4605,11 @@ TG3 + 10 Qs in at least 5 games
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" type="TimePlusFaults">
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
@@ -4542,7 +4634,11 @@ TG3 + 10 Qs in at least 5 games
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
@@ -4579,7 +4675,11 @@ TG3 + 10 Qs in at least 5 games
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" type="TimePlusFaults">
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
@@ -4605,7 +4705,11 @@ TG3 + 10 Qs in at least 5 games
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
@@ -4865,15 +4969,23 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
         </Scoring>
       </Event>
       <Event Name="Biathlon">
-        <Desc>This tracks Master Challenge overall status for all both events.</Desc>
+        <Desc>This tracks Master Challenge overall status for both events.</Desc>
+        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2019-1-1" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-12-31" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Nationals" ValidFrom="2012-1-1" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2019-1-1" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
         <Scoring Division="Performance" Level="Nationals" ValidFrom="2012-1-1" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" type="TimePlusFaults">
-          <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
       </Event>
       <Event Name="Jokers Wild">
         <Desc>Nationals Event</Desc>
