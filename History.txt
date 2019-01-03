@@ -22,7 +22,7 @@
   - Fix crash on Mac when closing ARB.
   - Fix issue in determining upgrade status.
 
-1/1/2019: v3.2.5.105
+1/1/2019: v3.2.6.105
 - Notes:
   - Windows XP release.
 - Bumped Configuration v59:
