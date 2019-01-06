@@ -17,7 +17,7 @@ LibArchive: zlib v1.2.11: My wrapper to hide zlib
 - zlib is only compiled in the non wxWidget case.
 -- #include "LibArchive/LibArchive.h"
 
-LibFmt: fmtlib v5.2.1
+LibFmt: fmtlib v5.3.0
 .../LibFmt/
 - https://github.com/fmtlib/fmt/releases
 - http://fmtlib.net/dev/index.html
