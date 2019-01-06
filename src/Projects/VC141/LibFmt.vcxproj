@@ -98,10 +98,12 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\chrono.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\color.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\core.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\format.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\format-inl.h" />
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\locale.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\ostream.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\posix.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\printf.h" />

@@ -1632,7 +1632,7 @@ void CPointsDataItems::LoadData(
 							if (0 < allmatching.size())
 								percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(allmatching.size())) * 100;
 							fmt::wmemory_buffer strQcount;
-							fmt::format_to(strQcount, _("IDS_POINTS_QS"),
+							fmt::format_to(strQcount, _("IDS_POINTS_QS").wx_str(),
 								nCleanQ + nNotCleanQ,
 								static_cast<int>(percentQs));
 							if (0 < nCleanQ)

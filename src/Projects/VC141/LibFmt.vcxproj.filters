@@ -46,5 +46,11 @@
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\chrono.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\locale.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

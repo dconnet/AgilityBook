@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-01-06 fmt 5.3 cannot sprintf a wide string into a narrow format anymore
  * 2018-12-16 Convert to fmt.
  * 2018-04-26 Added roman numeral tests.
  * 2017-11-09 Convert from UnitTest++ to Catch
@@ -253,22 +254,6 @@ TEST_CASE("Misc")
 
 			std::string buffer = fmt::sprintf("%s", str);
 			std::wstring wbuffer = fmt::sprintf(L"%ls", wstr);
-
-			REQUIRE(str == buffer);
-			REQUIRE(wstr == wbuffer);
-		}
-	}
-
-
-	SECTION("C99PrintfToOpposite")
-	{
-		if (!g_bMicroTest)
-		{
-			std::string str("str");
-			std::wstring wstr(L"str");
-
-			std::string buffer = fmt::sprintf("%ls", wstr);
-			std::wstring wbuffer = fmt::sprintf(L"%s", str);
 
 			REQUIRE(str == buffer);
 			REQUIRE(wstr == wbuffer);
