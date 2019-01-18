@@ -76,7 +76,7 @@ bool CReadHttp::ReadHttpFile(
 		bool bCheckOnly)
 {
 	if (m_Data)
-		m_Data->erase();
+		m_Data->clear();
 	if (!m_URL || !m_URL->IsOk())
 	{
 		outErrMsg = _("Invalid URL");

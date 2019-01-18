@@ -707,7 +707,7 @@ template <typename T, typename S> T ReplaceImpl(
 		else
 		{
 			fmt::format_to(str, format, text);
-			text.erase();
+			text.clear();
 		}
 	}
 	return fmt::to_string(str);

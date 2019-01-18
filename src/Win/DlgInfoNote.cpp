@@ -360,7 +360,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 	if (wxID_OK == dlg.ShowModal())
 	{
 		int index = -1;
-		m_Select.erase();
+		m_Select.clear();
 		std::wstring name = dlg.Name();
 		// First, check if the item exists.
 		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);

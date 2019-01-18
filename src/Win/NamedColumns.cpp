@@ -180,7 +180,7 @@ bool CNamedColumns::DeleteConfig(std::wstring const& inName)
 	{
 		m_Configs.erase(iter);
 		if (inName == m_curConfig)
-			m_curConfig.erase();
+			m_curConfig.clear();
 		return true;
 	}
 	else

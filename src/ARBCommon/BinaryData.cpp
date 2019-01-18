@@ -113,7 +113,7 @@ bool BinaryData::Encode(
 		size_t inBytes,
 		std::wstring& outBase64)
 {
-	outBase64.erase();
+	outBase64.clear();
 	if (0 == inBytes)
 		return false;
 
@@ -161,7 +161,7 @@ bool BinaryData::EncodeFile(
 		std::wstring const& inFileName,
 		std::wstring& outBase64)
 {
-	outBase64.erase();
+	outBase64.clear();
 
 	bool bOk = false;
 	size_t nData = 0;
@@ -221,7 +221,7 @@ bool BinaryData::DecodeString(
 {
 	if (inBase64.empty())
 	{
-		outData.erase();
+		outData.clear();
 		return false;
 	}
 	unsigned char* data;
@@ -240,7 +240,7 @@ bool BinaryData::EncodeString(
 		std::wstring const& inData,
 		std::wstring& outBase64)
 {
-	outBase64.erase();
+	outBase64.clear();
 	if (inData.empty())
 		return false;
 	// Do not include the null terminator. Otherwise decoding includes it into

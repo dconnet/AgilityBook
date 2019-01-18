@@ -231,7 +231,7 @@ protected:
 
 bool Element::Initialize(std::wstring& outMsg)
 {
-	outMsg.erase();
+	outMsg.clear();
 #if __USE_LIBXML2
 	xmlInitParser();
 	xmlSubstituteEntitiesDefault(1);
@@ -704,7 +704,7 @@ void ElementNode::SetValue(double inValue, int inPrec)
 
 void ElementNode::clear()
 {
-	m_Name.erase();
+	m_Name.clear();
 	m_Attribs.clear();
 	m_Elements.clear();
 }
@@ -1707,7 +1707,7 @@ void ElementText::SetValue(wchar_t const* const inValue)
 	if (inValue)
 		m_Value = inValue;
 	else
-		m_Value.erase();
+		m_Value.clear();
 }
 
 

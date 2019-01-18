@@ -246,10 +246,10 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	m_VersionNum.clear();
 	m_VerConfig = 0;
 	m_size = 0;
-	m_hash.erase();
+	m_hash.clear();
 	m_hashType = ARBMsgDigest::ARBDigestUnknown;
-	m_NewFile.erase();
-	m_ConfigFileName.erase();
+	m_NewFile.clear();
+	m_ConfigFileName.clear();
 	m_InfoMsg.clear();
 	m_UpdateDownload.clear();
 	m_usernameHint = L"default";
@@ -803,7 +803,7 @@ void CUpdateInfo::CheckConfig(
 				}
 				else if (tree->GetName() == L"DefaultConfig")
 				{
-					strConfig.erase();
+					strConfig.clear();
 					ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
 					tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 					int nConfig = tree->FindElement(TREE_CONFIG);

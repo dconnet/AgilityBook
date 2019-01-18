@@ -178,7 +178,7 @@ static ElementNodePtr ReadData(
 #if !USE_TESTDATA
 	if (!http.ReadHttpFile(username, errMsg))
 	{
-		data.erase();
+		data.clear();
 	}
 #endif
 

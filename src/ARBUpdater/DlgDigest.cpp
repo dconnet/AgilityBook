@@ -172,7 +172,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		m_Size = static_cast<long>(size);
 
 		if (m_MD5.empty())
-			m_File.erase();
+			m_File.clear();
 		else
 			m_Size = static_cast<long>(size);
 	}

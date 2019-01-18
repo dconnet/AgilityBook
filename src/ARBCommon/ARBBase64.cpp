@@ -194,7 +194,7 @@ bool ARBBase64::Encode(
 		size_t inBytes,
 		std::wstring& outData)
 {
-	outData.erase();
+	outData.clear();
 	if (0 == inBytes || !inBinData || !*inBinData)
 		return false;
 	unsigned char* encoded = nullptr;

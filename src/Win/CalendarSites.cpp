@@ -505,7 +505,7 @@ std::string CPluginConfigData::Process(IProgressMeter *progress)
 	CReadHttp http(url, &data);
 	std::wstring username, errMsg;
 	if (!http.ReadHttpFile(username, errMsg, wxGetApp().GetTopWindow()))
-		data.erase();
+		data.clear();
 	return data;
 }
 
@@ -969,7 +969,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 					if (!data.empty())
 					{
 						bOk = tree->LoadXML(data.c_str(), data.length(), errMsg);
-						data.erase();
+						data.clear();
 					}
 					if (bOk)
 					{

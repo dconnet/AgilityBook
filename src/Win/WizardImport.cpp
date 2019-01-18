@@ -302,7 +302,7 @@ CWizardImport::CWizardImport(
 
 void CWizardImport::ResetData()
 {
-	m_FileName.erase();
+	m_FileName.clear();
 	m_FileData.clear();
 	m_ExcelData.clear();
 }
