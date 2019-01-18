@@ -6392,10 +6392,6 @@ msgstr "Log Entraînement"
 msgid "IDS_UPDATED_CONFIG"
 msgstr "La configuration a etais mise a jour. Voulez-vous introduire vos data?"
 
-#: Win/UpdateInfo.cpp:262 Win/UpdateInfo.cpp:777
-msgid "IDS_HELP_UPDATE"
-msgstr "http://www.agilityrecordbook.com"
-
 #: Win/UpdateInfo.cpp:287 Win/UpdateInfo.cpp:432
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Version current pas determinable."

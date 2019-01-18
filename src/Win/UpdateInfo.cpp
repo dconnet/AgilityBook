@@ -12,6 +12,9 @@
  * File Format: See below.
  *
  * Revision History
+ * 2019-01-18 Change debugging to use ARB_WWW_ROOT instead of hardcoded path.
+ *            Fix a config-only update (broken since moving to version2.xml)
+ *            Fix loading local config file.
  * 2018-12-16 Convert to fmt.
  * 2014-03-05 Change wxFileSystem usage to CLibArchive.
  * 2013-12-05 Remove "?os=..." from url (website redesign)
@@ -124,14 +127,8 @@
 #endif
 
 #include "Platform/arbWarningPush.h"
-
 #include <wx/zipstrm.h>
-
 #include "Platform/arbWarningPop.h"
-
-#ifdef _DEBUG
-#define USE_LOCAL
-#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -159,17 +156,26 @@ static wxString UpdateFile()
 #endif
 
 
-#ifdef USE_LOCAL
-static wxString FILENAME()
+static bool GetARBFilename(wxString const& filename, std::wstring& fullpath)
 {
-#ifdef __WXMSW__
-	// Why this? Just cause that's how my local system is setup.
-	return L"d:/dcon/www/agilityrecordbook/" + VersionFile();
-#else
-	return wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + VersionFile();
+	fullpath.clear();
+
+	bool bUseLocal = false;
+#ifdef _DEBUG
+	/// ARB_WWW_ROOT points to the directory where version2.xml lives.
+	wxString path;
+	if (wxGetEnv(L"ARB_WWW_ROOT", &path))
+	{
+		wxFileName file(path, filename);
+		fullpath = StringUtil::stringW(file.GetFullPath());
+		bUseLocal = true;
+	}
 #endif
+	if (!bUseLocal)
+		fullpath = fmt::format(L"http://www.agilityrecordbook.com/{}", filename);
+
+	return bUseLocal;
 }
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -259,40 +265,43 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	m_UpdateDownload = _("LinkArbDownloadUrl");
 
 	// Read the file.
-	std::wstring url(StringUtil::stringW(_("IDS_HELP_UPDATE")));
-	url += L"/" + VersionFile();
+	std::wstring url;
+	bool bUseLocal = GetARBFilename(VersionFile(), url);
 	std::string data; // must be 'char' for XML parsing
 	std::wstring errMsg;
 
-#ifdef USE_LOCAL
-	wxTextFile file;
-	if (file.Open(FILENAME()))
+	if (bUseLocal)
 	{
-		for (size_t line = 0; line < file.GetLineCount(); ++line)
+		wxTextFile file;
+		if (file.Open(url))
 		{
-			data += file[line].ToUTF8();
-			data += '\n';
+			for (size_t line = 0; line < file.GetLineCount(); ++line)
+			{
+				data += file[line].ToUTF8();
+				data += '\n';
+			}
+			file.Close();
 		}
-		file.Close();
 	}
-#else
-	CReadHttp file(url, &data);
-	std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-	if (file.ReadHttpFile(userName, errMsg, wxGetApp().GetTopWindow()))
-		CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 	else
 	{
-		if (bVerbose)
+		CReadHttp file(url, &data);
+		std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
+		if (file.ReadHttpFile(userName, errMsg, wxGetApp().GetTopWindow()))
+			CAgilityBookOptions::SetUserName(m_usernameHint, userName);
+		else
 		{
-			data = wxString(_("IDS_UPDATE_UNKNOWN")).mb_str(wxMBConvUTF8());
-			wxString tmp = StringUtil::stringWX(data);
-			if (!errMsg.empty())
-				tmp << errMsg.c_str();
-			wxMessageBox(tmp, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			if (bVerbose)
+			{
+				data = wxString(_("IDS_UPDATE_UNKNOWN")).mb_str(wxMBConvUTF8());
+				wxString tmp = StringUtil::stringWX(data);
+				if (!errMsg.empty())
+					tmp << errMsg.c_str();
+				wxMessageBox(tmp, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			}
+			return false;
 		}
-		return false;
 	}
-#endif
 
 	bool bLoadedVersion = false;
 	if (!data.empty())
@@ -415,6 +424,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					}
 					else
 					{
+						m_ConfigFileName = fmt::format(L"Config{}.txt", m_VerConfig);
 						if (ElementNode::eFound == node->GetAttrib(L"sha256", m_hash))
 							m_hashType = ARBMsgDigest::ARBDigestSHA256;
 						else if (ElementNode::eFound == node->GetAttrib(L"sha1", m_hash))
@@ -774,53 +784,74 @@ void CUpdateInfo::CheckConfig(
 		if (UpdateConfig(pDoc, msg.c_str()))
 		{
 			// Load the config.
-			std::wstring url = StringUtil::stringW(_("IDS_HELP_UPDATE"));
-			url += L"/";
-			url += m_ConfigFileName;
+			std::wstring url;
+			bool bUseLocal = GetARBFilename(m_ConfigFileName, url);
 			std::string strConfig;
 			std::wstring errMsg;
-			CReadHttp file(url, &strConfig);
-			std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-			if (file.ReadHttpFile(m_usernameHint, errMsg, wxGetApp().GetTopWindow()))
+
+			if (bUseLocal)
 			{
-				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
-				ElementNodePtr tree(ElementNode::New());
-				fmt::wmemory_buffer errMsg2;
-				bool bOk = false;
+				wxTextFile file;
+				if (file.Open(url))
 				{
-					wxBusyCursor wait;
-					bOk = tree->LoadXML(strConfig.c_str(), strConfig.length(), errMsg2);
-				}
-				if (!bOk)
-				{
-					fmt::wmemory_buffer msg2;
-					fmt::format_to(msg2, _("IDS_LOAD_FAILED").wx_str(), url);
-					if (0 < errMsg2.size())
+					for (size_t line = 0; line < file.GetLineCount(); ++line)
 					{
-						fmt::format_to(msg2, L"\n\n{}", fmt::to_string(errMsg2));
+						strConfig += file[line].ToUTF8();
+						strConfig += '\n';
 					}
-					wxMessageBox(fmt::to_string(msg2), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					file.Close();
 				}
-				else if (tree->GetName() == L"DefaultConfig")
+			}
+			else
+			{
+				CReadHttp file(url, &strConfig);
+				std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
+				if (file.ReadHttpFile(m_usernameHint, errMsg, wxGetApp().GetTopWindow()))
+					CAgilityBookOptions::SetUserName(m_usernameHint, userName);
+				else
 				{
 					strConfig.clear();
-					ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
-					tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
-					int nConfig = tree->FindElement(TREE_CONFIG);
-					if (0 <= nConfig)
+					// TODO: if (bVerbose), error msg (like above)
+					return;
+				}
+			}
+
+			ElementNodePtr tree(ElementNode::New());
+			fmt::wmemory_buffer errMsg2;
+			bool bOk = false;
+			{
+				wxBusyCursor wait;
+				bOk = tree->LoadXML(strConfig.c_str(), strConfig.length(), errMsg2);
+			}
+			if (!bOk)
+			{
+				fmt::wmemory_buffer msg2;
+				fmt::format_to(msg2, _("IDS_LOAD_FAILED").wx_str(), url);
+				if (0 < errMsg2.size())
+				{
+					fmt::format_to(msg2, L"\n\n{}", fmt::to_string(errMsg2));
+				}
+				wxMessageBox(fmt::to_string(msg2), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			}
+			else if (tree->GetName() == L"DefaultConfig")
+			{
+				strConfig.clear();
+				ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
+				tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
+				int nConfig = tree->FindElement(TREE_CONFIG);
+				if (0 <= nConfig)
+				{
+					CErrorCallback err;
+					ARBAgilityRecordBook book;
+					if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 					{
-						CErrorCallback err;
-						ARBAgilityRecordBook book;
-						if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
-						{
-							if (0 < err.m_ErrMsg.size())
-								wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
-						}
-						else
-						{
-							if (pDoc->ImportConfiguration(book.GetConfig()))
-								pDoc->Modify(true);
-						}
+						if (0 < err.m_ErrMsg.size())
+							wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+					}
+					else
+					{
+						if (pDoc->ImportConfiguration(book.GetConfig()))
+							pDoc->Modify(true);
 					}
 				}
 			}
