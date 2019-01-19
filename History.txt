@@ -1,3 +1,9 @@
+1/19/2019: v3.2.7.107
+- Bumped Configuration v60:
+  - Fix lifetime points in NADAC extreme games.
+- Bug fixes:
+  - Fix config only update (broken since version.txt to version2.xml transition)
+
 1/1/2019: v3.2.6.105
 - Notes:
   - Only released for Windows, specifically XP

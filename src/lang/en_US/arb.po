@@ -6282,10 +6282,6 @@ msgstr ""
 "The configuration has been updated. Would you like to merge the new one with "
 "your data?"
 
-#: Win/UpdateInfo.cpp:261 Win/UpdateInfo.cpp:774
-msgid "IDS_HELP_UPDATE"
-msgstr "http://www.agilityrecordbook.com"
-
 #: Win/UpdateInfo.cpp:286 Win/UpdateInfo.cpp:430
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Unable to determine current released version."
