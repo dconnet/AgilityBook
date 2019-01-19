@@ -87,6 +87,7 @@ Create the files to be distributed (make sure you archive them too)
 
 GitHub:
 - Create release on vn.n.n branch
+  - Create tag "release/vn.n.n" (to avoid branch name ambiguity)
   - Use History to create release notes, these will be the same as the announcement below.
   - AgilityBook-n_n_n_n-src.zip
   - AgilityBook-n_n_n_n-win.msi
@@ -113,12 +114,12 @@ Web Site:
 - Delete old zip files.
 
 In Yahoo
-- Note: Files are no longer released on Yahoo (as of v1.8)
 - Send an email announcing new release - send as a 'Special Notice' from Yahoo.
 
 Backup:
 - Backup development directory onto CD.
   - Remove unnecessary files (build relics, leave .git - complete backup!)
+  - (Note: Could just expand the src.zip file)
 
 Prepare for next release:
 - Switch back to master

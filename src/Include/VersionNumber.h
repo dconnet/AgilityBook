@@ -36,7 +36,7 @@
 
 #define ARB_VER_MAJOR					3
 #define ARB_VER_MINOR					3
-#define ARB_VER_DOT						1
+#define ARB_VER_DOT						2
 #define ARB_VER_BUILD					108
 
 #define ARB_VER_STR_MAJOR				STR(ARB_VER_MAJOR)
