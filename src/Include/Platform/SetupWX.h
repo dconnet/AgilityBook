@@ -171,7 +171,7 @@
  * Macros to enable easy first control focus.
  */
 #define DECLARE_ON_INIT() \
-		wxWindow* m_Focus; \
+		wxWindow* m_Focus = nullptr; \
 		void OnInit(wxInitDialogEvent& evt);
 #define IMPLEMENT_ON_INIT(cls, ctrl) \
 		{ \

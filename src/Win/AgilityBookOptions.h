@@ -47,6 +47,13 @@ struct CFontInfo
 	int size;
 	bool italic;
 	bool bold;
+	CFontInfo()
+		: name()
+		, size(0)
+		, italic(false)
+		, bold(false)
+	{
+	}
 	void CreateFont(wxFont& font);
 	void CreateFont(
 			wxFontDialog& dlg,

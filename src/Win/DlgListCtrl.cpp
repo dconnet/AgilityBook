@@ -401,6 +401,13 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_pTabView(pTabView)
 	, m_pConfig(nullptr)
 	, m_pRun()
+	, m_imgTentative(-1)
+	, m_imgPlan(-1)
+	, m_imgPlanTentative(-1)
+	, m_imgPending(-1)
+	, m_imgPendingTentative(-1)
+	, m_imgEntered(-1)
+	, m_imgEnteredTentative(-1)
 {
 	Create(StringUtil::stringW(_("IDS_CALENDAR")), pParent, true);
 	m_ctrlCreateTrial->Show();
@@ -444,6 +451,13 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_pTabView(nullptr)
 	, m_pConfig(nullptr)
 	, m_pRun(inRun)
+	, m_imgTentative(-1)
+	, m_imgPlan(-1)
+	, m_imgPlanTentative(-1)
+	, m_imgPending(-1)
+	, m_imgPendingTentative(-1)
+	, m_imgEntered(-1)
+	, m_imgEnteredTentative(-1)
 {
 	int nCols = 0;
 	std::vector<CDlgListCtrlDataPtr> items;
@@ -499,6 +513,13 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_pTabView(nullptr)
 	, m_pConfig(&pConfig)
 	, m_pRun(inRun)
+	, m_imgTentative(-1)
+	, m_imgPlan(-1)
+	, m_imgPlanTentative(-1)
+	, m_imgPending(-1)
+	, m_imgPendingTentative(-1)
+	, m_imgEntered(-1)
+	, m_imgEnteredTentative(-1)
 {
 	Create(StringUtil::stringW(_("IDS_OTHERPOINTS")), pParent, false);
 

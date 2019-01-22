@@ -32,6 +32,24 @@
 
 
 CIconList::CIconList()
+	: m_idxEmpty(-1)
+	, m_idxARB(-1)
+	, m_idxDog(-1)
+	, m_idxTrial(-1)
+	, m_idxRun(-1)
+	, m_idxVenueAAC(-1)
+	, m_idxVenueAKC(-1)
+	, m_idxVenueASCA(-1)
+	, m_idxVenueCKC(-1)
+	, m_idxVenueCPE(-1)
+	, m_idxVenueDOCNA(-1)
+	, m_idxVenueNADAC(-1)
+	, m_idxVenueSweep(-1)
+	, m_idxVenueTDAA(-1)
+	, m_idxVenueUKC(-1)
+	, m_idxVenueUSDAA(-1)
+	, m_idxVenueFCI(-1)
+	, m_idxVenueSCC(-1)
 {
 }
 

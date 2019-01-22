@@ -1111,6 +1111,7 @@ CDlgListViewer::CDlgListViewer(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
+	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1199,6 +1200,7 @@ CDlgListViewer::CDlgListViewer(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
+	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1252,6 +1254,7 @@ CDlgListViewer::CDlgListViewer(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
+	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1311,6 +1314,7 @@ CDlgListViewer::CDlgListViewer(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
+	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1348,6 +1352,7 @@ CDlgListViewer::CDlgListViewer(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
+	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {
@@ -1384,6 +1389,7 @@ CDlgListViewer::CDlgListViewer(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
+	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
 {

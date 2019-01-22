@@ -114,6 +114,12 @@ struct CFindItemInfo
 	ARBInfo::eInfoType type;
 	std::wstring name;
 	ARBInfoItemPtr pItem;
+	CFindItemInfo()
+		: type(ARBInfo::eClubInfo)
+		, name()
+		, pItem()
+	{
+	}
 };
 
 

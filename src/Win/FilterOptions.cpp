@@ -142,6 +142,20 @@ CFilterOptions& CFilterOptions::Options()
 
 
 CFilterOptions::CFilterOptions()
+	: m_calView()
+	, m_bAllDates(false)
+	, m_bStartDate(false)
+	, m_dateStartDate()
+	, m_bEndDate(false)
+	, m_dateEndDate()
+	, m_bViewAllVenues(false)
+	, m_venueFilter()
+	, m_eRuns(eViewRunsAll)
+	, m_bViewAllNames(false)
+	, m_nameFilter()
+	, m_curFilter()
+	, m_nFilters(0)
+	, m_filters()
 {
 	Load();
 }
