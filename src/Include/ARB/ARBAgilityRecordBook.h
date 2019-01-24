@@ -281,7 +281,7 @@ public:
 	} FileInfoType;
 	std::wstring GetFileInfo(FileInfoType type) const
 	{
-		if ((size_t)type < m_FileInfo.size())
+		if (static_cast<size_t>(type) < m_FileInfo.size())
 			return m_FileInfo[type];
 		return std::wstring();
 	}

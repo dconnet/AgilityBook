@@ -191,7 +191,7 @@ bool ARBAgilityRecordBook::Load(
 		return false;
 	}
 
-	m_FileInfo.insert(m_FileInfo.end(), (size_t)fileInfoMax, std::wstring());
+	m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(fileInfoMax), std::wstring());
 	inTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[fileInfoBook]);
 	inTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[fileInfoVersion]);
 	inTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[fileInfoPlatform]);
@@ -262,10 +262,9 @@ bool ARBAgilityRecordBook::Load(
 	if (inConfig)
 	{
 		bLoaded = true;
-		int i;
 		int nConfig = -1;
 		// Find a configuration.
-		for (i = 0; i < inTree->GetElementCount(); ++i)
+		for (int i = 0; i < inTree->GetElementCount(); ++i)
 		{
 			ElementNodePtr element = inTree->GetElementNode(i);
 			if (!element)
@@ -298,7 +297,7 @@ bool ARBAgilityRecordBook::Load(
 		if (inDogs)
 		{
 			// Now load the rest
-			for (i = 0; i < inTree->GetElementCount(); ++i)
+			for (int i = 0; i < inTree->GetElementCount(); ++i)
 			{
 				ElementNodePtr element = inTree->GetElementNode(i);
 				if (!element)
@@ -341,7 +340,7 @@ static std::wstring GetTimeStamp()
 #else
 	pTime = localtime(&t);
 #endif
-	wchar_t szBuffer[128]; // as defined by VC9 ATL::maxTimeBufferSize
+	wchar_t szBuffer[128] = {0}; // as defined by VC9 ATL::maxTimeBufferSize
 	if (!pTime || !wcsftime(szBuffer, 128, L"%Y-%m-%d %H:%M:%S", pTime))
 	{
 		szBuffer[0] = '\0';
@@ -376,7 +375,7 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr const& outTree,
 
 	// Refresh cached "write-only" file info
 	if (m_FileInfo.empty()) // A new file didn't initialize this
-		m_FileInfo.insert(m_FileInfo.end(), (size_t)fileInfoMax, std::wstring());
+		m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(fileInfoMax), std::wstring());
 	outTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[fileInfoBook]);
 	outTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[fileInfoVersion]);
 	outTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[fileInfoPlatform]);

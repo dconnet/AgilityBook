@@ -34,6 +34,9 @@ public:
 		, m_Version()
 	{
 	}
+	~CVersionNum()
+	{
+	}
 	CVersionNum(
 			unsigned short inMajor,
 			unsigned short inMinor,
@@ -54,12 +57,28 @@ public:
 		, m_Version(rhs.m_Version)
 	{
 	}
+	CVersionNum(CVersionNum&& rhs)
+		: m_Valid(rhs.m_Valid)
+		, m_Version(rhs.m_Version)
+	{
+		rhs.clear();
+	}
 	CVersionNum& operator=(CVersionNum const& rhs)
 	{
 		if (this != &rhs)
 		{
 			m_Valid = rhs.m_Valid;
 			m_Version = rhs.m_Version;
+		}
+		return *this;
+	}
+	CVersionNum& operator=(CVersionNum&& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_Valid = rhs.m_Valid;
+			m_Version = rhs.m_Version;
+			rhs.clear();
 		}
 		return *this;
 	}

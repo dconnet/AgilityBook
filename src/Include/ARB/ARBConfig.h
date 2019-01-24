@@ -54,11 +54,13 @@ class ARBConfig
 {
 	// We allow copying, but not assignment. Updating a config object is
 	// accomplished via the Update() method.
-	ARBConfig& operator=(ARBConfig const& rhs); // not implemented
+	ARBConfig& operator=(ARBConfig const& rhs) = delete;
+	ARBConfig& operator=(ARBConfig&& rhs) = delete;
 public:
 	ARBConfig();
 	~ARBConfig();
 	ARBConfig(ARBConfig const& rhs);
+	ARBConfig(ARBConfig&& rhs);
 	bool operator==(ARBConfig const& rhs) const;
 	bool operator!=(ARBConfig const& rhs) const
 	{
@@ -126,7 +128,7 @@ public:
 	 * @param inHandler Interface to deal with platform specific resource issues
 	 * @param pVersion Version number of default config.
 	 */
-	void Default(IARBConfigHandler* inHandler, ARBVersion* pVersion = NULL);
+	void Default(IARBConfigHandler* inHandler, ARBVersion* pVersion = nullptr);
 
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)

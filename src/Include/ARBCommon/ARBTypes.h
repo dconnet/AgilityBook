@@ -114,6 +114,13 @@ public:
 #endif
 		return pt;
 	}
+
+private:
+	CLocaleWrapper() = delete;
+	CLocaleWrapper(CLocaleWrapper const&) = delete;
+	CLocaleWrapper(CLocaleWrapper&&) = delete;
+	CLocaleWrapper& operator=(CLocaleWrapper const&) = delete;
+	CLocaleWrapper& operator=(CLocaleWrapper&&) = delete;
 };
 
 
@@ -122,8 +129,12 @@ public:
  */
 class ARBDouble
 {
-	ARBDouble();
-	~ARBDouble();
+	ARBDouble() = delete;
+	~ARBDouble() = delete;
+	ARBDouble(ARBDouble const&) = delete;
+	ARBDouble(ARBDouble&&) = delete;
+	ARBDouble& operator=(ARBDouble const&) = delete;
+	ARBDouble& operator=(ARBDouble&&) = delete;
 public:
 	/// How to handle trailing zeros
 	enum ZeroStrip
@@ -183,13 +194,32 @@ public:
 	{
 	}
 
+	ARBVersion(ARBVersion&& inVer)
+		: m_Version(inVer.m_Version)
+	{
+		inVer.clear();
+	}
+
 	ARBVersion(std::wstring inStr);
+
+	~ARBVersion()
+	{
+	}
 
 	ARBVersion& operator=(ARBVersion const& rhs)
 	{
 		if (this != &rhs)
 		{
 			m_Version = rhs.m_Version;
+		}
+		return *this;
+	}
+	ARBVersion& operator=(ARBVersion&& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_Version = rhs.m_Version;
+			rhs.clear();
 		}
 		return *this;
 	}

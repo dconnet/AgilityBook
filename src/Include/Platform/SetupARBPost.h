@@ -90,3 +90,22 @@
 #define WM_DPICHANGED		0x02E0
 #endif
 #endif
+
+// When turning on VS2017's static analysis (All Rules!), there's a few warnings
+// we're just not going to deal with at this time.
+#ifdef _MSC_VER
+
+#pragma warning (disable : 26429) // Symbol '<var>' is never tested for nullness, it can be marked as not_null (f.23).
+#pragma warning (disable : 26439) // This kind of function may not throw. Declare it 'noexcept' (f.6).
+#pragma warning (disable : 26440) // Function '<func>' can be declared 'noexcept' (f.6).
+#pragma warning (disable : 26446) // Prefer to use gsl::at() instead of unchecked subscript operator (bounds.4).
+#pragma warning (disable : 26451) // Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).
+#pragma warning (disable : 26455) // Default constructor may not throw. Declare it 'noexcept' (f.6).
+#pragma warning (disable : 26462) // The value pointed to by '<var>' is assigned only once, mark it as a pointer to const (con.4).
+#pragma warning (disable : 26472) // Don't use a static_cast for arithmetic conversions. Use brace initialization, gsl::narrow_cast or gsl::narrow (type.1).
+#pragma warning (disable : 26481) // Don't use pointer arithmetic. Use span instead (bounds.1).
+#pragma warning (disable : 26482) // Only index into arrays using constant expressions (bounds.2).
+#pragma warning (disable : 26485) // Expression '<var>': No array to pointer decay (bounds.3).
+#pragma warning (disable : 26496) // The variable '<var>' is assigned only once, mark it as const (con.4).
+
+#endif

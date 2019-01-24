@@ -74,6 +74,10 @@ public:
 	ARB_Q(ARB_Q const& rhs) : m_Q(rhs.m_Q)
 	{
 	}
+	ARB_Q(ARB_Q&& rhs) : m_Q(rhs.m_Q)
+	{
+		rhs.m_Q = eQ_UNK;
+	}
 	~ARB_Q()
 	{
 	}
@@ -82,6 +86,15 @@ public:
 	{
 		if (this != &rhs)
 			m_Q = rhs.m_Q;
+		return *this;
+	}
+	ARB_Q& operator=(ARB_Q&& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_Q = rhs.m_Q;
+			rhs.m_Q = eQ_UNK;
+		}
 		return *this;
 	}
 	bool operator==(ARB_Q const& rhs) const

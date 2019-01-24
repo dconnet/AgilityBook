@@ -42,6 +42,10 @@ class ARBCalcPoints
 {
 protected:
 	ARBCalcPoints();
+	ARBCalcPoints(ARBCalcPoints const&) = delete;
+	ARBCalcPoints(ARBCalcPoints&&) = delete;
+	ARBCalcPoints& operator=(ARBCalcPoints const&) = delete;
+	ARBCalcPoints& operator=(ARBCalcPoints&&) = delete;
 
 public:
 	virtual ~ARBCalcPoints();

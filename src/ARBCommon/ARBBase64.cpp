@@ -136,9 +136,8 @@ bool ARBBase64::Decode(
 		if (count % 4 == 0) //we have 3 more real chars...
 		{
 			//put std in the next 3 chars in finalresult
-			int tmp;
 			std >>= 6;
-			tmp = std;
+			int tmp = std;
 			tmp >>= 16;
 			tmp &= 0xFF;
 			*(result++) = static_cast<unsigned char>(tmp);
@@ -164,9 +163,8 @@ bool ARBBase64::Decode(
 			std <<= 6;
 		size_t nBits = (count % 4) * 6;
 		outBytes += nBits / 8;
-		int tmp;
 		std >>= 6;
-		tmp = std;
+		int tmp = std;
 		tmp >>= 16;
 		tmp &= 0xFF;
 		*(result++) = static_cast<unsigned char>(tmp);

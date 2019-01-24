@@ -101,6 +101,11 @@ public:
 		: m_Julian(rhs.m_Julian)
 	{
 	}
+	ARBDate(ARBDate&& rhs)
+		: m_Julian(rhs.m_Julian)
+	{
+		rhs.clear();
+	}
 	explicit ARBDate(time_t inTime);
 #if defined(__WXWINDOWS__)
 	ARBDate(wxDateTime const& inTime)
@@ -179,6 +184,15 @@ public:
 		if (this != &rhs)
 		{
 			m_Julian = rhs.m_Julian;
+		}
+		return *this;
+	}
+	ARBDate& operator=(ARBDate&& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_Julian = rhs.m_Julian;
+			rhs.clear();
 		}
 		return *this;
 	}

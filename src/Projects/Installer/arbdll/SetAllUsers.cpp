@@ -71,11 +71,11 @@ static void SetAllUserDefaults(
 // Both sequences, run before FindRelatedProducts (ALLUSERS influences FRP)
 extern "C" UINT __stdcall ARBSetAllUsers(MSIHANDLE hInstall)
 {
-	UINT rc;
+	UINT rc = ERROR_SUCCESS;
 	LogMessage(hInstall, L"==== ARBSetAllUsers");
 
 	// Get the installers UpgradeCode
-	WCHAR upgradeCode[cchGUID+1];
+	WCHAR upgradeCode[cchGUID+1] = {0};
 	DWORD buflen = _countof(upgradeCode);
 	if (ERROR_SUCCESS != (rc = MsiGetProperty(hInstall, L"UpgradeCode", upgradeCode, &buflen)))
 	{

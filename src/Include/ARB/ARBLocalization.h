@@ -36,8 +36,11 @@
  */
 class IARBLocalization
 {
+	IARBLocalization() = delete;
+	DECLARE_NO_COPY_IMPLEMENTED(IARBLocalization)
 public:
 	static void Init(IARBLocalization const* pLocalization);
+	virtual ~IARBLocalization() {}
 
 	// Used when loading data.
 	virtual std::wstring UnknownVersion() const = 0;

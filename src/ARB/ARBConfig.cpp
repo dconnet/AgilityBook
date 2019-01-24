@@ -66,27 +66,26 @@ ARBConfig::ARBConfig(ARBConfig const& rhs)
 }
 
 
+ARBConfig::ARBConfig(ARBConfig&& rhs)
+	: m_bUpdate(rhs.m_bUpdate)
+	, m_Version(rhs.m_Version)
+	, m_CalSites(rhs.m_CalSites)
+	, m_Actions()
+	, m_Venues()
+	, m_FaultTypes()
+	, m_OtherPoints()
+{
+	m_Actions = std::move(rhs.m_Actions);
+	m_Venues = std::move(rhs.m_Venues);
+	m_FaultTypes = std::move(rhs.m_FaultTypes);
+	m_OtherPoints = std::move(rhs.m_OtherPoints);
+}
+
+
 ARBConfig::~ARBConfig()
 {
 	clear();
 }
-
-
-/*
-ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
-{
-	if (this != &rhs)
-	{
-		m_bUpdate = rhs.m_bUpdate;
-		m_Version = rhs.m_Version;
-		rhs.m_Actions.Clone(m_Actions);
-		rhs.m_Venues.Clone(m_Venues);
-		rhs.m_FaultTypes.Clone(m_FaultTypes);
-		rhs.m_OtherPoints.Clone(m_OtherPoints);
-	}
-	return *this;
-}
-*/
 
 
 bool ARBConfig::operator==(ARBConfig const& rhs) const

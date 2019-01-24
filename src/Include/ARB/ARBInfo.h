@@ -40,7 +40,9 @@ public:
 	ARBInfo();
 	~ARBInfo();
 	ARBInfo(ARBInfo const& rhs);
+	ARBInfo(ARBInfo&& rhs);
 	ARBInfo& operator=(ARBInfo const& rhs);
+	ARBInfo& operator=(ARBInfo&& rhs);
 
 	bool operator==(ARBInfo const& rhs) const;
 	bool operator!=(ARBInfo const& rhs) const

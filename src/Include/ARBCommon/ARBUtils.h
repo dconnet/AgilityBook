@@ -29,6 +29,13 @@ class CConfigPathHelper
 public:
 	CConfigPathHelper(wxString const& key);
 	~CConfigPathHelper();
+
+private:
+	CConfigPathHelper() = delete;
+	CConfigPathHelper(CConfigPathHelper const&) = delete;
+	CConfigPathHelper(CConfigPathHelper&&) = delete;
+	CConfigPathHelper& operator=(CConfigPathHelper const&) = delete;
+	CConfigPathHelper& operator=(CConfigPathHelper&&) = delete;
 };
 
 
@@ -97,6 +104,12 @@ private:
 	DWORD fTics;
 	DWORD fTickle;
 	static int fIndent;
+
+	CStackTracer() = delete;
+	CStackTracer(CStackTracer const&) = delete;
+	CStackTracer(CStackTracer&&) = delete;
+	CStackTracer& operator=(CStackTracer const&) = delete;
+	CStackTracer& operator=(CStackTracer&&) = delete;
 };
 
 #define STACK_TRACE(name, msg)	CStackTracer name(msg)

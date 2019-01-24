@@ -63,11 +63,11 @@ std::wstring ARBDouble::ToString(
 #if defined(__WXWINDOWS__) && !USE_CRT
 	std::unique_ptr<wxLocale> locale;
 	if (!bUseCurrentLocale)
-		locale.reset(new wxLocale(wxLANGUAGE_ENGLISH_US, wxLOCALE_DONT_LOAD_DEFAULT));
+		locale = std::make_unique<wxLocale>(wxLANGUAGE_ENGLISH_US, wxLOCALE_DONT_LOAD_DEFAULT);
 #else
 	std::unique_ptr<CLocaleWrapper> locale;
 	if (!bUseCurrentLocale)
-		locale.reset(new CLocaleWrapper(LC_NUMERIC, "C"));
+		locale = std::make_unique<CLocaleWrapper>(LC_NUMERIC, "C");
 #endif
 
 	if (0 < inPrec)

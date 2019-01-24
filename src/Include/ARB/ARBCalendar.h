@@ -34,7 +34,11 @@ class ICalendar
 {
 protected:
 	ICalendar();
-	virtual ~ICalendar();
+	~ICalendar();
+	ICalendar(ICalendar const&) = delete;
+	ICalendar(ICalendar&&) = delete;
+	ICalendar& operator=(ICalendar const&) = delete;
+	ICalendar& operator=(ICalendar&&) = delete;
 
 public:
 	/**
@@ -95,6 +99,7 @@ public:
 protected:
 	ARBCalendar();
 	ARBCalendar(ARBCalendar const& rhs);
+	ARBCalendar(ARBCalendar&& rhs);
 
 public:
 	~ARBCalendar();
@@ -102,6 +107,7 @@ public:
 	ARBCalendarPtr Clone() const;
 
 	ARBCalendar& operator=(ARBCalendar const& rhs);
+	ARBCalendar& operator=(ARBCalendar&& rhs);
 
 	bool operator==(ARBCalendar const& rhs) const;
 	bool operator!=(ARBCalendar const& rhs) const

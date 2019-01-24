@@ -160,7 +160,7 @@ public:
 	{
 	}
 
-	virtual size_t OnSysRead(void* buffer, size_t size)
+	size_t OnSysRead(void* buffer, size_t size) override
 	{
 		size_t count = 0;
 		if (m_stream.good())
@@ -197,7 +197,7 @@ public:
 	{
 	}
 
-	virtual size_t OnSysWrite(const void* buffer, size_t size)
+	size_t OnSysWrite(const void* buffer, size_t size) override
 	{
 		size_t count = 0;
 		if (m_stream.good())
@@ -551,17 +551,30 @@ static void LogMessage(fmt::wmemory_buffer& msg)
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ElementNode_concrete : public ElementNode
+	{
+	public:
+		ElementNode_concrete()
+		{
+		}
+		ElementNode_concrete(std::wstring const& inName) : ElementNode(inName)
+		{
+		}
+	};
+}
+
+
 ElementNodePtr ElementNode::New()
 {
-	ElementNodePtr pNode(new ElementNode());
-	return pNode;
+	return std::make_shared<ElementNode_concrete>();
 }
 
 
 ElementNodePtr ElementNode::New(std::wstring const& inText)
 {
-	ElementNodePtr pNode(new ElementNode(inText));
-	return pNode;
+	return std::make_shared<ElementNode_concrete>(inText);
 }
 
 
@@ -1089,12 +1102,6 @@ ElementNodePtr ElementNode::GetElementNode(int inIndex)
 
 ElementNodePtr ElementNode::GetNthElementNode(int inIndex) const
 {
-	return const_cast<ElementNode*>(this)->GetNthElementNode(inIndex);
-}
-
-
-ElementNodePtr ElementNode::GetNthElementNode(int inIndex)
-{
 	int index = -1;
 	int nElements = static_cast<int>(m_Elements.size());
 	for (int iElement = 0; iElement < nElements; ++iElement)
@@ -1107,6 +1114,14 @@ ElementNodePtr ElementNode::GetNthElementNode(int inIndex)
 		}
 	}
 	return ElementNodePtr();
+
+}
+
+
+ElementNodePtr ElementNode::GetNthElementNode(int inIndex)
+{
+	ElementNode const* constThis = this;
+	return constThis->GetNthElementNode(inIndex);
 }
 
 
@@ -1114,7 +1129,7 @@ ElementNodePtr ElementNode::AddElementNode(
 		std::wstring const& inName,
 		int inAt)
 {
-	size_t index;
+	size_t index = 0;
 	std::vector<ElementPtr>::iterator iter = m_Elements.begin();
 	if (0 < inAt)
 	{
@@ -1138,7 +1153,7 @@ ElementTextPtr ElementNode::AddElementText(
 		int inAt)
 {
 	assert(0 == m_Value.length());
-	size_t index;
+	size_t index = 0;
 	std::vector<ElementPtr>::iterator iter = m_Elements.begin();
 	if (0 < inAt)
 	{
@@ -1634,17 +1649,30 @@ bool ElementNode::SaveXML(
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace
+{
+	class ElementText_concrete : public ElementText
+	{
+	public:
+		ElementText_concrete()
+		{
+		}
+		ElementText_concrete(std::wstring const& inText) : ElementText(inText)
+		{
+		}
+	};
+}
+
+
 ElementTextPtr ElementText::New()
 {
-	ElementTextPtr pText(new ElementText());
-	return pText;
+	return std::make_shared<ElementText_concrete>();
 }
 
 
 ElementTextPtr ElementText::New(std::wstring const& inText)
 {
-	ElementTextPtr pText(new ElementText(inText));
-	return pText;
+	return std::make_shared<ElementText_concrete>(inText);
 }
 
 

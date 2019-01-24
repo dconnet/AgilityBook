@@ -50,6 +50,10 @@ class Element
 {
 protected:
 	Element();
+	Element(Element const&) = delete;
+	Element(Element&&) = delete;
+	Element& operator=(Element const&) = delete;
+	Element& operator=(Element&&) = delete;
 
 public:
 	/**
@@ -122,7 +126,7 @@ public:
 
 class ElementNode : public Element
 {
-private:
+protected:
 	ElementNode();
 	ElementNode(std::wstring const& inName);
 	DECLARE_NO_COPY_IMPLEMENTED(ElementNode);
@@ -131,18 +135,18 @@ public:
 	static ElementNodePtr New();
 	static ElementNodePtr New(std::wstring const& inName);
 
-	virtual void Dump(int inLevel = 0) const;
-	virtual Element::ElementType GetType() const;
-	virtual std::wstring const& GetName() const;
-	virtual void SetName(std::wstring const& inName);
-	virtual std::wstring GetValue() const;
-	virtual void SetValue(std::wstring const& inValue);
-	virtual void SetValue(wchar_t const* const inValue);
-	virtual void SetValue(short inValue);
-	virtual void SetValue(unsigned short inValue);
-	virtual void SetValue(long inValue);
-	virtual void SetValue(unsigned long inValue);
-	virtual void SetValue(double inValue, int inPrec = 2);
+	void Dump(int inLevel = 0) const override;
+	Element::ElementType GetType() const override;
+	std::wstring const& GetName() const override;
+	void SetName(std::wstring const& inName) override;
+	std::wstring GetValue() const override;
+	void SetValue(std::wstring const& inValue) override;
+	void SetValue(wchar_t const* const inValue) override;
+	void SetValue(short inValue) override;
+	void SetValue(unsigned short inValue) override;
+	void SetValue(long inValue) override;
+	void SetValue(unsigned long inValue) override;
+	void SetValue(double inValue, int inPrec = 2) override;
 
 	/**
 	 * Clear the name, value, attributes, and subelements (everything!).
@@ -460,7 +464,7 @@ protected:
 
 class ElementText : public Element
 {
-private:
+protected:
 	ElementText();
 	ElementText(std::wstring const& inText);
 	DECLARE_NO_COPY_IMPLEMENTED(ElementText);
@@ -469,18 +473,18 @@ public:
 	static ElementTextPtr New();
 	static ElementTextPtr New(std::wstring const& inText);
 
-	virtual void Dump(int inLevel = 0) const;
-	virtual Element::ElementType GetType() const;
-	virtual std::wstring const& GetName() const;
-	virtual void SetName(std::wstring const& inName);
-	virtual std::wstring GetValue() const;
-	virtual void SetValue(std::wstring const& inValue);
-	virtual void SetValue(wchar_t const* const inValue);
-	virtual void SetValue(short inValue);
-	virtual void SetValue(unsigned short inValue);
-	virtual void SetValue(long inValue);
-	virtual void SetValue(unsigned long inValue);
-	virtual void SetValue(double inValue, int inPrec = 2);
+	void Dump(int inLevel = 0) const override;
+	Element::ElementType GetType() const override;
+	std::wstring const& GetName() const override;
+	void SetName(std::wstring const& inName) override;
+	std::wstring GetValue() const override;
+	void SetValue(std::wstring const& inValue) override;
+	void SetValue(wchar_t const* const inValue) override;
+	void SetValue(short inValue) override;
+	void SetValue(unsigned short inValue) override;
+	void SetValue(long inValue) override;
+	void SetValue(unsigned long inValue) override;
+	void SetValue(double inValue, int inPrec = 2) override;
 
 protected:
 	std::wstring m_Value;

@@ -136,12 +136,16 @@
 #define DECLARE_NO_COPY_IMPLEMENTED(cls) \
 	private: \
 		cls(cls const&) = delete; \
-		cls& operator=(cls const&) = delete;
+		cls(cls&&) = delete; \
+		cls& operator=(cls const&) = delete; \
+		cls& operator=(cls&&) = delete;
 #else
 #define DECLARE_NO_COPY_IMPLEMENTED(cls) \
 	private: \
 		cls(cls const&); \
-		cls& operator=(cls const&);
+		cls(cls&&); \
+		cls& operator=(cls const&); \
+		cls& operator=(cls&&);
 #endif
 
 

@@ -111,5 +111,10 @@ public:
 
 protected:
 	bool m_bFiltered[eNumFilters];
+
+	ARBBase(ARBBase const&) = delete;
+	ARBBase(ARBBase&&) = delete;
+	ARBBase& operator=(ARBBase const&) = delete;
+	ARBBase& operator=(ARBBase&&) = delete;
 };
 typedef std::shared_ptr<ARBBase> ARBBasePtr;

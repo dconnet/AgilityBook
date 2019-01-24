@@ -123,8 +123,8 @@ static long int GregorianToSdn(
 		int inputMonth,
 		int inputDay)
 {
-	int year;
-	int month;
+	int year = 0;
+	int month = 0;
 
 	/* check for invalid dates */
 	if (inputYear == 0 || inputYear < -4714
@@ -458,12 +458,12 @@ void ARBDate::GetDate(
 
 bool ARBDate::GetDate(time_t& outTime) const
 {
-	outTime = (time_t)-1;
+	outTime = static_cast<time_t>(-1);
 	if (0 < m_Julian)
 	{
 		int yr, mon, day;
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
-		struct tm tim;
+		struct tm tim = {0};
 		// This initializes tm_isdst properly.
 		time_t inTime = time(nullptr);
 #if defined(ARB_HAS_SECURE_LOCALTIME)
@@ -495,7 +495,7 @@ bool ARBDate::GetDate(time_t& outTime) const
 			outTime = mktime(&tim);
 		}
 	}
-	return outTime != (time_t)-1;
+	return outTime != static_cast<time_t>(-1);
 }
 
 
@@ -528,7 +528,7 @@ bool ARBDate::GetDate(wxDateTime& outDate) const
 		return false;
 	int yr, mon, day;
 	GetDate(yr, mon, day);
-	outDate.Set((wxDateTime::wxDateTime_t)day, (wxDateTime::Month)(mon - 1), yr);
+	outDate.Set(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon - 1), yr);
 	return true;
 }
 #endif

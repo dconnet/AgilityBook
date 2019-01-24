@@ -535,7 +535,7 @@ int CompareNoCase(std::wstring const& inStr1, std::wstring const& inStr2)
 	// WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 	if (UseCompareString())
 	{
-		switch (CompareStringW(LOCALE_USER_DEFAULT, NORM_IGNORECASE | SORT_DIGITSASNUMBERS, inStr1.c_str(), (int)inStr1.length(), inStr2.c_str(), (int)inStr2.length()))
+		switch (CompareStringW(LOCALE_USER_DEFAULT, NORM_IGNORECASE | SORT_DIGITSASNUMBERS, inStr1.c_str(), static_cast<int>(inStr1.length()), inStr2.c_str(), static_cast<int>(inStr2.length())))
 		{
 		case CSTR_LESS_THAN:
 			return -1;

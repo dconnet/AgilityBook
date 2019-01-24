@@ -32,7 +32,7 @@ void LogMessage(MSIHANDLE hInstall, std::wstring const& msg, INSTALLMESSAGE leve
 
 bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op)
 {
-	OSVERSIONINFOEX osvi;
+	OSVERSIONINFOEX osvi = {0};
 	DWORDLONG dwlConditionMask = 0;
 
 	ZeroMemory(&osvi, sizeof(osvi));
@@ -106,8 +106,11 @@ public:
 
 	HANDLE& m_Handle;
 private:
+	CHandle() = delete;
 	CHandle(CHandle const&) = delete;
+	CHandle(CHandle&&) = delete;
 	CHandle& operator=(CHandle const&) = delete;
+	CHandle& operator=(CHandle&&) = delete;
 };
 
 
@@ -123,7 +126,7 @@ bool IsUserAdmin()
 		return false;
 
 	// Get admin SID
-	char AdminSID[SECURITY_MAX_SID_SIZE];
+	char AdminSID[SECURITY_MAX_SID_SIZE] = {0};
 	DWORD dwLength = _countof(AdminSID);
 	if (!CreateWellKnownSid(WinBuiltinAdministratorsSid, nullptr, &AdminSID, &dwLength))
 		return false;

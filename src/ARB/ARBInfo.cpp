@@ -47,6 +47,17 @@ ARBInfo::ARBInfo(ARBInfo const& rhs)
 }
 
 
+ARBInfo::ARBInfo(ARBInfo&& rhs)
+	: m_ClubInfo(TREE_CLUBINFO)
+	, m_JudgeInfo(TREE_JUDGEINFO)
+	, m_LocationInfo(TREE_LOCATIONINFO)
+{
+	m_ClubInfo = std::move(rhs.m_ClubInfo);
+	m_JudgeInfo = std::move(rhs.m_JudgeInfo);
+	m_LocationInfo = std::move(rhs.m_LocationInfo);
+}
+
+
 ARBInfo::~ARBInfo()
 {
 	clear();
@@ -60,6 +71,18 @@ ARBInfo& ARBInfo::operator=(ARBInfo const& rhs)
 		rhs.m_ClubInfo.Clone(m_ClubInfo);
 		rhs.m_JudgeInfo.Clone(m_JudgeInfo);
 		rhs.m_LocationInfo.Clone(m_LocationInfo);
+	}
+	return *this;
+}
+
+
+ARBInfo& ARBInfo::operator=(ARBInfo&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_ClubInfo = std::move(rhs.m_ClubInfo);
+		m_JudgeInfo = std::move(rhs.m_JudgeInfo);
+		m_LocationInfo = std::move(rhs.m_LocationInfo);
 	}
 	return *this;
 }

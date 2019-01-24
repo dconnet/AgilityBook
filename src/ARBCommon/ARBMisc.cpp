@@ -284,7 +284,7 @@ std::wstring GetOSInfo(bool bVerbose)
 
 bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op)
 {
-	OSVERSIONINFOEX osvi;
+	OSVERSIONINFOEX osvi = {0};
 	DWORDLONG dwlConditionMask = 0;
 
 	ZeroMemory(&osvi, sizeof(osvi));
