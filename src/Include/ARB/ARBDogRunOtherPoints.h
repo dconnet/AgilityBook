@@ -32,6 +32,7 @@ class ARBDogRunOtherPoints : public ARBBase
 protected:
 	ARBDogRunOtherPoints();
 	ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs);
+	ARBDogRunOtherPoints(ARBDogRunOtherPoints&& rhs);
 
 public:
 	~ARBDogRunOtherPoints();
@@ -39,6 +40,7 @@ public:
 	ARBDogRunOtherPointsPtr Clone() const;
 
 	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
+	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints&& rhs);
 
 	bool operator==(ARBDogRunOtherPoints const& rhs) const;
 	bool operator!=(ARBDogRunOtherPoints const& rhs) const

@@ -29,6 +29,7 @@ class ARBConfigCalSite
 protected:
 	ARBConfigCalSite();
 	ARBConfigCalSite(ARBConfigCalSite const& rhs);
+	ARBConfigCalSite(ARBConfigCalSite&& rhs);
 
 public:
 	~ARBConfigCalSite();
@@ -36,6 +37,7 @@ public:
 	ARBConfigCalSitePtr Clone() const;
 
 	ARBConfigCalSite& operator=(ARBConfigCalSite const& rhs);
+	ARBConfigCalSite& operator=(ARBConfigCalSite&& rhs);
 	bool operator==(ARBConfigCalSite const& rhs) const;
 	bool operator!=(ARBConfigCalSite const& rhs) const
 	{

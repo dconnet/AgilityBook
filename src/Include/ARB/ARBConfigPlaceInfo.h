@@ -32,6 +32,7 @@ protected:
 	ARBConfigPlaceInfo();
 	ARBConfigPlaceInfo(short inPlace, double inValue, bool bMustQ);
 	ARBConfigPlaceInfo(ARBConfigPlaceInfo const& rhs);
+	ARBConfigPlaceInfo(ARBConfigPlaceInfo&& rhs);
 
 public:
 	~ARBConfigPlaceInfo();
@@ -40,6 +41,7 @@ public:
 	ARBConfigPlaceInfoPtr Clone() const;
 
 	ARBConfigPlaceInfo& operator=(ARBConfigPlaceInfo const& rhs);
+	ARBConfigPlaceInfo& operator=(ARBConfigPlaceInfo&& rhs);
 
 	bool operator==(ARBConfigPlaceInfo const& rhs) const;
 	bool operator!=(ARBConfigPlaceInfo const& rhs) const

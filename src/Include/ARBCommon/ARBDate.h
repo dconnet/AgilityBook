@@ -102,9 +102,8 @@ public:
 	{
 	}
 	ARBDate(ARBDate&& rhs)
-		: m_Julian(rhs.m_Julian)
+		: m_Julian(std::move(rhs.m_Julian))
 	{
-		rhs.clear();
 	}
 	explicit ARBDate(time_t inTime);
 #if defined(__WXWINDOWS__)
@@ -191,8 +190,7 @@ public:
 	{
 		if (this != &rhs)
 		{
-			m_Julian = rhs.m_Julian;
-			rhs.clear();
+			m_Julian = std::move(rhs.m_Julian);
 		}
 		return *this;
 	}

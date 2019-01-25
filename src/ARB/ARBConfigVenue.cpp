@@ -102,6 +102,20 @@ ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 }
 
 
+ARBConfigVenue::ARBConfigVenue(ARBConfigVenue&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_LongName(std::move(rhs.m_LongName))
+	, m_URL(std::move(rhs.m_URL))
+	, m_Desc(std::move(rhs.m_Desc))
+	, m_idxIcon(std::move(rhs.m_idxIcon))
+	, m_Titles(std::move(rhs.m_Titles))
+	, m_Divisions(std::move(rhs.m_Divisions))
+	, m_Events(std::move(rhs.m_Events))
+	, m_MultiQs(std::move(rhs.m_MultiQs))
+{
+}
+
+
 ARBConfigVenue::~ARBConfigVenue()
 {
 }
@@ -127,6 +141,25 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 		rhs.m_Divisions.Clone(m_Divisions);
 		rhs.m_Events.Clone(m_Events);
 		rhs.m_MultiQs.Clone(m_MultiQs);
+	}
+	return *this;
+}
+
+
+ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_LongName = std::move(rhs.m_LongName);
+		m_URL = std::move(rhs.m_URL);
+		m_Desc = std::move(rhs.m_Desc);
+		m_LifetimeNames = std::move(rhs.m_LifetimeNames);
+		m_idxIcon = std::move(rhs.m_idxIcon);
+		m_Titles = std::move(rhs.m_Titles);
+		m_Divisions = std::move(rhs.m_Divisions);
+		m_Events = std::move(rhs.m_Events);
+		m_MultiQs = std::move(rhs.m_MultiQs);
 	}
 	return *this;
 }
@@ -430,8 +463,7 @@ bool ARBConfigVenue::Update(
 	// If the order is different, we will fall into this...
 	if (GetTitles() != inVenueNew->GetTitles())
 	{
-		int nChanged, nAdded, nSkipped;
-		nChanged = nAdded = nSkipped = 0;
+		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigTitleList::const_iterator iterTitle = inVenueNew->GetTitles().begin();
 			iterTitle != inVenueNew->GetTitles().end();
 			++iterTitle)
@@ -480,8 +512,7 @@ bool ARBConfigVenue::Update(
 	if (GetDivisions() != inVenueNew->GetDivisions())
 	{
 		std::wstring info2;
-		int nChanged, nAdded, nSkipped;
-		nChanged = nAdded = nSkipped = 0;
+		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigDivisionList::const_iterator iterDiv = inVenueNew->GetDivisions().begin();
 			iterDiv != inVenueNew->GetDivisions().end();
 			++iterDiv)
@@ -528,8 +559,7 @@ bool ARBConfigVenue::Update(
 	if (GetEvents() != inVenueNew->GetEvents())
 	{
 		std::wstring info2;
-		int nChanged, nAdded, nSkipped;
-		nChanged = nAdded = nSkipped = 0;
+		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigEventList::const_iterator iterEvent = inVenueNew->GetEvents().begin();
 			iterEvent != inVenueNew->GetEvents().end();
 			++iterEvent)
@@ -575,8 +605,7 @@ bool ARBConfigVenue::Update(
 	// If the order is different, we will fall into this...
 	if (GetMultiQs() != inVenueNew->GetMultiQs())
 	{
-		int nAdded, nDeleted, nChanged, nSkipped;
-		nAdded = nDeleted = nChanged = nSkipped = 0;
+		int nAdded = 0, nDeleted = 0, nSkipped = 0;
 		ARBConfigMultiQList::iterator iter1;
 		ARBConfigMultiQList::const_iterator iter2;
 		// Look for items that will be removed.

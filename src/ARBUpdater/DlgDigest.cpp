@@ -42,7 +42,10 @@
 
 class CLongValidator : public wxValidator
 {
-DECLARE_CLASS(CLongValidator)
+	DECLARE_CLASS(CLongValidator)
+	CLongValidator(CLongValidator&&) = delete;
+	CLongValidator& operator=(CLongValidator const&) = delete;
+	CLongValidator& operator=(CLongValidator&&) = delete;
 public:
 	CLongValidator(long* val)
 		: m_pLong(val)
@@ -53,10 +56,10 @@ public:
 	{
 		Copy(rhs);
 	}
-	virtual wxObject *Clone() const {return new CLongValidator(*this);}
-	virtual bool TransferFromWindow();
-	virtual bool TransferToWindow();
-	virtual bool Validate(wxWindow* parent);
+	wxObject *Clone() const override {return new CLongValidator(*this);}
+	bool TransferFromWindow() override;
+	bool TransferToWindow() override;
+	bool Validate(wxWindow* parent) override;
 private:
 	long* m_pLong;
 };
@@ -70,7 +73,7 @@ bool CLongValidator::TransferFromWindow()
 	// Following the example of wxGenericValidator
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
-		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+		wxTextCtrl* pControl = dynamic_cast<wxTextCtrl*>(m_validatorWindow);
 		if (m_pLong)
 		{
 			if (!StringUtil::ToLong(StringUtil::stringW(pControl->GetValue()), *m_pLong))
@@ -86,7 +89,7 @@ bool CLongValidator::TransferToWindow()
 {
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
-		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+		wxTextCtrl* pControl = dynamic_cast<wxTextCtrl*>(m_validatorWindow);
 		if (m_pLong)
 		{
 			wxString str;
@@ -105,7 +108,7 @@ bool CLongValidator::Validate(wxWindow* parent)
 		return true;
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
-		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+		wxTextCtrl* pControl = dynamic_cast<wxTextCtrl*>(m_validatorWindow);
 		if (m_pLong)
 		{
 			long val;
@@ -303,7 +306,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 }
 
 
-bool CDlgDigest::Init()
+bool CDlgDigest::InitConfig()
 {
 	wxFileDialog file(this,
 			L"", // caption
@@ -358,7 +361,7 @@ bool CDlgDigest::LoadConfig()
 
 void CDlgDigest::OnInit(wxCommandEvent& evt)
 {
-	Init();
+	InitConfig();
 }
 
 
@@ -399,7 +402,7 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 		return;
 	}
 
-	if (!Init())
+	if (!InitConfig())
 		return;
 
 	wxBusyCursor busy;

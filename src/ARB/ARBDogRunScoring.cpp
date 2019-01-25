@@ -102,6 +102,26 @@ ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 }
 
 
+ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring&& rhs)
+	: m_type(std::move(rhs.m_type))
+	, m_bRoundTimeFaults(std::move(rhs.m_bRoundTimeFaults))
+	, m_SCT(std::move(rhs.m_SCT))
+	, m_SCT2(std::move(rhs.m_SCT2))
+	, m_Yards(std::move(rhs.m_Yards))
+	, m_Obstacles(std::move(rhs.m_Obstacles))
+	, m_Time(std::move(rhs.m_Time))
+	, m_Table(std::move(rhs.m_Table))
+	, m_ConvertTable(std::move(rhs.m_ConvertTable))
+	, m_CourseFaults(std::move(rhs.m_CourseFaults))
+	, m_NeedOpenPts(std::move(rhs.m_NeedOpenPts))
+	, m_NeedClosePts(std::move(rhs.m_NeedClosePts))
+	, m_OpenPts(std::move(rhs.m_OpenPts))
+	, m_ClosePts(std::move(rhs.m_ClosePts))
+	, m_BonusTitlePts(std::move(rhs.m_BonusTitlePts))
+{
+}
+
+
 ARBDogRunScoring::~ARBDogRunScoring()
 {
 }
@@ -125,6 +145,29 @@ ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
 		m_OpenPts = rhs.m_OpenPts;
 		m_ClosePts = rhs.m_ClosePts;
 		m_BonusTitlePts = rhs.m_BonusTitlePts;
+	}
+	return *this;
+}
+
+
+ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_type = std::move(rhs.m_type);
+		m_bRoundTimeFaults = std::move(rhs.m_bRoundTimeFaults);
+		m_SCT = std::move(rhs.m_SCT);
+		m_SCT2 = std::move(rhs.m_SCT2);
+		m_Yards = std::move(rhs.m_Yards);
+		m_Obstacles = std::move(rhs.m_Obstacles);
+		m_Time = std::move(rhs.m_Time);
+		m_Table = std::move(rhs.m_Table);
+		m_CourseFaults = std::move(rhs.m_CourseFaults);
+		m_NeedOpenPts = std::move(rhs.m_NeedOpenPts);
+		m_NeedClosePts = std::move(rhs.m_NeedClosePts);
+		m_OpenPts = std::move(rhs.m_OpenPts);
+		m_ClosePts = std::move(rhs.m_ClosePts);
+		m_BonusTitlePts = std::move(rhs.m_BonusTitlePts);
 	}
 	return *this;
 }

@@ -90,6 +90,15 @@ ARBDogNotes::ARBDogNotes(ARBDogNotes const& rhs)
 }
 
 
+ARBDogNotes::ARBDogNotes(ARBDogNotes&& rhs)
+	: m_Faults(std::move(rhs.m_Faults))
+	, m_CRCD(std::move(rhs.m_CRCD))
+	, m_CRCDMeta(std::move(rhs.m_CRCDMeta))
+	, m_Note(std::move(rhs.m_Note))
+{
+}
+
+
 ARBDogNotes::~ARBDogNotes()
 {
 }
@@ -103,6 +112,19 @@ ARBDogNotes& ARBDogNotes::operator=(ARBDogNotes const& rhs)
 		m_CRCD = rhs.m_CRCD;
 		m_CRCDMeta = rhs.m_CRCDMeta;
 		m_Note = rhs.m_Note;
+	}
+	return *this;
+}
+
+
+ARBDogNotes& ARBDogNotes::operator=(ARBDogNotes&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Faults = std::move(rhs.m_Faults);
+		m_CRCD = std::move(rhs.m_CRCD);
+		m_CRCDMeta = std::move(rhs.m_CRCDMeta);
+		m_Note = std::move(rhs.m_Note);
 	}
 	return *this;
 }

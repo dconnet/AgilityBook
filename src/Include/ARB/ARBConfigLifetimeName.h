@@ -29,6 +29,7 @@ class ARBConfigLifetimeName : public ARBBase
 protected:
 	ARBConfigLifetimeName();
 	ARBConfigLifetimeName(ARBConfigLifetimeName const& rhs);
+	ARBConfigLifetimeName(ARBConfigLifetimeName&& rhs);
 
 public:
 	~ARBConfigLifetimeName();
@@ -36,6 +37,7 @@ public:
 	ARBConfigLifetimeNamePtr Clone() const;
 
 	ARBConfigLifetimeName& operator=(ARBConfigLifetimeName const& rhs);
+	ARBConfigLifetimeName& operator=(ARBConfigLifetimeName&& rhs);
 
 	bool operator==(ARBConfigLifetimeName const& rhs) const;
 	bool operator!=(ARBConfigLifetimeName const& rhs) const

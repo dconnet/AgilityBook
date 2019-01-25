@@ -61,6 +61,12 @@ ARBConfigLifetimeName::ARBConfigLifetimeName(ARBConfigLifetimeName const& rhs)
 }
 
 
+ARBConfigLifetimeName::ARBConfigLifetimeName(ARBConfigLifetimeName&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+{
+}
+
+
 ARBConfigLifetimeName::~ARBConfigLifetimeName()
 {
 }
@@ -76,6 +82,14 @@ ARBConfigLifetimeName& ARBConfigLifetimeName::operator=(ARBConfigLifetimeName co
 {
 	if (this != &rhs)
 		m_Name = rhs.m_Name;
+	return *this;
+}
+
+
+ARBConfigLifetimeName& ARBConfigLifetimeName::operator=(ARBConfigLifetimeName&& rhs)
+{
+	if (this != &rhs)
+		m_Name = std::move(rhs.m_Name);
 	return *this;
 }
 

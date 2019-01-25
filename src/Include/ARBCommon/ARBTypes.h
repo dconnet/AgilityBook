@@ -195,9 +195,8 @@ public:
 	}
 
 	ARBVersion(ARBVersion&& inVer)
-		: m_Version(inVer.m_Version)
+		: m_Version(std::move(inVer.m_Version))
 	{
-		inVer.clear();
 	}
 
 	ARBVersion(std::wstring inStr);
@@ -218,8 +217,7 @@ public:
 	{
 		if (this != &rhs)
 		{
-			m_Version = rhs.m_Version;
-			rhs.clear();
+			m_Version = std::move(rhs.m_Version);
 		}
 		return *this;
 	}

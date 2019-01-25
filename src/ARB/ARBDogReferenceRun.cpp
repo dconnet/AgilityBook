@@ -78,6 +78,19 @@ ARBDogReferenceRun::ARBDogReferenceRun(ARBDogReferenceRun const& rhs)
 }
 
 
+ARBDogReferenceRun::ARBDogReferenceRun(ARBDogReferenceRun&& rhs)
+	: m_Q(std::move(rhs.m_Q))
+	, m_Place(std::move(rhs.m_Place))
+	, m_Name(std::move(rhs.m_Name))
+	, m_Height(std::move(rhs.m_Height))
+	, m_Breed(std::move(rhs.m_Breed))
+	, m_Time(std::move(rhs.m_Time))
+	, m_Score(std::move(rhs.m_Score))
+	, m_Note(std::move(rhs.m_Note))
+{
+}
+
+
 ARBDogReferenceRun::~ARBDogReferenceRun()
 {
 }
@@ -101,6 +114,23 @@ ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun const& rhs)
 		m_Time = rhs.m_Time;
 		m_Score = rhs.m_Score;
 		m_Note = rhs.m_Note;
+	}
+	return *this;
+}
+
+
+ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Q = std::move(rhs.m_Q);
+		m_Place = std::move(rhs.m_Place);
+		m_Name = std::move(rhs.m_Name);
+		m_Height = std::move(rhs.m_Height);
+		m_Breed = std::move(rhs.m_Breed);
+		m_Time = std::move(rhs.m_Time);
+		m_Score = std::move(rhs.m_Score);
+		m_Note = std::move(rhs.m_Note);
 	}
 	return *this;
 }

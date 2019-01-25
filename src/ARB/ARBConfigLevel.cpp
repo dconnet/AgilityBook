@@ -72,6 +72,14 @@ ARBConfigLevel::ARBConfigLevel(ARBConfigLevel const& rhs)
 }
 
 
+ARBConfigLevel::ARBConfigLevel(ARBConfigLevel&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_ShortName(std::move(rhs.m_ShortName))
+	, m_SubLevels(std::move(rhs.m_SubLevels))
+{
+}
+
+
 ARBConfigLevel::~ARBConfigLevel()
 {
 }
@@ -90,6 +98,18 @@ ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel const& rhs)
 		m_Name = rhs.m_Name;
 		m_ShortName = rhs.m_ShortName;
 		rhs.m_SubLevels.Clone(m_SubLevels);
+	}
+	return *this;
+}
+
+
+ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_ShortName = std::move(rhs.m_ShortName);
+		m_SubLevels = std::move(rhs.m_SubLevels);
 	}
 	return *this;
 }
@@ -183,8 +203,7 @@ bool ARBConfigLevel::Update(
 	if (GetSubLevels() != inLevelNew->GetSubLevels())
 	{
 		std::wstring info2;
-		int nChanged, nAdded, nSkipped;
-		nChanged = nAdded = nSkipped = 0;
+		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigSubLevelList::const_iterator iterSub = inLevelNew->GetSubLevels().begin();
 			iterSub != inLevelNew->GetSubLevels().end();
 			++iterSub)

@@ -37,7 +37,7 @@ private:
 	long m_Size;
 	short m_ConfigVersion;
 
-	bool Init();
+	bool InitConfig();
 	bool LoadConfig();
 
 	void OnInit(wxCommandEvent& evt);

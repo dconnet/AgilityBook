@@ -35,7 +35,7 @@ public:
 	{
 	}
 
-	virtual void LogMessage(std::wstring const& inMsg)
+	void LogMessage(std::wstring const& inMsg) override
 	{
 		ARBErrorCallback::LogMessage(inMsg);
 		m_Msg += inMsg;

@@ -45,6 +45,7 @@ protected:
 			std::wstring const& name,
 			double inFaults);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
+	ARBConfigLifetimePoints(ARBConfigLifetimePoints&& rhs);
 
 public:
 	~ARBConfigLifetimePoints();
@@ -59,6 +60,7 @@ public:
 	ARBConfigLifetimePointsPtr Clone() const;
 
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
+	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints&& rhs);
 
 	bool operator==(ARBConfigLifetimePoints const& rhs) const;
 	bool operator!=(ARBConfigLifetimePoints const& rhs) const

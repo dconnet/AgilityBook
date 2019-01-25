@@ -42,6 +42,7 @@ class ARBConfigEvent : public ARBBase
 protected:
 	ARBConfigEvent();
 	ARBConfigEvent(ARBConfigEvent const& rhs);
+	ARBConfigEvent(ARBConfigEvent&& rhs);
 
 public:
 	~ARBConfigEvent();
@@ -49,6 +50,7 @@ public:
 	ARBConfigEventPtr Clone() const;
 
 	ARBConfigEvent& operator=(ARBConfigEvent const& rhs);
+	ARBConfigEvent& operator=(ARBConfigEvent&& rhs);
 
 	bool operator==(ARBConfigEvent const& rhs) const;
 	bool operator!=(ARBConfigEvent const& rhs) const

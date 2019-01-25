@@ -36,6 +36,7 @@ class ARBTraining : public ARBBase
 protected:
 	ARBTraining();
 	ARBTraining(ARBTraining const& rhs);
+	ARBTraining(ARBTraining&& rhs);
 
 public:
 	~ARBTraining();
@@ -43,6 +44,7 @@ public:
 	ARBTrainingPtr Clone() const;
 
 	ARBTraining& operator=(ARBTraining const& rhs);
+	ARBTraining& operator=(ARBTraining&& rhs);
 
 	bool operator==(ARBTraining const& rhs) const;
 	bool operator!=(ARBTraining const& rhs) const

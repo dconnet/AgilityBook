@@ -94,6 +94,22 @@ ARBDogTitle::ARBDogTitle(ARBDogTitle const& rhs)
 }
 
 
+ARBDogTitle::ARBDogTitle(ARBDogTitle&& rhs)
+	: m_Date(std::move(rhs.m_Date))
+	, m_Venue(std::move(rhs.m_Venue))
+	, m_Name(std::move(rhs.m_Name))
+	, m_Instance(std::move(rhs.m_Instance))
+	, m_MultipleStartAt(std::move(rhs.m_MultipleStartAt))
+	, m_MultipleIncrement(std::move(rhs.m_MultipleIncrement))
+	, m_bShowInstanceOne(std::move(rhs.m_bShowInstanceOne))
+	, m_MultipleStyle(std::move(rhs.m_MultipleStyle))
+	, m_MultipleSeparator(std::move(rhs.m_MultipleSeparator))
+	, m_bReceived(std::move(rhs.m_bReceived))
+	, m_bHidden(std::move(rhs.m_bHidden))
+{
+}
+
+
 ARBDogTitle::~ARBDogTitle()
 {
 }
@@ -120,6 +136,26 @@ ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)
 		m_MultipleSeparator = rhs.m_MultipleSeparator;
 		m_bReceived = rhs.m_bReceived;
 		m_bHidden = rhs.m_bHidden;
+	}
+	return *this;
+}
+
+
+ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Date = std::move(rhs.m_Date);
+		m_Venue = std::move(rhs.m_Venue);
+		m_Name = std::move(rhs.m_Name);
+		m_Instance = std::move(rhs.m_Instance);
+		m_MultipleStartAt = std::move(rhs.m_MultipleStartAt);
+		m_MultipleIncrement = std::move(rhs.m_MultipleIncrement);
+		m_bShowInstanceOne = std::move(rhs.m_bShowInstanceOne);
+		m_MultipleStyle = std::move(rhs.m_MultipleStyle);
+		m_MultipleSeparator = std::move(rhs.m_MultipleSeparator);
+		m_bReceived = std::move(rhs.m_bReceived);
+		m_bHidden = std::move(rhs.m_bHidden);
 	}
 	return *this;
 }

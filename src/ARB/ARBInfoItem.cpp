@@ -70,6 +70,14 @@ ARBInfoItem::ARBInfoItem(ARBInfoItem const& rhs)
 }
 
 
+ARBInfoItem::ARBInfoItem(ARBInfoItem&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_Comment(std::move(rhs.m_Comment))
+	, m_Visible(std::move(rhs.m_Visible))
+{
+}
+
+
 ARBInfoItem::~ARBInfoItem()
 {
 }
@@ -88,6 +96,18 @@ ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)
 		m_Name = rhs.m_Name;
 		m_Comment = rhs.m_Comment;
 		m_Visible = rhs.m_Visible;
+	}
+	return *this;
+}
+
+
+ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_Comment = std::move(rhs.m_Comment);
+		m_Visible = std::move(rhs.m_Visible);
 	}
 	return *this;
 }
@@ -167,8 +187,15 @@ ARBInfoItemList::ARBInfoItemList(std::wstring const& inItemName)
 
 
 ARBInfoItemList::ARBInfoItemList(ARBInfoItemList const& rhs)
-	: ARBVector<ARBInfoItemPtr>(rhs)
+	: ARBVectorNoSave<ARBInfoItemPtr>(rhs)
 	, m_ItemName(rhs.m_ItemName)
+{
+}
+
+
+ARBInfoItemList::ARBInfoItemList(ARBInfoItemList&& rhs)
+	: ARBVectorNoSave<ARBInfoItemPtr>(rhs)
+	, m_ItemName(std::move(rhs.m_ItemName))
 {
 }
 
@@ -177,8 +204,19 @@ ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
 {
 	if (this != &rhs)
 	{
-		ARBVector<ARBInfoItemPtr>::operator=(rhs);
+		ARBVectorNoSave<ARBInfoItemPtr>::operator=(rhs);
 		m_ItemName = rhs.m_ItemName;
+	}
+	return *this;
+}
+
+
+ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList&& rhs)
+{
+	if (this != &rhs)
+	{
+		ARBVectorNoSave<ARBInfoItemPtr>::operator=(rhs);
+		m_ItemName = std::move(rhs.m_ItemName);
 	}
 	return *this;
 }

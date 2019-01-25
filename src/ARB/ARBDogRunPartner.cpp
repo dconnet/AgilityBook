@@ -69,6 +69,14 @@ ARBDogRunPartner::ARBDogRunPartner(ARBDogRunPartner const& rhs)
 }
 
 
+ARBDogRunPartner::ARBDogRunPartner(ARBDogRunPartner&& rhs)
+	: m_Handler(std::move(rhs.m_Handler))
+	, m_Dog(std::move(rhs.m_Dog))
+	, m_RegNum(std::move(rhs.m_RegNum))
+{
+}
+
+
 ARBDogRunPartner::~ARBDogRunPartner()
 {
 }
@@ -87,6 +95,18 @@ ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner const& rhs)
 		m_Handler = rhs.m_Handler;
 		m_Dog = rhs.m_Dog;
 		m_RegNum = rhs.m_RegNum;
+	}
+	return *this;
+}
+
+
+ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Handler = std::move(rhs.m_Handler);
+		m_Dog = std::move(rhs.m_Dog);
+		m_RegNum = std::move(rhs.m_RegNum);
 	}
 	return *this;
 }

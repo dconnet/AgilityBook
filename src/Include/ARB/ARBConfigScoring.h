@@ -64,6 +64,7 @@ public:
 protected:
 	ARBConfigScoring();
 	ARBConfigScoring(ARBConfigScoring const& rhs);
+	ARBConfigScoring(ARBConfigScoring&& rhs);
 
 public:
 	~ARBConfigScoring();
@@ -71,6 +72,7 @@ public:
 	ARBConfigScoringPtr Clone() const;
 
 	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
+	ARBConfigScoring& operator=(ARBConfigScoring&& rhs);
 
 	bool operator==(ARBConfigScoring const& rhs) const;
 	bool operator!=(ARBConfigScoring const& rhs) const

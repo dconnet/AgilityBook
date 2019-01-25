@@ -74,6 +74,15 @@ ARBTraining::ARBTraining(ARBTraining const& rhs)
 }
 
 
+ARBTraining::ARBTraining(ARBTraining&& rhs)
+	: m_Date(std::move(rhs.m_Date))
+	, m_Name(std::move(rhs.m_Name))
+	, m_SubName(std::move(rhs.m_SubName))
+	, m_Note(std::move(rhs.m_Note))
+{
+}
+
+
 ARBTraining::~ARBTraining()
 {
 }
@@ -93,6 +102,19 @@ ARBTraining& ARBTraining::operator=(ARBTraining const& rhs)
 		m_Name = rhs.m_Name;
 		m_SubName = rhs.m_SubName;
 		m_Note = rhs.m_Note;
+	}
+	return *this;
+}
+
+
+ARBTraining& ARBTraining::operator=(ARBTraining&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Date = std::move(rhs.m_Date);
+		m_Name = std::move(rhs.m_Name);
+		m_SubName = std::move(rhs.m_SubName);
+		m_Note = std::move(rhs.m_Note);
 	}
 	return *this;
 }

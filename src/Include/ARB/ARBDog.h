@@ -43,6 +43,7 @@ class ARBDog : public ARBBase
 protected:
 	ARBDog();
 	ARBDog(ARBDog const& rhs);
+	ARBDog(ARBDog&& rhs);
 
 public:
 	~ARBDog();
@@ -50,6 +51,7 @@ public:
 	ARBDogPtr Clone() const;
 
 	ARBDog& operator=(ARBDog const& rhs);
+	ARBDog& operator=(ARBDog&& rhs);
 
 	bool operator==(ARBDog const& rhs) const;
 	bool operator!=(ARBDog const& rhs) const

@@ -43,6 +43,7 @@ class ARBConfigVenue : public ARBBase
 protected:
 	ARBConfigVenue();
 	ARBConfigVenue(ARBConfigVenue const& rhs);
+	ARBConfigVenue(ARBConfigVenue&& rhs);
 
 public:
 	~ARBConfigVenue();
@@ -50,6 +51,7 @@ public:
 	ARBConfigVenuePtr Clone() const;
 
 	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
+	ARBConfigVenue& operator=(ARBConfigVenue&& rhs);
 
 	bool operator==(ARBConfigVenue const& rhs) const;
 	bool operator!=(ARBConfigVenue const& rhs) const

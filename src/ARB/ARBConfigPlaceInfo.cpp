@@ -88,6 +88,13 @@ ARBConfigPlaceInfo::ARBConfigPlaceInfo(ARBConfigPlaceInfo const& rhs)
 {
 }
 
+ARBConfigPlaceInfo::ARBConfigPlaceInfo(ARBConfigPlaceInfo&& rhs)
+	: m_Place(std::move(rhs.m_Place))
+	, m_Value(std::move(rhs.m_Value))
+	, m_MustQ(std::move(rhs.m_MustQ))
+{
+}
+
 
 ARBConfigPlaceInfo::~ARBConfigPlaceInfo()
 {
@@ -107,6 +114,18 @@ ARBConfigPlaceInfo& ARBConfigPlaceInfo::operator=(ARBConfigPlaceInfo const& rhs)
 		m_Place = rhs.m_Place;
 		m_Value = rhs.m_Value;
 		m_MustQ = rhs.m_MustQ;
+	}
+	return *this;
+}
+
+
+ARBConfigPlaceInfo& ARBConfigPlaceInfo::operator=(ARBConfigPlaceInfo&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Place = std::move(rhs.m_Place);
+		m_Value = std::move(rhs.m_Value);
+		m_MustQ = std::move(rhs.m_MustQ);
 	}
 	return *this;
 }

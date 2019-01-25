@@ -34,8 +34,8 @@ class CARBUpdaterApp : public CBaseApp
 	DECLARE_NO_COPY_IMPLEMENTED(CARBUpdaterApp)
 public:
 	CARBUpdaterApp();
-	virtual bool InitLanguage()	{return true;}
-	virtual bool OnInit();
+	bool InitLanguage() override {return true;}
+	bool OnInit() override;
 };
 
 

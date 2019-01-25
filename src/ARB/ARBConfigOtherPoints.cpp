@@ -84,6 +84,15 @@ ARBConfigOtherPoints::ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs)
 }
 
 
+ARBConfigOtherPoints::ARBConfigOtherPoints(ARBConfigOtherPoints&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_Tally(std::move(rhs.m_Tally))
+	, m_Desc(std::move(rhs.m_Desc))
+	, m_Default(std::move(rhs.m_Default))
+{
+}
+
+
 ARBConfigOtherPoints::~ARBConfigOtherPoints()
 {
 }
@@ -103,6 +112,19 @@ ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints const
 		m_Tally = rhs.m_Tally;
 		m_Desc = rhs.m_Desc;
 		m_Default = rhs.m_Default;
+	}
+	return *this;
+}
+
+
+ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_Tally = std::move(rhs.m_Tally);
+		m_Desc = std::move(rhs.m_Desc);
+		m_Default = std::move(rhs.m_Default);
 	}
 	return *this;
 }

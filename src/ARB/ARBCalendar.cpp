@@ -386,24 +386,23 @@ ARBCalendar::ARBCalendar(ARBCalendar const& rhs)
 
 
 ARBCalendar::ARBCalendar(ARBCalendar&& rhs)
-	: m_DateStart(rhs.m_DateStart)
-	, m_DateEnd(rhs.m_DateEnd)
-	, m_DateOpening(rhs.m_DateOpening)
-	, m_DateDraw(rhs.m_DateDraw)
-	, m_DateClosing(rhs.m_DateClosing)
-	, m_bTentative(rhs.m_bTentative)
-	, m_Location(rhs.m_Location)
-	, m_Club(rhs.m_Club)
-	, m_Venue(rhs.m_Venue)
-	, m_eEntered(rhs.m_eEntered)
-	, m_eAccommodations(rhs.m_eAccommodations)
-	, m_Confirmation(rhs.m_Confirmation)
-	, m_SecEmail(rhs.m_SecEmail)
-	, m_PremiumURL(rhs.m_PremiumURL)
-	, m_OnlineURL(rhs.m_OnlineURL)
-	, m_Note(rhs.m_Note)
+	: m_DateStart(std::move(rhs.m_DateStart))
+	, m_DateEnd(std::move(rhs.m_DateEnd))
+	, m_DateOpening(std::move(rhs.m_DateOpening))
+	, m_DateDraw(std::move(rhs.m_DateDraw))
+	, m_DateClosing(std::move(rhs.m_DateClosing))
+	, m_bTentative(std::move(rhs.m_bTentative))
+	, m_Location(std::move(rhs.m_Location))
+	, m_Club(std::move(rhs.m_Club))
+	, m_Venue(std::move(rhs.m_Venue))
+	, m_eEntered(std::move(rhs.m_eEntered))
+	, m_eAccommodations(std::move(rhs.m_eAccommodations))
+	, m_Confirmation(std::move(rhs.m_Confirmation))
+	, m_SecEmail(std::move(rhs.m_SecEmail))
+	, m_PremiumURL(std::move(rhs.m_PremiumURL))
+	, m_OnlineURL(std::move(rhs.m_OnlineURL))
+	, m_Note(std::move(rhs.m_Note))
 {
-	rhs = ARBCalendar();
 }
 
 
@@ -447,23 +446,22 @@ ARBCalendar& ARBCalendar::operator=(ARBCalendar&& rhs)
 {
 	if (this != &rhs)
 	{
-		m_DateStart = rhs.m_DateStart;
-		m_DateEnd = rhs.m_DateEnd;
-		m_DateOpening = rhs.m_DateOpening;
-		m_DateDraw = rhs.m_DateDraw;
-		m_DateClosing = rhs.m_DateClosing;
-		m_bTentative = rhs.m_bTentative;
-		m_Location = rhs.m_Location;
-		m_Club = rhs.m_Club;
-		m_Venue = rhs.m_Venue;
-		m_eEntered = rhs.m_eEntered;
-		m_eAccommodations = rhs.m_eAccommodations;
-		m_Confirmation = rhs.m_Confirmation;
-		m_SecEmail = rhs.m_SecEmail;
-		m_PremiumURL = rhs.m_PremiumURL;
-		m_OnlineURL = rhs.m_OnlineURL;
-		m_Note = rhs.m_Note;
-		rhs = ARBCalendar();
+		m_DateStart = std::move(rhs.m_DateStart);
+		m_DateEnd = std::move(rhs.m_DateEnd);
+		m_DateOpening = std::move(rhs.m_DateOpening);
+		m_DateDraw = std::move(rhs.m_DateDraw);
+		m_DateClosing = std::move(rhs.m_DateClosing);
+		m_bTentative = std::move(rhs.m_bTentative);
+		m_Location = std::move(rhs.m_Location);
+		m_Club = std::move(rhs.m_Club);
+		m_Venue = std::move(rhs.m_Venue);
+		m_eEntered = std::move(rhs.m_eEntered);
+		m_eAccommodations = std::move(rhs.m_eAccommodations);
+		m_Confirmation = std::move(rhs.m_Confirmation);
+		m_SecEmail = std::move(rhs.m_SecEmail);
+		m_PremiumURL = std::move(rhs.m_PremiumURL);
+		m_OnlineURL = std::move(rhs.m_OnlineURL);
+		m_Note = std::move(rhs.m_Note);
 	}
 	return *this;
 }

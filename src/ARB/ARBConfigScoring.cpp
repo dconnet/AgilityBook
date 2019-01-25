@@ -185,6 +185,34 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 }
 
 
+ARBConfigScoring::ARBConfigScoring(ARBConfigScoring&& rhs)
+	: m_ValidFrom(std::move(rhs.m_ValidFrom))
+	, m_ValidTo(std::move(rhs.m_ValidTo))
+	, m_Division(std::move(rhs.m_Division))
+	, m_Level(std::move(rhs.m_Level))
+	, m_Style(std::move(rhs.m_Style))
+	, m_bDropFractions(std::move(rhs.m_bDropFractions))
+	, m_bCleanQ(std::move(rhs.m_bCleanQ))
+	, m_bTimeFaultsUnder(std::move(rhs.m_bTimeFaultsUnder))
+	, m_bTimeFaultsOver(std::move(rhs.m_bTimeFaultsOver))
+	, m_bTitlingPointsRawFaults(std::move(rhs.m_bTitlingPointsRawFaults))
+	, m_bSubtractTimeFaults(std::move(rhs.m_bSubtractTimeFaults))
+	, m_TimeFaultMultiplier(std::move(rhs.m_TimeFaultMultiplier))
+	, m_Note(std::move(rhs.m_Note))
+	, m_OpeningPts(std::move(rhs.m_OpeningPts))
+	, m_ClosingPts(std::move(rhs.m_ClosingPts))
+	, m_bSuperQ(std::move(rhs.m_bSuperQ))
+	, m_bDoubleQ(std::move(rhs.m_bDoubleQ))
+	, m_bSpeedPts(std::move(rhs.m_bSpeedPts))
+	, m_bBonusTitlePts(std::move(rhs.m_bBonusTitlePts))
+	, m_PlaceInfo(std::move(rhs.m_PlaceInfo))
+	, m_TitlePoints(std::move(rhs.m_TitlePoints))
+	, m_LifePoints(std::move(rhs.m_LifePoints))
+	, m_Placements(std::move(rhs.m_Placements))
+{
+}
+
+
 ARBConfigScoring::~ARBConfigScoring()
 {
 }
@@ -223,6 +251,38 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		rhs.m_TitlePoints.Clone(m_TitlePoints);
 		rhs.m_LifePoints.Clone(m_LifePoints);
 		rhs.m_Placements.Clone(m_Placements);
+	}
+	return *this;
+}
+
+
+ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_ValidFrom = std::move(rhs.m_ValidFrom);
+		m_ValidTo = std::move(rhs.m_ValidTo);
+		m_Division = std::move(rhs.m_Division);
+		m_Level = std::move(rhs.m_Level);
+		m_Style = std::move(rhs.m_Style);
+		m_bDropFractions = std::move(rhs.m_bDropFractions);
+		m_bCleanQ = std::move(rhs.m_bCleanQ);
+		m_bTimeFaultsUnder = std::move(rhs.m_bTimeFaultsUnder);
+		m_bTimeFaultsOver = std::move(rhs.m_bTimeFaultsOver);
+		m_bTitlingPointsRawFaults = std::move(rhs.m_bTitlingPointsRawFaults);
+		m_bSubtractTimeFaults = std::move(rhs.m_bSubtractTimeFaults);
+		m_TimeFaultMultiplier = std::move(rhs.m_TimeFaultMultiplier);
+		m_Note = std::move(rhs.m_Note);
+		m_OpeningPts = std::move(rhs.m_OpeningPts);
+		m_ClosingPts = std::move(rhs.m_ClosingPts);
+		m_bSuperQ = std::move(rhs.m_bSuperQ);
+		m_bDoubleQ = std::move(rhs.m_bDoubleQ);
+		m_bSpeedPts = std::move(rhs.m_bSpeedPts);
+		m_bBonusTitlePts = std::move(rhs.m_bBonusTitlePts);
+		m_PlaceInfo = std::move(rhs.m_PlaceInfo);
+		m_TitlePoints = std::move(rhs.m_TitlePoints);
+		m_LifePoints = std::move(rhs.m_LifePoints);
+		m_Placements = std::move(rhs.m_Placements);
 	}
 	return *this;
 }

@@ -131,6 +131,31 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 }
 
 
+ARBDogRun::ARBDogRun(ARBDogRun&& rhs)
+	: m_pMultiQs()
+	, m_Date(std::move(rhs.m_Date))
+	, m_Division(std::move(rhs.m_Division))
+	, m_Level(std::move(rhs.m_Level))
+	, m_Height(std::move(rhs.m_Height))
+	, m_Event(std::move(rhs.m_Event))
+	, m_SubName(std::move(rhs.m_SubName))
+	, m_Conditions(std::move(rhs.m_Conditions))
+	, m_Judge(std::move(rhs.m_Judge))
+	, m_Handler(std::move(rhs.m_Handler))
+	, m_Partners(std::move(rhs.m_Partners))
+	, m_Scoring(std::move(rhs.m_Scoring))
+	, m_Q(std::move(rhs.m_Q))
+	, m_Place(std::move(rhs.m_Place))
+	, m_InClass(std::move(rhs.m_InClass))
+	, m_DogsQd(std::move(rhs.m_DogsQd))
+	, m_OtherPoints(std::move(rhs.m_OtherPoints))
+	, m_Notes(std::move(rhs.m_Notes))
+	, m_RefRuns(std::move(rhs.m_RefRuns))
+	, m_Links(std::move(rhs.m_Links))
+{
+}
+
+
 ARBDogRun::~ARBDogRun()
 {
 }
@@ -146,6 +171,7 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 {
 	if (this != &rhs)
 	{
+		m_pMultiQs.clear();
 		m_Date = rhs.m_Date;
 		m_Division = rhs.m_Division;
 		m_Level = rhs.m_Level;
@@ -165,6 +191,35 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 		m_Notes = rhs.m_Notes;
 		rhs.m_RefRuns.Clone(m_RefRuns);
 		m_Links = rhs.m_Links;
+	}
+	return *this;
+}
+
+
+ARBDogRun& ARBDogRun::operator=(ARBDogRun&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_pMultiQs.clear();
+		m_Date = std::move(rhs.m_Date);
+		m_Division = std::move(rhs.m_Division);
+		m_Level = std::move(rhs.m_Level);
+		m_Height = std::move(rhs.m_Height);
+		m_Event = std::move(rhs.m_Event);
+		m_SubName = std::move(rhs.m_SubName);
+		m_Conditions = std::move(rhs.m_Conditions);
+		m_Judge = std::move(rhs.m_Judge);
+		m_Handler = std::move(rhs.m_Handler);
+		m_Partners = std::move(rhs.m_Partners);
+		m_Scoring = std::move(rhs.m_Scoring);
+		m_Q = std::move(rhs.m_Q);
+		m_Place = std::move(rhs.m_Place);
+		m_InClass = std::move(rhs.m_InClass);
+		m_DogsQd = std::move(rhs.m_DogsQd);
+		m_OtherPoints = std::move(rhs.m_OtherPoints);
+		m_Notes = std::move(rhs.m_Notes);
+		m_RefRuns = std::move(rhs.m_RefRuns);
+		m_Links = std::move(rhs.m_Links);
 	}
 	return *this;
 }
@@ -572,9 +627,9 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr const& inScoring) const
 				pts = static_cast<short>(diff);
 				if (0 > pts)
 					pts = 0;
-				double mult;
 				if (0 < GetPlace())
 				{
+					double mult = 0.0;
 					if (inScoring->GetPlaceInfo().GetPlaceInfo(GetPlace(), mult))
 					{
 						// Compute the multiplier for the given place.

@@ -34,6 +34,7 @@ class ARBInfoItem : public ARBBase
 protected:
 	ARBInfoItem();
 	ARBInfoItem(ARBInfoItem const& rhs);
+	ARBInfoItem(ARBInfoItem&& rhs);
 
 public:
 	~ARBInfoItem();
@@ -41,6 +42,7 @@ public:
 	ARBInfoItemPtr Clone() const;
 
 	ARBInfoItem& operator=(ARBInfoItem const& rhs);
+	ARBInfoItem& operator=(ARBInfoItem&& rhs);
 
 	bool operator==(ARBInfoItem const& rhs) const;
 	bool operator!=(ARBInfoItem const& rhs) const
@@ -135,8 +137,9 @@ private:
 /**
  * List of ARBInfoItem objects.
  */
-class ARBInfoItemList : public ARBVector<ARBInfoItemPtr>
+class ARBInfoItemList : public ARBVectorNoSave<ARBInfoItemPtr>
 {
+	ARBInfoItemList() = delete;
 public:
 	/**
 	 * Construct a club/judge/location info object.
@@ -144,7 +147,10 @@ public:
 	 */
 	ARBInfoItemList(std::wstring const& inItemName);
 	ARBInfoItemList(ARBInfoItemList const& rhs);
+	ARBInfoItemList(ARBInfoItemList&& rhs);
+	~ARBInfoItemList() {}
 	ARBInfoItemList& operator=(ARBInfoItemList const& rhs);
+	ARBInfoItemList& operator=(ARBInfoItemList&& rhs);
 
 	std::wstring const& GetItemName() const
 	{

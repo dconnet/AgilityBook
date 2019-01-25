@@ -24,13 +24,42 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBBase::ARBBase()
+static size_t FilterToIndex(ARBBase::FilterType inFilterType)
 {
-	for (int i = 0; i < eNumFilters; ++i)
-		m_bFiltered[i] = false;
+	switch (inFilterType)
+	{
+	default:
+		assert(0);
+		// fall thru
+	case ARBBase::eFilter:
+		return 0;
+	case ARBBase::eIgnoreQ:
+		return 1;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+ARBBase::ARBBase()
+	: m_bFiltered({false, false})
+{
 }
 
 
 ARBBase::~ARBBase()
 {
+}
+
+
+bool ARBBase::IsFiltered(FilterType inFilterType) const
+{
+	return m_bFiltered[FilterToIndex(inFilterType)];
+}
+
+
+void ARBBase::SetFiltered(
+	FilterType inFilterType,
+	bool bFiltered)
+{
+	m_bFiltered[FilterToIndex(inFilterType)] = bFiltered;
 }

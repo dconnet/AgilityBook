@@ -33,6 +33,7 @@ class ARBDogReferenceRun : public ARBBase
 protected:
 	ARBDogReferenceRun();
 	ARBDogReferenceRun(ARBDogReferenceRun const& rhs);
+	ARBDogReferenceRun(ARBDogReferenceRun&& rhs);
 
 public:
 	~ARBDogReferenceRun();
@@ -40,6 +41,7 @@ public:
 	ARBDogReferenceRunPtr Clone() const;
 
 	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
+	ARBDogReferenceRun& operator=(ARBDogReferenceRun&& rhs);
 
 	bool operator==(ARBDogReferenceRun const& rhs) const;
 	bool operator!=(ARBDogReferenceRun const& rhs) const

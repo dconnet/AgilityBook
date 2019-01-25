@@ -67,6 +67,17 @@ ARBConfigCalSite::ARBConfigCalSite(ARBConfigCalSite const& rhs)
 }
 
 
+ARBConfigCalSite::ARBConfigCalSite(ARBConfigCalSite&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_Desc(std::move(rhs.m_Desc))
+	, m_urlSearch(std::move(rhs.m_urlSearch))
+	, m_urlHelp(std::move(rhs.m_urlHelp))
+	, m_Locations(std::move(rhs.m_Locations))
+	, m_Venues(std::move(rhs.m_Venues))
+{
+}
+
+
 ARBConfigCalSite::~ARBConfigCalSite()
 {
 }
@@ -88,6 +99,21 @@ ARBConfigCalSite& ARBConfigCalSite::operator=(ARBConfigCalSite const& rhs)
 		m_urlHelp = rhs.m_urlHelp;
 		m_Locations = rhs.m_Locations;
 		m_Venues = rhs.m_Venues;
+	}
+	return *this;
+}
+
+
+ARBConfigCalSite& ARBConfigCalSite::operator=(ARBConfigCalSite&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_Desc = std::move(rhs.m_Desc);
+		m_urlSearch = std::move(rhs.m_urlSearch);
+		m_urlHelp = std::move(rhs.m_urlHelp);
+		m_Locations = std::move(rhs.m_Locations);
+		m_Venues = std::move(rhs.m_Venues);
 	}
 	return *this;
 }

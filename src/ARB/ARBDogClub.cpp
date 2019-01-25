@@ -68,6 +68,13 @@ ARBDogClub::ARBDogClub(ARBDogClub const& rhs)
 }
 
 
+ARBDogClub::ARBDogClub(ARBDogClub&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_Venue(std::move(rhs.m_Venue))
+{
+}
+
+
 ARBDogClub::~ARBDogClub()
 {
 }
@@ -85,6 +92,17 @@ ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
 	{
 		m_Name = rhs.m_Name;
 		m_Venue = rhs.m_Venue;
+	}
+	return *this;
+}
+
+
+ARBDogClub& ARBDogClub::operator=(ARBDogClub&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_Venue = std::move(rhs.m_Venue);
 	}
 	return *this;
 }

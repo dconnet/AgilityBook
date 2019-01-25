@@ -48,13 +48,10 @@ ARBInfo::ARBInfo(ARBInfo const& rhs)
 
 
 ARBInfo::ARBInfo(ARBInfo&& rhs)
-	: m_ClubInfo(TREE_CLUBINFO)
-	, m_JudgeInfo(TREE_JUDGEINFO)
-	, m_LocationInfo(TREE_LOCATIONINFO)
+	: m_ClubInfo(std::move(rhs.m_ClubInfo))
+	, m_JudgeInfo(std::move(rhs.m_JudgeInfo))
+	, m_LocationInfo(std::move(rhs.m_LocationInfo))
 {
-	m_ClubInfo = std::move(rhs.m_ClubInfo);
-	m_JudgeInfo = std::move(rhs.m_JudgeInfo);
-	m_LocationInfo = std::move(rhs.m_LocationInfo);
 }
 
 

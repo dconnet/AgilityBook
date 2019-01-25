@@ -46,6 +46,7 @@ public:
 protected:
 	ARBConfigOtherPoints();
 	ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs);
+	ARBConfigOtherPoints(ARBConfigOtherPoints&& rhs);
 
 public:
 	~ARBConfigOtherPoints();
@@ -53,6 +54,7 @@ public:
 	ARBConfigOtherPointsPtr Clone() const;
 
 	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
+	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints&& rhs);
 
 	bool operator==(ARBConfigOtherPoints const& rhs) const;
 	bool operator!=(ARBConfigOtherPoints const& rhs) const

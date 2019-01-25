@@ -66,6 +66,13 @@ ARBConfigSubLevel::ARBConfigSubLevel(ARBConfigSubLevel const& rhs)
 }
 
 
+ARBConfigSubLevel::ARBConfigSubLevel(ARBConfigSubLevel&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_ShortName(std::move(rhs.m_ShortName))
+{
+}
+
+
 ARBConfigSubLevel::~ARBConfigSubLevel()
 {
 }
@@ -83,6 +90,17 @@ ARBConfigSubLevel& ARBConfigSubLevel::operator=(ARBConfigSubLevel const& rhs)
 	{
 		m_Name = rhs.m_Name;
 		m_ShortName = rhs.m_ShortName;
+	}
+	return *this;
+}
+
+
+ARBConfigSubLevel& ARBConfigSubLevel::operator=(ARBConfigSubLevel&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_ShortName = std::move(rhs.m_ShortName);
 	}
 	return *this;
 }

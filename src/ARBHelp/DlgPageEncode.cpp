@@ -59,6 +59,7 @@ static void SearchFor(
 CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 	: wxWizardPageSimple(pParent)
 	, m_Parent(pParent)
+	, m_DiskChoices(nullptr)
 {
 	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
 		L"When Agility Record Book has a problem, this program helps by gathering information that may be useful in determining what when wrong.",

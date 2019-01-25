@@ -291,6 +291,22 @@ ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 }
 
 
+ARBConfigTitle::ARBConfigTitle(ARBConfigTitle&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_LongName(std::move(rhs.m_LongName))
+	, m_Desc(std::move(rhs.m_Desc))
+	, m_Prefix(std::move(rhs.m_Prefix))
+	, m_ValidFrom(std::move(rhs.m_ValidFrom))
+	, m_ValidTo(std::move(rhs.m_ValidTo))
+	, m_MultipleStartAt(std::move(rhs.m_MultipleStartAt))
+	, m_MultipleIncrement(std::move(rhs.m_MultipleIncrement))
+	, m_MultipleOnFirst(std::move(rhs.m_MultipleOnFirst))
+	, m_MultipleStyle(std::move(rhs.m_MultipleStyle))
+	, m_MultipleSeparator(std::move(rhs.m_MultipleSeparator))
+{
+}
+
+
 ARBConfigTitle::~ARBConfigTitle()
 {
 }
@@ -317,6 +333,26 @@ ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 		m_MultipleOnFirst = rhs.m_MultipleOnFirst;
 		m_MultipleStyle = rhs.m_MultipleStyle;
 		m_MultipleSeparator = rhs.m_MultipleSeparator;
+	}
+	return *this;
+}
+
+
+ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_LongName = std::move(rhs.m_LongName);
+		m_Desc = std::move(rhs.m_Desc);
+		m_Prefix = std::move(rhs.m_Prefix);
+		m_ValidFrom = std::move(rhs.m_ValidFrom);
+		m_ValidTo = std::move(rhs.m_ValidTo);
+		m_MultipleStartAt = std::move(rhs.m_MultipleStartAt);
+		m_MultipleIncrement = std::move(rhs.m_MultipleIncrement);
+		m_MultipleOnFirst = std::move(rhs.m_MultipleOnFirst);
+		m_MultipleStyle = std::move(rhs.m_MultipleStyle);
+		m_MultipleSeparator = std::move(rhs.m_MultipleSeparator);
 	}
 	return *this;
 }

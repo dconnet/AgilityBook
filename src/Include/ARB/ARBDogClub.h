@@ -34,6 +34,7 @@ class ARBDogClub : public ARBBase
 protected:
 	ARBDogClub();
 	ARBDogClub(ARBDogClub const& rhs);
+	ARBDogClub(ARBDogClub&& rhs);
 
 public:
 	~ARBDogClub();
@@ -41,6 +42,7 @@ public:
 	ARBDogClubPtr Clone() const;
 
 	ARBDogClub& operator=(ARBDogClub const& rhs);
+	ARBDogClub& operator=(ARBDogClub&& rhs);
 
 	bool operator==(ARBDogClub const& rhs) const;
 	bool operator!=(ARBDogClub const& rhs) const

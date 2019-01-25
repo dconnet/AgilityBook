@@ -127,6 +127,22 @@ ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints const& rhs)
 }
 
 
+ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints&& rhs)
+	: m_Date(std::move(rhs.m_Date))
+	, m_Comment(std::move(rhs.m_Comment))
+	, m_Type(std::move(rhs.m_Type))
+	, m_TypeName(std::move(rhs.m_TypeName))
+	, m_Venue(std::move(rhs.m_Venue))
+	, m_MultiQ(std::move(rhs.m_MultiQ))
+	, m_Div(std::move(rhs.m_Div))
+	, m_Level(std::move(rhs.m_Level))
+	, m_Event(std::move(rhs.m_Event))
+	, m_SubName(std::move(rhs.m_SubName))
+	, m_Points(std::move(rhs.m_Points))
+{
+}
+
+
 ARBDogExistingPoints::~ARBDogExistingPoints()
 {
 }
@@ -153,6 +169,26 @@ ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const
 		m_Event = rhs.m_Event;
 		m_SubName = rhs.m_SubName;
 		m_Points = rhs.m_Points;
+	}
+	return *this;
+}
+
+
+ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Date = std::move(rhs.m_Date);
+		m_Comment = std::move(rhs.m_Comment);
+		m_Type = std::move(rhs.m_Type);
+		m_TypeName = std::move(rhs.m_TypeName);
+		m_Venue = std::move(rhs.m_Venue);
+		m_MultiQ = std::move(rhs.m_MultiQ);
+		m_Div = std::move(rhs.m_Div);
+		m_Level = std::move(rhs.m_Level);
+		m_Event = std::move(rhs.m_Event);
+		m_SubName = std::move(rhs.m_SubName);
+		m_Points = std::move(rhs.m_Points);
 	}
 	return *this;
 }

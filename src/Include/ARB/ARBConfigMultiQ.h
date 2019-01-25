@@ -32,6 +32,7 @@ class ARBConfigMultiQ : public ARBBase
 protected:
 	ARBConfigMultiQ();
 	ARBConfigMultiQ(ARBConfigMultiQ const& rhs);
+	ARBConfigMultiQ(ARBConfigMultiQ&& rhs);
 
 public:
 	~ARBConfigMultiQ();
@@ -39,6 +40,7 @@ public:
 	ARBConfigMultiQPtr Clone() const;
 
 	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
+	ARBConfigMultiQ& operator=(ARBConfigMultiQ&& rhs);
 
 	bool operator==(ARBConfigMultiQ const& rhs) const;
 	bool operator!=(ARBConfigMultiQ const& rhs) const

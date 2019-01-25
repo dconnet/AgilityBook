@@ -95,6 +95,8 @@
 // we're just not going to deal with at this time.
 #ifdef _MSC_VER
 
+#pragma warning (disable : 26415) // Smart pointer parameter '<var>' is used only to access contained pointer. Use T* or T& instead (r.30).
+#pragma warning (disable : 26418) // Shared pointer parameter '<var>' is not copied or moved. Use T* or T& instead (r.36).
 #pragma warning (disable : 26429) // Symbol '<var>' is never tested for nullness, it can be marked as not_null (f.23).
 #pragma warning (disable : 26439) // This kind of function may not throw. Declare it 'noexcept' (f.6).
 #pragma warning (disable : 26440) // Function '<func>' can be declared 'noexcept' (f.6).
@@ -106,6 +108,8 @@
 #pragma warning (disable : 26481) // Don't use pointer arithmetic. Use span instead (bounds.1).
 #pragma warning (disable : 26482) // Only index into arrays using constant expressions (bounds.2).
 #pragma warning (disable : 26485) // Expression '<var>': No array to pointer decay (bounds.3).
+#pragma warning (disable : 26486) // Don't pass a pointer that may be invalid to a function. ... (lifetime.1).
+#pragma warning (disable : 26489) // Don't dereference a pointer that may be invalid: '<var>'. '<var>' may have been invalidated at line <line> (lifetime.1).
 #pragma warning (disable : 26496) // The variable '<var>' is assigned only once, mark it as const (con.4).
 
 #endif

@@ -32,6 +32,7 @@ class ARBConfigFault : public ARBBase
 protected:
 	ARBConfigFault();
 	ARBConfigFault(ARBConfigFault const& rhs);
+	ARBConfigFault(ARBConfigFault&& rhs);
 
 public:
 	~ARBConfigFault();
@@ -39,6 +40,7 @@ public:
 	ARBConfigFaultPtr Clone() const;
 
 	ARBConfigFault& operator=(ARBConfigFault const& rhs);
+	ARBConfigFault& operator=(ARBConfigFault&& rhs);
 
 	bool operator==(ARBConfigFault const& rhs) const;
 	bool operator!=(ARBConfigFault const& rhs) const

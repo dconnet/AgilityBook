@@ -44,6 +44,7 @@ class ARBDogRun : public ARBBase
 protected:
 	ARBDogRun();
 	ARBDogRun(ARBDogRun const& rhs);
+	ARBDogRun(ARBDogRun&& rhs);
 
 public:
 	~ARBDogRun();
@@ -51,6 +52,7 @@ public:
 	ARBDogRunPtr Clone() const;
 
 	ARBDogRun& operator=(ARBDogRun const& rhs);
+	ARBDogRun& operator=(ARBDogRun&& rhs);
 
 	bool operator==(ARBDogRun const& rhs) const;
 	bool operator!=(ARBDogRun const& rhs) const
@@ -69,14 +71,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::wstring GetGenericName() const;
+	std::wstring GetGenericName() const override;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const;
+	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
 
 	/**
 	 * Load a run.

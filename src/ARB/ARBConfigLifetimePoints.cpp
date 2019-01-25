@@ -122,6 +122,15 @@ ARBConfigLifetimePoints::ARBConfigLifetimePoints(ARBConfigLifetimePoints const& 
 }
 
 
+ARBConfigLifetimePoints::ARBConfigLifetimePoints(ARBConfigLifetimePoints&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_UseSpeedPts(std::move(rhs.m_UseSpeedPts))
+	, m_Points(std::move(rhs.m_Points))
+	, m_Faults(std::move(rhs.m_Faults))
+{
+}
+
+
 ARBConfigLifetimePoints::~ARBConfigLifetimePoints()
 {
 }
@@ -141,6 +150,19 @@ ARBConfigLifetimePoints& ARBConfigLifetimePoints::operator=(ARBConfigLifetimePoi
 		m_UseSpeedPts = rhs.m_UseSpeedPts;
 		m_Points = rhs.m_Points;
 		m_Faults = rhs.m_Faults;
+	}
+	return *this;
+}
+
+
+ARBConfigLifetimePoints& ARBConfigLifetimePoints::operator=(ARBConfigLifetimePoints&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_UseSpeedPts = std::move(rhs.m_UseSpeedPts);
+		m_Points = std::move(rhs.m_Points);
+		m_Faults = std::move(rhs.m_Faults);
 	}
 	return *this;
 }

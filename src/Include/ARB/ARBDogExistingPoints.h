@@ -34,6 +34,7 @@ class ARBDogExistingPoints : public ARBBase
 protected:
 	ARBDogExistingPoints();
 	ARBDogExistingPoints(ARBDogExistingPoints const& rhs);
+	ARBDogExistingPoints(ARBDogExistingPoints&& rhs);
 
 public:
 	~ARBDogExistingPoints();
@@ -41,6 +42,7 @@ public:
 	ARBDogExistingPointsPtr Clone() const;
 
 	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
+	ARBDogExistingPoints& operator=(ARBDogExistingPoints&& rhs);
 
 	bool operator==(ARBDogExistingPoints const& rhs) const;
 	bool operator!=(ARBDogExistingPoints const& rhs) const

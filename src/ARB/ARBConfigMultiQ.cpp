@@ -69,6 +69,16 @@ ARBConfigMultiQ::ARBConfigMultiQ(ARBConfigMultiQ const& rhs)
 }
 
 
+ARBConfigMultiQ::ARBConfigMultiQ(ARBConfigMultiQ&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_ShortName(std::move(rhs.m_ShortName))
+	, m_ValidFrom(std::move(rhs.m_ValidFrom))
+	, m_ValidTo(std::move(rhs.m_ValidTo))
+	, m_Items(std::move(rhs.m_Items))
+{
+}
+
+
 ARBConfigMultiQ::~ARBConfigMultiQ()
 {
 }
@@ -89,6 +99,20 @@ ARBConfigMultiQ& ARBConfigMultiQ::operator=(ARBConfigMultiQ const& rhs)
 		m_ValidFrom = rhs.m_ValidFrom;
 		m_ValidTo = rhs.m_ValidTo;
 		m_Items = rhs.m_Items;
+	}
+	return *this;
+}
+
+
+ARBConfigMultiQ& ARBConfigMultiQ::operator=(ARBConfigMultiQ&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_ShortName = std::move(rhs.m_ShortName);
+		m_ValidFrom = std::move(rhs.m_ValidFrom);
+		m_ValidTo = std::move(rhs.m_ValidTo);
+		m_Items = std::move(rhs.m_Items);
 	}
 	return *this;
 }

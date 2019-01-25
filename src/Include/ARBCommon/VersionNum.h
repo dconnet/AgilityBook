@@ -58,10 +58,9 @@ public:
 	{
 	}
 	CVersionNum(CVersionNum&& rhs)
-		: m_Valid(rhs.m_Valid)
-		, m_Version(rhs.m_Version)
+		: m_Valid(std::move(rhs.m_Valid))
+		, m_Version(std::move(rhs.m_Version))
 	{
-		rhs.clear();
 	}
 	CVersionNum& operator=(CVersionNum const& rhs)
 	{
@@ -76,9 +75,8 @@ public:
 	{
 		if (this != &rhs)
 		{
-			m_Valid = rhs.m_Valid;
-			m_Version = rhs.m_Version;
-			rhs.clear();
+			m_Valid = std::move(rhs.m_Valid);
+			m_Version = std::move(rhs.m_Version);
 		}
 		return *this;
 	}

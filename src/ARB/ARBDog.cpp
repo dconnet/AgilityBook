@@ -99,6 +99,21 @@ ARBDog::ARBDog(ARBDog const& rhs)
 }
 
 
+ARBDog::ARBDog(ARBDog&& rhs)
+	: m_CallName(std::move(rhs.m_CallName))
+	, m_DOB(std::move(rhs.m_DOB))
+	, m_Deceased(std::move(rhs.m_Deceased))
+	, m_RegName(std::move(rhs.m_RegName))
+	, m_Breed(std::move(rhs.m_Breed))
+	, m_Note(std::move(rhs.m_Note))
+	, m_ExistingPoints(std::move(rhs.m_ExistingPoints))
+	, m_RegNums(std::move(rhs.m_RegNums))
+	, m_Titles(std::move(rhs.m_Titles))
+	, m_Trials(std::move(rhs.m_Trials))
+{
+}
+
+
 ARBDog::~ARBDog()
 {
 }
@@ -124,6 +139,25 @@ ARBDog& ARBDog::operator=(ARBDog const& rhs)
 		rhs.m_RegNums.Clone(m_RegNums);
 		rhs.m_Titles.Clone(m_Titles);
 		rhs.m_Trials.Clone(m_Trials);
+	}
+	return *this;
+}
+
+
+ARBDog& ARBDog::operator=(ARBDog&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_CallName = std::move(rhs.m_CallName);
+		m_DOB = std::move(rhs.m_DOB);
+		m_Deceased = std::move(rhs.m_Deceased);
+		m_RegName = std::move(rhs.m_RegName);
+		m_Breed = std::move(rhs.m_Breed);
+		m_Note = std::move(rhs.m_Note);
+		m_ExistingPoints = std::move(rhs.m_ExistingPoints);
+		m_RegNums = std::move(rhs.m_RegNums);
+		m_Titles = std::move(rhs.m_Titles);
+		m_Trials = std::move(rhs.m_Trials);
 	}
 	return *this;
 }

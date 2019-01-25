@@ -32,9 +32,9 @@ class ActionCallbackStop : public IConfigActionCallback
 {
 public:
 	ActionCallbackStop() {}
-	virtual void PreDelete(std::wstring const& inMsg) {}
-	virtual void PostDelete(std::wstring const& inMsg) const {}
-	virtual bool CanContinue() const	{return false;}
+	void PreDelete(std::wstring const& inMsg) override {}
+	void PostDelete(std::wstring const& inMsg) const override {}
+	bool CanContinue() const	 override {return false;}
 };
 
 
@@ -42,9 +42,9 @@ class ActionCallbackContinue : public IConfigActionCallback
 {
 public:
 	ActionCallbackContinue() {}
-	virtual void PreDelete(std::wstring const& inMsg) {}
-	virtual void PostDelete(std::wstring const& inMsg) const {}
-	virtual bool CanContinue() const	{return true;}
+	void PreDelete(std::wstring const& inMsg) override {}
+	void PostDelete(std::wstring const& inMsg) const override {}
+	bool CanContinue() const	 override {return true;}
 };
 
 

@@ -67,18 +67,14 @@ ARBConfig::ARBConfig(ARBConfig const& rhs)
 
 
 ARBConfig::ARBConfig(ARBConfig&& rhs)
-	: m_bUpdate(rhs.m_bUpdate)
-	, m_Version(rhs.m_Version)
-	, m_CalSites(rhs.m_CalSites)
-	, m_Actions()
-	, m_Venues()
-	, m_FaultTypes()
-	, m_OtherPoints()
+	: m_bUpdate(std::move(rhs.m_bUpdate))
+	, m_Version(std::move(rhs.m_Version))
+	, m_CalSites(std::move(rhs.m_CalSites))
+	, m_Actions(std::move(rhs.m_Actions))
+	, m_Venues(std::move(rhs.m_Venues))
+	, m_FaultTypes(std::move(rhs.m_FaultTypes))
+	, m_OtherPoints(std::move(rhs.m_OtherPoints))
 {
-	m_Actions = std::move(rhs.m_Actions);
-	m_Venues = std::move(rhs.m_Venues);
-	m_FaultTypes = std::move(rhs.m_FaultTypes);
-	m_OtherPoints = std::move(rhs.m_OtherPoints);
 }
 
 

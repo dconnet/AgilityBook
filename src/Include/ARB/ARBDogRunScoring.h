@@ -48,7 +48,9 @@ public:
 	ARBDogRunScoring();
 	~ARBDogRunScoring();
 	ARBDogRunScoring(ARBDogRunScoring const& rhs);
+	ARBDogRunScoring(ARBDogRunScoring&& rhs);
 	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
+	ARBDogRunScoring& operator=(ARBDogRunScoring&& rhs);
 
 	bool operator==(ARBDogRunScoring const& rhs) const;
 	bool operator!=(ARBDogRunScoring const& rhs) const

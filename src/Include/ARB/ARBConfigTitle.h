@@ -72,7 +72,7 @@ void SaveTitleSeparator(
 class ARBTitleInstance
 {
 protected:
-	virtual std::wstring TitleInstance(
+	std::wstring TitleInstance(
 			bool bShowInstanceOne,
 			short instance,
 			short startAt,
@@ -91,6 +91,7 @@ class ARBConfigTitle : public ARBBase, protected ARBTitleInstance
 protected:
 	ARBConfigTitle();
 	ARBConfigTitle(ARBConfigTitle const& rhs);
+	ARBConfigTitle(ARBConfigTitle&& rhs);
 
 public:
 	~ARBConfigTitle();
@@ -98,6 +99,7 @@ public:
 	ARBConfigTitlePtr Clone() const;
 
 	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
+	ARBConfigTitle& operator=(ARBConfigTitle&& rhs);
 
 	bool operator==(ARBConfigTitle const& rhs) const;
 	bool operator!=(ARBConfigTitle const& rhs) const

@@ -136,6 +136,14 @@ ARBConfigTitlePoints::ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs)
 }
 
 
+ARBConfigTitlePoints::ARBConfigTitlePoints(ARBConfigTitlePoints&& rhs)
+	: m_Points(std::move(rhs.m_Points))
+	, m_Faults(std::move(rhs.m_Faults))
+	, m_Calc(std::move(rhs.m_Calc))
+{
+}
+
+
 ARBConfigTitlePoints::~ARBConfigTitlePoints()
 {
 }
@@ -154,6 +162,18 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const
 		m_Points = rhs.m_Points;
 		m_Faults = rhs.m_Faults;
 		m_Calc = rhs.m_Calc;
+	}
+	return *this;
+}
+
+
+ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Points = std::move(rhs.m_Points);
+		m_Faults = std::move(rhs.m_Faults);
+		m_Calc = std::move(rhs.m_Calc);
 	}
 	return *this;
 }

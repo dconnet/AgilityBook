@@ -32,6 +32,7 @@ typedef std::shared_ptr<ARBMetaData> ARBMetaDataPtr;
 class ARBMetaData
 {
 	friend class ARBDogNotes;
+	DECLARE_NO_COPY_IMPLEMENTED(ARBMetaData)
 protected:
 	ARBMetaData();
 public:
@@ -54,9 +55,11 @@ class ARBDogNotes
 {
 public:
 	ARBDogNotes();
-	~ARBDogNotes();
+	virtual ~ARBDogNotes();
 	ARBDogNotes(ARBDogNotes const& rhs);
+	ARBDogNotes(ARBDogNotes&& rhs);
 	ARBDogNotes& operator=(ARBDogNotes const& rhs);
+	ARBDogNotes& operator=(ARBDogNotes&& rhs);
 
 	bool operator==(ARBDogNotes const& rhs) const;
 	bool operator!=(ARBDogNotes const& rhs) const

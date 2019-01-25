@@ -62,6 +62,12 @@ ARBConfigFault::ARBConfigFault(ARBConfigFault const& rhs)
 }
 
 
+ARBConfigFault::ARBConfigFault(ARBConfigFault&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+{
+}
+
+
 ARBConfigFault::~ARBConfigFault()
 {
 }
@@ -77,6 +83,14 @@ ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault const& rhs)
 {
 	if (this != &rhs)
 		m_Name = rhs.m_Name;
+	return *this;
+}
+
+
+ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault&& rhs)
+{
+	if (this != &rhs)
+		m_Name = std::move(rhs.m_Name);
 	return *this;
 }
 

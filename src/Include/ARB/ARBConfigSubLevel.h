@@ -33,6 +33,7 @@ class ARBConfigSubLevel : public ARBBase
 protected:
 	ARBConfigSubLevel();
 	ARBConfigSubLevel(ARBConfigSubLevel const& rhs);
+	ARBConfigSubLevel(ARBConfigSubLevel&& rhs);
 
 public:
 	~ARBConfigSubLevel();
@@ -40,6 +41,7 @@ public:
 	ARBConfigSubLevelPtr Clone() const;
 
 	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
+	ARBConfigSubLevel& operator=(ARBConfigSubLevel&& rhs);
 
 	bool operator==(ARBConfigSubLevel const& rhs) const;
 	bool operator!=(ARBConfigSubLevel const& rhs) const

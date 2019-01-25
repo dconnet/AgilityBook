@@ -119,6 +119,17 @@ ARBDogTrial::ARBDogTrial(ARBDogTrial const& rhs)
 }
 
 
+ARBDogTrial::ARBDogTrial(ARBDogTrial&& rhs)
+	: m_Location(std::move(rhs.m_Location))
+	, m_Note(std::move(rhs.m_Note))
+	, m_DefaultDate(std::move(rhs.m_DefaultDate))
+	, m_Verified(std::move(rhs.m_Verified))
+	, m_Clubs(std::move(rhs.m_Clubs))
+	, m_Runs(std::move(rhs.m_Runs))
+{
+}
+
+
 ARBDogTrial::~ARBDogTrial()
 {
 }
@@ -140,6 +151,21 @@ ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
 		m_Verified = rhs.m_Verified;
 		rhs.m_Clubs.Clone(m_Clubs);
 		rhs.m_Runs.Clone(m_Runs);
+	}
+	return *this;
+}
+
+
+ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Location = std::move(rhs.m_Location);
+		m_Note = std::move(rhs.m_Note);
+		m_DefaultDate = std::move(rhs.m_DefaultDate);
+		m_Verified = std::move(rhs.m_Verified);
+		m_Clubs = std::move(rhs.m_Clubs);
+		m_Runs = std::move(rhs.m_Runs);
 	}
 	return *this;
 }

@@ -26,7 +26,7 @@ class CDlgPageEncodeFinish : public wxWizardPageSimple
 public:
 	CDlgPageEncodeFinish(CDlgARBHelp* pParent);
 
-	virtual bool TransferDataToWindow();
+	bool TransferDataToWindow() override;
 
 private:
 	CDlgARBHelp* m_Parent;

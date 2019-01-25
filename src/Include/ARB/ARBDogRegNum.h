@@ -33,6 +33,7 @@ class ARBDogRegNum : public ARBBase
 protected:
 	ARBDogRegNum();
 	ARBDogRegNum(ARBDogRegNum const& rhs);
+	ARBDogRegNum(ARBDogRegNum&& rhs);
 
 public:
 	~ARBDogRegNum();
@@ -40,6 +41,7 @@ public:
 	ARBDogRegNumPtr Clone() const;
 
 	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
+	ARBDogRegNum& operator=(ARBDogRegNum&& rhs);
 
 	bool operator==(ARBDogRegNum const& rhs) const;
 	bool operator!=(ARBDogRegNum const& rhs) const

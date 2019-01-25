@@ -40,6 +40,7 @@ protected:
 			double inFaults,
 			ARBPointsType inType);
 	ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs);
+	ARBConfigTitlePoints(ARBConfigTitlePoints&& rhs);
 
 public:
 	~ARBConfigTitlePoints();
@@ -51,6 +52,7 @@ public:
 	ARBConfigTitlePointsPtr Clone() const;
 
 	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
+	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints&& rhs);
 
 	bool operator==(ARBConfigTitlePoints const& rhs) const;
 	bool operator!=(ARBConfigTitlePoints const& rhs) const

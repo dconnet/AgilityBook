@@ -36,6 +36,7 @@ class ARBConfigDivision : public ARBBase
 protected:
 	ARBConfigDivision();
 	ARBConfigDivision(ARBConfigDivision const& rhs);
+	ARBConfigDivision(ARBConfigDivision&& rhs);
 
 public:
 	~ARBConfigDivision();
@@ -43,6 +44,7 @@ public:
 	ARBConfigDivisionPtr Clone() const;
 
 	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
+	ARBConfigDivision& operator=(ARBConfigDivision&& rhs);
 
 	bool operator==(ARBConfigDivision const& rhs) const;
 	bool operator!=(ARBConfigDivision const& rhs) const

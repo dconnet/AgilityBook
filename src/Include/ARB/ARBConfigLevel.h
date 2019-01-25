@@ -34,6 +34,7 @@ class ARBConfigLevel : public ARBBase
 protected:
 	ARBConfigLevel();
 	ARBConfigLevel(ARBConfigLevel const& rhs);
+	ARBConfigLevel(ARBConfigLevel&& rhs);
 
 public:
 	~ARBConfigLevel();
@@ -41,6 +42,7 @@ public:
 	ARBConfigLevelPtr Clone() const;
 
 	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
+	ARBConfigLevel& operator=(ARBConfigLevel&& rhs);
 
 	bool operator==(ARBConfigLevel const& rhs) const;
 	bool operator!=(ARBConfigLevel const& rhs) const

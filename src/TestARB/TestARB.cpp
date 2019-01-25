@@ -56,6 +56,7 @@ class CLangManager
 	: public ILanguageCallback
 #endif
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CLangManager);
 public:
 	CLangManager(CLocalization& localization)
 		: m_Localization(localization)
@@ -66,15 +67,12 @@ public:
 #endif
 	{
 #if defined(__WXWINDOWS__)
-		m_langMgr = new CLanguageManager(this, true);
+		m_langMgr = std::make_unique<CLanguageManager>(this, true);
 		m_langMgr->InitLanguage();
 #endif
 	}
-	~CLangManager()
+	virtual ~CLangManager()
 	{
-#if defined(__WXWINDOWS__)
-		delete m_langMgr;
-#endif
 	}
 
 	bool SetLang(wxLanguage langId);
@@ -84,19 +82,19 @@ private:
 
 #if defined(__WXWINDOWS__)
 	// ILanguageCallback interface
-	virtual wxLanguage OnGetLanguage() const
+	wxLanguage OnGetLanguage() const override
 	{
 		return m_langMgr->GetDefaultLanguage();
 	}
-	virtual wxString OnGetCatalogName() const
+	wxString OnGetCatalogName() const override
 	{
 		return m_langMgr->GetDefaultCatalogName();
 	}
-	virtual wxString OnGetLangConfigName() const
+	wxString OnGetLangConfigName() const override
 	{
 		return wxEmptyString;
 	}
-	virtual wxString OnGetLanguageDir() const
+	wxString OnGetLanguageDir() const override
 	{
 #ifdef __WXMAC__
 		// Command line programs on Mac are acting like unix. GetResourcesDir
@@ -106,7 +104,7 @@ private:
 		return m_langMgr->GetDefaultLanguageDir();
 #endif
 	}
-	virtual void OnSetLanguage(wxLanguage langId)
+	void OnSetLanguage(wxLanguage langId) override
 	{
 		if (!m_Localization.Load())
 		{
@@ -115,19 +113,17 @@ private:
 			throw std::runtime_error(msg);
 		}
 	}
-	virtual void OnErrorMessage(wxString const& msg) const
+	void OnErrorMessage(wxString const& msg) const override
 	{
 		fmt::print(std::wcerr, L"{}\n", msg.wx_str());
 	}
-	CLanguageManager* m_langMgr;
+	std::unique_ptr<CLanguageManager> m_langMgr;
 #else // __WXWINDOWS__
 	virtual void OnSetLanguage(int langId)
 	{
 	}
 	int m_CurLang;
 #endif
-
-	DECLARE_NO_COPY_IMPLEMENTED(CLangManager);
 };
 static CLangManager* g_LangMgr = nullptr;
 

@@ -21,6 +21,7 @@
 
 class CConfigHandler : public IARBConfigHandler
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CConfigHandler)
 public:
 	/**
 	 * Load a file from a wxWidget archive (zip file)

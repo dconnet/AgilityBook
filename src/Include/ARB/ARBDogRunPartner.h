@@ -33,6 +33,7 @@ class ARBDogRunPartner : public ARBBase
 protected:
 	ARBDogRunPartner();
 	ARBDogRunPartner(ARBDogRunPartner const& rhs);
+	ARBDogRunPartner(ARBDogRunPartner&& rhs);
 
 public:
 	~ARBDogRunPartner();
@@ -40,6 +41,7 @@ public:
 	ARBDogRunPartnerPtr Clone() const;
 
 	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
+	ARBDogRunPartner& operator=(ARBDogRunPartner&& rhs);
 
 	bool operator==(ARBDogRunPartner const& rhs) const;
 	bool operator!=(ARBDogRunPartner const& rhs) const

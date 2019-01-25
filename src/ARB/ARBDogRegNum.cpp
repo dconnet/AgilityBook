@@ -75,6 +75,16 @@ ARBDogRegNum::ARBDogRegNum(ARBDogRegNum const& rhs)
 }
 
 
+ARBDogRegNum::ARBDogRegNum(ARBDogRegNum&& rhs)
+	: m_Venue(std::move(rhs.m_Venue))
+	, m_Number(std::move(rhs.m_Number))
+	, m_Height(std::move(rhs.m_Height))
+	, m_bReceived(std::move(rhs.m_bReceived))
+	, m_Note(std::move(rhs.m_Note))
+{
+}
+
+
 ARBDogRegNum::~ARBDogRegNum()
 {
 }
@@ -95,6 +105,20 @@ ARBDogRegNum& ARBDogRegNum::operator=(ARBDogRegNum const& rhs)
 		m_Height = rhs.m_Height;
 		m_bReceived = rhs.m_bReceived;
 		m_Note = rhs.m_Note;
+	}
+	return *this;
+}
+
+
+ARBDogRegNum& ARBDogRegNum::operator=(ARBDogRegNum&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Venue = std::move(rhs.m_Venue);
+		m_Number = std::move(rhs.m_Number);
+		m_Height = std::move(rhs.m_Height);
+		m_bReceived = std::move(rhs.m_bReceived);
+		m_Note = std::move(rhs.m_Note);
 	}
 	return *this;
 }

@@ -65,6 +65,13 @@ ARBDogRunOtherPoints::ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs)
 }
 
 
+ARBDogRunOtherPoints::ARBDogRunOtherPoints(ARBDogRunOtherPoints&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_Points(std::move(rhs.m_Points))
+{
+}
+
+
 ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 {
 }
@@ -82,6 +89,17 @@ ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints const
 	{
 		m_Name = rhs.m_Name;
 		m_Points = rhs.m_Points;
+	}
+	return *this;
+}
+
+
+ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_Points = std::move(rhs.m_Points);
 	}
 	return *this;
 }

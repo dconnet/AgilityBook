@@ -22,6 +22,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include <array>
 #include <set>
 
 
@@ -52,9 +53,8 @@ public:
 	// Filtered state
 	typedef enum
 	{
-		eFilter = 0,	// Full filter
-		eIgnoreQ = 1,	// Ignore Q status when filtering
-		eNumFilters = 2	// Number of filter types
+		eFilter,	// Full filter
+		eIgnoreQ,	// Ignore Q status when filtering
 	} FilterType;
 
 	/**
@@ -62,10 +62,7 @@ public:
 	 * @param inFilterType The filtered type to check.
 	 * @return The filtered state.
 	 */
-	virtual bool IsFiltered(FilterType inFilterType) const
-	{
-		return m_bFiltered[inFilterType];
-	}
+	virtual bool IsFiltered(FilterType inFilterType) const;
 
 	/**
 	 * Set the filtered state of this object.
@@ -75,10 +72,7 @@ public:
 	 */
 	virtual void SetFiltered(
 			FilterType inFilterType,
-			bool bFiltered)
-	{
-		m_bFiltered[inFilterType] = bFiltered;
-	}
+			bool bFiltered);
 
 	/**
 	 * Get the filtered state of this object.
@@ -110,7 +104,7 @@ public:
 	}
 
 protected:
-	bool m_bFiltered[eNumFilters];
+	std::array<bool, 2> m_bFiltered;
 
 	ARBBase(ARBBase const&) = delete;
 	ARBBase(ARBBase&&) = delete;

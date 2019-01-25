@@ -25,8 +25,8 @@ class CDlgPageEncodeFiles : public wxWizardPageSimple
 public:
 	CDlgPageEncodeFiles(CDlgARBHelp* pParent);
 
-	virtual bool TransferDataToWindow();
-	virtual bool TransferDataFromWindow();
+	bool TransferDataToWindow() override;
+	bool TransferDataFromWindow() override;
 
 private:
 	CDlgARBHelp* m_Parent;

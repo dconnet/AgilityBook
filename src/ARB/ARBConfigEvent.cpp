@@ -86,6 +86,19 @@ ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 }
 
 
+ARBConfigEvent::ARBConfigEvent(ARBConfigEvent&& rhs)
+	: m_Name(std::move(rhs.m_Name))
+	, m_ShortName(std::move(rhs.m_ShortName))
+	, m_Desc(std::move(rhs.m_Desc))
+	, m_bTable(std::move(rhs.m_bTable))
+	, m_bHasPartner(std::move(rhs.m_bHasPartner))
+	, m_bHasSubNames(std::move(rhs.m_bHasSubNames))
+	, m_SubNames(std::move(rhs.m_SubNames))
+	, m_Scoring(std::move(rhs.m_Scoring))
+{
+}
+
+
 ARBConfigEvent::~ARBConfigEvent()
 {
 }
@@ -109,6 +122,23 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 		m_bHasSubNames = rhs.m_bHasSubNames;
 		m_SubNames = rhs.m_SubNames;
 		rhs.m_Scoring.Clone(m_Scoring);
+	}
+	return *this;
+}
+
+
+ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent&& rhs)
+{
+	if (this != &rhs)
+	{
+		m_Name = std::move(rhs.m_Name);
+		m_ShortName = std::move(rhs.m_ShortName);
+		m_Desc = std::move(rhs.m_Desc);
+		m_bTable = std::move(rhs.m_bTable);
+		m_bHasPartner = std::move(rhs.m_bHasPartner);
+		m_bHasSubNames = std::move(rhs.m_bHasSubNames);
+		m_SubNames = std::move(rhs.m_SubNames);
+		m_Scoring = std::move(rhs.m_Scoring);
 	}
 	return *this;
 }
@@ -277,8 +307,7 @@ bool ARBConfigEvent::Update(
 	// If the order is different, we will fall into this...
 	if (GetScorings() != inEventNew->GetScorings())
 	{
-		int nAdded, nDeleted, nChanged, nSkipped;
-		nAdded = nDeleted = nChanged = nSkipped = 0;
+		int nAdded = 0, nDeleted = 0, nChanged = 0, nSkipped = 0;
 		ARBConfigScoringList::iterator iter1;
 		ARBConfigScoringList::const_iterator iter2;
 		// Look for changed items and items that will be removed.
