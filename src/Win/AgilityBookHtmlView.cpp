@@ -138,7 +138,7 @@ CAgilityBookHtmlView::CAgilityBookHtmlView(
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
 	, m_Ctrl(nullptr)
-	, m_Items(new CPointsDataItems())
+	, m_Items(std::make_unique<CPointsDataItems>())
 {
 }
 
@@ -146,7 +146,6 @@ CAgilityBookHtmlView::CAgilityBookHtmlView(
 CAgilityBookHtmlView::~CAgilityBookHtmlView()
 {
 	m_Items->clear();
-	delete m_Items;
 }
 
 

@@ -43,6 +43,7 @@
 class CLongValidator : public wxValidator
 {
 	DECLARE_CLASS(CLongValidator)
+private:
 	CLongValidator(CLongValidator&&) = delete;
 	CLongValidator& operator=(CLongValidator const&) = delete;
 	CLongValidator& operator=(CLongValidator&&) = delete;

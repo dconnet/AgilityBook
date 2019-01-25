@@ -106,8 +106,8 @@ public:
 	ARBDogPtr GetDog() const			{return m_pDog;}
 	ARBDogTrialPtr GetTrial() const		{return m_pTrial;}
 	ARBDogRunPtr GetRun() const			{return m_pRun;}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+	std::wstring OnNeedText(long iCol) const override;
+	void OnNeedListItem(long iCol, wxListItem& info) const override;
 protected:
 	CAgilityBookRunsView* m_pView;
 	ARBDogPtr m_pDog;
@@ -118,7 +118,7 @@ protected:
 
 std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 {
-	short val;
+	short val = 0;
 	std::wstring str;
 	if (0 < iCol && m_pRun)
 	{
@@ -694,7 +694,7 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_MIN_YPS:
 		{
-			double yps1, yps2;
+			double yps1 = 0.0, yps2 = 0.0;
 			bool bOk1 = pRun1->GetRun()->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps1);
 			bool bOk2 = pRun2->GetRun()->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps2);
 			if (bOk1 && bOk2)
@@ -712,7 +712,7 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_YPS:
 		{
-			double yps1, yps2;
+			double yps1 = 0.0, yps2 = 0.0;
 			bool bOk1 = pRun1->GetRun()->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps1);
 			bool bOk2 = pRun2->GetRun()->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps2);
 			if (bOk1 && bOk2)
@@ -740,7 +740,7 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_OPS:
 		{
-			double ops1, ops2;
+			double ops1 = 0.0, ops2 = 0.0;
 			bool bOk1 = pRun1->GetRun()->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops1);
 			bool bOk2 = pRun2->GetRun()->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops2);
 			if (bOk1 && bOk2)

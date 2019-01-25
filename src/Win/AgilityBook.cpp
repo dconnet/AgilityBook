@@ -85,8 +85,8 @@ class CAgilityBookDocManager : public wxDocManager
 	CAgilityBookDocManager(); // not implemented
 public:
 	CAgilityBookDocManager(size_t historySize);
-	virtual wxFileHistory* OnCreateFileHistory();
-	virtual void ActivateView(wxView *view, bool activate = true);
+	wxFileHistory* OnCreateFileHistory() override;
+	void ActivateView(wxView *view, bool activate = true) override;
 private:
 	size_t m_History;
 
@@ -315,14 +315,14 @@ bool CAgilityBookApp::OnInit()
 		filename = fName.GetFullPath();
 	}
 
-	m_manager = new CAgilityBookDocManager(CAgilityBookOptions::GetMRUFileCount());
+	m_manager = std::make_unique<CAgilityBookDocManager>(CAgilityBookOptions::GetMRUFileCount());
 	m_manager->SetMaxDocsOpen(1);
 	{
 		CConfigPathHelper config(CFG_KEY_RECENT_FILES);
 		m_manager->FileHistoryLoad(*wxConfig::Get());
 	}
 
-	(void)new wxDocTemplate(m_manager, L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
+	(void)new wxDocTemplate(m_manager.get(), L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
 #ifdef __WXMAC__
 #ifndef __WXOSX_COCOA__
@@ -348,8 +348,7 @@ bool CAgilityBookApp::OnInit()
 	wxSystemOptions::SetOption(L"mac.listctrl.always_use_generic", 1);
 #endif
 
-	int x, y;
-	x = y = wxDefaultCoord;
+	int x = wxDefaultCoord, y = wxDefaultCoord;
 	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTXPOS, &x, x))
 		x = DPI::Scale(x);
 	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTYPOS, &y, y))
@@ -381,7 +380,7 @@ bool CAgilityBookApp::OnInit()
 		rWorkSpace = monitor.GetClientArea();
 	}
 
-	CMainFrame *frame = new CMainFrame(m_manager);
+	CMainFrame *frame = new CMainFrame(m_manager.get());
 	int width = DPI::Scale(600);
 	int height = DPI::Scale(400);
 	int defWidth = width;
@@ -489,8 +488,7 @@ int CAgilityBookApp::OnExit()
 		CConfigPathHelper config(CFG_KEY_RECENT_FILES);
 		m_manager->FileHistorySave(*wxConfig::Get());
 	}
-	delete m_manager;
-	m_manager = nullptr;
+	m_manager.reset();
 	delete m_printDialogData;
 	m_printDialogData = nullptr;
 	delete m_Prn;

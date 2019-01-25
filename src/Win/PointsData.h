@@ -143,13 +143,13 @@ public:
 			CAgilityBookDoc* pDoc,
 			std::wstring const& inHtml);
 
-	virtual std::wstring OnNeedText(int inCol) const	{return std::wstring();}
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const
+	std::wstring OnNeedText(int inCol) const override {return std::wstring();}
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override
 	{
 		return m_Html;
 	}
-	virtual bool IsVisible() const						{return false;}
-	virtual bool IsEqual(CPointsDataBasePtr const& /*inData*/)	{return false;}
+	bool IsVisible() const override {return false;}
+	bool IsEqual(CPointsDataBasePtr const& /*inData*/) override {return false;}
 
 protected:
 	std::wstring m_Html;
@@ -180,9 +180,9 @@ public:
 			CAgilityBookDoc* pDoc,
 			std::wstring const& str);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 private:
 	bool m_UseInHtml;
@@ -201,9 +201,9 @@ class CPointsDataHeader : public CPointsDataBase
 public:
 	CPointsDataHeader(CAgilityBookDoc* pDoc);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	ARBDate m_today;
@@ -220,11 +220,11 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr const& inDog);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	ARBDogPtr m_pDog;
@@ -244,11 +244,11 @@ public:
 			ARBDogPtr const& inDog,
 			ARBConfigVenuePtr const& inVenue);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	ARBDogPtr m_pDog;
@@ -269,11 +269,11 @@ public:
 			ARBDogPtr const& inDog,
 			ARBDogTitlePtr const& inTitle);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	ARBDogPtr m_pDog;
@@ -307,11 +307,11 @@ public:
 			std::wstring const& inSuperQ,
 			std::wstring const& inSpeed);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	ARBDogPtr m_Dog;
@@ -352,11 +352,11 @@ public:
 			double inLifetime,
 			double inFiltered);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	ARBConfigLifetimeNamePtr m_LifetimeName;	///< null implies Placement
@@ -395,9 +395,9 @@ public:
 			double inLifetime,
 			double inFiltered);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	std::wstring m_Name;
@@ -419,11 +419,11 @@ public:
 			ARBConfigMultiQPtr const& inMultiQ,
 			std::set<MultiQdata> const& inMQs);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	ARBDogPtr m_Dog;
@@ -448,9 +448,9 @@ public:
 			ARBConfigDivisionPtr const& inDiv,
 			int inPts);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	ARBConfigVenuePtr m_Venue;
@@ -485,11 +485,11 @@ public:
 			std::wstring const& inName,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	std::wstring m_Name;
@@ -504,11 +504,11 @@ public:
 			std::wstring const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	std::wstring m_Event;
@@ -523,11 +523,11 @@ public:
 			std::wstring const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	std::wstring m_Level;
@@ -543,11 +543,11 @@ public:
 			std::wstring const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual std::wstring OnNeedText(int inCol) const;
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
-	virtual bool HasDetails() const {return true;}
-	virtual void Details() const;
-	virtual bool IsEqual(CPointsDataBasePtr const& inData);
+	std::wstring OnNeedText(int inCol) const override;
+	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
+	bool HasDetails() const override {return true;}
+	void Details() const override;
+	bool IsEqual(CPointsDataBasePtr const& inData) override;
 
 protected:
 	std::wstring m_Level;

@@ -37,10 +37,10 @@ public:
 	bool ShowPointsAsHtml(bool bHtml);
 	int GetCurTab() const;
 	int SetCurTab(int index);
-	virtual void OnChangeFilename();
-	virtual bool OnCreate(wxDocument* doc, long flags);
-	virtual void OnDraw(wxDC* dc);
-	virtual void OnUpdate(wxView* sender, wxObject* inHint = nullptr);
+	void OnChangeFilename() override;
+	bool OnCreate(wxDocument* doc, long flags) override;
+	void OnDraw(wxDC* dc) override;
+	void OnUpdate(wxView* sender, wxObject* inHint = nullptr) override;
 
 	// Menu ids
 	int GetType() const		{return m_type;}

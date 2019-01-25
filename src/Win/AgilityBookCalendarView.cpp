@@ -68,6 +68,7 @@
 class CAgilityBookCalendar : public wxWindow
 {
 	DECLARE_CLASS(CAgilityBookCalendar)
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookCalendar)
 public:
 	CAgilityBookCalendar(
 			CAgilityBookCalendarView* parentView,
@@ -650,8 +651,8 @@ void CAgilityBookCalendar::OnCopy()
 #define COL_CLOSES		6
 #define COL_NOTES		7
 
-	int index;
-	size_t maxLen[scNumColumns];
+	int index = 0;
+	size_t maxLen[scNumColumns] = { 0 };
 	std::wstring columns[scNumColumns];
 	for (index = 0; index < scNumColumns; ++index)
 	{
@@ -1103,7 +1104,7 @@ wxRect CAgilityBookCalendar::GetDateRect(ARBDate const& date)
 	wxClientDC dc(this);
 
 	wxRect rHeader, rDaysOfWeek, rCalendar;
-	int width, height;
+	int width = 0, height = 0;
 	GetWorkingAreas(&dc, rHeader, rDaysOfWeek, rCalendar, width, height, false);
 
 	wxRect r(rCalendar.x + 1, rCalendar.y + 1, width - 1, height - 1);
@@ -1121,7 +1122,7 @@ void CAgilityBookCalendar::GetDateFromPoint(
 	wxClientDC dc(this);
 
 	wxRect rHeader, rDaysOfWeek, rCalendar;
-	int width, height;
+	int width = 0, height = 0;
 	GetWorkingAreas(&dc, rHeader, rDaysOfWeek, rCalendar, width, height, false);
 
 	if (rCalendar.Contains(pt))

@@ -21,7 +21,7 @@
 /// Combobox specifically for listing venues
 class CVenueComboBox : public wxComboBox
 {
-DECLARE_CLASS(CVenueComboBox)
+	DECLARE_CLASS(CVenueComboBox)
 public:
 	CVenueComboBox(
 			wxWindow* parent,

@@ -54,33 +54,33 @@ public:
 	CAgilityBookMenu& GetMenus() { return m_menus; }
 
 protected:
-	virtual wxString GetReportName() const { return wxT("AgilityBook"); }
+	wxString GetReportName() const override { return wxT("AgilityBook"); }
 
-	virtual bool OnInit();
-	virtual int OnExit();
+	bool OnInit() override;
+	int OnExit() override;
 
 #if USE_DBGREPORT
-	virtual bool OnAddFileDebugReport(wxDebugReport* report);
+	bool OnAddFileDebugReport(wxDebugReport* report) override;
 #endif
 
-	virtual void BaseAppCleanup(bool deleteConfig = false);
+	void BaseAppCleanup(bool deleteConfig = false) override;
 
-	virtual wxLanguage OnGetLanguage() const;
-	virtual wxString OnGetLangConfigName() const;
-	virtual void OnSetLanguage(wxLanguage langId);
+	wxLanguage OnGetLanguage() const override;
+	wxString OnGetLangConfigName() const override;
+	void OnSetLanguage(wxLanguage langId) override;
 
 	// IImageManagerCallback interface
-	virtual bool OnCreateBitmap(
+	bool OnCreateBitmap(
 			const wxArtID& id,
 			const wxArtClient& client,
 			const wxSize& size,
-			wxBitmap& outBmp);
-	virtual bool OnCreateIconBundle(
+			wxBitmap& outBmp) override;
+	bool OnCreateIconBundle(
 			const wxArtID& id,
 			const wxArtClient& client,
-			wxIconBundle& outIcon);
+			wxIconBundle& outIcon) override;
 
-	virtual bool InitLanguage();
+	bool InitLanguage() override;
 
 	DECLARE_EVENT_TABLE()
 	void OnQueryEndSession(wxCloseEvent& evt);
@@ -90,7 +90,7 @@ protected:
 	CLocalization m_Localization;
 	CImageHelper m_imageHelper;
 	CUpdateInfo m_UpdateInfo;
-	CAgilityBookDocManager* m_manager;
+	std::unique_ptr<CAgilityBookDocManager> m_manager;
 	wxPrintDialogData* m_printDialogData;
 	CHtmlEasyPrinting* m_Prn;
 	CAgilityBookMenu m_menus;

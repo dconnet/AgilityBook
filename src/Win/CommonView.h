@@ -38,7 +38,7 @@ public:
 	}
 	// Prevent the view from calling wxDocument::DeleteDocument
 	// (wxView override)
-	virtual bool OnClose(bool /*deleteWindow*/)
+	bool OnClose(bool /*deleteWindow*/) override
 	{
 		Activate(false);
 		return true;
@@ -68,11 +68,12 @@ public:
 class CAgilityBookBaseExtraView : public CAgilityBookBaseView
 {
 	DECLARE_CLASS(CAgilityBookBaseExtraView)
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookBaseExtraView)
+
+public:
 	CAgilityBookBaseExtraView(
 			CTabView* pTabView,
 			wxDocument* doc);
-
-public:
 	/// Derived class must call this at end of their work.
 	virtual bool Create(
 			CBasePanel* parentOfView,

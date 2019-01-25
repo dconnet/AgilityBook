@@ -60,6 +60,7 @@
 
 class CAgilityBookTrainingViewData : public CListData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTrainingViewData)
 public:
 	CAgilityBookTrainingViewData(
 			CAgilityBookTrainingView* pView,
@@ -76,8 +77,8 @@ public:
 	bool CanDelete() const				{return true;}
 
 	ARBTrainingPtr GetTraining()		{return m_pTraining;}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+	std::wstring OnNeedText(long iCol) const override;
+	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
 private:
 	CAgilityBookTrainingView* m_pView;

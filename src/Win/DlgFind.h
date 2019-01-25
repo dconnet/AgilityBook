@@ -21,6 +21,7 @@ class CTextCtrl;
 
 class IFindCallback
 {
+	DECLARE_NO_COPY_IMPLEMENTED(IFindCallback)
 public:
 	IFindCallback()
 		: m_strCaption()
@@ -32,6 +33,7 @@ public:
 		, m_bDown(true)
 	{
 	}
+	virtual ~IFindCallback() {}
 
 	virtual std::wstring const& GetCaption() const	{return m_strCaption;}
 	virtual std::wstring const& Text() const		{return m_strSearch;}

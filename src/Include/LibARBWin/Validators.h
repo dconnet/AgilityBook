@@ -30,7 +30,7 @@ class wxDateTime;
 // no ctor I can use (it has no default one).
 class CGenericValidator : public wxValidator
 {
-DECLARE_CLASS(CGenericValidator)
+	DECLARE_CLASS(CGenericValidator)
 public:
 	CGenericValidator(
 			unsigned short* val,
@@ -98,7 +98,7 @@ private:
 
 class CTrimValidator : public wxGenericValidator
 {
-DECLARE_CLASS(CTrimValidator)
+	DECLARE_CLASS(CTrimValidator)
 public:
 	CTrimValidator(
 			wxString* valPtr = nullptr,

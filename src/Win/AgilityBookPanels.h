@@ -31,7 +31,7 @@ public:
 	CBasePanel(
 			wxWindow* parent,
 			std::wstring const& helpText);
-	virtual ~CBasePanel();
+	~CBasePanel();
 
 	void ActivateView();
 	bool ActivateView(int iSplit);
@@ -51,6 +51,7 @@ protected:
 
 class CAgilityBookPanelRuns : public CBasePanel
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookPanelRuns)
 public:
 	CAgilityBookPanelRuns(
 			CTabView* pTabView,
@@ -81,6 +82,7 @@ public:
 
 class CAgilityBookPanelCalendar : public CBasePanel
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookPanelCalendar)
 public:
 	CAgilityBookPanelCalendar(
 			CTabView* pTabView,

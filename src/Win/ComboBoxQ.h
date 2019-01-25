@@ -22,7 +22,7 @@
 /// Combobox for Qs
 class CQualifyingComboBox : public wxChoice
 {
-DECLARE_CLASS(CQualifyingComboBox)
+	DECLARE_CLASS(CQualifyingComboBox)
 public:
 	CQualifyingComboBox(
 			wxWindow* parent,

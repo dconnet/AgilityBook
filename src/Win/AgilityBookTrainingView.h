@@ -41,7 +41,7 @@ public:
 		: m_pView(pView)
 	{
 	}
-	virtual bool Search(CDlgFind* pDlg) const;
+	bool Search(CDlgFind* pDlg) const override;
 private:
 	CAgilityBookTrainingView* m_pView;
 };
@@ -53,14 +53,15 @@ class CAgilityBookTrainingView : public CAgilityBookBaseExtraView
 	friend class CFindTraining;
 	friend int wxCALLBACK CompareTraining(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
 	DECLARE_CLASS(CAgilityBookTrainingView)
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTrainingView)
+
+public:
 	CAgilityBookTrainingView(
 			CTabView* pTabView,
 			wxDocument* doc);
-
-public:
 	~CAgilityBookTrainingView();
 
-	virtual bool Create(
+	bool Create(
 			CBasePanel* parentView,
 			wxWindow* parentCtrl,
 			wxDocument* doc,
@@ -68,28 +69,28 @@ public:
 			wxSizer* sizer,
 			int proportion = 0,
 			int sizerFlags = 0,
-			int border = 0);
-	virtual wxWindow* GetControl()		{return m_Ctrl;}
-	virtual void DetachView();
+			int border = 0) override;
+	wxWindow* GetControl() override		{return m_Ctrl;}
+	void DetachView() override;
 
 	void SetCurrentDate(ARBDate const& inDate);
 
-	virtual bool IsFiltered() const;
-	virtual bool GetMessage(std::wstring& msg) const;
-	virtual bool GetMessage2(std::wstring& msg) const;
-	virtual bool AllowStatusContext(int field) const;
+	bool IsFiltered() const override;
+	bool GetMessage(std::wstring& msg) const override;
+	bool GetMessage2(std::wstring& msg) const override;
+	bool AllowStatusContext(int field) const override;
 
-	virtual bool OnCreate(
+	bool OnCreate(
 			wxDocument* doc,
-			long flags);
-	virtual void DoActivateView(
+			long flags) override;
+	void DoActivateView(
 			bool activate,
 			wxView* activeView,
-			wxView* deactiveView);
-	virtual void OnDraw(wxDC* dc);
-	virtual void OnUpdate(
+			wxView* deactiveView) override;
+	void OnDraw(wxDC* dc) override;
+	void OnUpdate(
 			wxView* sender,
-			wxObject* inHint = nullptr);
+			wxObject* inHint = nullptr) override;
 
 	void GetPrintLine(long item, std::vector<std::wstring>& line) const;
 

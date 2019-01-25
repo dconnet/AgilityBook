@@ -31,6 +31,7 @@ class CAgilityBookTreeDataRun;
 
 class CAgilityBookTreeData : public CTreeData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeData)
 public:
 	CAgilityBookTreeData(CAgilityBookTreeView* pTree)
 		: m_pTree(pTree)
@@ -114,53 +115,54 @@ protected:
 
 class CAgilityBookTreeDataDog : public CAgilityBookTreeData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeDataDog)
 public:
 	CAgilityBookTreeDataDog(
 			CAgilityBookTreeView* pTree,
 			ARBDogPtr const& inDog);
 	~CAgilityBookTreeDataDog();
 
-	virtual CTreeDataType GetType() const
+	CTreeDataType GetType() const override
 	{
 		return CAgilityBookTreeData::eTreeDog;
 	}
 
-	virtual CAgilityBookTreeData const* GetParent() const
+	CAgilityBookTreeData const* GetParent() const override
 	{
 		return nullptr;
 	}
-	virtual ARBBasePtr GetARBBase() const
+	ARBBasePtr GetARBBase() const override
 	{
 		return m_pDog;
 	}
-	virtual ARBDogPtr GetDog() const
+	ARBDogPtr GetDog() const override
 	{
 		return m_pDog;
 	}
-	virtual ARBDogPtr GetDog()
+	ARBDogPtr GetDog() override
 	{
 		return m_pDog;
 	}
-	virtual CAgilityBookTreeDataDog const* GetDataDog() const
+	CAgilityBookTreeDataDog const* GetDataDog() const override
 	{
 		return this;
 	}
-	virtual CAgilityBookTreeDataDog* GetDataDog()
+	CAgilityBookTreeDataDog* GetDataDog() override
 	{
 		return this;
 	}
 
-	virtual MenuIdentityPopup GetMenuID() const
+	MenuIdentityPopup GetMenuID() const override
 	{
 		return IdMenuDog;
 	}
-	virtual std::wstring OnNeedText() const;
-	virtual int OnNeedIcon() const;
+	std::wstring OnNeedText() const override;
+	int OnNeedIcon() const override;
 
-	virtual void Properties();
-	virtual bool DoCopy();
-	virtual bool DoDuplicate();
-	virtual bool DoDelete(bool bSilent);
+	void Properties() override;
+	bool DoCopy() override;
+	bool DoDuplicate() override;
+	bool DoDelete(bool bSilent) override;
 
 private:
 	ARBDogPtr m_pDog;
@@ -170,56 +172,57 @@ private:
 
 class CAgilityBookTreeDataTrial : public CAgilityBookTreeData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeDataTrial)
 public:
 	CAgilityBookTreeDataTrial(
 			CAgilityBookTreeView* pTree,
 			ARBDogTrialPtr const& inTrial);
 
-	virtual CTreeDataType GetType() const
+	CTreeDataType GetType() const override
 	{
 		return CAgilityBookTreeData::eTreeTrial;
 	}
 
-	virtual CAgilityBookTreeData const* GetParent() const
+	CAgilityBookTreeData const* GetParent() const override
 	{
 		return GetDataDog();
 	}
-	virtual ARBBasePtr GetARBBase() const
+	ARBBasePtr GetARBBase() const override
 	{
 		return m_pTrial;
 	}
-	virtual ARBDogPtr GetDog() const;
-	virtual ARBDogTrialPtr GetTrial() const
+	ARBDogPtr GetDog() const override;
+	ARBDogTrialPtr GetTrial() const override
 	{
 		return m_pTrial;
 	}
-	virtual ARBDogPtr GetDog();
-	virtual ARBDogTrialPtr GetTrial()
+	ARBDogPtr GetDog() override;
+	ARBDogTrialPtr GetTrial() override
 	{
 		return m_pTrial;
 	}
-	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
-	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const
+	CAgilityBookTreeDataDog const* GetDataDog() const override;
+	CAgilityBookTreeDataTrial const* GetDataTrial() const override
 	{
 		return this;
 	}
-	virtual CAgilityBookTreeDataDog* GetDataDog();
-	virtual CAgilityBookTreeDataTrial* GetDataTrial()
+	CAgilityBookTreeDataDog* GetDataDog() override;
+	CAgilityBookTreeDataTrial* GetDataTrial() override
 	{
 		return this;
 	}
 
-	virtual MenuIdentityPopup GetMenuID() const
+	MenuIdentityPopup GetMenuID() const override
 	{
 		return IdMenuTrial;
 	}
-	virtual std::wstring OnNeedText() const;
-	virtual int OnNeedIcon() const;
+	std::wstring OnNeedText() const override;
+	int OnNeedIcon() const override;
 
-	virtual void Properties();
-	virtual bool DoCopy();
-	virtual bool DoDuplicate();
-	virtual bool DoDelete(bool bSilent);
+	void Properties() override;
+	bool DoCopy() override;
+	bool DoDuplicate() override;
+	bool DoDelete(bool bSilent) override;
 
 private:
 	ARBDogTrialPtr m_pTrial;
@@ -230,61 +233,62 @@ private:
 
 class CAgilityBookTreeDataRun : public CAgilityBookTreeData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeDataRun)
 public:
 	CAgilityBookTreeDataRun(
 			CAgilityBookTreeView* pTree,
 			ARBDogRunPtr const& inRun);
 	~CAgilityBookTreeDataRun();
 
-	virtual CTreeDataType GetType() const
+	CTreeDataType GetType() const override
 	{
 		return CAgilityBookTreeData::eTreeRun;
 	}
 
-	virtual CAgilityBookTreeData const* GetParent() const
+	CAgilityBookTreeData const* GetParent() const override
 	{
 		return GetDataTrial();
 	}
-	virtual ARBBasePtr GetARBBase() const
+	ARBBasePtr GetARBBase() const override
 	{
 		return m_pRun;
 	}
-	virtual ARBDogPtr GetDog() const;
-	virtual ARBDogTrialPtr GetTrial() const;
-	virtual ARBDogRunPtr GetRun() const
+	ARBDogPtr GetDog() const override;
+	ARBDogTrialPtr GetTrial() const override;
+	ARBDogRunPtr GetRun() const override
 	{
 		return m_pRun;
 	}
-	virtual ARBDogPtr GetDog();
-	virtual ARBDogTrialPtr GetTrial();
-	virtual ARBDogRunPtr GetRun()
+	ARBDogPtr GetDog() override;
+	ARBDogTrialPtr GetTrial() override;
+	ARBDogRunPtr GetRun() override
 	{
 		return m_pRun;
 	}
-	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
-	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const;
-	virtual CAgilityBookTreeDataRun const* GetDataRun() const
+	CAgilityBookTreeDataDog const* GetDataDog() const override;
+	CAgilityBookTreeDataTrial const* GetDataTrial() const override;
+	CAgilityBookTreeDataRun const* GetDataRun() const override
 	{
 		return this;
 	}
-	virtual CAgilityBookTreeDataDog* GetDataDog();
-	virtual CAgilityBookTreeDataTrial* GetDataTrial();
-	virtual CAgilityBookTreeDataRun* GetDataRun()
+	CAgilityBookTreeDataDog* GetDataDog() override;
+	CAgilityBookTreeDataTrial* GetDataTrial() override;
+	CAgilityBookTreeDataRun* GetDataRun() override
 	{
 		return this;
 	}
 
-	virtual MenuIdentityPopup GetMenuID() const
+	MenuIdentityPopup GetMenuID() const override
 	{
 		return IdMenuRun;
 	}
-	virtual std::wstring OnNeedText() const;
-	virtual int OnNeedIcon() const;
+	std::wstring OnNeedText() const override;
+	int OnNeedIcon() const override;
 
-	virtual void Properties();
-	virtual bool DoCopy();
-	virtual bool DoDuplicate();
-	virtual bool DoDelete(bool bSilent);
+	void Properties() override;
+	bool DoCopy() override;
+	bool DoDuplicate() override;
+	bool DoDelete(bool bSilent) override;
 
 private:
 	ARBDogRunPtr m_pRun;

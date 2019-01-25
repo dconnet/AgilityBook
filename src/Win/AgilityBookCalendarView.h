@@ -33,14 +33,15 @@ class CAgilityBookCalendarView : public CAgilityBookBaseExtraView
 {
 	friend class CAgilityBookCalendar;
 	DECLARE_CLASS(CAgilityBookCalendarView)
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookCalendarView)
+
+public:
 	CAgilityBookCalendarView(
 			CTabView* pTabView,
 			wxDocument* doc);
-
-public:
 	~CAgilityBookCalendarView();
 
-	virtual bool Create(
+	bool Create(
 			CBasePanel* parentView,
 			wxWindow* parentCtrl,
 			wxDocument* doc,
@@ -48,35 +49,35 @@ public:
 			wxSizer* sizer,
 			int proportion = 0,
 			int sizerFlags = 0,
-			int border = 0);
-	virtual wxWindow* GetControl();
-	virtual bool HasPrevPane() const	{return true;}
-	virtual bool PrevPane();
-	virtual bool HasNextPane() const	{return true;}
-	virtual bool NextPane();
-	virtual void DetachView();
+			int border = 0) override;
+	wxWindow* GetControl() override;
+	bool HasPrevPane() const override	{return true;}
+	bool PrevPane() override;
+	bool HasNextPane() const override	{return true;}
+	bool NextPane() override;
+	void DetachView() override;
 
 	ARBDate GetCurrentDate() const;
 	bool SetCurrentDate(
 			ARBDate const& date,
 			bool bEnsureVisible);
 
-	virtual bool IsFiltered() const;
-	virtual bool GetMessage(std::wstring& msg) const;
-	virtual bool GetMessage2(std::wstring& msg) const;
-	virtual bool AllowStatusContext(int field) const;
+	bool IsFiltered() const override;
+	bool GetMessage(std::wstring& msg) const override;
+	bool GetMessage2(std::wstring& msg) const override;
+	bool AllowStatusContext(int field) const override;
 
-	virtual bool OnCreate(
+	bool OnCreate(
 			wxDocument* doc,
-			long flags);
-	virtual void DoActivateView(
+			long flags) override;
+	void DoActivateView(
 			bool activate,
 			wxView* activeView,
-			wxView* deactiveView);
-	virtual void OnDraw(wxDC* dc);
-	virtual void OnUpdate(
+			wxView* deactiveView) override;
+	void OnDraw(wxDC* dc) override;
+	void OnUpdate(
 			wxView* sender,
-			wxObject* inHint = nullptr);
+			wxObject* inHint = nullptr) override;
 
 private:
 	void SetupColumns();

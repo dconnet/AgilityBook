@@ -317,7 +317,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 			if (GetTreeView() && 1 < m_Records.GetDogs().size())
 			{
 				ARBDogPtr curDog = GetCurrentDog();
-				wxMenu* menu = new wxMenu();
+				wxMenu menu;
 				int menuId = baseID;
 				CStatusHandler data;
 				ARBDogList::const_iterator iDog;
@@ -325,15 +325,14 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				{
 					BIND_OR_CONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
 					std::wstring item = StringUtil::Replace((*iDog)->GetGenericName(), L"&", L"&&");
-					wxMenuItem* menuitem = menu->AppendCheckItem(menuId, StringUtil::stringWX(item));
+					wxMenuItem* menuitem = menu.AppendCheckItem(menuId, StringUtil::stringWX(item));
 					if (curDog && *(*iDog) == *curDog)
 						menuitem->Check(true);
 					data.dogs.push_back(*iDog);
 				}
 				bHandled = true;
 				m_StatusData = &data;
-				parent->PopupMenu(menu, point);
-				delete menu;
+				parent->PopupMenu(&menu, point);
 				menuId = baseID;
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
@@ -350,7 +349,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				if (0 < data.filterNames.size())
 				{
 					std::wstring filterName = data.filterOptions.GetCurrentFilter();
-					wxMenu* menu = new wxMenu();
+					wxMenu menu;
 					int menuId = baseID;
 					std::vector<std::wstring>::const_iterator iFilter;
 					for (iFilter = data.filterNames.begin();
@@ -359,14 +358,13 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 					{
 						BIND_OR_CONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
 						std::wstring item = StringUtil::Replace(*iFilter, L"&", L"&&");
-						wxMenuItem* menuitem = menu->AppendCheckItem(menuId, StringUtil::stringWX(item));
+						wxMenuItem* menuitem = menu.AppendCheckItem(menuId, StringUtil::stringWX(item));
 						if (*iFilter == filterName)
 							menuitem->Check(true);
 					}
 					bHandled = true;
 					m_StatusData = &data;
-					parent->PopupMenu(menu, point);
-					delete menu;
+					parent->PopupMenu(&menu, point);
 					menuId = baseID;
 					for (iFilter = data.filterNames.begin();
 						iFilter != data.filterNames.end();
@@ -808,8 +806,8 @@ class CConfigActionCallback : public IConfigActionCallback
 {
 public:
 	CConfigActionCallback() {}
-	virtual void PreDelete(std::wstring const& inMsg);
-	virtual void PostDelete(std::wstring const& inMsg) const;
+	void PreDelete(std::wstring const& inMsg) override;
+	void PostDelete(std::wstring const& inMsg) const override;
 };
 
 
@@ -1860,7 +1858,7 @@ public:
 		m_bSearchAll = true;
 		m_bEnableDirection = false;
 	}
-	virtual bool Search(CDlgFind* pDlg) const;
+	bool Search(CDlgFind* pDlg) const override;
 	mutable std::vector<CFindItemInfo> m_Items;
 private:
 	CAgilityBookDoc* m_pDoc;
@@ -2242,7 +2240,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case wxID_PREFERENCES:
 		{
-			int nPage;
+			int nPage = 0;
 			CTabView* pTab = GetTabView();
 			if (!pTab)
 				return;

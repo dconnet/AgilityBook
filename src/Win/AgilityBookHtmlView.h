@@ -40,8 +40,8 @@ public:
 	{
 	}
 
-	virtual bool SetPage(const wxString& source);
-	virtual void OnLinkClicked(const wxHtmlLinkInfo& link);
+	bool SetPage(const wxString& source) override;
+	void OnLinkClicked(const wxHtmlLinkInfo& link) override;
 
 private:
 	CAgilityBookHtmlView* m_pView;
@@ -51,16 +51,17 @@ private:
 
 class CAgilityBookHtmlView : public CAgilityBookBaseExtraView
 {
-	DECLARE_DYNAMIC_CLASS(CAgilityBookHtmlView)
 	friend class CHtmlWindow;
+	DECLARE_DYNAMIC_CLASS(CAgilityBookHtmlView)
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookHtmlView)
+
+public:
 	CAgilityBookHtmlView(
 			CTabView* pTabView,
 			wxDocument* doc);
-
-public:
 	~CAgilityBookHtmlView();
 
-	virtual bool Create(
+	bool Create(
 			CBasePanel* parentView,
 			wxWindow* parentCtrl,
 			wxDocument* doc,
@@ -68,26 +69,26 @@ public:
 			wxSizer* sizer,
 			int proportion = 0,
 			int sizerFlags = 0,
-			int border = 0);
-	virtual wxWindow* GetControl()		{return m_Ctrl;}
-	virtual void DetachView();
+			int border = 0) override;
+	wxWindow* GetControl() override		{return m_Ctrl;}
+	void DetachView() override;
 
-	virtual bool IsFiltered() const;
-	virtual bool GetMessage(std::wstring& msg) const;
-	virtual bool GetMessage2(std::wstring& msg) const;
-	virtual bool AllowStatusContext(int field) const;
+	bool IsFiltered() const override;
+	bool GetMessage(std::wstring& msg) const override;
+	bool GetMessage2(std::wstring& msg) const override;
+	bool AllowStatusContext(int field) const override;
 
-	virtual bool OnCreate(
+	bool OnCreate(
 			wxDocument* doc,
-			long flags);
-	virtual void DoActivateView(
+			long flags) override;
+	void DoActivateView(
 			bool activate,
 			wxView* activeView,
-			wxView* deactiveView);
-	virtual void OnDraw(wxDC* dc);
-	virtual void OnUpdate(
+			wxView* deactiveView) override;
+	void OnDraw(wxDC* dc) override;
+	void OnUpdate(
 			wxView* sender,
-			wxObject* inHint = nullptr);
+			wxObject* inHint = nullptr) override;
 
 private:
 	wxString RawHtml(
@@ -96,7 +97,7 @@ private:
 	void LoadData();
 
 	CHtmlWindow* m_Ctrl;
-	CPointsDataItems* m_Items;
+	std::unique_ptr<CPointsDataItems> m_Items;
 
 	DECLARE_EVENT_TABLE()
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);

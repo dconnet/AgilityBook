@@ -23,7 +23,7 @@
 /// For use with CQualifyingComboBox
 class CQualifyingValidator : public wxValidator
 {
-DECLARE_CLASS(CQualifyingValidator)
+	DECLARE_CLASS(CQualifyingValidator)
 public:
 	CQualifyingValidator(ARB_Q* valPtr = nullptr, bool bAllowNoSel = false);
 	CQualifyingValidator(CQualifyingValidator const& rhs);

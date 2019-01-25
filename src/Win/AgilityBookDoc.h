@@ -93,7 +93,7 @@ class CErrorCallback : public ARBErrorCallback
 {
 public:
 	CErrorCallback();
-	virtual bool OnError(wchar_t const* const pMsg);
+	bool OnError(wchar_t const* const pMsg) override;
 	fmt::wmemory_buffer m_ErrMsg;
 };
 
@@ -101,6 +101,7 @@ public:
 class CAgilityBookDoc : public wxDocument
 {
 	DECLARE_DYNAMIC_CLASS(CAgilityBookDoc)
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookDoc)
 public:
 	CAgilityBookDoc();
 	~CAgilityBookDoc();
@@ -194,12 +195,12 @@ private:
 	ARBDogPtr m_pCurrentDog;
 
 protected:
-	virtual bool DeleteContents();
-	virtual bool OnNewDocument();
-	virtual bool OnOpenDocument(const wxString& file);
-	virtual bool Save();
-	virtual bool DoSaveDocument(const wxString& file);
-	virtual bool OnCloseDocument();
+	bool DeleteContents() override;
+	bool OnNewDocument() override;
+	bool OnOpenDocument(const wxString& file) override;
+	bool Save() override;
+	bool DoSaveDocument(const wxString& file) override;
+	bool OnCloseDocument() override;
 
 private:
 	DECLARE_EVENT_TABLE()

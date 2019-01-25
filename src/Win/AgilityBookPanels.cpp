@@ -207,7 +207,7 @@ CAgilityBookPanelPoints::CAgilityBookPanelPoints(
 
 	if (bAttachViews)
 	{
-		CAgilityBookBaseExtraView* pView;
+		CAgilityBookBaseExtraView* pView = nullptr;
 		if (CAgilityBookOptions::ShowHtmlPoints())
 			pView = new CAgilityBookHtmlView(pTabView, doc);
 		else

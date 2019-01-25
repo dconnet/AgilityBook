@@ -83,8 +83,8 @@ public:
 	bool CanDelete() const			{return true;}
 
 	ARBCalendarPtr GetCalendar()	{return m_pCal;}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+	std::wstring OnNeedText(long iCol) const override;
+	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
 private:
 	bool HighlightOpeningNear(long iCol) const;
