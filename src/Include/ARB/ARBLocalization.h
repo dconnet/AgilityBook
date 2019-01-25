@@ -36,10 +36,10 @@
  */
 class IARBLocalization
 {
-	IARBLocalization() = delete;
 	DECLARE_NO_COPY_IMPLEMENTED(IARBLocalization)
 public:
 	static void Init(IARBLocalization const* pLocalization);
+	IARBLocalization() {}
 	virtual ~IARBLocalization() {}
 
 	// Used when loading data.

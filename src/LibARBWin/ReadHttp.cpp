@@ -45,7 +45,7 @@ CReadHttp::CReadHttp(
 	, m_Stream(nullptr)
 	, m_pProgress(nullptr)
 {
-	m_URL = new wxURL(StringUtil::stringWX(inURL));
+	m_URL = std::make_unique<wxURL>(StringUtil::stringWX(inURL));
 }
 
 
@@ -59,13 +59,12 @@ CReadHttp::CReadHttp(
 	, m_Stream(&outStream)
 	, m_pProgress(pProgress)
 {
-	m_URL = new wxURL(StringUtil::stringWX(inURL));
+	m_URL = std::make_unique<wxURL>(StringUtil::stringWX(inURL));
 }
 
 
 CReadHttp::~CReadHttp()
 {
-	delete m_URL;
 }
 
 
@@ -121,7 +120,7 @@ bool CReadHttp::ReadHttpFile(
 		if (m_pProgress)
 		{
 			bool bCancelEnable = m_pProgress->EnableCancel(false);
-			unsigned char buffer[4096];
+			unsigned char buffer[4096] = { 0 };
 			while (!stream->Eof())
 			{
 				stream->Read(buffer, sizeof(buffer));

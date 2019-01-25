@@ -57,7 +57,4 @@ public:
 	virtual void SetForegroundWindow() = 0;
 	/// Shut down (delete) the dialog.
 	virtual void Dismiss() = 0;
-
-protected:
-	virtual ~IDlgProgress();
 };

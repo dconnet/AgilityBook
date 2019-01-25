@@ -35,7 +35,7 @@ class wxPrintDialogData;
 
 class CAgilityBookApp : public CBaseApp
 {
-	DECLARE_NO_COPY_CLASS(CAgilityBookApp)
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookApp)
 public:
 	CAgilityBookApp();
 

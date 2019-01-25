@@ -23,9 +23,9 @@
 
 class CColumnOrder
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CColumnOrder)
 public:
 	CColumnOrder(std::wstring const& pItem);
-	~CColumnOrder();
 	bool Initialize(int nColumns); // Returns true if saved settings restored
 	void Save();
 
@@ -50,6 +50,6 @@ private:
 	wxString m_Item;
 	int m_nColumns;
 	bool m_bDefaultDescending;
-	int* m_order;
-	bool* m_bDescending;
+	std::unique_ptr<int[]> m_order;
+	std::unique_ptr<bool[]> m_bDescending;
 };

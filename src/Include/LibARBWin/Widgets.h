@@ -45,7 +45,7 @@ public:
 	{
 		EnableSystemTheme();
 	}
-	bool SetColumnWidth(int col, int width)
+	bool SetColumnWidth(int col, int width) override
 	{
 #ifndef __WXMSW__
 		if (wxLIST_AUTOSIZE_USEHEADER == width)
@@ -83,6 +83,8 @@ public:
 	{
 		EnableSystemTheme();
 	}
+
+	// Beware: We're hiding non-virtual base class functions
 	int GetItemState(const wxTreeItemId& item)
 	{
 #ifdef WX_TREE_HAS_STATE
@@ -132,7 +134,7 @@ public:
 	bool AllowMultilineTabstop() const		{return m_bAllowMultilineTabstop;}
 	void AllowMultilineTabstop(bool bAllow)	{m_bAllowMultilineTabstop = bAllow;}
 
-	virtual bool AcceptsFocusFromKeyboard() const
+	bool AcceptsFocusFromKeyboard() const override
 	{
 		return (IsEditable() || (IsMultiLine() && m_bAllowMultilineTabstop))
 			&& wxControl::AcceptsFocus();

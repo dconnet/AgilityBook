@@ -69,7 +69,7 @@ public:
 		Write("END:VCALENDAR\r\n");
 	}
 
-	virtual void Release()
+	void Release() override
 	{
 		delete this;
 	}

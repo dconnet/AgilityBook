@@ -41,8 +41,6 @@ ARB_TYPEDEF(ISpreadSheetImporter)
 class ISpreadSheetExporter
 {
 public:
-	virtual ~ISpreadSheetExporter() = 0;
-
 	virtual wchar_t GetSumIfSeparator() const = 0;
 
 	virtual bool AllowAccess(bool bAllow) = 0;
@@ -115,7 +113,6 @@ public:
 class ISpreadSheetImporter
 {
 public:
-	virtual ~ISpreadSheetImporter() = 0;
 	virtual bool OpenFile(std::wstring const& inFilename) = 0;
 	virtual bool GetData(
 			std::vector< std::vector<std::wstring> >& outData,
@@ -147,7 +144,6 @@ public:
 			long inCol,
 			std::wstring& outCell);
 
-	virtual ~ISpreadSheet() = 0;
 	virtual ISpreadSheetExporterPtr GetExporter() const = 0;
 	virtual ISpreadSheetImporterPtr GetImporter() const = 0;
 };

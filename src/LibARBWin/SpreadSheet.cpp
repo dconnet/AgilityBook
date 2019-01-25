@@ -48,22 +48,6 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-ISpreadSheetExporter::~ISpreadSheetExporter()
-{
-}
-
-
-ISpreadSheetImporter::~ISpreadSheetImporter()
-{
-}
-
-
-ISpreadSheet::~ISpreadSheet()
-{
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
 #if HAS_AUTOMATION
 
 class CWizardBaseImport : public ISpreadSheetImporter
@@ -81,14 +65,15 @@ protected:
 
 class CWizardExcel : public ISpreadSheet
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CWizardExcel)
 protected:
 	CWizardExcel();
 public:
 	static CWizardExcel* Create();
 	virtual ~CWizardExcel();
 
-	virtual ISpreadSheetExporterPtr GetExporter() const;
-	virtual ISpreadSheetImporterPtr GetImporter() const;
+	ISpreadSheetExporterPtr GetExporter() const override;
+	ISpreadSheetImporterPtr GetImporter() const override;
 
 private:
 	mutable wxAutomationObject m_App;
@@ -97,6 +82,7 @@ private:
 
 class CWizardExcelExport : public ISpreadSheetExporter
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CWizardExcelExport)
 protected:
 	CWizardExcelExport(wxAutomationObject& ioApp);
 	// Copied from C# code that used reflection.
@@ -132,53 +118,53 @@ public:
 	static CWizardExcelExport* Create(wxAutomationObject& ioApp);
 	virtual ~CWizardExcelExport();
 
-	virtual wchar_t GetSumIfSeparator() const;
+	wchar_t GetSumIfSeparator() const override;
 
-	virtual bool AllowAccess(bool bAllow);
+	bool AllowAccess(bool bAllow) override;
 
-	virtual bool SetTextColor(
+	bool SetTextColor(
 			long inRow,
 			long inCol,
-			wxColour inColor);
-	virtual bool SetBackColor(
+			wxColour inColor) override;
+	bool SetBackColor(
 			long inRow,
 			long inCol,
-			wxColour inColor);
-	virtual bool SetItalic(
+			wxColour inColor) override;
+	bool SetItalic(
 			long inRow,
 			long inCol,
-			bool bItalic);
-	virtual bool SetBold(
+			bool bItalic) override;
+	bool SetBold(
 			long inRow,
 			long inCol,
-			bool bBold);
+			bool bBold) override;
 
-	virtual bool SetAlignment(
+	bool SetAlignment(
 			long inRow,
 			long inCol,
-			ISpreadSheetExporter::eAlign align);
-	virtual bool SetFormat(
+			ISpreadSheetExporter::eAlign align) override;
+	bool SetFormat(
 			long inRow,
 			long inCol,
-			ISpreadSheetExporter::eFormat format);
-	virtual bool SetFormat(
+			ISpreadSheetExporter::eFormat format) override;
+	bool SetFormat(
 			long inRow,
 			long inCol,
-			std::wstring const& format);
+			std::wstring const& format) override;
 
-	virtual bool InsertData(
+	bool InsertData(
 			long inRow,
 			long inCol,
-			double inData);
-	virtual bool InsertData(
+			double inData) override;
+	bool InsertData(
 			long inRow,
 			long inCol,
 			std::wstring const& inData,
-			bool bFormula = false);
+			bool bFormula = false) override;
 
-	virtual bool AutoFit(
+	bool AutoFit(
 			long inColFrom,
-			long inColTo);
+			long inColTo) override;
 
 private:
 	wxAutomationObject& m_App;
@@ -188,16 +174,17 @@ private:
 
 class CWizardExcelImport : public CWizardBaseImport
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CWizardExcelImport)
 protected:
 	CWizardExcelImport(wxAutomationObject& ioApp);
 public:
 	static CWizardExcelImport* Create(wxAutomationObject& ioApp);
 	virtual ~CWizardExcelImport();
 
-	virtual bool OpenFile(std::wstring const& inFilename);
-	virtual bool GetData(
+	bool OpenFile(std::wstring const& inFilename) override;
+	bool GetData(
 			std::vector< std::vector<std::wstring> >& outData,
-			IDlgProgress* ioProgress);
+			IDlgProgress* ioProgress) override;
 
 private:
 	wxAutomationObject& m_App;
@@ -208,14 +195,15 @@ private:
 
 class CWizardCalc : public ISpreadSheet
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CWizardCalc)
 protected:
 	CWizardCalc();
 public:
 	static CWizardCalc* Create();
 	virtual ~CWizardCalc();
 
-	virtual ISpreadSheetExporterPtr GetExporter() const;
-	virtual ISpreadSheetImporterPtr GetImporter() const;
+	ISpreadSheetExporterPtr GetExporter() const override;
+	ISpreadSheetImporterPtr GetImporter() const override;
 
 private:
 	mutable wxAutomationObject m_Manager;
@@ -225,6 +213,7 @@ private:
 
 class CWizardCalcExport : public ISpreadSheetExporter
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CWizardCalcExport)
 protected:
 	CWizardCalcExport(
 			wxAutomationObject& ioManager,
@@ -235,53 +224,53 @@ public:
 			wxAutomationObject& ioDesktop);
 	virtual ~CWizardCalcExport();
 
-	virtual wchar_t GetSumIfSeparator() const;
+	wchar_t GetSumIfSeparator() const override;
 
-	virtual bool AllowAccess(bool bAllow);
+	bool AllowAccess(bool bAllow) override;
 
-	virtual bool SetTextColor(
+	bool SetTextColor(
 			long inRow,
 			long inCol,
-			wxColour inColor);
-	virtual bool SetBackColor(
+			wxColour inColor) override;
+	bool SetBackColor(
 			long inRow,
 			long inCol,
-			wxColour inColor);
-	virtual bool SetItalic(
+			wxColour inColor) override;
+	bool SetItalic(
 			long inRow,
 			long inCol,
-			bool bItalic);
-	virtual bool SetBold(
+			bool bItalic) override;
+	bool SetBold(
 			long inRow,
 			long inCol,
-			bool bBold);
+			bool bBold) override;
 
-	virtual bool SetAlignment(
+	bool SetAlignment(
 			long inRow,
 			long inCol,
-			ISpreadSheetExporter::eAlign align);
-	virtual bool SetFormat(
+			ISpreadSheetExporter::eAlign align) override;
+	bool SetFormat(
 			long inRow,
 			long inCol,
-			ISpreadSheetExporter::eFormat format);
-	virtual bool SetFormat(
+			ISpreadSheetExporter::eFormat format) override;
+	bool SetFormat(
 			long inRow,
 			long inCol,
-			std::wstring const& format);
+			std::wstring const& format) override;
 
-	virtual bool InsertData(
+	bool InsertData(
 			long inRow,
 			long inCol,
-			double inData);
-	virtual bool InsertData(
+			double inData) override;
+	bool InsertData(
 			long inRow,
 			long inCol,
 			std::wstring const& inData,
-			bool bFormula = false);
+			bool bFormula = false) override;
 
-	virtual bool AutoFit(
+	bool AutoFit(
 			long inColFrom,
-			long inColTo);
+			long inColTo) override;
 
 private:
 	bool CreateWorksheet();
@@ -295,6 +284,7 @@ private:
 
 class CWizardCalcImport : public CWizardBaseImport
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CWizardCalcImport)
 protected:
 	CWizardCalcImport(
 			wxAutomationObject& ioDesktop);
@@ -303,10 +293,10 @@ public:
 			wxAutomationObject& ioDesktop);
 	virtual ~CWizardCalcImport();
 
-	virtual bool OpenFile(std::wstring const& inFilename);
-	virtual bool GetData(
+	bool OpenFile(std::wstring const& inFilename) override;
+	bool GetData(
 			std::vector< std::vector<std::wstring> >& outData,
-			IDlgProgress* ioProgress);
+			IDlgProgress* ioProgress) override;
 
 private:
 	wxAutomationObject& m_Desktop;
@@ -386,7 +376,7 @@ CWizardExcelExport::CWizardExcelExport(wxAutomationObject& ioApp)
 	// Get the first sheet.
 	wxAutomationObject sheets = book.GetProperty(L"Sheets");
 	wxVariant args[1];
-	args[0] = wxVariant((short)1);
+	args[0] = wxVariant(static_cast<short>(1));
 	sheets.GetObject(m_Worksheet, L"Item", 1, args);
 
 	// wx doesn't support IDispatch as a variant
@@ -717,7 +707,7 @@ bool CWizardExcelImport::OpenFile(std::wstring const& inFilename)
 	// Get the first sheet.
 	wxAutomationObject sheets = book.GetProperty(L"Sheets");
 	wxVariant args2[1];
-	args2[0] = wxVariant((short)1);
+	args2[0] = wxVariant(static_cast<short>(1));
 	sheets.GetObject(m_Worksheet, L"Item", 1, args2);
 	return !!m_Worksheet.GetDispatchPtr();
 }

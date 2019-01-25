@@ -35,7 +35,8 @@ public:
 			std::ostream& outData);
 
 	CConfigHandler();
+	virtual ~CConfigHandler() {}
 
-	virtual ElementNodePtr LoadDefaultConfig() const;
-	virtual std::string LoadDTD() const;
+	ElementNodePtr LoadDefaultConfig() const override;
+	std::string LoadDTD() const override;
 };

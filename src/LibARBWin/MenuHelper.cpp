@@ -326,7 +326,7 @@ void CMenuHelper::CreateMenu(
 	// This ensures all accelerators are registered.
 	if (m_accelData.size() > 0)
 	{
-		wxAcceleratorEntry* entries = new wxAcceleratorEntry[m_accelData.size()];
+		std::unique_ptr<wxAcceleratorEntry[]> entries = std::make_unique<wxAcceleratorEntry[]>(m_accelData.size());
 		for (size_t n = 0; n < m_accelData.size(); ++n)
 		{
 			int flags = wxACCEL_NORMAL;
@@ -338,10 +338,8 @@ void CMenuHelper::CreateMenu(
 				flags |= wxACCEL_SHIFT;
 			entries[n].Set(flags, m_accelData[n].keyCode , m_accelData[n].id);
 		}
-		wxAcceleratorTable* accel = new wxAcceleratorTable(int(m_accelData.size()), entries);
+		std::unique_ptr<wxAcceleratorTable> accel = std::make_unique<wxAcceleratorTable>(static_cast<int>(m_accelData.size()), entries.get());
 		pFrame->SetAcceleratorTable(*accel);
-		delete accel;
-		delete[] entries;
 	}
 
 	CreateMenu(pFrame, menuItems, numMenuItems, doTranslation, mruMenu);

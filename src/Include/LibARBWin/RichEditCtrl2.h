@@ -33,7 +33,7 @@ public:
 			const wxSize& size = wxDefaultSize,
 			bool bReadOnly = true); // Initial state of readonly
 
-	virtual void SetEditable(bool editable);
+	void SetEditable(bool editable) override;
 
 protected:
 	void OnUrl(wxTextUrlEvent& evt);

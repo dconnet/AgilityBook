@@ -40,7 +40,7 @@ class CBaseApp : public wxApp
 				, public ILanguageCallback
 				, public IImageManagerCallback
 {
-	DECLARE_NO_COPY_CLASS(CBaseApp)
+	DECLARE_NO_COPY_IMPLEMENTED(CBaseApp)
 protected:
 	typedef enum
 	{
@@ -54,7 +54,6 @@ protected:
 			wxString const& appName,
 			wxString const& appRegKey = wxEmptyString,
 			LanguageCatalog useLangCatalog = eLanguageCatalogNone);
-	~CBaseApp();
 
 #if USE_DBGREPORT
 	void GenerateReport(wxDebugReport::Context ctx);
@@ -65,10 +64,10 @@ protected:
 	// wxApp virtual
 	// Will init Element, ImageManager, wxApp::SetAppName and wxConfig::Set.
 	// If OnInit fails, BaseAppCleanup will be called before returning.
-	virtual bool OnInit();
-	virtual int OnExit();
+	bool OnInit() override;
+	int OnExit() override;
 #if USE_DBGREPORT
-	virtual void OnFatalException();
+	void OnFatalException() override;
 #endif
 
 #if USE_DBGREPORT
@@ -100,23 +99,23 @@ public:
 
 protected:
 	// ILanguageCallback interface
-	virtual wxLanguage OnGetLanguage() const;
-	virtual wxString OnGetCatalogName() const;
-	virtual wxString OnGetLangConfigName() const;
-	virtual wxString OnGetLanguageDir() const;
-	virtual void OnSetLanguage(wxLanguage langId);
-	virtual void OnErrorMessage(wxString const& msg) const;
+	wxLanguage OnGetLanguage() const override;
+	wxString OnGetCatalogName() const override;
+	wxString OnGetLangConfigName() const override;
+	wxString OnGetLanguageDir() const override;
+	void OnSetLanguage(wxLanguage langId) override;
+	void OnErrorMessage(wxString const& msg) const override;
 
 	// IImageManagerCallback interface
-	virtual bool OnCreateBitmap(
+	bool OnCreateBitmap(
 			const wxArtID& id,
 			const wxArtClient& client,
 			const wxSize& size,
-			wxBitmap& outBmp);
-	virtual bool OnCreateIconBundle(
+			wxBitmap& outBmp) override;
+	bool OnCreateIconBundle(
 			const wxArtID& id,
 			const wxArtClient& client,
-			wxIconBundle& outIcon);
+			wxIconBundle& outIcon) override;
 
 	virtual bool InitLanguage();
 	virtual int SelectLang(wxWindow* parent = nullptr);
@@ -141,5 +140,5 @@ protected:
 	bool m_bStandalone;
 
 private:
-	CLanguageManager* m_langMgr;
+	std::unique_ptr<CLanguageManager> m_langMgr;
 };

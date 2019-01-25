@@ -44,11 +44,6 @@ CImageManager::CImageManager()
 }
 
 
-CImageManager::~CImageManager()
-{
-}
-
-
 wxBitmap CImageManager::CreateBitmap(
 		const wxArtID& id,
 		const wxArtClient& client,

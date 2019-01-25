@@ -26,6 +26,7 @@
 
 class CListData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CListData)
 public:
 	CListData();
 	virtual ~CListData();
@@ -40,8 +41,9 @@ typedef std::shared_ptr<CListData> CListDataPtr;
 /// Provide a way to refresh items easily by using a common tree data class
 class CTreeData : public wxTreeItemData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CTreeData)
 public:
 	CTreeData();
-	virtual ~CTreeData();
+	~CTreeData();
 	virtual std::wstring OnNeedText() const = 0;
 };

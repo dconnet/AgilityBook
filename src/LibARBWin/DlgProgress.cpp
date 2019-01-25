@@ -39,33 +39,34 @@ static int _defWidth = 250;
 
 class CDlgProgress : public wxDialog, public IDlgProgress
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgProgress)
 public:
 	CDlgProgress(short nBars, wxWindow* parent);
-	virtual ~CDlgProgress();
+	~CDlgProgress();
 
-	virtual bool Show(bool show = true);
+	bool Show(bool show = true) override;
 
-	virtual void SetCaption(std::wstring const& inCaption);
-	virtual void SetMessage(std::wstring const& inMessage);
-	virtual void SetRange(
+	void SetCaption(std::wstring const& inCaption) override;
+	void SetMessage(std::wstring const& inMessage) override;
+	void SetRange(
 			short inBar,
-			int inRange);
-	virtual void SetStep(
+			int inRange) override;
+	void SetStep(
 			short inBar,
-			int inStep);
-	virtual void StepIt(short inBar);
-	virtual void OffsetPos(
+			int inStep) override;
+	void StepIt(short inBar) override;
+	void OffsetPos(
 			short inBar,
-			int inDelta);
-	virtual void SetPos(
+			int inDelta) override;
+	void SetPos(
 			short inBar,
-			int inPos);
-	virtual int GetPos(short inBar);
-	virtual bool EnableCancel(bool bEnable = true);
-	virtual bool HasCanceled() const;
-	virtual void ShowProgress(bool bShow = true);
-	virtual void SetForegroundWindow();
-	virtual void Dismiss();
+			int inPos) override;
+	int GetPos(short inBar) override;
+	bool EnableCancel(bool bEnable = true) override;
+	bool HasCanceled() const override;
+	void ShowProgress(bool bShow = true) override;
+	void SetForegroundWindow() override;
+	void Dismiss() override;
 
 private:
 	struct GaugeData
@@ -336,9 +337,4 @@ IDlgProgress* IDlgProgress::CreateProgress(short nBars, wxWindow* parent)
 {
 	CDlgProgress* pDlg = new CDlgProgress(nBars, parent);
 	return pDlg;
-}
-
-
-IDlgProgress::~IDlgProgress()
-{
 }

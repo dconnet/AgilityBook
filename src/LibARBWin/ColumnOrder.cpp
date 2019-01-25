@@ -43,25 +43,18 @@ CColumnOrder::CColumnOrder(std::wstring const& pItem)
 }
 
 
-CColumnOrder::~CColumnOrder()
-{
-	delete [] m_order;
-	delete [] m_bDescending;
-}
-
-
 bool CColumnOrder::Initialize(int nColumns)
 {
 	if (0 < m_nColumns)
 	{
-		delete [] m_order;
-		delete [] m_bDescending;
+		m_order.reset();
+		m_bDescending.reset();
 	}
 	m_nColumns = nColumns;
 	if (0 < m_nColumns)
 	{
-		m_order = new int[m_nColumns];
-		m_bDescending = new bool[m_nColumns];
+		m_order = std::make_unique<int[]>(m_nColumns);
+		m_bDescending = std::make_unique<bool[]>(m_nColumns);
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			m_order[i] = i;

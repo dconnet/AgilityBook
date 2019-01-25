@@ -62,12 +62,6 @@ CLanguageManager::CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded)
 }
 
 
-CLanguageManager::~CLanguageManager()
-{
-	delete m_locale;
-}
-
-
 wxLanguage CLanguageManager::GetDefaultLanguage() const
 {
 	if (!m_pCallback || m_pCallback->OnGetLangConfigName().empty())
@@ -112,7 +106,7 @@ bool CLanguageManager::InitLanguage()
 	}
 #endif
 
-	m_locale = new wxLocale(wxLANGUAGE_DEFAULT); // Initialize wx with the default system settings
+	m_locale = std::make_unique<wxLocale>(wxLANGUAGE_DEFAULT); // Initialize wx with the default system settings
 
 	if (m_pCallback)
 	{

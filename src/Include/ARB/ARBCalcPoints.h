@@ -81,15 +81,15 @@ protected:
 	ARBCalcPointsNormal();
 public:
 	static ARBCalcPointsNormalPtr New();
-	virtual ARBPointsType GetType() const	{return ePointsTypeNormal;}
-	virtual std::wstring GetGenericName(double points, double faults) const;
-	virtual bool AllowConfiguration() const	{return true;}
-	virtual double GetPoints(
+	ARBPointsType GetType() const override {return ePointsTypeNormal;}
+	std::wstring GetGenericName(double points, double faults) const override;
+	bool AllowConfiguration() const override {return true;}
+	double GetPoints(
 			double inPoints,
 			double inTime,
 			double inSCT,
 			short inPlace,
-			short inClass) const;
+			short inClass) const override;
 };
 
 
@@ -102,14 +102,14 @@ protected:
 	ARBCalcPointsT2B();
 public:
 	static ARBCalcPointsT2BPtr New();
-	virtual ARBPointsType GetType() const	{return ePointsTypeT2B;}
-	virtual std::wstring GetGenericName(double points, double faults) const;
-	virtual double GetPoints(
+	ARBPointsType GetType() const override {return ePointsTypeT2B;}
+	std::wstring GetGenericName(double points, double faults) const override;
+	double GetPoints(
 			double inPoints,
 			double inTime,
 			double inSCT,
 			short inPlace,
-			short inClass) const;
+			short inClass) const override;
 };
 
 
@@ -122,14 +122,14 @@ protected:
 	ARBCalcPointsUKI();
 public:
 	static ARBCalcPointsUKIPtr New();
-	virtual ARBPointsType GetType() const	{return ePointsTypeUKI;}
-	virtual std::wstring GetGenericName(double points, double faults) const;
-	virtual double GetPoints(
+	ARBPointsType GetType() const override {return ePointsTypeUKI;}
+	std::wstring GetGenericName(double points, double faults) const override;
+	double GetPoints(
 			double inPoints,
 			double inTime,
 			double inSCT,
 			short inPlace,
-			short inClass) const;
+			short inClass) const override;
 };
 
 
@@ -142,12 +142,12 @@ protected:
 	ARBCalcPointsTop10USDAA();
 public:
 	static ARBCalcPointsTop10USDAAPtr New();
-	virtual ARBPointsType GetType() const	{return ePointsTypeTop10USDAA;}
-	virtual std::wstring GetGenericName(double points, double faults) const;
-	virtual double GetPoints(
+	ARBPointsType GetType() const override {return ePointsTypeTop10USDAA;}
+	std::wstring GetGenericName(double points, double faults) const override;
+	double GetPoints(
 			double inPoints,
 			double inTime,
 			double inSCT,
 			short inPlace,
-			short inClass) const;
+			short inClass) const override;
 };

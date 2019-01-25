@@ -25,7 +25,7 @@ class CTabView;
 
 class CBasePanel : public wxPanel
 {
-	DECLARE_NO_COPY_CLASS(CBasePanel)
+	DECLARE_NO_COPY_IMPLEMENTED(CBasePanel)
 
 public:
 	CBasePanel(

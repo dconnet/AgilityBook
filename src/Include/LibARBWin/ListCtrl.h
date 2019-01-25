@@ -42,6 +42,7 @@ struct SortInfo
 	virtual ~SortInfo()
 	{
 	}
+	DECLARE_NO_COPY_IMPLEMENTED(SortInfo)
 };
 typedef int (wxCALLBACK *CListCtrlCompare)(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
 
@@ -167,11 +168,11 @@ protected:
 			SortHeader sortHeader,
 			bool bHasBorder,
 			bool bHasImageList);
-	virtual wxItemAttr* OnGetItemAttr(long item) const;
-	virtual wxItemAttr* OnGetItemColumnAttr(long item, long column) const;
-	virtual int OnGetItemColumnImage(long item, long column) const;
-	virtual int OnGetItemImage(long item) const;
-	virtual wxString OnGetItemText(long item, long column) const;
+	wxItemAttr* OnGetItemAttr(long item) const override;
+	wxItemAttr* OnGetItemColumnAttr(long item, long column) const override;
+	int OnGetItemColumnImage(long item, long column) const override;
+	int OnGetItemImage(long item) const override;
+	wxString OnGetItemText(long item, long column) const override;
 
 	wxImageList m_ImageList;
 	int m_imgEmpty;
@@ -190,7 +191,7 @@ private:
 	long InsertItem(long index, int imageIndex);
 	long InsertItem(long index, const wxString& label, int imageIndex);
 	// 2.9.4 changed this to virtual
-	virtual void SetImageList(wxImageList* imageList, int which) {}
+	void SetImageList(wxImageList* imageList, int which) override {}
 };
 
 
@@ -235,7 +236,7 @@ private:
 	// these are NOT virtual! Do not implement.
 	long InsertItem(wxListItem& info);
 	long InsertItem(long index, int imageIndex);
-	virtual void SetImageList(wxImageList* imageList, int which) {}
+	void SetImageList(wxImageList* imageList, int which) override {}
 
 	void OnClick(wxMouseEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);

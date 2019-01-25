@@ -101,7 +101,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::wstring GetGenericName() const
+	std::wstring GetGenericName() const override
 	{
 		return std::wstring();
 	}
@@ -112,7 +112,7 @@ public:
 	 * @return Number of strings accumulated in this object.
 	 * @note There are no strings to search in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
+	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
 	{
 		return 0;
 	}

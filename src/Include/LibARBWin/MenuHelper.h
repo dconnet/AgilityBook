@@ -30,6 +30,7 @@ class wxFrame;
 
 class CMenuHelper
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CMenuHelper)
 public:
 	struct ItemData
 	{

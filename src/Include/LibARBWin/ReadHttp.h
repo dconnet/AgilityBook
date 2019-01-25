@@ -36,6 +36,7 @@ inline bool GotoURL(std::wstring const& inLink)
  */
 class CReadHttp
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CReadHttp)
 public:
 	/**
 	 * Construction
@@ -76,7 +77,7 @@ public:
 
 private:
 	std::wstring m_address;
-	wxURL* m_URL;
+	std::unique_ptr<wxURL> m_URL;
 	std::string* m_Data;
 	wxOutputStream* m_Stream;
 	IDlgProgress* m_pProgress;

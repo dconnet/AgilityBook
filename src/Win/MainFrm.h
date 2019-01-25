@@ -46,7 +46,7 @@ private:
 
 class CMainFrame : public wxDocParentFrame
 {
-	DECLARE_NO_COPY_CLASS(CMainFrame)
+	DECLARE_NO_COPY_IMPLEMENTED(CMainFrame)
 
 public:
 	CMainFrame(wxDocManager* manager);

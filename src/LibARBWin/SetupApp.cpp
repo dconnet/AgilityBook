@@ -60,15 +60,9 @@ CBaseApp::CBaseApp(
 #if USE_DBGREPORT
 	wxHandleFatalExceptions();
 #endif
-	m_langMgr = new CLanguageManager(
+	m_langMgr = std::make_unique<CLanguageManager>(
 			eLanguageCatalogNone != useLangCatalog ? this : nullptr,
 			eLanguageCatalogEmbedded == useLangCatalog);
-}
-
-
-CBaseApp::~CBaseApp()
-{
-	delete m_langMgr;
 }
 
 
@@ -81,23 +75,23 @@ public:
 	{
 	}
 
-	virtual wxString GetReportName() const { return m_reportName; }
+	wxString GetReportName() const override { return m_reportName; }
 };
 
 
 void CBaseApp::GenerateReport(wxDebugReport::Context ctx)
 {
-	wxDebugReportCompress *report = new BaseAppDebugReport(GetReportName());
+	BaseAppDebugReport report(GetReportName());
 
 	// Add all standard files: currently this means just a minidump and an
 	// XML file with system info and stack trace
-	report->AddAll(ctx);
+	report.AddAll(ctx);
 
 	// Allow derived apps to add additional files.
-	if (!OnAddFileDebugReport(report))
+	if (!OnAddFileDebugReport(&report))
 	{
 		// Add a test file containing the date of the crash
-		wxFileName fn(report->GetDirectory(), wxT("timestamp.my"));
+		wxFileName fn(report.GetDirectory(), wxT("timestamp.my"));
 		wxFFile file(fn.GetFullPath(), wxT("w"));
 		if (file.IsOpened())
 		{
@@ -105,21 +99,19 @@ void CBaseApp::GenerateReport(wxDebugReport::Context ctx)
 			file.Write(dt.FormatISODate() + wxT(' ') + dt.FormatISOTime());
 			file.Close();
 		}
-		report->AddFile(fn.GetFullName(), wxT("Timestamp of this report"));
+		report.AddFile(fn.GetFullName(), wxT("Timestamp of this report"));
 	}
 
 	// Calling Show() is not mandatory, but is more polite
-	if (wxDebugReportPreviewStd().Show(*report))
+	if (wxDebugReportPreviewStd().Show(report))
 	{
-		if (report->Process())
+		if (report.Process())
 		{
-			wxLogMessage(wxT("Report generated in \"%s\"."), report->GetCompressedFileName().c_str());
-			report->Reset();
+			wxLogMessage(wxT("Report generated in \"%s\"."), report.GetCompressedFileName().c_str());
+			report.Reset();
 		}
 	}
 	//else: user cancelled the report
-
-	delete report;
 }
 #endif
 
@@ -223,8 +215,7 @@ void CBaseApp::BaseAppCleanup(bool deleteConfig)
 		if (pOld)
 			delete pOld;
 	}
-	delete m_langMgr;
-	m_langMgr = nullptr;
+	m_langMgr.reset();
 
 	CImageManager::Get()->SetCallback(nullptr);
 	Element::Terminate();

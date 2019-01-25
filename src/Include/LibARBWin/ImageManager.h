@@ -47,22 +47,22 @@ public:
 
 class CImageManager : public wxArtProvider
 {
-private:
+protected:
 	CImageManager();
-	~CImageManager();
+	DECLARE_NO_COPY_IMPLEMENTED(CImageManager)
 
 public:
 	static CImageManager* Get();
 	void SetCallback(IImageManagerCallback* pCallback) {m_Callback = pCallback;}
 
-	virtual wxBitmap CreateBitmap(
+	wxBitmap CreateBitmap(
 			const wxArtID& id,
 			const wxArtClient& client,
-			const wxSize& size);
+			const wxSize& size) override;
 
-	virtual wxIconBundle CreateIconBundle(
+	wxIconBundle CreateIconBundle(
 			const wxArtID& id,
-			const wxArtClient& client);
+			const wxArtClient& client) override;
 
 private:
 	IImageManagerCallback* m_Callback;

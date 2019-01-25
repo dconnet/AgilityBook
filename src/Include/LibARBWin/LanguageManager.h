@@ -37,6 +37,7 @@ public:
 
 class CLanguageManager
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CLanguageManager)
 public:
 	// Must use callback to enable catalogs.
 	// Embedding language MO files is only supported on Windows.
@@ -48,7 +49,6 @@ public:
 			bool bEmbedded = false
 #endif
 			);
-	~CLanguageManager();
 
 	bool InitLanguage();
 
@@ -69,5 +69,5 @@ private:
 	wxString m_dirLangDefault;
 	wxString m_dirLang; /// Where the en/fr/etc directories are located
 	std::wstring m_dirLoadedLang; /// 'en'/'fr' etc
-	wxLocale* m_locale;
+	std::unique_ptr<wxLocale> m_locale;
 };

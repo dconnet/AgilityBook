@@ -24,6 +24,7 @@
 class CCheckTreeCtrl : public CTreeCtrl
 {
 	DECLARE_CLASS(CCheckTreeCtrl)
+	DECLARE_NO_COPY_IMPLEMENTED(CCheckTreeCtrl)
 public:
 	CCheckTreeCtrl(
 			wxWindow* pParent,
