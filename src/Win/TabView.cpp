@@ -138,7 +138,7 @@ private:
 
 void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 {
-	int flags;
+	int flags = 0;
 	switch (m_orient)
 	{
 	default:

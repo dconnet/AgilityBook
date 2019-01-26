@@ -46,7 +46,7 @@ public:
 	{
 	}
 
-	virtual bool Validate(wxWindow* parent);
+	bool Validate(wxWindow* parent) override;
 
 private:
 	CDlgConfigOtherPoints* m_Dlg;

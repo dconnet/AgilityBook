@@ -161,8 +161,8 @@ public:
 		, m_Title(inTitle)
 	{
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+	std::wstring OnNeedText(long iCol) const override;
+	void OnNeedListItem(long iCol, wxListItem& info) const override;
 	ARBDogTitlePtr GetData() const	{return m_Title;}
 private:
 	CDlgDog* m_pDlg;
@@ -313,7 +313,7 @@ public:
 		, m_RegNum(inRegnum)
 	{
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
+	std::wstring OnNeedText(long iCol) const override;
 	ARBDogRegNumPtr GetData() const	{return m_RegNum;}
 private:
 	CDlgDog* m_pDlg;
@@ -415,7 +415,7 @@ public:
 		, m_Pts(pts)
 	{
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
+	std::wstring OnNeedText(long iCol) const override;
 	ARBDogExistingPointsPtr GetData() const	{return m_Pts;}
 private:
 	CDlgDog* m_pDlg;
@@ -1074,7 +1074,7 @@ void CDlgDog::ListTitles()
 		{
 			continue;
 		}
-		CDlgDogDataTitlePtr data(new CDlgDogDataTitle(this, pTitle));
+		CDlgDogDataTitlePtr data(std::make_shared<CDlgDogDataTitle>(this, pTitle));
 		m_ctrlTitles->InsertItem(data);
 	}
 	for (i = 0; i < nColTitleInfo; ++i)
@@ -1160,7 +1160,7 @@ void CDlgDog::ListRegNums()
 		iterRegNum != m_RegNums.end();
 		++iterRegNum)
 	{
-		CDlgDogDataRegNumPtr pData(new CDlgDogDataRegNum(this, *iterRegNum));
+		CDlgDogDataRegNumPtr pData(std::make_shared<CDlgDogDataRegNum>(this, *iterRegNum));
 		m_ctrlRegNums->InsertItem(pData);
 	}
 	for (i = 0; i < nColRegNumInfo; ++i)
@@ -1251,7 +1251,7 @@ void CDlgDog::ListExistingPoints()
 		iterExistingPoints != m_ExistingPoints.end();
 		++i, ++iterExistingPoints)
 	{
-		CDlgDogDataPointPtr data(new CDlgDogDataPoint(this, *iterExistingPoints));
+		CDlgDogDataPointPtr data(std::make_shared<CDlgDogDataPoint>(this, *iterExistingPoints));
 		m_ctrlPoints->InsertItem(data);
 	}
 	if (bSetWidth)

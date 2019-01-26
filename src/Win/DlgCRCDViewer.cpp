@@ -73,7 +73,7 @@ void CMetaDataStatic::OnPaint(wxPaintEvent& evt)
 		r.top = 0;
 		r.right = std::min(sz.x, sz.y);
 		r.bottom = std::min(sz.x, sz.y);
-		HDC hdc = (HDC)dc.GetHDC();
+		WXHDC hdc = dc.GetHDC();
 		PlayEnhMetaFile(hdc, m_MetaFile, &r);
 	}
 }

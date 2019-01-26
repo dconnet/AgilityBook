@@ -32,6 +32,7 @@ class CTextCtrl;
 
 class CDlgConfigEvent : public wxDialog
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgConfigEvent)
 public:
 	CDlgConfigEvent(
 			bool bNewEntry,

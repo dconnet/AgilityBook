@@ -206,7 +206,7 @@ bool CGenericValidator::TransferFromWindow()
 	// Following the example of wxGenericValidator
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
-		wxTextCtrl* pTextControl = (wxTextCtrl*)m_validatorWindow;
+		wxTextCtrl* pTextControl = dynamic_cast<wxTextCtrl*>(m_validatorWindow);
 		wxString textVal = pTextControl->GetValue();
 		if (m_pUShort)
 		{
@@ -264,7 +264,7 @@ bool CGenericValidator::TransferFromWindow()
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
 	{
-		wxDatePickerCtrlBase* pControl = (wxDatePickerCtrlBase*)m_validatorWindow;
+		wxDatePickerCtrlBase* pControl = dynamic_cast<wxDatePickerCtrlBase*>(m_validatorWindow);
 		if (m_pDate)
 		{
 			wxDateTime date = pControl->GetValue();
@@ -288,7 +288,7 @@ bool CGenericValidator::TransferToWindow()
 {
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
-		wxTextCtrl* pTextControl = (wxTextCtrl*)m_validatorWindow;
+		wxTextCtrl* pTextControl = dynamic_cast<wxTextCtrl*>(m_validatorWindow);
 		if (m_pUShort)
 		{
 			wxString str;
@@ -323,7 +323,7 @@ bool CGenericValidator::TransferToWindow()
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
 	{
-		wxDatePickerCtrlBase* pControl = (wxDatePickerCtrlBase*)m_validatorWindow;
+		wxDatePickerCtrlBase* pControl = dynamic_cast<wxDatePickerCtrlBase*>(m_validatorWindow);
 		if (m_pDate)
 		{
 			if (m_pDate->IsValid())
@@ -369,13 +369,13 @@ bool CGenericValidator::Validate(wxWindow* parent)
 	bool ok = true;
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
-		pTextControl = (wxTextCtrl*)m_validatorWindow;
+		pTextControl = dynamic_cast<wxTextCtrl*>(m_validatorWindow);
 		if (pTextControl->IsEditable())
 		{
 			wxString textVal = pTextControl->GetValue();
 			if (m_pUShort)
 			{
-				long val;
+				long val = 0;
 				if (textVal.empty() && m_bUseDefOnEmpty)
 				{
 					wxString str;
@@ -391,7 +391,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 			}
 			if (m_pShort || m_pLong)
 			{
-				long val;
+				long val = 0;
 				if (textVal.empty() && m_bUseDefOnEmpty)
 				{
 					wxString str;
@@ -410,7 +410,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 			}
 			else if (m_pDouble)
 			{
-				double dbl;
+				double dbl = 0.0;
 				if (textVal.empty() && m_bUseDefOnEmpty)
 				{
 					pTextControl->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(m_Default.dbl, m_Prec)));

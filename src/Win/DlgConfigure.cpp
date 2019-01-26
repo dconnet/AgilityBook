@@ -65,7 +65,7 @@ public:
 		, m_Action(action)
 	{
 	}
-	virtual std::wstring OnNeedText() const	{return std::wstring();}
+	std::wstring OnNeedText() const override {return std::wstring();}
 	CDlgConfigure::eAction GetAction() const
 	{
 		return m_Action;
@@ -89,7 +89,8 @@ public:
 		, m_ScoringRuns(inScoringRuns)
 	{
 	}
-	virtual void OnDetails(wxWindow* pParent);
+	virtual ~CDetails() {}
+	void OnDetails(wxWindow* pParent) override;
 protected:
 	CAgilityBookDoc* m_pDoc;
 	std::list<ScoringRunInfo> const& m_ScoringRuns;
@@ -312,7 +313,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 	}
 	if (!hParent.IsOk())
 		return;
-	wxTreeItemIdValue cookie;
+	wxTreeItemIdValue cookie = nullptr;
 	while (m_ctrlItems->ItemHasChildren(hParent))
 		m_ctrlItems->Delete(m_ctrlItems->GetFirstChild(hParent, cookie));
 
@@ -765,8 +766,8 @@ class CDlgConfigCallback : public IConfigActionCallback
 {
 public:
 	CDlgConfigCallback() {}
-	virtual void PreDelete(std::wstring const& inMsg) {}
-	void PostDelete(std::wstring const& inMsg) const {}
+	void PreDelete(std::wstring const& inMsg) override {}
+	void PostDelete(std::wstring const& inMsg) const override {}
 };
 
 

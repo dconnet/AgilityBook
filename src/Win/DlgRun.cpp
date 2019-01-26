@@ -162,10 +162,10 @@ public:
 		: m_dlg(dlg)
 	{
 	}
-	virtual bool OnDropFiles(
+	bool OnDropFiles(
 			wxCoord x,
 			wxCoord y,
-			wxArrayString const& filenames);
+			wxArrayString const& filenames) override;
 private:
 	CDlgRun* m_dlg;
 };
@@ -251,13 +251,14 @@ public:
 
 class CDlgDogRefRunData : public CListData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgDogRefRunData)
 public:
 	CDlgDogRefRunData(ARBDogRunPtr const& inRun, ARBDogReferenceRunPtr const& inRefRun)
 		: m_Run(inRun)
 		, m_RefRun(inRefRun)
 	{
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
+	std::wstring OnNeedText(long iCol) const override;
 	ARBDogReferenceRunPtr GetData() const		{return m_RefRun;}
 private:
 	ARBDogRunPtr m_Run;
@@ -391,6 +392,7 @@ int wxCALLBACK CompareRefRuns(CListDataPtr const& item1, CListDataPtr const& ite
 
 class CMetaDataDisplay : public CTextCtrl
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CMetaDataDisplay)
 public:
 	CMetaDataDisplay(
 			wxWindow* parent,
@@ -504,11 +506,10 @@ void CMetaDataDisplay::SetCRCDData()
 		ENHMETAHEADER header;
 		GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
 		UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, nullptr);
-		LPBYTE bits = new BYTE[nSize+1];
-		GetEnhMetaFileBits(m_metaFile, nSize, bits);
+		std::unique_ptr<BYTE[]> bits = std::make_unique<BYTE[]>(nSize+1);
+		GetEnhMetaFileBits(m_metaFile, nSize, bits.get());
 		assert(sizeof(BYTE) == sizeof(char));
-		m_Run->SetCRCDMetaData(bits, nSize);
-		delete [] bits;
+		m_Run->SetCRCDMetaData(bits.get(), nSize);
 	}
 	else
 #endif
@@ -571,7 +572,7 @@ void CMetaDataDisplay::OnCopy()
 						// Note, wxClipboard may be using the OLE clipboard
 						// which doesn't actually open the windows one.
 						wxOpenClipboard();
-						HENHMETAFILE hData = reinterpret_cast<HENHMETAFILE>(GetClipboardData(CF_ENHMETAFILE));
+						HENHMETAFILE hData = static_cast<HENHMETAFILE>(GetClipboardData(CF_ENHMETAFILE));
 						m_metaFile = CopyEnhMetaFile(hData, nullptr);
 						m_metaFileBack = m_metaFile;
 						SetCRCDData();
@@ -660,7 +661,7 @@ void CMetaDataDisplay::OnPaint(wxPaintEvent& evt)
 		r.top = 0;
 		r.right = std::min(sz.x, sz.y);
 		r.bottom = std::min(sz.x, sz.y);
-		HDC hdc = (HDC)dc.GetHDC();
+		WXHDC hdc = dc.GetHDC();
 		PlayEnhMetaFile(hdc, m_metaFile, &r);
 #endif
 	}
@@ -2551,7 +2552,7 @@ void CDlgRun::ListRefRuns()
 	iterRef != m_Run->GetReferenceRuns().end();
 	++index, ++iterRef)
 	{
-		CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(m_Run, *iterRef));
+		CDlgDogRefRunDataPtr data(std::make_shared<CDlgDogRefRunData>(m_Run, *iterRef));
 		m_ctrlRefRuns->InsertItem(data);
 	}
 	for (index = 0; index < scNumRefRunColumns; ++index)
@@ -3023,7 +3024,7 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 	{
 		if (m_Run->GetReferenceRuns().AddReferenceRun(ref))
 		{
-			CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(m_Run, ref));
+			CDlgDogRefRunDataPtr data(std::make_shared<CDlgDogRefRunData>(m_Run, ref));
 			long index = m_ctrlRefRuns->InsertItem(data);
 			m_ctrlRefRuns->Select(index);
 			// Insert item first to set selection.
@@ -3040,7 +3041,7 @@ void CDlgRun::OnRefRunAddMe(wxCommandEvent& evt)
 	{
 		if (m_Run->GetReferenceRuns().AddReferenceRun(m_pRefRunMe))
 		{
-			CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(m_Run, m_pRefRunMe));
+			CDlgDogRefRunDataPtr data(std::make_shared<CDlgDogRefRunData>(m_Run, m_pRefRunMe));
 			long index = m_ctrlRefRuns->InsertItem(data);
 			m_ctrlRefRuns->Select(index);
 			// Insert item first to set selection.

@@ -58,12 +58,6 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-ICalendarSite::~ICalendarSite()
-{
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
 static size_t TranslateCodeMap(
 		std::map<std::wstring, std::wstring> const& inMap,
 		std::vector<std::wstring>& outKeys)
@@ -82,21 +76,22 @@ static size_t TranslateCodeMap(
 
 class CProgressMeter : public IProgressMeter
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CProgressMeter)
 public:
 	CProgressMeter(int nEntries, wxWindow* pParent);
-	~CProgressMeter();
+	virtual ~CProgressMeter();
 
 	void SetForegroundWindow();
 	void Dismiss();
 	void StepMe();
 
-	virtual void SetMessage(wchar_t const* pMessage);
-	virtual void SetRange(int inRange);
-	virtual void SetStep(int inStep);
-	virtual void StepIt();
-	virtual void SetPos(int pos);
-	virtual int GetPos();
-	virtual bool HasCanceled() const;
+	void SetMessage(wchar_t const* pMessage) override;
+	void SetRange(int inRange) override;
+	void SetStep(int inStep) override;
+	void StepIt() override;
+	void SetPos(int pos) override;
+	int GetPos() override;
+	bool HasCanceled() const override;
 
 private:
 	int m_nEntries;
@@ -110,7 +105,7 @@ class CalSiteData
 	// Copy semantics don't work well with our cleanup code!
 	DECLARE_NO_COPY_IMPLEMENTED(CalSiteData);
 public:
-	CalSiteData(ICalendarSite* pSite);
+	CalSiteData(ICalendarSitePtr pSite);
 	~CalSiteData();
 
 	void Connect();
@@ -130,7 +125,7 @@ public:
 			std::vector<std::wstring> const& inVenueCodes);
 
 private:
-	ICalendarSite* m_pSite;
+	ICalendarSitePtr m_pSite;
 	std::wstring m_id;
 	CVersionNum m_Version;
 	std::map<std::wstring, std::wstring> m_LocCodes;
@@ -297,7 +292,7 @@ bool CProgressMeter::HasCanceled() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CalSiteData::CalSiteData(ICalendarSite* pSite)
+CalSiteData::CalSiteData(ICalendarSitePtr pSite)
 	: m_pSite(pSite)
 	, m_id()
 	, m_Version()
@@ -311,8 +306,6 @@ CalSiteData::CalSiteData(ICalendarSite* pSite)
 CalSiteData::~CalSiteData()
 {
 	Unload();
-	delete m_pSite;
-	m_pSite = nullptr;
 }
 
 
@@ -356,6 +349,7 @@ std::string CalSiteData::Process(IProgressMeter *progress,
 
 class CCalendarSitesImpl
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CCalendarSitesImpl)
 public:
 	CCalendarSitesImpl();
 	~CCalendarSitesImpl();
@@ -370,7 +364,7 @@ private:
 CCalendarSitesImpl::CCalendarSitesImpl()
 	: m_DirectAccess()
 {
-	m_DirectAccess.push_back(std::make_shared<CalSiteData>(new CCalendarSiteUSDAA()));
+	m_DirectAccess.push_back(std::make_shared<CalSiteData>(CCalendarSiteUSDAA::Create()));
 }
 
 
@@ -392,9 +386,10 @@ bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inC
 
 class CPluginBase : public CTreeData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPluginBase)
 public:
 	CPluginBase() {}
-	virtual ~CPluginBase() {}
+	~CPluginBase() {}
 
 	virtual std::wstring GetDesc() const = 0;
 };
@@ -405,8 +400,8 @@ class CPluginData : public CPluginBase
 public:
 	CPluginData() {}
 	virtual wxString GetSortName() const = 0;
-	virtual std::wstring OnNeedText() const			{return m_Name;}
-	virtual std::wstring GetDesc() const			{return m_Desc;}
+	std::wstring OnNeedText() const override		{return m_Name;}
+	std::wstring GetDesc() const override			{return m_Desc;}
 	virtual std::string Process(IProgressMeter *progress) = 0;
 	virtual bool HasQueryDetails() const = 0;
 	virtual bool CanEdit() const					{return false;}
@@ -444,47 +439,47 @@ public:
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
 
-	virtual wxString GetSortName() const		{return wxString(L"C") + m_Name.c_str();}
+	wxString GetSortName() const override		{return wxString(L"C") + m_Name.c_str();}
 
-	virtual std::string Process(IProgressMeter *progress);
+	std::string Process(IProgressMeter *progress) override;
 
-	virtual bool HasQueryDetails() const
+	bool HasQueryDetails() const override
 	{
 		return 1 < m_Site->LocationCodes().size() || 1 < m_Site->VenueCodes().size();
 	}
 
-	virtual bool CanEdit() const		{return true;}
-	virtual bool Edit(wxWindow* pParent);
-	virtual bool CanDelete() const		{return true;}
-	virtual bool Delete();
+	bool CanEdit() const override		{return true;}
+	bool Edit(wxWindow* pParent) override;
+	bool CanDelete() const override		{return true;}
+	bool Delete() override;
 
-	virtual std::map<std::wstring, std::wstring> const& QueryLocationCodes() const
+	std::map<std::wstring, std::wstring> const& QueryLocationCodes() const override
 	{
 		return m_Site->LocationCodes();
 	}
 
-	virtual std::map<std::wstring, std::wstring> const& QueryVenueCodes() const
+	std::map<std::wstring, std::wstring> const& QueryVenueCodes() const override
 	{
 		return m_Site->VenueCodes();
 	}
 
-	virtual bool isValid() const
+	bool isValid() const override
 	{
 		return m_Enabled;
 	}
 
-	virtual bool Enable()
+	bool Enable() override
 	{
 		m_Enabled = true;
 		return true;
 	}
 
-	virtual bool CanDisable() const
+	bool CanDisable() const override
 	{
 		return false;
 	}
 
-	virtual void Disable()
+	void Disable() override
 	{
 		m_Enabled = false;
 	}
@@ -552,31 +547,31 @@ public:
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
 
-	virtual wxString GetSortName() const	{return wxString(L"D") + m_Name.c_str();}
+	wxString GetSortName() const override	{return wxString(L"D") + m_Name.c_str();}
 
-	virtual std::string Process(IProgressMeter *progress)
+	std::string Process(IProgressMeter *progress) override
 	{
 		return m_CalData->Process(progress, m_LocationCodes, m_VenueCodes);
 	}
 
-	virtual bool HasQueryDetails() const
+	bool HasQueryDetails() const override
 	{
 		return 1 < m_CalData->QueryLocationCodes().size() || 1 < m_CalData->QueryVenueCodes().size();
 	}
 
-	virtual std::map<std::wstring, std::wstring> const& QueryLocationCodes() const
+	std::map<std::wstring, std::wstring> const& QueryLocationCodes() const override
 	{
 		return m_CalData->QueryLocationCodes();
 	}
 
-	virtual std::map<std::wstring, std::wstring> const& QueryVenueCodes() const
+	std::map<std::wstring, std::wstring> const& QueryVenueCodes() const override
 	{
 		return m_CalData->QueryVenueCodes();
 	}
 
-	virtual bool isValid() const		{return m_CalData->isValid();}
+	bool isValid() const override		{return m_CalData->isValid();}
 
-	virtual bool Enable()
+	bool Enable() override
 	{
 		bool bStatusChange = false;
 		if (!m_CalData->isValid())
@@ -592,12 +587,12 @@ public:
 		return bStatusChange;
 	}
 
-	virtual bool CanDisable() const
+	bool CanDisable() const override
 	{
 		return true;
 	}
 
-	virtual void Disable()
+	void Disable() override
 	{
 		m_CalData->Unload(true);
 		m_Name = fmt::format(L"{} [{}]", m_Filename, _("IDS_DISABLED").wx_str());
@@ -655,9 +650,9 @@ public:
 		m_Desc = fmt::to_string(desc);
 	}
 
-	virtual std::wstring OnNeedText() const	{return m_Name;}
-	virtual std::wstring GetDesc() const	{return m_Desc;}
-	ARBCalendarPtr CalEntry() const			{return m_Cal;}
+	std::wstring OnNeedText() const override	{return m_Name;}
+	std::wstring GetDesc() const override		{return m_Desc;}
+	ARBCalendarPtr CalEntry() const				{return m_Cal;}
 
 private:
 	ARBCalendarPtr m_Cal;
@@ -678,7 +673,7 @@ public:
 	{
 	}
 
-	int OnCompareItems(const wxTreeItemId& item1, const wxTreeItemId& item2);
+	int OnCompareItems(const wxTreeItemId& item1, const wxTreeItemId& item2) override;
 };
 
 
@@ -1168,14 +1163,13 @@ void CDlgCalendarPlugins::OnPluginDelete(wxCommandEvent& evt)
 /////////////////////////////////////////////////////////////////////////////
 
 CCalendarSites::CCalendarSites()
-	: m_Impl(new CCalendarSitesImpl())
+	: m_Impl(std::make_unique<CCalendarSitesImpl>())
 {
 }
 
 
 CCalendarSites::~CCalendarSites()
 {
-	delete m_Impl;
 }
 
 

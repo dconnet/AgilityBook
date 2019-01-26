@@ -86,7 +86,7 @@ private:
 	void ReenableOtherWindows();
 
 	wxWindow* m_parentTop;
-	CTaskbarProgress* m_pTaskbar;
+	CTaskbarProgressPtr m_pTaskbar;
 	wxStaticText* m_ctrlMessage;
 	std::vector<GaugeData> m_ctrlBars;
 	wxButton* m_ctrlCancel;
@@ -162,8 +162,6 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 CDlgProgress::~CDlgProgress()
 {
 	ReenableOtherWindows();
-	delete m_pTaskbar;
-	m_pTaskbar = nullptr;
 }
 
 

@@ -51,7 +51,7 @@ public:
 		, m_ctrlAllowMany(ctrlAllowMany)
 	{
 	}
-	virtual bool Validate(wxWindow* parent);
+	bool Validate(wxWindow* parent) override;
 private:
 	wxCheckBox* m_ctrlAllowMany;
 };
@@ -61,7 +61,7 @@ bool CMultipleValidator::Validate(wxWindow* parent)
 {
 	if (!CGenericValidator::Validate(parent))
 		return false;
-	CTextCtrl* pControl = (CTextCtrl*)m_validatorWindow;
+	CTextCtrl* pControl = dynamic_cast<CTextCtrl*>(m_validatorWindow);
 	short val = static_cast<short>(wxAtol(pControl->GetValue()));
 	if (m_ctrlAllowMany->GetValue() && 1 > val)
 	{

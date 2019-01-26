@@ -927,10 +927,10 @@ void CDlgConfigEvent::EditPoints()
 			pPlace = pData3->GetData();
 		if (pScoring && (pTitle || pLife || pPlace))
 		{
-			double value;
-			double points;
-			CDlgConfigTitlePoints::ETitlePointType type;
-			ARBPointsType typeNorm;
+			double value = 0.0;
+			double points = 0.0;
+			CDlgConfigTitlePoints::ETitlePointType type = CDlgConfigTitlePoints::eTitleNormal;
+			ARBPointsType typeNorm = ePointsTypeNormal;
 			if (pTitle)
 			{
 				value = pTitle->GetFaults();
@@ -958,8 +958,8 @@ void CDlgConfigEvent::EditPoints()
 			bool dlgUseSpeedPts = false;
 			double dlgPoints = 0.0;
 			wxString dlgLifetimeName;
-			CDlgConfigTitlePoints::ETitlePointType dlgType;
-			ARBPointsType dlgTypeNormal;
+			CDlgConfigTitlePoints::ETitlePointType dlgType = CDlgConfigTitlePoints::eTitleNormal;
+			ARBPointsType dlgTypeNormal = ePointsTypeNormal;
 			if (pLife)
 			{
 				CDlgConfigTitlePoints dlg(m_pVenue, pLife);

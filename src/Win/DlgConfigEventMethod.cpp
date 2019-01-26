@@ -69,7 +69,7 @@ public:
 		, m_Value(inVal)
 	{
 	}
-	virtual std::wstring OnNeedText(long iColumn) const;
+	std::wstring OnNeedText(long iColumn) const override;
 	short Place() const					{return m_Place;}
 	void Place(short place)				{m_Place = place;}
 	double Value() const				{return m_Value;}
@@ -356,7 +356,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		iterPlace != m_PlaceInfo.end();
 		++index, ++iterPlace)
 	{
-		CDlgConfigureDataPlacementPtr pData(new CDlgConfigureDataPlacement(
+		CDlgConfigureDataPlacementPtr pData(std::make_shared<CDlgConfigureDataPlacement>(
 			(*iterPlace)->GetPlace(), (*iterPlace)->GetValue()));
 		m_ctrlPlacement->InsertItem(pData);
 	}
@@ -868,7 +868,7 @@ void CDlgConfigEventMethod::OnPlacementNew(wxCommandEvent& evt)
 	CDlgConfigPlaceInfo dlg(placements, -1, 0.0, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		CDlgConfigureDataPlacementPtr pData(new CDlgConfigureDataPlacement(
+		CDlgConfigureDataPlacementPtr pData(std::make_shared<CDlgConfigureDataPlacement>(
 			dlg.GetPlace(), dlg.GetValue()));
 		m_ctrlPlacement->InsertItem(pData);
 		m_ctrlPlacement->SortItems(ComparePlacement);

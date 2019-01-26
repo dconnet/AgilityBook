@@ -30,6 +30,7 @@ class CMainFrame;
 class CTabView : public CAgilityBookBaseView
 {
 	DECLARE_DYNAMIC_CLASS(CTabView)
+	DECLARE_NO_COPY_IMPLEMENTED(CTabView)
 
 public:
 	CTabView();

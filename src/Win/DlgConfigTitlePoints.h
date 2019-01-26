@@ -25,7 +25,7 @@ class CTextCtrl;
 
 class CDlgConfigTitlePoints : public wxDialog
 {
-	void Init(wxWindow* pParent);
+	void InitDlg(wxWindow* pParent);
 
 public:
 	enum ETitlePointType

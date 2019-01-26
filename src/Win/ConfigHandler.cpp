@@ -47,6 +47,11 @@ CConfigHandler::CConfigHandler()
 }
 
 
+CConfigHandler::~CConfigHandler()
+{
+}
+
+
 ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 {
 	bool bOk = false;

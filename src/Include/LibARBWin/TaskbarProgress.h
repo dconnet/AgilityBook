@@ -33,10 +33,16 @@ typedef enum
 typedef unsigned int ULONGLONG;
 #endif
 
+class CTaskbarProgress;
+typedef std::shared_ptr<CTaskbarProgress> CTaskbarProgressPtr;
+
 class CTaskbarProgress
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CTaskbarProgress)
+protected:
+	CTaskbarProgress() {}
 public:
-	static CTaskbarProgress* Get(HWND hwnd);
+	static CTaskbarProgressPtr Get(HWND hwnd);
 	virtual ~CTaskbarProgress();
 
 	virtual bool SetProgressState(TBPFLAG tbpFlags) = 0;

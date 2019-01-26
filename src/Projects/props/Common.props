@@ -6,6 +6,7 @@
   <PropertyGroup>
     <OutDir>$(SolutionDir)..\..\..\bin\$(OutputPlatform)$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(ProjectName)\</IntDir>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

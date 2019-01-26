@@ -61,9 +61,10 @@
 
 class CListTrialData : public CListData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CListTrialData)
 public:
 	CListTrialData(ARBDogClubPtr const& inClub) : m_Club(inClub) {}
-	virtual std::wstring OnNeedText(long iCol) const;
+	std::wstring OnNeedText(long iCol) const override;
 	ARBDogClubPtr GetClub() const	{return m_Club;}
 private:
 	ARBDogClubPtr	m_Club;
@@ -392,7 +393,7 @@ void CDlgTrial::ListClubs(ARBDogClubPtr* inClub)
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++iter)
 	{
 		ARBDogClubPtr pClub = *iter;
-		CListTrialDataPtr data(new CListTrialData(pClub));
+		CListTrialDataPtr data(std::make_shared<CListTrialData>(pClub));
 		long idx = m_ctrlClubs->InsertItem(data);
 		if (inClub && *(*inClub) == *pClub)
 			m_ctrlClubs->Select(idx);

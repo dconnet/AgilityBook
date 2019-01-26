@@ -89,6 +89,12 @@ static void StripNewlines(std::wstring& inStr)
 
 /////////////////////////////////////////////////////////////////////////////
 
+ICalendarSitePtr CCalendarSiteUSDAA::Create()
+{
+	return std::make_shared<CCalendarSiteUSDAA>();
+}
+
+
 CCalendarSiteUSDAA::CCalendarSiteUSDAA()
 {
 }
@@ -96,12 +102,6 @@ CCalendarSiteUSDAA::CCalendarSiteUSDAA()
 
 CCalendarSiteUSDAA::~CCalendarSiteUSDAA()
 {
-}
-
-
-void CCalendarSiteUSDAA::Release()
-{
-	delete this;
 }
 
 
@@ -383,7 +383,7 @@ std::string CCalendarSiteUSDAA::Process(
 		{
 			static const std::wstring tag2(L"h3");
 			static const std::wstring name2(L"General Event Information");
-			ElementNode const* parent;
+			ElementNode const* parent = nullptr;
 			int idxEventCalH3tag = -1;
 			if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
 			{

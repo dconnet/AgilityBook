@@ -31,8 +31,8 @@ public:
 			CWizard* pSheet,
 			CAgilityBookDoc* pDoc);
 
-	wxWizardPage* GetPrev() const	{return nullptr;}
-	wxWizardPage* GetNext() const	{return m_Next;}
+	wxWizardPage* GetPrev() const override {return nullptr;}
+	wxWizardPage* GetNext() const override {return m_Next;}
 
 private:
 	void UpdateList(bool bInit = false);

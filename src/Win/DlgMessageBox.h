@@ -22,7 +22,6 @@
 class IMessageBoxCallback
 {
 public:
-	virtual ~IMessageBoxCallback();
 	virtual void OnDetails(wxWindow* pParent) = 0;
 };
 

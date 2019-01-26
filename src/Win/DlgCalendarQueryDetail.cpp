@@ -406,7 +406,7 @@ void CDlgCalendarQueryDetail::OnOk(wxCommandEvent& evt)
 		m_LocCodes.clear();
 		m_VenueCodes.clear();
 
-		int idx;
+		int idx = 0;
 		int nItems = m_ctrlLocations->GetItemCount();
 		for (idx = 0; idx < nItems; ++idx)
 		{
@@ -429,7 +429,7 @@ void CDlgCalendarQueryDetail::OnOk(wxCommandEvent& evt)
 		m_Locations.clear();
 		m_Venues.clear();
 
-		int idx;
+		int idx = 0;
 		int nItems = m_ctrlLocations->GetItemCount();
 		for (idx = 0; idx < nItems; ++idx)
 		{

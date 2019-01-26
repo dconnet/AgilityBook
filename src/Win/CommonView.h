@@ -96,10 +96,10 @@ public:
 
 	virtual bool AllowStatusContext(int field) const = 0;
 
-	virtual void OnActivateView(
+	void OnActivateView(
 			bool activate,
 			wxView* activeView,
-			wxView* deactiveView);
+			wxView* deactiveView) override;
 
 	virtual void DoActivateView(
 			bool activate,

@@ -39,7 +39,7 @@ CDlgSelectURL::CDlgSelectURL(
 	, m_Name(StringUtil::stringWX(name))
 	, m_textCtrl(nullptr)
 {
-	Init(pParent, false);
+	InitDlg(pParent, false);
 }
 
 
@@ -51,11 +51,11 @@ CDlgSelectURL::CDlgSelectURL(
 	, m_Name(StringUtil::stringWX(name))
 	, m_textCtrl(nullptr)
 {
-	Init(pParent, bAllowEmpty);
+	InitDlg(pParent, bAllowEmpty);
 }
 
 
-void CDlgSelectURL::Init(wxWindow* pParent, bool bAllowEmpty)
+void CDlgSelectURL::InitDlg(wxWindow* pParent, bool bAllowEmpty)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

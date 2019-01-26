@@ -132,13 +132,13 @@ END_EVENT_TABLE()
 static void SetStatusBarWidths(
 		wxStatusBar* statusbar,
 		int col,
-		int* widths,
+		WidthArray& widths,
 		bool bAddKludge)
 {
 	// The gripper isn't right on hidpi. Add a fudge factor.
 	if (bAddKludge && DPI::GetScale(statusbar) > 100)
 		widths[NUM_STATUS_FIELDS - 1] += DPI::Scale(statusbar, 10);
-	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
+	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths.data());
 #if defined(__WXMAC__)
 	// On the Mac, setting the width is always a bit small.
 	// For instance, we want 36, but it gets set to 32.
@@ -167,6 +167,7 @@ static void SetStatusBarWidths(
 CMainFrame::CMainFrame(wxDocManager* manager)
 	: wxDocParentFrame(manager, nullptr, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
+	, m_Widths({0})
 {
 	SetIcons(CImageManager::Get()->GetIconBundle(ImageMgrAppBundle));
 //#if wxUSE_HELP
@@ -184,7 +185,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	{
 		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_CONTEXT_MENU, wxContextMenuEventHandler, CMainFrame::OnStatusBarContextMenu);
 		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_LEFT_DCLICK, wxMouseEvent, CMainFrame::OnStatusBarDblClick);
-		int style[NUM_STATUS_FIELDS];
+		int style[NUM_STATUS_FIELDS] = {0};
 		m_Widths[0] = -1;
 		style[0] = wxSB_FLAT;
 		for (int i = 1; i < NUM_STATUS_FIELDS; ++i)

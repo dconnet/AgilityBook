@@ -32,7 +32,7 @@ public:
 	// Override so we can close the frame after printing. That's how MFC did
 	// it (note: MFC closed as soon as you clicked print - we wait for success
 	// so we're not fully implmementing the old mfc behavior)
-	bool Print(bool interactive);
+	bool Print(bool interactive) override;
 };
 
 
@@ -40,10 +40,10 @@ class CHtmlEasyPrinting : public wxHtmlEasyPrinting
 {
 public:
 	CHtmlEasyPrinting(wxWindow* parent);
-	virtual bool DoPreview(
+	bool DoPreview(
 			wxHtmlPrintout* printout1,
-			wxHtmlPrintout* printout2);
-	virtual bool DoPrint(wxHtmlPrintout* printout);
+			wxHtmlPrintout* printout2) override;
+	bool DoPrint(wxHtmlPrintout* printout) override;
 };
 
 

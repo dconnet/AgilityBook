@@ -43,10 +43,8 @@
 class CLongValidator : public wxValidator
 {
 	DECLARE_CLASS(CLongValidator)
-private:
+	DECLARE_NO_ASSIGN_IMPLEMENTED(CLongValidator)
 	CLongValidator(CLongValidator&&) = delete;
-	CLongValidator& operator=(CLongValidator const&) = delete;
-	CLongValidator& operator=(CLongValidator&&) = delete;
 public:
 	CLongValidator(long* val)
 		: m_pLong(val)
@@ -57,6 +55,7 @@ public:
 	{
 		Copy(rhs);
 	}
+	~CLongValidator() {}
 	wxObject *Clone() const override {return new CLongValidator(*this);}
 	bool TransferFromWindow() override;
 	bool TransferToWindow() override;

@@ -87,6 +87,7 @@
 
 class CAgilityBookRunsViewData : public CListData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookRunsViewData)
 public:
 	CAgilityBookRunsViewData(
 			CAgilityBookRunsView* pView,

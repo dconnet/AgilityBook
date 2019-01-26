@@ -846,6 +846,24 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(
 }
 
 
+CFilterOptions::CFilterOptionData::CFilterOptionData(
+		CFilterOptions::CFilterOptionData&& rhs)
+	: filterName(std::move(rhs.filterName))
+	, calView(std::move(rhs.calView))
+	, bAllDates(std::move(rhs.bAllDates))
+	, bStartDate(std::move(rhs.bStartDate))
+	, dateStartDate(std::move(rhs.dateStartDate))
+	, bEndDate(std::move(rhs.bEndDate))
+	, dateEndDate(std::move(rhs.dateEndDate))
+	, bViewAllVenues(std::move(rhs.bViewAllVenues))
+	, venueFilter(std::move(rhs.venueFilter))
+	, eRuns(std::move(rhs.eRuns))
+	, bViewAllNames(std::move(rhs.bViewAllNames))
+	, nameFilter(std::move(rhs.nameFilter))
+{
+}
+
+
 CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
 		CFilterOptions::CFilterOptionData const& rhs)
 {
@@ -863,6 +881,28 @@ CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
 		eRuns = rhs.eRuns;
 		bViewAllNames = rhs.bViewAllNames;
 		nameFilter = rhs.nameFilter;
+	}
+	return *this;
+}
+
+
+CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
+		CFilterOptions::CFilterOptionData&& rhs)
+{
+	if (this != &rhs)
+	{
+		filterName = std::move(rhs.filterName);
+		calView = std::move(rhs.calView);
+		bAllDates = std::move(rhs.bAllDates);
+		bStartDate = std::move(rhs.bStartDate);
+		dateStartDate = std::move(rhs.dateStartDate);
+		bEndDate = std::move(rhs.bEndDate);
+		dateEndDate = std::move(rhs.dateEndDate);
+		bViewAllVenues = std::move(rhs.bViewAllVenues);
+		venueFilter = std::move(rhs.venueFilter);
+		eRuns = std::move(rhs.eRuns);
+		bViewAllNames = std::move(rhs.bViewAllNames);
+		nameFilter = std::move(rhs.nameFilter);
 	}
 	return *this;
 }

@@ -77,7 +77,7 @@ CDlgReorder::CDlgReorder(
 	, m_ctrlUp(nullptr)
 	, m_ctrlDown(nullptr)
 {
-	Init(pParent);
+	InitDlg(pParent);
 }
 
 
@@ -96,11 +96,11 @@ CDlgReorder::CDlgReorder(
 	, m_ctrlUp(nullptr)
 	, m_ctrlDown(nullptr)
 {
-	Init(pParent);
+	InitDlg(pParent);
 }
 
 
-void CDlgReorder::Init(wxWindow* pParent)
+void CDlgReorder::InitDlg(wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

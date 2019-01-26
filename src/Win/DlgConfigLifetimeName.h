@@ -34,7 +34,7 @@ public:
 	std::wstring GetLifetimeName() const	{return m_NewName;}
 
 private:
-	void Init(wxWindow* pParent);
+	void InitDlg(wxWindow* pParent);
 
 	ARBConfigVenuePtr m_Venue;
 	bool m_bCheckOldName;

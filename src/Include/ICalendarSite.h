@@ -35,8 +35,6 @@ class IProgressMeter;	// Include/IProgressMeter.h
 class ICalendarSite
 {
 public:
-	virtual ~ICalendarSite();
-
 	/**
 	 * Get the identifier of the plugin.
 	 * Previously, this was the DLL file name. Now, just ensure a unique name
@@ -99,3 +97,4 @@ public:
 			std::vector<std::wstring> const& inVenueCodes,
 			IProgressMeter* progress) const = 0;
 };
+typedef std::shared_ptr<ICalendarSite> ICalendarSitePtr;

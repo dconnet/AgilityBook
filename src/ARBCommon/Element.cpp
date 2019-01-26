@@ -165,7 +165,7 @@ public:
 		size_t count = 0;
 		if (m_stream.good())
 		{
-			m_stream.read((char*)buffer, size);
+			m_stream.read(static_cast<char*>(buffer), size);
 			count = static_cast<size_t>(m_stream.gcount());
 
 			if (m_stream.eof())
@@ -202,7 +202,7 @@ public:
 		size_t count = 0;
 		if (m_stream.good())
 		{
-			m_stream.write((char*)buffer, size);
+			m_stream.write(static_cast<const char*>(buffer), size);
 			count = size;
 
 			if (m_stream.eof())

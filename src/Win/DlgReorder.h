@@ -48,7 +48,7 @@ private:
 	wxButton* m_ctrlDown;
 
 protected:
-	void Init(wxWindow* pParent);
+	void InitDlg(wxWindow* pParent);
 	void UpdateControls();
 
 	DECLARE_EVENT_TABLE()

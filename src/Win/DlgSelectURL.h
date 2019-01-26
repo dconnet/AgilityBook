@@ -37,7 +37,7 @@ private:
 	wxString m_Name;
 	CTextCtrl* m_textCtrl;
 
-	void Init(wxWindow* pParent, bool bAllowEmpty);
+	void InitDlg(wxWindow* pParent, bool bAllowEmpty);
 
 	DECLARE_ON_INIT()
 	void OnFilename(wxCommandEvent& evt);

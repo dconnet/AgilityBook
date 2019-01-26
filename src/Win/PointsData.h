@@ -80,10 +80,8 @@ public:
  */
 class OtherPtInfo
 {
-#if _MSC_VER >= 1400
 private:
-	OtherPtInfo() = delete; // Not implemented, needed for <list>
-#endif
+	OtherPtInfo() = delete;
 public:
 	OtherPtInfo(
 			ARBDogTrialPtr const& inTrial,
@@ -92,7 +90,11 @@ public:
 			bool bScore, // m_Score is valid
 			double score);
 	OtherPtInfo(ARBDogExistingPointsPtr const& inExisting);
+	OtherPtInfo(OtherPtInfo const&) = default;
+	OtherPtInfo(OtherPtInfo&&) = default;
 	~OtherPtInfo();
+	OtherPtInfo& operator=(OtherPtInfo const&) = default;
+	OtherPtInfo& operator=(OtherPtInfo&&) = default;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
 	ARBDogExistingPointsPtr m_pExisting;
@@ -111,6 +113,7 @@ class CPointsDataBase;
 typedef std::shared_ptr<CPointsDataBase> CPointsDataBasePtr;
 class CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataBase)
 public:
 	CPointsDataBase(CAgilityBookDoc* pDoc);
 	virtual ~CPointsDataBase();
@@ -138,6 +141,7 @@ protected:
  */
 class CPointsDataSeparator : public CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataSeparator)
 public:
 	CPointsDataSeparator(
 			CAgilityBookDoc* pDoc,
@@ -167,13 +171,13 @@ protected:
  */
 class CPointsDataText : public CPointsDataBase
 {
-private:
-	CPointsDataText(
-			CAgilityBookDoc* pDoc,
-			bool bUseInHtml,
-			wchar_t const* inCol1 = L"",
-			wchar_t const* inCol2 = L"");
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataText)
 public:
+	CPointsDataText(
+		CAgilityBookDoc* pDoc,
+		bool bUseInHtml,
+		wchar_t const* inCol1 = L"",
+		wchar_t const* inCol2 = L"");
 	static CPointsDataBasePtr CreateListBlankLine(CAgilityBookDoc* pDoc);
 	static CPointsDataBasePtr CreateListOtherPoints(CAgilityBookDoc* pDoc);
 	static CPointsDataBasePtr CreateDataLine(
@@ -198,6 +202,7 @@ typedef std::shared_ptr<CPointsDataText> CPointsDataTextPtr;
  */
 class CPointsDataHeader : public CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataHeader)
 public:
 	CPointsDataHeader(CAgilityBookDoc* pDoc);
 
@@ -215,6 +220,7 @@ typedef std::shared_ptr<CPointsDataHeader> CPointsDataHeaderPtr;
  */
 class CPointsDataDog : public CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataDog)
 public:
 	CPointsDataDog(
 			CAgilityBookDoc* pDoc,
@@ -238,6 +244,7 @@ typedef std::shared_ptr<CPointsDataDog> CPointsDataDogPtr;
  */
 class CPointsDataVenue : public CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataVenue)
 public:
 	CPointsDataVenue(
 			CAgilityBookDoc* pDoc,
@@ -263,6 +270,7 @@ typedef std::shared_ptr<CPointsDataVenue> CPointsDataVenuePtr;
  */
 class CPointsDataTitle : public CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataTitle)
 public:
 	CPointsDataTitle(
 			CAgilityBookDoc* pDoc,
@@ -289,6 +297,7 @@ typedef std::shared_ptr<CPointsDataTitle> CPointsDataTitlePtr;
 class CPointsDataEvent : public CPointsDataBase
 {
 	friend class SortPointItems;
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataEvent)
 public:
 	CPointsDataEvent(
 			CAgilityBookDoc* pDoc,
@@ -338,6 +347,7 @@ typedef std::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
  */
 class CPointsDataLifetime : public CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataLifetime)
 public:
 	CPointsDataLifetime(
 			CAgilityBookDoc* pDoc,
@@ -346,7 +356,7 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBConfigLifetimeNamePtr const& inLifetimeName,
 			ARBConfigVenuePtr const& inVenue);
-	void AddLifetimeInfo(
+	virtual void AddLifetimeInfo(
 			std::wstring const& inDiv,
 			std::wstring const& inLevel,
 			double inLifetime,
@@ -393,7 +403,7 @@ public:
 			std::wstring const& inSort1,
 			std::wstring const& inSort2,
 			double inLifetime,
-			double inFiltered);
+			double inFiltered) override;
 
 	std::wstring OnNeedText(int inCol) const override;
 	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
@@ -411,6 +421,7 @@ typedef std::shared_ptr<CPointsDataLifetimeByName> CPointsDataLifetimeByNamePtr;
  */
 class CPointsDataMultiQs : public CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataMultiQs)
 public:
 	CPointsDataMultiQs(
 			CAgilityBookDoc* pDoc,
@@ -441,6 +452,7 @@ typedef std::shared_ptr<CPointsDataMultiQs> CPointsDataMultiQsPtr;
  */
 class CPointsDataSpeedPts : public CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataSpeedPts)
 public:
 	CPointsDataSpeedPts(
 			CAgilityBookDoc* pDoc,
@@ -466,6 +478,7 @@ typedef std::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
  */
 class CPointsDataOtherPoints : public CPointsDataBase
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPoints)
 public:
 	CPointsDataOtherPoints(
 			CAgilityBookDoc* pDoc,
@@ -479,6 +492,7 @@ typedef std::shared_ptr<CPointsDataOtherPoints> CPointsDataOtherPointsPtr;
 
 class CPointsDataOtherPointsTallyAll : public CPointsDataOtherPoints
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyAll)
 public:
 	CPointsDataOtherPointsTallyAll(
 			CAgilityBookDoc* pDoc,
@@ -498,6 +512,7 @@ typedef std::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTa
 
 class CPointsDataOtherPointsTallyAllByEvent : public CPointsDataOtherPoints
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyAllByEvent)
 public:
 	CPointsDataOtherPointsTallyAllByEvent(
 			CAgilityBookDoc* pDoc,
@@ -517,6 +532,7 @@ typedef std::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherP
 
 class CPointsDataOtherPointsTallyLevel : public CPointsDataOtherPoints
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyLevel)
 public:
 	CPointsDataOtherPointsTallyLevel(
 			CAgilityBookDoc* pDoc,
@@ -536,6 +552,7 @@ typedef std::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPoints
 
 class CPointsDataOtherPointsTallyLevelByEvent : public CPointsDataOtherPoints
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyLevelByEvent)
 public:
 	CPointsDataOtherPointsTallyLevelByEvent(
 			CAgilityBookDoc* pDoc,
@@ -559,6 +576,7 @@ typedef std::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOthe
 
 class CPointsDataItems
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataItems)
 public:
 	CPointsDataItems();
 	~CPointsDataItems();

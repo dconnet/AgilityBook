@@ -59,6 +59,7 @@ ARB_TYPEDEF(CDlgDogDataTitle)
 class CDlgDog : public wxDialog
 {
 	friend class CDlgDogDataTitle;
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgDog)
 public:
 	CDlgDog(
 			CAgilityBookDoc* pDoc,

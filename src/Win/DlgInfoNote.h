@@ -59,10 +59,55 @@ private:
 			eInUse,
 			eDeleted
 		} eUsage;
-		NameInfo();
-		NameInfo(std::wstring const& inName);
-		NameInfo(NameInfo const& rhs);
-		bool operator==(NameInfo const& rhs);
+		NameInfo()
+			: m_Name()
+			, m_eInUse(eNotInUse)
+			, m_bHasData(false)
+		{
+		}
+		NameInfo(std::wstring const& inName)
+			: m_Name(inName)
+			, m_eInUse(eNotInUse)
+			, m_bHasData(false)
+		{
+		}
+		NameInfo(NameInfo const& rhs)
+			: m_Name(rhs.m_Name)
+			, m_eInUse(rhs.m_eInUse)
+			, m_bHasData(rhs.m_bHasData)
+		{
+		}
+		NameInfo(NameInfo&& rhs)
+			: m_Name(std::move(rhs.m_Name))
+			, m_eInUse(std::move(rhs.m_eInUse))
+			, m_bHasData(std::move(rhs.m_bHasData))
+		{
+		}
+		~NameInfo() {}
+		NameInfo& operator=(NameInfo const& rhs)
+		{
+			if (this != &rhs)
+			{
+				m_Name = rhs.m_Name;
+				m_eInUse = rhs.m_eInUse;
+				m_bHasData = rhs.m_bHasData;
+			}
+			return *this;
+		}
+		NameInfo& operator=(NameInfo&& rhs)
+		{
+			if (this != &rhs)
+			{
+				m_Name = std::move(rhs.m_Name);
+				m_eInUse = std::move(rhs.m_eInUse);
+				m_bHasData = std::move(rhs.m_bHasData);
+			}
+			return *this;
+		}
+		bool operator==(NameInfo const& rhs)
+		{
+			return m_Name == rhs.m_Name;
+		}
 		std::wstring m_Name;
 		eUsage m_eInUse;
 		bool m_bHasData;

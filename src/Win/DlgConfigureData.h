@@ -28,7 +28,8 @@ class CDlgConfigureDataBase : public CTreeData
 public:
 	CDlgConfigureDataBase(CDlgConfigVenue* pDlg);
 
-	virtual std::wstring OnNeedText() const			{return wxEmptyString;}
+	std::wstring OnNeedText() const override {return wxEmptyString;}
+	virtual std::wstring OnNeedText(int iColumn) const {return wxEmptyString;}
 
 	// After adding a node, use this to add subchildren in venue (levels/sublevels)
 	virtual void AddSubItems()					{}
@@ -57,11 +58,11 @@ class CDlgConfigureDataVenue : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataVenue(ARBConfigVenuePtr const& inVenue);
 	ARBConfigVenuePtr GetVenue() const			{return m_Venue;}
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanCopy() const				{return true;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanCopy() const override				{return true;}
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
 protected:
 	ARBConfigVenuePtr m_Venue;
 };
@@ -73,11 +74,11 @@ class CDlgConfigureDataFault : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataFault(ARBConfigFaultPtr const& inFault);
 	ARBConfigFaultPtr GetFault() const			{return m_Fault;}
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanCopy() const				{return true;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanCopy() const override				{return true;}
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
 protected:
 	ARBConfigFaultPtr m_Fault;
 };
@@ -89,11 +90,11 @@ class CDlgConfigureDataOtherPoints : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr const& inOtherPoints);
 	ARBConfigOtherPointsPtr GetOtherPoints() const	{return m_OtherPoints;}
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanCopy() const				{return true;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanCopy() const override				{return true;}
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
 protected:
 	ARBConfigOtherPointsPtr m_OtherPoints;
 };
@@ -107,17 +108,17 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigDivisionPtr const& inDiv);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Div;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
-	virtual void AddSubItems();
-	virtual bool CanAdd() const					{return true;}
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanMove() const				{return true;}
-	virtual bool DoAdd();
-	virtual bool DoEdit();
-	virtual bool DoDelete();
-	virtual CDlgConfigureDataBase* DoMove(bool bUp);
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
+	void AddSubItems() override;
+	bool CanAdd() const override					{return true;}
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanMove() const override				{return true;}
+	bool DoAdd() override;
+	bool DoEdit() override;
+	bool DoDelete() override;
+	CDlgConfigureDataBase* DoMove(bool bUp) override;
 protected:
 	ARBConfigDivisionPtr m_Div;
 };
@@ -133,17 +134,17 @@ public:
 			ARBConfigLevelPtr const& inLevel);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
-	virtual void AddSubItems();
-	virtual bool CanAdd() const					{return true;}
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanMove() const				{return true;}
-	virtual bool DoAdd();
-	virtual bool DoEdit();
-	virtual bool DoDelete();
-	virtual CDlgConfigureDataBase* DoMove(bool bUp);
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
+	void AddSubItems() override;
+	bool CanAdd() const override				{return true;}
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanMove() const override				{return true;}
+	bool DoAdd() override;
+	bool DoEdit() override;
+	bool DoDelete() override;
+	CDlgConfigureDataBase* DoMove(bool bUp) override;
 protected:
 	ARBConfigDivisionPtr m_Division;
 	ARBConfigLevelPtr m_Level;
@@ -162,14 +163,14 @@ public:
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
 	ARBConfigSubLevelPtr GetSubLevel() const	{return m_SubLevel;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanMove() const				{return true;}
-	virtual bool DoEdit();
-	virtual bool DoDelete();
-	virtual CDlgConfigureDataBase* DoMove(bool bUp);
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanMove() const override				{return true;}
+	bool DoEdit() override;
+	bool DoDelete() override;
+	CDlgConfigureDataBase* DoMove(bool bUp) override;
 protected:
 	ARBConfigDivisionPtr m_Division;
 	ARBConfigLevelPtr m_Level;
@@ -185,16 +186,16 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigTitlePtr const& inTitle);
 	ARBConfigTitlePtr GetTitle() const			{return m_Title;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanCopy() const				{return true;}
-	virtual bool CanMove() const				{return true;}
-	virtual bool DoEdit();
-	virtual bool DoDelete();
-	virtual bool DoCopy();
-	virtual CDlgConfigureDataBase* DoMove(bool bUp);
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanCopy() const override				{return true;}
+	bool CanMove() const override				{return true;}
+	bool DoEdit() override;
+	bool DoDelete() override;
+	bool DoCopy() override;
+	CDlgConfigureDataBase* DoMove(bool bUp) override;
 protected:
 	ARBConfigTitlePtr m_Title;
 };
@@ -208,16 +209,16 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigEventPtr const& inEvent);
 	ARBConfigEventPtr GetEvent() const			{return m_Event;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanCopy() const				{return true;}
-	virtual bool CanMove() const				{return true;}
-	virtual bool DoEdit();
-	virtual bool DoDelete();
-	virtual bool DoCopy();
-	virtual CDlgConfigureDataBase* DoMove(bool bUp);
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanCopy() const override				{return true;}
+	bool CanMove() const override				{return true;}
+	bool DoEdit() override;
+	bool DoDelete() override;
+	bool DoCopy() override;
+	CDlgConfigureDataBase* DoMove(bool bUp) override;
 protected:
 	ARBConfigEventPtr m_Event;
 };
@@ -231,16 +232,16 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigLifetimeNamePtr const& inName);
 	ARBConfigLifetimeNamePtr GetLifetimeName() const	{return m_pName;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanCopy() const				{return true;}
-	virtual bool CanMove() const				{return true;}
-	virtual bool DoEdit();
-	virtual bool DoDelete();
-	virtual bool DoCopy();
-	virtual CDlgConfigureDataBase* DoMove(bool bUp);
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanCopy() const override				{return true;}
+	bool CanMove() const override				{return true;}
+	bool DoEdit() override;
+	bool DoDelete() override;
+	bool DoCopy() override;
+	CDlgConfigureDataBase* DoMove(bool bUp) override;
 protected:
 	ARBConfigLifetimeNamePtr m_pName;
 };
@@ -254,16 +255,16 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigMultiQPtr const& inMultiq);
 	ARBConfigMultiQPtr GetMultiQ() const		{return m_MultiQ;}
-	virtual std::wstring OnNeedText() const;
-	virtual std::wstring OnNeedText(int iColumn) const;
-	virtual bool CanEdit() const				{return true;}
-	virtual bool CanDelete() const				{return true;}
-	virtual bool CanCopy() const				{return true;}
-	virtual bool CanMove() const				{return true;}
-	virtual bool DoEdit();
-	virtual bool DoDelete();
-	virtual bool DoCopy();
-	virtual CDlgConfigureDataBase* DoMove(bool bUp);
+	std::wstring OnNeedText() const override;
+	std::wstring OnNeedText(int iColumn) const override;
+	bool CanEdit() const override				{return true;}
+	bool CanDelete() const override				{return true;}
+	bool CanCopy() const override				{return true;}
+	bool CanMove() const override				{return true;}
+	bool DoEdit() override;
+	bool DoDelete() override;
+	bool DoCopy() override;
+	CDlgConfigureDataBase* DoMove(bool bUp) override;
 protected:
 	ARBConfigMultiQPtr m_MultiQ;
 };

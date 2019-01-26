@@ -42,6 +42,7 @@ typedef enum
  */
 class CClipboardData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CClipboardData)
 public:
 	CClipboardData(bool bAutoOpen);
 	virtual ~CClipboardData();
@@ -61,6 +62,7 @@ protected:
 
 class CClipboardDataReader : public CClipboardData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CClipboardDataReader)
 public:
 	CClipboardDataReader();
 
@@ -100,9 +102,10 @@ private:
  */
 class CClipboardDataWriter : public CClipboardData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CClipboardDataWriter)
 public:
 	CClipboardDataWriter();
-	virtual ~CClipboardDataWriter();
+	~CClipboardDataWriter();
 
 	bool AddData(
 			eClipFormat clpFmt,

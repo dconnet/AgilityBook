@@ -67,7 +67,7 @@ CVenueComboBox::CVenueComboBox(
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		wxString wxShortName = StringUtil::stringWX(pVenue->GetName());
 		wxString wxName(wxShortName);
-		int index;
+		int index = 0;
 		if (useLongName)
 			wxName = StringUtil::stringWX(pVenue->GetLongName());
 		index = Append(wxName);

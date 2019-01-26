@@ -142,7 +142,7 @@ CWizardImport::CWizardImport(
 	for (size_t i = 0; i < sc_nDates; ++i)
 	{
 		long index = m_ctrlDateFormat->Append(wxGetTranslation(sc_Dates[i].uFormat));
-		m_ctrlDateFormat->SetClientData(index, (void*)sc_Dates[i].format);
+		m_ctrlDateFormat->SetClientData(index, reinterpret_cast<void*>(sc_Dates[i].format));
 		if (sc_Dates[i].format == format || sc_Dates[i].extendedFormat == format)
 			m_ctrlDateFormat->SetSelection(index);
 	}
@@ -814,13 +814,13 @@ bool CWizardImport::DoWizardFinish()
 					IO_TYPE_RUNS_OPEN_CLOSE,
 					IO_TYPE_RUNS_POINTS
 				};
-				long idxDate[4];
-				long idxVenue[4];
-				long idxClub[4];
-				long idxDiv[4];
-				long idxLevel[4];
-				long idxEvent[4];
-				long i;
+				long idxDate[4] = { 0 };
+				long idxVenue[4] = { 0 };
+				long idxClub[4] = { 0 };
+				long idxDiv[4] = { 0 };
+				long idxLevel[4] = { 0 };
+				long idxEvent[4] = { 0 };
+				long i = 0;
 				for (i = 0; i < 4; ++i)
 				{
 					idxDate[i] = idxVenue[i] = idxClub[i] = idxDiv[i] = idxLevel[i] = idxEvent[i] = -1;

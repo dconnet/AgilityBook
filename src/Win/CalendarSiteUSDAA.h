@@ -20,22 +20,22 @@
 
 class CCalendarSiteUSDAA : public ICalendarSite
 {
-protected:
-	virtual ~CCalendarSiteUSDAA();
+	DECLARE_NO_COPY_IMPLEMENTED(CCalendarSiteUSDAA)
 public:
+	static ICalendarSitePtr Create();
 	CCalendarSiteUSDAA();
-	virtual void Release();
+	virtual ~CCalendarSiteUSDAA();
 
-	virtual std::wstring GetID() const;
-	virtual bool GetVersion(CVersionNum& outVer) const;
-	virtual std::wstring GetName() const;
-	virtual std::wstring GetDescription() const;
-	virtual size_t GetLocationCodes(
-			std::map<std::wstring, std::wstring>& locCodes) const;
-	virtual size_t GetVenueCodes(
-			std::map<std::wstring, std::wstring>& venueCodes) const;
-	virtual std::string Process(
+	std::wstring GetID() const override;
+	bool GetVersion(CVersionNum& outVer) const override;
+	std::wstring GetName() const override;
+	std::wstring GetDescription() const override;
+	size_t GetLocationCodes(
+			std::map<std::wstring, std::wstring>& locCodes) const override;
+	size_t GetVenueCodes(
+			std::map<std::wstring, std::wstring>& venueCodes) const override;
+	std::string Process(
 			std::vector<std::wstring> const& inLocCodes,
 			std::vector<std::wstring> const& inVenueCodes,
-			IProgressMeter* progress) const;
+			IProgressMeter* progress) const override;
 };

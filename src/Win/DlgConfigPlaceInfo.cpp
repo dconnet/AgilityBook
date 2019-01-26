@@ -44,9 +44,9 @@ public:
 		, m_origPlace(*val)
 	{
 	}
-	virtual wxObject *Clone() const {return new CPlaceValidator(*this);}
+	wxObject *Clone() const override {return new CPlaceValidator(*this);}
 
-	virtual bool Validate(wxWindow* parent);
+	bool Validate(wxWindow* parent) override;
 
 private:
 	std::vector<short> const& m_ExistingPlaces;
@@ -57,7 +57,7 @@ private:
 bool CPlaceValidator::Validate(wxWindow* parent)
 {
 	// We know...
-	CTextCtrl* pControl = (CTextCtrl*)m_validatorWindow;
+	CTextCtrl* pControl = dynamic_cast<CTextCtrl*>(m_validatorWindow);
 	short val = static_cast<short>(wxAtol(pControl->GetValue()));
 
 	if (val != m_origPlace)
@@ -86,9 +86,9 @@ public:
 		, m_origValue(*val)
 	{
 	}
-	virtual wxObject *Clone() const {return new CValueValidator(*this);}
+	wxObject *Clone() const override {return new CValueValidator(*this);}
 
-	virtual bool Validate(wxWindow* parent);
+	bool Validate(wxWindow* parent) override;
 
 private:
 	double m_origValue;
@@ -98,7 +98,7 @@ private:
 bool CValueValidator::Validate(wxWindow* parent)
 {
 	// We know...
-	CTextCtrl* pControl = (CTextCtrl*)m_validatorWindow;
+	CTextCtrl* pControl = dynamic_cast<CTextCtrl*>(m_validatorWindow);
 	double val = StringUtil::ToDouble(StringUtil::stringW(pControl->GetValue()), val);
 
 	if (0.0 > val)

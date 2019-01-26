@@ -369,7 +369,7 @@ void CWizardStart::UpdateList(bool bInit)
 			index = m_ctrlList->Append(str);
 		}
 		if (wxNOT_FOUND != index)
-			m_ctrlList->SetClientData(index, reinterpret_cast<void*>(size_t(i)));
+			m_ctrlList->SetClientData(index, reinterpret_cast<void*>(static_cast<size_t>(i)));
 	}
 	std::wstring str = fmt::format(L"{}{}", LAST_STYLEITEM, m_Style);
 	long idx = wxConfig::Get()->Read(str, -1L);
@@ -489,6 +489,7 @@ bool CWizardStart::DoWizardFinish()
 	int index = m_ctrlList->GetSelection();
 	if (-1 != m_Style && wxNOT_FOUND != index)
 	{
+		fmt::wmemory_buffer errMsg;
 		size_t data = reinterpret_cast<size_t>(m_ctrlList->GetClientData(index));
 		switch (data)
 		{
@@ -505,7 +506,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					fmt::wmemory_buffer errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					bool bLoadOk = false;
 					{
@@ -537,7 +537,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					fmt::wmemory_buffer errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					bool bLoadOk = false;
 					{
@@ -647,7 +646,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					fmt::wmemory_buffer errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					bool bLoadOk = false;
 					{
@@ -798,7 +796,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					fmt::wmemory_buffer errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					bool bLoadOk = false;
 					{

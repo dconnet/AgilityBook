@@ -186,7 +186,7 @@ CPointsDataBasePtr CPointsDataText::CreateListBlankLine(CAgilityBookDoc* pDoc)
 	// Would normally use make_shared, but VS2015 is complaining it can't access
 	// the constructor.
 	CPointsDataBasePtr obj;
-	obj.reset(new CPointsDataText(pDoc, false));
+	obj = std::make_shared<CPointsDataText>(pDoc, false);
 	return obj;
 }
 
@@ -195,7 +195,7 @@ CPointsDataBasePtr CPointsDataText::CreateListOtherPoints(CAgilityBookDoc* pDoc)
 {
 	std::wstring str(_("IDS_OTHERPOINTS"));
 	CPointsDataBasePtr obj;
-	obj.reset(new CPointsDataText(pDoc, false, str.c_str()));
+	obj = std::make_shared<CPointsDataText>(pDoc, false, str.c_str());
 	return obj;
 }
 
@@ -205,7 +205,7 @@ CPointsDataBasePtr CPointsDataText::CreateDataLine(
 		std::wstring const& str)
 {
 	CPointsDataBasePtr obj;
-	obj.reset(new CPointsDataText(pDoc, true, L"", str.c_str()));
+	obj = std::make_shared<CPointsDataText>(pDoc, true, L"", str.c_str());
 	return obj;
 }
 

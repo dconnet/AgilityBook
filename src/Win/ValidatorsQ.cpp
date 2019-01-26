@@ -58,7 +58,7 @@ bool CQualifyingValidator::TransferFromWindow()
 {
 	if (m_validatorWindow->IsKindOf(CLASSINFO(CQualifyingComboBox)))
 	{
-		CQualifyingComboBox* pControl = (CQualifyingComboBox*)m_validatorWindow;
+		CQualifyingComboBox* pControl = dynamic_cast<CQualifyingComboBox*>(m_validatorWindow);
 		if (!m_bAllowNoSel && wxNOT_FOUND == pControl->GetSelection())
 			return false;
 		if (m_pQ)
@@ -75,7 +75,7 @@ bool CQualifyingValidator::TransferToWindow()
 {
 	if (m_validatorWindow->IsKindOf(CLASSINFO(CQualifyingComboBox)))
 	{
-		CQualifyingComboBox* pControl = (CQualifyingComboBox*)m_validatorWindow;
+		CQualifyingComboBox* pControl = dynamic_cast<CQualifyingComboBox*>(m_validatorWindow);
 		if (m_pQ)
 		{
 			int idx = pControl->FindString(StringUtil::stringWX(m_pQ->str()), true);
@@ -97,7 +97,7 @@ bool CQualifyingValidator::Validate(wxWindow* parent)
 	}
 	if (!m_bAllowNoSel)
 	{
-		CQualifyingComboBox* pControl = (CQualifyingComboBox*)m_validatorWindow;
+		CQualifyingComboBox* pControl = dynamic_cast<CQualifyingComboBox*>(m_validatorWindow);
 		if (wxNOT_FOUND == pControl->GetSelection())
 		{
 			m_validatorWindow->SetFocus();

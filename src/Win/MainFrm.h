@@ -18,6 +18,7 @@
  */
 
 #include "AgilityBookMenu.h"
+#include <array>
 #include <wx/dnd.h>
 #include <wx/docview.h>
 
@@ -26,6 +27,7 @@
 #define STATUS_STATUS		2
 #define STATUS_FILTERED		3
 #define NUM_STATUS_FIELDS	4
+typedef std::array<int, NUM_STATUS_FIELDS> WidthArray;
 
 
 class CFileDropTarget : public wxFileDropTarget
@@ -35,10 +37,10 @@ public:
 		: m_docMgr(docMgr)
 	{
 	}
-	virtual bool OnDropFiles(
+	bool OnDropFiles(
 			wxCoord x,
 			wxCoord y,
-			wxArrayString const& filenames);
+			wxArrayString const& filenames) override;
 private:
 	wxDocManager* m_docMgr;
 };
@@ -63,10 +65,10 @@ private:
 	class CStartupEvent : public wxTimer
 	{
 	public:
-		virtual void Notify();
+		void Notify() override;
 	} m_timerStartup;
 	wxDocManager* m_manager;
-	int m_Widths[NUM_STATUS_FIELDS];
+	WidthArray m_Widths;
 
 private:
 	DECLARE_EVENT_TABLE()

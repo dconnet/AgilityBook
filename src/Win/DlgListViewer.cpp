@@ -88,6 +88,7 @@
 
 class CDlgListViewerDataColumns
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataColumns)
 public:
 	CDlgListViewerDataColumns(size_t inInitSize = 0)
 	{
@@ -131,12 +132,14 @@ typedef std::shared_ptr<CDlgListViewerDataColumns> CDlgListViewerDataColumnsPtr;
 
 class CDlgListViewerData : public CListData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerData)
 public:
 	CDlgListViewerData() {}
-	virtual ~CDlgListViewerData() {}
+	~CDlgListViewerData() {}
 
-	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
+	virtual int OnNeedIcon() const = 0;
 	virtual int Compare(
 			CDlgListViewerDataPtr const& inRow2,
 			int inCol) const = 0;
@@ -155,6 +158,7 @@ class CDlgListViewerDataExisting : public CDlgListViewerData
 {
 	friend class CDlgListViewerDataRun;
 	friend class CDlgListViewerDataMultiQ;
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataExisting)
 public:
 	CDlgListViewerDataExisting(
 			CDlgListViewerDataColumnsPtr const& inColData,
@@ -164,11 +168,11 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual int OnNeedIcon() const		{return -1;}
-	virtual int Compare(
+	std::wstring OnNeedText(long iCol) const override;
+	int OnNeedIcon() const override {return -1;}
+	int Compare(
 			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const;
+			int inCol) const override;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	ARBDogExistingPointsPtr m_Existing;
@@ -214,6 +218,7 @@ std::wstring CDlgListViewerDataExisting::OnNeedText(long iCol) const
 class CDlgListViewerDataRun : public CDlgListViewerData
 {
 	friend class CDlgListViewerDataExisting;
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataRun)
 public:
 	CDlgListViewerDataRun(
 			CDlgListViewerDataColumnsPtr const& inColData,
@@ -235,11 +240,11 @@ public:
 		// all hell will break loose. Don't bother asserting here...
 		//assert(inScoring);
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual int OnNeedIcon() const		{return -1;}
-	virtual int Compare(
+	std::wstring OnNeedText(long iCol) const override;
+	int OnNeedIcon() const override {return -1;}
+	int Compare(
 			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const;
+			int inCol) const override;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	ARBDogPtr m_Dog;
@@ -346,6 +351,7 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 class CDlgListViewerDataMultiQ : public CDlgListViewerData
 {
 	friend class CDlgListViewerDataExisting;
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataMultiQ)
 public:
 	CDlgListViewerDataMultiQ(
 			CDlgListViewerDataColumnsPtr const& inColData,
@@ -357,11 +363,11 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual int OnNeedIcon() const		{return -1;}
-	virtual int Compare(
+	std::wstring OnNeedText(long iCol) const override;
+	int OnNeedIcon() const override {return -1;}
+	int Compare(
 			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const;
+			int inCol) const override;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	ARBDate m_Date;
@@ -670,6 +676,7 @@ int CDlgListViewerDataMultiQ::Compare(
 
 class CDlgListViewerDataLifetime : public CDlgListViewerData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataLifetime)
 public:
 	CDlgListViewerDataLifetime(
 			CDlgListViewerDataColumnsPtr const& inColData,
@@ -679,11 +686,11 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual int OnNeedIcon() const		{return -1;}
-	virtual int Compare(
+	std::wstring OnNeedText(long iCol) const override;
+	int OnNeedIcon() const override {return -1;}
+	int Compare(
 			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const;
+			int inCol) const override;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	LifeTimePointInfoPtr m_info;
@@ -755,6 +762,7 @@ int CDlgListViewerDataLifetime::Compare(
 
 class CDlgListViewerDataOther : public CDlgListViewerData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataOther)
 public:
 	CDlgListViewerDataOther(
 			CDlgListViewerDataColumnsPtr const& inColData,
@@ -764,11 +772,11 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual int OnNeedIcon() const		{return -1;}
-	virtual int Compare(
+	std::wstring OnNeedText(long iCol) const override;
+	int OnNeedIcon() const override {return -1;}
+	int Compare(
 			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const;
+			int inCol) const override;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	OtherPtInfo m_info;
@@ -920,6 +928,7 @@ int CDlgListViewerDataOther::Compare(
 
 class CDlgListViewerDataItem : public CDlgListViewerData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataItem)
 public:
 	CDlgListViewerDataItem(
 			CDlgListViewerDataColumnsPtr const& inColData,
@@ -929,11 +938,11 @@ public:
 	{
 		assert(m_ColData);
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual int OnNeedIcon() const		{return -1;}
-	virtual int Compare(
+	std::wstring OnNeedText(long iCol) const override;
+	int OnNeedIcon() const override {return -1;}
+	int Compare(
 			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const;
+			int inCol) const override;
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	CFindItemInfo m_info;
@@ -1096,7 +1105,7 @@ static void InsertRun(
 	if (0 < pRun->GetPartners().size())
 		pColData->InsertColumn(ctrlList, COL_RUN_MQ_PARTNERS, _("IDS_PARTNERS"));
 
-	CDlgListViewerDataRunPtr data(new CDlgListViewerDataRun(pColData, pDog, pTrial, pRun, pScoring, scoringDetail));
+	CDlgListViewerDataRunPtr data(std::make_shared<CDlgListViewerDataRun>(pColData, pDog, pTrial, pRun, pScoring, scoringDetail));
 	ctrlList->InsertItem(data);
 }
 
@@ -1146,7 +1155,7 @@ CDlgListViewer::CDlgListViewer(
 			}
 		}
 	}
-	CDlgListViewerDataColumnsPtr pColData(new CDlgListViewerDataColumns(10));
+	CDlgListViewerDataColumnsPtr pColData(std::make_shared<CDlgListViewerDataColumns>(10));
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, _("IDS_COL_DATE"));
 	m_SortColumn = pColData->NumColumns();
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_Q, _("IDS_COL_Q"));
@@ -1170,7 +1179,7 @@ CDlgListViewer::CDlgListViewer(
 			iter != existingRuns.end();
 			++iter)
 		{
-			CDlgListViewerDataExistingPtr data(new CDlgListViewerDataExisting(pColData, *iter));
+			CDlgListViewerDataExistingPtr data(std::make_shared<CDlgListViewerDataExisting>(pColData, *iter));
 			m_ctrlList->InsertItem(data);
 		}
 	}
@@ -1213,7 +1222,7 @@ CDlgListViewer::CDlgListViewer(
 		if ((iter->m_Run)->GetSubName().length())
 			subNames.insert((iter->m_Run)->GetSubName());
 	}
-	CDlgListViewerDataColumnsPtr pColData(new CDlgListViewerDataColumns(12));
+	CDlgListViewerDataColumnsPtr pColData(std::make_shared<CDlgListViewerDataColumns>(12));
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_STATUS, _("IDS_COL_STATUS"));
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DOG, _("IDS_COL_DOG"));
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, _("IDS_COL_DATE"));
@@ -1277,7 +1286,7 @@ CDlgListViewer::CDlgListViewer(
 		}
 	}
 
-	CDlgListViewerDataColumnsPtr pColData(new CDlgListViewerDataColumns(3));
+	CDlgListViewerDataColumnsPtr pColData(std::make_shared<CDlgListViewerDataColumns>(3));
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, _("IDS_COL_DATE"));
 	m_SortColumn = pColData->NumColumns();
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_TITLE_PTS, _("IDS_COL_TITLE_PTS"));
@@ -1289,7 +1298,7 @@ CDlgListViewer::CDlgListViewer(
 			iter != existingRuns2.end();
 			++iter)
 		{
-			CDlgListViewerDataExistingPtr data(new CDlgListViewerDataExisting(pColData, *iter));
+			CDlgListViewerDataExistingPtr data(std::make_shared<CDlgListViewerDataExisting>(pColData, *iter));
 			m_ctrlList->InsertItem(data);
 		}
 	}
@@ -1297,7 +1306,7 @@ CDlgListViewer::CDlgListViewer(
 		iter != inMQs.end();
 		++iter)
 	{
-		CDlgListViewerDataMultiQPtr data(new CDlgListViewerDataMultiQ(pColData, iter->first, iter->second));
+		CDlgListViewerDataMultiQPtr data(std::make_shared<CDlgListViewerDataMultiQ>(pColData, iter->first, iter->second));
 		m_ctrlList->InsertItem(data);
 	}
 	pColData->SetColumnWidths(m_ctrlList);
@@ -1320,7 +1329,7 @@ CDlgListViewer::CDlgListViewer(
 {
 	Create(inCaption, pParent);
 
-	CDlgListViewerDataColumnsPtr pColData(new CDlgListViewerDataColumns(3));
+	CDlgListViewerDataColumnsPtr pColData(std::make_shared<CDlgListViewerDataColumns>(3));
 	if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
 	{
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_DIV, _("IDS_COL_EVENT"));
@@ -1335,7 +1344,7 @@ CDlgListViewer::CDlgListViewer(
 		iter != inLifetime.end();
 		++iter)
 	{
-		CDlgListViewerDataLifetimePtr data(new CDlgListViewerDataLifetime(pColData, *iter));
+		CDlgListViewerDataLifetimePtr data(std::make_shared<CDlgListViewerDataLifetime>(pColData, *iter));
 		m_ctrlList->InsertItem(data);
 	}
 	pColData->SetColumnWidths(m_ctrlList);
@@ -1358,7 +1367,7 @@ CDlgListViewer::CDlgListViewer(
 {
 	Create(inCaption, pParent);
 
-	CDlgListViewerDataColumnsPtr pColData(new CDlgListViewerDataColumns(8));
+	CDlgListViewerDataColumnsPtr pColData(std::make_shared<CDlgListViewerDataColumns>(8));
 	pColData->InsertColumn(m_ctrlList, COL_OTHER_DATE, _("IDS_COL_DATE"));
 	m_SortColumn = pColData->NumColumns();
 	pColData->InsertColumn(m_ctrlList, COL_OTHER_NAME, _("IDS_COL_TRIAL_EXISTPTS"));
@@ -1373,7 +1382,7 @@ CDlgListViewer::CDlgListViewer(
 		iter != inRunList.end();
 		++iter)
 	{
-		CDlgListViewerDataOtherPtr data(new CDlgListViewerDataOther(pColData, *iter));
+		CDlgListViewerDataOtherPtr data(std::make_shared<CDlgListViewerDataOther>(pColData, *iter));
 		m_ctrlList->InsertItem(data);
 	}
 	pColData->SetColumnWidths(m_ctrlList);
@@ -1395,7 +1404,7 @@ CDlgListViewer::CDlgListViewer(
 {
 	Create(inCaption, pParent);
 
-	CDlgListViewerDataColumnsPtr pColData(new CDlgListViewerDataColumns(3));
+	CDlgListViewerDataColumnsPtr pColData(std::make_shared<CDlgListViewerDataColumns>(3));
 	pColData->InsertColumn(m_ctrlList, COL_ITEM_TYPE, _("IDS_COL_TYPE"));
 	m_SortColumn = pColData->NumColumns();
 	pColData->InsertColumn(m_ctrlList, COL_ITEM_NAME, _("IDS_COL_NAME"));
@@ -1404,7 +1413,7 @@ CDlgListViewer::CDlgListViewer(
 		iter != inItems.end();
 		++iter)
 	{
-		CDlgListViewerDataItemPtr data(new CDlgListViewerDataItem(pColData, *iter));
+		CDlgListViewerDataItemPtr data(std::make_shared<CDlgListViewerDataItem>(pColData, *iter));
 		m_ctrlList->InsertItem(data);
 	}
 	pColData->SetColumnWidths(m_ctrlList);

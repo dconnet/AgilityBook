@@ -774,8 +774,9 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ColumnData: public wxClientData
+class ColumnData : public wxClientData
 {
+	DECLARE_NO_ASSIGN_IMPLEMENTED(ColumnData)
 public:
 	ColumnData(
 			size_t index,
@@ -789,6 +790,12 @@ public:
 		, m_Data(rhs.m_Data)
 	{
 	}
+	ColumnData(ColumnData&& rhs)
+		: m_Index(std::move(rhs.m_Index))
+		, m_Data(std::move(rhs.m_Data))
+	{
+	}
+	~ColumnData() {}
 	size_t m_Index; // Sort index for available fields
 	long m_Data; // Column identifier
 };
@@ -1075,8 +1082,8 @@ void CDlgAssignColumns::FillColumns()
 	if (0 <= idxType)
 	{
 		wxString blank(_("IDS_BLANK_COLUMN"));
-		size_t i;
-		bool bInUse[IO_MAX];
+		size_t i = 0;
+		bool bInUse[IO_MAX] = {false};
 		for (i = 0; i < IO_MAX; ++i)
 			bInUse[i] = false;
 		for (i = 0; i < m_Configs.Columns(idxType).size(); ++i)

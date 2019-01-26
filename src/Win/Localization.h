@@ -165,12 +165,12 @@ public:
 	std::wstring ActionDeleteEvent(
 			std::wstring const& venue,
 			std::wstring const& name) const override;
-	virtual std::wstring ActionRenameLifetimeName(
+	std::wstring ActionRenameLifetimeName(
 			std::wstring const& venue,
 			std::wstring const& oldName,
 			std::wstring const& newName,
 			int nEventChanges) const override;
-	virtual std::wstring ActionDeleteLifetimeName(
+	std::wstring ActionDeleteLifetimeName(
 			std::wstring const& venue,
 			std::wstring const& name,
 			int nEventChanges) const override;

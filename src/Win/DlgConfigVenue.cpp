@@ -70,8 +70,8 @@ public:
 		, m_Action(action)
 	{
 	}
-	virtual bool CanAdd() const		{return true;}
-	virtual bool DoAdd();
+	bool CanAdd() const override {return true;}
+	bool DoAdd() override;
 
 private:
 	CDlgConfigVenue::eAction m_Action;

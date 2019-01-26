@@ -28,6 +28,8 @@
 
 class CTaskbarProgressImpl : public CTaskbarProgress
 {
+	CTaskbarProgressImpl() = delete;
+	DECLARE_NO_COPY_IMPLEMENTED(CTaskbarProgressImpl)
 public:
 	CTaskbarProgressImpl(HWND hwnd)
 		: m_hWnd(hwnd)
@@ -37,17 +39,17 @@ public:
 			::CoCreateInstance(CLSID_TaskbarList, nullptr, CLSCTX_ALL, __uuidof(ITaskbarList3), (void**)&m_pTaskbarList);
 	}
 
-	virtual ~CTaskbarProgressImpl()
+	~CTaskbarProgressImpl()
 	{
 		if (m_pTaskbarList)
 			m_pTaskbarList->Release();
 	}
 	
-	virtual bool SetProgressState(TBPFLAG tbpFlags)
+	bool SetProgressState(TBPFLAG tbpFlags) override
 	{
 		return (m_pTaskbarList && SUCCEEDED(m_pTaskbarList->SetProgressState(m_hWnd, tbpFlags)));
 	}
-	virtual bool SetProgressValue(ULONGLONG ullCompleted, ULONGLONG ullTotal)
+	bool SetProgressValue(ULONGLONG ullCompleted, ULONGLONG ullTotal) override
 	{
 		return (m_pTaskbarList && SUCCEEDED(m_pTaskbarList->SetProgressValue(m_hWnd, ullCompleted, ullTotal)));
 	}
@@ -60,10 +62,10 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-CTaskbarProgress* CTaskbarProgress::Get(HWND hwnd)
+CTaskbarProgressPtr CTaskbarProgress::Get(HWND hwnd)
 {
 #ifdef WIN32
-	CTaskbarProgressImpl* pTaskbar = new CTaskbarProgressImpl(hwnd);
+	CTaskbarProgressPtr pTaskbar = std::make_shared<CTaskbarProgressImpl>(hwnd);
 	return pTaskbar;
 #else
 	return nullptr;

@@ -29,7 +29,7 @@ public:
 			std::vector<ARBDogPtr>& outDogs,
 			wxWindow* pParent = nullptr);
 
-	int ShowModal();
+	int ShowModal() override;
 
 private:
 	CAgilityBookDoc* m_pDoc;

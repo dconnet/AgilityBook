@@ -56,7 +56,7 @@ CDlgConfigLifetimeName::CDlgConfigLifetimeName(
 	, m_Name()
 	, m_NewName()
 {
-	Init(pParent);
+	InitDlg(pParent);
 }
 
 
@@ -70,11 +70,11 @@ CDlgConfigLifetimeName::CDlgConfigLifetimeName(
 	, m_Name(StringUtil::stringW(inName))
 	, m_NewName(inName)
 {
-	Init(pParent);
+	InitDlg(pParent);
 }
 
 
-void CDlgConfigLifetimeName::Init(wxWindow* pParent)
+void CDlgConfigLifetimeName::InitDlg(wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

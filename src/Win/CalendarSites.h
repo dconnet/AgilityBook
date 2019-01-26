@@ -26,6 +26,7 @@ class CCalendarSitesImpl;
  */
 class CCalendarSites
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CCalendarSites)
 public:
 	CCalendarSites();
 	~CCalendarSites();
@@ -39,5 +40,5 @@ public:
 			wxWindow* pParent = nullptr);
 
 private:
-	CCalendarSitesImpl* m_Impl;
+	std::unique_ptr<CCalendarSitesImpl> m_Impl;
 };

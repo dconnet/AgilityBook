@@ -55,37 +55,6 @@
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
-CDlgInfoNote::NameInfo::NameInfo()
-	: m_Name()
-	, m_eInUse(eNotInUse)
-	, m_bHasData(false)
-{
-}
-
-
-CDlgInfoNote::NameInfo::NameInfo(std::wstring const& inName)
-	: m_Name(inName)
-	, m_eInUse(eNotInUse)
-	, m_bHasData(false)
-{
-}
-
-
-CDlgInfoNote::NameInfo::NameInfo(NameInfo const& rhs)
-	: m_Name(rhs.m_Name)
-	, m_eInUse(rhs.m_eInUse)
-	, m_bHasData(rhs.m_bHasData)
-{
-}
-
-
-bool CDlgInfoNote::NameInfo::operator==(NameInfo const& rhs)
-{
-	return m_Name == rhs.m_Name;
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // CDlgInfoNote dialog
 
 BEGIN_EVENT_TABLE(CDlgInfoNote, wxDialog)
@@ -202,7 +171,7 @@ CDlgInfoNote::CDlgInfoNote(
 	{
 		// Combo box is ownerdraw.
 		int index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name), m_None);
-		m_ctrlNames->SetClientData(index, (void*)idx);
+		m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idx));
 		UpdateImage(index);
 		if (!bSet && 0 < m_Select.length())
 		{
@@ -374,7 +343,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 				m_Names[idx].m_eInUse = NameInfo::eNotInUse;
 				++m_nAdded;
 				index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name));
-				m_ctrlNames->SetClientData(index, (void*)idx);
+				m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idx));
 				m_ctrlVisible->SetValue(true);
 				m_ctrlNotes->SetValue(L"");
 				m_Info.AddItem(m_Names[idx].m_Name);
@@ -390,7 +359,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 			size_t idx = m_Names.size() - 1;
 			++m_nAdded;
 			index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name));
-			m_ctrlNames->SetClientData(index, (void*)idx);
+			m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idx));
 			m_ctrlVisible->SetValue(true);
 			m_ctrlNotes->SetValue(L"");
 			m_Info.AddItem(m_Names[idx].m_Name);

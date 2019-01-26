@@ -105,17 +105,18 @@
 
 class CAgilityBookPointsViewData : public CListData
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookPointsViewData)
 public:
 	CAgilityBookPointsViewData(CPointsDataBasePtr const& inData, int imgIndex)
 		: m_Data(inData)
 		, m_imgIndex(imgIndex)
 	{
 	}
-	virtual std::wstring OnNeedText(long index) const
+	std::wstring OnNeedText(long index) const override
 	{
 		return m_Data->OnNeedText(index);
 	}
-	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+	void OnNeedListItem(long iCol, wxListItem& info) const override;
 	virtual bool HasDetails() const
 	{
 		return m_Data->HasDetails();

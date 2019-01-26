@@ -209,7 +209,7 @@ CWizardExport::CWizardExport(
 	for (size_t i = 0; i < sc_nDates; ++i)
 	{
 		long index = m_ctrlDateFormat->Append(wxGetTranslation(sc_Dates[i].uFormat));
-		m_ctrlDateFormat->SetClientData(index, (void*)sc_Dates[i].format);
+		m_ctrlDateFormat->SetClientData(index, reinterpret_cast<void*>(sc_Dates[i].format));
 		if (sc_Dates[i].format == format || sc_Dates[i].extendedFormat == format)
 			m_ctrlDateFormat->SetSelection(index);
 	}

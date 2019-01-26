@@ -28,6 +28,7 @@ class CTreeCtrl;
 
 class CDlgConfigure : public wxDialog
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgConfigure)
 public:
 	CDlgConfigure(
 			CAgilityBookDoc* pDoc,

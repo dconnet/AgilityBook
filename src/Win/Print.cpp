@@ -94,9 +94,9 @@ public:
 	// Sets SetUserScale and m_OneInch (returns oneinch)
 	double ComputeScaling();
 
-	virtual bool HasPage(int page);
-	virtual void GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pageTo);
-	virtual bool OnPrintPage(int pageNum);
+	bool HasPage(int page) override;
+	void GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pageTo) override;
+	bool OnPrintPage(int pageNum) override;
 
 private:
 	std::wstring GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun, int code);
@@ -137,14 +137,14 @@ double CPrintRuns::ComputeScaling()
 	int ppiPrinterX, ppiPrinterY;
 	GetPPIPrinter(&ppiPrinterX, &ppiPrinterY);
 
-	double scale = (double)ppiPrinterX / (double)ppiScreenX;
+	double scale = static_cast<double>(ppiPrinterX) / static_cast<double>(ppiScreenX);
 
 	int w, h;
 	dc->GetSize(&w, &h);
 	int pageWidth, pageHeight;
 	GetPageSizePixels(&pageWidth, &pageHeight);
 
-	double overallScale = scale * ((double)w / (double)pageWidth);
+	double overallScale = scale * (static_cast<double>(w) / static_cast<double>(pageWidth));
 	dc->SetUserScale(overallScale, overallScale);
 
 	m_OneInch = ppiPrinterX / scale;

@@ -61,8 +61,8 @@ public:
 		, m_Image(image)
 	{
 	}
-	virtual std::wstring OnNeedText(long iCol) const;
-	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+	std::wstring OnNeedText(long iCol) const override;
+	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
 	ARBDogPtr m_pDog;
 	ARBDogTrialPtr m_pTrial;

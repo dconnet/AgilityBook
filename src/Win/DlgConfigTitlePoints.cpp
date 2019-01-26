@@ -67,7 +67,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_Points(inPoints)
 	, m_LifetimeName()
 {
-	Init(pParent);
+	InitDlg(pParent);
 }
 
 
@@ -94,11 +94,11 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_Points(inLifetime->GetPoints())
 	, m_LifetimeName(inLifetime->GetName())
 {
-	Init(pParent);
+	InitDlg(pParent);
 }
 
 
-void CDlgConfigTitlePoints::Init(wxWindow* pParent)
+void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
@@ -202,7 +202,7 @@ void CDlgConfigTitlePoints::Init(wxWindow* pParent)
 	{
 		wxString str = _("IDS_TITLEPOINT_LIFETIME_NAME");
 		int index = m_ctrlLifetimeName->Append(str);
-		m_ctrlLifetimeName->SetClientData(index, (void*)(1));
+		m_ctrlLifetimeName->SetClientData(index, reinterpret_cast<void*>(1));
 		m_ctrlLifetimeName->SetSelection(index);
 	}
 	if (1 == m_ctrlLifetimeName->GetCount())

@@ -119,7 +119,10 @@ private:
 		CFilterOptionData();
 		CFilterOptionData(int index);
 		CFilterOptionData(CFilterOptionData const& rhs);
+		CFilterOptionData(CFilterOptionData&& rhs);
+		~CFilterOptionData() {}
 		CFilterOptionData& operator=(CFilterOptionData const& rhs);
+		CFilterOptionData& operator=(CFilterOptionData&& rhs);
 		// Equality does not look at name.
 		bool operator==(CFilterOptionData const& rhs) const;
 		bool operator!=(CFilterOptionData const& rhs) const

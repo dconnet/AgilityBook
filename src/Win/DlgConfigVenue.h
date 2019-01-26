@@ -35,6 +35,7 @@ class CDlgConfigVenue : public wxDialog
 	friend class CDlgConfigureDataSubLevel;
 	friend class CDlgConfigureDataTitle;
 	friend class CDlgConfigVenueDataRoot;
+	DECLARE_NO_COPY_IMPLEMENTED(CDlgConfigVenue)
 
 public:
 	CDlgConfigVenue(

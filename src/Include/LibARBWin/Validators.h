@@ -31,6 +31,8 @@ class wxDateTime;
 class CGenericValidator : public wxValidator
 {
 	DECLARE_CLASS(CGenericValidator)
+	DECLARE_NO_ASSIGN_IMPLEMENTED(CGenericValidator)
+	CGenericValidator(CGenericValidator&& rhs) = delete;
 public:
 	CGenericValidator(
 			unsigned short* val,
@@ -60,13 +62,14 @@ public:
 			wxDateTime* val,
 			wxChar const* errMsg = nullptr);
 	CGenericValidator(CGenericValidator const& rhs);
+	~CGenericValidator() {}
 
-	virtual wxObject *Clone() const {return new CGenericValidator(*this);}
+	wxObject *Clone() const override {return new CGenericValidator(*this);}
 	bool Copy(CGenericValidator const& val);
 
-	virtual bool TransferFromWindow();
-	virtual bool TransferToWindow();
-	virtual bool Validate(wxWindow* parent);
+	bool TransferFromWindow() override;
+	bool TransferToWindow() override;
+	bool Validate(wxWindow* parent) override;
 
 private:
 	unsigned short* m_pUShort;
@@ -99,18 +102,21 @@ private:
 class CTrimValidator : public wxGenericValidator
 {
 	DECLARE_CLASS(CTrimValidator)
+	DECLARE_NO_ASSIGN_IMPLEMENTED(CTrimValidator)
+	CTrimValidator(CTrimValidator&& rhs) = delete;
 public:
 	CTrimValidator(
 			wxString* valPtr = nullptr,
 			long trimStyle = TRIMVALIDATOR_DEFAULT,
 			wxChar const* errMsg = nullptr); // Message to use when validation fails
 	CTrimValidator(CTrimValidator const& rhs);
+	~CTrimValidator() {}
 
-	virtual wxObject *Clone() const {return new CTrimValidator(*this);}
+	wxObject *Clone() const override {return new CTrimValidator(*this);}
 	bool Copy(CTrimValidator const& val);
 
-	virtual bool TransferFromWindow();
-	virtual bool Validate(wxWindow* parent);
+	bool TransferFromWindow() override;
+	bool Validate(wxWindow* parent) override;
 
 protected:
 	long m_TrimStyle;
