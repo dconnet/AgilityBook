@@ -37,7 +37,7 @@ bool CStatusBarHelper::Initialize(wxStatusBar* statusbar)
 	if (!statusbar || m_Widths.size() == 0)
 		return false;
 
-	if (m_Widths.size() != statusbar->GetFieldsCount())
+	if (static_cast<int>(m_Widths.size()) != statusbar->GetFieldsCount())
 	{
 		assert(0);
 		m_Widths.clear();
@@ -75,7 +75,7 @@ bool CStatusBarHelper::Update(
 	if (!statusbar)
 		return false;
 
-	assert(nCol > 0 && nCol < m_Widths.size());
+	assert(nCol > 0 && nCol < static_cast<int>(m_Widths.size()));
 
 	frame->SetStatusText(text, nCol);
 
@@ -102,7 +102,7 @@ bool CStatusBarHelper::Update(
 
 	assert(text.size() + 1 == m_Widths.size());
 
-	for (int i = 0; i < text.size(); ++i)
+	for (int i = 0; i < static_cast<int>(text.size()); ++i)
 		frame->SetStatusText(text[i], i+1);
 
 	wxClientDC dc(statusbar);
@@ -122,7 +122,7 @@ void CStatusBarHelper::SetStatusBarWidths(
 		wxStatusBar* statusbar,
 		int nColumn)
 {
-	bool bAddKludge = (statusbar->HasFlag(wxSTB_SIZEGRIP) && (0 > nColumn || nColumn == m_Widths.size() - 1));
+	bool bAddKludge = (statusbar->HasFlag(wxSTB_SIZEGRIP) && (0 > nColumn || nColumn == static_cast<int>(m_Widths.size()) - 1));
 	// The gripper isn't right on hidpi. Add a fudge factor.
 	if (bAddKludge && DPI::GetScale(statusbar) > 100)
 		m_Widths[m_Widths.size() - 1] += DPI::Scale(statusbar, 10);
