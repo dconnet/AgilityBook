@@ -169,7 +169,12 @@ protected:
 			bool bHasBorder,
 			bool bHasImageList);
 	wxItemAttr* OnGetItemAttr(long item) const override;
+#if defined(__WXMSW__)
+	// Only defined in the MSW and QT ports
 	wxItemAttr* OnGetItemColumnAttr(long item, long column) const override;
+#else
+	virtual wxItemAttr* OnGetItemColumnAttr(long item, long column) const;
+#endif
 	int OnGetItemColumnImage(long item, long column) const override;
 	int OnGetItemImage(long item) const override;
 	wxString OnGetItemText(long item, long column) const override;

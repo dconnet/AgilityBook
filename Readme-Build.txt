@@ -11,6 +11,7 @@ Additional software packages required (all free):
 - Windows Installer XML toolset
 - Doxygen (optional)
 - GraphViz (optional)
+- C++14 compiler
 [See "Compiler notes" at bottom of file for supported compilers]
 
 Once the above software is unpacked, the directory structure should look like:
@@ -284,7 +285,7 @@ The xcode projects were used as follows:
             AgilityBook.xcworkspace
                 wx3.0, cocoa, Current sdk, OSX10.7 deployment target
                 x64 (dropped 32bit)
-                C++ Language Dialect: c++11 (-std=c++11)
+                C++ Language Dialect: c++14 (-std=c++14)
                 C++ Std Lib: libc++
 
 To determine clang precessor defines (works for gcc also):

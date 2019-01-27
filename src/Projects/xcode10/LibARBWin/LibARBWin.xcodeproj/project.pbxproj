@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E112AE9321FE3DEA00D6FE27 /* StatusBarHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E112AE9221FE3DE900D6FE27 /* StatusBarHelper.h */; };
+		E112AE9521FE3E0000D6FE27 /* StatusBarHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E112AE9421FE3E0000D6FE27 /* StatusBarHelper.cpp */; };
 		E198518F2170E5C5003E7B92 /* ReadHttp.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517A2170E5C5003E7B92 /* ReadHttp.h */; };
 		E19851902170E5C5003E7B92 /* RichEditCtrl2.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517B2170E5C5003E7B92 /* RichEditCtrl2.h */; };
 		E19851912170E5C5003E7B92 /* ImageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517C2170E5C5003E7B92 /* ImageManager.h */; };
@@ -58,6 +60,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E112AE9221FE3DE900D6FE27 /* StatusBarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBarHelper.h; sourceTree = "<group>"; };
+		E112AE9421FE3E0000D6FE27 /* StatusBarHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StatusBarHelper.cpp; sourceTree = "<group>"; };
 		E198517A2170E5C5003E7B92 /* ReadHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadHttp.h; sourceTree = "<group>"; };
 		E198517B2170E5C5003E7B92 /* RichEditCtrl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichEditCtrl2.h; sourceTree = "<group>"; };
 		E198517C2170E5C5003E7B92 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
@@ -143,6 +147,7 @@
 				E198517B2170E5C5003E7B92 /* RichEditCtrl2.h */,
 				E19851842170E5C5003E7B92 /* SetupApp.h */,
 				E198517E2170E5C5003E7B92 /* SpreadSheet.h */,
+				E112AE9221FE3DE900D6FE27 /* StatusBarHelper.h */,
 				E19851852170E5C5003E7B92 /* TaskbarProgress.h */,
 				E198518C2170E5C5003E7B92 /* Validators.h */,
 				E198518D2170E5C5003E7B92 /* Widgets.h */,
@@ -195,6 +200,7 @@
 				E19851BD2170E5EE003E7B92 /* RichEditCtrl2.cpp */,
 				E19851BC2170E5ED003E7B92 /* SetupApp.cpp */,
 				E19851BF2170E5EE003E7B92 /* SpreadSheet.cpp */,
+				E112AE9421FE3E0000D6FE27 /* StatusBarHelper.cpp */,
 				E1CAE55D16B5BF3800B33FE5 /* stdafx.cpp */,
 				E1CAE55E16B5BF3800B33FE5 /* stdafx.h */,
 				E19851C32170E5EE003E7B92 /* TaskbarProgress.cpp */,
@@ -236,6 +242,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E112AE9321FE3DEA00D6FE27 /* StatusBarHelper.h in Headers */,
 				E198519E2170E5C5003E7B92 /* DPI.h in Headers */,
 				E19851902170E5C5003E7B92 /* RichEditCtrl2.h in Headers */,
 				E19851A12170E5C5003E7B92 /* Validators.h in Headers */,
@@ -322,6 +329,7 @@
 				E1CAE55F16B5BF3800B33FE5 /* stdafx.cpp in Sources */,
 				E19851CB2170E5EE003E7B92 /* TaskbarProgress.cpp in Sources */,
 				E19851B02170E5DE003E7B92 /* ImageManager.cpp in Sources */,
+				E112AE9521FE3E0000D6FE27 /* StatusBarHelper.cpp in Sources */,
 				E19851BA2170E5DE003E7B92 /* CheckLink.cpp in Sources */,
 				E19851C62170E5EE003E7B92 /* MenuHelper.cpp in Sources */,
 				E19851B12170E5DE003E7B92 /* LanguageManager.cpp in Sources */,
@@ -348,7 +356,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -412,7 +420,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;

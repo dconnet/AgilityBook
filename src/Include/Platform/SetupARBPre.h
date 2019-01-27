@@ -15,6 +15,7 @@
  * framework, then include SetupARBPost.h
  *
  * Revision History
+ * 2019-01-27 Min C++ is now 14 (for make_unique)
  * 2018-10-06 Dropping support for pre VS2017 (and XP).
  * 2016-09-27 Increase minimum WINVER to 0x502
  * 2014-05-16 Updated to reflect non-support for VC9, moved HAS macros to Post.
@@ -126,9 +127,9 @@
 // Without /Z option (or with it disabled):
 //                   199711L
 
-#if !defined(__cplusplus) || __cplusplus < 201103
+#if !defined(__cplusplus) || __cplusplus < 201402
 #pragma message(FILE_LINE "ERROR: __cplusplus is defined as " STRING(__cplusplus))
-#error Compiler must support C++11
+#error Compiler must support C++14
 #endif
 
 
