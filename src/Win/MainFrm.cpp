@@ -132,19 +132,19 @@ END_EVENT_TABLE()
 static void SetStatusBarWidths(
 		wxStatusBar* statusbar,
 		int col,
-		WidthArray& widths,
+		std::vector<int>& widths,
 		bool bAddKludge)
 {
 	// The gripper isn't right on hidpi. Add a fudge factor.
 	if (bAddKludge && DPI::GetScale(statusbar) > 100)
-		widths[NUM_STATUS_FIELDS - 1] += DPI::Scale(statusbar, 10);
-	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths.data());
+		widths[widths.size() - 1] += DPI::Scale(statusbar, 10);
+	statusbar->SetStatusWidths(static_cast<int>(widths.size()), widths.data());
 #if defined(__WXMAC__)
 	// On the Mac, setting the width is always a bit small.
 	// For instance, we want 36, but it gets set to 32.
 	// So kludge it and force it larger.
 	bool bFix = false;
-	for (int i = 0; i < NUM_STATUS_FIELDS; ++i)
+	for (int i = 0; i < widths.size(); ++i)
 	{
 		if ((0 > col || i == col) && 0 < widths[i])
 		{
@@ -158,7 +158,7 @@ static void SetStatusBarWidths(
 		}
 	}
 	if (bFix)
-		statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
+		statusbar->SetStatusWidths(static_cast<int>(widths.size()), widths.data());
 #endif
 }
 
@@ -167,7 +167,7 @@ static void SetStatusBarWidths(
 CMainFrame::CMainFrame(wxDocManager* manager)
 	: wxDocParentFrame(manager, nullptr, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
-	, m_Widths({0})
+	, m_Widths(NUM_STATUS_FIELDS, -1)
 {
 	SetIcons(CImageManager::Get()->GetIconBundle(ImageMgrAppBundle));
 //#if wxUSE_HELP
