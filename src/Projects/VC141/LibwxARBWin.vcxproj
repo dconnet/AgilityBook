@@ -151,6 +151,7 @@
     <ClCompile Include="..\..\LibARBWin\RichEditCtrl2.cpp" />
     <ClCompile Include="..\..\LibARBWin\SetupApp.cpp" />
     <ClCompile Include="..\..\LibARBWin\SpreadSheet.cpp" />
+    <ClCompile Include="..\..\LibARBWin\StatusBarHelper.cpp" />
     <ClCompile Include="..\..\LibARBWin\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -188,6 +189,7 @@
     <ClInclude Include="..\..\Include\LibARBWin\RichEditCtrl2.h" />
     <ClInclude Include="..\..\Include\LibARBWin\SetupApp.h" />
     <ClInclude Include="..\..\Include\LibARBWin\SpreadSheet.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\StatusBarHelper.h" />
     <ClInclude Include="..\..\Include\LibARBWin\TaskbarProgress.h" />
     <ClInclude Include="..\..\Include\LibARBWin\Validators.h" />
     <ClInclude Include="..\..\Include\LibARBWin\Widgets.h" />

@@ -18,7 +18,7 @@
  */
 
 #include "AgilityBookMenu.h"
-#include <vector>
+#include "LibARBWin/StatusBarHelper.h"
 #include <wx/dnd.h>
 #include <wx/docview.h>
 
@@ -67,7 +67,7 @@ private:
 		void Notify() override;
 	} m_timerStartup;
 	wxDocManager* m_manager;
-	std::vector<int> m_Widths;
+	CStatusBarHelper m_Widths;
 
 private:
 	DECLARE_EVENT_TABLE()

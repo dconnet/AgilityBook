@@ -87,6 +87,9 @@
     <ClCompile Include="..\..\LibARBWin\CheckLink.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\LibARBWin\StatusBarHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\LibARBWin\stdafx.h">
@@ -174,6 +177,9 @@
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\LibARBWin\CheckLink.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\StatusBarHelper.h">
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
   </ItemGroup>

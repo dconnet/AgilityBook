@@ -127,47 +127,11 @@ BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_MENU(ID_HELP_SYSINFO, CMainFrame::OnHelpSysinfo)
 END_EVENT_TABLE()
 
-/////////////////////////////////////////////////////////////////////////////
-
-static void SetStatusBarWidths(
-		wxStatusBar* statusbar,
-		int col,
-		std::vector<int>& widths,
-		bool bAddKludge)
-{
-	// The gripper isn't right on hidpi. Add a fudge factor.
-	if (bAddKludge && DPI::GetScale(statusbar) > 100)
-		widths[widths.size() - 1] += DPI::Scale(statusbar, 10);
-	statusbar->SetStatusWidths(static_cast<int>(widths.size()), widths.data());
-#if defined(__WXMAC__)
-	// On the Mac, setting the width is always a bit small.
-	// For instance, we want 36, but it gets set to 32.
-	// So kludge it and force it larger.
-	bool bFix = false;
-	for (int i = 0; i < widths.size(); ++i)
-	{
-		if ((0 > col || i == col) && 0 < widths[i])
-		{
-			wxRect r;
-			statusbar->GetFieldRect(i, r);
-			if (r.width < widths[i])
-			{
-				bFix = true;
-				widths[i] += 2 * (widths[i] - r.width);
-			}
-		}
-	}
-	if (bFix)
-		statusbar->SetStatusWidths(static_cast<int>(widths.size()), widths.data());
-#endif
-}
-
-/////////////////////////////////////////////////////////////////////////////
 
 CMainFrame::CMainFrame(wxDocManager* manager)
 	: wxDocParentFrame(manager, nullptr, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
-	, m_Widths(NUM_STATUS_FIELDS, -1)
+	, m_Widths(NUM_STATUS_FIELDS)
 {
 	SetIcons(CImageManager::Get()->GetIconBundle(ImageMgrAppBundle));
 //#if wxUSE_HELP
@@ -181,13 +145,11 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	wxGetApp().GetMenus().CreateMainMenu(this, menuRecent);
 
 	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
+	m_Widths.Initialize(statusbar);
 	if (statusbar)
 	{
 		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_CONTEXT_MENU, wxContextMenuEventHandler, CMainFrame::OnStatusBarContextMenu);
 		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_LEFT_DCLICK, wxMouseEvent, CMainFrame::OnStatusBarDblClick);
-		int style[NUM_STATUS_FIELDS] = {0};
-		m_Widths[0] = -1;
-		style[0] = wxSB_FLAT;
 		for (int i = 1; i < NUM_STATUS_FIELDS; ++i)
 		{
 			wxString str;
@@ -206,12 +168,8 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 				str = _("ID_INDICATOR_FILTERED");
 				break;
 			}
-			m_Widths[i] = statusbar->GetTextExtent(str).x;
-			style[i] = wxSB_NORMAL;
-			SetStatusText(str, i);
+			m_Widths.Update(this, i, str);
 		}
-		SetStatusBarWidths(statusbar, -1, m_Widths, true);
-		statusbar->SetStatusStyles(NUM_STATUS_FIELDS, style);
 	}
 #if !defined(__WXMAC__)
 	SetDropTarget(new CFileDropTarget(manager));
@@ -251,11 +209,9 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 		return;
 	wxString str = StringUtil::stringWX(msg);
 	if (bResize)
-	{
-		m_Widths[index] = statusbar->GetTextExtent(str).x;
-		SetStatusBarWidths(statusbar, index, m_Widths, index == NUM_STATUS_FIELDS - 1);
-	}
-	SetStatusText(str, index);
+		m_Widths.Update(this, index, str);
+	else
+		SetStatusText(str, index);
 }
 
 

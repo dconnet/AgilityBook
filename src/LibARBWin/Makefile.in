@@ -50,6 +50,7 @@ libarbwin_SRCS = ARBWinUtilities.cpp \
 	RichEditCtrl2.cpp \
 	SetupApp.cpp \
 	SpreadSheet.cpp \
+	StatusBarHelper.cpp \
 	TaskbarProgress.cpp \
 	Validators.cpp \
 	Widgets.cpp
