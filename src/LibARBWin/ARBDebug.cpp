@@ -10,19 +10,19 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-01-31 Moved from ARB.
  * 2018-12-16 Convert to fmt.
  * 2018-01-28 Created
  */
 
 #include "stdafx.h"
-#include "ARB/ARBDebug.h"
-
-#include "VersionNumber.h"
+#include "LibARBWin/ARBDebug.h"
 
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
+#include "LibARBWin/DPI.h"
 #include <wx/config.h>
 #include <wx/platinfo.h>
 #include <wx/stdpaths.h>
@@ -32,18 +32,148 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+ /////////////////////////////////////////////////////////////////////////////
+
+static std::wstring GetOSName()
+{
+	std::wstring str;
+
+	int majVer;
+	int minVer;
+	if (!GetOSInfo(majVer, minVer))
+		return std::wstring();
+
+#if defined(__WXWINDOWS__)
+	wxPlatformInfo info;
+	str = fmt::format(L"{} {}.{}", info.GetOperatingSystemIdName().wx_str(), majVer, minVer);
+
+#elif defined(_WIN32)
+	switch (majVer)
+	{
+	default:
+		str = fmt::format(L"Windows {}.{}", majVer, minVer);
+		break;
+	case 6:
+		switch (minVer)
+		{
+		default:
+			str = fmt::format(L"Windows {}.{}", majVer, minVer);
+			break;
+		case 0:
+			str = L"Windows Vista";
+			break;
+		case 1:
+			str = L"Windows 7";
+			break;
+		case 2:
+			str = L"Windows 8";
+			break;
+		case 3:
+			str = L"Windows 8.1";
+			break;
+		}
+		break;
+	case 5:
+		switch (minVer)
+		{
+		default:
+			str = fmt::format(L"Windows {}.{}", majVer, minVer);
+			break;
+		case 2:
+			str = L"Windows XP"; // Not really, 64bitXP, or Server
+			break;
+		case 1:
+			str = L"Windows XP";
+			break;
+		case 0:
+			str = L"Windows 2000";
+			break;
+		}
+		break;
+	}
+
+#else
+#error Unknown OS
+#endif
+
+	return str;
+}
+
+
+static std::wstring GetArchName()
+{
+#if defined(__WXWINDOWS__)
+	wxPlatformInfo info;
+	return StringUtil::stringW(info.GetArchName());
+
+#elif defined(_WIN32)
+	SYSTEM_INFO si;
+	ZeroMemory(&si, sizeof(si));
+	GetNativeSystemInfo(&si);
+	switch (si.wProcessorArchitecture)
+	{
+	default:
+	case PROCESSOR_ARCHITECTURE_UNKNOWN:
+		return L"??";
+	case PROCESSOR_ARCHITECTURE_AMD64:
+		return L"x64";
+	case PROCESSOR_ARCHITECTURE_ARM:
+		return L"ARM";
+	case PROCESSOR_ARCHITECTURE_IA64:
+		return L"ia64";
+	case PROCESSOR_ARCHITECTURE_INTEL:
+		return L"x86";
+	}
+
+#else
+#error Unknown OS
+#endif
+}
+
+
+static std::wstring GetEndiannessName()
+{
+#if defined(__WXWINDOWS__)
+	wxPlatformInfo info;
+	return StringUtil::stringW(info.GetEndiannessName());
+
+#else
+	// Copied from wxWidgets 2.9.5: utilscmn.cpp: wxIsPlatformLittleEndian
+	// Are we little or big endian? This method is from Harbison & Steele.
+	union
+	{
+		long l;
+		char c[sizeof(long)];
+	} u;
+	u.l = 1;
+
+	bool isLittleEndian = (u.c[0] == 1);
+	if (isLittleEndian)
+		return L"Little endian";
+	else
+		return L"Big endian";
+
+#endif
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
-std::wstring ARBDebug::GetSystemInfo()
+std::wstring ARBDebug::GetSystemInfo(
+		wxWindow* pWindow,
+		CVersionNum const& ver)
 {
 	fmt::wmemory_buffer str;
 
 	// OS version
-	fmt::format_to(str, L"{}", GetOSInfo());
+	fmt::format_to(str, L"OS: {}\n", GetOSName());
+	fmt::format_to(str, L"Architecture: {}, {}\n", GetArchName(), GetEndiannessName());
+
+	// DPI
+
+	fmt::format_to(str, L"DPI Scaling: {}\n", DPI::GetScale(pWindow));
 
 	// Me.
 	{
-		CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 		fmt::format_to(str, L"{}{}", wxStandardPaths::Get().GetExecutablePath().wx_str(),
 #ifdef ARB_64BIT
 			L" (64-bit): "

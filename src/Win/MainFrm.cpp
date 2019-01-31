@@ -43,9 +43,9 @@
 #include "TabView.h"
 #include "VersionNumber.h"
 
-#include "ARB/ARBDebug.h"
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBDebug.h"
 #include "LibARBWin/DPI.h"
 #include <wx/config.h>
 #include <wx/dnd.h>
@@ -507,7 +507,8 @@ void CMainFrame::OnPrevPane(wxCommandEvent& evt)
 
 void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 {
-	std::wstring str = ARBDebug::GetSystemInfo();
+	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
+	std::wstring str = ARBDebug::GetSystemInfo(this, ver);
 
 	CDlgMessage dlg(str, this);
 	dlg.ShowModal();

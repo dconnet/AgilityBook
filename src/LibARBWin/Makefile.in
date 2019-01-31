@@ -33,7 +33,8 @@ ARCHIVES = libarbwin
 ##########
 # Source files for each target
 ##########
-libarbwin_SRCS = ARBWinUtilities.cpp \
+libarbwin_SRCS = ARBDebug.cpp \
+	ARBWinUtilities.cpp \
 	CheckLink.cpp \
 	CheckTreeCtrl.cpp \
 	ColumnOrder.cpp \

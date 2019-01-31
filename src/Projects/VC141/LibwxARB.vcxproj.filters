@@ -141,9 +141,6 @@
     <ClCompile Include="..\..\ARB\ARBConfigLifetimeName.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ARB\ARBDebug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ARB\stdafx.h">
@@ -294,9 +291,6 @@
       <Filter>Include\ARB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimeName.h">
-      <Filter>Include\ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\ARB\ARBDebug.h">
       <Filter>Include\ARB</Filter>
     </ClInclude>
   </ItemGroup>

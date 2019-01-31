@@ -12,10 +12,12 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-01-31 Moved from ARB.
  * 2018-12-16 Convert to fmt.
  * 2018-01-28 Created
  */
 
+#include "ARBCommon/VersionNum.h"
 #include "fmt/format.h"
 
 
@@ -25,7 +27,9 @@
 class ARBDebug
 {
 public:
-	static std::wstring GetSystemInfo();
+	static std::wstring GetSystemInfo(
+			wxWindow* pWindow,
+			CVersionNum const& ver);
 	static std::wstring GetRegistryInfo();
 
 	/**
@@ -36,7 +40,7 @@ public:
 	 * @return Number of registry items added to outData.
 	 */
 	static size_t DumpRegistryGroup(
-		wxString const& inGroup,
-		fmt::wmemory_buffer* outData,
-		std::vector<std::wstring>* outItems);
+			wxString const& inGroup,
+			fmt::wmemory_buffer* outData,
+			std::vector<std::wstring>* outItems);
 };

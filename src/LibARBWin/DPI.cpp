@@ -220,7 +220,10 @@ unsigned int GetScale(wxWindow* pWindow)
 #if defined(__WXMAC__)
 	return GetDPI().GetScale(); // GetContentScaleFactor on Mac keeps returning 0 on destroy (and sometimes on create)
 #else
-	return static_cast<unsigned int>(pWindow->GetContentScaleFactor() * 100);
+	if (!pWindow)
+		return GetDPI().GetScale();
+	else
+		return static_cast<unsigned int>(pWindow->GetContentScaleFactor() * 100);
 #endif
 	//return GetDPI().GetScale();
 }

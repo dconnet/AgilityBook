@@ -43,12 +43,13 @@
 #include "RegItems.h"
 #include "SetupAppARB.h"
 #include "TabView.h"
+#include "VersionNumber.h"
 
-#include "ARB/ARBDebug.h"
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBDebug.h"
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/SetupApp.h"
 #include <stdexcept>
@@ -505,10 +506,11 @@ bool CAgilityBookApp::OnAddFileDebugReport(wxDebugReport* report)
 		wxFFile file(fn.GetFullPath(), wxT("w"));
 		if (file.IsOpened())
 		{
+			CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 			wxDateTime dt = wxDateTime::Now();
 			file.Write(dt.FormatISODate() + wxT(' ') + dt.FormatISOTime());
 			file.Write(wxT("\n\nSystem Information\n"));
-			file.Write(ARBDebug::GetSystemInfo());
+			file.Write(ARBDebug::GetSystemInfo(GetTopWindow(), ver));
 			file.Write(wxT("\nRegistry dump\n"));
 			file.Write(ARBDebug::GetRegistryInfo());
 		}

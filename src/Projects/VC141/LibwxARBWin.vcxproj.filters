@@ -90,6 +90,9 @@
     <ClCompile Include="..\..\LibARBWin\StatusBarHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\LibARBWin\ARBDebug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\LibARBWin\stdafx.h">
@@ -180,6 +183,9 @@
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\LibARBWin\StatusBarHelper.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ARBDebug.h">
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
   </ItemGroup>

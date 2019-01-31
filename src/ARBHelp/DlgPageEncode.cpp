@@ -24,10 +24,11 @@
 
 #include "ARBHelp.h"
 #include "DlgARBHelp.h"
+#include "VersionNumber.h"
 
-#include "ARB/ARBDebug.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBDebug.h"
 #include <set>
 #include <wx/config.h>
 #include <wx/dir.h>
@@ -87,7 +88,8 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	wxBusyCursor wait;
 
 	// Get system information
-	m_Parent->AddSysInfo(ARBDebug::GetSystemInfo());
+	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
+	m_Parent->AddSysInfo(ARBDebug::GetSystemInfo(this, ver));
 
 	// Add registry info
 	m_Parent->AddRegistryInfo(ARBDebug::GetRegistryInfo().c_str());
