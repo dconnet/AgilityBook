@@ -64,7 +64,7 @@ msgid "IDS_QTYPE_NA"
 msgstr "NA"
 
 #: LibARBWin/ARBDebug.cpp:187
-msgid "IDS_BAD_VERSION"
+msgid "Unable to determine version information"
 msgstr "Unable to determine version information"
 
 # DlgAuthenticate
@@ -101,7 +101,7 @@ msgstr "Choose a language:"
 
 # DlgLanguage
 #: LibARBWin/LanguageManager.cpp:195
-msgid "IDD_LANGUAGE"
+msgid "Language Selection"
 msgstr "Language Selection"
 
 #: LibARBWin/LanguageManager.cpp:196

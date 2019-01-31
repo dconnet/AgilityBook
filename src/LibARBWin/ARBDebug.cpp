@@ -184,7 +184,7 @@ std::wstring ARBDebug::GetSystemInfo(
 		if (ver.Valid())
 			fmt::format_to(str, L"{}\n", ver.GetVersionString());
 		else
-			fmt::format_to(str, L"{}\n", _("IDS_BAD_VERSION").wx_str());
+			fmt::format_to(str, L"{}\n", _("Unable to determine version information").wx_str());
 	}
 
 	// wxWidgets

@@ -192,7 +192,7 @@ wxLanguage CLanguageManager::SelectLang(wxWindow* parent)
 	else
 	{
 		// Note, the size arguments are ignored. sigh.
-		wxSingleChoiceDialog dialog(parent, _("Choose a language:"), _("IDD_LANGUAGE"), choices);
+		wxSingleChoiceDialog dialog(parent, _("Choose a language:"), _("Language Selection"), choices);
 		dialog.SetHelpText(_("Select a language to use."));
 		dialog.SetSelection(idxLang);
 		if (wxID_OK == dialog.ShowModal())
