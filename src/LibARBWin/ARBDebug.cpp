@@ -32,9 +32,9 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
- /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-static std::wstring GetOSName()
+std::wstring ARBDebug::GetOSName()
 {
 	std::wstring str;
 
@@ -100,7 +100,7 @@ static std::wstring GetOSName()
 }
 
 
-static std::wstring GetArchName()
+std::wstring ARBDebug::GetArchName()
 {
 #if defined(__WXWINDOWS__)
 	wxPlatformInfo info;
@@ -131,7 +131,7 @@ static std::wstring GetArchName()
 }
 
 
-static std::wstring GetEndiannessName()
+std::wstring ARBDebug::GetEndiannessName()
 {
 #if defined(__WXWINDOWS__)
 	wxPlatformInfo info;

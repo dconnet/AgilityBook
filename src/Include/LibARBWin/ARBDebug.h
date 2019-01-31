@@ -27,6 +27,10 @@
 class ARBDebug
 {
 public:
+	static std::wstring GetOSName();
+	static std::wstring GetArchName();
+	static std::wstring GetEndiannessName();
+
 	static std::wstring GetSystemInfo(
 			wxWindow* pWindow,
 			CVersionNum const& ver);
