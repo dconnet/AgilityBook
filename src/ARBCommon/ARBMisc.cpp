@@ -272,7 +272,7 @@ std::wstring GetOSInfo(bool bVerbose)
 
 	if (bVerbose)
 	{
-		fmt::format_to(str, L"\nArchitecture: %s, %s\n", GetArchName(), GetEndiannessName());
+		fmt::format_to(str, L"\nArchitecture: {}, {}\n", GetArchName(), GetEndiannessName());
 	}
 
 	return fmt::to_string(str);
