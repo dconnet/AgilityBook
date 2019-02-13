@@ -19,11 +19,7 @@
  * 2008-01-11 Created
  */
 
-#if defined(_MSC_VER) && _MSC_VER < 1900
-#include "../3rdParty/catch/catch.hpp"
-#else
 #include "../3rdParty/catch2/catch.hpp"
-#endif
 #include "ARBCommon/ARBTypes.h"
 class ARBConfig;
 
