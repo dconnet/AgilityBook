@@ -293,6 +293,9 @@
     <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimeName.h">
       <Filter>Include\ARB</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\ARB\LibwxARB.h">
+      <Filter>Include\ARB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\ARB\ARB.rc">

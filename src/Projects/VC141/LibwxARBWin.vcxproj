@@ -324,6 +324,7 @@
     <ClInclude Include="..\..\Include\LibARBWin\ImageHelperBase.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ImageManager.h" />
     <ClInclude Include="..\..\Include\LibARBWin\LanguageManager.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\LibwxARBWin.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ListCtrl.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ListData.h" />
     <ClInclude Include="..\..\Include\LibARBWin\MenuHelper.h" />

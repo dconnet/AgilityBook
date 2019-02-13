@@ -314,6 +314,7 @@
     <ClInclude Include="..\..\Include\ARBCommon\BinaryData.h" />
     <ClInclude Include="..\..\Include\ARBCommon\BreakLine.h" />
     <ClInclude Include="..\..\Include\ARBCommon\Element.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\LibwxARBCommon.h" />
     <ClInclude Include="..\..\Include\ARBCommon\StringUtil.h" />
     <ClInclude Include="..\..\Include\ARBCommon\VersionNum.h" />
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />

@@ -369,6 +369,7 @@
     <ClInclude Include="..\..\Include\ARB\ARBTraining.h" />
     <ClInclude Include="..\..\Include\ARB\ARBTypes2.h" />
     <ClInclude Include="..\..\Include\ARB\ARB_Q.h" />
+    <ClInclude Include="..\..\Include\ARB\LibwxARB.h" />
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
     <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
     <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />

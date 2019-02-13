@@ -131,6 +131,9 @@
     <ClInclude Include="..\..\Include\ARBCommon\ARBMisc.h">
       <Filter>Include\ARBCommon</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\LibwxARBCommon.h">
+      <Filter>Include\ARBCommon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\ARBCommon\ARBCommon.rc">
