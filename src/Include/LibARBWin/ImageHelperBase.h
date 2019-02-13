@@ -22,44 +22,46 @@
  */
 
 #include "ImageManager.h"
+#include "LibwxARBWin.h"
+
 
 // Helper functions called from IImageManagerCallback interfaces
 
 namespace ImageHelper
 {
-	extern wxSize GetScaledSize(wxWindow* pWindow, int logical);
-	extern wxSize GetScaledSize(wxWindow* pWindow, wxSize const& szLogical);
+	ARBWIN_API wxSize GetScaledSize(wxWindow* pWindow, int logical);
+	ARBWIN_API wxSize GetScaledSize(wxWindow* pWindow, wxSize const& szLogical);
 
-	extern wxBitmap GetBitmap(
+	ARBWIN_API wxBitmap GetBitmap(
 			wxWindow* pWindow,
 			const wxArtID& id,
 			const wxArtClient& client = wxART_OTHER,
 			const wxSize& size = wxDefaultSize);
 
-	extern wxIcon GetIcon(
+	ARBWIN_API wxIcon GetIcon(
 			wxWindow* pWindow,
 			const wxArtID& id,
 			const wxArtClient& client = wxART_OTHER,
 			const wxSize& size = wxDefaultSize);
 
-	extern wxIcon CreateIconFromBitmap(const wxBitmap& bitmap);
+	ARBWIN_API wxIcon CreateIconFromBitmap(const wxBitmap& bitmap);
 
 	// These are in each user of this.
 	// That's where the mapping of names happens via IImageManagerCallback
-	//extern bool DoCreateBitmap(
+	//ARBWIN_API bool DoCreateBitmap(
 	//		wxWindow* pWindow,
 	//		const wxArtID& id,
 	//		const wxArtClient& client,
 	//		const wxSize& size,
 	//		wxBitmap& outBmp);
-	//extern  bool DoCreateIconBundle(
+	//ARBWIN_API bool DoCreateIconBundle(
 	//		wxWindow* pWindow,
 	//		const wxArtID& id,
 	//		const wxArtClient& client,
 	//		wxIconBundle& outIcon);
 
 #if defined(__WINDOWS__)
-	extern void LoadLocalBitmap(
+	ARBWIN_API void LoadLocalBitmap(
 			wxWindow* pWindow,
 			wchar_t const* const pImageName,
 			wxBitmap& outBmp);

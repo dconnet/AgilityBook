@@ -17,11 +17,13 @@
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
-#include "LibARBWin/Widgets.h"
+#include "LibwxARBWin.h"
+#include "Widgets.h"
+
 #include <wx/imaglist.h>
 
 
-class CCheckTreeCtrl : public CTreeCtrl
+class ARBWIN_API CCheckTreeCtrl : public CTreeCtrl
 {
 	DECLARE_CLASS(CCheckTreeCtrl)
 	DECLARE_NO_COPY_IMPLEMENTED(CCheckTreeCtrl)
@@ -66,8 +68,6 @@ private:
 	void OnKeyDown(wxKeyEvent& evt);
 };
 
-BEGIN_DECLARE_EVENT_TYPES()
-	DECLARE_EVENT_TYPE(wxEVT_COMMAND_TREE_CHECK_CHANGED, 621)
-END_DECLARE_EVENT_TYPES()
+DECLARE_EXPORTED_EVENT_TYPE(ARBWIN_API, wxEVT_COMMAND_TREE_CHECK_CHANGED, 621)
 
 #define EVT_TREE_CHECK_CHANGED(id, fn) wx__DECLARE_TREEEVT(CHECK_CHANGED, id, fn)

@@ -21,6 +21,8 @@
  * 2012-12-29 Created.
  */
 
+#include "LibwxARBWin.h"
+
 #include <wx/artprov.h>
 #include <wx/bitmap.h>
 #include <wx/icon.h>
@@ -45,7 +47,7 @@ public:
 };
 
 
-class CImageManager : public wxArtProvider
+class ARBWIN_API CImageManager : public wxArtProvider
 {
 protected:
 	CImageManager();

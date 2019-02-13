@@ -18,6 +18,8 @@
  * 2012-09-09 Added ARBVectorNoSave.
  */
 
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/Element.h"
 #include "fmt/format.h"
@@ -244,7 +246,7 @@ public:
 /**
  * Error callback class.
  */
-class ARBErrorCallback
+class ARB_API ARBErrorCallback
 {
 public:
 	ARBErrorCallback(fmt::wmemory_buffer& ioErrMsg)

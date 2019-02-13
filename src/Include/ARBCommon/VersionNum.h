@@ -20,11 +20,13 @@
  * 2004-03-04 Created
  */
 
+#include "LibwxARBCommon.h"
+
 #include <array>
 #include <string>
 
 
-class CVersionNum
+class ARBCOMMON_API CVersionNum
 {
 public:
 	typedef std::array<unsigned short, 4> VERSION_NUMBER;

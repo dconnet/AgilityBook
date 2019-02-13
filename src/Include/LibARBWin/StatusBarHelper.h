@@ -15,8 +15,9 @@
  * 2019-01-27 Created
  */
 
-#include <vector>
+#include "LibwxARBWin.h"
 
+#include <vector>
 class wxStatusBar;
 
 
@@ -24,7 +25,7 @@ class wxStatusBar;
  * Helper class for setting status bar widths.
  * Column 0 is reserved for menu tips (variable width).
  */
-class CStatusBarHelper
+class ARBWIN_API CStatusBarHelper
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CStatusBarHelper)
 public:

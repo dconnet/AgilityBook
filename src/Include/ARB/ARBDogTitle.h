@@ -25,16 +25,18 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBConfigTitle.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBConfigTitle.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBDate.h"
 
 
 /**
  * Titles a dog has earned.
  */
-class ARBDogTitle : public ARBBase, protected ARBTitleInstance
+class ARB_API ARBDogTitle : public ARBBase, protected ARBTitleInstance
 {
 protected:
 	ARBDogTitle();
@@ -187,7 +189,7 @@ private:
 /**
  * List of ARBDogTitle objects.
  */
-class ARBDogTitleList : public ARBVector<ARBDogTitlePtr>
+class ARB_API ARBDogTitleList : public ARBVector<ARBDogTitlePtr>
 {
 public:
 	/**

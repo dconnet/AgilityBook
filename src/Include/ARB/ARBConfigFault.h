@@ -20,14 +20,15 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Pre-loaded Fault types.
  */
-class ARBConfigFault : public ARBBase
+class ARB_API ARBConfigFault : public ARBBase
 {
 protected:
 	ARBConfigFault();
@@ -109,7 +110,7 @@ private:
 /**
  * List of ARBConfigFault objects.
  */
-class ARBConfigFaultList : public ARBVector<ARBConfigFaultPtr>
+class ARB_API ARBConfigFaultList : public ARBVector<ARBConfigFaultPtr>
 {
 public:
 	/**

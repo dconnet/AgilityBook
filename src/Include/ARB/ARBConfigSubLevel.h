@@ -21,14 +21,15 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Sublevel, allows a level to be split into A/B groupings.
  */
-class ARBConfigSubLevel : public ARBBase
+class ARB_API ARBConfigSubLevel : public ARBBase
 {
 protected:
 	ARBConfigSubLevel();
@@ -131,7 +132,7 @@ private:
 /**
  * List of ARBConfigSubLevel objects.
  */
-class ARBConfigSubLevelList : public ARBVector<ARBConfigSubLevelPtr>
+class ARB_API ARBConfigSubLevelList : public ARBVector<ARBConfigSubLevelPtr>
 {
 public:
 	/**

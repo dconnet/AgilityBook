@@ -23,15 +23,16 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBDogClub.h"
-#include "ARB/ARBDogRun.h"
+#include "ARBBase.h"
+#include "ARBDogClub.h"
+#include "ARBDogRun.h"
+#include "LibwxARB.h"
 
 
 /**
  * All the information about a trial.
  */
-class ARBDogTrial : public ARBBase
+class ARB_API ARBDogTrial : public ARBBase
 {
 protected:
 	ARBDogTrial();
@@ -197,7 +198,7 @@ private:
 /**
  * List of ARBDogTrial objects.
  */
-class ARBDogTrialList : public ARBVectorSaveConfig<ARBDogTrialPtr>
+class ARB_API ARBDogTrialList : public ARBVectorSaveConfig<ARBDogTrialPtr>
 {
 public:
 	/**

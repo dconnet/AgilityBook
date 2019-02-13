@@ -18,7 +18,9 @@
  * 2008-12-14 Created
  */
 
+#include "LibwxARBWin.h"
 #include "Widgets.h"
+
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 #include <map>
@@ -26,6 +28,7 @@
 #include <wx/imaglist.h>
 
 ARB_TYPEDEF(CListData)
+
 
 struct SortInfo
 {
@@ -47,7 +50,7 @@ struct SortInfo
 typedef int (wxCALLBACK *CListCtrlCompare)(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
 
 // wxListView adds some convenient functions to wxListCtrl
-class CReportListCtrl : public CListCtrl
+class ARBWIN_API CReportListCtrl : public CListCtrl
 {
 	DECLARE_CLASS(CReportListCtrl)
 public:
@@ -202,7 +205,7 @@ private:
 
 // Right now, this is specifically used in DlgCalendarQueryDetail. We could
 // make it more generic (sort headers, etc), but that can wait until needed.
-class CCheckListCtrl : public CListCtrl
+class ARBWIN_API CCheckListCtrl : public CListCtrl
 {
 	DECLARE_CLASS(CCheckListCtrl)
 public:

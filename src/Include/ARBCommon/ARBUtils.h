@@ -17,12 +17,15 @@
  * 2018-10-30 Moved some utils from ARBWin.
  */
 
+#include "LibwxARBCommon.h"
+
 #include "fmt/format.h"
+
 
 /**
  * Helper to reset wxConfig path
  */
-class CConfigPathHelper
+class ARBCOMMON_API CConfigPathHelper
 {
 	wxString m_path;
 
@@ -45,7 +48,7 @@ private:
  * @param nBackups Number of backups to keep.
  * @return Backup files reorganized.
  */
-extern bool CreateBackupFile(
+ARBCOMMON_API bool CreateBackupFile(
 		wxString const& inFilename,
 		int nBackups);
 
@@ -59,7 +62,7 @@ extern bool CreateBackupFile(
  * @param dtCreate Creation time, may be NULL.
  * @return Success
  */
-extern bool GetFileTimes(
+ARBCOMMON_API bool GetFileTimes(
 		wxFileName const& filename,
 		wxDateTime* dtAccess,
 		wxDateTime* dtMod,
@@ -79,7 +82,7 @@ extern bool GetFileTimes(
 #endif
 
 #if USE_STACKTRACER && defined(WIN32)
-class CStackTracer
+class ARBCOMMON_API CStackTracer
 {
 public:
 	CStackTracer(wxString const& msg) : fMsg(msg)

@@ -20,8 +20,9 @@
  * 2004-10-06 Added as part of file version 10.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
@@ -33,7 +34,7 @@
  * points used to be titling points until it was discovered that some venues
  * award different values [CPE].)
  */
-class ARBConfigLifetimePoints : public ARBBase
+class ARB_API ARBConfigLifetimePoints : public ARBBase
 {
 protected:
 	ARBConfigLifetimePoints();
@@ -156,7 +157,7 @@ private:
 /**
  * List of ARBConfigLifetimePoints objects.
  */
-class ARBConfigLifetimePointsList : public ARBVector<ARBConfigLifetimePointsPtr>
+class ARB_API ARBConfigLifetimePointsList : public ARBVector<ARBConfigLifetimePointsPtr>
 {
 public:
 	/**

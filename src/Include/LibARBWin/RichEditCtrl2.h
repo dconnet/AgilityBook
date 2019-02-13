@@ -18,11 +18,12 @@
  * 2005-01-30 Created
  */
 
-#include "LibARBWin/Widgets.h"
+#include "LibwxARBWin.h"
+#include "Widgets.h"
 class wxTextUrlEvent;
 
 
-class CRichEditCtrl2 : public CTextCtrl
+class ARBWIN_API CRichEditCtrl2 : public CTextCtrl
 {
 public:
 	CRichEditCtrl2(

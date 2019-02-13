@@ -27,6 +27,8 @@
  */
 
 #include "ARBTypes.h"
+#include "LibwxARBCommon.h"
+
 #if defined(__WXWINDOWS__)
 #include <wx/datetime.h>
 #endif
@@ -36,7 +38,7 @@
  * Date class.
  * In XML/Element, this class is only used as an attribute, never an element.
  */
-class ARBDate
+class ARBCOMMON_API ARBDate
 {
 public:
 	/**

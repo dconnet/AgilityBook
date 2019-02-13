@@ -1,6 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugDLL|ARM64">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|Win32">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|x64">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
       <Platform>ARM64</Platform>
@@ -11,6 +23,18 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|ARM64">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|Win32">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|x64">
+      <Configuration>ReleaseDLL</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|ARM64">
@@ -40,14 +64,34 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -60,8 +104,21 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
@@ -72,37 +129,85 @@
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonRelease32.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseLib32.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseDll32.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonDebug32.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugLib32.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugDll32.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonRelease64.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseLib64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseDll64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonReleaseARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseDllARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonDebug64.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugLib64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugDll64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonDebugARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugDllARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -112,7 +217,17 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -122,7 +237,17 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -132,7 +257,17 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
       <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -142,7 +277,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -151,7 +295,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -160,7 +313,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
       <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_LIB;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../3rdParty/LibTidyHtml/tidy/include;../../3rdParty/LibTidyHtml/tidy/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LIBTIDYHTML_EXPORT;TIDY_STATIC;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -237,6 +399,9 @@
     <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\version.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="LibFmt.vcxproj">
+      <Project>{c28fcb5f-b8a7-4214-9b3f-9d1d9fb6976e}</Project>
+    </ProjectReference>
     <ProjectReference Include="LibwxARBCommon.vcxproj">
       <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
     </ProjectReference>

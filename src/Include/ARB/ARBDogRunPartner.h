@@ -21,14 +21,15 @@
  * 2003-09-08 Changed AddPartner usage.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Keeps track of partners in pairs runs.
  */
-class ARBDogRunPartner : public ARBBase
+class ARB_API ARBDogRunPartner : public ARBBase
 {
 protected:
 	ARBDogRunPartner();
@@ -127,7 +128,7 @@ private:
 /**
  * List of ARBDogRunPartner objects.
  */
-class ARBDogRunPartnerList : public ARBVector<ARBDogRunPartnerPtr>
+class ARB_API ARBDogRunPartnerList : public ARBVector<ARBDogRunPartnerPtr>
 {
 public:
 	/**

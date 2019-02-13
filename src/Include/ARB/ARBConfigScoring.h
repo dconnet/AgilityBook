@@ -28,18 +28,20 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBConfigLifetimePoints.h"
-#include "ARB/ARBConfigPlaceInfo.h"
-#include "ARB/ARBConfigTitlePoints.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBConfigLifetimePoints.h"
+#include "ARBConfigPlaceInfo.h"
+#include "ARBConfigTitlePoints.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBDate.h"
 
 
 /**
  * Scoring methods for an event.
  */
-class ARBConfigScoring : public ARBBase
+class ARB_API ARBConfigScoring : public ARBBase
 {
 public:
 	/**
@@ -365,7 +367,7 @@ private:
 /**
  * List of ARBConfigScoring objects.
  */
-class ARBConfigScoringList : public ARBVector<ARBConfigScoringPtr>
+class ARB_API ARBConfigScoringList : public ARBVector<ARBConfigScoringPtr>
 {
 public:
 	/**

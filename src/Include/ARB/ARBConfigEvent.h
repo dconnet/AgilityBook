@@ -26,10 +26,12 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBConfigDivision.h"
-#include "ARB/ARBConfigScoring.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBConfigDivision.h"
+#include "ARBConfigScoring.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include <set>
 class ARBDate;
 
@@ -37,7 +39,7 @@ class ARBDate;
 /**
  * Event configuration information.
  */
-class ARBConfigEvent : public ARBBase
+class ARB_API ARBConfigEvent : public ARBBase
 {
 protected:
 	ARBConfigEvent();
@@ -241,7 +243,7 @@ private:
 /**
  * List of ARBConfigEvent objects.
  */
-class ARBConfigEventList : public ARBVector<ARBConfigEventPtr>
+class ARB_API ARBConfigEventList : public ARBVector<ARBConfigEventPtr>
 {
 public:
 	/**

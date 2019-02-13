@@ -33,6 +33,8 @@
  * 2003-09-01 Added 'operator+=' and 'operator-=' to ARBDouble.
  */
 
+#include "LibwxARBCommon.h"
+
 #include <array>
 #include <locale>
 #include <set>
@@ -84,7 +86,7 @@ ARB_TYPEDEF2(ElementText)
  *
  * However, use GetDecimalPt regardless of defines.
  */
-class CLocaleWrapper
+class ARBCOMMON_API CLocaleWrapper
 {
 	int m_category;
 	char* m_pOldLocale;
@@ -127,15 +129,8 @@ private:
 /**
  * Helper functions for quickly/easily converting doubles to strings.
  */
-class ARBDouble
+namespace ARBDouble
 {
-	ARBDouble() = delete;
-	~ARBDouble() = delete;
-	ARBDouble(ARBDouble const&) = delete;
-	ARBDouble(ARBDouble&&) = delete;
-	ARBDouble& operator=(ARBDouble const&) = delete;
-	ARBDouble& operator=(ARBDouble&&) = delete;
-public:
 	/// How to handle trailing zeros
 	enum ZeroStrip
 	{
@@ -147,19 +142,19 @@ public:
 	 * Trailing zeros are trimmed unless inPrec=2.
 	 * Then they are only trimmed if all zero (and inPrec=2).
 	 */
-	static std::wstring ToString(
+	ARBCOMMON_API std::wstring ToString(
 			double inValue,
 			int inPrec = 2,
 			bool bUseCurrentLocale = true,
 			ZeroStrip eStripZeros = eCompatible);
-	static std::wstring ToString(
+	ARBCOMMON_API std::wstring ToString(
 			double inValue,
 			int inPrec,
 			ZeroStrip eStripZeros);
 	/**
 	 * Compare two doubles, allowing for 'prec' error.
 	 */
-	static bool equal(
+	ARBCOMMON_API bool equal(
 			double const& inVal1,
 			double const& inVal2,
 			double inPrec = 1e-9);
@@ -173,7 +168,7 @@ public:
  * version to read the newer file, but warns that some information may be
  * lost if the file is saved.
  */
-class ARBVersion
+class ARBCOMMON_API ARBVersion
 {
 	typedef std::array<unsigned short, 2> VERSION_ARB;
 public:

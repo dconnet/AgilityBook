@@ -45,13 +45,15 @@
  * 2003-10-13 Made Time/CourseFaults common for all types of scoring.
  */
 
-#include "ARB/ARBCalendar.h"
-#include "ARB/ARBConfig.h"
-#include "ARB/ARBDog.h"
-#include "ARB/ARBInfo.h"
-#include "ARB/ARBStructure.h"
-#include "ARB/ARBTraining.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBCalendar.h"
+#include "ARBConfig.h"
+#include "ARBDog.h"
+#include "ARBInfo.h"
+#include "ARBStructure.h"
+#include "ARBTraining.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "fmt/format.h"
 #include <set>
 
@@ -59,7 +61,7 @@
 /**
  * The main data class.
  */
-class ARBAgilityRecordBook
+class ARB_API ARBAgilityRecordBook
 {
 public:
 	/**

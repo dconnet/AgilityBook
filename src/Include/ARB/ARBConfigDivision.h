@@ -23,15 +23,16 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBConfigLevel.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBConfigLevel.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Division configuration information.
  */
-class ARBConfigDivision : public ARBBase
+class ARB_API ARBConfigDivision : public ARBBase
 {
 protected:
 	ARBConfigDivision();
@@ -150,7 +151,7 @@ private:
 /**
  * List of ARBConfigDivision objects.
  */
-class ARBConfigDivisionList : public ARBVector<ARBConfigDivisionPtr>
+class ARB_API ARBConfigDivisionList : public ARBVector<ARBConfigDivisionPtr>
 {
 public:
 	/**

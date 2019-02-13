@@ -26,12 +26,15 @@
  */
 
 #include "ARBTypes.h"
+#include "LibwxARBCommon.h"
+
 #include "fmt/format.h"
 #include <istream>
 #include <map>
 #include <vector>
 class ARBDate;
 class ARBVersion;
+
 
 /**
  * Tree-like structure to hold XML data.
@@ -46,7 +49,7 @@ class ARBVersion;
  * Elements are ordered and the same name may be repeated.
  * (Hence the different access methods.)
  */
-class Element
+class ARBCOMMON_API Element
 {
 protected:
 	Element();
@@ -124,7 +127,7 @@ public:
 };
 
 
-class ElementNode : public Element
+class ARBCOMMON_API ElementNode : public Element
 {
 protected:
 	ElementNode();
@@ -462,7 +465,7 @@ protected:
 };
 
 
-class ElementText : public Element
+class ARBCOMMON_API ElementText : public Element
 {
 protected:
 	ElementText();

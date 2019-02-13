@@ -25,20 +25,21 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBConfigDivision.h"
-#include "ARB/ARBConfigEvent.h"
-#include "ARB/ARBConfigLifetimeName.h"
-#include "ARB/ARBConfigMultiQ.h"
-#include "ARB/ARBConfigTitle.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBConfigDivision.h"
+#include "ARBConfigEvent.h"
+#include "ARBConfigLifetimeName.h"
+#include "ARBConfigMultiQ.h"
+#include "ARBConfigTitle.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 class ARBDate;
 
 
 /**
  * Venue configuration information.
  */
-class ARBConfigVenue : public ARBBase
+class ARB_API ARBConfigVenue : public ARBBase
 {
 protected:
 	ARBConfigVenue();
@@ -220,7 +221,7 @@ private:
 /**
  * List of ARBConfigVenue objects.
  */
-class ARBConfigVenueList : public ARBVector<ARBConfigVenuePtr>
+class ARB_API ARBConfigVenueList : public ARBVector<ARBConfigVenuePtr>
 {
 public:
 	/**

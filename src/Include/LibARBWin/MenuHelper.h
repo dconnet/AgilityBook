@@ -17,10 +17,11 @@
  * 2012-07-13 Created
  */
 
+#include "LibwxARBWin.h"
+
 #include <vector>
 #include <wx/artprov.h>
 class wxFrame;
-
 
 // MENU_SEP/MENU_ITEM/MENU_MRU are mutually exclusive
 #define MENU_SEP	0x01	///< Menu separator
@@ -28,7 +29,8 @@ class wxFrame;
 #define MENU_MRU	0x04	///< MRU item, can only be one
 #define MENU_HELP	0x08	///< Top-level Help item, can only be one
 
-class CMenuHelper
+
+class ARBWIN_API CMenuHelper
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CMenuHelper)
 public:

@@ -17,6 +17,8 @@
  * 2018-01-28 Created
  */
 
+#include "LibwxARBWin.h"
+
 #include "ARBCommon/VersionNum.h"
 #include "fmt/format.h"
 
@@ -24,7 +26,7 @@
 /**
  * General information to be reported
  */
-class ARBDebug
+class ARBWIN_API ARBDebug
 {
 public:
 	static std::wstring GetOSName();

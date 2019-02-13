@@ -17,14 +17,15 @@
  * 2016-01-06 Created
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Pre-loaded LifetimeName types.
  */
-class ARBConfigLifetimeName : public ARBBase
+class ARB_API ARBConfigLifetimeName : public ARBBase
 {
 protected:
 	ARBConfigLifetimeName();
@@ -106,7 +107,7 @@ private:
 /**
  * List of ARBConfigLifetimeName objects.
  */
-class ARBConfigLifetimeNameList : public ARBVector<ARBConfigLifetimeNamePtr>
+class ARB_API ARBConfigLifetimeNameList : public ARBVector<ARBConfigLifetimeNamePtr>
 {
 public:
 	/**

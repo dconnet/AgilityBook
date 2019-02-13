@@ -18,6 +18,8 @@
  * 2009-02-15 Created
  */
 
+#include "LibwxARBWin.h"
+
 #include "ARBCommon/ARBTypes.h"
 #include <wx/valgen.h>
 #include <wx/valtext.h>
@@ -28,7 +30,7 @@ class wxDateTime;
 /// wxGenericValidator doesn't do shorts and doubles
 // Would have preferred to inherit from wxGenericValidator, but there's
 // no ctor I can use (it has no default one).
-class CGenericValidator : public wxValidator
+class ARBWIN_API CGenericValidator : public wxValidator
 {
 	DECLARE_CLASS(CGenericValidator)
 	DECLARE_NO_ASSIGN_IMPLEMENTED(CGenericValidator)
@@ -99,7 +101,7 @@ private:
 #define TRIMVALIDATOR_DEFAULT		(TRIMVALIDATOR_TRIM_BOTH | TRIMVALIDATOR_NONEMPTY)
 
 
-class CTrimValidator : public wxGenericValidator
+class ARBWIN_API CTrimValidator : public wxGenericValidator
 {
 	DECLARE_CLASS(CTrimValidator)
 	DECLARE_NO_ASSIGN_IMPLEMENTED(CTrimValidator)

@@ -17,7 +17,8 @@
  * 2013-08-14 Moved out of ARBTypes.h
  */
 
-#include "ARB/ARBTypes2.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
@@ -26,7 +27,7 @@
  * This serves as a translation mechanism from the string in the XML to
  * something we can use as a basic type.
  */
-class ARB_Q
+class ARB_API ARB_Q
 {
 public:
 	/**

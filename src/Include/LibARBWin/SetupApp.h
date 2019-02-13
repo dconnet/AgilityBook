@@ -25,6 +25,7 @@
 
 #include "ImageManager.h"
 #include "LanguageManager.h"
+#include "LibwxARBWin.h"
 
 #if wxUSE_DEBUGREPORT && wxUSE_ON_FATAL_EXCEPTION
 #define USE_DBGREPORT 1
@@ -36,9 +37,9 @@
 #endif
 
 
-class CBaseApp : public wxApp
-				, public ILanguageCallback
-				, public IImageManagerCallback
+class ARBWIN_API CBaseApp : public wxApp
+	, public ILanguageCallback
+	, public IImageManagerCallback
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CBaseApp)
 protected:

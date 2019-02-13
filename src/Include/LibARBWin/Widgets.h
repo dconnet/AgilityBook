@@ -24,11 +24,13 @@
  * 2009-10-11 Created.
  */
 
+#include "LibwxARBWin.h"
+
 #include <wx/listctrl.h>
 #include <wx/treectrl.h>
 
 
-class CListCtrl : public wxListView
+class ARBWIN_API CListCtrl : public wxListView
 {
 	DECLARE_CLASS(CListCtrl)
 public:
@@ -68,7 +70,7 @@ public:
 #endif
 
 
-class CTreeCtrl : public wxTreeCtrl
+class ARBWIN_API CTreeCtrl : public wxTreeCtrl
 {
 	DECLARE_CLASS(CTreeCtrl)
 public:
@@ -108,7 +110,7 @@ public:
 };
 
 
-class CTextCtrl : public wxTextCtrl
+class ARBWIN_API CTextCtrl : public wxTextCtrl
 {
 	DECLARE_CLASS(CTextCtrl)
 public:
@@ -147,7 +149,7 @@ private:
 };
 
 
-class CSpellCheckCtrl : public  CTextCtrl
+class ARBWIN_API CSpellCheckCtrl : public  CTextCtrl
 {
 	DECLARE_CLASS(CSpellCheckCtrl)
 

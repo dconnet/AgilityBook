@@ -23,15 +23,16 @@
  * 2003-07-12 Added as part of file version 5.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBCalcPoints.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBCalcPoints.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Number of title points that can be earned.
  */
-class ARBConfigTitlePoints : public ARBBase
+class ARB_API ARBConfigTitlePoints : public ARBBase
 {
 protected:
 	ARBConfigTitlePoints();
@@ -128,7 +129,7 @@ private:
 /**
  * List of ARBConfigTitlePoints objects.
  */
-class ARBConfigTitlePointsList : public ARBVector<ARBConfigTitlePointsPtr>
+class ARB_API ARBConfigTitlePointsList : public ARBVector<ARBConfigTitlePointsPtr>
 {
 public:
 	/**

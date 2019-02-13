@@ -17,6 +17,8 @@
  * 2013-07-17 Created
  */
 
+#include "LibwxARBCommon.h"
+
 #include <string>
 
 
@@ -25,7 +27,7 @@
  * @param inRawData String to sanitize
  * @param bConvertCR Convert \n to html-breaks.
  */
-std::wstring SanitizeStringForHTML(
+ARBCOMMON_API std::wstring SanitizeStringForHTML(
 		std::wstring const& inRawData,
 		bool bConvertCR = true);
 
@@ -35,16 +37,16 @@ std::wstring SanitizeStringForHTML(
  * @param verMajor OS major version number.
  * @param verMinor OS minor version number.
  */
-bool GetOSInfo(int& verMajor, int& verMinor);
+ARBCOMMON_API bool GetOSInfo(int& verMajor, int& verMinor);
 
 
 /**
  * Are we running on Win7 or better?
  */
-bool IsWin7OrBetter();
+ARBCOMMON_API bool IsWin7OrBetter();
 
 
 /**
  * Translate a short to a Roman numeral
  */
-std::wstring ShortToRoman(short value);
+ARBCOMMON_API std::wstring ShortToRoman(short value);

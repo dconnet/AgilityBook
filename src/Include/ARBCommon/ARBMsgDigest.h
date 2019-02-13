@@ -16,14 +16,14 @@
  * 2010-02-07 Created
  */
 
-#include <string>
+#include "LibwxARBCommon.h"
+
 #include <istream>
+#include <string>
 
 
-class ARBMsgDigest
+namespace ARBMsgDigest
 {
-	ARBMsgDigest();
-public:
 	typedef enum
 	{
 		ARBDigestUnknown,
@@ -32,7 +32,7 @@ public:
 		ARBDigestSHA256,
 	} ARBDigest;
 
-	static std::wstring Compute(
+	ARBCOMMON_API std::wstring Compute(
 			std::istream& inFile,
 			ARBDigest type,
 			size_t* outSize = nullptr);

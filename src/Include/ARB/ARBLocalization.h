@@ -27,14 +27,15 @@
  *    Element.cpp (errors due to XML parsing failures)
  */
 
-#include "ARB/ARBTypes2.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * This class must be implemented by the user to define some strings ARB
  * requires. This allows ARB to remain platform-independent.
  */
-class IARBLocalization
+class ARB_API IARBLocalization
 {
 	DECLARE_NO_COPY_IMPLEMENTED(IARBLocalization)
 public:
@@ -254,4 +255,4 @@ public:
 };
 
 
-extern IARBLocalization const* Localization();
+ARB_API IARBLocalization const* Localization();

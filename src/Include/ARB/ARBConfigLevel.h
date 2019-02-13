@@ -21,15 +21,16 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBConfigSubLevel.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBConfigSubLevel.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Levels within a division.
  */
-class ARBConfigLevel : public ARBBase
+class ARB_API ARBConfigLevel : public ARBBase
 {
 protected:
 	ARBConfigLevel();
@@ -146,7 +147,7 @@ private:
 /**
  * List of ARBConfigLevel objects.
  */
-class ARBConfigLevelList : public ARBVector<ARBConfigLevelPtr>
+class ARB_API ARBConfigLevelList : public ARBVector<ARBConfigLevelPtr>
 {
 public:
 	/**

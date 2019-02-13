@@ -21,14 +21,15 @@
  * 2003-11-22 Added FindRegNum().
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Registration number for a venue.
  */
-class ARBDogRegNum : public ARBBase
+class ARB_API ARBDogRegNum : public ARBBase
 {
 protected:
 	ARBDogRegNum();
@@ -145,7 +146,7 @@ private:
 /**
  * List of ARBDogRegNum objects.
  */
-class ARBDogRegNumList : public ARBVector<ARBDogRegNumPtr>
+class ARB_API ARBDogRegNumList : public ARBVector<ARBDogRegNumPtr>
 {
 public:
 	/**

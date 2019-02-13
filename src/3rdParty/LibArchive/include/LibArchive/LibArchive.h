@@ -19,6 +19,16 @@
  * 2013-01-30 Created
  */
 
+#if defined(_DLL) && defined(_WIN32)
+#if defined(LIBARCHIVE_EXPORT)
+#define LIBARCHIVE_API	__declspec(dllexport)
+#else
+#define LIBARCHIVE_API	__declspec(dllimport)
+#endif
+#else
+#define LIBARCHIVE_API
+#endif
+
 #include <string>
 
 // TODO: Change api. On Win32, this because ReplaceFile[AW]
@@ -26,7 +36,7 @@
 #undef ReplaceFile
 #endif
 
-class CLibArchive
+class LIBARCHIVE_API CLibArchive
 {
 public:
 	typedef enum

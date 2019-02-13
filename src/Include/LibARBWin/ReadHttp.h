@@ -19,6 +19,8 @@
  * 2007-08-03 Separated HTTP reading code from UpdateInfo.cpp
  */
 
+#include "LibwxARBWin.h"
+
 #include "ARBCommon/StringUtil.h"
 class IDlgProgress;
 class wxOutputStream;
@@ -34,7 +36,7 @@ inline bool GotoURL(std::wstring const& inLink)
 /**
  * Read data from the internet
  */
-class CReadHttp
+class ARBWIN_API CReadHttp
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CReadHttp)
 public:

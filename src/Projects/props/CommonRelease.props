@@ -8,7 +8,6 @@
       <Optimization>Full</Optimization>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <OptimizeReferences>true</OptimizeReferences>

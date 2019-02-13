@@ -25,8 +25,10 @@
  */
 
 #include "ARBTypes.h"
+#include "LibwxARBCommon.h"
 
-class ARBBase64
+
+class ARBCOMMON_API ARBBase64
 {
 	ARBBase64();
 public:

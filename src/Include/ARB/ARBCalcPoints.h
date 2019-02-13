@@ -16,12 +16,13 @@
  * 2011-07-31 Created
  */
 
-#include "ARB/ARBTypes2.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 ARB_TYPEDEF(ARBCalcPoints)
 ARB_TYPEDEF(ARBCalcPointsNormal)
 ARB_TYPEDEF(ARBCalcPointsT2B)
-ARB_TYPEDEF(ARBCalcPointsUKI)
 ARB_TYPEDEF(ARBCalcPointsTop10USDAA)
+ARB_TYPEDEF(ARBCalcPointsUKI)
 
 
 enum ARBPointsType
@@ -38,7 +39,7 @@ enum ARBPointsType
 /**
  * Calculate title (etc) points.
  */
-class ARBCalcPoints
+class ARB_API ARBCalcPoints
 {
 protected:
 	ARBCalcPoints();
@@ -75,7 +76,7 @@ public:
 /**
  * Calculate points based on faults.
  */
-class ARBCalcPointsNormal : public ARBCalcPoints
+class ARB_API ARBCalcPointsNormal : public ARBCalcPoints
 {
 protected:
 	ARBCalcPointsNormal();
@@ -96,7 +97,7 @@ public:
 /**
  * Calculate points based on percentage of SCT (AKC-T2B).
  */
-class ARBCalcPointsT2B : public ARBCalcPoints
+class ARB_API ARBCalcPointsT2B : public ARBCalcPoints
 {
 protected:
 	ARBCalcPointsT2B();
@@ -116,7 +117,7 @@ public:
 /**
  * Calculate points based on placement (UKI).
  */
-class ARBCalcPointsUKI : public ARBCalcPoints
+class ARB_API ARBCalcPointsUKI : public ARBCalcPoints
 {
 protected:
 	ARBCalcPointsUKI();
@@ -136,7 +137,7 @@ public:
 /**
  * Calculate Top Ten points based on placement (USDAA).
  */
-class ARBCalcPointsTop10USDAA : public ARBCalcPoints
+class ARB_API ARBCalcPointsTop10USDAA : public ARBCalcPoints
 {
 protected:
 	ARBCalcPointsTop10USDAA();

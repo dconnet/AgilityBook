@@ -20,14 +20,15 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Other points are accumulated on a per-run basis.
  */
-class ARBDogRunOtherPoints : public ARBBase
+class ARB_API ARBDogRunOtherPoints : public ARBBase
 {
 protected:
 	ARBDogRunOtherPoints();
@@ -117,7 +118,7 @@ private:
 /**
  * List of ARBDogRunOtherPoints objects.
  */
-class ARBDogRunOtherPointsList : public ARBVector<ARBDogRunOtherPointsPtr>
+class ARB_API ARBDogRunOtherPointsList : public ARBVector<ARBDogRunOtherPointsPtr>
 {
 public:
 	/**

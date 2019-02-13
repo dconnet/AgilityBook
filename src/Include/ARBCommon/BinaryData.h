@@ -20,12 +20,11 @@
  */
 
 #include "ARBTypes.h"
+#include "LibwxARBCommon.h"
 
 
-class BinaryData
+namespace BinaryData
 {
-	BinaryData();
-public:
 	/**
 	 * Decode base64 and decompress data.
 	 * @param inBase64 Base64 encoded data
@@ -33,7 +32,7 @@ public:
 	 * @param outBytes Number of bytes in outBinData
 	 * @post outBinData must be deallocated using Release()
 	 */
-	static bool Decode(
+	ARBCOMMON_API bool Decode(
 			std::wstring const& inBase64,
 			unsigned char*& outBinData,
 			size_t& outBytes);
@@ -42,7 +41,7 @@ public:
 	 * Deallocate memory allocated in Decode()
 	 * @param inBinData Binary data allocated in Decode()
 	 */
-	static void Release(unsigned char* inBinData);
+	ARBCOMMON_API void Release(unsigned char* inBinData);
 
 	/**
 	 * Compress and base64 encode a chunk of data.
@@ -50,18 +49,18 @@ public:
 	 * @param inBytes Number of bytes in inBinData
 	 * @param outBase64 Base64 encoded string of compressed (zlib) data.
 	 */
-	static bool Encode(
+	ARBCOMMON_API bool Encode(
 			unsigned char const* inBinData,
 			size_t inBytes,
 			std::wstring& outBase64);
-	static bool EncodeFile(
+	ARBCOMMON_API bool EncodeFile(
 			std::wstring const& inFileName,
 			std::wstring& outBase64);
 
-	static bool DecodeString(
+	ARBCOMMON_API bool DecodeString(
 			std::wstring const& inBase64,
 			std::wstring& outData);
-	static bool EncodeString(
+	ARBCOMMON_API bool EncodeString(
 			std::wstring const& inData,
 			std::wstring& outBase64);
 };

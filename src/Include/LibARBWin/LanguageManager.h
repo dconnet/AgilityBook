@@ -20,6 +20,7 @@
  * 2007-09-22 Created
  */
 
+#include "LibwxARBWin.h"
 class wxLocale;
 
 
@@ -35,7 +36,7 @@ public:
 };
 
 
-class CLanguageManager
+class ARBWIN_API CLanguageManager
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CLanguageManager)
 public:

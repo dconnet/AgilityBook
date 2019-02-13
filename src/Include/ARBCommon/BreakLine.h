@@ -15,6 +15,8 @@
  * 2010-10-30 Moved BreakLine from Globals.h, added CSV routines.
  */
 
+#include "LibwxARBCommon.h"
+
 #include <string>
 #include <vector>
 
@@ -29,7 +31,7 @@
  * @return Number of fields parsed.
  * @note Return value may be larger than vector size due to removed entries.
  */
-extern size_t BreakLine(
+ARBCOMMON_API size_t BreakLine(
 		wchar_t inSep,
 		std::wstring const& inStr,
 		std::vector<std::wstring>& outFields,
@@ -53,7 +55,7 @@ typedef enum
  * @param newLine On continuation, append this.
  * @return Status of whether more data is needed (due to quoting multiline data)
  */
-extern ReadStatus ReadCSV(
+ARBCOMMON_API ReadStatus ReadCSV(
 		wchar_t inSep,
 		std::wstring inRecord,
 		std::vector<std::wstring>& ioFields,
@@ -67,7 +69,7 @@ extern ReadStatus ReadCSV(
  * @param inFields Fields to write
  * @return A string that can be written to a file. (not newline terminated)
  */
-extern std::wstring WriteCSV(
+ARBCOMMON_API std::wstring WriteCSV(
 		wchar_t inSep,
 		std::vector<std::wstring> const& inFields);
 
@@ -78,6 +80,6 @@ extern std::wstring WriteCSV(
  * @param inField Fields to write
  * @return A string that can be written to a file. (not newline terminated)
  */
-extern std::wstring WriteCSVField(
+ARBCOMMON_API std::wstring WriteCSVField(
 		wchar_t inSep,
 		std::wstring const& inField);

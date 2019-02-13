@@ -26,10 +26,13 @@
 #define HAS_AUTOMATION	0
 #endif
 
+#include "LibwxARBWin.h"
+
 #include "ARBCommon/ARBTypes.h"
 #include <string>
 #include <vector>
 class IDlgProgress;
+
 ARB_TYPEDEF(ISpreadSheet)
 ARB_TYPEDEF(ISpreadSheetExporter)
 ARB_TYPEDEF(ISpreadSheetImporter)
@@ -121,7 +124,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ISpreadSheet
+class ARBWIN_API ISpreadSheet
 {
 public:
 	typedef enum

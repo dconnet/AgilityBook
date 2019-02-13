@@ -22,15 +22,17 @@
  * 2003-10-31 Added FindCalendar.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBDate.h"
 
 
 /**
  * iCalendar interface
  */
-class ICalendar
+class ARB_API ICalendar
 {
 protected:
 	ICalendar();
@@ -66,7 +68,7 @@ public:
  *       configuration. Because of this, it is currently not possible to
  *       automatically create a multiple hosted trial.
  */
-class ARBCalendar : public ARBBase
+class ARB_API ARBCalendar : public ARBBase
 {
 public:
 	/**
@@ -395,7 +397,7 @@ private:
 /**
  * List of ARBCalendar objects.
  */
-class ARBCalendarList : public ARBVector<ARBCalendarPtr>
+class ARB_API ARBCalendarList : public ARBVector<ARBCalendarPtr>
 {
 public:
 	/**

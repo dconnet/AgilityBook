@@ -17,11 +17,13 @@
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
+#include "LibwxARBWin.h"
+
 #include <assert.h>
 #include <string>
 
 
-class CColumnOrder
+class ARBWIN_API CColumnOrder
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CColumnOrder)
 public:

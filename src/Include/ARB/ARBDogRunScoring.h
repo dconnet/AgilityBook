@@ -22,14 +22,15 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBConfigScoring.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBConfigScoring.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * Keeps track of the scoring for a run.
  */
-class ARBDogRunScoring
+class ARB_API ARBDogRunScoring
 {
 public:
 	/**

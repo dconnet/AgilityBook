@@ -18,8 +18,10 @@
  * 2005-07-15 Created.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBDate.h"
 #include <set>
 
@@ -27,7 +29,7 @@
 /**
  * MultiQ configuration information.
  */
-class ARBConfigMultiQ : public ARBBase
+class ARB_API ARBConfigMultiQ : public ARBBase
 {
 protected:
 	ARBConfigMultiQ();
@@ -259,7 +261,7 @@ private:
 /**
  * List of ARBConfigMultiQ objects.
  */
-class ARBConfigMultiQList : public ARBVector<ARBConfigMultiQPtr>
+class ARB_API ARBConfigMultiQList : public ARBVector<ARBConfigMultiQPtr>
 {
 public:
 	/**

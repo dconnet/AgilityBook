@@ -23,6 +23,8 @@
  * 2009-02-14 Moved from AgilityBook.h
  */
 
+#include "LibwxARBWin.h"
+
 #include "ARBCommon/ARBTypes.h"
 class CListCtrl;
 class wxDateTime;
@@ -36,7 +38,7 @@ class wxTreeCtrl;
  * @param id Id of window to return.
  * @note In Globals.cpp
  */
-extern wxWindow* FindWindowInSizer(
+ARBWIN_API wxWindow* FindWindowInSizer(
 		wxSizer* sizer,
 		int id);
 
@@ -46,7 +48,7 @@ extern wxWindow* FindWindowInSizer(
  * This is just a simple wrapper around wxListItem/GetItem
  * @note index = -1 implies getting the column header text
  */
-extern std::wstring GetListColumnText(
+ARBWIN_API std::wstring GetListColumnText(
 		CListCtrl const* list,
 		long index,
 		long col);
@@ -56,7 +58,7 @@ extern std::wstring GetListColumnText(
  * Set the text for a column.
  * This is just a simple wrapper around wxListItem/SetItem
  */
-extern bool SetListColumnText(
+ARBWIN_API bool SetListColumnText(
 		CListCtrl* list,
 		long index,
 		long col,
@@ -67,7 +69,7 @@ extern bool SetListColumnText(
  * Refresh tree data - in Windows we used getdispinfo, in wxWindows that doesn't
  * work. So the old code that simply invalidated the window no longer works.
  */
-extern void RefreshTreeItem(
+ARBWIN_API void RefreshTreeItem(
 		wxTreeCtrl* tree,
 		wxTreeItemId item,
 		bool bRecurse = false);
@@ -81,7 +83,7 @@ extern void RefreshTreeItem(
  * @param flags Flags to pass to DrawLabel
  * @param bCalc Determine rectangle or do actual drawing
  */
-extern void DrawBetterLabel(
+ARBWIN_API void DrawBetterLabel(
 		wxDC* pDC,
 		wxString const& inStr,
 		wxRect& rect,

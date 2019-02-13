@@ -26,19 +26,21 @@
  * 2003-07-24 Removed built-in sort on dogs. Dogs are user-sorted now.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBDogExistingPoints.h"
-#include "ARB/ARBDogRegNum.h"
-#include "ARB/ARBDogTitle.h"
-#include "ARB/ARBDogTrial.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBDogExistingPoints.h"
+#include "ARBDogRegNum.h"
+#include "ARBDogTitle.h"
+#include "ARBDogTrial.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBDate.h"
 
 
 /**
  * Information about a dog, titles, runs, etc.
  */
-class ARBDog : public ARBBase
+class ARB_API ARBDog : public ARBBase
 {
 protected:
 	ARBDog();
@@ -244,7 +246,7 @@ private:
 /**
  * List of ARBDog objects.
  */
-class ARBDogList : public ARBVectorSaveConfig<ARBDogPtr>
+class ARB_API ARBDogList : public ARBVectorSaveConfig<ARBDogPtr>
 {
 public:
 	/**

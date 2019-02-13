@@ -21,15 +21,16 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 class ARBDate;
 
 
 /**
  * Dog club.
  */
-class ARBDogClub : public ARBBase
+class ARB_API ARBDogClub : public ARBBase
 {
 protected:
 	ARBDogClub();
@@ -122,7 +123,7 @@ private:
  *       the primary club in a trial. The primary club is the club that is
  *       used to establish the rules used in entering a run.
  */
-class ARBDogClubList : public ARBVector<ARBDogClubPtr>
+class ARB_API ARBDogClubList : public ARBVector<ARBDogClubPtr>
 {
 public:
 	/**

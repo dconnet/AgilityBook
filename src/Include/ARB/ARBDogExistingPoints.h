@@ -21,15 +21,17 @@
  * 2003-02-02 Created
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBDate.h"
 
 
 /**
  * Initializes the titling points a dog has.
  */
-class ARBDogExistingPoints : public ARBBase
+class ARB_API ARBDogExistingPoints : public ARBBase
 {
 protected:
 	ARBDogExistingPoints();
@@ -227,7 +229,7 @@ private:
 /**
  * List of ARBDogExistingPoints objects.
  */
-class ARBDogExistingPointsList : public ARBVector<ARBDogExistingPointsPtr>
+class ARB_API ARBDogExistingPointsList : public ARBVector<ARBDogExistingPointsPtr>
 {
 public:
 	/**

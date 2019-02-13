@@ -16,8 +16,9 @@
  * 2006-11-03 Created
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
@@ -26,7 +27,7 @@
  * - Points (Sweepstakes champion points)
  * - Placements (FCI, Level 2 placements)
  */
-class ARBConfigPlaceInfo : public ARBBase
+class ARB_API ARBConfigPlaceInfo : public ARBBase
 {
 protected:
 	ARBConfigPlaceInfo();
@@ -122,7 +123,7 @@ private:
 /**
  * List of ARBConfigPlaceInfo objects.
  */
-class ARBConfigPlaceInfoList : public ARBVector<ARBConfigPlaceInfoPtr>
+class ARB_API ARBConfigPlaceInfoList : public ARBVector<ARBConfigPlaceInfoPtr>
 {
 public:
 	/**

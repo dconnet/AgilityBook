@@ -16,6 +16,8 @@
  * 2013-08-23 Created
  */
 
+#include "LibwxARBWin.h"
+
 #ifdef WIN32
 #include <shobjidl.h>
 
@@ -36,7 +38,7 @@ typedef unsigned int ULONGLONG;
 class CTaskbarProgress;
 typedef std::shared_ptr<CTaskbarProgress> CTaskbarProgressPtr;
 
-class CTaskbarProgress
+class ARBWIN_API CTaskbarProgress
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CTaskbarProgress)
 protected:

@@ -16,7 +16,10 @@
  * 2007-08-02 Created
  */
 
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include <map>
 #include <vector>
 
@@ -24,7 +27,7 @@
 /**
  * Configuration information for auto-loading calendar entries from the web.
  */
-class ARBConfigCalSite
+class ARB_API ARBConfigCalSite : public ARBBase
 {
 protected:
 	ARBConfigCalSite();
@@ -42,6 +45,25 @@ public:
 	bool operator!=(ARBConfigCalSite const& rhs) const
 	{
 		return !operator==(rhs);
+	}
+
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	std::wstring GetGenericName() const override
+	{
+		return m_Name;
+	}
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
+	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	{
+		return 0;
 	}
 
 	/**
@@ -138,7 +160,7 @@ private:
 /**
  * List of ARBConfigCalSite objects.
  */
-class ARBConfigCalSiteList : public ARBVector<ARBConfigCalSitePtr>
+class ARB_API ARBConfigCalSiteList : public ARBVector<ARBConfigCalSitePtr>
 {
 public:
 	/**

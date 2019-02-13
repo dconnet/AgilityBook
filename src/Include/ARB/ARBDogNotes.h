@@ -20,7 +20,9 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBTypes2.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include <set>
 #include <vector>
 
@@ -29,7 +31,7 @@ typedef std::vector<std::wstring> ARBDogFaultList;
 
 class ARBMetaData;
 typedef std::shared_ptr<ARBMetaData> ARBMetaDataPtr;
-class ARBMetaData
+class ARB_API ARBMetaData
 {
 	friend class ARBDogNotes;
 	DECLARE_NO_COPY_IMPLEMENTED(ARBMetaData)
@@ -51,7 +53,7 @@ private:
 /**
  * Various notes about a run.
  */
-class ARBDogNotes
+class ARB_API ARBDogNotes
 {
 public:
 	ARBDogNotes();

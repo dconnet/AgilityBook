@@ -26,8 +26,10 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/Element.h"
 
@@ -39,12 +41,12 @@ enum ARBTitleStyle
 	eTitleStyleRoman,	/// "Title-IV"
 };
 
-ElementNode::AttribLookup LoadTitleStyle(
+ARB_API ElementNode::AttribLookup LoadTitleStyle(
 		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,
 		ARBTitleStyle& ioStyle);
-void SaveTitleStyle(
+ARB_API void SaveTitleStyle(
 		ElementNodePtr const& ioTree,
 		wchar_t const* inAttrib,
 		ARBTitleStyle inStyle);
@@ -57,19 +59,19 @@ enum ARBTitleSeparator
 	eTitleSeparatorHyphen,	/// "Title-4"
 };
 
-ElementNode::AttribLookup LoadTitleSeparator(
+ARB_API ElementNode::AttribLookup LoadTitleSeparator(
 		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,
 		ARBTitleStyle inStyle,
 		ARBTitleSeparator& ioSep);
-void SaveTitleSeparator(
+ARB_API void SaveTitleSeparator(
 		ElementNodePtr const& ioTree,
 		wchar_t const* inAttrib,
 		ARBTitleSeparator inSep);
 
 
-class ARBTitleInstance
+class ARB_API ARBTitleInstance
 {
 protected:
 	std::wstring TitleInstance(
@@ -86,7 +88,7 @@ protected:
  * Title configuration.
  * A title consists of a name (the abbreviation), a long name and a description.
  */
-class ARBConfigTitle : public ARBBase, protected ARBTitleInstance
+class ARB_API ARBConfigTitle : public ARBBase, protected ARBTitleInstance
 {
 protected:
 	ARBConfigTitle();
@@ -314,7 +316,7 @@ private:
 /**
  * List of ARBConfigTitle objects.
  */
-class ARBConfigTitleList : public ARBVector<ARBConfigTitlePtr>
+class ARB_API ARBConfigTitleList : public ARBVector<ARBConfigTitlePtr>
 {
 public:
 	/**

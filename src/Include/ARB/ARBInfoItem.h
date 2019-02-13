@@ -21,15 +21,17 @@
  * 2003-12-07 Created
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include <set>
 
 
 /**
  * Comments about items
  */
-class ARBInfoItem : public ARBBase
+class ARB_API ARBInfoItem : public ARBBase
 {
 protected:
 	ARBInfoItem();
@@ -137,7 +139,7 @@ private:
 /**
  * List of ARBInfoItem objects.
  */
-class ARBInfoItemList : public ARBVectorNoSave<ARBInfoItemPtr>
+class ARB_API ARBInfoItemList : public ARBVectorNoSave<ARBInfoItemPtr>
 {
 	ARBInfoItemList() = delete;
 public:

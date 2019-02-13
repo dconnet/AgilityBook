@@ -10,12 +10,12 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\Include;$(SolutionDir)..\..\3rdParty\LibFmt\include;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\Include;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <StringPooling>true</StringPooling>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -31,7 +31,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Manifest>
-      <AdditionalManifestFiles>$(SolutionDir)..\..\Include\compat.manifest;$(SolutionDir)..\..\Include\dpi.manifest</AdditionalManifestFiles>
+      <AdditionalManifestFiles>$(SolutionDir)..\..\Include\compat.manifest;$(SolutionDir)..\..\Include\dpi.manifest;$(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
 </Project>

@@ -22,8 +22,10 @@
  * 2003-09-21 Created
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBDate.h"
 #include <set>
 
@@ -31,7 +33,7 @@
 /**
  * The training logbook
  */
-class ARBTraining : public ARBBase
+class ARB_API ARBTraining : public ARBBase
 {
 protected:
 	ARBTraining();
@@ -153,7 +155,7 @@ private:
 /**
  * List of ARBTraining objects.
  */
-class ARBTrainingList : public ARBVector<ARBTrainingPtr>
+class ARB_API ARBTrainingList : public ARBVector<ARBTrainingPtr>
 {
 public:
 	/**

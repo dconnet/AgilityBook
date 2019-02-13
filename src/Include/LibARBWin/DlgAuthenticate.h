@@ -17,7 +17,10 @@
  * 2007-08-03 Created
  */
 
-class CDlgAuthenticate : public wxDialog
+#include "LibwxARBWin.h"
+
+
+class ARBWIN_API CDlgAuthenticate : public wxDialog
 {
 public:
 	CDlgAuthenticate(

@@ -20,15 +20,16 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARB_Q.h"
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARB_Q.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * How did other dogs perform on the run we did?
  */
-class ARBDogReferenceRun : public ARBBase
+class ARB_API ARBDogReferenceRun : public ARBBase
 {
 protected:
 	ARBDogReferenceRun();
@@ -172,7 +173,7 @@ private:
 /**
  * List of ARBDogReferenceRun objects.
  */
-class ARBDogReferenceRunList : public ARBVector<ARBDogReferenceRunPtr>
+class ARB_API ARBDogReferenceRunList : public ARBVector<ARBDogReferenceRunPtr>
 {
 public:
 	/**

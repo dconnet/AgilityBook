@@ -23,12 +23,14 @@
  * 2004-01-21 Created
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "fmt/format.h"
 
 
-class IConfigActionCallback
+class ARB_API IConfigActionCallback
 {
 	DECLARE_NO_COPY_IMPLEMENTED(IConfigActionCallback)
 public:
@@ -77,7 +79,7 @@ protected:
  * During the update process, all actions are run in order, operating on the
  * existing configuration and data. The existing configuration is then updated.
  */
-class ARBConfigAction : public ARBBase
+class ARB_API ARBConfigAction : public ARBBase
 {
 protected:
 	ARBConfigAction(short configVersion);
@@ -87,6 +89,15 @@ protected:
 public:
 	~ARBConfigAction();
 	virtual ARBConfigActionPtr Clone() const = 0;
+
+	bool operator==(ARBConfigAction const& rhs) const
+	{
+		return false;
+	}
+	bool operator!=(ARBConfigAction const& rhs) const
+	{
+		return true;
+	}
 
 	/**
 	 * Get the version of the config this action can be applied against.
@@ -152,7 +163,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBConfigActionDeleteCalPlugin : public ARBConfigAction
+class ARB_API ARBConfigActionDeleteCalPlugin : public ARBConfigAction
 { 
 protected:
 	ARBConfigActionDeleteCalPlugin(
@@ -179,7 +190,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBConfigActionRenameOtherPoints : public ARBConfigAction
+class ARB_API ARBConfigActionRenameOtherPoints : public ARBConfigAction
 { 
 protected:
 	ARBConfigActionRenameOtherPoints(
@@ -210,7 +221,7 @@ protected:
 };
 
 
-class ARBConfigActionDeleteOtherPoints : public ARBConfigAction
+class ARB_API ARBConfigActionDeleteOtherPoints : public ARBConfigAction
 { 
 protected:
 	ARBConfigActionDeleteOtherPoints(
@@ -239,7 +250,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBConfigActionRenameVenue : public ARBConfigAction
+class ARB_API ARBConfigActionRenameVenue : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameVenue(
@@ -276,7 +287,7 @@ private:
 };
 
 
-class ARBConfigActionDeleteVenue : public ARBConfigAction
+class ARB_API ARBConfigActionDeleteVenue : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteVenue(
@@ -305,7 +316,7 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBConfigActionRenameMultiQ : public ARBConfigAction
+class ARB_API ARBConfigActionRenameMultiQ : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameMultiQ(
@@ -339,7 +350,7 @@ protected:
 };
 
 
-class ARBConfigActionDeleteMultiQ : public ARBConfigAction
+class ARB_API ARBConfigActionDeleteMultiQ : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteMultiQ(
@@ -371,7 +382,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBConfigActionRenameDivision : public ARBConfigAction
+class ARB_API ARBConfigActionRenameDivision : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameDivision(
@@ -411,7 +422,7 @@ protected:
 };
 
 
-class ARBConfigActionDeleteDivision : public ARBConfigAction
+class ARB_API ARBConfigActionDeleteDivision : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteDivision(
@@ -443,7 +454,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBConfigActionRenameLevel : public ARBConfigAction
+class ARB_API ARBConfigActionRenameLevel : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameLevel(
@@ -496,7 +507,7 @@ protected:
 };
 
 
-class ARBConfigActionDeleteLevel : public ARBConfigAction
+class ARB_API ARBConfigActionDeleteLevel : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteLevel(
@@ -541,7 +552,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBConfigActionRenameTitle : public ARBConfigAction
+class ARB_API ARBConfigActionRenameTitle : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameTitle(
@@ -575,7 +586,7 @@ protected:
 };
 
 
-class ARBConfigActionDeleteTitle : public ARBConfigAction
+class ARB_API ARBConfigActionDeleteTitle : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteTitle(
@@ -613,7 +624,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBConfigActionRenameEvent : public ARBConfigAction
+class ARB_API ARBConfigActionRenameEvent : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameEvent(
@@ -647,7 +658,7 @@ protected:
 };
 
 
-class ARBConfigActionDeleteEvent : public ARBConfigAction
+class ARB_API ARBConfigActionDeleteEvent : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteEvent(
@@ -679,7 +690,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBConfigActionRenameLifetimeName : public ARBConfigAction
+class ARB_API ARBConfigActionRenameLifetimeName : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameLifetimeName(
@@ -713,7 +724,7 @@ protected:
 };
 
 
-class ARBConfigActionDeleteLifetimeName : public ARBConfigAction
+class ARB_API ARBConfigActionDeleteLifetimeName : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteLifetimeName(
@@ -748,7 +759,7 @@ protected:
 /**
  * List of ARBConfigAction objects.
  */
-class ARBConfigActionList : public ARBVector<ARBConfigActionPtr>
+class ARB_API ARBConfigActionList : public ARBVectorNoSave<ARBConfigActionPtr>
 {
 public:
 	/**

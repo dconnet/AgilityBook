@@ -21,7 +21,9 @@
  *            prevent constant re-evaluation.
  */
 
-#include "ARB/ARBTypes2.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include <array>
 #include <set>
 
@@ -29,7 +31,7 @@
 /**
  * @brief Base class for common functionality.
  */
-class ARBBase
+class ARB_API ARBBase
 {
 public:
 	ARBBase();

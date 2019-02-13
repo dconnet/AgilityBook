@@ -23,12 +23,14 @@
  * 2003-10-22 Added static GetDTD() method.
  */
 
-#include "ARB/ARBConfigAction.h"
-#include "ARB/ARBConfigCalSite.h"
-#include "ARB/ARBConfigFault.h"
-#include "ARB/ARBConfigOtherPoints.h"
-#include "ARB/ARBConfigVenue.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBConfigAction.h"
+#include "ARBConfigCalSite.h"
+#include "ARBConfigFault.h"
+#include "ARBConfigOtherPoints.h"
+#include "ARBConfigVenue.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "fmt/format.h"
 
 
@@ -50,7 +52,7 @@ public:
 /**
  * The main configuration class.
  */
-class ARBConfig
+class ARB_API ARBConfig
 {
 	// We allow copying, but not assignment. Updating a config object is
 	// accomplished via the Update() method.

@@ -50,11 +50,6 @@
 #endif
 
 
-BinaryData::BinaryData()
-{
-}
-
-
 bool BinaryData::Decode(
 		std::wstring const& inBase64,
 		unsigned char*& outBinData,

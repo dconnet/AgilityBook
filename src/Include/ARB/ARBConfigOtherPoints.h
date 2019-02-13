@@ -20,14 +20,15 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARBBase.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBBase.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
  * A way to tally points that aren't inheritantly known.
  */
-class ARBConfigOtherPoints : public ARBBase
+class ARB_API ARBConfigOtherPoints : public ARBBase
 {
 public:
 	/**
@@ -155,7 +156,7 @@ private:
 /**
  * List of ARBConfigOtherPoints objects.
  */
-class ARBConfigOtherPointsList : public ARBVector<ARBConfigOtherPointsPtr>
+class ARB_API ARBConfigOtherPointsList : public ARBVector<ARBConfigOtherPointsPtr>
 {
 public:
 	/**

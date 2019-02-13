@@ -18,7 +18,9 @@
  * 2005-09-20 Created
  */
 
+#include "LibwxARBWin.h"
 
-extern bool CheckLink(
+
+ARBWIN_API bool CheckLink(
 		std::wstring const& inLink,
 		wxWindow* parent = nullptr);

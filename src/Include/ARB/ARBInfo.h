@@ -18,8 +18,9 @@
  * 2003-12-07 Created
  */
 
-#include "ARB/ARBInfoItem.h"
-#include "ARB/ARBTypes2.h"
+#include "ARBInfoItem.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
 
 
 /**
@@ -27,7 +28,7 @@
  *
  * This class is contained in ARBAgilityRecordBook.
  */
-class ARBInfo
+class ARB_API ARBInfo
 {
 public:
 	typedef enum

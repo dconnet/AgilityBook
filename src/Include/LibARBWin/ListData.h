@@ -19,12 +19,14 @@
  * 2006-02-12 Created
  */
 
-#include <wx/string.h>
+#include "LibwxARBWin.h"
+
 #include <wx/listctrl.h>
+#include <wx/string.h>
 #include <wx/treectrl.h>
 
 
-class CListData
+class ARBWIN_API CListData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CListData)
 public:
@@ -39,7 +41,7 @@ typedef std::shared_ptr<CListData> CListDataPtr;
 
 
 /// Provide a way to refresh items easily by using a common tree data class
-class CTreeData : public wxTreeItemData
+class ARBWIN_API CTreeData : public wxTreeItemData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CTreeData)
 public:

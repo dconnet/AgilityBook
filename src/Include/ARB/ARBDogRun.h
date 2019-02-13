@@ -27,19 +27,21 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB/ARB_Q.h"
-#include "ARB/ARBBase.h"
-#include "ARB/ARBDogNotes.h"
-#include "ARB/ARBDogReferenceRun.h"
-#include "ARB/ARBDogRunOtherPoints.h"
-#include "ARB/ARBDogRunPartner.h"
-#include "ARB/ARBDogRunScoring.h"
-#include "ARB/ARBTypes2.h"
+#include "ARB_Q.h"
+#include "ARBBase.h"
+#include "ARBDogNotes.h"
+#include "ARBDogReferenceRun.h"
+#include "ARBDogRunOtherPoints.h"
+#include "ARBDogRunPartner.h"
+#include "ARBDogRunScoring.h"
+#include "ARBTypes2.h"
+#include "LibwxARB.h"
+
 #include "ARBCommon/ARBDate.h"
 #include <set>
 
 
-class ARBDogRun : public ARBBase
+class ARB_API ARBDogRun : public ARBBase
 {
 protected:
 	ARBDogRun();
@@ -392,7 +394,7 @@ private:
 /**
  * List of ARBDogRun objects.
  */
-class ARBDogRunList : public ARBVectorNoSave<ARBDogRunPtr>
+class ARB_API ARBDogRunList : public ARBVectorNoSave<ARBDogRunPtr>
 {
 public:
 	/**
