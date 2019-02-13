@@ -191,6 +191,9 @@
     <ClInclude Include="..\..\Include\LibARBWin\LibwxARBWin.h">
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\VersionInfo.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\LibARBWin\res\LibARBWin.rc2">

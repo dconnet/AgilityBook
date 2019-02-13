@@ -548,6 +548,7 @@
     <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\ICalendarSite.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
+    <ClInclude Include="..\..\Include\VersionInfo.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
     <ClInclude Include="..\..\Win\AgilityBook.h" />
     <ClInclude Include="..\..\Win\AgilityBookCalendarListView.h" />

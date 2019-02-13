@@ -19,6 +19,9 @@
       <UniqueIdentifier>{65f92f8e-4dab-4511-91de-163f23a1a810}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Include\LibArchive">
+      <UniqueIdentifier>{6af1104c-b937-4aaf-9252-786c3d7dd9db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdParty\LibArchive\src\LibArchive.cpp">
@@ -51,6 +54,12 @@
       <Filter>Include\Platform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdParty\LibArchive\include\LibArchive\LibArchive.h">
+      <Filter>Include\LibArchive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\VersionInfo.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

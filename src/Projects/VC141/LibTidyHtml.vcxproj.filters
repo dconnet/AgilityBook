@@ -28,6 +28,9 @@
       <UniqueIdentifier>{03b84775-c420-45a1-93f3-da87227c349a}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Include\LibTidyHtml">
+      <UniqueIdentifier>{eeca84e9-3bdd-4875-b2f8-9fcad68f0301}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdParty\LibTidyHtml\src\LibTidyHtml.cpp">
@@ -218,13 +221,19 @@
     <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\version.h">
       <Filter>tidy\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\VersionInfo.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\LibTidyHtml\include\LibTidyHtml\LibTidyHtml.h">
+      <Filter>Include\LibTidyHtml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\VersionNumber.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\3rdParty\LibTidyHtml\src\stdafx.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdParty\LibTidyHtml\include\LibTidyHtml\LibTidyHtml.h">
-      <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\Platform\SetupARBPost.h">
       <Filter>Include\Platform</Filter>

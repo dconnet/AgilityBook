@@ -99,5 +99,8 @@
     <ClInclude Include="..\..\Win\Localization.h">
       <Filter>ARB</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\VersionInfo.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

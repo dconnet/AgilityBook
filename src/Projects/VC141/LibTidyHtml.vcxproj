@@ -397,6 +397,8 @@
     <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\tmbstr.h" />
     <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\utf8.h" />
     <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\version.h" />
+    <ClInclude Include="..\..\Include\VersionInfo.h" />
+    <ClInclude Include="..\..\Include\VersionNumber.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="LibFmt.vcxproj">

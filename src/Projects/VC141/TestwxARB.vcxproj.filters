@@ -209,6 +209,9 @@
     <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\VersionInfo.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\TestARB\res\Config08_v10_2.xml">
