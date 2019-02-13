@@ -331,6 +331,12 @@
       <Project>{c28fcb5f-b8a7-4214-9b3f-9d1d9fb6976e}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\ARBCommon\ARBCommon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\ARBCommon\res\ARBCommon.rc2" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

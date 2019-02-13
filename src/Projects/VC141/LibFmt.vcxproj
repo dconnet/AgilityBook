@@ -290,6 +290,12 @@
     <ClCompile Include="..\..\3rdParty\LibFmt\src\format.cc" />
     <ClCompile Include="..\..\3rdParty\LibFmt\src\posix.cc" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\3rdParty\LibFmt\LibFmt.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\3rdParty\LibFmt\res\LibFmt.rc2" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

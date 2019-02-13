@@ -15,6 +15,10 @@
     <Filter Include="Include\Platform">
       <UniqueIdentifier>{8f2688f8-f779-4b25-a1da-2ee6ebdfe382}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{65f92f8e-4dab-4511-91de-163f23a1a810}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdParty\LibArchive\src\LibArchive.cpp">
@@ -49,5 +53,15 @@
     <ClInclude Include="..\..\3rdParty\LibArchive\include\LibArchive\LibArchive.h">
       <Filter>Include</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\3rdParty\LibArchive\LibwxArchive.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\3rdParty\LibArchive\res\LibwxArchive.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

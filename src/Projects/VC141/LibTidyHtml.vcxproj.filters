@@ -24,6 +24,10 @@
     <Filter Include="tidy\src">
       <UniqueIdentifier>{9868bec3-6373-4ae0-b547-76be24bec4f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{03b84775-c420-45a1-93f3-da87227c349a}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdParty\LibTidyHtml\src\LibTidyHtml.cpp">
@@ -228,5 +232,15 @@
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\3rdParty\LibTidyHtml\LibTidyHtml.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\3rdParty\LibTidyHtml\res\LibTidyHtml.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

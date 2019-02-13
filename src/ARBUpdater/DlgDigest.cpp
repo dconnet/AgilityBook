@@ -418,8 +418,8 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 	wxFileName filename(m_File);
 
 	fmt::wmemory_buffer str;
-	fmt::format_to(str, L"<Platform arch=\"?\" minOS=\"?\" ver=\"{}\" config=\"{}\"\n",
-		wxString::From8BitData(ARB_VERSION_STRING).wx_str(),
+	fmt::format_to(str, L"<Platform arch=\"?\" minOS=\"?\" ver=\"{}.{}.{}.{}\" config=\"{}\"\n",
+		ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD,
 		m_ConfigVersion);
 	fmt::format_to(str, L"\tfile=\"http://www.agilityrecordbook.com/files/{}\"\n", filename.GetFullName().wx_str());
 	fmt::format_to(str, L"\tmd5=\"{}\"\n", m_MD5.wx_str());

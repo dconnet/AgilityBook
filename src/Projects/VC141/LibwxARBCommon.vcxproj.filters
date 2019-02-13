@@ -132,4 +132,14 @@
       <Filter>Include\ARBCommon</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\ARBCommon\ARBCommon.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\ARBCommon\res\ARBCommon.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

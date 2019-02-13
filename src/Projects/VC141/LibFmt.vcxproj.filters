@@ -9,6 +9,10 @@
       <UniqueIdentifier>{0791c8ce-6a39-48cb-8b20-edb629624a22}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{e6ec1e41-faa0-4551-89d1-31b3d42323d4}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdParty\LibFmt\src\format.cc">
@@ -52,5 +56,15 @@
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\locale.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\3rdParty\LibFmt\LibFmt.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\3rdParty\LibFmt\res\LibFmt.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

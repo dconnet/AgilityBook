@@ -1,9 +1,9 @@
 //
-// AgilityBook.RC2 - resources Microsoft Visual C++ does not edit directly
+// Resources Microsoft Visual C++ does not edit directly
 //
 
 #ifdef APSTUDIO_INVOKED
-#error this file is not editable by Microsoft Visual C++
+	#error this file is not editable by Microsoft Visual C++
 #endif //APSTUDIO_INVOKED
 
 #include "VersionInfo.h"
@@ -33,9 +33,9 @@ BEGIN
             VALUE "CompanyName", ARB_VERSION_CompanyName
             VALUE "FileDescription", ARB_VERSION_FileDescription
             VALUE "FileVersion", ARB_VERSION_STRING
-            VALUE "InternalName", "AgilityBook.exe"
+            VALUE "InternalName", "LibwxARB.dll"
             VALUE "LegalCopyright", ARB_VERSION_LegalCopyright
-            VALUE "OriginalFilename", "AgilityBook.exe"
+            VALUE "OriginalFilename", "LibwxARB.dll"
             VALUE "ProductName", ARB_VERSION_FileDescription
             VALUE "ProductVersion", ARB_VERSION_STRING
         END

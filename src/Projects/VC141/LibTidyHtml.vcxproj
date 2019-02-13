@@ -406,6 +406,12 @@
       <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\3rdParty\LibTidyHtml\LibTidyHtml.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\3rdParty\LibTidyHtml\res\LibTidyHtml.rc2" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
