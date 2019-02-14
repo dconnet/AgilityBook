@@ -15,7 +15,7 @@
  * (The actual version number is auto-updated, but the copyright is not)
  *
  * Revision History
- * 2019-02-13 Created VersionInfo.h
+ * 2019-02-13 Created VersionInfoARB.h
  * 2008-01-10 Added note
  * 2007-12-25 Created
  */

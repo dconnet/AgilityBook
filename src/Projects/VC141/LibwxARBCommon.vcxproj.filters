@@ -134,7 +134,7 @@
     <ClInclude Include="..\..\Include\ARBCommon\LibwxARBCommon.h">
       <Filter>Include\ARBCommon</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\VersionInfo.h">
+    <ClInclude Include="..\..\Include\VersionInfoARB.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

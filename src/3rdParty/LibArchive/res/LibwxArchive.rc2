@@ -6,7 +6,7 @@
 	#error this file is not editable by Microsoft Visual C++
 #endif //APSTUDIO_INVOKED
 
-#include "VersionInfo.h"
+#include "VersionInfoARB.h"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -36,7 +36,7 @@ BEGIN
             VALUE "InternalName", "LibwxArchive.dll"
             VALUE "LegalCopyright", ARB_VERSION_LegalCopyright
             VALUE "OriginalFilename", "LibwxArchive.dll"
-            VALUE "ProductName", ARB_VERSION_FileDescription
+            VALUE "ProductName", ARB_VERSION_ProductName
             VALUE "ProductVersion", ARB_VERSION_STRING
         END
     END

@@ -1,7 +1,6 @@
-3rd Party code. To use in my projects, include .../3rdParty in include path.
+3rd Party code.
 
-Catch: v2.5.0
-.../catch/
+Catch: v2.6.1
 .../catch2/
 - https://github.com/philsquared/Catch/releases
 -- #include "catch2/catch.hpp"
@@ -19,12 +18,14 @@ LibArchive: zlib v1.2.11: My wrapper to hide zlib
 
 LibFmt: fmtlib v5.3.0
 .../LibFmt/
+DevNote: When updating, update .../res/LibFmt.rc2 with version numbe and copyright
 - https://github.com/fmtlib/fmt/releases
 - http://fmtlib.net/dev/index.html
 - Only README.rst, LICENSE.rst, include, src
 
 LibTidyHtml: tidy v5.6.0: My wrapper to hide tidy
 .../LibTidyHtml/
+DevNote: When updating, update .../res/LibTidyHtml.rc2 with version number and copyright
 - https://github.com/htacg/tidy-html5/releases
 - Only 'README', 'include', and 'src' directories are included.
 -- #include "LibTidyHtml/LibTidyHtml.h"

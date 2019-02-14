@@ -56,7 +56,7 @@
     <ClInclude Include="..\..\3rdParty\LibArchive\include\LibArchive\LibArchive.h">
       <Filter>Include\LibArchive</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\VersionInfo.h">
+    <ClInclude Include="..\..\Include\VersionInfoARB.h">
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionNumber.h">

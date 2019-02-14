@@ -296,7 +296,7 @@
     <ClInclude Include="..\..\Include\ARB\LibwxARB.h">
       <Filter>Include\ARB</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\VersionInfo.h">
+    <ClInclude Include="..\..\Include\VersionInfoARB.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

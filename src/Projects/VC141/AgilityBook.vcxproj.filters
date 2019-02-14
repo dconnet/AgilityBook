@@ -560,7 +560,7 @@
     <ClInclude Include="..\..\Win\WizardStart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\VersionInfo.h">
+    <ClInclude Include="..\..\Include\VersionInfoARB.h">
       <Filter>Header Files\Include</Filter>
     </ClInclude>
   </ItemGroup>

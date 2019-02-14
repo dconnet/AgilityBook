@@ -221,7 +221,7 @@
     <ClInclude Include="..\..\3rdParty\LibTidyHtml\tidy\src\version.h">
       <Filter>tidy\src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\VersionInfo.h">
+    <ClInclude Include="..\..\Include\VersionInfoARB.h">
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdParty\LibTidyHtml\include\LibTidyHtml\LibTidyHtml.h">

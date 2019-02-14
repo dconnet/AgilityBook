@@ -6,7 +6,7 @@
 	#error this file is not editable by Microsoft Visual C++
 #endif //APSTUDIO_INVOKED
 
-#include "VersionInfo.h"
+#include "VersionInfoARB.h"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -14,8 +14,8 @@
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION ARB_VERSION
- PRODUCTVERSION ARB_VERSION
+ FILEVERSION 5, 3, 0, 0
+ PRODUCTVERSION 5, 3, 0, 0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -30,13 +30,12 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", ARB_VERSION_CompanyName
-            VALUE "FileDescription", ARB_VERSION_FileDescription
-            VALUE "FileVersion", ARB_VERSION_STRING
+            VALUE "FileDescription", "https://github.com/fmtlib/fmt"
+            VALUE "FileVersion", "5.3.0"
             VALUE "InternalName", "LibFmt.dll"
-            VALUE "LegalCopyright", ARB_VERSION_LegalCopyright
+            VALUE "LegalCopyright", "Copyright (c) 2012 - 2016, Victor Zverovich"
             VALUE "OriginalFilename", "LibFmt.dll"
-            VALUE "ProductName", ARB_VERSION_FileDescription
+            VALUE "ProductName", ARB_VERSION_ProductName
             VALUE "ProductVersion", ARB_VERSION_STRING
         END
     END

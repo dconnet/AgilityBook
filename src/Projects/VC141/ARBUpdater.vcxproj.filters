@@ -99,7 +99,7 @@
     <ClInclude Include="..\..\Win\Localization.h">
       <Filter>ARB</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\VersionInfo.h">
+    <ClInclude Include="..\..\Include\VersionInfoARB.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
