@@ -66,6 +66,13 @@ public:
 
 	void SaveAccelerators();
 
+	// If pParent is null, the parent window is the frame
+	bool ConfigureAccelerators(
+			wxFrame* pFrame,
+			ItemData const menuItems[],
+			size_t numMenuItems,
+			wxWindow* pParent = nullptr);
+
 	void CreateMenu(
 			wxFrame* pFrame,
 			ItemData const menuItems[],
@@ -129,6 +136,7 @@ private:
 		{
 		}
 	};
+
 	struct MenuHandle
 	{
 		wxMenu* pMenu;
@@ -147,6 +155,7 @@ private:
 		{
 		}
 	};
+
 	struct AccelData
 	{
 		wxString idStr;
@@ -174,6 +183,17 @@ private:
 		{}
 	};
 
+	class CDlgConfigAccel : public wxDialog
+	{
+	public:
+		CDlgConfigAccel(
+				wxWindow* pParent,
+				CMenuHelper::ItemData const menuItems[],
+				size_t numMenuItems);
+
+		bool GetAccelData(std::vector<AccelData>& accelData);
+	};
+
 	long ToBitmask(AccelData const& accel);
 	void FromBitmask(long mask, AccelData& accel);
 	wxString GetAccelString(std::vector<AccelData> const& accelData, int id);
@@ -181,6 +201,7 @@ private:
 			wxString const& idStr,
 			ItemAccel const defAccelItems[], 
 			size_t numDefAccelItems);
+	void CreateAccelTable(wxFrame* pFrame);
 
 	void Menu(
 			wxWindow* pWindow,

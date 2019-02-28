@@ -148,6 +148,37 @@ static const wchar_t* CodeToSpecial(int code)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// Accelerator customization dialog
+
+CMenuHelper::CDlgConfigAccel::CDlgConfigAccel(
+		wxWindow* pParent,
+		CMenuHelper::ItemData const menuItems[],
+		size_t numMenuItems)
+{
+	Create(pParent, wxID_ANY, _("IDD_DLGCONFIGACCEL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+
+	// Controls (these are done first to control tab order)
+
+	// Sizers
+
+	//...
+	//SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+}
+
+
+bool CMenuHelper::CDlgConfigAccel::GetAccelData(std::vector<AccelData>& accelData)
+{
+	//if (my accel data is the same as accelData)
+		return false;
+	//accelData = myData;
+	//return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 CMenuHelper::CMenuHelper()
 	: m_Frame(nullptr)
@@ -248,6 +279,31 @@ void CMenuHelper::SaveAccelerators()
 }
 
 
+bool CMenuHelper::ConfigureAccelerators(
+		wxFrame* pFrame,
+		ItemData const menuItems[],
+		size_t numMenuItems,
+		wxWindow* pParent)
+{
+	assert(pFrame);
+	if (!pParent)
+		pParent = pFrame;
+
+	bool rc = false;
+	//CDlgConfigAccel dlg(pParent, menuItems, numMenuItems);
+	//if (wxID_OK == dlg.ShowModal())
+	//{
+	//	if (dlg.GetAccelData(m_accelData))
+	//	{
+	//		rc = true;
+	//		CreateAccelTable(pFrame);
+	//		UpdateMenu();
+	//	}
+	//}
+	return rc;
+}
+
+
 void CMenuHelper::CreateMenu(
 		wxFrame* pFrame,
 		ItemData const items[],
@@ -324,23 +380,7 @@ void CMenuHelper::CreateMenu(
 {
 	// Load accelerators first. Not all of these are necessarily in the main menu.
 	// This ensures all accelerators are registered.
-	if (m_accelData.size() > 0)
-	{
-		std::unique_ptr<wxAcceleratorEntry[]> entries = std::make_unique<wxAcceleratorEntry[]>(m_accelData.size());
-		for (size_t n = 0; n < m_accelData.size(); ++n)
-		{
-			int flags = wxACCEL_NORMAL;
-			if (m_accelData[n].bAlt)
-				flags |= wxACCEL_ALT;
-			if (m_accelData[n].bCtrl)
-				flags |= wxACCEL_CTRL;
-			if (m_accelData[n].bShift)
-				flags |= wxACCEL_SHIFT;
-			entries[n].Set(flags, m_accelData[n].keyCode , m_accelData[n].id);
-		}
-		std::unique_ptr<wxAcceleratorTable> accel = std::make_unique<wxAcceleratorTable>(static_cast<int>(m_accelData.size()), entries.get());
-		pFrame->SetAcceleratorTable(*accel);
-	}
+	CreateAccelTable(pFrame);
 
 	CreateMenu(pFrame, menuItems, numMenuItems, doTranslation, mruMenu);
 
@@ -524,6 +564,32 @@ int CMenuHelper::TranslateId(
 		}
 	}
 	return id;
+}
+
+
+void CMenuHelper::CreateAccelTable(wxFrame* pFrame)
+{
+	if (m_accelData.size() > 0)
+	{
+		std::unique_ptr<wxAcceleratorEntry[]> entries = std::make_unique<wxAcceleratorEntry[]>(m_accelData.size());
+		for (size_t n = 0; n < m_accelData.size(); ++n)
+		{
+			int flags = wxACCEL_NORMAL;
+			if (m_accelData[n].bAlt)
+				flags |= wxACCEL_ALT;
+			if (m_accelData[n].bCtrl)
+				flags |= wxACCEL_CTRL;
+			if (m_accelData[n].bShift)
+				flags |= wxACCEL_SHIFT;
+			entries[n].Set(flags, m_accelData[n].keyCode, m_accelData[n].id);
+		}
+		wxAcceleratorTable accel(static_cast<int>(m_accelData.size()), entries.get());
+		pFrame->SetAcceleratorTable(accel);
+	}
+	else
+	{
+		pFrame->SetAcceleratorTable(wxNullAcceleratorTable);
+	}
 }
 
 
