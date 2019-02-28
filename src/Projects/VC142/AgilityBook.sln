@@ -1,17 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28621.142
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgilityBook", "AgilityBook.vcxproj", "{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{73C15F6D-530F-4B95-9A2C-81AD1958573F} = {73C15F6D-530F-4B95-9A2C-81AD1958573F}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ARBHelp", "ARBHelp.vcxproj", "{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{73C15F6D-530F-4B95-9A2C-81AD1958573F} = {73C15F6D-530F-4B95-9A2C-81AD1958573F}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTidyHtml", "LibTidyHtml.vcxproj", "{05967875-9726-4F06-8EC8-DB6170C00BF3}"
 EndProject
@@ -28,9 +22,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "arbdll", "arbdll.vcxproj", "{206FD8D8-1AB3-48D0-A296-C41262C27E64}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxARBWin", "LibwxARBWin.vcxproj", "{73C15F6D-530F-4B95-9A2C-81AD1958573F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B8E4CEE7-CD97-4355-B998-C5C37FA2F285} = {B8E4CEE7-CD97-4355-B998-C5C37FA2F285}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{9FE2832E-BD08-4026-8F96-CBA5A3244F06}"
 EndProject
