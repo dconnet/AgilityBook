@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2019-02-28 Add vc142 support
 # 2018-11-16 Added ARM64 support.
 # 2018-10-06 Dropping support for pre VS2017 (and XP).
 # 2018-01-27 Fix vcvarsall now changing directory.
@@ -86,6 +87,7 @@ def GetWindowsSdkDir():
 
 # 7.1, 8.0, 9.0, 10.0, 11.0, 12.0, 14.0, 15.0 (as observed on my machine)
 # Yes, VisualStudio2017 == reg("15.0") == _msc_ver191x
+# 16.0 (VS2019RC) does not install a key - hard code it
 def GetVSDir(version):
 	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
@@ -94,6 +96,12 @@ def GetVSDir(version):
 		vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
 		vsdir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
+	if 0 == len(vsdir) and version == '16.0':
+		vsdir = r'C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional' + '\\'
+		if not os.access(vsdir, os.F_OK):
+			vsdir = r'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community' + '\\'
+			if not os.access(vsdir, os.F_OK):
+				vsdir = ''
 	return vsdir
 
 
@@ -172,6 +180,27 @@ def GetCompilerPaths(c):
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, True, True)
 		platformDir = 'vc141'
+		platform = 'ARM64'
+
+	if c == 'vc142':
+		baseDir = GetVSDir("16.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, False, False)
+		platformDir = 'vc142'
+		platform = 'Win32'
+
+	elif c == 'vc142x64':
+		baseDir = GetVSDir("16.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, True, False)
+		platformDir = 'vc142'
+		platform = 'x64'
+
+	elif c == 'vc142arm64':
+		baseDir = GetVSDir("16.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, True, True)
+		platformDir = 'vc142'
 		platform = 'ARM64'
 
 	else:

@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2019-02-28 Add vc142 support
 # 2018-12-24 wx default is 3.1.2
 # 2018-10-06 Dropping support for pre VS2017 (and XP).
 # 2018-01-27 Fix vcvarsall now changing directory.
@@ -114,6 +115,7 @@ def GetRegString(hkey, path, value):
 
 # 7.1, 8.0, 9.0, 10.0, 11.0, 12.0, 14.0, 15.0 (as observed on my machine)
 # Yes, VisualStudio2017 == reg("15.0") == _msc_ver191x
+# 16.0 (VS2019RC) does not install a key - hard code it
 def GetVSDir(version):
 	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
@@ -122,6 +124,12 @@ def GetVSDir(version):
 		vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
 		vsdir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
+	if 0 == len(vsdir) and version == '16.0':
+		vsdir = r'C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional' + '\\'
+		if not os.access(vsdir, os.F_OK):
+			vsdir = r'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community' + '\\'
+			if not os.access(vsdir, os.F_OK):
+				vsdir = ''
 	return vsdir
 
 
@@ -166,6 +174,20 @@ def GetCompilerPaths(c):
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc141'
+		platform = 'x64'
+
+	elif c == 'vc142':
+		baseDir = GetVSDir("16.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = 'x86'
+		platformDir = 'vc142'
+		platform = 'Win32'
+
+	elif c == 'vc142x64':
+		baseDir = GetVSDir("16.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetX64Target(baseDir)
+		platformDir = 'vc142'
 		platform = 'x64'
 
 	else:
