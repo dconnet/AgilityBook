@@ -182,7 +182,7 @@ def GetCompilerPaths(c):
 		platformDir = 'vc141'
 		platform = 'ARM64'
 
-	if c == 'vc142':
+	elif c == 'vc142':
 		baseDir = GetVSDir("16.0")
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, False, False)
