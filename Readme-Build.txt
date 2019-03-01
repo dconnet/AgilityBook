@@ -27,7 +27,7 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 python: https://www.python.org
-Currently using version 3.7.1
+Currently using version 3.7.2
 - Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
@@ -46,6 +46,17 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_MEDIACTRL to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
   - Set wxUSE_INKEDIT to 1 (currently 0)
+
+-- For VS2019 support
+> include\msvc\wx
+diff setup_orig.h setup.h
+68c68
+<     #elif _MSC_VER >= 1910 && _MSC_VER < 2000
+---
+>     #elif _MSC_VER >= 1910 && _MSC_VER < 1920
+69a70,71
+>     #elif _MSC_VER >= 1920 && _MSC_VER < 2000
+>         #define wxCOMPILER_PREFIX vc142
 
 > src/msw/textctrl.cpp
 diff textctrl.old textctrl.cpp
@@ -147,7 +158,7 @@ To build for Mac, see ./build/setupwx.sh
 --------------------
 
 poedit: http://www.poedit.net
-Cross platform editor for modifying .po files. Currently using 2.0.5.
+Cross platform editor for modifying .po files. Currently using 2.2.1.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -194,7 +205,7 @@ Currently using Version 3.11.1 (as of ARB v3.2.4).
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.14.
+Used to create source code documentation. AgilityBook.dox uses v1.8.15.
 [Install to default location]
 
 --------------------
@@ -208,55 +219,17 @@ Earlier versions may work. (I used 2.14.1 with no problems for a while)
 Compiler notes
 ==============
 
-Microsoft Visual Studio 6
-=========================
-   Not supported.
-   It just can't handle namespaces well. I'm not going
-   to keep mangling the source code to support this.
-
-Microsoft Visual Studio .NET (VC7)
-==================================
-   Not supported.
-
-Microsoft Visual Studio 2003 (VC7.1)
-====================================
-   Not supported.
-   (dropped after moving to a new machine, no longer have compiler)
-
-Microsoft Visual Studio 2005 (VC8)
-==================================
-   Not supported.
-   (dropped after moving to a new machine, no longer have compiler)
-
-Microsoft Visual Studio 2008 (VC9)
-==================================
-   Not supported.
-
-Microsoft Visual Studio 2008 (VC9) + SP1
-========================================
-   Not supported. (no support for std::make_shared)
-
-Microsoft Visual Studio 2010 (VC10)
+Pre-2017
 ===================================
-   Not supported. (Dropping XP support, using more C++11 features)
-
-Microsoft Visual Studio 2012 (VC11)
-===================================
-   Not supported. (Dropping XP support, using more C++11 features)
-
-Microsoft Visual Studio 2013 (VC12)
-===================================
-   Not supported. (Dropping XP support, using more C++11 features)
-
-Microsoft Visual Studio 2015 (VC14)
-===================================
-   Not supported. (Dropping XP support, using more C++11 features)
+   Not supported. Dropping XP support, requires C++14.
 
 Microsoft Visual Studio 2017 (VC14.1)
 ===================================
-   It works, no additional notes. But only targets Vista+.
-   If 'vc141_xp' is set as the target platform, it appears to work, but the
-   compilation of WX is not targeted at that platform, so it's not supported.
+   It works, no additional notes.
+
+Microsoft Visual Studio 2019 (VC14.2)
+===================================
+   It works, no additional notes.
 
 
 Xcode
