@@ -40,16 +40,20 @@ CIconList::CIconList()
 	, m_idxVenueAAC(-1)
 	, m_idxVenueAKC(-1)
 	, m_idxVenueASCA(-1)
+	, m_idxVenueBHA(-1)
 	, m_idxVenueCKC(-1)
+	, m_idxVenueCKCSC(-1)
 	, m_idxVenueCPE(-1)
 	, m_idxVenueDOCNA(-1)
+	, m_idxVenueFCI(-1)
 	, m_idxVenueNADAC(-1)
+	, m_idxVenueSCC(-1)
 	, m_idxVenueSweep(-1)
 	, m_idxVenueTDAA(-1)
 	, m_idxVenueUKC(-1)
+	, m_idxVenueUKI(-1)
 	, m_idxVenueUSDAA(-1)
-	, m_idxVenueFCI(-1)
-	, m_idxVenueSCC(-1)
+	, m_idxVenueVALOR(-1)
 {
 }
 
@@ -74,6 +78,10 @@ bool CIconList::Create(wxWindow* pWindow)
 	m_idxVenueUSDAA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueUSDAA));
 	m_idxVenueFCI = Add(CImageManager::Get()->GetIcon(ImageMgrVenueFCI));
 	m_idxVenueSCC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueSCC));
+	m_idxVenueBHA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueBHA));
+	m_idxVenueCKCSC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueCKCSC));
+	m_idxVenueUKI = Add(CImageManager::Get()->GetIcon(ImageMgrVenueUKI));
+	m_idxVenueVALOR = Add(CImageManager::Get()->GetIcon(ImageMgrVenueVALOR));
 
 	m_idxARB = Add(CImageManager::Get()->GetIcon(ImageMgrApp));
 	m_idxEmpty = Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
@@ -103,6 +111,10 @@ bool CIconList::Create(wxWindow* pWindow)
 		{&m_idxVenueUSDAA,		13},
 		{&m_idxVenueFCI,		14},
 		{&m_idxVenueSCC,		15},
+		{&m_idxVenueBHA,		16},
+		{&m_idxVenueCKCSC,		17},
+		{&m_idxVenueUKI,		18},
+		{&m_idxVenueVALOR,		19},
 	};
 	int nIcons = sizeof(icons) / sizeof(icons[0]);
 

@@ -1,4 +1,6 @@
-1/19/2019: v3.3.2.<development>
+3/1/2019: v3.3.2.<development>
+- Bumped Configuration v61:
+  - Added BHA. Added icons for CKCSC, UKI, VALOR.
 
 1/19/2019: v3.3.1.108
 - Bumped Configuration v60:

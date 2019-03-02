@@ -99,8 +99,12 @@ bool CImageHelper::DoCreateBitmap(
 		LOAD_BITMAP_PNG(pWindow, venue_akc, outBmp);
 	else if (id == ImageMgrVenueASCA)
 		LOAD_BITMAP_PNG(pWindow, venue_asca, outBmp);
+	else if (id == ImageMgrVenueBHA)
+		LOAD_BITMAP_PNG(pWindow, venue_bha, outBmp);
 	else if (id == ImageMgrVenueCKC)
 		LOAD_BITMAP_PNG(pWindow, venue_ckc, outBmp);
+	else if (id == ImageMgrVenueCKCSC)
+		LOAD_BITMAP_PNG(pWindow, venue_ckcsc, outBmp);
 	else if (id == ImageMgrVenueCPE)
 		LOAD_BITMAP_PNG(pWindow, venue_cpe, outBmp);
 	else if (id == ImageMgrVenueDOCNA)
@@ -117,8 +121,12 @@ bool CImageHelper::DoCreateBitmap(
 		LOAD_BITMAP_PNG(pWindow, venue_tdaa, outBmp);
 	else if (id == ImageMgrVenueUKC)
 		LOAD_BITMAP_PNG(pWindow, venue_ukc, outBmp);
+	else if (id == ImageMgrVenueUKI)
+		LOAD_BITMAP_PNG(pWindow, venue_uki, outBmp);
 	else if (id == ImageMgrVenueUSDAA)
 		LOAD_BITMAP_PNG(pWindow, venue_usdaa, outBmp);
+	else if (id == ImageMgrVenueVALOR)
+		LOAD_BITMAP_PNG(pWindow, venue_valor, outBmp);
 
 	else if (id == ImageMgrCRCD)
 		LOAD_BITMAP_PNG(pWindow, crcd, outBmp);

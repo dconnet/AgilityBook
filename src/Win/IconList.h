@@ -36,16 +36,20 @@ public:
 	int AAC() const			{return m_idxVenueAAC;}
 	int AKC() const			{return m_idxVenueAKC;}
 	int ASCA() const		{return m_idxVenueASCA;}
+	int BHA() const			{return m_idxVenueBHA;}
 	int CKC() const			{return m_idxVenueCKC;}
+	int CKCSC() const		{return m_idxVenueCKCSC;}
 	int CPE() const			{return m_idxVenueCPE;}
 	int DOCNA() const		{return m_idxVenueDOCNA;}
+	int FCI() const			{return m_idxVenueFCI;}
 	int NADAC() const		{return m_idxVenueNADAC;}
+	int SCC() const			{return m_idxVenueSCC;}
 	int Sweepstakes() const	{return m_idxVenueSweep;}
 	int TDAA() const		{return m_idxVenueTDAA;}
 	int UKC() const			{return m_idxVenueUKC;}
+	int UKI() const			{return m_idxVenueUKI;}
 	int USDAA() const		{return m_idxVenueUSDAA;}
-	int FCI() const			{return m_idxVenueFCI;}
-	int SCC() const			{return m_idxVenueSCC;}
+	int VALOR() const		{return m_idxVenueVALOR;}
 
 	int Trial(ARBConfig& config, ARBDogTrialPtr const& inTrial) const;
 
@@ -58,14 +62,18 @@ protected:
 	int m_idxVenueAAC;
 	int m_idxVenueAKC;
 	int m_idxVenueASCA;
+	int m_idxVenueBHA;
 	int m_idxVenueCKC;
+	int m_idxVenueCKCSC;
 	int m_idxVenueCPE;
 	int m_idxVenueDOCNA;
+	int m_idxVenueFCI;
 	int m_idxVenueNADAC;
+	int m_idxVenueSCC;
 	int m_idxVenueSweep;
 	int m_idxVenueTDAA;
 	int m_idxVenueUKC;
+	int m_idxVenueUKI;
 	int m_idxVenueUSDAA;
-	int m_idxVenueFCI;
-	int m_idxVenueSCC;
+	int m_idxVenueVALOR;
 };
