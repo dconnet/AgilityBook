@@ -269,6 +269,7 @@
     <ClCompile Include="..\..\LibARBWin\CheckTreeCtrl.cpp" />
     <ClCompile Include="..\..\LibARBWin\ColumnOrder.cpp" />
     <ClCompile Include="..\..\LibARBWin\DlgAuthenticate.cpp" />
+    <ClCompile Include="..\..\LibARBWin\DlgConfigAccel.cpp" />
     <ClCompile Include="..\..\LibARBWin\DlgProgress.cpp" />
     <ClCompile Include="..\..\LibARBWin\DPI.cpp" />
     <ClCompile Include="..\..\LibARBWin\ImageHelperBase.cpp" />

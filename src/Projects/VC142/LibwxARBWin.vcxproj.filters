@@ -93,6 +93,9 @@
     <ClCompile Include="..\..\LibARBWin\ARBDebug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\LibARBWin\DlgConfigAccel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\LibARBWin\stdafx.h">

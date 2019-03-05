@@ -148,37 +148,6 @@ static const wchar_t* CodeToSpecial(int code)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Accelerator customization dialog
-
-CMenuHelper::CDlgConfigAccel::CDlgConfigAccel(
-		wxWindow* pParent,
-		CMenuHelper::ItemData const menuItems[],
-		size_t numMenuItems)
-{
-	Create(pParent, wxID_ANY, _("IDD_DLGCONFIGACCEL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
-
-	// Controls (these are done first to control tab order)
-
-	// Sizers
-
-	//...
-	//SetSizer(bSizer);
-	Layout();
-	GetSizer()->Fit(this);
-	SetSizeHints(GetSize(), wxDefaultSize);
-	CenterOnParent();
-}
-
-
-bool CMenuHelper::CDlgConfigAccel::GetAccelData(std::vector<AccelData>& accelData)
-{
-	//if (my accel data is the same as accelData)
-		return false;
-	//accelData = myData;
-	//return true;
-}
-
-/////////////////////////////////////////////////////////////////////////////
 
 CMenuHelper::CMenuHelper()
 	: m_Frame(nullptr)
