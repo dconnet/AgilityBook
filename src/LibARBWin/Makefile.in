@@ -39,6 +39,7 @@ libarbwin_SRCS = ARBDebug.cpp \
 	CheckTreeCtrl.cpp \
 	ColumnOrder.cpp \
 	DlgAuthenticate.cpp \
+	DlgConfigAccel.cpp \
 	DlgProgress.cpp \
 	DPI.cpp \
 	ImageHelperBase.cpp \

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E103F7C922334CDE00E2E39C /* DlgConfigAccel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E103F7C822334CDE00E2E39C /* DlgConfigAccel.cpp */; };
+		E103F7CB22334CED00E2E39C /* ARBDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E103F7CA22334CED00E2E39C /* ARBDebug.cpp */; };
 		E112AE9321FE3DEA00D6FE27 /* StatusBarHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E112AE9221FE3DE900D6FE27 /* StatusBarHelper.h */; };
 		E112AE9521FE3E0000D6FE27 /* StatusBarHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E112AE9421FE3E0000D6FE27 /* StatusBarHelper.cpp */; };
 		E198518F2170E5C5003E7B92 /* ReadHttp.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517A2170E5C5003E7B92 /* ReadHttp.h */; };
@@ -60,6 +62,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E103F7C822334CDE00E2E39C /* DlgConfigAccel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigAccel.cpp; sourceTree = "<group>"; };
+		E103F7CA22334CED00E2E39C /* ARBDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDebug.cpp; sourceTree = "<group>"; };
 		E112AE9221FE3DE900D6FE27 /* StatusBarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBarHelper.h; sourceTree = "<group>"; };
 		E112AE9421FE3E0000D6FE27 /* StatusBarHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StatusBarHelper.cpp; sourceTree = "<group>"; };
 		E198517A2170E5C5003E7B92 /* ReadHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadHttp.h; sourceTree = "<group>"; };
@@ -183,11 +187,13 @@
 		E19B62F3166C090F004DEDA4 /* LibARBWin */ = {
 			isa = PBXGroup;
 			children = (
+				E103F7CA22334CED00E2E39C /* ARBDebug.cpp */,
 				E19851A62170E5DD003E7B92 /* ARBWinUtilities.cpp */,
 				E19851AE2170E5DE003E7B92 /* CheckLink.cpp */,
 				E19851A82170E5DE003E7B92 /* CheckTreeCtrl.cpp */,
 				E19851A72170E5DE003E7B92 /* ColumnOrder.cpp */,
 				E19851AB2170E5DE003E7B92 /* DlgAuthenticate.cpp */,
+				E103F7C822334CDE00E2E39C /* DlgConfigAccel.cpp */,
 				E19851AD2170E5DE003E7B92 /* DlgProgress.cpp */,
 				E19851A92170E5DE003E7B92 /* DPI.cpp */,
 				E19851AF2170E5DE003E7B92 /* ImageHelperBase.cpp */,
@@ -325,6 +331,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E19851BB2170E5DE003E7B92 /* ImageHelperBase.cpp in Sources */,
+				E103F7CB22334CED00E2E39C /* ARBDebug.cpp in Sources */,
+				E103F7C922334CDE00E2E39C /* DlgConfigAccel.cpp in Sources */,
 				E19851C92170E5EE003E7B92 /* Validators.cpp in Sources */,
 				E1CAE55F16B5BF3800B33FE5 /* stdafx.cpp in Sources */,
 				E19851CB2170E5EE003E7B92 /* TaskbarProgress.cpp in Sources */,
