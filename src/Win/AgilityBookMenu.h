@@ -20,7 +20,7 @@
 
 enum MenuIdentityPopup
 {
-	IdMenuNone,
+	IdMenuNone = 0,
 	IdMenuDog,
 	IdMenuTrial,
 	IdMenuRun,

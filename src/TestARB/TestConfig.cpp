@@ -218,10 +218,11 @@ TEST_CASE("Config")
 			REQUIRE(190u == config.GetActions().size());
 			REQUIRE(0u == config.GetFaults().size());
 			REQUIRE(5u == config.GetOtherPoints().size());
-			REQUIRE(15u == config.GetVenues().size());
+			REQUIRE(16u == config.GetVenues().size());
 			REQUIRE(config.GetVenues().FindVenue(L"AAC"));
 			REQUIRE(config.GetVenues().FindVenue(L"AKC"));
 			REQUIRE(config.GetVenues().FindVenue(L"ASCA"));
+			REQUIRE(config.GetVenues().FindVenue(L"BHA"));
 			REQUIRE(config.GetVenues().FindVenue(L"CKC"));
 			REQUIRE(config.GetVenues().FindVenue(L"CKCSC"));
 			REQUIRE(config.GetVenues().FindVenue(L"CPE"));

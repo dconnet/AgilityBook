@@ -21,7 +21,10 @@
 #include "stdafx.h"
 #include "LibARBWin/MenuHelper.h"
 
+#include "DlgConfigAccel.h"
+
 #include "ARBCommon/ARBUtils.h"
+#include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/RegItemsBase.h"
 #include <set>
@@ -34,117 +37,169 @@
 #endif
 
 // See wxMenuItem::SetItemLabel() for set of special keys
-static struct
+static std::unordered_map<int, KeyCodeMapping> const& GetKeyCodes()
 {
-	int wxCode;
-	const wchar_t* special;
-} s_codeMapping[] = {
-	{WXK_F1, L"F1"},
-	{WXK_F2, L"F2"},
-	{WXK_F3, L"F3"},
-	{WXK_F4, L"F4"},
-	{WXK_F5, L"F5"},
-	{WXK_F6, L"F6"},
-	{WXK_F7, L"F7"},
-	{WXK_F8, L"F8"},
-	{WXK_F9, L"F9"},
-	{WXK_F10, L"F10"},
-	{WXK_F11, L"F11"},
-	{WXK_F12, L"F12"},
-	{WXK_DELETE, L"Del"},
-	{WXK_DELETE, L"Delete"},
-	{WXK_BACK, L"Back"},
-	{WXK_INSERT, L"Ins"},
-	{WXK_INSERT, L"Insert"},
-	{WXK_RETURN, L"Enter"},
-	{WXK_RETURN, L"Return"},
-	{WXK_PAGEUP, L"PgUp"},
-	{WXK_PAGEUP, L"PageUp"},
-	{WXK_PAGEDOWN, L"PgDn"},
-	{WXK_PAGEDOWN, L"PageDn"},
-	{WXK_LEFT, L"Left"},
-	{WXK_RIGHT, L"Right"},
-	{WXK_UP, L"Up"},
-	{WXK_DOWN, L"Down"},
-	{WXK_HOME, L"Home"},
-	{WXK_END, L"End"},
-	{WXK_SPACE, L"Space"},
-	{WXK_TAB, L"Tab"},
-	{WXK_ESCAPE, L"Esc"},
-	{WXK_ESCAPE, L"Escape"},
-	{WXK_CANCEL, L"Cancel"},
-	{WXK_CLEAR, L"Clear"},
-	{WXK_MENU, L"Menu"},
-	{WXK_PAUSE, L"Pause"},
-	{WXK_CAPITAL, L"Capital"},
-	{WXK_SELECT, L"Select"},
-	{WXK_PRINT, L"Print"},
-	{WXK_EXECUTE, L"Execute"},
-	{WXK_SNAPSHOT, L"Snapshot"},
-	{WXK_HELP, L"Help"},
-	{WXK_ADD, L"Add"},
-	{WXK_SEPARATOR, L"Separator"},
-	{WXK_SUBTRACT, L"Subtract"},
-	{WXK_DECIMAL, L"Decimal"},
-	{WXK_DIVIDE, L"Divide"},
-	{WXK_NUMLOCK, L"Num_lock"},
-	{WXK_SCROLL, L"Scroll_lock"},
-	{WXK_NUMPAD_SPACE, L"KP_Space"},
-	{WXK_NUMPAD_TAB, L"KP_Tab"},
-	{WXK_NUMPAD_ENTER, L"KP_Enter"},
-	{WXK_NUMPAD_HOME, L"KP_Home"},
-	{WXK_NUMPAD_LEFT, L"KP_Left"},
-	{WXK_NUMPAD_UP, L"KP_Up"},
-	{WXK_NUMPAD_RIGHT, L"KP_Right"},
-	{WXK_NUMPAD_DOWN, L"KP_Down"},
-	{WXK_NUMPAD_PAGEUP, L"KP_PageUp"},
-	{WXK_NUMPAD_PAGEDOWN, L"KP_PageDown"},
-	{WXK_NUMPAD_PAGEUP, L"KP_Prior"},
-	{WXK_NUMPAD_PAGEDOWN, L"KP_Next"},
-	{WXK_NUMPAD_END, L"KP_End"},
-	{WXK_NUMPAD_BEGIN, L"KP_Begin"},
-	{WXK_NUMPAD_INSERT, L"KP_Insert"},
-	{WXK_NUMPAD_DELETE, L"KP_Delete"},
-	{WXK_NUMPAD_EQUAL, L"KP_Equal"},
-	{WXK_NUMPAD_MULTIPLY, L"KP_Multiply"},
-	{WXK_NUMPAD_ADD, L"KP_Add"},
-	{WXK_NUMPAD_SEPARATOR, L"KP_Separator"},
-	{WXK_NUMPAD_SUBTRACT, L"KP_Subtract"},
-	{WXK_NUMPAD_DECIMAL, L"KP_Decimal"},
-	{WXK_NUMPAD_DIVIDE, L"KP_Divide"},
-	{WXK_WINDOWS_LEFT, L"Windows_Left"},
-	{WXK_WINDOWS_RIGHT, L"Windows_Right"},
-	{WXK_WINDOWS_MENU, L"Windows_Menu"},
-	{WXK_NUMPAD0, L"KP_0"},
-	{WXK_NUMPAD1, L"KP_1"},
-	{WXK_NUMPAD2, L"KP_2"},
-	{WXK_NUMPAD3, L"KP_3"},
-	{WXK_NUMPAD4, L"KP_4"},
-	{WXK_NUMPAD5, L"KP_5"},
-	{WXK_NUMPAD6, L"KP_6"},
-	{WXK_NUMPAD7, L"KP_7"},
-	{WXK_NUMPAD8, L"KP_8"},
-	{WXK_NUMPAD9, L"KP_9"},
+	static std::unordered_map<int, KeyCodeMapping> s_codeMapping = {
+		{WXK_F1, {WXK_F1, L"F1", true}},
+		{WXK_F2, {WXK_F2, L"F2", true}},
+		{WXK_F3, {WXK_F3, L"F3", true}},
+		{WXK_F4, {WXK_F4, L"F4", true}},
+		{WXK_F5, {WXK_F5, L"F5", true}},
+		{WXK_F6, {WXK_F6, L"F6", true}},
+		{WXK_F7, {WXK_F7, L"F7", true}},
+		{WXK_F8, {WXK_F8, L"F8", true}},
+		{WXK_F9, {WXK_F9, L"F9", true}},
+		{WXK_F10, {WXK_F10, L"F10", true}},
+		{WXK_F11, {WXK_F11, L"F11", true}},
+		{WXK_F12, {WXK_F12, L"F12", true}},
+		{WXK_DELETE, {WXK_DELETE, L"Del", true}},
+		{WXK_DELETE, {WXK_DELETE, L"Delete", true}},
+		{WXK_BACK, {WXK_BACK, L"Back", true}},
+		{WXK_INSERT, {WXK_INSERT, L"Ins", true}},
+		{WXK_INSERT, {WXK_INSERT, L"Insert", true}},
+		{WXK_RETURN, {WXK_RETURN, L"Enter", true}},
+		{WXK_RETURN, {WXK_RETURN, L"Return", true}},
+		{WXK_PAGEUP, {WXK_PAGEUP, L"PgUp", true}},
+		{WXK_PAGEUP, {WXK_PAGEUP, L"PageUp", true}},
+		{WXK_PAGEDOWN, {WXK_PAGEDOWN, L"PgDn", true}},
+		{WXK_PAGEDOWN, {WXK_PAGEDOWN, L"PageDn", true}},
+		{WXK_LEFT, {WXK_LEFT, L"Left", true}},
+		{WXK_RIGHT, {WXK_RIGHT, L"Right", true}},
+		{WXK_UP, {WXK_UP, L"Up", true}},
+		{WXK_DOWN, {WXK_DOWN, L"Down", true}},
+		{WXK_HOME, {WXK_HOME, L"Home", true}},
+		{WXK_END, {WXK_END, L"End", true}},
+		{WXK_SPACE, {WXK_SPACE, L"Space", true}},
+		{WXK_TAB, {WXK_TAB, L"Tab", true}},
+		{WXK_ESCAPE, {WXK_ESCAPE, L"Esc", true}},
+		{WXK_ESCAPE, {WXK_ESCAPE, L"Escape", true}},
+		{WXK_CANCEL, {WXK_CANCEL, L"Cancel", true}},
+		{WXK_CLEAR, {WXK_CLEAR, L"Clear", true}},
+		{WXK_MENU, {WXK_MENU, L"Menu", true}},
+		{WXK_PAUSE, {WXK_PAUSE, L"Pause", true}},
+		{WXK_CAPITAL, {WXK_CAPITAL, L"Capital", true}},
+		{WXK_SELECT, {WXK_SELECT, L"Select", true}},
+		{WXK_PRINT, {WXK_PRINT, L"Print", true}},
+		{WXK_EXECUTE, {WXK_EXECUTE, L"Execute", true}},
+		{WXK_SNAPSHOT, {WXK_SNAPSHOT, L"Snapshot", true}},
+		{WXK_HELP, {WXK_HELP, L"Help", true}},
+		{WXK_ADD, {WXK_ADD, L"Add", true}},
+		{WXK_SEPARATOR, {WXK_SEPARATOR, L"Separator", true}},
+		{WXK_SUBTRACT, {WXK_SUBTRACT, L"Subtract", true}},
+		{WXK_DECIMAL, {WXK_DECIMAL, L"Decimal", true}},
+		{WXK_DIVIDE, {WXK_DIVIDE, L"Divide", true}},
+		{WXK_NUMLOCK, {WXK_NUMLOCK, L"Num_lock", true}},
+		{WXK_SCROLL, {WXK_SCROLL, L"Scroll_lock", true}},
+		{WXK_NUMPAD_SPACE, {WXK_NUMPAD_SPACE, L"KP_Space", true}},
+		{WXK_NUMPAD_TAB, {WXK_NUMPAD_TAB, L"KP_Tab", true}},
+		{WXK_NUMPAD_ENTER, {WXK_NUMPAD_ENTER, L"KP_Enter", true}},
+		{WXK_NUMPAD_HOME, {WXK_NUMPAD_HOME, L"KP_Home", true}},
+		{WXK_NUMPAD_LEFT, {WXK_NUMPAD_LEFT, L"KP_Left", true}},
+		{WXK_NUMPAD_UP, {WXK_NUMPAD_UP, L"KP_Up", true}},
+		{WXK_NUMPAD_RIGHT, {WXK_NUMPAD_RIGHT, L"KP_Right", true}},
+		{WXK_NUMPAD_DOWN, {WXK_NUMPAD_DOWN, L"KP_Down", true}},
+		{WXK_NUMPAD_PAGEUP, {WXK_NUMPAD_PAGEUP, L"KP_PageUp", true}},
+		{WXK_NUMPAD_PAGEDOWN, {WXK_NUMPAD_PAGEDOWN, L"KP_PageDown", true}},
+		{WXK_NUMPAD_PAGEUP, {WXK_NUMPAD_PAGEUP, L"KP_Prior", true}},
+		{WXK_NUMPAD_PAGEDOWN, {WXK_NUMPAD_PAGEDOWN, L"KP_Next", true}},
+		{WXK_NUMPAD_END, {WXK_NUMPAD_END, L"KP_End", true}},
+		{WXK_NUMPAD_BEGIN, {WXK_NUMPAD_BEGIN, L"KP_Begin", true}},
+		{WXK_NUMPAD_INSERT, {WXK_NUMPAD_INSERT, L"KP_Insert", true}},
+		{WXK_NUMPAD_DELETE, {WXK_NUMPAD_DELETE, L"KP_Delete", true}},
+		{WXK_NUMPAD_EQUAL, {WXK_NUMPAD_EQUAL, L"KP_Equal", true}},
+		{WXK_NUMPAD_MULTIPLY, {WXK_NUMPAD_MULTIPLY, L"KP_Multiply", true}},
+		{WXK_NUMPAD_ADD, {WXK_NUMPAD_ADD, L"KP_Add", true}},
+		{WXK_NUMPAD_SEPARATOR, {WXK_NUMPAD_SEPARATOR, L"KP_Separator", true}},
+		{WXK_NUMPAD_SUBTRACT, {WXK_NUMPAD_SUBTRACT, L"KP_Subtract", true}},
+		{WXK_NUMPAD_DECIMAL, {WXK_NUMPAD_DECIMAL, L"KP_Decimal", true}},
+		{WXK_NUMPAD_DIVIDE, {WXK_NUMPAD_DIVIDE, L"KP_Divide", true}},
+		{WXK_WINDOWS_LEFT, {WXK_WINDOWS_LEFT, L"Windows_Left", true}},
+		{WXK_WINDOWS_RIGHT, {WXK_WINDOWS_RIGHT, L"Windows_Right", true}},
+		{WXK_WINDOWS_MENU, {WXK_WINDOWS_MENU, L"Windows_Menu", true}},
+		{WXK_NUMPAD0, {WXK_NUMPAD0, L"KP_0", true}}, // Note: wx po file has "KP_" only
+		{WXK_NUMPAD1, {WXK_NUMPAD1, L"KP_1", true}},
+		{WXK_NUMPAD2, {WXK_NUMPAD2, L"KP_2", true}},
+		{WXK_NUMPAD3, {WXK_NUMPAD3, L"KP_3", true}},
+		{WXK_NUMPAD4, {WXK_NUMPAD4, L"KP_4", true}},
+		{WXK_NUMPAD5, {WXK_NUMPAD5, L"KP_5", true}},
+		{WXK_NUMPAD6, {WXK_NUMPAD6, L"KP_6", true}},
+		{WXK_NUMPAD7, {WXK_NUMPAD7, L"KP_7", true}},
+		{WXK_NUMPAD8, {WXK_NUMPAD8, L"KP_8", true}},
+		{WXK_NUMPAD9, {WXK_NUMPAD9, L"KP_9", true}},
+		{WXK_SPECIAL1, {WXK_SPECIAL1, L"SPECIAL1", false}}, // Note: wx po file has "SPECIAL" only
+		{WXK_SPECIAL2, {WXK_SPECIAL2, L"SPECIAL2", false}},
+		{WXK_SPECIAL3, {WXK_SPECIAL3, L"SPECIAL3", false}},
+		{WXK_SPECIAL4, {WXK_SPECIAL4, L"SPECIAL4", false}},
+		{WXK_SPECIAL5, {WXK_SPECIAL5, L"SPECIAL5", false}},
+		{WXK_SPECIAL6, {WXK_SPECIAL6, L"SPECIAL6", false}},
+		{WXK_SPECIAL7, {WXK_SPECIAL7, L"SPECIAL7", false}},
+		{WXK_SPECIAL8, {WXK_SPECIAL8, L"SPECIAL8", false}},
+		{WXK_SPECIAL9, {WXK_SPECIAL9, L"SPECIAL9", false}},
+		{WXK_SPECIAL10, {WXK_SPECIAL10, L"SPECIAL10", false}},
+		{WXK_SPECIAL11, {WXK_SPECIAL11, L"SPECIAL11", false}},
+		{WXK_SPECIAL12, {WXK_SPECIAL12, L"SPECIAL12", false}},
+		{WXK_SPECIAL13, {WXK_SPECIAL13, L"SPECIAL13", false}},
+		{WXK_SPECIAL14, {WXK_SPECIAL14, L"SPECIAL14", false}},
+		{WXK_SPECIAL15, {WXK_SPECIAL15, L"SPECIAL15", false}},
+		{WXK_SPECIAL16, {WXK_SPECIAL16, L"SPECIAL16", false}},
+		{WXK_SPECIAL17, {WXK_SPECIAL17, L"SPECIAL17", false}},
+		{WXK_SPECIAL18, {WXK_SPECIAL18, L"SPECIAL18", false}},
+		{WXK_SPECIAL19, {WXK_SPECIAL19, L"SPECIAL19", false}},
+		{WXK_SPECIAL20, {WXK_SPECIAL20, L"SPECIAL20", false}},
+		{WXK_BROWSER_BACK, {WXK_BROWSER_BACK, L"BrowserBack", false}}, // Not in wx po at all (not a supported menu option)
+		{WXK_BROWSER_FORWARD, {WXK_BROWSER_FORWARD, L"BrowserForward", false}},
+		{WXK_BROWSER_REFRESH, {WXK_BROWSER_REFRESH, L"BrowserRefresh", false}},
+		{WXK_BROWSER_STOP, {WXK_BROWSER_STOP, L"BrowserStop", false}},
+		{WXK_BROWSER_SEARCH, {WXK_BROWSER_SEARCH, L"BrowserSearch", false}},
+		{WXK_BROWSER_FAVORITES, {WXK_BROWSER_FAVORITES, L"BrowserFav", false}},
+		{WXK_BROWSER_HOME, {WXK_BROWSER_HOME, L"BrowserHome", false}},
+		{WXK_VOLUME_MUTE, {WXK_VOLUME_MUTE, L"VolumeMute", false}},
+		{WXK_VOLUME_DOWN, {WXK_VOLUME_DOWN, L"VolumeDown", false}},
+		{WXK_VOLUME_UP, {WXK_VOLUME_UP, L"VolumeUp", false}},
+		{WXK_MEDIA_NEXT_TRACK, {WXK_MEDIA_NEXT_TRACK, L"MediaNext", false}},
+		{WXK_MEDIA_PREV_TRACK, {WXK_MEDIA_PREV_TRACK, L"MediaPrev", false}},
+		{WXK_MEDIA_STOP, {WXK_MEDIA_STOP, L"MediaStop", false}},
+		{WXK_MEDIA_PLAY_PAUSE, {WXK_MEDIA_PLAY_PAUSE, L"MediaPlay", false}},
+		{WXK_LAUNCH_MAIL, {WXK_LAUNCH_MAIL, L"LaunchMail", false}},
+		{WXK_LAUNCH_APP1, {WXK_LAUNCH_APP1, L"LaunchApp1", false}},
+		{WXK_LAUNCH_APP2, {WXK_LAUNCH_APP2, L"LaunchApp2", false}},
+	};
+	return s_codeMapping;
 };
 
 static int SpecialToCode(wxString const& special)
 {
-	for (auto item : s_codeMapping)
+	if (special.empty())
+		return 0;
+
+	for (auto iter : GetKeyCodes())
 	{
-		if (special == item.special)
-			return item.wxCode;
+		if (special == iter.second.special)
+			return iter.second.wxCode;
 	}
+	long val = 0;
+	if (special.ToCLong(&val))
+		return val;
 	return 0;
 }
 
-static const wchar_t* CodeToSpecial(int code)
+static wxString CodeToSpecial(int code, bool bNonMenu)
 {
-	for (auto item : s_codeMapping)
+	auto codes = GetKeyCodes();
+	auto key = codes.find(code);
+
+	if (key != codes.end())
 	{
-		if (code == item.wxCode)
-			return item.special;
+		if (bNonMenu || (!bNonMenu && key->second.bHasMenuSupport))
+			return key->second.special;
 	}
-	return nullptr;
+
+	// Note: This does not mean it's not a key - just that the menu doesn't
+	// support it - such as VolumeUp/etc. (and we don't list it above)
+	wxString special;
+	if (bNonMenu)
+		special = wxString::Format(L"%d", code);
+	return special;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -171,9 +226,17 @@ void CMenuHelper::LoadAccelerators(
 		size_t numDefAccelItems)
 {
 	m_accelData.clear();
+	m_accelDataDefaults.clear();
+
+	for (size_t index = 0; index < numDefAccelItems; ++index)
+		m_accelDataDefaults.push_back(defAccelItems[index]);
+	m_accelData = m_accelDataDefaults;
 
 	if (wxConfig::Get()->HasGroup(CFG_KEY_ACCELERATORS))
 	{
+		for (ItemAccel& item : m_accelData)
+			item.Clear();
+
 		CConfigPathHelper config(CFG_KEY_ACCELERATORS);
 		wxString entry;
 		long index = 0;
@@ -182,27 +245,28 @@ void CMenuHelper::LoadAccelerators(
 			do
 			{
 				CConfigPathHelper configEntry(entry);
-				AccelData accel;
-				accel.idStr = wxConfig::Get()->Read(L"id", wxString());
-				accel.id = TranslateId(accel.idStr, defAccelItems, numDefAccelItems);
-				accel.keyCode = SpecialToCode(wxConfig::Get()->Read(L"KeyCode", wxString()));
-				if (0 != accel.id && accel.keyCode)
+				int key = 0;
+				key = wxConfig::Get()->Read(L"id", key);
+				if (key)
 				{
-					long mask = 0;
-					wxConfig::Get()->Read(L"mod", &mask);
-					FromBitmask(mask, accel);
-					if (std::find_if(m_accelData.begin(), m_accelData.end(), [&accel](AccelData const& arg) {return arg.id == accel.id; }) == m_accelData.end())
-						m_accelData.push_back(accel);
+					for (ItemAccel& item : m_accelData)
+					{
+						if (item.key == key)
+						{
+							item.id = TranslateId(key, defAccelItems, numDefAccelItems);
+							item.keyCode = SpecialToCode(wxConfig::Get()->Read(L"KeyCode", wxString()));
+							if (item.id && item.keyCode)
+							{
+								long mask = 0;
+								wxConfig::Get()->Read(L"mod", &mask);
+								FromBitmask(mask, item);
+							}
+							break;
+						}
+					}
 				}
 			} while (wxConfig::Get()->GetNextGroup(entry, index));
 		}
-	}
-
-	if (m_accelData.empty())
-	{
-		for (size_t index = 0; index < numDefAccelItems; ++index)
-			if (defAccelItems[index].keyCode)
-				m_accelData.push_back(AccelData(defAccelItems[index]));
 	}
 
 #ifdef _DEBUG
@@ -210,13 +274,20 @@ void CMenuHelper::LoadAccelerators(
 	std::set<int> ids;
 	for (auto iter = m_accelData.begin(); iter != m_accelData.end(); ++iter)
 	{
-		// Must have a code (assuming valid string for WX)
-		assert((*iter).keyCode);
+		// Must have a key
+		assert(iter->key);
+		assert(iter->id);
 		// Check that we know how to translate wxKeyCode to string
-		assert(!GetAccelString(m_accelData, (*iter).id).empty());
-		// Only list id once
-		assert(ids.find((*iter).id) == ids.end());
-		ids.insert((*iter).id);
+		//assert(!GetAccelString(m_accelData, iter->id).empty());
+		// Actually, don't. Otherwise I can't support things like BrowserBack.
+
+		// Make sure id string is unique
+		// Note: do not check id - ctrl+c/ctrl+ins can both be copy
+		assert(ids.find(iter->key) == ids.end());
+		ids.insert(iter->key);
+		// Note: Do not check id/accel unique. While it may not make sense,
+		// the user could be using the same accel in different contexts.
+		// If both are enabled in the same context, it's up to the system...
 	}
 #endif
 }
@@ -229,20 +300,33 @@ void CMenuHelper::SaveAccelerators()
 		// Clear existing
 		wxConfig::Get()->DeleteGroup(CFG_KEY_ACCELERATORS);
 
-		CConfigPathHelper config(CFG_KEY_ACCELERATORS);
-
-		// Save
-		int nKey = 1;
-		for (auto iter = m_accelData.begin(); iter != m_accelData.end(); ++iter)
+		if (m_accelDataDefaults != m_accelData)
 		{
-			wxString key = wxString::Format(L"Item%d", nKey++);
-			CConfigPathHelper configKey(key);
-			assert(CodeToSpecial(iter->keyCode));
-			wxConfig::Get()->Write(L"KeyCode", CodeToSpecial(iter->keyCode));
-			wxConfig::Get()->Write(L"id", iter->idStr);
-			wxConfig::Get()->Write(L"mod", ToBitmask(*iter));
-		}
+			CConfigPathHelper config(CFG_KEY_ACCELERATORS);
 
+			// Save
+			int nKey = 1;
+			for (auto iter = m_accelData.begin(); iter != m_accelData.end(); ++iter)
+			{
+				if (!iter->keyCode)
+					continue;
+				wxString key = wxString::Format(L"Item%d", nKey++);
+				CConfigPathHelper configKey(key);
+				wxString special = CodeToSpecial(iter->keyCode, true);
+				assert(!special.empty());
+				wxConfig::Get()->Write(L"KeyCode", special);
+				wxConfig::Get()->Write(L"id", iter->key);
+				wxConfig::Get()->Write(L"mod", ToBitmask(*iter));
+			}
+			// All were cleared. Need to force an empty one or we default back.
+			if (1 == nKey)
+			{
+				wxString key = wxString::Format(L"Item%d", nKey++);
+				CConfigPathHelper configKey(key);
+				wxConfig::Get()->Write(L"id", 1);
+
+			}
+		}
 		m_bModified = false;
 	}
 }
@@ -259,16 +343,18 @@ bool CMenuHelper::ConfigureAccelerators(
 		pParent = pFrame;
 
 	bool rc = false;
-	//CDlgConfigAccel dlg(pParent, menuItems, numMenuItems);
-	//if (wxID_OK == dlg.ShowModal())
-	//{
-	//	if (dlg.GetAccelData(m_accelData))
-	//	{
-	//		rc = true;
-	//		CreateAccelTable(pFrame);
-	//		UpdateMenu();
-	//	}
-	//}
+	CDlgConfigAccel dlg(m_accelData, m_accelDataDefaults, menuItems, numMenuItems, GetKeyCodes(), pParent);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		if (dlg.GetAccelData(m_accelData))
+		{
+			m_bModified = true;
+			SaveAccelerators();
+			rc = true;
+			CreateAccelTable(pFrame);
+			UpdateMenu();
+		}
+	}
 	return rc;
 }
 
@@ -280,6 +366,24 @@ void CMenuHelper::CreateMenu(
 		bool doTranslation,
 		wxMenu* mruMenu)
 {
+#ifdef _DEBUG
+	// Sanity checking
+	// All the accelerators must be in the main menu (can't get the text otherwise)
+	for (auto iter = m_accelData.begin(); iter != m_accelData.end(); ++iter)
+	{
+		bool bFound = false;
+		for (size_t i = 0; !bFound && i < numItems; ++i)
+		{
+			if ((*iter).id == items[i].id)
+			{
+				bFound = true;
+				break;
+			}
+		}
+		assert(bFound);
+	}
+#endif
+
 	assert(!m_MenuBar);
 	m_Frame = pFrame;
 	m_doTranslation = doTranslation;
@@ -291,12 +395,16 @@ void CMenuHelper::CreateMenu(
 
 		for (size_t index = 0; index < numItems; )
 		{
-			if (!((MENU_ITEM | MENU_HELP) & items[index].flags))
+			if (0 != items[index].menuId
+			|| !((MENU_ITEM | MENU_HELP) & items[index].flags))
+			{
+				++index;
 				continue;
+			}
 			assert(items[index].menu);
 			size_t idxMenu = index;
 			MenuHandle handle(static_cast<int>(m_MenuBar->GetMenuCount()));
-			Menu(pFrame, handle, index, 1, mruMenu, mruAdded, items, numItems);
+			Menu(pFrame, 0, handle, index, 1, mruMenu, mruAdded, items, numItems);
 			wxString name;
 			if (m_doTranslation)
 			{
@@ -399,6 +507,32 @@ void CMenuHelper::CreateMenu(
 }
 
 
+wxMenu* CMenuHelper::CreatePopupMenu(
+		wxWindow* pWindow,
+		int menuId,
+		ItemData const items[],
+		size_t numItems)
+{
+	MenuHandle handle(0);
+
+	// We're not supporting an MRU menu item in the popups.
+	bool mruAdded = false;
+	for (size_t index = 0; index < numItems; )
+	{
+		if (items[index].menuId != menuId
+		|| !((MENU_ITEM | MENU_HELP) & items[index].flags))
+		{
+			++index;
+			continue;
+		}
+		assert(items[index].menu);
+		--index; // Because Menu() assumes we're on the parent item and increments index before processing.
+		Menu(pWindow, menuId, handle, index, 0, nullptr, mruAdded, items, numItems);
+	}
+	return handle.pMenu;
+}
+
+
 void CMenuHelper::UpdateMenu()
 {
 	if (m_doTranslation)
@@ -461,7 +595,7 @@ void CMenuHelper::DoMenuItem(
 }
 
 
-long CMenuHelper::ToBitmask(AccelData const& accel)
+long CMenuHelper::ToBitmask(ItemAccel const& accel)
 {
 	long modifiers = 0;
 	if (accel.bAlt)
@@ -474,7 +608,7 @@ long CMenuHelper::ToBitmask(AccelData const& accel)
 }
 
 
-void CMenuHelper::FromBitmask(long mask, AccelData& accel)
+void CMenuHelper::FromBitmask(long mask, ItemAccel& accel)
 {
 	accel.bAlt = (mask & 0x1);
 	accel.bCtrl = (mask & 0x2);
@@ -482,7 +616,7 @@ void CMenuHelper::FromBitmask(long mask, AccelData& accel)
 }
 
 
-wxString CMenuHelper::GetAccelString(std::vector<AccelData> const& accelItems, int id)
+wxString CMenuHelper::GetAccelString(std::vector<ItemAccel> const& accelItems, int id)
 {
 	wxString str;
 	for (auto iter = accelItems.begin(); iter != accelItems.end(); ++iter)
@@ -499,12 +633,11 @@ wxString CMenuHelper::GetAccelString(std::vector<AccelData> const& accelItems, i
 				str << wxString::Format(L"%c", (*iter).keyCode);
 			else
 			{
-				const wchar_t* special = CodeToSpecial((*iter).keyCode);
-				assert(special);
-				if (special)
-					str << special;
+				wxString special = CodeToSpecial((*iter).keyCode, false);
+				if (!special.empty())
+					str << wxGetTranslation(special);
 				else
-					str << L"?";
+					str.clear(); // Key not supported in menu
 			}
 			break;
 		}
@@ -516,23 +649,21 @@ wxString CMenuHelper::GetAccelString(std::vector<AccelData> const& accelItems, i
 
 
 int CMenuHelper::TranslateId(
-		wxString const& idStr,
+		int id,
 		ItemAccel const defAccelItems[],
 		size_t numDefAccelItems)
 {
-	int id = 0;
-	if (!idStr.empty())
+	if (0 != id)
 	{
 		for (size_t n = 0; n < numDefAccelItems; ++n)
 		{
-			if (idStr == defAccelItems[n].idStr)
+			if (id == defAccelItems[n].key)
 			{
-				id = defAccelItems[n].id;
-				break;
+				return defAccelItems[n].id;
 			}
 		}
 	}
-	return id;
+	return 0;
 }
 
 
@@ -564,6 +695,7 @@ void CMenuHelper::CreateAccelTable(wxFrame* pFrame)
 
 void CMenuHelper::Menu(
 		wxWindow* pWindow,
+		int menuId,
 		MenuHandle& handle,
 		size_t& index,
 		size_t level,
@@ -574,6 +706,8 @@ void CMenuHelper::Menu(
 {
 	for (++index; index < numItems && level == items[index].menuLevel; ++index)
 	{
+		if (items[index].menuId != menuId)
+			continue;
 		if (MENU_SEP & items[index].flags)
 			handle.pMenu->AppendSeparator();
 		else if ((MENU_ITEM | MENU_MRU | MENU_HELP) & items[index].flags)
@@ -607,7 +741,7 @@ void CMenuHelper::Menu(
 			{
 				size_t idxMenu = index;
 				MenuHandle subhandle(static_cast<int>(handle.pMenu->GetMenuItemCount()));
-				Menu(pWindow, subhandle, index, level + 1, mruMenu, mruAdded, items, numItems);
+				Menu(pWindow, menuId, subhandle, index, level + 1, mruMenu, mruAdded, items, numItems);
 				wxString name;
 				if (m_doTranslation)
 				{

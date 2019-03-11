@@ -346,6 +346,7 @@
     <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
+    <ClInclude Include="..\..\LibARBWin\DlgConfigAccel.h" />
     <ClInclude Include="..\..\LibARBWin\stdafx.h" />
   </ItemGroup>
   <ItemGroup>

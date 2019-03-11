@@ -36,6 +36,7 @@ class ARBWIN_API CMenuHelper
 public:
 	struct ItemData
 	{
+		int menuId;				///< Menu id, 0 is main menu. all others are program defined
 		unsigned int flags;		///< Above defines
 		int id;					///< 0: Separator or Menu root
 		wxItemKind kind;		///< Check/radio/normal button (or menu)
@@ -44,16 +45,86 @@ public:
 		wchar_t const* menu;	///< Menu text
 		wchar_t const* help;	///< Tooltip help (and status help)
 		char const* artId;		///< Toolbar/menu bitmap artid (wxArtId/wxString)
+		ItemData()
+			: flags(0)
+			, id(0)
+			, kind(wxITEM_SEPARATOR)
+			, menuLevel(0)
+			, toolbar(nullptr)
+			, menu(nullptr)
+			, help(nullptr)
+			, artId(nullptr)
+		{
+		}
+		ItemData(int _menuId, unsigned int _flags, int _id, wxItemKind _kind, size_t _menuLevel, wchar_t const* _toolbar, wchar_t const* _menu, wchar_t const* _help, char const* _artId)
+			: menuId(_menuId)
+			, flags(_flags)
+			, id(_id)
+			, kind(_kind)
+			, menuLevel(_menuLevel)
+			, toolbar(_toolbar)
+			, menu(_menu)
+			, help(_help)
+			, artId(_artId)
+		{
+		}
 	};
 
 	struct ItemAccel
 	{
-		wchar_t const* idStr; // Unique string that is stored to avoid using the id (that could change)
-		int id;
+		int key; // Unique value, must remain stable since it's stored
+		int id; // menu id, not stored (values could change)
+		int keyCode; // wxKeyCode: if 0, not set
 		bool bCtrl;
 		bool bAlt;
 		bool bShift;
-		int keyCode; // wxKeyCode: If 0, this entry is only used for idStr/id mapping
+		ItemAccel()
+			: key(0)
+			, id(0)
+			, keyCode(0)
+			, bCtrl(false)
+			, bAlt(false)
+			, bShift(false)
+		{
+		}
+		ItemAccel(ItemAccel const& rhs)
+			: key(rhs.key)
+			, id(rhs.id)
+			, keyCode(rhs.keyCode)
+			, bCtrl(rhs.bCtrl)
+			, bAlt(rhs.bAlt)
+			, bShift(rhs.bShift)
+		{
+		}
+		ItemAccel(int _key, int _id, bool _bCtrl, bool _bAlt, bool _bShift, int _keyCode)
+			: key(_key)
+			, id(_id)
+			, bCtrl(_bCtrl)
+			, bAlt(_bAlt)
+			, bShift(_bShift)
+			, keyCode(_keyCode)
+		{
+		}
+		bool operator==(ItemAccel const& rhs) const
+		{
+			return key == rhs.key
+				&& id == rhs.id
+				&& keyCode == rhs.keyCode
+				&& bCtrl == rhs.bCtrl
+				&& bAlt == rhs.bAlt
+				&& bShift == rhs.bShift;
+		}
+		bool operator!=(ItemAccel const& rhs) const
+		{
+			return !operator==(rhs);
+		}
+		void Clear()
+		{
+			keyCode = 0;
+			bCtrl = false;
+			bAlt = false;
+			bShift = false;
+		}
 	};
 
 	CMenuHelper();
@@ -89,6 +160,12 @@ public:
 			size_t numToolbarItems,
 			bool doTranslation,
 			wxMenu* mruMenu = nullptr);
+
+	wxMenu* CreatePopupMenu(
+			wxWindow* pWindow,
+			int menuId,
+			ItemData const items[],
+			size_t numItems);
 
 	// Note: Before calling this, make sure to call LoadAccelerators
 	void UpdateMenu();
@@ -147,64 +224,33 @@ private:
 		MenuHandle(int index)
 			: pMenu(new wxMenu())
 			, idx(index)
+			, item()
+			, items()
+			, subMenus()
 		{
 		}
 		MenuHandle(wxMenu* menu, int index)
 			: pMenu(menu)
 			, idx(index)
+			, item()
+			, items()
+			, subMenus()
 		{
 		}
 	};
 
-	struct AccelData
-	{
-		wxString idStr;
-		int id;
-		bool bCtrl;
-		bool bAlt;
-		bool bShift;
-		int keyCode;
-
-		AccelData()
-			: idStr()
-			, id(0)
-			, bCtrl(false)
-			, bAlt(false)
-			, bShift(false)
-			, keyCode()
-		{}
-		AccelData(ItemAccel const& accel)
-			: idStr(accel.idStr)
-			, id(accel.id)
-			, bCtrl(accel.bCtrl)
-			, bAlt(accel.bAlt)
-			, bShift(accel.bShift)
-			, keyCode(accel.keyCode)
-		{}
-	};
-
-	class CDlgConfigAccel : public wxDialog
-	{
-	public:
-		CDlgConfigAccel(
-				wxWindow* pParent,
-				CMenuHelper::ItemData const menuItems[],
-				size_t numMenuItems);
-
-		bool GetAccelData(std::vector<AccelData>& accelData);
-	};
-
-	long ToBitmask(AccelData const& accel);
-	void FromBitmask(long mask, AccelData& accel);
-	wxString GetAccelString(std::vector<AccelData> const& accelData, int id);
+	long ToBitmask(ItemAccel const& accel);
+	void FromBitmask(long mask, ItemAccel& accel);
+	wxString GetAccelString(std::vector<ItemAccel> const& accelData, int id);
 	int TranslateId(
-			wxString const& idStr,
+			int id,
 			ItemAccel const defAccelItems[], 
 			size_t numDefAccelItems);
 	void CreateAccelTable(wxFrame* pFrame);
 
 	void Menu(
 			wxWindow* pWindow,
+			int menuId,
 			MenuHandle& handle,
 			size_t& index,
 			size_t level,
@@ -221,5 +267,6 @@ private:
 	std::vector<MenuHandle> m_MenuData;
 	std::vector<TranslationData> m_ToolbarData;
 	bool m_bModified;
-	std::vector<AccelData> m_accelData;
+	std::vector<ItemAccel> m_accelDataDefaults;
+	std::vector<ItemAccel> m_accelData;
 };
