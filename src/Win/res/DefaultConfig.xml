@@ -4,7 +4,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2019-03-01 Configuration version 61.
+2019-04-02 Configuration version 61.
            Added BHA. Added icons for CKCSC, UKI, VALOR.
 2019-01-17 Configuration version 60.
            Fix lifetime points in NADAC extreme games.
@@ -1227,8 +1227,12 @@ You must enter the SCT (1st place) and your placement to generate the titling po
       <Titles LongName="Senior Barn Hunt Excelent" Name="RATSX">10 Qs</Titles>
       <Titles LongName="Master Barn Hunt" Name="RATM">5 Qs</Titles>
       <Titles LongName="Master Barn Hunt Champion" Name="RATCH" Prefix="y" StartAt="1">10 Qs</Titles>
-      <Titles LongName="Master Barn Hunt Champion Excelent" Name="RATCHX" Prefix="y" StartAt="1">10 Qs
+      <Titles LongName="Master Barn Hunt Champion Excellent" Name="RATCHX" Prefix="y" StartAt="1">10 Qs
 Repeat titles are RATCHX + 10 Qs</Titles>
+      <Titles LongName="Crazy 8s Bronze" Name="CZ8B">500 pts</Titles>
+      <Titles LongName="Crazy 8s Silver" Name="CZ8S">1000 pts</Titles>
+      <Titles LongName="Crazy 8s Gold" Name="CZ8G">1500 pts</Titles>
+      <Titles LongName="Crazy 8s Platinum" Name="CZ8P">2000 pts</Titles>
       <Division Name="Regular">
         <Level Name="Novice" ShortName="Nov">
           <SubLevel Name="Novice A" ShortName="NovA"/>
@@ -1247,6 +1251,7 @@ Repeat titles are RATCHX + 10 Qs</Titles>
           <SubLevel Name="Master B" ShortName="MasB"/>
         </Level>
         <Level Name="Instinct"/>
+        <Level Name="Crazy8s"/>
       </Division>
       <Event Name="Hunt">
         <Scoring Division="Regular" Level="Novice" type="FaultsThenTime">
@@ -1259,6 +1264,12 @@ Repeat titles are RATCHX + 10 Qs</Titles>
       <Event Name="Instinct">
         <Desc>Barn Hunt Instinct</Desc>
         <Scoring Division="Regular" Level="Instinct" timeFault="0" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+      </Event>
+      <Event Name="Crazy8s">
+        <Desc>Crazy 8s</Desc>
+        <Scoring Division="Regular" Level="Crazy8s" timeFault="0" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
