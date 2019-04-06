@@ -1,6 +1,8 @@
-3/1/2019: v3.3.2.<development>
+4/6/2019: v3.3.2.<development>
 - Bumped Configuration v61:
   - Added BHA. Added icons for CKCSC, UKI, VALOR.
+- Bug fixes:
+  - Fixed crash when duplicating run in Runs view via 'Duplicate' menu item.
 
 1/19/2019: v3.3.1.108
 - Bumped Configuration v60:

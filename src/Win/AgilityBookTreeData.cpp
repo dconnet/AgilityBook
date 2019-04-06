@@ -188,11 +188,12 @@ bool CAgilityBookTreeDataDog::DoDuplicate()
 {
 	if (!GetDog())
 		return false;
+	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 	ARBDogPtr pDog = GetDog()->Clone();
-	m_pTree->GetDocument()->Book().GetDogs().AddDog(pDog);
+	pDoc->Book().GetDogs().AddDog(pDog);
 	CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
-	m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
-	m_pTree->GetDocument()->Modify(true);
+	pDoc->UpdateAllViews(nullptr, &hint);
+	pDoc->Modify(true);
 	return true;
 }
 
@@ -425,11 +426,12 @@ bool CAgilityBookTreeDataTrial::DoDuplicate()
 {
 	if (!GetTrial())
 		return false;
+	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 	ARBDogTrialPtr pTrial = GetTrial()->Clone();
 	GetDog()->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst());
 	CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
-	m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
-	m_pTree->GetDocument()->Modify(true);
+	pDoc->UpdateAllViews(nullptr, &hint);
+	pDoc->Modify(true);
 	return true;
 }
 
@@ -643,12 +645,13 @@ bool CAgilityBookTreeDataRun::DoDuplicate()
 {
 	if (!GetRun())
 		return false;
+	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 	ARBDogRunPtr pRun = GetRun()->Clone();
 	GetTrial()->GetRuns().AddRun(pRun);
 	GetTrial()->GetRuns().sort();
 	CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
-	m_pTree->GetDocument()->UpdateAllViews(nullptr, &hint);
-	m_pTree->GetDocument()->Modify(true);
+	pDoc->UpdateAllViews(nullptr, &hint);
+	pDoc->Modify(true);
 	return true;
 }
 
