@@ -630,6 +630,35 @@
       <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\..\TestARB\res\Config51_v14_3.xml" />
+    <Xml Include="..\..\TestARB\res\Config52_v14_3.xml" />
+    <Xml Include="..\..\TestARB\res\Config53_v14_4.xml" />
+    <Xml Include="..\..\TestARB\res\Config54_v14_4.xml" />
+    <Xml Include="..\..\TestARB\res\Config55_v14_4.xml" />
+    <Xml Include="..\..\TestARB\res\Config56_v14_4.xml" />
+    <Xml Include="..\..\TestARB\res\Config57_v14_5.xml" />
+    <Xml Include="..\..\TestARB\res\Config58_v14_5.xml" />
+    <Xml Include="..\..\TestARB\res\Config59_v14_5.xml" />
+    <Xml Include="..\..\TestARB\res\Config60_v14_5.xml" />
+    <Xml Include="..\..\TestARB\res\Config61_v14_5.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\TestARB\res\CompileDatListTest.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Text>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
