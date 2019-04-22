@@ -47,6 +47,7 @@ public:
 			MenuIdentityPopup idMenu);
 
 	void UpdateMenu();
+	bool ConfigureAccelerators(wxFrame* pFrame);
 };
 
 
@@ -110,6 +111,7 @@ enum
 
 	//wxID_PREFERENCES,
 	ID_VIEW_CUSTOMIZE,
+	ID_VIEW_CUSTOMIZE_ACCEL,
 	ID_UNSORT,
 	ID_VIEW_SORTRUNS,
 	ID_VIEW_RUNS_BY_TRIAL,

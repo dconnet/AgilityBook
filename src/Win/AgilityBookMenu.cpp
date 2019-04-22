@@ -128,6 +128,7 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{IdMenuNone, MENU_ITEM, 0,                        wxITEM_NORMAL, 0, nullptr, arbT("MenuView"), nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, wxID_PREFERENCES,         wxITEM_NORMAL, 1, nullptr, arbT("MenuViewOptions"), arbT("DescViewOptions"), nullptr},
 	{IdMenuNone, MENU_ITEM, ID_VIEW_CUSTOMIZE,        wxITEM_NORMAL, 1, nullptr, arbT("MenuViewCustomize"), arbT("DescViewCustomize"), nullptr},
+	//{IdMenuNone, MENU_ITEM, ID_VIEW_CUSTOMIZE_ACCEL,  wxITEM_NORMAL, 1, nullptr, arbT("MenuViewCustomizeAccel"), arbT("DescViewCustomizeAccel"), nullptr},
 	{IdMenuNone, MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, ID_UNSORT,                wxITEM_NORMAL, 1, nullptr, arbT("MenuUnsort"), arbT("DescUnsort"), nullptr},
 	{IdMenuNone, MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
@@ -376,6 +377,10 @@ static const CMenuHelper::ItemAccel sc_Accels[] =
 	{79, ID_HELP_SYSINFO,            false, false, false, 0},
 	{80, wxID_ABOUT,                 false, false, false, 0},
 	{81, ID_DETAILS,                 false, false, false, 0},
+#ifdef _DEBUG
+	{82, ID_HELP_DEBUG,              false, false, false, 0},
+#endif
+	//{83, ID_VIEW_CUSTOMIZE_ACCEL,    false, false, false, 0},
 };
 static const size_t sc_AccelsCount = _countof(sc_Accels);
 
@@ -454,4 +459,10 @@ void CAgilityBookMenu::UpdateMenu()
 {
 	m_menus.LoadAccelerators(sc_Accels, sc_AccelsCount);
 	m_menus.UpdateMenu();
+}
+
+
+bool CAgilityBookMenu::ConfigureAccelerators(wxFrame* pFrame)
+{
+	return m_menus.ConfigureAccelerators(pFrame, sc_Items, sc_ItemsCount);
 }

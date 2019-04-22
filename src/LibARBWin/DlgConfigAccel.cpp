@@ -358,7 +358,7 @@ CDlgConfigAccel::CDlgConfigAccel(
 {
 	{
 		std::vector<std::wstring> path;
-		path.push_back(StringUtil::stringW(wxGetTranslation(menuItems[0].menu)));
+		path.push_back(StringUtil::stringW(wxStripMenuCodes(wxGetTranslation(menuItems[0].menu))));
 
 		for (size_t i = 1; i < numMenuItems; ++i)
 		{

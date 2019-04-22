@@ -88,5 +88,6 @@ private:
 	void OnOrient(wxCommandEvent& evt);
 	void OnNextPane(wxCommandEvent& evt);
 	void OnPrevPane(wxCommandEvent& evt);
+	void OnViewCustomizeAccel(wxCommandEvent& evt);
 	void OnHelpSysinfo(wxCommandEvent& evt);
 };

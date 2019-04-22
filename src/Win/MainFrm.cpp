@@ -124,6 +124,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_MENU_RANGE(ID_ORIENT_FIRST, ID_ORIENT_LAST, CMainFrame::OnOrient)
 	EVT_MENU(ID_NEXT_PANE, CMainFrame::OnNextPane)
 	EVT_MENU(ID_PREV_PANE, CMainFrame::OnPrevPane)
+	EVT_MENU(ID_VIEW_CUSTOMIZE_ACCEL, CMainFrame::OnViewCustomizeAccel)
 	EVT_MENU(ID_HELP_SYSINFO, CMainFrame::OnHelpSysinfo)
 END_EVENT_TABLE()
 
@@ -416,6 +417,7 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 				bEnable = pView->HasPrevPane();
 		}
 		break;
+	case ID_VIEW_CUSTOMIZE_ACCEL:
 	case ID_HELP_SYSINFO:
 		bEnable = true;
 		break;
@@ -502,6 +504,12 @@ void CMainFrame::OnPrevPane(wxCommandEvent& evt)
 		bHandled = pView->PrevPane();
 	if (!bHandled)
 		evt.Skip();
+}
+
+
+void CMainFrame::OnViewCustomizeAccel(wxCommandEvent& evt)
+{
+	wxGetApp().GetMenus().ConfigureAccelerators(this);
 }
 
 
