@@ -5,6 +5,7 @@ Copyright (c) David Connet. All Rights Reserved.
 License: See License.txt
 
 Revision History
+2019-04-22 Fix auto-launch of ARB on upgrade (there's no UI to prevent it).
 2013-08-15 Separated from AgilityBook.wxs
 -->
 
@@ -72,7 +73,7 @@ Revision History
 		<Publish Dialog="ExitDialog"
 			Control="Finish"
 			Event="DoAction"
-			Value="ARB_LaunchApplication">ACTION&lt;&gt;"ADMIN" And Not START_APP And LAUNCHPROGRAM And Not Installed</Publish>
+			Value="ARB_LaunchApplication">ACTION&lt;&gt;"ADMIN" And Not START_APP And LAUNCHPROGRAM And Not OLDVERSIONFOUND</Publish>
 
 		<Dialog Id="MyWelcomeDlg" Width="370" Height="270" Title="!(loc.WelcomeDlg_Title)">
 			<Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" >
