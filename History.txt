@@ -1,3 +1,7 @@
+4/23/2019: v3.3.3.<dev>
+- New features / Enhancements:
+  - Added ability to configure accelerator keys.
+
 4/14/2019: v3.3.2.109
 - Bumped Configuration v61:
   - Added BHA. Added icons for CKCSC, UKI, VALOR.

@@ -128,7 +128,7 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{IdMenuNone, MENU_ITEM, 0,                        wxITEM_NORMAL, 0, nullptr, arbT("MenuView"), nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, wxID_PREFERENCES,         wxITEM_NORMAL, 1, nullptr, arbT("MenuViewOptions"), arbT("DescViewOptions"), nullptr},
 	{IdMenuNone, MENU_ITEM, ID_VIEW_CUSTOMIZE,        wxITEM_NORMAL, 1, nullptr, arbT("MenuViewCustomize"), arbT("DescViewCustomize"), nullptr},
-	//{IdMenuNone, MENU_ITEM, ID_VIEW_CUSTOMIZE_ACCEL,  wxITEM_NORMAL, 1, nullptr, arbT("MenuViewCustomizeAccel"), arbT("DescViewCustomizeAccel"), nullptr},
+	{IdMenuNone, MENU_ITEM, ID_VIEW_CUSTOMIZE_ACCEL,  wxITEM_NORMAL, 1, nullptr, arbT("MenuViewCustomizeAccel"), arbT("DescViewCustomizeAccel"), nullptr},
 	{IdMenuNone, MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, ID_UNSORT,                wxITEM_NORMAL, 1, nullptr, arbT("MenuUnsort"), arbT("DescUnsort"), nullptr},
 	{IdMenuNone, MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
@@ -284,6 +284,9 @@ static const CMenuHelper::ItemData sc_Items[] =
 
 static const size_t sc_ItemsCount = sizeof(sc_Items) / sizeof(sc_Items[0]);
 
+// Note: The first number cannot change. It is stored to the registry.
+// Future changes all have to add new numbers. If old entries go away,
+// just comment them out (as a reserved spot).
 static const CMenuHelper::ItemAccel sc_Accels[] =
 {
 	{1,  wxID_NEW,                    true, false, false, 'N'},
@@ -339,48 +342,48 @@ static const CMenuHelper::ItemAccel sc_Accels[] =
 	{51, ID_NOTES_SEARCH,            false, false, false, 0},
 	{52, wxID_PREFERENCES,           false, false, false, WXK_F7},
 	{53, ID_VIEW_CUSTOMIZE,          false, false, false, 0},
-	{54, ID_UNSORT,                  false, false, false, 0},
-	{55, ID_VIEW_SORTRUNS,           false, false, false, 0},
-	{56, ID_VIEW_RUNS_BY_TRIAL,      false, false, false, 0},
-	{57, ID_VIEW_TABLE_IN_YPS,       false, false, false, 0},
-	{58, ID_VIEW_RUNTIME_IN_OPS,     false, false, false, 0},
-	{59, ID_VIEW_POINTS_VIEW_SORT,   false, false, false, 0},
-	{60, ID_VIEW_HIDDEN,             false, false, false, 0},
-	{61, ID_VIEW_LIFETIME_EVENTS,    false, false, false, 0},
-	{62, ID_EXPAND,                  false, false, false, 0},
-	{63, ID_COLLAPSE,                false, false, false, 0},
-	{64, ID_EXPAND_ALL,              false, false, false, 0},
-	{65, ID_COLLAPSE_ALL,            false, false, false, 0},
+	{54, ID_VIEW_CUSTOMIZE_ACCEL,    false, false, false, 0},
+	{55, ID_UNSORT,                  false, false, false, 0},
+	{56, ID_VIEW_SORTRUNS,           false, false, false, 0},
+	{57, ID_VIEW_RUNS_BY_TRIAL,      false, false, false, 0},
+	{58, ID_VIEW_TABLE_IN_YPS,       false, false, false, 0},
+	{59, ID_VIEW_RUNTIME_IN_OPS,     false, false, false, 0},
+	{60, ID_VIEW_POINTS_VIEW_SORT,   false, false, false, 0},
+	{61, ID_VIEW_HIDDEN,             false, false, false, 0},
+	{62, ID_VIEW_LIFETIME_EVENTS,    false, false, false, 0},
+	{63, ID_EXPAND,                  false, false, false, 0},
+	{64, ID_COLLAPSE,                false, false, false, 0},
+	{65, ID_EXPAND_ALL,              false, false, false, 0},
+	{66, ID_COLLAPSE_ALL,            false, false, false, 0},
 #if wxUSE_NOTEBOOK
-	{66, ID_BOOK_NOTEBOOK,            true, false, false, '1'},
+	{67, ID_BOOK_NOTEBOOK,            true, false, false, '1'},
 #endif
 #if wxUSE_LISTBOOK
-	{67, ID_BOOK_LISTBOOK,            true, false, false, '2'},
+	{68, ID_BOOK_LISTBOOK,            true, false, false, '2'},
 #endif
 #if wxUSE_CHOICEBOOK
-	{68, ID_BOOK_CHOICEBOOK,          true, false, false, '3'},
+	{69, ID_BOOK_CHOICEBOOK,          true, false, false, '3'},
 #endif
 #if wxUSE_TREEBOOK
-	{69, ID_BOOK_TREEBOOK,            true, false, false, '4'},
+	{70, ID_BOOK_TREEBOOK,            true, false, false, '4'},
 #endif
 #if wxUSE_TOOLBOOK
-	{70, ID_BOOK_TOOLBOOK,            true, false, false, '5'},
+	{71, ID_BOOK_TOOLBOOK,            true, false, false, '5'},
 #endif
-	{71, ID_ORIENT_TOP,              false, false, false, 0},
-	{72, ID_ORIENT_BOTTOM,           false, false, false, 0},
-	{73, ID_ORIENT_LEFT,             false, false, false, 0},
-	{74, ID_ORIENT_RIGHT,            false, false, false, 0},
-	{75, ID_WINDOW_SPLIT,            false, false, false, 0},
-	{76, ID_NEXT_PANE,               false, false, false, WXK_F6},
-	{77, ID_PREV_PANE,               false, false,  true, WXK_F6},
-	{78, ID_HELP_UPDATE,             false, false, false, 0},
-	{79, ID_HELP_SYSINFO,            false, false, false, 0},
-	{80, wxID_ABOUT,                 false, false, false, 0},
-	{81, ID_DETAILS,                 false, false, false, 0},
+	{72, ID_ORIENT_TOP,              false, false, false, 0},
+	{73, ID_ORIENT_BOTTOM,           false, false, false, 0},
+	{74, ID_ORIENT_LEFT,             false, false, false, 0},
+	{75, ID_ORIENT_RIGHT,            false, false, false, 0},
+	{76, ID_WINDOW_SPLIT,            false, false, false, 0},
+	{77, ID_NEXT_PANE,               false, false, false, WXK_F6},
+	{78, ID_PREV_PANE,               false, false,  true, WXK_F6},
 #ifdef _DEBUG
-	{82, ID_HELP_DEBUG,              false, false, false, 0},
+	{79, ID_HELP_DEBUG,              false, false, false, 0},
 #endif
-	//{83, ID_VIEW_CUSTOMIZE_ACCEL,    false, false, false, 0},
+	{80, ID_HELP_UPDATE,             false, false, false, 0},
+	{81, ID_HELP_SYSINFO,            false, false, false, 0},
+	{82, wxID_ABOUT,                 false, false, false, 0},
+	{83, ID_DETAILS,                 false, false, false, 0},
 };
 static const size_t sc_AccelsCount = _countof(sc_Accels);
 
@@ -464,5 +467,14 @@ void CAgilityBookMenu::UpdateMenu()
 
 bool CAgilityBookMenu::ConfigureAccelerators(wxFrame* pFrame)
 {
-	return m_menus.ConfigureAccelerators(pFrame, sc_Items, sc_ItemsCount);
+	std::unordered_map<int, std::wstring> menuIds;
+	menuIds[IdMenuNone] = wxGetTranslation(arbT("IDS_MENU_MAIN"));
+	menuIds[IdMenuDog] = wxGetTranslation(arbT("IDS_MENU_DOG"));
+	menuIds[IdMenuTrial] = wxGetTranslation(arbT("IDS_MENU_TRIAL"));
+	menuIds[IdMenuRun] = wxGetTranslation(arbT("IDS_MENU_RUN"));
+	menuIds[IdMenuPoints] = wxGetTranslation(arbT("IDS_MENU_POINTS"));
+	menuIds[IdMenuCalendar] = wxGetTranslation(arbT("IDS_MENU_CALENDAR"));
+	menuIds[IdMenuTraining] = wxGetTranslation(arbT("IDS_MENU_TRAINING"));
+
+	return m_menus.ConfigureAccelerators(pFrame, menuIds, sc_Items, sc_ItemsCount);
 }

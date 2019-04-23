@@ -36,6 +36,8 @@ class ARBWIN_API CMenuHelper
 public:
 	struct ItemData
 	{
+		// When reading the array of ItemData, it is assumed that all items of
+		// a given menuId are grouped together.
 		int menuId;				///< Menu id, 0 is main menu. all others are program defined
 		unsigned int flags;		///< Above defines
 		int id;					///< 0: Separator or Menu root
@@ -46,7 +48,8 @@ public:
 		wchar_t const* help;	///< Tooltip help (and status help)
 		char const* artId;		///< Toolbar/menu bitmap artid (wxArtId/wxString)
 		ItemData()
-			: flags(0)
+			: menuId(0)
+			, flags(0)
 			, id(0)
 			, kind(wxITEM_SEPARATOR)
 			, menuLevel(0)
@@ -127,10 +130,15 @@ public:
 		}
 	};
 
-	CMenuHelper();
+	CMenuHelper(bool bAllowDups = false);
 	~CMenuHelper();
 
+	static long ToBitmask(ItemAccel const& accel);
+	static void FromBitmask(long mask, ItemAccel& accel);
+
 	// The default accel list must contain all possible accelerators.
+	// bAllowDups: Allow an accelerator to be duped to different IDs.
+	// It's up to the user context to determine what to do...
 	void LoadAccelerators(
 			ItemAccel const defAccelItems[],
 			size_t numDefAccelItems);
@@ -140,6 +148,7 @@ public:
 	// If pParent is null, the parent window is the frame
 	bool ConfigureAccelerators(
 			wxFrame* pFrame,
+			std::unordered_map<int, std::wstring> const& menuIds,
 			ItemData const menuItems[],
 			size_t numMenuItems,
 			wxWindow* pParent = nullptr);
@@ -239,8 +248,6 @@ private:
 		}
 	};
 
-	long ToBitmask(ItemAccel const& accel);
-	void FromBitmask(long mask, ItemAccel& accel);
 	wxString GetAccelString(std::vector<ItemAccel> const& accelData, int id);
 	int TranslateId(
 			int id,
@@ -269,4 +276,5 @@ private:
 	bool m_bModified;
 	std::vector<ItemAccel> m_accelDataDefaults;
 	std::vector<ItemAccel> m_accelData;
+	bool m_bAllowDups;
 };

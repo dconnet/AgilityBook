@@ -204,7 +204,7 @@ static wxString CodeToSpecial(int code, bool bNonMenu)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CMenuHelper::CMenuHelper()
+CMenuHelper::CMenuHelper(bool bAllowDups)
 	: m_Frame(nullptr)
 	, m_MenuBar(nullptr)
 	, m_doTranslation(false)
@@ -212,12 +212,34 @@ CMenuHelper::CMenuHelper()
 	, m_ToolbarData()
 	, m_bModified(false)
 	, m_accelData()
+	, m_bAllowDups(bAllowDups)
 {
 }
 
 
 CMenuHelper::~CMenuHelper()
 {
+}
+
+
+long CMenuHelper::ToBitmask(ItemAccel const& accel)
+{
+	long modifiers = 0;
+	if (accel.bAlt)
+		modifiers |= 0x1;
+	if (accel.bCtrl)
+		modifiers |= 0x2;
+	if (accel.bShift)
+		modifiers |= 0x4;
+	return modifiers;
+}
+
+
+void CMenuHelper::FromBitmask(long mask, ItemAccel& accel)
+{
+	accel.bAlt = (mask & 0x1);
+	accel.bCtrl = (mask & 0x2);
+	accel.bShift = (mask & 0x4);
 }
 
 
@@ -269,9 +291,9 @@ void CMenuHelper::LoadAccelerators(
 		}
 	}
 
-#ifdef _DEBUG
 	// Sanity checking
 	std::set<int> ids;
+	std::set<std::pair<int, long>> accels;
 	for (auto iter = m_accelData.begin(); iter != m_accelData.end(); ++iter)
 	{
 		// Must have a key
@@ -288,8 +310,19 @@ void CMenuHelper::LoadAccelerators(
 		// Note: Do not check id/accel unique. While it may not make sense,
 		// the user could be using the same accel in different contexts.
 		// If both are enabled in the same context, it's up to the system...
+		if (!m_bAllowDups && iter->keyCode != 0)
+		{
+			long mask = ToBitmask(*iter);
+			auto accel = std::make_pair(iter->keyCode, mask);
+			if (accels.find(accel) != accels.end())
+			{
+				assert(!"Accelerator in use!");
+				iter->Clear(); // Fix bad registry data
+			}
+			else
+				accels.insert(accel);
+		}
 	}
-#endif
 }
 
 
@@ -334,6 +367,7 @@ void CMenuHelper::SaveAccelerators()
 
 bool CMenuHelper::ConfigureAccelerators(
 		wxFrame* pFrame,
+		std::unordered_map<int, std::wstring> const& menuIds,
 		ItemData const menuItems[],
 		size_t numMenuItems,
 		wxWindow* pParent)
@@ -343,7 +377,7 @@ bool CMenuHelper::ConfigureAccelerators(
 		pParent = pFrame;
 
 	bool rc = false;
-	CDlgConfigAccel dlg(m_accelData, m_accelDataDefaults, menuItems, numMenuItems, GetKeyCodes(), pParent);
+	CDlgConfigAccel dlg(menuIds, m_accelData, m_accelDataDefaults, m_bAllowDups, menuItems, numMenuItems, GetKeyCodes(), pParent);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		if (dlg.GetAccelData(m_accelData))
@@ -368,6 +402,11 @@ void CMenuHelper::CreateMenu(
 {
 #ifdef _DEBUG
 	// Sanity checking
+	// Menu id must be >=0
+	for (size_t i = 0; i < numItems; ++i)
+	{
+		assert(items[i].menuId >= 0);
+	}
 	// All the accelerators must be in the main menu (can't get the text otherwise)
 	for (auto iter = m_accelData.begin(); iter != m_accelData.end(); ++iter)
 	{
@@ -592,27 +631,6 @@ void CMenuHelper::DoMenuItem(
 			item->SetBitmap(bmp);
 	}
 	menu->Append(item);
-}
-
-
-long CMenuHelper::ToBitmask(ItemAccel const& accel)
-{
-	long modifiers = 0;
-	if (accel.bAlt)
-		modifiers |= 0x1;
-	if (accel.bCtrl)
-		modifiers |= 0x2;
-	if (accel.bShift)
-		modifiers |= 0x4;
-	return modifiers;
-}
-
-
-void CMenuHelper::FromBitmask(long mask, ItemAccel& accel)
-{
-	accel.bAlt = (mask & 0x1);
-	accel.bCtrl = (mask & 0x2);
-	accel.bShift = (mask & 0x4);
 }
 
 

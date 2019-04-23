@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 15:59-0700\n"
-"PO-Revision-Date: 2019-04-22 15:59-0700\n"
+"POT-Creation-Date: 2019-04-23 16:34-0700\n"
+"PO-Revision-Date: 2019-04-23 16:35-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -80,67 +80,75 @@ msgstr "User Name"
 msgid "Password"
 msgstr "Password"
 
-#: LibARBWin/DlgConfigAccel.cpp:83
+#: LibARBWin/DlgConfigAccel.cpp:88
 msgid "Assign Key"
 msgstr "Assign Key"
 
-#: LibARBWin/DlgConfigAccel.cpp:87
+#: LibARBWin/DlgConfigAccel.cpp:92
 msgid "Key:"
 msgstr "Key:"
 
-#: LibARBWin/DlgConfigAccel.cpp:95
+#: LibARBWin/DlgConfigAccel.cpp:100
 msgid "Modifiers:"
 msgstr "Modifiers:"
 
-#: LibARBWin/DlgConfigAccel.cpp:99
+#: LibARBWin/DlgConfigAccel.cpp:104
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: LibARBWin/DlgConfigAccel.cpp:104
+#: LibARBWin/DlgConfigAccel.cpp:109
 msgid "Alt"
 msgstr "Alt"
 
-#: LibARBWin/DlgConfigAccel.cpp:109
+#: LibARBWin/DlgConfigAccel.cpp:114
 msgid "Shift"
 msgstr "Shift"
 
-#: LibARBWin/DlgConfigAccel.cpp:114 LibARBWin/DlgConfigAccel.cpp:418
+#: LibARBWin/DlgConfigAccel.cpp:119 LibARBWin/DlgConfigAccel.cpp:479
 msgid "Clear"
 msgstr "Clear"
 
-#: LibARBWin/DlgConfigAccel.cpp:221 LibARBWin/MenuHelper.cpp:627
+#: LibARBWin/DlgConfigAccel.cpp:211
+msgid "ERROR: This accelerator is already in use."
+msgstr ""
+
+#: LibARBWin/DlgConfigAccel.cpp:260 LibARBWin/MenuHelper.cpp:645
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
-#: LibARBWin/DlgConfigAccel.cpp:223 LibARBWin/MenuHelper.cpp:629
+#: LibARBWin/DlgConfigAccel.cpp:262 LibARBWin/MenuHelper.cpp:647
 msgid "Alt+"
 msgstr "Alt+"
 
-#: LibARBWin/DlgConfigAccel.cpp:225 LibARBWin/MenuHelper.cpp:631
+#: LibARBWin/DlgConfigAccel.cpp:264 LibARBWin/MenuHelper.cpp:649
 msgid "Shift+"
 msgstr "Shift+"
 
-#: LibARBWin/DlgConfigAccel.cpp:389
+#: LibARBWin/DlgConfigAccel.cpp:448
 msgid "Configure Keyboard Shortcuts"
 msgstr "Configure Keyboard Shortcuts"
 
-#: LibARBWin/DlgConfigAccel.cpp:401
+#: LibARBWin/DlgConfigAccel.cpp:460
 msgid "Keyboard Shortcut"
 msgstr "Keyboard Shortcut"
 
-#: LibARBWin/DlgConfigAccel.cpp:402
+#: LibARBWin/DlgConfigAccel.cpp:461
 msgid "Description"
 msgstr "Description"
 
-#: LibARBWin/DlgConfigAccel.cpp:408
+#: LibARBWin/DlgConfigAccel.cpp:463
+msgid "Location"
+msgstr "Location"
+
+#: LibARBWin/DlgConfigAccel.cpp:469
 msgid "New..."
 msgstr "New..."
 
-#: LibARBWin/DlgConfigAccel.cpp:413
+#: LibARBWin/DlgConfigAccel.cpp:474
 msgid "Edit..."
 msgstr "Edit..."
 
-#: LibARBWin/DlgConfigAccel.cpp:423
+#: LibARBWin/DlgConfigAccel.cpp:484
 msgid "Set Defaults"
 msgstr "Set Defaults"
 
@@ -1776,6 +1784,34 @@ msgstr "&Details..."
 #: Win/AgilityBookMenu.cpp:251
 msgid "DescDetails"
 msgstr "Display details"
+
+#: Win/AgilityBookMenu.cpp:471
+msgid "IDS_MENU_MAIN"
+msgstr "Main Menu"
+
+#: Win/AgilityBookMenu.cpp:472
+msgid "IDS_MENU_DOG"
+msgstr "Context menu: Dog"
+
+#: Win/AgilityBookMenu.cpp:473
+msgid "IDS_MENU_TRIAL"
+msgstr "Context menu: Trial"
+
+#: Win/AgilityBookMenu.cpp:474
+msgid "IDS_MENU_RUN"
+msgstr "Context menu: Run"
+
+#: Win/AgilityBookMenu.cpp:475
+msgid "IDS_MENU_POINTS"
+msgstr "Context menu: Points"
+
+#: Win/AgilityBookMenu.cpp:476
+msgid "IDS_MENU_CALENDAR"
+msgstr "Context menu: Calendar"
+
+#: Win/AgilityBookMenu.cpp:477
+msgid "IDS_MENU_TRAINING"
+msgstr "Context menu: Training"
 
 #: Win/AgilityBookPanels.cpp:126
 msgid "PanelRuns"

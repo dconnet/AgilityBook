@@ -33,8 +33,10 @@ class CDlgConfigAccel : public wxDialog
 {
 public:
 	CDlgConfigAccel(
+			std::unordered_map<int, std::wstring> const& menuIds,
 			std::vector<CMenuHelper::ItemAccel> const& accelData,
 			std::vector<CMenuHelper::ItemAccel> const& accelDataDefaults,
+			bool bAllowDups,
 			CMenuHelper::ItemData const* menuItems,
 			size_t numMenuItems,
 			std::unordered_map<int, KeyCodeMapping> const& keyMap,
@@ -58,7 +60,9 @@ private:
 	void OnSetDefaults(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 
+	std::unordered_map<int, std::wstring> const& m_menuIds;
 	std::vector<CMenuHelper::ItemAccel> const& m_accelDataDefaults;
+	bool m_bAllowDups;
 	struct MenuData
 	{
 		CMenuHelper::ItemData const* m_data;
