@@ -31,26 +31,6 @@ enum MenuIdentityPopup
 };
 
 
-class CAgilityBookMenu
-{
-	CMenuHelper m_menus;
-
-public:
-	CAgilityBookMenu();
-
-	void CreateMainMenu(
-			wxFrame* pFrame,
-			wxMenu* pRecent);
-
-	wxMenu* CreatePopup(
-			wxWindow* pWindow,
-			MenuIdentityPopup idMenu);
-
-	void UpdateMenu();
-	bool ConfigureAccelerators(wxFrame* pFrame);
-};
-
-
 enum
 {
 	ID_ARB_FIRST = wxID_HIGHEST + 1,

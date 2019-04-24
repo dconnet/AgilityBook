@@ -26,6 +26,7 @@
 #include "stdafx.h"
 #include "AgilityBookMenu.h"
 
+#include "AgilityBook.h"
 #include "ImageHelper.h"
 
 #include "LibARBWin/MenuHelper.h"
@@ -37,7 +38,7 @@
 #endif
 
 
-static const CMenuHelper::ItemData sc_Items[] =
+static const std::vector<CMenuHelper::ItemData> sc_items =
 {
 	{IdMenuNone, MENU_ITEM, 0,                        wxITEM_NORMAL, 0, nullptr, arbT("MenuFile"), nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, wxID_NEW,                 wxITEM_NORMAL, 1, arbT("MenuFileNew"), arbT("MenuFileNew"), arbT("DescFileNew"), ImageMgrNew},
@@ -282,12 +283,10 @@ static const CMenuHelper::ItemData sc_Items[] =
 	{IdMenuTraining, MENU_ITEM, ID_AGILITY_DELETE_TRAINING, wxITEM_NORMAL, 0, nullptr, arbT("MenuTrainingDelete"), arbT("DescTrainingDelete"), nullptr},
 };
 
-static const size_t sc_ItemsCount = sizeof(sc_Items) / sizeof(sc_Items[0]);
-
 // Note: The first number cannot change. It is stored to the registry.
 // Future changes all have to add new numbers. If old entries go away,
 // just comment them out (as a reserved spot).
-static const CMenuHelper::ItemAccel sc_Accels[] =
+static const std::vector<CMenuHelper::ItemAccel> sc_accels =
 {
 	{1,  wxID_NEW,                    true, false, false, 'N'},
 	{2,  wxID_OPEN,                   true, false, false, 'O'},
@@ -385,9 +384,8 @@ static const CMenuHelper::ItemAccel sc_Accels[] =
 	{82, wxID_ABOUT,                 false, false, false, 0},
 	{83, ID_DETAILS,                 false, false, false, 0},
 };
-static const size_t sc_AccelsCount = _countof(sc_Accels);
 
-static const int sc_toolbarItems[] =
+static const std::vector<int> sc_toolbarItems =
 {
 	wxID_NEW,
 	wxID_OPEN,
@@ -410,62 +408,9 @@ static const int sc_toolbarItems[] =
 	0,
 	wxID_ABOUT
 };
-static const size_t sc_toolbarItemsCount = _countof(sc_toolbarItems);
 
 
-CAgilityBookMenu::CAgilityBookMenu()
-{
-}
-
-
-void CAgilityBookMenu::CreateMainMenu(
-		wxFrame* pFrame,
-		wxMenu* pRecent)
-{
-	m_menus.LoadAccelerators(sc_Accels, sc_AccelsCount);
-	m_menus.CreateMenu(pFrame, sc_Items, sc_ItemsCount, sc_toolbarItems, sc_toolbarItemsCount, true, pRecent);
-}
-
-
-/////////////////////////////////////////////////////////////////////////////
-// Popup menus are created each time, so we don't need the effort of above
-// to fix the text on language change.
-
-wxMenu* CAgilityBookMenu::CreatePopup(
-		wxWindow* pWindow,
-		MenuIdentityPopup idMenu)
-{
-	switch (idMenu)
-	{
-	default:
-		// all items in 'enum MenuIdentityPopup' should be listed
-		assert(0);
-		break;
-
-	case IdMenuNone:
-		break;
-
-	case IdMenuDog:
-	case IdMenuTrial:
-	case IdMenuRun:
-	case IdMenuPoints:
-	case IdMenuCalendar:
-	case IdMenuTraining:
-		return m_menus.CreatePopupMenu(pWindow, idMenu, sc_Items, sc_ItemsCount);
-	}
-
-	return nullptr;
-}
-
-
-void CAgilityBookMenu::UpdateMenu()
-{
-	m_menus.LoadAccelerators(sc_Accels, sc_AccelsCount);
-	m_menus.UpdateMenu();
-}
-
-
-bool CAgilityBookMenu::ConfigureAccelerators(wxFrame* pFrame)
+std::unique_ptr<CMenuHelper> CAgilityBookApp::CreateMenus()
 {
 	std::unordered_map<int, std::wstring> menuIds;
 	menuIds[IdMenuNone] = wxGetTranslation(arbT("IDS_MENU_MAIN"));
@@ -475,6 +420,5 @@ bool CAgilityBookMenu::ConfigureAccelerators(wxFrame* pFrame)
 	menuIds[IdMenuPoints] = wxGetTranslation(arbT("IDS_MENU_POINTS"));
 	menuIds[IdMenuCalendar] = wxGetTranslation(arbT("IDS_MENU_CALENDAR"));
 	menuIds[IdMenuTraining] = wxGetTranslation(arbT("IDS_MENU_TRAINING"));
-
-	return m_menus.ConfigureAccelerators(pFrame, menuIds, sc_Items, sc_ItemsCount);
+	return std::make_unique<CMenuHelper>(sc_items, sc_accels, sc_toolbarItems, menuIds, true);
 }

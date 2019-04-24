@@ -143,7 +143,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	wxMenu *menuRecent = new wxMenu;
 	manager->FileHistoryUseMenu(menuRecent);
 	manager->FileHistoryAddFilesToMenu();
-	wxGetApp().GetMenus().CreateMainMenu(this, menuRecent);
+	wxGetApp().GetMenus().CreateMenu(this, menuRecent);
 
 	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
 	m_Widths.Initialize(statusbar);

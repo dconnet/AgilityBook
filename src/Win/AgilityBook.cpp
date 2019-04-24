@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (c) David Connet. All Rights Reserved.
  *
  * License: See License.txt
@@ -186,7 +186,7 @@ CAgilityBookApp::CAgilityBookApp()
 	, m_manager(nullptr)
 	, m_printDialogData(nullptr)
 	, m_Prn(nullptr)
-	, m_menus()
+	, m_menus(nullptr)
 {
 	m_BaseInfoName = ARB_CONFIG_INFO;
 }
@@ -277,6 +277,14 @@ CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
 	if (!m_Prn)
 		m_Prn = new CHtmlEasyPrinting(GetTopWindow());
 	return m_Prn;
+}
+
+
+CMenuHelper& CAgilityBookApp::GetMenus()
+{
+	if (!m_menus)
+		m_menus = CreateMenus();
+	return *(m_menus.get());
 }
 
 

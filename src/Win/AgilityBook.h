@@ -51,9 +51,10 @@ public:
 	wxPrintDialogData* GetPrintData();
 	void SavePrintData(wxPrintDialogData const& data);
 	CHtmlEasyPrinting* GetHtmlPrinter();
-	CAgilityBookMenu& GetMenus() { return m_menus; }
+	CMenuHelper& GetMenus();
 
 protected:
+	static std::unique_ptr<CMenuHelper> CreateMenus();
 	wxString GetReportName() const override { return wxT("AgilityBook"); }
 
 	bool OnInit() override;
@@ -93,7 +94,7 @@ protected:
 	std::unique_ptr<CAgilityBookDocManager> m_manager;
 	wxPrintDialogData* m_printDialogData;
 	CHtmlEasyPrinting* m_Prn;
-	CAgilityBookMenu m_menus;
+	std::unique_ptr<CMenuHelper> m_menus;
 };
 
 DECLARE_APP(CAgilityBookApp)

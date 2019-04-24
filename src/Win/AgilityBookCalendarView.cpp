@@ -1397,7 +1397,7 @@ void CAgilityBookCalendarView::OnContextMenu(wxContextMenuEvent& evt)
 	wxPoint point;
 	if (GetMenuPosition(point, m_Ctrl, evt))
 	{
-		wxMenu* menu = wxGetApp().GetMenus().CreatePopup(m_Ctrl, IdMenuCalendar);
+		wxMenu* menu = wxGetApp().GetMenus().CreatePopupMenu(m_Ctrl, IdMenuCalendar);
 		m_Ctrl->PopupMenu(menu, point);
 		delete menu;
 	}

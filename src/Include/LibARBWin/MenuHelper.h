@@ -130,55 +130,41 @@ public:
 		}
 	};
 
-	CMenuHelper(bool bAllowDups = false);
+	// The default accel list must contain all possible accelerators.
+	// Toolbar array is the 'id' in ItemData, use 0 for separator.
+	// bAllowDups: Allow an accelerator to be duped to different IDs.
+	// It's up to the user context to determine what to do...
+	CMenuHelper(
+			std::vector<CMenuHelper::ItemData> const& menuItems,
+			std::vector<CMenuHelper::ItemAccel> const& accels,
+			std::vector<int> const& toolbarItems,
+			std::unordered_map<int, std::wstring> const& menuIds,
+			bool doTranslation = false,
+			bool bAllowDups = false); // Accelerator dups
 	~CMenuHelper();
 
 	static long ToBitmask(ItemAccel const& accel);
 	static void FromBitmask(long mask, ItemAccel& accel);
 
-	// The default accel list must contain all possible accelerators.
-	// bAllowDups: Allow an accelerator to be duped to different IDs.
-	// It's up to the user context to determine what to do...
-	void LoadAccelerators(
-			ItemAccel const defAccelItems[],
-			size_t numDefAccelItems);
-
+	void LoadAccelerators();
 	void SaveAccelerators();
 
 	// If pParent is null, the parent window is the frame
 	bool ConfigureAccelerators(
 			wxFrame* pFrame,
-			std::unordered_map<int, std::wstring> const& menuIds,
-			ItemData const menuItems[],
-			size_t numMenuItems,
 			wxWindow* pParent = nullptr);
 
 	void CreateMenu(
 			wxFrame* pFrame,
-			ItemData const menuItems[],
-			size_t numMenuItems,
-			bool doTranslation,
-			wxMenu* mruMenu = nullptr);
-
-	// Toolbar array is the 'id' in ItemData, use 0 for separator.
-	void CreateMenu(
-			wxFrame* pFrame,
-			ItemData const menuItems[],
-			size_t numMenuItems,
-			int const toolbarItems[],
-			size_t numToolbarItems,
-			bool doTranslation,
 			wxMenu* mruMenu = nullptr);
 
 	wxMenu* CreatePopupMenu(
 			wxWindow* pWindow,
-			int menuId,
-			ItemData const items[],
-			size_t numItems);
+			int menuId);
 
-	// Note: Before calling this, make sure to call LoadAccelerators
-	void UpdateMenu();
+	void UpdateMenu(bool bLoadAccelerators = true);
 
+protected:
 	void DoMenuItem(
 			wxWindow* pWindow,
 			wxMenu* menu,
@@ -251,8 +237,7 @@ private:
 	wxString GetAccelString(std::vector<ItemAccel> const& accelData, int id);
 	int TranslateId(
 			int id,
-			ItemAccel const defAccelItems[], 
-			size_t numDefAccelItems);
+			std::vector<ItemAccel> const& defAccelItems);
 	void CreateAccelTable(wxFrame* pFrame);
 
 	void Menu(
@@ -262,11 +247,14 @@ private:
 			size_t& index,
 			size_t level,
 			wxMenu* mruMenu,
-			bool& mruAdded,
-			ItemData const items[],
-			size_t numItems);
+			bool& mruAdded);
 
 	void DoSubMenu(wxMenu* parent, MenuHandle const& handle);
+
+	std::vector<CMenuHelper::ItemData> const& m_menuItems;
+	std::vector<ItemAccel> const& m_accelDataDefaults;
+	std::vector<int> const& m_toolbarItems;
+	std::unordered_map<int, std::wstring> m_menuIds;
 
 	wxFrame* m_Frame;
 	wxMenuBar* m_MenuBar;
@@ -274,7 +262,6 @@ private:
 	std::vector<MenuHandle> m_MenuData;
 	std::vector<TranslationData> m_ToolbarData;
 	bool m_bModified;
-	std::vector<ItemAccel> m_accelDataDefaults;
 	std::vector<ItemAccel> m_accelData;
 	bool m_bAllowDups;
 };

@@ -410,8 +410,7 @@ CDlgConfigAccel::CDlgConfigAccel(
 		std::vector<CMenuHelper::ItemAccel> const& accelData,
 		std::vector<CMenuHelper::ItemAccel> const& accelDataDefaults,
 		bool bAllowDups,
-		CMenuHelper::ItemData const* menuItems,
-		size_t numMenuItems,
+		std::vector<CMenuHelper::ItemData> const& menuItems,
 		std::unordered_map<int, KeyCodeMapping> const& keyMap,
 		wxWindow* pParent,
 		std::wstring caption)
@@ -431,7 +430,7 @@ CDlgConfigAccel::CDlgConfigAccel(
 		std::vector<std::wstring> path;
 		path.push_back(TrimDots(wxStripMenuCodes(wxGetTranslation(menuItems[0].menu))));
 
-		for (size_t i = 1; i < numMenuItems; ++i)
+		for (size_t i = 1; i < menuItems.size(); ++i)
 		{
 			while (path.size() > menuItems[i].menuLevel)
 				path.pop_back();

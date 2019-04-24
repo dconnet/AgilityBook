@@ -204,10 +204,20 @@ static wxString CodeToSpecial(int code, bool bNonMenu)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CMenuHelper::CMenuHelper(bool bAllowDups)
-	: m_Frame(nullptr)
+CMenuHelper::CMenuHelper(
+		std::vector<CMenuHelper::ItemData> const& menuItems,
+		std::vector<CMenuHelper::ItemAccel> const& accels,
+		std::vector<int> const& toolbarItems,
+		std::unordered_map<int, std::wstring> const& menuIds,
+		bool doTranslation,
+		bool bAllowDups)
+	: m_menuItems(menuItems)
+	, m_accelDataDefaults(accels)
+	, m_toolbarItems(toolbarItems)
+	, m_menuIds(menuIds)
+	, m_Frame(nullptr)
 	, m_MenuBar(nullptr)
-	, m_doTranslation(false)
+	, m_doTranslation(doTranslation)
 	, m_MenuData()
 	, m_ToolbarData()
 	, m_bModified(false)
@@ -243,15 +253,8 @@ void CMenuHelper::FromBitmask(long mask, ItemAccel& accel)
 }
 
 
-void CMenuHelper::LoadAccelerators(
-		ItemAccel const defAccelItems[],
-		size_t numDefAccelItems)
+void CMenuHelper::LoadAccelerators()
 {
-	m_accelData.clear();
-	m_accelDataDefaults.clear();
-
-	for (size_t index = 0; index < numDefAccelItems; ++index)
-		m_accelDataDefaults.push_back(defAccelItems[index]);
 	m_accelData = m_accelDataDefaults;
 
 	if (wxConfig::Get()->HasGroup(CFG_KEY_ACCELERATORS))
@@ -275,7 +278,7 @@ void CMenuHelper::LoadAccelerators(
 					{
 						if (item.key == key)
 						{
-							item.id = TranslateId(key, defAccelItems, numDefAccelItems);
+							item.id = TranslateId(key, m_accelDataDefaults);
 							item.keyCode = SpecialToCode(wxConfig::Get()->Read(L"KeyCode", wxString()));
 							if (item.id && item.keyCode)
 							{
@@ -367,9 +370,6 @@ void CMenuHelper::SaveAccelerators()
 
 bool CMenuHelper::ConfigureAccelerators(
 		wxFrame* pFrame,
-		std::unordered_map<int, std::wstring> const& menuIds,
-		ItemData const menuItems[],
-		size_t numMenuItems,
 		wxWindow* pParent)
 {
 	assert(pFrame);
@@ -377,7 +377,7 @@ bool CMenuHelper::ConfigureAccelerators(
 		pParent = pFrame;
 
 	bool rc = false;
-	CDlgConfigAccel dlg(menuIds, m_accelData, m_accelDataDefaults, m_bAllowDups, menuItems, numMenuItems, GetKeyCodes(), pParent);
+	CDlgConfigAccel dlg(m_menuIds, m_accelData, m_accelDataDefaults, m_bAllowDups, m_menuItems, GetKeyCodes(), pParent);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		if (dlg.GetAccelData(m_accelData))
@@ -386,34 +386,47 @@ bool CMenuHelper::ConfigureAccelerators(
 			SaveAccelerators();
 			rc = true;
 			CreateAccelTable(pFrame);
-			UpdateMenu();
+			UpdateMenu(false);
 		}
 	}
 	return rc;
 }
 
 
+static size_t FindItem(int id, std::vector<CMenuHelper::ItemData> const& menuItems)
+{
+	for (size_t i = 0; i < menuItems.size(); ++i)
+	{
+		if (menuItems[i].id == id)
+			return i;
+	}
+	return menuItems.size();
+}
+
+
 void CMenuHelper::CreateMenu(
 		wxFrame* pFrame,
-		ItemData const items[],
-		size_t numItems,
-		bool doTranslation,
 		wxMenu* mruMenu)
 {
+	// Load accelerators first. Not all of these are necessarily in the main menu.
+	// This ensures all accelerators are registered.
+	LoadAccelerators();
+	CreateAccelTable(pFrame);
+
 #ifdef _DEBUG
 	// Sanity checking
 	// Menu id must be >=0
-	for (size_t i = 0; i < numItems; ++i)
+	for (size_t i = 0; i < m_menuItems.size(); ++i)
 	{
-		assert(items[i].menuId >= 0);
+		assert(m_menuItems[i].menuId >= 0);
 	}
 	// All the accelerators must be in the main menu (can't get the text otherwise)
 	for (auto iter = m_accelData.begin(); iter != m_accelData.end(); ++iter)
 	{
 		bool bFound = false;
-		for (size_t i = 0; !bFound && i < numItems; ++i)
+		for (size_t i = 0; !bFound && i < m_menuItems.size(); ++i)
 		{
-			if ((*iter).id == items[i].id)
+			if ((*iter).id == m_menuItems[i].id)
 			{
 				bFound = true;
 				break;
@@ -425,37 +438,36 @@ void CMenuHelper::CreateMenu(
 
 	assert(!m_MenuBar);
 	m_Frame = pFrame;
-	m_doTranslation = doTranslation;
 
-	if (0 < numItems)
+	if (0 < m_menuItems.size())
 	{
 		m_MenuBar = new wxMenuBar();
 		bool mruAdded = false;
 
-		for (size_t index = 0; index < numItems; )
+		for (size_t index = 0; index < m_menuItems.size(); )
 		{
-			if (0 != items[index].menuId
-			|| !((MENU_ITEM | MENU_HELP) & items[index].flags))
+			if (0 != m_menuItems[index].menuId
+				|| !((MENU_ITEM | MENU_HELP) & m_menuItems[index].flags))
 			{
 				++index;
 				continue;
 			}
-			assert(items[index].menu);
+			assert(m_menuItems[index].menu);
 			size_t idxMenu = index;
 			MenuHandle handle(static_cast<int>(m_MenuBar->GetMenuCount()));
-			Menu(pFrame, 0, handle, index, 1, mruMenu, mruAdded, items, numItems);
+			Menu(pFrame, 0, handle, index, 1, mruMenu, mruAdded);
 			wxString name;
 			if (m_doTranslation)
 			{
-				name = wxGetTranslation(items[idxMenu].menu);
-				handle.item = items[idxMenu].menu;
+				name = wxGetTranslation(m_menuItems[idxMenu].menu);
+				handle.item = m_menuItems[idxMenu].menu;
 			}
 			else
 			{
-				name = items[idxMenu].menu;
+				name = m_menuItems[idxMenu].menu;
 			}
 #ifdef __WXMAC__
-			if (MENU_HELP & items[index].flags)
+			if (MENU_HELP & m_menuItems[index].flags)
 			{
 				wxApp::s_macHelpMenuTitleName = name;
 			}
@@ -471,73 +483,45 @@ void CMenuHelper::CreateMenu(
 
 		m_Frame->SetMenuBar(m_MenuBar);
 	}
-}
 
-
-static size_t FindItem(int id, CMenuHelper::ItemData const menuItems[], size_t numMenuItems)
-{
-	for (size_t i = 0; i < numMenuItems; ++i)
-	{
-		if (menuItems[i].id == id)
-			return i;
-	}
-	return numMenuItems;
-}
-
-
-void CMenuHelper::CreateMenu(
-		wxFrame* pFrame,
-		ItemData const menuItems[],
-		size_t numMenuItems,
-		int const toolbarItems[],
-		size_t numToolbarItems,
-		bool doTranslation,
-		wxMenu* mruMenu)
-{
-	// Load accelerators first. Not all of these are necessarily in the main menu.
-	// This ensures all accelerators are registered.
-	CreateAccelTable(pFrame);
-
-	CreateMenu(pFrame, menuItems, numMenuItems, doTranslation, mruMenu);
-
-	if (0 < numMenuItems && 0 < numToolbarItems)
+	if (0 < m_menuItems.size() && 0 < m_toolbarItems.size())
 	{
 		wxToolBar* toolbar = m_Frame->CreateToolBar(wxTB_FLAT);
 
-		for (size_t index = 0; index < numToolbarItems; ++index)
+		for (size_t index = 0; index < m_toolbarItems.size(); ++index)
 		{
-			if (0 == toolbarItems[index])
+			if (0 == m_toolbarItems[index])
 			{
 				toolbar->AddSeparator();
 			}
 			else
 			{
-				size_t idxItem = FindItem(toolbarItems[index], menuItems, numMenuItems);
-				if (idxItem >= numMenuItems)
+				size_t idxItem = FindItem(m_toolbarItems[index], m_menuItems);
+				if (idxItem >= m_menuItems.size())
 					continue;
-				assert(menuItems[idxItem].toolbar);
+				assert(m_menuItems[idxItem].toolbar);
 				wxString name;
 				wxString descShort;
-				if (doTranslation)
+				if (m_doTranslation)
 				{
-					name = wxGetTranslation(menuItems[idxItem].toolbar);
-					descShort = wxGetTranslation(menuItems[idxItem].help);
-					m_ToolbarData.push_back(TranslationData(menuItems[idxItem].id, menuItems[idxItem].toolbar, menuItems[idxItem].help));
+					name = wxGetTranslation(m_menuItems[idxItem].toolbar);
+					descShort = wxGetTranslation(m_menuItems[idxItem].help);
+					m_ToolbarData.push_back(TranslationData(m_menuItems[idxItem].id, m_menuItems[idxItem].toolbar, m_menuItems[idxItem].help));
 				}
 				else
 				{
-					name = menuItems[idxItem].toolbar;
-					descShort = menuItems[idxItem].help;
+					name = m_menuItems[idxItem].toolbar;
+					descShort = m_menuItems[idxItem].help;
 				}
-				wxBitmap bmp = ImageHelper::GetBitmap(pFrame, menuItems[idxItem].artId, wxART_TOOLBAR);
+				wxBitmap bmp = ImageHelper::GetBitmap(pFrame, m_menuItems[idxItem].artId, wxART_TOOLBAR);
 				assert(bmp.IsOk());
 				wxBitmap bmpDisabled = bmp.ConvertToDisabled();
 				assert(bmpDisabled.IsOk());
-				toolbar->AddTool(menuItems[idxItem].id,
+				toolbar->AddTool(m_menuItems[idxItem].id,
 					name,
 					bmp,
 					bmpDisabled,
-					menuItems[idxItem].kind,
+					m_menuItems[idxItem].kind,
 					descShort);
 			}
 		}
@@ -548,32 +532,35 @@ void CMenuHelper::CreateMenu(
 
 wxMenu* CMenuHelper::CreatePopupMenu(
 		wxWindow* pWindow,
-		int menuId,
-		ItemData const items[],
-		size_t numItems)
+		int menuId)
 {
 	MenuHandle handle(0);
 
 	// We're not supporting an MRU menu item in the popups.
 	bool mruAdded = false;
-	for (size_t index = 0; index < numItems; )
+	bool bAdded = false;
+	for (size_t index = 0; index < m_menuItems.size(); )
 	{
-		if (items[index].menuId != menuId
-		|| !((MENU_ITEM | MENU_HELP) & items[index].flags))
+		if (m_menuItems[index].menuId != menuId
+		|| !((MENU_ITEM | MENU_HELP) & m_menuItems[index].flags))
 		{
 			++index;
 			continue;
 		}
-		assert(items[index].menu);
+		assert(m_menuItems[index].menu);
 		--index; // Because Menu() assumes we're on the parent item and increments index before processing.
-		Menu(pWindow, menuId, handle, index, 0, nullptr, mruAdded, items, numItems);
+		Menu(pWindow, menuId, handle, index, 0, nullptr, mruAdded);
+		bAdded = true;
 	}
+	assert(bAdded);
 	return handle.pMenu;
 }
 
 
-void CMenuHelper::UpdateMenu()
+void CMenuHelper::UpdateMenu(bool bLoadAccelerators)
 {
+	if (bLoadAccelerators)
+		LoadAccelerators();
 	if (m_doTranslation)
 	{
 		for (std::vector<MenuHandle>::iterator i = m_MenuData.begin(); i != m_MenuData.end(); ++i)
@@ -668,12 +655,11 @@ wxString CMenuHelper::GetAccelString(std::vector<ItemAccel> const& accelItems, i
 
 int CMenuHelper::TranslateId(
 		int id,
-		ItemAccel const defAccelItems[],
-		size_t numDefAccelItems)
+		std::vector<ItemAccel> const& defAccelItems)
 {
 	if (0 != id)
 	{
-		for (size_t n = 0; n < numDefAccelItems; ++n)
+		for (size_t n = 0; n < defAccelItems.size(); ++n)
 		{
 			if (id == defAccelItems[n].key)
 			{
@@ -718,20 +704,18 @@ void CMenuHelper::Menu(
 		size_t& index,
 		size_t level,
 		wxMenu* mruMenu,
-		bool& mruAdded,
-		ItemData const items[],
-		size_t numItems)
+		bool& mruAdded)
 {
-	for (++index; index < numItems && level == items[index].menuLevel; ++index)
+	for (++index; index < m_menuItems.size() && level == m_menuItems[index].menuLevel; ++index)
 	{
-		if (items[index].menuId != menuId)
+		if (m_menuItems[index].menuId != menuId)
 			continue;
-		if (MENU_SEP & items[index].flags)
+		if (MENU_SEP & m_menuItems[index].flags)
 			handle.pMenu->AppendSeparator();
-		else if ((MENU_ITEM | MENU_MRU | MENU_HELP) & items[index].flags)
+		else if ((MENU_ITEM | MENU_MRU | MENU_HELP) & m_menuItems[index].flags)
 		{
-			assert(items[index].menu);
-			if (MENU_MRU & items[index].flags)
+			assert(m_menuItems[index].menu);
+			if (MENU_MRU & m_menuItems[index].flags)
 			{
 				assert(mruMenu);
 				assert(!mruAdded);
@@ -740,42 +724,42 @@ void CMenuHelper::Menu(
 				MenuHandle subhandle(mruMenu, static_cast<int>(handle.pMenu->GetMenuItemCount()));
 				if (m_doTranslation)
 				{
-					name = wxGetTranslation(items[index].menu);
-					subhandle.item = items[index].menu;
+					name = wxGetTranslation(m_menuItems[index].menu);
+					subhandle.item = m_menuItems[index].menu;
 				}
 				else
 				{
-					name = items[index].menu;
+					name = m_menuItems[index].menu;
 				}
 				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
 					name,
 					wxString(),
 					wxITEM_NORMAL,
 					mruMenu,
-					items[index].artId);
+					m_menuItems[index].artId);
 				handle.subMenus.push_back(subhandle);
 			}
-			else if (0 == items[index].id)
+			else if (0 == m_menuItems[index].id)
 			{
 				size_t idxMenu = index;
 				MenuHandle subhandle(static_cast<int>(handle.pMenu->GetMenuItemCount()));
-				Menu(pWindow, menuId, subhandle, index, level + 1, mruMenu, mruAdded, items, numItems);
+				Menu(pWindow, menuId, subhandle, index, level + 1, mruMenu, mruAdded);
 				wxString name;
 				if (m_doTranslation)
 				{
-					name = wxGetTranslation(items[idxMenu].menu);
-					subhandle.item = items[idxMenu].menu;
+					name = wxGetTranslation(m_menuItems[idxMenu].menu);
+					subhandle.item = m_menuItems[idxMenu].menu;
 				}
 				else
 				{
-					name = items[idxMenu].menu;
+					name = m_menuItems[idxMenu].menu;
 				}
 				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
 					name,
 					wxString(),
 					wxITEM_NORMAL,
 					subhandle.pMenu,
-					items[idxMenu].artId);
+					m_menuItems[idxMenu].artId);
 				--index;
 				handle.subMenus.push_back(subhandle);
 			}
@@ -785,21 +769,21 @@ void CMenuHelper::Menu(
 				wxString help;
 				if (m_doTranslation)
 				{
-					name = wxGetTranslation(items[index].menu);
-					help = wxGetTranslation(items[index].help);
-					handle.items.push_back(TranslationData(items[index].id, items[index].menu, items[index].help));
+					name = wxGetTranslation(m_menuItems[index].menu);
+					help = wxGetTranslation(m_menuItems[index].help);
+					handle.items.push_back(TranslationData(m_menuItems[index].id, m_menuItems[index].menu, m_menuItems[index].help));
 				}
 				else
 				{
-					name = items[index].menu;
-					help = items[index].help;
+					name = m_menuItems[index].menu;
+					help = m_menuItems[index].help;
 				}
-				DoMenuItem(pWindow, handle.pMenu, items[index].id,
+				DoMenuItem(pWindow, handle.pMenu, m_menuItems[index].id,
 					name,
 					help,
-					items[index].kind,
+					m_menuItems[index].kind,
 					nullptr,
-					items[index].artId);
+					m_menuItems[index].artId);
 			}
 		}
 	}

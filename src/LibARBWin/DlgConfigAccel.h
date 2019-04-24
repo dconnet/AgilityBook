@@ -37,8 +37,7 @@ public:
 			std::vector<CMenuHelper::ItemAccel> const& accelData,
 			std::vector<CMenuHelper::ItemAccel> const& accelDataDefaults,
 			bool bAllowDups,
-			CMenuHelper::ItemData const* menuItems,
-			size_t numMenuItems,
+			std::vector<CMenuHelper::ItemData> const& menuItems,
 			std::unordered_map<int, KeyCodeMapping> const& keyMap,
 			wxWindow* pParent,
 			std::wstring caption = std::wstring());
