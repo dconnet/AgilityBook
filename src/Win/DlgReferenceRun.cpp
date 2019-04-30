@@ -118,7 +118,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	m_ctrlTime = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 35), -1), 0,
 		CGenericValidator(&m_Time));
-	BIND_OR_CONNECT_CTRL(m_ctrlTime, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgReferenceRun::OnEnChangeRefRunTime);
+	m_ctrlTime->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgReferenceRun::OnEnChangeRefRunTime, this);
 	m_ctrlTime->SetHelpText(_("HIDC_REFRUN_TIME"));
 	m_ctrlTime->SetToolTip(_("HIDC_REFRUN_TIME"));
 

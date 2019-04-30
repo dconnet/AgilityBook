@@ -197,7 +197,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	m_ctrlType = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
-	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgExistingPoints::OnSelchangeType);
+	m_ctrlType->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeType, this);
 	m_ctrlType->SetHelpText(_("HIDC_EXISTING_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_EXISTING_TYPE"));
 	// Set the contents of the type combo.
@@ -233,7 +233,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	m_ctrlDate = new wxDatePickerCtrl(this, wxID_ANY,
 		date,
 		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
-	BIND_OR_CONNECT_CTRL(m_ctrlDate, wxEVT_DATE_CHANGED, wxDateEventHandler, CDlgExistingPoints::OnDateChanged);
+	m_ctrlDate->Bind(wxEVT_DATE_CHANGED, &CDlgExistingPoints::OnDateChanged, this);
 	m_ctrlDate->SetHelpText(_("HIDC_EXISTING_DATE"));
 	m_ctrlDate->SetToolTip(_("HIDC_EXISTING_DATE"));
 
@@ -259,7 +259,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_TextVenue));
-	BIND_OR_CONNECT_CTRL(m_ctrlVenues, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgExistingPoints::OnSelchangeVenue);
+	m_ctrlVenues->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeVenue, this);
 	m_ctrlVenues->SetHelpText(_("HIDC_EXISTING_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_EXISTING_VENUES"));
 
@@ -271,7 +271,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_TextDivMultiQ));
-	BIND_OR_CONNECT_CTRL(m_ctrlDivMultiQs, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgExistingPoints::OnSelchangeDivMultiQ);
+	m_ctrlDivMultiQs->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeDivMultiQ, this);
 
 	wxStaticText* textLevel = new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_LEVEL"),
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -281,7 +281,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_TextLevel));
-	BIND_OR_CONNECT_CTRL(m_ctrlLevels, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgExistingPoints::OnSelchangeLevel);
+	m_ctrlLevels->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeLevel, this);
 	m_ctrlLevels->SetHelpText(_("HIDC_EXISTING_LEVEL"));
 	m_ctrlLevels->SetToolTip(_("HIDC_EXISTING_LEVEL"));
 
@@ -293,7 +293,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_TextEvent));
-	BIND_OR_CONNECT_CTRL(m_ctrlEvents, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgExistingPoints::OnSelchangeEvent);
+	m_ctrlEvents->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeEvent, this);
 	m_ctrlEvents->SetHelpText(_("HIDC_EXISTING_EVENT"));
 	m_ctrlEvents->SetToolTip(_("HIDC_EXISTING_EVENT"));
 

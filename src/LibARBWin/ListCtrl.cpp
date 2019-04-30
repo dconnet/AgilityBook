@@ -99,8 +99,8 @@ bool CReportListCtrl::Create(
 	{
 		return false;
 	}
-	BIND_OR_CONNECT(wxEVT_COMMAND_LIST_DELETE_ALL_ITEMS, wxListEventHandler, CReportListCtrl::OnDeleteAllItems);
-	BIND_OR_CONNECT(wxEVT_COMMAND_LIST_DELETE_ITEM, wxListEventHandler, CReportListCtrl::OnDeleteItem);
+	Bind(wxEVT_COMMAND_LIST_DELETE_ALL_ITEMS, &CReportListCtrl::OnDeleteAllItems, this);
+	Bind(wxEVT_COMMAND_LIST_DELETE_ITEM, &CReportListCtrl::OnDeleteItem, this);
 
 	// Make the blank one the 1st icon so if an icon isn't set in a list
 	// it will use this by default
@@ -454,8 +454,8 @@ CCheckListCtrl::CCheckListCtrl(
 	Create(parent, wxID_ANY, pos, size, flags);
 	if (bHasChecks)
 	{
-		BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckListCtrl::OnClick);
-		BIND_OR_CONNECT(wxEVT_KEY_DOWN, wxKeyEventHandler, CCheckListCtrl::OnKeyDown);
+		Bind(wxEVT_LEFT_DOWN, &CCheckListCtrl::OnClick, this);
+		Bind(wxEVT_KEY_DOWN, &CCheckListCtrl::OnKeyDown, this);
 		m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
 		m_imgNoCheck = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrUnChecked));

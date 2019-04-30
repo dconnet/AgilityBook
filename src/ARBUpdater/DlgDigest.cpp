@@ -183,7 +183,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	m_ctrlInit = new wxButton(this, wxID_ANY,
 		L"Init",
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlInit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDigest::OnInit);
+	m_ctrlInit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDigest::OnInit, this);
 
 	m_ctrlConfig = new wxStaticText(this, wxID_ANY,
 		m_Config,
@@ -205,7 +205,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	wxButton* ctrlFind = new wxButton(this, wxID_ANY,
 		L"Browse...",
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(ctrlFind, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDigest::OnBrowse);
+	ctrlFind->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDigest::OnBrowse, this);
 
 	wxStaticText* txtMD5 = new wxStaticText(this, wxID_ANY,
 		L"MD5",
@@ -286,7 +286,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	m_ctrlCopy = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_OK), wxButton);
 	m_ctrlCopy->SetLabel(L"Copy");
-	BIND_OR_CONNECT_CTRL(m_ctrlCopy, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDigest::OnCopy);
+	m_ctrlCopy->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDigest::OnCopy, this);
 	m_ctrlCopy->Enable(false);
 	wxButton* cancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
 	cancel->SetLabel(L"Close");

@@ -135,34 +135,34 @@ CDlgInfoNote::CDlgInfoNote(
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
-	BIND_OR_CONNECT_CTRL(m_ctrlNames, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgInfoNote::OnSelchangeName);
+	m_ctrlNames->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgInfoNote::OnSelchangeName, this);
 	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));
 	m_ctrlNames->SetToolTip(_("HIDC_INFONOTE"));
 
 	wxButton* ctrlNew = new wxButton(this, wxID_ANY,
 		_("IDC_INFONOTE_NEW"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	BIND_OR_CONNECT_CTRL(ctrlNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgInfoNote::OnNewItem);
+	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnNewItem, this);
 	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
 	ctrlNew->SetToolTip(_("HIDC_INFONOTE_NEW"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_INFONOTE_DELETE"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgInfoNote::OnDeleteItem);
+	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnDeleteItem, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
 
 	m_ctrlVisible = new wxCheckBox(this, wxID_ANY,
 		_("IDC_INFONOTE_VISIBLE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlVisible, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgInfoNote::OnClickedJudgeVisible);
+	m_ctrlVisible->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgInfoNote::OnClickedJudgeVisible, this);
 	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
 	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
 
 	m_ctrlNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(180, 60)), wxTE_MULTILINE);
-	BIND_OR_CONNECT_CTRL(m_ctrlNotes, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgInfoNote::OnEnChangeComments);
+	m_ctrlNotes->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgInfoNote::OnEnChangeComments, this);
 	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
 	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));
 

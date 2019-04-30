@@ -200,8 +200,8 @@ bool CAgilityBookPointsView::Create(
 		int border)
 {
 	m_Ctrl = new CReportListCtrl(parentCtrl, false, CReportListCtrl::eNoHeader);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CAgilityBookPointsView::OnCtrlItemActivated);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookPointsView::OnCtrlKeyDown);
+	m_Ctrl->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CAgilityBookPointsView::OnCtrlItemActivated, this);
+	m_Ctrl->Bind(wxEVT_KEY_DOWN, &CAgilityBookPointsView::OnCtrlKeyDown, this);
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif

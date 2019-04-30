@@ -293,50 +293,50 @@ CDlgConfigVenue::CDlgConfigVenue(
 	m_ctrlItems = new CTreeCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(170, 135)),
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_NO_LINES|wxTR_SINGLE);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgConfigVenue::OnSelectionChanged);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CDlgConfigVenue::OnItemActivated);
+	m_ctrlItems->Bind(wxEVT_COMMAND_TREE_SEL_CHANGED, &CDlgConfigVenue::OnSelectionChanged, this);
+	m_ctrlItems->Bind(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, &CDlgConfigVenue::OnItemActivated, this);
 	//m_ctrlItems->SetHelpText(_(""));
 	//m_ctrlItems->SetToolTip(_(""));
 
 	m_ctrlNew = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_VENUE_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigVenue::OnNew);
+	m_ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnNew, this);
 	m_ctrlNew->SetHelpText(_("HIDC_CONFIG_VENUE_NEW"));
 	m_ctrlNew->SetToolTip(_("HIDC_CONFIG_VENUE_NEW"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_VENUE_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigVenue::OnEdit);
+	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_CONFIG_VENUE_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_CONFIG_VENUE_EDIT"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_VENUE_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigVenue::OnDelete);
+	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnDelete, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_CONFIG_VENUE_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_CONFIG_VENUE_DELETE"));
 
 	m_ctrlCopy = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_VENUE_COPY"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlCopy, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigVenue::OnCopy);
+	m_ctrlCopy->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnCopy, this);
 	m_ctrlCopy->SetHelpText(_("HIDC_CONFIG_VENUE_COPY"));
 	m_ctrlCopy->SetToolTip(_("HIDC_CONFIG_VENUE_COPY"));
 
 	m_ctrlMoveUp = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_VENUE_MOVE_UP"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlMoveUp, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigVenue::OnMoveUp);
+	m_ctrlMoveUp->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnMoveUp, this);
 	m_ctrlMoveUp->SetHelpText(_("HIDC_CONFIG_VENUE_MOVE_UP"));
 	m_ctrlMoveUp->SetToolTip(_("HIDC_CONFIG_VENUE_MOVE_UP"));
 
 	m_ctrlMoveDown = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_VENUE_MOVE_DOWN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlMoveDown, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigVenue::OnMoveDown);
+	m_ctrlMoveDown->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnMoveDown, this);
 	m_ctrlMoveDown->SetHelpText(_("HIDC_CONFIG_VENUE_MOVE_DOWN"));
 	m_ctrlMoveDown->SetToolTip(_("HIDC_CONFIG_VENUE_MOVE_DOWN"));
 

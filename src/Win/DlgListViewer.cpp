@@ -1436,15 +1436,15 @@ bool CDlgListViewer::Create(
 	m_ctrlList = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(300, 100)),
 		false, CReportListCtrl::eSortHeader, true);
-	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgListViewer::OnColumnClick);
-	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgListViewer::OnItemSelected);
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgListViewer::OnColumnClick, this);
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgListViewer::OnItemSelected, this);
 	m_ctrlList->SetHelpText(_("HIDC_LIST_VIEWER"));
 	m_ctrlList->SetToolTip(_("HIDC_LIST_VIEWER"));
 
 	m_ctrlCopy = new wxButton(this, wxID_ANY,
 		_("IDC_LIST_COPY"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlCopy, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgListViewer::OnCopy);
+	m_ctrlCopy->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgListViewer::OnCopy, this);
 	m_ctrlCopy->SetHelpText(_("HIDC_LIST_COPY"));
 	m_ctrlCopy->SetToolTip(_("HIDC_LIST_COPY"));
 

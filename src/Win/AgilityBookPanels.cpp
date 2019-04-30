@@ -132,7 +132,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
 	m_splitter->SetMinimumPaneSize(DPI::Scale(this, MIN_RUN_WIDTH));
-	BIND_OR_CONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelRuns::SplitterOnIdle);
+	m_splitter->Bind(wxEVT_IDLE, &CAgilityBookPanelRuns::SplitterOnIdle, this);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 	wxBoxSizer* bSizer1 = new wxBoxSizer(wxVERTICAL);
@@ -187,7 +187,7 @@ void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 	cx = DPI::Scale(this, cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
-	UNBIND_OR_DISCONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelRuns::SplitterOnIdle);
+	m_splitter->Unbind(wxEVT_IDLE, &CAgilityBookPanelRuns::SplitterOnIdle, this);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -236,7 +236,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
 	m_splitter->SetMinimumPaneSize(DPI::Scale(this, MIN_CAL_WIDTH));
-	BIND_OR_CONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelCalendar::SplitterOnIdle);
+	m_splitter->Bind(wxEVT_IDLE, &CAgilityBookPanelCalendar::SplitterOnIdle, this);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 	wxBoxSizer* bSizer1 = new wxBoxSizer(wxVERTICAL);
@@ -289,7 +289,7 @@ void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 	cx = DPI::Scale(this, cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
-	UNBIND_OR_DISCONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelCalendar::SplitterOnIdle);
+	m_splitter->Unbind(wxEVT_IDLE, &CAgilityBookPanelCalendar::SplitterOnIdle, this);
 }
 
 /////////////////////////////////////////////////////////////////////////////

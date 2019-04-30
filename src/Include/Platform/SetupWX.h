@@ -142,31 +142,6 @@
 #endif
 
 
-/*
- * Bind is only available on wx2.9+.
- * Rather than ifdef each instance of Connect, hide behind an evil macro.
- */
-#define BIND_OR_CONNECT(evt, cast, func) \
-	Bind(evt, &func, this)
-#define UNBIND_OR_DISCONNECT(evt, cast, func) \
-	Unbind(evt, &func, this)
-
-#define BIND_OR_CONNECT_CTRL(ctrl, evt, cast, func) \
-	ctrl->Bind(evt, &func, this)
-#define UNBIND_OR_DISCONNECT_CTRL(ctrl, evt, cast, func) \
-	ctrl->Unbind(evt, &func, this)
-
-#define BIND_OR_CONNECT_ID(id, evt, cast, func) \
-	Bind(evt, &func, this, id)
-#define UNBIND_OR_DISCONNECT_ID(id, evt, cast, func) \
-	Unbind(evt, &func, this, id)
-
-#define BIND_OR_CONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
-	ctrl->Bind(evt, &func, this, id)
-#define UNBIND_OR_DISCONNECT_ID_CTRL(ctrl, id, evt, cast, func) \
-	ctrl->Unbind(evt, &func, this, id)
-
-
 /**
  * Macros to enable easy first control focus.
  */
@@ -175,7 +150,7 @@
 		void OnInit(wxInitDialogEvent& evt);
 #define IMPLEMENT_ON_INIT(cls, ctrl) \
 		{ \
-			BIND_OR_CONNECT(wxEVT_INIT_DIALOG, wxInitDialogEventHandler, cls::OnInit); \
+			Bind(wxEVT_INIT_DIALOG, &cls::OnInit, this); \
 			m_Focus = ctrl; \
 		}
 #define DEFINE_ON_INIT(cls) \

@@ -55,7 +55,7 @@ CDlgOptions::CDlgOptions(
 	Create(pParent, wxID_ANY, _("IDS_VIEWING_OPTIONS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	wxNotebook* notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(notebook, wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING, wxNotebookEventHandler, CDlgOptions::OnPageChanging);
+	notebook->Bind(wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING, &CDlgOptions::OnPageChanging, this);
 
 	m_pageProgram = new CDlgOptionsProgram(notebook);
 	m_pageFilter = new CDlgOptionsFilter(notebook, m_pDoc);

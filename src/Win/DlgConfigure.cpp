@@ -146,43 +146,43 @@ CDlgConfigure::CDlgConfigure(
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(215, 215)),
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_NO_LINES|wxTR_SINGLE);
 	m_ctrlItems->SetImageList(&m_ImageList);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgConfigure::OnSelectionChanged);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CDlgConfigure::OnItemActivated);
+	m_ctrlItems->Bind(wxEVT_COMMAND_TREE_SEL_CHANGED, &CDlgConfigure::OnSelectionChanged, this);
+	m_ctrlItems->Bind(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, &CDlgConfigure::OnItemActivated, this);
 	m_ctrlItems->SetHelpText(_("HIDC_CONFIG_ITEMS"));
 	m_ctrlItems->SetToolTip(_("HIDC_CONFIG_ITEMS"));
 
 	m_ctrlNew = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigure::OnNew);
+	m_ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigure::OnNew, this);
 	m_ctrlNew->SetHelpText(_("HIDC_CONFIG_NEW"));
 	m_ctrlNew->SetToolTip(_("HIDC_CONFIG_NEW"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigure::OnEdit);
+	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigure::OnEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_CONFIG_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_CONFIG_EDIT"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigure::OnDelete);
+	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigure::OnDelete, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_CONFIG_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_CONFIG_DELETE"));
 
 	m_ctrlCopy = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_COPY"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlCopy, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigure::OnCopy);
+	m_ctrlCopy->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigure::OnCopy, this);
 	m_ctrlCopy->SetHelpText(_("HIDC_CONFIG_COPY"));
 	m_ctrlCopy->SetToolTip(_("HIDC_CONFIG_COPY"));
 
 	wxButton* btnUpdate = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_UPDATE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(btnUpdate, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigure::OnUpdate);
+	btnUpdate->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigure::OnUpdate, this);
 	btnUpdate->SetHelpText(_("HIDC_CONFIG_UPDATE"));
 	btnUpdate->SetToolTip(_("HIDC_CONFIG_UPDATE"));
 
@@ -243,7 +243,7 @@ CDlgConfigure::~CDlgConfigure()
 	// Unhook the selection event. DeleteAllItems triggers this and wxWidgets
 	// apparently didn't clean something up - the virtual root is trying
 	// to access GetParam() [via our GetData] whichs dies horribly.
-	UNBIND_OR_DISCONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgConfigure::OnSelectionChanged);
+	m_ctrlItems->Unbind(wxEVT_COMMAND_TREE_SEL_CHANGED, &CDlgConfigure::OnSelectionChanged, this);
 }
 
 

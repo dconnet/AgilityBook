@@ -36,7 +36,7 @@ CRichEditCtrl2::CRichEditCtrl2(
 	: CTextCtrl(parent, id, value, pos, size,
 		wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH2 | (bReadOnly ? wxTE_READONLY : 0))
 {
-	BIND_OR_CONNECT(wxEVT_COMMAND_TEXT_URL, wxTextUrlEventHandler, CRichEditCtrl2::OnUrl);
+	Bind(wxEVT_COMMAND_TEXT_URL, &CRichEditCtrl2::OnUrl, this);
 	if (bReadOnly)
 	{
 		SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE));

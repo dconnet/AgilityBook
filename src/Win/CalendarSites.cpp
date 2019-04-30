@@ -714,9 +714,9 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	// Controls (these are done first to control tab order)
 
 	m_ctrlPlugins = new CSortCheckTreeCtrl(this, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 230), -1));
-	BIND_OR_CONNECT_CTRL(m_ctrlPlugins, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgCalendarPlugins::OnSelectionChanged);
-	BIND_OR_CONNECT_CTRL(m_ctrlPlugins, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CDlgCalendarPlugins::OnItemActivated);
-	BIND_OR_CONNECT_CTRL(m_ctrlPlugins, wxEVT_COMMAND_TREE_CHECK_CHANGED, wxEventHandler, CDlgCalendarPlugins::OnCheckChange);
+	m_ctrlPlugins->Bind(wxEVT_COMMAND_TREE_SEL_CHANGED, &CDlgCalendarPlugins::OnSelectionChanged, this);
+	m_ctrlPlugins->Bind(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, &CDlgCalendarPlugins::OnItemActivated, this);
+	m_ctrlPlugins->Bind(wxEVT_COMMAND_TREE_CHECK_CHANGED, &CDlgCalendarPlugins::OnCheckChange, this);
 	m_ctrlPlugins->SetHelpText(_("HIDC_PLUGIN_TREE"));
 	m_ctrlPlugins->SetToolTip(_("HIDC_PLUGIN_TREE"));
 
@@ -730,49 +730,49 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	m_ctrlRead = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_READ"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlRead, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginRead);
+	m_ctrlRead->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginRead, this);
 	m_ctrlRead->SetHelpText(_("HIDC_PLUGIN_READ"));
 	m_ctrlRead->SetToolTip(_("HIDC_PLUGIN_READ"));
 
 	m_ctrlAdd = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_ADD"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlAdd, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginAddCalEntry);
+	m_ctrlAdd->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginAddCalEntry, this);
 	m_ctrlAdd->SetHelpText(_("HIDC_PLUGIN_ADD"));
 	m_ctrlAdd->SetToolTip(_("HIDC_PLUGIN_ADD"));
 
 	m_ctrlEnable = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_ENABLE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlEnable, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginEnable);
+	m_ctrlEnable->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginEnable, this);
 	m_ctrlEnable->SetHelpText(_("HIDC_PLUGIN_ENABLE"));
 	m_ctrlEnable->SetToolTip(_("HIDC_PLUGIN_ENABLE"));
 
 	m_ctrlQuery = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_QUERYDETAILS"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlQuery, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginQueryDetails);
+	m_ctrlQuery->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginQueryDetails, this);
 	m_ctrlQuery->SetHelpText(_("HIDC_PLUGIN_QUERYDETAILS"));
 	m_ctrlQuery->SetToolTip(_("HIDC_PLUGIN_QUERYDETAILS"));
 
 	wxButton* btnNew = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(btnNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginNew);
+	btnNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginNew, this);
 	btnNew->SetHelpText(_("HIDC_PLUGIN_NEW"));
 	btnNew->SetToolTip(_("HIDC_PLUGIN_NEW"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginEdit);
+	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_PLUGIN_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_PLUGIN_EDIT"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginDelete);
+	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginDelete, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_PLUGIN_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_PLUGIN_DELETE"));
 

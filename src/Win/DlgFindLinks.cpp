@@ -192,10 +192,10 @@ CDlgFindLinks::CDlgFindLinks(
 	m_ctrlLinks = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 85)),
 		true, CReportListCtrl::eSortHeader, true);
-	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgFindLinks::OnColumnClick);
-	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgFindLinks::OnItemSelected);
-	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgFindLinks::OnItemActivated);
-	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgFindLinks::OnKeyDown);
+	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgFindLinks::OnColumnClick, this);
+	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgFindLinks::OnItemSelected, this);
+	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgFindLinks::OnItemActivated, this);
+	m_ctrlLinks->Bind(wxEVT_KEY_DOWN, &CDlgFindLinks::OnKeyDown, this);
 	m_imgOk = m_ctrlLinks->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCheck));
 	m_imgMissing = m_ctrlLinks->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
 	m_ctrlLinks->SetHelpText(_("HIDC_FINDLINKS_LIST"));
@@ -208,21 +208,21 @@ CDlgFindLinks::CDlgFindLinks(
 	wxButton* btnCopy = new wxButton(this, wxID_ANY,
 		_("IDC_FINDLINKS_COPY"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(btnCopy, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgFindLinks::OnCopy);
+	btnCopy->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgFindLinks::OnCopy, this);
 	btnCopy->SetHelpText(_("HIDC_FINDLINKS_COPY"));
 	btnCopy->SetToolTip(_("HIDC_FINDLINKS_COPY"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_FINDLINKS_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgFindLinks::OnEdit);
+	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgFindLinks::OnEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_FINDLINKS_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_FINDLINKS_EDIT"));
 
 	m_ctrlOpen = new wxButton(this, wxID_ANY,
 		_("IDC_FINDLINKS_OPEN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlOpen, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgFindLinks::OnOpen);
+	m_ctrlOpen->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgFindLinks::OnOpen, this);
 	m_ctrlOpen->SetHelpText(_("HIDC_FINDLINKS_OPEN"));
 	m_ctrlOpen->SetToolTip(_("HIDC_FINDLINKS_OPEN"));
 

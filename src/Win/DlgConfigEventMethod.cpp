@@ -182,7 +182,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlDivision = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
-	BIND_OR_CONNECT_CTRL(m_ctrlDivision, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgConfigEventMethod::OnSelchangeDivision);
+	m_ctrlDivision->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgConfigEventMethod::OnSelchangeDivision, this);
 	m_ctrlDivision->SetHelpText(_("HIDC_CONFIG_EVENT_DIVISION"));
 	m_ctrlDivision->SetToolTip(_("HIDC_CONFIG_EVENT_DIVISION"));
 	wxString all = _("IDS_ALL");
@@ -214,7 +214,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlValidFrom = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_DATE_VALID_FROM"),
 		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT);
-	BIND_OR_CONNECT_CTRL(m_ctrlValidFrom, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnValidFrom);
+	m_ctrlValidFrom->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnValidFrom, this);
 	m_ctrlValidFrom->SetHelpText(_("HIDC_CONFIG_EVENT_DATE_VALID_FROM"));
 	m_ctrlValidFrom->SetToolTip(_("HIDC_CONFIG_EVENT_DATE_VALID_FROM"));
 
@@ -241,7 +241,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlValidTo = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_DATE_VALID_TO"),
 		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT);
-	BIND_OR_CONNECT_CTRL(m_ctrlValidTo, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnValidTo);
+	m_ctrlValidTo->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnValidTo, this);
 	m_ctrlValidTo->SetHelpText(_("HIDC_CONFIG_EVENT_DATE_VALID_TO"));
 	m_ctrlValidTo->SetToolTip(_("HIDC_CONFIG_EVENT_DATE_VALID_TO"));
 
@@ -273,7 +273,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlType = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY); 
-	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgConfigEventMethod::OnSelchangeType);
+	m_ctrlType->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgConfigEventMethod::OnSelchangeType, this);
 	m_ctrlType->SetHelpText(_("HIDC_CONFIG_EVENT_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_EVENT_TYPE"));
 	// If any additional types are added in ARBConfigScoring,
@@ -320,7 +320,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		_("IDC_CONFIG_EVENT_SPEED"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_SpeedPts));
-	BIND_OR_CONNECT_CTRL(m_ctrlSpeedPts, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnSpeedPoints);
+	m_ctrlSpeedPts->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnSpeedPoints, this);
 	m_ctrlSpeedPts->SetHelpText(_("HIDC_CONFIG_EVENT_SPEED"));
 	m_ctrlSpeedPts->SetToolTip(_("HIDC_CONFIG_EVENT_SPEED"));
 
@@ -344,9 +344,9 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacement = new CReportListCtrl(this,
 		wxDefaultPosition, wxDefaultSize,
 		true, CReportListCtrl::eNoSortHeader, true, false);
-	BIND_OR_CONNECT_CTRL(m_ctrlPlacement, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgConfigEventMethod::OnItemchangedPlacement);
-	BIND_OR_CONNECT_CTRL(m_ctrlPlacement, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgConfigEventMethod::OnItemActivatedPlacement);
-	BIND_OR_CONNECT_CTRL(m_ctrlPlacement, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgConfigEventMethod::OnKeydownPlacement);
+	m_ctrlPlacement->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgConfigEventMethod::OnItemchangedPlacement, this);
+	m_ctrlPlacement->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgConfigEventMethod::OnItemActivatedPlacement, this);
+	m_ctrlPlacement->Bind(wxEVT_KEY_DOWN, &CDlgConfigEventMethod::OnKeydownPlacement, this);
 	m_ctrlPlacement->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT"));
 	m_ctrlPlacement->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT"));
 	m_ctrlPlacement->InsertColumn(0, _("IDS_COL_PLACE"));
@@ -368,7 +368,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacementNew = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_NEW"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	BIND_OR_CONNECT_CTRL(m_ctrlPlacementNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnPlacementNew);
+	m_ctrlPlacementNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigEventMethod::OnPlacementNew, this);
 	m_ctrlPlacementNew->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_NEW"));
 	m_ctrlPlacementNew->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_NEW"));
 	m_ctrlPlacementNew->Show(m_SpeedPts);
@@ -376,7 +376,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacementEdit = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_EDIT"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	BIND_OR_CONNECT_CTRL(m_ctrlPlacementEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnPlacementEdit);
+	m_ctrlPlacementEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigEventMethod::OnPlacementEdit, this);
 	m_ctrlPlacementEdit->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_EDIT"));
 	m_ctrlPlacementEdit->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_EDIT"));
 	m_ctrlPlacementEdit->Show(m_SpeedPts);
@@ -384,7 +384,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacementDelete = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_DELETE"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	BIND_OR_CONNECT_CTRL(m_ctrlPlacementDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnPlacementDelete);
+	m_ctrlPlacementDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigEventMethod::OnPlacementDelete, this);
 	m_ctrlPlacementDelete->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_DELETE"));
 	m_ctrlPlacementDelete->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_DELETE"));
 	m_ctrlPlacementDelete->Show(m_SpeedPts);
@@ -400,7 +400,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		_("IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_SubtractTimeFaults));
-	BIND_OR_CONNECT_CTRL(m_ctrlSubtractTimeFaults, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnComputeTimeFaults);
+	m_ctrlSubtractTimeFaults->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnComputeTimeFaults, this);
 	m_ctrlSubtractTimeFaults->SetHelpText(_("HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"));
 	m_ctrlSubtractTimeFaults->SetToolTip(_("HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"));
 
@@ -408,7 +408,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_UNDER"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_TimeFaultsUnder));
-	BIND_OR_CONNECT_CTRL(m_ctrlTimeFaultsUnder, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnComputeTimeFaults);
+	m_ctrlTimeFaultsUnder->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnComputeTimeFaults, this);
 	m_ctrlTimeFaultsUnder->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"));
 	m_ctrlTimeFaultsUnder->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"));
 
@@ -416,7 +416,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_OVER"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_TimeFaultsOver));
-	BIND_OR_CONNECT_CTRL(m_ctrlTimeFaultsOver, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnComputeTimeFaults);
+	m_ctrlTimeFaultsOver->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnComputeTimeFaults, this);
 	m_ctrlTimeFaultsOver->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"));
 	m_ctrlTimeFaultsOver->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"));
 
@@ -424,7 +424,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_TitlingPointsRawFaults));
-	BIND_OR_CONNECT_CTRL(m_ctrlTimeFaultsTitlingPts, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnComputeTimeFaults);
+	m_ctrlTimeFaultsTitlingPts->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnComputeTimeFaults, this);
 	m_ctrlTimeFaultsTitlingPts->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"));
 	m_ctrlTimeFaultsTitlingPts->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"));
 

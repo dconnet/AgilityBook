@@ -108,13 +108,13 @@ CDlgTitle::CDlgTitle(
 		_("IDC_TITLE_EARNED"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_bEarned));
-	BIND_OR_CONNECT_CTRL(checkEarned, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgTitle::OnClickedEarned);
+	checkEarned->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgTitle::OnClickedEarned, this);
 	checkEarned->SetHelpText(_("HIDC_TITLE_EARNED"));
 	checkEarned->SetToolTip(_("HIDC_TITLE_EARNED"));
 
 	m_ctrlDate = new wxDatePickerCtrl(this, wxID_ANY, date,
 		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
-	BIND_OR_CONNECT_CTRL(m_ctrlDate, wxEVT_DATE_CHANGED, wxDateEventHandler, CDlgTitle::OnTitleDateChanged);
+	m_ctrlDate->Bind(wxEVT_DATE_CHANGED, &CDlgTitle::OnTitleDateChanged, this);
 	m_ctrlDate->SetHelpText(_("HIDC_TITLE_DATE"));
 	m_ctrlDate->SetToolTip(_("HIDC_TITLE_DATE"));
 	if (!m_bEarned)
@@ -146,7 +146,7 @@ CDlgTitle::CDlgTitle(
 	m_ctrlVenues = new CVenueComboBox(this,
 		config.GetVenues(), m_Venue, false,
 		wxGenericValidator(&m_Venue));
-	BIND_OR_CONNECT_CTRL(m_ctrlVenues, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgTitle::OnSelchangeVenues);
+	m_ctrlVenues->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgTitle::OnSelchangeVenues, this);
 	m_ctrlVenues->SetHelpText(_("HIDC_TITLE_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_TITLE_VENUES"));
 
@@ -159,7 +159,7 @@ CDlgTitle::CDlgTitle(
 		wxDefaultPosition, wxDefaultSize,
 		0, nullptr,
 		wxCB_DROPDOWN|wxCB_READONLY);
-	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgTitle::OnSelchangeTitles);
+	m_ctrlTitles->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgTitle::OnSelchangeTitles, this);
 	m_ctrlTitles->SetHelpText(_("HIDC_TITLE_TITLES"));
 	m_ctrlTitles->SetToolTip(_("HIDC_TITLE_TITLES"));
 

@@ -100,7 +100,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 		_("IDC_CONFIG_MULTIQ_DATE_VALID_FROM"),
 		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT,
 		wxGenericValidator(&m_bFrom));
-	BIND_OR_CONNECT_CTRL(ctrlValidFrom, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigMultiQ::OnClickFrom);
+	ctrlValidFrom->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigMultiQ::OnClickFrom, this);
 	ctrlValidFrom->SetHelpText(_("HIDC_CONFIG_MULTIQ_DATE_VALID_FROM"));
 	ctrlValidFrom->SetToolTip(_("HIDC_CONFIG_MULTIQ_DATE_VALID_FROM"));
 
@@ -114,7 +114,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 		_("IDC_CONFIG_MULTIQ_DATE_VALID_TO"),
 		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT,
 		wxGenericValidator(&m_bTo));
-	BIND_OR_CONNECT_CTRL(ctrlValidTo, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigMultiQ::OnClickTo);
+	ctrlValidTo->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigMultiQ::OnClickTo, this);
 	ctrlValidTo->SetHelpText(_("HIDC_CONFIG_MULTIQ_DATE_VALID_TO"));
 	ctrlValidTo->SetToolTip(_("HIDC_CONFIG_MULTIQ_DATE_VALID_TO"));
 
@@ -126,9 +126,9 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 
 	m_ctrlItems = new CListCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(170, 50)), wxLC_REPORT|wxLC_SINGLE_SEL);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgConfigMultiQ::OnItemchanged);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgConfigMultiQ::OnItemActivated);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgConfigMultiQ::OnKeydownItem);
+	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgConfigMultiQ::OnItemchanged, this);
+	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgConfigMultiQ::OnItemActivated, this);
+	m_ctrlItems->Bind(wxEVT_KEY_DOWN, &CDlgConfigMultiQ::OnKeydownItem, this);
 	m_ctrlItems->SetHelpText(_("HIDC_CONFIG_MULTIQ_ITEMS"));
 	m_ctrlItems->SetToolTip(_("HIDC_CONFIG_MULTIQ_ITEMS"));
 	m_ctrlItems->InsertColumn(0, _("IDS_COL_DIVISION"));
@@ -138,21 +138,21 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	wxButton* btnAdd = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_MULTIQ_ADD"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(btnAdd, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigMultiQ::OnAdd);
+	btnAdd->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigMultiQ::OnAdd, this);
 	btnAdd->SetHelpText(_("HIDC_CONFIG_MULTIQ_ADD"));
 	btnAdd->SetToolTip(_("HIDC_CONFIG_MULTIQ_ADD"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_MULTIQ_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigMultiQ::OnEdit);
+	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigMultiQ::OnEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_CONFIG_MULTIQ_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_CONFIG_MULTIQ_EDIT"));
 
 	m_ctrlRemove = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_MULTIQ_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlRemove, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigMultiQ::OnRemove);
+	m_ctrlRemove->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigMultiQ::OnRemove, this);
 	m_ctrlRemove->SetHelpText(_("HIDC_CONFIG_MULTIQ_DELETE"));
 	m_ctrlRemove->SetToolTip(_("HIDC_CONFIG_MULTIQ_DELETE"));
 

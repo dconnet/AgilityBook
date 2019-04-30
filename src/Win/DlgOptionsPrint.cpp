@@ -85,7 +85,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	wxButton* btnFont = new wxButton(this, wxID_ANY,
 		_("IDC_OPT_PRINT_FONT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(btnFont, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgOptionsPrint::OnFontPrint);
+	btnFont->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgOptionsPrint::OnFontPrint, this);
 	btnFont->SetHelpText(_("HIDC_OPT_PRINT_FONT"));
 	btnFont->SetToolTip(_("HIDC_OPT_PRINT_FONT"));
 
@@ -118,7 +118,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 		_("IDC_OPT_PRINT_UNITS"),
 		wxDefaultPosition, wxDefaultSize,
 		m_MetricNChoices, m_MetricChoices, 1, wxRA_SPECIFY_COLS);
-	BIND_OR_CONNECT_CTRL(m_Metric, wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler, CDlgOptionsPrint::OnUnitsChange);
+	m_Metric->Bind(wxEVT_COMMAND_RADIOBOX_SELECTED, &CDlgOptionsPrint::OnUnitsChange, this);
 	m_Metric->SetHelpText(_("HIDC_OPT_PRINT_UNITS"));
 	m_Metric->SetToolTip(_("HIDC_OPT_PRINT_UNITS"));
 	m_Metric->SetSelection(m_MetricSizes ? m_idxMM : m_idxIn);

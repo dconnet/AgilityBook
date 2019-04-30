@@ -542,11 +542,11 @@ bool CAgilityBookCalendarListView::Create(
 		int border)
 {
 	m_Ctrl = new CReportListCtrl(parentCtrl, false);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_SET_FOCUS, wxFocusEventHandler, CAgilityBookCalendarListView::OnCtrlSetFocus);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CAgilityBookCalendarListView::OnCtrlColumnClick);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CAgilityBookCalendarListView::OnCtrlItemSelected);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CAgilityBookCalendarListView::OnCtrlItemActivated);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookCalendarListView::OnCtrlKeyDown);
+	m_Ctrl->Bind(wxEVT_SET_FOCUS, &CAgilityBookCalendarListView::OnCtrlSetFocus, this);
+	m_Ctrl->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CAgilityBookCalendarListView::OnCtrlColumnClick, this);
+	m_Ctrl->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CAgilityBookCalendarListView::OnCtrlItemSelected, this);
+	m_Ctrl->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CAgilityBookCalendarListView::OnCtrlItemActivated, this);
+	m_Ctrl->Bind(wxEVT_KEY_DOWN, &CAgilityBookCalendarListView::OnCtrlKeyDown, this);
 	m_imgTentative = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
 	m_imgPlan = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCheck));
 	m_imgPlanTentative = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPlanTentative));

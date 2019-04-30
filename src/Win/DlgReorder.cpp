@@ -115,7 +115,7 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 			wxDefaultPosition, wxDLG_UNIT(this, wxSize(85, 50)),
 			0, nullptr,
 			wxLB_NEEDED_SB|wxLB_SINGLE);
-		BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgReorder::OnListSelected);
+		m_ctrlList->Bind(wxEVT_COMMAND_LISTBOX_SELECTED, &CDlgReorder::OnListSelected, this);
 		m_ctrlList->SetHelpText(_("HIDC_REORDER_LIST"));
 		m_ctrlList->SetToolTip(_("HIDC_REORDER_LIST"));
 	}
@@ -125,7 +125,7 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 			wxDefaultPosition, wxDLG_UNIT(this, wxSize(145, -1)),
 			wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_NO_LINES|wxTR_SINGLE);
 		m_ctrlTree->SetQuickBestSize(false);
-		BIND_OR_CONNECT_CTRL(m_ctrlTree, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgReorder::OnTreeSelected);
+		m_ctrlTree->Bind(wxEVT_COMMAND_TREE_SEL_CHANGED, &CDlgReorder::OnTreeSelected, this);
 		m_ctrlTree->SetHelpText(_("HIDC_REORDER_LIST"));
 		m_ctrlTree->SetToolTip(_("HIDC_REORDER_LIST"));
 	}
@@ -137,14 +137,14 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 	m_ctrlUp = new wxButton(this, wxID_ANY,
 		_("IDC_REORDER_MOVE_UP"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlUp, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgReorder::OnMoveUp);
+	m_ctrlUp->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgReorder::OnMoveUp, this);
 	m_ctrlUp->SetHelpText(_("HIDC_REORDER_MOVE_UP"));
 	m_ctrlUp->SetToolTip(_("HIDC_REORDER_MOVE_UP"));
 
 	m_ctrlDown = new wxButton(this, wxID_ANY,
 		_("IDC_REORDER_MOVE_DOWN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlDown, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgReorder::OnMoveDown);
+	m_ctrlDown->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgReorder::OnMoveDown, this);
 	m_ctrlDown->SetHelpText(_("HIDC_REORDER_MOVE_DOWN"));
 	m_ctrlDown->SetToolTip(_("HIDC_REORDER_MOVE_DOWN"));
 

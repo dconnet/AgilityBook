@@ -153,7 +153,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 		_("IDC_CONFIG_TITLE_ALLOW_MULTIPLE"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_AllowMany));
-	BIND_OR_CONNECT_CTRL(ctrlAllowMany, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigTitle::OnAllowMultiple);
+	ctrlAllowMany->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigTitle::OnAllowMultiple, this);
 	ctrlAllowMany->SetHelpText(_("HIDC_CONFIG_TITLE_ALLOW_MULTIPLE"));
 	ctrlAllowMany->SetToolTip(_("HIDC_CONFIG_TITLE_ALLOW_MULTIPLE"));
 
@@ -250,7 +250,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 		_("IDC_CONFIG_TITLE_VALID_FROM"),
 		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT,
 		wxGenericValidator(&m_DateFrom));
-	BIND_OR_CONNECT_CTRL(ctrlValidFrom, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigTitle::OnCheck);
+	ctrlValidFrom->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigTitle::OnCheck, this);
 	ctrlValidFrom->SetHelpText(_("HIDC_CONFIG_TITLE_VALID_FROM"));
 	ctrlValidFrom->SetToolTip(_("HIDC_CONFIG_TITLE_VALID_FROM"));
 
@@ -266,7 +266,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 		_("IDC_CONFIG_TITLE_VALID_TO"),
 		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT,
 		wxGenericValidator(&m_DateTo));
-	BIND_OR_CONNECT_CTRL(ctrlValidTo, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigTitle::OnCheck);
+	ctrlValidTo->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigTitle::OnCheck, this);
 	ctrlValidTo->SetHelpText(_("HIDC_CONFIG_TITLE_VALID_TO"));
 	ctrlValidTo->SetToolTip(_("HIDC_CONFIG_TITLE_VALID_TO"));
 

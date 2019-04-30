@@ -155,8 +155,8 @@ CDlgTrial::CDlgTrial(
 		0, nullptr,
 		wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location), _("IDS_ENTER_NAME"));
-	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgTrial::OnEnChangeLocation);
-	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgTrial::OnSelchangeLocation);
+	m_ctrlLocation->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgTrial::OnEnChangeLocation, this);
+	m_ctrlLocation->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgTrial::OnSelchangeLocation, this);
 	m_ctrlLocation->SetHelpText(_("HIDC_TRIAL_LOCATION"));
 	m_ctrlLocation->SetToolTip(_("HIDC_TRIAL_LOCATION"));
 
@@ -172,7 +172,7 @@ CDlgTrial::CDlgTrial(
 	ctrlTrialNotes->SetToolTip(_("HIDC_TRIAL_NOTES"));
 
 	m_ctrlLocationNotes = new CNoteButton(this);
-	BIND_OR_CONNECT_CTRL(m_ctrlLocationNotes, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnLocationNotes);
+	m_ctrlLocationNotes->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnLocationNotes, this);
 	m_ctrlLocationNotes->SetHelpText(_("HIDC_TRIAL_LOCATION_NOTES"));
 	m_ctrlLocationNotes->SetToolTip(_("HIDC_TRIAL_LOCATION_NOTES"));
 
@@ -194,35 +194,35 @@ CDlgTrial::CDlgTrial(
 	wxButton* btnNew = new wxButton(this, wxID_ANY,
 		_("IDC_TRIAL_CLUB_NEW"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	BIND_OR_CONNECT_CTRL(btnNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnClubNew);
+	btnNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubNew, this);
 	btnNew->SetHelpText(_("HIDC_TRIAL_CLUB_NEW"));
 	btnNew->SetToolTip(_("HIDC_TRIAL_CLUB_NEW"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_TRIAL_CLUB_EDIT"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnClubEdit);
+	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_TRIAL_CLUB_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_TRIAL_CLUB_EDIT"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_TRIAL_CLUB_DELETE"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnClubDelete);
+	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubDelete, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_TRIAL_CLUB_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_TRIAL_CLUB_DELETE"));
 
 	m_ctrlClubs = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(DEF_CTRL_WIDTH, DEF_CTRL_HEIGHT)),
 		true, CReportListCtrl::eNoSortHeader, true, false);
-	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgTrial::OnItemSelectedClubs);
-	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgTrial::OnItemActivatedClubs);
-	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgTrial::OnKeydownClubs);
+	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgTrial::OnItemSelectedClubs, this);
+	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgTrial::OnItemActivatedClubs, this);
+	m_ctrlClubs->Bind(wxEVT_KEY_DOWN, &CDlgTrial::OnKeydownClubs, this);
 	m_ctrlClubs->SetHelpText(_("HIDC_TRIAL_CLUBS"));
 	m_ctrlClubs->SetToolTip(_("HIDC_TRIAL_CLUBS"));
 
 	m_ctrlClubNotes = new CNoteButton(this);
-	BIND_OR_CONNECT_CTRL(m_ctrlClubNotes, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnClubNotes);
+	m_ctrlClubNotes->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubNotes, this);
 	m_ctrlClubNotes->SetHelpText(_("HIDC_TRIAL_CLUB_NOTES"));
 	m_ctrlClubNotes->SetToolTip(_("HIDC_TRIAL_CLUB_NOTES"));
 

@@ -126,7 +126,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 		_("IDC_CONFIG_TITLEPTS_SPEEDPTS"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_bSpeed));
-	BIND_OR_CONNECT_CTRL(m_ctrlSpeedPts, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigTitlePoints::OnUseSpeedPoints);
+	m_ctrlSpeedPts->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigTitlePoints::OnUseSpeedPoints, this);
 	m_ctrlSpeedPts->SetHelpText(_("HIDC_CONFIG_TITLEPTS_SPEEDPTS"));
 	m_ctrlSpeedPts->SetToolTip(_("HIDC_CONFIG_TITLEPTS_SPEEDPTS"));
 
@@ -149,7 +149,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	assert(types.size() == eTitleMax);
 	m_ctrlType = new wxChoice(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, types, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler, CDlgConfigTitlePoints::OnSelchangeTitlePoints);
+	m_ctrlType->Bind(wxEVT_COMMAND_CHOICE_SELECTED, &CDlgConfigTitlePoints::OnSelchangeTitlePoints, this);
 	m_ctrlType->SetHelpText(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
 	m_ctrlType->SetSelection(m_Type);
@@ -161,7 +161,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	assert(typesNorm.size() == ePointsTypeMax);
 	m_ctrlTypeNormal = new wxChoice(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, typesNorm, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlTypeNormal, wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler, CDlgConfigTitlePoints::OnSelchangeTitlePoints);
+	m_ctrlTypeNormal->Bind(wxEVT_COMMAND_CHOICE_SELECTED, &CDlgConfigTitlePoints::OnSelchangeTitlePoints, this);
 	m_ctrlTypeNormal->SetHelpText(_("HIDC_CONFIG_TITLEPTS_CALC"));
 	m_ctrlTypeNormal->SetToolTip(_("HIDC_CONFIG_TITLEPTS_CALC"));
 	m_ctrlTypeNormal->SetSelection(m_TypeNormal);

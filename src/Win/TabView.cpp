@@ -169,31 +169,31 @@ void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 #if wxUSE_NOTEBOOK
 	case ID_BOOK_NOTEBOOK:
 		m_ctrlBook = new wxNotebook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
-		BIND_OR_CONNECT_CTRL(m_ctrlBook, wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler, CTabView::OnNotebookChanged);
+		m_ctrlBook->Bind(wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, &CTabView::OnNotebookChanged, this);
 		break;
 #endif
 #if wxUSE_LISTBOOK
 	case ID_BOOK_LISTBOOK:
 		m_ctrlBook = new wxListbook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
-		BIND_OR_CONNECT_CTRL(m_ctrlBook, wxEVT_COMMAND_LISTBOOK_PAGE_CHANGED, wxListbookEventHandler, CTabView::OnListbookChanged);
+		m_ctrlBook->Bind(wxEVT_COMMAND_LISTBOOK_PAGE_CHANGED, &CTabView::OnListbookChanged, this);
 		break;
 #endif
 #if wxUSE_CHOICEBOOK
 	case ID_BOOK_CHOICEBOOK:
 		m_ctrlBook = new wxChoicebook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
-		BIND_OR_CONNECT_CTRL(m_ctrlBook, wxEVT_COMMAND_CHOICEBOOK_PAGE_CHANGED, wxChoicebookEventHandler, CTabView::OnChoicebookChanged);
+		m_ctrlBook->Bind(wxEVT_COMMAND_CHOICEBOOK_PAGE_CHANGED, &CTabView::OnChoicebookChanged, this);
 		break;
 #endif
 #if wxUSE_TREEBOOK
 	case ID_BOOK_TREEBOOK:
 		m_ctrlBook = new wxTreebook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
-		BIND_OR_CONNECT_CTRL(m_ctrlBook, wxEVT_COMMAND_TREEBOOK_PAGE_CHANGED, wxTreebookEventHandler, CTabView::OnTreebookChanged);
+		m_ctrlBook->Bind(wxEVT_COMMAND_TREEBOOK_PAGE_CHANGED, &CTabView::OnTreebookChanged, this);
 		break;
 #endif
 #if wxUSE_TOOLBOOK
 	case ID_BOOK_TOOLBOOK:
 		m_ctrlBook = new wxToolbook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
-		BIND_OR_CONNECT_CTRL(m_ctrlBook, wxEVT_COMMAND_TOOLBOOK_PAGE_CHANGED, wxToolbookEventHandler, CTabView::OnToolbookChanged);
+		m_ctrlBook->Bind(wxEVT_COMMAND_TOOLBOOK_PAGE_CHANGED, &CTabView::OnToolbookChanged, this);
 		break;
 #endif
 	}

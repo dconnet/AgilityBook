@@ -323,7 +323,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				ARBDogList::const_iterator iDog;
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
-					BIND_OR_CONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
+					parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &CAgilityBookDoc::OnStatusDog, this, menuId);
 					std::wstring item = StringUtil::Replace((*iDog)->GetGenericName(), L"&", L"&&");
 					wxMenuItem* menuitem = menu.AppendCheckItem(menuId, StringUtil::stringWX(item));
 					if (curDog && *(*iDog) == *curDog)
@@ -336,7 +336,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				menuId = baseID;
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
-					UNBIND_OR_DISCONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
+					parent->Unbind(wxEVT_COMMAND_MENU_SELECTED, &CAgilityBookDoc::OnStatusDog, this, menuId);
 				}
 			}
 			break;
@@ -356,7 +356,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 						iFilter != data.filterNames.end();
 						++iFilter, ++menuId)
 					{
-						BIND_OR_CONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
+						parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &CAgilityBookDoc::OnStatusFilter, this, menuId);
 						std::wstring item = StringUtil::Replace(*iFilter, L"&", L"&&");
 						wxMenuItem* menuitem = menu.AppendCheckItem(menuId, StringUtil::stringWX(item));
 						if (*iFilter == filterName)
@@ -370,7 +370,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 						iFilter != data.filterNames.end();
 						++iFilter, ++menuId)
 					{
-						UNBIND_OR_DISCONNECT_ID_CTRL(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
+						parent->Unbind(wxEVT_COMMAND_MENU_SELECTED, &CAgilityBookDoc::OnStatusFilter, this, menuId);
 					}
 				}
 			}

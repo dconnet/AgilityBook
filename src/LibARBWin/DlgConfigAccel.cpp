@@ -106,7 +106,7 @@ CDlgEditAccel::CDlgEditAccel(
 
 	m_ctrlKey = new wxTextCtrl(this, wxID_ANY, GetKeyCode(m_keyMap, m_item.keyCode),
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(30, -1)), 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlKey, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgEditAccel::OnKeyDown);
+	m_ctrlKey->Bind(wxEVT_KEY_DOWN, &CDlgEditAccel::OnKeyDown, this);
 
 	wxStaticText* textMod = new wxStaticText(this, wxID_ANY,
 		_("Modifiers:"),
@@ -130,7 +130,7 @@ CDlgEditAccel::CDlgEditAccel(
 	wxButton* ctrlClear = new wxButton(this, wxID_ANY,
 		_("Clear"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(ctrlClear, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgEditAccel::OnClear);
+	ctrlClear->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgEditAccel::OnClear, this);
 
 	// Sizers
 
@@ -160,7 +160,7 @@ CDlgEditAccel::CDlgEditAccel(
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL | wxEXPAND, wxDLG_UNIT_X(this, 3));
 
-	BIND_OR_CONNECT_ID(wxID_OK, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgEditAccel::OnOk);
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgEditAccel::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();
@@ -464,10 +464,10 @@ CDlgConfigAccel::CDlgConfigAccel(
 	m_ctrlItems = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 150)),
 		true, CReportListCtrl::eSortHeader, true, false);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgConfigAccel::OnColumnClick);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgConfigAccel::OnItemSelected);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgConfigAccel::OnItemActivated);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgConfigAccel::OnKeyDown);
+	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgConfigAccel::OnColumnClick, this);
+	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgConfigAccel::OnItemSelected, this);
+	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgConfigAccel::OnItemActivated, this);
+	m_ctrlItems->Bind(wxEVT_KEY_DOWN, &CDlgConfigAccel::OnKeyDown, this);
 	m_ctrlItems->InsertColumn(0, _("Keyboard Shortcut"), wxLIST_FORMAT_LEFT);
 	m_ctrlItems->InsertColumn(1, _("Description"), wxLIST_FORMAT_LEFT);
 	if (!menuIds.empty())
@@ -479,22 +479,22 @@ CDlgConfigAccel::CDlgConfigAccel(
 	m_ctrlNew = new wxButton(this, wxID_ANY,
 		_("New..."),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigAccel::OnAddItem);
+	m_ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnAddItem, this);
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("Edit..."),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigAccel::OnEditItem);
+	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnEditItem, this);
 
 	m_ctrlClear = new wxButton(this, wxID_ANY,
 		_("Clear"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlClear, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigAccel::OnClearItem);
+	m_ctrlClear->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnClearItem, this);
 
 	wxButton* ctrlDefaults = new wxButton(this, wxID_ANY,
 		_("Set Defaults"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(ctrlDefaults, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigAccel::OnSetDefaults);
+	ctrlDefaults->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnSetDefaults, this);
 
 	// Sizers
 
@@ -516,7 +516,7 @@ CDlgConfigAccel::CDlgConfigAccel(
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL | wxEXPAND, wxDLG_UNIT_X(this, 3));
 
-	BIND_OR_CONNECT_ID(wxID_OK, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigAccel::OnOk);
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

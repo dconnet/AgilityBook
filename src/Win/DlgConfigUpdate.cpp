@@ -60,14 +60,14 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	m_radioDefault = new wxRadioButton(this, wxID_ANY,
 		_("IDC_CONFIG_UPDATE_DEFAULT"),
 		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
-	BIND_OR_CONNECT_CTRL(m_radioDefault, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgConfigUpdate::OnUpdateDefault);
+	m_radioDefault->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgConfigUpdate::OnUpdateDefault, this);
 	m_radioDefault->SetHelpText(_("HIDC_CONFIG_UPDATE_DEFAULT"));
 	m_radioDefault->SetToolTip(_("HIDC_CONFIG_UPDATE_DEFAULT"));
 
 	m_radioExisting = new wxRadioButton(this, wxID_ANY,
 		_("IDC_CONFIG_UPDATE_EXISTING"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_radioExisting, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgConfigUpdate::OnUpdateExisting);
+	m_radioExisting->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgConfigUpdate::OnUpdateExisting, this);
 	m_radioExisting->SetHelpText(_("HIDC_CONFIG_UPDATE_EXISTING"));
 	m_radioExisting->SetToolTip(_("HIDC_CONFIG_UPDATE_EXISTING"));
 
@@ -76,7 +76,7 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	m_btnPick = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_UPDATE_NAME"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_btnPick, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigUpdate::OnName);
+	m_btnPick->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigUpdate::OnName, this);
 	m_btnPick->SetHelpText(_("HIDC_CONFIG_UPDATE_NAME"));
 	m_btnPick->SetToolTip(_("HIDC_CONFIG_UPDATE_NAME"));
 

@@ -149,8 +149,8 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	m_Widths.Initialize(statusbar);
 	if (statusbar)
 	{
-		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_CONTEXT_MENU, wxContextMenuEventHandler, CMainFrame::OnStatusBarContextMenu);
-		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_LEFT_DCLICK, wxMouseEvent, CMainFrame::OnStatusBarDblClick);
+		statusbar->Bind(wxEVT_CONTEXT_MENU, &CMainFrame::OnStatusBarContextMenu, this);
+		statusbar->Bind(wxEVT_LEFT_DCLICK, &CMainFrame::OnStatusBarDblClick, this);
 		for (int i = 1; i < NUM_STATUS_FIELDS; ++i)
 		{
 			wxString str;

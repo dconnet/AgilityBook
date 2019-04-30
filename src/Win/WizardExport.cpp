@@ -84,8 +84,8 @@ CWizardExport::CWizardExport(
 	, m_ctrlDateFormat(nullptr)
 	, m_ctrlPreview(nullptr)
 {
-	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler, CWizardExport::OnWizardChanging);
-	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler, CWizardExport::OnWizardChanged);
+	Bind(wxEVT_WIZARD_PAGE_CHANGING, &CWizardExport::OnWizardChanging, this);
+	Bind(wxEVT_WIZARD_PAGE_CHANGED, &CWizardExport::OnWizardChanged, this);
 
 	std::wstring tmp;
 	CAgilityBookOptions::GetImportExportDelimiters(false, m_Delim, tmp);
@@ -98,42 +98,42 @@ CWizardExport::CWizardExport(
 	m_ctrlTab = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_EXPORT_DELIM_TAB"),
 		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
-	BIND_OR_CONNECT_CTRL(m_ctrlTab, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardExport::OnDelimTab);
+	m_ctrlTab->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardExport::OnDelimTab, this);
 	m_ctrlTab->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_TAB"));
 	m_ctrlTab->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_TAB"));
 
 	m_ctrlColon = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_EXPORT_DELIM_COLON"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlColon, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardExport::OnDelimColon);
+	m_ctrlColon->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardExport::OnDelimColon, this);
 	m_ctrlColon->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_COLON"));
 	m_ctrlColon->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_COLON"));
 
 	m_ctrlComma = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_EXPORT_DELIM_COMMA"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlComma, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardExport::OnDelimComma);
+	m_ctrlComma->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardExport::OnDelimComma, this);
 	m_ctrlComma->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_COMMA"));
 	m_ctrlComma->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_COMMA"));
 
 	m_ctrlSpace = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_EXPORT_DELIM_SPACE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlSpace, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardExport::OnDelimSpace);
+	m_ctrlSpace->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardExport::OnDelimSpace, this);
 	m_ctrlSpace->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_SPACE"));
 	m_ctrlSpace->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_SPACE"));
 
 	m_ctrlSemicolon = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_EXPORT_DELIM_SEMI"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlSemicolon, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardExport::OnDelimSemicolon);
+	m_ctrlSemicolon->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardExport::OnDelimSemicolon, this);
 	m_ctrlSemicolon->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_SEMI"));
 	m_ctrlSemicolon->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_SEMI"));
 
 	m_ctrlOther = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_EXPORT_DELIM_OTHER"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlOther, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardExport::OnDelimOther);
+	m_ctrlOther->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardExport::OnDelimOther, this);
 	m_ctrlOther->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_OTHER"));
 	m_ctrlOther->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_OTHER"));
 
@@ -164,14 +164,14 @@ CWizardExport::CWizardExport(
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
 		wxGenericValidator(&m_Delimiter));
 	m_ctrlOtherChar->SetMaxLength(1); 
-	BIND_OR_CONNECT_CTRL(m_ctrlOtherChar, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CWizardExport::OnExportDelim);
+	m_ctrlOtherChar->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CWizardExport::OnExportDelim, this);
 	m_ctrlOtherChar->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM"));
 	m_ctrlOtherChar->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM"));
 
 	m_ctrlAssign = new wxButton(this, wxID_ANY,
 		_("IDC_WIZARD_EXPORT_ASSIGN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	BIND_OR_CONNECT_CTRL(m_ctrlAssign, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CWizardExport::OnExportAssign);
+	m_ctrlAssign->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CWizardExport::OnExportAssign, this);
 	m_ctrlAssign->SetHelpText(_("HIDC_WIZARD_EXPORT_ASSIGN"));
 	m_ctrlAssign->SetToolTip(_("HIDC_WIZARD_EXPORT_ASSIGN"));
 
@@ -215,7 +215,7 @@ CWizardExport::CWizardExport(
 	}
 	if (0 > m_ctrlDateFormat->GetSelection())
 		m_ctrlDateFormat->SetSelection(0);
-	BIND_OR_CONNECT_CTRL(m_ctrlDateFormat, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CWizardExport::OnSelchangeDate);
+	m_ctrlDateFormat->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CWizardExport::OnSelchangeDate, this);
 	m_ctrlDateFormat->SetHelpText(_("HIDC_WIZARD_EXPORT_DATE"));
 	m_ctrlDateFormat->SetToolTip(_("HIDC_WIZARD_EXPORT_DATE"));
 

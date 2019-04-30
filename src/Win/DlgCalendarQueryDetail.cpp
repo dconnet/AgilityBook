@@ -106,8 +106,8 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	textLocCodes->Wrap(-1);
 
 	m_ctrlLocations = new CCheckListCtrl(this, wxDefaultPosition, wxDLG_UNIT(this, wxSize(180, 75)), !m_EditCodes);
-	BIND_OR_CONNECT_CTRL(m_ctrlLocations, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgCalendarQueryDetail::OnLocationsItemSelected);
-	BIND_OR_CONNECT_CTRL(m_ctrlLocations, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgCalendarQueryDetail::OnLocationsItemActivated);
+	m_ctrlLocations->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgCalendarQueryDetail::OnLocationsItemSelected, this);
+	m_ctrlLocations->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgCalendarQueryDetail::OnLocationsItemActivated, this);
 	m_ctrlLocations->SetHelpText(_("HIDC_QUERY_LOCATIONS"));
 	m_ctrlLocations->SetToolTip(_("HIDC_QUERY_LOCATIONS"));
 	m_ctrlLocations->InsertColumn(0, _("IDS_COL_CODE"));
@@ -132,21 +132,21 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 		m_ctrlNewLoc = new wxButton(this, wxID_ANY,
 			_("IDC_QUERY_LOCCODE_NEW"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		BIND_OR_CONNECT_CTRL(m_ctrlNewLoc, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarQueryDetail::OnNewLocationCode);
+		m_ctrlNewLoc->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnNewLocationCode, this);
 		m_ctrlNewLoc->SetHelpText(_("HIDC_QUERY_LOCCODE_NEW"));
 		m_ctrlNewLoc->SetToolTip(_("HIDC_QUERY_LOCCODE_NEW"));
 
 		m_ctrlEditLoc = new wxButton(this, wxID_ANY,
 			_("IDC_QUERY_LOCCODE_EDIT"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		BIND_OR_CONNECT_CTRL(m_ctrlEditLoc, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarQueryDetail::OnEditLocationCode);
+		m_ctrlEditLoc->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnEditLocationCode, this);
 		m_ctrlEditLoc->SetHelpText(_("HIDC_QUERY_LOCCODE_EDIT"));
 		m_ctrlEditLoc->SetToolTip(_("HIDC_QUERY_LOCCODE_EDIT"));
 
 		m_ctrlDeleteLoc = new wxButton(this, wxID_ANY,
 			_("IDC_QUERY_LOCCODE_DELETE"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		BIND_OR_CONNECT_CTRL(m_ctrlDeleteLoc, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarQueryDetail::OnDeleteLocationCode);
+		m_ctrlDeleteLoc->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnDeleteLocationCode, this);
 		m_ctrlDeleteLoc->SetHelpText(_("HIDC_QUERY_LOCCODE_DELETE"));
 		m_ctrlDeleteLoc->SetToolTip(_("HIDC_QUERY_LOCCODE_DELETE"));
 	}
@@ -157,8 +157,8 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	textVenueCodes->Wrap(-1);
 
 	m_ctrlVenues = new CCheckListCtrl(this, wxDefaultPosition, wxDLG_UNIT(this, wxSize(180, 75)), !m_EditCodes);
-	BIND_OR_CONNECT_CTRL(m_ctrlVenues, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgCalendarQueryDetail::OnVenuesItemSelected);
-	BIND_OR_CONNECT_CTRL(m_ctrlVenues, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgCalendarQueryDetail::OnVenuesItemActivated);
+	m_ctrlVenues->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgCalendarQueryDetail::OnVenuesItemSelected, this);
+	m_ctrlVenues->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgCalendarQueryDetail::OnVenuesItemActivated, this);
 	m_ctrlVenues->SetHelpText(_("HIDC_QUERY_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_QUERY_VENUES"));
 	m_ctrlVenues->InsertColumn(0, _("IDS_COL_CODE"));
@@ -181,21 +181,21 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 		m_ctrlNewVenue = new wxButton(this, wxID_ANY,
 			_("IDC_QUERY_VENUE_NEW"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		BIND_OR_CONNECT_CTRL(m_ctrlNewVenue, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarQueryDetail::OnNewVenueCode);
+		m_ctrlNewVenue->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnNewVenueCode, this);
 		m_ctrlNewVenue->SetHelpText(_("HIDC_QUERY_VENUE_NEW"));
 		m_ctrlNewVenue->SetToolTip(_("HIDC_QUERY_VENUE_NEW"));
 
 		m_ctrlEditVenue = new wxButton(this, wxID_ANY,
 			_("IDC_QUERY_VENUE_EDIT"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		BIND_OR_CONNECT_CTRL(m_ctrlEditVenue, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarQueryDetail::OnEditVenueCode);
+		m_ctrlEditVenue->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnEditVenueCode, this);
 		m_ctrlEditVenue->SetHelpText(_("HIDC_QUERY_VENUE_EDIT"));
 		m_ctrlEditVenue->SetToolTip(_("HIDC_QUERY_VENUE_EDIT"));
 
 		m_ctrlDeleteVenue = new wxButton(this, wxID_ANY,
 			_("IDC_QUERY_VENUE_DELETE"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		BIND_OR_CONNECT_CTRL(m_ctrlDeleteVenue, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarQueryDetail::OnDeleteVenueCode);
+		m_ctrlDeleteVenue->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnDeleteVenueCode, this);
 		m_ctrlDeleteVenue->SetHelpText(_("HIDC_QUERY_VENUE_DELETE"));
 		m_ctrlDeleteVenue->SetToolTip(_("HIDC_QUERY_VENUE_DELETE"));
 	}
