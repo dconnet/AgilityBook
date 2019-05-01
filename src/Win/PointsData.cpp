@@ -2102,7 +2102,7 @@ void CPointsDataItems::LoadData(
 				break;
 			}
 		}
-		m_Lines.push_back(std::make_shared<CPointsDataSeparator>(pDoc, L"</table></html>"));
+		m_Lines.push_back(std::make_shared<CPointsDataSeparator>(pDoc, L"</table>"));
 	}
 }
 

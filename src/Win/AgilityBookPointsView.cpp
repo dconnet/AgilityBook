@@ -256,11 +256,11 @@ wxString CAgilityBookPointsView::RawHtml(
 		bool bNoInternalLinks) const
 {
 	fmt::wmemory_buffer data;
-	fmt::format_to(data, L"<html>\n");
 
 	size_t nItems = m_Items->NumLines();
 	if (!bFragment)
 	{
+		fmt::format_to(data, L"<html>\n");
 		if (0 < nItems)
 		{
 			CPointsDataBasePtr item = m_Items->GetLine(0);
