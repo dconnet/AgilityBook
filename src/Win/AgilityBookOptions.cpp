@@ -135,7 +135,6 @@ namespace
 	static const bool sc_AutoUpdateCheck = true;
 	static const long sc_NumBackup = 3;
 	static const bool sc_ShowPropOnNewTitle = false;
-	static const bool sc_ShowHtmlPoints = true;
 	static const bool sc_UseProxy = false;
 };
 
@@ -1827,20 +1826,6 @@ bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 {
 	wxConfig::Get()->Write(CFG_SETTINGS_AUTOSHOWTITLE, bShow);
-}
-
-
-bool CAgilityBookOptions::ShowHtmlPoints()
-{
-	bool val = sc_ShowHtmlPoints;
-	wxConfig::Get()->Read(CFG_SETTINGS_SHOWHTML, &val);
-	return val;
-}
-
-
-void CAgilityBookOptions::SetShowHtmlPoints(bool bSet)
-{
-	wxConfig::Get()->Write(CFG_SETTINGS_SHOWHTML, bSet);
 }
 
 /////////////////////////////////////////////////////////////////////////////

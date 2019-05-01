@@ -39,7 +39,6 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookPointsView.h"
 #include "DlgDog.h"
 #include "DlgListViewer.h"
 #include "DlgTitle.h"
@@ -48,6 +47,7 @@
 #include "ARB/ARBDog.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/ARBMisc.h"
+#include "ARBCommon/StringUtil.h"
 #include <algorithm>
 #include <map>
 #include <wx/utils.h>

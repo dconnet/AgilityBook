@@ -257,8 +257,6 @@ public:
 	static void SetNumBackupFiles(long nFiles);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
-	static bool ShowHtmlPoints();
-	static void SetShowHtmlPoints(bool bSet);
 	// Internet things
 	// -username/pw for accessing URLs thru ReadHTTP.cpp
 	static std::wstring GetUserName(std::wstring const& hint);

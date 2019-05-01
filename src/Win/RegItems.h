@@ -344,8 +344,6 @@ inline wxString CFG_SELECTION_DOG(int n)
 #define CFG_SETTINGS_PRINTLAND			CFG_KEY_SETTINGS L"/printLand"
 //	ST proxy
 #define CFG_SETTINGS_PROXY				CFG_KEY_SETTINGS L"/proxy"
-//	DW showHtml
-#define CFG_SETTINGS_SHOWHTML			CFG_KEY_SETTINGS L"/showHtml"
 //	DW splitCX (AgilityBookPanels.cpp)
 #define CFG_SETTINGS_SPLITCX			CFG_KEY_SETTINGS L"/splitCX"
 //	DW splitCX2 (AgilityBookPanels.cpp)
@@ -358,6 +356,7 @@ inline wxString CFG_SELECTION_DOG(int n)
 #define CFG_SETTINGS_VIEWORIENT			CFG_KEY_SETTINGS L"/ViewOrient"
 //	DW ViewType (TabView.cpp)
 #define CFG_SETTINGS_VIEWTYPE			CFG_KEY_SETTINGS L"/ViewType"
+//	Obsolete(3.3.3) DW showHtml
 //	Obsolete(2.1.0.0) DW dateFormat[n]
 //		{
 //			eRunTree	= 0,

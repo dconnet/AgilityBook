@@ -35,11 +35,9 @@
 
 CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
-	, m_bResetHtmlView(false)
 	, m_bAutoCheck(CAgilityBookOptions::GetAutoUpdateCheck())
 	, m_Backups(CAgilityBookOptions::GetNumBackupFiles())
 	, m_bAutoShow(CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
-	, m_bShowHtml(CAgilityBookOptions::ShowHtmlPoints())
 	, m_UseProxy(CAgilityBookOptions::GetUseProxy())
 	, m_Proxy(StringUtil::stringWX(CAgilityBookOptions::GetProxyServer()))
 	, m_ctrlProxy(nullptr)
@@ -81,13 +79,6 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	ctrlShowDog->SetHelpText(_("HIDC_OPT_PGM_AUTOSHOW"));
 	ctrlShowDog->SetToolTip(_("HIDC_OPT_PGM_AUTOSHOW"));
 
-	wxCheckBox* ctrlHtml = new wxCheckBox(this, wxID_ANY,
-		_("IDC_OPT_PGM_SHOWHTML"),
-		wxDefaultPosition, wxDefaultSize, 0,
-		wxGenericValidator(&m_bShowHtml));
-	ctrlHtml->SetHelpText(_("HIDC_OPT_PGM_SHOWHTML"));
-	ctrlHtml->SetToolTip(_("HIDC_OPT_PGM_SHOWHTML"));
-
 	wxCheckBox* ctrlUseProxy = new wxCheckBox(this, wxID_ANY,
 		_("IDC_OPT_PGM_USEPROXY"),
 		wxDefaultPosition, wxDefaultSize, 0,
@@ -116,7 +107,6 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 
 	sizerPgm->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerPgm->Add(ctrlShowDog, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(ctrlHtml, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerPgm->Add(ctrlUseProxy, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerProxy = new wxBoxSizer(wxHORIZONTAL);
@@ -142,11 +132,6 @@ void CDlgOptionsProgram::Save()
 	CAgilityBookOptions::SetAutoUpdateCheck(m_bAutoCheck);
 	CAgilityBookOptions::SetNumBackupFiles(m_Backups);
 	CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_bAutoShow);
-	if (CAgilityBookOptions::ShowHtmlPoints() != m_bShowHtml)
-	{
-		m_bResetHtmlView = true;
-		CAgilityBookOptions::SetShowHtmlPoints(m_bShowHtml);
-	}
 	std::wstring oldProxy(CAgilityBookOptions::GetProxy());
 	if (m_Proxy.empty())
 		m_UseProxy = false;

@@ -27,14 +27,11 @@ public:
 	CDlgOptionsProgram(wxWindow* pParent);
 
 	void Save();
-	bool ResetHtmlView() const	{return m_bResetHtmlView;}
 
 private:
-	bool m_bResetHtmlView;
 	bool m_bAutoCheck;
 	int m_Backups;
 	bool m_bAutoShow;
-	bool m_bShowHtml;
 	bool m_UseProxy;
 	wxString m_Proxy;
 	CTextCtrl* m_ctrlProxy;
