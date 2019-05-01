@@ -57,9 +57,6 @@
     <ClCompile Include="..\..\Win\AgilityBookPanels.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\AgilityBookPointsView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\AgilityBookRunsView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -318,9 +315,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\AgilityBookPanels.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\AgilityBookPointsView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\AgilityBookRunsView.h">

@@ -434,7 +434,6 @@
     <ClCompile Include="..\..\Win\AgilityBookMenu.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookOptions.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookPanels.cpp" />
-    <ClCompile Include="..\..\Win\AgilityBookPointsView.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookRunsView.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookTrainingView.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookTreeData.cpp" />
@@ -558,7 +557,6 @@
     <ClInclude Include="..\..\Win\AgilityBookMenu.h" />
     <ClInclude Include="..\..\Win\AgilityBookOptions.h" />
     <ClInclude Include="..\..\Win\AgilityBookPanels.h" />
-    <ClInclude Include="..\..\Win\AgilityBookPointsView.h" />
     <ClInclude Include="..\..\Win\AgilityBookRunsView.h" />
     <ClInclude Include="..\..\Win\AgilityBookTrainingView.h" />
     <ClInclude Include="..\..\Win\AgilityBookTreeData.h" />
