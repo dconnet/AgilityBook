@@ -23,8 +23,8 @@
 
 #include "AgilityBookCalendarListView.h"
 #include "AgilityBookCalendarView.h"
-#include "AgilityBookHtmlView.h"
 #include "AgilityBookOptions.h"
+#include "AgilityBookPointsView.h"
 #include "AgilityBookTrainingView.h"
 #include "AgilityBookRunsView.h"
 #include "AgilityBookTreeView.h"
@@ -206,7 +206,7 @@ CAgilityBookPanelPoints::CAgilityBookPanelPoints(
 
 	if (bAttachViews)
 	{
-		CAgilityBookBaseExtraView* pView = new CAgilityBookHtmlView(pTabView, doc);
+		CAgilityBookBaseExtraView* pView = new CAgilityBookPointsView(pTabView, doc);
 		assert(!pView->HasNextPane() && !pView->HasPrevPane());
 		m_views.push_back(pView);
 	}

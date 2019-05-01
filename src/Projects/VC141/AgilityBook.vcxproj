@@ -430,7 +430,7 @@
     <ClCompile Include="..\..\Win\AgilityBookCalendarListView.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookCalendarView.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookDoc.cpp" />
-    <ClCompile Include="..\..\Win\AgilityBookHtmlView.cpp" />
+    <ClCompile Include="..\..\Win\AgilityBookPointsView.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookMenu.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookOptions.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookPanels.cpp" />
@@ -553,7 +553,7 @@
     <ClInclude Include="..\..\Win\AgilityBookCalendarListView.h" />
     <ClInclude Include="..\..\Win\AgilityBookCalendarView.h" />
     <ClInclude Include="..\..\Win\AgilityBookDoc.h" />
-    <ClInclude Include="..\..\Win\AgilityBookHtmlView.h" />
+    <ClInclude Include="..\..\Win\AgilityBookPointsView.h" />
     <ClInclude Include="..\..\Win\AgilityBookMenu.h" />
     <ClInclude Include="..\..\Win\AgilityBookOptions.h" />
     <ClInclude Include="..\..\Win\AgilityBookPanels.h" />

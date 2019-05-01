@@ -20,7 +20,7 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBookHtmlView.h"
+#include "AgilityBookPointsView.h"
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
@@ -114,26 +114,26 @@ void CHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_CLASS(CAgilityBookHtmlView, CAgilityBookBaseExtraView)
+IMPLEMENT_CLASS(CAgilityBookPointsView, CAgilityBookBaseExtraView)
 
 
-BEGIN_EVENT_TABLE(CAgilityBookHtmlView, CAgilityBookBaseExtraView)
-	EVT_UPDATE_UI(wxID_COPY, CAgilityBookHtmlView::OnViewUpdateCmd)
-	EVT_MENU(wxID_COPY, CAgilityBookHtmlView::OnViewCmd)
-	EVT_UPDATE_UI(ID_AGILITY_NEW_TITLE, CAgilityBookHtmlView::OnViewUpdateCmd)
-	EVT_MENU(ID_AGILITY_NEW_TITLE, CAgilityBookHtmlView::OnViewCmd)
-	EVT_UPDATE_UI(ID_VIEW_POINTS_VIEW_SORT, CAgilityBookHtmlView::OnViewUpdateCmd)
-	EVT_MENU(ID_VIEW_POINTS_VIEW_SORT, CAgilityBookHtmlView::OnViewCmd)
-	EVT_UPDATE_UI(ID_VIEW_HIDDEN, CAgilityBookHtmlView::OnViewUpdateCmd)
-	EVT_MENU(ID_VIEW_HIDDEN, CAgilityBookHtmlView::OnViewCmd)
-	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookHtmlView::OnViewUpdateCmd)
-	EVT_MENU(ID_VIEW_LIFETIME_EVENTS, CAgilityBookHtmlView::OnViewCmd)
-	EVT_MENU(wxID_PRINT, CAgilityBookHtmlView::OnPrint)
-	EVT_MENU(wxID_PREVIEW, CAgilityBookHtmlView::OnPreview)
+BEGIN_EVENT_TABLE(CAgilityBookPointsView, CAgilityBookBaseExtraView)
+	EVT_UPDATE_UI(wxID_COPY, CAgilityBookPointsView::OnViewUpdateCmd)
+	EVT_MENU(wxID_COPY, CAgilityBookPointsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_AGILITY_NEW_TITLE, CAgilityBookPointsView::OnViewUpdateCmd)
+	EVT_MENU(ID_AGILITY_NEW_TITLE, CAgilityBookPointsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_VIEW_POINTS_VIEW_SORT, CAgilityBookPointsView::OnViewUpdateCmd)
+	EVT_MENU(ID_VIEW_POINTS_VIEW_SORT, CAgilityBookPointsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_VIEW_HIDDEN, CAgilityBookPointsView::OnViewUpdateCmd)
+	EVT_MENU(ID_VIEW_HIDDEN, CAgilityBookPointsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookPointsView::OnViewUpdateCmd)
+	EVT_MENU(ID_VIEW_LIFETIME_EVENTS, CAgilityBookPointsView::OnViewCmd)
+	EVT_MENU(wxID_PRINT, CAgilityBookPointsView::OnPrint)
+	EVT_MENU(wxID_PREVIEW, CAgilityBookPointsView::OnPreview)
 END_EVENT_TABLE()
 
 
-CAgilityBookHtmlView::CAgilityBookHtmlView(
+CAgilityBookPointsView::CAgilityBookPointsView(
 		CTabView* pTabView,
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
@@ -143,13 +143,13 @@ CAgilityBookHtmlView::CAgilityBookHtmlView(
 }
 
 
-CAgilityBookHtmlView::~CAgilityBookHtmlView()
+CAgilityBookPointsView::~CAgilityBookPointsView()
 {
 	m_Items->clear();
 }
 
 
-bool CAgilityBookHtmlView::Create(
+bool CAgilityBookPointsView::Create(
 		CBasePanel* parentView,
 		wxWindow* parentCtrl,
 		wxDocument* doc,
@@ -167,27 +167,27 @@ bool CAgilityBookHtmlView::Create(
 }
 
 
-void CAgilityBookHtmlView::DetachView()
+void CAgilityBookPointsView::DetachView()
 {
 	// The control is actually owned by the panel, the view is not.
 	m_Ctrl = nullptr;
 }
 
 
-bool CAgilityBookHtmlView::IsFiltered() const
+bool CAgilityBookPointsView::IsFiltered() const
 {
 	return CFilterOptions::Options().IsFilterEnabled();
 }
 
 
-bool CAgilityBookHtmlView::GetMessage(std::wstring& msg) const
+bool CAgilityBookPointsView::GetMessage(std::wstring& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
 }
 
 
-bool CAgilityBookHtmlView::GetMessage2(std::wstring& msg) const
+bool CAgilityBookPointsView::GetMessage2(std::wstring& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
@@ -202,13 +202,13 @@ bool CAgilityBookHtmlView::GetMessage2(std::wstring& msg) const
 }
 
 
-bool CAgilityBookHtmlView::AllowStatusContext(int field) const
+bool CAgilityBookPointsView::AllowStatusContext(int field) const
 {
 	return STATUS_DOG == field || STATUS_FILTERED == field;
 }
 
 
-bool CAgilityBookHtmlView::OnCreate(
+bool CAgilityBookPointsView::OnCreate(
 		wxDocument* doc,
 		long flags)
 {
@@ -216,7 +216,7 @@ bool CAgilityBookHtmlView::OnCreate(
 }
 
 
-void CAgilityBookHtmlView::DoActivateView(
+void CAgilityBookPointsView::DoActivateView(
 		bool activate,
 		wxView* activeView,
 		wxView* deactiveView)
@@ -226,18 +226,18 @@ void CAgilityBookHtmlView::DoActivateView(
 }
 
 
-void CAgilityBookHtmlView::OnDraw(wxDC* dc)
+void CAgilityBookPointsView::OnDraw(wxDC* dc)
 {
 	if (m_Ctrl && dc)
 		m_Ctrl->OnDraw(*dc);
 }
 
 
-void CAgilityBookHtmlView::OnUpdate(
+void CAgilityBookPointsView::OnUpdate(
 		wxView* sender,
 		wxObject* inHint)
 {
-	STACK_TRACE(stack, L"CAgilityBookHtmlView::OnUpdate");
+	STACK_TRACE(stack, L"CAgilityBookPointsView::OnUpdate");
 
 	CUpdateHint* hint = nullptr;
 	if (inHint)
@@ -251,7 +251,7 @@ void CAgilityBookHtmlView::OnUpdate(
 }
 
 
-wxString CAgilityBookHtmlView::RawHtml(
+wxString CAgilityBookPointsView::RawHtml(
 		bool bFragment,
 		bool bNoInternalLinks) const
 {
@@ -282,9 +282,9 @@ wxString CAgilityBookHtmlView::RawHtml(
 }
 
 
-void CAgilityBookHtmlView::LoadData()
+void CAgilityBookPointsView::LoadData()
 {
-	STACK_TRACE(stack, L"CAgilityBookHtmlView::LoadData");
+	STACK_TRACE(stack, L"CAgilityBookPointsView::LoadData");
 
 	wxBusyCursor wait;
 
@@ -297,7 +297,7 @@ void CAgilityBookHtmlView::LoadData()
 }
 
 
-void CAgilityBookHtmlView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
+void CAgilityBookPointsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 {
 	switch (evt.GetId())
 	{
@@ -316,7 +316,7 @@ void CAgilityBookHtmlView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 }
 
 
-void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
+void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 {
 	if (!m_Ctrl)
 		return;
@@ -377,14 +377,14 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 }
 
 
-void CAgilityBookHtmlView::OnPrint(wxCommandEvent& evt)
+void CAgilityBookPointsView::OnPrint(wxCommandEvent& evt)
 {
 	wxString text(RawHtml(false, true));
 	wxGetApp().GetHtmlPrinter()->PrintText(text);
 }
 
 
-void CAgilityBookHtmlView::OnPreview(wxCommandEvent& evt)
+void CAgilityBookPointsView::OnPreview(wxCommandEvent& evt)
 {
 	wxString text(RawHtml(false, true));
 	wxGetApp().GetHtmlPrinter()->PreviewText(text);

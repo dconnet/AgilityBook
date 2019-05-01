@@ -45,7 +45,7 @@
     <ClCompile Include="..\..\Win\AgilityBookDoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\AgilityBookHtmlView.cpp">
+    <ClCompile Include="..\..\Win\AgilityBookPointsView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\AgilityBookMenu.cpp">
@@ -305,7 +305,7 @@
     <ClInclude Include="..\..\Win\AgilityBookDoc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Win\AgilityBookHtmlView.h">
+    <ClInclude Include="..\..\Win\AgilityBookPointsView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\AgilityBookMenu.h">

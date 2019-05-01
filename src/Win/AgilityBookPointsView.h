@@ -19,7 +19,7 @@
 
 #include "CommonView.h"
 #include <wx/docview.h>
-class CAgilityBookHtmlView;
+class CAgilityBookPointsView;
 class CHtmlWindow;
 class CPointsDataItems;
 
@@ -28,7 +28,7 @@ class CHtmlWindow : public wxHtmlWindow
 {
 public:
 	CHtmlWindow(
-			CAgilityBookHtmlView* pView,
+			CAgilityBookPointsView* pView,
 			wxWindow *parent,
 			wxWindowID id = wxID_ANY,
 			const wxPoint& pos = wxDefaultPosition,
@@ -44,22 +44,22 @@ public:
 	void OnLinkClicked(const wxHtmlLinkInfo& link) override;
 
 private:
-	CAgilityBookHtmlView* m_pView;
+	CAgilityBookPointsView* m_pView;
 	std::wstring m_tag;
 };
 
 
-class CAgilityBookHtmlView : public CAgilityBookBaseExtraView
+class CAgilityBookPointsView : public CAgilityBookBaseExtraView
 {
 	friend class CHtmlWindow;
-	DECLARE_DYNAMIC_CLASS(CAgilityBookHtmlView)
-	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookHtmlView)
+	DECLARE_DYNAMIC_CLASS(CAgilityBookPointsView)
+	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookPointsView)
 
 public:
-	CAgilityBookHtmlView(
+	CAgilityBookPointsView(
 			CTabView* pTabView,
 			wxDocument* doc);
-	~CAgilityBookHtmlView();
+	~CAgilityBookPointsView();
 
 	bool Create(
 			CBasePanel* parentView,
