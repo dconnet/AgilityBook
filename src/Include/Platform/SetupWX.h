@@ -33,7 +33,7 @@
 
 #include "Platform/arbWarningPush.h"
 #if defined(_MSC_VER) && _MSC_VER > 1800
-#pragma warning(disable : 4458)
+#pragma warning(disable : 4458) // declaration of 'identifier' hides class member
 #endif
 
 // Pre-compiled header setup

@@ -133,8 +133,6 @@
 #endif
 
 
-#if __cplusplus >= 199711
-
 #define DECLARE_NO_ASSIGN_IMPLEMENTED(cls) \
 	private: \
 		cls& operator=(cls const&) = delete; \
@@ -145,22 +143,6 @@
 		cls(cls&&) = delete; \
 		cls& operator=(cls const&) = delete; \
 		cls& operator=(cls&&) = delete;
-
-#else
-
-#define DECLARE_NO_ASSIGN_IMPLEMENTED(cls) \
-	private: \
-		cls& operator=(cls const&); \
-		cls& operator=(cls&&);
-
-#define DECLARE_NO_COPY_IMPLEMENTED(cls) \
-	private: \
-		cls(cls const&); \
-		cls(cls&&); \
-		cls& operator=(cls const&); \
-		cls& operator=(cls&&);
-
-#endif
 
 
 // Compiler configuration (moved to SetupARBPost.h)
