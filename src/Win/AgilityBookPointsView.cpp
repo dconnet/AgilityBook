@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-05-04 Reworked PointsData usage.
  * 2018-12-16 Convert to fmt.
  * 2017-08-20 Alter how header is generated/handled.
  * 2014-04-23 Scroll to position of clicked link on page load.
@@ -77,15 +78,9 @@ void CHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 		std::wstring index(StringUtil::stringW(url.substr(ProtocolARB.length())));
 		if (!index.empty())
 		{
-			long nItem;
-			if (StringUtil::ToCLong(index, nItem) && nItem < static_cast<long>(m_pView->m_Items->NumLines()))
-			{
-				bDidIt = true;
-				CPointsDataBasePtr item = m_pView->m_Items->GetLine(nItem);
-				m_tag = fmt::format(L"ref{}", index);
-				item->Details();
-				m_tag.clear();
-			}
+			m_tag = index;
+			bDidIt = m_pView->m_Items->Details(index);
+			m_tag.clear();
 		}
 		if (!bDidIt)
 		{
@@ -138,7 +133,7 @@ CAgilityBookPointsView::CAgilityBookPointsView(
 		wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
 	, m_Ctrl(nullptr)
-	, m_Items(std::make_unique<CPointsDataItems>())
+	, m_Items(std::make_unique<CPointsDataItems>(GetDocument()))
 {
 }
 
@@ -251,45 +246,14 @@ void CAgilityBookPointsView::OnUpdate(
 }
 
 
-wxString CAgilityBookPointsView::RawHtml(
-		bool bFragment,
-		bool bNoInternalLinks) const
-{
-	fmt::wmemory_buffer data;
-
-	size_t nItems = m_Items->NumLines();
-	if (!bFragment)
-	{
-		fmt::format_to(data, L"<html>\n");
-		if (0 < nItems)
-		{
-			CPointsDataBasePtr item = m_Items->GetLine(0);
-			fmt::format_to(data, L"{}", item->GetHtml(0, bNoInternalLinks));
-		}
-		fmt::format_to(data, L"<body>\n");
-	}
-
-	for (size_t nItem = 1; nItem < nItems; ++nItem)
-	{
-		CPointsDataBasePtr item = m_Items->GetLine(nItem);
-		fmt::format_to(data, L"{}", item->GetHtml(nItem, bNoInternalLinks));
-	}
-	if (!bFragment)
-		fmt::format_to(data, L"</body></html>");
-	fmt::format_to(data, L"\n");
-
-	return StringUtil::stringWX(fmt::to_string(data));
-}
-
-
 void CAgilityBookPointsView::LoadData()
 {
 	STACK_TRACE(stack, L"CAgilityBookPointsView::LoadData");
 
 	wxBusyCursor wait;
 
-	m_Items->LoadData(GetDocument(), GetDocument()->GetCurrentDog());
-	wxString data = RawHtml(false, false);
+	m_Items->LoadData(GetDocument()->GetCurrentDog());
+	wxString data = m_Items->GetHtml(false, false);
 	m_Ctrl->SetPage(data);
 
 	if (m_Ctrl->IsShownOnScreen())
@@ -327,7 +291,7 @@ void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 			CClipboardDataWriter clpData;
 			if (clpData.isOkay())
 			{
-				wxString data = RawHtml(true, true);
+				wxString data = m_Items->GetHtml(true, true);
 				clpData.AddData(eFormatHtml, StringUtil::stringW(data));
 				clpData.AddData(StringUtil::stringW(m_Ctrl->ToText()));
 				clpData.CommitData();
@@ -379,13 +343,13 @@ void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 
 void CAgilityBookPointsView::OnPrint(wxCommandEvent& evt)
 {
-	wxString text(RawHtml(false, true));
+	wxString text(m_Items->GetHtml(false, true));
 	wxGetApp().GetHtmlPrinter()->PrintText(text);
 }
 
 
 void CAgilityBookPointsView::OnPreview(wxCommandEvent& evt)
 {
-	wxString text(RawHtml(false, true));
+	wxString text(m_Items->GetHtml(false, true));
 	wxGetApp().GetHtmlPrinter()->PreviewText(text);
 }

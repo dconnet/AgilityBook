@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-05-04 Reworked PointsData usage.
  * 2017-08-20 Add CPointsDataHeader
  * 2011-08-13 Don't copy internal url links to the clipboard.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -35,6 +36,7 @@
 #include <set>
 #include <vector>
 class CAgilityBookDoc;
+struct CVenueFilter;
 
 typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
 
@@ -53,27 +55,28 @@ typedef tuple<ARBDogPtr, ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
 /**
  * Used to accumulate lifetime info. Also for Placement totals.
  */
-class LifeTimePointInfo;
-typedef std::shared_ptr<LifeTimePointInfo> LifeTimePointInfoPtr;
 class LifeTimePointInfo
 {
-protected:
-	LifeTimePointInfo(
-			std::wstring const& inSort1,
-			std::wstring const& inSort2,
-			double inPoints,
-			double inFiltered);
+private:
+	LifeTimePointInfo() = delete;
 public:
-	static LifeTimePointInfoPtr New(
+	LifeTimePointInfo(
 			std::wstring const& inSort1, // Division or event
 			std::wstring const& inSort2, // Level or empty
 			double inPoints,
-			double inFiltered);
+			double inFiltered)
+		: sort1(inSort1)
+		, sort2(inSort2)
+		, points(inPoints)
+		, filtered(inFiltered)
+	{
+	}
 	std::wstring sort1;
 	std::wstring sort2;
 	double points;
 	double filtered;
 };
+typedef std::shared_ptr<LifeTimePointInfo> LifeTimePointInfoPtr;
 
 /**
  * Used to accumulate run info into a flat list.
@@ -92,7 +95,6 @@ public:
 	OtherPtInfo(ARBDogExistingPointsPtr const& inExisting);
 	OtherPtInfo(OtherPtInfo const&) = default;
 	OtherPtInfo(OtherPtInfo&&) = default;
-	~OtherPtInfo();
 	OtherPtInfo& operator=(OtherPtInfo const&) = default;
 	OtherPtInfo& operator=(OtherPtInfo&&) = default;
 	ARBDogTrialPtr m_pTrial;
@@ -109,192 +111,47 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CPointsDataBase;
-typedef std::shared_ptr<CPointsDataBase> CPointsDataBasePtr;
-class CPointsDataBase
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataBase)
-public:
-	CPointsDataBase(CAgilityBookDoc* pDoc);
-	virtual ~CPointsDataBase();
-
-	/// Get a particular column of text (used for listctrl)
-	virtual std::wstring OnNeedText(int inCol) const = 0;
-	/// Get html for a line
-	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const = 0;
-	/// Is this entry visible? (used for special html processing)
-	virtual bool IsVisible() const	{return true;}
-	/// This entry has details (dbl-click works)
-	virtual bool HasDetails() const {return false;}
-	virtual void Details() const	{}
-	/// Equality testing (to locate previous entries)
-	virtual bool IsEqual(CPointsDataBasePtr const& inData) = 0;
-
-protected:
-	CAgilityBookDoc* m_pDoc;
-};
-
-/////////////////////////////////////////////////////////////////////////////
-
 /**
- * Adds raw html into the HTML view.
+ * Keeps track of all titles in a venue.
  */
-class CPointsDataSeparator : public CPointsDataBase
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataSeparator)
-public:
-	CPointsDataSeparator(
-			CAgilityBookDoc* pDoc,
-			std::wstring const& inHtml);
-
-	std::wstring OnNeedText(int inCol) const override {return std::wstring();}
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override
-	{
-		return m_Html;
-	}
-	bool IsVisible() const override {return false;}
-	bool IsEqual(CPointsDataBasePtr const& /*inData*/) override {return false;}
-
-protected:
-	std::wstring m_Html;
-};
-
-/////////////////////////////////////////////////////////////////////////////
-
-/**
- * Inserts a line
- * - List view:
- *   - Blank line
- *   - Other points header (in html, CPointsDataSeparator is used)
- * - Both:
- *   - Name of Other Points data
- */
-class CPointsDataText : public CPointsDataBase
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataText)
-public:
-	CPointsDataText(
-		CAgilityBookDoc* pDoc,
-		bool bUseInHtml,
-		wchar_t const* inCol1 = L"",
-		wchar_t const* inCol2 = L"");
-	static CPointsDataBasePtr CreateListBlankLine(CAgilityBookDoc* pDoc);
-	static CPointsDataBasePtr CreateListOtherPoints(CAgilityBookDoc* pDoc);
-	static CPointsDataBasePtr CreateDataLine(
-			CAgilityBookDoc* pDoc,
-			std::wstring const& str);
-
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-private:
-	bool m_UseInHtml;
-	std::wstring m_Col1;
-	std::wstring m_Col2;
-};
-typedef std::shared_ptr<CPointsDataText> CPointsDataTextPtr;
-
-/////////////////////////////////////////////////////////////////////////////
-
-/**
- * This is the data for the "header".
- */
-class CPointsDataHeader : public CPointsDataBase
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataHeader)
-public:
-	CPointsDataHeader(CAgilityBookDoc* pDoc);
-
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	ARBDate m_today;
-};
-typedef std::shared_ptr<CPointsDataHeader> CPointsDataHeaderPtr;
-
-/**
- * This is the data for the dog.
- */
-class CPointsDataDog : public CPointsDataBase
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataDog)
-public:
-	CPointsDataDog(
-			CAgilityBookDoc* pDoc,
-			ARBDogPtr const& inDog);
-
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	ARBDogPtr m_pDog;
-};
-typedef std::shared_ptr<CPointsDataDog> CPointsDataDogPtr;
-
-/////////////////////////////////////////////////////////////////////////////
-
-/**
- * This is the venue "header"
- */
-class CPointsDataVenue : public CPointsDataBase
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataVenue)
-public:
-	CPointsDataVenue(
-			CAgilityBookDoc* pDoc,
-			ARBDogPtr const& inDog,
-			ARBConfigVenuePtr const& inVenue);
-
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	ARBDogPtr m_pDog;
-	ARBConfigVenuePtr m_pVenue;
-};
-typedef std::shared_ptr<CPointsDataVenue> CPointsDataVenuePtr;
-
-/////////////////////////////////////////////////////////////////////////////
-
-/**
- * This is a title item
- */
-class CPointsDataTitle : public CPointsDataBase
+class CPointsDataTitle
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataTitle)
 public:
 	CPointsDataTitle(
 			CAgilityBookDoc* pDoc,
-			ARBDogPtr const& inDog,
-			ARBDogTitlePtr const& inTitle);
+			ARBDogTitlePtr pTitle);
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks);
+	bool Details(
+			std::wstring const& link,
+			ARBDogPtr pDog);
 
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	ARBDogPtr m_pDog;
+private:
+	std::wstring m_refTag;
+	CAgilityBookDoc* m_pDoc;
 	ARBDogTitlePtr m_pTitle;
 };
 typedef std::shared_ptr<CPointsDataTitle> CPointsDataTitlePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
+class CRefTag
+{
+	size_t m_id;
+
+public:
+	CRefTag() : m_id(0) {}
+
+	size_t GetId() { ++m_id; return m_id; }
+	void reset() { m_id = 0; }
+};
+
 /**
- * Keeps track of all runs summarized in an event line.
+ * Keeps track of all runs in a venue.
  */
-class CPointsDataEvent : public CPointsDataBase
+class CPointsDataEvent
 {
 	friend class SortPointItems;
 	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataEvent)
@@ -314,15 +171,17 @@ public:
 			std::wstring const& inQcount,
 			std::wstring const& inPts,
 			std::wstring const& inSuperQ,
-			std::wstring const& inSpeed);
+			std::wstring const& inSpeed,
+			CRefTag& id);
 
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks);
+	bool Details(std::wstring const& link);
 
 protected:
+	std::wstring m_refTag;
+	CAgilityBookDoc* m_pDoc;
 	ARBDogPtr m_Dog;
 	std::list<RunInfo> m_Matching;
 	ARBConfigVenuePtr m_Venue;
@@ -343,32 +202,98 @@ typedef std::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
 /////////////////////////////////////////////////////////////////////////////
 
 /**
- * Keeps track of all lifetime points
+ * Keeps track of all Speed points in a venue.
  */
-class CPointsDataLifetime : public CPointsDataBase
+class CPointsDataSpeedPts
+{
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataSpeedPts)
+public:
+	CPointsDataSpeedPts(
+			CAgilityBookDoc* pDoc,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigDivisionPtr const& inDiv,
+			int inPts,
+			CRefTag& id);
+
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks);
+	bool Details(std::wstring const& link);
+
+protected:
+	std::wstring m_refTag;
+	CAgilityBookDoc* m_pDoc;
+	ARBConfigVenuePtr m_Venue;
+	ARBConfigDivisionPtr m_Div;
+	int m_Pts;
+};
+typedef std::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
+
+/////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Keeps track of all double Qs in a venue.
+ */
+class CPointsDataMultiQs
+{
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataMultiQs)
+public:
+	CPointsDataMultiQs(
+			CAgilityBookDoc* pDoc,
+			ARBDogPtr const& inDog,
+			ARBConfigVenuePtr const& inVenue,
+			ARBConfigMultiQPtr const& inMultiQ,
+			std::set<MultiQdata> const& inMQs,
+			CRefTag& id);
+
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks);
+	bool Details(std::wstring const& link);
+
+protected:
+	std::wstring m_refTag;
+	CAgilityBookDoc* m_pDoc;
+	ARBDogPtr m_Dog;
+	ARBConfigVenuePtr m_Venue;
+	ARBConfigMultiQPtr m_MultiQ;
+	std::set<MultiQdata> m_MQs;
+	double m_ExistingDblQs;
+};
+typedef std::shared_ptr<CPointsDataMultiQs> CPointsDataMultiQsPtr;
+
+/////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Keeps track of all lifetime points in a venue.
+ */
+class CPointsDataLifetime
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataLifetime)
 public:
 	CPointsDataLifetime(
 			CAgilityBookDoc* pDoc,
-			ARBConfigVenuePtr const& inVenue);
+			ARBConfigVenuePtr const& inVenue,
+			CRefTag& id);
 	CPointsDataLifetime(
 			CAgilityBookDoc* pDoc,
 			ARBConfigLifetimeNamePtr const& inLifetimeName,
-			ARBConfigVenuePtr const& inVenue);
+			ARBConfigVenuePtr const& inVenue,
+			CRefTag& id);
 	virtual void AddLifetimeInfo(
 			std::wstring const& inDiv,
 			std::wstring const& inLevel,
 			double inLifetime,
 			double inFiltered);
 
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
+	virtual void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks);
+	virtual bool Details(std::wstring const& link);
 
 protected:
+	std::wstring m_refTag;
+	CAgilityBookDoc* m_pDoc;
 	ARBConfigLifetimeNamePtr m_LifetimeName;	///< null implies Placement
 	ARBConfigVenuePtr m_Venue;
 	std::list<LifeTimePointInfoPtr> m_Data;
@@ -382,21 +307,19 @@ typedef std::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
  */
 class CPointsDataLifetimeByName : public CPointsDataLifetime
 {
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataLifetimeByName)
 public:
-	/**
-	* @param pDoc Document
-	* @param inVenue Associated venue
-	* @param inName Division name
-	*/
 	CPointsDataLifetimeByName(
 			CAgilityBookDoc* pDoc,
 			ARBConfigVenuePtr const& inVenue,
-			std::wstring const& inName);
+			std::wstring const& inName,
+			CRefTag& id);
 	CPointsDataLifetimeByName(
 			CAgilityBookDoc* pDoc,
 			ARBConfigLifetimeNamePtr const& inLifetimeName,
 			ARBConfigVenuePtr const& inVenue,
-			std::wstring const& inName);
+			std::wstring const& inName,
+			CRefTag& id);
 
 	// Adds are limited by inSort1 == m_Name
 	void AddLifetimeInfo(
@@ -405,9 +328,9 @@ public:
 			double inLifetime,
 			double inFiltered) override;
 
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks) override;
 
 protected:
 	std::wstring m_Name;
@@ -417,177 +340,24 @@ typedef std::shared_ptr<CPointsDataLifetimeByName> CPointsDataLifetimeByNamePtr;
 /////////////////////////////////////////////////////////////////////////////
 
 /**
- * Keeps track of all double Qs
+ * Keeps track of all venue data.
  */
-class CPointsDataMultiQs : public CPointsDataBase
+class CPointsDataVenue
 {
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataMultiQs)
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataVenue)
 public:
-	CPointsDataMultiQs(
+	CPointsDataVenue(
+			std::vector<CVenueFilter> const& venues,
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr const& inDog,
-			ARBConfigVenuePtr const& inVenue,
-			ARBConfigMultiQPtr const& inMultiQ,
-			std::set<MultiQdata> const& inMQs);
+			ARBConfigVenuePtr const inVenue,
+			CRefTag& id);
 
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	ARBDogPtr m_Dog;
-	ARBConfigVenuePtr m_Venue;
-	ARBConfigMultiQPtr m_MultiQ;
-	std::set<MultiQdata> m_MQs;
-	double m_ExistingDblQs;
-};
-typedef std::shared_ptr<CPointsDataMultiQs> CPointsDataMultiQsPtr;
-
-/////////////////////////////////////////////////////////////////////////////
-
-/**
- * Keeps track of all Speed points
- */
-class CPointsDataSpeedPts : public CPointsDataBase
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataSpeedPts)
-public:
-	CPointsDataSpeedPts(
-			CAgilityBookDoc* pDoc,
-			ARBConfigVenuePtr const& inVenue,
-			ARBConfigDivisionPtr const& inDiv,
-			int inPts);
-
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	ARBConfigVenuePtr m_Venue;
-	ARBConfigDivisionPtr m_Div;
-	int m_Pts;
-};
-typedef std::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
-
-/////////////////////////////////////////////////////////////////////////////
-
-/**
- * Other points data base class.
- */
-class CPointsDataOtherPoints : public CPointsDataBase
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPoints)
-public:
-	CPointsDataOtherPoints(
-			CAgilityBookDoc* pDoc,
-			std::list<OtherPtInfo> const& inRunList);
-
-protected:
-	double m_Points;
-	std::list<OtherPtInfo> m_RunList;
-};
-typedef std::shared_ptr<CPointsDataOtherPoints> CPointsDataOtherPointsPtr;
-
-class CPointsDataOtherPointsTallyAll : public CPointsDataOtherPoints
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyAll)
-public:
-	CPointsDataOtherPointsTallyAll(
-			CAgilityBookDoc* pDoc,
-			std::wstring const& inName,
-			std::list<OtherPtInfo> const& inRunList);
-
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	std::wstring m_Name;
-};
-typedef std::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
-
-class CPointsDataOtherPointsTallyAllByEvent : public CPointsDataOtherPoints
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyAllByEvent)
-public:
-	CPointsDataOtherPointsTallyAllByEvent(
-			CAgilityBookDoc* pDoc,
-			std::wstring const& inEvent,
-			std::list<OtherPtInfo> const& inRunList);
-
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	std::wstring m_Event;
-};
-typedef std::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
-
-class CPointsDataOtherPointsTallyLevel : public CPointsDataOtherPoints
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyLevel)
-public:
-	CPointsDataOtherPointsTallyLevel(
-			CAgilityBookDoc* pDoc,
-			std::wstring const& inLevel,
-			std::list<OtherPtInfo> const& inRunList);
-
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	std::wstring m_Level;
-};
-typedef std::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
-
-class CPointsDataOtherPointsTallyLevelByEvent : public CPointsDataOtherPoints
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyLevelByEvent)
-public:
-	CPointsDataOtherPointsTallyLevelByEvent(
-			CAgilityBookDoc* pDoc,
-			std::wstring const& inLevel,
-			std::wstring const& inEvent,
-			std::list<OtherPtInfo> const& inRunList);
-
-	std::wstring OnNeedText(int inCol) const override;
-	std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const override;
-	bool HasDetails() const override {return true;}
-	void Details() const override;
-	bool IsEqual(CPointsDataBasePtr const& inData) override;
-
-protected:
-	std::wstring m_Level;
-	std::wstring m_Event;
-};
-typedef std::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
-
-/////////////////////////////////////////////////////////////////////////////
-
-class CPointsDataItems
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataItems)
-public:
-	CPointsDataItems();
-	~CPointsDataItems();
-
-	void LoadData(
-			CAgilityBookDoc* pDoc,
-			ARBDogPtr const& inDog);
-	void clear();
-
-	size_t NumLines() const;
-	CPointsDataBasePtr GetLine(size_t nLine) const;
+	bool HasData() const;
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks);
+	bool Details(std::wstring const& link);
 
 private:
 	struct LifeTimePoint
@@ -627,10 +397,149 @@ private:
 	};
 	typedef std::list<PlacementPoints> PlacementPointsList;
 
-	void InsertVenueHeader(
-			CAgilityBookDoc* pDoc,
-			ARBDogPtr const& inDog,
-			ARBConfigVenuePtr const& inVenue);
+	std::wstring m_refTag;
+	CAgilityBookDoc* m_pDoc;
+	ARBDogPtr m_pDog;
+	ARBConfigVenuePtr m_pVenue;
+	std::vector<CPointsDataTitlePtr> m_titles;
+	std::vector<CPointsDataEventPtr> m_events;
+	std::vector<CPointsDataSpeedPtsPtr> m_speedPts;
+	std::vector<CPointsDataMultiQsPtr> m_multiQs;
+	std::vector<CPointsDataLifetimePtr> m_lifetime;
+};
+typedef std::shared_ptr<CPointsDataVenue> CPointsDataVenuePtr;
 
-	std::vector<CPointsDataBasePtr> m_Lines;
+/////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Other points data base class.
+ */
+class CPointsDataOtherPoints
+{
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPoints)
+public:
+	CPointsDataOtherPoints(
+			CAgilityBookDoc* pDoc,
+			ARBConfigOtherPointsPtr pOther,
+			std::list<OtherPtInfo> const& inRunList,
+			CRefTag& id);
+	virtual void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks) = 0;
+	virtual bool Details(std::wstring const& link) = 0;
+	ARBConfigOtherPointsPtr GetOther() const { return m_pOther; }
+
+protected:
+	std::wstring m_refTag;
+	CAgilityBookDoc* m_pDoc;
+	ARBConfigOtherPointsPtr m_pOther;
+	std::list<OtherPtInfo> m_RunList;
+	double m_Points;
+};
+typedef std::shared_ptr<CPointsDataOtherPoints> CPointsDataOtherPointsPtr;
+
+class CPointsDataOtherPointsTallyAll : public CPointsDataOtherPoints
+{
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyAll)
+public:
+	CPointsDataOtherPointsTallyAll(
+			CAgilityBookDoc* pDoc,
+			ARBConfigOtherPointsPtr pOther,
+			std::list<OtherPtInfo> const& inRunList,
+			CRefTag& id);
+
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks) override;
+	bool Details(std::wstring const& link) override;
+};
+typedef std::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
+
+class CPointsDataOtherPointsTallyAllByEvent : public CPointsDataOtherPoints
+{
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyAllByEvent)
+public:
+	CPointsDataOtherPointsTallyAllByEvent(
+			CAgilityBookDoc* pDoc,
+			ARBConfigOtherPointsPtr pOther,
+			std::wstring const& inEvent,
+			std::list<OtherPtInfo> const& inRunList,
+			CRefTag& id);
+
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks) override;
+	bool Details(std::wstring const& link) override;
+
+protected:
+	std::wstring m_Event;
+};
+typedef std::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
+
+class CPointsDataOtherPointsTallyLevel : public CPointsDataOtherPoints
+{
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyLevel)
+public:
+	CPointsDataOtherPointsTallyLevel(
+			CAgilityBookDoc* pDoc,
+			ARBConfigOtherPointsPtr pOther,
+			std::wstring const& inLevel,
+			std::list<OtherPtInfo> const& inRunList,
+			CRefTag& id);
+
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks) override;
+	bool Details(std::wstring const& link) override;
+
+protected:
+	std::wstring m_Level;
+};
+typedef std::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
+
+class CPointsDataOtherPointsTallyLevelByEvent : public CPointsDataOtherPoints
+{
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataOtherPointsTallyLevelByEvent)
+public:
+	CPointsDataOtherPointsTallyLevelByEvent(
+			CAgilityBookDoc* pDoc,
+			ARBConfigOtherPointsPtr pOther,
+			std::wstring const& inLevel,
+			std::wstring const& inEvent,
+			std::list<OtherPtInfo> const& inRunList,
+			CRefTag& id);
+
+	void GetHtml(
+			fmt::wmemory_buffer& data,
+			bool bNoInternalLinks) override;
+	bool Details(std::wstring const& link) override;
+
+protected:
+	std::wstring m_Level;
+	std::wstring m_Event;
+};
+typedef std::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CPointsDataItems
+{
+	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataItems)
+public:
+	CPointsDataItems(CAgilityBookDoc* pDoc);
+
+	void clear();
+
+	void LoadData(ARBDogPtr const& inDog);
+
+	wxString GetHtml(
+			bool bFragment,
+			bool bNoInternalLinks);
+	bool Details(std::wstring const& link);
+
+private:
+	CAgilityBookDoc* m_pDoc;
+	ARBDogPtr m_pDog;
+	std::vector<CPointsDataVenuePtr> m_venues;
+	std::vector< CPointsDataOtherPointsPtr> m_otherPts;
 };

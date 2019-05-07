@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-05-04 Reworked PointsData usage.
  * 2014-04-23 Scroll to position of clicked link on page load.
  * 2009-02-09 Ported to wxWidgets.
  * 2006-09-10 Created
@@ -91,9 +92,6 @@ public:
 			wxObject* inHint = nullptr) override;
 
 private:
-	wxString RawHtml(
-			bool bFragment,
-			bool bNoInternalLinks) const;
 	void LoadData();
 
 	CHtmlWindow* m_Ctrl;
