@@ -57,9 +57,9 @@
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoNote dialog
 
-BEGIN_EVENT_TABLE(CDlgInfoNote, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgInfoNote, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgInfoNote::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgInfoNote::CDlgInfoNote(

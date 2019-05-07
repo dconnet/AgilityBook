@@ -88,9 +88,9 @@ std::wstring CListTrialData::OnNeedText(long iCol) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgTrial, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgTrial, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgTrial::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgTrial::CDlgTrial(

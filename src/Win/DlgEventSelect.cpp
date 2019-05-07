@@ -72,9 +72,9 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgEventSelect, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgEventSelect, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgEventSelect::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgEventSelect::CDlgEventSelect(

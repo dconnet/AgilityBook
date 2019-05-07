@@ -192,7 +192,7 @@ bool CErrorCallback::OnError(wchar_t const* const pMsg)
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
+wxBEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_UPDATE_UI(ID_FILE_EXPORT_WIZARD, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_FILE_EXPORT_WIZARD, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(ID_FILE_LINKED, CAgilityBookDoc::OnUpdateCmdTrue)
@@ -235,7 +235,7 @@ BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 #ifdef _DEBUG
 	EVT_MENU(ID_HELP_DEBUG, CAgilityBookDoc::OnHelpDebug)
 #endif
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CAgilityBookDoc::CAgilityBookDoc()

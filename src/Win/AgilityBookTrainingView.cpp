@@ -297,10 +297,10 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_CLASS(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
+wxIMPLEMENT_CLASS(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
 
 
-BEGIN_EVENT_TABLE(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
+wxBEGIN_EVENT_TABLE(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
 	EVT_CONTEXT_MENU(CAgilityBookTrainingView::OnViewContextMenu)
 	EVT_UPDATE_UI(wxID_DUPLICATE, CAgilityBookTrainingView::OnViewUpdateCmd)
 	EVT_MENU(wxID_DUPLICATE, CAgilityBookTrainingView::OnViewCmd)
@@ -328,7 +328,7 @@ BEGIN_EVENT_TABLE(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookTrainingView::OnViewCmd)
 	EVT_MENU(wxID_PRINT, CAgilityBookTrainingView::OnPrint)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookTrainingView::OnPreview)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 #include "Platform/arbWarningPush.h"

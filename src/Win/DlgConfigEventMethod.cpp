@@ -108,9 +108,9 @@ int wxCALLBACK ComparePlacement(CListDataPtr const& item1, CListDataPtr const& i
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigEventMethod dialog
 
-BEGIN_EVENT_TABLE(CDlgConfigEventMethod, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigEventMethod, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigEventMethod::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigEventMethod::CDlgConfigEventMethod(

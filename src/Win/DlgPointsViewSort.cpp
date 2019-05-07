@@ -41,9 +41,9 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgPointsViewSort, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgPointsViewSort, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgPointsViewSort::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)

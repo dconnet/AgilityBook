@@ -562,9 +562,9 @@ int wxCALLBACK ComparePoints(CListDataPtr const& item1, CListDataPtr const& item
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgDog, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgDog, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgDog::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgDog::CDlgDog(

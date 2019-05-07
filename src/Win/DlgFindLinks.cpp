@@ -164,9 +164,9 @@ int wxCALLBACK CompareLinks(CListDataPtr const& item1, CListDataPtr const& item2
 /////////////////////////////////////////////////////////////////////////////
 // CDlgFindLinks dialog
 
-BEGIN_EVENT_TABLE(CDlgFindLinks, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgFindLinks, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgFindLinks::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgFindLinks::CDlgFindLinks(

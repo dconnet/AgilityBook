@@ -34,10 +34,10 @@
 #endif
 
 
-IMPLEMENT_CLASS(CListCtrl, wxListView)
-IMPLEMENT_CLASS(CTreeCtrl, wxTreeCtrl)
-IMPLEMENT_CLASS(CTextCtrl, wxTextCtrl)
-IMPLEMENT_CLASS(CSpellCheckCtrl, CTextCtrl)
+wxIMPLEMENT_CLASS(CListCtrl, wxListView)
+wxIMPLEMENT_CLASS(CTreeCtrl, wxTreeCtrl)
+wxIMPLEMENT_CLASS(CTextCtrl, wxTextCtrl)
+wxIMPLEMENT_CLASS(CSpellCheckCtrl, CTextCtrl)
 
 
 static bool ComputeTreeHeight(

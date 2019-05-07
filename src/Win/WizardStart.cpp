@@ -71,7 +71,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CWizardStart property page
 
-IMPLEMENT_CLASS(CWizardStart, wxWizardPage)
+wxIMPLEMENT_CLASS(CWizardStart, wxWizardPage)
 
 
 CWizardStart::CWizardStart(

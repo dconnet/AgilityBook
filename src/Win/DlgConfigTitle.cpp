@@ -74,9 +74,9 @@ bool CMultipleValidator::Validate(wxWindow* parent)
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgConfigTitle, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigTitle, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigTitle::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigTitle::CDlgConfigTitle(

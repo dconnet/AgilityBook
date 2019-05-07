@@ -44,7 +44,7 @@
 #endif
 
 
-IMPLEMENT_CLASS(CReportListCtrl, CListCtrl)
+wxIMPLEMENT_CLASS(CReportListCtrl, CListCtrl)
 
 
 CReportListCtrl::CReportListCtrl(
@@ -434,7 +434,7 @@ void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_CLASS(CCheckListCtrl, CListCtrl)
+wxIMPLEMENT_CLASS(CCheckListCtrl, CListCtrl)
 
 
 CCheckListCtrl::CCheckListCtrl(

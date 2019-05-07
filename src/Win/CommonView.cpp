@@ -26,8 +26,8 @@
 #endif
 
 
-IMPLEMENT_CLASS(CAgilityBookBaseView, wxView)
-IMPLEMENT_CLASS(CAgilityBookBaseExtraView, CAgilityBookBaseView)
+wxIMPLEMENT_CLASS(CAgilityBookBaseView, wxView)
+wxIMPLEMENT_CLASS(CAgilityBookBaseExtraView, CAgilityBookBaseView)
 
 
 CAgilityBookBaseExtraView::CAgilityBookBaseExtraView(

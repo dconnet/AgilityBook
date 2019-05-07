@@ -35,8 +35,8 @@
 #endif
 
 
-IMPLEMENT_CLASS(CGenericValidator, wxValidator)
-IMPLEMENT_CLASS(CTrimValidator, wxGenericValidator)
+wxIMPLEMENT_CLASS(CGenericValidator, wxValidator)
+wxIMPLEMENT_CLASS(CTrimValidator, wxGenericValidator)
 
 /////////////////////////////////////////////////////////////////////////////
 

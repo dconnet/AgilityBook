@@ -36,9 +36,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgPluginDetails, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgPluginDetails, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgPluginDetails::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgPluginDetails::CDlgPluginDetails(

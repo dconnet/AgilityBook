@@ -124,9 +124,9 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgExistingPoints, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgExistingPoints, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgExistingPoints::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 // Controls (all are readonly, except subname):

@@ -58,9 +58,9 @@ public:
 };
 
 
-BEGIN_EVENT_TABLE(CDlgReorder, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgReorder, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgReorder::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgReorder::CDlgReorder(

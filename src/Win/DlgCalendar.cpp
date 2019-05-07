@@ -51,9 +51,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgCalendar, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgCalendar, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgCalendar::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgCalendar::CDlgCalendar(

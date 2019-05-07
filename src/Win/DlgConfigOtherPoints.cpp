@@ -101,9 +101,9 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgConfigOtherPoints, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigOtherPoints, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigOtherPoints::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigOtherPoints::CDlgConfigOtherPoints(

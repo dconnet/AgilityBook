@@ -107,9 +107,9 @@ void CDetails::OnDetails(wxWindow* pParent)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigure dialog
 
-BEGIN_EVENT_TABLE(CDlgConfigure, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigure, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigure::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigure::CDlgConfigure(

@@ -60,7 +60,7 @@
 #endif
 
 
-IMPLEMENT_CLASS(CWizardExport, wxWizardPageSimple)
+wxIMPLEMENT_CLASS(CWizardExport, wxWizardPageSimple)
 
 
 CWizardExport::CWizardExport(

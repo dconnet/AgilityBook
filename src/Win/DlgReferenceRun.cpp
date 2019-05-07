@@ -43,9 +43,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgReferenceRun, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgReferenceRun, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgReferenceRun::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgReferenceRun::CDlgReferenceRun(

@@ -35,9 +35,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgCalendarQueryDetail, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgCalendarQueryDetail, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgCalendarQueryDetail::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(

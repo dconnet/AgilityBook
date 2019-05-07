@@ -97,10 +97,10 @@ private:
 };
 
 
-BEGIN_EVENT_TABLE(CAgilityBookDocManager, wxDocManager)
+wxBEGIN_EVENT_TABLE(CAgilityBookDocManager, wxDocManager)
 	EVT_MENU(wxID_PRINT, CAgilityBookDocManager::OnPrint)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookDocManager::OnPreview)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CAgilityBookDocManager::CAgilityBookDocManager(size_t historySize)
@@ -168,10 +168,10 @@ void CAgilityBookDocManager::OnPreview(wxCommandEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CAgilityBookApp, wxApp)
+wxBEGIN_EVENT_TABLE(CAgilityBookApp, wxApp)
 	EVT_QUERY_END_SESSION(CAgilityBookApp::OnQueryEndSession)
 	EVT_END_SESSION(CAgilityBookApp::OnEndSession)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 // eLanguageCatalogEmbedded will fallback to eLanguageCatalogDirectory

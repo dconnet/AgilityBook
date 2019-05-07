@@ -463,10 +463,10 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_CLASS(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
+wxIMPLEMENT_CLASS(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
 
 
-BEGIN_EVENT_TABLE(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
+wxBEGIN_EVENT_TABLE(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
 	EVT_CONTEXT_MENU(CAgilityBookCalendarListView::OnViewContextMenu)
 	EVT_UPDATE_UI(wxID_DUPLICATE, CAgilityBookCalendarListView::OnViewUpdateCmd)
 	EVT_MENU(wxID_DUPLICATE, CAgilityBookCalendarListView::OnViewCmd)
@@ -498,7 +498,7 @@ BEGIN_EVENT_TABLE(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookCalendarListView::OnViewCmd)
 	EVT_MENU(wxID_PRINT, CAgilityBookCalendarListView::OnPrint)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookCalendarListView::OnPreview)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 #include "Platform/arbWarningPush.h"

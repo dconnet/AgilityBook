@@ -36,9 +36,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgTraining, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgTraining, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgTraining::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgTraining::CDlgTraining(

@@ -109,10 +109,10 @@ void CHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_CLASS(CAgilityBookPointsView, CAgilityBookBaseExtraView)
+wxIMPLEMENT_CLASS(CAgilityBookPointsView, CAgilityBookBaseExtraView)
 
 
-BEGIN_EVENT_TABLE(CAgilityBookPointsView, CAgilityBookBaseExtraView)
+wxBEGIN_EVENT_TABLE(CAgilityBookPointsView, CAgilityBookBaseExtraView)
 	EVT_UPDATE_UI(wxID_COPY, CAgilityBookPointsView::OnViewUpdateCmd)
 	EVT_MENU(wxID_COPY, CAgilityBookPointsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_AGILITY_NEW_TITLE, CAgilityBookPointsView::OnViewUpdateCmd)
@@ -125,7 +125,7 @@ BEGIN_EVENT_TABLE(CAgilityBookPointsView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_VIEW_LIFETIME_EVENTS, CAgilityBookPointsView::OnViewCmd)
 	EVT_MENU(wxID_PRINT, CAgilityBookPointsView::OnPrint)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookPointsView::OnPreview)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CAgilityBookPointsView::CAgilityBookPointsView(

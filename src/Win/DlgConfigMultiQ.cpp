@@ -42,9 +42,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgConfigMultiQ, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigMultiQ, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigMultiQ::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigMultiQ::CDlgConfigMultiQ(

@@ -209,9 +209,9 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgConfigVenue, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigVenue, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigVenue::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigVenue::CDlgConfigVenue(

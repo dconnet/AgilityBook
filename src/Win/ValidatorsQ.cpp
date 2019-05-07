@@ -25,7 +25,7 @@
 #endif
 
 
-IMPLEMENT_CLASS(CQualifyingValidator, wxValidator)
+wxIMPLEMENT_CLASS(CQualifyingValidator, wxValidator)
 
 
 CQualifyingValidator::CQualifyingValidator(

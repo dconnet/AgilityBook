@@ -60,7 +60,7 @@
 #endif
 
 
-IMPLEMENT_CLASS(CWizardImport, wxWizardPageSimple)
+wxIMPLEMENT_CLASS(CWizardImport, wxWizardPageSimple)
 
 
 CWizardImport::CWizardImport(

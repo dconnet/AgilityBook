@@ -187,10 +187,10 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_CLASS(CAgilityBookTreeView, CAgilityBookBaseExtraView)
+wxIMPLEMENT_CLASS(CAgilityBookTreeView, CAgilityBookBaseExtraView)
 
 
-BEGIN_EVENT_TABLE(CAgilityBookTreeView, CAgilityBookBaseExtraView)
+wxBEGIN_EVENT_TABLE(CAgilityBookTreeView, CAgilityBookBaseExtraView)
 	EVT_CONTEXT_MENU(CAgilityBookTreeView::OnViewContextMenu)
 	EVT_UPDATE_UI(wxID_DUPLICATE, CAgilityBookTreeView::OnViewUpdateCmd)
 	EVT_MENU(wxID_DUPLICATE, CAgilityBookTreeView::OnViewCmd)
@@ -254,7 +254,7 @@ BEGIN_EVENT_TABLE(CAgilityBookTreeView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_COLLAPSE_ALL, CAgilityBookTreeView::OnViewCmd)
 	EVT_MENU(wxID_PRINT, CAgilityBookTreeView::OnPrint)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookTreeView::OnPreview)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 #include "Platform/arbWarningPush.h"

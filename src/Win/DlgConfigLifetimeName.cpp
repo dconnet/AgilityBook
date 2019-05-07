@@ -42,9 +42,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgConfigLifetimeName, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigLifetimeName, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigLifetimeName::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigLifetimeName::CDlgConfigLifetimeName(

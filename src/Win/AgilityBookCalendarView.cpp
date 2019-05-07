@@ -152,14 +152,14 @@ private:
 };
 
 
-IMPLEMENT_CLASS(CAgilityBookCalendar, wxWindow)
+wxIMPLEMENT_CLASS(CAgilityBookCalendar, wxWindow)
 
 
-BEGIN_EVENT_TABLE(CAgilityBookCalendar, wxWindow)
+wxBEGIN_EVENT_TABLE(CAgilityBookCalendar, wxWindow)
 	EVT_PAINT(CAgilityBookCalendar::OnPaint)
 	EVT_SET_FOCUS(CAgilityBookCalendar::OnSetFocus)
 	EVT_KILL_FOCUS(CAgilityBookCalendar::OnKillFocus)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CAgilityBookCalendar::CAgilityBookCalendar(
@@ -1169,10 +1169,10 @@ void CAgilityBookCalendar::OnKillFocus(wxFocusEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_CLASS(CAgilityBookCalendarView, CAgilityBookBaseExtraView)
+wxIMPLEMENT_CLASS(CAgilityBookCalendarView, CAgilityBookBaseExtraView)
 
 
-BEGIN_EVENT_TABLE(CAgilityBookCalendarView, CAgilityBookBaseExtraView)
+wxBEGIN_EVENT_TABLE(CAgilityBookCalendarView, CAgilityBookBaseExtraView)
 	EVT_CONTEXT_MENU(CAgilityBookCalendarView::OnContextMenu)
 	EVT_UPDATE_UI(wxID_DUPLICATE, CAgilityBookCalendarView::OnViewUpdateCmd)
 	EVT_MENU(wxID_DUPLICATE, CAgilityBookCalendarView::OnViewCmd)
@@ -1202,7 +1202,7 @@ BEGIN_EVENT_TABLE(CAgilityBookCalendarView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_AGILITY_CREATEENTRY_CALENDAR, CAgilityBookCalendarView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookCalendarView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookCalendarView::OnViewCmd)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CAgilityBookCalendarView::CAgilityBookCalendarView(

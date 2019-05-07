@@ -36,9 +36,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgConfigTitlePoints, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigTitlePoints, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigTitlePoints::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(

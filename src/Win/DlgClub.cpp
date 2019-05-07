@@ -37,9 +37,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgClub, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgClub, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgClub::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 // If inClub is NULL, we're creating a new entry. Otherwise, we're editing an existing.

@@ -32,7 +32,7 @@
 #endif
 
 
-IMPLEMENT_CLASS(CVenueComboBox, wxComboBox)
+wxIMPLEMENT_CLASS(CVenueComboBox, wxComboBox)
 
 /////////////////////////////////////////////////////////////////////////////
 

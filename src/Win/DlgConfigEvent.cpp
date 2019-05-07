@@ -119,9 +119,9 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgConfigEvent, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigEvent, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigEvent::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigEvent::CDlgConfigEvent(

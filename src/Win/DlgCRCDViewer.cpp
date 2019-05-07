@@ -43,9 +43,9 @@ private:
 };
 
 
-BEGIN_EVENT_TABLE(CMetaDataStatic, wxStaticText)
+wxBEGIN_EVENT_TABLE(CMetaDataStatic, wxStaticText)
 	EVT_PAINT(CMetaDataStatic::OnPaint)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CMetaDataStatic::CMetaDataStatic(

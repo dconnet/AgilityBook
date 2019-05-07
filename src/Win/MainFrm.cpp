@@ -101,7 +101,7 @@ void CMainFrame::CStartupEvent::Notify()
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
+wxBEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 #ifdef EVT_DPI_CHANGED
 	EVT_DPI_CHANGED(CMainFrame::OnDPIChanged)
 #endif
@@ -126,7 +126,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_MENU(ID_PREV_PANE, CMainFrame::OnPrevPane)
 	EVT_MENU(ID_VIEW_CUSTOMIZE_ACCEL, CMainFrame::OnViewCustomizeAccel)
 	EVT_MENU(ID_HELP_SYSINFO, CMainFrame::OnHelpSysinfo)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CMainFrame::CMainFrame(wxDocManager* manager)

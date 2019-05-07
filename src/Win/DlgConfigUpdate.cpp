@@ -40,9 +40,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgConfigUpdate, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgConfigUpdate, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigUpdate::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)

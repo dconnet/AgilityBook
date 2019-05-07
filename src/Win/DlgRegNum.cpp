@@ -36,9 +36,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgRegNum, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgRegNum, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgRegNum::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 // If inRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.

@@ -65,7 +65,7 @@ private:
 };
 
 
-IMPLEMENT_CLASS(CLongValidator, wxValidator)
+wxIMPLEMENT_CLASS(CLongValidator, wxValidator)
 
 
 bool CLongValidator::TransferFromWindow()

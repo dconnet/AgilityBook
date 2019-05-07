@@ -35,9 +35,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgSelectDog, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgSelectDog, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgSelectDog::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgSelectDog::CDlgSelectDog(

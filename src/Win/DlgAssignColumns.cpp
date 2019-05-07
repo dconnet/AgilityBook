@@ -817,9 +817,9 @@ int wxCALLBACK CompareTypes(wxIntPtr lParam1, wxIntPtr lParam2, wxIntPtr lParam3
 }
 
 
-BEGIN_EVENT_TABLE(CDlgAssignColumns, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgAssignColumns, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgAssignColumns::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgAssignColumns::CDlgAssignColumns(

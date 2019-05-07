@@ -41,7 +41,7 @@
 #define DEF_Q_WIDTH	30
 #endif
 
-IMPLEMENT_CLASS(CQualifyingComboBox, wxChoice)
+wxIMPLEMENT_CLASS(CQualifyingComboBox, wxChoice)
 
 /////////////////////////////////////////////////////////////////////////////
 

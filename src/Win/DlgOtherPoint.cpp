@@ -52,9 +52,9 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgOtherPoint, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgOtherPoint, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgOtherPoint::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgOtherPoint::CDlgOtherPoint(

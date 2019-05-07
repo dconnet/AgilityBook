@@ -439,9 +439,9 @@ private:
 };
 
 
-BEGIN_EVENT_TABLE(CMetaDataDisplay, CTextCtrl)
+wxBEGIN_EVENT_TABLE(CMetaDataDisplay, CTextCtrl)
 	EVT_PAINT(CMetaDataDisplay::OnPaint)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CMetaDataDisplay::CMetaDataDisplay(
@@ -677,9 +677,9 @@ static std::wstring Pad(std::wstring const& val)
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgRun, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgRun, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgRun::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgRun::CDlgRun(

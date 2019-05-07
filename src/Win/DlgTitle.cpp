@@ -58,9 +58,9 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_EVENT_TABLE(CDlgTitle, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgTitle, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgTitle::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 // If inTitle is NULL, we're creating a new entry. Otherwise, we're editing an existing.

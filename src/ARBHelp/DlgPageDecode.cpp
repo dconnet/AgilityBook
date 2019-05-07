@@ -40,9 +40,9 @@
 #endif
 
 
-BEGIN_EVENT_TABLE(CDlgPageDecode, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgPageDecode, wxDialog)
 	EVT_BUTTON(wxID_CANCEL, CDlgPageDecode::OnCancel)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 CDlgPageDecode::CDlgPageDecode()

@@ -378,9 +378,9 @@ void CDlgListCtrlDataPartners::Apply()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgListCtrl dialog
 
-BEGIN_EVENT_TABLE(CDlgListCtrl, wxDialog)
+wxBEGIN_EVENT_TABLE(CDlgListCtrl, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgListCtrl::OnOk)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 
 // Calendar
