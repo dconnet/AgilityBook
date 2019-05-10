@@ -19,6 +19,7 @@
 
 #include "LibwxARBWin.h"
 
+#include <unordered_map>
 #include <vector>
 #include <wx/artprov.h>
 class wxFrame;

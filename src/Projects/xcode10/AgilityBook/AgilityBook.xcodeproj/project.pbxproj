@@ -15,7 +15,6 @@
 		E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */; };
 		E19B64F1166C09B9004DEDA4 /* AgilityBookCalendarView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E2166C09B9004DEDA4 /* AgilityBookCalendarView.cpp */; };
 		E19B64F2166C09B9004DEDA4 /* AgilityBookDoc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E4166C09B9004DEDA4 /* AgilityBookDoc.cpp */; };
-		E19B64F3166C09B9004DEDA4 /* AgilityBookHtmlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E6166C09B9004DEDA4 /* AgilityBookHtmlView.cpp */; };
 		E19B64F4166C09B9004DEDA4 /* AgilityBookMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E8166C09B9004DEDA4 /* AgilityBookMenu.cpp */; };
 		E19B64F5166C09B9004DEDA4 /* AgilityBookOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63EA166C09B9004DEDA4 /* AgilityBookOptions.cpp */; };
 		E19B64F6166C09B9004DEDA4 /* AgilityBookPanels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63EC166C09B9004DEDA4 /* AgilityBookPanels.cpp */; };
@@ -252,8 +251,6 @@
 		E19B63E3166C09B9004DEDA4 /* AgilityBookCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookCalendarView.h; sourceTree = "<group>"; };
 		E19B63E4166C09B9004DEDA4 /* AgilityBookDoc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookDoc.cpp; sourceTree = "<group>"; };
 		E19B63E5166C09B9004DEDA4 /* AgilityBookDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookDoc.h; sourceTree = "<group>"; };
-		E19B63E6166C09B9004DEDA4 /* AgilityBookHtmlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookHtmlView.cpp; sourceTree = "<group>"; };
-		E19B63E7166C09B9004DEDA4 /* AgilityBookHtmlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookHtmlView.h; sourceTree = "<group>"; };
 		E19B63E8166C09B9004DEDA4 /* AgilityBookMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookMenu.cpp; sourceTree = "<group>"; };
 		E19B63E9166C09B9004DEDA4 /* AgilityBookMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookMenu.h; sourceTree = "<group>"; };
 		E19B63EA166C09B9004DEDA4 /* AgilityBookOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookOptions.cpp; sourceTree = "<group>"; };
@@ -778,8 +775,6 @@
 				E19B63E3166C09B9004DEDA4 /* AgilityBookCalendarView.h */,
 				E19B63E4166C09B9004DEDA4 /* AgilityBookDoc.cpp */,
 				E19B63E5166C09B9004DEDA4 /* AgilityBookDoc.h */,
-				E19B63E6166C09B9004DEDA4 /* AgilityBookHtmlView.cpp */,
-				E19B63E7166C09B9004DEDA4 /* AgilityBookHtmlView.h */,
 				E19B63E8166C09B9004DEDA4 /* AgilityBookMenu.cpp */,
 				E19B63E9166C09B9004DEDA4 /* AgilityBookMenu.h */,
 				E19B63EA166C09B9004DEDA4 /* AgilityBookOptions.cpp */,
@@ -1015,6 +1010,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = E19B63B0166C096E004DEDA4;
@@ -1190,7 +1186,6 @@
 				E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */,
 				E19B64F1166C09B9004DEDA4 /* AgilityBookCalendarView.cpp in Sources */,
 				E19B64F2166C09B9004DEDA4 /* AgilityBookDoc.cpp in Sources */,
-				E19B64F3166C09B9004DEDA4 /* AgilityBookHtmlView.cpp in Sources */,
 				E19B64F4166C09B9004DEDA4 /* AgilityBookMenu.cpp in Sources */,
 				E19B64F5166C09B9004DEDA4 /* AgilityBookOptions.cpp in Sources */,
 				E19B64F6166C09B9004DEDA4 /* AgilityBookPanels.cpp in Sources */,
