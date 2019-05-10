@@ -65,6 +65,10 @@ AGILITYBOOK_FR_FR       MOFILE                  "lang/fr_FR/AgilityBook.mo"
 
 AGILITYBOOK_DAT         DATAFILE                "AgilityBook.dat"
 
+// Note: When adding new images, remember to add them into the xcode project
+// "Supporting Files" section also. (Or an xcode-build won't include them. Make
+// builds include all files in the res directory, so that's not an issue.)
+
 AGILITYBOOK16           RCDATA                  "res/AgilityBook16.png"
 AGILITYBOOK16_2         RCDATA                  "res/AgilityBook16@2.png"
 AGILITYBOOK32           RCDATA                  "res/AgilityBook32.png"
