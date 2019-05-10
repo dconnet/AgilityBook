@@ -42,7 +42,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	AgilityBookCalendarListView.cpp \
 	AgilityBookCalendarView.cpp \
 	AgilityBookDoc.cpp \
-	AgilityBookHtmlView.cpp \
 	AgilityBookMenu.cpp \
 	AgilityBookOptions.cpp \
 	AgilityBookPanels.cpp \
