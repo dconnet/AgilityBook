@@ -1605,17 +1605,21 @@ wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 	}
 
 	// Put general info about the dog in...
-	fmt::format_to(data, L"<h1 align=\"center\">{} {}</h1><h1>",
+	fmt::format_to(data, L"<h1 align=\"center\">{} {}</h1>",
 		_("IDS_TITLING_POINTS").wx_str(),
 		Sanitize(today.GetString()));
-	if (!bNoInternalLinks)
-		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, s_refDog);
-	fmt::format_to(data, L"{}", Sanitize(m_pDog->GetCallName()));
-	if (!bNoInternalLinks)
-		fmt::format_to(data, L"</a>");
-	if (!m_pDog->GetRegisteredName().empty())
-		fmt::format_to(data, L" [{}]", Sanitize(m_pDog->GetRegisteredName()));
-	fmt::format_to(data, L"</h1>\n");
+	if (m_pDog)
+	{
+		fmt::format_to(data, L"<h1>");
+		if (!bNoInternalLinks)
+			fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, s_refDog);
+		fmt::format_to(data, L"{}", Sanitize(m_pDog->GetCallName()));
+		if (!bNoInternalLinks)
+			fmt::format_to(data, L"</a>");
+		if (!m_pDog->GetRegisteredName().empty())
+			fmt::format_to(data, L" [{}]", Sanitize(m_pDog->GetRegisteredName()));
+		fmt::format_to(data, L"</h1>\n");
+	}
 
 	// Venues
 	for (auto venue : m_venues)
