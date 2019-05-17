@@ -510,19 +510,19 @@ int CAgilityBookApp::OnExit()
 bool CAgilityBookApp::OnAddFileDebugReport(wxDebugReport* report)
 {
 	{
-		wxFileName fn(report->GetDirectory(), wxT("ARBInfo.txt"));
-		wxFFile file(fn.GetFullPath(), wxT("w"));
+		wxFileName fn(report->GetDirectory(), L"ARBInfo.txt");
+		wxFFile file(fn.GetFullPath(), L"w");
 		if (file.IsOpened())
 		{
 			CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 			wxDateTime dt = wxDateTime::Now();
-			file.Write(dt.FormatISODate() + wxT(' ') + dt.FormatISOTime());
-			file.Write(wxT("\n\nSystem Information\n"));
+			file.Write(dt.FormatISODate() + L' ' + dt.FormatISOTime());
+			file.Write(L"\n\nSystem Information\n");
 			file.Write(ARBDebug::GetSystemInfo(GetTopWindow(), ver));
-			file.Write(wxT("\nRegistry dump\n"));
+			file.Write(L"\nRegistry dump\n");
 			file.Write(ARBDebug::GetRegistryInfo());
 		}
-		report->AddFile(fn.GetFullName(), wxT("System information and registry dump of this application"));
+		report->AddFile(fn.GetFullName(), L"System information and registry dump of this application");
 	}
 
 	if (m_manager)
@@ -536,7 +536,7 @@ bool CAgilityBookApp::OnAddFileDebugReport(wxDebugReport* report)
 				wxFileName fn(filename);
 				if (fn.FileExists())
 				{
-					report->AddFile(fn.GetFullPath(), wxT("Current ARB File"));
+					report->AddFile(fn.GetFullPath(), L"Current ARB File");
 				}
 			}
 		}
@@ -607,7 +607,7 @@ void CAgilityBookApp::OnSetLanguage(wxLanguage langId)
 {
 	if (!m_Localization.Load())
 	{
-		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), OnGetCatalogName().c_str());
+		wxString str = wxString::Format(L"ERROR: Unable to load '%s.mo'.", OnGetCatalogName().c_str());
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
 		std::string msg(str.ToAscii());
 		throw std::runtime_error(msg);

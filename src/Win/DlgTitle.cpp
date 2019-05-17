@@ -293,7 +293,7 @@ void CDlgTitle::FillTitleInfo()
 		ARBConfigTitlePtr pTitle = GetTitleData(index);
 		desc = StringUtil::stringWX(pTitle->GetDescription());
 
-		caption << wxT(": ");
+		caption << L": ";
 		if (m_pTitle)
 			caption << m_pTitle->GetGenericName().c_str();
 		else

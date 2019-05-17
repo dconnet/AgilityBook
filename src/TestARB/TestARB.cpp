@@ -99,7 +99,7 @@ private:
 #ifdef __WXMAC__
 		// Command line programs on Mac are acting like unix. GetResourcesDir
 		// returns /usr/local/share. And GetExecutablePath is returning nothing.
-		return wxT("./lang");
+		return L"./lang";
 #else
 		return m_langMgr->GetDefaultLanguageDir();
 #endif

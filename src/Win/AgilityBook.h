@@ -55,7 +55,7 @@ public:
 
 protected:
 	static std::unique_ptr<CMenuHelper> CreateMenus();
-	wxString GetReportName() const override { return wxT("AgilityBook"); }
+	wxString GetReportName() const override { return L"AgilityBook"; }
 
 	bool OnInit() override;
 	int OnExit() override;

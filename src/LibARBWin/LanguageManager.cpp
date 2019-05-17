@@ -57,7 +57,7 @@ CLanguageManager::CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded)
 #endif
 {
 	if (!m_bEmbedded)
-		m_dirLangDefault = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+		m_dirLangDefault = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + L"lang";
 	wxTranslations::Set(new wxTranslations);
 }
 
@@ -248,7 +248,7 @@ bool CLanguageManager::SetLang(wxLanguage langId)
 	}
 	else
 	{
-		wxString str = wxString::Format(wxT("ERROR: Unable to load '%s.mo'."), m_pCallback->OnGetCatalogName().c_str());
+		wxString str = wxString::Format(L"ERROR: Unable to load '%s.mo'.", m_pCallback->OnGetCatalogName().c_str());
 		m_pCallback->OnErrorMessage(str);
 	}
 

@@ -45,12 +45,12 @@ CBaseApp::CBaseApp(
 		wxString const& appName,
 		wxString const& appRegKey,
 		LanguageCatalog useLangCatalog)
-	: m_VendorName(wxT("dcon Software"))
+	: m_VendorName(L"dcon Software")
 	, m_BaseAppName(appName)
 	, m_BaseRegName(appRegKey)
 	, m_BaseInfoName()
 	, m_bReadOnlyInfo(false)
-	, m_ConfigTest(wxT("Settings/isLocal"))
+	, m_ConfigTest(L"Settings/isLocal")
 	, m_bFallback(true)
 	, m_bStandalone(false)
 	, m_langMgr(nullptr)
@@ -91,15 +91,15 @@ void CBaseApp::GenerateReport(wxDebugReport::Context ctx)
 	if (!OnAddFileDebugReport(&report))
 	{
 		// Add a test file containing the date of the crash
-		wxFileName fn(report.GetDirectory(), wxT("timestamp.my"));
-		wxFFile file(fn.GetFullPath(), wxT("w"));
+		wxFileName fn(report.GetDirectory(), L"timestamp.my");
+		wxFFile file(fn.GetFullPath(), L"w");
 		if (file.IsOpened())
 		{
 			wxDateTime dt = wxDateTime::Now();
-			file.Write(dt.FormatISODate() + wxT(' ') + dt.FormatISOTime());
+			file.Write(dt.FormatISODate() + L' ' + dt.FormatISOTime());
 			file.Close();
 		}
-		report.AddFile(fn.GetFullName(), wxT("Timestamp of this report"));
+		report.AddFile(fn.GetFullName(), L"Timestamp of this report");
 	}
 
 	// Calling Show() is not mandatory, but is more polite
@@ -107,7 +107,7 @@ void CBaseApp::GenerateReport(wxDebugReport::Context ctx)
 	{
 		if (report.Process())
 		{
-			wxLogMessage(wxT("Report generated in \"%s\"."), report.GetCompressedFileName().c_str());
+			wxLogMessage(_("Report generated in \"%s\"."), report.GetCompressedFileName().c_str());
 			report.Reset();
 		}
 	}
@@ -146,7 +146,7 @@ bool CBaseApp::OnInit()
 			if (m_BaseInfoName.empty())
 			{
 				wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-				m_BaseInfoName = fileName.GetName() + wxT(".info");
+				m_BaseInfoName = fileName.GetName() + L".info";
 			}
 			wxString inifile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + m_BaseInfoName;
 
