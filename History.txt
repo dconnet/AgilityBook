@@ -1,7 +1,8 @@
-5/1/2019: v3.3.3.<dev>
+5/17/2019: v3.3.3.<dev>
 - New features / Enhancements:
   - Added ability to configure accelerator keys.
   - Removed list view of Points (it no longer autosized columns properly)
+  - Enable alternate row coloring in list controls.
 
 4/14/2019: v3.3.2.109
 - Bumped Configuration v61:

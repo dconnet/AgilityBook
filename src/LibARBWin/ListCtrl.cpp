@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-05-17 Enable alternate row coloring.
  * 2018-12-16 Convert to fmt.
  * 2018-10-11 Moved to Win LibARBWin
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -99,6 +100,8 @@ bool CReportListCtrl::Create(
 	{
 		return false;
 	}
+	EnableAlternateRowColours(true);
+
 	Bind(wxEVT_COMMAND_LIST_DELETE_ALL_ITEMS, &CReportListCtrl::OnDeleteAllItems, this);
 	Bind(wxEVT_COMMAND_LIST_DELETE_ITEM, &CReportListCtrl::OnDeleteItem, this);
 
@@ -115,15 +118,21 @@ bool CReportListCtrl::Create(
 	return true;
 }
 
+
 wxItemAttr* CReportListCtrl::OnGetItemAttr(long item) const
 {
-	return nullptr;
+	return CListCtrl::OnGetItemAttr(item);
 }
 
 
 wxItemAttr* CReportListCtrl::OnGetItemColumnAttr(long item, long column) const
 {
+#if defined(__WXMSW__)
+	// Only defined in the MSW and QT ports
+	return CListCtrl::OnGetItemColumnAttr(item, column);
+#else
 	return nullptr;
+#endif
 }
 
 
