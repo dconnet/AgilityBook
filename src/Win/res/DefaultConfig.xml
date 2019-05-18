@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2019-05-18 Configuration version 62.
+           Fix names of AKC Premier metalic titles.
 2019-04-02 Configuration version 61.
            Added BHA. Added icons for CKCSC, UKI, VALOR.
 2019-01-17 Configuration version 60.
@@ -196,7 +198,7 @@ Revision History:
            Added new Config/Action: DeleteTitle
 -->
 
-  <Configuration version="61">
+  <Configuration version="62">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -389,6 +391,22 @@ Revision History:
     <Action Config="59" OldName="GVA-E" NewName="GSDA-E" Venue="ASCA" Verb="RenameTitle" />
     <Action Config="59" OldName="GVA-E-OP" NewName="GSDA-E-OP" Venue="ASCA" Verb="RenameTitle" />
     <Action Config="59" OldName="GVA-E-SP" NewName="GSDA-E-SP" Venue="ASCA" Verb="RenameTitle" />
+    <Action Config="62" OldName="PADB" NewName="PDB" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PADS" NewName="PDS" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PADG" NewName="PDG" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PADC" NewName="PDC" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PJDB" NewName="PJB" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PJDS" NewName="PJS" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PJDG" NewName="PJG" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PJDC" NewName="PJC" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PADPB" NewName="PDBP" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PADPS" NewName="PDSP" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PADPG" NewName="PDGP" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PADPC" NewName="PDCP" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PJDPB" NewName="PJBP" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PJDPS" NewName="PJSP" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PJDPG" NewName="PJGP" Venue="AKC" Verb="RenameTitle" />
+    <Action Config="62" OldName="PJDPC" NewName="PJCP" Venue="AKC" Verb="RenameTitle" />
 
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <LifetimeNames/>
@@ -634,25 +652,25 @@ Repeat titles are MFPC + 50 Qs</Titles>
 Repeat titles are MFPC + 75 Qs</Titles>
       <Titles LongName="Master Century FAST Preferred Title" Name="MFPC" StartAt="1">100 Qs</Titles>
       <Titles LongName="Premier Agility Dog" Name="PAD" ValidFrom="2015-10-1">25 Qs, at least 5 Qs in top 25%</Titles>
-      <Titles LongName="Bronze Premier Agility Dog" Name="PADB" StartAt="1" ValidFrom="2015-10-1">25 Qs</Titles>
-      <Titles LongName="Silver Premier Agility Dog" Name="PADS" StartAt="1" ValidFrom="2015-10-1">50 Qs</Titles>
-      <Titles LongName="Gold Premier Agility Dog" Name="PADG" StartAt="1" ValidFrom="2015-10-1">75 Qs</Titles>
-      <Titles LongName="Century Premier Agility Dog" Name="PADC" StartAt="1" ValidFrom="2015-10-1">100 Qs</Titles>
+      <Titles LongName="Bronze Premier Agility Dog" Name="PDB" StartAt="2" ValidFrom="2015-10-1">PDC plus 25 Qs</Titles>
+      <Titles LongName="Silver Premier Agility Dog" Name="PDS" StartAt="1" ValidFrom="2015-10-1">PAD plus 25 Qs</Titles>
+      <Titles LongName="Gold Premier Agility Dog" Name="PDG" StartAt="1" ValidFrom="2015-10-1">PDS plus 25 Qs</Titles>
+      <Titles LongName="Century Premier Agility Dog" Name="PDC" StartAt="1" ValidFrom="2015-10-1">PDG plus 25 Qs</Titles>
       <Titles LongName="Premier Jumpers Dog" Name="PJD" ValidFrom="2015-10-1">25 Qs, at least 5 Qs in top 25%</Titles>
-      <Titles LongName="Bronze Premier Jumpers Dog" Name="PJDB" StartAt="1" ValidFrom="2015-10-1">25 Qs</Titles>
-      <Titles LongName="Silver Premier Jumpers Dog" Name="PJDS" StartAt="1" ValidFrom="2015-10-1">50 Qs</Titles>
-      <Titles LongName="Gold Premier Jumpers Dog" Name="PJDG" StartAt="1" ValidFrom="2015-10-1">75 Qs</Titles>
-      <Titles LongName="Century Premier Jumpers Dog" Name="PJDC" StartAt="1" ValidFrom="2015-10-1">100 Qs</Titles>
+      <Titles LongName="Bronze Premier Jumpers Dog" Name="PJB" StartAt="2" ValidFrom="2015-10-1">PJC plus 25 Qs</Titles>
+      <Titles LongName="Silver Premier Jumpers Dog" Name="PJS" StartAt="1" ValidFrom="2015-10-1">PJD plus 25 Qs</Titles>
+      <Titles LongName="Gold Premier Jumpers Dog" Name="PJG" StartAt="1" ValidFrom="2015-10-1">PJS plus 25 Qs</Titles>
+      <Titles LongName="Century Premier Jumpers Dog" Name="PJC" StartAt="1" ValidFrom="2015-10-1">PJG plus 25 Qs</Titles>
       <Titles LongName="Premier Agility Dog Preferred" Name="PADP" ValidFrom="2015-10-1">25 Qs, at least 5 Qs in top 25%</Titles>
-      <Titles LongName="Bronze Premier Agility Dog Preferred" Name="PADPB" StartAt="1" ValidFrom="2015-10-1">25 Qs</Titles>
-      <Titles LongName="Silver Premier Agility Dog Preferred" Name="PADPS" StartAt="1" ValidFrom="2015-10-1">50 Qs</Titles>
-      <Titles LongName="Gold Premier Agility Dog Preferred" Name="PADPG" StartAt="1" ValidFrom="2015-10-1">75 Qs</Titles>
-      <Titles LongName="Century Premier Agility Dog Preferred" Name="PADPC" StartAt="1" ValidFrom="2015-10-1">100 Qs</Titles>
+      <Titles LongName="Bronze Premier Agility Dog Preferred" Name="PDBP" StartAt="2" ValidFrom="2015-10-1">PDCP plus 25 Qs</Titles>
+      <Titles LongName="Silver Premier Agility Dog Preferred" Name="PDSP" StartAt="1" ValidFrom="2015-10-1">PADP plus 25 Qs</Titles>
+      <Titles LongName="Gold Premier Agility Dog Preferred" Name="PDGP" StartAt="1" ValidFrom="2015-10-1">PDSP plus 25 Qs</Titles>
+      <Titles LongName="Century Premier Agility Dog Preferred" Name="PDCP" StartAt="1" ValidFrom="2015-10-1">PDGP plus 25 Qs</Titles>
       <Titles LongName="Premier Jumpers Dog Preferred" Name="PJDP" ValidFrom="2015-10-1">25 Qs, at least 5 Qs in top 25%</Titles>
-      <Titles LongName="Bronze Premier Jumpers Dog Preferred" Name="PJDPB" StartAt="1" ValidFrom="2015-10-1">25 Qs</Titles>
-      <Titles LongName="Silver Premier Jumpers Dog Preferred" Name="PJDPS" StartAt="1" ValidFrom="2015-10-1">50 Qs</Titles>
-      <Titles LongName="Gold Premier Jumpers Dog Preferred" Name="PJDPG" StartAt="1" ValidFrom="2015-10-1">75 Qs</Titles>
-      <Titles LongName="Century Premier Jumpers Dog Preferred" Name="PJDPC" StartAt="1" ValidFrom="2015-10-1">100 Qs</Titles>
+      <Titles LongName="Bronze Premier Jumpers Dog Preferred" Name="PJBP" StartAt="2" ValidFrom="2015-10-1">PJCP plus 25 Qs</Titles>
+      <Titles LongName="Silver Premier Jumpers Dog Preferred" Name="PJSP" StartAt="1" ValidFrom="2015-10-1">PJDP plus 25 Qs</Titles>
+      <Titles LongName="Gold Premier Jumpers Dog Preferred" Name="PJGP" StartAt="1" ValidFrom="2015-10-1">PJSP plus 25 Qs</Titles>
+      <Titles LongName="Century Premier Jumpers Dog Preferred" Name="PJCP" StartAt="1" ValidFrom="2015-10-1">PJGP plus 25 Qs</Titles>
       <Titles LongName="Agility Grand Champion" Name="AGCH" Prefix="y">100 Std, 100 JWW, 75 FAST, 75 T2B, 50 Premier Std, 50 Premier JWW. (Regular or Preferred)</Titles>
       <Titles LongName="Agility Course Test 1" Name="ACT1">2 passing ACT1 scores</Titles>
       <Titles LongName="Agility Course Test 2" Name="ACT2">2 passing ACT2 scores</Titles>
