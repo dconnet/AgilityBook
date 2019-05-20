@@ -143,6 +143,7 @@ def CompilePoFiles(wxBaseName, sourceDirs, firstFile, outputDir, targetname, bDe
 	if not os.access(langDir, os.F_OK):
 		os.mkdir(langDir)
 
+	skipped = 0
 	for langName in langNames:
 		poFile1 = ''
 		poFiles = []
@@ -168,9 +169,11 @@ def CompilePoFiles(wxBaseName, sourceDirs, firstFile, outputDir, targetname, bDe
 				for po in glob.glob(os.path.join(wxLangDir, r'*.po')):
 					poFiles += [po]
 
+		# If we can't find the firstFile, assume we've included some library PO
+		# files for languages that the program does not (yet) support.
 		if len(poFile1) == 0:
-			print('ERROR: Could not find \'' + firstFile + '\'')
-			return False
+			++skipped
+			continue
 
 		# -t: output encoding
 		cmd = ['msgcat', '-t', 'utf-8', '-o', autogen, poFile1]
@@ -184,6 +187,11 @@ def CompilePoFiles(wxBaseName, sourceDirs, firstFile, outputDir, targetname, bDe
 
 		if not bDebug and os.access(autogen, os.F_OK):
 			os.remove(autogen)
+
+	if skipped == len(langNames):
+		print('ERROR: No languages compiled')
+		return False
+
 	return True
 
 
