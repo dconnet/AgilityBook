@@ -45,6 +45,9 @@
     <ClCompile Include="..\..\Win\AgilityBookDoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\AgilityBookPointsView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\AgilityBookMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -288,9 +291,6 @@
     <ClCompile Include="..\..\Win\WizardStart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\AgilityBookPointsView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Win\AgilityBook.h">
@@ -303,6 +303,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\AgilityBookDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\AgilityBookPointsView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\AgilityBookMenu.h">
@@ -553,9 +556,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionInfoARB.h">
       <Filter>Header Files\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\AgilityBookPointsView.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

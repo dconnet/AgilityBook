@@ -233,7 +233,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -248,7 +248,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -263,7 +263,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -278,7 +278,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -293,7 +293,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -308,7 +308,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -323,7 +323,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -341,7 +341,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -359,7 +359,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -377,7 +377,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -395,7 +395,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -413,7 +413,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
