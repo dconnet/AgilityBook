@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-05-28 Suppress href warning when hiding a title.
  * 2019-05-04 Reworked PointsData usage.
  * 2018-12-16 Convert to fmt.
  * 2017-08-20 Alter how header is generated/handled.
@@ -46,7 +47,10 @@ bool CHtmlWindow::SetPage(const wxString& source)
 	bool rc = wxHtmlWindow::SetPage(source);
 
 	if (rc && !m_tag.empty())
+	{
+		wxLogNull log; // Suppress missing tag warning
 		ScrollToAnchor(m_tag);
+	}
 
 	return rc;
 }
