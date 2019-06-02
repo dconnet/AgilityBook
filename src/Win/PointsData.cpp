@@ -1405,6 +1405,7 @@ void CPointsDataItems::clear()
 {
 	m_pDog.reset();
 	m_venues.clear();
+	m_otherPts.clear();
 }
 
 
