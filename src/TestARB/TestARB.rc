@@ -28,11 +28,11 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE  
+1 TEXTINCLUDE
 BEGIN
 END
 
-2 TEXTINCLUDE  
+2 TEXTINCLUDE
 BEGIN
     "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
     "#include ""windows.h""\r\n"
@@ -40,9 +40,9 @@ BEGIN
     "#define wxUSE_NO_MANIFEST 1\r\n\0"
 END
 
-3 TEXTINCLUDE  
+3 TEXTINCLUDE
 BEGIN
-    "#include ""res\\TestARB.rc2""\r\n"
+    "#include ""res/TestARB.rc2""\r\n"
     "#if defined(USE_WXWIDGETS)\r\n"
     "#include ""wx/msw/wx.rc""\r\n"
     "#endif\r\n\0"
