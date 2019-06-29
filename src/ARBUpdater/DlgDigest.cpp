@@ -38,6 +38,14 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// Copy test from gdicmn.h for wxBITMAP_PNG
+#if !((defined(__WINDOWS__) && wxUSE_WXDIB) || defined(__WXOSX__))
+#include "../Win/res/AgilityBook16_png.c"
+#include "../Win/res/AgilityBook32_png.c"
+#include "../Win/res/AgilityBook48_png.c"
+#include "../Win/res/AgilityBook256_png.c"
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 class CLongValidator : public wxValidator

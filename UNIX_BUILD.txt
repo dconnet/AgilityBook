@@ -1,8 +1,6 @@
 Building on Ubuntu Linux:
-[note: C++ files now compile (mostly - ARBHelp/Win has a problem with the
-LOAD_BITMAP macros - this may be because we're on wx3.0 there). But linking
-fails for all executables. Something in the make env.
-(also, the 'ar' cmd is wrong)]
+[note: C++ files now mostly compile. But linking fails for all executables.
+Probably something in the make env.]
 
 Needs boost:
 sudo apt-get install libboost-all-dev
