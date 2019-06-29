@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-06-28 Moved ConfigPath to TestUtils
  * 2019-01-06 fmt 5.3 cannot sprintf a wide string into a narrow format anymore
  * 2018-12-16 Convert to fmt.
  * 2018-04-26 Added roman numeral tests.
@@ -32,12 +33,10 @@
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
-#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/StringUtil.h"
 #include "fmt/printf.h"
 
 #include <stdarg.h>
-#include <wx/fileconf.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -327,28 +326,6 @@ TEST_CASE("Misc")
 			{
 				REQUIRE(ShortToRoman(testValues[i].val) == testValues[i].roman);
 			}
-		}
-	}
-
-
-	SECTION("ConfigPath")
-	{
-		if (!g_bMicroTest)
-		{
-			wxFileConfig config;
-			auto old = wxConfig::Set(&config);
-
-			config.SetPath(L"Test");
-			REQUIRE(config.GetPath() == L"/Test");
-			{
-				CConfigPathHelper path(L"Test2");
-				REQUIRE(config.GetPath() == L"/Test/Test2");
-				config.SetPath(L"Test3");
-				REQUIRE(config.GetPath() == L"/Test/Test2/Test3");
-			}
-			REQUIRE(config.GetPath() == L"/Test");
-
-			wxConfig::Set(old);
 		}
 	}
 }

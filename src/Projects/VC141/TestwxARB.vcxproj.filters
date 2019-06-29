@@ -168,6 +168,9 @@
     <ClCompile Include="..\..\TestARB\TestArchive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\TestARB\ConfigHandler.h">

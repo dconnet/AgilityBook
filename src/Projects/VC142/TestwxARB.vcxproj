@@ -553,6 +553,7 @@
     <ClCompile Include="..\..\TestARB\TestQ.cpp" />
     <ClCompile Include="..\..\TestARB\TestString.cpp" />
     <ClCompile Include="..\..\TestARB\TestTraining.cpp" />
+    <ClCompile Include="..\..\TestARB\TestUtils.cpp" />
     <ClCompile Include="..\..\TestARB\TestVersion.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -80,6 +80,7 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestQ.cpp \
 	TestString.cpp \
 	TestTraining.cpp \
+	TestUtils.cpp \
 	TestVersion.cpp
 
 ##########
