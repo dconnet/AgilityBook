@@ -173,8 +173,6 @@ public:
 			const wxString& name = wxTextCtrlNameStr)
 		: CTextCtrl()
 	{
-		Init();
-
 		bool bPlainText = false;
 		if (!(style & (wxTE_RICH | wxTE_RICH2)))
 		{
