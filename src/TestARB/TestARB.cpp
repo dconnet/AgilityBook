@@ -266,7 +266,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	std::wstring datafile = L"./testarb.dat";
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
+	std::wstring datafile = wxString(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
 #endif
 #else
 #pragma PRAGMA_TODO(write LoadXMLData)
