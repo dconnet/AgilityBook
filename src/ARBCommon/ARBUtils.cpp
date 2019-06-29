@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-06-28 Fix issue with change nBackups to less than existing backups.
  * 2018-10-30 Moved some utils from ARBWin.
  */
 
@@ -80,7 +81,7 @@ bool CreateBackupFile(
 		{
 			bChanged = true;
 			wxString backup = inFilename + L".bck1";
-			wxCopyFile(inFilename, backup, false);
+			wxCopyFile(inFilename, backup, true); // Force an overwrite (if nBackups+1 exists, we error out otherwise)
 		}
 	}
 	return bChanged;
