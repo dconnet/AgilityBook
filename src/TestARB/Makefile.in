@@ -102,8 +102,8 @@ INSTALL_BIN = @PACKAGE_TEST_SHORTNAME@
 
 resources: @PACKAGE_TEST_SHORTNAME@
 	echo "LANGDIR $(CURDIR)"
-	python3 $(TOPSRCDIR)/src/lang/CompileLang.py $(TOPSRCDIR)/src/lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
-	python3 $(TOPSRCDIR)/src/lang/CompileDatafile.py -x $(TOPSRCDIR)/src/lang/CompileDatList.txt $(CURDIR) @PACKAGE_TEST_SHORTNAME@
+	python3 $(TOPSRCDIR)/src/lang/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/src/lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
+	python3 $(TOPSRCDIR)/src/lang/CompileDatafile.py -x -f "$(TOPSRCDIR)/src/TestARB/res/CompileDatListTest.txt"  $(TOPSRCDIR)/src/lang/CompileDatList.txt $(CURDIR) @PACKAGE_TEST_SHORTNAME@
 
 all: @PACKAGE_TEST_SHORTNAME@ resources
 	python3 $(TOPSRCDIR)/src/Projects/RunARBTests.py $(TOPSRCDIR)/src $(CURDIR) @PACKAGE_TEST_SHORTNAME@ Mac

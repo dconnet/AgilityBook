@@ -137,6 +137,11 @@
  #if defined(__LP64__) && !defined(ARB_64BIT)
   #define ARB_64BIT
  #endif
+#elif defined(__WXGTK__)
+ // Just assume GTK means linux (ubuntu is what I've tested)
+ #if defined(__LP64__) && !defined(ARB_64BIT)
+  #define ARB_64BIT
+ #endif
 #else
 #error Unknown platform
 #endif

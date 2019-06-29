@@ -1,56 +1,31 @@
 Building on Ubuntu Linux:
 
-1. svn co https://agilitybook.svn.sourceforge.net/svnroot/agilitybook/trunk/AgilityBook
+Needs boost:
+sudo apt-get install libboost-all-dev
+
+0. (cd into directory where you want to clone)
+1. git clone https://github.com/dconnet/AgilityBook.git
 2. cd AgilityBook
 3. autoconf
-4. mkdir build
-5. cd build
+4. mkdir bld
+5. cd bld
 6. ../configure
 At this point the Makefile have been generated in all src subdirs and any changes to any of the Makefile.in files or the configure.in file will cause Makefiles to be be automatically regenerated.
 
 So to build the application and related libs:
-1. cd build
+1. cd bld
 2. make
 
 Depending on where libraries and include files are installed you may need to add include file directories to the invocation of ../configure
 For example on my Mac boost was installed in /opt/local/include/boost so I invoked configure as ../configure CPPFLAGS=-I/opt/local/include
 
-Compile errors:
-
-In file included from ../../../src/ARB/ARBBase.h:43,
-                 from ../../../src/ARB/ARBCalendar.h:44,
-                 from ../../../src/ARB/ARBAgilityRecordBook.h:65,
-                 from ../../../src/ARB/ARBAgilityRecordBook.cpp:96:
-../../../src/ARB/ARBTypes.h:65: error: ‘tr1’ has not been declared
-../../../src/ARB/ARBTypes.h:65: error: expected initializer before ‘<’ token
-
-1. install boost dev lib:
-sudo apt-get install libboost-dev
-
-
-../../../src/stdafx.h:201:2: error: #error Non-Windows platforms must use wxWidgets
-In file included from ../../../src/ARB/ARBTypes.h:110,
-                 from ../../../src/ARB/ARBBase.h:43,
-                 from ../../../src/ARB/ARBCalendar.h:44,
-                 from ../../../src/ARB/ARBAgilityRecordBook.h:65,
-                 from ../../../src/ARB/ARBAgilityRecordBook.cpp:96:
-../../../src/ARB/ARBString.h:42: error: ‘wxChar’ was not declared in this scope
-
-
-
-1. install wxgtk:s
+1. install wxgtk (out-of-date - on Ubuntu 18.04, this is wx3.0)
   Version 2.8.9 or later wxWidget package is required
   http://wiki.wxpython.org/InstallingOnUbuntuOrDebian
   sudo apt-get install wx2.8-i18n libwxgtk2.8-dev
 
 
 2. make sure /usr/bin is on your path and wx-config can be found
-
-3. the libcalusdaa.so shared lib requires libtidy be installed:
-For now we are getting it from the src/ directory.
-  cd src/tidy
-  make
-#  sudo apt-get install tidy
 
 Compiling Resources Manually
 - This will go in the makefiles

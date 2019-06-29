@@ -21,6 +21,7 @@
 
 #include "ARBCommon/VersionNum.h"
 #include "fmt/format.h"
+#include <vector>
 
 
 /**

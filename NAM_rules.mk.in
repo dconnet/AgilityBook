@@ -102,7 +102,8 @@ all:
 # instead, this command will achieve nothing and the variable will not be set,
 # and so the second command will conditionally set it to gnu.mk.
 ##########
-MAKEINCLUDE != echo bsd.mk
+# This is failing on ubuntu to GNU make (it's being included)
+#MAKEINCLUDE != echo bsd.mk
 MAKEINCLUDE ?= gnu.mk
 
 ##########

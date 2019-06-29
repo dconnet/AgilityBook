@@ -129,6 +129,16 @@ Darwin*)
 	AC_SUBST(NOPRECOMP,1)
 	#AC_SUBST(SHAREDLDFLAGS, "-prebind -bundle")
 	;;
+
+Linux)
+	# Ubuntu
+	#AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+	AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14")
+	AC_SUBST(CXXFLAGS, "$CXXFLAGS -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14")
+	#AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
+	AC_SUBST(NOPRECOMP,1)
+	;;
+
 *)
 	##########
 	# Check how dependencies are created for the C++ compiler on this system

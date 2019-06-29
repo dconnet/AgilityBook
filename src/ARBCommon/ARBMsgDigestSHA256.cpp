@@ -26,7 +26,9 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+#ifndef __WXGTK__
 #define SHA2_USE_MYTYPES_H
+#endif
 #ifndef BYTE_ORDER
 #define BYTE_ORDER LITTLE_ENDIAN
 //#define BYTE_ORDER BIG_ENDIAN
