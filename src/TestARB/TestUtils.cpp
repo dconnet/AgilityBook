@@ -108,7 +108,7 @@ public:
 		{
 			// Work backwards - we don't care if trailing files don't exist.
 			bool bExists = false;
-			for (size_t i = m_filenames.size(); i != 0; --i)
+			for (int i = static_cast<int>(m_filenames.size()); i != 0; --i)
 			{
 				if (!wxFile::Exists(m_filenames[i - 1]))
 				{
