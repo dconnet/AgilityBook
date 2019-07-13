@@ -42,7 +42,7 @@ TEST_CASE("ARBQ")
 			ARB_Q q;
 			REQUIRE(L"" == q.str());
 
-			ARB_Q q1(ARB_Q::eQ_Q);
+			ARB_Q q1(Q::Q);
 			REQUIRE(L"Q" == q1.str());
 		}
 	}
@@ -56,13 +56,13 @@ TEST_CASE("ARBQ")
 			// sure I didn't add/remove something and forget.
 			REQUIRE(7 == ARB_Q::GetNumValidTypes());
 			REQUIRE(L"SQ, Q, NQ, E, DNR, NA" == ARB_Q::GetValidTypes());
-			REQUIRE(ARB_Q(ARB_Q::eQ_UNK) == ARB_Q::GetValidType(0));
-			REQUIRE(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(6));
-			REQUIRE(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(2));
-			REQUIRE(ARB_Q(ARB_Q::eQ_NQ) == ARB_Q::GetValidType(3));
-			REQUIRE(ARB_Q(ARB_Q::eQ_E) == ARB_Q::GetValidType(4));
-			REQUIRE(ARB_Q(ARB_Q::eQ_DNR) == ARB_Q::GetValidType(5));
-			REQUIRE(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(1));
+			REQUIRE(ARB_Q(Q::UNK) == ARB_Q::GetValidType(0));
+			REQUIRE(ARB_Q(Q::NA) == ARB_Q::GetValidType(6));
+			REQUIRE(ARB_Q(Q::Q) == ARB_Q::GetValidType(2));
+			REQUIRE(ARB_Q(Q::NQ) == ARB_Q::GetValidType(3));
+			REQUIRE(ARB_Q(Q::E) == ARB_Q::GetValidType(4));
+			REQUIRE(ARB_Q(Q::DNR) == ARB_Q::GetValidType(5));
+			REQUIRE(ARB_Q(Q::SuperQ) == ARB_Q::GetValidType(1));
 
 			std::vector<std::wstring> types;
 			ARB_Q::GetValidTypes(types);
@@ -75,10 +75,10 @@ TEST_CASE("ARBQ")
 	{
 		if (!g_bMicroTest)
 		{
-			ARB_Q q1(ARB_Q::eQ_Q);
-			ARB_Q q2(ARB_Q::eQ_NQ);
+			ARB_Q q1(Q::Q);
+			ARB_Q q2(Q::NQ);
 			REQUIRE(q1 != q2);
-			q2 = ARB_Q::eQ_Q;
+			q2 = Q::Q;
 			REQUIRE(q1 == q2);
 			REQUIRE(q1.Qualified());
 		}
@@ -89,12 +89,12 @@ TEST_CASE("ARBQ")
 	{
 		if (!g_bMicroTest)
 		{
-			ARB_Q na(ARB_Q::eQ_NA);
-			ARB_Q q(ARB_Q::eQ_Q);
-			ARB_Q nq(ARB_Q::eQ_NQ);
-			ARB_Q e(ARB_Q::eQ_E);
-			ARB_Q dnr(ARB_Q::eQ_DNR);
-			ARB_Q sq(ARB_Q::eQ_SuperQ);
+			ARB_Q na(Q::NA);
+			ARB_Q q(Q::Q);
+			ARB_Q nq(Q::NQ);
+			ARB_Q e(Q::E);
+			ARB_Q dnr(Q::DNR);
+			ARB_Q sq(Q::SuperQ);
 
 			REQUIRE(na < dnr);
 			REQUIRE(dnr < e);
@@ -110,17 +110,17 @@ TEST_CASE("ARBQ")
 	{
 		if (!g_bMicroTest)
 		{
-			ARB_Q na(ARB_Q::eQ_NA);
+			ARB_Q na(Q::NA);
 			REQUIRE(!na.Qualified());
-			ARB_Q q(ARB_Q::eQ_Q);
+			ARB_Q q(Q::Q);
 			REQUIRE(q.Qualified());
-			ARB_Q nq(ARB_Q::eQ_NQ);
+			ARB_Q nq(Q::NQ);
 			REQUIRE(!nq.Qualified());
-			ARB_Q e(ARB_Q::eQ_E);
+			ARB_Q e(Q::E);
 			REQUIRE(!e.Qualified());
-			ARB_Q dnr(ARB_Q::eQ_DNR);
+			ARB_Q dnr(Q::DNR);
 			REQUIRE(!dnr.Qualified());
-			ARB_Q sq(ARB_Q::eQ_SuperQ);
+			ARB_Q sq(Q::SuperQ);
 			REQUIRE(sq.Qualified());
 		}
 	}
@@ -149,7 +149,7 @@ TEST_CASE("ARBQ")
 		if (!g_bMicroTest)
 		{
 #if defined(__WXWINDOWS__)
-			ARB_Q q(ARB_Q::eQ_Q);
+			ARB_Q q(Q::Q);
 			fmt::wmemory_buffer errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
@@ -166,11 +166,11 @@ TEST_CASE("ARBQ")
 	{
 		if (!g_bMicroTest)
 		{
-			ARB_Q q(ARB_Q::eQ_Q);
+			ARB_Q q(Q::Q);
 			ElementNodePtr ele = ElementNode::New(L"test");
 			REQUIRE(q.Save(ele, L"attrib"));
 			std::wstring str;
-			REQUIRE(ElementNode::eFound == ele->GetAttrib(L"attrib", str));
+			REQUIRE(ARBAttribLookup::Found == ele->GetAttrib(L"attrib", str));
 			REQUIRE(L"Q" == str);
 		}
 	}
@@ -184,7 +184,7 @@ TEST_CASE("ARBQ")
 			ElementNodePtr ele = ElementNode::New(L"test");
 			REQUIRE(q.Save(ele, L"attrib"));
 			std::wstring str;
-			REQUIRE(ElementNode::eNotFound == ele->GetAttrib(L"attrib", str));
+			REQUIRE(ARBAttribLookup::NotFound == ele->GetAttrib(L"attrib", str));
 			REQUIRE(L"" == str);
 		}
 	}

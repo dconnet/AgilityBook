@@ -225,7 +225,7 @@ TEST_CASE("InfoItemList")
 			ARBErrorCallback callback(errs);
 			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
 			std::set<std::wstring> items;
-			REQUIRE(4u == info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
+			REQUIRE(4u == info.GetInfo(ARBInfoType::Club).GetAllItems(items, false));
 		}
 	}
 
@@ -241,9 +241,9 @@ TEST_CASE("InfoItemList")
 			std::set<std::wstring> items;
 			items.insert(L"Club1");
 			items.insert(L"Club3");
-			info.GetInfo(ARBInfo::eClubInfo).CondenseContent(items);
+			info.GetInfo(ARBInfoType::Club).CondenseContent(items);
 			items.clear();
-			REQUIRE(3u == info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
+			REQUIRE(3u == info.GetInfo(ARBInfoType::Club).GetAllItems(items, false));
 		}
 	}
 
@@ -256,8 +256,8 @@ TEST_CASE("InfoItemList")
 			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
-			REQUIRE(info.GetInfo(ARBInfo::eClubInfo).FindItem(L"Club3"));
-			REQUIRE(!info.GetInfo(ARBInfo::eClubInfo).FindItem(L"Club3xc"));
+			REQUIRE(info.GetInfo(ARBInfoType::Club).FindItem(L"Club3"));
+			REQUIRE(!info.GetInfo(ARBInfoType::Club).FindItem(L"Club3xc"));
 		}
 	}
 
@@ -312,14 +312,14 @@ TEST_CASE("Info")
 			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
-			REQUIRE(4u == info.GetInfo(ARBInfo::eClubInfo).size());
-			REQUIRE(2u == info.GetInfo(ARBInfo::eJudgeInfo).size());
-			REQUIRE(1u == info.GetInfo(ARBInfo::eLocationInfo).size());
+			REQUIRE(4u == info.GetInfo(ARBInfoType::Club).size());
+			REQUIRE(2u == info.GetInfo(ARBInfoType::Judge).size());
+			REQUIRE(1u == info.GetInfo(ARBInfoType::Location).size());
 
 			ARBInfo info2(info);
 			REQUIRE(info == info2);
-			REQUIRE(info.GetInfo(ARBInfo::eClubInfo)[0].get() != info2.GetInfo(ARBInfo::eClubInfo)[0].get());
-			REQUIRE(*info.GetInfo(ARBInfo::eClubInfo)[0] == *info2.GetInfo(ARBInfo::eClubInfo)[0]);
+			REQUIRE(info.GetInfo(ARBInfoType::Club)[0].get() != info2.GetInfo(ARBInfoType::Club)[0].get());
+			REQUIRE(*info.GetInfo(ARBInfoType::Club)[0] == *info2.GetInfo(ARBInfoType::Club)[0]);
 		}
 	}
 }

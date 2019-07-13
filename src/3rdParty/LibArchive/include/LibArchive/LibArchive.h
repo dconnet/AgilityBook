@@ -36,16 +36,19 @@
 #undef ReplaceFile
 #endif
 
+
+enum class ArchiveLocation
+{
+	ResourceOrFileSystem, // Try resource, fallback to FS
+	FileSystem,           // Only look at FS
+	Resource,             // Only in resource (windows only)
+};
+
+
 class LIBARCHIVE_API CLibArchive
 {
 public:
-	typedef enum
-	{
-		locationResourceOrFileSystem, // Try resource, fallback to FS
-		locationFileSystem,           // Only look at FS
-		locationResource,             // Only in resource (windows only)
-	} ArchiveLocation;
-	CLibArchive(std::wstring const& zipFile, ArchiveLocation location = locationResourceOrFileSystem);
+	CLibArchive(std::wstring const& zipFile, ArchiveLocation location = ArchiveLocation::ResourceOrFileSystem);
 	~CLibArchive();
 
 	bool IsResource() const;

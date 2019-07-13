@@ -154,7 +154,7 @@ TEST_CASE("Calendar")
 			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(cal->Load(data.CalData1, ARBVersion(1, 0), callback));
-			REQUIRE(ARBCalendar::ePlanning == cal->GetEntered());
+			REQUIRE(ARBCalendarEntry::Planning == cal->GetEntered());
 			std::wstring name = cal->GetGenericName();
 			REQUIRE(!name.empty());
 		}
@@ -169,7 +169,7 @@ TEST_CASE("Calendar")
 			fmt::wmemory_buffer errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(cal->Load(data.CalData2, ARBVersion(2, 0), callback));
-			REQUIRE(ARBCalendar::ePlanning == cal->GetEntered());
+			REQUIRE(ARBCalendarEntry::Planning == cal->GetEntered());
 		}
 	}
 
@@ -183,7 +183,7 @@ TEST_CASE("Calendar")
 			ARBErrorCallback callback(errs);
 			REQUIRE(cal->Load(data.CalData1a, ARBVersion(1, 0), callback));
 			// These are not equal as 'Entered' isn't parsed in 1.0.
-			REQUIRE(ARBCalendar::ePlanning != cal->GetEntered());
+			REQUIRE(ARBCalendarEntry::Planning != cal->GetEntered());
 		}
 	}
 
@@ -391,13 +391,13 @@ TEST_CASE("CalendarList")
 			callist.AddCalendar(cal2);
 			std::vector<ARBCalendarPtr> lst;
 			REQUIRE(0u == callist.GetAllEntered(lst));
-			cal1->SetEntered(ARBCalendar::ePlanning);
+			cal1->SetEntered(ARBCalendarEntry::Planning);
 			REQUIRE(0u == callist.GetAllEntered(lst));
-			cal1->SetEntered(ARBCalendar::ePending);
+			cal1->SetEntered(ARBCalendarEntry::Pending);
 			REQUIRE(1u == callist.GetAllEntered(lst));
-			cal1->SetEntered(ARBCalendar::ePlanning);
+			cal1->SetEntered(ARBCalendarEntry::Planning);
 			REQUIRE(0u == callist.GetAllEntered(lst));
-			cal1->SetEntered(ARBCalendar::eEntered);
+			cal1->SetEntered(ARBCalendarEntry::Entered);
 			REQUIRE(1u == callist.GetAllEntered(lst));
 		}
 	}

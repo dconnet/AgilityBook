@@ -68,12 +68,12 @@ TEST_CASE("Element")
 			ElementNodePtr ele = ElementNode::New(L"name");
 			bool b = true;
 			ele->AddAttrib(L"name", b);
-			ElementNode::AttribLookup rc = ele->GetAttrib(L"name", b);
-			REQUIRE(ElementNode::eFound == rc);
+			ARBAttribLookup rc = ele->GetAttrib(L"name", b);
+			REQUIRE(ARBAttribLookup::Found == rc);
 			REQUIRE(b);
 			std::wstring s;
 			rc = ele->GetAttrib(L"name", s);
-			REQUIRE(ElementNode::eFound == rc);
+			REQUIRE(ARBAttribLookup::Found == rc);
 			REQUIRE(L"y" == s);
 		}
 	}
@@ -145,8 +145,8 @@ TEST_CASE("Element")
 			ElementNodePtr ele = ElementNode::New(L"name");
 			ele->AddAttrib(L"test", L"1999-03-27");
 			ARBDate d;
-			ElementNode::AttribLookup rc = ele->GetAttrib(L"test", d);
-			REQUIRE(ElementNode::eFound == rc);
+			ARBAttribLookup rc = ele->GetAttrib(L"test", d);
+			REQUIRE(ARBAttribLookup::Found == rc);
 			REQUIRE(1999 == d.GetYear());
 			REQUIRE(3 == d.GetMonth());
 			REQUIRE(27 == d.GetDay());
@@ -161,8 +161,8 @@ TEST_CASE("Element")
 			ElementNodePtr ele = ElementNode::New(L"name");
 			ele->AddAttrib(L"test", L"1999-99-27");
 			ARBDate d;
-			ElementNode::AttribLookup rc = ele->GetAttrib(L"test", d);
-			REQUIRE(ElementNode::eInvalidValue == rc);
+			ARBAttribLookup rc = ele->GetAttrib(L"test", d);
+			REQUIRE(ARBAttribLookup::Invalid == rc);
 		}
 	}
 
@@ -323,12 +323,12 @@ TEST_CASE("Element")
 			std::wstring str;
 			REQUIRE(tree->GetName() == L"Test");
 			REQUIRE(tree->GetAttribCount() == 1);
-			REQUIRE(tree->GetAttrib(L"attrib", str) == ElementNode::eFound);
+			REQUIRE(tree->GetAttrib(L"attrib", str) == ARBAttribLookup::Found);
 			REQUIRE(str == L"a");
 			REQUIRE(tree->GetElementCount() == 2);
 			REQUIRE(tree->GetElementNode(0)->GetAttribCount() == 0);
 			REQUIRE(tree->GetElementNode(1)->GetAttribCount() == 1);
-			REQUIRE(tree->GetElementNode(1)->GetAttrib(L"ele", str) == ElementNode::eFound);
+			REQUIRE(tree->GetElementNode(1)->GetAttrib(L"ele", str) == ARBAttribLookup::Found);
 			REQUIRE(str == L"2");
 			REQUIRE(tree->GetElementNode(0)->GetValue() == L"Content");
 			REQUIRE(tree->GetElementNode(1)->GetValue() == L"More content");

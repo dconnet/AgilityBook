@@ -109,7 +109,7 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static std::wstring GetPointTypeName(PointType inType);
+		//	static std::wstring GetPointTypeName(ARBExistingPointType inType);
 		}
 	}
 }
@@ -174,7 +174,7 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 		//	double ExistingPoints(
-		//			ARBDogExistingPoints::PointType inType,
+		//			ARBExistingPointType inType,
 		//			ARBConfigVenuePtr inVenue,
 		//			ARBConfigMultiQPtr inMultiQ,
 		//			ARBConfigDivisionPtr inDiv,

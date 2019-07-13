@@ -87,9 +87,9 @@ TEST_CASE("BreakLine")
 	SECTION("ReadCSV")
 	{
 		std::vector<std::wstring> fields;
-		REQUIRE(DataError == ReadCSV(';', L"f\";", fields));
-		REQUIRE(DataError == ReadCSV(';', record7, fields));
-		REQUIRE(DataOk == ReadCSV(';', record5, fields));
+		REQUIRE(ReadStatus::Error == ReadCSV(';', L"f\";", fields));
+		REQUIRE(ReadStatus::Error == ReadCSV(';', record7, fields));
+		REQUIRE(ReadStatus::Ok == ReadCSV(';', record5, fields));
 		REQUIRE(5 == fields.size());
 		if (5 == fields.size())
 		{
@@ -103,8 +103,8 @@ TEST_CASE("BreakLine")
 	SECTION("ReadCSVMultiLine1")
 	{
 		std::vector<std::wstring> fields;
-		REQUIRE(DataNeedMore == ReadCSV(';', recordMore1a, fields));
-		REQUIRE(DataOk == ReadCSV(';', recordMore2a, fields, true));
+		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore1a, fields));
+		REQUIRE(ReadStatus::Ok == ReadCSV(';', recordMore2a, fields, true));
 		REQUIRE(5 == fields.size());
 		if (5 == fields.size())
 		{
@@ -118,8 +118,8 @@ TEST_CASE("BreakLine")
 	SECTION("ReadCSVMultiLine2")
 	{
 		std::vector<std::wstring> fields;
-		REQUIRE(DataNeedMore == ReadCSV(';', recordMore1b, fields));
-		REQUIRE(DataOk == ReadCSV(';', recordMore2b, fields, true));
+		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore1b, fields));
+		REQUIRE(ReadStatus::Ok == ReadCSV(';', recordMore2b, fields, true));
 		REQUIRE(4 == fields.size());
 		if (4 == fields.size())
 		{
@@ -134,9 +134,9 @@ TEST_CASE("BreakLine")
 	SECTION("ReadCSVMultiLine3")
 	{
 		std::vector<std::wstring> fields;
-		REQUIRE(DataNeedMore == ReadCSV(';', recordMore1c, fields));
-		REQUIRE(DataNeedMore == ReadCSV(';', recordMore2c, fields, true));
-		REQUIRE(DataOk == ReadCSV(';', recordMore3c, fields, true));
+		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore1c, fields));
+		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore2c, fields, true));
+		REQUIRE(ReadStatus::Ok == ReadCSV(';', recordMore3c, fields, true));
 		REQUIRE(3 == fields.size());
 		if (3 == fields.size())
 		{
@@ -150,10 +150,10 @@ TEST_CASE("BreakLine")
 	SECTION("ReadCSVMultiLine4")
 	{
 		std::vector<std::wstring> fields;
-		REQUIRE(DataNeedMore == ReadCSV(';', recordMore1c, fields));
-		REQUIRE(DataNeedMore == ReadCSV(';', recordMore2c, fields, true));
-		REQUIRE(DataNeedMore == ReadCSV(';', recordMore2cb, fields, true));
-		REQUIRE(DataOk == ReadCSV(';', recordMore3c, fields, true));
+		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore1c, fields));
+		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore2c, fields, true));
+		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore2cb, fields, true));
+		REQUIRE(ReadStatus::Ok == ReadCSV(';', recordMore3c, fields, true));
 		REQUIRE(3 == fields.size());
 		if (3 == fields.size())
 		{

@@ -196,7 +196,7 @@ TEST_CASE("Config")
 			config.Default(&handler);
 			ElementNodePtr tree = ElementNode::New();
 			REQUIRE(config.Save(tree));
-			REQUIRE(1 == tree->GetNodeCount(ElementNode::Element_Node));
+			REQUIRE(1 == tree->GetNodeCount(ARBElementType::Node));
 			int idx = tree->FindElement(TREE_CONFIG);
 			REQUIRE(idx >= 0);
 		}

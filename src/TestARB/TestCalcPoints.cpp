@@ -31,11 +31,11 @@ TEST_CASE("CalcPoints")
 	{
 		if (!g_bMicroTest)
 		{
-			REQUIRE(ARBCalcPoints::New(ePointsTypeNormal));
-			REQUIRE(ARBCalcPoints::New(ePointsTypeT2B));
-			REQUIRE(ARBCalcPoints::New(ePointsTypeUKI));
-			REQUIRE(ARBCalcPoints::New(ePointsTypeTop10USDAA));
-			REQUIRE(!ARBCalcPoints::New(ePointsTypeMax));
+			REQUIRE(ARBCalcPoints::New(ARBPointsType::Normal));
+			REQUIRE(ARBCalcPoints::New(ARBPointsType::T2B));
+			REQUIRE(ARBCalcPoints::New(ARBPointsType::UKI));
+			REQUIRE(ARBCalcPoints::New(ARBPointsType::Top10USDAA));
+			REQUIRE(!ARBCalcPoints::New(ARBPointsType::Max));
 		}
 	}
 
@@ -45,8 +45,8 @@ TEST_CASE("CalcPoints")
 	{
 		if (!g_bMicroTest)
 		{
-			ARBCalcPointsPtr p = ARBCalcPoints::New(ePointsTypeNormal);
-			REQUIRE(p->GetType() == ePointsTypeNormal);
+			ARBCalcPointsPtr p = ARBCalcPoints::New(ARBPointsType::Normal);
+			REQUIRE(p->GetType() == ARBPointsType::Normal);
 			REQUIRE(p->AllowConfiguration());
 			double pt = p->GetPoints(1.0, 10.0, 5.0, 0, 0);
 			REQUIRE(pt == 1.0);
@@ -61,8 +61,8 @@ TEST_CASE("CalcPoints")
 	{
 		if (!g_bMicroTest)
 		{
-			ARBCalcPointsPtr p = ARBCalcPoints::New(ePointsTypeT2B);
-			REQUIRE(p->GetType() == ePointsTypeT2B);
+			ARBCalcPointsPtr p = ARBCalcPoints::New(ARBPointsType::T2B);
+			REQUIRE(p->GetType() == ARBPointsType::T2B);
 			REQUIRE(!p->AllowConfiguration());
 			// First field ignored.
 			double pt = p->GetPoints(0.0, 28.73, 28.73, 1, 10);
@@ -88,8 +88,8 @@ TEST_CASE("CalcPoints")
 	{
 		if (!g_bMicroTest)
 		{
-			ARBCalcPointsPtr p = ARBCalcPoints::New(ePointsTypeUKI);
-			REQUIRE(p->GetType() == ePointsTypeUKI);
+			ARBCalcPointsPtr p = ARBCalcPoints::New(ARBPointsType::UKI);
+			REQUIRE(p->GetType() == ARBPointsType::UKI);
 			REQUIRE(!p->AllowConfiguration());
 			// First 3 fields ignored.
 			static struct
@@ -141,8 +141,8 @@ TEST_CASE("CalcPoints")
 	{
 		if (!g_bMicroTest)
 		{
-			ARBCalcPointsPtr p = ARBCalcPoints::New(ePointsTypeTop10USDAA);
-			REQUIRE(p->GetType() == ePointsTypeTop10USDAA);
+			ARBCalcPointsPtr p = ARBCalcPoints::New(ARBPointsType::Top10USDAA);
+			REQUIRE(p->GetType() == ARBPointsType::Top10USDAA);
 			REQUIRE(!p->AllowConfiguration());
 			// First 3 fields ignored.
 			static struct

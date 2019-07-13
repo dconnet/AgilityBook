@@ -36,7 +36,7 @@ TEST_CASE("Archive")
 	{
 		if (!g_bMicroTest)
 		{
-			CLibArchive archive(L"TestArchive.zip", CLibArchive::locationResource);
+			CLibArchive archive(L"TestArchive.zip", ArchiveLocation::Resource);
 
 			{
 				std::ostringstream data;

@@ -129,7 +129,7 @@ TEST_CASE("Date")
 #else
 				CLocaleWrapper locale(LC_ALL, "english-uk");
 #endif
-				REQUIRE(L"02/03/1999" == d.GetString(ARBDate::eLocale));
+				REQUIRE(L"02/03/1999" == d.GetString(ARBDateFormat::Locale));
 			}
 			{
 #if defined(__WXWINDOWS__)
@@ -138,25 +138,25 @@ TEST_CASE("Date")
 				CLocaleWrapper locale(LC_ALL, "english-us");
 #endif
 #ifdef __WXMAC__
-				REQUIRE(L"03/02/1999" == d.GetString(ARBDate::eLocale));
+				REQUIRE(L"03/02/1999" == d.GetString(ARBDateFormat::Locale));
 #else
-				REQUIRE(L"3/2/1999" == d.GetString(ARBDate::eLocale));
+				REQUIRE(L"3/2/1999" == d.GetString(ARBDateFormat::Locale));
 #endif
 			}
 #endif
-			REQUIRE(L"03-02-1999" == d.GetString(ARBDate::eDashMMDDYYYY));
-			REQUIRE(L"03/02/1999" == d.GetString(ARBDate::eSlashMMDDYYYY));
-			REQUIRE(L"1999-03-02" == d.GetString(ARBDate::eDashYYYYMMDD));
-			REQUIRE(L"1999/03/02" == d.GetString(ARBDate::eSlashYYYYMMDD));
-			REQUIRE(L"02-03-1999" == d.GetString(ARBDate::eDashDDMMYYYY));
-			REQUIRE(L"02/03/1999" == d.GetString(ARBDate::eSlashDDMMYYYY));
-			REQUIRE(L"3-2-1999" == d.GetString(ARBDate::eDashMDY));
-			REQUIRE(L"3/2/1999" == d.GetString(ARBDate::eSlashMDY));
-			REQUIRE(L"1999-3-2" == d.GetString(ARBDate::eDashYMD));
-			REQUIRE(L"1999/3/2" == d.GetString(ARBDate::eSlashYMD));
-			REQUIRE(L"2-3-1999" == d.GetString(ARBDate::eDashDMY));
-			REQUIRE(L"2/3/1999" == d.GetString(ARBDate::eSlashDMY));
-			REQUIRE(L"19990302" == d.GetString(ARBDate::eYYYYMMDD));
+			REQUIRE(L"03-02-1999" == d.GetString(ARBDateFormat::DashMMDDYYYY));
+			REQUIRE(L"03/02/1999" == d.GetString(ARBDateFormat::SlashMMDDYYYY));
+			REQUIRE(L"1999-03-02" == d.GetString(ARBDateFormat::DashYYYYMMDD));
+			REQUIRE(L"1999/03/02" == d.GetString(ARBDateFormat::SlashYYYYMMDD));
+			REQUIRE(L"02-03-1999" == d.GetString(ARBDateFormat::DashDDMMYYYY));
+			REQUIRE(L"02/03/1999" == d.GetString(ARBDateFormat::SlashDDMMYYYY));
+			REQUIRE(L"3-2-1999" == d.GetString(ARBDateFormat::DashMDY));
+			REQUIRE(L"3/2/1999" == d.GetString(ARBDateFormat::SlashMDY));
+			REQUIRE(L"1999-3-2" == d.GetString(ARBDateFormat::DashYMD));
+			REQUIRE(L"1999/3/2" == d.GetString(ARBDateFormat::SlashYMD));
+			REQUIRE(L"2-3-1999" == d.GetString(ARBDateFormat::DashDMY));
+			REQUIRE(L"2/3/1999" == d.GetString(ARBDateFormat::SlashDMY));
+			REQUIRE(L"19990302" == d.GetString(ARBDateFormat::YYYYMMDD));
 		}
 	}
 
@@ -199,11 +199,11 @@ TEST_CASE("Date")
 	{
 		if (!g_bMicroTest)
 		{
-			ARBDate d = ARBDate::FromString(L"1999-3-27", ARBDate::eDashYYYYMMDD);
+			ARBDate d = ARBDate::FromString(L"1999-3-27", ARBDateFormat::DashYYYYMMDD);
 			REQUIRE(d.IsValid());
 			ARBDate d2(1999, 3, 27);
 			REQUIRE(d == d2);
-			d = ARBDate::FromString(L"1999-3-27", ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
+			d = ARBDate::FromString(L"1999-3-27", ARBDateFormat::SlashYYYYMMDD); // Reading does not enforce 0-padding
 			REQUIRE(!d.IsValid());
 			//TODO: Add more complete tests (test each format, bad formats, etc)
 		}
@@ -223,7 +223,7 @@ TEST_CASE("Date")
 #else
 			CLocaleWrapper locale(LC_ALL, "english-uk");
 #endif
-			ARBDate d = ARBDate::FromString(L"27/3/1999", ARBDate::eLocale);
+			ARBDate d = ARBDate::FromString(L"27/3/1999", ARBDateFormat::Locale);
 			REQUIRE(d.IsValid());
 			REQUIRE(d == d2);
 		}
@@ -244,7 +244,7 @@ TEST_CASE("Date")
 #else
 			CLocaleWrapper locale(LC_ALL, "english-us");
 #endif
-			ARBDate d = ARBDate::FromString(L"3/27/1999", ARBDate::eLocale);
+			ARBDate d = ARBDate::FromString(L"3/27/1999", ARBDateFormat::Locale);
 			REQUIRE(d.IsValid());
 			REQUIRE(d == d2);
 		}
@@ -269,15 +269,15 @@ TEST_CASE("Date")
 	}
 
 
-	SECTION("DayOfWeek")
+	SECTION("ARBDayOfWeek")
 	{
 		if (!g_bMicroTest)
 		{
 			ARBDate dSun(2009, 4, 12);
 			ARBDate dMon(2009, 4, 13);
-			REQUIRE(0 == dSun.GetDayOfWeek(ARBDate::eSunday));
-			REQUIRE(1 == dMon.GetDayOfWeek(ARBDate::eSunday));
-			REQUIRE(0 == dMon.GetDayOfWeek(ARBDate::eMonday));
+			REQUIRE(0 == dSun.GetDayOfWeek(ARBDayOfWeek::Sunday));
+			REQUIRE(1 == dMon.GetDayOfWeek(ARBDayOfWeek::Sunday));
+			REQUIRE(0 == dMon.GetDayOfWeek(ARBDayOfWeek::Monday));
 		}
 	}
 

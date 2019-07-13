@@ -69,37 +69,37 @@ static void RunDblTests(bool bUseLocale)
 	// eStrip
 
 	p = 2.1;
-	s = ARBDouble::ToString(p, 0, bUseLocale, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 0, bUseLocale, ARBDouble::ZeroStrip::Strip);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
-	s = ARBDouble::ToString(p, 2, bUseLocale, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 2, bUseLocale, ARBDouble::ZeroStrip::Strip);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
-	s = ARBDouble::ToString(p, 3, bUseLocale, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 3, bUseLocale, ARBDouble::ZeroStrip::Strip);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
 
 	p = 2;
-	s = ARBDouble::ToString(p, 0, bUseLocale, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 0, bUseLocale, ARBDouble::ZeroStrip::Strip);
 	REQUIRE(L"2" == s);
-	s = ARBDouble::ToString(p, 1, bUseLocale, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 1, bUseLocale, ARBDouble::ZeroStrip::Strip);
 	REQUIRE(L"2" == s);
-	s = ARBDouble::ToString(p, 2, bUseLocale, ARBDouble::eStrip);
+	s = ARBDouble::ToString(p, 2, bUseLocale, ARBDouble::ZeroStrip::Strip);
 	REQUIRE(L"2" == s);
 
 	// eAsIs
 
 	p = 2.1;
-	s = ARBDouble::ToString(p, 0, bUseLocale, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 0, bUseLocale, ARBDouble::ZeroStrip::AsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"1") == s);
-	s = ARBDouble::ToString(p, 2, bUseLocale, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 2, bUseLocale, ARBDouble::ZeroStrip::AsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"10") == s);
-	s = ARBDouble::ToString(p, 3, bUseLocale, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 3, bUseLocale, ARBDouble::ZeroStrip::AsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"100") == s);
 
 	p = 2;
-	s = ARBDouble::ToString(p, 0, bUseLocale, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 0, bUseLocale, ARBDouble::ZeroStrip::AsIs);
 	REQUIRE(L"2" == s);
-	s = ARBDouble::ToString(p, 1, bUseLocale, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 1, bUseLocale, ARBDouble::ZeroStrip::AsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"0") == s);
-	s = ARBDouble::ToString(p, 2, bUseLocale, ARBDouble::eAsIs);
+	s = ARBDouble::ToString(p, 2, bUseLocale, ARBDouble::ZeroStrip::AsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"00") == s);
 }
 

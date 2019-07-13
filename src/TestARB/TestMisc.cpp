@@ -114,9 +114,9 @@ TEST_CASE("Misc")
 			{
 				for (size_t iPrec = 0; iPrec < NUM_PREC; ++iPrec)
 				{
-					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesBinary) == sc_FormatUnits[i].unitBinary[iPrec]);
-					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesSI) == sc_FormatUnits[i].unitSI[iPrec]);
-					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::eBytesTrue) == sc_FormatUnits[i].unitTrue[iPrec]);
+					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::ByteSizeStyle::Binary) == sc_FormatUnits[i].unitBinary[iPrec]);
+					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::ByteSizeStyle::SI) == sc_FormatUnits[i].unitSI[iPrec]);
+					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::ByteSizeStyle::True) == sc_FormatUnits[i].unitTrue[iPrec]);
 				}
 			}
 		}

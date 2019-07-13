@@ -38,7 +38,7 @@ TEST_CASE("MsgDigest")
 		if (!g_bMicroTest)
 		{
 			std::stringstream buffer(RawString);
-			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigestMD5);
+			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigest::MD5);
 			REQUIRE(digest == DigestStringMD5);
 		}
 	}
@@ -49,7 +49,7 @@ TEST_CASE("MsgDigest")
 		if (!g_bMicroTest)
 		{
 			std::stringstream buffer(RawString);
-			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigestSHA1);
+			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigest::SHA1);
 			REQUIRE(digest == DigestStringSHA1);
 		}
 	}
@@ -60,7 +60,7 @@ TEST_CASE("MsgDigest")
 		if (!g_bMicroTest)
 		{
 			std::stringstream buffer(RawString);
-			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigestSHA256);
+			std::wstring digest = ARBMsgDigest::Compute(buffer, ARBMsgDigest::ARBDigest::SHA256);
 			REQUIRE(digest == DigestStringSHA256);
 		}
 	}

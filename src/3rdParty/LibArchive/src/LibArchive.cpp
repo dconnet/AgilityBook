@@ -51,7 +51,7 @@
 class CLibArchiveImpl
 {
 public:
-	CLibArchiveImpl(std::wstring const& zipFile, CLibArchive::ArchiveLocation location);
+	CLibArchiveImpl(std::wstring const& zipFile, ArchiveLocation location);
 
 	bool IsResource() const {return m_bResource;}
 #if defined(USE_POCO)
@@ -76,7 +76,7 @@ public:
 };
 
 
-CLibArchiveImpl::CLibArchiveImpl(std::wstring const& zipFile, CLibArchive::ArchiveLocation location)
+CLibArchiveImpl::CLibArchiveImpl(std::wstring const& zipFile, ArchiveLocation location)
 #if defined(__WXWINDOWS__) && !defined(USE_POCO)
 	: m_zipFile(StringUtil::stringWX(zipFile))
 #elif defined(USE_POCO) && defined(ARB_HAS_ISTREAM_WCHAR)
@@ -90,7 +90,7 @@ CLibArchiveImpl::CLibArchiveImpl(std::wstring const& zipFile, CLibArchive::Archi
 {
 	assert(!m_zipFile.empty());
 #if defined(WIN32)
-	if (CLibArchive::locationResourceOrFileSystem == location || CLibArchive::locationResource == location)
+	if (ArchiveLocation::ResourceOrFileSystem == location || ArchiveLocation::Resource == location)
 	{
 		std::wstring name;
 
@@ -131,7 +131,7 @@ CLibArchiveImpl::CLibArchiveImpl(std::wstring const& zipFile, CLibArchive::Archi
 			m_bResource = true;
 		else
 		{
-			if (CLibArchive::locationResource == location)
+			if (ArchiveLocation::Resource == location)
 				m_zipFile.clear();
 			m_zipFileRes.clear();
 		}

@@ -34,7 +34,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static std::wstring GetScoringStyleStr(ScoringStyle inStyle);
+		//	static std::wstring GetScoringStyleStr(ARBScoringStyle inStyle);
 		}
 	}
 

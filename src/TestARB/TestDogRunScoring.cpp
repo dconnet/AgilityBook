@@ -33,7 +33,7 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBDogRunScoring::ScoringType TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType);
+		//	static ARBScoringType TranslateConfigScoring(ARBScoringStyle inType);
 		}
 	}
 
