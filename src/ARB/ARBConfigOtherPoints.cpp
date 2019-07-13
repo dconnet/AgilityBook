@@ -68,7 +68,7 @@ ARBConfigOtherPointsPtr ARBConfigOtherPoints::New()
 
 ARBConfigOtherPoints::ARBConfigOtherPoints()
 	: m_Name()
-	, m_Tally(ARBConfigOtherPoints::eTallyAll)
+	, m_Tally(ARBOtherPointsTally::All)
 	, m_Desc()
 	, m_Default(0.0)
 {
@@ -142,7 +142,7 @@ bool ARBConfigOtherPoints::operator==(ARBConfigOtherPoints const& rhs) const
 void ARBConfigOtherPoints::clear()
 {
 	m_Name.clear();
-	m_Tally = ARBConfigOtherPoints::eTallyAll;
+	m_Tally = ARBOtherPointsTally::All;
 	m_Desc.clear();
 	m_Default = 0.0;
 }
@@ -156,7 +156,7 @@ bool ARBConfigOtherPoints::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_OTHERPTS)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME));
@@ -164,20 +164,20 @@ bool ARBConfigOtherPoints::Load(
 	}
 	inTree->GetAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
 	std::wstring attrib;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT));
 		return false;
 	}
 	if (attrib == OTHERPTS_COUNT_ALL)
-		m_Tally = eTallyAll;
+		m_Tally = ARBOtherPointsTally::All;
 	else if (attrib == OTHERPTS_COUNT_ALLBYEVENT)
-		m_Tally = eTallyAllByEvent;
+		m_Tally = ARBOtherPointsTally::AllByEvent;
 	else if (attrib == OTHERPTS_COUNT_LEVEL)
-		m_Tally = eTallyLevel;
+		m_Tally = ARBOtherPointsTally::Level;
 	else if (attrib == OTHERPTS_COUNT_LEVELBYEVENT)
-		m_Tally = eTallyLevelByEvent;
+		m_Tally = ARBOtherPointsTally::LevelByEvent;
 	else
 	{
 		std::wstring msg(Localization()->ValidValues());
@@ -207,16 +207,16 @@ bool ARBConfigOtherPoints::Save(ElementNodePtr const& ioTree) const
 	switch (m_Tally)
 	{
 	default:
-	case eTallyAll:
+	case ARBOtherPointsTally::All:
 		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, OTHERPTS_COUNT_ALL);
 		break;
-	case eTallyAllByEvent:
+	case ARBOtherPointsTally::AllByEvent:
 		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, OTHERPTS_COUNT_ALLBYEVENT);
 		break;
-	case eTallyLevel:
+	case ARBOtherPointsTally::Level:
 		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, OTHERPTS_COUNT_LEVEL);
 		break;
-	case eTallyLevelByEvent:
+	case ARBOtherPointsTally::LevelByEvent:
 		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, OTHERPTS_COUNT_LEVELBYEVENT);
 		break;
 	}

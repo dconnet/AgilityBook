@@ -35,18 +35,18 @@ ARBCalcPointsPtr ARBCalcPoints::New(ARBPointsType type)
 	{
 	default:
 		assert(0);
-	case ePointsTypeMax:
+	case ARBPointsType::Max:
 		break;
-	case ePointsTypeNormal:
+	case ARBPointsType::Normal:
 		p = ARBCalcPointsNormal::New();
 		break;
-	case ePointsTypeT2B:
+	case ARBPointsType::T2B:
 		p = ARBCalcPointsT2B::New();
 		break;
-	case ePointsTypeUKI:
+	case ARBPointsType::UKI:
 		p = ARBCalcPointsUKI::New();
 		break;
-	case ePointsTypeTop10USDAA:
+	case ARBPointsType::Top10USDAA:
 		p = ARBCalcPointsTop10USDAA::New();
 		break;
 	}

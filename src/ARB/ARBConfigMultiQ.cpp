@@ -137,17 +137,17 @@ bool ARBConfigMultiQ::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_MULTIQ)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_MULTIQ_NAME, m_Name))
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_MULTIQ_NAME, m_Name))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_NAME));
 		return false;
 	}
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_MULTIQ_SHORTNAME, m_ShortName))
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_MULTIQ_SHORTNAME, m_ShortName))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_SHORTNAME));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_MULTIQ_VALID_FROM, m_ValidFrom))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_MULTIQ_VALID_FROM, m_ValidFrom))
 	{
 		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_MULTIQ_VALID_FROM, attrib);
@@ -156,7 +156,7 @@ bool ARBConfigMultiQ::Load(
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_FROM, msg.c_str()));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_MULTIQ_VALID_TO, m_ValidTo))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_MULTIQ_VALID_TO, m_ValidTo))
 	{
 		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_MULTIQ_VALID_TO, attrib);
@@ -175,19 +175,19 @@ bool ARBConfigMultiQ::Load(
 		{
 			MultiQItem item;
 			// Read the data.
-			if (ElementNode::eFound != element->GetAttrib(ATTRIB_MULTIQ_ITEM_DIV, item.m_Div)
+			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_MULTIQ_ITEM_DIV, item.m_Div)
 			|| 0 == item.m_Div.length())
 			{
 				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV));
 				return false;
 			}
-			if (ElementNode::eFound != element->GetAttrib(ATTRIB_MULTIQ_ITEM_LEVEL, item.m_Level)
+			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_MULTIQ_ITEM_LEVEL, item.m_Level)
 			|| 0 == item.m_Level.length())
 			{
 				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL));
 				return false;
 			}
-			if (ElementNode::eFound != element->GetAttrib(ATTRIB_MULTIQ_ITEM_EVENT, item.m_Event)
+			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_MULTIQ_ITEM_EVENT, item.m_Event)
 			|| 0 == item.m_Event.length())
 			{
 				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT));

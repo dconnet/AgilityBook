@@ -17,7 +17,7 @@
  * 2009-07-19 Implement proxy support. 
  * 2008-12-24 Ported to wxWidgets.
  * 2007-08-03 Added UserNames
- * 2006-07-16 Added PointsViewSort
+ * 2006-07-16 Added ARBPointsViewSort
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-05-04 Added IncludeCRCDImage
  * 2004-12-18 Added Opening/Closing dates to view, plus color.
@@ -39,6 +39,43 @@
 #include <wx/font.h>
 #include <wx/fontdlg.h>
 class CVersionNum;
+
+
+enum class ARBCalColorItem
+{
+	Past,
+	NotEntered,
+	Planning,
+	Pending,
+	Entered,
+	Opening,
+	Closing,
+};
+enum class ARBViewRuns
+{
+	// Fixed values as they are stored in the registry
+	RunsByTrial = 1,
+	RunsByList = 0,
+	AllRunsByList = 2,
+};
+enum class ARBPointsViewSort
+{
+	// Fixed values as they are stored in the registry
+	Unknown = 0,
+	Division = 1,
+	Level = 2,
+	Event = 3
+};
+enum class ARBImportExportDelim
+{
+	// Fixed values as they are stored in the registry
+	Tab = 1,
+	Space = 2,
+	Colon = 3,
+	Semicolon = 4,
+	Comma = 5,
+	Other = 6
+};
 
 
 struct CFontInfo
@@ -80,19 +117,9 @@ public:
 	static void SetDaysTillEntryIsPast(long nDays);
 	static bool HideOverlappingCalendarEntries();
 	static void SetHideOverlappingCalendarEntries(bool bHide);
-	typedef enum
-	{
-		eCalColorPast,
-		eCalColorNotEntered,
-		eCalColorPlanning,
-		eCalColorPending,
-		eCalColorEntered,
-		eCalColorOpening,
-		eCalColorClosing,
-	} CalendarColorItem;
-	static wxColour CalendarColor(CalendarColorItem inItem);
+	static wxColour CalendarColor(ARBCalColorItem inItem);
 	static void SetCalendarColor(
-			CalendarColorItem inItem,
+			ARBCalColorItem inItem,
 			wxColour inColor);
 	static wxColour CalendarClosingColor();
 	static void SetCalendarClosingColor(wxColour inColor);
@@ -105,36 +132,21 @@ public:
 	static wxColour CalendarClosingNearColor();
 	static void SetCalendarClosingNearColor(wxColour inColor);
 	// Common options
-	static ARBDate::DayOfWeek GetFirstDayOfWeek();
-	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);
+	static ARBDayOfWeek GetFirstDayOfWeek();
+	static void SetFirstDayOfWeek(ARBDayOfWeek day);
 	// Runs/points options
-	typedef enum
-	{
-		// Fixed values as they are stored in the registry
-		eViewRunsByTrial = 1,
-		eViewRunsByList = 0,
-		eViewAllRunsByList = 2,
-	} ViewRunsStyle;
-	static ViewRunsStyle GetViewRunsStyle();
-	static void SetViewRunsStyle(ViewRunsStyle style);
+	static ARBViewRuns GetViewRunsStyle();
+	static void SetViewRunsStyle(ARBViewRuns style);
 	static bool GetNewestDatesFirst();
 	static void SetNewestDatesFirst(bool bNewest);
-	typedef enum
-	{
-		// Fixed values as they are stored in the registry
-		ePointsViewSortUnknown = 0,
-		ePointsViewSortDivision = 1,
-		ePointsViewSortLevel = 2,
-		ePointsViewSortEvent = 3
-	} PointsViewSort;
 	static void GetPointsViewSort(
-			PointsViewSort& outPrimary,
-			PointsViewSort& outSecondary,
-			PointsViewSort& outTertiary);
+			ARBPointsViewSort& outPrimary,
+			ARBPointsViewSort& outSecondary,
+			ARBPointsViewSort& outTertiary);
 	static void SetPointsViewSort(
-			PointsViewSort inPrimary,
-			PointsViewSort inSecondary,
-			PointsViewSort inTertiary);
+			ARBPointsViewSort inPrimary,
+			ARBPointsViewSort inSecondary,
+			ARBPointsViewSort inTertiary);
 	static bool GetViewHiddenTitles();
 	static void SetViewHiddenTitles(bool bSet);
 	static bool GetViewLifetimePointsByEvent();
@@ -209,32 +221,23 @@ public:
 	static void CleanLastItems(std::wstring const& oldCallName, std::wstring const& newCallName);
 	static void CleanLastItems(ARBConfig const& inConfig);
 	// Import/Export options
-	enum
-	{
-		eDelimTab		= 1,
-		eDelimSpace		= 2,
-		eDelimColon		= 3,
-		eDelimSemicolon	= 4,
-		eDelimComma		= 5,
-		eDelimOther		= 6
-	};
 	static long GetImportStartRow();
 	static void SetImportStartRow(long row);
 	static void GetImportExportDelimiters(
 			bool bImport,
-			long& delim,
+			ARBImportExportDelim& delim,
 			std::wstring& delimiter);
 	static void SetImportExportDelimiters(
 			bool bImport,
-			long delim,
+			ARBImportExportDelim delim,
 			std::wstring const& delimiter);
 	static void GetImportExportDateFormat(
 			bool bImport,
-			ARBDate::DateFormat& outFormat);
+			ARBDateFormat& outFormat);
 	static void SetImportExportDateFormat(
 			bool bImport,
-			ARBDate::DateFormat inFormat);
-	typedef enum
+			ARBDateFormat inFormat);
+	enum ColumnOrder
 	{
 		eUnknown		= 0x0000,
 		eRunsImport		= 0x0001,
@@ -247,7 +250,7 @@ public:
 		eLogExport		= 0x0080,
 		eView			= 0x0100,
 		eAllColumns		= 0x01ff
-	} ColumnOrder;
+	};
 	// General program options
 	static long GetMRUFileCount();
 	static void SetMRUFileCount(long nFiles);

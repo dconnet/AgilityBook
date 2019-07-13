@@ -32,7 +32,7 @@ public:
 
 private:
 	std::wstring GetCalText(
-			CAgilityBookOptions::CalendarColorItem type,
+			ARBCalColorItem type,
 			bool bForDisplay) const;
 	void UpdateControls();
 	void SetCalColor();
@@ -42,7 +42,7 @@ private:
 	wxFont m_fontCalView;
 	wxColour m_OpeningNear;
 	wxColour m_ClosingNear;
-	typedef std::pair<CAgilityBookOptions::CalendarColorItem, wxColour> tColorInfo;
+	typedef std::pair<ARBCalColorItem, wxColour> tColorInfo;
 	std::vector<tColorInfo> m_CalColors;
 	bool m_bOpeningNear;
 	int m_nOpeningNear;

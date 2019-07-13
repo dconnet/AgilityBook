@@ -38,6 +38,29 @@ ARB_TYPEDEF(ISpreadSheetExporter)
 ARB_TYPEDEF(ISpreadSheetImporter)
 
 
+enum class ARBSpreadSheetAlign
+{
+	None,
+	General,
+	Left,
+	Right,
+	Center,
+};
+enum class ARBSpreadSheetFormat
+{
+	Text,			///< General text
+	Currency,		///< Currency, "$  (redneg)", 0 == "-"
+	Number,			///< 0dec number, 1000sep, (redneg)
+	NumberNoZero,	///< 0dec number, 1000sep, (redneg), 0 == ""
+	Date,			///< m/d/yyyy
+};
+enum class ARBSpreadSheetType
+{
+	MicrosoftExcel,
+	OpenOfficeCalc
+};
+
+
 /**
  * Interface for exporting to a spreadsheet.
  */
@@ -65,30 +88,14 @@ public:
 			long inCol,
 			bool bBold) = 0;
 
-	enum eAlign
-	{
-		eSpreadSheetNone,
-		eSpreadSheetGeneral,
-		eSpreadSheetLeft,
-		eSpreadSheetRight,
-		eSpreadSheetCenter,
-	};
 	virtual bool SetAlignment(
 			long inRow,
 			long inCol,
-			eAlign align) = 0;
-	enum eFormat
-	{
-		eSpreadSheetText,			///< General text
-		eSpreadSheetCurrency,		///< Currency, "$  (redneg)", 0 == "-"
-		eSpreadSheetNumber,			///< 0dec number, 1000sep, (redneg)
-		eSpreadSheetNumberNoZero,	///< 0dec number, 1000sep, (redneg), 0 == ""
-		eSpreadSheetDate,			///< m/d/yyyy
-	};
+			ARBSpreadSheetAlign align) = 0;
 	virtual bool SetFormat(
 			long inRow,
 			long inCol,
-			eFormat format) = 0;
+			ARBSpreadSheetFormat format) = 0;
 	// Direct formatting
 	virtual bool SetFormat(
 			long inRow,
@@ -127,15 +134,10 @@ public:
 class ARBWIN_API ISpreadSheet
 {
 public:
-	typedef enum
-	{
-		eMicrosoftExcel,
-		eOpenOfficeCalc
-	} eType;
 	/**
 	 * Create a new spreadsheet manager, must 'delete' the returned pointer.
 	 */
-	static ISpreadSheetPtr Create(eType inType);
+	static ISpreadSheetPtr Create(ARBSpreadSheetType inType);
 
 	/// Get the maximum number of rows Excel can handle.
 	static long GetMaxRows();

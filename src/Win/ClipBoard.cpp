@@ -39,20 +39,20 @@
 /////////////////////////////////////////////////////////////////////////////
 // Special clipboard formats
 
-static wxDataFormat GetClipboardFormat(eClipFormat fmt)
+static wxDataFormat GetClipboardFormat(ARBClipFormat fmt)
 {
 	switch (fmt)
 	{
-	default:				return wxDataFormat(wxDF_INVALID);
-	case eFormatDog:		return wxDataFormat(L"ARB-Dog");
-	case eFormatTrial:		return wxDataFormat(L"ARB-Trial");
-	case eFormatRun:		return wxDataFormat(L"ARB-Run");
-	case eFormatCalendar:	return wxDataFormat(L"ARB-Cal");
-	case eFormatiCalendar:	return wxDataFormat(L"+//ISBN 1-887687-00-9::versit::PDI//vCalendar");
-	case eFormatLog:		return wxDataFormat(L"ARB-Log");
+	default:						return wxDataFormat(wxDF_INVALID);
+	case ARBClipFormat::Dog:		return wxDataFormat(L"ARB-Dog");
+	case ARBClipFormat::Trial:		return wxDataFormat(L"ARB-Trial");
+	case ARBClipFormat::Run:		return wxDataFormat(L"ARB-Run");
+	case ARBClipFormat::Calendar:	return wxDataFormat(L"ARB-Cal");
+	case ARBClipFormat::iCalendar:	return wxDataFormat(L"+//ISBN 1-887687-00-9::versit::PDI//vCalendar");
+	case ARBClipFormat::Log:		return wxDataFormat(L"ARB-Log");
 	// Not using wxDT_HTML aince OLE is defined which causes the wx code that
 	// "supports" html copying to not be invoked. So we do it.
-	case eFormatHtml:		return wxDataFormat(L"HTML Format");
+	case ARBClipFormat::Html:		return wxDataFormat(L"HTML Format");
 	}
 }
 
@@ -101,14 +101,14 @@ CClipboardDataReader::CClipboardDataReader()
 }
 
 
-bool CClipboardDataReader::IsFormatAvailable(eClipFormat clpFmt)
+bool CClipboardDataReader::IsFormatAvailable(ARBClipFormat clpFmt)
 {
 	return wxTheClipboard && wxTheClipboard->IsSupported(GetClipboardFormat(clpFmt));
 }
 
 
 bool CClipboardDataReader::GetData(
-		eClipFormat clpFmt,
+		ARBClipFormat clpFmt,
 		ElementNodePtr const& outTree)
 {
 	outTree->clear();
@@ -197,7 +197,7 @@ bool CClipboardDataTable::Write(CClipboardDataWriter& writer, bool bCommit)
 		m_ioHtml += L"</table>";
 		m_Closed = true;
 	}
-	rc |= writer.AddData(eFormatHtml, m_ioHtml);
+	rc |= writer.AddData(ARBClipFormat::Html, m_ioHtml);
 	rc |= writer.AddData(m_ioText);
 	if (bCommit)
 		return writer.CommitData();
@@ -225,7 +225,7 @@ CClipboardDataWriter::~CClipboardDataWriter()
 
 
 bool CClipboardDataWriter::AddData(
-		eClipFormat clpFmt,
+		ARBClipFormat clpFmt,
 		ElementNodePtr const& inTree)
 {
 	if (!m_bOkay)
@@ -242,10 +242,10 @@ bool CClipboardDataWriter::AddData(
 
 
 bool CClipboardDataWriter::AddData(
-		eClipFormat clpFmt,
+		ARBClipFormat clpFmt,
 		std::wstring const& inData)
 {
-	if (eFormatHtml == clpFmt)
+	if (ARBClipFormat::Html == clpFmt)
 	{
 		std::string data = StringUtil::stringA(inData);
 		{

@@ -65,7 +65,7 @@ class CDlgConfigVenueDataRoot : public CDlgConfigureDataBase
 public:
 	CDlgConfigVenueDataRoot(
 			CDlgConfigVenue* pDlg,
-			CDlgConfigVenue::eAction action)
+			CDlgConfigVenue::Action action)
 		: CDlgConfigureDataBase(pDlg)
 		, m_Action(action)
 	{
@@ -74,7 +74,7 @@ public:
 	bool DoAdd() override;
 
 private:
-	CDlgConfigVenue::eAction m_Action;
+	CDlgConfigVenue::Action m_Action;
 };
 
 
@@ -87,7 +87,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 	{
 	default:
 		break;
-	case CDlgConfigVenue::eDivisions:
+	case CDlgConfigVenue::Action::Divisions:
 		while (!done)
 		{
 			done = true;
@@ -114,7 +114,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 		}
 		break;
 
-	case CDlgConfigVenue::eEvents:
+	case CDlgConfigVenue::Action::Events:
 		{
 			// The dialog will ensure uniqueness.
 			ARBConfigEventPtr pEvent(ARBConfigEvent::New());
@@ -133,7 +133,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 		}
 		break;
 
-	case CDlgConfigVenue::eLifetimeNames:
+	case CDlgConfigVenue::Action::LifetimeNames:
 		{
 			// The dialog will ensure uniqueness.
 			CDlgConfigLifetimeName dlg(m_pDlg->m_pVenue, m_pDlg);
@@ -152,7 +152,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 		}
 		break;
 
-	case CDlgConfigVenue::eMultiQ:
+	case CDlgConfigVenue::Action::MultiQ:
 		{
 			// The dialog will ensure uniqueness.
 			ARBConfigMultiQPtr multiq(ARBConfigMultiQ::New());
@@ -171,7 +171,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 		}
 		break;
 
-	case CDlgConfigVenue::eTitles:
+	case CDlgConfigVenue::Action::Titles:
 		while (!done)
 		{
 			done = true;
@@ -380,7 +380,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 
-	wxTreeItemId divs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_DIVISION"), -1, -1, new CDlgConfigVenueDataRoot(this, eDivisions));
+	wxTreeItemId divs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_DIVISION"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::Divisions));
 	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin(); iterDiv != m_pVenue->GetDivisions().end(); ++iterDiv)
 	{
 		CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(this, *iterDiv);
@@ -389,7 +389,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	}
 	m_ctrlItems->Expand(divs);
 
-	wxTreeItemId events = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_EVENT"), -1, -1, new CDlgConfigVenueDataRoot(this, eEvents));
+	wxTreeItemId events = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_EVENT"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::Events));
 	for (ARBConfigEventList::iterator iterEvent = m_pVenue->GetEvents().begin(); iterEvent != m_pVenue->GetEvents().end(); ++iterEvent)
 	{
 		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(this, *iterEvent);
@@ -398,7 +398,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	}
 	m_ctrlItems->Expand(events);
 
-	wxTreeItemId lifetimeNames = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_LIFETIMENAME"), -1, -1, new CDlgConfigVenueDataRoot(this, eLifetimeNames));
+	wxTreeItemId lifetimeNames = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_LIFETIMENAME"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::LifetimeNames));
 	for (ARBConfigLifetimeNameList::iterator iter = m_pVenue->GetLifetimeNames().begin();
 		iter != m_pVenue->GetLifetimeNames().end();
 		++iter)
@@ -409,7 +409,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	}
 
 
-	wxTreeItemId multiQs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_MULTIQ"), -1, -1, new CDlgConfigVenueDataRoot(this, eMultiQ));
+	wxTreeItemId multiQs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_MULTIQ"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::MultiQ));
 	for (ARBConfigMultiQList::iterator iter = m_pVenue->GetMultiQs().begin();
 		iter != m_pVenue->GetMultiQs().end();
 		++iter)
@@ -419,7 +419,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		pData->AddSubItems();
 	}
 
-	wxTreeItemId titles = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_TITLES"), -1, -1, new CDlgConfigVenueDataRoot(this, eTitles));
+	wxTreeItemId titles = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_TITLES"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::Titles));
 	for (ARBConfigTitleList::iterator iterTitle = m_pVenue->GetTitles().begin();
 		iterTitle != m_pVenue->GetTitles().end();
 		++iterTitle)

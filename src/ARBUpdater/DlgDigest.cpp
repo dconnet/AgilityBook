@@ -170,9 +170,9 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 			wxString* pHash;
 			size_t* pSize;
 		} types[] = {
-			{ARBMsgDigest::ARBDigestMD5, &m_MD5, &size},
-			{ARBMsgDigest::ARBDigestSHA1, &m_SHA1, nullptr},
-			{ARBMsgDigest::ARBDigestSHA256, &m_SHA256, nullptr},
+			{ARBMsgDigest::ARBDigest::MD5, &m_MD5, &size},
+			{ARBMsgDigest::ARBDigest::SHA1, &m_SHA1, nullptr},
+			{ARBMsgDigest::ARBDigest::SHA256, &m_SHA256, nullptr},
 		};
 		for (size_t i = 0; i < _countof(types); ++i)
 		{
@@ -386,9 +386,9 @@ void CDlgDigest::OnBrowse(wxCommandEvent& evt)
 			wxString* pHash;
 			size_t* pSize;
 		} types[] = {
-			{ARBMsgDigest::ARBDigestMD5, &m_MD5, &size},
-			{ARBMsgDigest::ARBDigestSHA1, &m_SHA1, nullptr},
-			{ARBMsgDigest::ARBDigestSHA256, &m_SHA256, nullptr},
+			{ARBMsgDigest::ARBDigest::MD5, &m_MD5, &size},
+			{ARBMsgDigest::ARBDigest::SHA1, &m_SHA1, nullptr},
+			{ARBMsgDigest::ARBDigest::SHA256, &m_SHA256, nullptr},
 		};
 		for (size_t i = 0; i < _countof(types); ++i)
 		{

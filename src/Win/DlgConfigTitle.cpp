@@ -200,9 +200,9 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wchar_t const* idRes;
 		ARBTitleStyle style;
 	} styles[] = {
-		{arbT("IDS_CONFIG_TITLE_NONE"), eTitleStyleNone},
-		{arbT("IDS_CONFIG_TITLE_NUMBER"), eTitleStyleNumber},
-		{arbT("IDS_CONFIG_TITLE_ROMAN"), eTitleStyleRoman},
+		{arbT("IDS_CONFIG_TITLE_NONE"), ARBTitleStyle::None},
+		{arbT("IDS_CONFIG_TITLE_NUMBER"), ARBTitleStyle::Number},
+		{arbT("IDS_CONFIG_TITLE_ROMAN"), ARBTitleStyle::Roman},
 	};
 	static int nStyles = sizeof(styles) / sizeof(styles[0]);
 	for (int n = 0; n < nStyles; ++n)
@@ -230,9 +230,9 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wchar_t const* idRes;
 		ARBTitleSeparator sep;
 	} seps[] = {
-		{arbT("IDS_CONFIG_TITLE_SEP_NONE"), eTitleSeparatorNone},
-		{arbT("IDS_CONFIG_TITLE_SEP_SPACE"), eTitleSeparatorSpace},
-		{arbT("IDS_CONFIG_TITLE_SEP_HYPHEN"), eTitleSeparatorHyphen},
+		{arbT("IDS_CONFIG_TITLE_SEP_NONE"), ARBTitleSeparator::None},
+		{arbT("IDS_CONFIG_TITLE_SEP_SPACE"), ARBTitleSeparator::Space},
+		{arbT("IDS_CONFIG_TITLE_SEP_HYPHEN"), ARBTitleSeparator::Hyphen},
 	};
 	static int nSeps = sizeof(seps) / sizeof(seps[0]);
 	for (int n = 0; n < nSeps; ++n)

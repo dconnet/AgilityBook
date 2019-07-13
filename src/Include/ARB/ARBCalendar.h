@@ -30,6 +30,25 @@
 
 
 /**
+  * Various states an entry may be in.
+  */
+enum class ARBCalendarEntry
+{
+	Not,		///< Not entered
+	Entered,	///< Entered
+	Pending,	///< Entered, not confirmed
+	Planning	///< Not entered, but planning on it soon
+};
+
+enum class ARBAccommodations
+{
+	None,		///< No accommodations
+	Todo,		///< Need a place to stay
+	Confirmed	///< Reservations have been made
+};
+
+
+/**
  * iCalendar interface
  */
 class ARB_API ICalendar
@@ -72,31 +91,13 @@ class ARB_API ARBCalendar : public ARBBase
 {
 public:
 	/**
-	 * Various states an entry may be in.
-	 */
-	typedef enum
-	{
-		eNot,		///< Not entered
-		eEntered,	///< Entered
-		ePending,	///< Entered, not confirmed
-		ePlanning	///< Not entered, but planning on it soon
-	} eEntry;
-
-	typedef enum
-	{
-		eAccomNone,		///< No accommodations
-		eAccomTodo,		///< Need a place to stay
-		eAccomConfirmed	///< Reservations have been made
-	} eAccommodations;
-
-	/**
 	 *
 	 */
-	typedef enum
+	enum class UidType
 	{
-		eUIDvEvent,
-		eUIDvTodo
-	} eUidType;
+		vEvent,
+		vTodo
+	};
 
 protected:
 	ARBCalendar();
@@ -137,7 +138,7 @@ public:
 	 * Get a UID. Used when generating iCalendar entries.
 	 * @param inType UID type to generate.
 	 */
-	std::wstring GetUID(eUidType inType) const;
+	std::wstring GetUID(UidType inType) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -316,19 +317,19 @@ public:
 	{
 		m_Venue = inVenue;
 	}
-	eEntry GetEntered() const
+	ARBCalendarEntry GetEntered() const
 	{
 		return m_eEntered;
 	}
-	void SetEntered(eEntry inEnter)
+	void SetEntered(ARBCalendarEntry inEnter)
 	{
 		m_eEntered = inEnter;
 	}
-	eAccommodations GetAccommodation()
+	ARBAccommodations GetAccommodation()
 	{
 		return m_eAccommodations;
 	}
-	void SetAccommodation(eAccommodations inAccom)
+	void SetAccommodation(ARBAccommodations inAccom)
 	{
 		m_eAccommodations = inAccom;
 	}
@@ -383,8 +384,8 @@ private:
 	std::wstring m_Location;
 	std::wstring m_Club;
 	std::wstring m_Venue;
-	eEntry m_eEntered;
-	eAccommodations m_eAccommodations;
+	ARBCalendarEntry m_eEntered;
+	ARBAccommodations m_eAccommodations;
 	std::wstring m_Confirmation;
 	std::wstring m_SecEmail;
 	std::wstring m_PremiumURL;

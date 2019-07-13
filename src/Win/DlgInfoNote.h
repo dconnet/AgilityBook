@@ -34,7 +34,7 @@ class CDlgInfoNote : public wxDialog
 public:
 	CDlgInfoNote(
 			CAgilityBookDoc* pDoc,
-			ARBInfo::eInfoType inType,
+			ARBInfoType inType,
 			std::wstring const& inSelect,
 			wxWindow* pParent = nullptr);
 
@@ -45,29 +45,29 @@ private:
 	void UpdateData();
 
 	CAgilityBookDoc* m_pDoc;
-	ARBInfo::eInfoType m_Type;
+	ARBInfoType m_Type;
 	wxString m_Select;
 	std::set<std::wstring> m_NamesInUse;
 	ARBInfoItemList const& m_InfoOrig;
 	ARBInfoItemList m_Info;
+	enum class NameInfoUsage
+	{
+		NotInUse,
+		InUse,
+		Deleted
+	};
 	class NameInfo
 	{
 	public:
-		typedef enum
-		{
-			eNotInUse,
-			eInUse,
-			eDeleted
-		} eUsage;
 		NameInfo()
 			: m_Name()
-			, m_eInUse(eNotInUse)
+			, m_eInUse(NameInfoUsage::NotInUse)
 			, m_bHasData(false)
 		{
 		}
 		NameInfo(std::wstring const& inName)
 			: m_Name(inName)
-			, m_eInUse(eNotInUse)
+			, m_eInUse(NameInfoUsage::NotInUse)
 			, m_bHasData(false)
 		{
 		}
@@ -109,7 +109,7 @@ private:
 			return m_Name == rhs.m_Name;
 		}
 		std::wstring m_Name;
-		eUsage m_eInUse;
+		NameInfoUsage m_eInUse;
 		bool m_bHasData;
 	};
 	std::vector<NameInfo> m_Names;

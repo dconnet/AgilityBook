@@ -45,7 +45,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		ARBConfigVenuePtr const& inVenue,
 		double inValue, // Faults or Place
 		double inPoints,
-		ETitlePointType inType,
+		ARBTitlePointType inType,
 		ARBPointsType inTypeNormal,
 		wxWindow* pParent)
 	: wxDialog()
@@ -77,8 +77,8 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)
-	, m_Type(eTitleLifetime)
-	, m_TypeNormal(ePointsTypeNormal)
+	, m_Type(ARBTitlePointType::Lifetime)
+	, m_TypeNormal(ARBPointsType::Normal)
 	, m_textValue(nullptr)
 	, m_ctrlValue(nullptr)
 	, m_ctrlSpeedPts(nullptr)
@@ -106,7 +106,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 
 	// Controls (these are done first to control tab order)
 
-	wxString caption = (eTitlePlacement == m_Type) ? _("IDC_CONFIG_TITLEPTS_VALUE_TEXT2") : _("IDC_CONFIG_TITLEPTS_VALUE_TEXT1");
+	wxString caption = (ARBTitlePointType::Placement == m_Type) ? _("IDC_CONFIG_TITLEPTS_VALUE_TEXT2") : _("IDC_CONFIG_TITLEPTS_VALUE_TEXT1");
 	m_textValue = new wxStaticText(this, wxID_ANY,
 		caption,
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -115,7 +115,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	m_ctrlValue = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0);
-	if (eTitlePlacement == m_Type)
+	if (ARBTitlePointType::Placement == m_Type)
 		m_ctrlValue->SetValidator(CGenericValidator(&m_Place));
 	else
 		m_ctrlValue->SetValidator(CGenericValidator(&m_Faults));
@@ -146,26 +146,26 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	types.Add(_("IDS_TITLEPOINT_NORMAL"));
 	types.Add(_("IDS_TITLEPOINT_LIFETIME"));
 	types.Add(_("IDS_TITLEPOINT_PLACEMENT"));
-	assert(types.size() == eTitleMax);
+	assert(types.size() == static_cast<size_t>(ARBTitlePointType::Max));
 	m_ctrlType = new wxChoice(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, types, 0);
 	m_ctrlType->Bind(wxEVT_COMMAND_CHOICE_SELECTED, &CDlgConfigTitlePoints::OnSelchangeTitlePoints, this);
 	m_ctrlType->SetHelpText(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
-	m_ctrlType->SetSelection(m_Type);
+	m_ctrlType->SetSelection(static_cast<int>(m_Type));
 
 	wxArrayString typesNorm;
 	typesNorm.Add(_("IDS_TITLEPOINT_NORMAL_NORMAL"));
 	typesNorm.Add(_("IDS_TITLEPOINT_NORMAL_T2B"));
 	typesNorm.Add(_("IDS_TITLEPOINT_NORMAL_UKI"));
-	assert(typesNorm.size() == ePointsTypeMax);
+	assert(typesNorm.size() == static_cast<size_t>(ARBPointsType::Max));
 	m_ctrlTypeNormal = new wxChoice(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, typesNorm, 0);
 	m_ctrlTypeNormal->Bind(wxEVT_COMMAND_CHOICE_SELECTED, &CDlgConfigTitlePoints::OnSelchangeTitlePoints, this);
 	m_ctrlTypeNormal->SetHelpText(_("HIDC_CONFIG_TITLEPTS_CALC"));
 	m_ctrlTypeNormal->SetToolTip(_("HIDC_CONFIG_TITLEPTS_CALC"));
-	m_ctrlTypeNormal->SetSelection(m_TypeNormal);
-	if (eTitleNormal != m_Type)
+	m_ctrlTypeNormal->SetSelection(static_cast<int>(m_TypeNormal));
+	if (ARBTitlePointType::Normal != m_Type)
 		m_ctrlTypeNormal->Hide();
 
 	m_textLifetimeName = new wxStaticText(this, wxID_ANY,
@@ -208,7 +208,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	if (1 == m_ctrlLifetimeName->GetCount())
 		m_ctrlLifetimeName->SetSelection(0);
 
-	if (eTitleLifetime != m_Type)
+	if (ARBTitlePointType::Lifetime != m_Type)
 	{
 		m_textLifetimeName->Hide();
 		m_ctrlLifetimeName->Hide();
@@ -243,7 +243,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 
 	SetSizer(bSizer);
 
-	UpdateControls(-1);
+	UpdateControls(static_cast<ARBTitlePointType>(-1));
 
 	Layout();
 	GetSizer()->Fit(this);
@@ -255,10 +255,10 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 }
 
 
-bool CDlgConfigTitlePoints::UpdateControls(int oldType)
+bool CDlgConfigTitlePoints::UpdateControls(ARBTitlePointType oldType)
 {
 	bool bRefit = false;
-	if (eTitleNormal != m_Type || ePointsTypeNormal == m_TypeNormal)
+	if (ARBTitlePointType::Normal != m_Type || ARBPointsType::Normal == m_TypeNormal)
 	{
 		bRefit = true;
 		m_textValue->Show();
@@ -266,7 +266,7 @@ bool CDlgConfigTitlePoints::UpdateControls(int oldType)
 		m_textPoints->Show();
 		m_ctrlPoints->Show();
 		m_ctrlPoints->Enable(!m_bSpeed);
-		if (eTitleLifetime == m_Type)
+		if (ARBTitlePointType::Lifetime == m_Type)
 		{
 			m_ctrlSpeedPts->Show();
 			m_textLifetimeName->Show();
@@ -279,7 +279,7 @@ bool CDlgConfigTitlePoints::UpdateControls(int oldType)
 			m_ctrlLifetimeName->Hide();
 		}
 	}
-	else if (eTitleNormal == m_Type && ePointsTypeNormal != m_TypeNormal)
+	else if (ARBTitlePointType::Normal == m_Type && ARBPointsType::Normal != m_TypeNormal)
 	{
 		bRefit = true;
 		m_textValue->Hide();
@@ -291,24 +291,24 @@ bool CDlgConfigTitlePoints::UpdateControls(int oldType)
 		m_ctrlLifetimeName->Hide();
 	}
 
-	if (eTitleNormal == m_Type)
+	if (ARBTitlePointType::Normal == m_Type)
 	{
 		m_ctrlTypeNormal->Show();
 		bRefit = true;
 	}
-	else if (eTitleNormal == oldType)
+	else if (ARBTitlePointType::Normal == oldType)
 	{
 		m_ctrlTypeNormal->Hide();
 		bRefit = true;
 	}
-	if (eTitlePlacement == m_Type)
+	if (ARBTitlePointType::Placement == m_Type)
 	{
 		m_Place = static_cast<short>(m_Faults); // Copy old value
 		m_textValue->SetLabel(_("IDC_CONFIG_TITLEPTS_VALUE_TEXT2"));
 		m_ctrlValue->SetValidator(CGenericValidator(&m_Place));
 		bRefit = true;
 	}
-	else if (eTitlePlacement == oldType)
+	else if (ARBTitlePointType::Placement == oldType)
 	{
 		m_Faults = m_Place; // Copy old value
 		m_textValue->SetLabel(_("IDC_CONFIG_TITLEPTS_VALUE_TEXT1"));
@@ -331,9 +331,9 @@ void CDlgConfigTitlePoints::OnUseSpeedPoints(wxCommandEvent& evt)
 
 void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 {
-	int oldType = m_Type;
-	m_Type = m_ctrlType->GetSelection();
-	m_TypeNormal = m_ctrlTypeNormal->GetSelection();
+	ARBTitlePointType oldType = m_Type;
+	m_Type = static_cast<ARBTitlePointType>(m_ctrlType->GetSelection());
+	m_TypeNormal = static_cast<ARBPointsType>(m_ctrlTypeNormal->GetSelection());
 	TransferDataFromWindow();
 
 	if (UpdateControls(oldType))
@@ -350,7 +350,7 @@ void CDlgConfigTitlePoints::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	if (eTitleLifetime == Type())
+	if (ARBTitlePointType::Lifetime == m_Type)
 	{
 		int index = m_ctrlLifetimeName->GetSelection();
 		void* isDefault = m_ctrlLifetimeName->GetClientData(index);

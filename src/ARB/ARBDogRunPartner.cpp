@@ -155,14 +155,14 @@ bool ARBDogRunPartner::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_PARTNER)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
 	|| 0 == m_Handler.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_HANDLER));
 		return false;
 	}
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PARTNER_DOG, m_Dog)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PARTNER_DOG, m_Dog)
 	|| 0 == m_Dog.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_DOG));

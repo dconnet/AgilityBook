@@ -226,7 +226,7 @@ public:
 			ARBDogTrialPtr const& inTrial,
 			ARBDogRunPtr const& inRun,
 			ARBConfigScoringPtr const& inScoring,
-			ScoringRunInfo::eScoringDetail inScoringDetail)
+			ScoringRunInfo::ScoringDetail inScoringDetail)
 		: m_ColData(inColData)
 		, m_Dog(inDog)
 		, m_Trial(inTrial)
@@ -251,7 +251,7 @@ private:
 	ARBDogTrialPtr m_Trial;
 	ARBDogRunPtr m_Run;
 	ARBConfigScoringPtr m_Scoring;
-	ScoringRunInfo::eScoringDetail m_ScoringDetail;
+	ScoringRunInfo::ScoringDetail m_ScoringDetail;
 };
 typedef std::shared_ptr<CDlgListViewerDataRun> CDlgListViewerDataRunPtr;
 
@@ -269,10 +269,10 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 		{
 		default:
 			break;
-		case ScoringRunInfo::eScoringDeleted:
+		case ScoringRunInfo::ScoringDetail::Deleted:
 			str = _("IDS_DELETED");
 			break;
-		case ScoringRunInfo::eScoringChanged:
+		case ScoringRunInfo::ScoringDetail::Changed:
 			str = _("IDS_CHANGED");
 			break;
 		}
@@ -959,13 +959,13 @@ std::wstring CDlgListViewerDataItem::OnNeedText(long iCol) const
 		{
 			switch (m_info.type)
 			{
-			case ARBInfo::eClubInfo:
+			case ARBInfoType::Club:
 				str = _("IDS_COL_CLUB");
 				break;
-			case ARBInfo::eJudgeInfo:
+			case ARBInfoType::Judge:
 				str = _("IDS_COL_JUDGE");
 				break;
-			case ARBInfo::eLocationInfo:
+			case ARBInfoType::Location:
 				str = _("IDS_COL_LOCATION");
 				break;
 			}
@@ -999,25 +999,25 @@ int CDlgListViewerDataItem::Compare(
 	case COL_ITEM_TYPE:
 		switch (m_info.type)
 		{
-		case ARBInfo::eClubInfo:
+		case ARBInfoType::Club:
 			str1 = _("IDS_COL_CLUB");
 			break;
-		case ARBInfo::eJudgeInfo:
+		case ARBInfoType::Judge:
 			str1 = _("IDS_COL_JUDGE");
 			break;
-		case ARBInfo::eLocationInfo:
+		case ARBInfoType::Location:
 			str1 = _("IDS_COL_LOCATION");
 			break;
 		}
 		switch (pData->m_info.type)
 		{
-		case ARBInfo::eClubInfo:
+		case ARBInfoType::Club:
 			str2 = _("IDS_COL_CLUB");
 			break;
-		case ARBInfo::eJudgeInfo:
+		case ARBInfoType::Judge:
 			str2 = _("IDS_COL_JUDGE");
 			break;
-		case ARBInfo::eLocationInfo:
+		case ARBInfoType::Location:
 			str2 = _("IDS_COL_LOCATION");
 			break;
 		}
@@ -1085,7 +1085,7 @@ static void InsertRun(
 		ARBDogPtr const& pDog,
 		ARBDogTrialPtr const& pTrial,
 		ARBDogRunPtr const& pRun,
-		ScoringRunInfo::eScoringDetail scoringDetail)
+		ScoringRunInfo::ScoringDetail scoringDetail)
 {
 	ARBConfigScoringPtr pScoring;
 	if (pTrial->GetClubs().GetPrimaryClub())
@@ -1142,7 +1142,7 @@ CDlgListViewer::CDlgListViewer(
 			++iter)
 		{
 			ARBDogExistingPointsPtr pExisting = *iter;
-			if (ARBDogExistingPoints::eTitle == pExisting->GetType()
+			if (ARBExistingPointType::Title == pExisting->GetType()
 			&& pExisting->GetVenue() == inData->m_Venue->GetName()
 			&& pExisting->GetDivision() == inData->m_Div->GetName()
 			&& (pExisting->GetLevel() == inData->m_Level->GetName()
@@ -1193,7 +1193,7 @@ CDlgListViewer::CDlgListViewer(
 				continue;
 		}
 		InsertRun(m_pDoc, m_ctrlList, pColData, iItem,
-			ARBDogPtr(), pTrial, pRun, ScoringRunInfo::eNotScoringDetail);
+			ARBDogPtr(), pTrial, pRun, ScoringRunInfo::ScoringDetail::None);
 	}
 	pColData->SetColumnWidths(m_ctrlList);
 
@@ -1277,7 +1277,7 @@ CDlgListViewer::CDlgListViewer(
 			++iter)
 		{
 			ARBDogExistingPointsPtr pExisting = *iter;
-			if (ARBDogExistingPoints::eMQ == pExisting->GetType()
+			if (ARBExistingPointType::MQ == pExisting->GetType()
 			&& pExisting->GetVenue() == inData->m_Venue->GetName()
 			&& pExisting->GetMultiQ() == inData->m_MultiQ->GetName())
 			{
@@ -1435,7 +1435,7 @@ bool CDlgListViewer::Create(
 
 	m_ctrlList = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(300, 100)),
-		false, CReportListCtrl::eSortHeader, true);
+		false, CReportListCtrl::SortHeader::Sort, true);
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgListViewer::OnColumnClick, this);
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgListViewer::OnItemSelected, this);
 	m_ctrlList->SetHelpText(_("HIDC_LIST_VIEWER"));

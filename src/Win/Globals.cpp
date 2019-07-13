@@ -33,5 +33,5 @@
 //          never had the NA test added.)
 bool ShouldComputeScore(ARB_Q q)
 {
-	return q.Qualified() || ARB_Q::eQ_NQ == q || ARB_Q::eQ_NA == q;
+	return q.Qualified() || Q::NQ == q || Q::NA == q;
 }

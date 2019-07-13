@@ -224,7 +224,7 @@ bool ARBDogTrial::Load(
 	if (!inTree || inTree->GetName() != TREE_TRIAL)
 		return false;
 	inTree->GetAttrib(ATTRIB_TRIAL_DEFAULT_DATE, m_DefaultDate);
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, Localization()->ValidValuesBool().c_str()));
 		return false;

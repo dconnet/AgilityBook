@@ -41,7 +41,7 @@ public:
 			wxWindow* pParent = nullptr);
 
 private:
-	ARBDogExistingPoints::PointType GetCurrentType() const;
+	ARBExistingPointType GetCurrentType() const;
 	CDlgPointsVenueData* GetVenueData(int index) const;
 	CDlgPointsDivisionData* GetDivisionData(int index) const;
 	CDlgPointsLevelData* GetLevelData(int index) const;

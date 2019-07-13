@@ -460,11 +460,11 @@ double ToCDouble(std::wstring const& inStr)
 
 static const char* const sc_Whitespace = "\r\n\t ";
 static const wchar_t* const sc_wWhitespace = L"\r\n\t ";
-enum TrimType
+enum class TrimType
 {
-	eTrimLeft = 0x1,
-	eTrimRight = 0x2,
-	eTrimBoth = eTrimLeft | eTrimRight
+	Left = 0x1,
+	Right = 0x2,
+	Both = Left | Right
 };
 
 
@@ -473,14 +473,14 @@ template <typename T> T TrimImpl(T const& inStr, T const& toTrim, TrimType type)
 	if (0 == inStr.length())
 		return inStr;
 	typename T::size_type posFirst = 0;
-	if (type & eTrimLeft)
+	if (static_cast<unsigned int>(type) & static_cast<unsigned int>(TrimType::Left))
 	{
 		posFirst = inStr.find_first_not_of(toTrim);
 		if (T::npos == posFirst)
 			return T();
 	}
 	typename T::size_type posLast = inStr.length() - 1;
-	if (type & eTrimRight)
+	if (static_cast<unsigned int>(type) & static_cast<unsigned int>(TrimType::Right))
 	{
 		posLast = inStr.find_last_not_of(toTrim);
 		if (T::npos == posLast)
@@ -579,73 +579,73 @@ int CompareNoCase(wxString const& inStr1, wxString const& inStr2)
 
 std::string Trim(std::string const& inStr)
 {
-	return TrimImpl<std::string>(inStr, sc_Whitespace, eTrimBoth);
+	return TrimImpl<std::string>(inStr, sc_Whitespace, TrimType::Both);
 }
 
 
 std::wstring Trim(std::wstring const& inStr)
 {
-	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, eTrimBoth);
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, TrimType::Both);
 }
 
 
 std::string Trim(std::string const& inStr, char toTrim)
 {
-	return TrimImpl<std::string>(inStr, std::string(1, toTrim), eTrimBoth);
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim), TrimType::Both);
 }
 
 
 std::wstring Trim(std::wstring const& inStr, wchar_t toTrim)
 {
-	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), eTrimBoth);
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), TrimType::Both);
 }
 
 
 std::string TrimLeft(std::string const& inStr)
 {
-	return TrimImpl<std::string>(inStr, sc_Whitespace, eTrimLeft);
+	return TrimImpl<std::string>(inStr, sc_Whitespace, TrimType::Left);
 }
 
 
 std::wstring TrimLeft(std::wstring const& inStr)
 {
-	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, eTrimLeft);
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, TrimType::Left);
 }
 
 
 std::string TrimLeft(std::string const& inStr, char toTrim)
 {
-	return TrimImpl<std::string>(inStr, std::string(1, toTrim), eTrimLeft);
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim), TrimType::Left);
 }
 
 
 std::wstring TrimLeft(std::wstring const& inStr, wchar_t toTrim)
 {
-	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), eTrimLeft);
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), TrimType::Left);
 }
 
 
 std::string TrimRight(std::string const& inStr)
 {
-	return TrimImpl<std::string>(inStr, sc_Whitespace, eTrimRight);
+	return TrimImpl<std::string>(inStr, sc_Whitespace, TrimType::Right);
 }
 
 
 std::wstring TrimRight(std::wstring const& inStr)
 {
-	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, eTrimRight);
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, TrimType::Right);
 }
 
 
 std::string TrimRight(std::string const& inStr, char toTrim)
 {
-	return TrimImpl<std::string>(inStr, std::string(1, toTrim), eTrimRight);
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim), TrimType::Right);
 }
 
 
 std::wstring TrimRight(std::wstring const& inStr, wchar_t toTrim)
 {
-	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), eTrimRight);
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), TrimType::Right);
 }
 
 
@@ -761,13 +761,13 @@ std::wstring FormatBytes(
 	default:
 		assert(0);
 		// fall thru
-	case eBytesSI:
+	case ByteSizeStyle::SI:
 		unitIndex = 0;
 		break;
-	case eBytesBinary:
+	case ByteSizeStyle::Binary:
 		unitIndex = 1;
 		break;
-	case eBytesTrue:
+	case ByteSizeStyle::True:
 		unitIndex = 2;
 		break;
 	}
@@ -780,7 +780,7 @@ std::wstring FormatBytes(
 	}
 	std::wstring form(sc_units[unitIndex].units[index]);
 
-	std::wstring val = ARBDouble::ToString(inSize, inPrec, ARBDouble::eStrip) + form;
+	std::wstring val = ARBDouble::ToString(inSize, inPrec, ARBDouble::ZeroStrip::Strip) + form;
 	return val;
 }
 

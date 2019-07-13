@@ -134,6 +134,61 @@ static wxString TrainingNames(std::set<std::wstring> const& inNames)
 
 /////////////////////////////////////////////////////////////////////////////
 
+// These values are written to the registry.
+enum ViewFilter
+{
+	eReserved1 = 0x01,	///< Obsolete, implies not+plan+enter
+	eReserved2 = 0x02,	///< Obsolete, changed to ViewAllCalendarOpening()
+	eReserved3 = 0x04,	///< Obsolete, changed to ViewAllCalendarClosing()
+	eViewNotEntered = 0x08,	///< Type of entry to view
+	eViewPlanning = 0x10,	///< Type of entry to view
+	eViewEntered = 0x20,	///< Type of entry to view
+	eViewNormal = eViewNotEntered | eViewPlanning | eViewEntered
+};
+
+
+CCalendarViewFilter::CCalendarViewFilter(unsigned short inFilter)
+	: m_Filter(inFilter)
+{
+	if (m_Filter & 0x01)
+	{
+		// Transition existing registry entries.
+		m_Filter &= ~0x01;
+		m_Filter |= eViewNormal;
+	}
+}
+
+bool CCalendarViewFilter::IsFiltered() const
+{
+	return eViewNormal != (m_Filter & eViewNormal);
+}
+bool CCalendarViewFilter::ViewNotEntered() const
+{
+	return 0 == m_Filter || eViewNotEntered == (m_Filter & eViewNotEntered);
+}
+bool CCalendarViewFilter::ViewPlanning() const
+{
+	return 0 == m_Filter || eViewPlanning == (m_Filter & eViewPlanning);
+}
+bool CCalendarViewFilter::ViewEntered() const
+{
+	return 0 == m_Filter || eViewEntered == (m_Filter & eViewEntered);
+}
+void CCalendarViewFilter::AddNotEntered()
+{
+	m_Filter |= eViewNotEntered;
+}
+void CCalendarViewFilter::AddPlanning()
+{
+	m_Filter |= eViewPlanning;
+}
+void CCalendarViewFilter::AddEntered()
+{
+	m_Filter |= eViewEntered;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 CFilterOptions& CFilterOptions::Options()
 {
 	static CFilterOptions options;
@@ -150,7 +205,7 @@ CFilterOptions::CFilterOptions()
 	, m_dateEndDate()
 	, m_bViewAllVenues(false)
 	, m_venueFilter()
-	, m_eRuns(eViewRunsAll)
+	, m_eRuns(ARBFilterViewRuns::All)
 	, m_bViewAllNames(false)
 	, m_nameFilter()
 	, m_curFilter()
@@ -221,7 +276,7 @@ void CFilterOptions::Load()
 	wxString val;
 	std::wstring all(StringUtil::GetTranslation(arbT("IDS_ALL")));
 
-	m_calView.m_Filter = static_cast<unsigned short>(wxConfig::Get()->Read(CFG_CAL_FILTER, static_cast<long>(CCalendarViewFilter::eViewNormal)));
+	m_calView.m_Filter = static_cast<unsigned short>(wxConfig::Get()->Read(CFG_CAL_FILTER, static_cast<long>(eViewNormal)));
 	wxConfig::Get()->Read(CFG_COMMON_VIEWALLDATES, &m_bAllDates, true);
 	wxConfig::Get()->Read(CFG_COMMON_STARTFILTER, &m_bStartDate, false);
 	m_dateStartDate = ARBDate::Today();
@@ -235,7 +290,7 @@ void CFilterOptions::Load()
 	m_venueFilter.clear();
 	FilterVenue(val, m_venueFilter);
 
-	m_eRuns = static_cast<eViewRuns>(wxConfig::Get()->Read(CFG_COMMON_VIEWRUNS, 0L));
+	m_eRuns = static_cast<ARBFilterViewRuns>(wxConfig::Get()->Read(CFG_COMMON_VIEWRUNS, 0L));
 
 	wxConfig::Get()->Read(CFG_COMMON_VIEWALLNAMES, &m_bViewAllNames, true);
 	val = wxConfig::Get()->Read(CFG_COMMON_FILTERTRAININGNAMES, wxEmptyString);
@@ -471,7 +526,7 @@ bool CFilterOptions::IsFilterEnabled() const
 {
 	if (m_bAllDates
 	&& m_bViewAllVenues
-	&& eViewRunsAll == m_eRuns)
+	&& ARBFilterViewRuns::All == m_eRuns)
 		return false;
 	else
 		return true;
@@ -600,7 +655,7 @@ unsigned short CFilterOptions::IsRunVisible(
 	unsigned short nVisible = 0;
 	if (!IsDateVisible(inRun->GetDate(), inRun->GetDate()))
 		return nVisible;
-	nVisible = (0x1 << ARBBase::eFilter) | (0x1 << ARBBase::eIgnoreQ);
+	nVisible = GetFilterMask(ARBFilterType::Full) | GetFilterMask(ARBFilterType::IgnoreQ);
 	if (!m_bViewAllVenues)
 	{
 		nVisible = 0;
@@ -630,21 +685,21 @@ unsigned short CFilterOptions::IsRunVisible(
 				&& inRun->GetDivision() == (*iter).division
 				&& inRun->GetLevel() == (*iter).level)
 				{
-					nVisible = (0x1 << ARBBase::eFilter) | (0x1 << ARBBase::eIgnoreQ);
+					nVisible = GetFilterMask(ARBFilterType::Full) | GetFilterMask(ARBFilterType::IgnoreQ);
 					break;
 				}
 			}
 		}
 	}
-	if ((nVisible & (0x1 << ARBBase::eFilter))
-	&& eViewRunsAll != m_eRuns)
+	if ((nVisible & GetFilterMask(ARBFilterType::Full))
+	&& ARBFilterViewRuns::All != m_eRuns)
 	{
 		// Only set the full filter, not the IgnoreQ filter.
-		nVisible &= ~(0x1 << ARBBase::eFilter);
-		bool bQualifying = eViewRunsQs == m_eRuns;
+		nVisible &= ~GetFilterMask(ARBFilterType::Full);
+		bool bQualifying = ARBFilterViewRuns::Qs == m_eRuns;
 		if ((inRun->GetQ().Qualified() && bQualifying)
 		|| (!inRun->GetQ().Qualified() && !bQualifying))
-			nVisible |= (0x1 << ARBBase::eFilter);
+			nVisible |= GetFilterMask(ARBFilterType::Full);
 	}
 	return nVisible;
 }
@@ -778,7 +833,7 @@ bool CFilterOptions::FilterExists(
 
 CFilterOptions::CFilterOptionData::CFilterOptionData()
 		: filterName()
-		, calView(CCalendarViewFilter::eViewNormal)
+		, calView(eViewNormal)
 		, bAllDates(true)
 		, bStartDate(false)
 		, dateStartDate(ARBDate::Today())
@@ -786,7 +841,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData()
 		, dateEndDate(ARBDate::Today())
 		, bViewAllVenues(true)
 		, venueFilter()
-		, eRuns(eViewRunsAll)
+		, eRuns(ARBFilterViewRuns::All)
 		, bViewAllNames(true)
 		, nameFilter()
 {
@@ -795,7 +850,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData()
 
 CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 		: filterName()
-		, calView(CCalendarViewFilter::eViewNormal)
+		, calView(eViewNormal)
 		, bAllDates(true)
 		, bStartDate(false)
 		, dateStartDate(ARBDate::Today())
@@ -803,7 +858,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 		, dateEndDate(ARBDate::Today())
 		, bViewAllVenues(true)
 		, venueFilter()
-		, eRuns(eViewRunsAll)
+		, eRuns(ARBFilterViewRuns::All)
 		, bViewAllNames(true)
 		, nameFilter()
 {
@@ -820,7 +875,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 	wxString names = wxConfig::Get()->Read(section + CFG_FILTER_ITEM_FILTERVENUE, wxEmptyString);
 	venueFilter.clear();
 	FilterVenue(names, venueFilter);
-	eRuns = static_cast<CFilterOptions::eViewRuns>(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_VIEWRUNS, static_cast<long>(eRuns)));
+	eRuns = static_cast<ARBFilterViewRuns>(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_VIEWRUNS, static_cast<long>(eRuns)));
 	wxConfig::Get()->Read(section + CFG_FILTER_ITEM_ALLNAMES, &bViewAllNames, bViewAllNames);
 	names = wxConfig::Get()->Read(section + CFG_FILTER_ITEM_FILTERNAMES, wxEmptyString);
 	nameFilter.clear();

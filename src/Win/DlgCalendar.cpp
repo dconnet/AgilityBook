@@ -262,13 +262,13 @@ CDlgCalendar::CDlgCalendar(
 	default:
 		m_ctrlEntryNot->SetValue(true);
 		break;
-	case ARBCalendar::ePlanning:
+	case ARBCalendarEntry::Planning:
 		m_ctrlEntryPlan->SetValue(true);
 		break;
-	case ARBCalendar::ePending:
+	case ARBCalendarEntry::Pending:
 		m_ctrlEntryPending->SetValue(true);
 		break;
-	case ARBCalendar::eEntered:
+	case ARBCalendarEntry::Entered:
 		m_ctrlEntryEntered->SetValue(true);
 		break;
 	}
@@ -279,7 +279,7 @@ CDlgCalendar::CDlgCalendar(
 	m_ctrlOnlineUrlEntry->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendar::OnOnlineEntry, this);
 	m_ctrlOnlineUrlEntry->SetHelpText(_("HIDC_CAL_ONLINE_ENTRY"));
 	m_ctrlOnlineUrlEntry->SetToolTip(_("HIDC_CAL_ONLINE_ENTRY"));
-	if (ARBCalendar::ePlanning != m_pCal->GetEntered() || m_OnlineUrl.empty())
+	if (ARBCalendarEntry::Planning != m_pCal->GetEntered() || m_OnlineUrl.empty())
 		m_ctrlOnlineUrlEntry->Enable(false);
 
 	m_ctrlOnlineUrl = new CTextCtrl(this, wxID_ANY, wxEmptyString,
@@ -317,10 +317,10 @@ CDlgCalendar::CDlgCalendar(
 	default:
 		m_ctrlAccomNot->SetValue(true);
 		break;
-	case ARBCalendar::eAccomTodo:
+	case ARBAccommodations::Todo:
 		m_ctrlAccomNeeded->SetValue(true);
 		break;
-	case ARBCalendar::eAccomConfirmed:
+	case ARBAccommodations::Confirmed:
 		m_ctrlAccomMade->SetValue(true);
 		m_Confirmation = StringUtil::stringWX(m_pCal->GetConfirmation());
 		break;
@@ -331,7 +331,7 @@ CDlgCalendar::CDlgCalendar(
 		CTrimValidator(&m_Confirmation, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlConfirmation->SetHelpText(_("HIDC_CAL_ACCOM_CONFIRMATION"));
 	m_ctrlConfirmation->SetToolTip(_("HIDC_CAL_ACCOM_CONFIRMATION"));
-	m_ctrlConfirmation->Enable(ARBCalendar::eAccomConfirmed == m_pCal->GetAccommodation());
+	m_ctrlConfirmation->Enable(ARBAccommodations::Confirmed == m_pCal->GetAccommodation());
 
 	m_ctrlPremiumEntry = new wxButton(this, wxID_ANY,
 		_("IDC_CAL_PREMIUM_ENTRY"),
@@ -594,7 +594,7 @@ void CDlgCalendar::UpdateLocationInfo(wxString const& location)
 	if (!location.empty())
 	{
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(StringUtil::stringW(location), &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Location).FindItem(StringUtil::stringW(location), &pItem))
 		{
 			str = StringUtil::stringWX(pItem->GetComment());
 		}
@@ -635,7 +635,7 @@ void CDlgCalendar::UpdateClubInfo(wxString const& club)
 	if (!club.empty())
 	{
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(StringUtil::stringW(club), &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Club).FindItem(StringUtil::stringW(club), &pItem))
 		{
 			str = StringUtil::stringWX(pItem->GetComment());
 		}
@@ -779,7 +779,7 @@ void CDlgCalendar::OnSelchangeClub(wxCommandEvent& evt)
 void CDlgCalendar::OnClubNotes(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, StringUtil::stringW(m_Club), this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfoType::Club, StringUtil::stringW(m_Club), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_Club = StringUtil::stringWX(dlg.CurrentSelection());
@@ -798,7 +798,7 @@ void CDlgCalendar::OnSelchangeLocation(wxCommandEvent& evt)
 void CDlgCalendar::OnLocationNotes(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, StringUtil::stringW(m_Location), this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfoType::Location, StringUtil::stringW(m_Location), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_Location = StringUtil::stringWX(dlg.CurrentSelection());
@@ -850,13 +850,13 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	m_pCal->SetStartDate(m_dateStart);
 	m_pCal->SetEndDate(m_dateEnd);
 	if (m_ctrlEntryNot->GetValue())
-		m_pCal->SetEntered(ARBCalendar::eNot);
+		m_pCal->SetEntered(ARBCalendarEntry::Not);
 	else if (m_ctrlEntryPlan->GetValue())
-		m_pCal->SetEntered(ARBCalendar::ePlanning);
+		m_pCal->SetEntered(ARBCalendarEntry::Planning);
 	else if (m_ctrlEntryPending->GetValue())
-		m_pCal->SetEntered(ARBCalendar::ePending);
+		m_pCal->SetEntered(ARBCalendarEntry::Pending);
 	else if (m_ctrlEntryEntered->GetValue())
-		m_pCal->SetEntered(ARBCalendar::eEntered);
+		m_pCal->SetEntered(ARBCalendarEntry::Entered);
 	m_pCal->SetIsTentative(m_bTentative);
 	m_pCal->SetLocation(StringUtil::stringW(m_Location));
 	m_pCal->SetVenue(StringUtil::stringW(m_Venue));
@@ -874,12 +874,12 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	m_pCal->SetPremiumURL(StringUtil::stringW(m_PremiumUrl));
 	m_pCal->SetSecEmail(StringUtil::stringW(m_EMailSecAddr));
 	if (m_ctrlAccomNot->GetValue())
-		m_pCal->SetAccommodation(ARBCalendar::eAccomNone);
+		m_pCal->SetAccommodation(ARBAccommodations::None);
 	else if (m_ctrlAccomNeeded->GetValue())
-		m_pCal->SetAccommodation(ARBCalendar::eAccomTodo);
+		m_pCal->SetAccommodation(ARBAccommodations::Todo);
 	else if (m_ctrlAccomMade->GetValue())
 	{
-		m_pCal->SetAccommodation(ARBCalendar::eAccomConfirmed);
+		m_pCal->SetAccommodation(ARBAccommodations::Confirmed);
 		m_pCal->SetConfirmation(StringUtil::stringW(m_Confirmation));
 	}
 	m_pCal->SetNote(StringUtil::stringW(m_Notes));

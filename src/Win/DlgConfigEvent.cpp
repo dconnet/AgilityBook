@@ -624,7 +624,7 @@ void CDlgConfigEvent::FillControls()
 			{
 				std::wstring str1, str2;
 				fmt::wmemory_buffer info;
-				ARBConfigScoring::ScoringStyle style = pScoring->GetScoringStyle();
+				ARBScoringStyle style = pScoring->GetScoringStyle();
 				str1 = _("IDS_CONFIGEVENT_STYLE");
 				fmt::format_to(info, L"{}: {}\n", str1, ARBConfigScoring::GetScoringStyleStr(style));
 				// The following strings should be the same as they are in
@@ -633,13 +633,13 @@ void CDlgConfigEvent::FillControls()
 				{
 				default:
 					break;
-				case ARBConfigScoring::eFaultsThenTime:
-				case ARBConfigScoring::eFaults100ThenTime:
-				case ARBConfigScoring::eFaults200ThenTime:
+				case ARBScoringStyle::FaultsThenTime:
+				case ARBScoringStyle::Faults100ThenTime:
+				case ARBScoringStyle::Faults200ThenTime:
 					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
 					fmt::format_to(info, L"{}: {}", str1, pScoring->TimeFaultMultiplier());
 					break;
-				case ARBConfigScoring::eOCScoreThenTime:
+				case ARBScoringStyle::OCScoreThenTime:
 					str1 = _("IDS_CONFIGEVENT_REQOPEN");
 					str2 = _("IDS_CONFIGEVENT_REQCLOSE");
 					fmt::format_to(info, L"{}: {}; {}: {}", str1, pScoring->GetRequiredOpeningPoints(), str2, pScoring->GetRequiredClosingPoints());
@@ -661,7 +661,7 @@ void CDlgConfigEvent::FillControls()
 						}
 					}
 					break;
-				case ARBConfigScoring::eScoreThenTime:
+				case ARBScoringStyle::ScoreThenTime:
 					str1 = _("IDS_POINTS");
 					fmt::format_to(info, L"{}: {}", str1, pScoring->GetRequiredOpeningPoints());
 					if (pScoring->SubtractTimeFaultsFromScore())
@@ -682,7 +682,7 @@ void CDlgConfigEvent::FillControls()
 						}
 					}
 					break;
-				case ARBConfigScoring::eTimePlusFaults:
+				case ARBScoringStyle::TimePlusFaults:
 					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
 					fmt::format_to(info, L"{}: {}", str1, pScoring->TimeFaultMultiplier());
 					if (pScoring->QsMustBeClean())
@@ -929,28 +929,28 @@ void CDlgConfigEvent::EditPoints()
 		{
 			double value = 0.0;
 			double points = 0.0;
-			CDlgConfigTitlePoints::ETitlePointType type = CDlgConfigTitlePoints::eTitleNormal;
-			ARBPointsType typeNorm = ePointsTypeNormal;
+			ARBTitlePointType type = ARBTitlePointType::Normal;
+			ARBPointsType typeNorm = ARBPointsType::Normal;
 			if (pTitle)
 			{
 				value = pTitle->GetFaults();
 				points = pTitle->GetPoints();
-				type = CDlgConfigTitlePoints::eTitleNormal;
+				type = ARBTitlePointType::Normal;
 				typeNorm = pTitle->GetCalc()->GetType();
 			}
 			else if (pLife)
 			{
 				value = pLife->GetFaults();
 				points = pLife->GetPoints();
-				type = CDlgConfigTitlePoints::eTitleLifetime;
-				typeNorm = ePointsTypeMax;
+				type = ARBTitlePointType::Lifetime;
+				typeNorm = ARBPointsType::Max;
 			}
 			else
 			{
 				value = pPlace->GetPlace();
 				points = pPlace->GetValue();
-				type = CDlgConfigTitlePoints::eTitlePlacement;
-				typeNorm = ePointsTypeMax;
+				type = ARBTitlePointType::Placement;
+				typeNorm = ARBPointsType::Max;
 			}
 			int rc = 0;
 			double dlgFaults = 0.0;
@@ -958,8 +958,8 @@ void CDlgConfigEvent::EditPoints()
 			bool dlgUseSpeedPts = false;
 			double dlgPoints = 0.0;
 			wxString dlgLifetimeName;
-			CDlgConfigTitlePoints::ETitlePointType dlgType = CDlgConfigTitlePoints::eTitleNormal;
-			ARBPointsType dlgTypeNormal = ePointsTypeNormal;
+			ARBTitlePointType dlgType = ARBTitlePointType::Normal;
+			ARBPointsType dlgTypeNormal = ARBPointsType::Normal;
 			if (pLife)
 			{
 				CDlgConfigTitlePoints dlg(m_pVenue, pLife);
@@ -1009,7 +1009,7 @@ void CDlgConfigEvent::EditPoints()
 					{
 					default:
 						assert(0);
-					case CDlgConfigTitlePoints::eTitleNormal:
+					case ARBTitlePointType::Normal:
 						{
 							ARBCalcPointsPtr calc = pScoring->GetTitlePoints().GetCalc();
 							if (!calc || dlgTypeNormal != calc->GetType())
@@ -1024,12 +1024,12 @@ void CDlgConfigEvent::EditPoints()
 						if (!bOk)
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
-					case CDlgConfigTitlePoints::eTitleLifetime:
+					case ARBTitlePointType::Lifetime:
 						bOk = pScoring->GetLifetimePoints().AddLifetimePoints(StringUtil::stringW(dlgLifetimeName), dlgUseSpeedPts, dlgPoints, dlgFaults);
 						if (!bOk)
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
-					case CDlgConfigTitlePoints::eTitlePlacement:
+					case ARBTitlePointType::Placement:
 						bOk = pScoring->GetPlacements().AddPlaceInfo(dlgPlace, dlgPoints, true);
 						if (!bOk)
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
@@ -1284,7 +1284,7 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		if (pScoring)
 		{
-			CDlgConfigTitlePoints dlg(m_pVenue, 0.0, 0.0, CDlgConfigTitlePoints::eTitleNormal, ePointsTypeNormal, this);
+			CDlgConfigTitlePoints dlg(m_pVenue, 0.0, 0.0, ARBTitlePointType::Normal, ARBPointsType::Normal, this);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				// The only reason this fails is if the faults entry exists.
@@ -1292,15 +1292,15 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 				{
 				default:
 					assert(0);
-				case CDlgConfigTitlePoints::eTitleNormal:
+				case ARBTitlePointType::Normal:
 					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults()))
 						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
-				case CDlgConfigTitlePoints::eTitleLifetime:
+				case ARBTitlePointType::Lifetime:
 					if (!pScoring->GetLifetimePoints().AddLifetimePoints(StringUtil::stringW(dlg.LifetimeName()), dlg.UseSpeedPts(), dlg.Points(), dlg.Faults()))
 						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
-				case CDlgConfigTitlePoints::eTitlePlacement:
+				case ARBTitlePointType::Placement:
 					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true))
 						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;

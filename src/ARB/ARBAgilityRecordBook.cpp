@@ -192,16 +192,16 @@ bool ARBAgilityRecordBook::Load(
 		return false;
 	}
 
-	m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(fileInfoMax), std::wstring());
-	inTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[fileInfoBook]);
-	inTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[fileInfoVersion]);
-	inTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[fileInfoPlatform]);
-	inTree->GetAttrib(ATTRIB_BOOK_PGM_OS, m_FileInfo[fileInfoOS]);
-	inTree->GetAttrib(ATTRIB_BOOK_TIMESTAMP, m_FileInfo[fileInfoTimeStamp]);
+	m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(ARBFileInfo::Max), std::wstring());
+	inTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[static_cast<size_t>(ARBFileInfo::Book)]);
+	inTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[static_cast<size_t>(ARBFileInfo::Version)]);
+	inTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[static_cast<size_t>(ARBFileInfo::Platform)]);
+	inTree->GetAttrib(ATTRIB_BOOK_PGM_OS, m_FileInfo[static_cast<size_t>(ARBFileInfo::OS)]);
+	inTree->GetAttrib(ATTRIB_BOOK_TIMESTAMP, m_FileInfo[static_cast<size_t>(ARBFileInfo::TimeStamp)]);
 
 	// The version of the document must be something we understand.
 	ARBVersion version;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_BOOK_VERSION, version))
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_BOOK_VERSION, version))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION));
 		return false;
@@ -376,12 +376,12 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr const& outTree,
 
 	// Refresh cached "write-only" file info
 	if (m_FileInfo.empty()) // A new file didn't initialize this
-		m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(fileInfoMax), std::wstring());
-	outTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[fileInfoBook]);
-	outTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[fileInfoVersion]);
-	outTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[fileInfoPlatform]);
-	outTree->GetAttrib(ATTRIB_BOOK_PGM_OS, m_FileInfo[fileInfoOS]);
-	outTree->GetAttrib(ATTRIB_BOOK_TIMESTAMP, m_FileInfo[fileInfoTimeStamp]);
+		m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(ARBFileInfo::Max), std::wstring());
+	outTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[static_cast<size_t>(ARBFileInfo::Book)]);
+	outTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[static_cast<size_t>(ARBFileInfo::Version)]);
+	outTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[static_cast<size_t>(ARBFileInfo::Platform)]);
+	outTree->GetAttrib(ATTRIB_BOOK_PGM_OS, m_FileInfo[static_cast<size_t>(ARBFileInfo::OS)]);
+	outTree->GetAttrib(ATTRIB_BOOK_TIMESTAMP, m_FileInfo[static_cast<size_t>(ARBFileInfo::TimeStamp)]);
 
 	if (inCalendar)
 	{
@@ -525,7 +525,7 @@ bool ARBAgilityRecordBook::Update(
 					// Move pairs run to new team
 					pRun->SetEvent(L"Team");
 					fmt::format_to(msgPairsRuns, L"   {} {} {} {}/{}\n",
-						pRun->GetDate().GetString(ARBDate::eISO),
+						pRun->GetDate().GetString(ARBDateFormat::ISO),
 						venue,
 						pRun->GetEvent(),
 						pRun->GetDivision(),
@@ -553,7 +553,7 @@ bool ARBAgilityRecordBook::Update(
 						if (!q.AllowForNonTitling())
 						{
 							// Titling points were removed. Reset the Q/NQ to NA.
-							pRun->SetQ(ARB_Q::eQ_NA);
+							pRun->SetQ(Q::NA);
 						}
 					}
 					++iterRun;
@@ -561,7 +561,7 @@ bool ARBAgilityRecordBook::Update(
 				else
 				{
 					fmt::format_to(msgDelRuns, L"   {} {} {} {}/{}\n",
-						pRun->GetDate().GetString(ARBDate::eISO),
+						pRun->GetDate().GetString(ARBDateFormat::ISO),
 						venue,
 						pRun->GetEvent(),
 						pRun->GetDivision(),
@@ -694,7 +694,7 @@ size_t ARBAgilityRecordBook::GetAllClubNames(
 			outClubs.insert(pCal->GetClub());
 	}
 	if (bInfo)
-		m_Info.GetInfo(ARBInfo::eClubInfo).GetAllItems(outClubs, bVisibleOnly);
+		m_Info.GetInfo(ARBInfoType::Club).GetAllItems(outClubs, bVisibleOnly);
 	return outClubs.size();
 }
 
@@ -728,7 +728,7 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(
 			outLocations.insert(pCal->GetLocation());
 	}
 	if (bInfo)
-		m_Info.GetInfo(ARBInfo::eLocationInfo).GetAllItems(outLocations, bVisibleOnly);
+		m_Info.GetInfo(ARBInfoType::Location).GetAllItems(outLocations, bVisibleOnly);
 	return outLocations.size();
 }
 
@@ -903,7 +903,7 @@ size_t ARBAgilityRecordBook::GetAllJudges(
 		}
 	}
 	if (bInfo)
-		m_Info.GetInfo(ARBInfo::eJudgeInfo).GetAllItems(outJudges, bVisibleOnly);
+		m_Info.GetInfo(ARBInfoType::Judge).GetAllItems(outJudges, bVisibleOnly);
 	return outJudges.size();
 }
 

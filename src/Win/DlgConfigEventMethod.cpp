@@ -278,14 +278,14 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_EVENT_TYPE"));
 	// If any additional types are added in ARBConfigScoring,
 	// they'll have to be manually added here...
-	static ARBConfigScoring::ScoringStyle const Styles[] =
+	static ARBScoringStyle const Styles[] =
 	{
-		ARBConfigScoring::eFaultsThenTime,
-		ARBConfigScoring::eFaults100ThenTime,
-		ARBConfigScoring::eFaults200ThenTime,
-		ARBConfigScoring::eOCScoreThenTime,
-		ARBConfigScoring::eScoreThenTime,
-		ARBConfigScoring::eTimePlusFaults
+		ARBScoringStyle::FaultsThenTime,
+		ARBScoringStyle::Faults100ThenTime,
+		ARBScoringStyle::Faults200ThenTime,
+		ARBScoringStyle::OCScoreThenTime,
+		ARBScoringStyle::ScoreThenTime,
+		ARBScoringStyle::TimePlusFaults
 	};
 	static int const nStyles = sizeof(Styles) / sizeof(Styles[0]);
 	for (index = 0; index < nStyles; ++index)
@@ -343,7 +343,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	m_ctrlPlacement = new CReportListCtrl(this,
 		wxDefaultPosition, wxDefaultSize,
-		true, CReportListCtrl::eNoSortHeader, true, false);
+		true, CReportListCtrl::SortHeader::None, true, false);
 	m_ctrlPlacement->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgConfigEventMethod::OnItemchangedPlacement, this);
 	m_ctrlPlacement->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgConfigEventMethod::OnItemActivatedPlacement, this);
 	m_ctrlPlacement->Bind(wxEVT_KEY_DOWN, &CDlgConfigEventMethod::OnKeydownPlacement, this);
@@ -542,7 +542,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlType->SetSelection(-1);
 	for (unsigned int idxType = 0; idxType < m_ctrlType->GetCount(); ++idxType)
 	{
-		ARBConfigScoring::ScoringStyle style = GetType(idxType);
+		ARBScoringStyle style = GetType(idxType);
 		if (m_pScoring->GetScoringStyle() == style)
 		{
 			m_ctrlType->SetSelection(idxType);
@@ -565,9 +565,9 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 DEFINE_ON_INIT(CDlgConfigEventMethod)
 
 
-ARBConfigScoring::ScoringStyle CDlgConfigEventMethod::GetType(int index) const
+ARBScoringStyle CDlgConfigEventMethod::GetType(int index) const
 {
-	return static_cast<ARBConfigScoring::ScoringStyle>(reinterpret_cast<size_t>(m_ctrlType->GetClientData(index)));
+	return static_cast<ARBScoringStyle>(reinterpret_cast<size_t>(m_ctrlType->GetClientData(index)));
 }
 
 
@@ -646,9 +646,9 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlMultiplyText->Show(false);
 			m_ctrlMultiply->Show(false);
 			break;
-		case ARBConfigScoring::eFaultsThenTime:
-		case ARBConfigScoring::eFaults100ThenTime:
-		case ARBConfigScoring::eFaults200ThenTime:
+		case ARBScoringStyle::FaultsThenTime:
+		case ARBScoringStyle::Faults100ThenTime:
+		case ARBScoringStyle::Faults200ThenTime:
 			m_ctrlPointsOpeningText->Show(false);
 			m_ctrlPointsOpening->Show(false);
 			m_ctrlPointsClosingText->Show(false);
@@ -662,7 +662,7 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlMultiplyText->Show(true);
 			m_ctrlMultiply->Show(true);
 			break;
-		case ARBConfigScoring::eOCScoreThenTime:
+		case ARBScoringStyle::OCScoreThenTime:
 			m_ctrlPointsOpeningText->Show(true);
 			m_ctrlPointsOpening->Show(true);
 			m_ctrlPointsClosingText->Show(true);
@@ -677,7 +677,7 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlMultiply->Show(true);
 			m_ctrlPointsOpeningText->SetLabel(_("IDC_CONFIG_EVENT_OPENING_PTS"));
 			break;
-		case ARBConfigScoring::eScoreThenTime:
+		case ARBScoringStyle::ScoreThenTime:
 			m_ctrlPointsOpeningText->Show(true);
 			m_ctrlPointsOpening->Show(true);
 			m_ctrlPointsClosingText->Show(false);
@@ -692,7 +692,7 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlMultiply->Show(true);
 			m_ctrlPointsOpeningText->SetLabel(_("IDS_SCORING_REQUIRED_POINTS"));
 			break;
-		case ARBConfigScoring::eTimePlusFaults:
+		case ARBScoringStyle::TimePlusFaults:
 			m_ctrlPointsOpeningText->Show(false);
 			m_ctrlPointsOpening->Show(false);
 			m_ctrlPointsClosingText->Show(false);
@@ -983,18 +983,18 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		m_pScoring->GetPlaceInfo() = m_PlaceInfo;
 	}
 
-	ARBConfigScoring::ScoringStyle style = GetType(idxType);
+	ARBScoringStyle style = GetType(idxType);
 	m_pScoring->SetScoringStyle(style);
 	switch (style)
 	{
 	default:
 		break;
-	case ARBConfigScoring::eFaultsThenTime:
-	case ARBConfigScoring::eFaults100ThenTime:
-	case ARBConfigScoring::eFaults200ThenTime:
+	case ARBScoringStyle::FaultsThenTime:
+	case ARBScoringStyle::Faults100ThenTime:
+	case ARBScoringStyle::Faults200ThenTime:
 		m_pScoring->SetTimeFaultMultiplier(m_Multiply);
 		break;
-	case ARBConfigScoring::eOCScoreThenTime:
+	case ARBScoringStyle::OCScoreThenTime:
 		m_pScoring->SetRequiredOpeningPoints(m_OpeningPts);
 		m_pScoring->SetRequiredClosingPoints(m_ClosingPts);
 		m_pScoring->SetSubtractTimeFaultsFromScore(m_SubtractTimeFaults);
@@ -1002,14 +1002,14 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		m_pScoring->SetComputeTimeFaultsOver(m_TimeFaultsOver);
 		m_pScoring->SetTimeFaultMultiplier(m_Multiply);
 		break;
-	case ARBConfigScoring::eScoreThenTime:
+	case ARBScoringStyle::ScoreThenTime:
 		m_pScoring->SetRequiredOpeningPoints(m_OpeningPts);
 		m_pScoring->SetSubtractTimeFaultsFromScore(m_SubtractTimeFaults);
 		m_pScoring->SetComputeTimeFaultsUnder(m_TimeFaultsUnder);
 		m_pScoring->SetComputeTimeFaultsOver(m_TimeFaultsOver);
 		m_pScoring->SetTimeFaultMultiplier(m_Multiply);
 		break;
-	case ARBConfigScoring::eTimePlusFaults:
+	case ARBScoringStyle::TimePlusFaults:
 		m_pScoring->SetQsMustBeClean(m_TimeFaultsCleanQ);
 		m_pScoring->SetComputeTimeFaultsUnder(m_TimeFaultsUnder);
 		m_pScoring->SetComputeTimeFaultsOver(m_TimeFaultsOver);

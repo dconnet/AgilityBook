@@ -34,14 +34,21 @@
 #include "ARBCommon/Element.h"
 
 
-enum ARBTitleStyle
+enum class ARBTitleStyle
 {
-	eTitleStyleNone,	/// "Title"
-	eTitleStyleNumber,	/// "Title4"
-	eTitleStyleRoman,	/// "Title-IV"
+	None,	///< "Title"
+	Number,	///< "Title4"
+	Roman,	///< "Title-IV"
+};
+enum class ARBTitleSeparator
+{
+	None,	///< "Title4"
+	Space,	///< "Title 4"
+	Hyphen,	///< "Title-4"
 };
 
-ARB_API ElementNode::AttribLookup LoadTitleStyle(
+
+ARB_API ARBAttribLookup LoadTitleStyle(
 		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,
@@ -52,14 +59,7 @@ ARB_API void SaveTitleStyle(
 		ARBTitleStyle inStyle);
 
 
-enum ARBTitleSeparator
-{
-	eTitleSeparatorNone,	/// "Title4"
-	eTitleSeparatorSpace,	/// "Title 4"
-	eTitleSeparatorHyphen,	/// "Title-4"
-};
-
-ARB_API ElementNode::AttribLookup LoadTitleSeparator(
+ARB_API ARBAttribLookup LoadTitleSeparator(
 		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,

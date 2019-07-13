@@ -58,6 +58,17 @@
 #include <set>
 
 
+enum class ARBFileInfo
+{
+	Book = 0,		// ARB document version
+	OS = 1,			// OS name (with some info)0
+	Platform = 2,	// Platform (arch) 
+	TimeStamp = 3,	// File written
+	Version = 4,	// Version of ARB that wrote file
+	Max = 5,		// Version of ARB that wrote file
+};
+
+
 /**
  * The main data class.
  */
@@ -273,18 +284,10 @@ public:
 	/*
 	 * Access to write-only data.
 	 */
-	typedef enum {
-		fileInfoBook = 0,		// ARB document version
-		fileInfoOS = 1,			// OS name (with some info)0
-		fileInfoPlatform = 2,	// Platform (arch) 
-		fileInfoTimeStamp = 3,	// File written
-		fileInfoVersion = 4,	// Version of ARB that wrote file
-		fileInfoMax = 5,		// Version of ARB that wrote file
-	} FileInfoType;
-	std::wstring GetFileInfo(FileInfoType type) const
+	std::wstring GetFileInfo(ARBFileInfo type) const
 	{
 		if (static_cast<size_t>(type) < m_FileInfo.size())
-			return m_FileInfo[type];
+			return m_FileInfo[static_cast<size_t>(type)];
 		return std::wstring();
 	}
 

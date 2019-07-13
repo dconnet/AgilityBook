@@ -78,13 +78,13 @@ bool CNameValidator::Validate(wxWindow* parent)
 static struct
 {
 	wchar_t const* idDesc;
-	ARBConfigOtherPoints::eOtherPointsTally tally;
+	ARBOtherPointsTally tally;
 } const sc_Tally[] =
 {
-	{arbT("IDS_OTHERPTS_ALL"), ARBConfigOtherPoints::eTallyAll},
-	{arbT("IDS_OTHERPTS_EVENT"), ARBConfigOtherPoints::eTallyAllByEvent},
-	{arbT("IDS_OTHERPTS_LEVEL"), ARBConfigOtherPoints::eTallyLevel},
-	{arbT("IDS_OTHERPTS_EVENT_LEVEL"), ARBConfigOtherPoints::eTallyLevelByEvent}
+	{arbT("IDS_OTHERPTS_ALL"), ARBOtherPointsTally::All},
+	{arbT("IDS_OTHERPTS_EVENT"), ARBOtherPointsTally::AllByEvent},
+	{arbT("IDS_OTHERPTS_LEVEL"), ARBOtherPointsTally::Level},
+	{arbT("IDS_OTHERPTS_EVENT_LEVEL"), ARBOtherPointsTally::LevelByEvent}
 };
 static int const sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
 
@@ -92,11 +92,11 @@ static int const sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
 class DlgConfigOtherPointData : public wxClientData 
 {
 public:
-	DlgConfigOtherPointData(ARBConfigOtherPoints::eOtherPointsTally tally)
+	DlgConfigOtherPointData(ARBOtherPointsTally tally)
 		: m_Tally(tally)
 	{
 	}
-	ARBConfigOtherPoints::eOtherPointsTally m_Tally;
+	ARBOtherPointsTally m_Tally;
 };
 
 /////////////////////////////////////////////////////////////////////////////

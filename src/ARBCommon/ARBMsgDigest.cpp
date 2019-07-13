@@ -38,13 +38,13 @@ std::wstring ARBMsgDigest::Compute(
 
 	switch (type)
 	{
-	case ARBDigestMD5:
+	case ARBDigest::MD5:
 		return ARBMsgDigestComputeMD5(inFile, outSize);
 
-	case ARBDigestSHA1:
+	case ARBDigest::SHA1:
 		return ARBMsgDigestComputeSHA1(inFile, outSize);
 
-	case ARBDigestSHA256:
+	case ARBDigest::SHA256:
 		return ARBMsgDigestComputeSHA256(inFile, outSize);
 
 	default:

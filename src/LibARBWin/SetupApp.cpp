@@ -44,7 +44,7 @@
 CBaseApp::CBaseApp(
 		wxString const& appName,
 		wxString const& appRegKey,
-		LanguageCatalog useLangCatalog)
+		ARBLanguageCatalog useLangCatalog)
 	: m_VendorName(L"dcon Software")
 	, m_BaseAppName(appName)
 	, m_BaseRegName(appRegKey)
@@ -61,8 +61,8 @@ CBaseApp::CBaseApp(
 	wxHandleFatalExceptions();
 #endif
 	m_langMgr = std::make_unique<CLanguageManager>(
-			eLanguageCatalogNone != useLangCatalog ? this : nullptr,
-			eLanguageCatalogEmbedded == useLangCatalog);
+			ARBLanguageCatalog::None != useLangCatalog ? this : nullptr,
+			ARBLanguageCatalog::Embedded == useLangCatalog);
 }
 
 

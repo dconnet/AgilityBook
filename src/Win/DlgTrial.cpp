@@ -214,7 +214,7 @@ CDlgTrial::CDlgTrial(
 
 	m_ctrlClubs = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(DEF_CTRL_WIDTH, DEF_CTRL_HEIGHT)),
-		true, CReportListCtrl::eNoSortHeader, true, false);
+		true, CReportListCtrl::SortHeader::NoSort, true, false);
 	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgTrial::OnItemSelectedClubs, this);
 	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgTrial::OnItemActivatedClubs, this);
 	m_ctrlClubs->Bind(wxEVT_KEY_DOWN, &CDlgTrial::OnKeydownClubs, this);
@@ -341,7 +341,7 @@ void CDlgTrial::UpdateNotes(
 	{
 		std::wstring str;
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(StringUtil::stringW(location), &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Location).FindItem(StringUtil::stringW(location), &pItem))
 		{
 			str = pItem->GetComment();
 		}
@@ -354,7 +354,7 @@ void CDlgTrial::UpdateNotes(
 		if (pClub)
 		{
 			ARBInfoItemPtr pItem;
-			if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName(), &pItem))
+			if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Club).FindItem(pClub->GetName(), &pItem))
 			{
 				str = pItem->GetComment();
 			}
@@ -478,7 +478,7 @@ void CDlgTrial::OnLocationNotes(wxCommandEvent& evt)
 {
 	if (TransferDataFromWindow())
 	{
-		CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, StringUtil::stringW(m_Location), this);
+		CDlgInfoNote dlg(m_pDoc, ARBInfoType::Location, StringUtil::stringW(m_Location), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			m_Location = StringUtil::stringWX(dlg.CurrentSelection());
@@ -497,7 +497,7 @@ void CDlgTrial::OnClubNotes(wxCommandEvent& evt)
 	{
 		TransferDataFromWindow();
 		ARBDogClubPtr pClub = GetClubData(index);
-		CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName(), this);
+		CDlgInfoNote dlg(m_pDoc, ARBInfoType::Club, pClub->GetName(), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			if (pClub->GetName() != dlg.CurrentSelection())

@@ -47,17 +47,17 @@ public:
 
 	void GetFixups(ARBConfigActionList& ioFixups);
 
-	typedef enum
-	{
-		eNone,
-		eDivisions,
-		eEvents,
-		eLifetimeNames,
-		eMultiQ,
-		eTitles,
-	} eAction;
-
 private:
+	enum class Action
+	{
+		None,
+		Divisions,
+		Events,
+		LifetimeNames,
+		MultiQ,
+		Titles,
+	};
+
 	CDlgConfigureDataBase* GetData(wxTreeItemId item) const;
 	CDlgConfigureDataBase* GetCurrentData(wxTreeItemId* pItem = nullptr) const;
 	void UpdateButtons();

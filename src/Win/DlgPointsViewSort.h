@@ -30,9 +30,9 @@ private:
 	wxComboBox* m_ctrlTertiary;
 	wxButton* m_ctrlOk;
 
-	CAgilityBookOptions::PointsViewSort m_Primary;
-	CAgilityBookOptions::PointsViewSort m_Secondary;
-	CAgilityBookOptions::PointsViewSort m_Tertiary;
+	ARBPointsViewSort m_Primary;
+	ARBPointsViewSort m_Secondary;
+	ARBPointsViewSort m_Tertiary;
 
 protected:
 	void UpdateControls();

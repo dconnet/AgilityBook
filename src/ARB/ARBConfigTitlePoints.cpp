@@ -42,9 +42,9 @@ static struct PointsEnum
 	ARBPointsType type;		///< Enum type
 } const sc_Points[] =
 {
-	{ATTRIB_TITLE_POINTS_TYPE_NORMAL, ePointsTypeNormal},
-	{ATTRIB_TITLE_POINTS_TYPE_T2B, ePointsTypeT2B},
-	{ATTRIB_TITLE_POINTS_TYPE_UKI, ePointsTypeUKI}
+	{ATTRIB_TITLE_POINTS_TYPE_NORMAL, ARBPointsType::Normal},
+	{ATTRIB_TITLE_POINTS_TYPE_T2B, ARBPointsType::T2B},
+	{ATTRIB_TITLE_POINTS_TYPE_UKI, ARBPointsType::UKI}
 };
 static size_t const sc_nPoints = sizeof(sc_Points) / sizeof(sc_Points[0]);
 
@@ -57,7 +57,7 @@ static ARBPointsType PointsToType(std::wstring const& str)
 			return sc_Points[n].type;
 	}
 	assert(0);
-	return ePointsTypeNormal;
+	return ARBPointsType::Normal;
 }
 
 
@@ -205,18 +205,18 @@ bool ARBConfigTitlePoints::Load(
 	// Added in ARBVersion 13.1. Made this a backwards incompatible change
 	// as the configuration will be damaged if this were saved in a 12.x form.
 	std::wstring type;
-	if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_TITLE_POINTS_TYPE, type))
+	if (ARBAttribLookup::Found == inTree->GetAttrib(ATTRIB_TITLE_POINTS_TYPE, type))
 	{
 		m_Calc = ARBCalcPoints::New(PointsToType(type));
 	}
-	if (ePointsTypeNormal == m_Calc->GetType())
+	if (ARBPointsType::Normal == m_Calc->GetType())
 	{
-		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
+		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS));
 			return false;
 		}
-		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
+		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS));
 			return false;
@@ -224,7 +224,7 @@ bool ARBConfigTitlePoints::Load(
 		if (inVersion < ARBVersion(10,0))
 		{
 			bool bLifetime;
-			if (ElementNode::eFound == inTree->GetAttrib(L"LifeTime", bLifetime))
+			if (ARBAttribLookup::Found == inTree->GetAttrib(L"LifeTime", bLifetime))
 			{
 				if (bLifetime)
 				{
@@ -243,7 +243,7 @@ bool ARBConfigTitlePoints::Save(ElementNodePtr const& ioTree) const
 	if (!ioTree)
 		return false;
 	ElementNodePtr title = ioTree->AddElementNode(TREE_TITLE_POINTS);
-	if (ePointsTypeNormal == m_Calc->GetType())
+	if (ARBPointsType::Normal == m_Calc->GetType())
 	{
 		title->AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points, 0);
 		title->AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults, 0);
@@ -309,7 +309,7 @@ ARBPointsType ARBConfigTitlePointsList::GetType() const
 	ARBCalcPointsPtr calc = GetCalc();
 	if (calc)
 		return calc->GetType();
-	return ePointsTypeNormal;
+	return ARBPointsType::Normal;
 }
 
 
@@ -323,10 +323,10 @@ void ARBConfigTitlePointsList::SetType(ARBPointsType inType)
 		default:
 			assert(0);
 			// Fall through
-		case ePointsTypeNormal:
+		case ARBPointsType::Normal:
 			break;
-		case ePointsTypeT2B:
-		case ePointsTypeUKI:
+		case ARBPointsType::T2B:
+		case ARBPointsType::UKI:
 			push_back(ARBConfigTitlePoints::New(0.0, 0.0, inType));
 			break;
 		}
@@ -392,7 +392,7 @@ bool ARBConfigTitlePointsList::AddTitlePoints(
 	if ((calc && !calc->AllowConfiguration())
 	|| FindTitlePoints(inFaults))
 		return false;
-	ARBConfigTitlePointsPtr pTitle(ARBConfigTitlePoints::New(inPoints, inFaults, ePointsTypeNormal));
+	ARBConfigTitlePointsPtr pTitle(ARBConfigTitlePoints::New(inPoints, inFaults, ARBPointsType::Normal));
 	push_back(pTitle);
 	sort();
 	if (outPoints)
@@ -417,7 +417,7 @@ bool ARBConfigTitlePointsList::DeleteTitlePoints(
 			}
 		}
 	}
-	else if (calc && calc->GetType() != ePointsTypeNormal && 1 == size())
+	else if (calc && calc->GetType() != ARBPointsType::Normal && 1 == size())
 	{
 		clear();
 	}

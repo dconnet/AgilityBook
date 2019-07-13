@@ -75,7 +75,7 @@ CWizardImport::CWizardImport(
 	, m_ExcelData()
 	, m_Row(CAgilityBookOptions::GetImportStartRow())
 	, m_ctrlRow(nullptr)
-	, m_Delim(-1)
+	, m_Delim(static_cast<ARBImportExportDelim>(-1))
 	, m_Delimiter(L":")
 	, m_boxDelimiters(nullptr)
 	, m_ctrlTab(nullptr)
@@ -119,25 +119,25 @@ CWizardImport::CWizardImport(
 	static struct
 	{
 		wchar_t const* uFormat;
-		ARBDate::DateFormat format;
-		ARBDate::DateFormat extendedFormat;
+		ARBDateFormat format;
+		ARBDateFormat extendedFormat;
 	} const sc_Dates[] =
 	{
 		{arbT("IDS_DATEFORMAT_DASH_MMDDYYYY"),
-			ARBDate::eDashMMDDYYYY, ARBDate::eDashMDY},
+			ARBDateFormat::DashMMDDYYYY, ARBDateFormat::DashMDY},
 		{arbT("IDS_DATEFORMAT_SLASH_MMDDYYYY"),
-			ARBDate::eSlashMMDDYYYY, ARBDate::eSlashMDY},
+			ARBDateFormat::SlashMMDDYYYY, ARBDateFormat::SlashMDY},
 		{arbT("IDS_DATEFORMAT_DASH_YYYYMMDD"),
-			ARBDate::eDashYYYYMMDD, ARBDate::eDashYMD},
+			ARBDateFormat::DashYYYYMMDD, ARBDateFormat::DashYMD},
 		{arbT("IDS_DATEFORMAT_SLASH_YYYYMMDD"),
-			ARBDate::eSlashYYYYMMDD, ARBDate::eSlashYMD},
+			ARBDateFormat::SlashYYYYMMDD, ARBDateFormat::SlashYMD},
 		{arbT("IDS_DATEFORMAT_DASH_DDMMYYYY"),
-			ARBDate::eDashDDMMYYYY, ARBDate::eDashDMY},
+			ARBDateFormat::DashDDMMYYYY, ARBDateFormat::DashDMY},
 		{arbT("IDS_DATEFORMAT_SLASH_DDMMYYYY"),
-			ARBDate::eSlashDDMMYYYY, ARBDate::eSlashDMY},
+			ARBDateFormat::SlashDDMMYYYY, ARBDateFormat::SlashDMY},
 	};
 	static size_t const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
-	ARBDate::DateFormat format;
+	ARBDateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(true, format);
 	for (size_t i = 0; i < sc_nDates; ++i)
 	{
@@ -198,22 +198,22 @@ CWizardImport::CWizardImport(
 	switch (m_Delim)
 	{
 	default:
-	case CAgilityBookOptions::eDelimTab:
+	case ARBImportExportDelim::Tab:
 		m_ctrlTab->SetValue(true);
 		break;
-	case CAgilityBookOptions::eDelimSpace:
+	case ARBImportExportDelim::Space:
 		m_ctrlSpace->SetValue(true);
 		break;
-	case CAgilityBookOptions::eDelimColon:
+	case ARBImportExportDelim::Colon:
 		m_ctrlColon->SetValue(true);
 		break;
-	case CAgilityBookOptions::eDelimSemicolon:
+	case ARBImportExportDelim::Semicolon:
 		m_ctrlSemicolon->SetValue(true);
 		break;
-	case CAgilityBookOptions::eDelimComma:
+	case ARBImportExportDelim::Comma:
 		m_ctrlComma->SetValue(true);
 		break;
-	case CAgilityBookOptions::eDelimOther:
+	case ARBImportExportDelim::Other:
 		m_ctrlOther->SetValue(true);
 		break;
 	}
@@ -327,12 +327,12 @@ wchar_t CWizardImport::GetDelim() const
 	switch (m_Delim)
 	{
 	default:
-	case CAgilityBookOptions::eDelimTab:       return L'\t';
-	case CAgilityBookOptions::eDelimSpace:     return L' ';
-	case CAgilityBookOptions::eDelimColon:     return L':';
-	case CAgilityBookOptions::eDelimSemicolon: return L';';
-	case CAgilityBookOptions::eDelimComma:     return L',';
-	case CAgilityBookOptions::eDelimOther:
+	case ARBImportExportDelim::Tab:       return L'\t';
+	case ARBImportExportDelim::Space:     return L' ';
+	case ARBImportExportDelim::Colon:     return L':';
+	case ARBImportExportDelim::Semicolon: return L';';
+	case ARBImportExportDelim::Comma:     return L',';
+	case ARBImportExportDelim::Other:
 		if (1 == m_Delimiter.length())
 			return m_Delimiter[0];
 		else
@@ -549,12 +549,12 @@ void CWizardImport::UpdatePreview()
 		{
 			std::vector<std::wstring> fields;
 			ReadStatus status = ReadCSV(delim, m_FileData[iFileLine], fields);
-			while (DataNeedMore == status && iFileLine + 1 < static_cast<long>(m_FileData.size()))
+			while (ReadStatus::NeedMore == status && iFileLine + 1 < static_cast<long>(m_FileData.size()))
 			{
 				++iFileLine;
 				status = ReadCSV(delim, m_FileData[iFileLine], fields, true);
 			}
-			if (DataOk == status && 0 < fields.size())
+			if (ReadStatus::Ok == status && 0 < fields.size())
 			{
 				m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(fields[0]));
 				for (iCol = 1;
@@ -630,7 +630,7 @@ void CWizardImport::OnDeltaposImportRowSpin(wxSpinEvent& evt)
 
 void CWizardImport::OnDelimTab(wxCommandEvent& evt)
 {
-	m_Delim = CAgilityBookOptions::eDelimTab;
+	m_Delim = ARBImportExportDelim::Tab;
 	UpdateButtons();
 	UpdatePreview();
 }
@@ -638,7 +638,7 @@ void CWizardImport::OnDelimTab(wxCommandEvent& evt)
 
 void CWizardImport::OnDelimSpace(wxCommandEvent& evt)
 {
-	m_Delim = CAgilityBookOptions::eDelimSpace;
+	m_Delim = ARBImportExportDelim::Space;
 	UpdateButtons();
 	UpdatePreview();
 }
@@ -646,7 +646,7 @@ void CWizardImport::OnDelimSpace(wxCommandEvent& evt)
 
 void CWizardImport::OnDelimColon(wxCommandEvent& evt)
 {
-	m_Delim = CAgilityBookOptions::eDelimColon;
+	m_Delim = ARBImportExportDelim::Colon;
 	UpdateButtons();
 	UpdatePreview();
 }
@@ -654,7 +654,7 @@ void CWizardImport::OnDelimColon(wxCommandEvent& evt)
 
 void CWizardImport::OnDelimSemicolon(wxCommandEvent& evt)
 {
-	m_Delim = CAgilityBookOptions::eDelimSemicolon;
+	m_Delim = ARBImportExportDelim::Semicolon;
 	UpdateButtons();
 	UpdatePreview();
 }
@@ -662,7 +662,7 @@ void CWizardImport::OnDelimSemicolon(wxCommandEvent& evt)
 
 void CWizardImport::OnDelimComma(wxCommandEvent& evt)
 {
-	m_Delim = CAgilityBookOptions::eDelimComma;
+	m_Delim = ARBImportExportDelim::Comma;
 	UpdateButtons();
 	UpdatePreview();
 }
@@ -670,7 +670,7 @@ void CWizardImport::OnDelimComma(wxCommandEvent& evt)
 
 void CWizardImport::OnDelimOther(wxCommandEvent& evt)
 {
-	m_Delim = CAgilityBookOptions::eDelimOther;
+	m_Delim = ARBImportExportDelim::Other;
 	UpdateButtons();
 	UpdatePreview();
 }
@@ -770,7 +770,7 @@ bool CWizardImport::DoWizardFinish()
 	{
 		CAgilityBookOptions::SetImportExportDelimiters(true, m_Delim, m_Delimiter);
 	}
-	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(reinterpret_cast<size_t>(m_ctrlDateFormat->GetClientData(index)));
+	ARBDateFormat format = static_cast<ARBDateFormat>(reinterpret_cast<size_t>(m_ctrlDateFormat->GetClientData(index)));
 	CAgilityBookOptions::SetImportExportDateFormat(true, format);
 
 	wxBusyCursor wait;
@@ -873,18 +873,18 @@ bool CWizardImport::DoWizardFinish()
 				{
 				default:
 					break;
-				case ARBConfigScoring::eFaultsThenTime:
-				case ARBConfigScoring::eFaults100ThenTime:
-				case ARBConfigScoring::eFaults200ThenTime:
+				case ARBScoringStyle::FaultsThenTime:
+				case ARBScoringStyle::Faults100ThenTime:
+				case ARBScoringStyle::Faults200ThenTime:
 					i = IO_TYPE_RUNS_FAULTS_TIME;
 					break;
-				case ARBConfigScoring::eOCScoreThenTime:
+				case ARBScoringStyle::OCScoreThenTime:
 					i = IO_TYPE_RUNS_OPEN_CLOSE;
 					break;
-				case ARBConfigScoring::eScoreThenTime:
+				case ARBScoringStyle::ScoreThenTime:
 					i = IO_TYPE_RUNS_POINTS;
 					break;
-				case ARBConfigScoring::eTimePlusFaults:
+				case ARBScoringStyle::TimePlusFaults:
 					i = IO_TYPE_RUNS_TIME_FAULTS;
 					break;
 				}
@@ -1304,22 +1304,22 @@ bool CWizardImport::DoWizardFinish()
 						if (L"N" == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
-							pCal->SetEntered(ARBCalendar::eNot);
+							pCal->SetEntered(ARBCalendarEntry::Not);
 						}
 						else if (L"P" == entry[iCol] || entry[iCol] == StringUtil::GetTranslation(arbT("IDS_CALENDAR_PLANNING")))
 						{
 							pCal = CreateCal(pCal);
-							pCal->SetEntered(ARBCalendar::ePlanning);
+							pCal->SetEntered(ARBCalendarEntry::Planning);
 						}
 						else if (L"O" == entry[iCol] || entry[iCol] == StringUtil::GetTranslation(arbT("IDS_CALENDAR_PENDING")))
 						{
 							pCal = CreateCal(pCal);
-							pCal->SetEntered(ARBCalendar::ePending);
+							pCal->SetEntered(ARBCalendarEntry::Pending);
 						}
 						else if (L"E" == entry[iCol] || entry[iCol] == StringUtil::GetTranslation(arbT("IDS_CALENDAR_ENTERED")))
 						{
 							pCal = CreateCal(pCal);
-							pCal->SetEntered(ARBCalendar::eEntered);
+							pCal->SetEntered(ARBCalendarEntry::Entered);
 						}
 						else
 						{

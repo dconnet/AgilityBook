@@ -174,7 +174,7 @@ bool CAgilityBookTreeDataDog::DoCopy()
 			wxBusyCursor wait;
 			ElementNodePtr tree(ElementNode::New(CLIPDATA));
 			GetDog()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
-			clpData.AddData(eFormatDog, tree);
+			clpData.AddData(ARBClipFormat::Dog, tree);
 			clpData.AddData(m_pTree->GetPrintLine(GetId()));
 			clpData.CommitData();
 			bCopied = true;
@@ -412,7 +412,7 @@ bool CAgilityBookTreeDataTrial::DoCopy()
 			wxBusyCursor wait;
 			ElementNodePtr tree(ElementNode::New(CLIPDATA));
 			GetTrial()->Save(tree, m_pTree->GetDocument()->Book().GetConfig());
-			clpData.AddData(eFormatTrial, tree);
+			clpData.AddData(ARBClipFormat::Trial, tree);
 			clpData.AddData(m_pTree->GetPrintLine(GetId()));
 			clpData.CommitData();
 			bCopied = true;
@@ -573,7 +573,7 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 							q += (*iMultiQ)->GetShortName();
 						}
 					}
-					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
+					if (Q::SuperQ == m_pRun->GetQ())
 					{
 						std::wstring tmp(StringUtil::stringW(_("IDS_SQ")));
 						if (!q.empty())
@@ -631,7 +631,7 @@ bool CAgilityBookTreeDataRun::DoCopy()
 			wxBusyCursor wait;
 			ElementNodePtr tree(ElementNode::New(CLIPDATA));
 			GetRun()->Save(tree, nullptr, m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
-			clpData.AddData(eFormatRun, tree);
+			clpData.AddData(ARBClipFormat::Run, tree);
 			clpData.AddData(m_pTree->GetPrintLine(GetId()));
 			clpData.CommitData();
 			bCopied = true;

@@ -111,7 +111,7 @@ bool ARBConfigFault::Load(
 		return false;
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (ElementNode::eFound != inTree->GetAttrib(L"Name", m_Name)
+		if (ARBAttribLookup::Found != inTree->GetAttrib(L"Name", m_Name)
 		|| 0 == m_Name.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_FAULTTYPE, L"Name"));

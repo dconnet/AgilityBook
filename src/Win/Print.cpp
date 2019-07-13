@@ -48,11 +48,11 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-enum RingBinder
+enum class RingBinder
 {
-	eSmall3Ring,
-	eLarge3Ring,
-	eLarge4Ring
+	Small3Ring,
+	Large3Ring,
+	Large4Ring
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -390,7 +390,7 @@ static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const&
 	case CODE_REFQ2:
 	case CODE_REFQ3:
 	case CODE_REFQ4:
-		if ((ARB_Q::eQ)inRef->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)inRef->GetQ() != ARB_Q::eQ_NA)
+		if (Q::UNK != inRef->GetQ() && Q::NA != inRef->GetQ())
 			fmt::format_to(text, L"{}", inRef->GetQ().str());
 		break;
 	case CODE_REFTIME1:
@@ -556,7 +556,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 	case CODE_Q:
 		if (inRun)
 		{
-			if ((ARB_Q::eQ)inRun->GetQ() != ARB_Q::eQ_UNK && (ARB_Q::eQ)inRun->GetQ() != ARB_Q::eQ_NA)
+			if (Q::UNK != inRun->GetQ() && Q::NA != inRun->GetQ())
 				fmt::format_to(text, L"{}", inRun->GetQ().str());
 		}
 		break;
@@ -583,14 +583,14 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 			{
 			default:
 				break;
-			case ARBDogRunScoring::eTypeByOpenClose:
+			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
 					fmt::format_to(text, L"{}", inRun->GetScoring().GetNeedOpenPts());
 				fmt::format_to(text, L" / ");
 				if (0 < inRun->GetScoring().GetNeedClosePts())
 					fmt::format_to(text, L"{}", inRun->GetScoring().GetNeedClosePts());
 				break;
-			case ARBDogRunScoring::eTypeByPoints:
+			case ARBScoringType::ByPoints:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
 					fmt::format_to(text, L"{}", inRun->GetScoring().GetNeedOpenPts());
 				break;
@@ -635,14 +635,14 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 			{
 			default:
 				break;
-			case ARBDogRunScoring::eTypeByOpenClose:
+			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetOpenPts())
 					fmt::format_to(text, L"{}", inRun->GetScoring().GetOpenPts());
 				fmt::format_to(text, L" / ");
 				if (0 < inRun->GetScoring().GetClosePts())
 					fmt::format_to(text, L"{}", inRun->GetScoring().GetClosePts());
 				break;
-			case ARBDogRunScoring::eTypeByPoints:
+			case ARBScoringType::ByPoints:
 				if (0 < inRun->GetScoring().GetOpenPts())
 					fmt::format_to(text, L"{}", inRun->GetScoring().GetOpenPts());
 				break;
@@ -764,10 +764,10 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 			switch (run->GetScoring().GetType())
 			{
 			default:
-			case ARBDogRunScoring::eTypeByTime:
+			case ARBScoringType::ByTime:
 				break;
-			case ARBDogRunScoring::eTypeByOpenClose:
-			case ARBDogRunScoring::eTypeByPoints:
+			case ARBScoringType::ByOpenClose:
+			case ARBScoringType::ByPoints:
 				bPoints = true;
 				break;
 			}
@@ -874,17 +874,17 @@ static void PrintBinderMarkings(
 	switch (style)
 	{
 	default:
-	case eSmall3Ring:
+	case RingBinder::Small3Ring:
 		PrintMark(pDC, x, y, oneInch);
 		PrintMark(pDC, x, static_cast<wxCoord>(y - 2.75 * oneInch), oneInch);
 		PrintMark(pDC, x, static_cast<wxCoord>(y + 2.75 * oneInch), oneInch);
 		break;
-	case eLarge3Ring:
+	case RingBinder::Large3Ring:
 		PrintMark(pDC, x, y, oneInch);
 		PrintMark(pDC, x, static_cast<wxCoord>(y - 4.25 * oneInch), oneInch);
 		PrintMark(pDC, x, static_cast<wxCoord>(y + 4.25 * oneInch), oneInch);
 		break;
-	case eLarge4Ring:
+	case RingBinder::Large4Ring:
 		PrintMark(pDC, x, static_cast<wxCoord>(y - 3.5 * oneInch), oneInch); // 1 3/8 + 2 1/8
 		PrintMark(pDC, x, static_cast<wxCoord>(y - 2.125 * oneInch), oneInch);
 		PrintMark(pDC, x, static_cast<wxCoord>(y + 2.125 * oneInch), oneInch);
@@ -969,13 +969,13 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 			{
 				if (!bPrintBox)
 				{
-					PrintBinderMarkings(eLarge3Ring, GetDC(), rPage, marginL, m_OneInch);
-					PrintBinderMarkings(eLarge4Ring, GetDC(), rPage, marginL, m_OneInch);
+					PrintBinderMarkings(RingBinder::Large3Ring, GetDC(), rPage, marginL, m_OneInch);
+					PrintBinderMarkings(RingBinder::Large4Ring, GetDC(), rPage, marginL, m_OneInch);
 				}
 			}
 			else
 			{
-				PrintBinderMarkings(eSmall3Ring, GetDC(), rPage, marginL, m_OneInch);
+				PrintBinderMarkings(RingBinder::Small3Ring, GetDC(), rPage, marginL, m_OneInch);
 			}
 		}
 		if (bPrintBox)

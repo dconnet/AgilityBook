@@ -23,25 +23,26 @@
 class CTextCtrl;
 
 
+enum class ARBTitlePointType
+{
+	// These numbers correspond to the index in the choice list
+	Normal = 0,
+	Lifetime,
+	Placement,
+	Max
+};
+
+
 class CDlgConfigTitlePoints : public wxDialog
 {
 	void InitDlg(wxWindow* pParent);
 
 public:
-	enum ETitlePointType
-	{
-		// These numbers correspond to the index in the choice list
-		eTitleNormal = 0,
-		eTitleLifetime,
-		eTitlePlacement,
-		eTitleMax
-	};
-
 	CDlgConfigTitlePoints(
 			ARBConfigVenuePtr const& inVenue,
 			double inValue, // Faults or Place
 			double inPoints,
-			ETitlePointType inType,
+			ARBTitlePointType inType,
 			ARBPointsType inTypeNormal,
 			wxWindow* pParent = nullptr);
 
@@ -50,24 +51,18 @@ public:
 			ARBConfigLifetimePointsPtr const& inLifetime,
 			wxWindow* pParent = nullptr);
 
-	double Faults() const			{return m_Faults;}
-	short Place() const				{return m_Place;}
-	bool UseSpeedPts() const		{return m_bSpeed;}
-	double Points() const			{return m_Points;}
-	wxString LifetimeName() const	{return m_LifetimeName;}
-	ETitlePointType Type() const
-	{
-		return static_cast<ETitlePointType>(m_Type);
-	}
-	ARBPointsType TypeNormal() const
-	{
-		return static_cast<ARBPointsType>(m_TypeNormal);
-	}
+	double Faults() const				{return m_Faults;}
+	short Place() const					{return m_Place;}
+	bool UseSpeedPts() const			{return m_bSpeed;}
+	double Points() const				{return m_Points;}
+	wxString LifetimeName() const		{return m_LifetimeName;}
+	ARBTitlePointType Type() const		{return m_Type;}
+	ARBPointsType TypeNormal() const	{return m_TypeNormal;}
 
 private:
 	ARBConfigVenuePtr m_Venue;
-	int m_Type;
-	int m_TypeNormal;
+	ARBTitlePointType m_Type;
+	ARBPointsType m_TypeNormal;
 	wxStaticText* m_textValue;
 	CTextCtrl* m_ctrlValue;
 	wxCheckBox* m_ctrlSpeedPts;
@@ -83,7 +78,7 @@ private:
 	double m_Points;
 	wxString m_LifetimeName;
 
-	bool UpdateControls(int oldType);
+	bool UpdateControls(ARBTitlePointType oldType);
 
 	DECLARE_EVENT_TABLE()
 	DECLARE_ON_INIT()

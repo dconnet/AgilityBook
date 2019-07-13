@@ -653,7 +653,7 @@ void CAgilityBookTrainingView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
 		break;
 	case wxID_PASTE:
-		evt.Enable(CClipboardDataReader::IsFormatAvailable(eFormatLog));
+		evt.Enable(CClipboardDataReader::IsFormatAvailable(ARBClipFormat::Log));
 		break;
 	case wxID_SELECTALL:
 		evt.Enable(m_Ctrl->CanSelectAll());
@@ -775,7 +775,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 					table.EndLine();
 				}
 
-				clpData.AddData(eFormatLog, tree);
+				clpData.AddData(ARBClipFormat::Log, tree);
 				clpData.AddData(table);
 				clpData.CommitData();
 			}
@@ -787,7 +787,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 			bool bLoaded = false;
 			ElementNodePtr tree(ElementNode::New());
 			CClipboardDataReader clpData;
-			if (clpData.GetData(eFormatLog, tree))
+			if (clpData.GetData(ARBClipFormat::Log, tree))
 			{
 				if (CLIPDATA == tree->GetName())
 				{

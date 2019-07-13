@@ -32,11 +32,11 @@
 class CPointViewData : public wxClientData
 {
 public:
-	CPointViewData(CAgilityBookOptions::PointsViewSort item)
+	CPointViewData(ARBPointsViewSort item)
 		: m_Item(item)
 	{
 	}
-	CAgilityBookOptions::PointsViewSort m_Item;
+	ARBPointsViewSort m_Item;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -159,8 +159,8 @@ void CDlgPointsViewSort::UpdateControls()
 
 static int AddItem(
 		wxComboBox* ctrl,
-		CAgilityBookOptions::PointsViewSort item,
-		CAgilityBookOptions::PointsViewSort inSelect)
+		ARBPointsViewSort item,
+		ARBPointsViewSort inSelect)
 {
 	int idx = -1;
 	wxString str;
@@ -168,17 +168,17 @@ static int AddItem(
 	{
 	default:
 		break;
-	case CAgilityBookOptions::ePointsViewSortDivision:
+	case ARBPointsViewSort::Division:
 		str = _("IDS_COL_DIVISION");
 		idx = ctrl->Append(str);
 		ctrl->SetClientObject(idx, new CPointViewData(item));
 		break;
-	case CAgilityBookOptions::ePointsViewSortLevel:
+	case ARBPointsViewSort::Level:
 		str = _("IDS_COL_LEVEL");
 		idx = ctrl->Append(str);
 		ctrl->SetClientObject(idx, new CPointViewData(item));
 		break;
-	case CAgilityBookOptions::ePointsViewSortEvent:
+	case ARBPointsViewSort::Event:
 		str = _("IDS_COL_EVENT");
 		idx = ctrl->Append(str);
 		ctrl->SetClientObject(idx, new CPointViewData(item));
@@ -193,9 +193,9 @@ static int AddItem(
 void CDlgPointsViewSort::FillPrimary()
 {
 	m_ctrlPrimary->Clear();
-	AddItem(m_ctrlPrimary, CAgilityBookOptions::ePointsViewSortDivision, m_Primary);
-	AddItem(m_ctrlPrimary, CAgilityBookOptions::ePointsViewSortLevel, m_Primary);
-	AddItem(m_ctrlPrimary, CAgilityBookOptions::ePointsViewSortEvent, m_Primary);
+	AddItem(m_ctrlPrimary, ARBPointsViewSort::Division, m_Primary);
+	AddItem(m_ctrlPrimary, ARBPointsViewSort::Level, m_Primary);
+	AddItem(m_ctrlPrimary, ARBPointsViewSort::Event, m_Primary);
 	FillSecondary();
 }
 
@@ -203,12 +203,12 @@ void CDlgPointsViewSort::FillPrimary()
 void CDlgPointsViewSort::FillSecondary()
 {
 	m_ctrlSecondary->Clear();
-	if (m_Primary != CAgilityBookOptions::ePointsViewSortDivision)
-		AddItem(m_ctrlSecondary, CAgilityBookOptions::ePointsViewSortDivision, m_Secondary);
-	if (m_Primary != CAgilityBookOptions::ePointsViewSortLevel)
-		AddItem(m_ctrlSecondary, CAgilityBookOptions::ePointsViewSortLevel, m_Secondary);
-	if (m_Primary != CAgilityBookOptions::ePointsViewSortEvent)
-		AddItem(m_ctrlSecondary, CAgilityBookOptions::ePointsViewSortEvent, m_Secondary);
+	if (m_Primary != ARBPointsViewSort::Division)
+		AddItem(m_ctrlSecondary, ARBPointsViewSort::Division, m_Secondary);
+	if (m_Primary != ARBPointsViewSort::Level)
+		AddItem(m_ctrlSecondary, ARBPointsViewSort::Level, m_Secondary);
+	if (m_Primary != ARBPointsViewSort::Event)
+		AddItem(m_ctrlSecondary, ARBPointsViewSort::Event, m_Secondary);
 	FillTertiary();
 }
 
@@ -216,15 +216,15 @@ void CDlgPointsViewSort::FillSecondary()
 void CDlgPointsViewSort::FillTertiary()
 {
 	m_ctrlTertiary->Clear();
-	if (m_Primary != CAgilityBookOptions::ePointsViewSortDivision
-	&& m_Secondary != CAgilityBookOptions::ePointsViewSortDivision)
-		AddItem(m_ctrlTertiary, CAgilityBookOptions::ePointsViewSortDivision, m_Tertiary);
-	if (m_Primary != CAgilityBookOptions::ePointsViewSortLevel
-	&& m_Secondary != CAgilityBookOptions::ePointsViewSortLevel)
-		AddItem(m_ctrlTertiary, CAgilityBookOptions::ePointsViewSortLevel, m_Tertiary);
-	if (m_Primary != CAgilityBookOptions::ePointsViewSortEvent
-	&& m_Secondary != CAgilityBookOptions::ePointsViewSortEvent)
-		AddItem(m_ctrlTertiary, CAgilityBookOptions::ePointsViewSortEvent, m_Tertiary);
+	if (m_Primary != ARBPointsViewSort::Division
+	&& m_Secondary != ARBPointsViewSort::Division)
+		AddItem(m_ctrlTertiary, ARBPointsViewSort::Division, m_Tertiary);
+	if (m_Primary != ARBPointsViewSort::Level
+	&& m_Secondary != ARBPointsViewSort::Level)
+		AddItem(m_ctrlTertiary, ARBPointsViewSort::Level, m_Tertiary);
+	if (m_Primary != ARBPointsViewSort::Event
+	&& m_Secondary != ARBPointsViewSort::Event)
+		AddItem(m_ctrlTertiary, ARBPointsViewSort::Event, m_Tertiary);
 	UpdateControls();
 }
 
@@ -233,7 +233,7 @@ void CDlgPointsViewSort::OnSelchangePrimary(wxCommandEvent& evt)
 {
 	int idx = m_ctrlPrimary->GetSelection();
 	if (wxNOT_FOUND == idx)
-		m_Primary = CAgilityBookOptions::ePointsViewSortUnknown;
+		m_Primary = ARBPointsViewSort::Unknown;
 	else
 		m_Primary = dynamic_cast<CPointViewData*>(m_ctrlPrimary->GetClientObject(idx))->m_Item;
 	FillSecondary();
@@ -244,7 +244,7 @@ void CDlgPointsViewSort::OnSelchangeSecondary(wxCommandEvent& evt)
 {
 	int idx = m_ctrlSecondary->GetSelection();
 	if (wxNOT_FOUND == idx)
-		m_Secondary = CAgilityBookOptions::ePointsViewSortUnknown;
+		m_Secondary = ARBPointsViewSort::Unknown;
 	else
 		m_Secondary = dynamic_cast<CPointViewData*>(m_ctrlSecondary->GetClientObject(idx))->m_Item;
 	FillTertiary();
@@ -255,7 +255,7 @@ void CDlgPointsViewSort::OnSelchangeTertiary(wxCommandEvent& evt)
 {
 	int idx = m_ctrlTertiary->GetSelection();
 	if (wxNOT_FOUND == idx)
-		m_Tertiary = CAgilityBookOptions::ePointsViewSortUnknown;
+		m_Tertiary = ARBPointsViewSort::Unknown;
 	else
 		m_Tertiary = dynamic_cast<CPointViewData*>(m_ctrlTertiary->GetClientObject(idx))->m_Item;
 	UpdateControls();

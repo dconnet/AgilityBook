@@ -76,7 +76,7 @@ public:
 	 */
 	std::wstring GetGenericName() const override
 	{
-		return m_Date.GetString(ARBDate::eSlashMDY);
+		return m_Date.GetString(ARBDateFormat::SlashMDY);
 	}
 
 	/**

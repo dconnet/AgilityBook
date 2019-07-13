@@ -153,7 +153,7 @@ bool ARBConfig::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_CONFIG)
 		return false;
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, Localization()->ValidValuesBool().c_str()));
 		return false;

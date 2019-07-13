@@ -122,12 +122,12 @@ namespace StringUtil
 			std::wstring const& inReplace,
 			std::wstring const& inReplaceWith);
 
-	typedef enum
+	enum class ByteSizeStyle
 	{
-		eBytesSI,     // KB == 1000 btyes
-		eBytesBinary, // KiB == 1024 bytes
-		eBytesTrue,   // KB == 1024 bytes (non-IEC)
-	} ByteSizeStyle;
+		SI,     // KB == 1000 btyes
+		Binary, // KiB == 1024 bytes
+		True,   // KB == 1024 bytes (non-IEC)
+	};
 
 	/**
 	 * Return a formatted string using IEC binary prefixes.
@@ -138,5 +138,5 @@ namespace StringUtil
 	ARBCOMMON_API std::wstring FormatBytes(
 			double inSize,
 			int inPrec = 2,
-			ByteSizeStyle inSizeStyle = eBytesBinary);
+			ByteSizeStyle inSizeStyle = ByteSizeStyle::Binary);
 };

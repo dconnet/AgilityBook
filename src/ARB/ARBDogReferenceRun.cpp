@@ -193,7 +193,7 @@ bool ARBDogReferenceRun::Load(
 
 	std::wstring attrib;
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REF_RUN_Q, attrib))
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_REF_RUN_Q, attrib))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REF_RUN, ATTRIB_REF_RUN_Q));
 		return false;

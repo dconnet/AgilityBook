@@ -191,7 +191,7 @@ CDlgFindLinks::CDlgFindLinks(
 
 	m_ctrlLinks = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 85)),
-		true, CReportListCtrl::eSortHeader, true);
+		true, CReportListCtrl::SortHeader::Sort, true);
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgFindLinks::OnColumnClick, this);
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgFindLinks::OnItemSelected, this);
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgFindLinks::OnItemActivated, this);

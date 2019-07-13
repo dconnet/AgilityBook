@@ -77,13 +77,13 @@ std::wstring ARBDouble::ToString(
 
 	wchar_t pt = CLocaleWrapper::GetDecimalPt();
 
-	if (eAsIs != eStripZeros)
+	if (ZeroStrip::AsIs != eStripZeros)
 	{
 		std::wstring::size_type pos = retVal.find(pt);
 		if (std::wstring::npos != pos)
 		{
 			// Strip trailing zeros iff they are all 0.
-			if (2 == inPrec && eCompatible == eStripZeros)
+			if (2 == inPrec && ZeroStrip::Compatible == eStripZeros)
 			{
 				std::wstring twoZeros;
 				twoZeros = pt;

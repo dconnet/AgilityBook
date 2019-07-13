@@ -227,13 +227,13 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		pDC->SetBackgroundMode(wxTRANSPARENT);
 
 		// Colors for current selected date
-		wxColour clrNotEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered);
-		wxColour clrPast = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPast);
-		wxColour clrPlanning = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning);
-		wxColour clrPending = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPending);
-		wxColour clrEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered);
-		wxColour clrOpening = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorOpening);
-		wxColour clrClosing = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorClosing);
+		wxColour clrNotEntered = CAgilityBookOptions::CalendarColor(ARBCalColorItem::NotEntered);
+		wxColour clrPast = CAgilityBookOptions::CalendarColor(ARBCalColorItem::Past);
+		wxColour clrPlanning = CAgilityBookOptions::CalendarColor(ARBCalColorItem::Planning);
+		wxColour clrPending = CAgilityBookOptions::CalendarColor(ARBCalColorItem::Pending);
+		wxColour clrEntered = CAgilityBookOptions::CalendarColor(ARBCalColorItem::Entered);
+		wxColour clrOpening = CAgilityBookOptions::CalendarColor(ARBCalColorItem::Opening);
+		wxColour clrClosing = CAgilityBookOptions::CalendarColor(ARBCalColorItem::Closing);
 
 		// Figure out which month we're on.
 		ARBDate curMonth = FirstDayOfVisibleMonth();
@@ -288,7 +288,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 				// dow is now the index of the day of week.
 				int dow = (weekStart + iDay).GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
 				// Now translate back to Sun==0
-				dow = (dow + CAgilityBookOptions::GetFirstDayOfWeek()) % 7;
+				dow = (dow + static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek())) % 7;
 				wxDCClipper clip(*pDC, rect);
 				pDC->DrawLabel(m_Days[dow], rect, wxALIGN_CENTRE);
 			}
@@ -425,19 +425,19 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 							}
 							else switch (pCal->GetEntered())
 							{
-							case ARBCalendar::eNot:
+							case ARBCalendarEntry::Not:
 								bReset = true;
 								pDC->SetTextForeground(clrNotEntered);
 								break;
-							case ARBCalendar::ePlanning:
+							case ARBCalendarEntry::Planning:
 								bReset = true;
 								pDC->SetTextForeground(clrPlanning);
 								break;
-							case ARBCalendar::ePending:
+							case ARBCalendarEntry::Pending:
 								bReset = true;
 								pDC->SetTextForeground(clrPending);
 								break;
-							case ARBCalendar::eEntered:
+							case ARBCalendarEntry::Entered:
 								bReset = true;
 								pDC->SetTextForeground(clrEntered);
 								break;
@@ -880,7 +880,7 @@ void CAgilityBookCalendar::LoadData(CAgilityBookDoc* pDoc)
 				f = pCal->GetStartDate();
 				l = pCal->GetEndDate();
 			}
-			if (ARBCalendar::ePlanning == pCal->GetEntered()
+			if (ARBCalendarEntry::Planning == pCal->GetEntered()
 			&& filter.ViewPlanning())
 			{
 				if (CAgilityBookOptions::ViewAllCalendarOpening()
@@ -1049,15 +1049,15 @@ size_t CAgilityBookCalendar::GetEntriesOn(
 	{
 		ARBCalendarPtr pCal = *iter;
 		if (pCal->InRange(date)
-		&& ((ARBCalendar::eNot == pCal->GetEntered() && filter.ViewNotEntered())
-		|| (ARBCalendar::ePlanning == pCal->GetEntered() && filter.ViewPlanning())
-		|| ((ARBCalendar::ePending == pCal->GetEntered() || ARBCalendar::eEntered == pCal->GetEntered())
+		&& ((ARBCalendarEntry::Not == pCal->GetEntered() && filter.ViewNotEntered())
+		|| (ARBCalendarEntry::Planning == pCal->GetEntered() && filter.ViewPlanning())
+		|| ((ARBCalendarEntry::Pending == pCal->GetEntered() || ARBCalendarEntry::Entered == pCal->GetEntered())
 		&& filter.ViewEntered())))
 		{
 			entries.push_back((*iter));
 		}
 		// Only show opening/closing dates if we're planning on entering
-		else if (ARBCalendar::ePlanning == pCal->GetEntered()
+		else if (ARBCalendarEntry::Planning == pCal->GetEntered()
 		&& filter.ViewPlanning())
 		{
 			if ((CAgilityBookOptions::ViewAllCalendarOpening()
@@ -1472,19 +1472,19 @@ void CAgilityBookCalendarView::OnCtrlMouseWheel(wxMouseEvent& evt)
 #endif
 
 
-enum CalendarMotion
+enum class CalendarMotion
 {
-	eMotionNone,
-	eMotionDayLast,
-	eMotionDayNext,
-	eMotionWeekLast,
-	eMotionWeekNext,
-	eMotionMonthLast,
-	eMotionMonthNext,
-	eMotionWeekStart,
-	eMotionWeekEnd,
-	eMotionCalStart,
-	eMotionCalEnd
+	None,
+	DayLast,
+	DayNext,
+	WeekLast,
+	WeekNext,
+	MonthLast,
+	MonthNext,
+	WeekStart,
+	WeekEnd,
+	CalStart,
+	CalEnd
 };
 
 
@@ -1495,7 +1495,7 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 	ARBDate date = m_Ctrl->CurrentDate();
 	if (!date.IsValid())
 		return;
-	CalendarMotion motion = eMotionNone;
+	CalendarMotion motion = CalendarMotion::None;
 	switch (evt.GetKeyCode())
 	{
 	default:
@@ -1509,52 +1509,52 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 		break;
 	case WXK_LEFT:
 	case WXK_NUMPAD_LEFT:
-		motion = eMotionDayLast;
+		motion = CalendarMotion::DayLast;
 		break;
 	case WXK_RIGHT:
 	case WXK_NUMPAD_RIGHT:
-		motion = eMotionDayNext;
+		motion = CalendarMotion::DayNext;
 		break;
 	case WXK_UP:
 	case WXK_NUMPAD_UP:
 #if defined(__WXMAC__)
-		motion = (wxMOD_CMD == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekLast;
+		motion = (wxMOD_CMD == evt.GetModifiers()) ? CalendarMotion::CalStart : CalendarMotion::WeekLast;
 #else
-		motion = eMotionWeekLast;
+		motion = CalendarMotion::WeekLast;
 #endif
 		break;
 	case WXK_DOWN:
 	case WXK_NUMPAD_DOWN:
 #if defined(__WXMAC__)
-		motion = (wxMOD_CMD == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekNext;
+		motion = (wxMOD_CMD == evt.GetModifiers()) ? CalendarMotion::CalEnd : CalendarMotion::WeekNext;
 #else
-		motion = eMotionWeekNext;
+		motion = CalendarMotion::WeekNext;
 #endif
 		break;
 	case WXK_PAGEUP:
 		// Note: The mac synthesizes PAGEUP with fn+<up>
-		motion = eMotionMonthLast;
+		motion = CalendarMotion::MonthLast;
 		break;
 	case WXK_PAGEDOWN:
 		// Note: The mac synthesizes PAGEDOWN with fn+<dn>
-		motion = eMotionMonthNext;
+		motion = CalendarMotion::MonthNext;
 		break;
 	case WXK_HOME:
 		// Note: The mac synthesizes HOME with fn+<left>,
 		// But don't support fn+control+left as ctrl+home since ctrl+a is also
 		// synthesized into HOME - hence ctrl+a == ctrl+home which is wrong.
 #if defined(__WXMAC__)
-		motion = eMotionWeekStart;
+		motion = CalendarMotion::WeekStart;
 #else
-		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? eMotionCalStart : eMotionWeekStart;
+		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? CalendarMotion::CalStart : CalendarMotion::WeekStart;
 #endif
 		break;
 	case WXK_END:
 		// Note: The mac synthesizes END with fn+<right>
 #if defined(__WXMAC__)
-		motion = eMotionWeekEnd;
+		motion = CalendarMotion::WeekEnd;
 #else
-		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? eMotionCalEnd : eMotionWeekEnd;
+		motion = (wxMOD_CONTROL == evt.GetModifiers()) ? CalendarMotion::CalEnd : CalendarMotion::WeekEnd;
 #endif
 		break;
 	}
@@ -1562,19 +1562,19 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 	{
 	default:
 		break;
-	case eMotionDayLast:
+	case CalendarMotion::DayLast:
 		--date;
 		break;
-	case eMotionDayNext:
+	case CalendarMotion::DayNext:
 		++date;
 		break;
-	case eMotionWeekLast:
+	case CalendarMotion::WeekLast:
 		date -= 7;
 		break;
-	case eMotionWeekNext:
+	case CalendarMotion::WeekNext:
 		date += 7;
 		break;
-	case eMotionMonthLast:
+	case CalendarMotion::MonthLast:
 		if (1 == date.GetMonth())
 		{
 			date.SetDate(date.GetYear() - 1, 12, date.GetDay());
@@ -1590,7 +1590,7 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 			}
 		}
 		break;
-	case eMotionMonthNext:
+	case CalendarMotion::MonthNext:
 		if (12 == date.GetMonth())
 		{
 			date.SetDate(date.GetYear() + 1, 1, date.GetDay());
@@ -1606,16 +1606,16 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 			}
 		}
 		break;
-	case eMotionWeekStart:
+	case CalendarMotion::WeekStart:
 		date = m_Ctrl->FirstDayOfWeek(date);
 		break;
-	case eMotionWeekEnd:
+	case CalendarMotion::WeekEnd:
 		date = m_Ctrl->LastDayOfWeek(date);
 		break;
-	case eMotionCalStart:
+	case CalendarMotion::CalStart:
 		date = m_Ctrl->FirstDate();
 		break;
-	case eMotionCalEnd:
+	case CalendarMotion::CalEnd:
 		date = m_Ctrl->LastDate();
 		break;
 	}

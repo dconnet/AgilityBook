@@ -138,12 +138,12 @@ bool ARBConfigCalSite::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_CALSITE)
 		return false;
-	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_CALSITE_NAME, m_Name))
+	if (ARBAttribLookup::NotFound == inTree->GetAttrib(ATTRIB_CALSITE_NAME, m_Name))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_NAME));
 		return false;
 	}
-	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch))
+	if (ARBAttribLookup::NotFound == inTree->GetAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_SEARCH));
 		return false;
@@ -164,7 +164,7 @@ bool ARBConfigCalSite::Load(
 		{
 			// Ignore any errors...
 			std::wstring code;
-			if (ElementNode::eNotFound != element->GetAttrib(ATTRIB_LOCCODE_CODE, code))
+			if (ARBAttribLookup::NotFound != element->GetAttrib(ATTRIB_LOCCODE_CODE, code))
 			{
 				if (!code.empty())
 				{
@@ -178,7 +178,7 @@ bool ARBConfigCalSite::Load(
 		{
 			// Ignore any errors...
 			std::wstring code;
-			if (ElementNode::eNotFound != element->GetAttrib(ATTRIB_VENUECODE_CODE, code))
+			if (ARBAttribLookup::NotFound != element->GetAttrib(ATTRIB_VENUECODE_CODE, code))
 			{
 				if (!code.empty())
 				{

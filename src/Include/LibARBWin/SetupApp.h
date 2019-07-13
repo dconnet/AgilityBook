@@ -37,24 +37,25 @@
 #endif
 
 
+enum class ARBLanguageCatalog
+{
+	None,      // Not using MO files.
+	Directory, // Files are in 'lang' directory
+	Embedded,  // Files are embedded in rc file (win only)
+};
+
+
 class ARBWIN_API CBaseApp : public wxApp
 	, public ILanguageCallback
 	, public IImageManagerCallback
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CBaseApp)
 protected:
-	typedef enum
-	{
-		eLanguageCatalogNone,      // Not using MO files.
-		eLanguageCatalogDirectory, // Files are in 'lang' directory
-		eLanguageCatalogEmbedded,  // Files are embedded in rc file (win only)
-	} LanguageCatalog;
-
 	// If appRegKey is empty, no config will be created.
 	CBaseApp(
 			wxString const& appName,
 			wxString const& appRegKey = wxEmptyString,
-			LanguageCatalog useLangCatalog = eLanguageCatalogNone);
+			ARBLanguageCatalog useLangCatalog = ARBLanguageCatalog::None);
 
 #if USE_DBGREPORT
 	void GenerateReport(wxDebugReport::Context ctx);

@@ -147,12 +147,12 @@ bool ARBInfoItem::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != inItemName)
 		return false;
-	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_INFO_NAME, m_Name))
+	if (ARBAttribLookup::NotFound == inTree->GetAttrib(ATTRIB_INFO_NAME, m_Name))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(inItemName.c_str(), ATTRIB_INFO_NAME).c_str());
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_INFO_VISIBLE, m_Visible))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_INFO_VISIBLE, m_Visible))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(inItemName.c_str(), ATTRIB_INFO_VISIBLE, Localization()->ValidValuesBool().c_str()));
 		return false;

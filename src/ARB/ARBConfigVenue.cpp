@@ -205,7 +205,7 @@ bool ARBConfigVenue::Load(
 	if (!inTree || inTree->GetName() != TREE_VENUE)
 		return false;
 	// Get the venue name.
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_VENUE_NAME, m_Name)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_VENUE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME));
@@ -220,7 +220,7 @@ bool ARBConfigVenue::Load(
 	if (inVersion < ARBVersion(14,4))
 	{
 		std::wstring lifetimeName;
-		if (ElementNode::eFound == inTree->GetAttrib(L"LifetimeName", lifetimeName))
+		if (ARBAttribLookup::Found == inTree->GetAttrib(L"LifetimeName", lifetimeName))
 			m_LifetimeNames.AddLifetimeName(lifetimeName);
 	}
 	// Icon index added in 12.5

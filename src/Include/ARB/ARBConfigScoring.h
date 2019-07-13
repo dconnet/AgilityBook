@@ -37,6 +37,20 @@
 
 #include "ARBCommon/ARBDate.h"
 
+/**
+ * Types of scoring methods.
+ */
+enum class ARBScoringStyle
+{
+	Unknown,			///< Unknown scoring method.
+	FaultsThenTime,	///< By faults then time.
+	Faults100ThenTime,	///< By faults then time (AKC).
+	Faults200ThenTime,	///< By faults then time (UKC).
+	OCScoreThenTime,	///< Open/Closing points then time.
+	ScoreThenTime,		///< Points then time.
+	TimePlusFaults		///< Time plus faults.
+};
+
 
 /**
  * Scoring methods for an event.
@@ -45,23 +59,9 @@ class ARB_API ARBConfigScoring : public ARBBase
 {
 public:
 	/**
-	 * Types of scoring methods.
-	 */
-	typedef enum
-	{
-		eUnknown,			///< Unknown scoring method.
-		eFaultsThenTime,	///< By faults then time.
-		eFaults100ThenTime,	///< By faults then time (AKC).
-		eFaults200ThenTime,	///< By faults then time (UKC).
-		eOCScoreThenTime,	///< Open/Closing points then time.
-		eScoreThenTime,		///< Points then time.
-		eTimePlusFaults		///< Time plus faults.
-	} ScoringStyle;
-
-	/**
 	 * Translate the enum to a string.
 	 */
-	static std::wstring GetScoringStyleStr(ScoringStyle inStyle);
+	static std::wstring GetScoringStyleStr(ARBScoringStyle inStyle);
 
 protected:
 	ARBConfigScoring();
@@ -174,7 +174,7 @@ public:
 	{
 		m_Level = inLevel;
 	}
-	ScoringStyle GetScoringStyle() const
+	ARBScoringStyle GetScoringStyle() const
 	{
 		return m_Style;
 	}
@@ -182,10 +182,10 @@ public:
 	{
 		return GetScoringStyleStr(m_Style);
 	}
-	void SetScoringStyle(ARBConfigScoring::ScoringStyle inStyle)
+	void SetScoringStyle(ARBScoringStyle inStyle)
 	{
 		m_Style = inStyle;
-		if (eOCScoreThenTime != m_Style && eScoreThenTime != m_Style)
+		if (ARBScoringStyle::OCScoreThenTime != m_Style && ARBScoringStyle::ScoreThenTime != m_Style)
 			m_OpeningPts = m_ClosingPts = 0;
 	}
 	bool DropFractions() const ///< Only valid for F/T, T+F
@@ -341,7 +341,7 @@ private:
 	ARBDate m_ValidTo;
 	std::wstring m_Division;
 	std::wstring m_Level;
-	ScoringStyle m_Style;
+	ARBScoringStyle m_Style;
 	bool m_bDropFractions;
 	bool m_bCleanQ;
 	bool m_bTimeFaultsUnder;

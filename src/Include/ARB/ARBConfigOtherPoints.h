@@ -26,22 +26,23 @@
 
 
 /**
+ * How to accumulate points.
+ */
+enum class ARBOtherPointsTally
+{
+	All,			///< Accumulate all runs together.
+	AllByEvent,		///< Separate runs by event.
+	Level,			///< Separate runs by level.
+	LevelByEvent	///< Separate runs by event and level.
+};
+
+
+/**
  * A way to tally points that aren't inheritantly known.
  */
 class ARB_API ARBConfigOtherPoints : public ARBBase
 {
 public:
-	/**
-	 * How to accumulate points.
-	 */
-	typedef enum
-	{
-		eTallyAll,			///< Accumulate all runs together.
-		eTallyAllByEvent,	///< Separate runs by event.
-		eTallyLevel,		///< Separate runs by level.
-		eTallyLevelByEvent	///< Separate runs by event and level.
-	} eOtherPointsTally;
-
 	static void GetTallyValidValues(std::vector<std::wstring>& outValues);
 
 protected:
@@ -127,11 +128,11 @@ public:
 	{
 		m_Desc = inDesc;
 	}
-	eOtherPointsTally GetTally() const
+	ARBOtherPointsTally GetTally() const
 	{
 		return m_Tally;
 	}
-	void SetTally(eOtherPointsTally inTally)
+	void SetTally(ARBOtherPointsTally inTally)
 	{
 		m_Tally = inTally;
 	}
@@ -146,7 +147,7 @@ public:
 
 private:
 	std::wstring m_Name;
-	eOtherPointsTally m_Tally;
+	ARBOtherPointsTally m_Tally;
 	std::wstring m_Desc;
 	double m_Default;
 };

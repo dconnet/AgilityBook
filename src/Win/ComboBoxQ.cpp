@@ -105,7 +105,7 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr const& inScoring)
 	bool bHasTitling = true;
 	if (inScoring)
 		bHasTitling = (0 < inScoring->GetTitlePoints().size() || 0 < inScoring->GetLifetimePoints().size());
-	ARB_Q curQ = ARB_Q::eQ_UNK;
+	ARB_Q curQ = Q::UNK;
 	if (m_refRun)
 		curQ = m_refRun->GetQ();
 	else if (m_Run)
@@ -115,7 +115,7 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr const& inScoring)
 	for (int index = 0; index < nQs; ++index)
 	{
 		ARB_Q q = ARB_Q::GetValidType(index);
-		if (inScoring && ARB_Q::eQ_SuperQ == q && !inScoring->HasSuperQ())
+		if (inScoring && Q::SuperQ == q && !inScoring->HasSuperQ())
 			continue;
 		// Allow non-titling runs to only have certain types.
 		// 0 is special - it's the Unknown case.
@@ -135,5 +135,5 @@ ARB_Q CQualifyingComboBox::GetQ(int index) const
 	wxClientData* pData = GetClientObject(index);
 	if (pData)
 		return dynamic_cast<CQualifyingComboData*>(pData)->m_Q;
-	return ARB_Q::eQ_UNK;
+	return Q::UNK;
 }

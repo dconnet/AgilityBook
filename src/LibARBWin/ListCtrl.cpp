@@ -93,7 +93,7 @@ bool CReportListCtrl::Create(
 {
 	long style = wxLC_REPORT | wxLC_VIRTUAL
 		| (bSingleSel ? wxLC_SINGLE_SEL : 0)
-		| ((sortHeader == eSortHeader) ? 0 : (sortHeader == eNoSortHeader) ? wxLC_NO_SORT_HEADER : wxLC_NO_HEADER)
+		| ((sortHeader == SortHeader::Sort) ? 0 : (sortHeader == SortHeader::NoSort) ? wxLC_NO_SORT_HEADER : wxLC_NO_HEADER)
 		| (bHasBorder ? wxBORDER : wxNO_BORDER);
 
 	if (!CListCtrl::Create(parent, wxID_ANY, pos, size, style))
@@ -107,7 +107,7 @@ bool CReportListCtrl::Create(
 
 	// Make the blank one the 1st icon so if an icon isn't set in a list
 	// it will use this by default
-	if (bHasImageList || sortHeader == eSortHeader)
+	if (bHasImageList || sortHeader == SortHeader::Sort)
 	{
 		m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));

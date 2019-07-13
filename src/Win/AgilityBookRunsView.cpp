@@ -206,7 +206,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			str = ARBDouble::ToString(m_pRun->GetScoring().GetTime());
 			break;
 		case IO_RUNS_YARDS:
-			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
+			if (ARBScoringType::ByTime == m_pRun->GetScoring().GetType()
 			&& 0.0 < m_pRun->GetScoring().GetYards())
 			{
 				str = ARBDouble::ToString(m_pRun->GetScoring().GetYards(), 0);
@@ -247,14 +247,14 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			}
 			break;
 		case IO_RUNS_SCT:
-			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
+			if (ARBScoringType::ByTime == m_pRun->GetScoring().GetType()
 			&& 0.0 < m_pRun->GetScoring().GetSCT())
 			{
 				str = ARBDouble::ToString(m_pRun->GetScoring().GetSCT());
 			}
 			break;
 		case IO_RUNS_TOTAL_FAULTS:
-			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
+			if (ARBScoringType::ByTime == m_pRun->GetScoring().GetType())
 			{
 				ARBConfigScoringPtr pScoring;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
@@ -271,37 +271,37 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			}
 			break;
 		case IO_RUNS_REQ_OPENING:
-			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+			if (ARBScoringType::ByOpenClose == m_pRun->GetScoring().GetType())
 			{
 				str = fmt::format(L"{}", m_pRun->GetScoring().GetNeedOpenPts());
 			}
 			break;
 		case IO_RUNS_REQ_CLOSING:
-			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+			if (ARBScoringType::ByOpenClose == m_pRun->GetScoring().GetType())
 			{
 				str = fmt::format(L"{}", m_pRun->GetScoring().GetNeedClosePts());
 			}
 			break;
 		case IO_RUNS_OPENING:
-			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+			if (ARBScoringType::ByOpenClose == m_pRun->GetScoring().GetType())
 			{
 				str = fmt::format(L"{}", m_pRun->GetScoring().GetOpenPts());
 			}
 			break;
 		case IO_RUNS_CLOSING:
-			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+			if (ARBScoringType::ByOpenClose == m_pRun->GetScoring().GetType())
 			{
 				str = fmt::format(L"{}", m_pRun->GetScoring().GetClosePts());
 			}
 			break;
 		case IO_RUNS_REQ_POINTS:
-			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
+			if (ARBScoringType::ByPoints == m_pRun->GetScoring().GetType())
 			{
 				str = fmt::format(L"{}", m_pRun->GetScoring().GetNeedOpenPts());
 			}
 			break;
 		case IO_RUNS_POINTS:
-			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
+			if (ARBScoringType::ByPoints == m_pRun->GetScoring().GetType())
 			{
 				str = fmt::format(L"{}", m_pRun->GetScoring().GetOpenPts());
 			}
@@ -345,7 +345,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 							q += (*iMultiQ)->GetShortName();
 						}
 					}
-					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
+					if (Q::SuperQ == m_pRun->GetQ())
 					{
 						bSet = true;
 						if (!q.empty())
@@ -676,9 +676,9 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_YARDS:
 		{
-			bool bRun1 = (ARBDogRunScoring::eTypeByTime == pRun1->GetRun()->GetScoring().GetType()
+			bool bRun1 = (ARBScoringType::ByTime == pRun1->GetRun()->GetScoring().GetType()
 				&& 0.0 < pRun1->GetRun()->GetScoring().GetYards());
-			bool bRun2 = (ARBDogRunScoring::eTypeByTime == pRun2->GetRun()->GetScoring().GetType()
+			bool bRun2 = (ARBScoringType::ByTime == pRun2->GetRun()->GetScoring().GetType()
 				&& 0.0 < pRun2->GetRun()->GetScoring().GetYards());
 			if (bRun1 && bRun2)
 			{
@@ -759,9 +759,9 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_SCT:
 		{
-			bool bOk1 = ARBDogRunScoring::eTypeByTime == pRun1->GetRun()->GetScoring().GetType()
+			bool bOk1 = ARBScoringType::ByTime == pRun1->GetRun()->GetScoring().GetType()
 				&& 0.0 < pRun1->GetRun()->GetScoring().GetSCT();
-			bool bOk2 = ARBDogRunScoring::eTypeByTime == pRun2->GetRun()->GetScoring().GetType()
+			bool bOk2 = ARBScoringType::ByTime == pRun2->GetRun()->GetScoring().GetType()
 				&& 0.0 < pRun2->GetRun()->GetScoring().GetSCT();
 			if (bOk1 && bOk2)
 			{
@@ -778,8 +778,8 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_TOTAL_FAULTS:
 		{
-			bool bOk1 = ARBDogRunScoring::eTypeByTime == pRun1->GetRun()->GetScoring().GetType();
-			bool bOk2 = ARBDogRunScoring::eTypeByTime == pRun2->GetRun()->GetScoring().GetType();
+			bool bOk1 = ARBScoringType::ByTime == pRun1->GetRun()->GetScoring().GetType();
+			bool bOk2 = ARBScoringType::ByTime == pRun2->GetRun()->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
 				ARBConfigScoringPtr pScoring1;
@@ -817,8 +817,8 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_REQ_OPENING:
 		{
-			bool bOk1 = ARBDogRunScoring::eTypeByOpenClose == pRun1->GetRun()->GetScoring().GetType();
-			bool bOk2 = ARBDogRunScoring::eTypeByOpenClose == pRun2->GetRun()->GetScoring().GetType();
+			bool bOk1 = ARBScoringType::ByOpenClose == pRun1->GetRun()->GetScoring().GetType();
+			bool bOk2 = ARBScoringType::ByOpenClose == pRun2->GetRun()->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
 				if (pRun1->GetRun()->GetScoring().GetNeedOpenPts() < pRun2->GetRun()->GetScoring().GetNeedOpenPts())
@@ -834,8 +834,8 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_REQ_CLOSING:
 		{
-			bool bOk1 = ARBDogRunScoring::eTypeByOpenClose == pRun1->GetRun()->GetScoring().GetType();
-			bool bOk2 = ARBDogRunScoring::eTypeByOpenClose == pRun2->GetRun()->GetScoring().GetType();
+			bool bOk1 = ARBScoringType::ByOpenClose == pRun1->GetRun()->GetScoring().GetType();
+			bool bOk2 = ARBScoringType::ByOpenClose == pRun2->GetRun()->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
 				if (pRun1->GetRun()->GetScoring().GetNeedClosePts() < pRun2->GetRun()->GetScoring().GetNeedClosePts())
@@ -851,8 +851,8 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_OPENING:
 		{
-			bool bOk1 = ARBDogRunScoring::eTypeByOpenClose == pRun1->GetRun()->GetScoring().GetType();
-			bool bOk2 = ARBDogRunScoring::eTypeByOpenClose == pRun2->GetRun()->GetScoring().GetType();
+			bool bOk1 = ARBScoringType::ByOpenClose == pRun1->GetRun()->GetScoring().GetType();
+			bool bOk2 = ARBScoringType::ByOpenClose == pRun2->GetRun()->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
 				if (pRun1->GetRun()->GetScoring().GetOpenPts() < pRun2->GetRun()->GetScoring().GetOpenPts())
@@ -868,8 +868,8 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_CLOSING:
 		{
-			bool bOk1 = ARBDogRunScoring::eTypeByOpenClose == pRun1->GetRun()->GetScoring().GetType();
-			bool bOk2 = ARBDogRunScoring::eTypeByOpenClose == pRun2->GetRun()->GetScoring().GetType();
+			bool bOk1 = ARBScoringType::ByOpenClose == pRun1->GetRun()->GetScoring().GetType();
+			bool bOk2 = ARBScoringType::ByOpenClose == pRun2->GetRun()->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
 				if (pRun1->GetRun()->GetScoring().GetClosePts() < pRun2->GetRun()->GetScoring().GetClosePts())
@@ -885,8 +885,8 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_REQ_POINTS:
 		{
-			bool bOk1 = ARBDogRunScoring::eTypeByPoints == pRun1->GetRun()->GetScoring().GetType();
-			bool bOk2 = ARBDogRunScoring::eTypeByPoints == pRun2->GetRun()->GetScoring().GetType();
+			bool bOk1 = ARBScoringType::ByPoints == pRun1->GetRun()->GetScoring().GetType();
+			bool bOk2 = ARBScoringType::ByPoints == pRun2->GetRun()->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
 				if (pRun1->GetRun()->GetScoring().GetNeedOpenPts() < pRun2->GetRun()->GetScoring().GetNeedOpenPts())
@@ -902,8 +902,8 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_POINTS:
 		{
-			bool bOk1 = ARBDogRunScoring::eTypeByPoints == pRun1->GetRun()->GetScoring().GetType();
-			bool bOk2 = ARBDogRunScoring::eTypeByPoints == pRun2->GetRun()->GetScoring().GetType();
+			bool bOk1 = ARBScoringType::ByPoints == pRun1->GetRun()->GetScoring().GetType();
+			bool bOk2 = ARBScoringType::ByPoints == pRun2->GetRun()->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
 				if (pRun1->GetRun()->GetScoring().GetOpenPts() < pRun2->GetRun()->GetScoring().GetOpenPts())
@@ -965,8 +965,8 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 		break;
 	case IO_RUNS_SCORE:
 		{
-			bool bOk1 = (pRun1->GetRun()->GetQ().Qualified() || ARB_Q::eQ_NQ == pRun1->GetRun()->GetQ());
-			bool bOk2 = (pRun2->GetRun()->GetQ().Qualified() || ARB_Q::eQ_NQ == pRun2->GetRun()->GetQ());
+			bool bOk1 = (pRun1->GetRun()->GetQ().Qualified() || Q::NQ == pRun1->GetRun()->GetQ());
+			bool bOk2 = (pRun2->GetRun()->GetQ().Qualified() || Q::NQ == pRun2->GetRun()->GetQ());
 			if (bOk1 && bOk2)
 			{
 				ARBConfigScoringPtr pScoring1;
@@ -1345,7 +1345,7 @@ bool CAgilityBookRunsView::GetMessage(std::wstring& msg) const
 			ARB_Q q = pData->GetRun()->GetQ();
 			if (q.Qualified())
 				++nQs;
-			else if (ARB_Q::eQ_UNK == q || ARB_Q::eQ_DNR == q)
+			else if (Q::UNK == q || Q::DNR == q)
 				++nIgnoredRuns;
 		}
 	}
@@ -1594,7 +1594,7 @@ void CAgilityBookRunsView::LoadData()
 	std::list<ARBDogTrialPtr> trials;
 	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
 	ARBDogTrialPtr pCurTrial = GetDocument()->GetCurrentTrial();
-	if (pCurTrial && CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
+	if (pCurTrial && ARBViewRuns::RunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
 		trials.push_back(pCurTrial);
 	else
 	{
@@ -1772,7 +1772,7 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		bEnable = (0 < m_Ctrl->GetSelectedItemCount());
 		break;
 	case wxID_PASTE:
-		if (CClipboardDataReader::IsFormatAvailable(eFormatRun))
+		if (CClipboardDataReader::IsFormatAvailable(ARBClipFormat::Run))
 		{
 			ARBDogPtr pDog;
 			ARBDogTrialPtr pTrial;
@@ -1910,7 +1910,7 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 					table.EndLine();
 				}
 
-				clpData.AddData(eFormatRun, tree);
+				clpData.AddData(ARBClipFormat::Run, tree);
 				clpData.AddData(table);
 				clpData.CommitData();
 			}
@@ -1918,7 +1918,7 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 		break;
 
 	case wxID_PASTE:
-		if (CClipboardDataReader::IsFormatAvailable(eFormatRun))
+		if (CClipboardDataReader::IsFormatAvailable(ARBClipFormat::Run))
 		{
 			ARBDogPtr pDog;
 			ARBDogTrialPtr pTrial;
@@ -2117,10 +2117,10 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 		break;
 
 	case ID_VIEW_RUNS_BY_TRIAL:
-		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
-			CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewRunsByList);
+		if (ARBViewRuns::RunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
+			CAgilityBookOptions::SetViewRunsStyle(ARBViewRuns::RunsByList);
 		else
-			CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewRunsByTrial);
+			CAgilityBookOptions::SetViewRunsStyle(ARBViewRuns::RunsByTrial);
 		LoadData();
 		break;
 

@@ -24,6 +24,14 @@
 #include <vector>
 
 
+enum class ARBFilterViewRuns
+{
+	All = 0,
+	Qs = 1,
+	NQs = 2,
+};
+
+
 struct CVenueFilter
 {
 	std::wstring venue;
@@ -44,74 +52,29 @@ struct CVenueFilter
 
 class CCalendarViewFilter
 {
+	friend class CFilterOptions;
 public:
-	typedef enum
-	{
-		eReserved1 =		0x01,	///< Obsolete, implies not+plan+enter
-		eReserved2 =		0x02,	///< Obsolete, changed to ViewAllCalendarOpening()
-		eReserved3 =		0x04,	///< Obsolete, changed to ViewAllCalendarClosing()
-		eViewNotEntered =	0x08,	///< Type of entry to view
-		eViewPlanning =		0x10,	///< Type of entry to view
-		eViewEntered =		0x20,	///< Type of entry to view
-		eViewNormal =		eViewNotEntered | eViewPlanning | eViewEntered
-	} eViewFilter;
 	CCalendarViewFilter() : m_Filter(0) {}
-	CCalendarViewFilter(unsigned short inFilter) : m_Filter(inFilter)
-	{
-		if (m_Filter & 0x01)
-		{
-			// Transition existing registry entries.
-			m_Filter &= ~0x01;
-			m_Filter |= eViewNormal;
-		}
-	}
-	bool IsFiltered() const
-	{
-		return eViewNormal != (m_Filter & eViewNormal);
-	}
-	bool ViewNotEntered() const
-	{
-		return 0 == m_Filter || eViewNotEntered == (m_Filter & eViewNotEntered);
-	}
-	bool ViewPlanning() const
-	{
-		return 0 == m_Filter || eViewPlanning == (m_Filter & eViewPlanning);
-	}
-	bool ViewEntered() const
-	{
-		return 0 == m_Filter || eViewEntered == (m_Filter & eViewEntered);
-	}
-	void AddNotEntered()
-	{
-		m_Filter |= eViewNotEntered;
-	}
-	void AddPlanning()
-	{
-		m_Filter |= eViewPlanning;
-	}
-	void AddEntered()
-	{
-		m_Filter |= eViewEntered;
-	}
+	CCalendarViewFilter(unsigned short inFilter);
+	bool IsFiltered() const;
+	bool ViewNotEntered() const;
+	bool ViewPlanning() const;
+	bool ViewEntered() const;
+	void AddNotEntered();
+	void AddPlanning();
+	void AddEntered();
 	void Clear()
 	{
 		m_Filter = 0;
 	}
 
+private:
 	unsigned short m_Filter;
 };
 
 
 class CFilterOptions
 {
-public:
-	typedef enum
-	{
-		eViewRunsAll = 0,
-		eViewRunsQs = 1,
-		eViewRunsNQs = 2,
-	} eViewRuns;
-
 private:
 	class CFilterOptionData
 	{
@@ -140,7 +103,7 @@ private:
 		ARBDate dateEndDate;
 		bool bViewAllVenues;
 		std::vector<CVenueFilter> venueFilter;
-		eViewRuns eRuns;
+		ARBFilterViewRuns eRuns;
 		bool bViewAllNames;
 		std::set<std::wstring> nameFilter;
 	};
@@ -153,7 +116,7 @@ private:
 	ARBDate m_dateEndDate;
 	bool m_bViewAllVenues;
 	std::vector<CVenueFilter> m_venueFilter;
-	eViewRuns m_eRuns;
+	ARBFilterViewRuns m_eRuns;
 	bool m_bViewAllNames;
 	std::set<std::wstring> m_nameFilter;
 
@@ -296,11 +259,11 @@ public:
 			std::wstring const& inDiv,
 			std::wstring const& inLevel) const;
 
-	eViewRuns GetViewRuns() const
+	ARBFilterViewRuns GetViewRuns() const
 	{
 		return m_eRuns;
 	}
-	void SetViewRuns(eViewRuns eViewAll)
+	void SetViewRuns(ARBFilterViewRuns eViewAll)
 	{
 		m_eRuns = eViewAll;
 	}

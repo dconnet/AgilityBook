@@ -132,11 +132,11 @@ private:
 namespace ARBDouble
 {
 	/// How to handle trailing zeros
-	enum ZeroStrip
+	enum class ZeroStrip
 	{
-		eCompatible,	///< Strip, unless inPrec = 2
-		eStrip,			///< Strip
-		eAsIs			///< Don't touch
+		Compatible,		///< Strip, unless inPrec = 2
+		Strip,			///< Strip
+		AsIs			///< Don't touch
 	};
 	/**
 	 * Trailing zeros are trimmed unless inPrec=2.
@@ -146,7 +146,7 @@ namespace ARBDouble
 			double inValue,
 			int inPrec = 2,
 			bool bUseCurrentLocale = true,
-			ZeroStrip eStripZeros = eCompatible);
+			ZeroStrip eStripZeros = ZeroStrip::Compatible);
 	ARBCOMMON_API std::wstring ToString(
 			double inValue,
 			int inPrec,

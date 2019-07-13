@@ -24,17 +24,17 @@
 #define CLIPDATA	L"ClipData"
 
 // Special clipboard formats
-typedef enum
+enum class ARBClipFormat
 {
-	eFormatNone,
-	eFormatDog,
-	eFormatTrial,
-	eFormatRun,
-	eFormatCalendar,
-	eFormatiCalendar,
-	eFormatLog,
-	eFormatHtml,
-} eClipFormat;
+	None,
+	Dog,
+	Trial,
+	Run,
+	Calendar,
+	iCalendar,
+	Log,
+	Html,
+};
 
 
 /**
@@ -66,10 +66,10 @@ class CClipboardDataReader : public CClipboardData
 public:
 	CClipboardDataReader();
 
-	static bool IsFormatAvailable(eClipFormat clpFmt);
+	static bool IsFormatAvailable(ARBClipFormat clpFmt);
 
 	bool GetData(
-			eClipFormat clpFmt,
+			ARBClipFormat clpFmt,
 			ElementNodePtr const& outTree);
 
 	bool GetData(std::wstring& outData);
@@ -108,12 +108,12 @@ public:
 	~CClipboardDataWriter();
 
 	bool AddData(
-			eClipFormat clpFmt,
+			ARBClipFormat clpFmt,
 			ElementNodePtr const& inTree);
 
 	// Used to write special data.
 	bool AddData(
-			eClipFormat clpFmt,
+			ARBClipFormat clpFmt,
 			std::wstring const& inData);
 
 	bool AddData(std::wstring const& inData);

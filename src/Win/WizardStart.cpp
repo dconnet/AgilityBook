@@ -202,12 +202,12 @@ CWizardStart::CWizardStart(
 
 /////////////////////////////////////////////////////////////////////////////
 
-enum ePage
+enum class WizardPage
 {
-	ePageNone,
-	ePageFinish,
-	ePageImport,
-	ePageExport,
+	None,
+	Finish,
+	Import,
+	Export,
 };
 
 // Note, order of 'data' changed between v1 and v2. In v1, order was UI based.
@@ -218,7 +218,7 @@ static struct
 	int index;
 	struct
 	{
-		ePage nextPage;
+		WizardPage nextPage;
 		// Listing (NULL denotes no entry)
 		wchar_t const* item;
 		// Description shown when listing is selected.
@@ -229,115 +229,115 @@ static struct
 {
 	{WIZ_IMPORT_RUNS,
 	{
-		{ePageImport, arbT("IDS_WIZ_IMPORT_RUNS"), arbT("IDS_WIZ_IMPORT_RUNS_EXCEL")},
-		{ePageImport, arbT("IDS_WIZ_IMPORT_RUNS"), arbT("IDS_WIZ_IMPORT_RUNS_SPREAD")},
-		{ePageFinish, arbT("IDS_WIZ_IMPORT_RUNS_PLUS"), arbT("IDS_WIZ_IMPORT_RUNS_ARB")},
-		{ePageImport, arbT("IDS_WIZ_IMPORT_RUNS"), arbT("IDS_WIZ_IMPORT_RUNS_CALC")},
+		{WizardPage::Import, arbT("IDS_WIZ_IMPORT_RUNS"), arbT("IDS_WIZ_IMPORT_RUNS_EXCEL")},
+		{WizardPage::Import, arbT("IDS_WIZ_IMPORT_RUNS"), arbT("IDS_WIZ_IMPORT_RUNS_SPREAD")},
+		{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_RUNS_PLUS"), arbT("IDS_WIZ_IMPORT_RUNS_ARB")},
+		{WizardPage::Import, arbT("IDS_WIZ_IMPORT_RUNS"), arbT("IDS_WIZ_IMPORT_RUNS_CALC")},
 	} },
 	{WIZ_EXPORT_RUNS,
 	{
-		{ePageExport, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_EXCEL")},
-		{ePageExport, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_SPREAD")},
-		{ePageNone, nullptr, nullptr},
-		{ePageExport, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_CALC")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_EXCEL")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_SPREAD")},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_CALC")},
 	} },
 	{WIZ_IMPORT_CALENDAR,
 	{
-		{ePageImport, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_EXCEL")},
-		{ePageImport, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_SPREAD")},
-		{ePageFinish, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_ARB")},
-		{ePageImport, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_CALC")},
+		{WizardPage::Import, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_EXCEL")},
+		{WizardPage::Import, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_SPREAD")},
+		{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_ARB")},
+		{WizardPage::Import, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_CALC")},
 	} },
 	{WIZ_EXPORT_CALENDAR,
 	{
-		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_EXCEL")},
-		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_SPREAD")},
-		{ePageFinish, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_ARB")},
-		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_CALC")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_EXCEL")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_SPREAD")},
+		{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_ARB")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_CALC")},
 	} },
 	{WIZ_EXPORT_CALENDAR_VCAL,
 	{
-		{ePageNone, nullptr, nullptr},
-		{ePageFinish, arbT("IDS_WIZ_EXPORT_CAL_VCAL"), arbT("IDS_WIZ_EXPORT_CAL_VCAL_SPREAD")},
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_CAL_VCAL"), arbT("IDS_WIZ_EXPORT_CAL_VCAL_SPREAD")},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_CALENDAR_ICAL,
 	{
-		{ePageNone, nullptr, nullptr},
-		{ePageFinish, arbT("IDS_WIZ_EXPORT_CAL_ICAL"), arbT("IDS_WIZ_EXPORT_CAL_ICAL_SPREAD")},
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_CAL_ICAL"), arbT("IDS_WIZ_EXPORT_CAL_ICAL_SPREAD")},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_CALENDAR_APPT,
 	{
-		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL_APPT"), arbT("IDS_WIZ_EXPORT_CAL_APPT_EXCEL")},
-		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL_APPT"), arbT("IDS_WIZ_EXPORT_CAL_APPT_SPREAD")},
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL_APPT"), arbT("IDS_WIZ_EXPORT_CAL_APPT_EXCEL")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL_APPT"), arbT("IDS_WIZ_EXPORT_CAL_APPT_SPREAD")},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_CALENDAR_TASK,
 	{
-		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL_TASK"), arbT("IDS_WIZ_EXPORT_CAL_TASK_EXCEL")},
-		{ePageExport, arbT("IDS_WIZ_EXPORT_CAL_TASK"), arbT("IDS_WIZ_EXPORT_CAL_TASK_SPREAD")},
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL_TASK"), arbT("IDS_WIZ_EXPORT_CAL_TASK_EXCEL")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL_TASK"), arbT("IDS_WIZ_EXPORT_CAL_TASK_SPREAD")},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 	{WIZ_IMPORT_LOG,
 	{
-		{ePageImport, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_EXCEL")},
-		{ePageImport, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_SPREAD")},
-		{ePageFinish, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_ARB")},
-		{ePageImport, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_CALC")},
+		{WizardPage::Import, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_EXCEL")},
+		{WizardPage::Import, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_SPREAD")},
+		{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_ARB")},
+		{WizardPage::Import, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_CALC")},
 	} },
 	{WIZ_EXPORT_LOG,
 	{
-		{ePageExport, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_EXCEL")},
-		{ePageExport, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_SPREAD")},
-		{ePageFinish, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_ARB")},
-		{ePageExport, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_CALC")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_EXCEL")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_SPREAD")},
+		{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_ARB")},
+		{WizardPage::Export, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_CALC")},
 	} },
 	{WIZ_IMPORT_CONFIGURATION,
 	{
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
-		{ePageFinish, arbT("IDS_WIZ_IMPORT_CONFIG"), arbT("IDS_WIZ_IMPORT_CONFIG_ARB")},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_CONFIG"), arbT("IDS_WIZ_IMPORT_CONFIG_ARB")},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_CONFIGURATION,
 	{
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
-		{ePageFinish, arbT("IDS_WIZ_EXPORT_CONFIG"), arbT("IDS_WIZ_EXPORT_CONFIG_ARB")},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_CONFIG"), arbT("IDS_WIZ_EXPORT_CONFIG_ARB")},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_DTD,
 	{
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
-		{ePageFinish, arbT("IDS_WIZ_EXPORT_DTD"), arbT("IDS_WIZ_EXPORT_DTD_ARB")},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_DTD"), arbT("IDS_WIZ_EXPORT_DTD_ARB")},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_XML,
 	{
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
-		{ePageFinish, arbT("IDS_WIZ_EXPORT_XML"), arbT("IDS_WIZ_EXPORT_XML_ARB")},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_XML"), arbT("IDS_WIZ_EXPORT_XML_ARB")},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 	{WIZ_IMPORT_SETTINGS,
 	{
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
-		{ePageFinish, arbT("IDS_WIZ_IMPORT_SETTINGS"), arbT("IDS_WIZ_IMPORT_SETTINGS_ARB")},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_SETTINGS"), arbT("IDS_WIZ_IMPORT_SETTINGS_ARB")},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 	{WIZ_EXPORT_SETTINGS,
 	{
-		{ePageNone, nullptr, nullptr},
-		{ePageNone, nullptr, nullptr},
-		{ePageFinish, arbT("IDS_WIZ_EXPORT_SETTINGS"), arbT("IDS_WIZ_EXPORT_SETTINGS_ARB")},
-		{ePageNone, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::None, nullptr, nullptr},
+		{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_SETTINGS"), arbT("IDS_WIZ_EXPORT_SETTINGS_ARB")},
+		{WizardPage::None, nullptr, nullptr},
 	} },
 };
 static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
@@ -391,16 +391,16 @@ void CWizardStart::DoUpdateExportList(bool bInit)
 	{
 	default:
 		assert(0);
-	case ePageNone:
+	case WizardPage::None:
 		bEnableNext = false;
 		// fallthru
-	case ePageFinish:
+	case WizardPage::Finish:
 		m_Next = nullptr;
 		break;
-	case ePageImport:
+	case WizardPage::Import:
 		m_Next = m_pSheet->GetImportPage();
 		break;
-	case ePageExport:
+	case WizardPage::Export:
 		m_Next = m_pSheet->GetExportPage();
 		break;
 	}
@@ -461,7 +461,7 @@ void CWizardStart::OnWizardChanging(wxWizardEvent& evt)
 		}
 		int data = static_cast<int>(reinterpret_cast<size_t>(m_ctrlList->GetClientData(index)));
 		m_pSheet->SetImportExportItem(data, m_Style);
-		if (ePageFinish == sc_Items[data].data[m_Style].nextPage
+		if (WizardPage::Finish == sc_Items[data].data[m_Style].nextPage
 		&& !DoWizardFinish())
 		{
 			evt.Veto();

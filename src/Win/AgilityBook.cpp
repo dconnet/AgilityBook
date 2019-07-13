@@ -178,7 +178,7 @@ wxEND_EVENT_TABLE()
 // on systems that don't support it.
 
 CAgilityBookApp::CAgilityBookApp()
-	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, eLanguageCatalogEmbedded)
+	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, ARBLanguageCatalog::Embedded)
 	, m_bShutdownSocket(false)
 	, m_Localization()
 	, m_imageHelper()
@@ -199,7 +199,7 @@ bool CAgilityBookApp::AutoCheckProgram()
 	if (CAgilityBookOptions::GetAutoUpdateCheck())
 	{
 		std::wstring ver = StringUtil::stringW(wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, L""));
-		ARBDate date = ARBDate::FromString(ver, ARBDate::eISO);
+		ARBDate date = ARBDate::FromString(ver, ARBDateFormat::ISO);
 		if (date.IsValid())
 		{
 			ARBDate today = ARBDate::Today();

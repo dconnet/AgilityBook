@@ -29,6 +29,14 @@ class CAgilityBookTreeDataTrial;
 class CAgilityBookTreeDataRun;
 
 
+enum class ARBTreeDataType
+{
+	Dog,
+	Trial,
+	Run
+};
+
+
 class CAgilityBookTreeData : public CTreeData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeData)
@@ -38,8 +46,7 @@ public:
 	{}
 
 	// This removes a need for a dynamic cast
-	enum CTreeDataType { eTreeDog, eTreeTrial, eTreeRun };
-	virtual CTreeDataType GetType() const = 0;
+	virtual ARBTreeDataType GetType() const = 0;
 
 	virtual CAgilityBookTreeData const* GetParent() const = 0;
 	virtual ARBBasePtr GetARBBase() const
@@ -122,9 +129,9 @@ public:
 			ARBDogPtr const& inDog);
 	~CAgilityBookTreeDataDog();
 
-	CTreeDataType GetType() const override
+	ARBTreeDataType GetType() const override
 	{
-		return CAgilityBookTreeData::eTreeDog;
+		return ARBTreeDataType::Dog;
 	}
 
 	CAgilityBookTreeData const* GetParent() const override
@@ -178,9 +185,9 @@ public:
 			CAgilityBookTreeView* pTree,
 			ARBDogTrialPtr const& inTrial);
 
-	CTreeDataType GetType() const override
+	ARBTreeDataType GetType() const override
 	{
-		return CAgilityBookTreeData::eTreeTrial;
+		return ARBTreeDataType::Trial;
 	}
 
 	CAgilityBookTreeData const* GetParent() const override
@@ -240,9 +247,9 @@ public:
 			ARBDogRunPtr const& inRun);
 	~CAgilityBookTreeDataRun();
 
-	CTreeDataType GetType() const override
+	ARBTreeDataType GetType() const override
 	{
-		return CAgilityBookTreeData::eTreeRun;
+		return ARBTreeDataType::Run;
 	}
 
 	CAgilityBookTreeData const* GetParent() const override

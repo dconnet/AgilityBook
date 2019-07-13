@@ -24,18 +24,25 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-static size_t FilterToIndex(ARBBase::FilterType inFilterType)
+static size_t FilterToIndex(ARBFilterType inFilterType)
 {
 	switch (inFilterType)
 	{
 	default:
 		assert(0);
 		// fall thru
-	case ARBBase::eFilter:
+	case ARBFilterType::Full:
 		return 0;
-	case ARBBase::eIgnoreQ:
+	case ARBFilterType::IgnoreQ:
 		return 1;
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+unsigned short GetFilterMask(ARBFilterType type)
+{
+	return 0x1 << static_cast<unsigned short>(type);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -51,14 +58,14 @@ ARBBase::~ARBBase()
 }
 
 
-bool ARBBase::IsFiltered(FilterType inFilterType) const
+bool ARBBase::IsFiltered(ARBFilterType inFilterType) const
 {
 	return m_bFiltered[FilterToIndex(inFilterType)];
 }
 
 
 void ARBBase::SetFiltered(
-	FilterType inFilterType,
+	ARBFilterType inFilterType,
 	bool bFiltered)
 {
 	m_bFiltered[FilterToIndex(inFilterType)] = bFiltered;

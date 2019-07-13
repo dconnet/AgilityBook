@@ -52,8 +52,8 @@ CWizard::CWizard(
 	m_Finish = wxDynamicCast(FindWindow(wxID_FORWARD), wxButton);
 	assert(m_Finish);
 
-	m_Excel = ISpreadSheet::Create(ISpreadSheet::eMicrosoftExcel);
-	m_Calc = ISpreadSheet::Create(ISpreadSheet::eOpenOfficeCalc);
+	m_Excel = ISpreadSheet::Create(ARBSpreadSheetType::MicrosoftExcel);
+	m_Calc = ISpreadSheet::Create(ARBSpreadSheetType::OpenOfficeCalc);
 	// Have to delay these as their ctor will use m_Excel.
 	m_pageStart = new CWizardStart(this, m_pDoc);
 	m_pageImport = new CWizardImport(this, m_pDoc, m_pageStart);

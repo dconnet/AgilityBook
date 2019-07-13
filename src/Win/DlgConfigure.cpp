@@ -60,18 +60,18 @@
 class CDlgConfigureDataRoot : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataRoot(CDlgConfigure::eAction action)
+	CDlgConfigureDataRoot(CDlgConfigure::Action action)
 		: CDlgConfigureDataBase(nullptr)
 		, m_Action(action)
 	{
 	}
 	std::wstring OnNeedText() const override {return std::wstring();}
-	CDlgConfigure::eAction GetAction() const
+	CDlgConfigure::Action GetAction() const
 	{
 		return m_Action;
 	}
 private:
-	CDlgConfigure::eAction m_Action;
+	CDlgConfigure::Action m_Action;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -220,15 +220,15 @@ CDlgConfigure::CDlgConfigure(
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 
-	m_hItemVenues = m_ctrlItems->AppendItem(root, _("IDS_COL_VENUES"), m_ImageList.IndexARB(), m_ImageList.IndexARB(), new CDlgConfigureDataRoot(eVenues));
-	LoadData(eVenues);
+	m_hItemVenues = m_ctrlItems->AppendItem(root, _("IDS_COL_VENUES"), m_ImageList.IndexARB(), m_ImageList.IndexARB(), new CDlgConfigureDataRoot(Action::Venues));
+	LoadData(Action::Venues);
 	m_ctrlItems->Expand(m_hItemVenues);
 
-	m_hItemFaults = m_ctrlItems->AppendItem(root, _("IDS_COL_FAULTS"), m_idxFaults, m_idxFaults, new CDlgConfigureDataRoot(eFaults));
-	LoadData(eFaults);
+	m_hItemFaults = m_ctrlItems->AppendItem(root, _("IDS_COL_FAULTS"), m_idxFaults, m_idxFaults, new CDlgConfigureDataRoot(Action::Faults));
+	LoadData(Action::Faults);
 
-	m_hItemOtherPts = m_ctrlItems->AppendItem(root, _("IDS_OTHERPOINTS"), m_ImageList.IndexRun(), m_ImageList.IndexRun(), new CDlgConfigureDataRoot(eOtherPoints));
-	LoadData(eOtherPoints);
+	m_hItemOtherPts = m_ctrlItems->AppendItem(root, _("IDS_OTHERPOINTS"), m_ImageList.IndexRun(), m_ImageList.IndexRun(), new CDlgConfigureDataRoot(Action::OtherPoints));
+	LoadData(Action::OtherPoints);
 
 	m_ctrlItems->SelectItem(m_hItemVenues);
 	m_ctrlItems->EnsureVisible(m_hItemVenues);
@@ -254,7 +254,7 @@ CDlgConfigure::~CDlgConfigure()
 
 
 
-CDlgConfigure::eAction CDlgConfigure::GetAction() const
+CDlgConfigure::Action CDlgConfigure::GetAction() const
 {
 	wxTreeItemId hItem = m_ctrlItems->GetSelection();
 	if (hItem.IsOk())
@@ -266,7 +266,7 @@ CDlgConfigure::eAction CDlgConfigure::GetAction() const
 		if (pData)
 			return pData->GetAction();
 	}
-	return eNone;
+	return Action::None;
 }
 
 
@@ -284,7 +284,7 @@ void CDlgConfigure::UpdateButtons()
 	bool bEdit = false;
 	bool bDelete = false;
 	bool bCopy = false;
-	if (eNone != GetAction())
+	if (Action::None != GetAction())
 		bNew = true;
 	CDlgConfigureDataBase* pData = GetData(m_ctrlItems->GetSelection());
 	if (pData)
@@ -300,20 +300,20 @@ void CDlgConfigure::UpdateButtons()
 }
 
 
-void CDlgConfigure::LoadData(eAction dataToLoad)
+void CDlgConfigure::LoadData(Action dataToLoad)
 {
 	wxTreeItemId hParent;
 	switch (dataToLoad)
 	{
 	default:
 		break;
-	case eVenues:
+	case Action::Venues:
 		hParent = m_hItemVenues;
 		break;
-	case eFaults:
+	case Action::Faults:
 		hParent = m_hItemFaults;
 		break;
-	case eOtherPoints:
+	case Action::OtherPoints:
 		hParent = m_hItemOtherPts;
 		break;
 	}
@@ -327,7 +327,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 	{
 	default:
 		break;
-	case eVenues:
+	case Action::Venues:
 		{ // Scoped because of VC6's scoping of for-variables.
 			for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin(); iterVenue != m_Config.GetVenues().end(); ++iterVenue)
 			{
@@ -344,7 +344,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 			}
 		}
 		break;
-	case eFaults:
+	case Action::Faults:
 		{
 			for (ARBConfigFaultList::iterator iterFault = m_Config.GetFaults().begin(); iterFault != m_Config.GetFaults().end(); ++iterFault)
 			{
@@ -357,7 +357,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 			}
 		}
 		break;
-	case eOtherPoints:
+	case Action::OtherPoints:
 		{
 			for (ARBConfigOtherPointsList::iterator iterOther = m_Config.GetOtherPoints().begin(); iterOther != m_Config.GetOtherPoints().end(); ++iterOther)
 			{
@@ -387,7 +387,7 @@ void CDlgConfigure::DoEdit()
 	default:
 		break;
 
-	case eVenues:
+	case Action::Venues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
 			CDlgConfigVenue dlg(m_Book, m_Config, pVenueData->GetVenue(), this);
@@ -400,7 +400,7 @@ void CDlgConfigure::DoEdit()
 		}
 		break;
 
-	case eFaults:
+	case Action::Faults:
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			bool done = false;
@@ -431,7 +431,7 @@ void CDlgConfigure::DoEdit()
 		}
 		break;
 
-	case eOtherPoints:
+	case Action::OtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
 			std::wstring oldName = pOtherData->GetOtherPoints()->GetName();
@@ -552,7 +552,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 	default:
 		break;
 
-	case eVenues:
+	case Action::Venues:
 		{
 			ARBConfigVenuePtr pVenue(ARBConfigVenue::New());
 			CDlgConfigVenue dlg(m_Book, m_Config, pVenue, this);
@@ -574,7 +574,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 		}
 		break;
 
-	case eFaults:
+	case Action::Faults:
 		{
 			CDlgName dlg(std::wstring(), _("IDS_FAULT_TYPE_NAME"), this);
 			if (wxID_OK == dlg.ShowModal())
@@ -602,7 +602,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 		}
 		break;
 
-	case eOtherPoints:
+	case Action::OtherPoints:
 		{
 			ARBConfigOtherPointsPtr pOther(ARBConfigOtherPoints::New());
 			// The dialog will ensure uniqueness.
@@ -639,7 +639,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 	default:
 		break;
 
-	case eVenues:
+	case Action::Venues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
 			std::wstring venue = pVenueData->GetVenue()->GetName();
@@ -652,7 +652,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 		}
 		break;
 
-	case eFaults:
+	case Action::Faults:
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			if (m_Config.GetFaults().DeleteFault(pFaultData->GetFault()->GetName()))
@@ -663,7 +663,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 		}
 		break;
 
-	case eOtherPoints:
+	case Action::OtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
 			std::wstring otherPoints = pOtherData->GetOtherPoints()->GetName();
@@ -696,7 +696,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	default:
 		break;
 
-	case eVenues:
+	case Action::Venues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
 			std::wstring name(pVenueData->GetVenue()->GetName());
@@ -721,7 +721,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 		}
 		break;
 
-	case eFaults:
+	case Action::Faults:
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			std::wstring name(pFaultData->GetFault()->GetName());
@@ -740,7 +740,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 		}
 		break;
 
-	case eOtherPoints:
+	case Action::OtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
 			std::wstring name(pOtherData->GetOtherPoints()->GetName());
@@ -801,9 +801,9 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		{
 			CDlgMessage dlgMsg(fmt::to_string(info), this);
 			dlgMsg.ShowModal();
-			LoadData(eVenues);
-			LoadData(eFaults);
-			LoadData(eOtherPoints);
+			LoadData(Action::Venues);
+			LoadData(Action::Faults);
+			LoadData(Action::OtherPoints);
 		}
 		else
 			wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);

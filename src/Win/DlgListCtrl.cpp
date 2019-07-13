@@ -117,11 +117,11 @@ int CDlgListCtrlDataCalendar::OnNeedIcon() const
 	{
 	default:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgTentative : m_Parent->m_ctrlList->ImageEmpty();
-	case ARBCalendar::ePlanning:
+	case ARBCalendarEntry::Planning:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgPlanTentative : m_Parent->m_imgPlan;
-	case ARBCalendar::ePending:
+	case ARBCalendarEntry::Pending:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgPendingTentative : m_Parent->m_imgPending;
-	case ARBCalendar::eEntered:
+	case ARBCalendarEntry::Entered:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgEnteredTentative : m_Parent->m_imgEntered;
 	}
 }
@@ -398,7 +398,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_ctrlUp(nullptr)
 	, m_ctrlDown(nullptr)
 	, m_ctrlCreateTrial(nullptr)
-	, m_What(eCalendar)
+	, m_What(ARBWhatToList::Calendar)
 	, m_pDoc(pDoc)
 	, m_Date(date)
 	, m_CalEntries(entries)
@@ -436,7 +436,7 @@ CDlgListCtrl::CDlgListCtrl(
 
 // Faults/Partners
 CDlgListCtrl::CDlgListCtrl(
-		CDlgListCtrl::WhatToList inType,
+		ARBWhatToList inType,
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr const& inRun,
 		wxWindow* pParent)
@@ -466,7 +466,7 @@ CDlgListCtrl::CDlgListCtrl(
 	int nCols = 0;
 	std::vector<CDlgListCtrlDataPtr> items;
 
-	if (eFaults == m_What)
+	if (ARBWhatToList::Faults == m_What)
 	{
 		Create(StringUtil::stringW(_("IDS_FAULT_TYPES")), pParent, false);
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_FAULT"));
@@ -477,7 +477,7 @@ CDlgListCtrl::CDlgListCtrl(
 		}
 	}
 
-	else if (ePartners == m_What)
+	else if (ARBWhatToList::Partners == m_What)
 	{
 		Create(StringUtil::stringW(_("IDS_PARTNERS")), pParent, false);
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_DOG"));
@@ -510,7 +510,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_ctrlUp(nullptr)
 	, m_ctrlDown(nullptr)
 	, m_ctrlCreateTrial(nullptr)
-	, m_What(eOtherPoints)
+	, m_What(ARBWhatToList::OtherPoints)
 	, m_pDoc(nullptr)
 	, m_Date()
 	, m_CalEntries(nullptr)
@@ -554,7 +554,7 @@ bool CDlgListCtrl::Create(
 
 	m_ctrlList = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 80)),
-		true, CReportListCtrl::eNoSortHeader, true, bHasImageList);
+		true, CReportListCtrl::SortHeader::NoSort, true, bHasImageList);
 	if (bHasImageList)
 	{
 		m_imgTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
@@ -693,7 +693,7 @@ void CDlgListCtrl::UpdateControls()
 	m_ctrlDelete->Enable(bEnable);
 
 	bool bEnableCreate = false;
-	if (bEnable && eCalendar == m_What)
+	if (bEnable && ARBWhatToList::Calendar == m_What)
 	{
 		CDlgListCtrlDataPtr pData = GetItemListData(index);
 		if (pData)
@@ -810,7 +810,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 	default:
 		assert(0);
 		break;
-	case eCalendar:
+	case ARBWhatToList::Calendar:
 		{
 			ARBCalendarPtr cal(ARBCalendar::New());
 			cal->SetStartDate(m_Date);
@@ -828,7 +828,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 		}
 		break;
 
-	case eFaults:
+	case ARBWhatToList::Faults:
 		{
 			std::set<std::wstring> faults;
 			CDlgListCtrlDataFaults::GetAllFaults(this, m_ctrlList, m_pDoc, m_pRun, faults);
@@ -842,7 +842,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 		}
 		break;
 
-	case eOtherPoints:
+	case ARBWhatToList::OtherPoints:
 		{
 			ARBDogRunOtherPointsPtr pOther(ARBDogRunOtherPoints::New());
 			CDlgOtherPoint dlg(*m_pConfig, pOther, this);
@@ -855,7 +855,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 		}
 		break;
 
-	case ePartners:
+	case ARBWhatToList::Partners:
 		{
 			ARBDogRunPartnerPtr partner(ARBDogRunPartner::New());
 			std::set<std::wstring> handlers, dogs;
@@ -961,19 +961,19 @@ bool CDlgListCtrl::DoOK()
 	default:
 		assert(0);
 		break;
-	case eCalendar:
+	case ARBWhatToList::Calendar:
 		{
 			for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
 				m_pDoc->Book().GetCalendar().DeleteCalendar((*iter));
 		}
 		break;
-	case eFaults:
+	case ARBWhatToList::Faults:
 		m_pRun->GetFaults().clear();
 		break;
-	case eOtherPoints:
+	case ARBWhatToList::OtherPoints:
 		m_pRun->GetOtherPoints().clear();
 		break;
-	case ePartners:
+	case ARBWhatToList::Partners:
 		m_pRun->GetPartners().clear();
 		break;
 	}
@@ -989,7 +989,7 @@ bool CDlgListCtrl::DoOK()
 	// Post-apply
 	switch (m_What)
 	{
-	case eCalendar:
+	case ARBWhatToList::Calendar:
 		{
 			if (CAgilityBookOptions::AutoDeleteCalendarEntries())
 			{

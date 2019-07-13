@@ -42,28 +42,28 @@
 /////////////////////////////////////////////////////////////////////////////
 // static
 
-ARBDogRunScoring::ScoringType ARBDogRunScoring::TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType)
+ARBScoringType ARBDogRunScoring::TranslateConfigScoring(ARBScoringStyle inType)
 {
 	switch (inType)
 	{
 	default:
 		assert(0);
-	case ARBConfigScoring::eFaultsThenTime:
-	case ARBConfigScoring::eFaults100ThenTime:
-	case ARBConfigScoring::eFaults200ThenTime:
-	case ARBConfigScoring::eTimePlusFaults:
-		return ARBDogRunScoring::eTypeByTime;
-	case ARBConfigScoring::eOCScoreThenTime:
-		return ARBDogRunScoring::eTypeByOpenClose;
-	case ARBConfigScoring::eScoreThenTime:
-		return ARBDogRunScoring::eTypeByPoints;
+	case ARBScoringStyle::FaultsThenTime:
+	case ARBScoringStyle::Faults100ThenTime:
+	case ARBScoringStyle::Faults200ThenTime:
+	case ARBScoringStyle::TimePlusFaults:
+		return ARBScoringType::ByTime;
+	case ARBScoringStyle::OCScoreThenTime:
+		return ARBScoringType::ByOpenClose;
+	case ARBScoringStyle::ScoreThenTime:
+		return ARBScoringType::ByPoints;
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 ARBDogRunScoring::ARBDogRunScoring()
-	: m_type(eTypeUnknown)
+	: m_type(ARBScoringType::Unknown)
 	, m_bRoundTimeFaults(false)
 	, m_SCT(0.0)
 	, m_SCT2(0.0)
@@ -218,7 +218,7 @@ bool ARBDogRunScoring::Load(
 	default:
 		break;
 
-	case eTypeByTime:
+	case ARBScoringType::ByTime:
 		if (name == TREE_BY_TIME)
 		{
 			if (inVersion < ARBVersion(8,6))
@@ -233,7 +233,7 @@ bool ARBDogRunScoring::Load(
 				// level. [note, changed to handle conversion on newone == 3+]
 				m_ConvertTable = true;
 				bool bTableInYPS = true;
-				if (ElementNode::eFound == inTree->GetAttrib(L"TableInYPS", bTableInYPS))
+				if (ARBAttribLookup::Found == inTree->GetAttrib(L"TableInYPS", bTableInYPS))
 				{
 					if (!bTableInYPS)
 					{
@@ -244,7 +244,7 @@ bool ARBDogRunScoring::Load(
 			}
 			else
 			{
-				if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
+				if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
 				{
 					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, Localization()->ValidValuesBool().c_str()));
 					// Report the error, but keep going.
@@ -277,7 +277,7 @@ bool ARBDogRunScoring::Load(
 		}
 		break;
 
-	case eTypeByOpenClose:
+	case ARBScoringType::ByOpenClose:
 		if (name == TREE_BY_OPENCLOSE)
 		{
 			inTree->GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
@@ -290,7 +290,7 @@ bool ARBDogRunScoring::Load(
 		}
 		break;
 
-	case eTypeByPoints:
+	case ARBScoringType::ByPoints:
 		if (name == TREE_BY_POINTS)
 		{
 			inTree->GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
@@ -313,7 +313,7 @@ bool ARBDogRunScoring::Save(ElementNodePtr const& ioTree) const
 	{
 	default:
 		break;
-	case eTypeByTime:
+	case ARBScoringType::ByTime:
 		{
 			ElementNodePtr scoring = ioTree->AddElementNode(TREE_BY_TIME);
 			if (m_Table) // Default is no
@@ -327,7 +327,7 @@ bool ARBDogRunScoring::Save(ElementNodePtr const& ioTree) const
 				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}
 		return true;
-	case eTypeByOpenClose:
+	case ARBScoringType::ByOpenClose:
 		{
 			ElementNodePtr scoring = ioTree->AddElementNode(TREE_BY_OPENCLOSE);
 			if (0 < m_CourseFaults)
@@ -346,7 +346,7 @@ bool ARBDogRunScoring::Save(ElementNodePtr const& ioTree) const
 				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}
 		return true;
-	case eTypeByPoints:
+	case ARBScoringType::ByPoints:
 		{
 			ElementNodePtr scoring = ioTree->AddElementNode(TREE_BY_POINTS);
 			if (0 < m_CourseFaults)
@@ -371,7 +371,7 @@ bool ARBDogRunScoring::GetMinYPS(
 		double& outYPS) const
 {
 	bool bOk = false;
-	if (eTypeByTime == GetType()
+	if (ARBScoringType::ByTime == GetType()
 	&& 0 < GetYards() && 0.0 < GetSCT())
 	{
 		bOk = true;
@@ -398,7 +398,7 @@ bool ARBDogRunScoring::GetYPS(
 		double& outYPS) const
 {
 	bool bOk = false;
-	if (eTypeByTime == GetType()
+	if (ARBScoringType::ByTime == GetType()
 	&& 0 < GetYards() && 0.0 < inTime)
 	{
 		bOk = true;
@@ -421,11 +421,11 @@ bool ARBDogRunScoring::GetObstaclesPS(
 	{
 		bOk = true;
 		double t = GetTime();
-		if (eTypeByTime == m_type && HasTable() && 5.0 < t && !inTableInYPS)
+		if (ARBScoringType::ByTime == m_type && HasTable() && 5.0 < t && !inTableInYPS)
 		{
 			t -= 5;
 		}
-		else if (!inRunTimeInOPS && eTypeByOpenClose == m_type
+		else if (!inRunTimeInOPS && ARBScoringType::ByOpenClose == m_type
 		&& t > m_SCT && m_SCT2 > 0.0)
 		{
 			t = m_SCT;
@@ -439,27 +439,27 @@ bool ARBDogRunScoring::GetObstaclesPS(
 double ARBDogRunScoring::GetTimeFaults(ARBConfigScoringPtr const& inScoring) const
 {
 	double timeFaults = 0.0;
-	if (eTypeByTime == m_type
-	|| eTypeByOpenClose == m_type
-	|| eTypeByPoints == m_type)
+	if (ARBScoringType::ByTime == m_type
+	|| ARBScoringType::ByOpenClose == m_type
+	|| ARBScoringType::ByPoints == m_type)
 	{
 		double timeSCT = m_SCT;
 		bool bAddTimeFaultsUnder = false;
 		bool bAddTimeFaultsOver = true;
-		if (ARBDogRunScoring::eTypeByTime != m_type)
+		if (ARBScoringType::ByTime != m_type)
 			bAddTimeFaultsOver = false;
 		if (inScoring)
 		{
 			// Compute time faults on gamble-style events now.
 			// This currently applies only to DOCNA strategic time gamble
 			// And AKC FAST.
-			if (ARBDogRunScoring::eTypeByTime != m_type)
+			if (ARBScoringType::ByTime != m_type)
 			{
 				timeSCT += m_SCT2;
 				bAddTimeFaultsUnder = inScoring->ComputeTimeFaultsUnder();
 				bAddTimeFaultsOver = inScoring->ComputeTimeFaultsOver();
 			}
-			else if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
+			else if (ARBScoringStyle::TimePlusFaults == inScoring->GetScoringStyle())
 			{
 				bAddTimeFaultsUnder = inScoring->ComputeTimeFaultsUnder();
 				bAddTimeFaultsOver = inScoring->ComputeTimeFaultsOver();

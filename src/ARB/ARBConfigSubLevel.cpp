@@ -121,7 +121,7 @@ bool ARBConfigSubLevel::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_SUBLEVEL)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_SUBLEVEL_NAME, m_Name)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_SUBLEVEL_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_SUBLEVEL, ATTRIB_SUBLEVEL_NAME));

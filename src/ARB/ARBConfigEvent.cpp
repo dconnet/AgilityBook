@@ -166,7 +166,7 @@ bool ARBConfigEvent::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_EVENT)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EVENT_NAME, m_Name)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_EVENT_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME));
@@ -175,19 +175,19 @@ bool ARBConfigEvent::Load(
 	inTree->GetAttrib(ATTRIB_EVENT_SHORTNAME, m_ShortName);
 
 	// Introduced in file version 8.6.
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HAS_TABLE, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASSUBNAMES, Localization()->ValidValuesBool().c_str()));
 		return false;

@@ -160,7 +160,7 @@ bool ARBDogRegNum::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_REG_NUM)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE));
@@ -169,7 +169,7 @@ bool ARBDogRegNum::Load(
 
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (ElementNode::eFound != inTree->GetAttrib(L"Number", m_Number)
+		if (ARBAttribLookup::Found != inTree->GetAttrib(L"Number", m_Number)
 		|| 0 == m_Number.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, L"Number"));
@@ -180,7 +180,7 @@ bool ARBDogRegNum::Load(
 		m_Number = inTree->GetValue();
 	else
 	{
-		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REG_NUM_NUMBER, m_Number)
+		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_REG_NUM_NUMBER, m_Number)
 		|| 0 == m_Number.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_NUMBER));
@@ -192,7 +192,7 @@ bool ARBDogRegNum::Load(
 
 	inTree->GetAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, Localization()->ValidValuesBool().c_str()));
 		return false;

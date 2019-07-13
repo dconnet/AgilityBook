@@ -82,13 +82,13 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 		m_nClosingNear = 0;
 	}
 
-	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorPast, wxColour()));
-	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorNotEntered, wxColour()));
-	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorPlanning, wxColour()));
-	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorOpening, wxColour()));
-	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorClosing, wxColour()));
-	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorPending, wxColour()));
-	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorEntered, wxColour()));
+	m_CalColors.push_back(tColorInfo(ARBCalColorItem::Past, wxColour()));
+	m_CalColors.push_back(tColorInfo(ARBCalColorItem::NotEntered, wxColour()));
+	m_CalColors.push_back(tColorInfo(ARBCalColorItem::Planning, wxColour()));
+	m_CalColors.push_back(tColorInfo(ARBCalColorItem::Opening, wxColour()));
+	m_CalColors.push_back(tColorInfo(ARBCalColorItem::Closing, wxColour()));
+	m_CalColors.push_back(tColorInfo(ARBCalColorItem::Pending, wxColour()));
+	m_CalColors.push_back(tColorInfo(ARBCalColorItem::Entered, wxColour()));
 	std::vector<tColorInfo>::iterator iColor;
 	for (iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
 	{
@@ -168,7 +168,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDOW->Wrap(-1);
 
-	assert(ARBDate::eSunday == 0);
+	assert(static_cast<size_t>(ARBDayOfWeek::Sunday) == 0);
 	wxString choicesDOW[] =
 	{
 		_("Sunday"),
@@ -398,7 +398,7 @@ void CDlgOptionsCalendar::Save()
 		m_nClosingNear = -1;
 	CAgilityBookOptions::SetCalendarClosingNear(m_nClosingNear);
 
-	CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_ctrlDayOfWeek->GetSelection()));
+	CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDayOfWeek>(m_ctrlDayOfWeek->GetSelection()));
 	CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_bAutoDelete);
 	CAgilityBookOptions::SetViewAllCalendarEntries(!m_bHideOld);
 	CAgilityBookOptions::SetDaysTillEntryIsPast(m_Days);
@@ -416,47 +416,47 @@ static std::wstring ForDisplay(std::wstring const& text)
 
 
 std::wstring CDlgOptionsCalendar::GetCalText(
-		CAgilityBookOptions::CalendarColorItem type,
+		ARBCalColorItem type,
 		bool bForDisplay) const
 {
 	std::wstring text;
 	switch (type)
 	{
-	case CAgilityBookOptions::eCalColorPast:
+	case ARBCalColorItem::Past:
 		text = Localization()->CalendarPast();
 		if (bForDisplay)
 			text = ForDisplay(text);
 		break;
-	case CAgilityBookOptions::eCalColorNotEntered:
+	case ARBCalColorItem::NotEntered:
 		text = Localization()->CalendarNotEntered();
 		if (bForDisplay)
 			text = ForDisplay(text);
 		break;
-	case CAgilityBookOptions::eCalColorPlanning:
+	case ARBCalColorItem::Planning:
 		text += Localization()->CalendarPlanning();
 		if (bForDisplay)
 			text = ForDisplay(text);
 		break;
-	case CAgilityBookOptions::eCalColorOpening:
+	case ARBCalColorItem::Opening:
 		if (!bForDisplay)
 			text = L"  ";
 		text += _("IDS_COL_OPENING");
 		if (bForDisplay)
 			text = ForDisplay(text);
 		break;
-	case CAgilityBookOptions::eCalColorClosing:
+	case ARBCalColorItem::Closing:
 		if (!bForDisplay)
 			text = L"  ";
 		text += _("IDS_COL_CLOSING");
 		if (bForDisplay)
 			text = ForDisplay(text);
 		break;
-	case CAgilityBookOptions::eCalColorPending:
+	case ARBCalColorItem::Pending:
 		text = Localization()->CalendarPending();
 		if (bForDisplay)
 			text = ForDisplay(text);
 		break;
-	case CAgilityBookOptions::eCalColorEntered:
+	case ARBCalColorItem::Entered:
 		text = Localization()->CalendarEntered();
 		if (bForDisplay)
 			text = ForDisplay(text);

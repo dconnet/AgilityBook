@@ -26,7 +26,7 @@
  * 2008-12-24 Ported to wxWidgets.
  * 2008-01-14 Make ViewLifetimeEvents default to true.
  * 2007-08-03 Added UserNames
- * 2006-07-16 Added PointsViewSort
+ * 2006-07-16 Added ARBPointsViewSort
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-08-18 Changed how filter options are done.
  * 2005-05-04 Added IncludeCRCDImage
@@ -91,14 +91,14 @@ namespace
 	static const wxColour sc_CalColorClosingNear() {return wxColour(255,0,0);}
 
 	// Common
-	static const ARBDate::DayOfWeek sc_FirstDayOfWeek = ARBDate::eSunday;
+	static const ARBDayOfWeek sc_FirstDayOfWeek = ARBDayOfWeek::Sunday;
 
 	// Runs/points
-	static const CAgilityBookOptions::ViewRunsStyle sc_ViewRunsStyle = CAgilityBookOptions::eViewRunsByTrial;
+	static const ARBViewRuns sc_ViewRunsStyle = ARBViewRuns::RunsByTrial;
 	static const bool sc_NewestDatesFirst = true;
-	static const CAgilityBookOptions::PointsViewSort sc_PointsViewSort1 = CAgilityBookOptions::ePointsViewSortDivision;
-	static const CAgilityBookOptions::PointsViewSort sc_PointsViewSort2 = CAgilityBookOptions::ePointsViewSortLevel;
-	static const CAgilityBookOptions::PointsViewSort sc_PointsViewSort3 = CAgilityBookOptions::ePointsViewSortEvent;
+	static const ARBPointsViewSort sc_PointsViewSort1 = ARBPointsViewSort::Division;
+	static const ARBPointsViewSort sc_PointsViewSort2 = ARBPointsViewSort::Level;
+	static const ARBPointsViewSort sc_PointsViewSort3 = ARBPointsViewSort::Event;
 	static const bool sc_ViewHiddenTitles = false;
 	static const bool sc_ViewLifetimePointsByEvent = true;
 	static const bool sc_TableInYPS = false;
@@ -126,8 +126,8 @@ namespace
 
 	// Import/export
 	static const long sc_ImportStartRow = 1;
-	static const long sc_ImportExportDelim = CAgilityBookOptions::eDelimTab;
-	static const ARBDate::DateFormat sc_ImportExportFormat = ARBDate::eISO;
+	static const ARBImportExportDelim sc_ImportExportDelim = ARBImportExportDelim::Tab;
+	static const ARBDateFormat sc_ImportExportFormat = ARBDateFormat::ISO;
 	// Note: Default column order is defined in GetColumnOrder()
 
 	// Program
@@ -224,7 +224,7 @@ static ElementNodePtr FindElementName(
 		std::wstring configName = fmt::format(L"{}{}", eleItem, i);
 		int idxConfig = inTree->FindElement(configName);
 		if (0 <= idxConfig
-		&& Element::Element_Node == inTree->GetElement(idxConfig)->GetType())
+		&& ARBElementType::Node == inTree->GetElement(idxConfig)->GetType())
 		{
 			ElementNodePtr nodeConfig = inTree->GetElementNode(idxConfig);
 			int idxName = nodeConfig->FindElement(L"name");
@@ -279,7 +279,7 @@ static bool ImportColumnInfo(ElementNodePtr const& inTree)
 		std::wstring configName = fmt::format(CFG_KEY_CONFIG L"{}", i);
 		int idxConfig = inTree->FindElement(configName);
 		if (0 <= idxConfig
-		&& Element::Element_Node == inTree->GetElement(idxConfig)->GetType())
+		&& ARBElementType::Node == inTree->GetElement(idxConfig)->GetType())
 		{
 			ElementNodePtr nodeConfig = inTree->GetElementNode(idxConfig);
 			int idxName = nodeConfig->FindElement(L"name");
@@ -357,7 +357,7 @@ static bool MergeFilters(ElementNodePtr const& inTree)
 		std::wstring configName = fmt::format(CFG_KEY_FILTER L"{}", i);
 		int idxFilter = inTree->FindElement(configName);
 		if (0 <= idxFilter
-		&& Element::Element_Node == inTree->GetElement(idxFilter)->GetType())
+		&& ARBElementType::Node == inTree->GetElement(idxFilter)->GetType())
 		{
 			ElementNodePtr nodeFilter = inTree->GetElementNode(idxFilter);
 			int idxName = nodeFilter->FindElement(L"Name");
@@ -399,7 +399,7 @@ static bool MergeFilters(ElementNodePtr const& inTree)
 static void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters)
 {
 	std::wstring type;
-	if (ElementNode::eFound != inTree->GetAttrib(L"type", type))
+	if (ARBAttribLookup::Found != inTree->GetAttrib(L"type", type))
 		return;
 	if (L"g" == type)
 	{
@@ -470,10 +470,10 @@ bool CAgilityBookOptions::ImportSettings(ElementNodePtr const& inree)
 		return false;
 	// Version numbers aren't needed yet.
 	ARBVersion version;
-	if (ElementNode::eFound != inree->GetAttrib(ATTRIB_BOOK_VERSION, version))
+	if (ARBAttribLookup::Found != inree->GetAttrib(ATTRIB_BOOK_VERSION, version))
 		return false;
 	std::wstring pgmVersion;
-	if (ElementNode::eFound != inree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, pgmVersion))
+	if (ARBAttribLookup::Found != inree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, pgmVersion))
 		return false;
 	bool bClobberFilters = MergeFilters(inree);
 	for (int i = 0; i < inree->GetElementCount(); ++i)
@@ -669,23 +669,23 @@ void CAgilityBookOptions::SetHideOverlappingCalendarEntries(bool bHide)
 }
 
 
-static wchar_t const* CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
+static wchar_t const* CalItemName(ARBCalColorItem inItem)
 {
 	switch (inItem)
 	{
-	case CAgilityBookOptions::eCalColorPast:
+	case ARBCalColorItem::Past:
 		return CFG_CAL_ITEM_PASTCOLOR;
-	case CAgilityBookOptions::eCalColorNotEntered:
+	case ARBCalColorItem::NotEntered:
 		return CFG_CAL_ITEM_NOTENTEREDCOLOR;
-	case CAgilityBookOptions::eCalColorPlanning:
+	case ARBCalColorItem::Planning:
 		return CFG_CAL_ITEM_PLANNINGCOLOR;
-	case CAgilityBookOptions::eCalColorPending:
+	case ARBCalColorItem::Pending:
 		return CFG_CAL_ITEM_PENDINGCOLOR;
-	case CAgilityBookOptions::eCalColorEntered:
+	case ARBCalColorItem::Entered:
 		return CFG_CAL_ITEM_ENTEREDCOLOR;
-	case CAgilityBookOptions::eCalColorOpening:
+	case ARBCalColorItem::Opening:
 		return CFG_CAL_ITEM_OPENCOLOR;
-	case CAgilityBookOptions::eCalColorClosing:
+	case ARBCalColorItem::Closing:
 		return CFG_CAL_ITEM_CLOSECOLOR;
 	}
 	assert(0);
@@ -693,23 +693,23 @@ static wchar_t const* CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 }
 
 
-static wxColour CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
+static wxColour CalItemColor(ARBCalColorItem inItem)
 {
 	switch (inItem)
 	{
-	case CAgilityBookOptions::eCalColorPast:
+	case ARBCalColorItem::Past:
 		return sc_CalColorPast();
-	case CAgilityBookOptions::eCalColorNotEntered:
+	case ARBCalColorItem::NotEntered:
 		return sc_CalColorNotEntered();
-	case CAgilityBookOptions::eCalColorPlanning:
+	case ARBCalColorItem::Planning:
 		return sc_CalColorPlanning();
-	case CAgilityBookOptions::eCalColorPending:
+	case ARBCalColorItem::Pending:
 		return sc_CalColorPending();
-	case CAgilityBookOptions::eCalColorEntered:
+	case ARBCalColorItem::Entered:
 		return sc_CalColorEntered();
-	case CAgilityBookOptions::eCalColorOpening:
+	case ARBCalColorItem::Opening:
 		return sc_CalColorOpening();
-	case CAgilityBookOptions::eCalColorClosing:
+	case ARBCalColorItem::Closing:
 		return sc_CalColorClosing();
 	}
 	assert(0);
@@ -739,14 +739,14 @@ static void WriteColor(wxString const& key, wxColour const& inColor)
 }
 
 
-wxColour CAgilityBookOptions::CalendarColor(CalendarColorItem inItem)
+wxColour CAgilityBookOptions::CalendarColor(ARBCalColorItem inItem)
 {
 	std::wstring key = fmt::format(L"{}/{}", CFG_KEY_CALENDAR, CalItemName(inItem));
 	return ReadColor(key, CalItemColor(inItem));
 }
 
 
-void CAgilityBookOptions::SetCalendarColor(CalendarColorItem inItem, wxColour inColor)
+void CAgilityBookOptions::SetCalendarColor(ARBCalColorItem inItem, wxColour inColor)
 {
 	std::wstring key = fmt::format(L"{}/{}", CFG_KEY_CALENDAR, CalItemName(inItem));
 	WriteColor(key, inColor);
@@ -807,17 +807,17 @@ void CAgilityBookOptions::SetCalendarClosingNearColor(wxColour inColor)
 /////////////////////////////////////////////////////////////////////////////
 // Common options
 
-ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
+ARBDayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 {
 	long val = static_cast<long>(sc_FirstDayOfWeek);
 	wxConfig::Get()->Read(CFG_COMMON_FIRSTDAYOFWEEK, &val);
 	if (val < 0 || val > 6)
-		val = static_cast<long>(ARBDate::eSunday);
-	return static_cast<ARBDate::DayOfWeek>(val);
+		val = static_cast<long>(ARBDayOfWeek::Sunday);
+	return static_cast<ARBDayOfWeek>(val);
 }
 
 
-void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
+void CAgilityBookOptions::SetFirstDayOfWeek(ARBDayOfWeek day)
 {
 	wxConfig::Get()->Write(CFG_COMMON_FIRSTDAYOFWEEK, static_cast<long>(day));
 }
@@ -825,13 +825,13 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 /////////////////////////////////////////////////////////////////////////////
 // Runs/points options
 
-CAgilityBookOptions::ViewRunsStyle CAgilityBookOptions::GetViewRunsStyle()
+ARBViewRuns CAgilityBookOptions::GetViewRunsStyle()
 {
-	return static_cast<ViewRunsStyle>(wxConfig::Get()->Read(CFG_COMMON_VIEWRUNSBYTRIAL, static_cast<long>(sc_ViewRunsStyle)));
+	return static_cast<ARBViewRuns>(wxConfig::Get()->Read(CFG_COMMON_VIEWRUNSBYTRIAL, static_cast<long>(sc_ViewRunsStyle)));
 }
 
 
-void CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::ViewRunsStyle style)
+void CAgilityBookOptions::SetViewRunsStyle(ARBViewRuns style)
 {
 	wxConfig::Get()->Write(CFG_COMMON_VIEWRUNSBYTRIAL, static_cast<long>(style));
 }
@@ -852,20 +852,20 @@ void CAgilityBookOptions::SetNewestDatesFirst(bool bNewest)
 
 
 void CAgilityBookOptions::GetPointsViewSort(
-		PointsViewSort& outPrimary,
-		PointsViewSort& outSecondary,
-		PointsViewSort& outTertiary)
+		ARBPointsViewSort& outPrimary,
+		ARBPointsViewSort& outSecondary,
+		ARBPointsViewSort& outTertiary)
 {
-	outPrimary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW1, static_cast<long>(sc_PointsViewSort1)));
-	outSecondary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW2, static_cast<long>(sc_PointsViewSort2)));
-	outTertiary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW3, static_cast<long>(sc_PointsViewSort3)));
+	outPrimary = static_cast<ARBPointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW1, static_cast<long>(sc_PointsViewSort1)));
+	outSecondary = static_cast<ARBPointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW2, static_cast<long>(sc_PointsViewSort2)));
+	outTertiary = static_cast<ARBPointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW3, static_cast<long>(sc_PointsViewSort3)));
 }
 
 
 void CAgilityBookOptions::SetPointsViewSort(
-		PointsViewSort inPrimary,
-		PointsViewSort inSecondary,
-		PointsViewSort inTertiary)
+		ARBPointsViewSort inPrimary,
+		ARBPointsViewSort inSecondary,
+		ARBPointsViewSort inTertiary)
 {
 	wxConfig::Get()->Write(CFG_COMMON_SORTPTVW1, static_cast<long>(inPrimary));
 	wxConfig::Get()->Write(CFG_COMMON_SORTPTVW2, static_cast<long>(inSecondary));
@@ -1399,13 +1399,13 @@ void CAgilityBookOptions::SetImportStartRow(long row)
 
 void CAgilityBookOptions::GetImportExportDelimiters(
 		bool bImport,
-		long& delim,
+		ARBImportExportDelim& delim,
 		std::wstring& delimiter)
 {
 	std::wstring section = fmt::format(L"{}/", bImport ? CFG_KEY_IMPORT : CFG_KEY_EXPORT);
 	delim = sc_ImportExportDelim;
 	delimiter.clear();
-	delim = wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIM, delim);
+	delim = static_cast<ARBImportExportDelim>(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIM, static_cast<long>(delim)));
 	delimiter = StringUtil::stringW(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIMITER, delimiter.c_str()));
 	if (1 < delimiter.length())
 		delimiter = delimiter.substr(0, 1);
@@ -1414,29 +1414,29 @@ void CAgilityBookOptions::GetImportExportDelimiters(
 
 void CAgilityBookOptions::SetImportExportDelimiters(
 		bool bImport,
-		long delim,
+		ARBImportExportDelim delim,
 		std::wstring const& delimiter)
 {
 	std::wstring section = fmt::format(L"{}/", bImport ? CFG_KEY_IMPORT : CFG_KEY_EXPORT);
-	wxConfig::Get()->Write(section + CFG_IMPORT_EXPORT_DELIM, delim);
+	wxConfig::Get()->Write(section + CFG_IMPORT_EXPORT_DELIM, static_cast<long>(delim));
 	wxConfig::Get()->Write(section + CFG_IMPORT_EXPORT_DELIMITER, delimiter.c_str());
 }
 
 
 void CAgilityBookOptions::GetImportExportDateFormat(
 		bool bImport,
-		ARBDate::DateFormat& outFormat)
+		ARBDateFormat& outFormat)
 {
 	std::wstring section = fmt::format(L"{}/", bImport ? CFG_KEY_IMPORT : CFG_KEY_EXPORT);
-	outFormat = static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(sc_ImportExportFormat)));
-	if (ARBDate::eReserved14 == outFormat)
-		outFormat = ARBDate::eLocale;
+	outFormat = static_cast<ARBDateFormat>(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(sc_ImportExportFormat)));
+	if (ARBDateFormat::Reserved14 == outFormat)
+		outFormat = ARBDateFormat::Locale;
 }
 
 
 void CAgilityBookOptions::SetImportExportDateFormat(
 		bool bImport,
-		ARBDate::DateFormat inFormat)
+		ARBDateFormat inFormat)
 {
 	std::wstring section = fmt::format(L"{}/", bImport ? CFG_KEY_IMPORT : CFG_KEY_EXPORT);
 	wxConfig::Get()->Write(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(inFormat));

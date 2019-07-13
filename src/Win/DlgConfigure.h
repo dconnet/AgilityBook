@@ -29,6 +29,7 @@ class CTreeCtrl;
 class CDlgConfigure : public wxDialog
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgConfigure)
+	friend class CDlgConfigureDataRoot; // For 'Action' access
 public:
 	CDlgConfigure(
 			CAgilityBookDoc* pDoc,
@@ -36,19 +37,20 @@ public:
 			wxWindow* pParent = nullptr);
 	~CDlgConfigure();
 
-	typedef enum
-	{
-		eNone = 0,
-		eVenues,
-		eFaults,
-		eOtherPoints
-	} eAction;
-
 private:
-	eAction GetAction() const;
+	// Only public so internal data classes can access.
+	enum class Action
+	{
+		None = 0,
+		Venues,
+		Faults,
+		OtherPoints
+	};
+
+	Action GetAction() const;
 	CDlgConfigureDataBase* GetData(wxTreeItemId hItem) const;
 	void UpdateButtons();
-	void LoadData(eAction dataToLoad);
+	void LoadData(Action dataToLoad);
 	void DoEdit();
 	wxTreeItemId FindCurrentVenue(
 			ARBConfigVenuePtr const& inVenue,

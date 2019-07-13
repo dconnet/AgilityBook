@@ -29,6 +29,21 @@
 
 
 /**
+ * Type of points.
+ */
+enum class ARBExistingPointType
+{
+	Unknown,
+	OtherPoints,	///< Number of OtherPoint points.
+	Lifetime,		///< Number of Lifetime points.
+	Title,			///< Number of Titling points.
+	Speed,			///< Number of Speed points.
+	MQ,				///< Number of multi Qs.
+	SQ				///< Number of Super Qs.
+};
+
+
+/**
  * Initializes the titling points a dog has.
  */
 class ARB_API ARBDogExistingPoints : public ARBBase
@@ -100,32 +115,18 @@ public:
 	bool Save(ElementNodePtr const& ioTree) const;
 
 	/**
-	 * Type of points.
-	 */
-	typedef enum
-	{
-		eUnknown,
-		eOtherPoints,	///< Number of OtherPoint points.
-		eLifetime,		///< Number of Lifetime points.
-		eTitle,			///< Number of Titling points.
-		eSpeed,			///< Number of Speed points.
-		eMQ,			///< Number of multi Qs.
-		eSQ				///< Number of Super Qs.
-	} PointType;
-
-	/**
 	 * Translate the enum to a string.
 	 */
-	static std::wstring GetPointTypeName(PointType inType);
+	static std::wstring GetPointTypeName(ARBExistingPointType inType);
 
 	/*
 	 * Getters/setters.
 	 */
-	PointType GetType() const
+	ARBExistingPointType GetType() const
 	{
 		return m_Type;
 	}
-	void SetType(PointType inType)
+	void SetType(ARBExistingPointType inType)
 	{
 		m_Type = inType;
 	}
@@ -213,7 +214,7 @@ public:
 private:
 	ARBDate m_Date;
 	std::wstring m_Comment;
-	PointType m_Type;
+	ARBExistingPointType m_Type;
 	std::wstring m_TypeName; // Name of OtherPoints or Lifetime item
 	std::wstring m_Venue;
 	std::wstring m_MultiQ;
@@ -292,7 +293,7 @@ public:
 	 * @return The number of existing points.
 	 */
 	double ExistingPoints(
-			ARBDogExistingPoints::PointType inType,
+			ARBExistingPointType inType,
 			ARBConfigVenuePtr const& inVenue,
 			ARBConfigMultiQPtr const& inMultiQ,
 			ARBConfigDivisionPtr const& inDiv,

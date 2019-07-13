@@ -274,7 +274,7 @@ std::wstring CDlgDogRefRunData::OnNeedText(long iCol) const
 	default:
 		break;
 	case 0: // Q
-		str = fmt::format(L"{}", m_RefRun->GetQ());
+		str = fmt::format(L"{}", m_RefRun->GetQ().str());
 		break;
 	case 1: // Place
 		str = fmt::format(L"{}", m_RefRun->GetPlace());
@@ -827,14 +827,14 @@ CDlgRun::CDlgRun(
 	{
 	default:
 		break;
-	case ARBDogRunScoring::eTypeByTime:
+	case ARBScoringType::ByTime:
 		m_Faults = m_Run->GetScoring().GetCourseFaults();
 		m_Time = m_Run->GetScoring().GetTime();
 		m_Table = m_Run->GetScoring().HasTable();
 		m_Yards = m_Run->GetScoring().GetYards();
 		m_SCT = m_Run->GetScoring().GetSCT();
 		break;
-	case ARBDogRunScoring::eTypeByOpenClose:
+	case ARBScoringType::ByOpenClose:
 		m_Faults = m_Run->GetScoring().GetCourseFaults();
 		m_Time = m_Run->GetScoring().GetTime();
 		m_Opening = m_Run->GetScoring().GetNeedOpenPts();
@@ -844,7 +844,7 @@ CDlgRun::CDlgRun(
 		m_SCT = m_Run->GetScoring().GetSCT();
 		m_SCT2 = m_Run->GetScoring().GetSCT2();
 		break;
-	case ARBDogRunScoring::eTypeByPoints:
+	case ARBScoringType::ByPoints:
 		m_Faults = m_Run->GetScoring().GetCourseFaults();
 		m_Time = m_Run->GetScoring().GetTime();
 		m_Opening = m_Run->GetScoring().GetNeedOpenPts();
@@ -1283,7 +1283,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
 	m_ctrlRefRuns = new CReportListCtrl(panelRefRuns,
-		true, CReportListCtrl::eSortHeader, true);
+		true, CReportListCtrl::SortHeader::Sort, true);
 	m_ctrlRefRuns->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgRun::OnRefRunColumnClick, this);
 	m_ctrlRefRuns->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgRun::OnRefRunItemSelected, this);
 	m_ctrlRefRuns->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgRun::OnRefRunItemActivated, this);
@@ -2056,7 +2056,7 @@ void CDlgRun::SetPartnerText()
 
 void CDlgRun::SetMinYPS()
 {
-	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
+	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType())
 	{
 		wxString str;
 		double yps;
@@ -2071,7 +2071,7 @@ void CDlgRun::SetMinYPS()
 
 void CDlgRun::SetYPS()
 {
-	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
+	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType())
 	{
 		wxString str;
 		double yps;
@@ -2098,7 +2098,7 @@ void CDlgRun::SetObstacles()
 
 void CDlgRun::SetTotalFaults()
 {
-	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
+	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType())
 	{
 		wxString total;
 		ARBConfigScoringPtr pScoring;
@@ -2221,7 +2221,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 	ARBConfigScoringPtr pScoring;
 	if (!GetScoring(&pScoring))
 	{
-		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeUnknown, false);
+		m_Run->GetScoring().SetType(ARBScoringType::Unknown, false);
 		FixScoreLayout();
 		return;
 	}
@@ -2270,11 +2270,11 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 	default:
 		assert(0);
 		break;
-	case ARBConfigScoring::eFaultsThenTime:
-	case ARBConfigScoring::eFaults100ThenTime:
-	case ARBConfigScoring::eFaults200ThenTime:
-	case ARBConfigScoring::eTimePlusFaults:
-		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
+	case ARBScoringStyle::FaultsThenTime:
+	case ARBScoringStyle::Faults100ThenTime:
+	case ARBScoringStyle::Faults200ThenTime:
+	case ARBScoringStyle::TimePlusFaults:
+		m_Run->GetScoring().SetType(ARBScoringType::ByTime, pScoring->DropFractions());
 		m_ctrlSCTText->Show(true);
 		m_ctrlSCT->Show(true);
 		m_textYardsReqOpeningPts->SetLabel(_("IDC_RUNSCORE_YARDS"));
@@ -2306,8 +2306,8 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_ctrlClosingPtsTotalFaults->Show(true);
 		SetReadOnlyFlag(m_ctrlClosingPtsTotalFaults, true);
 		break;
-	case ARBConfigScoring::eOCScoreThenTime:
-		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByOpenClose, pScoring->DropFractions());
+	case ARBScoringStyle::OCScoreThenTime:
+		m_Run->GetScoring().SetType(ARBScoringType::ByOpenClose, pScoring->DropFractions());
 		if (bOnEventChange)
 		{
 			m_Opening = pScoring->GetRequiredOpeningPoints();
@@ -2360,8 +2360,8 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_ctrlClosingPtsTotalFaults->Show(true);
 		SetReadOnlyFlag(m_ctrlClosingPtsTotalFaults, false);
 		break;
-	case ARBConfigScoring::eScoreThenTime:
-		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByPoints, pScoring->DropFractions());
+	case ARBScoringStyle::ScoreThenTime:
+		m_Run->GetScoring().SetType(ARBScoringType::ByPoints, pScoring->DropFractions());
 		if (bOnEventChange)
 		{
 			m_Opening = pScoring->GetRequiredOpeningPoints();
@@ -2421,7 +2421,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 	}
 	SetTitlePoints();
 	SetObstacles();
-	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
+	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType())
 	{
 		SetMinYPS();
 		SetYPS();
@@ -2769,7 +2769,7 @@ void CDlgRun::OnSelchangeEvent(wxCommandEvent& evt)
 void CDlgRun::OnJudgeNotes(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	CDlgInfoNote dlg(m_pDoc, ARBInfo::eJudgeInfo, StringUtil::stringW(m_Judge), this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfoType::Judge, StringUtil::stringW(m_Judge), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_Judge = StringUtil::stringWX(dlg.CurrentSelection());
@@ -2780,7 +2780,7 @@ void CDlgRun::OnJudgeNotes(wxCommandEvent& evt)
 
 void CDlgRun::OnPartnersEdit(wxCommandEvent& evt)
 {
-	CDlgListCtrl dlg(CDlgListCtrl::ePartners, m_pDoc, m_Run, this);
+	CDlgListCtrl dlg(ARBWhatToList::Partners, m_pDoc, m_Run, this);
 	if (wxID_OK == dlg.ShowModal())
 		SetPartnerText();
 }
@@ -2852,8 +2852,8 @@ void CDlgRun::OnReqOpeningYPSChange(wxCommandEvent& evt)
 		short val = static_cast<short>(wxAtol(m_ctrlYardsReqOpeningPts->GetValue()));
 		switch (pScoring->GetScoringStyle())
 		{
-		case ARBConfigScoring::eScoreThenTime:
-		case ARBConfigScoring::eOCScoreThenTime:
+		case ARBScoringStyle::ScoreThenTime:
+		case ARBScoringStyle::OCScoreThenTime:
 			m_Opening = val;
 			m_Run->GetScoring().SetNeedOpenPts(m_Opening);
 			SetTitlePoints();
@@ -2940,7 +2940,7 @@ void CDlgRun::OnBonusChange(wxCommandEvent& evt)
 
 void CDlgRun::OnCommentsFaults(wxCommandEvent& evt)
 {
-	CDlgListCtrl dlg(CDlgListCtrl::eFaults, m_pDoc, m_Run, this);
+	CDlgListCtrl dlg(ARBWhatToList::Faults, m_pDoc, m_Run, this);
 	if (wxID_OK == dlg.ShowModal())
 		SetFaultsText();
 }
@@ -2986,7 +2986,7 @@ void CDlgRun::OnRefRunKeyDown(wxKeyEvent& evt)
 void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 {
 	ARBDogReferenceRunPtr ref(ARBDogReferenceRun::New());
-	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
+	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType())
 	{
 		ARBConfigScoringPtr pScoring;
 		if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
@@ -3004,17 +3004,17 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 			default:
 				nScore = L"0";
 				break;
-			case ARBConfigScoring::eFaults100ThenTime:
+			case ARBScoringStyle::Faults100ThenTime:
 				nScore = L"100";
 				break;
-			case ARBConfigScoring::eFaults200ThenTime:
+			case ARBScoringStyle::Faults200ThenTime:
 				nScore = L"200";
 				break;
 			}
 			ref->SetScore(nScore);
 		}
 	}
-	ref->SetQ(ARB_Q::eQ_Q);
+	ref->SetQ(Q::Q);
 	std::set<std::wstring> heights, names, breeds;
 	GetAllHeights(heights);
 	GetAllCallNames(names);

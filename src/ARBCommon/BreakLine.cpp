@@ -88,11 +88,11 @@ ReadStatus ReadCSV(
 {
 	if (!bContinuation)
 		ioFields.clear();
-	ReadStatus status = DataOk;
+	ReadStatus status = ReadStatus::Ok;
 	if (bContinuation && inRecord.empty())
 	{
 		ioFields[ioFields.size()-1] += newLine;
-		status = DataNeedMore;
+		status = ReadStatus::NeedMore;
 	}
 	bool bAddEmpty = false;
 	while (!inRecord.empty())
@@ -109,7 +109,7 @@ ReadStatus ReadCSV(
 				else
 					str = inRecord.substr(1);
 				inRecord.clear();
-				status = DataNeedMore;
+				status = ReadStatus::NeedMore;
 			}
 			else
 			{
@@ -131,7 +131,7 @@ ReadStatus ReadCSV(
 						if (iStr + 1 == inRecord.end())
 						{
 							if (!bInQuote)
-								return DataError;
+								return ReadStatus::Error;
 							else
 								bInQuote = false;
 						}
@@ -147,7 +147,7 @@ ReadStatus ReadCSV(
 							else
 							{
 								if (bInQuote)
-									return DataError;
+									return ReadStatus::Error;
 								fmt::format_to(data, L"{}", *iStr);
 							}
 						}
@@ -179,7 +179,7 @@ ReadStatus ReadCSV(
 			// If there is a quote in the string,
 			// the field itself must be quoted.
 			if (std::wstring::npos != str.find(L'"'))
-				return DataError;
+				return ReadStatus::Error;
 		}
 		if (bContinuation && 0 < ioFields.size())
 			ioFields[ioFields.size()-1] += newLine + str;

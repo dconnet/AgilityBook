@@ -33,17 +33,17 @@
 static struct Q2Enum
 {
 	wchar_t const* pQ;		///< Actual text in file
-	ARB_Q::eQ q;			///< Enum type
+	Q q;					///< Enum type
 	wchar_t const* trans;	///< Translation
 } const sc_Qs[] =
 {
-	{nullptr,          ARB_Q::eQ_UNK,    nullptr},
-	{ATTRIB_QTYPE_SQ,  ARB_Q::eQ_SuperQ, arbT("IDS_QTYPE_SQ")},
-	{ATTRIB_QTYPE_Q,   ARB_Q::eQ_Q,      arbT("IDS_QTYPE_Q")},
-	{ATTRIB_QTYPE_NQ,  ARB_Q::eQ_NQ,     arbT("IDS_QTYPE_NQ")},
-	{ATTRIB_QTYPE_E,   ARB_Q::eQ_E,      arbT("IDS_QTYPE_E")},
-	{ATTRIB_QTYPE_DNR, ARB_Q::eQ_DNR,    arbT("IDS_QTYPE_DNR")},
-	{ATTRIB_QTYPE_NA,  ARB_Q::eQ_NA,     arbT("IDS_QTYPE_NA")},
+	{nullptr,          Q::UNK,    nullptr},
+	{ATTRIB_QTYPE_SQ,  Q::SuperQ, arbT("IDS_QTYPE_SQ")},
+	{ATTRIB_QTYPE_Q,   Q::Q,      arbT("IDS_QTYPE_Q")},
+	{ATTRIB_QTYPE_NQ,  Q::NQ,     arbT("IDS_QTYPE_NQ")},
+	{ATTRIB_QTYPE_E,   Q::E,      arbT("IDS_QTYPE_E")},
+	{ATTRIB_QTYPE_DNR, Q::DNR,    arbT("IDS_QTYPE_DNR")},
+	{ATTRIB_QTYPE_NA,  Q::NA,     arbT("IDS_QTYPE_NA")},
 }; ///< This is a list of the various types of "Q"s we support.
 static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 
@@ -128,7 +128,7 @@ bool ARB_Q::Load(
 		}
 	}
 	// Any Q that is not recognized is changed into unknown.
-	m_Q = eQ_UNK;
+	m_Q = Q::UNK;
 	return false;
 }
 

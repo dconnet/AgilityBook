@@ -361,7 +361,7 @@ static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffe
 		ElementPtr element = toWrite.GetElement(i);
 		switch (element->GetType())
 		{
-		case Element::Element_Node:
+		case ARBElementType::Node:
 			{
 				XMLstring name(element->GetName());
 				xmlTextWriterStartElement(formatter, name.c_str());
@@ -371,7 +371,7 @@ static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffe
 				xmlOutputBufferFlush(outputBuffer);
 			}
 			break;
-		case Element::Element_Text:
+		case ARBElementType::Text:
 			{
 				XMLstring value(element->GetValue());
 				xmlTextWriterWriteString(formatter, value.c_str());
@@ -441,7 +441,7 @@ static void CreateDoc(Poco::XML::Document* pDoc, Poco::XML::Element* node, Eleme
 		ElementPtr element = toWrite.GetElement(i);
 		switch (element->GetType())
 		{
-		case Element::Element_Node:
+		case ARBElementType::Node:
 			{
 				Poco::XML::XMLString name(StringUtil::stringA(element->GetName()));
 				Poco::XML::AutoPtr<Poco::XML::Element> pChild = pDoc->createElement(name);
@@ -449,7 +449,7 @@ static void CreateDoc(Poco::XML::Document* pDoc, Poco::XML::Element* node, Eleme
 				CreateDoc(pDoc, pChild, *(dynamic_cast<ElementNode*>(element.get())));
 			}
 			break;
-		case Element::Element_Text:
+		case ARBElementType::Text:
 			{
 				Poco::XML::XMLString value(StringUtil::stringA(element->GetValue()));
 				Poco::XML::AutoPtr<Poco::XML::Text> pText = pDoc->createTextNode(value);
@@ -502,7 +502,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 		ElementPtr element = toWrite.GetElement(i);
 		switch (element->GetType())
 		{
-		case Element::Element_Node:
+		case ARBElementType::Node:
 			{
 				wxXmlNode* child = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, StringUtil::stringWX(element->GetName()));
 				if (lastChild)
@@ -513,7 +513,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 				CreateDoc(child, *(dynamic_cast<ElementNode*>(element.get())));
 			}
 			break;
-		case Element::Element_Text:
+		case ARBElementType::Text:
 			{
 				wxXmlNode* child = new wxXmlNode(nullptr, wxXML_TEXT_NODE, StringUtil::stringWX(element->GetName()), StringUtil::stringWX(element->GetValue()));
 				node->AddChild(child);
@@ -595,7 +595,7 @@ void ElementNode::RemoveAllTextNodes()
 		i != m_Elements.end();
 		)
 	{
-		if (Element::Element_Text == (*i)->GetType())
+		if (ARBElementType::Text == (*i)->GetType())
 			i = m_Elements.erase(i);
 		else
 			++i;
@@ -622,9 +622,9 @@ void ElementNode::Dump(int inLevel) const
 }
 
 
-Element::ElementType ElementNode::GetType() const
+ARBElementType ElementNode::GetType() const
 {
-	return Element::Element_Node;
+	return ARBElementType::Node;
 }
 
 
@@ -645,7 +645,7 @@ std::wstring ElementNode::GetValue() const
 	std::wstring value;
 	for (int i = 0; i < GetElementCount(); ++i)
 	{
-		if (Element::Element_Text == GetElement(i)->GetType())
+		if (ARBElementType::Text == GetElement(i)->GetType())
 			value += GetElement(i)->GetValue();
 	}
 	return value;
@@ -729,7 +729,7 @@ int ElementNode::GetAttribCount() const
 }
 
 
-ElementNode::AttribLookup ElementNode::GetNthAttrib(
+ARBAttribLookup ElementNode::GetNthAttrib(
 		int inIndex,
 		std::wstring& outName,
 		std::wstring& outValue) const
@@ -744,14 +744,14 @@ ElementNode::AttribLookup ElementNode::GetNthAttrib(
 	{
 		outName = (*iter).first;
 		outValue = (*iter).second;
-		return eFound;
+		return ARBAttribLookup::Found;
 	}
 	else
-		return eNotFound;
+		return ARBAttribLookup::NotFound;
 }
 
 
-ElementNode::AttribLookup ElementNode::GetAttrib(
+ARBAttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
 		std::wstring& outValue) const
 {
@@ -759,20 +759,20 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	if (iter != m_Attribs.end())
 	{
 		outValue = (*iter).second;
-		return eFound;
+		return ARBAttribLookup::Found;
 	}
 	else
-		return eNotFound;
+		return ARBAttribLookup::NotFound;
 }
 
 
-ElementNode::AttribLookup ElementNode::GetAttrib(
+ARBAttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
 		ARBVersion& outValue) const
 {
 	std::wstring value;
-	AttribLookup rc = GetAttrib(inName, value);
-	if (eFound == rc)
+	ARBAttribLookup rc = GetAttrib(inName, value);
+	if (ARBAttribLookup::Found == rc)
 	{
 		outValue = ARBVersion(value);
 	}
@@ -780,132 +780,132 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 }
 
 
-ElementNode::AttribLookup ElementNode::GetAttrib(
+ARBAttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
 		ARBDate& outValue) const
 {
 	std::wstring value;
-	AttribLookup rc = GetAttrib(inName, value);
-	if (eFound == rc)
+	ARBAttribLookup rc = GetAttrib(inName, value);
+	if (ARBAttribLookup::Found == rc)
 	{
-		ARBDate date = ARBDate::FromString(value, ARBDate::eDashYMD);
+		ARBDate date = ARBDate::FromString(value, ARBDateFormat::DashYMD);
 		if (date.IsValid())
 			outValue = date;
 		else
-			rc = eInvalidValue;
+			rc = ARBAttribLookup::Invalid;
 	}
 	return rc;
 }
 
 
-ElementNode::AttribLookup ElementNode::GetAttrib(
+ARBAttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
 		bool& outValue) const
 {
 	std::wstring value;
-	AttribLookup rc = GetAttrib(inName, value);
-	if (eFound == rc)
+	ARBAttribLookup rc = GetAttrib(inName, value);
+	if (ARBAttribLookup::Found == rc)
 	{
 		if (value == L"y")
 			outValue = true;
 		else if (value == L"n")
 			outValue = false;
 		else
-			rc = eInvalidValue;
+			rc = ARBAttribLookup::Invalid;
 	}
 	return rc;
 }
 
 
-ElementNode::AttribLookup ElementNode::GetAttrib(
+ARBAttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
 		short& outValue) const
 {
 	std::wstring value;
-	AttribLookup rc = GetAttrib(inName, value);
-	if (eFound == rc)
+	ARBAttribLookup rc = GetAttrib(inName, value);
+	if (ARBAttribLookup::Found == rc)
 	{
 		if (0 < value.length())
 			outValue = static_cast<short>(StringUtil::ToCLong(value));
 		else
-			rc = eInvalidValue;
+			rc = ARBAttribLookup::Invalid;
 	}
 	return rc;
 }
 
 
-ElementNode::AttribLookup ElementNode::GetAttrib(
+ARBAttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
 		unsigned short& outValue) const
 {
 	std::wstring value;
-	AttribLookup rc = GetAttrib(inName, value);
-	if (eFound == rc)
+	ARBAttribLookup rc = GetAttrib(inName, value);
+	if (ARBAttribLookup::Found == rc)
 	{
 		if (0 < value.length())
 			outValue = static_cast<unsigned short>(StringUtil::ToCULong(value));
 		else
-			rc = eInvalidValue;
+			rc = ARBAttribLookup::Invalid;
 	}
 	return rc;
 }
 
 
-ElementNode::AttribLookup ElementNode::GetAttrib(
+ARBAttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
 		long& outValue) const
 {
 	std::wstring value;
-	AttribLookup rc = GetAttrib(inName, value);
-	if (eFound == rc)
+	ARBAttribLookup rc = GetAttrib(inName, value);
+	if (ARBAttribLookup::Found == rc)
 	{
 		if (0 < value.length())
 		{
 			if (!StringUtil::ToCLong(value, outValue))
-				rc = eInvalidValue;
+				rc = ARBAttribLookup::Invalid;
 		}
 		else
-			rc = eInvalidValue;
+			rc = ARBAttribLookup::Invalid;
 	}
 	return rc;
 }
 
 
-ElementNode::AttribLookup ElementNode::GetAttrib(
+ARBAttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
 		unsigned long& outValue) const
 {
 	std::wstring value;
-	AttribLookup rc = GetAttrib(inName, value);
-	if (eFound == rc)
+	ARBAttribLookup rc = GetAttrib(inName, value);
+	if (ARBAttribLookup::Found == rc)
 	{
 		if (0 < value.length())
 		{
 			if (!StringUtil::ToCULong(value, outValue))
-				rc = eInvalidValue;
+				rc = ARBAttribLookup::Invalid;
 		}
 		else
-			rc = eInvalidValue;
+			rc = ARBAttribLookup::Invalid;
 	}
 	return rc;
 }
 
 
-ElementNode::AttribLookup ElementNode::GetAttrib(
+ARBAttribLookup ElementNode::GetAttrib(
 		std::wstring const& inName,
 		double& outValue) const
 {
 	std::wstring value;
-	AttribLookup rc = GetAttrib(inName, value);
-	if (eFound == rc)
+	ARBAttribLookup rc = GetAttrib(inName, value);
+	if (ARBAttribLookup::Found == rc)
 	{
 		if (0 < value.length())
 		{
 			if (!StringUtil::ToCDouble(value, outValue))
-				rc = eInvalidValue;
+				rc = ARBAttribLookup::Invalid;
 		}
 		else
-			rc = eInvalidValue;
+			rc = ARBAttribLookup::Invalid;
 	}
 	return rc;
 }
@@ -949,7 +949,7 @@ bool ElementNode::AddAttrib(
 		ARBDate const& inValue)
 {
 	if (inValue.IsValid())
-		AddAttrib(inName, inValue.GetString(ARBDate::eDashYMD));
+		AddAttrib(inName, inValue.GetString(ARBDateFormat::DashYMD));
 	return false;
 }
 
@@ -1049,7 +1049,7 @@ int ElementNode::GetElementCount() const
 }
 
 
-int ElementNode::GetNodeCount(ElementType type) const
+int ElementNode::GetNodeCount(ARBElementType type) const
 {
 	int nCount = 0;
 	for (std::vector<ElementPtr>::const_iterator iter = m_Elements.begin();
@@ -1069,7 +1069,7 @@ bool ElementNode::HasTextNodes() const
 		iter != m_Elements.end();
 		++iter)
 	{
-		if (Element::Element_Text == (*iter)->GetType())
+		if (ARBElementType::Text == (*iter)->GetType())
 			return true;
 	}
 	return false;
@@ -1106,7 +1106,7 @@ ElementNodePtr ElementNode::GetNthElementNode(int inIndex) const
 	int nElements = static_cast<int>(m_Elements.size());
 	for (int iElement = 0; iElement < nElements; ++iElement)
 	{
-		if (Element::Element_Node == m_Elements[iElement]->GetType())
+		if (ARBElementType::Node == m_Elements[iElement]->GetType())
 		{
 			++index;
 			if (index == inIndex)
@@ -1700,9 +1700,9 @@ void ElementText::Dump(int inLevel) const
 }
 
 
-Element::ElementType ElementText::GetType() const
+ARBElementType ElementText::GetType() const
 {
-	return Element::Element_Text;
+	return ARBElementType::Text;
 }
 
 

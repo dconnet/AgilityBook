@@ -187,13 +187,13 @@ size_t ARBDog::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 	if (m_DOB.IsValid())
 	{
-		ioStrings.insert(m_DOB.GetString(ARBDate::eSlashMDY));
+		ioStrings.insert(m_DOB.GetString(ARBDateFormat::SlashMDY));
 		++nItems;
 	}
 	
 	if (m_Deceased.IsValid())
 	{
-		ioStrings.insert(m_Deceased.GetString(ARBDate::eSlashMDY));
+		ioStrings.insert(m_Deceased.GetString(ARBDateFormat::SlashMDY));
 		++nItems;
 	}
 
@@ -234,14 +234,14 @@ bool ARBDog::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_DOG)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
 	|| 0 == m_CallName.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_DOG, ATTRIB_DOG_CALLNAME));
 		return false;
 	}
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_DOG_DOB, m_DOB))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_DOG_DOB, m_DOB))
 	{
 		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_DOG_DOB, attrib);
@@ -251,7 +251,7 @@ bool ARBDog::Load(
 		return false;
 	}
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_DOG_DECEASED, m_Deceased))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_DOG_DECEASED, m_Deceased))
 	{
 		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_DOG_DECEASED, attrib);

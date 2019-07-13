@@ -207,10 +207,10 @@ static int ParseFields(
 // static
 ARBDate ARBDate::FromString(
 		std::wstring const& inDate,
-		ARBDate::DateFormat inFormat)
+		ARBDateFormat inFormat)
 {
 	ARBDate date;
-	if (eLocale == inFormat)
+	if (ARBDateFormat::Locale == inFormat)
 	{
 #if defined(__WXWINDOWS__)
 		wxDateTime dt;
@@ -228,11 +228,11 @@ ARBDate ARBDate::FromString(
 		int nSlash = ParseFields(inDate, '/', val1, val2, val3);
 		int yr = 0, mon = 0, day = 0;
 		if ((3 == nDash &&
-		(eDashMMDDYYYY == inFormat || eDashYYYYMMDD == inFormat || eDashDDMMYYYY == inFormat
-			|| eDashMDY == inFormat || eDashYMD == inFormat || eDashDMY == inFormat))
+		(ARBDateFormat::DashMMDDYYYY == inFormat || ARBDateFormat::DashYYYYMMDD == inFormat || ARBDateFormat::DashDDMMYYYY == inFormat
+			|| ARBDateFormat::DashMDY == inFormat || ARBDateFormat::DashYMD == inFormat || ARBDateFormat::DashDMY == inFormat))
 		|| (3 == nSlash &&
-		(eSlashMMDDYYYY == inFormat || eSlashYYYYMMDD == inFormat || eSlashDDMMYYYY == inFormat
-			|| eSlashMDY == inFormat || eSlashYMD == inFormat || eSlashDMY == inFormat)))
+		(ARBDateFormat::SlashMMDDYYYY == inFormat || ARBDateFormat::SlashYYYYMMDD == inFormat || ARBDateFormat::SlashDDMMYYYY == inFormat
+			|| ARBDateFormat::SlashMDY == inFormat || ARBDateFormat::SlashYMD == inFormat || ARBDateFormat::SlashDMY == inFormat)))
 		{
 			bool bOk = true;
 			switch (inFormat)
@@ -241,26 +241,26 @@ ARBDate ARBDate::FromString(
 				assert(0);
 				bOk = false;
 				break;
-			case eDashMMDDYYYY:
-			case eDashMDY:
-			case eSlashMMDDYYYY:
-			case eSlashMDY:
+			case ARBDateFormat::DashMMDDYYYY:
+			case ARBDateFormat::DashMDY:
+			case ARBDateFormat::SlashMMDDYYYY:
+			case ARBDateFormat::SlashMDY:
 				mon = val1;
 				day = val2;
 				yr = val3;
 				break;
-			case eDashYYYYMMDD: // eISO
-			case eDashYMD:
-			case eSlashYYYYMMDD:
-			case eSlashYMD:
+			case ARBDateFormat::DashYYYYMMDD: // ISO
+			case ARBDateFormat::DashYMD:
+			case ARBDateFormat::SlashYYYYMMDD:
+			case ARBDateFormat::SlashYMD:
 				yr = val1;
 				mon = val2;
 				day = val3;
 				break;
-			case eDashDDMMYYYY:
-			case eDashDMY:
-			case eSlashDDMMYYYY:
-			case eSlashDMY:
+			case ARBDateFormat::DashDDMMYYYY:
+			case ARBDateFormat::DashDMY:
+			case ARBDateFormat::SlashDDMMYYYY:
+			case ARBDateFormat::SlashDMY:
 				day = val1;
 				mon = val2;
 				yr = val3;
@@ -285,7 +285,7 @@ ARBDate ARBDate::FromString(
 std::wstring ARBDate::GetValidDateString(
 		ARBDate const& inFrom,
 		ARBDate const& inTo,
-		DateFormat inFormat)
+		ARBDateFormat inFormat)
 {
 	std::wstring str;
 	if (inFrom.IsValid() || inTo.IsValid())
@@ -367,7 +367,7 @@ bool ARBDate::SetDate(
 
 
 std::wstring ARBDate::GetString(
-		DateFormat inFormat,
+		ARBDateFormat inFormat,
 		bool inForceOutput) const
 {
 	if (!inForceOutput && !IsValid())
@@ -380,7 +380,7 @@ std::wstring ARBDate::GetString(
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
 	switch (inFormat)
 	{
-	case eLocale:
+	case ARBDateFormat::Locale:
 		{
 #if defined(__WXWINDOWS__)
 			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
@@ -391,13 +391,13 @@ std::wstring ARBDate::GetString(
 #endif
 		}
 		break;
-	case eDashMMDDYYYY:		///< MM-DD-YYYY
+	case ARBDateFormat::DashMMDDYYYY:		///< MM-DD-YYYY
 		date = fmt::format(L"{:02}-{:02}-{:04}", mon, day, yr);
 		break;
-	case eYYYYMMDD:
+	case ARBDateFormat::YYYYMMDD:
 		date = fmt::format(L"{:04}{:02}{:02}", yr, mon, day);
 		break;
-	case eVerbose:
+	case ARBDateFormat::Verbose:
 		{
 #if defined(__WXWINDOWS__)
 			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
@@ -409,37 +409,37 @@ std::wstring ARBDate::GetString(
 		}
 		break;
 	default:
-	case eSlashMMDDYYYY:	///< MM/DD/YYYY
+	case ARBDateFormat::SlashMMDDYYYY:	///< MM/DD/YYYY
 		date = fmt::format(L"{:02}/{:02}/{:04}", mon, day, yr);
 		break;
-	case eDashYYYYMMDD:		///< YYYY-MM-DD
+	case ARBDateFormat::DashYYYYMMDD:		///< YYYY-MM-DD
 		date = fmt::format(L"{:04}-{:02}-{:02}", yr, mon, day);
 		break;
-	case eSlashYYYYMMDD:	///< YYYY/MM/DD
+	case ARBDateFormat::SlashYYYYMMDD:	///< YYYY/MM/DD
 		date = fmt::format(L"{:04}/{:02}/{:02}", yr, mon, day);
 		break;
-	case eDashDDMMYYYY:		///< DD-MM-YYYY
+	case ARBDateFormat::DashDDMMYYYY:		///< DD-MM-YYYY
 		date = fmt::format(L"{:02}-{:02}-{:04}", day, mon, yr);
 		break;
-	case eSlashDDMMYYYY:	///< DD/MM/YYYY
+	case ARBDateFormat::SlashDDMMYYYY:	///< DD/MM/YYYY
 		date = fmt::format(L"{:02}/{:02}/{:04}", day, mon, yr);
 		break;
-	case eDashMDY:	///< M-D-Y
+	case ARBDateFormat::DashMDY:	///< M-D-Y
 		date = fmt::format(L"{}-{}-{}", mon, day, yr);
 		break;
-	case eSlashMDY:	///< M/D/Y
+	case ARBDateFormat::SlashMDY:	///< M/D/Y
 		date = fmt::format(L"{}/{}/{}", mon, day, yr);
 		break;
-	case eDashYMD:	///< Y-M-D
+	case ARBDateFormat::DashYMD:	///< Y-M-D
 		date = fmt::format(L"{}-{}-{}", yr, mon, day);
 		break;
-	case eSlashYMD:	///< Y/M/D
+	case ARBDateFormat::SlashYMD:	///< Y/M/D
 		date = fmt::format(L"{}/{}/{}", yr, mon, day);
 		break;
-	case eDashDMY:	///< D-M-Y
+	case ARBDateFormat::DashDMY:	///< D-M-Y
 		date = fmt::format(L"{}-{}-{}", day, mon, yr);
 		break;
-	case eSlashDMY:	///< D/M/Y
+	case ARBDateFormat::SlashDMY:	///< D/M/Y
 		date = fmt::format(L"{}/{}/{}", day, mon, yr);
 		break;
 	}

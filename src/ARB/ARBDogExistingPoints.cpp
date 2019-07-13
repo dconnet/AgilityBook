@@ -44,29 +44,29 @@
 #define EXISTING_PTS_TYPE_MQ		L"MQ"
 #define EXISTING_PTS_TYPE_SQ		L"SQ"
 
-std::wstring ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
+std::wstring ARBDogExistingPoints::GetPointTypeName(ARBExistingPointType inType)
 {
 	std::wstring str;
 	switch (inType)
 	{
 	default:
 		break;
-	case eOtherPoints:
+	case ARBExistingPointType::OtherPoints:
 		str = Localization()->ExistingPointsOther();
 		break;
-	case eLifetime:
+	case ARBExistingPointType::Lifetime:
 		str = Localization()->ExistingPointsLifetime();
 		break;
-	case eTitle:
+	case ARBExistingPointType::Title:
 		str = Localization()->ExistingPointsRun();
 		break;
-	case eSpeed:
+	case ARBExistingPointType::Speed:
 		str = Localization()->ExistingPointsSpeed();
 		break;
-	case eMQ:
+	case ARBExistingPointType::MQ:
 		str = Localization()->ExistingPointsMQ();
 		break;
-	case eSQ:
+	case ARBExistingPointType::SQ:
 		str = Localization()->ExistingPointsSQ();
 		break;
 	}
@@ -98,7 +98,7 @@ ARBDogExistingPointsPtr ARBDogExistingPoints::New()
 ARBDogExistingPoints::ARBDogExistingPoints()
 	: m_Date()
 	, m_Comment()
-	, m_Type(eTitle)
+	, m_Type(ARBExistingPointType::Title)
 	, m_TypeName()
 	, m_Venue()
 	, m_MultiQ()
@@ -222,7 +222,7 @@ bool ARBDogExistingPoints::Load(
 
 	std::wstring attrib;
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
 	{
 		inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
 		std::wstring msg(Localization()->InvalidDate());
@@ -231,7 +231,7 @@ bool ARBDogExistingPoints::Load(
 		return false;
 	}
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_TYPE, attrib)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_EXISTING_PTS_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE));
@@ -239,24 +239,24 @@ bool ARBDogExistingPoints::Load(
 	}
 	bool bConvertedQQ = false;
 	if (attrib == EXISTING_PTS_TYPE_OTHER)
-		m_Type = eOtherPoints;
+		m_Type = ARBExistingPointType::OtherPoints;
 	else if (attrib == EXISTING_PTS_TYPE_LIFETIME)
-		m_Type = eLifetime;
+		m_Type = ARBExistingPointType::Lifetime;
 	else if (attrib == EXISTING_PTS_TYPE_TITLE)
-		m_Type = eTitle;
+		m_Type = ARBExistingPointType::Title;
 	else if (attrib == EXISTING_PTS_TYPE_SPEED)
-		m_Type = eSpeed;
+		m_Type = ARBExistingPointType::Speed;
 	else if (attrib == EXISTING_PTS_TYPE_MQ)
-		m_Type = eMQ;
+		m_Type = ARBExistingPointType::MQ;
 	else if (attrib == EXISTING_PTS_TYPE_SQ)
-		m_Type = eSQ;
+		m_Type = ARBExistingPointType::SQ;
 	// Changed attribute from 'Mach' to 'Speed' in 10.1
 	else if (inVersion < ARBVersion(10,1) && attrib == L"Mach")
-		m_Type = eSpeed;
+		m_Type = ARBExistingPointType::Speed;
 	// Changed QQ to MQ (multi Q)
 	else if (inVersion < ARBVersion(11,0) && attrib == L"QQ")
 	{
-		m_Type = eMQ;
+		m_Type = ARBExistingPointType::MQ;
 		bConvertedQQ = true;
 	}
 	else
@@ -277,12 +277,12 @@ bool ARBDogExistingPoints::Load(
 		return false;
 	}
 
-	if (eOtherPoints == m_Type || eLifetime == m_Type)
+	if (ARBExistingPointType::OtherPoints == m_Type || ARBExistingPointType::Lifetime == m_Type)
 	{
-		if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_EXISTING_PTS_OTHER, m_TypeName)
+		if (ARBAttribLookup::Found == inTree->GetAttrib(ATTRIB_EXISTING_PTS_OTHER, m_TypeName)
 		&& 0 < m_TypeName.length())
 		{
-			if (eOtherPoints == m_Type)
+			if (ARBExistingPointType::OtherPoints == m_Type)
 			{
 				if (!inConfig.GetOtherPoints().VerifyOtherPoints(m_TypeName))
 				{
@@ -300,7 +300,7 @@ bool ARBDogExistingPoints::Load(
 		}
 	}
 
-	if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue)
+	if (ARBAttribLookup::Found == inTree->GetAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue)
 		&& 0 < m_Venue.length())
 	{
 		if (!inConfig.GetVenues().VerifyVenue(m_Venue))
@@ -310,7 +310,7 @@ bool ARBDogExistingPoints::Load(
 			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
 		}
-		if (eLifetime == m_Type)
+		if (ARBExistingPointType::Lifetime == m_Type)
 		{
 			ARBConfigVenuePtr pVenue;
 			if (!inConfig.GetVenues().FindVenue(m_Venue, &pVenue)
@@ -330,7 +330,7 @@ bool ARBDogExistingPoints::Load(
 		return false;
 	}
 
-	if (eMQ == m_Type)
+	if (ARBExistingPointType::MQ == m_Type)
 	{
 		if (bConvertedQQ)
 		{
@@ -366,7 +366,7 @@ bool ARBDogExistingPoints::Load(
 		}
 		else
 		{
-			if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_EXISTING_PTS_MULTIQ, m_MultiQ)
+			if (ARBAttribLookup::Found == inTree->GetAttrib(ATTRIB_EXISTING_PTS_MULTIQ, m_MultiQ)
 			&& 0 < m_MultiQ.length())
 			{
 				if (!inConfig.GetVenues().VerifyMultiQ(m_Venue, m_MultiQ))
@@ -389,14 +389,14 @@ bool ARBDogExistingPoints::Load(
 
 	else
 	{
-		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
+		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
 		|| 0 == m_Div.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DIV));
 			return false;
 		}
 
-		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
+		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
 		|| 0 == m_Level.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_LEVEL));
@@ -408,13 +408,13 @@ bool ARBDogExistingPoints::Load(
 	// event... but let the UI handle that...
 	switch (m_Type)
 	{
-	case eMQ:
+	case ARBExistingPointType::MQ:
 		break;
-	case eOtherPoints:
-	case eLifetime:
-	case eTitle:
-	case eSQ:
-		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
+	case ARBExistingPointType::OtherPoints:
+	case ARBExistingPointType::Lifetime:
+	case ARBExistingPointType::Title:
+	case ARBExistingPointType::SQ:
+		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
 		|| 0 == m_Event.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT));
@@ -471,7 +471,7 @@ bool ARBDogExistingPoints::Save(ElementNodePtr const& ioTree) const
 	default:
 		assert(0);
 		break;
-	case eOtherPoints:
+	case ARBExistingPointType::OtherPoints:
 		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_OTHER);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_OTHER, m_TypeName);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
@@ -479,7 +479,7 @@ bool ARBDogExistingPoints::Save(ElementNodePtr const& ioTree) const
 		title->AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
 		break;
-	case eLifetime:
+	case ARBExistingPointType::Lifetime:
 		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_LIFETIME);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_OTHER, m_TypeName);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
@@ -487,7 +487,7 @@ bool ARBDogExistingPoints::Save(ElementNodePtr const& ioTree) const
 		title->AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
 		break;
-	case eTitle:
+	case ARBExistingPointType::Title:
 		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_TITLE);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
@@ -495,18 +495,18 @@ bool ARBDogExistingPoints::Save(ElementNodePtr const& ioTree) const
 		title->AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
 		break;
-	case eSpeed:
+	case ARBExistingPointType::Speed:
 		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SPEED);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		break;
-	case eMQ:
+	case ARBExistingPointType::MQ:
 		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_MQ);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_MULTIQ, m_MultiQ);
 		break;
-	case eSQ:
+	case ARBExistingPointType::SQ:
 		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SQ);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
 		title->AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
@@ -582,7 +582,7 @@ bool ARBDogExistingPointsList::HasPoints(std::wstring const& inVenue) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetType() != ARBDogExistingPoints::eOtherPoints
+		if ((*iter)->GetType() != ARBExistingPointType::OtherPoints
 		&& (*iter)->GetVenue() == inVenue)
 			return true;
 	}
@@ -601,8 +601,8 @@ bool ARBDogExistingPointsList::HasPoints(
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBDogExistingPoints::PointType type = (*iter)->GetType();
-		if (ARBDogExistingPoints::eOtherPoints != type
+		ARBExistingPointType type = (*iter)->GetType();
+		if (ARBExistingPointType::OtherPoints != type
 		&& (*iter)->GetVenue() == inVenue->GetName()
 		&& (*iter)->GetDivision() == inDiv->GetName()
 		&& ((*iter)->GetLevel() == inLevel->GetName()
@@ -612,12 +612,12 @@ bool ARBDogExistingPointsList::HasPoints(
 			|| (inDateTo.IsValid() && (*iter)->GetDate() > inDateTo))
 				return false;
 			if (!inHasLifetime
-			&& (ARBDogExistingPoints::eTitle == type || ARBDogExistingPoints::eSQ == type))
+			&& (ARBExistingPointType::Title == type || ARBExistingPointType::SQ == type))
 			{
 				if ((*iter)->GetEvent() == inEvent->GetName())
 					return true;
 			}
-			else if (inHasLifetime && ARBDogExistingPoints::eLifetime == type)
+			else if (inHasLifetime && ARBExistingPointType::Lifetime == type)
 			{
 				if ((*iter)->GetEvent() == inEvent->GetName())
 				{
@@ -643,7 +643,7 @@ bool ARBDogExistingPointsList::HasPoints(
 
 
 double ARBDogExistingPointsList::ExistingPoints(
-		ARBDogExistingPoints::PointType inType,
+		ARBExistingPointType inType,
 		ARBConfigVenuePtr const& inVenue,
 		ARBConfigMultiQPtr const& inMultiQ,
 		ARBConfigDivisionPtr const& inDiv,
@@ -652,7 +652,7 @@ double ARBDogExistingPointsList::ExistingPoints(
 		ARBDate inDateFrom,
 		ARBDate inDateTo) const
 {
-	if (ARBDogExistingPoints::eLifetime == inType)
+	if (ARBExistingPointType::Lifetime == inType)
 		return 0.0;
 	double pts = 0.0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -693,7 +693,7 @@ double ARBDogExistingPointsList::ExistingLifetimePoints(
 	double pts = 0.0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if (ARBDogExistingPoints::eLifetime == (*iter)->GetType())
+		if (ARBExistingPointType::Lifetime == (*iter)->GetType())
 		{
 			if (inName && (*iter)->GetTypeName() != inName->GetName())
 				continue;
@@ -935,7 +935,7 @@ int ARBDogExistingPointsList::NumOtherPointsInUse(std::wstring const& inOther) c
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if (ARBDogExistingPoints::eOtherPoints == (*iter)->GetType()
+		if (ARBExistingPointType::OtherPoints == (*iter)->GetType()
 		&& (*iter)->GetTypeName() == inOther)
 			++count;
 	}
@@ -950,7 +950,7 @@ int ARBDogExistingPointsList::RenameOtherPoints(
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if (ARBDogExistingPoints::eOtherPoints == (*iter)->GetType()
+		if (ARBExistingPointType::OtherPoints == (*iter)->GetType()
 		&& (*iter)->GetTypeName() == inOldOther)
 		{
 			(*iter)->SetTypeName(inNewOther);
@@ -966,7 +966,7 @@ int ARBDogExistingPointsList::DeleteOtherPoints(std::wstring const& inOther)
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
-		if (ARBDogExistingPoints::eOtherPoints == (*iter)->GetType()
+		if (ARBExistingPointType::OtherPoints == (*iter)->GetType()
 		&& (*iter)->GetTypeName() == inOther)
 		{
 			iter = erase(iter);
@@ -984,7 +984,7 @@ int ARBDogExistingPointsList::NumLifetimePointsInUse(std::wstring const& inLifet
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if (ARBDogExistingPoints::eLifetime == (*iter)->GetType()
+		if (ARBExistingPointType::Lifetime == (*iter)->GetType()
 		&& (*iter)->GetTypeName() == inLifetime)
 			++count;
 	}
@@ -1000,7 +1000,7 @@ int ARBDogExistingPointsList::RenameLifetimeName(
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if (ARBDogExistingPoints::eLifetime == (*iter)->GetType()
+		if (ARBExistingPointType::Lifetime == (*iter)->GetType()
 		&& (*iter)->GetVenue() == inVenue
 		&& (*iter)->GetTypeName() == inOldName)
 		{
@@ -1019,7 +1019,7 @@ int ARBDogExistingPointsList::DeleteLifetimeName(
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
-		if (ARBDogExistingPoints::eLifetime == (*iter)->GetType()
+		if (ARBExistingPointType::Lifetime == (*iter)->GetType()
 		&& (*iter)->GetVenue() == inVenue
 		&& (*iter)->GetTypeName() == inName)
 		{
@@ -1040,7 +1040,7 @@ int ARBDogExistingPointsList::NumMultiQsInUse(
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if (ARBDogExistingPoints::eMQ == (*iter)->GetType()
+		if (ARBExistingPointType::MQ == (*iter)->GetType()
 		&& (*iter)->GetVenue() == inVenue
 		&& (*iter)->GetMultiQ() == inMultiQ)
 			++count;
@@ -1057,7 +1057,7 @@ int ARBDogExistingPointsList::RenameMultiQs(
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if (ARBDogExistingPoints::eMQ == (*iter)->GetType()
+		if (ARBExistingPointType::MQ == (*iter)->GetType()
 		&& (*iter)->GetVenue() == inVenue
 		&& (*iter)->GetMultiQ() == inOldMultiQ)
 		{
@@ -1079,7 +1079,7 @@ int ARBDogExistingPointsList::DeleteMultiQs(
 	{
 		for (iterator iter = begin(); iter != end(); )
 		{
-			if (ARBDogExistingPoints::eMQ == (*iter)->GetType()
+			if (ARBExistingPointType::MQ == (*iter)->GetType()
 			&& !pVenue->GetMultiQs().FindMultiQ((*iter)->GetMultiQ(), true))
 			{
 				iter = erase(iter);

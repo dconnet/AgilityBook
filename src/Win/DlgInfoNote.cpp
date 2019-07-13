@@ -64,7 +64,7 @@ wxEND_EVENT_TABLE()
 
 CDlgInfoNote::CDlgInfoNote(
 		CAgilityBookDoc* pDoc,
-		ARBInfo::eInfoType inType,
+		ARBInfoType inType,
 		std::wstring const& inSelect,
 		wxWindow* pParent)
 	: wxDialog()
@@ -90,17 +90,17 @@ CDlgInfoNote::CDlgInfoNote(
 	std::set<std::wstring> names;
 	switch (m_Type)
 	{
-	case ARBInfo::eClubInfo:
+	case ARBInfoType::Club:
 		m_pDoc->Book().GetAllClubNames(m_NamesInUse, false, false);
 		m_pDoc->Book().GetAllClubNames(names, true, false);
 		caption = _("IDS_INFO_CLUB");
 		break;
-	case ARBInfo::eJudgeInfo:
+	case ARBInfoType::Judge:
 		m_pDoc->Book().GetAllJudges(m_NamesInUse, false, false);
 		m_pDoc->Book().GetAllJudges(names, true, false);
 		caption = _("IDS_INFO_JUDGE");
 		break;
-	case ARBInfo::eLocationInfo:
+	case ARBInfoType::Location:
 		m_pDoc->Book().GetAllTrialLocations(m_NamesInUse, false, false);
 		m_pDoc->Book().GetAllTrialLocations(names, true, false);
 		caption = _("IDS_INFO_LOCATION");
@@ -119,7 +119,7 @@ CDlgInfoNote::CDlgInfoNote(
 				data.m_bHasData = true;
 		}
 		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_Name))
-			data.m_eInUse = NameInfo::eInUse;
+			data.m_eInUse = NameInfoUsage::InUse;
 		else
 			++m_nAdded;
 		m_Names.push_back(data);
@@ -226,7 +226,7 @@ void CDlgInfoNote::UpdateImage(int index)
 	size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
 
 	wxBitmap bmp = m_None;
-	if (0 < m_nAdded && NameInfo::eNotInUse == m_Names[idx].m_eInUse)
+	if (0 < m_nAdded && NameInfoUsage::NotInUse == m_Names[idx].m_eInUse)
 	{
 		if (m_Names[idx].m_bHasData)
 			bmp = m_NoteAdded;
@@ -315,13 +315,13 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 	wxString caption;
 	switch (m_Type)
 	{
-	case ARBInfo::eClubInfo:
+	case ARBInfoType::Club:
 		caption = _("IDS_COL_CLUB");
 		break;
-	case ARBInfo::eJudgeInfo:
+	case ARBInfoType::Judge:
 		caption = _("IDS_COL_JUDGE");
 		break;
-	case ARBInfo::eLocationInfo:
+	case ARBInfoType::Location:
 		caption = _("IDS_COL_LOCATION");
 		break;
 	}
@@ -338,9 +338,9 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 			// Ok, it exists, but it may have been deleted.
 			size_t idx = iter - m_Names.begin();
 			// Added items cannot be in-use. So we're re-adding.
-			if (NameInfo::eDeleted == m_Names[idx].m_eInUse)
+			if (NameInfoUsage::Deleted == m_Names[idx].m_eInUse)
 			{
-				m_Names[idx].m_eInUse = NameInfo::eNotInUse;
+				m_Names[idx].m_eInUse = NameInfoUsage::NotInUse;
 				++m_nAdded;
 				index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name));
 				m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idx));
@@ -393,7 +393,7 @@ void CDlgInfoNote::OnDeleteItem(wxCommandEvent& evt)
 			// Do NOT remove the name from m_Names. It will mess up
 			// the indices of all the other items. But mark it
 			// so we know if it's being re-added later.
-			m_Names[idx].m_eInUse = NameInfo::eDeleted;
+			m_Names[idx].m_eInUse = NameInfoUsage::Deleted;
 			UpdateData();
 		}
 		else

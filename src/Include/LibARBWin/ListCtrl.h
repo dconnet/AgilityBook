@@ -58,11 +58,16 @@ class ARBWIN_API CReportListCtrl : public CListCtrl
 {
 	DECLARE_CLASS(CReportListCtrl)
 public:
-	enum SortHeader { eNoHeader, eNoSortHeader, eSortHeader };
+	enum class SortHeader
+	{
+		None,   ///< No header
+		NoSort, ///< Header, but no sorting
+		Sort    ///< Full sort header
+	};
 	CReportListCtrl(
 			wxWindow *parent,
 			bool bSingleSel,
-			SortHeader sortHeader = eSortHeader,
+			SortHeader sortHeader = SortHeader::Sort,
 			bool bHasBorder = false,
 			bool bHasImageList = true);
 	CReportListCtrl(
@@ -70,7 +75,7 @@ public:
 			const wxPoint& pos = wxDefaultPosition,
 			const wxSize& size = wxDefaultSize,
 			bool bSingleSel = false,
-			SortHeader sortHeader = eSortHeader,
+			SortHeader sortHeader = SortHeader::Sort,
 			bool bHasBorder = false,
 			bool bHasImageList = true);
 

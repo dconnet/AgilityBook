@@ -21,6 +21,18 @@
 #include "LibwxARB.h"
 
 
+enum class Q
+{
+	UNK,	///< Unknown / not set. This must be first.
+	NA,		///< Cannot qualify in this run.
+	DNR,	///< Did Not Run.
+	E,		///< Eliminated.
+	NQ,		///< Not qualified.
+	Q,		///< Qualified.
+	SuperQ,	///< Super Qualifier (USDAA Snooker top 15%).
+};
+
+
 /**
  * Qualifying status of a run.
  * In XML/Element, this class is only used as an attribute, never an element.
@@ -33,16 +45,6 @@ public:
 	/**
 	 * Types of Qs (the enum order determines the sort order)
 	 */
-	typedef enum
-	{
-		eQ_UNK,		///< Unknown / not set. This must be first.
-		eQ_NA,		///< Cannot qualify in this run.
-		eQ_DNR,		///< Did Not Run.
-		eQ_E,		///< Eliminated.
-		eQ_NQ,		///< Not qualified.
-		eQ_Q,		///< Qualified.
-		eQ_SuperQ,	///< Super Qualifier (USDAA Snooker top 15%).
-	} eQ;
 
 	// These functions map the above enum into strings.
 
@@ -66,10 +68,10 @@ public:
 	 */
 	static ARB_Q GetValidType(int inIndex);
 
-	ARB_Q() : m_Q(eQ_UNK)
+	ARB_Q() : m_Q(Q::UNK)
 	{
 	}
-	ARB_Q(eQ inQ) : m_Q(inQ)
+	ARB_Q(Q inQ) : m_Q(inQ)
 	{
 	}
 	ARB_Q(ARB_Q const& rhs) : m_Q(rhs.m_Q)
@@ -77,7 +79,7 @@ public:
 	}
 	ARB_Q(ARB_Q&& rhs) : m_Q(rhs.m_Q)
 	{
-		rhs.m_Q = eQ_UNK;
+		rhs.m_Q = Q::UNK;
 	}
 	~ARB_Q()
 	{
@@ -94,7 +96,7 @@ public:
 		if (this != &rhs)
 		{
 			m_Q = rhs.m_Q;
-			rhs.m_Q = eQ_UNK;
+			rhs.m_Q = Q::UNK;
 		}
 		return *this;
 	}
@@ -102,7 +104,7 @@ public:
 	{
 		return m_Q == rhs.m_Q;
 	}
-	bool operator==(eQ rhs) const
+	bool operator==(Q rhs) const
 	{
 		return m_Q == rhs;
 	}
@@ -132,7 +134,7 @@ public:
 	 */
 	bool Qualified() const
 	{
-		return eQ_Q == m_Q || eQ_SuperQ == m_Q;
+		return Q::Q == m_Q || Q::SuperQ == m_Q;
 	}
 
 	/**
@@ -141,7 +143,7 @@ public:
 	 */
 	bool AllowTally() const
 	{
-		return eQ_UNK != m_Q && eQ_NA != m_Q && eQ_DNR != m_Q;
+		return Q::UNK != m_Q && Q::NA != m_Q && Q::DNR != m_Q;
 	}
 
 	/**
@@ -150,10 +152,10 @@ public:
 	 */
 	bool AllowForNonTitling() const
 	{
-		return eQ_UNK == m_Q || eQ_NA == m_Q || eQ_DNR == m_Q || eQ_E == m_Q;
+		return Q::UNK == m_Q || Q::NA == m_Q || Q::DNR == m_Q || Q::E == m_Q;
 	}
 
-	operator eQ() const
+	operator Q() const
 	{
 		return m_Q;
 	}
@@ -187,5 +189,5 @@ public:
 			wchar_t const* const inAttribName) const;
 
 private:
-	eQ m_Q;
+	Q m_Q;
 };

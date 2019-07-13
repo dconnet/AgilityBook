@@ -262,7 +262,7 @@ std::wstring ARBDogRun::GetName() const
 
 std::wstring ARBDogRun::GetGenericName() const
 {
-	std::wstring name = m_Date.GetString(ARBDate::eDashYMD) + L" ";
+	std::wstring name = m_Date.GetString(ARBDateFormat::DashYMD) + L" ";
 	if (0 < m_SubName.length())
 		name = m_Division + L" " + m_Level + L" " + m_SubName;
 	else
@@ -275,7 +275,7 @@ size_t ARBDogRun::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
-	ioStrings.insert(m_Date.GetString(ARBDate::eSlashMDY));
+	ioStrings.insert(m_Date.GetString(ARBDateFormat::SlashMDY));
 	++nItems;
 
 	if (0 < m_Division.length())
@@ -352,10 +352,10 @@ bool ARBDogRun::Load(
 	{
 	default:
 		break;
-	case ElementNode::eNotFound:
+	case ARBAttribLookup::NotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE));
 		return false;
-	case ElementNode::eInvalidValue:
+	case ARBAttribLookup::Invalid:
 		{
 			std::wstring attrib;
 			inTree->GetAttrib(ATTRIB_RUN_DATE, attrib);
@@ -366,14 +366,14 @@ bool ARBDogRun::Load(
 		}
 	}
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION));
 		return false;
 	}
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL));
@@ -383,7 +383,7 @@ bool ARBDogRun::Load(
 	// Height is no longer a required attribute (doc ver 8.1)
 	inTree->GetAttrib(ATTRIB_RUN_HEIGHT, m_Height);
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_RUN_EVENT, m_Event)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_EVENT, m_Event)
 	|| 0 == m_Event.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT));
@@ -432,7 +432,7 @@ bool ARBDogRun::Load(
 		else if (name == TREE_PLACEMENT)
 		{
 			std::wstring attrib;
-			if (ElementNode::eFound != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
+			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
 			|| 0 == attrib.length())
 			{
 				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q));
@@ -508,7 +508,7 @@ bool ARBDogRun::Save(
 	if (!m_Scoring.Save(run))
 		return false;
 
-	if (0 < m_Place || ARB_Q::eQ_UNK != m_Q)
+	if (0 < m_Place || Q::UNK != m_Q)
 	{
 		ElementNodePtr element = run->AddElementNode(TREE_PLACEMENT);
 		m_Q.Save(element, ATTRIB_PLACEMENT_Q);
@@ -661,7 +661,7 @@ double ARBDogRun::GetTitlePoints(
 	{
 	default:
 		break;
-	case ARBDogRunScoring::eTypeByTime:
+	case ARBScoringType::ByTime:
 		{
 			double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 			if (ARBDouble::equal(score, 0))
@@ -669,7 +669,7 @@ double ARBDogRun::GetTitlePoints(
 				if (outClean)
 					*outClean = true;
 			}
-			if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
+			if (ARBScoringStyle::TimePlusFaults == inScoring->GetScoringStyle())
 			{
 				if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
 				{
@@ -704,7 +704,7 @@ double ARBDogRun::GetTitlePoints(
 			}
 		}
 		break;
-	case ARBDogRunScoring::eTypeByOpenClose:
+	case ARBScoringType::ByOpenClose:
 		if ((m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts()
 		&& m_Scoring.GetNeedClosePts() <= m_Scoring.GetClosePts())
 		// Allows for USDAA tournament gambles
@@ -730,7 +730,7 @@ double ARBDogRun::GetTitlePoints(
 			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
 		}
 		break;
-	case ARBDogRunScoring::eTypeByPoints:
+	case ARBScoringType::ByPoints:
 		if (m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts())
 		{
 			double timeFaults = 0.0;
@@ -767,10 +767,10 @@ double ARBDogRun::GetLifetimePoints(
 	{
 	default:
 		break;
-	case ARBDogRunScoring::eTypeByTime:
+	case ARBScoringType::ByTime:
 		{
 			double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
-			if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
+			if (ARBScoringStyle::TimePlusFaults == inScoring->GetScoringStyle())
 			{
 				if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
 				{
@@ -794,7 +794,7 @@ double ARBDogRun::GetLifetimePoints(
 			}
 		}
 		break;
-	case ARBDogRunScoring::eTypeByOpenClose:
+	case ARBScoringType::ByOpenClose:
 		if ((m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts()
 		&& m_Scoring.GetNeedClosePts() <= m_Scoring.GetClosePts())
 		// Allows for USDAA tournament gambles
@@ -818,7 +818,7 @@ double ARBDogRun::GetLifetimePoints(
 			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, timeFaults, GetSpeedPoints(inScoring)) + bonusTitlePts;
 		}
 		break;
-	case ARBDogRunScoring::eTypeByPoints:
+	case ARBScoringType::ByPoints:
 		if (m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts())
 		{
 			double timeFaults = 0.0;
@@ -859,22 +859,22 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 	{
 	default:
 		break;
-	case ARBDogRunScoring::eTypeByTime:
+	case ARBScoringType::ByTime:
 		pts = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 		switch (inScoring->GetScoringStyle())
 		{
 		default: break;
-		case ARBConfigScoring::eTimePlusFaults: pts += m_Scoring.GetTime(); break;
-		case ARBConfigScoring::eFaults100ThenTime: pts = 100 - pts; break;
-		case ARBConfigScoring::eFaults200ThenTime: pts = 200 - pts; break;
+		case ARBScoringStyle::TimePlusFaults: pts += m_Scoring.GetTime(); break;
+		case ARBScoringStyle::Faults100ThenTime: pts = 100 - pts; break;
+		case ARBScoringStyle::Faults200ThenTime: pts = 200 - pts; break;
 		}
 		break;
-	case ARBDogRunScoring::eTypeByOpenClose:
+	case ARBScoringType::ByOpenClose:
 		pts = m_Scoring.GetOpenPts() + m_Scoring.GetClosePts() - m_Scoring.GetCourseFaults();
 		if (inScoring->SubtractTimeFaultsFromScore())
 			pts -= m_Scoring.GetTimeFaults(inScoring);
 		break;
-	case ARBDogRunScoring::eTypeByPoints:
+	case ARBScoringType::ByPoints:
 		pts = m_Scoring.GetOpenPts() - m_Scoring.GetCourseFaults();
 		if (inScoring->SubtractTimeFaultsFromScore())
 			pts -= m_Scoring.GetTimeFaults(inScoring);

@@ -24,13 +24,13 @@
 
 namespace ARBMsgDigest
 {
-	typedef enum
+	enum class ARBDigest
 	{
-		ARBDigestUnknown,
-		ARBDigestMD5,
-		ARBDigestSHA1,
-		ARBDigestSHA256,
-	} ARBDigest;
+		Unknown,
+		MD5,
+		SHA1,
+		SHA256,
+	};
 
 	ARBCOMMON_API std::wstring Compute(
 			std::istream& inFile,

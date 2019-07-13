@@ -51,7 +51,7 @@ private:
 
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
-	long m_Delim;
+	ARBImportExportDelim m_Delim;
 	wxString m_Delimiter;
 	wxStaticBox* m_boxDelimiters;
 	wxRadioButton* m_ctrlTab;

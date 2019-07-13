@@ -308,7 +308,7 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 			dateTo = CFilterOptions::Options().GetEndFilterDate();
 	}
 	m_ExistingDblQs = m_Dog->GetExistingPoints().ExistingPoints(
-		ARBDogExistingPoints::eMQ, m_Venue, m_MultiQ,
+		ARBExistingPointType::MQ, m_Venue, m_MultiQ,
 		ARBConfigDivisionPtr(), ARBConfigLevelPtr(), ARBConfigEventPtr(), dateFrom, dateTo);
 }
 
@@ -500,17 +500,17 @@ public:
 				assert(0);
 				return false;
 
- 			case CAgilityBookOptions::ePointsViewSortDivision:
+			case ARBPointsViewSort::Division:
 				if (one->m_DivIdx != two->m_DivIdx)
 					return one->m_DivIdx < two->m_DivIdx;
 				break;
 
-			case CAgilityBookOptions::ePointsViewSortLevel:
+			case ARBPointsViewSort::Level:
 				if (one->m_LevelIdx != two->m_LevelIdx)
 					return one->m_LevelIdx < two->m_LevelIdx;
 				break;
 
-			case CAgilityBookOptions::ePointsViewSortEvent:
+			case ARBPointsViewSort::Event:
 				if (one->m_EventIdx != two->m_EventIdx)
 					return one->m_EventIdx < two->m_EventIdx;
 				break;
@@ -519,7 +519,7 @@ public:
 		return false;
 	}
 private:
-	CAgilityBookOptions::PointsViewSort m_Order[3];
+	ARBPointsViewSort m_Order[3];
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -660,7 +660,7 @@ CPointsDataVenue::CPointsDataVenue(
 								if (!pScoring) continue; // Shouldn't need it...
 								if (*pScoring != *pScoringMethod)
 									continue;
-								bool bRunVisible = (!pRun->IsFiltered(ARBBase::eIgnoreQ)
+								bool bRunVisible = (!pRun->IsFiltered(ARBFilterType::IgnoreQ)
 								&& CFilterOptions::Options().IsRunVisible(venues, m_pVenue, pTrial, pRun));
 								if (bRunVisible)
 								{
@@ -671,7 +671,7 @@ CPointsDataVenue::CPointsDataVenue(
 									judges.insert(pRun->GetJudge());
 									if (pRun->GetQ().Qualified())
 										judgesQ.insert(pRun->GetJudge());
-									if (pScoringMethod->HasSuperQ() && ARB_Q::eQ_SuperQ == pRun->GetQ())
+									if (pScoringMethod->HasSuperQ() && Q::SuperQ == pRun->GetQ())
 										++SQs;
 									if (pScoringMethod->HasSpeedPts())
 									{
@@ -722,11 +722,11 @@ CPointsDataVenue::CPointsDataVenue(
 						if (bHasExistingPoints || bHasExistingLifetimePoints || 0 < matching.size())
 						{
 							nExistingPts = inDog->GetExistingPoints().ExistingPoints(
-								ARBDogExistingPoints::eTitle,
+								ARBExistingPointType::Title,
 								m_pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2);
 							if (pScoringMethod->HasSuperQ())
 								nExistingSQ += static_cast<int>(inDog->GetExistingPoints().ExistingPoints(
-									ARBDogExistingPoints::eSQ,
+									ARBExistingPointType::SQ,
 									m_pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2));
 							// Now add the existing lifetime points
 							for (ARBConfigLifetimeNameList::const_iterator iterLifetime = m_pVenue->GetLifetimeNames().begin();
@@ -825,7 +825,7 @@ CPointsDataVenue::CPointsDataVenue(
 				if (bHasSpeedPts)
 				{
 					speedPts += static_cast<int>(inDog->GetExistingPoints().ExistingPoints(
-						ARBDogExistingPoints::eSpeed,
+						ARBExistingPointType::Speed,
 						m_pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, ARBConfigEventPtr(), dateFrom, dateTo));
 				}
 				if (0 < ptsLifetime.ptLifetime.size())
@@ -857,7 +857,7 @@ CPointsDataVenue::CPointsDataVenue(
 					ARBDogRunPtr pRun = *iterR;
 					std::vector<ARBConfigMultiQPtr> multiQs;
 					if (0 < pRun->GetMultiQs(multiQs)
-					&& !pRun->IsFiltered(ARBBase::eIgnoreQ)
+					&& !pRun->IsFiltered(ARBFilterType::IgnoreQ)
 					&& CFilterOptions::Options().IsRunVisible(venues, m_pVenue, pTrial, pRun))
 					{
 						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
@@ -1461,7 +1461,7 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 						++iterRun)
 					{
 						ARBDogRunPtr pRun = (*iterRun);
-						if (!pRun->IsFiltered(ARBBase::eIgnoreQ))
+						if (!pRun->IsFiltered(ARBFilterType::IgnoreQ))
 						{
 							for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
 								iterOtherPts != pRun->GetOtherPoints().end();
@@ -1501,7 +1501,7 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 				iterExisting != inDog->GetExistingPoints().end();
 				++iterExisting)
 			{
-				if (ARBDogExistingPoints::eOtherPoints == (*iterExisting)->GetType()
+				if (ARBExistingPointType::OtherPoints == (*iterExisting)->GetType()
 					&& (*iterExisting)->GetTypeName() == pOther->GetName())
 				{
 					runs.push_back(OtherPtInfo(*iterExisting));
@@ -1514,11 +1514,11 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 			switch (pOther->GetTally())
 			{
 			default:
-			case ARBConfigOtherPoints::eTallyAll:
+			case ARBOtherPointsTally::All:
 				m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyAll>(m_pDoc, pOther, runs, id));
 				break;
 
-			case ARBConfigOtherPoints::eTallyAllByEvent:
+			case ARBOtherPointsTally::AllByEvent:
 				{
 					std::set<std::wstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -1541,7 +1541,7 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 				}
 				break;
 
-			case ARBConfigOtherPoints::eTallyLevel:
+			case ARBOtherPointsTally::Level:
 				{
 					std::set<std::wstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -1564,7 +1564,7 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 				}
 				break;
 
-			case ARBConfigOtherPoints::eTallyLevelByEvent:
+			case ARBOtherPointsTally::LevelByEvent:
 				{
 					typedef std::pair<std::wstring, std::wstring> LevelEvent;
 					std::set<LevelEvent> tally;
@@ -1634,13 +1634,13 @@ wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 		fmt::format_to(data, L"<h2>{}</h2>{}",
 			_("IDS_OTHERPOINTS").wx_str(),
 			s_TableHeader);
-		ARBConfigOtherPoints::eOtherPointsTally last = (ARBConfigOtherPoints::eOtherPointsTally)-1;
+		ARBOtherPointsTally last = static_cast<ARBOtherPointsTally>(-1);
 		for (auto other : m_otherPts)
 		{
 			if (other->GetOther()->GetTally() != last)
 			{
 				last = other->GetOther()->GetTally();
-				if (ARBConfigOtherPoints::eTallyAll != last)
+				if (ARBOtherPointsTally::All != last)
 				{
 					fmt::format_to(data, L"<tr>\n<td>{}</td>\n</tr>\n", Sanitize(other->GetOther()->GetName(), true));
 				}

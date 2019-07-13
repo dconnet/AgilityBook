@@ -35,39 +35,54 @@
 
 
 /**
+ * Output date format (do not change the values!)
+ */
+enum class ARBDateFormat
+{
+	Locale = 0,			///< System (current) locale (output only)
+	// Leading zeros
+	DashMMDDYYYY = 1,	///< MM-DD-YYYY
+	SlashMMDDYYYY = 2,	///< MM/DD/YYYY
+	DashYYYYMMDD = 3,	///< YYYY-MM-DD, ISO 8601
+	ISO = 3,
+	SlashYYYYMMDD = 4,	///< YYYY/MM/DD
+	DashDDMMYYYY = 5,	///< DD-MM-YYYY
+	SlashDDMMYYYY = 6,	///< DD/MM/YYYY
+	// No leading zeros
+	DashMDY = 7,		///< M-D-Y
+	SlashMDY = 8,		///< M/D/Y
+	DashYMD = 9,		///< Y-M-D
+	SlashYMD = 10,		///< Y/M/D
+	DashDMY = 11,		///< D-M-Y
+	SlashDMY = 12,		///< D/M/Y
+	// New formats...
+	YYYYMMDD = 13,		///< YYYYMMDD (output only)
+	Reserved14 = 14,	///< was eCurrentLocale
+	Verbose = 15,		///< "%A, %B %d, %Y" (output only)
+};
+
+/**
+ * Days of the week (do not change the values!)
+ */
+enum class ARBDayOfWeek
+{
+	Sunday = 0,		///< Sunday
+	Monday = 1,		///< Monday
+	Tuesday = 2,	///< Tuesday
+	Wednesday = 3,	///< Wednesday
+	Thursday = 4,	///< Thursday
+	Friday = 5,		///< Friday
+	Saturday = 6,	///< Saturday
+};
+
+
+/**
  * Date class.
  * In XML/Element, this class is only used as an attribute, never an element.
  */
 class ARBCOMMON_API ARBDate
 {
 public:
-	/**
-	 * Output date format (do not change the values!)
-	 */
-	typedef enum
-	{
-		eLocale			= 0,	///< System (current) locale (output only)
-		// Leading zeros
-		eDashMMDDYYYY	= 1,	///< MM-DD-YYYY
-		eSlashMMDDYYYY	= 2,	///< MM/DD/YYYY
-		eDashYYYYMMDD	= 3,	///< YYYY-MM-DD, ISO 8601
-		eISO			= 3,
-		eSlashYYYYMMDD	= 4,	///< YYYY/MM/DD
-		eDashDDMMYYYY	= 5,	///< DD-MM-YYYY
-		eSlashDDMMYYYY	= 6,	///< DD/MM/YYYY
-		// No leading zeros
-		eDashMDY		= 7,	///< M-D-Y
-		eSlashMDY		= 8,	///< M/D/Y
-		eDashYMD		= 9,	///< Y-M-D
-		eSlashYMD		= 10,	///< Y/M/D
-		eDashDMY		= 11,	///< D-M-Y
-		eSlashDMY		= 12,	///< D/M/Y
-		// New formats...
-		eYYYYMMDD		= 13,	///< YYYYMMDD (output only)
-		eReserved14		= 14,	///< was eCurrentLocale
-		eVerbose		= 15,	///< "%A, %B %d, %Y" (output only)
-	} DateFormat;
-
 	/**
 	 * Convert a string to a date
 	 * @param inDate String to convert
@@ -76,7 +91,7 @@ public:
 	 */
 	static ARBDate FromString(
 			std::wstring const& inDate,
-			DateFormat inFormat);
+			ARBDateFormat inFormat);
 
 	/**
 	 * Get a string showing the valid date range (if set)
@@ -88,7 +103,7 @@ public:
 	static std::wstring GetValidDateString(
 			ARBDate const& inFrom,
 			ARBDate const& inTo,
-			DateFormat inFormat = eDashYMD);
+			ARBDateFormat inFormat = ARBDateFormat::DashYMD);
 
 	/**
 	 * Get the current date.
@@ -294,7 +309,7 @@ public:
 	 * @return Date in the format defined by inFormat.
 	 */
 	std::wstring GetString(
-			DateFormat inFormat = eLocale,
+			ARBDateFormat inFormat = ARBDateFormat::Locale,
 			bool inForceOutput = false) const;
 
 	/**
@@ -341,24 +356,10 @@ public:
 	int GetDayOfYear() const;
 
 	/**
-	 * Days of the week (do not change the values!)
-	 */
-	typedef enum
-	{
-		eSunday = 0,	///< Sunday
-		eMonday = 1,	///< Monday
-		eTuesday = 2,	///< Tuesday
-		eWednesday = 3,	///< Wednesday
-		eThursday = 4,	///< Thursday
-		eFriday = 5,	///< Friday
-		eSaturday = 6,	///< Saturday
-	} DayOfWeek;
-
-	/**
 	 * Get the day of the week of the current date.
 	 * @param inFirstDay Define what day of week has index 0 (1st day of week).
 	 */
-	int GetDayOfWeek(DayOfWeek inFirstDay = eSunday) const
+	int GetDayOfWeek(ARBDayOfWeek inFirstDay = ARBDayOfWeek::Sunday) const
 	{
 		// This was copied from another source, but I don't remember where...
 		// I suspect it won't work properly on dates before 1752 (start of

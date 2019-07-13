@@ -37,7 +37,7 @@ public:
 			wxWindow* pParent = nullptr);
 
 private:
-	ARBConfigScoring::ScoringStyle GetType(int index) const;
+	ARBScoringStyle GetType(int index) const;
 	CDlgConfigureDataPlacementPtr GetPlacementData(int index) const;
 	void UpdateButtons();
 	void UpdateControls();

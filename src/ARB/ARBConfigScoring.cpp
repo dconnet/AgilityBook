@@ -72,31 +72,31 @@ static void OutputDebugString(wchar_t const* msg)
 #define SCORING_TYPE_ST		L"ScoreThenTime"
 #define SCORING_TYPE_TF		L"TimePlusFaults"
 
-std::wstring ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
+std::wstring ARBConfigScoring::GetScoringStyleStr(ARBScoringStyle inStyle)
 {
 	std::wstring style;
 	switch (inStyle)
 	{
 	default:
-	case eUnknown:
+	case ARBScoringStyle::Unknown:
 		style = Localization()->ScoreStyleUnknown();
 		break;
-	case eFaultsThenTime:
+	case ARBScoringStyle::FaultsThenTime:
 		style = Localization()->ScoreStyleFaultsTime();
 		break;
-	case eFaults100ThenTime:
+	case ARBScoringStyle::Faults100ThenTime:
 		style = Localization()->ScoreStyleFaults100Time();
 		break;
-	case eFaults200ThenTime:
+	case ARBScoringStyle::Faults200ThenTime:
 		style = Localization()->ScoreStyleFaults200Time();
 		break;
-	case eOCScoreThenTime:
+	case ARBScoringStyle::OCScoreThenTime:
 		style = Localization()->ScoreStyleOCScoreTime();
 		break;
-	case eScoreThenTime:
+	case ARBScoringStyle::ScoreThenTime:
 		style = Localization()->ScoreStyleScoreTime();
 		break;
-	case eTimePlusFaults:
+	case ARBScoringStyle::TimePlusFaults:
 		style = Localization()->ScoreStyleTimePlusFaults();
 		break;
 	}
@@ -130,7 +130,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_ValidTo()
 	, m_Division()
 	, m_Level()
-	, m_Style(eUnknown)
+	, m_Style(ARBScoringStyle::Unknown)
 	, m_bDropFractions(false)
 	, m_bCleanQ(false)
 	, m_bTimeFaultsUnder(false)
@@ -328,7 +328,7 @@ bool ARBConfigScoring::Load(
 	// Probably unnecessary since it isn't actually implemented yet!
 	if (inVersion == ARBVersion(8, 0))
 		inTree->GetAttrib(L"Date", m_ValidFrom);
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
 	{
 		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, attrib);
@@ -337,7 +337,7 @@ bool ARBConfigScoring::Load(
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg.c_str()));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
 	{
 		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_SCORING_VALIDTO, attrib);
@@ -347,14 +347,14 @@ bool ARBConfigScoring::Load(
 		return false;
 	}
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_SCORING_DIVISION, m_Division)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_SCORING_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_DIVISION));
 		return false;
 	}
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_SCORING_LEVEL, m_Level)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_SCORING_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_LEVEL));
@@ -371,28 +371,28 @@ bool ARBConfigScoring::Load(
 	}
 
 	std::wstring attrib;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_SCORING_TYPE, attrib)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_SCORING_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_TYPE));
 		return false;
 	}
 	if (attrib == SCORING_TYPE_FT)
-		m_Style = eFaultsThenTime;
+		m_Style = ARBScoringStyle::FaultsThenTime;
 	else if (attrib == SCORING_TYPE_FT100)
 	{
-		m_Style = eFaults100ThenTime;
+		m_Style = ARBScoringStyle::Faults100ThenTime;
 		if (inVersion <= ARBVersion(3,0))
 			m_bDropFractions = true;
 	}
 	else if (attrib == SCORING_TYPE_FT200) // Version5.
-		m_Style = eFaults200ThenTime;
+		m_Style = ARBScoringStyle::Faults200ThenTime;
 	else if (attrib == SCORING_TYPE_OCT)
-		m_Style = eOCScoreThenTime;
+		m_Style = ARBScoringStyle::OCScoreThenTime;
 	else if (attrib == SCORING_TYPE_ST)
-		m_Style = eScoreThenTime;
+		m_Style = ARBScoringStyle::ScoreThenTime;
 	else if (attrib == SCORING_TYPE_TF)
-		m_Style = eTimePlusFaults;
+		m_Style = ARBScoringStyle::TimePlusFaults;
 	else
 	{
 		std::wstring msg(Localization()->ValidValues());
@@ -414,39 +414,39 @@ bool ARBConfigScoring::Load(
 	// This attribute came in in version 4, but go ahead and read it even if
 	// the current doc is earlier. This will allow someone to hand-edit it in.
 	// Not advisable, but it doesn't hurt anything either.
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DROPFRACTIONS, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_UNDER, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_OVER, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_TITLING_PTS, m_bTitlingPointsRawFaults))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_TITLING_PTS, m_bTitlingPointsRawFaults))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_TITLING_PTS, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUPERQ, Localization()->ValidValuesBool().c_str()));
 		return false;
@@ -454,20 +454,20 @@ bool ARBConfigScoring::Load(
 
 	if (inVersion < ARBVersion(11, 0))
 	{
-		if (ElementNode::eInvalidValue == inTree->GetAttrib(L"doubleQ", m_bDoubleQ))
+		if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"doubleQ", m_bDoubleQ))
 		{
 			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, L"doubleQ", Localization()->ValidValuesBool().c_str()));
 			return false;
 		}
 	}
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SPEEDPTS, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_bBonusTitlePts))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_bBonusTitlePts))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_BONUSTITLEPTS, Localization()->ValidValuesBool().c_str()));
 		return false;
@@ -478,7 +478,7 @@ bool ARBConfigScoring::Load(
 	{
 		if (inVersion < ARBVersion(10, 1))
 		{
-			if (ElementNode::eInvalidValue == inTree->GetAttrib(L"machPts", m_bSpeedPts))
+			if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"machPts", m_bSpeedPts))
 			{
 				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, L"machPts", Localization()->ValidValuesBool().c_str()));
 				return false;
@@ -541,7 +541,7 @@ bool ARBConfigScoring::Load(
 	else
 	{
 		short ptsWhenClean = 0;
-		if (ElementNode::eFound != inTree->GetAttrib(L"Clean", ptsWhenClean))
+		if (ARBAttribLookup::Found != inTree->GetAttrib(L"Clean", ptsWhenClean))
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_SCORING, L"Clean"));
 			return false;
@@ -593,22 +593,22 @@ bool ARBConfigScoring::Save(ElementNodePtr const& ioTree) const
 #endif
 #endif
 		return false;
-	case eFaultsThenTime:
+	case ARBScoringStyle::FaultsThenTime:
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_FT);
 		break;
-	case eFaults100ThenTime:
+	case ARBScoringStyle::Faults100ThenTime:
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_FT100);
 		break;
-	case eFaults200ThenTime:
+	case ARBScoringStyle::Faults200ThenTime:
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_FT200);
 		break;
-	case eOCScoreThenTime:
+	case ARBScoringStyle::OCScoreThenTime:
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_OCT);
 		break;
-	case eScoreThenTime:
+	case ARBScoringStyle::ScoreThenTime:
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_ST);
 		break;
-	case eTimePlusFaults:
+	case ARBScoringStyle::TimePlusFaults:
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_TF);
 		break;
 	}
@@ -844,7 +844,7 @@ ARBConfigScoringPtr ARBConfigScoringList::AddScoring()
 	ARBConfigScoringPtr pScoring(ARBConfigScoring::New());
 	pScoring->SetDivision(WILDCARD_DIVISION);
 	pScoring->SetLevel(WILDCARD_LEVEL);
-	pScoring->SetScoringStyle(ARBConfigScoring::eFaultsThenTime);
+	pScoring->SetScoringStyle(ARBScoringStyle::FaultsThenTime);
 	push_back(pScoring);
 	return pScoring;
 }

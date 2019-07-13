@@ -142,11 +142,11 @@ public:
 	bool SetAlignment(
 			long inRow,
 			long inCol,
-			ISpreadSheetExporter::eAlign align) override;
+			ARBSpreadSheetAlign align) override;
 	bool SetFormat(
 			long inRow,
 			long inCol,
-			ISpreadSheetExporter::eFormat format) override;
+			ARBSpreadSheetFormat format) override;
 	bool SetFormat(
 			long inRow,
 			long inCol,
@@ -248,11 +248,11 @@ public:
 	bool SetAlignment(
 			long inRow,
 			long inCol,
-			ISpreadSheetExporter::eAlign align) override;
+			ARBSpreadSheetAlign align) override;
 	bool SetFormat(
 			long inRow,
 			long inCol,
-			ISpreadSheetExporter::eFormat format) override;
+			ARBSpreadSheetFormat format) override;
 	bool SetFormat(
 			long inRow,
 			long inCol,
@@ -504,9 +504,9 @@ bool CWizardExcelExport::SetBold(
 bool CWizardExcelExport::SetAlignment(
 		long inRow,
 		long inCol,
-		ISpreadSheetExporter::eAlign align)
+		ARBSpreadSheetAlign align)
 {
-	if (ISpreadSheetExporter::eSpreadSheetNone == align)
+	if (ARBSpreadSheetAlign::None == align)
 		return true;
 	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -520,16 +520,16 @@ bool CWizardExcelExport::SetAlignment(
 	switch (align)
 	{
 	default:
-	case ISpreadSheetExporter::eSpreadSheetGeneral:
+	case ARBSpreadSheetAlign::General:
 		val = xlHAlignGeneral;
 		break;
-	case ISpreadSheetExporter::eSpreadSheetLeft:
+	case ARBSpreadSheetAlign::Left:
 		val = xlHAlignLeft;
 		break;
-	case ISpreadSheetExporter::eSpreadSheetRight:
+	case ARBSpreadSheetAlign::Right:
 		val = xlHAlignRight;
 		break;
-	case ISpreadSheetExporter::eSpreadSheetCenter:
+	case ARBSpreadSheetAlign::Center:
 		val = xlHAlignCenter;
 		break;
 	}
@@ -541,7 +541,7 @@ bool CWizardExcelExport::SetAlignment(
 bool CWizardExcelExport::SetFormat(
 		long inRow,
 		long inCol,
-		ISpreadSheetExporter::eFormat format)
+		ARBSpreadSheetFormat format)
 {
 	std::wstring sFormat;
 
@@ -573,19 +573,19 @@ bool CWizardExcelExport::SetFormat(
 	switch (format)
 	{
 	default:
-	case ISpreadSheetExporter::eSpreadSheetText:
+	case ARBSpreadSheetFormat::Text:
 		sFormat = L"@";
 		break;
-	case ISpreadSheetExporter::eSpreadSheetCurrency:
+	case ARBSpreadSheetFormat::Currency:
 		sFormat = L"_($* #,##0.00_);[Red]_($* (#,##0.00);_(* \"-\"??_);_(@_)";
 		break;
-	case ISpreadSheetExporter::eSpreadSheetNumber:
+	case ARBSpreadSheetFormat::Number:
 		sFormat = L"#,##0_);[Red](#,##0)";
 		break;
-	case ISpreadSheetExporter::eSpreadSheetNumberNoZero:
+	case ARBSpreadSheetFormat::NumberNoZero:
 		sFormat = L"#,##0_);[Red](#,##0);_(* \"\"??_);_(@_)";
 		break;
-	case ISpreadSheetExporter::eSpreadSheetDate:
+	case ARBSpreadSheetFormat::Date:
 		sFormat = L"d/m/yyyy";
 		break;
 	}
@@ -939,9 +939,9 @@ bool CWizardCalcExport::SetBold(
 bool CWizardCalcExport::SetAlignment(
 		long inRow,
 		long inCol,
-		ISpreadSheetExporter::eAlign align)
+		ARBSpreadSheetAlign align)
 {
-	if (ISpreadSheetExporter::eSpreadSheetNone == align)
+	if (ARBSpreadSheetAlign::None == align)
 		return true;
 	wxAutomationObject cell(m_Worksheet.CallMethod(L"getCellByPosition", inCol, inRow));
 	if (!cell.GetDispatchPtr())
@@ -952,19 +952,19 @@ bool CWizardCalcExport::SetAlignment(
 	switch (align)
 	{
 	default:
-	case ISpreadSheetExporter::eSpreadSheetGeneral:
+	case ARBSpreadSheetAlign::General:
 		// com.sun.star.table.CellHoriJustify.STANDARD
 		val = 0;
 		break;
-	case ISpreadSheetExporter::eSpreadSheetLeft:
+	case ARBSpreadSheetAlign::Left:
 		// com.sun.star.table.CellHoriJustify.LEFT
 		val = 1;
 		break;
-	case ISpreadSheetExporter::eSpreadSheetCenter:
+	case ARBSpreadSheetAlign::Center:
 		// com.sun.star.table.CellHoriJustify.CENTER
 		val = 2;
 		break;
-	case ISpreadSheetExporter::eSpreadSheetRight:
+	case ARBSpreadSheetAlign::Right:
 		// com.sun.star.table.CellHoriJustify.RIGHT
 		val = 3;
 		break;
@@ -976,22 +976,22 @@ bool CWizardCalcExport::SetAlignment(
 bool CWizardCalcExport::SetFormat(
 		long inRow,
 		long inCol,
-		ISpreadSheetExporter::eFormat format)
+		ARBSpreadSheetFormat format)
 {
 	std::wstring sFormat;
 	switch (format)
 	{
 	default:
-	case ISpreadSheetExporter::eSpreadSheetText:
+	case ARBSpreadSheetFormat::Text:
 		sFormat = L"@";
 		break;
-	case ISpreadSheetExporter::eSpreadSheetCurrency:
+	case ARBSpreadSheetFormat::Currency:
 		sFormat = L"_($#,##0.00_);[RED]_($(#,##0.00);_(\"-\"??_);_(@_)";
 		break;
-	case ISpreadSheetExporter::eSpreadSheetNumber:
+	case ARBSpreadSheetFormat::Number:
 		sFormat = L"#,##0_);[RED](#,##0)";
 		break;
-	case ISpreadSheetExporter::eSpreadSheetDate:
+	case ARBSpreadSheetFormat::Date:
 		sFormat = L"DD/MM/YYYY";
 		break;
 	}
@@ -1186,7 +1186,7 @@ bool CWizardCalcImport::GetData(
 
 /////////////////////////////////////////////////////////////////////////////
 
-ISpreadSheetPtr ISpreadSheet::Create(eType inType)
+ISpreadSheetPtr ISpreadSheet::Create(ARBSpreadSheetType inType)
 {
 	ISpreadSheetPtr pInterface;
 #if HAS_AUTOMATION
@@ -1194,10 +1194,10 @@ ISpreadSheetPtr ISpreadSheet::Create(eType inType)
 	{
 	default:
 		break;
-	case eMicrosoftExcel:
+	case ARBSpreadSheetType::MicrosoftExcel:
 		pInterface = ISpreadSheetPtr(CWizardExcel::Create());
 		break;
-	case eOpenOfficeCalc:
+	case ARBSpreadSheetType::OpenOfficeCalc:
 		pInterface = ISpreadSheetPtr(CWizardCalc::Create());
 		break;
 	}

@@ -141,7 +141,7 @@ bool ARBConfigDivision::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_DIVISION)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME));

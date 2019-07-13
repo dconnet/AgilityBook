@@ -200,7 +200,7 @@ bool ARBConfigLifetimePoints::Load(
 			return false;
 
 		// pre-v14.4: Points is required. v14.4+ is not.
-		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points))
+		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points))
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_POINTS));
 			return false;
@@ -218,7 +218,7 @@ bool ARBConfigLifetimePoints::Load(
 		inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points);
 	}
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults))
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_FAULTS));
 		return false;

@@ -25,14 +25,14 @@ ARB_TYPEDEF(ARBCalcPointsTop10USDAA)
 ARB_TYPEDEF(ARBCalcPointsUKI)
 
 
-enum ARBPointsType
+enum class ARBPointsType
 {
 	// Note, these faults are used as indices in the UI
-	ePointsTypeNormal = 0, ///< Original points computation.
-	ePointsTypeT2B,        ///< AKC/T2B: based on percentage of SCT.
-	ePointsTypeUKI,        ///< UKI: points based on placement.
-	ePointsTypeTop10USDAA, ///< USDAA: Top10 points based on placement/inclass
-	ePointsTypeMax
+	Normal = 0, ///< Original points computation.
+	T2B,        ///< AKC/T2B: based on percentage of SCT.
+	UKI,        ///< UKI: points based on placement.
+	Top10USDAA, ///< USDAA: Top10 points based on placement/inclass
+	Max
 };
 
 
@@ -82,7 +82,7 @@ protected:
 	ARBCalcPointsNormal();
 public:
 	static ARBCalcPointsNormalPtr New();
-	ARBPointsType GetType() const override {return ePointsTypeNormal;}
+	ARBPointsType GetType() const override {return ARBPointsType::Normal;}
 	std::wstring GetGenericName(double points, double faults) const override;
 	bool AllowConfiguration() const override {return true;}
 	double GetPoints(
@@ -103,7 +103,7 @@ protected:
 	ARBCalcPointsT2B();
 public:
 	static ARBCalcPointsT2BPtr New();
-	ARBPointsType GetType() const override {return ePointsTypeT2B;}
+	ARBPointsType GetType() const override {return ARBPointsType::T2B;}
 	std::wstring GetGenericName(double points, double faults) const override;
 	double GetPoints(
 			double inPoints,
@@ -123,7 +123,7 @@ protected:
 	ARBCalcPointsUKI();
 public:
 	static ARBCalcPointsUKIPtr New();
-	ARBPointsType GetType() const override {return ePointsTypeUKI;}
+	ARBPointsType GetType() const override {return ARBPointsType::UKI;}
 	std::wstring GetGenericName(double points, double faults) const override;
 	double GetPoints(
 			double inPoints,
@@ -143,7 +143,7 @@ protected:
 	ARBCalcPointsTop10USDAA();
 public:
 	static ARBCalcPointsTop10USDAAPtr New();
-	ARBPointsType GetType() const override {return ePointsTypeTop10USDAA;}
+	ARBPointsType GetType() const override {return ARBPointsType::Top10USDAA;}
 	std::wstring GetGenericName(double points, double faults) const override;
 	double GetPoints(
 			double inPoints,

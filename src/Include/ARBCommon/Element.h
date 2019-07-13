@@ -36,6 +36,24 @@ class ARBDate;
 class ARBVersion;
 
 
+enum class ARBElementType
+{
+	Node,
+	Text
+};
+
+
+/**
+ * Result of getting an attribute.
+ */
+enum class ARBAttribLookup
+{
+	NotFound,	///< Attribute was not found.
+	Invalid,	///< Attribute's value is not valid for data type.
+	Found		///< Attribute was found.
+};
+
+
 /**
  * Tree-like structure to hold XML data.
  *
@@ -79,12 +97,7 @@ public:
 	 */
 	virtual void Dump(int inLevel = 0) const = 0;
 
-	typedef enum
-	{
-		Element_Node,
-		Element_Text
-	} ElementType;
-	virtual ElementType GetType() const = 0;
+	virtual ARBElementType GetType() const = 0;
 
 	/**
 	 * Get the name of this element.
@@ -139,7 +152,7 @@ public:
 	static ElementNodePtr New(std::wstring const& inName);
 
 	void Dump(int inLevel = 0) const override;
-	Element::ElementType GetType() const override;
+	ARBElementType GetType() const override;
 	std::wstring const& GetName() const override;
 	void SetName(std::wstring const& inName) override;
 	std::wstring GetValue() const override;
@@ -157,16 +170,6 @@ public:
 	void clear();
 
 	/**
-	 * Result of getting an attribute.
-	 */
-	typedef enum
-	{
-		eNotFound,		///< Attribute was not found.
-		eInvalidValue,	///< Attribute's value is not valid for data type.
-		eFound			///< Attribute was found.
-	} AttribLookup;
-
-	/**
 	 * The number of attributes. This should only be used when iterating over
 	 * all attributes. Use in conjunction with GetNthAttrib. For getting the
 	 * value of a given attribute, GetAttrib is more efficient.
@@ -181,7 +184,7 @@ public:
 	 * @param outValue Value of the attribute.
 	 * @return Result of lookup.
 	 */
-	AttribLookup GetNthAttrib(
+	ARBAttribLookup GetNthAttrib(
 			int inIndex,
 			std::wstring& outName,
 			std::wstring& outValue) const;
@@ -192,31 +195,31 @@ public:
 	 * @param outValue Value of attribute
 	 * @return Result of lookup.
 	 */
-	AttribLookup GetAttrib(
+	ARBAttribLookup GetAttrib(
 			std::wstring const& inName,
 			std::wstring& outValue) const;
-	AttribLookup GetAttrib(
+	ARBAttribLookup GetAttrib(
 			std::wstring const& inName,
 			ARBVersion& outValue) const;
-	AttribLookup GetAttrib(
+	ARBAttribLookup GetAttrib(
 			std::wstring const& inName,
 			ARBDate& outValue) const;
-	AttribLookup GetAttrib(
+	ARBAttribLookup GetAttrib(
 			std::wstring const& inName,
 			bool& outValue) const;
-	AttribLookup GetAttrib(
+	ARBAttribLookup GetAttrib(
 			std::wstring const& inName,
 			short& outValue) const;
-	AttribLookup GetAttrib(
+	ARBAttribLookup GetAttrib(
 			std::wstring const& inName,
 			unsigned short& outValue) const;
-	AttribLookup GetAttrib(
+	ARBAttribLookup GetAttrib(
 			std::wstring const& inName,
 			long& outValue) const;
-	AttribLookup GetAttrib(
+	ARBAttribLookup GetAttrib(
 			std::wstring const& inName,
 			unsigned long& outValue) const;
-	AttribLookup GetAttrib(
+	ARBAttribLookup GetAttrib(
 			std::wstring const& inName,
 			double& outValue) const;
 
@@ -290,7 +293,7 @@ public:
 	 * Get the number of typed elements.
 	 * @param type Type to count.
 	 */
-	int GetNodeCount(ElementType type) const;
+	int GetNodeCount(ARBElementType type) const;
 
 	/**
 	 * Does this node have any text? (a value)
@@ -477,7 +480,7 @@ public:
 	static ElementTextPtr New(std::wstring const& inText);
 
 	void Dump(int inLevel = 0) const override;
-	Element::ElementType GetType() const override;
+	ARBElementType GetType() const override;
 	std::wstring const& GetName() const override;
 	void SetName(std::wstring const& inName) override;
 	std::wstring GetValue() const override;

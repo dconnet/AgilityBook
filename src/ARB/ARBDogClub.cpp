@@ -146,7 +146,7 @@ bool ARBDogClub::Load(
 		return false;
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (ElementNode::eFound != inTree->GetAttrib(L"Name", m_Name)
+		if (ARBAttribLookup::Found != inTree->GetAttrib(L"Name", m_Name)
 		|| 0 == m_Name.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CLUB, L"Name"));
@@ -156,7 +156,7 @@ bool ARBDogClub::Load(
 	else
 		m_Name = inTree->GetValue();
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_CLUB_VENUE, m_Venue)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_CLUB_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CLUB, ATTRIB_CLUB_VENUE));

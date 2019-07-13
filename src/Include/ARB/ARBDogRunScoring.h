@@ -28,23 +28,24 @@
 
 
 /**
+ * Types of scoring
+ */
+enum class ARBScoringType
+{
+	Unknown = -1,		///< Unknown
+	ByTime = 0,			///< Scoring based on time.
+	ByOpenClose = 1,	///< Scoring based on Opening/Closing points.
+	ByPoints = 2		///< Scoring based on points.
+};
+
+
+/**
  * Keeps track of the scoring for a run.
  */
 class ARB_API ARBDogRunScoring
 {
 public:
-	/**
-	 * Types of scoring
-	 */
-	typedef enum
-	{
-		eTypeUnknown = -1,		///< Unknown
-		eTypeByTime = 0,		///< Scoring based on time.
-		eTypeByOpenClose = 1,	///< Scoring based on Opening/Closing points.
-		eTypeByPoints = 2		///< Scoring based on points.
-	} ScoringType;
-
-	static ARBDogRunScoring::ScoringType TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType);
+	static ARBScoringType TranslateConfigScoring(ARBScoringStyle inType);
 
 	ARBDogRunScoring();
 	~ARBDogRunScoring();
@@ -139,12 +140,12 @@ public:
 	/**
 	 * Getters/setters.
 	 */
-	ScoringType GetType() const
+	ARBScoringType GetType() const
 	{
 		return m_type;
 	}
 	void SetType(
-			ScoringType inType,
+			ARBScoringType inType,
 			bool inRound)
 	{
 		m_type = inType;
@@ -253,7 +254,7 @@ public:
 	}
 
 private:
-	ScoringType m_type;
+	ARBScoringType m_type;
 	bool m_bRoundTimeFaults;
 	double m_SCT;
 	double m_SCT2;

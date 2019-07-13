@@ -201,14 +201,14 @@ CDlgExistingPoints::CDlgExistingPoints(
 	m_ctrlType->SetHelpText(_("HIDC_EXISTING_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_EXISTING_TYPE"));
 	// Set the contents of the type combo.
-	ARBDogExistingPoints::PointType types[] =
+	ARBExistingPointType types[] =
 	{
-		ARBDogExistingPoints::eOtherPoints,
-		ARBDogExistingPoints::eLifetime,
-		ARBDogExistingPoints::eTitle,
-		ARBDogExistingPoints::eSpeed,
-		//ARBDogExistingPoints::eMQ, Not here - will be added later as long as a venue supports it
-		ARBDogExistingPoints::eSQ
+		ARBExistingPointType::OtherPoints,
+		ARBExistingPointType::Lifetime,
+		ARBExistingPointType::Title,
+		ARBExistingPointType::Speed,
+		//ARBExistingPointType::MQ, Not here - will be added later as long as a venue supports it
+		ARBExistingPointType::SQ
 	};
 	int nTypes = sizeof(types) / sizeof(types[0]);
 	for (int i = 0; i < nTypes; ++i)
@@ -217,7 +217,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		m_ctrlType->SetClientData(index, reinterpret_cast<void*>(types[i]));
 		if (m_pExistingPoints && m_pExistingPoints->GetType() == types[i])
 			m_ctrlType->SetSelection(index);
-		else if (!m_pExistingPoints && ARBDogExistingPoints::eTitle == types[i])
+		else if (!m_pExistingPoints && ARBExistingPointType::Title == types[i])
 			m_ctrlType->SetSelection(index);
 	}
 	if (wxNOT_FOUND == m_ctrlType->GetSelection())
@@ -390,9 +390,9 @@ CDlgExistingPoints::CDlgExistingPoints(
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (0 < pVenue->GetMultiQs().size())
 		{
-			int index = m_ctrlType->Append(StringUtil::stringWX(ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::eMQ)));
-			m_ctrlType->SetClientData(index, reinterpret_cast<void*>(ARBDogExistingPoints::eMQ));
-			if (m_pExistingPoints && m_pExistingPoints->GetType() == ARBDogExistingPoints::eMQ)
+			int index = m_ctrlType->Append(StringUtil::stringWX(ARBDogExistingPoints::GetPointTypeName(ARBExistingPointType::MQ)));
+			m_ctrlType->SetClientData(index, reinterpret_cast<void*>(ARBExistingPointType::MQ));
+			if (m_pExistingPoints && m_pExistingPoints->GetType() == ARBExistingPointType::MQ)
 				m_ctrlType->SetSelection(index);
 			break;
 		}
@@ -413,14 +413,13 @@ CDlgExistingPoints::CDlgExistingPoints(
 }
 
 
-ARBDogExistingPoints::PointType CDlgExistingPoints::GetCurrentType() const
+ARBExistingPointType CDlgExistingPoints::GetCurrentType() const
 {
-	ARBDogExistingPoints::PointType type = ARBDogExistingPoints::eUnknown;
+	ARBExistingPointType type = ARBExistingPointType::Unknown;
 	int index = m_ctrlType->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
-		type = static_cast<ARBDogExistingPoints::PointType>(
-			reinterpret_cast<size_t>(m_ctrlType->GetClientData(index)));
+		type = static_cast<ARBExistingPointType>(reinterpret_cast<size_t>(m_ctrlType->GetClientData(index)));
 	}
 	return type;
 }
@@ -489,7 +488,7 @@ void CDlgExistingPoints::SetEnableLists(
 	default:
 		break;
 
-	case ARBDogExistingPoints::eOtherPoints:
+	case ARBExistingPointType::OtherPoints:
 		outVenue = true;
 		outDivMQ = true;
 		outLevel = true;
@@ -497,7 +496,7 @@ void CDlgExistingPoints::SetEnableLists(
 		outTypeName = true;
 		break;
 
-	case ARBDogExistingPoints::eLifetime:
+	case ARBExistingPointType::Lifetime:
 		outVenue = true;
 		outDivMQ = true;
 		outLevel = true;
@@ -505,7 +504,7 @@ void CDlgExistingPoints::SetEnableLists(
 		outTypeName = true;
 		break;
 
-	case ARBDogExistingPoints::eTitle:
+	case ARBExistingPointType::Title:
 		outVenue = true;
 		outDivMQ = true;
 		outLevel = true;
@@ -520,18 +519,18 @@ void CDlgExistingPoints::SetEnableLists(
 		}
 		break;
 
-	case ARBDogExistingPoints::eSpeed:
+	case ARBExistingPointType::Speed:
 		outVenue = true;
 		outDivMQ = true;
 		outLevel = true;
 		break;
 
-	case ARBDogExistingPoints::eMQ:
+	case ARBExistingPointType::MQ:
 		outVenue = true;
 		outDivMQ = true;
 		break;
 
-	case ARBDogExistingPoints::eSQ:
+	case ARBExistingPointType::SQ:
 		outVenue = true;
 		outDivMQ = true;
 		outLevel = true;
@@ -560,8 +559,8 @@ void CDlgExistingPoints::UpdateControls()
 	bool outSubName;
 	bool outTypeName;
 	SetEnableLists(outVenue, outDivMQ, outLevel, outEvent, outSubName, outTypeName, true);
-	ARBDogExistingPoints::PointType type = GetCurrentType();
-	if (ARBDogExistingPoints::eMQ == type)
+	ARBExistingPointType type = GetCurrentType();
+	if (ARBExistingPointType::MQ == type)
 	{
 		m_textDivMultiQs->SetLabel(_("IDC_EXISTING_MULTIQ"));
 		m_ctrlDivMultiQs->SetHelpText(_("HIDC_EXISTING_MULTIQ"));
@@ -575,7 +574,7 @@ void CDlgExistingPoints::UpdateControls()
 	}
 	wxWindow* btnOk = FindWindowInSizer(m_sdbSizer, wxID_OK);
 	if (btnOk)
-		btnOk->Enable(ARBDogExistingPoints::eUnknown != type);
+		btnOk->Enable(ARBExistingPointType::Unknown != type);
 }
 
 
@@ -589,14 +588,14 @@ void CDlgExistingPoints::FillVenues()
 		venue = m_pExistingPoints->GetVenue();
 	m_ctrlVenues->Clear();
 
-	ARBDogExistingPoints::PointType type = GetCurrentType();
+	ARBExistingPointType type = GetCurrentType();
 
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
 		iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
 		++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
-		if (ARBDogExistingPoints::eMQ != type || 0 < pVenue->GetMultiQs().size())
+		if (ARBExistingPointType::MQ != type || 0 < pVenue->GetMultiQs().size())
 		{
 			int idx = m_ctrlVenues->Append(StringUtil::stringWX(pVenue->GetName()));
 			m_ctrlVenues->SetClientObject(idx, new CDlgPointsVenueData(pVenue));
@@ -611,14 +610,14 @@ void CDlgExistingPoints::FillVenues()
 
 void CDlgExistingPoints::FillDivMultiQ()
 {
-	ARBDogExistingPoints::PointType type = GetCurrentType();
+	ARBExistingPointType type = GetCurrentType();
 	std::wstring divMultiQ;
 	int index = m_ctrlDivMultiQs->GetSelection();
 	if (wxNOT_FOUND != index)
 		divMultiQ = m_ctrlDivMultiQs->GetString(index);
 	else if (m_pExistingPoints)
 	{
-		if (ARBDogExistingPoints::eMQ == type)
+		if (ARBExistingPointType::MQ == type)
 			divMultiQ = m_pExistingPoints->GetMultiQ();
 		else
 			divMultiQ = m_pExistingPoints->GetDivision();
@@ -630,7 +629,7 @@ void CDlgExistingPoints::FillDivMultiQ()
 	{
 		ARBConfigVenuePtr pVenue = GetVenueData(idxVenue)->m_Venue;
 
-		if (ARBDogExistingPoints::eMQ == type)
+		if (ARBExistingPointType::MQ == type)
 		{
 			for (ARBConfigMultiQList::const_iterator iterQ = pVenue->GetMultiQs().begin();
 				iterQ != pVenue->GetMultiQs().end();
@@ -657,7 +656,7 @@ void CDlgExistingPoints::FillDivMultiQ()
 			}
 		}
 	}
-	if (ARBDogExistingPoints::eMQ != type)
+	if (ARBExistingPointType::MQ != type)
 		FillLevels();
 }
 
@@ -787,7 +786,7 @@ void CDlgExistingPoints::FillSubNames()
 
 void CDlgExistingPoints::FillTypeNames()
 {
-	ARBDogExistingPoints::PointType type = GetCurrentType();
+	ARBExistingPointType type = GetCurrentType();
 	ARBConfigVenuePtr pVenue;
 	int idxVenue = m_ctrlVenues->GetSelection();
 	if (wxNOT_FOUND != idxVenue)
@@ -800,7 +799,7 @@ void CDlgExistingPoints::FillTypeNames()
 	default:
 		break;
 			
-	case ARBDogExistingPoints::eOtherPoints:
+	case ARBExistingPointType::OtherPoints:
 		for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->Book().GetConfig().GetOtherPoints().begin();
 			iterOther != m_pDoc->Book().GetConfig().GetOtherPoints().end();
 			++iterOther)
@@ -808,7 +807,7 @@ void CDlgExistingPoints::FillTypeNames()
 			ARBConfigOtherPointsPtr pOther = (*iterOther);
 			int idxName = m_ctrlTypeNames->Append(StringUtil::stringWX(pOther->GetName()));
 			m_ctrlTypeNames->SetClientObject(idxName, new CDlgPointsTypeNameData(pOther));
-			if (m_pExistingPoints && ARBDogExistingPoints::eOtherPoints == m_pExistingPoints->GetType())
+			if (m_pExistingPoints && ARBExistingPointType::OtherPoints == m_pExistingPoints->GetType())
 			{
 				if (m_pExistingPoints->GetTypeName() == pOther->GetName())
 					m_ctrlTypeNames->SetSelection(idxName);
@@ -816,7 +815,7 @@ void CDlgExistingPoints::FillTypeNames()
 		}
 		break;
 
-	case ARBDogExistingPoints::eLifetime:
+	case ARBExistingPointType::Lifetime:
 		if (pVenue)
 			for (ARBConfigLifetimeNameList::const_iterator iterOther = pVenue->GetLifetimeNames().begin();
 				iterOther != pVenue->GetLifetimeNames().end();
@@ -825,7 +824,7 @@ void CDlgExistingPoints::FillTypeNames()
 				ARBConfigLifetimeNamePtr pOther = (*iterOther);
 				int idxName = m_ctrlTypeNames->Append(StringUtil::stringWX(pOther->GetName()));
 				m_ctrlTypeNames->SetClientObject(idxName, new CDlgPointsTypeNameData(pOther));
-				if (m_pExistingPoints && ARBDogExistingPoints::eLifetime == m_pExistingPoints->GetType())
+				if (m_pExistingPoints && ARBExistingPointType::Lifetime == m_pExistingPoints->GetType())
 				{
 					if (m_pExistingPoints->GetTypeName() == pOther->GetName())
 						m_ctrlTypeNames->SetSelection(idxName);
@@ -859,7 +858,7 @@ void CDlgExistingPoints::OnSelchangeVenue(wxCommandEvent& evt)
 
 void CDlgExistingPoints::OnSelchangeDivMultiQ(wxCommandEvent& evt)
 {
-	if (ARBDogExistingPoints::eMQ != GetCurrentType())
+	if (ARBExistingPointType::MQ != GetCurrentType())
 		FillLevels();
 }
 
@@ -881,7 +880,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	ARBDogExistingPoints::PointType type = GetCurrentType();
+	ARBExistingPointType type = GetCurrentType();
 	std::wstring typeName;
 	std::wstring venue;
 	std::wstring div;
@@ -894,7 +893,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 	default:
 		break;
 	//  OtherPts Venue    Division Level Event
-	case ARBDogExistingPoints::eOtherPoints:
+	case ARBExistingPointType::OtherPoints:
 		typeName = m_TextTypeName;
 		venue = m_TextVenue;
 		div = m_TextDivMultiQ;
@@ -902,7 +901,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		eventName = m_TextEvent;
 		break;
 	//  OtherPts Venue    Division Level Event
-	case ARBDogExistingPoints::eLifetime:
+	case ARBExistingPointType::Lifetime:
 		typeName = m_TextTypeName;
 		venue = m_TextVenue;
 		div = m_TextDivMultiQ;
@@ -910,7 +909,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		eventName = m_TextEvent;
 		break;
 		//  Venue    Division Level    Event SubName
-	case ARBDogExistingPoints::eTitle:
+	case ARBExistingPointType::Title:
 		venue = m_TextVenue;
 		div = m_TextDivMultiQ;
 		level = m_TextLevel;
@@ -918,20 +917,20 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		subName = m_TextSubName;
 		break;
 	//  Venue    Division Level    Event
-	case ARBDogExistingPoints::eSQ:
+	case ARBExistingPointType::SQ:
 		venue = m_TextVenue;
 		div = m_TextDivMultiQ;
 		level = m_TextLevel;
 		eventName = m_TextEvent;
 		break;
 	//  Venue    Division Level
-	case ARBDogExistingPoints::eSpeed:
+	case ARBExistingPointType::Speed:
 		venue = m_TextVenue;
 		div = m_TextDivMultiQ;
 		level = m_TextLevel;
 		break;
 	//  Venue    MultiQ
-	case ARBDogExistingPoints::eMQ:
+	case ARBExistingPointType::MQ:
 		venue = m_TextVenue;
 		multiQ = m_TextDivMultiQ;
 		break;

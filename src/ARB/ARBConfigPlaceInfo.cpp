@@ -153,17 +153,17 @@ bool ARBConfigPlaceInfo::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_PLACE_INFO)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place))
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_PLACE));
 		return false;
 	}
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACE_INFO_VALUE, m_Value))
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PLACE_INFO_VALUE, m_Value))
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_VALUE));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_PLACE_INFO_MUSTQ, m_MustQ))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_PLACE_INFO_MUSTQ, m_MustQ))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_MUSTQ, Localization()->ValidValuesBool().c_str()));
 		return false;

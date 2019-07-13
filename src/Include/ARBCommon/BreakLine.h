@@ -38,12 +38,12 @@ ARBCOMMON_API size_t BreakLine(
 		bool inRemoveEmpties = false);
 
 
-typedef enum
+enum class ReadStatus
 {
-	DataError,		///< Data was ill-formed (quoting)
-	DataNeedMore,	///< Last field is incomplete - need more data
-	DataOk,			///< Fields were all parsed
-} ReadStatus;
+	Error,		///< Data was ill-formed (quoting)
+	NeedMore,	///< Last field is incomplete - need more data
+	Ok,			///< Fields were all parsed
+};
 
 /**
  * Read a line from a CSV file [Based on RFC 4180 (October 2005)]

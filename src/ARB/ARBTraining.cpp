@@ -133,7 +133,7 @@ size_t ARBTraining::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
-	ioStrings.insert(m_Date.GetString(ARBDate::eSlashMDY));
+	ioStrings.insert(m_Date.GetString(ARBDateFormat::SlashMDY));
 	++nItems;
 
 	if (0 < m_Name.length())
@@ -170,10 +170,10 @@ bool ARBTraining::Load(
 	{
 	default:
 		break;
-	case ElementNode::eNotFound:
+	case ARBAttribLookup::NotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE));
 		return false;
-	case ElementNode::eInvalidValue:
+	case ARBAttribLookup::Invalid:
 		{
 			std::wstring attrib;
 			inTree->GetAttrib(ATTRIB_TRAINING_DATE, attrib);

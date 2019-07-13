@@ -23,6 +23,14 @@
 #include "LibwxARB.h"
 
 
+enum class ARBInfoType
+{
+	Club,
+	Judge,
+	Location
+};
+
+
 /**
  * General information to be tracked.
  *
@@ -31,13 +39,6 @@
 class ARB_API ARBInfo
 {
 public:
-	typedef enum
-	{
-		eClubInfo,
-		eJudgeInfo,
-		eLocationInfo
-	} eInfoType;
-
 	ARBInfo();
 	~ARBInfo();
 	ARBInfo(ARBInfo const& rhs);
@@ -80,29 +81,29 @@ public:
 	/*
 	 * Getters.
 	 */
-	ARBInfoItemList const& GetInfo(ARBInfo::eInfoType inType) const
+	ARBInfoItemList const& GetInfo(ARBInfoType inType) const
 	{
 		switch (inType)
 		{
 		default:
-		case ARBInfo::eClubInfo:
+		case ARBInfoType::Club:
 			return m_ClubInfo;
-		case ARBInfo::eJudgeInfo:
+		case ARBInfoType::Judge:
 			return m_JudgeInfo;
-		case ARBInfo::eLocationInfo:
+		case ARBInfoType::Location:
 			return m_LocationInfo;
 		}
 	}
-	ARBInfoItemList& GetInfo(ARBInfo::eInfoType inType)
+	ARBInfoItemList& GetInfo(ARBInfoType inType)
 	{
 		switch (inType)
 		{
 		default:
-		case ARBInfo::eClubInfo:
+		case ARBInfoType::Club:
 			return m_ClubInfo;
-		case ARBInfo::eJudgeInfo:
+		case ARBInfoType::Judge:
 			return m_JudgeInfo;
-		case ARBInfo::eLocationInfo:
+		case ARBInfoType::Location:
 			return m_LocationInfo;
 		}
 	}

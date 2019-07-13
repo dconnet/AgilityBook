@@ -1918,14 +1918,14 @@ bool ARBConfigActionList::Load(
 	if (!inTree || inTree->GetName() != TREE_ACTION)
 		return false;
 	std::wstring verb;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_ACTION_VERB, verb)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_ACTION_VERB, verb)
 	|| 0 == verb.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_ACTION, ATTRIB_ACTION_VERB));
 		return false;
 	}
 	short configVer;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_ACTION_CONFIG, configVer))
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_ACTION_CONFIG, configVer))
 	{
 		if (inVersion < ARBVersion(12, 12))
 		{

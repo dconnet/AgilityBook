@@ -34,24 +34,24 @@ typedef std::shared_ptr<CDlgListViewerData> CDlgListViewerDataPtr;
 class ScoringRunInfo
 {
 public:
-	typedef enum
+	enum class ScoringDetail
 	{
-		eNotScoringDetail,
-		eScoringDeleted,
-		eScoringChanged
-	} eScoringDetail;
+		None,
+		Deleted,
+		Changed
+	};
 	ScoringRunInfo()
 		: m_Dog()
 		, m_Trial()
 		, m_Run()
-		, m_ScoringDetail(eNotScoringDetail)
+		, m_ScoringDetail(ScoringDetail::None)
 	{
 	}
 	ScoringRunInfo(
 			ARBDogPtr const& inDog,
 			ARBDogTrialPtr const& inTrial,
 			ARBDogRunPtr const& inRun,
-			eScoringDetail inScoringDetail)
+			ScoringDetail inScoringDetail)
 		: m_Dog(inDog)
 		, m_Trial(inTrial)
 		, m_Run(inRun)
@@ -61,7 +61,7 @@ public:
 	ARBDogPtr m_Dog;
 	ARBDogTrialPtr m_Trial;
 	ARBDogRunPtr m_Run;
-	eScoringDetail m_ScoringDetail;
+	ScoringDetail m_ScoringDetail;
 };
 
 
@@ -111,11 +111,11 @@ public:
 
 struct CFindItemInfo
 {
-	ARBInfo::eInfoType type;
+	ARBInfoType type;
 	std::wstring name;
 	ARBInfoItemPtr pItem;
 	CFindItemInfo()
-		: type(ARBInfo::eClubInfo)
+		: type(ARBInfoType::Club)
 		, name()
 		, pItem()
 	{

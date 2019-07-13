@@ -261,18 +261,18 @@ std::string CCalendarSiteUSDAA::Process(
 				return std::string();
 			for (int i = 0; i < table->GetElementCount(); ++i)
 			{
-				if (Element::Element_Node != table->GetElement(i)->GetType())
+				if (ARBElementType::Node != table->GetElement(i)->GetType())
 					continue;
 				ElementNodePtr tr = table->GetElementNode(i);
 				if (!tr)
 					continue;
-				if (4 <= tr->GetNodeCount(Element::Element_Node))
+				if (4 <= tr->GetNodeCount(ARBElementType::Node))
 				{
 					std::wstring dates, club, detail, location;
 					int idx = 0;
 					for (int td = 0; td < tr->GetElementCount(); ++td)
 					{
-						if (Element::Element_Node != tr->GetElement(td)->GetType())
+						if (ARBElementType::Node != tr->GetElement(td)->GetType())
 							continue;
 						switch (idx)
 						{
@@ -400,12 +400,12 @@ std::string CCalendarSiteUSDAA::Process(
 					// <div><p>Closing date:</p><span>11/01/2010</span></div>
 					// <div><p>2nd Closing Date:</p><span>11/15/2010</span></div>
 					// <div><p>Event Secretary:</p><div><a href="mailto:yagility@nycap.rr.com">Donna Young</a><br/>4 Haber Way<br/>Castleton, NY 12033 United States</div></div>
-					if (4 <= fieldset->GetNodeCount(Element::Element_Node))
+					if (4 <= fieldset->GetNodeCount(ARBElementType::Node))
 					{
 						int idx = 0;
 						for (int i = 0; i < fieldset->GetElementCount(); ++i)
 						{
-							if (Element::Element_Node != fieldset->GetElement(i)->GetType())
+							if (ARBElementType::Node != fieldset->GetElement(i)->GetType())
 								continue;
 							ElementNodePtr div = fieldset->GetElementNode(i);
 							switch (idx)
@@ -453,12 +453,12 @@ std::string CCalendarSiteUSDAA::Process(
 				if (0 <= idxTable)
 				{
 					ElementNodePtr table = parent->GetElementNode(idxTable);
-					if (6 <= table->GetNodeCount(Element::Element_Node))
+					if (6 <= table->GetNodeCount(ARBElementType::Node))
 					{
 						int idx = 0;
 						for (int i = 0; i < table->GetElementCount(); ++i)
 						{
-							if (Element::Element_Node != table->GetElement(i)->GetType())
+							if (ARBElementType::Node != table->GetElement(i)->GetType())
 								continue;
 							switch (idx)
 							{

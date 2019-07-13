@@ -463,7 +463,7 @@ CDlgConfigAccel::CDlgConfigAccel(
 
 	m_ctrlItems = new CReportListCtrl(this,
 		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 150)),
-		true, CReportListCtrl::eSortHeader, true, false);
+		true, CReportListCtrl::SortHeader::Sort, true, false);
 	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgConfigAccel::OnColumnClick, this);
 	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgConfigAccel::OnItemSelected, this);
 	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgConfigAccel::OnItemActivated, this);

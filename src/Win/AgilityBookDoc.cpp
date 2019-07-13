@@ -1095,35 +1095,35 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 		}
 
-		for (ARBInfoItemList::const_iterator iterClub = book.GetInfo().GetInfo(ARBInfo::eClubInfo).begin();
-			iterClub != book.GetInfo().GetInfo(ARBInfo::eClubInfo).end();
+		for (ARBInfoItemList::const_iterator iterClub = book.GetInfo().GetInfo(ARBInfoType::Club).begin();
+			iterClub != book.GetInfo().GetInfo(ARBInfoType::Club).end();
 			++iterClub)
 		{
 			ARBInfoItemPtr pClub = *iterClub;
 			// If this fails, it already exists.
-			if (m_Records.GetInfo().GetInfo(ARBInfo::eClubInfo).AddItem(pClub))
+			if (m_Records.GetInfo().GetInfo(ARBInfoType::Club).AddItem(pClub))
 			{
 				++countClubs;
 			}
 		}
-		for (ARBInfoItemList::const_iterator iterJudge = book.GetInfo().GetInfo(ARBInfo::eJudgeInfo).begin();
-			iterJudge != book.GetInfo().GetInfo(ARBInfo::eJudgeInfo).end();
+		for (ARBInfoItemList::const_iterator iterJudge = book.GetInfo().GetInfo(ARBInfoType::Judge).begin();
+			iterJudge != book.GetInfo().GetInfo(ARBInfoType::Judge).end();
 			++iterJudge)
 		{
 			ARBInfoItemPtr pJudge = *iterJudge;
 			// If this fails, it already exists.
-			if (m_Records.GetInfo().GetInfo(ARBInfo::eJudgeInfo).AddItem(pJudge))
+			if (m_Records.GetInfo().GetInfo(ARBInfoType::Judge).AddItem(pJudge))
 			{
 				++countJudges;
 			}
 		}
-		for (ARBInfoItemList::const_iterator iterLocation = book.GetInfo().GetInfo(ARBInfo::eLocationInfo).begin();
-			iterLocation != book.GetInfo().GetInfo(ARBInfo::eLocationInfo).end();
+		for (ARBInfoItemList::const_iterator iterLocation = book.GetInfo().GetInfo(ARBInfoType::Location).begin();
+			iterLocation != book.GetInfo().GetInfo(ARBInfoType::Location).end();
 			++iterLocation)
 		{
 			ARBInfoItemPtr pLocation = *iterLocation;
 			// If this fails, it already exists.
-			if (m_Records.GetInfo().GetInfo(ARBInfo::eLocationInfo).AddItem(pLocation))
+			if (m_Records.GetInfo().GetInfo(ARBInfoType::Location).AddItem(pLocation))
 			{
 				++countLocations;
 			}
@@ -1142,19 +1142,19 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 		{
 			std::set<std::wstring> namesInUse;
 			m_Records.GetAllClubNames(namesInUse, false, false);
-			m_Records.GetInfo().GetInfo(ARBInfo::eClubInfo).CondenseContent(namesInUse);
+			m_Records.GetInfo().GetInfo(ARBInfoType::Club).CondenseContent(namesInUse);
 		}
 		if (0 < countJudges)
 		{
 			std::set<std::wstring> namesInUse;
 			m_Records.GetAllJudges(namesInUse, false, false);
-			m_Records.GetInfo().GetInfo(ARBInfo::eJudgeInfo).CondenseContent(namesInUse);
+			m_Records.GetInfo().GetInfo(ARBInfoType::Judge).CondenseContent(namesInUse);
 		}
 		if (0 < countLocations)
 		{
 			std::set<std::wstring> namesInUse;
 			m_Records.GetAllTrialLocations(namesInUse, false, false);
-			m_Records.GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
+			m_Records.GetInfo().GetInfo(ARBInfoType::Location).CondenseContent(namesInUse);
 		}
 		fmt::wmemory_buffer str;
 		fmt::format_to(str, L"{}", _("IDS_ADDED").wx_str());
@@ -1388,17 +1388,17 @@ bool CAgilityBookDoc::ResetVisibility(
 {
 	bool bChanged = false;
 	unsigned short nVisRun = CFilterOptions::Options().IsRunVisible(venues, inTrial, inRun);
-	bool bFilter = (nVisRun & (0x1 << ARBBase::eFilter)) ? false : true;
-	bool bIgnore = (nVisRun & (0x1 << ARBBase::eIgnoreQ)) ? false : true;
-	if (inRun->IsFiltered(ARBBase::eFilter) != bFilter)
+	bool bFilter = (nVisRun & GetFilterMask(ARBFilterType::Full)) ? false : true;
+	bool bIgnore = (nVisRun & GetFilterMask(ARBFilterType::IgnoreQ)) ? false : true;
+	if (inRun->IsFiltered(ARBFilterType::Full) != bFilter)
 	{
 		bChanged = true;
-		inRun->SetFiltered(ARBBase::eFilter, bFilter);
+		inRun->SetFiltered(ARBFilterType::Full, bFilter);
 	}
-	if (inRun->IsFiltered(ARBBase::eIgnoreQ) != bIgnore)
+	if (inRun->IsFiltered(ARBFilterType::IgnoreQ) != bIgnore)
 	{
 		bChanged = true;
-		inRun->SetFiltered(ARBBase::eIgnoreQ, bIgnore);
+		inRun->SetFiltered(ARBFilterType::IgnoreQ, bIgnore);
 	}
 	return bChanged;
 }
@@ -1614,7 +1614,7 @@ std::wstring CAgilityBookDoc::GenerateHash(wxString const& filename) const
 {
 	wxFileInputStream file(StringUtil::stringW(filename));
 	wxStdInputStream stdfile(file);
-	return ARBMsgDigest::Compute(stdfile, ARBMsgDigest::ARBDigestSHA1, nullptr);
+	return ARBMsgDigest::Compute(stdfile, ARBMsgDigest::ARBDigest::SHA1, nullptr);
 }
 
 
@@ -1864,7 +1864,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	void Search(
 			std::wstring const& search,
-			ARBInfo::eInfoType inType,
+			ARBInfoType inType,
 			std::set<std::wstring> const& inUse,
 			ARBInfo const& info) const;
 };
@@ -1879,11 +1879,11 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	ARBInfo& info = m_pDoc->Book().GetInfo();
 	std::set<std::wstring> inUse;
 	m_pDoc->Book().GetAllClubNames(inUse, false, false);
-	Search(search, ARBInfo::eClubInfo, inUse, info);
+	Search(search, ARBInfoType::Club, inUse, info);
 	m_pDoc->Book().GetAllJudges(inUse, false, false);
-	Search(search, ARBInfo::eJudgeInfo, inUse, info);
+	Search(search, ARBInfoType::Judge, inUse, info);
 	m_pDoc->Book().GetAllTrialLocations(inUse, false, false);
-	Search(search, ARBInfo::eLocationInfo, inUse, info);
+	Search(search, ARBInfoType::Location, inUse, info);
 	if (0 < m_Items.size())
 	{
 		pDlg->EndModal(wxID_OK);
@@ -1900,7 +1900,7 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 
 void CFindInfo::Search(
 		std::wstring const& search,
-		ARBInfo::eInfoType inType,
+		ARBInfoType inType,
 		std::set<std::wstring> const& inUse,
 		ARBInfo const& info) const
 {
@@ -1983,7 +1983,7 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 		evt.Skip();
 		break;
 	case ID_VIEW_RUNS_BY_TRIAL:
-		evt.Check(CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle() ? 1 : 0);
+		evt.Check(ARBViewRuns::RunsByTrial == CAgilityBookOptions::GetViewRunsStyle() ? 1 : 0);
 		evt.Enable(false);
 		evt.Skip();
 		break;
@@ -2199,7 +2199,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
 				select = pTrial->GetClubs().GetPrimaryClubName();
-			CDlgInfoNote dlg(this, ARBInfo::eClubInfo, select, wxGetApp().GetTopWindow());
+			CDlgInfoNote dlg(this, ARBInfoType::Club, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}
 		break;
@@ -2210,7 +2210,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			ARBDogRunPtr pRun = GetCurrentRun();
 			if (pRun)
 				select = pRun->GetJudge();
-			CDlgInfoNote dlg(this, ARBInfo::eJudgeInfo, select, wxGetApp().GetTopWindow());
+			CDlgInfoNote dlg(this, ARBInfoType::Judge, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}
 		break;
@@ -2221,7 +2221,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
 				select = pTrial->GetLocation();
-			CDlgInfoNote dlg(this, ARBInfo::eLocationInfo, select, wxGetApp().GetTopWindow());
+			CDlgInfoNote dlg(this, ARBInfoType::Location, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}
 		break;
@@ -2325,25 +2325,25 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 	else
 		fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_CONFIGURATION_CURRENT").wx_str(), Book().GetConfig().GetVersion(), GetCurrentConfigVersion()));
 
-	if (!Book().GetFileInfo(ARBAgilityRecordBook::fileInfoBook).empty())
+	if (!Book().GetFileInfo(ARBFileInfo::Book).empty())
 	{
-		ARBVersion ver(Book().GetFileInfo(ARBAgilityRecordBook::fileInfoBook));
+		ARBVersion ver(Book().GetFileInfo(ARBFileInfo::Book));
 		if (ver == ARBAgilityRecordBook::GetCurrentDocVersion())
 			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_VERSION").wx_str(), ver.str()));
 		else
 			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_VERSION_CURRENT").wx_str(), ver.str(), ARBAgilityRecordBook::GetCurrentDocVersion().str()));
 	}
 
-	if (!Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS).empty()
-	|| !Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform).empty()
-	|| !Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp).empty()
-	|| !Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion).empty())
+	if (!Book().GetFileInfo(ARBFileInfo::OS).empty()
+	|| !Book().GetFileInfo(ARBFileInfo::Platform).empty()
+	|| !Book().GetFileInfo(ARBFileInfo::TimeStamp).empty()
+	|| !Book().GetFileInfo(ARBFileInfo::Version).empty())
 	{
 		fmt::format_to(str, L"\n{}\n{}\n", fmt::format(_("IDS_FILEPROP_FILEWRITTEN").wx_str(),
-			Book().GetFileInfo(ARBAgilityRecordBook::fileInfoOS),
-			Book().GetFileInfo(ARBAgilityRecordBook::fileInfoPlatform),
-			Book().GetFileInfo(ARBAgilityRecordBook::fileInfoTimeStamp),
-			Book().GetFileInfo(ARBAgilityRecordBook::fileInfoVersion)),
+			Book().GetFileInfo(ARBFileInfo::OS),
+			Book().GetFileInfo(ARBFileInfo::Platform),
+			Book().GetFileInfo(ARBFileInfo::TimeStamp),
+			Book().GetFileInfo(ARBFileInfo::Version)),
 			wxVERSION_STRING);
 	}
 

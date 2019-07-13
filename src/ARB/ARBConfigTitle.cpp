@@ -40,34 +40,34 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-ElementNode::AttribLookup LoadTitleStyle(
+ARBAttribLookup LoadTitleStyle(
 		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,
 		ARBTitleStyle& ioStyle)
 {
-	ioStyle = eTitleStyleNumber;
-	ElementNode::AttribLookup found = ElementNode::eNotFound;
+	ioStyle = ARBTitleStyle::Number;
+	ARBAttribLookup found = ARBAttribLookup::NotFound;
 	if (inVersion < ARBVersion(14, 0))
 	{
 		short tmp;
 		found = inTree->GetAttrib(inAttrib, tmp);
-		if (ElementNode::eFound == found)
+		if (ARBAttribLookup::Found == found)
 		{
 			switch (tmp)
 			{
 			default:
 				assert(0);
-				found = ElementNode::eInvalidValue;
+				found = ARBAttribLookup::Invalid;
 				break;
 			case 0:
-				ioStyle = eTitleStyleNumber;
+				ioStyle = ARBTitleStyle::Number;
 				break;
 			case 1:
-				ioStyle = eTitleStyleRoman;
+				ioStyle = ARBTitleStyle::Roman;
 				break;
 			case 2:
-				ioStyle = eTitleStyleNone;
+				ioStyle = ARBTitleStyle::None;
 				break;
 			}
 		}
@@ -76,18 +76,18 @@ ElementNode::AttribLookup LoadTitleStyle(
 	{
 		std::wstring tmp;
 		found = inTree->GetAttrib(inAttrib, tmp);
-		if (ElementNode::eFound == found)
+		if (ARBAttribLookup::Found == found)
 		{
 			if (L"0" == tmp)
-				ioStyle = eTitleStyleNone;
+				ioStyle = ARBTitleStyle::None;
 			else if (L"n" == tmp)
-				ioStyle = eTitleStyleNumber;
+				ioStyle = ARBTitleStyle::Number;
 			else if (L"r" == tmp)
-				ioStyle = eTitleStyleRoman;
+				ioStyle = ARBTitleStyle::Roman;
 			else
 			{
 				assert(0);
-				found = ElementNode::eInvalidValue;
+				found = ARBAttribLookup::Invalid;
 			}
 		}
 	}
@@ -106,13 +106,13 @@ void SaveTitleStyle(
 	default:
 		assert(0);
 		break;
-	case eTitleStyleNone:
+	case ARBTitleStyle::None:
 		style = L"0";
 		break;
-	case eTitleStyleNumber:
+	case ARBTitleStyle::Number:
 		// default
 		break;
-	case eTitleStyleRoman:
+	case ARBTitleStyle::Roman:
 		style = L"r";
 		break;
 	}
@@ -122,36 +122,36 @@ void SaveTitleStyle(
 
 /////////////////////////////////////////////////////////////////////////////
 
-ElementNode::AttribLookup LoadTitleSeparator(
+ARBAttribLookup LoadTitleSeparator(
 		ElementNodePtr const& inTree,
 		wchar_t const* inAttrib,
 		ARBVersion const& inVersion,
 		ARBTitleStyle inStyle,
 		ARBTitleSeparator& ioSep)
 {
-	ioSep = eTitleSeparatorNone;
+	ioSep = ARBTitleSeparator::None;
 	std::wstring tmp;
-	ElementNode::AttribLookup found = inTree->GetAttrib(inAttrib, tmp);
-	if (ElementNode::eFound == found)
+	ARBAttribLookup found = inTree->GetAttrib(inAttrib, tmp);
+	if (ARBAttribLookup::Found == found)
 	{
 		if (L"n" == tmp)
-			ioSep = eTitleSeparatorNone;
+			ioSep = ARBTitleSeparator::None;
 		else if (L"s" == tmp)
-			ioSep = eTitleSeparatorSpace;
+			ioSep = ARBTitleSeparator::Space;
 		else if (L"h" == tmp)
-			ioSep = eTitleSeparatorHyphen;
+			ioSep = ARBTitleSeparator::Hyphen;
 		else
 		{
 			assert(0);
-			found = ElementNode::eInvalidValue;
+			found = ARBAttribLookup::Invalid;
 		}
 	}
 
 	if (inVersion < ARBVersion(14, 0))
 	{
-		if (eTitleStyleRoman == inStyle)
+		if (ARBTitleStyle::Roman == inStyle)
 		{
-			ioSep = eTitleSeparatorHyphen;
+			ioSep = ARBTitleSeparator::Hyphen;
 		}
 	}
 	return found;
@@ -169,13 +169,13 @@ void SaveTitleSeparator(
 	default:
 		assert(0);
 		break;
-	case eTitleSeparatorNone:
+	case ARBTitleSeparator::None:
 		// default
 		break;
-	case eTitleSeparatorSpace:
+	case ARBTitleSeparator::Space:
 		sep = L"s";
 		break;
-	case eTitleSeparatorHyphen:
+	case ARBTitleSeparator::Hyphen:
 		sep = L"h";
 		break;
 	}
@@ -191,10 +191,10 @@ static std::wstring GetSeparator(ARBTitleSeparator inSep)
 	{
 	default:
 		break;
-	case eTitleSeparatorSpace:
+	case ARBTitleSeparator::Space:
 		sep = L" ";
 		break;
-	case eTitleSeparatorHyphen:
+	case ARBTitleSeparator::Hyphen:
 		sep = L"-";
 		break;
 	}
@@ -217,19 +217,19 @@ std::wstring ARBTitleInstance::TitleInstance(
 		// If we're showing in the selection menu (new title), there is no
 		// instance, so don't show "title0".
 		if (bShowInstanceOne && 0 == instance)
-			style = eTitleStyleNone;
+			style = ARBTitleStyle::None;
 		short value = startAt + (instance - 1) * increment;
 		switch (style)
 		{
 		default:
 			assert(0);
 			// fall thru
-		case eTitleStyleNone:
+		case ARBTitleStyle::None:
 			break;
-		case eTitleStyleNumber:
+		case ARBTitleStyle::Number:
 			str = fmt::format(L"{}{}", GetSeparator(sep), value);
 			break;
-		case eTitleStyleRoman:
+		case ARBTitleStyle::Roman:
 			str = fmt::format(L"{}{}", GetSeparator(sep), ShortToRoman(value));
 			break;
 		}
@@ -269,8 +269,8 @@ ARBConfigTitle::ARBConfigTitle()
 	, m_MultipleStartAt(0)
 	, m_MultipleIncrement(1)
 	, m_MultipleOnFirst(false)
-	, m_MultipleStyle(eTitleStyleNumber)
-	, m_MultipleSeparator(eTitleSeparatorNone)
+	, m_MultipleStyle(ARBTitleStyle::Number)
+	, m_MultipleSeparator(ARBTitleSeparator::None)
 {
 }
 
@@ -385,8 +385,8 @@ void ARBConfigTitle::clear()
 	m_MultipleStartAt = 0;
 	m_MultipleIncrement = 1;
 	m_MultipleOnFirst = false;
-	m_MultipleStyle = eTitleStyleNumber;
-	m_MultipleSeparator = eTitleSeparatorNone;
+	m_MultipleStyle = ARBTitleStyle::Number;
+	m_MultipleSeparator = ARBTitleSeparator::None;
 }
 
 
@@ -398,7 +398,7 @@ bool ARBConfigTitle::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_TITLES)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLES_NAME, m_Name)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_TITLES_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLES_NAME));
@@ -408,13 +408,13 @@ bool ARBConfigTitle::Load(
 	inTree->GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
 	m_Desc = inTree->GetValue();
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom))
 	{
 		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, attrib);
@@ -423,7 +423,7 @@ bool ARBConfigTitle::Load(
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg.c_str()));
 		return false;
 	}
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
 	{
 		std::wstring attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, attrib);
@@ -436,7 +436,7 @@ bool ARBConfigTitle::Load(
 	if (inVersion < ARBVersion(14, 0))
 	{
 		short multiple;
-		if (ElementNode::eFound == inTree->GetAttrib(L"Multiple", multiple))
+		if (ARBAttribLookup::Found == inTree->GetAttrib(L"Multiple", multiple))
 		{
 			if (1 == multiple)
 			{

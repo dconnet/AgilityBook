@@ -296,7 +296,7 @@ void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 			if (clpData.isOkay())
 			{
 				wxString data = m_Items->GetHtml(true, true);
-				clpData.AddData(eFormatHtml, StringUtil::stringW(data));
+				clpData.AddData(ARBClipFormat::Html, StringUtil::stringW(data));
 				clpData.AddData(StringUtil::stringW(m_Ctrl->ToText()));
 				clpData.CommitData();
 			}

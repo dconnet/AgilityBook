@@ -230,7 +230,7 @@ CUpdateInfo::CUpdateInfo()
 	, m_VerConfig(0)
 	, m_size(0)
 	, m_hash()
-	, m_hashType(ARBMsgDigest::ARBDigestUnknown)
+	, m_hashType(ARBMsgDigest::ARBDigest::Unknown)
 	, m_NewFile()
 	, m_ConfigFileName()
 	, m_InfoMsg()
@@ -253,7 +253,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	m_VerConfig = 0;
 	m_size = 0;
 	m_hash.clear();
-	m_hashType = ARBMsgDigest::ARBDigestUnknown;
+	m_hashType = ARBMsgDigest::ARBDigest::Unknown;
 	m_NewFile.clear();
 	m_ConfigFileName.clear();
 	m_InfoMsg.clear();
@@ -385,13 +385,13 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				{
 					bool bSkip = true;
 					std::wstring value;
-					if (ElementNode::eFound == node->GetAttrib(L"arch", value))
+					if (ARBAttribLookup::Found == node->GetAttrib(L"arch", value))
 					{
 						if (ARBAgilityRecordBook::GetArch() == value)
 						{
 							bSkip = false;
 							ARBVersion minOS;
-							if (ElementNode::eFound == node->GetAttrib(L"minOS", minOS))
+							if (ARBAttribLookup::Found == node->GetAttrib(L"minOS", minOS))
 							{
 								int majVer;
 								int minVer;
@@ -410,27 +410,27 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					// Wrong architecture
 					if (bSkip)
 						continue;
-					if (ElementNode::eFound == node->GetAttrib(L"ver", value))
+					if (ARBAttribLookup::Found == node->GetAttrib(L"ver", value))
 					{
 						m_VersionNum.Parse(value);
 						if (m_VersionNum.Valid())
 							bLoadedVersion = true;
 					}
-					if (ElementNode::eFound != node->GetAttrib(L"config", m_VerConfig)
-					|| ElementNode::eFound != node->GetAttrib(L"size", m_size)
-					|| ElementNode::eFound != node->GetAttrib(L"file", m_NewFile))
+					if (ARBAttribLookup::Found != node->GetAttrib(L"config", m_VerConfig)
+					|| ARBAttribLookup::Found != node->GetAttrib(L"size", m_size)
+					|| ARBAttribLookup::Found != node->GetAttrib(L"file", m_NewFile))
 					{
 						bLoadedVersion = false;
 					}
 					else
 					{
 						m_ConfigFileName = fmt::format(L"Config{}.txt", m_VerConfig);
-						if (ElementNode::eFound == node->GetAttrib(L"sha256", m_hash))
-							m_hashType = ARBMsgDigest::ARBDigestSHA256;
-						else if (ElementNode::eFound == node->GetAttrib(L"sha1", m_hash))
-							m_hashType = ARBMsgDigest::ARBDigestSHA1;
-						else if (ElementNode::eFound == node->GetAttrib(L"md5", m_hash))
-							m_hashType = ARBMsgDigest::ARBDigestMD5;
+						if (ARBAttribLookup::Found == node->GetAttrib(L"sha256", m_hash))
+							m_hashType = ARBMsgDigest::ARBDigest::SHA256;
+						else if (ARBAttribLookup::Found == node->GetAttrib(L"sha1", m_hash))
+							m_hashType = ARBMsgDigest::ARBDigest::SHA1;
+						else if (ARBAttribLookup::Found == node->GetAttrib(L"md5", m_hash))
+							m_hashType = ARBMsgDigest::ARBDigest::MD5;
 						else
 							bLoadedVersion = false;
 					}
@@ -515,7 +515,7 @@ bool CUpdateInfo::CheckProgram(
 			// Return that it needs updating, but don't record that we checked.
 			return bNeedsUpdating;
 		}
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO).c_str());
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDateFormat::ISO).c_str());
 		std::wstring msg = fmt::format(_("IDS_VERSION_AVAILABLE").wx_str(), m_VersionNum.GetVersionString());
 		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 		{
@@ -701,7 +701,7 @@ bool CUpdateInfo::CheckProgram(
 		}
 	}
 	else
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO).c_str());
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDateFormat::ISO).c_str());
 	return bNeedsUpdating;
 }
 

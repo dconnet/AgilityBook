@@ -28,6 +28,16 @@
 #include <set>
 
 
+// Filtered state
+enum class ARBFilterType
+{
+	Full,		// Full filter
+	IgnoreQ,	// Ignore Q status when filtering
+};
+
+ARB_API unsigned short GetFilterMask(ARBFilterType type);
+
+
 /**
  * @brief Base class for common functionality.
  */
@@ -52,19 +62,12 @@ public:
 	 */
 	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const = 0;
 
-	// Filtered state
-	typedef enum
-	{
-		eFilter,	// Full filter
-		eIgnoreQ,	// Ignore Q status when filtering
-	} FilterType;
-
 	/**
 	 * Get the filtered state of this object.
 	 * @param inFilterType The filtered type to check.
 	 * @return The filtered state.
 	 */
-	virtual bool IsFiltered(FilterType inFilterType) const;
+	virtual bool IsFiltered(ARBFilterType inFilterType) const;
 
 	/**
 	 * Set the filtered state of this object.
@@ -73,7 +76,7 @@ public:
 	 * @param bFiltered Filtered state of the object.
 	 */
 	virtual void SetFiltered(
-			FilterType inFilterType,
+			ARBFilterType inFilterType,
 			bool bFiltered);
 
 	/**
@@ -82,7 +85,7 @@ public:
 	 */
 	virtual bool IsFiltered() const
 	{
-		return IsFiltered(eFilter);
+		return IsFiltered(ARBFilterType::Full);
 	}
 
 	/**
@@ -91,7 +94,7 @@ public:
 	 */
 	virtual bool IsAnyFiltered() const
 	{
-		return IsFiltered(eFilter) || IsFiltered(eIgnoreQ);
+		return IsFiltered(ARBFilterType::Full) || IsFiltered(ARBFilterType::IgnoreQ);
 	}
 
 	/**
@@ -101,8 +104,8 @@ public:
 	 */
 	virtual void SetFiltered(bool bFiltered)
 	{
-		SetFiltered(eFilter, bFiltered);
-		SetFiltered(eIgnoreQ, bFiltered);
+		SetFiltered(ARBFilterType::Full, bFiltered);
+		SetFiltered(ARBFilterType::IgnoreQ, bFiltered);
 	}
 
 protected:

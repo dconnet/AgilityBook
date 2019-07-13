@@ -70,8 +70,8 @@ ARBDogTitle::ARBDogTitle()
 	, m_MultipleStartAt(0)
 	, m_MultipleIncrement(1)
 	, m_bShowInstanceOne(false)
-	, m_MultipleStyle(eTitleStyleNumber)
-	, m_MultipleSeparator(eTitleSeparatorNone)
+	, m_MultipleStyle(ARBTitleStyle::Number)
+	, m_MultipleSeparator(ARBTitleSeparator::None)
 	, m_bReceived(false)
 	, m_bHidden(false)
 {
@@ -188,7 +188,7 @@ size_t ARBDogTitle::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
-	ioStrings.insert(m_Date.GetString(ARBDate::eDashYMD));
+	ioStrings.insert(m_Date.GetString(ARBDateFormat::DashYMD));
 	++nItems;
 
 	ioStrings.insert(m_Venue);
@@ -210,7 +210,7 @@ bool ARBDogTitle::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_TITLE)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE));
@@ -225,7 +225,7 @@ bool ARBDogTitle::Load(
 		return false;
 	}
 
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_NAME, m_Name)
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_TITLE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME));
@@ -239,7 +239,7 @@ bool ARBDogTitle::Load(
 	{
 	default:
 		break;
-	case ElementNode::eNotFound:
+	case ARBAttribLookup::NotFound:
 		// As of version 8.5, no date infers this is an unearned title
 		// that we're hiding.
 		if (inVersion < ARBVersion(8, 5))
@@ -249,7 +249,7 @@ bool ARBDogTitle::Load(
 		}
 		m_bHidden = true;
 		break;
-	case ElementNode::eInvalidValue:
+	case ARBAttribLookup::Invalid:
 		{
 			std::wstring attrib;
 			inTree->GetAttrib(ATTRIB_TITLE_DATE, attrib);
@@ -267,7 +267,7 @@ bool ARBDogTitle::Load(
 	LoadTitleStyle(inTree, ATTRIB_TITLE_INSTANCE_STYLE, inVersion, m_MultipleStyle);
 	LoadTitleSeparator(inTree, ATTRIB_TITLE_INSTANCE_SEP, inVersion, m_MultipleStyle, m_MultipleSeparator);
 
-	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, Localization()->ValidValuesBool().c_str()));
 		return false;

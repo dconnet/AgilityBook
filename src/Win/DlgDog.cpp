@@ -722,7 +722,7 @@ CDlgDog::CDlgDog(
 	wxPanel* panelTitles = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlTitles = new CReportListCtrl(panelTitles, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), true, CReportListCtrl::eSortHeader, true);
+	m_ctrlTitles = new CReportListCtrl(panelTitles, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), true, CReportListCtrl::SortHeader::Sort, true);
 	m_ctrlTitles->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgDog::OnTitleColumnClick, this);
 	m_ctrlTitles->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgDog::OnTitleItemSelected, this);
 	m_ctrlTitles->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgDog::OnTitleItemActivated, this);
@@ -776,7 +776,7 @@ CDlgDog::CDlgDog(
 	wxPanel* panelRegNums = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlRegNums = new CReportListCtrl(panelRegNums, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), true, CReportListCtrl::eSortHeader, true);
+	m_ctrlRegNums = new CReportListCtrl(panelRegNums, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), true, CReportListCtrl::SortHeader::Sort, true);
 	m_ctrlRegNums->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgDog::OnRegNumColumnClick, this);
 	m_ctrlRegNums->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgDog::OnRegNumItemSelected, this);
 	m_ctrlRegNums->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgDog::OnRegNumItemActivated, this);
@@ -815,7 +815,7 @@ CDlgDog::CDlgDog(
 	wxPanel* panelPoints = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlPoints = new CReportListCtrl(panelPoints, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), false, CReportListCtrl::eSortHeader, true);
+	m_ctrlPoints = new CReportListCtrl(panelPoints, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), false, CReportListCtrl::SortHeader::Sort, true);
 	m_ctrlPoints->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgDog::OnPointsColumnClick, this);
 	m_ctrlPoints->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgDog::OnPointsItemSelected, this);
 	m_ctrlPoints->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgDog::OnPointsItemActivated, this);

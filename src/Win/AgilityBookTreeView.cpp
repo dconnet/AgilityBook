@@ -680,7 +680,7 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 		return false;
 	ElementNodePtr tree(ElementNode::New());
 	CClipboardDataReader clpData;
-	if (clpData.GetData(eFormatDog, tree))
+	if (clpData.GetData(ARBClipFormat::Dog, tree))
 	{
 		if (CLIPDATA == tree->GetName())
 		{
@@ -736,7 +736,7 @@ bool CAgilityBookTreeView::PasteRuns(
 
 	ElementNodePtr tree(ElementNode::New());
 	CClipboardDataReader clpData;
-	if (clpData.GetData(eFormatRun, tree))
+	if (clpData.GetData(ARBClipFormat::Run, tree))
 	{
 		if (CLIPDATA == tree->GetName())
 		{
@@ -890,13 +890,13 @@ void CAgilityBookTreeView::DoSelectionChange(wxTreeItemId hItem)
 				iHint |= UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW;
 			GetDocument()->SetCurrentDog(pDog, true);
 			CAgilityBookRunsView* pView = GetDocument()->GetRunsView();
-			if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle()
+			if (ARBViewRuns::RunsByTrial == CAgilityBookOptions::GetViewRunsStyle()
 			&& !pView->IsTrial(pData->GetTrial()))
 			{
 				iHint |= UPDATE_RUNS_VIEW;
 			}
 			// Pass the selected run
-			else if (CAgilityBookTreeData::eTreeRun == pData->GetType())
+			else if (ARBTreeDataType::Run == pData->GetType())
 			{
 				pBase = pData->GetRun();
 				iHint |= UPDATE_RUNS_SELECTION_VIEW;
@@ -1195,11 +1195,11 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 
 	case wxID_PASTE:
-		if (CClipboardDataReader::IsFormatAvailable(eFormatDog))
+		if (CClipboardDataReader::IsFormatAvailable(ARBClipFormat::Dog))
 			bEnable = true;
-		else if (pData && pData->GetDog() && CClipboardDataReader::IsFormatAvailable(eFormatTrial))
+		else if (pData && pData->GetDog() && CClipboardDataReader::IsFormatAvailable(ARBClipFormat::Trial))
 			bEnable = true;
-		else if (pData && pData->GetTrial() && CClipboardDataReader::IsFormatAvailable(eFormatRun))
+		else if (pData && pData->GetTrial() && CClipboardDataReader::IsFormatAvailable(ARBClipFormat::Run))
 			bEnable = true;
 		break;
 
@@ -1330,12 +1330,12 @@ bool CAgilityBookTreeView::OnCmd(int id)
 				// Done.
 			}
 			else if (pTrial
-			&& clpData.GetData(eFormatRun, tree) && PasteRuns(pDog, pTrial, bLoaded, nullptr))
+			&& clpData.GetData(ARBClipFormat::Run, tree) && PasteRuns(pDog, pTrial, bLoaded, nullptr))
 			{
 				// Done.
 			}
 			else if (pDog
-			&& clpData.GetData(eFormatTrial, tree))
+			&& clpData.GetData(ARBClipFormat::Trial, tree))
 			{
 				if (CLIPDATA == tree->GetName())
 				{
@@ -1548,10 +1548,10 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_VIEW_RUNS_BY_TRIAL:
-		if (CAgilityBookOptions::eViewRunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
-			CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewRunsByList);
+		if (ARBViewRuns::RunsByTrial == CAgilityBookOptions::GetViewRunsStyle())
+			CAgilityBookOptions::SetViewRunsStyle(ARBViewRuns::RunsByList);
 		else
-			CAgilityBookOptions::SetViewRunsStyle(CAgilityBookOptions::eViewRunsByTrial);
+			CAgilityBookOptions::SetViewRunsStyle(ARBViewRuns::RunsByTrial);
 		{
 			CUpdateHint hint(UPDATE_RUNS_VIEW);
 			GetDocument()->UpdateAllViews(this, &hint);

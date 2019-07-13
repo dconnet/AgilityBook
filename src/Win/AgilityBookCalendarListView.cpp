@@ -154,19 +154,19 @@ void CAgilityBookCalendarListViewData::OnNeedListItem(long iCol, wxListItem& inf
 				else
 					idxImage = m_pView->m_Ctrl->ImageEmpty();
 				break;
-			case ARBCalendar::ePlanning:
+			case ARBCalendarEntry::Planning:
 				if (m_pCal->IsTentative())
 					idxImage = m_pView->m_imgPlanTentative;
 				else
 					idxImage = m_pView->m_imgPlan;
 				break;
-			case ARBCalendar::ePending:
+			case ARBCalendarEntry::Pending:
 				if (m_pCal->IsTentative())
 					idxImage = m_pView->m_imgPendingTentative;
 				else
 					idxImage = m_pView->m_imgPending;
 				break;
-			case ARBCalendar::eEntered:
+			case ARBCalendarEntry::Entered:
 				if (m_pCal->IsTentative())
 					idxImage = m_pView->m_imgEnteredTentative;
 				else
@@ -176,18 +176,18 @@ void CAgilityBookCalendarListViewData::OnNeedListItem(long iCol, wxListItem& inf
 		}
 		else if (IO_CAL_LOCATION == m_pView->m_Columns[iCol])
 		{
-			if (ARBCalendar::eNot == m_pCal->GetEntered())
+			if (ARBCalendarEntry::Not == m_pCal->GetEntered())
 				idxImage = m_pView->m_Ctrl->ImageEmpty();
 			else switch (m_pCal->GetAccommodation())
 			{
 			default:
-			case ARBCalendar::eAccomNone:
+			case ARBAccommodations::None:
 				idxImage = m_pView->m_imgAccomNone;
 				break;
-			case ARBCalendar::eAccomTodo:
+			case ARBAccommodations::Todo:
 				idxImage = m_pView->m_imgAccomTodo;
 				break;
-			case ARBCalendar::eAccomConfirmed:
+			case ARBAccommodations::Confirmed:
 				idxImage = m_pView->m_imgAccomConfirm;
 				break;
 			}
@@ -216,7 +216,7 @@ bool CAgilityBookCalendarListViewData::HighlightOpeningNear(long iCol) const
 	bool bHighlight = false;
 	int nearDays = CAgilityBookOptions::CalendarOpeningNear();
 	if (0 <= iCol && 0 <= nearDays
-	&& ARBCalendar::ePlanning == m_pCal->GetEntered()
+	&& ARBCalendarEntry::Planning == m_pCal->GetEntered()
 	&& m_pCal->GetOpeningDate().IsValid())
 	{
 		ARBDate today = ARBDate::Today();
@@ -240,7 +240,7 @@ bool CAgilityBookCalendarListViewData::HighlightClosingNear(long iCol) const
 	bool bHighlight = false;
 	int nearDays = CAgilityBookOptions::CalendarClosingNear();
 	if (0 <= iCol && 0 <= nearDays
-	&& ARBCalendar::ePlanning == m_pCal->GetEntered()
+	&& ARBCalendarEntry::Planning == m_pCal->GetEntered()
 	&& m_pCal->GetClosingDate().IsValid())
 	{
 		// If 'interval' is less than 0, then the date has passed.
@@ -756,9 +756,9 @@ void CAgilityBookCalendarListView::LoadData()
 		if (pCal->IsFiltered())
 			continue;
 		// Additional filtering
-		if (!((ARBCalendar::eNot == pCal->GetEntered() && filter.ViewNotEntered())
-		|| (ARBCalendar::ePlanning == pCal->GetEntered() && filter.ViewPlanning())
-		|| ((ARBCalendar::ePending == pCal->GetEntered() || ARBCalendar::eEntered == pCal->GetEntered())
+		if (!((ARBCalendarEntry::Not == pCal->GetEntered() && filter.ViewNotEntered())
+		|| (ARBCalendarEntry::Planning == pCal->GetEntered() && filter.ViewPlanning())
+		|| ((ARBCalendarEntry::Pending == pCal->GetEntered() || ARBCalendarEntry::Entered == pCal->GetEntered())
 		&& filter.ViewEntered())))
 			continue;
 		if (!bViewAll)
@@ -766,8 +766,8 @@ void CAgilityBookCalendarListView::LoadData()
 			if (pCal->IsBefore(today))
 				continue;
 		}
-		if (bHide && !(ARBCalendar::ePending == pCal->GetEntered()
-		|| ARBCalendar::eEntered == pCal->GetEntered()))
+		if (bHide && !(ARBCalendarEntry::Pending == pCal->GetEntered()
+		|| ARBCalendarEntry::Entered == pCal->GetEntered()))
 		{
 			bool bSuppress = false;
 			for (std::vector<ARBCalendarPtr>::const_iterator iterE = entered.begin();
@@ -920,7 +920,7 @@ void CAgilityBookCalendarListView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
 		break;
 	case wxID_PASTE:
-		evt.Enable(CClipboardDataReader::IsFormatAvailable(eFormatCalendar));
+		evt.Enable(CClipboardDataReader::IsFormatAvailable(ARBClipFormat::Calendar));
 		break;
 	case wxID_FIND:
 	case ID_EDIT_FIND_NEXT:
@@ -996,13 +996,13 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 					// This will happen if the source is marked as entered and they have
 					// selected the option to hide dates.
 					ARBCalendarPtr cal = (*iter)->GetCalendar()->Clone();
-					if (((*iter)->GetCalendar()->GetEntered() == ARBCalendar::ePending
-					|| (*iter)->GetCalendar()->GetEntered() == ARBCalendar::eEntered)
+					if (((*iter)->GetCalendar()->GetEntered() == ARBCalendarEntry::Pending
+					|| (*iter)->GetCalendar()->GetEntered() == ARBCalendarEntry::Entered)
 					&& CAgilityBookOptions::HideOverlappingCalendarEntries())
 					{
 						++nNewIsNotVisible;
 					}
-					cal->SetEntered(ARBCalendar::eNot);
+					cal->SetEntered(ARBCalendarEntry::Not);
 					GetDocument()->Book().GetCalendar().AddCalendar(cal);
 				}
 				GetDocument()->Book().GetCalendar().sort();
@@ -1076,9 +1076,9 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 				}
 				iCalendar->Release();
 
-				clpData.AddData(eFormatCalendar, tree);
+				clpData.AddData(ARBClipFormat::Calendar, tree);
 				clpData.AddData(table);
-				clpData.AddData(eFormatiCalendar, StringUtil::stringW(iCal.str()));
+				clpData.AddData(ARBClipFormat::iCalendar, StringUtil::stringW(iCal.str()));
 				clpData.CommitData();
 			}
 		}
@@ -1089,7 +1089,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 			bool bLoaded = false;
 			ElementNodePtr tree(ElementNode::New());
 			CClipboardDataReader clpData;
-			if (clpData.GetData(eFormatCalendar, tree))
+			if (clpData.GetData(ARBClipFormat::Calendar, tree))
 			{
 				if (CLIPDATA == tree->GetName())
 				{

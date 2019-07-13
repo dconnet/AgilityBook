@@ -30,19 +30,20 @@ class CDlgListCtrlData;
 typedef std::shared_ptr<CDlgListCtrlData> CDlgListCtrlDataPtr;
 
 
+enum class ARBWhatToList
+{
+	Calendar,
+	Faults,
+	OtherPoints,
+	Partners
+};
+
+
 class CDlgListCtrl : public wxDialog
 {
 	friend class CDlgListCtrlDataCalendar; // To allow easy access to image icons
 	friend class CDlgListCtrlDataFaults; // To allow access to GetItemListData
 public:
-	typedef enum
-	{
-		eCalendar,
-		eFaults,
-		eOtherPoints,
-		ePartners
-	} WhatToList;
-
 	// Calendar
 	CDlgListCtrl(
 			CAgilityBookDoc* pDoc,
@@ -52,7 +53,7 @@ public:
 			wxWindow* pParent = nullptr);
 	// Faults, Partners
 	CDlgListCtrl(
-			WhatToList inType,
+			ARBWhatToList inType,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr const& inRun,
 			wxWindow* pParent = nullptr);
@@ -90,7 +91,7 @@ private:
 	wxButton* m_ctrlUp;
 	wxButton* m_ctrlDown;
 	wxButton* m_ctrlCreateTrial;
-	WhatToList m_What;
+	ARBWhatToList m_What;
 	CAgilityBookDoc* m_pDoc;
 	ARBDate m_Date;
 	std::vector<ARBCalendarPtr> const* m_CalEntries;

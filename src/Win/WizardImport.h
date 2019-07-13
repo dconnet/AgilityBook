@@ -56,7 +56,7 @@ private:
 	std::vector< std::vector<std::wstring> > m_ExcelData; ///< For reading excel directly.
 	long m_Row;
 	wxSpinCtrl* m_ctrlRow;
-	long m_Delim;
+	ARBImportExportDelim m_Delim;
 	std::wstring m_Delimiter;
 	wxStaticBox* m_boxDelimiters;
 	wxRadioButton* m_ctrlTab;

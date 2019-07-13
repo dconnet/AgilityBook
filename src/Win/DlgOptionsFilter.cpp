@@ -523,13 +523,13 @@ void CDlgOptionsFilter::FillControls()
 	switch (m_FilterOptions.GetViewRuns())
 	{
 	default:
-	case CFilterOptions::eViewRunsAll:
+	case ARBFilterViewRuns::All:
 		m_ctrlQsAll->SetValue(true);
 		break;
-	case CFilterOptions::eViewRunsQs:
+	case ARBFilterViewRuns::Qs:
 		m_ctrlQsQs->SetValue(true);
 		break;
-	case CFilterOptions::eViewRunsNQs:
+	case ARBFilterViewRuns::NQs:
 		m_ctrlQsNonQs->SetValue(true);
 		break;
 	}
@@ -709,11 +709,11 @@ void CDlgOptionsFilter::OnFilterQs(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
 	if (m_ctrlQsAll->GetValue())
-		m_FilterOptions.SetViewRuns(CFilterOptions::eViewRunsAll);
+		m_FilterOptions.SetViewRuns(ARBFilterViewRuns::All);
 	else if (m_ctrlQsQs->GetValue())
-		m_FilterOptions.SetViewRuns(CFilterOptions::eViewRunsQs);
+		m_FilterOptions.SetViewRuns(ARBFilterViewRuns::Qs);
 	else if (m_ctrlQsNonQs->GetValue())
-		m_FilterOptions.SetViewRuns(CFilterOptions::eViewRunsNQs);
+		m_FilterOptions.SetViewRuns(ARBFilterViewRuns::NQs);
 	UpdateControls();
 }
 
