@@ -13,15 +13,20 @@ else
 fi
 BUILDDIR="$WXWIN/build"
 
-if test "x$3" = "xcarbon"; then
-	BUILDDIR+="-carbon"
-else
-	BUILDDIR+="-cocoa"
-fi
+case `uname` in
+Darwin*)
+    if test "x$3" = "xcarbon"; then
+        BUILDDIR+="-carbon"
+    else
+        BUILDDIR+="-cocoa"
+    fi
+    ;;
+esac
 
 if test "x$2" = "xdebug"; then
 	BUILDDIR+="-debug"
 elif test "x$2" = "xrelease"; then
+	BUILDDIR+="-release"
 	DUMMY=0
 else
 	echo $USAGE

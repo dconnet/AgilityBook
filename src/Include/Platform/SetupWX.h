@@ -137,8 +137,8 @@
  #if defined(__LP64__) && !defined(ARB_64BIT)
   #define ARB_64BIT
  #endif
-#elif defined(__WXGTK__)
- // Just assume GTK means linux (ubuntu is what I've tested)
+#elif defined(__WXGTK__) || defined(__WXX11__)
+ // Just assume GTK/X11 means linux (ubuntu is what I've tested)
  #if defined(__LP64__) && !defined(ARB_64BIT)
   #define ARB_64BIT
  #endif

@@ -26,7 +26,7 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#ifndef __WXGTK__
+#if !defined(__WXGTK__) && !defined(__WXX11__)
 #define SHA2_USE_MYTYPES_H
 #endif
 #ifndef BYTE_ORDER

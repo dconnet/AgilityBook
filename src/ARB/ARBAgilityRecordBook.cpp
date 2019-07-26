@@ -143,7 +143,7 @@ std::wstring ARBAgilityRecordBook::GetArch()
 	// Was "mac" (changed in v2.4)
 	// Note: 32bit osx was dropped in v3 when min os changed to 10.7.
 	return L"osx";
-#elif defined(__WXGTK__)
+#elif defined(__WXGTK__) || defined(__WXX11__)
 	return L"linux";
 #else
 #error Unknown platform

@@ -21,17 +21,25 @@ So to build the application and related libs:
 Depending on where libraries and include files are installed you may need to add include file directories to the invocation of ../configure
 For example on my Mac boost was installed in /opt/local/include/boost so I invoked configure as ../configure CPPFLAGS=-I/opt/local/include
 
+1. (ignore above, leaving for documentation)
+  On new system, targetting X11 (GTK not installed here)
+  download wx source (3.1.2) (extract to ~/devtools/wx/wxWidgets-3.1.2)
+  sudo apt-get install libboost-all-dev
+  sudo apt install libpango1.0-dev (wx configure complains when building unicode)
+  use build/setupwx.sh script
+
+2. Use build/setwxpath.sh to set env (. ./setwxpath.sh ...)
+[And still doesn't work. Linking fails]
+
+[old]
 1. install wxgtk (out-of-date - on Ubuntu 18.04, this is wx3.0)
   Version 2.8.9 or later wxWidget package is required
   http://wiki.wxpython.org/InstallingOnUbuntuOrDebian
   sudo apt-get install wx2.8-i18n libwxgtk2.8-dev
-  --
-  (on new system)
-  sudo apt-get install libboost-all-dev
-  sudo apt install libwxbase3.0-dev libwxgtk3.0-dev libwxgtk3.0-gtk3-dev
 
 2. make sure /usr/bin is on your path and wx-config can be found
 
+[comment: still determining needs here]
 Compiling Resources Manually
 - This will go in the makefiles
 1. in the root of the build directory:
