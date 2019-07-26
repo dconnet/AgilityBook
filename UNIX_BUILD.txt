@@ -25,7 +25,10 @@ For example on my Mac boost was installed in /opt/local/include/boost so I invok
   Version 2.8.9 or later wxWidget package is required
   http://wiki.wxpython.org/InstallingOnUbuntuOrDebian
   sudo apt-get install wx2.8-i18n libwxgtk2.8-dev
-
+  --
+  (on new system)
+  sudo apt-get install libboost-all-dev
+  sudo apt install libwxbase3.0-dev libwxgtk3.0-dev libwxgtk3.0-gtk3-dev
 
 2. make sure /usr/bin is on your path and wx-config can be found
 
