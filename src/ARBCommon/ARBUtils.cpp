@@ -51,6 +51,8 @@ CConfigPathHelper::~CConfigPathHelper()
 wxString GetARBResourceDir()
 {
 #if defined(__WXMAC__)
+	// Note: For command line, this now (as of 3.1.2) returns the exe path.
+	// For the UI, it's the resource bundle path
 	return wxStandardPaths::Get().GetResourcesDir();
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());

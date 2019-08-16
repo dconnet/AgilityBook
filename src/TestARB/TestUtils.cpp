@@ -166,13 +166,8 @@ TEST_CASE("Utils")
 			wxString dir = GetARBResourceDir();
 			REQUIRE(!dir.empty());
 			wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-#ifdef WIN32
+			// Note: For Mac, this is only true with a command line program
 			REQUIRE(fileName.GetPath() == dir);
-#elif defined(__WXMAC__)
-			REQUIRE(fileName.GetPath() != dir);
-#else
-			REQUIRE(fileName.GetPath() == dir);
-#endif
 		}
 	}
 

@@ -9,6 +9,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-08-15 wx3.1.2 (maybe earlier) has fixed GetExecutablePath on Mac cmdline
  * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-27 Added test duration to verbose option.
@@ -97,13 +98,7 @@ private:
 	}
 	wxString OnGetLanguageDir() const override
 	{
-#ifdef __WXMAC__
-		// Command line programs on Mac are acting like unix. GetResourcesDir
-		// returns /usr/local/share. And GetExecutablePath is returning nothing.
-		return L"./lang";
-#else
 		return m_langMgr->GetDefaultLanguageDir();
-#endif
 	}
 	void OnSetLanguage(wxLanguage langId) override
 	{
@@ -261,14 +256,8 @@ ElementNodePtr LoadXMLData(size_t id)
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
 #if defined(__WXWINDOWS__)
-#ifdef __WXMAC__
-	// Command line programs on Mac are acting like unix. GetResourcesDir
-	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	std::wstring datafile = L"./testarb.dat";
-#else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	std::wstring datafile = wxString(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
-#endif
 #else
 #pragma PRAGMA_TODO(write LoadXMLData)
 #ifdef WIN32

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-08-15 wx3.1.2 (maybe earlier) has fixed GetExecutablePath on Mac cmdline
  * 2018-12-16 Convert to fmt.
  * 2013-01-30 Moved zip code into LibArchive.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
@@ -59,14 +60,8 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	ElementNodePtr tree(ElementNode::New());
 
 #if defined(__WXWINDOWS__)
-#ifdef __WXMAC__
-	// Command line programs on Mac are acting like unix. GetResourcesDir
-	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	std::wstring datafile = L"./testarb.dat";
-#else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	std::wstring datafile = StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
-#endif
 #else
 #ifdef WIN32
 	wchar_t fileName[MAX_PATH];
@@ -90,14 +85,8 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 std::string CConfigHandler::LoadDTD() const
 {
 #if defined(__WXWINDOWS__)
-#ifdef __WXMAC__
-	// Command line programs on Mac are acting like unix. GetResourcesDir
-	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	std::wstring datafile = L"./testarb.dat";
-#else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	std::wstring datafile = StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
-#endif
 #else
 #ifdef WIN32
 	wchar_t fileName[MAX_PATH];
