@@ -60,10 +60,6 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#if defined(__WXMAC__)
-static std::wstring m_idleOpen;
-#endif
-
 #if wxUSE_DRAG_AND_DROP
 
 bool CFileDropTarget::OnDropFiles(
@@ -73,16 +69,7 @@ bool CFileDropTarget::OnDropFiles(
 {
 	if (1 != filenames.size())
 		return false;
-#if defined(__WXMAC__)
-	m_idleOpen = StringUtil::stringW(filenames[0]);
-#else
-	// Doing this on the Mac causes a crash. On Mac, registering this on the
-	// mainframe doesn't work. If has to be registered on the topmost window.
-	// When this is called, it causes the drop target to be deleted, but things
-	// aren't fully cleaned up, so as this call unwinds, the object it was in
-	// has been deleted, and it dies.
 	m_docMgr->CreateDocument(filenames[0], wxDOC_SILENT);
-#endif
 	return true;
 }
 
@@ -109,9 +96,6 @@ wxBEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_DPI_CHANGED(CMainFrame::OnDPIChanged)
 #endif
 	EVT_CLOSE(CMainFrame::OnClose)
-#if defined(__WXMAC__)
-	EVT_IDLE(CMainFrame::OnIdle)
-#endif
 	EVT_UPDATE_UI(wxID_DUPLICATE, CMainFrame::OnUpdateCmd)
 	EVT_UPDATE_UI(wxID_CUT, CMainFrame::OnUpdateCmd)
 	EVT_UPDATE_UI(wxID_COPY, CMainFrame::OnUpdateCmd)
@@ -175,7 +159,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 			m_Widths.Update(this, i, str);
 		}
 	}
-#if !defined(__WXMAC__) && wxUSE_DRAG_AND_DROP
+#if wxUSE_DRAG_AND_DROP
 	SetDropTarget(new CFileDropTarget(manager));
 #endif
 
@@ -364,19 +348,6 @@ void CMainFrame::OnClose(wxCloseEvent& evt)
 	wxConfig::Get()->Write(CFG_SETTINGS_LASTSTATE, state);
 	evt.Skip();
 }
-
-
-#if defined(__WXMAC__)
-void CMainFrame::OnIdle(wxIdleEvent& evt)
-{
-	if (!m_idleOpen.empty())
-	{
-		wxString file(m_idleOpen.c_str());
-		m_idleOpen.clear();
-		m_manager->CreateDocument(file, wxDOC_SILENT);
-	}
-}
-#endif
 
 
 void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)

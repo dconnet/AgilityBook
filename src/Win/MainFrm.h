@@ -80,9 +80,6 @@ private:
 	void OnStatusBarContextMenu(wxContextMenuEvent& evt);
 	void OnStatusBarDblClick(wxMouseEvent& evt);
 	void OnClose(wxCloseEvent& evt);
-#if defined(__WXMAC__)
-	void OnIdle(wxIdleEvent& evt);
-#endif
 	void OnUpdateCmd(wxUpdateUIEvent& evt);
 	void OnFileLanguageChoose(wxCommandEvent& evt);
 	void OnPrintBlankRuns(wxCommandEvent& evt);
