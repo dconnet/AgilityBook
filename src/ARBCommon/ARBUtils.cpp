@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-08-15 Added GetARBResourceDir
  * 2019-06-28 Fix issue with change nBackups to less than existing backups.
  * 2018-10-30 Moved some utils from ARBWin.
  */
@@ -18,6 +19,8 @@
 #include "ARBCommon/ARBUtils.h"
 
 #include <wx/config.h>
+#include <wx/filename.h>
+#include <wx/stdpaths.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -42,6 +45,17 @@ CConfigPathHelper::CConfigPathHelper(wxString const& key)
 CConfigPathHelper::~CConfigPathHelper()
 {
 	wxConfig::Get()->SetPath(m_path);
+}
+
+
+wxString GetARBResourceDir()
+{
+#if defined(__WXMAC__)
+	return wxStandardPaths::Get().GetResourcesDir();
+#else
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	return fileName.GetPath();
+#endif
 }
 
 

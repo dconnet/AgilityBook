@@ -9,6 +9,8 @@
 /src/Projects/**/*.VC.*
 /src/Projects/**/ipch/*
 
+.vscode
+
 # Ignore (recommended and things I do) Mac build directory (and generated files)
 /build-cocoa/*
 /build-cocoa-debug/*

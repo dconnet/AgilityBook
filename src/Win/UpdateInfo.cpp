@@ -109,6 +109,7 @@
 #include <fstream>
 
 #include "ARBCommon/ARBMisc.h"
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
@@ -663,7 +664,7 @@ bool CUpdateInfo::CheckProgram(
 							std::ofstream output(pFile, std::ios::out | std::ios::binary);
 #endif
 							wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-							wxString zipfile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
+							wxString zipfile = GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 							CLibArchive filesys(StringUtil::stringW(zipfile));
 							if (!filesys.ExtractFile(StringUtil::stringW(ARBUpdater()), output))
 							{

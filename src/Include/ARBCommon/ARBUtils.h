@@ -14,6 +14,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-08-15 Added GetARBResourceDir
  * 2018-10-30 Moved some utils from ARBWin.
  */
 
@@ -40,6 +41,14 @@ private:
 	CConfigPathHelper& operator=(CConfigPathHelper const&) = delete;
 	CConfigPathHelper& operator=(CConfigPathHelper&&) = delete;
 };
+
+
+/**
+ * Get directory for resources.
+ * On Windows/Unix, they're located with the exe.
+ * On Mac, they're in the resource bundle
+ */
+wxString GetARBResourceDir();
 
 
 /**

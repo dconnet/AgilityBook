@@ -27,6 +27,7 @@
 #include "stdafx.h"
 #include "LibARBWin/LanguageManager.h"
 
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
@@ -57,7 +58,7 @@ CLanguageManager::CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded)
 #endif
 {
 	if (!m_bEmbedded)
-		m_dirLangDefault = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + L"lang";
+		m_dirLangDefault = GetARBResourceDir() + wxFileName::GetPathSeparator() + L"lang";
 	wxTranslations::Set(new wxTranslations);
 }
 

@@ -1,35 +1,25 @@
 Building on Ubuntu Linux:
-[note: C++ files now mostly compile. But linking fails for all executables.
-Probably something in the make env.]
+Targeting X11 on Ubuntu (GTK isn't installed)
 
-Needs boost:
+Needs:
 sudo apt-get install libboost-all-dev
+sudo apt install libpango1.0-dev
 
-0. (cd into directory where you want to clone)
-1. git clone https://github.com/dconnet/AgilityBook.git
-2. cd AgilityBook
-3. autoconf
-4. mkdir bld
-5. cd bld
-6. ../configure
-At this point the Makefile have been generated in all src subdirs and any changes to any of the Makefile.in files or the configure.in file will cause Makefiles to be be automatically regenerated.
-
-So to build the application and related libs:
-1. cd bld
-2. make
-
-Depending on where libraries and include files are installed you may need to add include file directories to the invocation of ../configure
-For example on my Mac boost was installed in /opt/local/include/boost so I invoked configure as ../configure CPPFLAGS=-I/opt/local/include
-
-1. (ignore above, leaving for documentation)
-  On new system, targetting X11 (GTK not installed here)
-  download wx source (3.1.2) (extract to ~/devtools/wx/wxWidgets-3.1.2)
-  sudo apt-get install libboost-all-dev
-  sudo apt install libpango1.0-dev (wx configure complains when building unicode)
-  use build/setupwx.sh script
-
-2. Use build/setwxpath.sh to set env (. ./setwxpath.sh ...)
-[And still doesn't work. Linking fails]
+Setup:
+1. Download wx source (3.1.2) (extract to ~/devtools/wx/wxWidgets-3.1.2)
+2. cd into directory where you want to clone
+   git clone https://github.com/dconnet/AgilityBook.git
+3. cd AgilityBook/build
+4. Use build/setupwx.sh script to setup WX
+5. cd ~/devtools/wx/wxWidgets-3.1.2/build-release
+   make
+6. cd .../AgilityBook
+7. . build/setwxpath.sh 3.1 release
+8. autoconf
+9. mkdir bld
+10. cd bld
+11. ../configure
+12. make
 
 [old]
 1. install wxgtk (out-of-date - on Ubuntu 18.04, this is wx3.0)

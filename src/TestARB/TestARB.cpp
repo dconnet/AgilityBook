@@ -29,6 +29,7 @@
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBStructure.h"
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "fmt/printf.h"
@@ -266,7 +267,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	std::wstring datafile = L"./testarb.dat";
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile = wxString(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
+	std::wstring datafile = wxString(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
 #endif
 #else
 #pragma PRAGMA_TODO(write LoadXMLData)

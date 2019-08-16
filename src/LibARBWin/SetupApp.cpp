@@ -24,6 +24,7 @@
 #include "stdafx.h"
 #include "LibARBWin/SetupApp.h"
 
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
@@ -148,7 +149,7 @@ bool CBaseApp::OnInit()
 				wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 				m_BaseInfoName = fileName.GetName() + L".info";
 			}
-			wxString inifile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + m_BaseInfoName;
+			wxString inifile = GetARBResourceDir() + wxFileName::GetPathSeparator() + m_BaseInfoName;
 
 			// Important: If this is a dialog-based app, you must delete
 			// the config before returning from OnInit for this will leak.

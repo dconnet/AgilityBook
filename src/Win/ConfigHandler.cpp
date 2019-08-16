@@ -21,6 +21,7 @@
 #include "stdafx.h"
 #include "ConfigHandler.h"
 
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibArchive/LibArchive.h"
@@ -60,7 +61,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	ElementNodePtr tree(ElementNode::New());
 
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
+	wxString datafile = GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 	std::stringstream data;
 	if (LoadWxFile(StringUtil::stringW(datafile), L"DefaultConfig.xml", data))
 		bOk = tree->LoadXML(data, errMsg);
@@ -72,7 +73,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 std::string CConfigHandler::LoadDTD() const
 {
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
+	wxString datafile = GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 
 	std::stringstream data;
 	LoadWxFile(StringUtil::stringW(datafile), L"AgilityRecordBook.dtd", data);

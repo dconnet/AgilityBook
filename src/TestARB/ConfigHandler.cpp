@@ -21,6 +21,7 @@
 #include "stdafx.h"
 #include "ConfigHandler.h"
 
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibArchive/LibArchive.h"
@@ -64,7 +65,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	std::wstring datafile = L"./testarb.dat";
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile = StringUtil::stringW(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
+	std::wstring datafile = StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
 #endif
 #else
 #ifdef WIN32
@@ -95,7 +96,7 @@ std::string CConfigHandler::LoadDTD() const
 	std::wstring datafile = L"./testarb.dat";
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile = StringUtil::stringW(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
+	std::wstring datafile = StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
 #endif
 #else
 #ifdef WIN32
