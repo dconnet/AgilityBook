@@ -133,7 +133,9 @@ Linux)
     export OBJCXXFLAGS="-std=c++14"
     #export LDFLAGS="-stdlib=libc++"
     #export LIBS="-lc++"
-    CONFIG_PARAMS+=" --with-x11"
+    #CONFIG_PARAMS+=" --with-x11"
+    CONFIG_PARAMS+=" --with-gtk=2"
+    #CONFIG_PARAMS+=" --with-gtk=3"
     ;;
 
 *)
