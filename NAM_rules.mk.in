@@ -60,7 +60,7 @@ RM        = rm -f
 AUTOCONF  = autoconf
 RANLIB    = @RANLIB@
 AR        = ar
-ARFLAGS   = cru
+ARFLAGS   = Ucru
 
 INSTALL   = @INSTALL@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -192,7 +192,7 @@ clean-default:
 ##########
 $(PROGRAMS:=$(EXEEXT)):
 	$(NICE_ECHO) "  Linking:\t$@"
-	$(LD) $(LDFLAGS) $($(@:$(EXEEXT)=)_LDFLAGS) -o $@ $($(@:$(EXEEXT)=)_OBJS) $($(@:$(EXEEXT)=)_LIBS) $(LIBS)
+	$(LD) $($(@:$(EXEEXT)=)_OBJS) $($(@:$(EXEEXT)=)_LIBS) $(LIBS) $(LDFLAGS) $($(@:$(EXEEXT)=)_LDFLAGS) -o $@
 
 ##########
 # Generic rule to link an archive (static library)

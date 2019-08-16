@@ -155,6 +155,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+#if wxUSE_DRAG_AND_DROP
+
 class CLinkDropTarget : public wxFileDropTarget
 {
 public:
@@ -183,6 +185,8 @@ bool CLinkDropTarget::OnDropFiles(
 	}
 	return true;
 }
+
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1401,7 +1405,9 @@ CDlgRun::CDlgRun(
 	m_ctrlLinks->SetHelpText(_("HIDC_RUNLINK_LIST"));
 	m_ctrlLinks->SetToolTip(_("HIDC_RUNLINK_LIST"));
 	m_ctrlLinks->InsertColumn(0, L"");
+#if wxUSE_DRAG_AND_DROP
 	m_ctrlLinks->SetDropTarget(new CLinkDropTarget(this));
+#endif
 
 	wxButton* btnLinkNew = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_NEW"),

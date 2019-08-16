@@ -64,6 +64,8 @@
 static std::wstring m_idleOpen;
 #endif
 
+#if wxUSE_DRAG_AND_DROP
+
 bool CFileDropTarget::OnDropFiles(
 		wxCoord x,
 		wxCoord y,
@@ -84,6 +86,7 @@ bool CFileDropTarget::OnDropFiles(
 	return true;
 }
 
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -172,7 +175,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 			m_Widths.Update(this, i, str);
 		}
 	}
-#if !defined(__WXMAC__)
+#if !defined(__WXMAC__) && wxUSE_DRAG_AND_DROP
 	SetDropTarget(new CFileDropTarget(manager));
 #endif
 

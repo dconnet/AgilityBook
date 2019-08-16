@@ -79,9 +79,13 @@ CDlgFind::CDlgFind(
 		radioSearchCount, radioSearchFields,
 		1, wxRA_SPECIFY_COLS);
 	m_radioBoxSearch->SetItemHelpText(0, _("HIDC_FIND_ALL"));
+#if wxUSE_TOOLTIPS
 	m_radioBoxSearch->SetItemToolTip(0, _("HIDC_FIND_ALL"));
+#endif
 	m_radioBoxSearch->SetItemHelpText(1, _("HIDC_FIND_VISIBLE"));
+#if wxUSE_TOOLTIPS
 	m_radioBoxSearch->SetItemToolTip(1, _("HIDC_FIND_VISIBLE"));
+#endif
 	m_radioBoxSearch->SetSelection(m_Callback.SearchAll() ? 0 : 1);
 	if (!m_Callback.EnableSearch())
 		m_radioBoxSearch->Enable(false);
@@ -98,9 +102,13 @@ CDlgFind::CDlgFind(
 		radioDirectionCount, radioDirectionFields,
 		1, wxRA_SPECIFY_COLS);
 	m_radioBoxDir->SetItemHelpText(0, _("HIDC_FIND_UP"));
+#if wxUSE_TOOLTIPS
 	m_radioBoxDir->SetItemToolTip(0, _("HIDC_FIND_UP"));
+#endif
 	m_radioBoxDir->SetItemHelpText(1, _("HIDC_FIND_DOWN"));
+#if wxUSE_TOOLTIPS
 	m_radioBoxDir->SetItemToolTip(1, _("HIDC_FIND_DOWN"));
+#endif
 	m_radioBoxDir->SetSelection(m_Callback.SearchDown() ? 1 : 0);
 	if (!m_Callback.EnableDirection())
 		m_radioBoxDir->Enable(false);

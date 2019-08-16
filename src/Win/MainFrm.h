@@ -29,6 +29,8 @@
 #define NUM_STATUS_FIELDS	4
 
 
+#if wxUSE_DRAG_AND_DROP
+
 class CFileDropTarget : public wxFileDropTarget
 {
 public:
@@ -44,6 +46,7 @@ private:
 	wxDocManager* m_docMgr;
 };
 
+#endif
 
 class CMainFrame : public wxDocParentFrame
 {
