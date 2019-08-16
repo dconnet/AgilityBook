@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * 2019-08-16 Suppress PNG warning message.
  * 2019-01-01 Fix standalone detection.
  * 2018-10-11 Moved to Win LibARBWin
  * 2018-04-20 Use wxTranslations instead of wxLocale.
@@ -128,6 +129,10 @@ bool CBaseApp::OnInit()
 	// Now I don't need to tweak the wx source!
 	wxStandardPaths::Get().DontIgnoreAppSubDir();
 #endif
+
+    // Suppress PNG loading messages.
+    // Specifically: "iCCP: known incorrect sRGB profile"
+	wxImage::SetDefaultLoadFlags(wxImage::GetDefaultLoadFlags() & ~wxImage::Load_Verbose);
 
 	std::wstring errMsg;
 	if (!Element::Initialize(errMsg))
