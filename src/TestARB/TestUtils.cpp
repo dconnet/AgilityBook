@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-08-15 Added resource directory test.
  * 2019-06-28 Created
  */
 
@@ -20,6 +21,8 @@
 #include "fmt/printf.h"
 
 #include <wx/fileconf.h>
+#include <wx/filename.h>
+#include <wx/stdpaths.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -155,6 +158,23 @@ TEST_CASE("Utils")
 		}
 	}
 
+
+	SECTION("ResourceDir")
+	{
+		if (!g_bMicroTest)
+		{
+			wxString dir = GetARBResourceDir();
+			REQUIRE(!dir.empty());
+			wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+#ifdef WIN32
+			REQUIRE(fileName.GetPath() == dir);
+#elif defined(__WXMAC__)
+			REQUIRE(fileName.GetPath() != dir);
+#else
+			REQUIRE(fileName.GetPath() == dir);
+#endif
+		}
+	}
 
 	SECTION("BackupFiles0")
 	{

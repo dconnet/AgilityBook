@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-08-15 Fix tests on unix.
  * 2019-06-28 Moved ConfigPath to TestUtils
  * 2019-01-06 fmt 5.3 cannot sprintf a wide string into a narrow format anymore
  * 2018-12-16 Convert to fmt.
@@ -62,11 +63,11 @@ static const struct
 	{1536.0,          {1, 2}, {L"1.5 kB", L"1.54 kB"},     {L"1.5 KiB", L"1.5 KiB"},    {L"1.5 KB", L"1.5 KB"}},
 	{1600.0,          {1, 2}, {L"1.6 kB", L"1.6 kB"},      {L"1.6 KiB", L"1.56 KiB"},   {L"1.6 KB", L"1.56 KB"}},
 	{1728.0,          {1, 2}, {L"1.7 kB", L"1.73 kB"},     {L"1.7 KiB", L"1.69 KiB"},   {L"1.7 KB", L"1.69 KB"}},
-#ifdef __WXMAC__
-	// Note: On Mac, 15.625 is rounding differently than Windows.
-	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.62 KiB"}, {L"15.6 KB", L"15.62 KB"}},
-#else
+#ifdef WIN32
 	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.63 KiB"}, {L"15.6 KB", L"15.63 KB"}},
+#else
+	// Note: On Mac/Unix, 15.625 is rounding differently than Windows.
+	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.62 KiB"}, {L"15.6 KB", L"15.62 KB"}},
 #endif
 	{110592.0,        {1, 2}, {L"110.6 kB", L"110.59 kB"}, {L"108 KiB", L"108 KiB"},    {L"108 KB", L"108 KB"}},
 	{7077888.0,       {1, 2}, {L"7.1 MB", L"7.08 MB"},     {L"6.8 MiB", L"6.75 MiB"},   {L"6.8 MB", L"6.75 MB"}},
