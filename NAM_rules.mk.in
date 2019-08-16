@@ -60,7 +60,7 @@ RM        = rm -f
 AUTOCONF  = autoconf
 RANLIB    = @RANLIB@
 AR        = ar
-ARFLAGS   = Ucru
+ARFLAGS   = @ARFLAGS@
 
 INSTALL   = @INSTALL@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@

@@ -69,6 +69,7 @@ AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not foun
 
 case `uname` in
 Darwin*)
+	AC_SUBST(ARFLAGS, 'cru')
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
 
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
@@ -132,6 +133,7 @@ Darwin*)
 
 Linux)
 	# Ubuntu
+	AC_SUBST(ARFLAGS, 'Ucru')
 	#AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
 	AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14")
 	AC_SUBST(CXXFLAGS, "$CXXFLAGS -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14")
