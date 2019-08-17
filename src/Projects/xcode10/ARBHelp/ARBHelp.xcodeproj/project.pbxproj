@@ -323,7 +323,7 @@
 					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
 					"-isystem",
 					$BOOST_ROOT,
-					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.2/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXBASE/wxWidgets-3.1.2/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
@@ -336,7 +336,7 @@
 					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXBASE/wxWidgets-3.1.2/build-cocoa-debug/lib",
+					"-L$WXBASE/wxWidgets-3.1.2/build-debug/lib",
 					"-framework",
 					IOKit,
 					"-framework",
