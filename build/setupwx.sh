@@ -42,8 +42,10 @@ CONFIG_PARAMS=" --disable-mediactrl --disable-shared --enable-unicode"
 case `uname` in
 Darwin*)
 	CONFIG_PARAMS+=" --with-osx"
-    fi
-    ;;
+	;;
+Linux)
+	CONFIG_PARAMS+=" --with-gtk=2"
+	;;
 esac
 
 if test "x$2" = "xdebug"; then
@@ -64,80 +66,76 @@ cd $BUILDDIR
 
 case `uname` in
 Darwin*)
-    if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk; then
-        echo "Using 10.14 SDK"
-        export CXXFLAGS="-std=c++14 -stdlib=libc++"
-        export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-        export LDFLAGS="-stdlib=libc++"
-        export LIBS="-lc++"
-        TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
-        MINSDK=10.7
-        TARGETARCH="--enable-macosx_arch=x86_64"
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk; then
+		echo "Using 10.14 SDK"
+		export CXXFLAGS="-std=c++14 -stdlib=libc++"
+		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
+		export LDFLAGS="-stdlib=libc++"
+		export LIBS="-lc++"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
+		MINSDK=10.7
+		TARGETARCH="--enable-macosx_arch=x86_64"
 
-    elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
-        echo "Using 10.13 SDK"
-        export CXXFLAGS="-std=c++14 -stdlib=libc++"
-        export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-        export LDFLAGS="-stdlib=libc++"
-        export LIBS="-lc++"
-        TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
-        MINSDK=10.7
-        TARGETARCH="--enable-macosx_arch=x86_64"
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
+		echo "Using 10.13 SDK"
+		export CXXFLAGS="-std=c++14 -stdlib=libc++"
+		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
+		export LDFLAGS="-stdlib=libc++"
+		export LIBS="-lc++"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
+		MINSDK=10.7
+		TARGETARCH="--enable-macosx_arch=x86_64"
 
-    elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk; then
-        echo "Using 10.12 SDK"
-        export CXXFLAGS="-std=c++14 -stdlib=libc++"
-        export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-        export LDFLAGS="-stdlib=libc++"
-        export LIBS="-lc++"
-        TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
-        MINSDK=10.7
-        TARGETARCH="--enable-macosx_arch=x86_64"
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk; then
+		echo "Using 10.12 SDK"
+		export CXXFLAGS="-std=c++14 -stdlib=libc++"
+		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
+		export LDFLAGS="-stdlib=libc++"
+		export LIBS="-lc++"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
+		MINSDK=10.7
+		TARGETARCH="--enable-macosx_arch=x86_64"
 
-    elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk; then
-        echo "Using 10.11 SDK"
-        export CXXFLAGS="-std=c++14 -stdlib=libc++"
-        export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-        export LDFLAGS="-stdlib=libc++"
-        export LIBS="-lc++"
-        TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
-        MINSDK=10.7
-        TARGETARCH="--enable-macosx_arch=x86_64"
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk; then
+		echo "Using 10.11 SDK"
+		export CXXFLAGS="-std=c++14 -stdlib=libc++"
+		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
+		export LDFLAGS="-stdlib=libc++"
+		export LIBS="-lc++"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+		MINSDK=10.7
+		TARGETARCH="--enable-macosx_arch=x86_64"
 
-    elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk; then
-        echo "Using 10.9 SDK"
-        export CXXFLAGS="-std=c++14 -stdlib=libc++"
-        export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-        export LDFLAGS="-stdlib=libc++"
-        export LIBS="-lc++"
-        TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
-        MINSDK=10.7
-        TARGETARCH="--enable-macosx_arch=x86_64"
-    fi
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk; then
+		echo "Using 10.9 SDK"
+		export CXXFLAGS="-std=c++14 -stdlib=libc++"
+		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
+		export LDFLAGS="-stdlib=libc++"
+		export LIBS="-lc++"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
+		MINSDK=10.7
+		TARGETARCH="--enable-macosx_arch=x86_64"
+	fi
 
-    if test "x$TARGETSDK" = "x"; then
-        echo "ERROR: Can't find an SDK"
-        exit
-    fi
+	if test "x$TARGETSDK" = "x"; then
+		echo "ERROR: Can't find an SDK"
+		exit
+	fi
 
-    CONFIG_PARAMS+=" --with-macosx-version-min=$MINSDK --with-macosx-sdk=$TARGETSDK"
-
-    ;;
+	CONFIG_PARAMS+=" --with-macosx-version-min=$MINSDK --with-macosx-sdk=$TARGETSDK"
+	;;
 
 Linux)
-    export CXXFLAGS="-std=c++14"
-    export OBJCXXFLAGS="-std=c++14"
-    #export LDFLAGS="-stdlib=libc++"
-    #export LIBS="-lc++"
-    #CONFIG_PARAMS+=" --with-x11"
-    CONFIG_PARAMS+=" --with-gtk=2"
-    #CONFIG_PARAMS+=" --with-gtk=3"
-    ;;
+	export CXXFLAGS="-std=c++14"
+	export OBJCXXFLAGS="-std=c++14"
+	#export LDFLAGS="-stdlib=libc++"
+	#export LIBS="-lc++"
+	;;
 
 *)
-    echo "ERROR: No idea what you're on..."
-    exit
-    ;;
+	echo "ERROR: No idea what you're on..."
+	exit
+	;;
 esac
 
 CONFIG_PARAMS+=" $TARGETARCH"
