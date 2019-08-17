@@ -536,7 +536,7 @@
 					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
 					"-isystem",
 					$BOOST_ROOT,
-					"-I$WXBASE/wxWidgets-3.1.2/build-cocoa/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXBASE/wxWidgets-3.1.2/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXBASE/wxWidgets-3.1.2/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
