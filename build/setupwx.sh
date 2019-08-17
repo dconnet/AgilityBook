@@ -6,6 +6,7 @@
 # (I put this script in my home dir)
 #
 # History
+# 2019-08-17 Remove carbon
 # 2019-07-26 Add support for Ubuntu (18.04), changed default build dir name
 # 2018-12-11 Upgraded 3.1.1 to 3.1.2
 # 2018-02-19 Upgraded 3.1.0 to 3.1.1
@@ -22,7 +23,7 @@ export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 trunk|3.1 [debug|release] [carbon]"
+USAGE="Usage $0 trunk|3.1 [debug|release]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
@@ -40,12 +41,7 @@ CONFIG_PARAMS=" --disable-mediactrl --disable-shared --enable-unicode"
 
 case `uname` in
 Darwin*)
-    if test "x$3" = "xcarbon"; then
-        BUILDDIR+="-carbon"
-        CONFIG_PARAMS+=" --with-osx_carbon"
-    else
-        BUILDDIR+="-cocoa"
-        CONFIG_PARAMS+=" --with-osx_cocoa"
+	CONFIG_PARAMS+=" --with-osx"
     fi
     ;;
 esac

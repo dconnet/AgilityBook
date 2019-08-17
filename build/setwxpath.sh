@@ -1,7 +1,7 @@
 export BUILDDIR
 export WXWIN
 
-USAGE="Usage $0 trunk|3.1 [release|debug] [carbon]"
+USAGE="Usage $0 trunk|3.1 [release|debug]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
@@ -12,16 +12,6 @@ else
 	return
 fi
 BUILDDIR="$WXWIN/build"
-
-case `uname` in
-Darwin*)
-    if test "x$3" = "xcarbon"; then
-        BUILDDIR+="-carbon"
-    else
-        BUILDDIR+="-cocoa"
-    fi
-    ;;
-esac
 
 if test "x$2" = "xdebug"; then
 	BUILDDIR+="-debug"
