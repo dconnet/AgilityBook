@@ -1,7 +1,7 @@
 Setting up the build environment
 ================================
 (Note, comments/etc are very Windows-oriented since that's my main platform.
-Most of the Mac equivalents are installed via MacPorts)
+Most of the Mac equivalents are installed via MacPorts, unix notes below)
 Additional software packages required (all free):
 - python
 - wxWidgets
@@ -27,7 +27,7 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 python: https://www.python.org
-Currently using version 3.7.2
+Currently using version 3.7.4
 - Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
@@ -36,6 +36,8 @@ Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
    must match the wx version number being used.
+- Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
+  set the ARB compile environment.
 
 === Changes to 3.1.2:
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
@@ -153,7 +155,7 @@ before AC_MSG_CHECKING line (fixes macOS 10.13 SDK issue)
   }
 
 To build for VC, see ./src/Projects/CompileWX.py
-To build for Mac, see ./build/setupwx.sh
+To build for Mac/Unix, see ./build/setupwx.sh
 
 --------------------
 
@@ -183,6 +185,8 @@ Useful for figuring out how a lay a dialog out.
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
+- It is needed for Mac, but not unix since we apt-install there.
+  Haven't tried installing libboost-all-dev on Mac...
 ARB has been built and tested using Boost version 1.68.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr,
 weak_ptr and make_shared templates are used.)
@@ -205,7 +209,7 @@ Currently using Version 3.11.1 (as of ARB v3.2.4).
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.15.
+Used to create source code documentation. AgilityBook.dox uses v1.8.16.
 [Install to default location]
 
 --------------------
@@ -231,6 +235,13 @@ Microsoft Visual Studio 2019 (VC14.2)
 ===================================
    It works, no additional notes.
 
+Unix
+====
+(targeting GTK2)
+Needs (note, some aren't strictly needed):
+sudo apt install git python3 python3-pip curl
+sudo apt install libboost-all-dev libgtk2.0.dev (and/or libgtk-3-dev)
+sudo apt install libcanberra-gtk-module
 
 Xcode
 =====
@@ -238,12 +249,8 @@ Install xcode command line tools
 Install MacPorts: http://www.macports.org
 sudo port -v selfupdate
 sudo port upgrade outdated
-initial: sudo port install autoconf
-         sudo port install subversion
-         sudo port install git
-         sudo port install python36
-         sudo port install py36-readline
-         sudo port select --set python3 python36
+initial: sudo port install autoconf gettext git python37 py37-readline
+         sudo port select --set python3 python37
 
 The xcode projects were used as follows:
 .../xcode7: Xcode 7.x on OSX10.11 (still applies to xcode9)
