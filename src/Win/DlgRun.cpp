@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-08-18 Fix Bonus points (couldn't enter double).
  * 2018-12-16 Convert to fmt.
  * 2017-11-21 Update title points when InClass changes.
  * 2015-11-01 Compute score for NA runs also.
@@ -2126,7 +2127,6 @@ void CDlgRun::SetTitlePoints()
 	}
 	ARB_Q q = m_ctrlQ->GetQ(index);
 
-	std::wstring strBonus(L"0");
 	std::wstring strSpeed(L"0");
 	std::wstring strTitle(L"0");
 	std::wstring strScore(L"");
@@ -2136,10 +2136,6 @@ void CDlgRun::SetTitlePoints()
 		// 8/17/03: Only compute title points on Q runs.
 		if (q.Qualified())
 		{
-			if (pScoring->HasBonusTitlePts())
-			{
-				strBonus = fmt::format(L"{}", m_Run->GetScoring().GetBonusTitlePts());
-			}
 			if (pScoring->HasSpeedPts())
 			{
 				strSpeed = fmt::format(L"{}", m_Run->GetSpeedPoints(pScoring));
@@ -2150,7 +2146,6 @@ void CDlgRun::SetTitlePoints()
 			strScore = ARBDouble::ToString(m_Run->GetScore(pScoring));
 	}
 	// Doesn't matter if they're hidden,..
-	m_ctrlBonusTitlePts->ChangeValue(strBonus);
 	m_ctrlSpeedPts->ChangeValue(strSpeed);
 	m_ctrlTitlePoints->ChangeValue(strTitle);
 	m_ctrlScore->ChangeValue(strScore);
@@ -2938,7 +2933,7 @@ void CDlgRun::OnInClassChange(wxCommandEvent& evt)
 
 void CDlgRun::OnBonusChange(wxCommandEvent& evt)
 {
-	m_BonusTitlePts = static_cast<short>(wxAtol(m_ctrlBonusTitlePts->GetValue()));
+	StringUtil::ToDouble(StringUtil::stringW(m_ctrlBonusTitlePts->GetValue()), m_BonusTitlePts);
 	m_Run->GetScoring().SetBonusTitlePts(m_BonusTitlePts);
 	SetTitlePoints();
 }
