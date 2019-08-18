@@ -49,7 +49,7 @@ std::wstring ARBDogExistingPoints::GetPointTypeName(ARBExistingPointType inType)
 	std::wstring str;
 	switch (inType)
 	{
-	default:
+	case ARBExistingPointType::Unknown:
 		break;
 	case ARBExistingPointType::OtherPoints:
 		str = Localization()->ExistingPointsOther();
@@ -408,8 +408,6 @@ bool ARBDogExistingPoints::Load(
 	// event... but let the UI handle that...
 	switch (m_Type)
 	{
-	case ARBExistingPointType::MQ:
-		break;
 	case ARBExistingPointType::OtherPoints:
 	case ARBExistingPointType::Lifetime:
 	case ARBExistingPointType::Title:
@@ -436,7 +434,9 @@ bool ARBDogExistingPoints::Load(
 		// Only used in eRuns.
 		inTree->GetAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
 		break;
-	default:
+	case ARBExistingPointType::MQ:
+		break;
+	case ARBExistingPointType::Speed:
 		if (!inConfig.GetVenues().VerifyLevel(m_Venue, m_Div, m_Level))
 		{
 			std::wstring msg(Localization()->InvalidVenueName());
@@ -448,6 +448,8 @@ bool ARBDogExistingPoints::Load(
 			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
 		}
+		break;
+	case ARBExistingPointType::Unknown:
 		break;
 	}
 
@@ -468,7 +470,7 @@ bool ARBDogExistingPoints::Save(ElementNodePtr const& ioTree) const
 	title->AddAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date);
 	switch (m_Type)
 	{
-	default:
+	case ARBExistingPointType::Unknown:
 		assert(0);
 		break;
 	case ARBExistingPointType::OtherPoints:

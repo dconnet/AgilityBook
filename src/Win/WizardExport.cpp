@@ -139,7 +139,6 @@ CWizardExport::CWizardExport(
 
 	switch (m_Delim)
 	{
-	default:
 	case ARBImportExportDelim::Tab:
 		m_ctrlTab->SetValue(true);
 		break;
@@ -282,7 +281,8 @@ CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
 	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
 	switch (m_pSheet->GetImportExportItem())
 	{
-	default: break;
+	default:
+		break;
 	case WIZ_EXPORT_RUNS:
 		order = CAgilityBookOptions::eRunsExport;
 		break;
@@ -310,7 +310,6 @@ wchar_t CWizardExport::GetDelim() const
 		return 0;
 	switch (m_Delim)
 	{
-	default:
 	case ARBImportExportDelim::Tab:       return L'\t';
 	case ARBImportExportDelim::Space:     return L' ';
 	case ARBImportExportDelim::Colon:     return L':';
@@ -322,6 +321,8 @@ wchar_t CWizardExport::GetDelim() const
 		else
 			return 0;
 	}
+	// 'enum class' handles all cases via the switch above
+	return 0;
 }
 
 
@@ -560,7 +561,7 @@ void CWizardExport::UpdatePreview()
 							long idxType = -1;
 							switch (pScoring->GetScoringStyle())
 							{
-							default:
+							case ARBScoringStyle::Unknown:
 								break;
 							case ARBScoringStyle::FaultsThenTime:
 							case ARBScoringStyle::Faults100ThenTime:
@@ -888,7 +889,6 @@ void CWizardExport::UpdatePreview()
 					case IO_CAL_ENTERED:
 						switch (pCal->GetEntered())
 						{
-						default:
 						case ARBCalendarEntry::Not:
 							break;
 						case ARBCalendarEntry::Entered:
@@ -1011,7 +1011,6 @@ void CWizardExport::UpdatePreview()
 							}
 							switch (pCal->GetEntered())
 							{
-							default:
 							case ARBCalendarEntry::Not:
 								tmp += Localization()->CalendarStatusN();
 								tmp += L" ";

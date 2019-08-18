@@ -320,14 +320,15 @@ void ARBConfigTitlePointsList::SetType(ARBPointsType inType)
 		clear();
 		switch (inType)
 		{
-		default:
-			assert(0);
-			// Fall through
 		case ARBPointsType::Normal:
+		case ARBPointsType::Top10USDAA:
 			break;
 		case ARBPointsType::T2B:
 		case ARBPointsType::UKI:
 			push_back(ARBConfigTitlePoints::New(0.0, 0.0, inType));
+			break;
+		case ARBPointsType::Max:
+			assert(0);
 			break;
 		}
 	}

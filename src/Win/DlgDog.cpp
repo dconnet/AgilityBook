@@ -481,7 +481,6 @@ int wxCALLBACK ComparePoints(CListDataPtr const& item1, CListDataPtr const& item
 		int col = pInfo->pCols->GetColumnAt(i);
 		switch (col)
 		{
-
 		default:
 		case 0: // date
 			if (pExistingPoints1->GetDate() < pExistingPoints2->GetDate())

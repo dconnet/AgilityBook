@@ -219,7 +219,7 @@ TEST_CASE("Config")
 			REQUIRE(206u == config.GetActions().size());
 			REQUIRE(0u == config.GetFaults().size());
 			REQUIRE(5u == config.GetOtherPoints().size());
-			REQUIRE(16u == config.GetVenues().size());
+			REQUIRE(17u == config.GetVenues().size());
 			REQUIRE(config.GetVenues().FindVenue(L"AAC"));
 			REQUIRE(config.GetVenues().FindVenue(L"AKC"));
 			REQUIRE(config.GetVenues().FindVenue(L"ASCA"));
@@ -228,6 +228,7 @@ TEST_CASE("Config")
 			REQUIRE(config.GetVenues().FindVenue(L"CKCSC"));
 			REQUIRE(config.GetVenues().FindVenue(L"CPE"));
 			REQUIRE(config.GetVenues().FindVenue(L"DOCNA"));
+			REQUIRE(config.GetVenues().FindVenue(L"FCAT"));
 			REQUIRE(config.GetVenues().FindVenue(L"FCI"));
 			REQUIRE(config.GetVenues().FindVenue(L"NADAC"));
 			REQUIRE(config.GetVenues().FindVenue(L"SCC"));

@@ -115,7 +115,7 @@ int CDlgListCtrlDataCalendar::OnNeedIcon() const
 {
 	switch (GetCalendar()->GetEntered())
 	{
-	default:
+	case ARBCalendarEntry::Not:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgTentative : m_Parent->m_ctrlList->ImageEmpty();
 	case ARBCalendarEntry::Planning:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgPlanTentative : m_Parent->m_imgPlan;
@@ -124,6 +124,8 @@ int CDlgListCtrlDataCalendar::OnNeedIcon() const
 	case ARBCalendarEntry::Entered:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgEnteredTentative : m_Parent->m_imgEntered;
 	}
+	// 'enum class' handles all cases via the switch above
+	return 0;
 }
 
 
@@ -807,9 +809,6 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 	long nItem = wxNOT_FOUND;
 	switch (m_What)
 	{
-	default:
-		assert(0);
-		break;
 	case ARBWhatToList::Calendar:
 		{
 			ARBCalendarPtr cal(ARBCalendar::New());
@@ -958,9 +957,6 @@ bool CDlgListCtrl::DoOK()
 	// Pre-apply
 	switch (m_What)
 	{
-	default:
-		assert(0);
-		break;
 	case ARBWhatToList::Calendar:
 		{
 			for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
@@ -1002,7 +998,9 @@ bool CDlgListCtrl::DoOK()
 			m_pDoc->UpdateAllViews(nullptr, &hint);
 		}
 		break;
-	default:
+	case ARBWhatToList::Faults:
+	case ARBWhatToList::OtherPoints:
+	case ARBWhatToList::Partners:
 		break;
 	}
 	return true;

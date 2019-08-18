@@ -168,7 +168,7 @@ bool ARBTraining::Load(
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
 	{
-	default:
+	case ARBAttribLookup::Found:
 		break;
 	case ARBAttribLookup::NotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE));

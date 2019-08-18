@@ -1447,7 +1447,8 @@ static wchar_t const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrde
 {
 	switch (eOrder)
 	{
-	default:
+	case CAgilityBookOptions::eUnknown:
+	case CAgilityBookOptions::eAllColumns:
 		return CFG_KEY_UNKNOWN;
 	case CAgilityBookOptions::eRunsImport:
 		return CFG_KEY_IMPORT;
@@ -1468,6 +1469,8 @@ static wchar_t const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrde
 	case CAgilityBookOptions::eView:
 		return CFG_KEY_COLUMNS;
 	}
+	// 'enum class' handles all cases via the switch above
+	return CFG_KEY_UNKNOWN;
 }
 
 
@@ -1507,7 +1510,8 @@ void CAgilityBookOptions::GetColumnOrder(
 	{
 		switch (eOrder)
 		{
-		default:
+		case eUnknown:
+		case eAllColumns:
 			break;
 		case eRunsImport:
 		case eRunsExport:

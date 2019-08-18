@@ -522,7 +522,6 @@ void CDlgOptionsFilter::FillControls()
 
 	switch (m_FilterOptions.GetViewRuns())
 	{
-	default:
 	case ARBFilterViewRuns::All:
 		m_ctrlQsAll->SetValue(true);
 		break;

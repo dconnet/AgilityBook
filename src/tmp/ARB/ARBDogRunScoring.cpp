@@ -58,6 +58,8 @@ ARBScoringType ARBDogRunScoring::TranslateConfigScoring(ARBScoringStyle inType)
 		return ARBScoringType::ByOpenClose;
 	case ARBScoringStyle::ScoreThenTime:
 		return ARBScoringType::ByPoints;
+	case ARBScoringStyle::TimeNoPlaces:
+		return ARBScoringType::BySpeed;
 	}
 	// 'enum class' handles all cases via the switch above
 	return ARBScoringType::Unknown;
@@ -367,6 +369,10 @@ bool ARBDogRunScoring::Save(ElementNodePtr const& ioTree) const
 				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}
 		return true;
+
+	case ARBScoringType::BySpeed:
+#pragma PRAGMA_TODO(FCAT)
+		break;
 	}
 	return false;
 }

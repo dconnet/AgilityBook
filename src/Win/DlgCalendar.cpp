@@ -259,7 +259,7 @@ CDlgCalendar::CDlgCalendar(
 
 	switch (m_pCal->GetEntered())
 	{
-	default:
+	case ARBCalendarEntry::Not:
 		m_ctrlEntryNot->SetValue(true);
 		break;
 	case ARBCalendarEntry::Planning:
@@ -314,7 +314,7 @@ CDlgCalendar::CDlgCalendar(
 
 	switch (m_pCal->GetAccommodation())
 	{
-	default:
+	case ARBAccommodations::None:
 		m_ctrlAccomNot->SetValue(true);
 		break;
 	case ARBAccommodations::Todo:

@@ -28,14 +28,13 @@ static size_t FilterToIndex(ARBFilterType inFilterType)
 {
 	switch (inFilterType)
 	{
-	default:
-		assert(0);
-		// fall thru
 	case ARBFilterType::Full:
 		return 0;
 	case ARBFilterType::IgnoreQ:
 		return 1;
 	}
+	// 'enum class' handles all cases via the switch above
+	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -305,7 +305,7 @@ void CDlgConfigure::LoadData(Action dataToLoad)
 	wxTreeItemId hParent;
 	switch (dataToLoad)
 	{
-	default:
+	case Action::None:
 		break;
 	case Action::Venues:
 		hParent = m_hItemVenues;
@@ -325,7 +325,7 @@ void CDlgConfigure::LoadData(Action dataToLoad)
 
 	switch (dataToLoad)
 	{
-	default:
+	case Action::None:
 		break;
 	case Action::Venues:
 		{ // Scoped because of VC6's scoping of for-variables.
@@ -384,7 +384,7 @@ void CDlgConfigure::DoEdit()
 
 	switch (GetAction())
 	{
-	default:
+	case Action::None:
 		break;
 
 	case Action::Venues:
@@ -549,7 +549,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 {
 	switch (GetAction())
 	{
-	default:
+	case Action::None:
 		break;
 
 	case Action::Venues:
@@ -636,7 +636,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 
 	switch (GetAction())
 	{
-	default:
+	case Action::None:
 		break;
 
 	case Action::Venues:
@@ -693,7 +693,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 
 	switch (GetAction())
 	{
-	default:
+	case Action::None:
 		break;
 
 	case Action::Venues:

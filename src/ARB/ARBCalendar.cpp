@@ -493,10 +493,6 @@ std::wstring ARBCalendar::GetUID(UidType inType) const
 	fmt::wmemory_buffer str;
 	switch (inType)
 	{
-	default:
-		assert(0);
-		fmt::format_to(str, L"u");
-		break;
 	case UidType::vEvent:
 		fmt::format_to(str, L"e");
 		break;
@@ -603,7 +599,7 @@ bool ARBCalendar::Load(
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_CAL_START, m_DateStart))
 	{
-	default:
+	case ARBAttribLookup::Found:
 		break;
 	case ARBAttribLookup::NotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_START));
@@ -621,7 +617,7 @@ bool ARBCalendar::Load(
 
 	switch (inTree->GetAttrib(ATTRIB_CAL_END, m_DateEnd))
 	{
-	default:
+	case ARBAttribLookup::Found:
 		break;
 	case ARBAttribLookup::NotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_END));
@@ -764,7 +760,7 @@ bool ARBCalendar::Save(ElementNodePtr const& ioTree) const
 	cal->AddAttrib(ATTRIB_CAL_VENUE, m_Venue);
 	switch (m_eEntered)
 	{
-	default:
+	case ARBCalendarEntry::Not:
 		cal->AddAttrib(ATTRIB_CAL_ENTERED, ENTRY_NOT);
 		break;
 	case ARBCalendarEntry::Entered:
@@ -779,7 +775,7 @@ bool ARBCalendar::Save(ElementNodePtr const& ioTree) const
 	}
 	switch (m_eAccommodations)
 	{
-	default:
+	case ARBAccommodations::None:
 		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, ACCOM_NONE);
 		break;
 	case ARBAccommodations::Todo:
@@ -819,7 +815,6 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 			fmt::format_to(str, L"{} ", Localization()->CalendarTentative());
 		switch (GetEntered())
 		{
-		default:
 		case ARBCalendarEntry::Not:
 			fmt::format_to(str, L"{} ", Localization()->CalendarStatusN());
 			break;

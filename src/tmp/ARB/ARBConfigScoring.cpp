@@ -71,6 +71,7 @@ static void OutputDebugString(wchar_t const* msg)
 #define SCORING_TYPE_OCT	L"OCScoreThenTime"
 #define SCORING_TYPE_ST		L"ScoreThenTime"
 #define SCORING_TYPE_TF		L"TimePlusFaults"
+#define SCORING_TYPE_NP		L"TimeNoPlaces"
 
 std::wstring ARBConfigScoring::GetScoringStyleStr(ARBScoringStyle inStyle)
 {
@@ -97,6 +98,9 @@ std::wstring ARBConfigScoring::GetScoringStyleStr(ARBScoringStyle inStyle)
 		break;
 	case ARBScoringStyle::TimePlusFaults:
 		style = Localization()->ScoreStyleTimePlusFaults();
+		break;
+	case ARBScoringStyle::TimeNoPlaces:
+		style = Localization()->ScoreStyleTimeNoPlaces();
 		break;
 	}
 	return style;
@@ -392,6 +396,8 @@ bool ARBConfigScoring::Load(
 		m_Style = ARBScoringStyle::ScoreThenTime;
 	else if (attrib == SCORING_TYPE_TF)
 		m_Style = ARBScoringStyle::TimePlusFaults;
+	else if (attrib == SCORING_TYPE_NP)
+		m_Style = ARBScoringStyle::TimeNoPlaces;
 	else
 	{
 		std::wstring msg(Localization()->ValidValues());
@@ -609,6 +615,9 @@ bool ARBConfigScoring::Save(ElementNodePtr const& ioTree) const
 		break;
 	case ARBScoringStyle::TimePlusFaults:
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_TF);
+		break;
+	case ARBScoringStyle::TimeNoPlaces:
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_NP);
 		break;
 	}
 	if (m_bDropFractions)

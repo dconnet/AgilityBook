@@ -632,7 +632,7 @@ void CDlgConfigEventMethod::UpdateControls()
 	{
 		switch (GetType(idxType))
 		{
-		default:
+		case ARBScoringStyle::Unknown:
 			m_ctrlPointsOpeningText->Show(false);
 			m_ctrlPointsOpening->Show(false);
 			m_ctrlPointsClosingText->Show(false);
@@ -987,7 +987,7 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 	m_pScoring->SetScoringStyle(style);
 	switch (style)
 	{
-	default:
+	case ARBScoringStyle::Unknown:
 		break;
 	case ARBScoringStyle::FaultsThenTime:
 	case ARBScoringStyle::Faults100ThenTime:

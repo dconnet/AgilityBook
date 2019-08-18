@@ -848,7 +848,11 @@ CDlgAssignColumns::CDlgAssignColumns(
 
 	switch (m_Configs.Order())
 	{
-	default:
+	case CAgilityBookOptions::eUnknown:
+	case CAgilityBookOptions::eCalExportAppt:
+	case CAgilityBookOptions::eCalExportTask:
+	case CAgilityBookOptions::eView:
+	case CAgilityBookOptions::eAllColumns:
 		break;
 	case CAgilityBookOptions::eRunsImport:
 	case CAgilityBookOptions::eRunsExport:

@@ -831,7 +831,7 @@ CDlgRun::CDlgRun(
 
 	switch (m_Run->GetScoring().GetType())
 	{
-	default:
+	case ARBScoringType::Unknown:
 		break;
 	case ARBScoringType::ByTime:
 		m_Faults = m_Run->GetScoring().GetCourseFaults();
@@ -2282,7 +2282,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 	wxString str;
 	switch (pScoring->GetScoringStyle())
 	{
-	default:
+	case ARBScoringStyle::Unknown:
 		assert(0);
 		break;
 	case ARBScoringStyle::FaultsThenTime:
@@ -2867,18 +2867,22 @@ void CDlgRun::OnReqOpeningYPSChange(wxCommandEvent& evt)
 		short val = static_cast<short>(wxAtol(m_ctrlYardsReqOpeningPts->GetValue()));
 		switch (pScoring->GetScoringStyle())
 		{
-		case ARBScoringStyle::ScoreThenTime:
-		case ARBScoringStyle::OCScoreThenTime:
-			m_Opening = val;
-			m_Run->GetScoring().SetNeedOpenPts(m_Opening);
-			SetTitlePoints();
-			break;
-		default:
+		case ARBScoringStyle::Unknown:
+		case ARBScoringStyle::FaultsThenTime:
+		case ARBScoringStyle::Faults100ThenTime:
+		case ARBScoringStyle::Faults200ThenTime:
+		case ARBScoringStyle::TimePlusFaults:
 			m_Yards = val;
 			m_Run->GetScoring().SetYards(m_Yards);
 			SetMinYPS();
 			SetYPS();
 			SetTotalFaults();
+			break;
+		case ARBScoringStyle::ScoreThenTime:
+		case ARBScoringStyle::OCScoreThenTime:
+			m_Opening = val;
+			m_Run->GetScoring().SetNeedOpenPts(m_Opening);
+			SetTitlePoints();
 			break;
 		}
 	}
@@ -3016,7 +3020,11 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 			std::wstring nScore;
 			switch (pScoring->GetScoringStyle())
 			{
-			default:
+			case ARBScoringStyle::Unknown:
+			case ARBScoringStyle::FaultsThenTime:
+			case ARBScoringStyle::OCScoreThenTime:
+			case ARBScoringStyle::ScoreThenTime:
+			case ARBScoringStyle::TimePlusFaults:
 				nScore = L"0";
 				break;
 			case ARBScoringStyle::Faults100ThenTime:

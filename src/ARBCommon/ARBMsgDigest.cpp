@@ -38,6 +38,10 @@ std::wstring ARBMsgDigest::Compute(
 
 	switch (type)
 	{
+	case ARBDigest::Unknown:
+		assert(0);
+		return std::wstring();
+
 	case ARBDigest::MD5:
 		return ARBMsgDigestComputeMD5(inFile, outSize);
 
@@ -46,9 +50,8 @@ std::wstring ARBMsgDigest::Compute(
 
 	case ARBDigest::SHA256:
 		return ARBMsgDigestComputeSHA256(inFile, outSize);
-
-	default:
-		assert(0);
-		return std::wstring();
 	}
+
+	// 'enum class' handles all cases via the switch above
+	return std::wstring();
 }

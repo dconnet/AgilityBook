@@ -33,10 +33,6 @@ ARBCalcPointsPtr ARBCalcPoints::New(ARBPointsType type)
 	ARBCalcPointsPtr p;
 	switch (type)
 	{
-	default:
-		assert(0);
-	case ARBPointsType::Max:
-		break;
 	case ARBPointsType::Normal:
 		p = ARBCalcPointsNormal::New();
 		break;
@@ -48,6 +44,8 @@ ARBCalcPointsPtr ARBCalcPoints::New(ARBPointsType type)
 		break;
 	case ARBPointsType::Top10USDAA:
 		p = ARBCalcPointsTop10USDAA::New();
+		break;
+	case ARBPointsType::Max:
 		break;
 	}
 	return p;

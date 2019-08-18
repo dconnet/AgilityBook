@@ -85,8 +85,9 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 	std::wstring name;
 	switch (m_Action)
 	{
-	default:
+	case CDlgConfigVenue::Action::None:
 		break;
+
 	case CDlgConfigVenue::Action::Divisions:
 		while (!done)
 		{

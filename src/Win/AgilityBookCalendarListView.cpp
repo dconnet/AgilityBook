@@ -148,7 +148,7 @@ void CAgilityBookCalendarListViewData::OnNeedListItem(long iCol, wxListItem& inf
 		{
 			switch (m_pCal->GetEntered())
 			{
-			default:
+			case ARBCalendarEntry::Not:
 				if (m_pCal->IsTentative())
 					idxImage = m_pView->m_imgTentative;
 				else
@@ -180,7 +180,6 @@ void CAgilityBookCalendarListViewData::OnNeedListItem(long iCol, wxListItem& inf
 				idxImage = m_pView->m_Ctrl->ImageEmpty();
 			else switch (m_pCal->GetAccommodation())
 			{
-			default:
 			case ARBAccommodations::None:
 				idxImage = m_pView->m_imgAccomNone;
 				break;

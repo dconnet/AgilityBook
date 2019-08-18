@@ -103,9 +103,6 @@ void SaveTitleStyle(
 	std::wstring style;
 	switch (inStyle)
 	{
-	default:
-		assert(0);
-		break;
 	case ARBTitleStyle::None:
 		style = L"0";
 		break;
@@ -166,9 +163,6 @@ void SaveTitleSeparator(
 	std::wstring sep;
 	switch (inSep)
 	{
-	default:
-		assert(0);
-		break;
 	case ARBTitleSeparator::None:
 		// default
 		break;
@@ -189,7 +183,7 @@ static std::wstring GetSeparator(ARBTitleSeparator inSep)
 	std::wstring sep;
 	switch (inSep)
 	{
-	default:
+	case ARBTitleSeparator::None:
 		break;
 	case ARBTitleSeparator::Space:
 		sep = L" ";
@@ -221,9 +215,6 @@ std::wstring ARBTitleInstance::TitleInstance(
 		short value = startAt + (instance - 1) * increment;
 		switch (style)
 		{
-		default:
-			assert(0);
-			// fall thru
 		case ARBTitleStyle::None:
 			break;
 		case ARBTitleStyle::Number:

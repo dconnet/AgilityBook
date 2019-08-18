@@ -485,7 +485,7 @@ void CDlgExistingPoints::SetEnableLists(
 
 	switch (GetCurrentType())
 	{
-	default:
+	case ARBExistingPointType::Unknown:
 		break;
 
 	case ARBExistingPointType::OtherPoints:
@@ -796,9 +796,13 @@ void CDlgExistingPoints::FillTypeNames()
 
 	switch (type)
 	{
-	default:
+	case ARBExistingPointType::Unknown:
+	case ARBExistingPointType::Title:
+	case ARBExistingPointType::Speed:
+	case ARBExistingPointType::MQ:
+	case ARBExistingPointType::SQ:
 		break;
-			
+
 	case ARBExistingPointType::OtherPoints:
 		for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->Book().GetConfig().GetOtherPoints().begin();
 			iterOther != m_pDoc->Book().GetConfig().GetOtherPoints().end();
@@ -890,7 +894,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 	std::wstring multiQ;
 	switch (type)
 	{
-	default:
+	case ARBExistingPointType::Unknown:
 		break;
 	//  OtherPts Venue    Division Level Event
 	case ARBExistingPointType::OtherPoints:

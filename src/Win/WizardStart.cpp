@@ -389,8 +389,6 @@ void CWizardStart::DoUpdateExportList(bool bInit)
 	bool bEnableNext = true;
 	switch (sc_Items[idx].data[m_Style].nextPage)
 	{
-	default:
-		assert(0);
 	case WizardPage::None:
 		bEnableNext = false;
 		// fallthru

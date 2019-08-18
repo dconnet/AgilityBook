@@ -237,7 +237,10 @@ ARBDate ARBDate::FromString(
 			bool bOk = true;
 			switch (inFormat)
 			{
-			default:
+			case ARBDateFormat::Locale:
+			case ARBDateFormat::YYYYMMDD:
+			case ARBDateFormat::Reserved14:
+			case ARBDateFormat::Verbose:
 				assert(0);
 				bOk = false;
 				break;
@@ -408,7 +411,7 @@ std::wstring ARBDate::GetString(
 #endif
 		}
 		break;
-	default:
+	case ARBDateFormat::Reserved14:
 	case ARBDateFormat::SlashMMDDYYYY:	///< MM/DD/YYYY
 		date = fmt::format(L"{:02}/{:02}/{:04}", mon, day, yr);
 		break;

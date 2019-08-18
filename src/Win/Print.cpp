@@ -581,7 +581,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 		{
 			switch (inRun->GetScoring().GetType())
 			{
-			default:
+			case ARBScoringType::Unknown:
+			case ARBScoringType::ByTime:
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
@@ -633,7 +634,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 		{
 			switch (inRun->GetScoring().GetType())
 			{
-			default:
+			case ARBScoringType::Unknown:
+			case ARBScoringType::ByTime:
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetOpenPts())
@@ -763,7 +765,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 				continue;
 			switch (run->GetScoring().GetType())
 			{
-			default:
+			case ARBScoringType::Unknown:
 			case ARBScoringType::ByTime:
 				break;
 			case ARBScoringType::ByOpenClose:
@@ -873,7 +875,6 @@ static void PrintBinderMarkings(
 	wxCoord y = rPrinted.y + rPrinted.height / 2; // centered
 	switch (style)
 	{
-	default:
 	case RingBinder::Small3Ring:
 		PrintMark(pDC, x, y, oneInch);
 		PrintMark(pDC, x, static_cast<wxCoord>(y - 2.75 * oneInch), oneInch);

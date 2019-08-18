@@ -758,9 +758,6 @@ std::wstring FormatBytes(
 	size_t unitIndex = 0;
 	switch (inSizeStyle)
 	{
-	default:
-		assert(0);
-		// fall thru
 	case ByteSizeStyle::SI:
 		unitIndex = 0;
 		break;

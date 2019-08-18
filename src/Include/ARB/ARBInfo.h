@@ -85,7 +85,6 @@ public:
 	{
 		switch (inType)
 		{
-		default:
 		case ARBInfoType::Club:
 			return m_ClubInfo;
 		case ARBInfoType::Judge:
@@ -93,12 +92,13 @@ public:
 		case ARBInfoType::Location:
 			return m_LocationInfo;
 		}
+		// 'enum class' handles all cases via the switch above
+		return m_ClubInfo;
 	}
 	ARBInfoItemList& GetInfo(ARBInfoType inType)
 	{
 		switch (inType)
 		{
-		default:
 		case ARBInfoType::Club:
 			return m_ClubInfo;
 		case ARBInfoType::Judge:
@@ -106,6 +106,8 @@ public:
 		case ARBInfoType::Location:
 			return m_LocationInfo;
 		}
+		// 'enum class' handles all cases via the switch above
+		return m_ClubInfo;
 	}
 
 private:

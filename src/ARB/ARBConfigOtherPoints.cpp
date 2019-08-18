@@ -206,7 +206,6 @@ bool ARBConfigOtherPoints::Save(ElementNodePtr const& ioTree) const
 	other->AddAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
 	switch (m_Tally)
 	{
-	default:
 	case ARBOtherPointsTally::All:
 		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, OTHERPTS_COUNT_ALL);
 		break;

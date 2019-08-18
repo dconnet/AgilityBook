@@ -43,7 +43,7 @@ static wxDataFormat GetClipboardFormat(ARBClipFormat fmt)
 {
 	switch (fmt)
 	{
-	default:						return wxDataFormat(wxDF_INVALID);
+	case ARBClipFormat::None:		return wxDataFormat(wxDF_INVALID);
 	case ARBClipFormat::Dog:		return wxDataFormat(L"ARB-Dog");
 	case ARBClipFormat::Trial:		return wxDataFormat(L"ARB-Trial");
 	case ARBClipFormat::Run:		return wxDataFormat(L"ARB-Run");
@@ -54,6 +54,8 @@ static wxDataFormat GetClipboardFormat(ARBClipFormat fmt)
 	// "supports" html copying to not be invoked. So we do it.
 	case ARBClipFormat::Html:		return wxDataFormat(L"HTML Format");
 	}
+	// 'enum class' handles all cases via the switch above
+	return wxDataFormat(wxDF_INVALID);
 }
 
 ////////////////////////////////////////////////////////////////////////////

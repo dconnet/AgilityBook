@@ -1,0 +1,749 @@
+<!--
+An AgilityRecordBook file is made up of several main sections, see
+below for more details.  Multiple dogs may be contained within a file.
+
+In general, all fields are free form. Exceptions will be noted.
+ All date attributes are in the form "YYYY-MM-DD".
+
+See comments in DefaultConfig.xml for configuration changes.
+
+Note: When updating the file version number,
+see notes in src/ARB/ARBAgilityRecordBook.cpp.
+
+Revision History:
+2019-08-18 File version 14.6
+           Added 'TimeNoPlaces' to scoring 'type'.
+2017-12-31 File version 14.5
+           Added 'TFfaults' to 'Scoring'.
+2016-01-06 File version 14.4
+		   Added 'LifetimeNames' to 'Venue'. Removed 'LifetimeName' from Venue.
+           Renamed 'LifeTime' to 'LifetimePoints', added 'Name', 'SpeedPts'.
+2015-02-13 File version 14.3
+2014-02-12 File version 14.3 - oops - version was never incremented
+           Added 'scorePts' to 'Placement'.
+2013-09-03 File version 14.2
+           Added 'ShortName' to 'Division', 'Level', 'SubLevel', 'Event'.
+2013-05-24 File version 14.1
+           Added 'Date' to 'Trial'.
+2013-01-13 File version 14.0
+           Added new recurring title suffix style.
+           Titles now are unique with Name+recurring.
+2012-09-09 File version 13.2
+           Added new title style (eTitleNone).
+           Added 'titlePts','speedPts' to 'Placement'.
+2011-07-31 File version 13.1
+           Added 'platform','os' to 'AgilityBook', modified
+           TitlePoints (see ARBConfigTitlePoints.cpp).
+2011-07-26 File version 12.13
+           Added 'platform','os' to 'AgilityBook', modified TitlePoints.
+2011-06-09 File version 12.12
+           Added 'Config' to 'Action'.
+2009-12-18 File version 12.11
+           Added 'O' to 'Entry'.
+2009-07-26 File version 12.10
+           Added 'DNR' to 'Placement' and 'ReferenceRun'
+2008-02-12 File version 12.9
+           Fix metadata bug in dognotes.
+2008-08-05 File version 12.8
+           Added 'style' to Title, 'Style' to 'Titles'
+2008-01-21 File version 12.7
+           Added 'Visible' to InfoItem, 'obstacles' to 'Scoring'
+2007-08-10 File version 12.6
+           Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
+           Added 'CalSite' to config, 'SecEmail'/etc to 'Calendar'
+           Added 'LifetimeName' to 'Venue'
+2007-04-22 File version 12.5
+           Added 'defValue' to 'OtherPts'.
+           Added reservations to calendar.
+           Added 'icon' to 'Venue'.
+2006-12-25 File version 12.4
+           Added 'DrawDate' to Calendar.
+2006-12-01 File version 12.3
+           Added 'SpdMult'. Added Action for RenameDivision.
+2006-07-02 File version 12.2
+           Added 'subtractTF'.
+           Added Action for DeleteEvent.
+2006-02-08 File version 12.1
+           Added 'RenameEvent'.
+2005-12-14 File version 12.0
+           Moved Titles from Division to Venue, added Valid dates on them.
+           Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
+           Added 'cleanQ','bonusPts' to 'Scoring','Run'(scoring).
+           Update Action for DeleteTitle.
+2005-07-15 File version 11.0.
+           Added 'MultiQ' to 'Venue', removed 'doubleQ' from 'Event'.
+2005-04-26 File version 10.2.
+           Added 'ver' to 'AgilityBook'
+2005-02-07 File version 10.1.
+           Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
+           Added 'ClubInfo', 'LocationInfo'.
+           Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.
+           Added 'LongName' to 'Venue'.
+           Added 'SubName' to 'Event','Run','ExistingPoints'.
+           Added 'Multiple' to 'Titles', 'instance' to 'Title'.
+2004-10-12 File version 10.
+           Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
+           'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
+           'SCT', 'SCT2' to 'ByOpenClose'. Added 'SCT' to 'ByPoints'.
+2004-07-03 File version 9.0.
+           Added 'SubName' to 'Training'
+           'RegNum': Moved PCDATA to 'Number', added 'Note' as PCDATA
+2004-04-30 File version 8.6.
+           Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
+           Added 'Link' to 'Run'
+           Added 'LifeTime' to 'TitlePoints'
+2004-03-21 File version 8.5.
+           Added 'isHidden' to 'Title', made 'Date' optional.
+2004-03-08 File version 8.4.
+           Added versioning to configuration to allow auto-upgrades.
+           Added "TableInYPS" to "ByTime"
+           Added new Config/Action: DeleteTitle
+           Added "CRCDMeta" to "Notes"
+2004-02-09 File version 8.3
+           Added "ExistingPoints" to "Dog"
+2004-01-21 File version 8.2
+           Added "LongName" to "Titles"
+           Added "Action" to "Configuration"
+2003-12-28 File version 8.1
+           Added "ValidFrom","ValidTo" to "Scoring"
+2003-12-13 File version 8.0
+2003-10-15 File version 7
+2003-09-21 File version 6
+2003-07-16 File version 5
+2003-06-15 File version 4
+2003-06-02 File version 3
+2003-02-21 File version 2
+2002-12-28 File version 1
+-->
+
+<!--
+ Book is a simple integer in versions 1 thru 7.
+ It then changes to a more complex value ("major.minor"), starting with "8.0"
+ ver: Version of program that created file. Used for debugging purposes.
+ platform: Platform/architecture of program. Used for debugging purposes.
+ os: Platform/architecture of os. Used for debugging purposes.
+ timestamp: time stamp when file was written. For debugging purposes.
+-->
+<!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Info?, Dog*) >
+	<!ATTLIST AgilityBook
+		Book CDATA #REQUIRED
+		ver CDATA #IMPLIED
+		platform CDATA #IMPLIED
+		os CDATA #IMPLIED
+		timestamp CDATA #IMPLIED
+		>
+
+<!--
+This section defines the rules for the calendar cribsheet.
+ Entered: E==Entered, O=Pending, P==Planning, N==Not
+-->
+<!ELEMENT Calendar (#PCDATA) >
+	<!ATTLIST Calendar
+		DateStart CDATA #REQUIRED
+		DateEnd CDATA #REQUIRED
+		DateOpening CDATA #IMPLIED
+		DateDraw CDATA #IMPLIED
+		DateClosing CDATA #IMPLIED
+		isTentative (y|n) 'n'
+		Location CDATA #REQUIRED
+		Club CDATA #REQUIRED
+		Venue CDATA #REQUIRED
+		Entered (E|O|P|N) 'N'
+		Acc (N|T|C) 'N'
+		Confirm CDATA #IMPLIED
+		SecEmail CDATA #IMPLIED
+		PremiumURL CDATA #IMPLIED
+		OnlineURL CDATA #IMPLIED
+		>
+
+<!-- End of Calendar -->
+
+<!--
+This section defines the rules for the training log.
+-->
+<!ELEMENT Training (#PCDATA) >
+	<!ATTLIST Training
+		Date CDATA #REQUIRED
+		Name CDATA #IMPLIED
+		SubName CDATA #IMPLIED
+		>
+
+<!-- End of Training -->
+
+<!--
+This section defines the rules of each venue (the Configuration).
+ 'version' is used to auto-update a data file. The program will only prompt
+ to do so - it will not do anything behind-the-back. Once a config version is
+ set, the user could still modify things. But we won't automatically prompt
+ to upgrade. The user can merge the configuration any number of times.
+ If 'update' is set to 'n', this file will no longer prompt to update the config
+-->
+<!ELEMENT Configuration (Action*, CalSite*, Venue*, FaultType*, OtherPts*) >
+	<!ATTLIST Configuration
+		version CDATA #IMPLIED
+		update (y|n) 'y'
+		>
+
+<!--
+This is a special element that is applied to the old configuration before
+we import the new one (where this resides).
+ Config: Only apply this action up to this config (non-inclusive, 0 == always)
+         Basically, this is when the action was added. See ARBConfigAction.h.
+ Imporant: If a venue/division/level name changes all at the same time, make
+           sure they are ordered that way.
+ Verb: Supported actions (determines usage of other attributes):
+  'DeleteCalPlugin':
+    Venue: Unused
+    Div: Unused
+    OldName: Plugin to be renamed.
+    NewName: Unused
+  'RenameTitle':
+    Venue: Venue that contains title
+    Div: Unused
+    OldName: Title to be renamed.
+    NewName: New name.
+  'DeleteTitle': (I added ASCA titles that shouldn't be there)
+    Venue: Venue that contains title
+    Div: If set, limit delete to this division (I created dup names in NADAC)
+         Note: As of v1.7, this is obsolete - titles are not grouped by division
+    OldName: Title to be removed.
+    NewName: If set, rename any existing titles, otherwise titles are deleted.
+  'DeleteEvent': NADAC doesn't have a 'Championship' class (Double Shot)
+    Venue: Venue that contains event
+    Div: Unused
+    OldName: Event to be delete.
+    NewName: Unused
+  'RenameEvent': NADAC changed 'Wildcard' to 'Chance'
+    Venue: Venue that contains event
+    Div: Unused
+    OldName: Event to be renamed.
+    NewName: New name.
+  'RenameLevel': AKC ExcellentB -> Master
+    Venue: Venue that contains division
+    Div: Division containing level.
+    OldName: Level to be renamed. (note: NOT sublevel name)
+    NewName: New name.
+  'RenameDivision': CPE Standard->Regular, shouldn't have had Junior
+    Venue: Venue that contains division
+    Div: Unused
+    OldName: Division to be renamed.
+    NewName: New name.
+  'RenameVenue': To change 'Sweepstakes' to 'SSA'
+    Venue: Unused
+    Div: Unused
+    OldName: Venue to be renamed.
+    NewName: New name.
+ pcdata: currently unused, defined to allow future expansion.
+-->
+<!ELEMENT Action (#PCDATA) >
+	<!ATTLIST Action
+		Config CDATA #REQUIRED
+		Verb CDATA #REQUIRED
+		Venue CDATA #IMPLIED
+		Div CDATA #IMPLIED
+		OldName CDATA #IMPLIED
+		NewName CDATA #IMPLIED
+		>
+
+<!--
+Define a calendar source site.
+ name: Name displayed in plugin dialog
+ search: Url to request data from with special formatting
+      "!L!": Add selected LocCodes (code1+code2...)
+      "!V!": Add selected venues (v1+v2...)
+ help: Url to page describing what you get (for instance if data is limited)
+       (Note, not currently used. The idea is this would eventually be used
+       at a site where they provide limited data, but if you pay, you get more.
+       This would be a link to a page describing the differences and trying to
+       convince the user to subscribe. I haven't figured out where to put this
+       in the UI yet)
+Note: The requested data will be returned using with the venue code. We'll
+run a 'fixup' routine before actually importing the Calendar data.
+This means that the URL query can be specified with no locations or venues.
+Depending on the server, this could mean 'return all'. When processing returned
+data, no assumptions are made based on the query we started with.
+-->
+<!ELEMENT CalSite (Desc?, LocCode*, VenueCode*) >
+	<!ATTLIST CalSite
+		name CDATA #REQUIRED
+		search CDATA #REQUIRED
+		help CDATA #IMPLIED
+		>
+<!--
+Description of source, displayed in plugin dialog.
+-->
+<!ELEMENT Desc (#PCDATA) >
+<!--
+List of locations we can select from.
+ code: Transmitted to url
+ name: Displayed name
+-->
+<!ELEMENT LocCode EMPTY >
+	<!ATTLIST LocCode
+		code CDATA #REQUIRED
+		name CDATA #REQUIRED
+		>
+<!--
+List of venues we can select from.
+ code: Transmitted to url
+ venue: mapping to our names, if not set, code is same as ours
+-->
+<!ELEMENT VenueCode EMPTY >
+	<!ATTLIST VenueCode
+		code CDATA #REQUIRED
+		venue CDATA #IMPLIED
+		>
+
+<!--
+There will be a number of Fault Types that are pre-defined. But in general,
+this will be a user defined field for their own tracking purposes.
+-->
+<!ELEMENT FaultType (#PCDATA) >
+
+<!--
+OtherPts is used to enable things like breed points and USDAA
+top-ten points. The 'Count' value is how they are accumulated
+(points will be totalled by year/lifetime):
+  All: Tally all points in every event at all levels
+  AllByEvent: Tally points by event, but include all levels
+  Level: Tally all events, by level. (this infers by division too)
+  LevelByEvent: Tally events and levels separately.
+ The PCDATA content of the element is it's description.
+-->
+<!ELEMENT OtherPts (#PCDATA) >
+	<!ATTLIST OtherPts
+		Name CDATA #REQUIRED
+		Count (All|AllByEvent|Level|LevelByEvent) #REQUIRED
+		defValue CDATA #IMPLIED
+		>
+
+<!ELEMENT Venue (Desc?, LifetimeNames*, Titles*, Division+, Event+, MultiQ*) >
+	<!ATTLIST Venue
+		Name CDATA #REQUIRED
+		LongName CDATA #IMPLIED
+		URL CDATA #IMPLIED
+		icon CDATA #IMPLIED
+		>
+
+<!--
+This allows for multiple lifetime accumulations. None are currently known,
+but I'm needing to misuse lifetime more often (AKC NAC).
+An empty 'Name' implies the default. This is a localized name ("Lifetime").
+-->
+<!ELEMENT LifetimeNames EMPTY >
+	<!ATTLIST LifetimeNames
+		Name CDATA #IMPLIED
+		>
+
+<!--
+Style: 0: None
+       n: Number
+       r: Roman
+Sep n: None
+    s: Space
+    h: Hyphon
+-->
+<!ELEMENT Titles (#PCDATA) >
+	<!ATTLIST Titles
+		Name CDATA #REQUIRED
+		LongName CDATA #IMPLIED
+		OnFirst (y|n) 'n'
+		StartAt CDATA #IMPLIED
+		Inc CDATA #IMPLIED
+		Style (0|n|r) 'n'
+		Sep (n|s|h) 'n'
+		Prefix (y|n) 'n'
+		ValidFrom CDATA #IMPLIED
+		ValidTo CDATA #IMPLIED
+		>
+
+<!--
+This allows for multiple multiQs within a venue. Currently, I only
+know of 2 venues: AKC/QQ, AKC/QQQ, and UKC/QQQ
+-->
+<!ELEMENT MultiQ (MultiQItem+) >
+	<!ATTLIST MultiQ
+		Name CDATA #REQUIRED
+		SName CDATA #REQUIRED
+		ValidFrom CDATA #IMPLIED
+		ValidTo CDATA #IMPLIED
+		>
+<!--
+Note, 'Level' is the entered level, in other words, it may be the sublevel.
+-->
+<!ELEMENT MultiQItem EMPTY >
+	<!ATTLIST MultiQItem
+		Div CDATA #REQUIRED
+		Level CDATA #REQUIRED
+		Event CDATA #REQUIRED
+		>
+
+<!--
+When 'Multiple' is greater than 1, a title is considered to be recurring,
+meaning it can be entered multiple times. The value in this attribute is
+used to determine the starting point for the first recurance.
+-->
+<!ELEMENT Division (Level+) >
+	<!ATTLIST Division
+		Name CDATA #REQUIRED
+		ShortName CDATA #IMPLIED >
+
+<!--
+Rules for levels are based on the level name. A level may be
+broken into sublevels, for instance "Novice A" and "Novice B".
+AKC's ExA and ExB should be treated as distinct levels, since
+you title in each one, unlike the novice levels.
+-->
+<!ELEMENT Level (SubLevel*) >
+	<!ATTLIST Level
+		Name CDATA #REQUIRED
+		ShortName CDATA #IMPLIED >
+<!ELEMENT SubLevel EMPTY >
+	<!ATTLIST SubLevel
+		Name CDATA #REQUIRED
+		ShortName CDATA #IMPLIED >
+
+<!--
+The biggest difference in events is in how they are scored. These
+are the types of scoring recognized:
+ FaultsThenTime    Accumulate faults.
+ Faults100ThenTime Subtract faults from 100 and round time faults.
+ Faults200ThenTime Subtract faults from 200 and round time faults.
+ OCScoreThenTime   Must have a required number of opening and closing pts.
+ ScoreThenTime     Must have a required number of pts.
+ TimePlusFaults    Score by adding faults and time together.
+
+The 'Division' and 'Level' attributes should enumerate all possible
+levels listed in the Division elements (remember a level is 'Level',
+not 'SubLevel'). The name may be '*' which will be the default. If not
+enumerated, the event will not be offered for that division/level pair.
+
+'dropFractions' means that when computing time faults, fractions are
+dropped. (AKC and CPE do this.)
+
+'cleanQ' is used to determine titling points on T+F runs.
+
+'underTF' and 'overTF' are used to cause time faults to be computed on
+Time+Faults style events (USDAA Time Gamble). They are also used to specify
+faults in ScoreThenTime events (DOCNA Strategic gamble).
+
+'TFfaults' is used to make Time+Faults runs use the actual faults when
+computing titling points. Otherwise the faults used are T+F over SCT.
+Note: TFfault=y implies that the run must be under SCT.
+
+'subtractFT' will cause the time faults to be subtracted from the run's score.
+
+The 'superQ', 'speedPts' and 'bonusPts' attributes enable built-in
+features for an event. (note: bonusPts are actually bonus titling points)
+
+'obstacles' specified the number of obstacles attempted so an obstacles per
+second figure can be computed. On opening/closing time runs (gambles), only
+the opening time is used. Other runs use the dog's time.
+
+'hasTable' specifies that this run might have a table. This is used as the
+default when creating a run.
+
+'timeFault' is a multiplier when a run has time faults.
+
+If a scoring method has speed points, the PlaceInfo entries define the
+multipliers for placements. If SpeedPts='n', PlaceInfo entries are ignored.
+
+Entries in 'TitlePoints' determines if a Q should/not be awarded. When
+data is entered in the program, the program will perform certain tests.
+If it thinks you should/not Q and you enter data differently,
+it will ask if you really mean that.
+Type: Norm, T2B, UKI
+
+If there are no 'TitlePoints', then the class is non-titling.
+
+Placements is used to count the number of places earned (used in FCI, SCC)
+
+ Integer: OpeningPts,ClosingPts,Points,Faults
+-->
+<!ELEMENT Event (Desc?, SubName*, Scoring+) >
+	<!ATTLIST Event
+		Name CDATA #REQUIRED
+		ShortName CDATA #IMPLIED
+		hasTable (y|n) 'n'
+		hasPartner (y|n) 'n'
+		hasSubNames (y|n) 'n'
+		>
+<!ELEMENT SubName (#PCDATA) >
+<!ELEMENT Scoring (Note?, PlaceInfo*, TitlePoints*, LifetimePoints*, Placements?) >
+	<!ATTLIST Scoring
+		ValidFrom CDATA #IMPLIED
+		ValidTo CDATA #IMPLIED
+		Division CDATA #REQUIRED
+		Level CDATA #REQUIRED
+		type (FaultsThenTime|Faults100ThenTime|Faults200ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults) #REQUIRED
+		dropFractions (y|n) 'n'
+		cleanQ (y|n) 'n'
+		underTF (y|n) 'n'
+		overTF (y|n) 'n'
+		TFfaults (y|n) 'n'
+		subtractTF (y|n) 'n'
+		superQ (y|n) 'n'
+		speedPts (y|n) 'n'
+		bonusPts (y|n) 'n'
+		obstacles CDATA #IMPLIED
+		timeFault CDATA #IMPLIED
+		OpeningPts CDATA #IMPLIED
+		ClosingPts CDATA #IMPLIED
+		>
+<!ELEMENT PlaceInfo EMPTY >
+	<!ATTLIST PlaceInfo
+		Place CDATA #REQUIRED
+		Value CDATA #REQUIRED
+		MustQ (y|n) 'y'
+		>
+<!ELEMENT TitlePoints EMPTY >
+	<!ATTLIST TitlePoints
+		Points CDATA #REQUIRED
+		Faults CDATA #REQUIRED
+		Type CDATA #IMPLIED
+		>
+<!ELEMENT LifetimePoints EMPTY >
+	<!ATTLIST LifetimePoints
+		Name CDATA #IMPLIED
+		SpeedPts (y|n) 'n'
+		Points CDATA #IMPLIED
+		Faults CDATA #REQUIRED
+		>
+<!ELEMENT Placements (PlaceInfo+) >
+
+<!-- End of Configuration -->
+
+<!--
+This section adds optional data.
+-->
+
+<!ELEMENT Info (ClubInfo*, JudgeInfo*, LocationInfo*) >
+<!-- The pcdata is the comment about the judge(etc) -->
+<!ELEMENT ClubInfo (#PCDATA) >
+	<!ATTLIST ClubInfo
+		Name CDATA #REQUIRED
+		Visible (y|n) 'y'
+		>
+<!ELEMENT JudgeInfo (#PCDATA) >
+	<!ATTLIST JudgeInfo
+		Name CDATA #REQUIRED
+		Visible (y|n) 'y'
+		>
+<!ELEMENT LocationInfo (#PCDATA) >
+	<!ATTLIST LocationInfo
+		Name CDATA #REQUIRED
+		Visible (y|n) 'y'
+		>
+
+<!-- End of Info -->
+
+<!--
+This section defines a dog's runs. The way the data is interpretted
+depends on how a venue has been defined above.
+ Date: DOB,Deceased
+ Height is free form - this allows for NADACs "20+" height.
+ ExistingPoints allows setting an initial value for points earned at a certain
+  level. This way, you don't have to have all trial information for older dogs.
+-->
+
+<!ELEMENT Dog (RegisteredName?, Breed?, Note?, ExistingPoints*, RegNum*, Title*, Trial*) >
+	<!ATTLIST Dog
+		CallName CDATA #REQUIRED
+		DOB CDATA #IMPLIED
+		Deceased CDATA #IMPLIED
+		>
+<!ELEMENT RegisteredName (#PCDATA) >
+<!ELEMENT Breed (#PCDATA) >
+<!ELEMENT Note (#PCDATA) >
+<!--
+ Type: [required items..]
+  'Other': Other Points [Other, Venue, Div, Level, Event]
+  'Run': Runs           [       Venue, Div, Level, Event, SubName]
+  'Speed': Speed points [       Venue, Div, Level]
+  'MQ': Multiple Q      [       Venue, MultiQ]
+  'SQ': Super Q         [       Venue, Div, Level, Event]
+-->
+<!ELEMENT ExistingPoints (#PCDATA) >
+	<!ATTLIST ExistingPoints
+		Date CDATA #REQUIRED
+		Type CDATA #REQUIRED
+		Other CDATA #IMPLIED
+		Venue CDATA #IMPLIED
+		MultiQ CDATA #IMPLIED
+		Div CDATA #IMPLIED
+		Level CDATA #IMPLIED
+		Event CDATA #IMPLIED
+		SubName CDATA #IMPLIED
+		Pts CDATA #REQUIRED
+		>
+<!ELEMENT RegNum (#PCDATA) >
+	<!ATTLIST RegNum
+		Venue CDATA #REQUIRED
+		Number CDATA #REQUIRED
+		Height CDATA #IMPLIED
+		isReceived (y|n) 'n'
+	>
+<!--
+'show' is used to show instance 1: "FTC1"
+style/sep: See Titles
+-->
+<!ELEMENT Title EMPTY >
+	<!ATTLIST Title
+		Date CDATA #IMPLIED
+		Venue CDATA #REQUIRED
+		Name CDATA #REQUIRED
+		instance CDATA #IMPLIED
+		startat CDATA #IMPLIED
+		inc CDATA #IMPLIED
+		show (y|n) 'n'
+		style (0|n|r) 'n'
+		sep (n|s|h) 'n'
+		isReceived (y|n) 'n'
+		isHidden (y|n) 'n'
+	>
+
+<!--
+Entries in the file are grouped by trial.
+'Date' is used as the default date for the first run (and sorting when no runs)
+-->
+<!ELEMENT Trial (Location?, Note?, Club+, Run*) >
+	<!ATTLIST Trial
+		Date CDATA #IMPLIED
+		Verified (y|n) 'n' >
+
+<!ELEMENT Location (#PCDATA) >
+
+<!--
+Multiple clubs are allowed for co-sanctioned matches, such as NADAC/ASCA.
+The 'Venue' must be defined above in a Configuration/Venue element.
+-->
+<!ELEMENT Club (#PCDATA) >
+	<!ATTLIST Club Venue CDATA #REQUIRED >
+
+<!--
+The attributes 'Division' and 'Event' must be defined above in a
+Configuration/Venue element. The 'Level' attribute is defined in either
+a Level or SubLevel element.
+-->
+<!ELEMENT Run (Conditions?, Judge, Handler?, Partner*, (ByTime | ByOpenClose | ByPoints), Placement?, Notes?, ReferenceRun*, Link*) >
+	<!ATTLIST Run
+		Date CDATA #REQUIRED
+		Division CDATA #REQUIRED
+		Level CDATA #REQUIRED
+		Height CDATA #IMPLIED
+		Event CDATA #REQUIRED
+		SubName CDATA #IMPLIED
+		>
+
+<!ELEMENT Conditions (#PCDATA) >
+<!ELEMENT Judge (#PCDATA) >
+<!ELEMENT Handler (#PCDATA) >
+<!ELEMENT Link (#PCDATA) >
+
+<!--
+The '*' on Partner allows for 3 dogs relays, etc. This element may only be
+specified if the 'hasPartner' attribute on the event is true.
+-->
+<!ELEMENT Partner EMPTY >
+	<!ATTLIST Partner
+		Handler CDATA #REQUIRED
+		Dog CDATA #REQUIRED
+		RegNum CDATA #IMPLIED
+	>
+
+<!--
+These 3 elements define the major scoring mechanisms.
+ ByTime: FaultsThenTime, Faults100ThenTime, Faults200ThenTime, TimePlusFaults
+  When used by 'TimePlusFaults', SCT and Yards are not required. If
+  specified, then it is assumed time faults are also tallied.
+ ByOpenClose: OCScoreThenTime
+ ByPoints: ScoreThenTime
+
+ Integer: CourseFaults,NeedOpenPts,NeedClosePts,OpenPts,ClosePts,NeedPts,Points,bonusPts
+ Decimal: Time,SCT,SCT2,Yards
+ Boolean: hasTable
+-->
+<!ELEMENT ByTime EMPTY >
+	<!ATTLIST ByTime
+		CourseFaults CDATA #REQUIRED
+		Time CDATA #REQUIRED
+		SCT CDATA #IMPLIED
+		Yards CDATA #IMPLIED
+		hasTable (y|n) 'n'
+		bonusPts CDATA #IMPLIED
+		>
+<!ELEMENT ByOpenClose EMPTY >
+	<!ATTLIST ByOpenClose
+		CourseFaults CDATA #IMPLIED
+		Time CDATA #REQUIRED
+		SCT CDATA #IMPLIED
+		SCT2 CDATA #IMPLIED
+		NeedOpenPts CDATA #REQUIRED
+		NeedClosePts CDATA #REQUIRED
+		OpenPts CDATA #REQUIRED
+		ClosePts CDATA #REQUIRED
+		bonusPts CDATA #IMPLIED
+		>
+<!ELEMENT ByPoints EMPTY >
+	<!ATTLIST ByPoints
+		CourseFaults CDATA #IMPLIED
+		Time CDATA #REQUIRED
+		SCT CDATA #IMPLIED
+		NeedPts CDATA #REQUIRED
+		Points CDATA #REQUIRED
+		bonusPts CDATA #IMPLIED
+		>
+
+<!--
+ Integer: Place,InClass,DogsQd,Points,titlePts,speedPts
+ Note: titlePts/speedPts/scorePts are not used internally. It allows external
+       apps access to title point information without needing to compute them.
+-->
+<!ELEMENT Placement (OtherPoints*) >
+	<!ATTLIST Placement
+		Q (NA|SQ|Q|NQ|E|DNR) 'NA'
+		Place CDATA #REQUIRED
+		InClass CDATA #IMPLIED
+		DogsQd CDATA #IMPLIED
+		titlePts CDATA #IMPLIED
+		speedPts CDATA #IMPLIED
+		scorePts CDATA #IMPLIED
+	>
+<!ELEMENT OtherPoints EMPTY >
+	<!ATTLIST OtherPoints
+		Name CDATA #REQUIRED
+		Points CDATA #REQUIRED
+		>
+
+<!--
+Notes on a dogs run.
+ Faults: Simple string, for generating reports in the future
+ CRCD: Text copy of CRCD course
+ CRCDMeta: Enhanced Metafile of course
+ CRCDMeta2: Compressed CRCDMeta
+ Other: Generic comments
+-->
+<!ELEMENT Notes (Faults*, CRCD?, (CRCDMeta | CRCDMeta2)?, Other?) >
+<!ELEMENT Faults (#PCDATA) >
+<!ELEMENT CRCD (#PCDATA) >
+<!ELEMENT CRCDMeta (#PCDATA) >
+<!ELEMENT CRCDMeta2 (#PCDATA) >
+<!ELEMENT Other (#PCDATA) >
+
+<!--
+The meaning of ScoreOrFaults is dependent on the type of run. These
+entries are just for reference, hence the data is not interpreted.
+ Integer: Place
+ Decimal: Time
+-->
+<!ELEMENT ReferenceRun (Name, Breed?, ScoreOrFaults?, Note?) >
+	<!ATTLIST ReferenceRun
+		Q (NA|SQ|Q|NQ|E|DNR) 'NA'
+		Place CDATA #REQUIRED
+		Time CDATA #IMPLIED
+		Height CDATA #IMPLIED
+	>
+<!ELEMENT Name (#PCDATA) >
+<!ELEMENT ScoreOrFaults (#PCDATA) >
+
+<!-- End of Dog -->

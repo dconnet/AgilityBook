@@ -1560,7 +1560,7 @@ void CAgilityBookCalendarView::OnCtrlChar(wxKeyEvent& evt)
 	}
 	switch (motion)
 	{
-	default:
+	case CalendarMotion::None:
 		break;
 	case CalendarMotion::DayLast:
 		--date;

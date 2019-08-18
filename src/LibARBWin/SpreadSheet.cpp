@@ -519,7 +519,7 @@ bool CWizardExcelExport::SetAlignment(
 	short val = xlHAlignGeneral;
 	switch (align)
 	{
-	default:
+	case ARBSpreadSheetAlign::None:
 	case ARBSpreadSheetAlign::General:
 		val = xlHAlignGeneral;
 		break;
@@ -572,7 +572,6 @@ bool CWizardExcelExport::SetFormat(
 
 	switch (format)
 	{
-	default:
 	case ARBSpreadSheetFormat::Text:
 		sFormat = L"@";
 		break;
@@ -951,7 +950,7 @@ bool CWizardCalcExport::SetAlignment(
 	long val = 0;
 	switch (align)
 	{
-	default:
+	case ARBSpreadSheetAlign::None:
 	case ARBSpreadSheetAlign::General:
 		// com.sun.star.table.CellHoriJustify.STANDARD
 		val = 0;
@@ -981,8 +980,8 @@ bool CWizardCalcExport::SetFormat(
 	std::wstring sFormat;
 	switch (format)
 	{
-	default:
 	case ARBSpreadSheetFormat::Text:
+	case ARBSpreadSheetFormat::NumberNoZero:
 		sFormat = L"@";
 		break;
 	case ARBSpreadSheetFormat::Currency:
@@ -1192,8 +1191,6 @@ ISpreadSheetPtr ISpreadSheet::Create(ARBSpreadSheetType inType)
 #if HAS_AUTOMATION
 	switch (inType)
 	{
-	default:
-		break;
 	case ARBSpreadSheetType::MicrosoftExcel:
 		pInterface = ISpreadSheetPtr(CWizardExcel::Create());
 		break;

@@ -350,7 +350,7 @@ bool ARBDogRun::Load(
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{
-	default:
+	case ARBAttribLookup::Found:
 		break;
 	case ARBAttribLookup::NotFound:
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE));
@@ -659,7 +659,7 @@ double ARBDogRun::GetTitlePoints(
 	double bonusTitlePts = inScoring->HasBonusTitlePts() ? m_Scoring.GetBonusTitlePts() : 0.0;
 	switch (m_Scoring.GetType())
 	{
-	default:
+	case ARBScoringType::Unknown:
 		break;
 	case ARBScoringType::ByTime:
 		{
@@ -765,7 +765,7 @@ double ARBDogRun::GetLifetimePoints(
 	double bonusTitlePts = inScoring->HasBonusTitlePts() ? m_Scoring.GetBonusTitlePts() : 0.0;
 	switch (m_Scoring.GetType())
 	{
-	default:
+	case ARBScoringType::Unknown:
 		break;
 	case ARBScoringType::ByTime:
 		{
@@ -857,16 +857,26 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 	double pts = 0.0;
 	switch (m_Scoring.GetType())
 	{
-	default:
+	case ARBScoringType::Unknown:
 		break;
 	case ARBScoringType::ByTime:
 		pts = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 		switch (inScoring->GetScoringStyle())
 		{
-		default: break;
-		case ARBScoringStyle::TimePlusFaults: pts += m_Scoring.GetTime(); break;
-		case ARBScoringStyle::Faults100ThenTime: pts = 100 - pts; break;
-		case ARBScoringStyle::Faults200ThenTime: pts = 200 - pts; break;
+		case ARBScoringStyle::Unknown:
+		case ARBScoringStyle::FaultsThenTime:
+		case ARBScoringStyle::OCScoreThenTime:
+		case ARBScoringStyle::ScoreThenTime:
+			break;
+		case ARBScoringStyle::TimePlusFaults:
+			pts += m_Scoring.GetTime();
+			break;
+		case ARBScoringStyle::Faults100ThenTime:
+			pts = 100 - pts;
+			break;
+		case ARBScoringStyle::Faults200ThenTime:
+			pts = 200 - pts;
+			break;
 		}
 		break;
 	case ARBScoringType::ByOpenClose:

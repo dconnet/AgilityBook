@@ -166,7 +166,7 @@ static int AddItem(
 	wxString str;
 	switch (item)
 	{
-	default:
+	case ARBPointsViewSort::Unknown:
 		break;
 	case ARBPointsViewSort::Division:
 		str = _("IDS_COL_DIVISION");

@@ -197,7 +197,6 @@ CWizardImport::CWizardImport(
 
 	switch (m_Delim)
 	{
-	default:
 	case ARBImportExportDelim::Tab:
 		m_ctrlTab->SetValue(true);
 		break;
@@ -326,7 +325,6 @@ wchar_t CWizardImport::GetDelim() const
 {
 	switch (m_Delim)
 	{
-	default:
 	case ARBImportExportDelim::Tab:       return L'\t';
 	case ARBImportExportDelim::Space:     return L' ';
 	case ARBImportExportDelim::Colon:     return L':';
@@ -338,6 +336,8 @@ wchar_t CWizardImport::GetDelim() const
 		else
 			return 0;
 	}
+	// 'enum class' handles all cases via the switch above
+	return 0;
 }
 
 
@@ -803,7 +803,8 @@ bool CWizardImport::DoWizardFinish()
 		}
 		switch (m_pSheet->GetImportExportItem())
 		{
-		default: break;
+		default:
+			break;
 
 		case WIZ_IMPORT_RUNS:
 			{
@@ -871,7 +872,7 @@ bool CWizardImport::DoWizardFinish()
 				i = -1;
 				switch (pScoring->GetScoringStyle())
 				{
-				default:
+				case ARBScoringStyle::Unknown:
 					break;
 				case ARBScoringStyle::FaultsThenTime:
 				case ARBScoringStyle::Faults100ThenTime:

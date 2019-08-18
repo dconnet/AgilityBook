@@ -631,7 +631,7 @@ void CDlgConfigEvent::FillControls()
 				// the Method Configuration dialog.
 				switch (style)
 				{
-				default:
+				case ARBScoringStyle::Unknown:
 					break;
 				case ARBScoringStyle::FaultsThenTime:
 				case ARBScoringStyle::Faults100ThenTime:
@@ -1007,8 +1007,6 @@ void CDlgConfigEvent::EditPoints()
 					bool bOk = false;
 					switch (dlgType)
 					{
-					default:
-						assert(0);
 					case ARBTitlePointType::Normal:
 						{
 							ARBCalcPointsPtr calc = pScoring->GetTitlePoints().GetCalc();
@@ -1033,6 +1031,9 @@ void CDlgConfigEvent::EditPoints()
 						bOk = pScoring->GetPlacements().AddPlaceInfo(dlgPlace, dlgPoints, true);
 						if (!bOk)
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+						break;
+					case ARBTitlePointType::Max:
+						assert(0);
 						break;
 					}
 					if (bOk && type != dlgType)
@@ -1290,8 +1291,6 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 				// The only reason this fails is if the faults entry exists.
 				switch (dlg.Type())
 				{
-				default:
-					assert(0);
 				case ARBTitlePointType::Normal:
 					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults()))
 						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
@@ -1303,6 +1302,9 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 				case ARBTitlePointType::Placement:
 					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true))
 						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					break;
+				case ARBTitlePointType::Max:
+					assert(0);
 					break;
 				}
 				FillTitlePoints(pScoring);
@@ -1499,7 +1501,6 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 		case CDlgConfigure::eCancelChanges:
 			EndDialog(IDCANCEL);
 			return;
-		default:
 		case CDlgConfigure::eDoNotDoIt:
 			return;
 		case CDlgConfigure::eNoChange:

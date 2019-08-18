@@ -496,7 +496,7 @@ public:
 		{
 			switch (m_Order[i])
 			{
-			default:
+			case ARBPointsViewSort::Unknown:
 				assert(0);
 				return false;
 
@@ -1513,7 +1513,6 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 
 			switch (pOther->GetTally())
 			{
-			default:
 			case ARBOtherPointsTally::All:
 				m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyAll>(m_pDoc, pOther, runs, id));
 				break;

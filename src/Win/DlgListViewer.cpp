@@ -267,7 +267,7 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 	case COL_RUN_MQ_STATUS: // Only happens for scoring detail items.
 		switch (m_ScoringDetail)
 		{
-		default:
+		case ScoringRunInfo::ScoringDetail::None:
 			break;
 		case ScoringRunInfo::ScoringDetail::Deleted:
 			str = _("IDS_DELETED");
