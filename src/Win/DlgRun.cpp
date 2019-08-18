@@ -11,6 +11,7 @@
  *
  * Revision History
  * 2019-08-18 Fix Bonus points (couldn't enter double).
+ *            Auto-select event when there's only one.
  * 2018-12-16 Convert to fmt.
  * 2017-11-21 Update title points when InClass changes.
  * 2015-11-01 Compute score for NA runs also.
@@ -1943,6 +1944,7 @@ void CDlgRun::FillEvents(bool bOnEventChange)
 		int idxLevel = m_ctrlLevels->GetSelection();
 		if (wxNOT_FOUND != idxLevel)
 		{
+			ARBConfigEventPtr pLastAddedEvent;
 			CDlgDogLevelData* pData = GetLevelData(idxLevel);
 			for (ARBConfigEventList::const_iterator iter = m_pVenue->GetEvents().begin();
 				iter != m_pVenue->GetEvents().end();
@@ -1957,7 +1959,19 @@ void CDlgRun::FillEvents(bool bOnEventChange)
 						m_ctrlEvents->SetSelection(idx);
 						SetEventDesc(pEvent);
 					}
+					else
+					{
+						// If we're not looking for an event (and haven't found one!),
+						// remember this.
+						pLastAddedEvent = pEvent;
+					}
 				}
+			}
+			// If there's only one event, auto-select it.
+			if (pLastAddedEvent && 1 == m_ctrlEvents->GetCount() && 0 > m_ctrlEvents->GetSelection())
+			{
+				m_ctrlEvents->SetSelection(0);
+				SetEventDesc(pLastAddedEvent);
 			}
 		}
 	}
