@@ -1,10 +1,13 @@
 6/2/2019: v3.3.3.<dev>
 - Bumped Configuration v62:
   - Fixed AKC Premier metalic title names.
+  - Add AKC FAST CAT.
 - New features / Enhancements:
   - Added ability to configure accelerator keys.
   - Removed list view of Points (it no longer autosized columns properly)
   - Enable alternate row coloring in list controls.
+- Bug fixes:
+  - Fix entering bonus points in run dialog.
 
 4/14/2019: v3.3.2.109
 - Bumped Configuration v61:

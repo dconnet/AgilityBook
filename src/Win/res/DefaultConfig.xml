@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2019-05-18 Configuration version 62.
+2019-08-18 Configuration version 62.
            Fix names of AKC Premier metalic titles.
+           Add AKC FAST CAT.
 2019-04-02 Configuration version 61.
            Added BHA. Added icons for CKCSC, UKI, VALOR.
 2019-01-17 Configuration version 60.
@@ -3038,6 +3039,20 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
         </Scoring>
         <Scoring Division="*" Level="Specialist" type="TimePlusFaults">
           <TitlePoints Faults="12" Points="1"/>
+        </Scoring>
+      </Event>
+    </Venue>
+    <Venue LongName="FAST CAT" Name="FCAT" URL="https://www.akc.org/sports/coursing/fast-cat" icon="4">
+      <Titles Name="BCAT">150 points</Titles>
+      <Titles Name="DCAT">500 points</Titles>
+      <Titles Name="FCAT" StartAt="1">1000 points for FCAT
+Repeats every additional 500 points</Titles>
+      <Division Name="FCAT">
+        <Level Name="FCAT"/>
+      </Division>
+      <Event Name="FCAT">
+        <Scoring Division="*" Level="*" bonusPts="y" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
     </Venue>
