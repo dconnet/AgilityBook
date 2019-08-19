@@ -3052,7 +3052,8 @@ Repeats every additional 500 points</Titles>
         <Level Name="FCAT"/>
       </Division>
       <Event Name="FCAT">
-        <Scoring Division="*" Level="*" bonusPts="y" type="FaultsThenTime">
+        <Desc>Enter points (MPH * Handicap) as Bonus Points</Desc>
+        <Scoring Division="*" Level="*" bonusPts="y" type="TimeNoPlaces">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
