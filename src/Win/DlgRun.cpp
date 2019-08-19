@@ -714,9 +714,12 @@ CDlgRun::CDlgRun(
 	, m_SubName(StringUtil::stringWX(inRun->GetSubName()))
 	, m_ctrlTable(nullptr)
 	, m_Table(false)
+	, m_textHeight(nullptr)
 	, m_ctrlHeight(nullptr)
 	, m_Height(StringUtil::stringWX(inRun->GetHeight()))
+	, m_textJudge(nullptr)
 	, m_ctrlJudge(nullptr)
+	, m_ctrlJudgeNote(nullptr)
 	, m_Judge(StringUtil::stringWX(inRun->GetJudge()))
 	, m_ctrlHandler(nullptr)
 	, m_Handler(StringUtil::stringWX(inRun->GetHandler()))
@@ -815,17 +818,20 @@ CDlgRun::CDlgRun(
 
 	if (!m_Run->GetDate().IsValid())
 		m_Date.SetToday();
-	if (m_Height.empty())
+	if (ARBScoringType::BySpeed != m_Run->GetScoring().GetType())
 	{
-		std::wstring last = CAgilityBookOptions::GetLastEnteredHeight(m_pDog, m_pVenue);
-		if (!last.empty())
-			m_Height = StringUtil::stringWX(last);
-	}
-	if (m_Judge.empty())
-	{
-		std::wstring last = CAgilityBookOptions::GetLastEnteredJudge();
-		if (!last.empty())
-			m_Judge = StringUtil::stringWX(last);
+		if (m_Height.empty())
+		{
+			std::wstring last = CAgilityBookOptions::GetLastEnteredHeight(m_pDog, m_pVenue);
+			if (!last.empty())
+				m_Height = StringUtil::stringWX(last);
+		}
+		if (m_Judge.empty())
+		{
+			std::wstring last = CAgilityBookOptions::GetLastEnteredJudge();
+			if (!last.empty())
+				m_Judge = StringUtil::stringWX(last);
+		}
 	}
 	if (m_Handler.empty())
 	{
@@ -963,10 +969,10 @@ CDlgRun::CDlgRun(
 	m_ctrlTable->SetHelpText(_("HIDC_RUNSCORE_TABLE"));
 	m_ctrlTable->SetToolTip(_("HIDC_RUNSCORE_TABLE"));
 
-	wxStaticText* textHeight = new wxStaticText(m_panelScore, wxID_ANY,
+	m_textHeight = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_HEIGHT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	textHeight->Wrap(-1);
+	m_textHeight->Wrap(-1);
 
 	m_ctrlHeight = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition,
@@ -991,10 +997,10 @@ CDlgRun::CDlgRun(
 	}
 	m_ctrlHeight->AutoComplete(choices);
 
-	wxStaticText* textJudge = new wxStaticText(m_panelScore, wxID_ANY,
+	m_textJudge = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_JUDGE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	textJudge->Wrap(-1);
+	m_textJudge->Wrap(-1);
 
 	m_ctrlJudge = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
@@ -1003,10 +1009,10 @@ CDlgRun::CDlgRun(
 	m_ctrlJudge->SetHelpText(_("HIDC_RUNSCORE_JUDGE"));
 	m_ctrlJudge->SetToolTip(_("HIDC_RUNSCORE_JUDGE"));
 
-	CNoteButton* ctrlJudgeNote = new CNoteButton(m_panelScore);
-	ctrlJudgeNote->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgRun::OnJudgeNotes, this);
-	ctrlJudgeNote->SetHelpText(_("HIDC_RUNSCORE_JUDGE_NOTES"));
-	ctrlJudgeNote->SetToolTip(_("HIDC_RUNSCORE_JUDGE_NOTES"));
+	m_ctrlJudgeNote = new CNoteButton(m_panelScore);
+	m_ctrlJudgeNote->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgRun::OnJudgeNotes, this);
+	m_ctrlJudgeNote->SetHelpText(_("HIDC_RUNSCORE_JUDGE_NOTES"));
+	m_ctrlJudgeNote->SetToolTip(_("HIDC_RUNSCORE_JUDGE_NOTES"));
 
 	wxStaticText* textHandler = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_HANDLER"),
@@ -1035,7 +1041,7 @@ CDlgRun::CDlgRun(
 	textConditions->Wrap(-1);
 
 	m_ctrlConditions = new CSpellCheckCtrl(m_panelScore, wxID_ANY,
-		wxEmptyString, wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 25)),
+		wxEmptyString, wxDefaultPosition, wxDLG_UNIT(this, wxSize(200, 25)),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Conditions, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlConditions->SetHelpText(_("HIDC_RUNSCORE_CONDITIONS"));
@@ -1487,11 +1493,11 @@ CDlgRun::CDlgRun(
 	wxBoxSizer* sizerHtCond = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerHt = new wxBoxSizer(wxHORIZONTAL);
-	sizerHt->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHt->Add(m_textHeight, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerHt->Add(m_ctrlHeight, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerHt->Add(textJudge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHt->Add(m_textJudge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerHt->Add(m_ctrlJudge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerHt->Add(ctrlJudgeNote, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerHt->Add(m_ctrlJudgeNote, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerHt->Add(textHandler, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerHt->Add(m_ctrlHandler, 0, wxEXPAND, 0);
 
@@ -2208,8 +2214,11 @@ void CDlgRun::FixScoreLayout()
 
 void CDlgRun::UpdateControls(bool bOnEventChange)
 {
-	m_ctrlHeight->Enable(false);
-	m_ctrlJudge->Enable(false);
+	m_textHeight->Show(false);
+	m_ctrlHeight->Show(false);
+	m_textJudge->Show(false);
+	m_ctrlJudge->Show(false);
+	m_ctrlJudgeNote->Show(false);
 	m_ctrlHandler->Enable(false);
 	m_ctrlConditions->Enable(false);
 	m_ctrlPartnerEdit->Show(false);
@@ -2263,8 +2272,6 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		return;
 	}
 
-	m_ctrlHeight->Enable(true);
-	m_ctrlJudge->Enable(true);
 	m_ctrlHandler->Enable(true);
 	m_ctrlConditions->Enable(true);
 
@@ -2451,6 +2458,11 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 
 	if (ARBScoringStyle::TimeNoPlaces != pScoring->GetScoringStyle())
 	{
+		m_textHeight->Show(true);
+		m_ctrlHeight->Show(true);
+		m_textJudge->Show(true);
+		m_ctrlJudge->Show(true);
+		m_ctrlJudgeNote->Show(true);
 		m_ctrlObstaclesText->Show(true);
 		m_ctrlObstacles->Show(true);
 		m_textPlace->Show(true);
