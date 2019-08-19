@@ -709,6 +709,9 @@ void CDlgConfigEvent::FillControls()
 						fmt::format_to(info, L"; {}", str1);
 					}
 					break;
+				case ARBScoringStyle::TimeNoPlaces:
+					str1.clear();
+					break;
 				}
 				if (pScoring->DropFractions())
 				{

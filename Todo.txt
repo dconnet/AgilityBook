@@ -1,4 +1,8 @@
-Last Updated: 4/7/2018
+Last Updated: 8/18/2019
+
+- Update DlgAssignColumn to support the new 'BySpeed' type (for FCAT).
+  It's basically the same as FaultsThenTime, except missing a bunch of data.
+  (no placements, SCT, obstacles)
 
 - Tweaks to Find-Links dialog:
   - Ability to go directly to run with link (or at least the trial)

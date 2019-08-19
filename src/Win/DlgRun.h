@@ -171,6 +171,7 @@ private:
 	wxStaticText* m_ctrlClosingText;
 	CTextCtrl* m_ctrlClosing;
 	short m_Closing;
+	wxStaticText* m_ctrlObstaclesText;
 	CTextCtrl* m_ctrlObstacles;
 	short m_Obstacles;
 	wxStaticText* m_ctrlTimeText;
@@ -191,11 +192,15 @@ private:
 		//CEdit m_ctrlClose;
 		short m_Close;
 		//CStatic m_ctrlTotalFaultsText;
+	wxStaticText* m_ctrlObstaclesPSText;
 	CTextCtrl* m_ctrlObstaclesPS;
+	wxStaticText* m_textPlace;
 	CTextCtrl* m_ctrlPlace;
+	wxStaticText* m_textPlaceOf;
 	short m_Place;
 	CTextCtrl* m_ctrlInClass;
 	short m_InClass;
+	wxStaticText* m_textDogsQd;
 	CTextCtrl* m_ctrlDogsQd;
 	short m_DogsQd;
 	CQualifyingComboBox* m_ctrlQ;

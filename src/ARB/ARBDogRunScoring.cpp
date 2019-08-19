@@ -39,6 +39,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// Magic / time == MPH
+// This number is from the AKC rule book.
+// Note: My computed MPH is often lower than the official one. WTF Excel?
+// (not excel: putting in "=204.545 / A1" results in the numbers I have.
+constexpr double sc_magicMPH = 204.545;
+
 /////////////////////////////////////////////////////////////////////////////
 // static
 
@@ -58,6 +64,8 @@ ARBScoringType ARBDogRunScoring::TranslateConfigScoring(ARBScoringStyle inType)
 		return ARBScoringType::ByOpenClose;
 	case ARBScoringStyle::ScoreThenTime:
 		return ARBScoringType::ByPoints;
+	case ARBScoringStyle::TimeNoPlaces:
+		return ARBScoringType::BySpeed;
 	}
 	// 'enum class' handles all cases via the switch above
 	return ARBScoringType::Unknown;
@@ -206,7 +214,8 @@ bool ARBDogRunScoring::Load(
 	assert(inTree);
 	if (!inTree || !(inTree->GetName() == TREE_BY_TIME
 	|| inTree->GetName() == TREE_BY_OPENCLOSE
-	|| inTree->GetName() == TREE_BY_POINTS))
+	|| inTree->GetName() == TREE_BY_POINTS
+	|| inTree->GetName() == TREE_BY_SPEED))
 		return false;
 
 	m_bRoundTimeFaults = inEventScoring->DropFractions();
@@ -302,6 +311,14 @@ bool ARBDogRunScoring::Load(
 			return true;
 		}
 		break;
+
+	case ARBScoringType::BySpeed:
+		if (name == TREE_BY_SPEED)
+		{
+			inTree->GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
+			return true;
+		}
+		break;
 	}
 	return false;
 }
@@ -367,6 +384,16 @@ bool ARBDogRunScoring::Save(ElementNodePtr const& ioTree) const
 				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}
 		return true;
+
+	case ARBScoringType::BySpeed:
+		{
+			ElementNodePtr scoring = ioTree->AddElementNode(TREE_BY_SPEED);
+			scoring->AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			scoring->AddAttrib(ATTRIB_SCORING_TIME, m_Time);
+			scoring->AddAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
+			scoring->AddAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
+		}
+		return true;
 	}
 	return false;
 }
@@ -404,7 +431,7 @@ bool ARBDogRunScoring::GetYPS(
 		double& outYPS) const
 {
 	bool bOk = false;
-	if (ARBScoringType::ByTime == GetType()
+	if ((ARBScoringType::ByTime == GetType() || ARBScoringType::BySpeed == GetType())
 	&& 0 < GetYards() && 0.0 < inTime)
 	{
 		bOk = true;
@@ -420,23 +447,34 @@ bool ARBDogRunScoring::GetYPS(
 bool ARBDogRunScoring::GetObstaclesPS(
 		bool inTableInYPS,
 		bool inRunTimeInOPS,
-		double& outOPS) const
+		double& outOPS,
+		int& outPrec) const
 {
 	bool bOk = false;
-	if (0 < GetObstacles() && 0.0 < GetTime())
+	double t = GetTime();
+	if (0.0 < t)
 	{
-		bOk = true;
-		double t = GetTime();
-		if (ARBScoringType::ByTime == m_type && HasTable() && 5.0 < t && !inTableInYPS)
+		if (ARBScoringType::BySpeed == m_type)
 		{
-			t -= 5;
+			bOk = true;
+			outOPS = sc_magicMPH / t;
+			outPrec = 2;
 		}
-		else if (!inRunTimeInOPS && ARBScoringType::ByOpenClose == m_type
-		&& t > m_SCT && m_SCT2 > 0.0)
+		else if (0 < GetObstacles())
 		{
-			t = m_SCT;
+			bOk = true;
+			if (ARBScoringType::ByTime == m_type && HasTable() && 5.0 < t && !inTableInYPS)
+			{
+				t -= 5;
+			}
+			else if (!inRunTimeInOPS && ARBScoringType::ByOpenClose == m_type
+			&& t > m_SCT && m_SCT2 > 0.0)
+			{
+				t = m_SCT;
+			}
+			outOPS = GetObstacles() / t;
+			outPrec = 3;
 		}
-		outOPS = GetObstacles() / t;
 	}
 	return bOk;
 }

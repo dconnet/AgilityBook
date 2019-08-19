@@ -583,6 +583,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 			{
 			case ARBScoringType::Unknown:
 			case ARBScoringType::ByTime:
+			case ARBScoringType::BySpeed:
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
@@ -636,6 +637,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 			{
 			case ARBScoringType::Unknown:
 			case ARBScoringType::ByTime:
+			case ARBScoringType::BySpeed:
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetOpenPts())
@@ -767,6 +769,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 			{
 			case ARBScoringType::Unknown:
 			case ARBScoringType::ByTime:
+			case ARBScoringType::BySpeed:
 				break;
 			case ARBScoringType::ByOpenClose:
 			case ARBScoringType::ByPoints:

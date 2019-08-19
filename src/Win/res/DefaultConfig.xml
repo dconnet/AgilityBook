@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DefaultConfig Book="14.5">
+<DefaultConfig Book="14.6">
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2019-08-18 Configuration version 62.
+2019-08-18 File version 14.6, additional FCAT support.
+           Configuration version 62.
            Fix names of AKC Premier metalic titles.
            Add AKC FAST CAT.
 2019-04-02 Configuration version 61.

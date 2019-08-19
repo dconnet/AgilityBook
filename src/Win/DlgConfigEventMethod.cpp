@@ -285,7 +285,8 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		ARBScoringStyle::Faults200ThenTime,
 		ARBScoringStyle::OCScoreThenTime,
 		ARBScoringStyle::ScoreThenTime,
-		ARBScoringStyle::TimePlusFaults
+		ARBScoringStyle::TimePlusFaults,
+		ARBScoringStyle::TimeNoPlaces,
 	};
 	static int const nStyles = sizeof(Styles) / sizeof(Styles[0]);
 	for (index = 0; index < nStyles; ++index)
@@ -706,6 +707,20 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlMultiplyText->Show(true);
 			m_ctrlMultiply->Show(true);
 			break;
+		case ARBScoringStyle::TimeNoPlaces:
+			m_ctrlPointsOpeningText->Show(false);
+			m_ctrlPointsOpening->Show(false);
+			m_ctrlPointsClosingText->Show(false);
+			m_ctrlPointsClosing->Show(false);
+			m_ctrlDropFractions->Show(false);
+			m_ctrlTimeFaultsCleanQ->Show(false);
+			m_ctrlSubtractTimeFaults->Show(false);
+			m_ctrlTimeFaultsUnder->Show(false);
+			m_ctrlTimeFaultsOver->Show(false);
+			m_ctrlTimeFaultsTitlingPts->Show(false);
+			m_ctrlMultiplyText->Show(false);
+			m_ctrlMultiply->Show(false);
+			break;
 		}
 	}
 	UpdateButtons();
@@ -1015,6 +1030,8 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		m_pScoring->SetComputeTimeFaultsOver(m_TimeFaultsOver);
 		m_pScoring->SetComputeTitlingPointsRawFaults(m_TitlingPointsRawFaults);
 		m_pScoring->SetTimeFaultMultiplier(m_Multiply);
+		break;
+	case ARBScoringStyle::TimeNoPlaces:
 		break;
 	}
 

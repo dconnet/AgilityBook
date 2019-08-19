@@ -738,6 +738,7 @@ CDlgRun::CDlgRun(
 	, m_ctrlClosingText(nullptr)
 	, m_ctrlClosing(nullptr)
 	, m_Closing(0)
+	, m_ctrlObstaclesText(nullptr)
 	, m_ctrlObstacles(nullptr)
 	, m_Obstacles(inRun->GetScoring().GetObstacles())
 	, m_ctrlTimeText(nullptr)
@@ -752,11 +753,15 @@ CDlgRun::CDlgRun(
 	, m_textClosingPtsTotalFaults(nullptr)
 	, m_ctrlClosingPtsTotalFaults(nullptr)
 	, m_Close(0)
+	, m_ctrlObstaclesPSText(nullptr)
 	, m_ctrlObstaclesPS(nullptr)
+	, m_textPlace(nullptr)
 	, m_ctrlPlace(nullptr)
+	, m_textPlaceOf(nullptr)
 	, m_Place(inRun->GetPlace())
 	, m_ctrlInClass(nullptr)
 	, m_InClass(inRun->GetInClass())
+	, m_textDogsQd(nullptr)
 	, m_ctrlDogsQd(nullptr)
 	, m_DogsQd(inRun->GetDogsQd())
 	, m_ctrlQ(nullptr)
@@ -856,6 +861,11 @@ CDlgRun::CDlgRun(
 		m_Opening = m_Run->GetScoring().GetNeedOpenPts();
 		m_Open = m_Run->GetScoring().GetOpenPts();
 		m_SCT = m_Run->GetScoring().GetSCT();
+		break;
+	case ARBScoringType::BySpeed:
+		m_Faults = m_Run->GetScoring().GetCourseFaults();
+		m_Time = m_Run->GetScoring().GetTime();
+		m_Yards = m_Run->GetScoring().GetYards();
 		break;
 	}
 
@@ -1095,10 +1105,10 @@ CDlgRun::CDlgRun(
 	m_ctrlClosing->SetHelpText(_("HIDC_RUNSCORE_CLOSING_PTS"));
 	m_ctrlClosing->SetToolTip(_("HIDC_RUNSCORE_CLOSING_PTS"));
 
-	wxStaticText* ctrlObstaclesText = new wxStaticText(m_panelScore, wxID_ANY,
+	m_ctrlObstaclesText = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_OBSTACLES"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	ctrlObstaclesText->Wrap(-1);
+	m_ctrlObstaclesText->Wrap(-1);
 
 	m_ctrlObstacles = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
@@ -1153,10 +1163,10 @@ CDlgRun::CDlgRun(
 	m_ctrlClosingPtsTotalFaults->SetHelpText(_("HIDC_RUNSCORE_CLOSE_PTS"));
 	m_ctrlClosingPtsTotalFaults->SetToolTip(_("HIDC_RUNSCORE_CLOSE_PTS"));
 
-	wxStaticText* ctrlObstaclesPSText = new wxStaticText(m_panelScore, wxID_ANY,
+	m_ctrlObstaclesPSText = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_OBSTACLES_PER_SEC"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	ctrlObstaclesPSText->Wrap(-1);
+	m_ctrlObstaclesPSText->Wrap(-1);
 
 	m_ctrlObstaclesPS = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), wxTE_READONLY);
@@ -1164,10 +1174,10 @@ CDlgRun::CDlgRun(
 	m_ctrlObstaclesPS->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
 	m_ctrlObstaclesPS->SetToolTip(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
 
-	wxStaticText* textPlace = new wxStaticText(m_panelScore, wxID_ANY,
+	m_textPlace = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_PLACE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	textPlace->Wrap(-1);
+	m_textPlace->Wrap(-1);
 
 	m_ctrlPlace = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
@@ -1176,10 +1186,10 @@ CDlgRun::CDlgRun(
 	m_ctrlPlace->SetHelpText(_("HIDC_RUNSCORE_PLACE"));
 	m_ctrlPlace->SetToolTip(_("HIDC_RUNSCORE_PLACE"));
 
-	wxStaticText* textPlaceOf = new wxStaticText(m_panelScore, wxID_ANY,
+	m_textPlaceOf = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_IN_CLASS"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	textPlaceOf->Wrap(-1);
+	m_textPlaceOf->Wrap(-1);
 
 	m_ctrlInClass = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
@@ -1188,10 +1198,10 @@ CDlgRun::CDlgRun(
 	m_ctrlInClass->SetHelpText(_("HIDC_RUNSCORE_IN_CLASS"));
 	m_ctrlInClass->SetToolTip(_("HIDC_RUNSCORE_IN_CLASS"));
 
-	wxStaticText* textDogsQd = new wxStaticText(m_panelScore, wxID_ANY,
+	m_textDogsQd = new wxStaticText(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_DOGS_QD"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	textDogsQd->Wrap(-1);
+	m_textDogsQd->Wrap(-1);
 
 	m_ctrlDogsQd = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
@@ -1525,9 +1535,9 @@ CDlgRun::CDlgRun(
 	sizerResults->Add(sizerTime, 0, wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerPlace = new wxBoxSizer(wxHORIZONTAL);
-	sizerPlace->Add(textPlace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPlace->Add(m_textPlace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerPlace->Add(m_ctrlPlace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPlace->Add(textPlaceOf, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPlace->Add(m_textPlaceOf, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerPlace->Add(m_ctrlInClass, 0, wxALIGN_CENTER_VERTICAL, 0);
 
 	sizerResults->Add(sizerPlace, 0, wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
@@ -1551,7 +1561,7 @@ CDlgRun::CDlgRun(
 	sizerResults->Add(sizerFaults, 0, wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerDogsQd = new wxBoxSizer(wxHORIZONTAL);
-	sizerDogsQd->Add(textDogsQd, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDogsQd->Add(m_textDogsQd, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerDogsQd->Add(m_ctrlDogsQd, 0, wxALIGN_CENTER_VERTICAL, 0);
 
 	sizerResults->Add(sizerDogsQd, 0, wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
@@ -1607,13 +1617,13 @@ CDlgRun::CDlgRun(
 	sizerResults->Add(sizerScore, 0, wxALIGN_RIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerNumObs = new wxBoxSizer(wxHORIZONTAL);
-	sizerNumObs->Add(ctrlObstaclesText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerNumObs->Add(m_ctrlObstaclesText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerNumObs->Add(m_ctrlObstacles, 0, wxALIGN_CENTER_VERTICAL, 0);
 
 	sizerResults->Add(sizerNumObs, 0, wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerObsSec = new wxBoxSizer(wxHORIZONTAL);
-	sizerObsSec->Add(ctrlObstaclesPSText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerObsSec->Add(m_ctrlObstaclesPSText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerObsSec->Add(m_ctrlObstaclesPS, 0, wxALIGN_CENTER_VERTICAL, 0);
 
 	sizerResults->Add(sizerObsSec, 0, wxALIGN_RIGHT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
@@ -2109,9 +2119,10 @@ void CDlgRun::SetObstacles()
 {
 	wxString str;
 	double ops;
-	if (m_Run->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops))
+	int prec;
+	if (m_Run->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops, prec))
 	{
-		str = StringUtil::stringWX(ARBDouble::ToString(ops, 3));
+		str = StringUtil::stringWX(ARBDouble::ToString(ops, prec));
 	}
 	m_ctrlObstaclesPS->ChangeValue(str);
 }
@@ -2212,7 +2223,8 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 	m_ctrlMinYPSClosingTime->Show(false);
 	m_ctrlClosingText->Show(false);
 	m_ctrlClosing->Show(false);
-	m_ctrlObstacles->Enable(false);
+	m_ctrlObstaclesText->Show(false);
+	m_ctrlObstacles->Show(false);
 	m_ctrlTimeText->Show(false);
 	m_ctrlTime->Show(false);
 	m_ctrlFaultsText->Show(false);
@@ -2222,9 +2234,12 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 	m_textClosingPtsTotalFaults->Show(false);
 	m_ctrlClosingPtsTotalFaults->Show(false);
 	m_ctrlObstaclesPS->Enable(false);
-	m_ctrlPlace->Enable(false);
-	m_ctrlInClass->Enable(false);
-	m_ctrlDogsQd->Enable(false);
+	m_textPlace->Show(false);
+	m_ctrlPlace->Show(false);
+	m_textPlaceOf->Show(false);
+	m_ctrlInClass->Show(false);
+	m_textDogsQd->Show(false);
+	m_ctrlDogsQd->Show(false);
 	m_ctrlQ->Enable(false);
 	m_ctrlBonusPtsText->Show(false);
 	m_ctrlBonusTitlePts->Show(false);
@@ -2407,15 +2422,57 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_ctrlYPSOpeningPts->Show(true);
 		SetReadOnlyFlag(m_ctrlYPSOpeningPts, false);
 		break;
+	case ARBScoringStyle::TimeNoPlaces:
+		m_Run->GetScoring().SetType(ARBScoringType::BySpeed, pScoring->DropFractions());
+		m_ctrlSCTText->Show(false);
+		m_ctrlSCT->Show(false);
+		m_textYardsReqOpeningPts->SetLabel(_("IDC_RUNSCORE_YARDS"));
+		m_textYardsReqOpeningPts->Show(true);
+		m_ctrlYardsReqOpeningPts->SetHelpText(_("HIDC_RUNSCORE_YARDS"));
+		m_ctrlYardsReqOpeningPts->SetToolTip(_("HIDC_RUNSCORE_YARDS"));
+		m_ctrlYardsReqOpeningPts->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(m_Yards)));
+		m_ctrlYardsReqOpeningPts->Show(true);
+		m_textMinYPSClosingTime->Show(false);
+		m_ctrlMinYPSClosingTime->Show(false);
+		m_ctrlTimeText->Show(true);
+		m_ctrlTime->Show(true);
+		m_ctrlFaultsText->Show(false);
+		m_ctrlFaults->Show(false);
+		m_textYPSOpeningPts->SetLabel(_("IDC_RUNSCORE_YPS"));
+		m_textYPSOpeningPts->Show(true);
+		m_ctrlYPSOpeningPts->SetHelpText(wxEmptyString);
+		m_ctrlYPSOpeningPts->SetToolTip(wxEmptyString);
+		m_ctrlYPSOpeningPts->Show(true);
+		SetReadOnlyFlag(m_ctrlYPSOpeningPts, true);
+		m_textClosingPtsTotalFaults->Show(false);
+		m_ctrlClosingPtsTotalFaults->Show(false);
+		break;
 	}
 
-	m_ctrlObstacles->Enable(true);
-	m_ctrlObstaclesPS->Enable(true);
-	m_ctrlPlace->Enable(true);
-	m_ctrlInClass->Enable(true);
-	if (0 < pScoring->GetTitlePoints().size() || 0 < pScoring->GetLifetimePoints().size())
+	if (ARBScoringStyle::TimeNoPlaces != pScoring->GetScoringStyle())
 	{
-		m_ctrlDogsQd->Enable(true);
+		m_ctrlObstaclesText->Show(true);
+		m_ctrlObstacles->Show(true);
+		m_textPlace->Show(true);
+		m_ctrlPlace->Show(true);
+		m_textPlaceOf->Show(true);
+		m_ctrlInClass->Show(true);
+		m_textDogsQd->Show(true);
+		m_ctrlDogsQd->Show(true);
+		m_ctrlDogsQd->Enable(0 < pScoring->GetTitlePoints().size() || 0 < pScoring->GetLifetimePoints().size());
+		m_ctrlObstaclesPSText->SetLabel(_("IDC_RUNSCORE_OBSTACLES_PER_SEC"));
+		m_ctrlObstaclesPSText->Show(true);
+		m_ctrlObstaclesPS->Enable(true);
+		m_ctrlObstaclesPS->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
+		m_ctrlObstaclesPS->SetToolTip(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
+	}
+	else
+	{
+		m_ctrlObstaclesPSText->SetLabel(_("IDC_RUNSCORE_MILESPERHOUR"));
+		m_ctrlObstaclesPSText->Show(true);
+		m_ctrlObstaclesPS->Enable(true);
+		m_ctrlObstaclesPS->SetHelpText(_("HIDC_RUNSCORE_MILESPERHOUR"));
+		m_ctrlObstaclesPS->SetToolTip(_("HIDC_RUNSCORE_MILESPERHOUR"));
 	}
 	m_ctrlQ->Enable(true);
 	m_ctrlQ->ResetContent(pScoring);
@@ -2884,6 +2941,11 @@ void CDlgRun::OnReqOpeningYPSChange(wxCommandEvent& evt)
 			m_Run->GetScoring().SetNeedOpenPts(m_Opening);
 			SetTitlePoints();
 			break;
+		case ARBScoringStyle::TimeNoPlaces:
+			m_Yards = val;
+			m_Run->GetScoring().SetYards(m_Yards);
+			SetYPS();
+			break;
 		}
 	}
 }
@@ -3025,6 +3087,7 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 			case ARBScoringStyle::OCScoreThenTime:
 			case ARBScoringStyle::ScoreThenTime:
 			case ARBScoringStyle::TimePlusFaults:
+			case ARBScoringStyle::TimeNoPlaces:
 				nScore = L"0";
 				break;
 			case ARBScoringStyle::Faults100ThenTime:

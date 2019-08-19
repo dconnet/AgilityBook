@@ -35,7 +35,8 @@ enum class ARBScoringType
 	Unknown = -1,		///< Unknown
 	ByTime = 0,			///< Scoring based on time.
 	ByOpenClose = 1,	///< Scoring based on Opening/Closing points.
-	ByPoints = 2		///< Scoring based on points.
+	ByPoints = 2,		///< Scoring based on points.
+	BySpeed = 3,		///< Scoring based on speed (FCAT).
 };
 
 
@@ -124,12 +125,14 @@ public:
 	 * @param inTableInYPS Include table in computation.
 	 * @param inRunTimeInOPS Use runtime instead of opening time in OPS.
 	 * @param outOPS OPS for the run.
+	 * @param outPrec Precision (hint) to use when displaying.
 	 * @return Indicates whether outOPS is valid (needs obstacle count and time)
 	 */
 	bool GetObstaclesPS(
 			bool inTableInYPS,
 			bool inRunTimeInOPS,
-			double& outOPS) const;
+			double& outOPS,
+			int& outPrec) const;
 
 	/**
 	 * Compute the number of time faults based on the scoring configuration.

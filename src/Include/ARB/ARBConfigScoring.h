@@ -39,6 +39,7 @@
 
 /**
  * Types of scoring methods.
+ * Note: If a new style is added, update CDlgConfigEventMethod.
  */
 enum class ARBScoringStyle
 {
@@ -48,7 +49,8 @@ enum class ARBScoringStyle
 	Faults200ThenTime,	///< By faults then time (UKC).
 	OCScoreThenTime,	///< Open/Closing points then time.
 	ScoreThenTime,		///< Points then time.
-	TimePlusFaults		///< Time plus faults.
+	TimePlusFaults,		///< Time plus faults.
+	TimeNoPlaces,		///< Time, no placement (AKC FCAT).
 };
 
 

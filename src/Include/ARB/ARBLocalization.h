@@ -206,6 +206,7 @@ public:
 	virtual std::wstring ScoreStyleOCScoreTime() const = 0;
 	virtual std::wstring ScoreStyleScoreTime() const = 0;
 	virtual std::wstring ScoreStyleTimePlusFaults() const = 0;
+	virtual std::wstring ScoreStyleTimeNoPlaces() const = 0;
 
 	// Used in ARBDogExistingPoints.cpp
 	virtual std::wstring ExistingPointsOther() const = 0;

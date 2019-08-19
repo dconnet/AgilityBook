@@ -566,6 +566,7 @@ void CWizardExport::UpdatePreview()
 							case ARBScoringStyle::FaultsThenTime:
 							case ARBScoringStyle::Faults100ThenTime:
 							case ARBScoringStyle::Faults200ThenTime:
+							case ARBScoringStyle::TimeNoPlaces:
 								idxType = IO_TYPE_RUNS_FAULTS_TIME;
 								break;
 							case ARBScoringStyle::OCScoreThenTime:
@@ -708,9 +709,10 @@ void CWizardExport::UpdatePreview()
 									case IO_RUNS_OPS:
 										{
 											double ops;
-											if (pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops))
+											int prec;
+											if (pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops, prec))
 											{
-												data += AddPreviewData(iLine, idx, ARBDouble::ToString(ops, 3));
+												data += AddPreviewData(iLine, idx, ARBDouble::ToString(ops, prec));
 											}
 											else
 											{

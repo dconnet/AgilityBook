@@ -424,7 +424,8 @@ bool ARBDogRun::Load(
 		}
 		else if (name == TREE_BY_TIME
 		|| name == TREE_BY_OPENCLOSE
-		|| name == TREE_BY_POINTS)
+		|| name == TREE_BY_POINTS
+		|| name == TREE_BY_SPEED)
 		{
 			// Ignore any errors...
 			m_Scoring.Load(inConfig.GetVersion(), pEvent, pScoring, element, inVersion, ioCallback);
@@ -662,6 +663,7 @@ double ARBDogRun::GetTitlePoints(
 	case ARBScoringType::Unknown:
 		break;
 	case ARBScoringType::ByTime:
+	case ARBScoringType::BySpeed:
 		{
 			double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 			if (ARBDouble::equal(score, 0))
@@ -768,7 +770,8 @@ double ARBDogRun::GetLifetimePoints(
 	case ARBScoringType::Unknown:
 		break;
 	case ARBScoringType::ByTime:
-		{
+	case ARBScoringType::BySpeed:
+	{
 			double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 			if (ARBScoringStyle::TimePlusFaults == inScoring->GetScoringStyle())
 			{
@@ -860,6 +863,7 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 	case ARBScoringType::Unknown:
 		break;
 	case ARBScoringType::ByTime:
+	case ARBScoringType::BySpeed:
 		pts = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 		switch (inScoring->GetScoringStyle())
 		{
@@ -867,6 +871,7 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 		case ARBScoringStyle::FaultsThenTime:
 		case ARBScoringStyle::OCScoreThenTime:
 		case ARBScoringStyle::ScoreThenTime:
+		case ARBScoringStyle::TimeNoPlaces:
 			break;
 		case ARBScoringStyle::TimePlusFaults:
 			pts += m_Scoring.GetTime();

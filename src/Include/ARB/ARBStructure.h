@@ -76,6 +76,7 @@
 #define TREE_HANDLER						L"Handler"
 #define TREE_PARTNER						L"Partner"
 #define TREE_BY_TIME						L"ByTime"
+#define TREE_BY_SPEED						L"BySpeed"
 #define TREE_BY_OPENCLOSE					L"ByOpenClose"
 #define TREE_BY_POINTS						L"ByPoints"
 #define TREE_PLACEMENT						L"Placement"

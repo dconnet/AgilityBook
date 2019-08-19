@@ -16,6 +16,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2019-08-18 File version 14.6
  * 2018-12-16 Convert to fmt.
  * 2017-12-31 File version 14.5
  * 2016-01-06 File version 14.4
@@ -120,7 +121,7 @@
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(14, 5);
+	static ARBVersion const curVersion(14, 6);
 	return curVersion;
 }
 

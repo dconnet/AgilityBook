@@ -44,8 +44,8 @@ public:
 	std::wstring InvalidVenueConfig() const override		{return m_InvalidVenueConfig;}
 	std::wstring InvalidDivName() const override			{return m_InvalidDivName;}
 	std::wstring InvalidVenueName() const override			{return m_InvalidVenueName;}
-	std::wstring InvalidOtherPtsName() const override		{return m_InvalidOtherPtsName;}
 	std::wstring InvalidLifetimeName() const override		{return m_InvalidLifetimeName;}
+	std::wstring InvalidOtherPtsName() const override		{return m_InvalidOtherPtsName;}
 	std::wstring InvalidMultiqName() const override			{return m_InvalidMultiqName;}
 	std::wstring InvalidMultiqConversion() const override	{return m_InvalidMultiqConversion;}
 	std::wstring InvalidEvent() const override				{return m_InvalidEvent;}
@@ -187,6 +187,7 @@ public:
 	std::wstring ScoreStyleOCScoreTime() const override		{return m_ScoreStyleOCScoreTime;}
 	std::wstring ScoreStyleScoreTime() const override		{return m_ScoreStyleScoreTime;}
 	std::wstring ScoreStyleTimePlusFaults() const override	{return m_ScoreStyleTimePlusFaults;}
+	std::wstring ScoreStyleTimeNoPlaces() const override	{return m_ScoreStyleTimeNoPlaces;}
 
 	std::wstring ExistingPointsOther() const override		{return m_ExistingPointsOther;}
 	std::wstring ExistingPointsLifetime() const override	{return m_ExistingPointsLifetime;}
@@ -250,6 +251,7 @@ private:
 	std::wstring m_ScoreStyleOCScoreTime;
 	std::wstring m_ScoreStyleScoreTime;
 	std::wstring m_ScoreStyleTimePlusFaults;
+	std::wstring m_ScoreStyleTimeNoPlaces;
 
 	std::wstring m_QTypeNA;
 	std::wstring m_QTypeQ;

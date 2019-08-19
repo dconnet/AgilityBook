@@ -187,6 +187,7 @@ public:
 	std::wstring ScoreStyleOCScoreTime() const override		{return m_ScoreStyleOCScoreTime;}
 	std::wstring ScoreStyleScoreTime() const override		{return m_ScoreStyleScoreTime;}
 	std::wstring ScoreStyleTimePlusFaults() const override	{return m_ScoreStyleTimePlusFaults;}
+	std::wstring ScoreStyleTimeNoPlaces() const override	{return m_ScoreStyleTimeNoPlaces;}
 
 	std::wstring ExistingPointsOther() const override		{return m_ExistingPointsOther;}
 	std::wstring ExistingPointsLifetime() const override	{return m_ExistingPointsLifetime;}
@@ -250,6 +251,7 @@ private:
 	std::wstring m_ScoreStyleOCScoreTime;
 	std::wstring m_ScoreStyleScoreTime;
 	std::wstring m_ScoreStyleTimePlusFaults;
+	std::wstring m_ScoreStyleTimeNoPlaces;
 
 	std::wstring m_QTypeNA;
 	std::wstring m_QTypeQ;
