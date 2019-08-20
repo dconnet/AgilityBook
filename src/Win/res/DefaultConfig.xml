@@ -1277,9 +1277,15 @@ Repeat titles are RATCHX + 10 Qs</Titles>
         <Scoring Division="Regular" Level="Novice" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Regular" Level="Open" type="FaultsThenTime"/>
-        <Scoring Division="Regular" Level="Senior" type="FaultsThenTime"/>
-        <Scoring Division="Regular" Level="Master" type="FaultsThenTime"/>
+        <Scoring Division="Regular" Level="Open" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Regular" Level="Senior" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Regular" Level="Master" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+        </Scoring>
       </Event>
       <Event Name="Instinct">
         <Desc>Barn Hunt Instinct</Desc>

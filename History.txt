@@ -1,6 +1,7 @@
-6/2/2019: v3.3.3.<dev>
+8/20/2019: v3.3.3.<dev>
 - Bumped Configuration v62:
   - Fixed AKC Premier metalic title names.
+  - Fixed BHA Hunt (open/senior/master) for Qing.
   - Add AKC FAST CAT.
 - New features / Enhancements:
   - Added ability to configure accelerator keys.
