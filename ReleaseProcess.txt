@@ -61,12 +61,12 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
   (preferable to edit files on build machine step above for single commit)
   - NOTE: xcode is no longer updating CFBundleGetInfoString or
     CFBundleLongVersionString. Edit the plist files directly.
-- export PATH=$WXWIN/build-cocoa:$PATH
+- export PATH=$WXWIN/build-release:$PATH
 - cd .../AgilityBook
 - autoconf
-- rm -rf build-cocoa
-- mkdir build-cocoa
-- cd build-cocoa
+- rm -rf build-rel
+- mkdir build-rel
+- cd build-rel
 - ../configure
 - make dist
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
