@@ -237,7 +237,7 @@ Microsoft Visual Studio 2019 (VC14.2)
 
 Unix
 ====
-(targeting GTK2)
+(targeting GTK3, GTK2 with wx3.1 crashes when the new-doc button is pressed)
 Needs (note, some aren't strictly needed):
 sudo apt install git python3 python3-pip curl
 sudo apt install libboost-all-dev libgtk-3-dev
