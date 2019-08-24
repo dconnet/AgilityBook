@@ -6,6 +6,7 @@
 # (I put this script in my home dir)
 #
 # History
+# 2019-08-24 Make gtk3 the default.
 # 2019-08-17 Remove carbon
 # 2019-07-26 Add support for Ubuntu (18.04), changed default build dir name
 # 2018-12-11 Upgraded 3.1.1 to 3.1.2
@@ -44,7 +45,7 @@ Darwin*)
 	CONFIG_PARAMS+=" --with-osx"
 	;;
 Linux)
-	CONFIG_PARAMS+=" --with-gtk=2"
+	CONFIG_PARAMS+=" --with-gtk=3"
 	;;
 esac
 

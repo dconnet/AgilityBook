@@ -240,7 +240,7 @@ Unix
 (targeting GTK2)
 Needs (note, some aren't strictly needed):
 sudo apt install git python3 python3-pip curl
-sudo apt install libboost-all-dev libgtk2.0.dev (and/or libgtk-3-dev)
+sudo apt install libboost-all-dev libgtk-3-dev
 sudo apt install libcanberra-gtk-module
 
 Xcode
