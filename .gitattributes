@@ -1,5 +1,8 @@
 *      text=auto
 
+*.avery binary
+*.doc  binary
+*.docx binary
 *.dox  eol=lf
 *.dtd  eol=lf
 *.in   eol=lf

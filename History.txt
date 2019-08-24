@@ -1,4 +1,4 @@
-8/20/2019: v3.3.3.<dev>
+8/24/2019: v3.3.3.110
 - Bumped Configuration v62:
   - Fixed AKC Premier metalic title names.
   - Fixed BHA Hunt (open/senior/master) for Qing.

@@ -36,6 +36,7 @@ Commit all changes to GitHub.
 (note: if doing this on official build machine, can skip this commit)
 
 Switch to build machine, do a full rebuild and verify it.
+[Note: continue to use VS2017 - wx3.1.2 needs a patch for VS2019]
 - cd src\Projects\Installer
 - 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.2 -b fullupdate' [runs VC141 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
@@ -44,6 +45,7 @@ Switch to build machine, do a full rebuild and verify it.
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
       compiler: vc141 (default: vc141)
+    (note: If this needs to be re-run, revert .../configure.in, .../src/Include/VersionNumber.h)
 - Run 'GenMSI.py /all' to create w32/x64 installers (and sign them)
   and auto-update Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.

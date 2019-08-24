@@ -3,6 +3,7 @@
 #
 # This assumes the current directory is 'Include'
 #
+# 2019-08-24 Fix writing configure.in
 # 2016-06-10 Convert to Python3
 # 2016-03-28 Cleanup lockfile on exception
 # 2012-09-24 Sync copyright in configure.in with VersionNumber.h
@@ -74,6 +75,19 @@ def doWork():
 	vMinARB = '0'
 	vDotARB = '0'
 	vBldARB = '0'
+
+	ver = open('VersionInfoARB.h', 'r')
+	while True:
+		line = ver.readline()
+		if not line:
+			break
+		line = str.rstrip(line)
+		defineCopy = '#define ARB_VERSION_LegalCopyright'
+		pos = line.find(defineCopy)
+		if 0 == pos:
+			copyRight = str.strip(line[pos+len(defineCopy):])
+	ver.close()
+
 	ver = open('VersionNumber.h', 'r')
 	verOut = open('VersionNumber.h.new', 'w')
 	while True:
@@ -81,14 +95,10 @@ def doWork():
 		if not line:
 			break
 		line = str.rstrip(line)
-		defineCopy = '#define ARB_VERSION_LegalCopyright'
 		defineMaj = '#define ARB_VER_MAJOR'
 		defineMin = '#define ARB_VER_MINOR'
 		defineDot = '#define ARB_VER_DOT'
 		defineBld = '#define ARB_VER_BUILD'
-		pos = line.find(defineCopy)
-		if 0 == pos:
-			copyRight = str.strip(line[pos+len(defineCopy):])
 		pos = line.find(defineMaj)
 		if 0 == pos:
 			vMajARB = str.strip(line[pos+len(defineMaj):])
@@ -114,6 +124,7 @@ def doWork():
 			print(line, file=verOut)
 	ver.close()
 	verOut.close()
+
 	if update:
 		print("VersionNumber.h updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
 		os.remove('VersionNumber.h')
@@ -124,7 +135,7 @@ def doWork():
 
 	update = 0
 	conf = open('../../configure.in', 'r')
-	confOut = open('../../configure.in.new', 'w')
+	confOut = open('../../configure.in.new', 'w', newline='\n')
 	while 1:
 		line = conf.readline()
 		if not line:
@@ -148,6 +159,7 @@ def doWork():
 			print(line, file=confOut)
 	conf.close()
 	confOut.close()
+
 	if update:
 		print("../../configure.in updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
 		os.remove('../../configure.in')
