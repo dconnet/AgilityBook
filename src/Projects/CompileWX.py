@@ -145,7 +145,7 @@ def GetTarget(vcBase, bIs64Bit, bIsARM):
 	return target
 
 
-def GetCompilerPaths(c):
+def GetCompilerPaths(c, verbose = True):
 	baseDir = ''
 	vcvarsall = ''
 	target = ''
@@ -204,17 +204,21 @@ def GetCompilerPaths(c):
 		platform = 'ARM64'
 
 	else:
-		print('ERROR: Unknown target: ' + c)
+		if verbose:
+			print('ERROR: Unknown target: ' + c)
 		return ('', '', '', '')
 
 	if len(baseDir) == 0:
-		print('ERROR: Unknown target: ' + c)
+		if verbose:
+			print('ERROR: Unknown target: ' + c)
 		return ('', '', '', '')
 	if not os.access(baseDir, os.F_OK):
-		print('ERROR: "' + baseDir + '" does not exist')
+		if verbose:
+			print('ERROR: "' + baseDir + '" does not exist')
 		return ('', '', '', '')
 	if not os.access(vcvarsall, os.F_OK):
-		print('ERROR: "' + vcvarsall + '" does not exist')
+		if verbose:
+			print('ERROR: "' + vcvarsall + '" does not exist')
 		return ('', '', '', '')
 
 	return (baseDir, '"' + vcvarsall + '" ' + target + extraargs, platformDir, platform)

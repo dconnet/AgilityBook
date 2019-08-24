@@ -15,7 +15,7 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
-// 2019-08-24 Up minimum wx to 3.1.
+ * 2019-08-24 Up minimum wx to 3.1.
  * 2015-11-25 Created ARB_64BIT
  * 2013-01-27 Split/moved stdafx.h.
  * 2013-01-01 Added _VARIADIC_MAX for vc11.
