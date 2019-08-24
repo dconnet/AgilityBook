@@ -41,8 +41,6 @@
 #define DEF_Q_WIDTH	30
 #endif
 
-wxIMPLEMENT_CLASS(CQualifyingComboBox, wxChoice)
-
 /////////////////////////////////////////////////////////////////////////////
 
 class CQualifyingComboData : public wxClientData
@@ -51,6 +49,10 @@ public:
 	CQualifyingComboData(ARB_Q q) : m_Q(q) {}
 	ARB_Q m_Q;
 };
+
+/////////////////////////////////////////////////////////////////////////////
+
+wxIMPLEMENT_CLASS(CQualifyingComboBox, wxChoice)
 
 
 CQualifyingComboBox::CQualifyingComboBox(

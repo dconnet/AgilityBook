@@ -32,8 +32,6 @@
 #endif
 
 
-wxIMPLEMENT_CLASS(CVenueComboBox, wxComboBox)
-
 /////////////////////////////////////////////////////////////////////////////
 
 class CVenueComboData : public wxClientData
@@ -42,6 +40,10 @@ public:
 	CVenueComboData(ARBConfigVenuePtr const& inVenue) : m_Venue(inVenue) {}
 	ARBConfigVenuePtr m_Venue;
 };
+
+/////////////////////////////////////////////////////////////////////////////
+
+wxIMPLEMENT_CLASS(CVenueComboBox, wxComboBox)
 
 
 CVenueComboBox::CVenueComboBox(

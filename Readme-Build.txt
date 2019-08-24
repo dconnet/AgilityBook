@@ -209,8 +209,9 @@ Currently using Version 3.11.1 (as of ARB v3.2.4).
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.16.
+Used to create source code documentation. AgilityBook.dox uses v1.8.15.
 [Install to default location]
+[Note: 1.8.16 doesn't work.]
 
 --------------------
 
