@@ -242,6 +242,8 @@ Needs (note, some aren't strictly needed):
 sudo apt install git python3 python3-pip curl
 sudo apt install libboost-all-dev libgtk-3-dev
 sudo apt install libcanberra-gtk-module
+- Not strictly needed, but unit tests will fail otherwise
+sudo apt install language-pack-fr language-pack-uk
 
 Xcode
 =====

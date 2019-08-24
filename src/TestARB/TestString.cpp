@@ -165,7 +165,6 @@ TEST_CASE("String")
 	}
 
 
-#if defined(WIN32) || defined(__WXMAC__)
 	SECTION("AtodFR")
 	{
 		if (!g_bMicroTest)
@@ -185,9 +184,6 @@ TEST_CASE("String")
 			REQUIRE(!bParsed);
 		}
 	}
-#else
-#pragma PRAGMA_TODO(This test is failing on unix)
-#endif
 
 
 	SECTION("AtodFR2")
