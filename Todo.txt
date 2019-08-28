@@ -1,4 +1,14 @@
-Last Updated: 8/18/2019
+Last Updated: 8/28/2019
+
+- Subnames on an event need valid date ranges.
+  (NADAC has brought back gamblers, but the new incarnation does not have
+  subnames)
+
+- Change how co-sanctioned trials are handled. AFAIK there are no more. So I
+  only need to support existing ASCA/NADAC trials from past years. What we do
+  have now is many trials that have multiple events happening at the same
+  location. This change needs to support that. (currently, you have to create
+  separate trials for each venue)
 
 - Update DlgAssignColumn to support the new 'BySpeed' type (for FCAT).
   It's basically the same as FaultsThenTime, except missing a bunch of data.
