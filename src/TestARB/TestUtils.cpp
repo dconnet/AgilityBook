@@ -18,7 +18,6 @@
 #include "TestARB.h"
 
 #include "ARBCommon/ARBUtils.h"
-#include "fmt/printf.h"
 
 #include <wx/fileconf.h>
 #include <wx/filename.h>

@@ -18,7 +18,7 @@ LibArchive: zlib v1.2.11: My wrapper to hide zlib
 
 LibFmt: fmtlib v5.3.0
 .../LibFmt/
-DevNote: When updating, update .../res/LibFmt.rc2 with version numbe and copyright
+DevNote: When updating, update .../res/LibFmt.rc2 with version number and copyright
 - https://github.com/fmtlib/fmt/releases
 - http://fmtlib.net/dev/index.html
 - Only README.rst, LICENSE.rst, include, src
