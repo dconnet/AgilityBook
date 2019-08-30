@@ -547,7 +547,7 @@ std::wstring CLocalization::LifetimePointsNameWithSpeedPointsFormat(double fault
 
 std::wstring CLocalization::LifetimePointsNameFormat(double points, double faults) const
 {
-	std::wstring dbl1 = fmt::format(L"{:g}", points);
+	std::wstring dbl1 = ARBDouble::ToString(points, 0);
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_LIFETITLEPOINTSNAME")), dbl1, faults);
 }
 
