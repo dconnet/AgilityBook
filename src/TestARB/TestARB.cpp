@@ -104,7 +104,7 @@ private:
 	{
 		if (!m_Localization.Load())
 		{
-			std::string msg = fmt::format("ERROR: Unable to load '{}.mo'.", StringUtil::stringA(OnGetCatalogName().wx_str()));
+			std::string msg = fmt::format("ERROR: Unable to load '{}.mo'.", OnGetCatalogName().ToStdString());
 			fmt::print(std::cerr, "{}\n", msg);
 			throw std::runtime_error(msg);
 		}
