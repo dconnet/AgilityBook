@@ -609,8 +609,7 @@ void CAgilityBookApp::OnSetLanguage(wxLanguage langId)
 	{
 		wxString str = wxString::Format(L"ERROR: Unable to load '%s.mo'.", OnGetCatalogName().c_str());
 		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
-		std::string msg(str.ToAscii());
-		throw std::runtime_error(msg);
+		throw std::runtime_error(str.ToStdString());
 	}
 }
 
