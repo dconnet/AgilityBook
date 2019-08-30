@@ -1,6 +1,6 @@
 3rd Party code.
 
-Catch: v2.6.1
+Catch: v2.9.2
 .../catch2/
 - https://github.com/philsquared/Catch/releases
 -- #include "catch2/catch.hpp"
