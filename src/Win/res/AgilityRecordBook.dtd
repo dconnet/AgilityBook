@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2019-08-31 File version 15.0
+           Move table and subname info from 'Event' to 'Scoring'
 2019-08-18 File version 14.6
            Added 'TimeNoPlaces' to scoring 'type'.
 2017-12-31 File version 14.5
@@ -461,22 +463,22 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 
  Integer: OpeningPts,ClosingPts,Points,Faults
 -->
-<!ELEMENT Event (Desc?, SubName*, Scoring+) >
+<!ELEMENT Event (Desc?, Scoring+) >
 	<!ATTLIST Event
 		Name CDATA #REQUIRED
 		ShortName CDATA #IMPLIED
-		hasTable (y|n) 'n'
 		hasPartner (y|n) 'n'
-		hasSubNames (y|n) 'n'
 		>
 <!ELEMENT SubName (#PCDATA) >
-<!ELEMENT Scoring (Note?, PlaceInfo*, TitlePoints*, LifetimePoints*, Placements?) >
+<!ELEMENT Scoring (Note?, PlaceInfo*, TitlePoints*, LifetimePoints*, Placements?, SubName*) >
 	<!ATTLIST Scoring
 		ValidFrom CDATA #IMPLIED
 		ValidTo CDATA #IMPLIED
 		Division CDATA #REQUIRED
 		Level CDATA #REQUIRED
 		type (FaultsThenTime|Faults100ThenTime|Faults200ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults|TimeNoPlaces) #REQUIRED
+		hasTable (y|n) 'n'
+		hasSubNames (y|n) 'n'
 		dropFractions (y|n) 'n'
 		cleanQ (y|n) 'n'
 		underTF (y|n) 'n'

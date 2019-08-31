@@ -63,10 +63,7 @@ ARBConfigEvent::ARBConfigEvent()
 	: m_Name()
 	, m_ShortName()
 	, m_Desc()
-	, m_bTable(false)
 	, m_bHasPartner(false)
-	, m_bHasSubNames(false)
-	, m_SubNames()
 	, m_Scoring()
 {
 }
@@ -76,10 +73,7 @@ ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_ShortName(rhs.m_ShortName)
 	, m_Desc(rhs.m_Desc)
-	, m_bTable(rhs.m_bTable)
 	, m_bHasPartner(rhs.m_bHasPartner)
-	, m_bHasSubNames(rhs.m_bHasSubNames)
-	, m_SubNames(rhs.m_SubNames)
 	, m_Scoring()
 {
 	rhs.m_Scoring.Clone(m_Scoring);
@@ -90,10 +84,7 @@ ARBConfigEvent::ARBConfigEvent(ARBConfigEvent&& rhs)
 	: m_Name(std::move(rhs.m_Name))
 	, m_ShortName(std::move(rhs.m_ShortName))
 	, m_Desc(std::move(rhs.m_Desc))
-	, m_bTable(std::move(rhs.m_bTable))
 	, m_bHasPartner(std::move(rhs.m_bHasPartner))
-	, m_bHasSubNames(std::move(rhs.m_bHasSubNames))
-	, m_SubNames(std::move(rhs.m_SubNames))
 	, m_Scoring(std::move(rhs.m_Scoring))
 {
 }
@@ -117,10 +108,7 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 		m_Name = rhs.m_Name;
 		m_ShortName = rhs.m_ShortName;
 		m_Desc = rhs.m_Desc;
-		m_bTable = rhs.m_bTable;
 		m_bHasPartner = rhs.m_bHasPartner;
-		m_bHasSubNames = rhs.m_bHasSubNames;
-		m_SubNames = rhs.m_SubNames;
 		rhs.m_Scoring.Clone(m_Scoring);
 	}
 	return *this;
@@ -134,10 +122,7 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent&& rhs)
 		m_Name = std::move(rhs.m_Name);
 		m_ShortName = std::move(rhs.m_ShortName);
 		m_Desc = std::move(rhs.m_Desc);
-		m_bTable = std::move(rhs.m_bTable);
 		m_bHasPartner = std::move(rhs.m_bHasPartner);
-		m_bHasSubNames = std::move(rhs.m_bHasSubNames);
-		m_SubNames = std::move(rhs.m_SubNames);
 		m_Scoring = std::move(rhs.m_Scoring);
 	}
 	return *this;
@@ -149,10 +134,7 @@ bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 	return m_Name == rhs.m_Name
 		&& m_ShortName == rhs.m_ShortName
 		&& m_Desc == rhs.m_Desc
-		&& m_bTable == rhs.m_bTable
 		&& m_bHasPartner == rhs.m_bHasPartner
-		&& m_bHasSubNames == rhs.m_bHasSubNames
-		&& m_SubNames == rhs.m_SubNames
 		&& m_Scoring == rhs.m_Scoring;
 }
 
@@ -174,25 +156,31 @@ bool ARBConfigEvent::Load(
 	}
 	inTree->GetAttrib(ATTRIB_EVENT_SHORTNAME, m_ShortName);
 
-	// Introduced in file version 8.6.
-	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable))
-	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HAS_TABLE, Localization()->ValidValuesBool().c_str()));
-		return false;
-	}
-
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
-	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames))
+	bool bTable = false;
+	bool bHasSubNames = false;
+	if (inVersion < ARBVersion(15, 0))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASSUBNAMES, Localization()->ValidValuesBool().c_str()));
-		return false;
+		// Introduced in file version 8.6. Moved in 15.0
+		if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"hasTable", bTable))
+		{
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, L"hasTable", Localization()->ValidValuesBool().c_str()));
+			return false;
+		}
+
+		if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"hasSubNames", bHasSubNames))
+		{
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, L"hasSubNames", Localization()->ValidValuesBool().c_str()));
+			return false;
+		}
 	}
 
+	std::set<std::wstring> subNames;
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
 		ElementNodePtr element = inTree->GetElementNode(i);
@@ -202,14 +190,31 @@ bool ARBConfigEvent::Load(
 		{
 			m_Desc = element->GetValue();
 		}
-		else if (element->GetName() == TREE_EVENT_SUBNAME)
-		{
-			m_SubNames.insert(element->GetValue());
-		}
 		else if (element->GetName() == TREE_SCORING)
 		{
 			// Ignore any errors...
 			m_Scoring.Load(inDivisions, element, inVersion, ioCallback);
+		}
+		else
+		{
+			if (inVersion < ARBVersion(15, 0))
+			{
+				if (element->GetName() == L"SubName")
+				{
+					subNames.insert(element->GetValue());
+				}
+			}
+		}
+	}
+
+	// Migrate table and subname information to new format.
+	if (inVersion < ARBVersion(15, 0) && (bTable || bHasSubNames))
+	{
+		for (auto iter = GetScorings().begin(); iter != GetScorings().end(); ++iter)
+		{
+			(*iter)->SetHasTable(bTable);
+			(*iter)->SetHasSubNames(bHasSubNames);
+			(*iter)->SetSubNames(subNames);
 		}
 	}
 	return true;
@@ -231,24 +236,8 @@ bool ARBConfigEvent::Save(ElementNodePtr const& ioTree) const
 	if (!m_ShortName.empty())
 		evtTree->AddAttrib(ATTRIB_EVENT_SHORTNAME, m_ShortName);
 	// No need to write if not set.
-	if (m_bTable)
-		evtTree->AddAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable);
 	if (m_bHasPartner)
 		evtTree->AddAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner);
-	if (m_bHasSubNames)
-	{
-		evtTree->AddAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames);
-		for (std::set<std::wstring>::const_iterator iter = m_SubNames.begin();
-			iter != m_SubNames.end();
-			++iter)
-		{
-			if (0 < (*iter).length())
-			{
-				ElementNodePtr name = evtTree->AddElementNode(TREE_EVENT_SUBNAME);
-				name->SetValue(*iter);
-			}
-		}
-	}
 	if (!m_Scoring.Save(evtTree))
 		return false;
 	return true;
@@ -279,29 +268,10 @@ bool ARBConfigEvent::Update(
 		bChanges = true;
 		SetDesc(inEventNew->GetDesc());
 	}
-	if (HasTable() != inEventNew->HasTable())
-	{
-		bChanges = true;
-		SetHasTable(inEventNew->HasTable());
-	}
 	if (HasPartner() != inEventNew->HasPartner())
 	{
 		bChanges = true;
 		SetHasPartner(inEventNew->HasPartner());
-	}
-
-	if (HasSubNames() != inEventNew->HasSubNames())
-	{
-		bChanges = true;
-		SetHasSubNames(inEventNew->HasSubNames());
-	}
-	std::set<std::wstring> oldNames, newNames;
-	GetSubNames(oldNames);
-	inEventNew->GetSubNames(newNames);
-	if (oldNames != newNames)
-	{
-		bChanges = true;
-		SetSubNames(newNames);
 	}
 
 	// If the order is different, we will fall into this...
@@ -362,21 +332,6 @@ bool ARBConfigEvent::Update(
 		ioInfo += info;
 	}
 	return bChanges;
-}
-
-
-size_t ARBConfigEvent::GetSubNames(std::set<std::wstring>& outNames) const
-{
-	outNames.clear();
-	outNames = m_SubNames;
-	return outNames.size();
-}
-
-
-void ARBConfigEvent::SetSubNames(std::set<std::wstring> const& inNames)
-{
-	m_SubNames.clear();
-	m_SubNames = inNames;
 }
 
 /////////////////////////////////////////////////////////////////////////////

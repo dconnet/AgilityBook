@@ -280,7 +280,7 @@ bool ARBDogRunScoring::Load(
 				// Only do this if the config is higher than 2. Otherwise, when
 				// we read the v2 config, the table bit is cleared before we
 				// get around to merging the new configuration.
-				if (!inEvent->HasTable())
+				if (!inEventScoring->HasTable())
 					m_Table = false;
 			}
 			inTree->GetAttrib(ATTRIB_SCORING_SCT, m_SCT);

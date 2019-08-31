@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DefaultConfig Book="14.6">
+<DefaultConfig Book="15.0">
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2019-08-31 File version 15.0, move table and subname config info.
+           Configuration version 63.
+           Re-add NADAC Gamblers.
 2019-08-18 File version 14.6, additional FCAT support.
            Configuration version 62.
            Fix names of AKC Premier metalic titles.
@@ -200,7 +203,7 @@ Revision History:
            Added new Config/Action: DeleteTitle
 -->
 
-  <Configuration version="62">
+  <Configuration version="63">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -497,17 +500,17 @@ Revision History:
         <Level Name="Advanced" ShortName="Adv"/>
         <Level Name="Masters" ShortName="Mas"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
-        <Scoring Division="*" Level="Masters" type="FaultsThenTime">
+      <Event Name="Standard">
+        <Scoring Division="*" Level="Masters" hasTable="y" type="FaultsThenTime">
           <Note>E: 3 Rs or 1 wrong course or 1 NC</Note>
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="*" Level="Advanced" type="FaultsThenTime">
+        <Scoring Division="*" Level="Advanced" hasTable="y" type="FaultsThenTime">
           <Note>E: 3 Rs or 2 NCs</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Starters" type="FaultsThenTime">
+        <Scoring Division="*" Level="Starters" hasTable="y" type="FaultsThenTime">
           <Note>E: 3 NCs</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
@@ -710,50 +713,50 @@ Repeat titles are MFPC + 75 Qs</Titles>
         <Level Name="ACT1"/>
         <Level Name="ACT2"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
-        <Scoring Division="ISC" Level="Master" type="FaultsThenTime">
+      <Event Name="Standard">
+        <Scoring Division="ISC" Level="Master" hasTable="y" type="FaultsThenTime">
           <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Regular" Level="Master" ValidFrom="2011-7-1" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Regular" Level="Master" ValidFrom="2011-7-1" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
           <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
         </Scoring>
-        <Scoring Division="Regular" Level="Master" ValidTo="2011-6-30" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Regular" Level="Master" ValidTo="2011-6-30" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
           <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <PlaceInfo Place="1" Value="2"/>
           <PlaceInfo Place="2" Value="1.5"/>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Preferred" Level="Master" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Preferred" Level="Master" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
           <Note>PACH title starts 7-Jul-2011 and points are retroactive.
 Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
         </Scoring>
-        <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Excellent" dropFractions="y" hasTable="y" timeFault="3" type="Faults100ThenTime">
           <Note>Time Faults only</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Open" dropFractions="y" hasTable="y" timeFault="2" type="Faults100ThenTime">
           <Note>No more than 1R, 1W, 1T</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Novice" dropFractions="y" hasTable="y" type="Faults100ThenTime">
           <Note>No more than 2R, 1W, 2T (before 9/1/2006, 2Ws were allowed)</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Nationals" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
-        <Scoring Division="*" Level="Premier" ValidFrom="2016-12-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Nationals" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
+        <Scoring Division="*" Level="Premier" ValidFrom="2016-12-1" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" Points="25" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="*" Level="Premier" ValidFrom="2015-10-1" ValidTo="2016-11-30" dropFractions="y" superQ="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Premier" ValidFrom="2015-10-1" ValidTo="2016-11-30" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" Points="5" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="*" Level="Premier" ValidTo="2015-9-30" dropFractions="y" superQ="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Premier" ValidTo="2015-9-30" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
           <Note>Not official yet.</Note>
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
@@ -806,20 +809,30 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="National Rounds" ShortName="NatRnd" hasSubNames="y">
+      <Event Name="National Rounds" ShortName="NatRnd">
         <Desc>Hybrid, Challenger and Final Rounds</Desc>
-        <SubName>Challenger</SubName>
-        <SubName>Finals</SubName>
-        <SubName>Hybrid</SubName>
-        <Scoring Division="*" Level="Nationals" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Nationals" dropFractions="y" hasSubNames="y" timeFault="3" type="Faults100ThenTime">
+          <SubName>Challenger</SubName>
+          <SubName>Finals</SubName>
+          <SubName>Hybrid</SubName>
+        </Scoring>
+        <Scoring Division="*" Level="Master" ValidTo="2014-4-30" dropFractions="y" hasSubNames="y" timeFault="3" type="Faults100ThenTime">
+          <SubName>Challenger</SubName>
+          <SubName>Finals</SubName>
+          <SubName>Hybrid</SubName>
           <Note>Note: Deprecated all Master level (2014-5-1) runs - use Nationals now.</Note>
         </Scoring>
-        <Scoring Division="*" Level="Master" ValidTo="2014-4-30" dropFractions="y" timeFault="3" type="Faults100ThenTime"/>
-        <Scoring Division="Regular" Level="Master" ValidTo="2014-4-30" dropFractions="y" timeFault="3" type="Faults100ThenTime">
-          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+        <Scoring Division="Regular" Level="Master" ValidTo="2014-4-30" dropFractions="y" hasSubNames="y" timeFault="3" type="Faults100ThenTime">
+          <SubName>Challenger</SubName>
+          <SubName>Finals</SubName>
+          <SubName>Hybrid</SubName>
+          <Note>Note: Deprecated all Master level (2014-5-1) runs - use Nationals now.</Note>
         </Scoring>
-        <Scoring Division="Preferred" Level="Master" ValidTo="2014-4-30" dropFractions="y" timeFault="3" type="Faults100ThenTime">
-          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+        <Scoring Division="Preferred" Level="Master" ValidTo="2014-4-30" dropFractions="y" hasSubNames="y" timeFault="3" type="Faults100ThenTime">
+          <SubName>Challenger</SubName>
+          <SubName>Finals</SubName>
+          <SubName>Hybrid</SubName>
+          <Note>Note: Deprecated all Master level (2014-5-1) runs - use Nationals now.</Note>
         </Scoring>
       </Event>
       <Event Name="FAST">
@@ -876,34 +889,34 @@ You must enter the SCT (1st place) and your placement to generate the titling po
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="ACT" hasTable="y">
-        <Scoring Division="ACT" Level="*" ValidFrom="2016-1-1" dropFractions="y" type="Faults100ThenTime">
+      <Event Name="ACT">
+        <Scoring Division="ACT" Level="*" ValidFrom="2016-1-1" dropFractions="y" hasTable="y" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Faults/Time" ShortName="Game: FT" hasSubNames="y" hasTable="y">
+      <Event Name="Game: Faults/Time" ShortName="Game: FT">
         <Desc>This is for events scored like Standard.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="FaultsThenTime"/>
+        <Scoring Division="Fun" Level="Fun" hasSubNames="y" hasTable="y" type="FaultsThenTime"/>
       </Event>
-      <Event Name="Game: Time+Faults" ShortName="Game: T+F" hasSubNames="y">
+      <Event Name="Game: Time+Faults" ShortName="Game: T+F">
         <Desc>This is for Time plus Fault events. Time faults are not added.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="TimePlusFaults"/>
+        <Scoring Division="Fun" Level="Fun" hasSubNames="y" type="TimePlusFaults"/>
       </Event>
-      <Event Name="Game: Total Points" ShortName="Game: Pt" hasSubNames="y">
+      <Event Name="Game: Total Points" ShortName="Game: Pt">
         <Desc>Points are accumulated in a single time period, like FAST.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="OCScoreThenTime"/>
+        <Scoring Division="Fun" Level="Fun" hasSubNames="y" type="OCScoreThenTime"/>
       </Event>
-      <Event Name="Game: Total Points - TimeFaults1" ShortName="Game: Pt-TF1" hasSubNames="y">
+      <Event Name="Game: Total Points - TimeFaults1" ShortName="Game: Pt-TF1">
         <Desc>Points are accumulated in a single time period, like FAST. Time over SCT is deducted.</Desc>
-        <Scoring Division="Fun" Level="Fun" dropFractions="y" overTF="y" subtractTF="y" type="OCScoreThenTime"/>
+        <Scoring Division="Fun" Level="Fun" dropFractions="y" hasSubNames="y" overTF="y" subtractTF="y" type="OCScoreThenTime"/>
       </Event>
-      <Event Name="Game: Open/Close Points" ShortName="Game: OCPt" hasSubNames="y">
+      <Event Name="Game: Open/Close Points" ShortName="Game: OCPt">
         <Desc>Points are accumulated separately in the opening and closing, like Gamblers.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="OCScoreThenTime"/>
+        <Scoring Division="Fun" Level="Fun" hasSubNames="y" type="OCScoreThenTime"/>
       </Event>
-      <Event Name="Game: Relay" ShortName="Game: Relay" hasPartner="y" hasSubNames="y">
+      <Event Name="Game: Relay" ShortName="Game: Relay" hasPartner="y">
         <Desc>This is for events run with one or more partners. Scored like Standard.</Desc>
-        <Scoring Division="Fun" Level="Fun" type="FaultsThenTime"/>
+        <Scoring Division="Fun" Level="Fun" hasSubNames="y" type="FaultsThenTime"/>
       </Event>
       <MultiQ Name="Double Q" SName="QQ">
         <MultiQItem Div="Regular" Event="JWW" Level="Master"/>
@@ -1397,21 +1410,21 @@ Repeat titles are RATCHX + 10 Qs</Titles>
         <Level Name="Master" ShortName="Mst"/>
         <Level Name="ICC" ShortName="IC"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
-        <Scoring Division="*" Level="ICC" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+      <Event Name="Standard">
+        <Scoring Division="*" Level="ICC" dropFractions="y" hasTable="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Master" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Master" dropFractions="y" hasTable="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Excellent" dropFractions="y" hasTable="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Intermediate" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Intermediate" dropFractions="y" hasTable="y" timeFault="2" type="Faults100ThenTime">
           <Note>1 Refusal allowed</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Novice" dropFractions="y" hasTable="y" type="Faults100ThenTime">
           <Note>2 Refusals allowed</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
@@ -1519,17 +1532,17 @@ Repeat titles are RATCHX + 10 Qs</Titles>
         <Level Name="Excellent" ShortName="Ex"/>
         <Level Name="Master" ShortName="Mas"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
-        <Scoring Division="*" Level="Master" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+      <Event Name="Standard">
+        <Scoring Division="*" Level="Master" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Excellent" dropFractions="y" hasTable="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Open" dropFractions="y" hasTable="y" timeFault="2" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Novice" dropFractions="y" hasTable="y" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
       </Event>
@@ -3072,8 +3085,8 @@ Repeats every additional 500 points</Titles>
         <Level Name="Level 2" ShortName="L2"/>
         <Level Name="Level 3" ShortName="L3"/>
       </Division>
-      <Event Name="Agility" hasTable="y">
-        <Scoring Division="*" Level="Level 2" type="FaultsThenTime">
+      <Event Name="Agility">
+        <Scoring Division="*" Level="Level 2" hasTable="y" type="FaultsThenTime">
           <Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -3088,7 +3101,7 @@ Repeats every additional 500 points</Titles>
             <PlaceInfo Place="3" Value="1"/>
           </Placements>
         </Scoring>
-        <Scoring Division="*" Level="*" type="FaultsThenTime">
+        <Scoring Division="*" Level="*" hasTable="y" type="FaultsThenTime">
           <Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -3665,11 +3678,7 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
       </Event>
-      <Event Name="Gamblers" hasSubNames="y">
-        <Desc>Gamblers changed in 2005. For specified-type gambles, use one of the pre-defined sub-names.</Desc>
-        <SubName>Contacts</SubName>
-        <SubName>Jumps</SubName>
-        <SubName>Weaves</SubName>
+      <Event Name="Gamblers">
         <Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" ValidTo="2004-12-31" type="OCScoreThenTime">
           <Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
           <TitlePoints Faults="0" Points="10"/>
@@ -3700,13 +3709,37 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Standard" Level="*" ValidFrom="2005-1-1" ValidTo="2006-1-1" type="OCScoreThenTime">
-          <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
+        <Scoring Division="Standard" Level="*" ValidFrom="2005-1-1" ValidTo="2006-1-1" hasSubNames="y" type="OCScoreThenTime">
+          <SubName>Contacts</SubName>
+          <SubName>Jumps</SubName>
+          <SubName>Weaves</SubName>
+          <Note>This is the new Gamblers style. It is simply Q or NQ. Gamblers changed in 2005. For specified-type gambles, use one of the pre-defined sub-names.</Note>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Veterans" Level="*" ValidFrom="2005-1-1" ValidTo="2006-1-1" type="OCScoreThenTime">
-          <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
+        <Scoring Division="Veterans" Level="*" ValidFrom="2005-1-1" ValidTo="2006-1-1" hasSubNames="y" type="OCScoreThenTime">
+          <SubName>Contacts</SubName>
+          <SubName>Jumps</SubName>
+          <SubName>Weaves</SubName>
+          <Note>This is the new Gamblers style. It is simply Q or NQ. Gamblers changed in 2005. For specified-type gambles, use one of the pre-defined sub-names.</Note>
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="*" Level="Elite" OpeningPts="50" ValidFrom="2019-8-1" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="ScoreThenTime">
+          <Note>Enter time bonus as part of your earned points. Time faults are automatically computed.
+SCT: 20": 34, 16":38, 12":42, 8":46, 4":50</Note>
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="*" Level="Open" OpeningPts="40" ValidFrom="2019-8-1" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="ScoreThenTime">
+          <Note>Enter time bonus as part of your earned points. Time faults are automatically computed.
+SCT: 20": 34, 16":38, 12":42, 8":46, 4":50</Note>
+          <TitlePoints Faults="0" Points="10"/>
+          <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="*" Level="Novice" OpeningPts="30" ValidFrom="2019-8-1" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="ScoreThenTime">
+          <Note>Enter time bonus as part of your earned points. Time faults are automatically computed.
+SCT: 20": 34, 16":38, 12":42, 8":46, 4":50</Note>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
@@ -3971,8 +4004,8 @@ Was called Wild Card briefly.</Desc>
         <Level Name="3ème degré"/>
         <Level Name="Sans degré"/>
       </Division>
-      <Event Name="Agility" hasTable="y">
-        <Scoring Division="*" Level="2ème degré" type="FaultsThenTime">
+      <Event Name="Agility">
+        <Scoring Division="*" Level="2ème degré" hasTable="y" type="FaultsThenTime">
           <Note>0 - 5.99 pénalités = Excellent
 6 - 15.99 pénalités = Très bon
 16 - 25.99 pénalités = Bon
@@ -3987,7 +4020,7 @@ Was called Wild Card briefly.</Desc>
             <PlaceInfo Place="3" Value="1"/>
           </Placements>
         </Scoring>
-        <Scoring Division="*" Level="*" type="FaultsThenTime">
+        <Scoring Division="*" Level="*" hasTable="y" type="FaultsThenTime">
           <Note>0 - 5.99 pénalités = Excellent
 6 - 15.99 pénalités = Très bon
 16 - 25.99 pénalités = Bon
@@ -4025,8 +4058,8 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="25.99" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Open Royal Canin" hasTable="y">
-        <Scoring Division="*" Level="Sans degré" type="FaultsThenTime">
+      <Event Name="Open Royal Canin">
+        <Scoring Division="*" Level="Sans degré" hasTable="y" type="FaultsThenTime">
           <Note>0 - 5.99 pénalités = Excellent
 6 - 15.99 pénalités = Très bon
 16 - 25.99 pénalités = Bon
@@ -4037,8 +4070,8 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="25.99" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Grand Prix France" hasTable="y">
-        <Scoring Division="*" Level="Sans degré" type="FaultsThenTime">
+      <Event Name="Grand Prix France">
+        <Scoring Division="*" Level="Sans degré" hasTable="y" type="FaultsThenTime">
           <Note>0 - 5.99 pénalités = Excellent
 6 - 15.99 pénalités = Très bon
 16 - 25.99 pénalités = Bon
@@ -4072,90 +4105,91 @@ TG3 + 10 Qs in at least 5 games
       <Event Name="Petit Prix">
         <Scoring Division="*" Level="*" type="FaultsThenTime"/>
       </Event>
-      <Event Name="Standard" hasTable="y">
-        <Scoring Division="*" Level="*" type="Faults100ThenTime">
+      <Event Name="Standard">
+        <Scoring Division="*" Level="*" hasTable="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Faults/Time" ShortName="Game: FT" hasSubNames="y" hasTable="y">
+      <Event Name="Game: Faults/Time" ShortName="Game: FT">
         <Desc>This is for events scored like Standard.</Desc>
-        <SubName>Box Game</SubName>
-        <Scoring Division="*" Level="*" type="FaultsThenTime">
+        <Scoring Division="*" Level="*" hasSubNames="y" hasTable="y" type="FaultsThenTime">
+          <SubName>Box Game</SubName>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Faults/Time (2)" ShortName="Game: FT2" hasSubNames="y" hasTable="y">
+      <Event Name="Game: Faults/Time (2)" ShortName="Game: FT2">
         <Desc>This is for events scored like Standard, but allows faults.</Desc>
-        <SubName>Colors</SubName>
-        <Scoring Division="*" Level="Superior" type="FaultsThenTime">
+        <Scoring Division="*" Level="Superior" hasSubNames="y" hasTable="y" type="FaultsThenTime">
+          <SubName>Colors</SubName>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="*" type="FaultsThenTime">
+        <Scoring Division="*" Level="*" hasSubNames="y" hasTable="y" type="FaultsThenTime">
+          <SubName>Colors</SubName>
           <TitlePoints Faults="5" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Time+Faults" ShortName="Game: T+F" hasSubNames="y">
+      <Event Name="Game: Time+Faults" ShortName="Game: T+F">
         <Desc>This is for Time plus Fault events. Time faults are not added. Subtract Bonus points from Faults. Faults may be negative.</Desc>
-        <SubName>Chutes and Ladders</SubName>
-        <SubName>Dealers Choice</SubName>
-        <SubName>Football</SubName>
-        <SubName>Louganis</SubName>
-        <SubName>Time Warp</SubName>
-        <Scoring Division="*" Level="*" type="TimePlusFaults">
+        <Scoring Division="*" Level="*" hasSubNames="y" type="TimePlusFaults">
+          <SubName>Chutes and Ladders</SubName>
+          <SubName>Dealers Choice</SubName>
+          <SubName>Football</SubName>
+          <SubName>Louganis</SubName>
+          <SubName>Time Warp</SubName>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Time+Faults (2)" ShortName="Game: T+F2" hasSubNames="y">
+      <Event Name="Game: Time+Faults (2)" ShortName="Game: T+F2">
         <Desc>This is for Time plus Fault events. Time faults are not added. Bonus points allowed.</Desc>
-        <SubName>Football</SubName>
-        <Scoring Division="*" Level="*" bonusPts="y" type="TimePlusFaults">
+        <Scoring Division="*" Level="*" bonusPts="y" hasSubNames="y" type="TimePlusFaults">
+          <SubName>Football</SubName>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Total Points" ShortName="Game: Pt" hasSubNames="y">
+      <Event Name="Game: Total Points" ShortName="Game: Pt">
         <Desc>Points are accumulated in a single time period, like Snooker.</Desc>
-        <SubName>12 Tone Row</SubName>
-        <SubName>Beat the Clock</SubName>
-        <SubName>Black Hole</SubName>
-        <SubName>BlackJack</SubName>
-        <SubName>Boston Bowling</SubName>
-        <SubName>Connect the Dots</SubName>
-        <SubName>Dare to Double</SubName>
-        <SubName>Easter Egg Hunt</SubName>
-        <SubName>Empire State Pinball</SubName>
-        <SubName>FAST</SubName>
-        <SubName>Quidditch</SubName>
-        <SubName>Snooker</SubName>
-        <SubName>The Weakest Link</SubName>
-        <Scoring Division="*" Level="*" type="OCScoreThenTime">
+        <Scoring Division="*" Level="*" hasSubNames="y" type="OCScoreThenTime">
+          <SubName>12 Tone Row</SubName>
+          <SubName>Beat the Clock</SubName>
+          <SubName>Black Hole</SubName>
+          <SubName>BlackJack</SubName>
+          <SubName>Boston Bowling</SubName>
+          <SubName>Connect the Dots</SubName>
+          <SubName>Dare to Double</SubName>
+          <SubName>Easter Egg Hunt</SubName>
+          <SubName>Empire State Pinball</SubName>
+          <SubName>FAST</SubName>
+          <SubName>Quidditch</SubName>
+          <SubName>Snooker</SubName>
+          <SubName>The Weakest Link</SubName>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Total Points - TimeFaults1" ShortName="Game: Pt-TF1" hasSubNames="y">
+      <Event Name="Game: Total Points - TimeFaults1" ShortName="Game: Pt-TF1">
         <Desc>Points are accumulated in a single time period, like Snooker. Time over SCT is deducted.</Desc>
-        <Scoring Division="*" Level="*" dropFractions="y" overTF="y" subtractTF="y" type="OCScoreThenTime">
+        <Scoring Division="*" Level="*" dropFractions="y" hasSubNames="y" overTF="y" subtractTF="y" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Total Points - TimeFaults2" ShortName="Game: Pt-TF2" hasSubNames="y">
+      <Event Name="Game: Total Points - TimeFaults2" ShortName="Game: Pt-TF2">
         <Desc>Points are accumulated in a single time period. 2 points are deducted for each second over SCT.</Desc>
-        <SubName>Copycat</SubName>
-        <Scoring Division="*" Level="*" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="OCScoreThenTime">
+        <Scoring Division="*" Level="*" dropFractions="y" hasSubNames="y" overTF="y" subtractTF="y" timeFault="2" type="OCScoreThenTime">
+          <SubName>Copycat</SubName>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Open/Close Points" ShortName="Game: OCPt" hasSubNames="y">
+      <Event Name="Game: Open/Close Points" ShortName="Game: OCPt">
         <Desc>Points are accumulated separately in the opening and closing, like Gamblers.</Desc>
-        <SubName>Double Joker</SubName>
-        <SubName>Double or Nothing</SubName>
-        <SubName>Gamblers</SubName>
-        <Scoring Division="*" Level="*" type="OCScoreThenTime">
+        <Scoring Division="*" Level="*" hasSubNames="y" type="OCScoreThenTime">
+          <SubName>Double Joker</SubName>
+          <SubName>Double or Nothing</SubName>
+          <SubName>Gamblers</SubName>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
-      <Event Name="Game: Relay" ShortName="Game: Relay" hasPartner="y" hasSubNames="y">
+      <Event Name="Game: Relay" ShortName="Game: Relay" hasPartner="y">
         <Desc>This is for events run with one or more partners.</Desc>
-        <Scoring Division="*" Level="*" type="FaultsThenTime">
+        <Scoring Division="*" Level="*" hasSubNames="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
@@ -4367,8 +4401,8 @@ TG3 + 10 Qs in at least 5 games
       <Division Name="Masters" ShortName="Mas">
         <Level Name="Champion" ShortName="Ch"/>
       </Division>
-      <Event Name="Agility" hasTable="y">
-        <Scoring Division="*" Level="*" type="FaultsThenTime">
+      <Event Name="Agility">
+        <Scoring Division="*" Level="*" hasTable="y" type="FaultsThenTime">
           <TitlePoints Type="UKI"/>
         </Scoring>
       </Event>
@@ -4702,73 +4736,73 @@ TG3 + 10 Qs in at least 5 games
       <Division Name="Intro">
         <Level Name="Intro"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
-        <Scoring Division="Championship" Level="International" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
+      <Event Name="Standard">
+        <Scoring Division="Championship" Level="International" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Nationals" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" hasTable="y" type="TimePlusFaults">
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" hasTable="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-1-2" type="FaultsThenTime">
+        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-1-2" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="2"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
+        <Scoring Division="Championship" Level="Masters" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Advanced" type="FaultsThenTime">
+        <Scoring Division="Championship" Level="Advanced" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Novice" type="FaultsThenTime">
+        <Scoring Division="Championship" Level="Novice" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Performance" Level="International" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="International" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Nationals" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" hasTable="y" type="TimePlusFaults">
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" hasTable="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-1-2" type="FaultsThenTime">
+        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-1-2" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="2"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
+        <Scoring Division="Performance" Level="PIII" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Performance" Level="PII" type="FaultsThenTime">
+        <Scoring Division="Performance" Level="PII" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Performance" Level="PI" type="FaultsThenTime">
+        <Scoring Division="Performance" Level="PI" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Junior" Level="*" type="FaultsThenTime">
+        <Scoring Division="Junior" Level="*" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Veterans" Level="*" ValidFrom="2011-3-1" type="FaultsThenTime">
+        <Scoring Division="Veterans" Level="*" ValidFrom="2011-3-1" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Intro" Level="Intro" ValidFrom="2011-8-1" type="FaultsThenTime">
+        <Scoring Division="Intro" Level="Intro" ValidFrom="2011-8-1" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
@@ -5195,8 +5229,8 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
         <Level Name="Intermediate" ShortName="Int"/>
         <Level Name="Expert" ShortName="Ex"/>
       </Division>
-      <Event Name="Standard" hasTable="y">
-        <Scoring Division="*" Level="*" type="FaultsThenTime">
+      <Event Name="Standard">
+        <Scoring Division="*" Level="*" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>

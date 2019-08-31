@@ -1,8 +1,4 @@
-Last Updated: 8/28/2019
-
-- Subnames on an event need valid date ranges.
-  (NADAC has brought back gamblers, but the new incarnation does not have
-  subnames)
+Last Updated: 8/31/2019
 
 - Change how co-sanctioned trials are handled. AFAIK there are no more. So I
   only need to support existing ASCA/NADAC trials from past years. What we do

@@ -136,11 +136,11 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_DlgFixup()
 	, m_Scorings()
 	, m_Name(StringUtil::stringWX(m_pEvent->GetName()))
-	, m_bHasTable(m_pEvent->HasTable())
 	, m_bHasPartners(m_pEvent->HasPartner())
-	, m_bHasSubNames(m_pEvent->HasSubNames())
 	, m_Desc(StringUtil::stringWX(m_pEvent->GetDesc()))
 	, m_ctrlName(nullptr)
+	, m_ctrlTable(nullptr)
+	, m_ctrlHasSubnames(nullptr)
 	, m_ctrlSubNames(nullptr)
 	, m_ctrlSubNamesNew(nullptr)
 	, m_ctrlSubNamesEdit(nullptr)
@@ -183,12 +183,13 @@ CDlgConfigEvent::CDlgConfigEvent(
 	m_ctrlName->SetHelpText(_("HIDC_CONFIG_EVENT"));
 	m_ctrlName->SetToolTip(_("HIDC_CONFIG_EVENT"));
 
-	wxCheckBox* ctrlTable = new wxCheckBox(this, wxID_ANY,
+	m_ctrlTable = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_TABLE"),
-		wxDefaultPosition, wxDefaultSize, 0,
-		wxGenericValidator(&m_bHasTable));
-	ctrlTable->SetHelpText(_("HIDC_CONFIG_EVENT_TABLE"));
-	ctrlTable->SetToolTip(_("HIDC_CONFIG_EVENT_TABLE"));
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlTable->Enable(false);
+	m_ctrlTable->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEvent::OnClickedTable, this);
+	m_ctrlTable->SetHelpText(_("HIDC_CONFIG_EVENT_TABLE"));
+	m_ctrlTable->SetToolTip(_("HIDC_CONFIG_EVENT_TABLE"));
 
 	wxCheckBox* ctrlPartners = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PARTNER"),
@@ -197,13 +198,13 @@ CDlgConfigEvent::CDlgConfigEvent(
 	ctrlPartners->SetHelpText(_("HIDC_CONFIG_EVENT_PARTNER"));
 	ctrlPartners->SetToolTip(_("HIDC_CONFIG_EVENT_PARTNER"));
 
-	wxCheckBox* ctrlHasSubnames = new wxCheckBox(this, wxID_ANY,
+	m_ctrlHasSubnames = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_HAS_SUBNAMES"),
-		wxDefaultPosition, wxDefaultSize, 0,
-		wxGenericValidator(&m_bHasSubNames));
-	ctrlHasSubnames->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEvent::OnClickedSubNames, this);
-	ctrlHasSubnames->SetHelpText(_("HIDC_CONFIG_EVENT_HAS_SUBNAMES"));
-	ctrlHasSubnames->SetToolTip(_("HIDC_CONFIG_EVENT_HAS_SUBNAMES"));
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlHasSubnames->Enable(false);
+	m_ctrlHasSubnames->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEvent::OnClickedSubNames, this);
+	m_ctrlHasSubnames->SetHelpText(_("HIDC_CONFIG_EVENT_HAS_SUBNAMES"));
+	m_ctrlHasSubnames->SetToolTip(_("HIDC_CONFIG_EVENT_HAS_SUBNAMES"));
 
 	wxStaticText* textNote = new wxStaticText(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_DESC"),
@@ -376,11 +377,11 @@ CDlgConfigEvent::CDlgConfigEvent(
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
 	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerName->Add(m_ctrlName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerName->Add(ctrlTable, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(m_ctrlTable, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerName->Add(ctrlPartners, 0, wxALIGN_CENTER_VERTICAL, 0);
 
 	sizerTop->Add(sizerName, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerTop->Add(ctrlHasSubnames, 0, wxALIGN_CENTER_VERTICAL);
+	sizerTop->Add(m_ctrlHasSubnames, 0, wxALIGN_CENTER_VERTICAL);
 
 	wxBoxSizer* sizerNotes = new wxBoxSizer(wxHORIZONTAL);
 	sizerNotes->Add(textNote, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
@@ -389,16 +390,16 @@ CDlgConfigEvent::CDlgConfigEvent(
 	sizerTop->Add(sizerNotes, 1, wxEXPAND | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerSubname = new wxBoxSizer(wxHORIZONTAL);
-	sizerSubname->Add(m_ctrlSubNames, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerSubname->Add(m_ctrlSubNames, 1, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtnSub = new wxBoxSizer(wxVERTICAL);
-	sizerBtnSub->Add(m_ctrlSubNamesNew, 0, wxEXPAND, 0);
-	sizerBtnSub->Add(m_ctrlSubNamesEdit, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerBtnSub->Add(m_ctrlSubNamesDelete, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerBtnSub->Add(m_ctrlSubNamesNew, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND, 0);
+	sizerBtnSub->Add(m_ctrlSubNamesEdit, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerBtnSub->Add(m_ctrlSubNamesDelete, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
 
-	sizerSubname->Add(sizerBtnSub, 0, wxEXPAND, 0);
+	sizerSubname->Add(sizerBtnSub, 0, wxEXPAND, wxRESERVE_SPACE_EVEN_IF_HIDDEN);
 
-	sizerTop->Add(sizerSubname, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerTop->Add(sizerSubname, 1, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	bSizer->Add(sizerTop, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
@@ -454,7 +455,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	FillSubNames(true);
+	ShowSubNames(false);
 	FillMethodList();
 	FillControls();
 
@@ -490,26 +491,14 @@ void CDlgConfigEvent::ClearFixups()
 }
 
 
-void CDlgConfigEvent::FillSubNames(bool bInit)
+void CDlgConfigEvent::ShowSubNames(bool bShow)
 {
-	if (m_bHasSubNames)
+	if (bShow)
 	{
 		m_ctrlSubNames->Show(true);
 		m_ctrlSubNamesNew->Show(true);
 		m_ctrlSubNamesEdit->Show(true);
 		m_ctrlSubNamesDelete->Show(true);
-		if (bInit)
-		{
-			m_ctrlSubNames->Clear();
-			std::set<std::wstring> subNames;
-			m_pEvent->GetSubNames(subNames);
-			for (std::set<std::wstring>::const_iterator iter = subNames.begin();
-				iter != subNames.end();
-				++iter)
-			{
-				m_ctrlSubNames->Append(StringUtil::stringWX(*iter));
-			}
-		}
 	}
 	else
 	{
@@ -588,13 +577,38 @@ void CDlgConfigEvent::EditSubname()
 		if (wxID_OK == dlg.ShowModal())
 		{
 			m_ctrlSubNames->Delete(idx);
-			m_ctrlSubNames->Insert(StringUtil::stringWX(dlg.Name()), idx);
+			idx = m_ctrlSubNames->Append(StringUtil::stringWX(dlg.Name()));
 			m_ctrlSubNames->SetSelection(idx);
+			UpdateSubnames();
 			EnableSubnameControls();
 		}
 	}
 }
 
+
+void CDlgConfigEvent::UpdateSubnames()
+{
+	int idxMethod = m_ctrlMethods->GetSelection();
+	if (wxNOT_FOUND == idxMethod)
+		return;
+
+	CConfigEventDataScoring* pScoringData = GetScoringData(m_idxMethod);
+	ARBConfigScoringPtr pScoring = pScoringData->GetData();
+
+	if (m_ctrlHasSubnames->IsChecked())
+	{
+		std::set<std::wstring> subNames;
+		int nCount = m_ctrlSubNames->GetCount();
+		for (int i = 0; i < nCount; ++i)
+		{
+			std::wstring str = StringUtil::stringW(m_ctrlSubNames->GetString(i));
+			str = StringUtil::Trim(str);
+			if (!str.empty())
+				subNames.insert(str);
+		}
+		pScoring->SetSubNames(subNames);
+	}
+}
 
 void CDlgConfigEvent::EnablePointsControls()
 {
@@ -610,6 +624,7 @@ void CDlgConfigEvent::FillControls()
 {
 	bool bEnable = false;
 	int idxMethod = m_ctrlMethods->GetSelection();
+	m_ctrlSubNames->Clear();
 	m_ctrlInfo->SetLabel(L"");
 	m_ctrlPointsList->Clear();
 	m_ctrlNote->SetValue(L"");
@@ -620,6 +635,18 @@ void CDlgConfigEvent::FillControls()
 		{
 			bEnable = true;
 			ARBConfigScoringPtr pScoring = pScoringData->GetData();
+			m_ctrlHasSubnames->SetValue(pScoring->HasSubNames());
+			if (pScoring->HasSubNames())
+			{
+				std::set<std::wstring> subNames;
+				pScoring->GetSubNames(subNames);
+				for (std::set<std::wstring>::const_iterator iter = subNames.begin();
+					iter != subNames.end();
+					++iter)
+				{
+					m_ctrlSubNames->Append(StringUtil::stringWX(*iter));
+				}
+			}
 			// Get info
 			{
 				std::wstring str1, str2;
@@ -756,6 +783,9 @@ void CDlgConfigEvent::FillControls()
 			m_ctrlNote->SetValue(StringUtil::stringWX(str));
 		}
 	}
+	m_ctrlTable->Enable(bEnable);
+	m_ctrlHasSubnames->Enable(bEnable);
+	ShowSubNames(bEnable);
 	m_ctrlEdit->Enable(bEnable);
 	m_ctrlDelete->Enable(bEnable);
 	m_ctrlCopy->Enable(bEnable);
@@ -1066,13 +1096,33 @@ void CDlgConfigEvent::EditPoints()
 }
 
 
+void CDlgConfigEvent::OnClickedTable(wxCommandEvent& evt)
+{
+	int idxMethod = m_ctrlMethods->GetSelection();
+	if (wxNOT_FOUND == idxMethod)
+		return;
+
+	CConfigEventDataScoring* pScoringData = GetScoringData(m_idxMethod);
+	ARBConfigScoringPtr pScoring = pScoringData->GetData();
+
+	pScoring->SetHasTable(m_ctrlTable->IsChecked());
+}
+
+
 void CDlgConfigEvent::OnClickedSubNames(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
-	FillSubNames();
+	int idxMethod = m_ctrlMethods->GetSelection();
+	if (wxNOT_FOUND == idxMethod)
+		return;
+
+	CConfigEventDataScoring* pScoringData = GetScoringData(m_idxMethod);
+	ARBConfigScoringPtr pScoring = pScoringData->GetData();
+
+	bool bHasSubnames = m_ctrlHasSubnames->IsChecked();
+	pScoring->SetHasSubNames(bHasSubnames);
+	ShowSubNames(bHasSubnames);
+
 	EnableSubnameControls();
-	Layout();
-	GetSizer()->Fit(this);
 }
 
 
@@ -1095,6 +1145,7 @@ void CDlgConfigEvent::OnBnClickedSubNamesNew(wxCommandEvent& evt)
 	{
 		int idx = m_ctrlSubNames->Append(StringUtil::stringWX(dlg.Name()));
 		m_ctrlSubNames->SetSelection(idx);
+		UpdateSubnames();
 		EnableSubnameControls();
 	}
 }
@@ -1514,22 +1565,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 	*/
 
 	m_pEvent->SetDesc(StringUtil::stringW(m_Desc));
-	m_pEvent->SetHasTable(m_bHasTable);
 	m_pEvent->SetHasPartner(m_bHasPartners);
-	m_pEvent->SetHasSubNames(m_bHasSubNames);
-	if (m_bHasSubNames)
-	{
-		std::set<std::wstring> subNames;
-		int nCount = m_ctrlSubNames->GetCount();
-		for (int i = 0; i < nCount; ++i)
-		{
-			std::wstring str = StringUtil::stringW(m_ctrlSubNames->GetString(i));
-			str = StringUtil::Trim(str);
-			if (!str.empty())
-				subNames.insert(str);
-		}
-		m_pEvent->SetSubNames(subNames);
-	}
 	// No need to clone them, just move them.
 	m_pEvent->GetScorings() = m_Scorings;
 	EndDialog(wxID_OK);

@@ -190,6 +190,24 @@ public:
 		if (ARBScoringStyle::OCScoreThenTime != m_Style && ARBScoringStyle::ScoreThenTime != m_Style)
 			m_OpeningPts = m_ClosingPts = 0;
 	}
+	bool HasTable() const
+	{
+		return m_bTable;
+	}
+	void SetHasTable(bool inBool)
+	{
+		m_bTable = inBool;
+	}
+	bool HasSubNames() const
+	{
+		return m_bHasSubNames;
+	}
+	void SetHasSubNames(bool inHas)
+	{
+		m_bHasSubNames = inHas;
+	}
+	size_t GetSubNames(std::set<std::wstring>& outNames, bool bClear = true) const;
+	void SetSubNames(std::set<std::wstring> const& inNames);
 	bool DropFractions() const ///< Only valid for F/T, T+F
 	{
 		return m_bDropFractions;
@@ -344,6 +362,9 @@ private:
 	std::wstring m_Division;
 	std::wstring m_Level;
 	ARBScoringStyle m_Style;
+	bool m_bTable;
+	bool m_bHasSubNames;
+	std::set<std::wstring> m_SubNames;
 	bool m_bDropFractions;
 	bool m_bCleanQ;
 	bool m_bTimeFaultsUnder;

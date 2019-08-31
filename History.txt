@@ -1,6 +1,12 @@
-8/24/2019: v3.3.4.<development>
+8/31/2019: v3.3.4.<development>
+- Bumped file version to 15.0:
+  - Move table and subname info from 'Event' to 'Scoring'
+- Bumped Configuration v63:
+  - Re-add NADAC Gamblers.
 
 8/24/2019: v3.3.3.110
+- Bumped file version to 14.6:
+  - Support for FCAT with 'TimeNoPlaces' on scoring type.
 - Bumped Configuration v62:
   - Fixed AKC Premier metalic title names.
   - Fixed BHA Hunt (open/senior/master) for Qing.
@@ -88,7 +94,7 @@
   - Fixed parsing numbers in English locales with a non"." decimal separator.
 
 1/1/2018: v3.2.4.103
-- Bumped file version to 12.5
+- Bumped file version to 14.5
   - Added a 'use faults' to T+F runs for determining title points.
 - Bumped Configuration v57:
   - Updated USDAA Master Challenge classes.

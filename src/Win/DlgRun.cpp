@@ -1999,9 +1999,10 @@ void CDlgRun::FillEvents(bool bOnEventChange)
 void CDlgRun::FillSubNames()
 {
 	ARBConfigEventPtr pEvent;
-	if (GetEvent(&pEvent))
+	ARBConfigScoringPtr pScoring;
+	if (GetEvent(&pEvent) && GetScoring(&pScoring))
 	{
-		if (pEvent->HasSubNames())
+		if (pScoring->HasSubNames())
 		{
 			std::set<std::wstring> names;
 			m_pDoc->Book().GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
@@ -2285,16 +2286,16 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 	// the new event has a table. (which is what was done before)
 	if (bOnEventChange)
 	{
-		if (m_Run->GetScoring().HasTable() != pEvent->HasTable())
+		if (m_Run->GetScoring().HasTable() != pScoring->HasTable())
 		{
-			m_Run->GetScoring().SetHasTable(pEvent->HasTable());
+			m_Run->GetScoring().SetHasTable(pScoring->HasTable());
 			// Plus, we need to recompute the YPS.
 			SetMinYPS();
 			SetYPS();
 			SetObstacles();
 		}
 	}
-	if (pEvent->HasTable())
+	if (pScoring->HasTable())
 	{
 		m_ctrlTable->Show(true);
 		m_Table = m_Run->GetScoring().HasTable();
@@ -3375,7 +3376,10 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 		ARBConfigEventPtr pEvent2;
 		m_pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent2);
 		assert(!!pEvent2.get());
-		if (!pEvent2->HasTable())
+		ARBConfigScoringPtr scoring;
+		pEvent2->FindEvent(m_Run->GetDivision(), m_Run->GetLevel(), m_Run->GetDate(), &scoring);
+		assert(!!scoring.get());
+		if (!scoring->HasTable())
 			if (m_Run->GetScoring().HasTable())
 				wxMessageBox(L"Poof!", wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 	}

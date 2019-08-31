@@ -134,6 +134,9 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_Division()
 	, m_Level()
 	, m_Style(ARBScoringStyle::Unknown)
+	, m_bTable(false)
+	, m_bHasSubNames(false)
+	, m_SubNames()
 	, m_bDropFractions(false)
 	, m_bCleanQ(false)
 	, m_bTimeFaultsUnder(false)
@@ -162,6 +165,9 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_Division(rhs.m_Division)
 	, m_Level(rhs.m_Level)
 	, m_Style(rhs.m_Style)
+	, m_bTable(rhs.m_bTable)
+	, m_bHasSubNames(rhs.m_bHasSubNames)
+	, m_SubNames(rhs.m_SubNames)
 	, m_bDropFractions(rhs.m_bDropFractions)
 	, m_bCleanQ(rhs.m_bCleanQ)
 	, m_bTimeFaultsUnder(rhs.m_bTimeFaultsUnder)
@@ -194,6 +200,9 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring&& rhs)
 	, m_Division(std::move(rhs.m_Division))
 	, m_Level(std::move(rhs.m_Level))
 	, m_Style(std::move(rhs.m_Style))
+	, m_bTable(std::move(rhs.m_bTable))
+	, m_bHasSubNames(std::move(rhs.m_bHasSubNames))
+	, m_SubNames(std::move(rhs.m_SubNames))
 	, m_bDropFractions(std::move(rhs.m_bDropFractions))
 	, m_bCleanQ(std::move(rhs.m_bCleanQ))
 	, m_bTimeFaultsUnder(std::move(rhs.m_bTimeFaultsUnder))
@@ -236,6 +245,9 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_Division = rhs.m_Division;
 		m_Level = rhs.m_Level;
 		m_Style = rhs.m_Style;
+		m_bTable = rhs.m_bTable;
+		m_bHasSubNames = rhs.m_bHasSubNames;
+		m_SubNames = rhs.m_SubNames;
 		m_bDropFractions = rhs.m_bDropFractions;
 		m_bCleanQ = rhs.m_bCleanQ;
 		m_bTimeFaultsUnder = rhs.m_bTimeFaultsUnder;
@@ -268,6 +280,9 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring&& rhs)
 		m_Division = std::move(rhs.m_Division);
 		m_Level = std::move(rhs.m_Level);
 		m_Style = std::move(rhs.m_Style);
+		m_bTable = std::move(rhs.m_bTable);
+		m_bHasSubNames = std::move(rhs.m_bHasSubNames);
+		m_SubNames = std::move(rhs.m_SubNames);
 		m_bDropFractions = std::move(rhs.m_bDropFractions);
 		m_bCleanQ = std::move(rhs.m_bCleanQ);
 		m_bTimeFaultsUnder = std::move(rhs.m_bTimeFaultsUnder);
@@ -298,6 +313,9 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_Division == rhs.m_Division
 		&& m_Level == rhs.m_Level
 		&& m_Style == rhs.m_Style
+		&& m_bTable == rhs.m_bTable
+		&& m_bHasSubNames == rhs.m_bHasSubNames
+		&& m_SubNames == rhs.m_SubNames
 		&& m_bDropFractions == rhs.m_bDropFractions
 		&& m_bCleanQ == rhs.m_bCleanQ
 		&& m_bTimeFaultsUnder == rhs.m_bTimeFaultsUnder
@@ -413,6 +431,18 @@ bool ARBConfigScoring::Load(
 		msg += L", ";
 		msg += SCORING_TYPE_TF;
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE, msg.c_str()));
+		return false;
+	}
+
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_bTable))
+	{
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_SCORING_HAS_TABLE, Localization()->ValidValuesBool().c_str()));
+		return false;
+	}
+
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_HASSUBNAMES, m_bHasSubNames))
+	{
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_SCORING_HASSUBNAMES, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
@@ -536,6 +566,10 @@ bool ARBConfigScoring::Load(
 					}
 				}
 			}
+			else if (element->GetName() == TREE_SCORING_SUBNAME)
+			{
+				m_SubNames.insert(element->GetValue());
+			}
 		}
 		m_TitlePoints.sort();
 		m_LifePoints.sort();
@@ -620,6 +654,22 @@ bool ARBConfigScoring::Save(ElementNodePtr const& ioTree) const
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_NP);
 		break;
 	}
+	if (m_bTable)
+		scoring->AddAttrib(ATTRIB_SCORING_HAS_TABLE, m_bTable);
+	if (m_bHasSubNames)
+	{
+		scoring->AddAttrib(ATTRIB_SCORING_HASSUBNAMES, m_bHasSubNames);
+		for (std::set<std::wstring>::const_iterator iter = m_SubNames.begin();
+			iter != m_SubNames.end();
+			++iter)
+		{
+			if (0 < (*iter).length())
+			{
+				ElementNodePtr name = scoring->AddElementNode(TREE_SCORING_SUBNAME);
+				name->SetValue(*iter);
+			}
+		}
+	}
 	if (m_bDropFractions)
 		scoring->AddAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions);
 	if (m_bCleanQ)
@@ -668,6 +718,22 @@ bool ARBConfigScoring::Save(ElementNodePtr const& ioTree) const
 			return false;
 	}
 	return true;
+}
+
+
+size_t ARBConfigScoring::GetSubNames(std::set<std::wstring>& outNames, bool bClear) const
+{
+	if (bClear)
+		outNames.clear();
+	outNames.insert(m_SubNames.begin(), m_SubNames.end());
+	return m_SubNames.size();
+}
+
+
+void ARBConfigScoring::SetSubNames(std::set<std::wstring> const& inNames)
+{
+	m_SubNames.clear();
+	m_SubNames = inNames;
 }
 
 /////////////////////////////////////////////////////////////////////////////

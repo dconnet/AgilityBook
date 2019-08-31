@@ -48,6 +48,7 @@ private:
 	CDlgPointsEventData* GetEventData(int index) const;
 	CDlgPointsTypeNameData* GetTypeNameData(int index) const;
 	CDlgPointsMultiQData* GetMultiQData(int index) const;
+	ARBConfigScoringPtr GetConfigScoring() const;
 	void SetEnableLists(
 			bool& outVenue,
 			bool& outDivMQ,

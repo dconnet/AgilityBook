@@ -192,14 +192,6 @@ public:
 	{
 		m_Desc = inDesc;
 	}
-	bool HasTable() const
-	{
-		return m_bTable;
-	}
-	void SetHasTable(bool inBool)
-	{
-		m_bTable = inBool;
-	}
 	bool HasPartner() const
 	{
 		return m_bHasPartner;
@@ -208,16 +200,6 @@ public:
 	{
 		m_bHasPartner = inHas;
 	}
-	bool HasSubNames() const
-	{
-		return m_bHasSubNames;
-	}
-	void SetHasSubNames(bool inHas)
-	{
-		m_bHasSubNames = inHas;
-	}
-	size_t GetSubNames(std::set<std::wstring>& outNames) const;
-	void SetSubNames(std::set<std::wstring> const& inNames);
 	ARBConfigScoringList const& GetScorings() const
 	{
 		return m_Scoring;
@@ -231,10 +213,7 @@ private:
 	std::wstring m_Name;
 	std::wstring m_ShortName;
 	std::wstring m_Desc;
-	bool m_bTable;
 	bool m_bHasPartner;
-	bool m_bHasSubNames;
-	std::set<std::wstring> m_SubNames;
 	ARBConfigScoringList m_Scoring;
 };
 

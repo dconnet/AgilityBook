@@ -467,6 +467,28 @@ CDlgPointsMultiQData* CDlgExistingPoints::GetMultiQData(int index) const
 }
 
 
+ARBConfigScoringPtr CDlgExistingPoints::GetConfigScoring() const
+{
+	ARBConfigScoringPtr scoring;
+
+	long index = m_ctrlDivMultiQs->GetSelection();
+	if (wxNOT_FOUND == index)
+		return scoring;
+
+	index = m_ctrlLevels->GetSelection();
+	if (wxNOT_FOUND == index)
+		return scoring;
+
+	index = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND == index)
+		return scoring;
+
+	ARBConfigEventPtr pEvent = GetEventData(index)->m_Event;
+	pEvent->FindEvent(GetDivisionData(index)->m_Div->GetName(), GetLevelData(index)->m_Level->GetName(), m_Date, &scoring);
+	return scoring;
+}
+
+
 void CDlgExistingPoints::SetEnableLists(
 		bool& outVenue,
 		bool& outDivMQ,
@@ -510,12 +532,9 @@ void CDlgExistingPoints::SetEnableLists(
 		outLevel = true;
 		outEvent = true;
 		{
-			long index = m_ctrlEvents->GetSelection();
-			if (wxNOT_FOUND != index)
-			{
-				ARBConfigEventPtr pEvent = GetEventData(index)->m_Event;
-				outSubName = pEvent->HasSubNames();
-			}
+			ARBConfigScoringPtr scoring = GetConfigScoring();
+			if (scoring)
+				outSubName = scoring->HasSubNames();
 		}
 		break;
 
@@ -765,7 +784,11 @@ void CDlgExistingPoints::FillSubNames()
 		return;
 	ARBConfigEventPtr pEvent = GetEventData(index)->m_Event;
 
-	if (pEvent->HasSubNames())
+	ARBConfigScoringPtr scoring = GetConfigScoring();
+	if (!scoring)
+		return;
+
+	if (scoring->HasSubNames())
 	{
 		m_ctrlSubNames->Enable(true);
 		std::set<std::wstring> names;

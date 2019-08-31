@@ -16,6 +16,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2019-08-31 File version 15.0
  * 2019-08-18 File version 14.6
  * 2018-12-16 Convert to fmt.
  * 2017-12-31 File version 14.5
@@ -121,7 +122,7 @@
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(14, 6);
+	static ARBVersion const curVersion(15, 0);
 	return curVersion;
 }
 
@@ -631,10 +632,14 @@ bool ARBAgilityRecordBook::Update(
 									// table based on the configuration. This
 									// makes sure that old runs marked as having
 									// a table get properly cleaned up.
-									if (pRun->GetScoring().HasTable() != pEvent->HasTable())
+									ARBConfigScoringPtr scoring;
+									if (pEvent->GetScorings().FindEvent(pRun->GetDivision(), pRun->GetLevel(), pRun->GetDate(), &scoring))
 									{
-										++nUpdated;
-										pRun->GetScoring().SetHasTable(pEvent->HasTable());
+										if (pRun->GetScoring().HasTable() != scoring->HasTable())
+										{
+											++nUpdated;
+											pRun->GetScoring().SetHasTable(scoring->HasTable());
+										}
 									}
 								}
 							}
@@ -740,9 +745,13 @@ size_t ARBAgilityRecordBook::GetAllEventSubNames(
 		std::set<std::wstring>& outNames) const
 {
 	outNames.clear();
-	if (!inEvent || !inEvent->HasSubNames())
+	if (!inEvent || 0 == inEvent->GetScorings().size())
 		return 0;
-	inEvent->GetSubNames(outNames);
+	for (auto iter = inEvent->GetScorings().begin(); iter != inEvent->GetScorings().end(); ++iter)
+	{
+		if ((*iter)->HasSubNames())
+			(*iter)->GetSubNames(outNames, false);
+	}
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)

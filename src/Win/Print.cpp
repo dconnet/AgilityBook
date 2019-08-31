@@ -519,8 +519,12 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 								div = pDiv->GetName();
 						}
 
-						if (pEvent->HasSubNames())
-							evt = inRun->GetSubName();
+						ARBConfigScoringPtr scoring;
+						if (pEvent->GetScorings().FindEvent(inRun->GetDivision(), inRun->GetLevel(), inRun->GetDate(), &scoring))
+						{
+							if (scoring->HasSubNames())
+								evt = inRun->GetSubName();
+						}
 						if (evt.empty())
 						{
 							evt = pEvent->GetShortName();

@@ -52,8 +52,9 @@ private:
 	wxString GetListName(ARBConfigScoringPtr const& inScoring) const;
 	void EnableSubnameControls();
 	void EditSubname();
+	void UpdateSubnames();
 	void EnablePointsControls();
-	void FillSubNames(bool bInit = false);
+	void ShowSubNames(bool bShow);
 	void FillControls();
 	void FillMethodList();
 	void FillTitlePoints(ARBConfigScoringPtr const& inScoring);
@@ -67,11 +68,11 @@ private:
 	std::vector<ARBConfigActionPtr> m_DlgFixup;
 	ARBConfigScoringList m_Scorings;
 	wxString m_Name;
-	bool m_bHasTable;
 	bool m_bHasPartners;
-	bool m_bHasSubNames;
 	wxString m_Desc;
 	CTextCtrl* m_ctrlName;
+	wxCheckBox* m_ctrlTable;
+	wxCheckBox* m_ctrlHasSubnames;
 	wxListBox* m_ctrlSubNames;
 	wxButton* m_ctrlSubNamesNew;
 	wxButton* m_ctrlSubNamesEdit;
@@ -94,6 +95,7 @@ private:
 
 	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
+	void OnClickedTable(wxCommandEvent& evt);
 	void OnClickedSubNames(wxCommandEvent& evt);
 	void OnLbnSelchangeSubnames(wxCommandEvent& evt);
 	void OnLbnDblclkSubnames(wxCommandEvent& evt);
