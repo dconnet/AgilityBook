@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-04-10 Update to fmt 6.2.
  * 2019-12-08 Add fmt number formatting tests.
  * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
@@ -24,6 +25,7 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 #include "fmt/format.h"
+#include "fmt/locale.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -118,6 +120,33 @@ static void RunDblTests(bool bUseLocale)
 	REQUIRE(FormNumber(L"2", decimalPt, L"0") == s);
 	s = ARBDouble::ToString(p, 2, bUseLocale, ARBDouble::ZeroStrip::AsIs);
 	REQUIRE(FormNumber(L"2", decimalPt, L"00") == s);
+
+	// Check assumptions about libfmt
+	// Things changed from v5 to v6, see comments about fmt in ARBTypes.cpp
+	// (v6: Formatting changed to locale-independent)
+#if (FMT_VERSION >= 60000)
+	static const struct
+	{
+		double val;
+		int prec;
+		wchar_t const* expected; // No matter the locale, these should always be the same.
+		wchar_t const* format;
+	} tests[] = {
+		{42.34, 0, L"42.34", L"{:g}"},
+		{42.0,  0, L"42",    L"{:g}"},
+		{42.34, 1, L"42.3",  L"{:.{}f}"},
+		{42.0,  1, L"42.0",  L"{:.{}f}"},
+	};
+
+	for (auto& test : tests)
+	{
+		if (test.prec > 0)
+			s = fmt::format(test.format, test.val, test.prec);
+		else
+			s = fmt::format(test.format, test.val);
+		REQUIRE(s == test.expected);
+	}
+#endif
 }
 
 
@@ -125,46 +154,24 @@ TEST_CASE("Double")
 {
 	SECTION("fmtCheck")
 	{
-		static const struct
+		if (!g_bMicroTest)
 		{
-			double val;
-			int prec;
-			wchar_t const* expected;
-			wchar_t const* format;
-			wchar_t const* formatv6;
-		} tests[] = {
-			{42.34, 0, L"42.34", L"{:g}",    L"{:n}"},
-			{42.0,  0, L"42",    L"{:g}",    L"{:n}"},
-			// https://github.com/fmtlib/fmt/issues/1381
-			//{42.34, 1, L"42.3",  L"{:.{}f}", L"{:.{}n}"},
-			//{42.0,  1, L"42.0",  L"{:.{}f}", L"{:.{}n}"},
-		};
-
-		for (auto& test : tests)
-		{
-			std::wstring s;
-			if (test.prec > 0)
-				s = fmt::format(test.format, test.val, test.prec);
-			else
-				s = fmt::format(test.format, test.val);
-			REQUIRE(s == test.expected);
-		}
-
-#if (FMT_VERSION >= 60000)
-		{
-			// FMT v6: Formatting changed to locale-independent.
-			// New 'n' option is required for locale-specific formatting.
-			for (auto& test : tests)
-			{
-				std::wstring s;
-				if (test.prec > 0)
-					s = fmt::format(test.formatv6, test.val, test.prec);
-				else
-					s = fmt::format(test.formatv6, test.val);
-				REQUIRE(s == test.expected);
-			}
-		}
+			// [v6.0/6.1] 'n' is used to tell it to use locales. But that
+			// assumes 'g' and [v6.2] needs the std::locale passed.
+			// (precision in 'g' works differently than 'f', it's the total
+			// number of digits.
+#if (FMT_VERSION >= 60200)
+			// Some general tests on assumptions ('L' appeared in v6.2, 'n' will be removed later)
+			REQUIRE(L"1,234,567,890" == fmt::format(std::locale("en_US"), L"{:L}", 1234567890));
+			REQUIRE(L"1.234.567.890" == fmt::format(std::locale("de_DE"), L"{:L}", 1234567890));
+			REQUIRE(L"1234567890" == fmt::format(L"{}", 1234567890));
+#if (FMT_VERSION > 60200)
+			// This causes an 'invalid type specifier' exception in v6.2
+			d = 1.2;
+			REQUIRE(L"1.2" == fmt::format(std::locale("en_US"), L"{:L}", d));
 #endif
+#endif
+		}
 	}
 
 

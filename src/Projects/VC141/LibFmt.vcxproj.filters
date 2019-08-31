@@ -18,7 +18,7 @@
     <ClCompile Include="..\..\3rdParty\LibFmt\src\format.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdParty\LibFmt\src\posix.cc">
+    <ClCompile Include="..\..\3rdParty\LibFmt\src\os.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -33,6 +33,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\format-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\os.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\ostream.h">

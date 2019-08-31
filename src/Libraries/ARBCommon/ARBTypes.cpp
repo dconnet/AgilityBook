@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-04-10 Update to fmt 6.2.
  * 2018-12-16 Convert to fmt.
  * 2018-08-15 Changed ARBVersion to use std::array
  * 2016-09-04 Add a ToString wrapper.
@@ -37,6 +38,7 @@
 
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "fmt/format.h"
 #include <math.h>
 #include <time.h>
 
@@ -60,22 +62,28 @@ std::wstring ARBDouble::ToString(
 {
 	std::wstring retVal;
 
-#if defined(__WXWINDOWS__) && !USE_CRT
-	std::unique_ptr<wxLocale> locale;
-	if (!bUseCurrentLocale)
-		locale = std::make_unique<wxLocale>(wxLANGUAGE_ENGLISH_US, wxLOCALE_DONT_LOAD_DEFAULT);
-#else
-	std::unique_ptr<CLocaleWrapper> locale;
-	if (!bUseCurrentLocale)
-		locale = std::make_unique<CLocaleWrapper>(LC_NUMERIC, "C");
-#endif
-
-	if (0 < inPrec)
-		retVal = fmt::format(L"{:.{}f}", inValue, inPrec);
+	// libfmt v6 changed how formatting works.
+	// It is now locale-independent (backwards from before).
+	// As of v6.2, 'f' format is not supported with locales ('n'/'L' imply 'g')
+	// So give up on fmt for locale formating, use wxWidgets instead.
+	if (bUseCurrentLocale)
+	{
+		if (0 < inPrec)
+			retVal = wxString::Format(L"%.*f", inPrec, inValue);
+		else
+			retVal = wxString::Format(L"%g", inValue);
+	}
 	else
-		retVal = fmt::format(L"{:g}", inValue);
+	{
+		if (0 < inPrec)
+			retVal = fmt::format(L"{:.{}f}", inValue, inPrec);
+		else
+			retVal = fmt::format(L"{:g}", inValue);
+	}
 
-	wchar_t pt = CLocaleWrapper::GetDecimalPt();
+	wchar_t pt = '.';
+	if (bUseCurrentLocale)
+		pt = CLocaleWrapper::GetDecimalPt();
 
 	if (ZeroStrip::AsIs != eStripZeros)
 	{

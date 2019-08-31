@@ -28,7 +28,7 @@ ARCHIVES = libfmt
 # Source files for each target
 ##########
 libfmt_SRCS = src/format.cpp \
-	src/posix.cpp
+	src/os.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
