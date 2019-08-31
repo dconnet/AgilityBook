@@ -17,6 +17,9 @@ LibArchive: zlib v1.2.11: My wrapper to hide zlib
 -- #include "LibArchive/LibArchive.h"
 
 LibFmt: fmtlib v5.3.0
+Note: Do not upgrade to v6. v6 has changed to locale-independent formatting and
+added a new specifier ('n') for locale. This simply does not work the same way
+as the 'f' and 'g' modifiers. And changes assumptions in the whole program.
 .../LibFmt/
 DevNote: When updating, update .../res/LibFmt.rc2 with version number and copyright
 - https://github.com/fmtlib/fmt/releases
