@@ -628,12 +628,20 @@ bool ARBAgilityRecordBook::Update(
 								if (pRun->GetEvent() == pEvent->GetName()
 								&& pRun->GetScoring().TableNeedsConverting())
 								{
+									std::wstring level(pRun->GetLevel());
+									ARBConfigDivisionPtr div;
+									if (pVenue->GetDivisions().FindDivision(pRun->GetDivision(), &div))
+									{
+										ARBConfigLevelPtr pLevel;
+										if (div->GetLevels().FindSubLevel(pRun->GetLevel(), &pLevel))
+											level = pLevel->GetName();
+									}
 									// Specifically set whether the run has a
 									// table based on the configuration. This
 									// makes sure that old runs marked as having
 									// a table get properly cleaned up.
 									ARBConfigScoringPtr scoring;
-									if (pEvent->GetScorings().FindEvent(pRun->GetDivision(), pRun->GetLevel(), pRun->GetDate(), &scoring))
+									if (pEvent->GetScorings().FindEvent(pRun->GetDivision(), level, pRun->GetDate(), &scoring))
 									{
 										if (pRun->GetScoring().HasTable() != scoring->HasTable())
 										{

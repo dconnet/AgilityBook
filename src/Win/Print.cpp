@@ -487,12 +487,14 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 					ARBConfigEventPtr pEvent;
 					if (pVenue->GetEvents().FindEvent(inRun->GetEvent(), &pEvent))
 					{
+						std::wstring level(inRun->GetLevel());
 						ARBConfigDivisionPtr pDiv;
 						if (pVenue->GetDivisions().FindDivision(inRun->GetDivision(), &pDiv))
 						{
 							ARBConfigLevelPtr pLevel;
 							if (pDiv->GetLevels().FindSubLevel(inRun->GetLevel(), &pLevel))
 							{
+								level = pLevel->GetName();
 								ARBConfigSubLevelPtr pSubLevel;
 								if (pLevel->GetSubLevels().FindSubLevel(inRun->GetLevel(), &pSubLevel))
 								{
@@ -520,7 +522,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 						}
 
 						ARBConfigScoringPtr scoring;
-						if (pEvent->GetScorings().FindEvent(inRun->GetDivision(), inRun->GetLevel(), inRun->GetDate(), &scoring))
+						if (pEvent->GetScorings().FindEvent(inRun->GetDivision(), level, inRun->GetDate(), &scoring))
 						{
 							if (scoring->HasSubNames())
 								evt = inRun->GetSubName();

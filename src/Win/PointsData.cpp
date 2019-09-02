@@ -657,7 +657,7 @@ CPointsDataVenue::CPointsDataVenue(
 								ARBConfigScoringPtr pScoring;
 								pEvent->FindEvent(pDiv->GetName(), pLevel->GetName(), pRun->GetDate(), &pScoring);
 								assert(pScoring);
-								if (!pScoring) continue; // Shouldn't need it...
+								if (!pScoring) continue; // Shouldn't need it... Actually, we do - if a trial's venues are changed, this can cause FindEvent to fail.
 								if (*pScoring != *pScoringMethod)
 									continue;
 								bool bRunVisible = (!pRun->IsFiltered(ARBFilterType::IgnoreQ)

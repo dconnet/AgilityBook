@@ -264,7 +264,7 @@ public:
 	 * Find an event.
 	 * @param inEvent Event to find.
 	 * @param inDivision Division event exists in.
-	 * @param inLevel Level event exists in.
+	 * @param inLevel Level (NOT sublevel) event exists in.
 	 * @param inDate Date for requested scoring.
 	 * @param outEvent Pointer to object, NULL if not found.
 	 * @param outScoring Pointer to object, NULL if not found.

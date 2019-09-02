@@ -3377,7 +3377,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 		m_pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent2);
 		assert(!!pEvent2.get());
 		ARBConfigScoringPtr scoring;
-		pEvent2->FindEvent(m_Run->GetDivision(), m_Run->GetLevel(), m_Run->GetDate(), &scoring);
+		pEvent2->FindEvent(m_Run->GetDivision(), pLevel->m_pLevel->GetName(), m_Run->GetDate(), &scoring);
 		assert(!!scoring.get());
 		if (!scoring->HasTable())
 			if (m_Run->GetScoring().HasTable())
