@@ -157,6 +157,8 @@ public:
 	static void SetRunTimeInOPS(bool bSet);
 	static bool GetIncludeCRCDImage();
 	static void SetIncludeCRCDImage(bool bSet);
+	static bool ShowCoSanctioning();
+	static void SetShowCoSanctioning(bool bSet);
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(CFontInfo const& info);

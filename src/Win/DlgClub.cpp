@@ -59,6 +59,7 @@ CDlgClub::CDlgClub(
 		CAgilityBookDoc* pDoc,
 		ARBDogClubList& inClubs,
 		ARBDogClubPtr const& inClub,
+		bool bShowCoSanction,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
@@ -105,6 +106,8 @@ CDlgClub::CDlgClub(
 		if (inClubs.size() < 2 || (pPrimary && !bEditingCosanction))
 			bEnableCosanction = false;
 	}
+	if (bEnableCosanction && !bShowCoSanction)
+		bEnableCosanction = false;
 
 	wxArrayString clubs;
 	for (std::set<std::wstring>::const_iterator iter = clubnames.begin(); iter != clubnames.end(); ++iter)
@@ -209,21 +212,33 @@ CDlgClub::CDlgClub(
 DEFINE_ON_INIT(CDlgClub)
 
 
-std::wstring CDlgClub::Club() const
+ARBDogClubPtr CDlgClub::AddClub(ARBDogClubList& clubs) const
 {
-	return StringUtil::stringW(m_Club);
-}
-
-
-std::wstring CDlgClub::Venue() const
-{
-	return StringUtil::stringW(m_Venue);
+	ARBDogClubPtr club;
+	if (clubs.AddClub(StringUtil::stringW(m_Club), StringUtil::stringW(m_Venue), &club))
+		SetPrimaryClub(club);
+	else
+		club.reset();
+	return club;
 }
 
 
 CDlgClubData* CDlgClub::GetClubData(int index) const
 {
 	return dynamic_cast<CDlgClubData*>(m_ctrlPrimary->GetClientObject(index));
+}
+
+
+void CDlgClub::SetPrimaryClub(ARBDogClubPtr pClub) const
+{
+	ARBDogClubPtr pPrimary;
+	if (m_bCoSanction && m_ctrlPrimary->IsShown())
+	{
+		int index = m_ctrlPrimary->GetSelection();
+		if (wxNOT_FOUND != index)
+			pPrimary = GetClubData(index)->m_Club;
+	}
+	pClub->SetPrimaryClub(pPrimary);
 }
 
 
@@ -266,14 +281,7 @@ void CDlgClub::OnOk(wxCommandEvent& evt)
 	{
 		m_pClub->SetName(StringUtil::stringW(m_Club));
 		m_pClub->SetVenue(StringUtil::stringW(m_Venue));
-		ARBDogClubPtr pPrimary;
-		if (m_bCoSanction && m_ctrlPrimary->IsShown())
-		{
-			int index = m_ctrlPrimary->GetSelection();
-			if (wxNOT_FOUND != index)
-				pPrimary = GetClubData(index)->m_Club;
-		}
-		m_pClub->SetPrimaryClub(pPrimary);
+		SetPrimaryClub(m_pClub);
 	}
 	EndDialog(wxID_OK);
 }

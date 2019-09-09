@@ -31,13 +31,14 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBDogClubList& inClubs,
 			ARBDogClubPtr const& inClub,
+			bool bShowCoSanction,
 			wxWindow* pParent = nullptr);
 
-	std::wstring Club() const;
-	std::wstring Venue() const;
+	ARBDogClubPtr AddClub(ARBDogClubList& clubs) const;
 
 private:
 	CDlgClubData* GetClubData(int index) const;
+	void SetPrimaryClub(ARBDogClubPtr pClub) const;
 
 	CAgilityBookDoc* m_pDoc;
 	ARBDogClubPtr m_pClub;

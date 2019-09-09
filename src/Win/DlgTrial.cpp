@@ -36,6 +36,7 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "DlgClub.h"
 #include "DlgInfoNote.h"
 #include "NoteButton.h"
@@ -119,6 +120,7 @@ CDlgTrial::CDlgTrial(
 	, m_pDoc(pDoc)
 	, m_pTrial(inTrial)
 	, m_Clubs()
+	, m_bShowCoSanction(CAgilityBookOptions::ShowCoSanctioning())
 	, m_bFixup(false)
 	, m_bRunsDeleted(false)
 {
@@ -130,6 +132,13 @@ CDlgTrial::CDlgTrial(
 			wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	m_pTrial->GetClubs().Clone(m_Clubs);
+
+	if (!m_bShowCoSanction)
+	{
+		for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); !m_bShowCoSanction && iter != m_Clubs.end(); ++iter)
+			if ((*iter)->GetPrimaryClub())
+				m_bShowCoSanction = true;
+	}
 
 	if (!m_dateStart.IsValid())
 		m_dateStart.SetToday();
@@ -319,7 +328,8 @@ CDlgTrial::CDlgTrial(
 
 	m_ctrlClubs->InsertColumn(0, _("IDS_COL_CLUB"));
 	m_ctrlClubs->InsertColumn(1, _("IDS_COL_VENUE"));
-	m_ctrlClubs->InsertColumn(2, _("IDS_COL_COSANCTION"));
+	if (m_bShowCoSanction)
+		m_ctrlClubs->InsertColumn(2, _("IDS_COL_COSANCTION"));
 	m_ctrlEdit->Enable(false);
 	m_ctrlClubNotes->Enable(false);
 	m_ctrlDelete->Enable(false);
@@ -425,7 +435,7 @@ void CDlgTrial::EditClub()
 	{
 #pragma PRAGMA_TODO(Should prevent user from renaming club to an existing club)
 		ARBDogClubPtr pClub = GetClubData(index);
-		CDlgClub dlg(m_pDoc, m_Clubs, pClub, this);
+		CDlgClub dlg(m_pDoc, m_Clubs, pClub, m_bShowCoSanction, this);
 		if (wxID_OK == dlg.ShowModal())
 			ListClubs(&pClub);
 	}
@@ -527,11 +537,11 @@ void CDlgTrial::OnClubNotes(wxCommandEvent& evt)
 
 void CDlgTrial::OnClubNew(wxCommandEvent& evt)
 {
-	CDlgClub dlg(m_pDoc, m_Clubs, ARBDogClubPtr(), this);
+	CDlgClub dlg(m_pDoc, m_Clubs, ARBDogClubPtr(), m_bShowCoSanction, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		ARBDogClubPtr club;
-		if (m_Clubs.AddClub(dlg.Club(), dlg.Venue(), &club))
+		ARBDogClubPtr club = dlg.AddClub(m_Clubs);
+		if (club)
 			ListClubs(&club);
 		else
 			wxMessageBox(_("IDS_ADD_CLUB_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-08 20:53-0700\n"
-"PO-Revision-Date: 2019-09-08 20:53-0700\n"
+"POT-Creation-Date: 2019-09-09 07:53-0700\n"
+"PO-Revision-Date: 2019-09-09 07:53-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -217,8 +217,8 @@ msgstr "Merci d'enter un nombre valide."
 msgid "Please enter a value"
 msgstr "Renseignez le champ, svp."
 
-#: LibARBWin/Validators.cpp:448 LibARBWin/Validators.cpp:550 Win/DlgClub.cpp:250
-#: Win/DlgClub.cpp:259 Win/DlgConfigOtherPoints.cpp:70
+#: LibARBWin/Validators.cpp:448 LibARBWin/Validators.cpp:550 Win/DlgClub.cpp:265
+#: Win/DlgClub.cpp:274 Win/DlgConfigOtherPoints.cpp:70
 #: Win/DlgConfigPlaceInfo.cpp:67 Win/DlgConfigPlaceInfo.cpp:73
 #: Win/DlgConfigPlaceInfo.cpp:108 Win/DlgQueryDetail.cpp:190
 #: Win/DlgRegNum.cpp:169 Win/ValidatorsQ.cpp:95 Win/ValidatorsQ.cpp:104
@@ -741,7 +741,7 @@ msgstr "Dernier date"
 #: Win/DlgCalendarQueryDetail.cpp:165 Win/DlgDog.cpp:108 Win/DlgDog.cpp:122
 #: Win/DlgDog.cpp:142 Win/DlgListCtrl.cpp:427 Win/DlgListViewer.cpp:1166
 #: Win/DlgListViewer.cpp:1235 Win/DlgListViewer.cpp:1378
-#: Win/DlgQueryDetail.cpp:79 Win/DlgTrial.cpp:321 Win/Print.cpp:260
+#: Win/DlgQueryDetail.cpp:79 Win/DlgTrial.cpp:330 Win/Print.cpp:260
 msgid "IDS_COL_VENUE"
 msgstr "Organisation"
 
@@ -760,7 +760,7 @@ msgstr "Endroit"
 #: Win/DlgInfoNote.cpp:319 Win/DlgListCtrl.cpp:426 Win/DlgListViewer.cpp:966
 #: Win/DlgListViewer.cpp:1006 Win/DlgListViewer.cpp:1018
 #: Win/DlgListViewer.cpp:1173 Win/DlgListViewer.cpp:1242
-#: Win/DlgListViewer.cpp:1297 Win/DlgListViewer.cpp:1377 Win/DlgTrial.cpp:320
+#: Win/DlgListViewer.cpp:1297 Win/DlgListViewer.cpp:1377 Win/DlgTrial.cpp:329
 #: Win/Print.cpp:261
 msgid "IDS_COL_CLUB"
 msgstr "Club"
@@ -2968,55 +2968,55 @@ msgid "HIDC_QUERY_VENUE_DELETE"
 msgstr "Supprimer lentrée code Organisation sélectionné."
 
 # DlgClub
-#: Win/DlgClub.cpp:75
+#: Win/DlgClub.cpp:76
 msgid "IDD_CLUB"
 msgstr "Club"
 
-#: Win/DlgClub.cpp:119
+#: Win/DlgClub.cpp:122
 msgid "IDC_CLUB_CLUBS"
 msgstr "&Nom"
 
-#: Win/DlgClub.cpp:126 Win/DlgConfigEvent.cpp:182 Win/DlgConfigMultiQ.cpp:84
+#: Win/DlgClub.cpp:129 Win/DlgConfigEvent.cpp:182 Win/DlgConfigMultiQ.cpp:84
 #: Win/DlgConfigTitle.cpp:119 Win/DlgFault.cpp:58 Win/DlgName.cpp:64
 #: Win/DlgPartner.cpp:82 Win/DlgPartner.cpp:95 Win/DlgSelectURL.cpp:68
-#: Win/DlgTrial.cpp:168
+#: Win/DlgTrial.cpp:177
 msgid "IDS_ENTER_NAME"
 msgstr "Entrez un nom."
 
-#: Win/DlgClub.cpp:127 Win/DlgClub.cpp:128
+#: Win/DlgClub.cpp:130 Win/DlgClub.cpp:131
 msgid "HIDC_CLUB_CLUBS"
 msgstr "Entrer le nom du club. Tous clubs entrés précédemment sont listés ici."
 
-#: Win/DlgClub.cpp:132
+#: Win/DlgClub.cpp:135
 msgid "IDC_CLUB_VENUES"
 msgstr "&Organisation"
 
-#: Win/DlgClub.cpp:139 Win/DlgClub.cpp:140
+#: Win/DlgClub.cpp:142 Win/DlgClub.cpp:143
 msgid "HIDC_CLUB_VENUES"
 msgstr "Lorganisation pour le club d'accueil."
 
-#: Win/DlgClub.cpp:146
+#: Win/DlgClub.cpp:149
 #, fuzzy
 msgid "IDS_CLUB_COSANCTION"
 msgstr "Co-Sanctioned"
 
-#: Win/DlgClub.cpp:150 Win/DlgClub.cpp:151
+#: Win/DlgClub.cpp:153 Win/DlgClub.cpp:154
 #, fuzzy
 msgid "HIDC_CLUB_COSANCTION"
 msgstr ""
 "This club is co-sanctioning the trial with another club. (Runs count towards "
 
-#: Win/DlgClub.cpp:156 Win/DlgClub.cpp:157
+#: Win/DlgClub.cpp:159 Win/DlgClub.cpp:160
 #, fuzzy
 msgid "HIDC_CLUB_PRIMARY"
 msgstr ""
 "This club is the primary club in a co-sanctioned trial. Its rules are used."
 
-#: Win/DlgClub.cpp:250 Win/DlgRegNum.cpp:169 Win/DlgRun.cpp:3420
+#: Win/DlgClub.cpp:265 Win/DlgRegNum.cpp:169 Win/DlgRun.cpp:3420
 msgid "IDS_SELECT_VENUE"
 msgstr "Choisissez un epreuve."
 
-#: Win/DlgClub.cpp:259
+#: Win/DlgClub.cpp:274
 #, fuzzy
 msgid "IDS_SELECT_COSANCTION"
 msgstr "Please select a co-sanctioning club."
@@ -6361,110 +6361,110 @@ msgid "HIDC_TRAINING_NOTES"
 msgstr "Entrée de journal d'entraînement."
 
 # DlgTrial
-#: Win/DlgTrial.cpp:128
+#: Win/DlgTrial.cpp:130
 msgid "IDD_TRIAL"
 msgstr "Paramètres concours"
 
-#: Win/DlgTrial.cpp:140
+#: Win/DlgTrial.cpp:149
 msgid "IDC_TRIAL_DATE_START"
 msgstr "&Date Début"
 
-#: Win/DlgTrial.cpp:147 Win/DlgTrial.cpp:148
+#: Win/DlgTrial.cpp:156 Win/DlgTrial.cpp:157
 msgid "HIDC_TRIAL_DATE_START"
 msgstr "Date de début du concours."
 
-#: Win/DlgTrial.cpp:153
+#: Win/DlgTrial.cpp:162
 msgid "IDC_TRIAL_VERIFIED"
 msgstr "C&onfirmé"
 
-#: Win/DlgTrial.cpp:156 Win/DlgTrial.cpp:157
+#: Win/DlgTrial.cpp:165 Win/DlgTrial.cpp:166
 msgid "HIDC_TRIAL_VERIFIED"
 msgstr "Les résultats de ce concours sont-ils vérifiés?"
 
-#: Win/DlgTrial.cpp:160
+#: Win/DlgTrial.cpp:169
 msgid "IDC_TRIAL_LOCATION"
 msgstr "&Endroit"
 
-#: Win/DlgTrial.cpp:171 Win/DlgTrial.cpp:172
+#: Win/DlgTrial.cpp:180 Win/DlgTrial.cpp:181
 msgid "HIDC_TRIAL_LOCATION"
 msgstr "Lendroit de ce concours. Tous les endroits précédents sont listés."
 
-#: Win/DlgTrial.cpp:175
+#: Win/DlgTrial.cpp:184
 msgid "IDC_TRIAL_NOTES"
 msgstr "No&tes"
 
-#: Win/DlgTrial.cpp:182 Win/DlgTrial.cpp:183
+#: Win/DlgTrial.cpp:191 Win/DlgTrial.cpp:192
 msgid "HIDC_TRIAL_NOTES"
 msgstr "Notes sur le concours en général."
 
-#: Win/DlgTrial.cpp:187 Win/DlgTrial.cpp:188
+#: Win/DlgTrial.cpp:196 Win/DlgTrial.cpp:197
 msgid "HIDC_TRIAL_LOCATION_NOTES"
 msgstr "Entrer de notes sur cet endroit."
 
-#: Win/DlgTrial.cpp:191
+#: Win/DlgTrial.cpp:200
 msgid "IDC_TRIAL_LOCATION_INFO"
 msgstr "Notes Endroit"
 
-#: Win/DlgTrial.cpp:197 Win/DlgTrial.cpp:198
+#: Win/DlgTrial.cpp:206 Win/DlgTrial.cpp:207
 msgid "HIDC_TRIAL_LOCATION_INFO"
 msgstr "Notes sur lendroit sélectionné."
 
-#: Win/DlgTrial.cpp:201
+#: Win/DlgTrial.cpp:210
 msgid "IDC_TRIAL_CLUBS"
 msgstr "&Club"
 
-#: Win/DlgTrial.cpp:206
+#: Win/DlgTrial.cpp:215
 msgid "IDC_TRIAL_CLUB_NEW"
 msgstr "&Nouveau..."
 
-#: Win/DlgTrial.cpp:209 Win/DlgTrial.cpp:210
+#: Win/DlgTrial.cpp:218 Win/DlgTrial.cpp:219
 msgid "HIDC_TRIAL_CLUB_NEW"
 msgstr "Créer un nouveau club associé à ce concours."
 
-#: Win/DlgTrial.cpp:213
+#: Win/DlgTrial.cpp:222
 msgid "IDC_TRIAL_CLUB_EDIT"
 msgstr "&Édition..."
 
-#: Win/DlgTrial.cpp:216 Win/DlgTrial.cpp:217
+#: Win/DlgTrial.cpp:225 Win/DlgTrial.cpp:226
 msgid "HIDC_TRIAL_CLUB_EDIT"
 msgstr "Éditer le club sélectionné."
 
-#: Win/DlgTrial.cpp:220
+#: Win/DlgTrial.cpp:229
 msgid "IDC_TRIAL_CLUB_DELETE"
 msgstr "&Supprimer"
 
-#: Win/DlgTrial.cpp:223 Win/DlgTrial.cpp:224
+#: Win/DlgTrial.cpp:232 Win/DlgTrial.cpp:233
 msgid "HIDC_TRIAL_CLUB_DELETE"
 msgstr "Supprimer le club sélectionné de ce concours."
 
-#: Win/DlgTrial.cpp:232 Win/DlgTrial.cpp:233
+#: Win/DlgTrial.cpp:241 Win/DlgTrial.cpp:242
 msgid "HIDC_TRIAL_CLUBS"
 msgstr ""
 "Liste des clubs associés à ce concours. L'ordre des clubs est très important."
 
-#: Win/DlgTrial.cpp:237 Win/DlgTrial.cpp:238
+#: Win/DlgTrial.cpp:246 Win/DlgTrial.cpp:247
 msgid "HIDC_TRIAL_CLUB_NOTES"
 msgstr "Entrer des notes sur ce club."
 
-#: Win/DlgTrial.cpp:241
+#: Win/DlgTrial.cpp:250
 msgid "IDC_TRIAL_CLUB_INFO"
 msgstr "Notes club"
 
-#: Win/DlgTrial.cpp:247 Win/DlgTrial.cpp:248
+#: Win/DlgTrial.cpp:256 Win/DlgTrial.cpp:257
 msgid "HIDC_TRIAL_CLUB_INFO"
 msgstr "Notes sur le club sélectionné."
 
-#: Win/DlgTrial.cpp:322
+#: Win/DlgTrial.cpp:332
 #, fuzzy
 msgid "IDS_COL_COSANCTION"
 msgstr "Co-Sanctioned"
 
-#: Win/DlgTrial.cpp:537
+#: Win/DlgTrial.cpp:547
 #, fuzzy
 msgid "IDS_ADD_CLUB_FAILED"
 msgstr "This club and venue are already in the trial."
 
-#: Win/DlgTrial.cpp:643
+#: Win/DlgTrial.cpp:653
 msgid "IDS_CONFIG_DELETE_RUNS"
 msgstr ""
 "Attention!!!\n"

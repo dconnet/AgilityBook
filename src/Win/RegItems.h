@@ -161,6 +161,8 @@ inline std::wstring CFG_CI_KEY_CONFIG(int n, bool bIncSep = true)
 #define CFG_COMMON_PRINTFONTLISTNAME	CFG_KEY_COMMON L"/PrintFontListName"
 //	DW PrintFontListSize
 #define CFG_COMMON_PRINTFONTLISTSIZE	CFG_KEY_COMMON L"/PrintFontListSize"
+//	DW ShowCoSanction
+#define CFG_COMMON_SHOWCOSANCTION		CFG_KEY_COMMON L"/ShowCoSanction"
 //	DW sortPtVw1
 #define CFG_COMMON_SORTPTVW1			CFG_KEY_COMMON L"/sortPtVw1"
 //	DW sortPtVw2

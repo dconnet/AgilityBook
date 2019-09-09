@@ -104,6 +104,7 @@ namespace
 	static const bool sc_TableInYPS = false;
 	static const bool sc_RunTimeInOPS = false;
 	static const bool sc_IncludeCRCDImage = false;
+	static const bool sc_ShowCoSanctioning = false;
 
 	// Font
 	static const wchar_t* const sc_FontPrinterName = L"Times New Roman";
@@ -940,6 +941,20 @@ bool CAgilityBookOptions::GetIncludeCRCDImage()
 void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
 {
 	wxConfig::Get()->Write(CFG_COMMON_CRCDIMAGE, bSet);
+}
+
+
+bool CAgilityBookOptions::ShowCoSanctioning()
+{
+	bool val = sc_ShowCoSanctioning;
+	wxConfig::Get()->Read(CFG_COMMON_SHOWCOSANCTION, &val);
+	return val;
+}
+
+
+void CAgilityBookOptions::SetShowCoSanctioning(bool bSet)
+{
+	wxConfig::Get()->Write(CFG_COMMON_SHOWCOSANCTION, bSet);
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -60,6 +60,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogClubList m_Clubs;
+	bool m_bShowCoSanction;
 	bool m_bFixup;
 	bool m_bRunsDeleted;
 
