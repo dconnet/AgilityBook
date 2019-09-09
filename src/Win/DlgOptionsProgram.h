@@ -32,6 +32,7 @@ private:
 	bool m_bAutoCheck;
 	int m_Backups;
 	bool m_bAutoShow;
+	bool m_bShowCosanction;
 	bool m_UseProxy;
 	wxString m_Proxy;
 	CTextCtrl* m_ctrlProxy;
