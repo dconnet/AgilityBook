@@ -410,8 +410,21 @@ bool ARBDogRun::Load(
 	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_EVENT, m_Event)
 	|| 0 == m_Event.length())
 	{
-		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT));
-		return false;
+		bool bReallyError = true;
+		if (inVersion < ARBVersion(15, 0))
+		{
+			// Fix a data corruption bug from the v3.3.3 release.
+			if (m_Division == L"FCAT" && m_Level == L"FCAT")
+			{
+				m_Event = L"FCAT";
+				bReallyError = false;
+			}
+		}
+		if (bReallyError)
+		{
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT));
+			return false;
+		}
 	}
 
 	inTree->GetAttrib(ATTRIB_RUN_SUBNAME, m_SubName);
