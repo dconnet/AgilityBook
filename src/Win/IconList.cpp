@@ -136,9 +136,10 @@ int CIconList::Trial(ARBConfig& config, ARBDogTrialPtr const& inTrial) const
 	int idxIcon = IndexTrial();
 	if (inTrial)
 	{
-		ARBDogClubPtr pClub;
-		if (inTrial->GetClubs().GetPrimaryClub(&pClub))
+		if (0 < inTrial->GetClubs().size())
 		{
+#pragma PRAGMA_TODO(ReAdd primary club to trial for icon and name)
+			ARBDogClubPtr pClub = inTrial->GetClubs()[0];
 			ARBConfigVenuePtr pVenue;
 			if (config.GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
 			{

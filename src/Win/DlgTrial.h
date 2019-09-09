@@ -60,6 +60,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogClubList m_Clubs;
+	bool m_bFixup;
 	bool m_bRunsDeleted;
 
 private:
@@ -85,4 +86,5 @@ private:
 	void OnClubEdit(wxCommandEvent& evt);
 	void OnClubDelete(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
+	void OnCancel(wxCommandEvent& evt);
 };

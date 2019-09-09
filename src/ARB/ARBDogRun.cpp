@@ -81,6 +81,7 @@ ARBDogRunPtr ARBDogRun::New()
 ARBDogRun::ARBDogRun()
 	: m_pMultiQs()
 	, m_Date()
+	, m_Club()
 	, m_Division()
 	, m_Level()
 	, m_Height()
@@ -106,6 +107,7 @@ ARBDogRun::ARBDogRun()
 ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 	: m_pMultiQs()
 	, m_Date(rhs.m_Date)
+	, m_Club(rhs.m_Club)
 	, m_Division(rhs.m_Division)
 	, m_Level(rhs.m_Level)
 	, m_Height(rhs.m_Height)
@@ -134,6 +136,7 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 ARBDogRun::ARBDogRun(ARBDogRun&& rhs)
 	: m_pMultiQs()
 	, m_Date(std::move(rhs.m_Date))
+	, m_Club(std::move(rhs.m_Club))
 	, m_Division(std::move(rhs.m_Division))
 	, m_Level(std::move(rhs.m_Level))
 	, m_Height(std::move(rhs.m_Height))
@@ -173,6 +176,7 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 	{
 		m_pMultiQs.clear();
 		m_Date = rhs.m_Date;
+		m_Club = rhs.m_Club;
 		m_Division = rhs.m_Division;
 		m_Level = rhs.m_Level;
 		m_Height = rhs.m_Height;
@@ -202,6 +206,7 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun&& rhs)
 	{
 		m_pMultiQs.clear();
 		m_Date = std::move(rhs.m_Date);
+		m_Club = std::move(rhs.m_Club);
 		m_Division = std::move(rhs.m_Division);
 		m_Level = std::move(rhs.m_Level);
 		m_Height = std::move(rhs.m_Height);
@@ -228,6 +233,7 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun&& rhs)
 bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 {
 	return m_Date == rhs.m_Date
+		&& m_Club == rhs.m_Club
 		&& m_Division == rhs.m_Division
 		&& m_Level == rhs.m_Level
 		&& m_Height == rhs.m_Height
@@ -277,6 +283,12 @@ size_t ARBDogRun::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 	ioStrings.insert(m_Date.GetString(ARBDateFormat::SlashMDY));
 	++nItems;
+
+	if (0 < m_Club->GetName().length())
+	{
+		ioStrings.insert(m_Club->GetName());
+		++nItems;
+	}
 
 	if (0 < m_Division.length())
 	{
@@ -364,6 +376,18 @@ bool ARBDogRun::Load(
 			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
 			return false;
 		}
+	}
+
+	{
+		short idx = 0;
+		if (inVersion >= ARBVersion(15, 0))
+			inTree->GetAttrib(ATTRIB_RUN_CLUB, idx);
+		if (0 > idx || static_cast<size_t>(idx) >= inClubs.size())
+		{
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_CLUB));
+			return false;
+		}
+		m_Club = inClubs[idx];
 	}
 
 	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
@@ -489,6 +513,16 @@ bool ARBDogRun::Save(
 		return false;
 	ElementNodePtr run = ioTree->AddElementNode(TREE_RUN);
 	run->AddAttrib(ATTRIB_RUN_DATE, m_Date);
+	{
+		// Note: If we're copy/pasting, pTrial is null.
+		size_t index = 0;
+		if (pTrial && pTrial->GetClubs().FindClubIndex(m_Club, index))
+		{
+			// Only save if index is not zero.
+			if (0 < index)
+				run->AddAttrib(ATTRIB_RUN_CLUB, static_cast<short>(index));
+		}
+	}
 	run->AddAttrib(ATTRIB_RUN_DIVISION, m_Division);
 	run->AddAttrib(ATTRIB_RUN_LEVEL, m_Level);
 	run->AddAttrib(ATTRIB_RUN_HEIGHT, m_Height);
@@ -523,9 +557,9 @@ bool ARBDogRun::Save(
 		if (pTrial)
 		{
 			ARBConfigScoringPtr pScoring;
-			if (pTrial->GetClubs().GetPrimaryClub())
+			if (GetClub())
 				inConfig.GetVenues().FindEvent(
-					pTrial->GetClubs().GetPrimaryClubVenue(),
+					GetClub()->GetVenue(),
 					GetEvent(),
 					GetDivision(),
 					GetLevel(),

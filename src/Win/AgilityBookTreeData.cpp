@@ -232,9 +232,10 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 	m_idxIcon = m_pTree->GetImageList().IndexTrial();
 	if (m_pTrial)
 	{
-		ARBDogClubPtr pClub;
-		if (m_pTrial->GetClubs().GetPrimaryClub(&pClub))
+		if (0 < m_pTrial->GetClubs().size())
 		{
+#pragma PRAGMA_TODO(ReAdd primary club to trial for icon and name)
+			ARBDogClubPtr pClub = m_pTrial->GetClubs()[0];
 			ARBConfigVenuePtr pVenue;
 			if (pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
 			{
@@ -336,32 +337,16 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			{
 				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
 					fmt::format_to(str, L" ");
-				int i = 0;
-				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
-					iter != m_pTrial->GetClubs().end();
-					++iter, ++i)
-				{
-					if (0 < i)
-						fmt::format_to(str, L"/");
-					fmt::format_to(str, L"{}", (*iter)->GetName());
-					bNeedSpace = true;
-				}
+				fmt::format_to(str, L"{}", m_pTrial->GetClubs().GetClubList(true));
+				bNeedSpace = true;
 			}
 			break;
 		case IO_TREE_TRIAL_VENUE:
 			{
 				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
 					fmt::format_to(str, L" ");
-				int i = 0;
-				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
-					iter != m_pTrial->GetClubs().end();
-					++iter, ++i)
-				{
-					if (0 < i)
-						fmt::format_to(str, L"/");
-					fmt::format_to(str, L"{}", (*iter)->GetVenue());
-					bNeedSpace = true;
-				}
+				fmt::format_to(str, L"{}", m_pTrial->GetClubs().GetClubList(false));
+				bNeedSpace = true;
 			}
 			break;
 		case IO_TREE_TRIAL_LOCATION:

@@ -185,8 +185,9 @@ bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 std::wstring ARBDogTrial::GetGenericName() const
 {
 	ARBDogClubPtr pClub;
-	if (m_Clubs.GetPrimaryClub(&pClub))
-		return fmt::format(L"{} {}", pClub->GetVenue(), m_Location);
+#pragma PRAGMA_TODO(ReAdd primary club to trial for icon and name)
+	if (0 < m_Clubs.size())
+		return fmt::format(L"{} {}", m_Clubs[0]->GetVenue(), m_Location);
 	else
 		return m_Location;
 }
@@ -256,6 +257,24 @@ bool ARBDogTrial::Load(
 			m_Runs.Load(inConfig, m_Clubs, element, inVersion, ioCallback);
 		}
 	}
+	// Fix old-style co-sanctioning.
+	if (inVersion < ARBVersion(15, 0))
+	{
+		if (1 < m_Clubs.size())
+		{
+			for (size_t i = 1; i < m_Clubs.size(); ++i)
+			{
+				// I specifically had multiple clubs of the same venue
+				// for some trials. These were not cosanctioned. (Club1
+				// had D1/D4, club2 had D2/D3). So this is a special case
+				// for me! (Besides, the only known cosanctioning is with
+				// ASCA/NADAC from many years ago.)
+				if (m_Clubs[0]->GetVenue() != m_Clubs[i]->GetVenue())
+					m_Clubs[i]->SetPrimaryClub(m_Clubs[0]);
+			}
+		}
+	}
+	m_Clubs.PostLoad(ioCallback);
 	SetMultiQs(inConfig);
 	m_Runs.sort();
 	// Default date is only saved when there are no runs. Set this in case
@@ -311,46 +330,54 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 	}
 
 	// Now get some needed info...
-	ARBDogClubPtr pClub;
-	if (!GetClubs().GetPrimaryClub(&pClub))
-		return;
-	ARBConfigVenuePtr pVenue;
-	if (!inConfig.GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
-		return;
-	if (0 == pVenue->GetMultiQs().size())
+	std::set<std::wstring> venues;
+	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++iter)
+	{
+		venues.insert((*iter)->GetVenue());
+	}
+	if (0 == venues.size())
 		return;
 
-	// Then for each day in the trial, look for multiQs.
-	for (date = m_Runs.GetStartDate();
-		date <= m_Runs.GetEndDate();
-		++date)
+	for (auto venue : venues)
 	{
-		std::vector<ARBDogRunPtr> runs;
-		for (ARBDogRunList::iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
+		ARBConfigVenuePtr pVenue;
+		if (!inConfig.GetVenues().FindVenue(venue, &pVenue))
+			continue;
+		if (0 == pVenue->GetMultiQs().size())
+			continue;
+
+		// Then for each day in the trial, look for multiQs.
+		for (date = m_Runs.GetStartDate();
+			date <= m_Runs.GetEndDate();
+			++date)
 		{
-			ARBDogRunPtr pRun = (*iterRun);
-			if (pRun->GetDate() == date
-			&& pRun->GetQ().Qualified())
+			std::vector<ARBDogRunPtr> runs;
+			for (ARBDogRunList::iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 			{
-				runs.push_back(pRun);
-			}
-		}
-		// Now, see if any combo of these runs matches a multiQ config.
-		if (1 < runs.size())
-		{
-			for (ARBConfigMultiQList::iterator iterM = pVenue->GetMultiQs().begin();
-				iterM != pVenue->GetMultiQs().end();
-				++iterM)
-			{
-				ARBConfigMultiQPtr pMultiQ = *iterM;
-				std::vector<ARBDogRunPtr> matchedRuns;
-				if (pMultiQ->Match(runs, matchedRuns))
+				ARBDogRunPtr pRun = (*iterRun);
+				if (pRun->GetDate() == date
+				&& pRun->GetQ().Qualified())
 				{
-					for (std::vector<ARBDogRunPtr>::iterator iter = matchedRuns.begin();
-						iter != matchedRuns.end();
-						++iter)
+					runs.push_back(pRun);
+				}
+			}
+			// Now, see if any combo of these runs matches a multiQ config.
+			if (1 < runs.size())
+			{
+				for (ARBConfigMultiQList::iterator iterM = pVenue->GetMultiQs().begin();
+					iterM != pVenue->GetMultiQs().end();
+					++iterM)
+				{
+					ARBConfigMultiQPtr pMultiQ = *iterM;
+					std::vector<ARBDogRunPtr> matchedRuns;
+					if (pMultiQ->Match(runs, matchedRuns))
 					{
-						(*iter)->AddMultiQ(pMultiQ);
+						for (std::vector<ARBDogRunPtr>::iterator iter = matchedRuns.begin();
+							iter != matchedRuns.end();
+							++iter)
+						{
+							(*iter)->AddMultiQ(pMultiQ);
+						}
 					}
 				}
 			}
@@ -364,7 +391,7 @@ short ARBDogTrial::GetSpeedPoints(
 		std::wstring const& inDiv,
 		std::wstring const& inLevel) const
 {
-	if (!GetClubs().GetPrimaryClub())
+	if (0 == GetClubs().size())
 		return 0;
 	short speed = 0;
 	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
@@ -375,7 +402,7 @@ short ARBDogTrial::GetSpeedPoints(
 		{
 			ARBConfigScoringPtr pScoring;
 			if (inConfig.GetVenues().FindEvent(
-				GetClubs().GetPrimaryClubVenue(),
+				pRun->GetClub()->GetVenue(),
 				pRun->GetEvent(),
 				pRun->GetDivision(),
 				pRun->GetLevel(),
@@ -461,7 +488,9 @@ public:
 			if (0 == iCompare)
 			{
 				ARBDogClubPtr club1;
-				one->GetClubs().GetPrimaryClub(&club1);
+#pragma PRAGMA_TODO(ReAdd primary club to trial for icon and name)
+				if (0 < one->GetClubs().size())
+					club1 = one->GetClubs()[0];
 				std::wstring name1, venue1;
 				if (club1)
 				{
@@ -469,7 +498,9 @@ public:
 					venue1 = club1->GetVenue();
 				}
 				ARBDogClubPtr club2;
-				two->GetClubs().GetPrimaryClub(&club2);
+#pragma PRAGMA_TODO(ReAdd primary club to trial for icon and name)
+				if (0 < two->GetClubs().size())
+					club2 = two->GetClubs()[0];
 				std::wstring name2, venue2;
 				if (club2)
 				{

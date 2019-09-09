@@ -20,6 +20,7 @@
 
 #include "ARB/ARBTypes2.h"
 class CAgilityBookDoc;
+class CDlgClubData;
 class CVenueComboBox;
 
 
@@ -36,14 +37,19 @@ public:
 	std::wstring Venue() const;
 
 private:
+	CDlgClubData* GetClubData(int index) const;
+
 	CAgilityBookDoc* m_pDoc;
 	ARBDogClubPtr m_pClub;
 	wxComboBox* m_ctrlClubs;
 	CVenueComboBox* m_ctrlVenues;
+	wxComboBox* m_ctrlPrimary;
 	wxString m_Club;
 	wxString m_Venue;
+	bool m_bCoSanction;
 
 	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
+	void OnClickedPrimary(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

@@ -55,6 +55,7 @@
 class CAgilityBookDoc;
 class CDlgDogDivData;
 class CDlgDogLevelData;
+class CDlgDogVenueData;
 class CListCtrl;
 class CMetaDataDisplay;
 class CNoteButton;
@@ -83,10 +84,12 @@ public:
 			int iSelectPage = 0);
 
 private:
+	CDlgDogVenueData* GetVenueData(int index) const;
 	CDlgDogDivData* GetDivisionData(int index) const;
 	CDlgDogLevelData* GetLevelData(int index) const;
 	bool GetEvent(ARBConfigEventPtr* outEvent) const;
 	bool GetScoring(ARBConfigScoringPtr* outScoring) const;
+	void UpdateVenue(bool bOnEventChange);
 	void FillDivisions(bool bOnEventChange);
 	void FillLevels(bool bOnEventChange);
 	void FillEvents(bool bOnEventChange);
@@ -126,12 +129,11 @@ private:
 	ARBDogRunPtr m_pRealRun;
 	ARBDogRunPtr m_Run;
 	ARBDogReferenceRunPtr m_pRefRunMe;
-	ARBDogClubPtr m_Club;
-	ARBConfigVenuePtr m_pVenue;
 	wxColour m_clrBack;
 
 	wxPanel* m_panelScore;
 	ARBDate m_Date;
+	wxComboBox* m_ctrlVenues;
 	wxComboBox* m_ctrlDivisions;
 	wxComboBox* m_ctrlLevels;
 	wxComboBox* m_ctrlEvents;
@@ -246,6 +248,7 @@ private:
 	void OnOk(wxCommandEvent& evt);
 	// Score
 	void OnScoreDateChanged(wxDateEvent& evt);
+	void OnSelchangeVenue(wxCommandEvent& evt);
 	void OnSelchangeDivision(wxCommandEvent& evt);
 	void OnSelchangeLevel(wxCommandEvent& evt);
 	void OnSelchangeEvent(wxCommandEvent& evt);

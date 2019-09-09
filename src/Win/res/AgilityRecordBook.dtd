@@ -11,8 +11,9 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2019-08-31 File version 15.0
+2019-09-02 File version 15.0
            Move table and subname info from 'Event' to 'Scoring'
+           Reorganize how co-sanctioning is done.
 2019-08-18 File version 14.6
            Added 'TimeNoPlaces' to scoring 'type'.
 2017-12-31 File version 14.5
@@ -619,11 +620,16 @@ Entries in the file are grouped by trial.
 <!--
 Multiple clubs are allowed for co-sanctioned matches, such as NADAC/ASCA.
 The 'Venue' must be defined above in a Configuration/Venue element.
+'Primary' is the co-sanctioned venue. Rules of the primary club apply.
+If multiple clubs of the same venue are here, the first listed is primary.
 -->
 <!ELEMENT Club (#PCDATA) >
-	<!ATTLIST Club Venue CDATA #REQUIRED >
+	<!ATTLIST Club
+		Venue CDATA #REQUIRED
+		Primary CDATA #IMPLIED >
 
 <!--
+The 'ClubIdx' attribute references the trial club list (default, first)
 The attributes 'Division' and 'Event' must be defined above in a
 Configuration/Venue element. The 'Level' attribute is defined in either
 a Level or SubLevel element.
@@ -631,6 +637,7 @@ a Level or SubLevel element.
 <!ELEMENT Run (Conditions?, Judge, Handler?, Partner*, (ByTime | ByOpenClose | ByPoints | BySpeed), Placement?, Notes?, ReferenceRun*, Link*) >
 	<!ATTLIST Run
 		Date CDATA #REQUIRED
+		ClubIdx CDATA #IMPLIED
 		Division CDATA #REQUIRED
 		Level CDATA #REQUIRED
 		Height CDATA #IMPLIED

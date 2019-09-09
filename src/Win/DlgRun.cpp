@@ -223,6 +223,21 @@ struct RunSortInfo : public SortInfo
 
 /////////////////////////////////////////////////////////////////////////////
 
+class CDlgDogVenueData : public wxClientData
+{
+public:
+	CDlgDogVenueData(
+			ARBDogClubPtr const& inClub,
+			ARBConfigVenuePtr const& inVenue)
+		: m_Club(inClub)
+		, m_Venue(inVenue)
+	{
+	}
+	ARBDogClubPtr m_Club;
+	ARBConfigVenuePtr m_Venue;
+};
+
+
 class CDlgDogDivData : public wxClientData
 {
 public:
@@ -702,10 +717,9 @@ CDlgRun::CDlgRun(
 	, m_pRealRun(inRun)
 	, m_Run(inRun->Clone())
 	, m_pRefRunMe()
-	, m_Club()
-	, m_pVenue()
 	, m_panelScore(nullptr)
 	, m_Date(inRun->GetDate())
+	, m_ctrlVenues(nullptr)
 	, m_ctrlDivisions(nullptr)
 	, m_ctrlLevels(nullptr)
 	, m_ctrlEvents(nullptr)
@@ -809,23 +823,13 @@ CDlgRun::CDlgRun(
 
 	m_clrBack = GetBackgroundColour();
 
-	m_pTrial->GetClubs().GetPrimaryClub(&m_Club);
-	assert(!!m_Club.get());
-	pDoc->Book().GetConfig().GetVenues().FindVenue(m_Club->GetVenue(), &m_pVenue);
-	assert(!!m_pVenue.get());
-
 	m_sortRefRuns.Initialize(scNumRefRunColumns);
 
 	if (!m_Run->GetDate().IsValid())
 		m_Date.SetToday();
+
 	if (ARBScoringType::BySpeed != m_Run->GetScoring().GetType())
 	{
-		if (m_Height.empty())
-		{
-			std::wstring last = CAgilityBookOptions::GetLastEnteredHeight(m_pDog, m_pVenue);
-			if (!last.empty())
-				m_Height = StringUtil::stringWX(last);
-		}
 		if (m_Judge.empty())
 		{
 			std::wstring last = CAgilityBookOptions::GetLastEnteredJudge();
@@ -833,6 +837,7 @@ CDlgRun::CDlgRun(
 				m_Judge = StringUtil::stringWX(last);
 		}
 	}
+
 	if (m_Handler.empty())
 	{
 		std::wstring last = CAgilityBookOptions::GetLastEnteredHandler(m_pDog);
@@ -898,15 +903,25 @@ CDlgRun::CDlgRun(
 	ctrlDate->SetHelpText(_("HIDC_RUNSCORE_DATE"));
 	ctrlDate->SetToolTip(_("HIDC_RUNSCORE_DATE"));
 
-	wxStaticText* textVenue = new wxStaticText(m_panelScore, wxID_ANY,
-		Pad(m_pVenue->GetName()),
-		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
-	textVenue->Wrap(-1);
-
-	wxStaticText* textClub = new wxStaticText(m_panelScore, wxID_ANY,
-		Pad(m_Club->GetName()),
-		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
-	textClub->Wrap(-1);
+	m_ctrlVenues = new wxComboBox(m_panelScore, wxID_ANY,
+		wxEmptyString, wxDefaultPosition, wxDefaultSize,
+		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlVenues->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgRun::OnSelchangeVenue, this);
+	m_ctrlVenues->SetHelpText(_("HIDC_RUNSCORE_VENUE"));
+	m_ctrlVenues->SetToolTip(_("HIDC_RUNSCORE_VENUE"));
+	for (auto pClub : inTrial->GetClubs())
+	{
+		if (pClub->GetPrimaryClub())
+			continue;
+		ARBConfigVenuePtr pVenue;
+		m_pDoc->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
+		int index = m_ctrlVenues->Append(fmt::format(L"[{}] {}", pClub->GetVenue(), pClub->GetName()));
+		m_ctrlVenues->SetClientObject(index, new CDlgDogVenueData(pClub, pVenue));
+		if (m_Run->GetClub() && *(m_Run->GetClub()) == *pClub)
+			m_ctrlVenues->SetSelection(index);
+	}
+	if (wxNOT_FOUND == m_ctrlVenues->GetSelection())
+		m_ctrlVenues->SetSelection(0);
 
 	wxStaticText* textLocation = new wxStaticText(m_panelScore, wxID_ANY,
 		Pad(m_pTrial->GetLocation()),
@@ -1464,8 +1479,7 @@ CDlgRun::CDlgRun(
 	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
 	sizerDate->Add(textDate, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerDate->Add(ctrlDate, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerDate->Add(textVenue, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerDate->Add(textClub, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDate->Add(m_ctrlVenues, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerDate->Add(textLocation, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxALIGN_CENTER_VERTICAL, 0);
 
 	sizerScorePanel->Add(sizerDate, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
@@ -1721,7 +1735,7 @@ CDlgRun::CDlgRun(
 	wxSizer* sdbSizer = CreateButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	FillDivisions(false); // This will call UpdateControls();
+	UpdateVenue(false); // This will call UpdateControls();
 	FillJudges();
 	SetPartnerText();
 	SetFaultsText();
@@ -1750,6 +1764,12 @@ CDlgRun::CDlgRun(
 DEFINE_ON_INIT(CDlgRun)
 
 
+CDlgDogVenueData* CDlgRun::GetVenueData(int index) const
+{
+	return dynamic_cast<CDlgDogVenueData*>(m_ctrlVenues->GetClientObject(index));
+}
+
+
 CDlgDogDivData* CDlgRun::GetDivisionData(int index) const
 {
 	return dynamic_cast<CDlgDogDivData*>(m_ctrlDivisions->GetClientObject(index));
@@ -1766,13 +1786,17 @@ bool CDlgRun::GetEvent(ARBConfigEventPtr* outEvent) const
 {
 	if (outEvent)
 		outEvent->reset();
-	int index = m_ctrlEvents->GetSelection();
-	if (wxNOT_FOUND == index)
+	int idxVenue = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND == idxVenue)
 		return false;
-	std::wstring str = StringUtil::stringW(m_ctrlEvents->GetString(index));
+	int idxEvent = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND == idxEvent)
+		return false;
+	std::wstring str = StringUtil::stringW(m_ctrlEvents->GetString(idxEvent));
 	if (str.empty())
 		return false;
-	return m_pVenue->GetEvents().FindEvent(str, outEvent);
+	ARBConfigVenuePtr pVenue = GetVenueData(idxVenue)->m_Venue;
+	return pVenue->GetEvents().FindEvent(str, outEvent);
 }
 
 
@@ -1804,10 +1828,41 @@ bool CDlgRun::GetScoring(ARBConfigScoringPtr* outScoring) const
 }
 
 
+void CDlgRun::UpdateVenue(bool bOnEventChange)
+{
+	int index = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND == index)
+		return;
+	CDlgDogVenueData* pData = GetVenueData(index);
+
+	if (ARBScoringType::BySpeed != m_Run->GetScoring().GetType())
+	{
+		if (bOnEventChange || m_Height.empty())
+		{
+			std::wstring last;
+			last = CAgilityBookOptions::GetLastEnteredHeight(m_pDog, pData->m_Venue);
+			if (!last.empty())
+			{
+				m_Height = StringUtil::stringWX(last);
+				if (bOnEventChange)
+					m_ctrlHeight->SetLabel(m_Height);
+			}
+		}
+	}
+
+	FillDivisions(bOnEventChange);
+}
+
+
 void CDlgRun::FillDivisions(bool bOnEventChange)
 {
+	int index = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND == index)
+        return;
+	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
+
 	std::wstring div;
-	long index = m_ctrlDivisions->GetSelection();
+	index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
 		div = m_ctrlDivisions->GetString(index);
@@ -1816,14 +1871,14 @@ void CDlgRun::FillDivisions(bool bOnEventChange)
 		div = m_Run->GetDivision();
 	m_ctrlDivisions->Clear();
 
-	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
-		iterDiv != m_pVenue->GetDivisions().end();
+	for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
+		iterDiv != pVenue->GetDivisions().end();
 		++iterDiv)
 	{
 		ARBConfigDivisionPtr pDiv = (*iterDiv);
 		// Does this division have any events possible on this date?
-		for (ARBConfigEventList::const_iterator iterEvent = m_pVenue->GetEvents().begin();
-			iterEvent != m_pVenue->GetEvents().end();
+		for (ARBConfigEventList::const_iterator iterEvent = pVenue->GetEvents().begin();
+			iterEvent != pVenue->GetEvents().end();
 			++iterEvent)
 		{
 			if ((*iterEvent)->VerifyEvent(pDiv->GetName(), WILDCARD_LEVEL, m_Run->GetDate()))
@@ -1846,7 +1901,7 @@ void CDlgRun::FillDivisions(bool bOnEventChange)
 	// Then try to find the last entered
 	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection())
 	{
-		std::wstring last = CAgilityBookOptions::GetLastEnteredDivision(m_pDog, m_pVenue);
+		std::wstring last = CAgilityBookOptions::GetLastEnteredDivision(m_pDog, pVenue);
 		if (0 < last.length())
 		{
 			index = m_ctrlDivisions->FindString(StringUtil::stringWX(last), true);
@@ -1869,8 +1924,13 @@ void CDlgRun::FillDivisions(bool bOnEventChange)
 
 void CDlgRun::FillLevels(bool bOnEventChange)
 {
+	int index = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND == index)
+		return;
+	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
+
 	std::wstring level;
-	int index = m_ctrlLevels->GetSelection();
+	index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
 		level = m_ctrlLevels->GetString(index);
@@ -1888,8 +1948,8 @@ void CDlgRun::FillLevels(bool bOnEventChange)
 		{
 			ARBConfigLevelPtr pLevel = (*iter);
 			// Does this level have any events possible on this date?
-			for (ARBConfigEventList::const_iterator iterEvent = m_pVenue->GetEvents().begin();
-				iterEvent != m_pVenue->GetEvents().end();
+			for (ARBConfigEventList::const_iterator iterEvent = pVenue->GetEvents().begin();
+				iterEvent != pVenue->GetEvents().end();
 				++iterEvent)
 			{
 				if ((*iterEvent)->VerifyEvent(pDiv->GetName(), pLevel->GetName(), m_Run->GetDate()))
@@ -1920,7 +1980,7 @@ void CDlgRun::FillLevels(bool bOnEventChange)
 		}
 		if (wxNOT_FOUND == m_ctrlLevels->GetSelection())
 		{
-			std::wstring last = CAgilityBookOptions::GetLastEnteredLevel(m_pDog, m_pVenue);
+			std::wstring last = CAgilityBookOptions::GetLastEnteredLevel(m_pDog, pVenue);
 			if (0 < last.length())
 			{
 				int idx = m_ctrlLevels->FindString(StringUtil::stringWX(last), true);
@@ -1944,8 +2004,13 @@ void CDlgRun::FillLevels(bool bOnEventChange)
 
 void CDlgRun::FillEvents(bool bOnEventChange)
 {
+	int index = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND == index)
+		return;
+	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
+
 	std::wstring evt;
-	int index = m_ctrlEvents->GetSelection();
+	index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
 		evt = m_ctrlEvents->GetString(index);
@@ -1962,8 +2027,8 @@ void CDlgRun::FillEvents(bool bOnEventChange)
 		{
 			ARBConfigEventPtr pLastAddedEvent;
 			CDlgDogLevelData* pData = GetLevelData(idxLevel);
-			for (ARBConfigEventList::const_iterator iter = m_pVenue->GetEvents().begin();
-				iter != m_pVenue->GetEvents().end();
+			for (ARBConfigEventList::const_iterator iter = pVenue->GetEvents().begin();
+				iter != pVenue->GetEvents().end();
 				++iter)
 			{
 				ARBConfigEventPtr pEvent = (*iter);
@@ -1988,6 +2053,7 @@ void CDlgRun::FillEvents(bool bOnEventChange)
 			{
 				m_ctrlEvents->SetSelection(0);
 				SetEventDesc(pLastAddedEvent);
+				m_Run->SetEvent(pLastAddedEvent->GetName());
 			}
 		}
 	}
@@ -2004,8 +2070,13 @@ void CDlgRun::FillSubNames()
 	{
 		if (pScoring->HasSubNames())
 		{
+            int index = m_ctrlVenues->GetSelection();
+            if (wxNOT_FOUND == index)
+                return;
+            ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
+
 			std::set<std::wstring> names;
-			m_pDoc->Book().GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
+			m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
 			m_ctrlSubNames->Clear();
 			wxArrayString choices;
 			for (std::set<std::wstring>::const_iterator iter = names.begin();
@@ -2552,6 +2623,16 @@ bool CDlgRun::IsRefRunMe()
 
 void CDlgRun::CreateRefRunMe()
 {
+    std::wstring venue;
+    if (m_Run->GetClub())
+        venue = m_Run->GetClub()->GetVenue();
+    else
+    {
+        int index = m_ctrlVenues->GetSelection();
+        if (wxNOT_FOUND != index)
+            venue = GetVenueData(index)->m_Venue->GetName();
+    }
+
 	// Create the 'me' reference run.
 	m_pRefRunMe = ARBDogReferenceRunPtr(ARBDogReferenceRun::New());
 	m_pRefRunMe->SetQ(m_Run->GetQ());
@@ -2562,7 +2643,7 @@ void CDlgRun::CreateRefRunMe()
 	m_pRefRunMe->SetTime(m_Run->GetScoring().GetTime());
 	ARBConfigScoringPtr pScoring;
 	if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
-		m_pVenue->GetName(),
+		venue,
 		m_Run->GetEvent(),
 		m_Run->GetDivision(),
 		m_Run->GetLevel(),
@@ -2817,6 +2898,22 @@ void CDlgRun::OnScoreDateChanged(wxDateEvent& evt)
 {
 	m_Run->SetDate(ARBDate(evt.GetDate().GetYear(), evt.GetDate().GetMonth() + 1, evt.GetDate().GetDay()));
 	FillDivisions(true);
+}
+
+
+void CDlgRun::OnSelchangeVenue(wxCommandEvent& evt)
+{
+	bool bChanged = true;
+	int index = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND != index)
+		m_Run->SetClub(GetVenueData(index)->m_Club);
+	// We could check if the venue changed. But I'm finding it convenient when
+	// co-sanctioning changes and changes don't necessarily update the club,
+	// re-selecting the venue "fixes" it.
+	if (bChanged)
+		UpdateVenue(true);
+	else
+		FillDivisions(true);
 }
 
 
@@ -3082,9 +3179,19 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 	ARBDogReferenceRunPtr ref(ARBDogReferenceRun::New());
 	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType())
 	{
+        std::wstring venue;
+        if (m_Run->GetClub())
+            venue = m_Run->GetClub()->GetVenue();
+        else
+        {
+            int index = m_ctrlVenues->GetSelection();
+            if (wxNOT_FOUND != index)
+                venue = GetVenueData(index)->m_Venue->GetName();
+        }
+
 		ARBConfigScoringPtr pScoring;
 		if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
-			m_pVenue->GetName(),
+			venue,
 			m_Run->GetEvent(),
 			m_Run->GetDivision(),
 			m_Run->GetLevel(),
@@ -3307,7 +3414,16 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	int index = m_ctrlDivisions->GetSelection();
+	int index = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND == index)
+    {
+		wxMessageBox(_("IDS_SELECT_VENUE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+		m_ctrlVenues->SetFocus();
+		return;
+    }
+	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
+
+	index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
 		wxMessageBox(_("IDS_SELECT_DIVISION"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
@@ -3336,7 +3452,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	std::wstring curEvent = StringUtil::stringW(m_ctrlEvents->GetString(index));
 
 	ARBConfigEventPtr pEvent;
-	m_pVenue->GetEvents().FindEvent(curEvent, &pEvent);
+	pVenue->GetEvents().FindEvent(curEvent, &pEvent);
 	if (!pEvent)
 	{
 		wxMessageBox(_("IDS_BAD_EVENT"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
@@ -3373,11 +3489,9 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	//TODO: Remove debugging code
 #ifdef _DEBUG
 	{
-		ARBConfigEventPtr pEvent2;
-		m_pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent2);
-		assert(!!pEvent2.get());
+		assert(!!pEvent.get());
 		ARBConfigScoringPtr scoring;
-		pEvent2->FindEvent(m_Run->GetDivision(), pLevel->m_pLevel->GetName(), m_Run->GetDate(), &scoring);
+		pEvent->FindEvent(curDiv, pLevel->m_pLevel->GetName(), m_Run->GetDate(), &scoring);
 		assert(!!scoring.get());
 		if (!scoring->HasTable())
 			if (m_Run->GetScoring().HasTable())
@@ -3388,9 +3502,9 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 
 	*m_pRealRun = *m_Run;
 	m_pTrial->SetMultiQs(m_pDoc->Book().GetConfig()); // Note, when adding a new run, this is actually too soon to call - the run isn't in the trial yet
-	CAgilityBookOptions::SetLastEnteredDivision(m_pDog, m_pVenue, m_Run->GetDivision().c_str());
-	CAgilityBookOptions::SetLastEnteredLevel(m_pDog, m_pVenue, m_Run->GetLevel().c_str());
-	CAgilityBookOptions::SetLastEnteredHeight(m_pDog, m_pVenue, m_Run->GetHeight().c_str());
+	CAgilityBookOptions::SetLastEnteredDivision(m_pDog, pVenue, m_Run->GetDivision().c_str());
+	CAgilityBookOptions::SetLastEnteredLevel(m_pDog, pVenue, m_Run->GetLevel().c_str());
+	CAgilityBookOptions::SetLastEnteredHeight(m_pDog, pVenue, m_Run->GetHeight().c_str());
 	CAgilityBookOptions::SetLastEnteredJudge(m_Run->GetJudge().c_str());
 	CAgilityBookOptions::SetLastEnteredHandler(m_pDog, m_Run->GetHandler().c_str());
 

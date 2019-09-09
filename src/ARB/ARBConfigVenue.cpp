@@ -896,8 +896,10 @@ bool ARBConfigVenueList::FindEvent(
 			//else
 			//	assert(pLevel);
 		}
-		else
-			assert(pDiv);
+		// Now that we allow multiple venues (cosanctioning is different),
+		// we may fail to find the division. That's fine.
+		//else
+		//	assert(pDiv);
 	}
 	return bFound;
 }

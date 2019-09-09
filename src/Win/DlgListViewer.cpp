@@ -291,7 +291,8 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 			str = L"0";
 		break;
 	case COL_RUN_MQ_VENUE:
-		str = m_Trial->GetClubs().GetPrimaryClubVenue();
+		if (m_Run->GetClub())
+			str = m_Run->GetClub()->GetVenue();
 		break;
 	case COL_RUN_MQ_DIV:
 		str = m_Run->GetDivision();
@@ -309,8 +310,8 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 		str = m_Trial->GetLocation();
 		break;
 	case COL_RUN_MQ_CLUB:
-		if (m_Trial->GetClubs().GetPrimaryClub())
-			str = m_Trial->GetClubs().GetPrimaryClubName();
+		if (m_Run->GetClub())
+			str = m_Run->GetClub()->GetName();
 		break;
 	case COL_RUN_MQ_JUDGE:
 		str = m_Run->GetJudge();
@@ -356,10 +357,12 @@ public:
 	CDlgListViewerDataMultiQ(
 			CDlgListViewerDataColumnsPtr const& inColData,
 			ARBDate const& inDate,
-			ARBDogTrialPtr const& inTrial)
+			ARBDogTrialPtr const& inTrial,
+			std::wstring const& inClub)
 		: m_ColData(inColData)
 		, m_Date(inDate)
 		, m_Trial(inTrial)
+		, m_Club(inClub)
 	{
 		assert(m_ColData);
 	}
@@ -372,6 +375,7 @@ private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	ARBDate m_Date;
 	ARBDogTrialPtr m_Trial;
+	std::wstring m_Club;
 };
 typedef std::shared_ptr<CDlgListViewerDataMultiQ> CDlgListViewerDataMultiQPtr;
 
@@ -391,8 +395,7 @@ std::wstring CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 		str = m_Trial->GetLocation();
 		break;
 	case COL_RUN_MQ_CLUB:
-		if (m_Trial->GetClubs().GetPrimaryClub())
-			str = m_Trial->GetClubs().GetPrimaryClubName();
+		str = m_Club;
 		break;
 	}
 	return str;
@@ -804,8 +807,8 @@ std::wstring CDlgListViewerDataOther::OnNeedText(long iCol) const
 	case COL_OTHER_CLUB:
 		if (m_info.m_pExisting)
 			str = fmt::format(L"[{}]", _("IDS_EXISTING_POINTS").wx_str());
-		else if (m_info.m_pTrial->GetClubs().GetPrimaryClub())
-			str = m_info.m_pTrial->GetClubs().GetPrimaryClubName();
+		else if (m_info.m_pRun && m_info.m_pRun->GetClub())
+			str = m_info.m_pRun->GetClub()->GetName();
 		break;
 	case COL_OTHER_VENUE:
 		str = m_info.m_Venue;
@@ -871,10 +874,10 @@ int CDlgListViewerDataOther::Compare(
 			str2 = pData->m_info.m_pTrial->GetLocation();
 		break;
 	case COL_OTHER_CLUB:
-		if (!m_info.m_pExisting && m_info.m_pTrial->GetClubs().GetPrimaryClub())
-			str1 = m_info.m_pTrial->GetClubs().GetPrimaryClubName();
-		if (!pData->m_info.m_pExisting && pData->m_info.m_pTrial->GetClubs().GetPrimaryClub())
-			str2 = pData->m_info.m_pTrial->GetClubs().GetPrimaryClubName();
+		if (!m_info.m_pExisting && m_info.m_pRun && m_info.m_pRun->GetClub())
+			str1 = m_info.m_pRun->GetClub()->GetName();
+		if (!pData->m_info.m_pExisting && pData->m_info.m_pRun && pData->m_info.m_pRun->GetClub())
+			str2 = pData->m_info.m_pRun->GetClub()->GetName();
 		break;
 	case COL_OTHER_VENUE:
 		str1 = m_info.m_Venue;
@@ -1088,9 +1091,9 @@ static void InsertRun(
 		ScoringRunInfo::ScoringDetail scoringDetail)
 {
 	ARBConfigScoringPtr pScoring;
-	if (pTrial->GetClubs().GetPrimaryClub())
+	if (pRun->GetClub())
 		 pDoc->Book().GetConfig().GetVenues().FindEvent(
-			pTrial->GetClubs().GetPrimaryClubVenue(),
+			pRun->GetClub()->GetVenue(),
 			pRun->GetEvent(),
 			pRun->GetDivision(),
 			pRun->GetLevel(),
@@ -1306,7 +1309,7 @@ CDlgListViewer::CDlgListViewer(
 		iter != inMQs.end();
 		++iter)
 	{
-		CDlgListViewerDataMultiQPtr data(std::make_shared<CDlgListViewerDataMultiQ>(pColData, iter->first, iter->second));
+		CDlgListViewerDataMultiQPtr data(std::make_shared<CDlgListViewerDataMultiQ>(pColData, iter->date, iter->trial, iter->club));
 		m_ctrlList->InsertItem(data);
 	}
 	pColData->SetColumnWidths(m_ctrlList);

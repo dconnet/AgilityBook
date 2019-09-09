@@ -86,12 +86,9 @@ OtherPtInfo::OtherPtInfo(
 	, m_bScore(bScore)
 	, m_Score(score)
 {
-	if (m_pTrial)
-	{
-		m_Venue = m_pTrial->GetClubs().GetPrimaryClubVenue();
-	}
 	if (m_pRun)
 	{
+		m_Venue = m_pRun->GetClub()->GetVenue();
 		m_Div = m_pRun->GetDivision();
 		m_Level = m_pRun->GetLevel();
 		m_Event = m_pRun->GetEvent();
@@ -862,7 +859,7 @@ CPointsDataVenue::CPointsDataVenue(
 					{
 						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
 						{
-							MQs[*iMultiQ].insert(MultiQdata(pRun->GetDate(), pTrial));
+							MQs[*iMultiQ].insert(MultiQdata(pRun->GetDate(), pTrial, pRun->GetClub()->GetName()));
 						}
 					}
 				}
@@ -1473,10 +1470,10 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 									bool bScore = false;
 									double score = 0.0;
 									ARBConfigScoringPtr pScoring;
-									if (pTrial->GetClubs().GetPrimaryClub())
+									if (pRun->GetClub())
 									{
 										m_pDoc->Book().GetConfig().GetVenues().FindEvent(
-											pTrial->GetClubs().GetPrimaryClubVenue(),
+											pRun->GetClub()->GetVenue(),
 											pRun->GetEvent(),
 											pRun->GetDivision(),
 											pRun->GetLevel(),

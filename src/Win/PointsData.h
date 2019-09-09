@@ -38,8 +38,6 @@
 class CAgilityBookDoc;
 struct CVenueFilter;
 
-typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
-
 // See SetupARBPost.h
 using std::tuple;
 using std::get;
@@ -51,6 +49,35 @@ typedef tuple<ARBDogPtr, ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
 
 // Special HTML tag for href's
 #define ARB_PROTOCOL	L"arb:"
+
+
+/**
+ * Used to accumulate multiQ info.
+ */
+class MultiQdata
+{
+private:
+	MultiQdata() = delete;
+public:
+	MultiQdata(
+			ARBDate inDate,
+			ARBDogTrialPtr inTrial,
+			std::wstring const& inClub)
+		: date(inDate)
+		, trial(inTrial)
+		, club(inClub)
+	{
+	}
+
+	bool operator<(MultiQdata const& rhs) const
+	{
+		return date < rhs.date;
+	}
+
+	ARBDate date;
+	ARBDogTrialPtr trial;
+	std::wstring club;
+};
 
 /**
  * Used to accumulate lifetime info. Also for Placement totals.

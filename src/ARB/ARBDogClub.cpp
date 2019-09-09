@@ -57,6 +57,8 @@ ARBDogClubPtr ARBDogClub::New()
 ARBDogClub::ARBDogClub()
 	: m_Name()
 	, m_Venue()
+	, m_PrimaryClubVenue()
+	, m_PrimaryClub()
 {
 }
 
@@ -64,6 +66,8 @@ ARBDogClub::ARBDogClub()
 ARBDogClub::ARBDogClub(ARBDogClub const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Venue(rhs.m_Venue)
+	, m_PrimaryClubVenue(rhs.m_PrimaryClubVenue)
+	, m_PrimaryClub(rhs.m_PrimaryClub)
 {
 }
 
@@ -71,6 +75,8 @@ ARBDogClub::ARBDogClub(ARBDogClub const& rhs)
 ARBDogClub::ARBDogClub(ARBDogClub&& rhs)
 	: m_Name(std::move(rhs.m_Name))
 	, m_Venue(std::move(rhs.m_Venue))
+	, m_PrimaryClubVenue(std::move(rhs.m_PrimaryClubVenue))
+	, m_PrimaryClub(std::move(rhs.m_PrimaryClub))
 {
 }
 
@@ -92,6 +98,8 @@ ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
 	{
 		m_Name = rhs.m_Name;
 		m_Venue = rhs.m_Venue;
+		m_PrimaryClubVenue = rhs.m_PrimaryClubVenue;
+		m_PrimaryClub = rhs.m_PrimaryClub;
 	}
 	return *this;
 }
@@ -103,6 +111,8 @@ ARBDogClub& ARBDogClub::operator=(ARBDogClub&& rhs)
 	{
 		m_Name = std::move(rhs.m_Name);
 		m_Venue = std::move(rhs.m_Venue);
+		m_PrimaryClubVenue = std::move(rhs.m_PrimaryClubVenue);
+		m_PrimaryClub = std::move(rhs.m_PrimaryClub);
 	}
 	return *this;
 }
@@ -110,6 +120,7 @@ ARBDogClub& ARBDogClub::operator=(ARBDogClub&& rhs)
 
 bool ARBDogClub::operator==(ARBDogClub const& rhs) const
 {
+	// Equality is only name/venue, not cosanctioning.
 	return m_Name == rhs.m_Name
 		&& m_Venue == rhs.m_Venue;
 }
@@ -163,6 +174,8 @@ bool ARBDogClub::Load(
 		return false;
 	}
 
+	inTree->GetAttrib(ATTRIB_CLUB_PRIMARY, m_PrimaryClubVenue);
+
 	if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 	{
 		std::wstring msg(Localization()->InvalidVenueName());
@@ -175,6 +188,30 @@ bool ARBDogClub::Load(
 }
 
 
+bool ARBDogClub::PostLoad(
+		ARBDogClubList const& clubList,
+		ARBErrorCallback& ioCallback)
+{
+	bool bOk = true;
+	if (!m_PrimaryClubVenue.empty())
+	{
+		ARBDogClubPtr club;
+		if (clubList.GetPrimaryClub(m_PrimaryClubVenue, &club))
+		{
+			m_PrimaryClub = club;
+		}
+		else
+		{
+			bOk = false;
+			// The linked cosanctioning venue isn't in the trial list.
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CLUB, ATTRIB_CLUB_PRIMARY));
+		}
+		m_PrimaryClubVenue.clear();
+	}
+	return bOk;
+}
+
+
 bool ARBDogClub::Save(ElementNodePtr const& ioTree) const
 {
 	assert(ioTree);
@@ -182,6 +219,9 @@ bool ARBDogClub::Save(ElementNodePtr const& ioTree) const
 		return false;
 	ElementNodePtr club = ioTree->AddElementNode(TREE_CLUB);
 	club->AddAttrib(ATTRIB_CLUB_VENUE, m_Venue);
+	ARBDogClubPtr pClub = m_PrimaryClub.lock();
+	if (pClub)
+		club->AddAttrib(ATTRIB_CLUB_PRIMARY, pClub->GetVenue());
 	if (0 < m_Name.length())
 		club->SetValue(m_Name);
 	return true;
@@ -203,37 +243,134 @@ bool ARBDogClubList::Load(
 }
 
 
-bool ARBDogClubList::GetPrimaryClub(ARBDogClubPtr* outClub) const
+bool ARBDogClubList::PostLoad(ARBErrorCallback& ioCallback)
+{
+	bool bOk = true;
+	for (auto item : *this)
+	{
+		// Continue on error
+		if (!item->PostLoad(*this, ioCallback))
+			bOk = false;
+	}
+	return bOk;
+}
+
+
+bool ARBDogClubList::GetPrimaryClub(
+		std::wstring const& inVenue,
+		ARBDogClubPtr* outClub) const
+{
+	if (inVenue.empty())
+		return false;
+	for (auto item : *this)
+	{
+		if (item->GetPrimaryClub())
+			continue;
+		if (item->GetVenue() == inVenue)
+		{
+			if (outClub)
+				*outClub = item;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+std::wstring ARBDogClubList::GetClubList(bool bNames, bool bIncCosanction) const
+{
+	std::set<std::wstring> dedup;
+	int i = 0;
+	fmt::wmemory_buffer buf;
+	for (ARBDogClubList::const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if (!bIncCosanction && (*iter)->GetPrimaryClub())
+			continue;
+		std::wstring str = bNames ? (*iter)->GetName() : (*iter)->GetVenue();
+		if (dedup.find(str) == dedup.end())
+		{
+			dedup.insert(str);
+			if (0 < i)
+				fmt::format_to(buf, L"/");
+			++i;
+			fmt::format_to(buf, L"{}", str);
+		}
+	}
+	return fmt::to_string(buf);
+}
+
+
+std::wstring ARBDogClubList::GetClubList(bool bNames, ARBDogRunPtr inRun) const
+{
+	if (!inRun || !inRun->GetClub())
+		return std::wstring();
+	fmt::wmemory_buffer buf;
+	std::wstring str = bNames ? inRun->GetClub()->GetName() : inRun->GetClub()->GetVenue();
+	fmt::format_to(buf, L"{}", str);
+	ARBDogClubPtr pPrimary = FindCoSanctioningClub(inRun->GetClub());
+	if (pPrimary)
+	{
+		str = bNames ? pPrimary->GetName() : pPrimary->GetVenue();
+		fmt::format_to(buf, L"/{}", str);
+	}
+
+	return fmt::to_string(buf);
+}
+
+
+ARBDogClubPtr ARBDogClubList::FindCoSanctioningClub(ARBDogClubPtr inClub) const
+{
+	if (!inClub->GetPrimaryClub())
+	{
+		for (const_iterator iter = begin(); iter != end(); ++iter)
+		{
+			if (*iter == inClub)
+				continue;
+			ARBDogClubPtr pClub = (*iter)->GetPrimaryClub();
+			if (pClub && *pClub == *inClub)
+				return *iter;
+		}
+	}
+	return ARBDogClubPtr();
+}
+
+
+bool ARBDogClubList::FindClubIndex(
+		ARBDogClubPtr const& inClub,
+		size_t& outIndex) const
+{
+	assert(!!inClub);
+	if (!inClub)
+		return false;
+	for (size_t i = 0; i < size(); ++i)
+	{
+		if (*inClub == *(*this)[i])
+		{
+			outIndex = i;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ARBDogClubList::FindClub(
+		std::wstring const& inName,
+		std::wstring const& inVenue,
+		ARBDogClubPtr* outClub) const
 {
 	if (outClub)
 		outClub->reset();
-	if (0 < size())
+	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		const_iterator iter = begin();
-		if (outClub)
-			*outClub = *iter;
-		return true;
+		if ((*iter)->GetName() == inName && (*iter)->GetVenue() == inVenue)
+		{
+			if (outClub)
+				*outClub = *iter;
+			return true;
+		}
 	}
-	else
-		return false;
-}
-
-
-std::wstring ARBDogClubList::GetPrimaryClubName() const
-{
-	if (0 < size())
-		return (*begin())->GetName();
-	else
-		return std::wstring();
-}
-
-
-std::wstring ARBDogClubList::GetPrimaryClubVenue() const
-{
-	if (0 < size())
-		return (*begin())->GetVenue();
-	else
-		return std::wstring();
+	return false;
 }
 
 
@@ -255,7 +392,8 @@ bool ARBDogClubList::FindEvent(
 	ARBConfigScoringPtr pScoring;
 	for (const_iterator iter = begin(); !pScoring && iter != end(); ++iter)
 	{
-		inConfig.GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate, &pEvent, &pScoring);
+		if (inConfig.GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate, &pEvent, &pScoring))
+			break;
 	}
 	bool bFound = false;
 	if (pScoring)
@@ -313,6 +451,8 @@ bool ARBDogClubList::AddClub(
 		std::wstring const& inVenue,
 		ARBDogClubPtr* outClub)
 {
+	if (FindClub(inName, inVenue))
+		return false;
 	ARBDogClubPtr pClub(ARBDogClub::New());
 	pClub->SetName(inName);
 	pClub->SetVenue(inVenue);
@@ -333,6 +473,12 @@ bool ARBDogClubList::DeleteClub(
 	{
 		if ((*iter)->GetName() == name && (*iter)->GetVenue() == venue)
 		{
+			for (iterator iter2 = begin(); iter2 != end(); ++iter2)
+			{
+				ARBDogClubPtr pPrimary = (*iter2)->GetPrimaryClub();
+				if (pPrimary && *pPrimary == *(*iter))
+					(*iter2)->SetPrimaryClub(ARBDogClubPtr());
+			}
 			erase(iter);
 			return true;
 		}

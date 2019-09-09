@@ -192,6 +192,14 @@ public:
 	{
 		m_Date = inDate;
 	}
+	ARBDogClubPtr GetClub() const
+	{
+		return m_Club;
+	}
+	void SetClub(ARBDogClubPtr club)
+	{
+		m_Club = club;
+	}
 	std::wstring const& GetDivision() const
 	{
 		return m_Division;
@@ -368,6 +376,7 @@ public:
 private:
 	std::set<ARBConfigMultiQPtr> m_pMultiQs; //< Not persisted.
 	ARBDate m_Date;
+	ARBDogClubPtr m_Club;
 	std::wstring m_Division;
 	std::wstring m_Level;
 	std::wstring m_Height;

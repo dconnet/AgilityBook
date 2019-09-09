@@ -53,6 +53,11 @@
 	class name;\
 	class name##List;\
 	typedef std::shared_ptr<name> name##Ptr;
+#define ARB_TYPEDEF2_LIST(name) \
+	class name;\
+	class name##List;\
+	typedef std::weak_ptr<name> name##WPtr; \
+	typedef std::shared_ptr<name> name##Ptr;
 
 ARB_TYPEDEF(Element)
 ARB_TYPEDEF2(ElementNode)

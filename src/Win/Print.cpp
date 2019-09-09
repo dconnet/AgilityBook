@@ -445,33 +445,17 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 			fmt::format_to(text, L"{}", inRun->GetDate().GetString());
 		break;
 	case CODE_VENUE:
-		if (inTrial)
-		{
-			int i = 0;
-			for (ARBDogClubList::iterator iter = inTrial->GetClubs().begin();
-				iter != inTrial->GetClubs().end();
-				++iter, ++i)
-			{
-				if (0 < i)
-					fmt::format_to(text, L"/");
-				fmt::format_to(text, L"{}", (*iter)->GetVenue());
-			}
-			break;
-		}
+		if (inRun && inRun->GetClub())
+			fmt::format_to(text, L"{}", inRun->GetClub()->GetVenue());
+		else if (inTrial)
+			fmt::format_to(text, L"{}", inTrial->GetClubs().GetClubList(false, true));
+		break;
 	case CODE_CLUB:
-		if (inTrial)
-		{
-			int i = 0;
-			for (ARBDogClubList::iterator iter = inTrial->GetClubs().begin();
-				iter != inTrial->GetClubs().end();
-				++iter, ++i)
-			{
-				if (0 < i)
-					fmt::format_to(text, L"/");
-				fmt::format_to(text, L"{}", (*iter)->GetName());
-			}
-			break;
-		}
+		if (inRun && inRun->GetClub())
+			fmt::format_to(text, L"{}", inRun->GetClub()->GetName());
+		else if (inTrial)
+			fmt::format_to(text, L"{}", inTrial->GetClubs().GetClubList(true, true));
+		break;
 	case CODE_DIV:
 		if (inRun)
 		{
@@ -480,7 +464,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 			std::wstring evt = inRun->GetEvent();
 			if (m_config && inTrial)
 			{
-				std::wstring venue = inTrial->GetClubs().GetPrimaryClubVenue();
+				std::wstring venue = inRun->GetClub()->GetVenue();
 				ARBConfigVenuePtr pVenue;
 				if (m_config->GetVenues().FindVenue(venue, &pVenue))
 				{
@@ -617,9 +601,9 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 		if (inTrial && inRun)
 		{
 			ARBConfigScoringPtr pScoring;
-			if (m_config && inTrial->GetClubs().GetPrimaryClub())
+			if (inRun->GetClub())
 				m_config->GetVenues().FindEvent(
-					inTrial->GetClubs().GetPrimaryClubVenue(),
+					inRun->GetClub()->GetVenue(),
 					inRun->GetEvent(),
 					inRun->GetDivision(),
 					inRun->GetLevel(),

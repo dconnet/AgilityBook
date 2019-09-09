@@ -1246,7 +1246,7 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 
 	case ID_AGILITY_NEW_RUN:
-		bEnable = (pData && pData->GetTrial() && pData->GetTrial()->GetClubs().GetPrimaryClub());
+		bEnable = (pData && pData->GetTrial() && 0 < pData->GetTrial()->GetClubs().size());
 		break;
 
 	case ID_AGILITY_DELETE_RUN:
@@ -1512,7 +1512,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 		break;
 
 	case ID_AGILITY_NEW_RUN:
-		if (pData && pData->GetTrial() && pData->GetTrial()->GetClubs().GetPrimaryClub())
+		if (pData && pData->GetTrial() && 0 < pData->GetTrial()->GetClubs().size())
 			GetDocument()->EditRun(pData->GetDog(), pData->GetTrial(), nullptr);
 		break;
 

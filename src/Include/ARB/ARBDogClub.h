@@ -83,6 +83,16 @@ public:
 			ARBErrorCallback& ioCallback);
 
 	/**
+	 * Perform any fix ups - specifically, co-sanctioning.
+	 * @param clubList The parent list container.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool PostLoad(
+			ARBDogClubList const& clubList,
+			ARBErrorCallback& ioCallback);
+
+	/**
 	 * Save a document.
 	 * @param ioTree Parent element.
 	 * @return Success
@@ -109,10 +119,21 @@ public:
 	{
 		m_Venue = inVenue;
 	}
+	// For Co-sanctioning
+	ARBDogClubPtr GetPrimaryClub() const
+	{
+		return m_PrimaryClub.lock();
+	}
+	void SetPrimaryClub(ARBDogClubPtr const& inCoSanction)
+	{
+		m_PrimaryClub = inCoSanction;
+	}
 
 private:
 	std::wstring m_Name;
 	std::wstring m_Venue;
+	std::wstring m_PrimaryClubVenue; // Only used during loading.
+	ARBDogClubWPtr m_PrimaryClub;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -142,23 +163,70 @@ public:
 			ARBErrorCallback& ioCallback);
 
 	/**
+	 * Perform any fix ups - specifically, co-sanctioning.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool PostLoad(ARBErrorCallback& ioCallback);
+
+	/**
 	 * Get the primary club, used to establish rules.
+	 * @param inVenue Venue of club to find.
 	 * @param outClub Pointer to first club.
 	 * @return Whether there is a primary club.
 	 */
-	bool GetPrimaryClub(ARBDogClubPtr* outClub = nullptr) const;
+	bool GetPrimaryClub(
+			std::wstring const& inVenue,
+			ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
-	 * Get the primary club's name.
-	 * @return Name of primary club, empty is none.
+	 * Get the list of all clubs.
+	 * @param bNames Get club names or venues?
+	 * @param bIncCosanction Should co-sanctioning clubs be included?
+	 * @return All clubs.
 	 */
-	std::wstring GetPrimaryClubName() const;
+	std::wstring GetClubList(bool bNames, bool bIncCosanction = true) const;
 
 	/**
-	 * Get the primary club's venue.
-	 * @return Venue of primary club, empty is none.
+	 * Get the list of clubs for a run.
+	 * @param bNames Get club names or venues?
+	 * @param inRun Run to get clubs for.
+	 * @return Primary and possible cosanctioning club.
 	 */
-	std::wstring GetPrimaryClubVenue() const;
+	std::wstring GetClubList(bool bNames, ARBDogRunPtr inRun) const;
+
+	/**
+	 * Find the first cosanctioning club for a primary club.
+	 * If the club is a cosanctioning club and not a primary,
+	 * no results are found.
+	 * @param inClub The primary club.
+	 * @return The cosanctioning club.
+	 *         That club's GetPrimaryClub should (better!) return inClub.
+	 */
+	ARBDogClubPtr FindCoSanctioningClub(ARBDogClubPtr inClub) const;
+
+	/**
+	 * Find the index of the club.
+	 * Should only be called by ARBDogRun to save data.
+	 * @param inClub Club to find.
+	 * @param outIndex Direct index of club.
+	 * @return If club was found.
+	 */
+	bool FindClubIndex(
+			ARBDogClubPtr const& inClub,
+			size_t& outIndex) const;
+
+	/**
+	 * Find a club
+	 * @param inName Name of club to find.
+	 * @param inVenue Venue of club.
+	 * @param outClub Found club.
+	 * @return Whether the club was found.
+	 */
+	bool FindClub(
+			std::wstring const& inName,
+			std::wstring const& inVenue,
+			ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
 	 * Find the first scoring style to match.

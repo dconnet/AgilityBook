@@ -54,7 +54,8 @@
 #endif
 
 #define DEF_CTRL_WIDTH	150
-#define DEF_CTRL_HEIGHT	35
+#define DEF_CTRL_HEIGHT	35 //trial notes
+#define DEF_CLUB_HEIGHT	50
 #define DEF_NOTE_WIDTH	95
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,22 +75,31 @@ typedef std::shared_ptr<CListTrialData> CListTrialDataPtr;
 
 std::wstring CListTrialData::OnNeedText(long iCol) const
 {
+	std::wstring text;
 	switch (iCol)
 	{
 	default:
 		assert(0);
 		return std::wstring();
 	case 0:
-		return m_Club->GetName();
+		text = m_Club->GetName();
+		break;
 	case 1:
-		return m_Club->GetVenue();
+		text = m_Club->GetVenue();
+		break;
+	case 2:
+		if (m_Club->GetPrimaryClub())
+			text = m_Club->GetPrimaryClub()->GetVenue();
+		break;
 	}
+	return text;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 wxBEGIN_EVENT_TABLE(CDlgTrial, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgTrial::OnOk)
+	EVT_BUTTON(wxID_CANCEL, CDlgTrial::OnCancel)
 wxEND_EVENT_TABLE()
 
 
@@ -109,6 +119,7 @@ CDlgTrial::CDlgTrial(
 	, m_pDoc(pDoc)
 	, m_pTrial(inTrial)
 	, m_Clubs()
+	, m_bFixup(false)
 	, m_bRunsDeleted(false)
 {
 	if (!pParent)
@@ -213,7 +224,7 @@ CDlgTrial::CDlgTrial(
 	m_ctrlDelete->SetToolTip(_("HIDC_TRIAL_CLUB_DELETE"));
 
 	m_ctrlClubs = new CReportListCtrl(this,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(DEF_CTRL_WIDTH, DEF_CTRL_HEIGHT)),
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(DEF_CTRL_WIDTH, DEF_CLUB_HEIGHT)),
 		true, CReportListCtrl::SortHeader::NoSort, true, false);
 	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgTrial::OnItemSelectedClubs, this);
 	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgTrial::OnItemActivatedClubs, this);
@@ -308,6 +319,7 @@ CDlgTrial::CDlgTrial(
 
 	m_ctrlClubs->InsertColumn(0, _("IDS_COL_CLUB"));
 	m_ctrlClubs->InsertColumn(1, _("IDS_COL_VENUE"));
+	m_ctrlClubs->InsertColumn(2, _("IDS_COL_COSANCTION"));
 	m_ctrlEdit->Enable(false);
 	m_ctrlClubNotes->Enable(false);
 	m_ctrlDelete->Enable(false);
@@ -411,6 +423,7 @@ void CDlgTrial::EditClub()
 	long index = m_ctrlClubs->GetFirstSelected();
 	if (0 <= index)
 	{
+#pragma PRAGMA_TODO(Should prevent user from renaming club to an existing club)
 		ARBDogClubPtr pClub = GetClubData(index);
 		CDlgClub dlg(m_pDoc, m_Clubs, pClub, this);
 		if (wxID_OK == dlg.ShowModal())
@@ -520,6 +533,8 @@ void CDlgTrial::OnClubNew(wxCommandEvent& evt)
 		ARBDogClubPtr club;
 		if (m_Clubs.AddClub(dlg.Club(), dlg.Venue(), &club))
 			ListClubs(&club);
+		else
+			wxMessageBox(_("IDS_ADD_CLUB_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 	}
 }
 
@@ -536,8 +551,29 @@ void CDlgTrial::OnClubDelete(wxCommandEvent& evt)
 	if (0 <= index)
 	{
 		ARBDogClubPtr pClub = GetClubData(index);
+		// Before deleting the club, swap co-sanctioning if it exists.
+		ARBDogClubPtr pCoSanction = m_Clubs.FindCoSanctioningClub(pClub);
+		if (pCoSanction)
+		{
+			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin();
+				iterRun != m_pTrial->GetRuns().end();
+				++iterRun)
+			{
+				ARBDogClubPtr pRunClub = (*iterRun)->GetClub();
+				if (!pRunClub)
+					continue;
+				ARBDogClubPtr pClub2;
+				if (m_Clubs.FindClub(pRunClub->GetName(), pRunClub->GetVenue(), &pClub2)
+				&& pClub2 == pClub)
+				{
+					m_bFixup = true;
+					(*iterRun)->SetClub(pCoSanction);
+				}
+			}
+		}
 		m_Clubs.DeleteClub(pClub->GetName(), pClub->GetVenue());
 		m_ctrlClubs->DeleteItem(index);
+		m_ctrlClubs->Refresh();
 	}
 }
 
@@ -579,8 +615,8 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 		{
 			int nDelete = 0;
 			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin();
-			iterRun != m_pTrial->GetRuns().end();
-			++iterRun)
+				iterRun != m_pTrial->GetRuns().end();
+				++iterRun)
 			{
 				ARBDogRunPtr pRun = *iterRun;
 				bool bFound = false;
@@ -614,6 +650,41 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 		}
 	}
 
+	ARBDogClubPtr pOldPrimary, pNewPrimary;
+	for (auto pClub : m_pTrial->GetClubs())
+	{
+		if (pClub->GetPrimaryClub())
+		{
+			pOldPrimary = pClub->GetPrimaryClub();
+			break;
+		}
+	}
+	for (auto pClub : m_Clubs)
+	{
+		if (pClub->GetPrimaryClub())
+		{
+			pNewPrimary = pClub->GetPrimaryClub();
+			break;
+		}
+	}
+	if (pOldPrimary != pNewPrimary && pNewPrimary)
+	{
+		ARBDogClubPtr pCoSanction = m_Clubs.FindCoSanctioningClub(pNewPrimary);
+		if (pCoSanction)
+		{
+			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin();
+				iterRun != m_pTrial->GetRuns().end();
+				++iterRun)
+			{
+				ARBDogClubPtr pRunClub = (*iterRun)->GetClub();
+				if (!pRunClub)
+					continue;
+				if (*pRunClub == *pCoSanction)
+					(*iterRun)->SetClub(pNewPrimary);
+			}
+		}
+	}
+
 	m_pTrial->SetDefaultDate(m_dateStart);
 	m_pTrial->SetLocation(StringUtil::stringW(m_Location));
 	m_pTrial->SetNote(StringUtil::stringW(m_Notes));
@@ -623,4 +694,37 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 	m_pDoc->Modify(true);
 
 	EndDialog(wxID_OK);
+}
+
+
+void CDlgTrial::OnCancel(wxCommandEvent& evt)
+{
+	if (m_bFixup)
+	{
+		ARBDogClubPtr pPrimary;
+		for (auto pClub : m_pTrial->GetClubs())
+		{
+			pPrimary = pClub->GetPrimaryClub();
+			if (pPrimary)
+				break;
+		}
+		if (pPrimary)
+		{
+			ARBDogClubPtr pCoSanction = m_pTrial->GetClubs().FindCoSanctioningClub(pPrimary);
+			if (pCoSanction)
+			{
+				for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin();
+					iterRun != m_pTrial->GetRuns().end();
+					++iterRun)
+				{
+					ARBDogClubPtr pRunClub = (*iterRun)->GetClub();
+					if (!pRunClub)
+						continue;
+					if (*pRunClub == *pCoSanction)
+						(*iterRun)->SetClub(pPrimary);
+				}
+			}
+		}
+	}
+	EndDialog(wxID_CANCEL);
 }

@@ -513,14 +513,12 @@ bool ARBAgilityRecordBook::Update(
 			++iterTrial)
 		{
 			ARBDogTrialPtr pTrial = *iterTrial;
-			if (!pTrial->GetClubs().GetPrimaryClub())
-				continue;
-			std::wstring venue = pTrial->GetClubs().GetPrimaryClubVenue();
 			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				)
 			{
 				ARBDogRunPtr pRun = *iterRun;
+				std::wstring venue = pRun->GetClub()->GetVenue();
 				if (bFixUSDAAPairs && venue == L"USDAA" && pRun->GetEvent() == L"Pairs"
 				&& (pRun->GetLevel() == L"Tournament" || pRun->GetLevel() == L"Nationals"))
 				{

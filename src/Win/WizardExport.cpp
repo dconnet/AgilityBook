@@ -546,9 +546,9 @@ void CWizardExport::UpdatePreview()
 					{
 						ARBDogRunPtr pRun = *iterRun;
 						ARBConfigScoringPtr pScoring;
-						if (pTrial->GetClubs().GetPrimaryClub())
+						if (pRun->GetClub())
 							m_pDoc->Book().GetConfig().GetVenues().FindEvent(
-								pTrial->GetClubs().GetPrimaryClubVenue(),
+								pRun->GetClub()->GetVenue(),
 								pRun->GetEvent(),
 								pRun->GetDivision(),
 								pRun->GetLevel(),

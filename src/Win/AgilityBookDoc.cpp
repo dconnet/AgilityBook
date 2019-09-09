@@ -612,17 +612,19 @@ bool CAgilityBookDoc::EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTr
 	ARBDogRunPtr pRun = inRun;
 	if (!pRun)
 	{
-		ARBDogClubPtr pClub;
-		if (!inTrial->GetClubs().GetPrimaryClub(&pClub))
+		if (0 == inTrial->GetClubs().size())
 		{
 			wxMessageBox(_("IDS_NEED_CLUB"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
-		if (!Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
+		for (auto pClub : inTrial->GetClubs())
 		{
-			wxMessageBox(fmt::format(_("IDS_VENUE_CONFIG_MISSING").wx_str(), pClub->GetVenue()),
-				wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
-			return false;
+			if (!Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
+			{
+				wxMessageBox(fmt::format(_("IDS_VENUE_CONFIG_MISSING").wx_str(), pClub->GetVenue()),
+					wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+				return false;
+			}
 		}
 		bAdd = true;
 		pRun = ARBDogRunPtr(ARBDogRun::New());
@@ -2196,9 +2198,9 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	case ID_NOTES_CLUBS:
 		{
 			std::wstring select;
-			ARBDogTrialPtr pTrial = GetCurrentTrial();
-			if (pTrial)
-				select = pTrial->GetClubs().GetPrimaryClubName();
+			ARBDogRunPtr pRun = GetCurrentRun();
+			if (pRun)
+				select = pRun->GetClub()->GetName();
 			CDlgInfoNote dlg(this, ARBInfoType::Club, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}

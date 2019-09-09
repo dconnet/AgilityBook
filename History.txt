@@ -1,8 +1,12 @@
-8/31/2019: v3.3.4.<development>
+9/8/2019: v3.4.0.<development>
 - Bumped file version to 15.0:
   - Move table and subname info from 'Event' to 'Scoring'
+  - Reorganize how co-sanctioning is done.
 - Bumped Configuration v63:
   - Re-add NADAC Gamblers.
+- New features / Enhancements:
+  - Can now add multiple clubs/venues to a single trial. This allows entering
+    multiple activities in a single trial.
 
 8/24/2019: v3.3.3.110
 - Bumped file version to 14.6:
