@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-09 07:53-0700\n"
-"PO-Revision-Date: 2019-09-09 07:53-0700\n"
+"POT-Creation-Date: 2019-09-10 10:45-0700\n"
+"PO-Revision-Date: 2019-09-10 10:47-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -5353,62 +5353,75 @@ msgstr "&Basse"
 msgid "HIDC_OPT_PRINT_MARGIN_B"
 msgstr "Modifier la marge de bas de page pour imprimer."
 
-#: Win/DlgOptionsProgram.cpp:48
+#: Win/DlgOptionsProgram.cpp:49
 msgid "IDC_OPT_PGM_AUTO_CHECK"
 msgstr "Vérifie automatiquement les mises à jour"
 
-#: Win/DlgOptionsProgram.cpp:51 Win/DlgOptionsProgram.cpp:52
+#: Win/DlgOptionsProgram.cpp:52 Win/DlgOptionsProgram.cpp:53
 msgid "HIDC_OPT_PGM_AUTO_CHECK"
 msgstr ""
 "Vérifier automatiquement tous les 30 jours si une nouvelle version du "
 "programme est disponible."
 
-#: Win/DlgOptionsProgram.cpp:55
+#: Win/DlgOptionsProgram.cpp:56
 msgid "IDC_OPT_PGM_AUTO_CHECK_TEXT"
 msgstr ""
 "NB: Cette fonction vérifie si des mises à jour existent. Elle ne les "
 "télécharge pas."
 
-#: Win/DlgOptionsProgram.cpp:60
+#: Win/DlgOptionsProgram.cpp:61
 msgid "IDC_OPT_PGM_EDIT"
 msgstr "Nombre des copies de sauvegarde"
 
-#: Win/DlgOptionsProgram.cpp:67 Win/DlgOptionsProgram.cpp:68
+#: Win/DlgOptionsProgram.cpp:68 Win/DlgOptionsProgram.cpp:69
 msgid "HIDC_OPT_PGM_EDIT"
 msgstr ""
 "Nombre de copies sauvegarde conservées. Chaque fois que vous sauvegardez le "
 "dossier, une nouvelle copie de sauvegarde est créée. Si cette fonction est à "
 "0, des copies de sauvegarde ne sont plus créées."
 
-#: Win/DlgOptionsProgram.cpp:71
+#: Win/DlgOptionsProgram.cpp:72
 msgid "IDC_OPT_PGM_EDIT_TEXT"
 msgstr ""
 "Chaque fois qu'un fichier est sauvegardé, une copie est faite. Mettez 0 pour "
 "éviter cela."
 
-#: Win/DlgOptionsProgram.cpp:76
+#: Win/DlgOptionsProgram.cpp:77
 msgid "IDC_OPT_PGM_AUTOSHOW"
 msgstr "Affichage paramètres du chien après l'ajout d'une Récompense"
 
-#: Win/DlgOptionsProgram.cpp:79 Win/DlgOptionsProgram.cpp:80
+#: Win/DlgOptionsProgram.cpp:80 Win/DlgOptionsProgram.cpp:81
 msgid "HIDC_OPT_PGM_AUTOSHOW"
 msgstr ""
 "Après avoir ajouté une Récompense, afficher le dialogue contenant toutes les "
 "Récompenses."
 
-#: Win/DlgOptionsProgram.cpp:83
+#: Win/DlgOptionsProgram.cpp:84
+#, fuzzy
+msgid "IDC_OPT_PGM_COSANCTION"
+msgstr "Show co-sanctioned trial options"
+
+#: Win/DlgOptionsProgram.cpp:87 Win/DlgOptionsProgram.cpp:88
+#, fuzzy
+msgid "HIDC_OPT_PGM_COSANCTION"
+msgstr ""
+"Co-sanctioning was done many years ago for ASCA and NADAC. Unless you are "
+"going to enter trial information from a long time ago, you really shouldn't "
+"need this option."
+
+#: Win/DlgOptionsProgram.cpp:91
 msgid "IDC_OPT_PGM_USEPROXY"
 msgstr ""
 "Utiliser un serveur proxy pour se connecter à l'Internet (<hostname>:<port "
 "number>)"
 
-#: Win/DlgOptionsProgram.cpp:87 Win/DlgOptionsProgram.cpp:88
+#: Win/DlgOptionsProgram.cpp:95 Win/DlgOptionsProgram.cpp:96
 msgid "HIDC_OPT_PGM_USEPROXY"
 msgstr ""
 "Certains utilisateurs passent par un serveur proxy pour se connecter à "
 "l'Internet. Si vous ne savez pas, consultez les paramètres de votre navigateur."
 
-#: Win/DlgOptionsProgram.cpp:93 Win/DlgOptionsProgram.cpp:94
+#: Win/DlgOptionsProgram.cpp:101 Win/DlgOptionsProgram.cpp:102
 msgid "HIDC_OPT_PGM_PROXY"
 msgstr ""
 "Entrer l'adresse du serveur proxy et le numéro de port à utiliser. Par "
