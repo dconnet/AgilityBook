@@ -50,7 +50,7 @@ Linux)
 esac
 
 if test "x$2" = "xdebug"; then
-	DEBUG="--enable-debug --enable-debug_gdb"
+	DEBUG="--enable-debug --enable-debug_info --enable-debug_gdb"
 	BUILDDIR+="-debug"
 elif test "x$2" = "xrelease"; then
 	DEBUG="--disable-debug_flag"
@@ -127,8 +127,14 @@ Darwin*)
 	;;
 
 Linux)
-	export CXXFLAGS="-std=c++14"
-	export OBJCXXFLAGS="-std=c++14"
+	if test "x$2" = "xdebug"; then
+		export CFLAGS="-g"
+		export CXXFLAGS="-g -std=c++14"
+		export OBJCXXFLAGS="-g -std=c++14"
+	else
+		export CXXFLAGS="-std=c++14"
+		export OBJCXXFLAGS="-std=c++14"
+	fi
 	#export LDFLAGS="-stdlib=libc++"
 	#export LIBS="-lc++"
 	;;

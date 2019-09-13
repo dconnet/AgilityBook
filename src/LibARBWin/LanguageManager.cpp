@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-09-13 Fix initialization issue.
  * 2018-10-11 Moved to Win LibARBWin
  * 2018-04-20 Use wxTranslations instead of wxLocale.
  * 2014-11-14 Add support for embedded MO files on Win32.
@@ -129,15 +130,18 @@ bool CLanguageManager::InitLanguage()
 				{
 					if (info->Language == lang2)
 					{
-						bSet = true;
-						SetLang(lang2);
+						bSet = SetLang(lang2);
 					}
 				}
 			}
 			// Oh well... English it is.
 			if (!bSet)
-				SetLang(wxLANGUAGE_ENGLISH_US);
+				bSet = SetLang(wxLANGUAGE_ENGLISH_US);
 			bInit = SelectLanguage();
+			// SelectLanguage returns false if we didn't change.
+			// If we set it here, we're good.
+			if (!bInit && bSet)
+				bInit = true;
 		}
 		else
 			bInit = SetLang(lang);
