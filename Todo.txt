@@ -1,10 +1,7 @@
-Last Updated: 8/31/2019
+Last Updated: 9/14/2019
 
-- Change how co-sanctioned trials are handled. AFAIK there are no more. So I
-  only need to support existing ASCA/NADAC trials from past years. What we do
-  have now is many trials that have multiple events happening at the same
-  location. This change needs to support that. (currently, you have to create
-  separate trials for each venue)
+- Allow easier order changing of clubs in trial dialog. Allow assigning a
+  club as the "primary" - this is what will used for the icon in the list.
 
 - Update DlgAssignColumn to support the new 'BySpeed' type (for FCAT).
   It's basically the same as FaultsThenTime, except missing a bunch of data.

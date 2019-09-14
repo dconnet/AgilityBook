@@ -1,4 +1,4 @@
-9/8/2019: v3.4.0.<development>
+9/14/2019: v3.4.0.111
 - Bumped file version to 15.0:
   - Move table and subname info from 'Event' to 'Scoring'
   - Reorganize how co-sanctioning is done.
@@ -7,6 +7,8 @@
 - New features / Enhancements:
   - Can now add multiple clubs/venues to a single trial. This allows entering
     multiple activities in a single trial.
+- Bug fixes:
+  - Fix FCAT bug.
 
 8/24/2019: v3.3.3.110
 - Bumped file version to 14.6:
