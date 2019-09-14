@@ -373,10 +373,11 @@
 			};
 			buildConfigurationList = E179640D176927D2003AE489 /* Build configuration list for PBXProject "LibTidyHtml" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = E1796409176927D2003AE489;
 			productRefGroup = E1796413176927D2003AE489 /* Products */;

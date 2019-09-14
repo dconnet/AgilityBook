@@ -310,10 +310,11 @@
 			};
 			buildConfigurationList = E19B62E5166C08B9004DEDA4 /* Build configuration list for PBXProject "LibARBWin" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = E19B62E0166C08B9004DEDA4;
 			productRefGroup = E19B62EC166C08B9004DEDA4 /* Products */;

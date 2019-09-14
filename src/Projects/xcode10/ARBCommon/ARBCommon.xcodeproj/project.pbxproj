@@ -210,10 +210,11 @@
 			};
 			buildConfigurationList = E110B504177FD120004071B5 /* Build configuration list for PBXProject "ARBCommon" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = E110B500177FD120004071B5;
 			productRefGroup = E110B50A177FD120004071B5 /* Products */;

@@ -1031,11 +1031,11 @@
 			};
 			buildConfigurationList = E19B63B5166C096E004DEDA4 /* Build configuration list for PBXProject "AgilityBook" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = E19B63B0166C096E004DEDA4;
 			productRefGroup = E19B63BC166C096E004DEDA4 /* Products */;
