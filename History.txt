@@ -1,3 +1,5 @@
+9/14/2019: v3.4.1.<develop>
+
 9/14/2019: v3.4.0.111
 - Bumped file version to 15.0:
   - Move table and subname info from 'Event' to 'Scoring'
