@@ -7,7 +7,6 @@ Additional software packages required (all free):
 - wxWidgets
 - poedit (includes msgcat)
 - wxFormBuilder (optional)
-- Boost libraries (not needed as of VC9+SP1)
 - Windows Installer XML toolset
 - Doxygen (optional)
 - GraphViz (optional)
@@ -19,10 +18,6 @@ Once the above software is unpacked, the directory structure should look like:
     - src/
     - Readme.txt
     - ...
-  - <some_path>/boost_<ver>/ [BOOST_ROOT points to this]
-      - ...(Boost structure)
-    I typically use \devtools\boost\boost_<ver>. Then my other 3rdparty tools
-    also reside in devtools, for instance: \devtools\wx\wxWidgets-<ver>.
 
 --------------------
 
@@ -182,22 +177,6 @@ Useful for figuring out how a lay a dialog out.
 
 --------------------
 
-Boost: http://www.boost.org.
-- Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
-  included project files now assume the Service Pack is installed with VS2008.
-- It is needed for Mac, but not unix since we apt-install there.
-  Haven't tried installing libboost-all-dev on Mac...
-ARB has been built and tested using Boost version 1.68.0. There is no need
-to actually build the Boost libraries. (Currently, only the smart_ptr,
-weak_ptr and make_shared templates are used.)
-[Minimum Boost version supported (for TR1): 1.38.0]
-When the library is unpacked, it should be located according to the map
-above. The default directory when unpacked is boost_1_68_0 (of course,
-this will vary based on boost version). Set BOOST_ROOT to point to this
-directory. The projects use this environment variable.
-
---------------------
-
 Windows Installer XML toolset: http://wixtoolset.org/
 Currently using Version 3.11.1 (as of ARB v3.2.4).
 - Install votive [optional]
@@ -241,7 +220,7 @@ Unix
 (targeting GTK3, GTK2 with wx3.1 crashes when the new-doc button is pressed)
 Needs (note, some aren't strictly needed):
 sudo apt install git python3 python3-pip curl
-sudo apt install libboost-all-dev libgtk-3-dev
+sudo apt install libgtk-3-dev
 sudo apt install libcanberra-gtk-module
 - Not strictly needed, but unit tests will fail otherwise
 sudo dpkg-reconfigure locales
@@ -279,7 +258,6 @@ OSX 10.9:
 - Create/add to /etc/launchd.conf (replace /Users/dconnet with your HOME)
   Must reboot after modifying.
 ===
-setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_68_0
 setenv WXBASE /Users/dconnet/devtools/wx
 setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.2
 ====
@@ -301,7 +279,6 @@ OSX 10.10+:
     <string>sh</string>
     <string>-c</string>
     <string>
-    launchctl setenv BOOST_ROOT /Users/dconnet/devtools/boost/boost_1_68_0
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
     launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.2
     </string>
