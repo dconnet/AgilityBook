@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-09-15 Quiet a wx debug message (see comment below)
  * 2018-10-11 Moved to Win LibARBWin
  * 2010-03-28 Moved SetColumnWidth override to CListCtrl.
  * 2009-01-06 Ported to wxWidgets.
@@ -161,6 +162,9 @@ public:
 			return;
 		if (!(0 <= newIndex && newIndex < static_cast<long>(m_items.size())))
 			return;
+#ifdef _DEBUG
+		wxLogNull log; // SetItemPtrData always returns false. But works. Shutup.
+#endif
 		wxUIntPtr data1 = GetItemData(oldIndex);
 		wxUIntPtr data2 = GetItemData(newIndex);
 		SetItemPtrData(oldIndex, data2);

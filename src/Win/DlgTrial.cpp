@@ -54,10 +54,10 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define DEF_CTRL_WIDTH	150
-#define DEF_CTRL_HEIGHT	35 //trial notes
-#define DEF_CLUB_HEIGHT	50
-#define DEF_NOTE_WIDTH	95
+#define DEF_TRIAL_NOTES_HEIGHT	35
+#define DEF_CLUB_WIDTH			180
+#define DEF_CLUB_HEIGHT			50
+#define DEF_NOTE_WIDTH			95
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -116,6 +116,8 @@ CDlgTrial::CDlgTrial(
 	, m_ctrlLocationInfo(nullptr)
 	, m_ctrlEdit(nullptr)
 	, m_ctrlDelete(nullptr)
+	, m_ctrlUp(nullptr)
+	, m_ctrlDn(nullptr)
 	, m_ctrlClubNotes(nullptr)
 	, m_pDoc(pDoc)
 	, m_pTrial(inTrial)
@@ -186,7 +188,7 @@ CDlgTrial::CDlgTrial(
 	textNotes->Wrap(-1);
 
 	CSpellCheckCtrl* ctrlTrialNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, DEF_CTRL_HEIGHT)), wxTE_MULTILINE,
+		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, DEF_TRIAL_NOTES_HEIGHT)), wxTE_MULTILINE,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlTrialNotes->SetHelpText(_("HIDC_TRIAL_NOTES"));
 	ctrlTrialNotes->SetToolTip(_("HIDC_TRIAL_NOTES"));
@@ -232,8 +234,22 @@ CDlgTrial::CDlgTrial(
 	m_ctrlDelete->SetHelpText(_("HIDC_TRIAL_CLUB_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_TRIAL_CLUB_DELETE"));
 
+	m_ctrlUp = new wxButton(this, wxID_ANY,
+		_("IDC_TRIAL_CLUB_UP"),
+		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlUp->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubMoveUp, this);
+	m_ctrlUp->SetHelpText(_("HIDC_TRIAL_CLUB_UP"));
+	m_ctrlUp->SetToolTip(_("HIDC_TRIAL_CLUB_UP"));
+
+	m_ctrlDn = new wxButton(this, wxID_ANY,
+		_("IDC_TRIAL_CLUB_DOWN"),
+		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlDn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubMoveDown, this);
+	m_ctrlDn->SetHelpText(_("HIDC_TRIAL_CLUB_DOWN"));
+	m_ctrlDn->SetToolTip(_("HIDC_TRIAL_CLUB_DOWN"));
+
 	m_ctrlClubs = new CReportListCtrl(this,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(DEF_CTRL_WIDTH, DEF_CLUB_HEIGHT)),
+		wxDefaultPosition, wxDLG_UNIT(this, wxSize(DEF_CLUB_WIDTH, DEF_CLUB_HEIGHT)),
 		true, CReportListCtrl::SortHeader::NoSort, true, false);
 	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgTrial::OnItemSelectedClubs, this);
 	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgTrial::OnItemActivatedClubs, this);
@@ -285,7 +301,9 @@ CDlgTrial::CDlgTrial(
 	sizerClubBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerClubBtns->Add(btnNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerClubBtns->Add(m_ctrlEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerClubBtns->Add(m_ctrlDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerClubBtns->Add(m_ctrlDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerClubBtns->Add(m_ctrlUp, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerClubBtns->Add(m_ctrlDn, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerClubNotes = new wxBoxSizer(wxHORIZONTAL);
 	sizerClubNotes->Add(m_ctrlClubNotes, 0, wxALIGN_BOTTOM | wxRIGHT, wxDLG_UNIT_X(this, 3));
@@ -333,6 +351,8 @@ CDlgTrial::CDlgTrial(
 	m_ctrlEdit->Enable(false);
 	m_ctrlClubNotes->Enable(false);
 	m_ctrlDelete->Enable(false);
+	m_ctrlUp->Enable(false);
+	m_ctrlDn->Enable(false);
 	TransferDataToWindow();
 	ListLocations();
 	ListClubs();
@@ -460,17 +480,23 @@ void CDlgTrial::OnSelchangeLocation(wxCommandEvent& evt)
 void CDlgTrial::OnItemSelectedClubs(wxListEvent& evt)
 {
 	TransferDataFromWindow();
-	if (0 == m_ctrlClubs->GetSelectedItemCount())
+	long index = m_ctrlClubs->GetFirstSelected();
+	if (0 <= index)
+	{
+		const int count = m_ctrlClubs->GetItemCount();
+		m_ctrlEdit->Enable(true);
+		m_ctrlClubNotes->Enable(true);
+		m_ctrlDelete->Enable(true);
+		m_ctrlUp->Enable(0 < index);
+		m_ctrlDn->Enable(index < count - 1);
+	}
+	else
 	{
 		m_ctrlEdit->Enable(false);
 		m_ctrlClubNotes->Enable(false);
 		m_ctrlDelete->Enable(false);
-	}
-	else
-	{
-		m_ctrlEdit->Enable(true);
-		m_ctrlClubNotes->Enable(true);
-		m_ctrlDelete->Enable(true);
+		m_ctrlUp->Enable(false);
+		m_ctrlDn->Enable(false);
 	}
 	UpdateNotes(m_Location, false, true);
 }
@@ -584,6 +610,36 @@ void CDlgTrial::OnClubDelete(wxCommandEvent& evt)
 		m_Clubs.DeleteClub(pClub->GetName(), pClub->GetVenue());
 		m_ctrlClubs->DeleteItem(index);
 		m_ctrlClubs->Refresh();
+	}
+}
+
+
+void CDlgTrial::OnClubMoveUp(wxCommandEvent& evt)
+{
+	int nItem = m_ctrlClubs->GetSelection(true);
+	if (0 <= nItem)
+	{
+		int newIndex = nItem - 1;
+		if (0 <= newIndex)
+		{
+			m_ctrlClubs->SwapEntries(nItem, newIndex);
+			std::swap(m_Clubs.at(nItem), m_Clubs.at(newIndex));
+		}
+	}
+}
+
+
+void CDlgTrial::OnClubMoveDown(wxCommandEvent& evt)
+{
+	int nItem = m_ctrlClubs->GetSelection(true);
+	if (0 <= nItem)
+	{
+		int newIndex = nItem + 1;
+		if (newIndex < m_ctrlClubs->GetItemCount())
+		{
+			m_ctrlClubs->SwapEntries(nItem, newIndex);
+			std::swap(m_Clubs.at(nItem), m_Clubs.at(newIndex));
+		}
 	}
 }
 

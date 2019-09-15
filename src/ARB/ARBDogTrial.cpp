@@ -184,10 +184,9 @@ bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 
 std::wstring ARBDogTrial::GetGenericName() const
 {
-	ARBDogClubPtr pClub;
-#pragma PRAGMA_TODO(ReAdd primary club to trial for icon and name)
-	if (0 < m_Clubs.size())
-		return fmt::format(L"{} {}", m_Clubs[0]->GetVenue(), m_Location);
+	ARBDogClubPtr pClub = m_Clubs.GetMainClub();
+	if (pClub)
+		return fmt::format(L"{} {}", pClub->GetVenue(), m_Location);
 	else
 		return m_Location;
 }
@@ -487,18 +486,14 @@ public:
 			iCompare = StringUtil::CompareNoCase(one->GetGenericName(), two->GetGenericName());
 			if (0 == iCompare)
 			{
-				ARBDogClubPtr club1;
-#pragma PRAGMA_TODO(ReAdd primary club to trial for icon and name)
-				if (0 < one->GetClubs().size())
-					club1 = one->GetClubs()[0];
+				ARBDogClubPtr club1 = one->GetClubs().GetMainClub();
 				std::wstring name1, venue1;
 				if (club1)
 				{
 					name1 = club1->GetName();
 					venue1 = club1->GetVenue();
 				}
-				ARBDogClubPtr club2;
-#pragma PRAGMA_TODO(ReAdd primary club to trial for icon and name)
+				ARBDogClubPtr club2 = two->GetClubs().GetMainClub();
 				if (0 < two->GetClubs().size())
 					club2 = two->GetClubs()[0];
 				std::wstring name2, venue2;

@@ -22,8 +22,11 @@
 #include "stdafx.h"
 #include "LibARBWin/DPI.h"
 
-#ifndef EVT_DPI_CHANGED
-#if _MSC_VER >= 1800 && (NTDDI_VERSION >= NTDDI_WINBLUE)
+//#ifdef EVT_DPI_CHANGED
+// wx3.1.3 adds much better dpi support
+// TODO: Use it!
+
+#if _MSC_VER >= 1800
 #include <shellscalingapi.h>
 
 #else
@@ -39,7 +42,6 @@ typedef enum MONITOR_DPI_TYPE {
 	MDT_RAW_DPI = 2,
 	MDT_DEFAULT = MDT_EFFECTIVE_DPI
 } MONITOR_DPI_TYPE;
-#endif
 #endif
 
 #ifdef __WXMSW__

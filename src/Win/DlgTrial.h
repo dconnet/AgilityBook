@@ -54,6 +54,8 @@ private:
 	CRichEditCtrl2* m_ctrlLocationInfo;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
+	wxButton* m_ctrlUp;
+	wxButton* m_ctrlDn;
 	CReportListCtrl* m_ctrlClubs;
 	CNoteButton* m_ctrlClubNotes;
 	CRichEditCtrl2* m_ctrlClubInfo;
@@ -86,6 +88,8 @@ private:
 	void OnClubNew(wxCommandEvent& evt);
 	void OnClubEdit(wxCommandEvent& evt);
 	void OnClubDelete(wxCommandEvent& evt);
+	void OnClubMoveUp(wxCommandEvent& evt);
+	void OnClubMoveDown(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 	void OnCancel(wxCommandEvent& evt);
 };

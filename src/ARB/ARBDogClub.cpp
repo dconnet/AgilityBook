@@ -256,6 +256,16 @@ bool ARBDogClubList::PostLoad(ARBErrorCallback& ioCallback)
 }
 
 
+ARBDogClubPtr ARBDogClubList::GetMainClub() const
+{
+	ARBDogClubPtr club;
+#pragma PRAGMA_TODO(Maybe add a user defined main club)
+	if (size() > 0)
+		club = at(0);
+	return club;
+}
+
+
 bool ARBDogClubList::GetPrimaryClub(
 		std::wstring const& inVenue,
 		ARBDogClubPtr* outClub) const

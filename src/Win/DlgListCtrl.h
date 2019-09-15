@@ -77,9 +77,6 @@ private:
 			std::vector<CDlgListCtrlDataPtr>& items);
 	CDlgListCtrlDataPtr GetItemListData(long item) const;
 	void UpdateControls();
-	void SwapEntries(
-			long oldIndex,
-			long newIndex);
 	void DoEdit();
 	// Only PocketPC calls this directly. We're making use of it internally.
 	virtual bool DoOK();

@@ -232,10 +232,9 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 	m_idxIcon = m_pTree->GetImageList().IndexTrial();
 	if (m_pTrial)
 	{
-		if (0 < m_pTrial->GetClubs().size())
+		ARBDogClubPtr pClub = m_pTrial->GetClubs().GetMainClub();
+		if (pClub)
 		{
-#pragma PRAGMA_TODO(ReAdd primary club to trial for icon and name)
-			ARBDogClubPtr pClub = m_pTrial->GetClubs()[0];
 			ARBConfigVenuePtr pVenue;
 			if (pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
 			{

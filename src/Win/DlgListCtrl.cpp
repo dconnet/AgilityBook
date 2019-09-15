@@ -725,21 +725,6 @@ void CDlgListCtrl::UpdateControls()
 }
 
 
-void CDlgListCtrl::SwapEntries(
-		long oldIndex,
-		long newIndex)
-{
-	long data1 = static_cast<long>(m_ctrlList->GetItemData(oldIndex));
-	long data2 = static_cast<long>(m_ctrlList->GetItemData(newIndex));
-	m_ctrlList->SetItemData(oldIndex, data2);
-	m_ctrlList->SetItemData(newIndex, data1);
-	m_ctrlList->SetSelection(newIndex);
-	m_ctrlList->RefreshItem(oldIndex);
-	m_ctrlList->RefreshItem(newIndex);
-	UpdateControls();
-}
-
-
 void CDlgListCtrl::DoEdit()
 {
 	int nItem = m_ctrlList->GetFirstSelected();
@@ -913,7 +898,8 @@ void CDlgListCtrl::OnMoveUp(wxCommandEvent& evt)
 		int newIndex = nItem - 1;
 		if (0 <= newIndex)
 		{
-			SwapEntries(nItem, newIndex);
+			m_ctrlList->SwapEntries(nItem, newIndex);
+			UpdateControls();
 		}
 	}
 }
@@ -926,7 +912,10 @@ void CDlgListCtrl::OnMoveDown(wxCommandEvent& evt)
 	{
 		int newIndex = nItem + 1;
 		if (newIndex < m_ctrlList->GetItemCount())
-			SwapEntries(nItem, newIndex);
+		{
+			m_ctrlList->SwapEntries(nItem, newIndex);
+			UpdateControls();
+		}
 	}
 }
 

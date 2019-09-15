@@ -170,7 +170,13 @@ public:
 	bool PostLoad(ARBErrorCallback& ioCallback);
 
 	/**
-	 * Get the primary club, used to establish rules.
+	 * Get the main club for the trial (used for icon and trial generic name)
+	 * @return Main club for trial
+	 */
+	ARBDogClubPtr GetMainClub() const;
+
+	/**
+	 * Get the primary club for a cosanctioning pair, used to establish rules.
 	 * @param inVenue Venue of club to find.
 	 * @param outClub Pointer to first club.
 	 * @return Whether there is a primary club.
