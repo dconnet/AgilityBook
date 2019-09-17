@@ -1,4 +1,9 @@
-9/14/2019: v3.4.1.<develop>
+9/17/2019: v3.4.1.<develop>
+- Bumped file version to 15.1:
+  - Needed to fix FCAT.
+- Bug fixes:
+  - Don't record judge or height for FCAT.
+  - Properly set the venue when creating a new run.
 
 9/14/2019: v3.4.0.111
 - Bumped file version to 15.0:

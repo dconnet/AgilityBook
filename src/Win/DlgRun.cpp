@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-09-17 Fix last-entered on hidden fields. Fix run's club on creation.
  * 2019-08-18 Fix Bonus points (couldn't enter double).
  *            Auto-select event when there's only one.
  * 2018-12-16 Convert to fmt.
@@ -921,7 +922,10 @@ CDlgRun::CDlgRun(
 			m_ctrlVenues->SetSelection(index);
 	}
 	if (wxNOT_FOUND == m_ctrlVenues->GetSelection())
+	{
 		m_ctrlVenues->SetSelection(0);
+		m_Run->SetClub(GetVenueData(0)->m_Club);
+	}
 
 	wxStaticText* textLocation = new wxStaticText(m_panelScore, wxID_ANY,
 		Pad(m_pTrial->GetLocation()),
@@ -1835,7 +1839,8 @@ void CDlgRun::UpdateVenue(bool bOnEventChange)
 		return;
 	CDlgDogVenueData* pData = GetVenueData(index);
 
-	if (ARBScoringType::BySpeed != m_Run->GetScoring().GetType())
+	if (m_ctrlHeight->IsShown()
+	&& ARBScoringType::BySpeed != m_Run->GetScoring().GetType())
 	{
 		if (bOnEventChange || m_Height.empty())
 		{
@@ -2180,7 +2185,8 @@ void CDlgRun::SetMinYPS()
 
 void CDlgRun::SetYPS()
 {
-	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType())
+	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType()
+	|| ARBScoringType::BySpeed == m_Run->GetScoring().GetType())
 	{
 		wxString str;
 		double yps;
@@ -2577,7 +2583,8 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 	}
 	SetTitlePoints();
 	SetObstacles();
-	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType())
+	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType()
+	|| ARBScoringType::BySpeed == m_Run->GetScoring().GetType())
 	{
 		SetMinYPS();
 		SetYPS();
@@ -3477,14 +3484,20 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	//@todo: Add integrity checks - things like snooker score >=37? is Q set?
 
 	m_Run->SetDate(m_Date);
-	m_Run->SetSubName(StringUtil::stringW(m_SubName));
-	m_Run->SetHeight(StringUtil::stringW(m_Height));
-	m_Run->SetJudge(StringUtil::stringW(m_Judge));
-	m_Run->SetHandler(StringUtil::stringW(m_Handler));
+	if (m_ctrlSubNames->IsShown())
+		m_Run->SetSubName(StringUtil::stringW(m_SubName));
+	if (m_ctrlHeight->IsShown())
+		m_Run->SetHeight(StringUtil::stringW(m_Height));
+	if (m_ctrlJudge->IsShown())
+		m_Run->SetJudge(StringUtil::stringW(m_Judge));
+	if (m_ctrlHandler->IsShown())
+		m_Run->SetHandler(StringUtil::stringW(m_Handler));
 	m_Run->SetConditions(StringUtil::stringW(m_Conditions));
 	m_Run->SetNote(StringUtil::stringW(m_Comments));
-	m_Run->SetInClass(m_InClass);
-	m_Run->SetDogsQd(m_DogsQd);
+	if (m_ctrlInClass->IsShown())
+		m_Run->SetInClass(m_InClass);
+	if (m_ctrlDogsQd->IsShown())
+		m_Run->SetDogsQd(m_DogsQd);
 
 	//TODO: Remove debugging code
 #ifdef _DEBUG
@@ -3504,9 +3517,12 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	m_pTrial->SetMultiQs(m_pDoc->Book().GetConfig()); // Note, when adding a new run, this is actually too soon to call - the run isn't in the trial yet
 	CAgilityBookOptions::SetLastEnteredDivision(m_pDog, pVenue, m_Run->GetDivision().c_str());
 	CAgilityBookOptions::SetLastEnteredLevel(m_pDog, pVenue, m_Run->GetLevel().c_str());
-	CAgilityBookOptions::SetLastEnteredHeight(m_pDog, pVenue, m_Run->GetHeight().c_str());
-	CAgilityBookOptions::SetLastEnteredJudge(m_Run->GetJudge().c_str());
-	CAgilityBookOptions::SetLastEnteredHandler(m_pDog, m_Run->GetHandler().c_str());
+	if (m_ctrlHeight->IsShown())
+		CAgilityBookOptions::SetLastEnteredHeight(m_pDog, pVenue, m_Run->GetHeight().c_str());
+	if (m_ctrlJudge->IsShown())
+		CAgilityBookOptions::SetLastEnteredJudge(m_Run->GetJudge().c_str());
+	if (m_ctrlHandler->IsShown())
+		CAgilityBookOptions::SetLastEnteredHandler(m_pDog, m_Run->GetHandler().c_str());
 
 	m_pDoc->Modify(true);
 

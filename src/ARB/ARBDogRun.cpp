@@ -512,6 +512,16 @@ bool ARBDogRun::Load(
 			m_Links.insert(element->GetValue());
 		}
 	}
+
+	// Fix improperly recorded data for FCAT.
+	if (inVersion < ARBVersion(15, 1) && m_Division == L"FCAT" && m_Level == L"FCAT")
+	{
+		m_Height.clear();
+		m_Judge.clear();
+		m_Handler.clear();
+		m_InClass = -1;
+		m_DogsQd = -1;
+	}
 	return true;
 }
 
