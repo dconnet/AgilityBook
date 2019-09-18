@@ -88,7 +88,8 @@ OtherPtInfo::OtherPtInfo(
 {
 	if (m_pRun)
 	{
-		m_Venue = m_pRun->GetClub()->GetVenue();
+		if (m_pRun->GetClub())
+			m_Venue = m_pRun->GetClub()->GetVenue();
 		m_Div = m_pRun->GetDivision();
 		m_Level = m_pRun->GetLevel();
 		m_Event = m_pRun->GetEvent();
@@ -859,7 +860,10 @@ CPointsDataVenue::CPointsDataVenue(
 					{
 						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
 						{
-							MQs[*iMultiQ].insert(MultiQdata(pRun->GetDate(), pTrial, pRun->GetClub()->GetName()));
+							std::wstring name;
+							if (pRun->GetClub())
+								name = pRun->GetClub()->GetName();
+							MQs[*iMultiQ].insert(MultiQdata(pRun->GetDate(), pTrial, name));
 						}
 					}
 				}
