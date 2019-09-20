@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2019-09-20 Create distribution files automagically.
 # 2017-05-10 Fix vcver/platformTools issues.
 # 2017-04-09 Added vc141 support.
 # 2016-10-19 Changed RmMinusRF to using shutil.rmtree()
@@ -51,7 +52,7 @@
 # 2007-10-31 Changed from WiX to InnoSetup
 # 2007-03-07 Created
 
-"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC141]]
+"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC141]] [/distrib dir]
 	wix: Override internal wix path (c:\Tools\wix3)
 	user: Create msi as a per-user install (default: per-machine)
 	32: Create 32bit Unicode msi
@@ -60,6 +61,7 @@
 	notidy: Do not clean up generated files
 	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
 	VC: Generate msi using specified vc version (Default: 141)
+	distrib: Directory to write distribution files to (Default: ./distrib)
 """
 
 import datetime
@@ -74,6 +76,15 @@ import sys
 
 # Where top-level AgilityBook directory is relative to this script.
 AgilityBookDir = r'..\..\..'
+
+# Where to assemble all the files
+DistribDir = r'.\distrib'
+
+FilesToCopy = [
+	'AgilityBook.pdb',
+	'AgilityBook.exe',
+	'ARBHelp.exe',
+	'ARBUpdater.exe']
 
 # Where is WiX? Can be overriden on command line.
 # This is initially set to %WIX%/bin, if WiX is actually installed.
@@ -175,12 +186,14 @@ def getoutputvars(code, version, platformTools):
 	if code32 == code:
 		outputFile = 'AgilityBook-' + version + '-win'
 		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'Win32\Release'
+		distDir = 'vc' + platformTools
 	elif code64 == code:
 		outputFile = 'AgilityBook-' + version + '-x64'
 		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x64\Release'
+		distDir = 'vc' + platformTools + 'x64'
 	else:
 		raise Exception('Invalid code')
-	return baseDir, outputFile
+	return baseDir, outputFile, distDir
 
 
 def ReadPipe(logFile, cmd):
@@ -269,7 +282,7 @@ def GetWxsFilesAsString(extension):
 
 
 def CopyCAdll(ver4Line, platformTools):
-	baseDir, outputFile = getoutputvars(code32, ver4Line, platformTools)
+	baseDir, outputFile, distDir = getoutputvars(code32, ver4Line, platformTools)
 	arbdll = baseDir + '\\' + CA_dll
 	if not os.access(arbdll, os.F_OK):
 		print(arbdll + r' does not exist, MSI skipped')
@@ -278,68 +291,73 @@ def CopyCAdll(ver4Line, platformTools):
 	return 1
 
 
-def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, platformTools):
-	baseDir, outputFile = getoutputvars(code, ver4Line, platformTools)
-	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
-		print(baseDir + r'\AgilityBook.exe does not exist, MSI skipped')
-		return 0
+def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, platformTools, distrib):
+	baseDir, outputFile, distDir = getoutputvars(code, ver4Line, platformTools)
 
-	if os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
-		cabcache = 'cabcache'
-		RmMinusRF(cabcache)
-		# -wx: Treat warnings as errors
-		candleCmd = 'candle -nologo -wx -pedantic'
-		candleCmd += ' -dCURRENT_VERSION=' + ver3Dot
-		if code == code64:
-			candleCmd += ' -arch x64'
-		else:
-			candleCmd += ' -arch x86'
-		candleCmd += ' -ext WixUIExtension -ext WixUtilExtension'
-		candleCmd += ' -dBASEDIR="' + baseDir + '"'
-		candleCmd += ' -dINSTALL_SCOPE=' + perUser
-		runcmd(candleCmd + GetWxsFilesAsString('.wxs'))
-		processing = 0
-		baseMsi = ''
-		sumInfoStream = ''
-		for culture, langId in supportedLangs:
-			processing += 1
-			basename = outputFile
-			if processing > 1:
-				basename += '_' + culture
-			# -wx: Treat warnings as errors
-			lightCmd = 'light -nologo -wx -pedantic -spdb'
-			lightCmd += ' -dcl:high -cc ' + cabcache
-			if not processing == 1:
-				lightCmd += ' -reusecab'
-			lightCmd += ' -ext WixUIExtension -ext WixUtilExtension'
-			lightCmd += ' -dWixUILicenseRtf=License_' + culture + '.rtf'
-			lightCmd += ' -cultures:' + culture
-			lightCmd += ' -loc AgilityBook_' + culture + '.wxl'
-			lightCmd += ' -out ' + basename + '.msi'
-			runcmd(lightCmd + GetWxsFilesAsString('.wixobj'))
-			if processing == 1:
-				baseMsi = basename + '.msi'
-				sumInfoStream += langId
-			else:
-				sumInfoStream += ',' + langId
-				runcmd('torch -nologo -p -t language ' + baseMsi + ' ' + basename + '.msi -out ' + langId + '.mst')
-				WiSubStg(baseMsi, langId)
-			if tidy:
-				if os.access(langId + '.mst', os.F_OK):
-					os.remove(langId + '.mst')
-				if processing > 1:
-					if os.access(basename + '.msi', os.F_OK):
-						os.remove(basename + '.msi')
+	vcdir = os.path.join(distrib, distDir)
+	if not os.access(vcdir, os.F_OK):
+		os.mkdir(vcdir)
 
-		if processing > 1:
-			WiLangId(baseMsi, sumInfoStream)
-		if tidy:
-			RmMinusRF(cabcache)
-		if not testing:
-			WriteCode(baseMsi, ver4Dot, code, vcver)
-		runcmd(r'python ..\SignStuff.py ' + baseMsi)
+	for file in FilesToCopy:
+		fullpath = os.path.join(baseDir, file)
+		if not os.access(fullpath, os.F_OK):
+			print(fullpath + r' does not exist, MSI skipped')
+			return 0
+		shutil.copy(fullpath, vcdir)
+
+	cabcache = 'cabcache'
+	RmMinusRF(cabcache)
+	# -wx: Treat warnings as errors
+	candleCmd = 'candle -nologo -wx -pedantic'
+	candleCmd += ' -dCURRENT_VERSION=' + ver3Dot
+	if code == code64:
+		candleCmd += ' -arch x64'
 	else:
-		print(baseDir + r'\AgilityBook.exe does not exist, MSI skipped')
+		candleCmd += ' -arch x86'
+	candleCmd += ' -ext WixUIExtension -ext WixUtilExtension'
+	candleCmd += ' -dBASEDIR="' + baseDir + '"'
+	candleCmd += ' -dINSTALL_SCOPE=' + perUser
+	runcmd(candleCmd + GetWxsFilesAsString('.wxs'))
+	processing = 0
+	baseMsi = ''
+	sumInfoStream = ''
+	for culture, langId in supportedLangs:
+		processing += 1
+		basename = os.path.join(distrib, outputFile)
+		if processing > 1:
+			basename += '_' + culture
+		# -wx: Treat warnings as errors
+		lightCmd = 'light -nologo -wx -pedantic -spdb'
+		lightCmd += ' -dcl:high -cc ' + cabcache
+		if not processing == 1:
+			lightCmd += ' -reusecab'
+		lightCmd += ' -ext WixUIExtension -ext WixUtilExtension'
+		lightCmd += ' -dWixUILicenseRtf=License_' + culture + '.rtf'
+		lightCmd += ' -cultures:' + culture
+		lightCmd += ' -loc AgilityBook_' + culture + '.wxl'
+		lightCmd += ' -out ' + basename + '.msi'
+		runcmd(lightCmd + GetWxsFilesAsString('.wixobj'))
+		if processing == 1:
+			baseMsi = basename + '.msi'
+			sumInfoStream += langId
+		else:
+			sumInfoStream += ',' + langId
+			runcmd('torch -nologo -p -t language ' + baseMsi + ' ' + basename + '.msi -out ' + langId + '.mst')
+			WiSubStg(baseMsi, langId)
+		if tidy:
+			if os.access(langId + '.mst', os.F_OK):
+				os.remove(langId + '.mst')
+			if processing > 1:
+				if os.access(basename + '.msi', os.F_OK):
+					os.remove(basename + '.msi')
+
+	if processing > 1:
+		WiLangId(baseMsi, sumInfoStream)
+	if tidy:
+		RmMinusRF(cabcache)
+	if not testing:
+		WriteCode(baseMsi, ver4Dot, code, vcver)
+	runcmd(r'python ..\SignStuff.py ' + baseMsi)
 
 	if tidy:
 		for file in GetWxsFiles('.wixobj'):
@@ -362,6 +380,7 @@ def main():
 	testing = 0
 	vcver = '141'
 	platformTools = '141'
+	distrib = DistribDir
 	if 1 == len(sys.argv):
 		print('Setting /32 /test')
 		b32 = 1
@@ -392,12 +411,22 @@ def main():
 		elif o == '/VC141':
 			vcver = '141'
 			platformTools = '141'
+		elif o == '/distrib':
+			if i == len(sys.argv) - 1:
+				error = 1
+				break;
+			distrib = sys.argv[i+1]
+			i += 1
 		else:
 			error = 1
 			break
 		i += 1
 	if error:
 		print('Usage:', __doc__)
+		return 1
+
+	if os.access(distrib, os.F_OK):
+		print('ERROR: "' + distrib + '" exists. Please clean this up first.')
 		return 1
 
 	if not os.access(WiXdir, os.W_OK):
@@ -411,14 +440,16 @@ def main():
 	ver3Dot, ver3Line = getversion(3)
 	ver4Dot, ver4Line = getversion(4)
 
+	os.mkdir(distrib)
+
 	# Wix
 	os.environ['PATH'] += ';' + WiXdir
 	if not CopyCAdll(ver4Line, platformTools):
 		return 1
 	if b32:
-		genWiX(ver3Dot, ver4Dot, ver4Line, code32, tidy, perUser, testing, vcver, platformTools)
+		genWiX(ver3Dot, ver4Dot, ver4Line, code32, tidy, perUser, testing, vcver, platformTools, distrib)
 	if b64:
-		genWiX(ver3Dot, ver4Dot, ver4Line, code64, tidy, perUser, testing, vcver, platformTools)
+		genWiX(ver3Dot, ver4Dot, ver4Line, code64, tidy, perUser, testing, vcver, platformTools, distrib)
 	if os.access(CA_dll, os.W_OK):
 		os.remove(CA_dll)
 
