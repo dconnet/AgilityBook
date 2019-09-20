@@ -73,6 +73,7 @@ import stat
 import string
 import subprocess
 import sys
+import zipfile
 
 # Where top-level AgilityBook directory is relative to this script.
 AgilityBookDir = r'..\..\..'
@@ -320,6 +321,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, plat
 	runcmd(candleCmd + GetWxsFilesAsString('.wxs'))
 	processing = 0
 	baseMsi = ''
+	baseMsiZip = ''
 	sumInfoStream = ''
 	for culture, langId in supportedLangs:
 		processing += 1
@@ -339,6 +341,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, plat
 		runcmd(lightCmd + GetWxsFilesAsString('.wixobj'))
 		if processing == 1:
 			baseMsi = basename + '.msi'
+			baseMsiZip = basename + '.zip'
 			sumInfoStream += langId
 		else:
 			sumInfoStream += ',' + langId
@@ -358,6 +361,10 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, plat
 	if not testing:
 		WriteCode(baseMsi, ver4Dot, code, vcver)
 	runcmd(r'python ..\SignStuff.py ' + baseMsi)
+
+	zip = zipfile.ZipFile(baseMsiZip, 'w')
+	zip.write(baseMsi, outputFile + '.msi')
+	zip.close()
 
 	if tidy:
 		for file in GetWxsFiles('.wixobj'):
@@ -411,6 +418,9 @@ def main():
 		elif o == '/VC141':
 			vcver = '141'
 			platformTools = '141'
+		elif o == '/VC142':
+			vcver = '142'
+			platformTools = '142'
 		elif o == '/distrib':
 			if i == len(sys.argv) - 1:
 				error = 1
