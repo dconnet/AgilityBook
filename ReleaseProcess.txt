@@ -45,10 +45,9 @@ Switch to build machine, do a full rebuild and verify it.
       -t:       Testing, just print commands to run
       compiler: vc141 (default: vc141)
     (note: If this needs to be re-run, revert .../configure.in, .../src/Include/VersionNumber.h)
-- Run 'GenMSI.py /all' to create w32/x64 installers (and sign them)
-  and auto-update Misc\Installations\InstallGUIDs.csv
-  - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
-- Copy exe files from bin to \AgilityBook\distrib\vN.N.N.N (vc141/vc141x64)
+- Run 'GenMSI.py -b all' to create w32/x64 installers (and sign them),
+  auto-update Misc\Installations\InstallGUIDs.csv, and create distribution dir.
+  - Move distrib dir to \AgilityBook\distrib\vN.N.N.N
 
 Commit all changes to GitHub.
 

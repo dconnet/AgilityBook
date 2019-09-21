@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2019-09-21 Change to getopt
 # 2019-09-20 Create distribution files automagically.
 # 2017-05-10 Fix vcver/platformTools issues.
 # 2017-04-09 Added vc141 support.
@@ -52,19 +53,21 @@
 # 2007-10-31 Changed from WiX to InnoSetup
 # 2007-03-07 Created
 
-"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC141]] [/distrib dir]
-	wix: Override internal wix path (c:\Tools\wix3)
-	user: Create msi as a per-user install (default: per-machine)
-	32: Create 32bit Unicode msi
-	64: Create 64bit Unicode msi
-	all: Create all of them (default)
-	notidy: Do not clean up generated files
-	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
-	VC: Generate msi using specified vc version (Default: 141)
-	distrib: Directory to write distribution files to (Default: ./distrib)
+"""GenMSI.py [-w path] [-b user|32|64|all]* [-x] [-e] [-t target] [-d distrib]
+	-w: Override internal wix path (c:\Tools\wix3, default %WIX%)
+	-b: Build target (multiple can be specified
+	    user: Create msi as a per-user install (default: per-machine)
+	    32: Create 32bit Unicode msi
+	    64: Create 64bit Unicode msi
+	    all: Create all of them (default)
+	-x: Do not clean up generated files
+	-e: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
+	-t target: Generate msi using specified vc version (Default: vc141)
+	-d distrib: Directory to write distribution files to (Default: ./distrib)
 """
 
 import datetime
+import getopt
 import glob
 import msilib
 import os
@@ -84,7 +87,9 @@ DistribDir = r'.\distrib'
 FilesToCopy = [
 	'AgilityBook.pdb',
 	'AgilityBook.exe',
+	'ARBHelp.pdb',
 	'ARBHelp.exe',
+	'ARBUpdater.pdb',
 	'ARBUpdater.exe']
 
 # Where is WiX? Can be overriden on command line.
@@ -388,52 +393,53 @@ def main():
 	vcver = '141'
 	platformTools = '141'
 	distrib = DistribDir
+
 	if 1 == len(sys.argv):
-		print('Setting /32 /test')
-		b32 = 1
+		print('Setting -b 64 -e')
+		b64 = 1
 		testing = 1
-	error = 0
-	i = 1
-	while i < len(sys.argv):
-		o = sys.argv[i]
-		if o == '/wix':
-			if i == len(sys.argv) - 1:
-				error = 1
-				break;
-			WiXdir = sys.argv[i+1]
-			i += 1
-		elif o == '/user':
-			perUser = "perUser"
-		elif o == '/32':
-			b32 = 1
-		elif o == '/64':
-			b64 = 1
-		elif o == '/all':
-			b32 = 1
-			b64 = 1
-		elif o == '/notidy':
-			tidy = 0
-		elif o == '/test':
-			testing = 1
-		elif o == '/VC141':
-			vcver = '141'
-			platformTools = '141'
-		elif o == '/VC142':
-			vcver = '142'
-			platformTools = '142'
-		elif o == '/distrib':
-			if i == len(sys.argv) - 1:
-				error = 1
-				break;
-			distrib = sys.argv[i+1]
-			i += 1
-		else:
-			error = 1
-			break
-		i += 1
-	if error:
-		print('Usage:', __doc__)
-		return 1
+	else:
+		try:
+			opts, args = getopt.getopt(sys.argv[1:], "d:w:b:t:xe")
+		except getopt.error as msg:
+			print(msg)
+			print('Usage', __doc__)
+			return 1
+
+		usage = False
+
+		for o, a in opts:
+			if '-d' == o:
+				distrib = a
+			elif '-w' == o:
+				WiXdir = a
+			elif '-b' == o:
+				if a == '32':
+					b32 = 1
+				elif a == '64':
+					b64 = 1
+				elif a == 'all':
+					b32 = 1
+					b64 = 1
+				elif a == 'user':
+					perUser = "perUser"
+			elif '-t' == o:
+				if a == 'vc141':
+					vcver = '141'
+					platformTools = '141'
+				elif a == 'vc142':
+					vcver = '142'
+					platformTools = '142'
+			elif '-x' == o:
+				tidy = 0
+			elif '-e' == o:
+				testing = 1
+			else:
+				usage = True
+				break
+		if usage:
+			print('Usage:', __doc__)
+			return 1
 
 	if os.access(distrib, os.F_OK):
 		print('ERROR: "' + distrib + '" exists. Please clean this up first.')
