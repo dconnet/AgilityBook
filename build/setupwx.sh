@@ -67,7 +67,18 @@ cd $BUILDDIR
 
 case `uname` in
 Darwin*)
-	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk; then
+
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk; then
+		echo "Using 10.15 SDK"
+		export CXXFLAGS="-std=c++14 -stdlib=libc++"
+		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
+		export LDFLAGS="-stdlib=libc++"
+		export LIBS="-lc++"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk
+		MINSDK=10.7
+		TARGETARCH="--enable-macosx_arch=x86_64"
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk; then
 		echo "Using 10.14 SDK"
 		export CXXFLAGS="-std=c++14 -stdlib=libc++"
 		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
