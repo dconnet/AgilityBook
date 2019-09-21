@@ -11,6 +11,7 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2019-09-21 File version 15.1
 2019-09-02 File version 15.0
            Move table and subname info from 'Event' to 'Scoring'
            Reorganize how co-sanctioning is done.

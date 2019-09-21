@@ -1,7 +1,6 @@
-Last Updated: 9/14/2019
+Last Updated: 9/21/2019
 
-- Allow easier order changing of clubs in trial dialog. Allow assigning a
-  club as the "primary" - this is what will used for the icon in the list.
+- Allow assigning a club as the "primary" - this is what will used for the icon in the list.
 
 - Update DlgAssignColumn to support the new 'BySpeed' type (for FCAT).
   It's basically the same as FaultsThenTime, except missing a bunch of data.
