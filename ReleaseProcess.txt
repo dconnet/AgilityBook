@@ -74,20 +74,15 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 
 Commit all changes to GitHub (should just be the xcode project).
 
-Create git branch for release: 'vn.n.n'
- (note, this is a change from prior SVN style. If a rebuild is required because
- of a muckup, it will be done on the branch)
-
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
-- Copy a backup of released files to \AgilityBook\test\[vc141/vc141x64]
-  Currently, I only archive vc141/x64 - the exe's that are released to the wild.
 - Generate zip file (github's zip has unix EOLs):
   - git archive master --prefix="AgilityBook/" --format=zip > AgilityBook-n_n_n_n-src.zip
 
-GitHub:
-- Create release on vn.n.n branch
-  - Create tag "release/vn.n.n" (to avoid branch name ambiguity)
+Create a release on GitHub tagged as: 'release/vn.n.n'
+ (note, this is a change from prior SVN style. If a rebuild is required because
+ of a muckup, we will create a branch from the tag at that point)
+  - Create tag "release/vn.n.n"
   - Use History to create release notes, these will be the same as the announcement below.
   - AgilityBook-n_n_n_n-src.zip
   - AgilityBook-n_n_n_n-win.msi
