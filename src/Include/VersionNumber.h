@@ -22,5 +22,5 @@
 
 #define ARB_VER_MAJOR					3
 #define ARB_VER_MINOR					4
-#define ARB_VER_DOT						1
+#define ARB_VER_DOT						2
 #define ARB_VER_BUILD					112
