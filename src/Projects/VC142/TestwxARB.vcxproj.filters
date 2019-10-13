@@ -141,6 +141,9 @@
     <ClCompile Include="..\..\TestARB\TestInfoItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\TestARB\TestMD5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -185,6 +188,9 @@
     <ClInclude Include="..\..\TestARB\TestARB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\TestARB\TestLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
@@ -217,124 +223,124 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\TestARB\res\Config08_v10_2.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config09_v11_0.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config12_v12_1.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config14_v12_2.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config19_v12_5.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config20_v12_6.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config21_v12_7.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config22_v12_7.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config23_v12_8.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config24_v12_8.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config25_v12_9.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\TestARB.rc2">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config26_v12_9.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config27_v12_10.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config28_v12_11.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config29_v12_11.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config30_v12_11.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config31_v12_11.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config32_v12_11.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config33_v13_1.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config34_v13_1.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config35_v13_1.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config36_v13_1.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config37_v13_1.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config38_v13_1.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config39_v13_2.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config40_v13_2.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config41_v13_2.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config42_v14_0.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config43_v14_0.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config44_v14_1.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config45_v14_2.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config46_v14_3.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config47_v14_3.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config48_v14_3.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config49_v14_3.xml">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\TestARB\res\Config50_v14_3.xml">
+    <None Include="..\..\TestARB\res\TestLib.rc2">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\TestARB\TestARB.rc">
+    <ResourceCompile Include="..\..\TestARB\TestLib.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="..\..\TestARB\res\Config08_v10_2.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config09_v11_0.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config12_v12_1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config14_v12_2.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config19_v12_5.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config20_v12_6.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config21_v12_7.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config22_v12_7.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config23_v12_8.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config24_v12_8.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config25_v12_9.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config26_v12_9.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config27_v12_10.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config28_v12_11.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config29_v12_11.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config30_v12_11.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config31_v12_11.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config32_v12_11.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config33_v13_1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config34_v13_1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config35_v13_1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config36_v13_1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config37_v13_1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config38_v13_1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config39_v13_2.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config40_v13_2.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config41_v13_2.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config42_v14_0.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config43_v14_0.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config44_v14_1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config45_v14_2.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config46_v14_3.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config47_v14_3.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config48_v14_3.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config49_v14_3.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config50_v14_3.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
     <Xml Include="..\..\TestARB\res\Config51_v14_3.xml">
       <Filter>Resource Files</Filter>
     </Xml>
@@ -366,6 +372,12 @@
       <Filter>Resource Files</Filter>
     </Xml>
     <Xml Include="..\..\TestARB\res\Config61_v14_5.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config62_v14_6.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config63_v15_0.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

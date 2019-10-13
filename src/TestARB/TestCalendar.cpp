@@ -17,7 +17,7 @@
  */
 
 #include "stdafx.h"
-#include "TestARB.h"
+#include "TestLib.h"
 
 #include "ARB/ARBCalendar.h"
 #include "ARB/ARBStructure.h"

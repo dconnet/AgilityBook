@@ -18,7 +18,7 @@
  */
 
 #include "stdafx.h"
-#include "TestARB.h"
+#include "TestLib.h"
 
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/VersionNum.h"

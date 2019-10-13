@@ -20,6 +20,8 @@
  */
 
 #include "stdafx.h"
+#include "TestLib.h"
+
 #include "TestARB.h"
 
 #include "ARB/ARBStructure.h"

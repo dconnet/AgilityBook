@@ -22,9 +22,10 @@
  */
 
 #include "stdafx.h"
-#include "TestARB.h"
+#include "TestLib.h"
 
 #include "ConfigHandler.h"
+#include "TestARB.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBStructure.h"

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-10-13 Move config test to TestARB
  * 2019-08-15 Fix tests on unix.
  * 2019-06-28 Moved ConfigPath to TestUtils
  * 2019-01-06 fmt 5.3 cannot sprintf a wide string into a narrow format anymore
@@ -27,11 +28,8 @@
  */
 
 #include "stdafx.h"
-#include "TestARB.h"
+#include "TestLib.h"
 
-#include "ConfigHandler.h"
-#include "ARB/ARBAgilityRecordBook.h"
-#include "ARB/ARBConfig.h"
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
@@ -257,20 +255,6 @@ TEST_CASE("Misc")
 
 			REQUIRE(str == buffer);
 			REQUIRE(wstr == wbuffer);
-		}
-	}
-
-
-	SECTION("ARBConfigFiles")
-	{
-		if (!g_bMicroTest)
-		{
-			ARBConfig config;
-			CConfigHandler handler;
-			ARBVersion version;
-			config.Default(&handler, &version);
-			REQUIRE(version.IsSet());
-			REQUIRE(version == ARBAgilityRecordBook::GetCurrentDocVersion());
 		}
 	}
 

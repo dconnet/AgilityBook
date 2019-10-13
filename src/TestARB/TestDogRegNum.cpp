@@ -16,7 +16,7 @@
  */
 
 #include "stdafx.h"
-#include "TestARB.h"
+#include "TestLib.h"
 
 #include "ARB/ARBStructure.h"
 #include "ARB/ARBDogRegNum.h"

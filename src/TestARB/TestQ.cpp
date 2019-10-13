@@ -20,7 +20,7 @@
  */
 
 #include "stdafx.h"
-#include "TestARB.h"
+#include "TestLib.h"
 
 #include "ARB/ARB_Q.h"
 #include "ARBCommon/ARBTypes.h"

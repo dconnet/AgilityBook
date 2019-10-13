@@ -17,7 +17,7 @@
  */
 
 #include "stdafx.h"
-#include "TestARB.h"
+#include "TestLib.h"
 
 #include "ARB/ARBInfo.h"
 #include "ARB/ARBInfoItem.h"

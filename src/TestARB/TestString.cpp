@@ -17,7 +17,7 @@
  */
 
 #include "stdafx.h"
-#include "TestARB.h"
+#include "TestLib.h"
 
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"

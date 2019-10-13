@@ -19,7 +19,7 @@
  */
 
 #include "stdafx.h"
-#include "TestARB.h"
+#include "TestLib.h"
 
 #include "ARBCommon/ARBDate.h"
 

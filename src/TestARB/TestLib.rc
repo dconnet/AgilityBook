@@ -42,7 +42,7 @@ END
 
 3 TEXTINCLUDE
 BEGIN
-    "#include ""res/TestARB.rc2""\r\n"
+    "#include ""res/TestLib.rc2""\r\n"
     "#if defined(USE_WXWIDGETS)\r\n"
     "#include ""wx/msw/wx.rc""\r\n"
     "#endif\r\n\0"
@@ -75,7 +75,7 @@ TESTARCHIVE_ZIP         DATAFILE                "res/TestArchive.zip"
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#include "res/TestARB.rc2"
+#include "res/TestLib.rc2"
 #if defined(USE_WXWIDGETS)
 #include "wx/msw/wx.rc"
 #endif
