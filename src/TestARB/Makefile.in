@@ -75,6 +75,7 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestElement.cpp \
 	TestErrorCallback.cpp \
 	TestInfoItem.cpp \
+	TestLib.cpp \
 	TestMD5.cpp \
 	TestMisc.cpp \
 	TestQ.cpp \
