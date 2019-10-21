@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2019-10-21 Configuration version 64.
+           Fixed AKC NAC points (Premier changed to 15 for 2018)
 2019-08-31 File version 15.0, move table and subname config info.
            Configuration version 63.
            Re-add NADAC Gamblers.
@@ -203,7 +205,7 @@ Revision History:
            Added new Config/Action: DeleteTitle
 -->
 
-  <Configuration version="63">
+  <Configuration version="64">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -748,7 +750,11 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Nationals" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
-        <Scoring Division="*" Level="Premier" ValidFrom="2016-12-1" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Premier" ValidFrom="2017-12-1" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="NAC" Points="15" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="*" Level="Premier" ValidFrom="2016-12-1" ValidTo="2017-11-30" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" Points="25" SpeedPts="n"/>
         </Scoring>
@@ -796,7 +802,11 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Nationals" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
-        <Scoring Division="*" Level="Premier" ValidFrom="2016-12-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Premier" ValidFrom="2017-12-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="NAC" Points="15" SpeedPts="n"/>
+        </Scoring>
+        <Scoring Division="*" Level="Premier" ValidFrom="2016-12-1" ValidTo="2017-11-30" dropFractions="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" Points="25" SpeedPts="n"/>
         </Scoring>
