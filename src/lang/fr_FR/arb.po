@@ -2037,12 +2037,12 @@ msgid "Agility Record Book"
 msgstr "Agility Record Book"
 
 #: Win/DlgAbout.cpp:65
-msgid "LinkYahooText"
-msgstr "Forum Yahoo"
+msgid "LinkGroupText"
+msgstr "Forum"
 
 #: Win/DlgAbout.cpp:65 Win/DlgAbout.cpp:67 Win/DlgAbout.cpp:68
-msgid "LinkYahooUrl"
-msgstr "http://groups.yahoo.com/group/AgilityRecordBook"
+msgid "LinkGroupUrl"
+msgstr "http://groups.io/g/AgilityRecordBook"
 
 #: Win/DlgAbout.cpp:71
 msgid "LinkHelpText"

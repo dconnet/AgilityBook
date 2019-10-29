@@ -62,10 +62,10 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
  	version->Wrap(wxDLG_UNIT_X(this, 250));
 
 	wxHyperlinkCtrl* link1 = new wxHyperlinkCtrl(this, wxID_ANY,
-		_("LinkYahooText"), _("LinkYahooUrl"),
+		_("LinkGroupText"), _("LinkGroupUrl"),
 		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
-	link1->SetToolTip(_("LinkYahooUrl"));
-	link1->SetHelpText(_("LinkYahooUrl"));
+	link1->SetToolTip(_("LinkGroupUrl"));
+	link1->SetHelpText(_("LinkGroupUrl"));
 
 	wxHyperlinkCtrl* link2 = new wxHyperlinkCtrl(this, wxID_ANY,
 		_("LinkHelpText"), _("LinkHelpUrl"),

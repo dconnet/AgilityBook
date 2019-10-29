@@ -108,8 +108,8 @@ Web Site:
   - Verify auto-update works from program
 - Delete old zip files.
 
-In Yahoo
-- Send an email announcing new release - send as a 'Special Notice' from Yahoo.
+In Groups
+- Send an email announcing new release.
 
 Backup:
 - Backup development directory onto CD.

@@ -40,7 +40,7 @@ quickly grew too complicated since I wanted it to automatically calculate
 many things. And with all the rule differences between the venues,
 the macros were complex and data entry was a pain! Thus AgilityBook was
 born on December 28, 2002. With the help of many people in the
-[Yahoo discussion group](https://groups.yahoo.com/neo/groups/AgilityRecordBook),
+[Groups.io discussion group](https://groups.io/g/AgilityRecordBook),
 various options were debated, added, and tested. In July of 2003,
 I officially released the source code into the public domain on Source Forge.
 This was then moved to GitHub at the end of December 2017.
