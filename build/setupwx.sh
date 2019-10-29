@@ -6,6 +6,7 @@
 # (I put this script in my home dir)
 #
 # History
+# 2019-10-28 Upgraded 3.1.2 to 3.1.3
 # 2019-08-24 Make gtk3 the default.
 # 2019-08-17 Remove carbon
 # 2019-07-26 Add support for Ubuntu (18.04), changed default build dir name
@@ -30,7 +31,7 @@ if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
 	VERSION="--disable-compat28 --disable-compat30"
 elif test "x$1" = "x3.1"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.2
+	WXWIN=~/devtools/wx/wxWidgets-3.1.3
 	VERSION="--disable-compat28 --disable-compat30"
 else
 	echo $USAGE

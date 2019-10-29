@@ -6,7 +6,7 @@ USAGE="Usage $0 trunk|3.1 [release|debug]"
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
 elif test "x$1" = "x3.1"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.2
+	WXWIN=~/devtools/wx/wxWidgets-3.1.3
 else
 	echo $USAGE
 	return

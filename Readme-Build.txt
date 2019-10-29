@@ -26,13 +26,32 @@ Currently using version 3.7.4
 - Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.1.2.
+I'm currently using version 3.1.3.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
    must match the wx version number being used.
 - Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
   set the ARB compile environment.
+
+=== Changes to 3.1.3:
+  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
+  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
+  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+  - Set wxUSE_INKEDIT to 1 (currently 0)
+
+> src/msw/textctrl.cpp
+>diff textctrl.old textctrl.cpp
+362a363,367
+> #if wxUSE_INKEDIT && wxUSE_RICHEDIT
+>     if (m_isInkEdit)
+>         DissociateHandle();
+> #endif
+>
 
 === Changes to 3.1.2:
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)

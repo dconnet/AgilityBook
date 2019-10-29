@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2019-10-28 wx default is 3.1.3
 # 2019-02-28 Add vc142 support
 # 2018-12-24 wx default is 3.1.2
 # 2018-10-06 Dropping support for pre VS2017 (and XP).
@@ -25,7 +26,7 @@
 # 2010-06-11 Support building on x64 OS
 # 2010-05-30 Converted .bat to .py (keeps environment clean!)
 """BuildAll.py -w wxwin [-b type] compiler*
-   -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.1.2)'
+   -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.1.3)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config: 'release' or 'debug' (default, release)
    -t:       Testing, just print commands to run
@@ -44,7 +45,7 @@ import win32api
 import win32con
 
 # ARB is officially released using this branch. This is located under $WXBASE.
-wxBranch = r'\wxWidgets-3.1.2'
+wxBranch = r'\wxWidgets-3.1.3'
 
 testing = False
 
