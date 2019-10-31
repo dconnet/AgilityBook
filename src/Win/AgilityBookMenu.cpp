@@ -82,7 +82,7 @@ static const std::vector<CMenuHelper::ItemData> sc_items =
 	{IdMenuNone, MENU_ITEM, 0,                               wxITEM_NORMAL, 1, nullptr, arbT("MenuDog"), nullptr, ImageMgrDog},
 	{IdMenuNone, MENU_ITEM, ID_AGILITY_EDIT_DOG,             wxITEM_NORMAL, 2, nullptr, arbT("MenuDogProperties"), arbT("DescDogProperties"), ImageMgrDog},
 	{IdMenuNone, MENU_SEP,  0,                               wxITEM_NORMAL, 2, nullptr, nullptr, nullptr, nullptr},
-	{IdMenuNone, MENU_ITEM, ID_AGILITY_NEW_DOG,              wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescDogProperties"), ImageMgrDog},
+	{IdMenuNone, MENU_ITEM, ID_AGILITY_NEW_DOG,              wxITEM_NORMAL, 2, arbT("MenuNew"), arbT("MenuNew"), arbT("DescDogNew"), ImageMgrDog},
 	{IdMenuNone, MENU_ITEM, ID_AGILITY_DELETE_DOG,           wxITEM_NORMAL, 2, nullptr, arbT("MenuDogDelete"), arbT("DescDogDelete"), nullptr},
 	{IdMenuNone, MENU_ITEM, 0,                               wxITEM_NORMAL, 1, nullptr, arbT("MenuTitle"), nullptr, ImageMgrTitle},
 	{IdMenuNone, MENU_ITEM, ID_AGILITY_EDIT_TITLE,           wxITEM_NORMAL, 2, nullptr, arbT("MenuTitleProperties"), arbT("DescTitleProperties"), ImageMgrTitle},
