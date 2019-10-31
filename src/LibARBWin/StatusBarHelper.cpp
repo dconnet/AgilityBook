@@ -124,12 +124,19 @@ void CStatusBarHelper::SetStatusBarWidths(
 {
 	bool bAddKludge = (statusbar->HasFlag(wxSTB_SIZEGRIP) && (0 > nColumn || nColumn == static_cast<int>(m_Widths.size()) - 1));
 	// The gripper isn't right on hidpi. Add a fudge factor.
-	if (bAddKludge && DPI::GetScale(statusbar) > 100)
-		m_Widths[m_Widths.size() - 1] += DPI::Scale(statusbar, 10);
+	if (bAddKludge)
+	{
+		if (DPI::GetScale(statusbar) > 100)
+			m_Widths[m_Widths.size() - 1] += DPI::Scale(statusbar, 10);
+#if defined(__WXGTK__)
+		// The last column is cut off because of the gripper on linux.
+		m_Widths[m_Widths.size() - 1] += DPI::Scale(statusbar, 20);
+#endif
+	}
 
 	statusbar->SetStatusWidths(static_cast<int>(m_Widths.size()), m_Widths.data());
-#if defined(__WXMAC__)
-	// On the Mac, setting the width is always a bit small.
+#if !defined(__WXMSW__)
+	// On the Mac (and linux), setting the width is always a bit small.
 	// For instance, we want 36, but it gets set to 32.
 	// So kludge it and force it larger.
 	bool bFix = false;
