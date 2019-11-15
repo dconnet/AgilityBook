@@ -60,7 +60,7 @@ libarbwin_SRCS = ARBDebug.cpp \
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/ARBWin/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/src/Libraries/LibARBWin/stdafx.h
 
 
 ##########

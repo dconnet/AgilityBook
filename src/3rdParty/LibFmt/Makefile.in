@@ -39,7 +39,7 @@ libfmt_SRCS = src/format.cpp \
 ##########
 # Precompiled headers
 ##########
-#PRECOMP_HEADER = $(TOPSRCDIR)/src/LibFmt/src/stdafx.h
+#PRECOMP_HEADER = $(TOPSRCDIR)/src/3rdParty/LibFmt/src/stdafx.h
 
 
 ##########

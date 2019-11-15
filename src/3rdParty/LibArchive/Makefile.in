@@ -38,7 +38,7 @@ libarchive_SRCS = src/LibArchive.cpp
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/LibArchive/src/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/src/3rdParty/LibArchive/src/stdafx.h
 
 
 ##########

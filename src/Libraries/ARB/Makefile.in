@@ -75,7 +75,7 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/ARB/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/src/Libraries/ARB/stdafx.h
 
 
 ##########

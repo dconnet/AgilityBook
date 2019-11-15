@@ -64,7 +64,7 @@ libtidyhtml_SRCS = src/LibTidyHtml.cpp \
 ##########
 # Precompiled headers
 ##########
-#PRECOMP_HEADER = $(TOPSRCDIR)/src/LibTidyHtml/stdafx.h
+#PRECOMP_HEADER = $(TOPSRCDIR)/src/3rdParty/LibTidyHtml/stdafx.h
 
 
 ##########
