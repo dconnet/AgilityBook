@@ -263,21 +263,21 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ARBCommon\ARBBase64.cpp" />
-    <ClCompile Include="..\..\ARBCommon\ARBDate.cpp" />
-    <ClCompile Include="..\..\ARBCommon\ARBMisc.cpp" />
-    <ClCompile Include="..\..\ARBCommon\ARBMsgDigest.cpp" />
-    <ClCompile Include="..\..\ARBCommon\ARBMsgDigestMD5.cpp" />
-    <ClCompile Include="..\..\ARBCommon\ARBMsgDigestSHA1.cpp" />
-    <ClCompile Include="..\..\ARBCommon\ARBMsgDigestSHA256.cpp" />
-    <ClCompile Include="..\..\ARBCommon\ARBTypes.cpp" />
-    <ClCompile Include="..\..\ARBCommon\ARBUtils.cpp" />
-    <ClCompile Include="..\..\ARBCommon\BinaryData.cpp" />
-    <ClCompile Include="..\..\ARBCommon\BreakLine.cpp" />
-    <ClCompile Include="..\..\ARBCommon\Element.cpp" />
-    <ClCompile Include="..\..\ARBCommon\StringUtil.cpp" />
-    <ClCompile Include="..\..\ARBCommon\VersionNum.cpp" />
-    <ClCompile Include="..\..\ARBCommon\stdafx.cpp">
+    <ClCompile Include="..\..\Libraries\ARBCommon\ARBBase64.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\ARBDate.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\ARBMisc.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\ARBMsgDigest.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\ARBMsgDigestMD5.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\ARBMsgDigestSHA1.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\ARBMsgDigestSHA256.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\ARBTypes.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\ARBUtils.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\BinaryData.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\BreakLine.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\Element.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\StringUtil.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\VersionNum.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -325,8 +325,8 @@
     <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
-    <ClInclude Include="..\..\ARBCommon\stdafx.h" />
-    <ClInclude Include="..\..\ARBCommon\ARBMsgDigestImpl.h" />
+    <ClInclude Include="..\..\Libraries\ARBCommon\stdafx.h" />
+    <ClInclude Include="..\..\Libraries\ARBCommon\ARBMsgDigestImpl.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="LibFmt.vcxproj">
@@ -334,10 +334,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\ARBCommon\ARBCommon.rc" />
+    <ResourceCompile Include="..\..\Libraries\ARBCommon\ARBCommon.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\ARBCommon\res\ARBCommon.rc2" />
+    <None Include="..\..\Libraries\ARBCommon\res\ARBCommon.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

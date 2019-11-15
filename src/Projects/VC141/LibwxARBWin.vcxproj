@@ -263,27 +263,27 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\LibARBWin\ARBDebug.cpp" />
-    <ClCompile Include="..\..\LibARBWin\ARBWinUtilities.cpp" />
-    <ClCompile Include="..\..\LibARBWin\CheckLink.cpp" />
-    <ClCompile Include="..\..\LibARBWin\CheckTreeCtrl.cpp" />
-    <ClCompile Include="..\..\LibARBWin\ColumnOrder.cpp" />
-    <ClCompile Include="..\..\LibARBWin\DlgAuthenticate.cpp" />
-    <ClCompile Include="..\..\LibARBWin\DlgConfigAccel.cpp" />
-    <ClCompile Include="..\..\LibARBWin\DlgProgress.cpp" />
-    <ClCompile Include="..\..\LibARBWin\DPI.cpp" />
-    <ClCompile Include="..\..\LibARBWin\ImageHelperBase.cpp" />
-    <ClCompile Include="..\..\LibARBWin\ImageManager.cpp" />
-    <ClCompile Include="..\..\LibARBWin\LanguageManager.cpp" />
-    <ClCompile Include="..\..\LibARBWin\ListCtrl.cpp" />
-    <ClCompile Include="..\..\LibARBWin\ListData.cpp" />
-    <ClCompile Include="..\..\LibARBWin\MenuHelper.cpp" />
-    <ClCompile Include="..\..\LibARBWin\ReadHttp.cpp" />
-    <ClCompile Include="..\..\LibARBWin\RichEditCtrl2.cpp" />
-    <ClCompile Include="..\..\LibARBWin\SetupApp.cpp" />
-    <ClCompile Include="..\..\LibARBWin\SpreadSheet.cpp" />
-    <ClCompile Include="..\..\LibARBWin\StatusBarHelper.cpp" />
-    <ClCompile Include="..\..\LibARBWin\stdafx.cpp">
+    <ClCompile Include="..\..\Libraries\LibARBWin\ARBDebug.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ARBWinUtilities.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\CheckLink.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\CheckTreeCtrl.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ColumnOrder.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\DlgAuthenticate.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\DlgConfigAccel.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\DlgProgress.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\DPI.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ImageHelperBase.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ImageManager.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\LanguageManager.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ListCtrl.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ListData.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\MenuHelper.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ReadHttp.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\RichEditCtrl2.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\SetupApp.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\SpreadSheet.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\StatusBarHelper.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -309,9 +309,9 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">false</MultiProcessorCompilation>
     </ClCompile>
-    <ClCompile Include="..\..\LibARBWin\TaskbarProgress.cpp" />
-    <ClCompile Include="..\..\LibARBWin\Validators.cpp" />
-    <ClCompile Include="..\..\LibARBWin\Widgets.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\TaskbarProgress.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\Validators.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\Widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\LibARBWin\ARBDebug.h" />
@@ -346,8 +346,8 @@
     <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
-    <ClInclude Include="..\..\LibARBWin\DlgConfigAccel.h" />
-    <ClInclude Include="..\..\LibARBWin\stdafx.h" />
+    <ClInclude Include="..\..\Libraries\LibARBWin\DlgConfigAccel.h" />
+    <ClInclude Include="..\..\Libraries\LibARBWin\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="LibFmt.vcxproj">
@@ -358,10 +358,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\LibARBWin\res\LibARBWin.rc2" />
+    <None Include="..\..\Libraries\LibARBWin\res\LibARBWin.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\LibARBWin\LibARBWin.rc" />
+    <ResourceCompile Include="..\..\Libraries\LibARBWin\LibARBWin.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

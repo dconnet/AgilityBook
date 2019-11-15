@@ -263,45 +263,45 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ARB\ARBAgilityRecordBook.cpp" />
-    <ClCompile Include="..\..\ARB\ARBBase.cpp" />
-    <ClCompile Include="..\..\ARB\ARBCalcPoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBCalendar.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfig.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigAction.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigCalSite.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigDivision.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigEvent.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigFault.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigLevel.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigLifetimeName.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigLifetimePoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigMultiQ.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigOtherPoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigPlaceInfo.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigScoring.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigSubLevel.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigTitle.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigTitlePoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigVenue.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDog.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogClub.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogExistingPoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogNotes.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogReferenceRun.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRegNum.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRun.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRunOtherPoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRunPartner.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRunScoring.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogTitle.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogTrial.cpp" />
-    <ClCompile Include="..\..\ARB\ARBInfo.cpp" />
-    <ClCompile Include="..\..\ARB\ARBInfoItem.cpp" />
-    <ClCompile Include="..\..\ARB\ARBLocalization.cpp" />
-    <ClCompile Include="..\..\ARB\ARBTraining.cpp" />
-    <ClCompile Include="..\..\ARB\ARB_Q.cpp" />
-    <ClCompile Include="..\..\ARB\stdafx.cpp">
+    <ClCompile Include="..\..\Libraries\ARB\ARBAgilityRecordBook.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBBase.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBCalcPoints.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBCalendar.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfig.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigAction.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigCalSite.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigDivision.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigEvent.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigFault.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigLevel.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigLifetimeName.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigLifetimePoints.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigMultiQ.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigOtherPoints.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigPlaceInfo.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigScoring.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigSubLevel.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigTitle.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigTitlePoints.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBConfigVenue.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDog.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogClub.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogExistingPoints.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogNotes.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogReferenceRun.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogRegNum.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogRun.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogRunOtherPoints.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogRunPartner.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogRunScoring.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogTitle.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBDogTrial.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBInfo.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBInfoItem.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBLocalization.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARBTraining.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\ARB_Q.cpp" />
+    <ClCompile Include="..\..\Libraries\ARB\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -380,7 +380,7 @@
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
-    <ClInclude Include="..\..\ARB\stdafx.h" />
+    <ClInclude Include="..\..\Libraries\ARB\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="LibFmt.vcxproj">
@@ -391,10 +391,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\ARB\ARB.rc" />
+    <ResourceCompile Include="..\..\Libraries\ARB\ARB.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\ARB\res\ARB.rc2" />
+    <None Include="..\..\Libraries\ARB\res\ARB.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

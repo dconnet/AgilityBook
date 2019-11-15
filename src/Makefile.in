@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Recursively make in these subdirectories
 ##########
-SUBDIRS = 3rdParty ARBCommon ARB LibARBWin TestARB ARBHelp Win
+SUBDIRS = 3rdParty Libraries/ARBCommon Libraries/ARB Libraries/LibARBWin TestARB ARBHelp Win
 
 ##########
 # Compile flags, list include directories
