@@ -121,7 +121,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/ARB -larb -L$(TOPBUILDDIR)/src/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/src/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/src/3rdParty/LibFmt -lfmt
+@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/Libraries/ARB -larb -L$(TOPBUILDDIR)/src/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/src/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/src/3rdParty/LibFmt -lfmt
 
 ##########
 # Precompiled headers
