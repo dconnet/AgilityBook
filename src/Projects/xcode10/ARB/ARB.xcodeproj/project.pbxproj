@@ -47,50 +47,50 @@
 		E110B4F4177FCFCC004071B5 /* ARBTraining.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4CD177FCFCC004071B5 /* ARBTraining.h */; };
 		E110B4F5177FCFCC004071B5 /* ARBTypes2.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4CE177FCFCC004071B5 /* ARBTypes2.h */; };
 		E161B7CA201E78FE000CCF24 /* ARBDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = E161B7C9201E78FE000CCF24 /* ARBDebug.h */; };
-		E19B6352166C090F004DEDA4 /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B62F4166C090F004DEDA4 /* ARB_Q.cpp */; };
-		E19B6354166C090F004DEDA4 /* ARBAgilityRecordBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B62F6166C090F004DEDA4 /* ARBAgilityRecordBook.cpp */; };
-		E19B6356166C090F004DEDA4 /* ARBBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B62F8166C090F004DEDA4 /* ARBBase.cpp */; };
-		E19B635A166C090F004DEDA4 /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B62FC166C090F004DEDA4 /* ARBCalcPoints.cpp */; };
-		E19B635C166C090F004DEDA4 /* ARBCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B62FE166C090F004DEDA4 /* ARBCalendar.cpp */; };
-		E19B635E166C090F004DEDA4 /* ARBConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6300166C090F004DEDA4 /* ARBConfig.cpp */; };
-		E19B6360166C090F004DEDA4 /* ARBConfigAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6302166C090F004DEDA4 /* ARBConfigAction.cpp */; };
-		E19B6362166C090F004DEDA4 /* ARBConfigCalSite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6304166C090F004DEDA4 /* ARBConfigCalSite.cpp */; };
-		E19B6364166C090F004DEDA4 /* ARBConfigDivision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6306166C090F004DEDA4 /* ARBConfigDivision.cpp */; };
-		E19B6366166C090F004DEDA4 /* ARBConfigEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6308166C090F004DEDA4 /* ARBConfigEvent.cpp */; };
-		E19B6368166C090F004DEDA4 /* ARBConfigFault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B630A166C090F004DEDA4 /* ARBConfigFault.cpp */; };
-		E19B636A166C090F004DEDA4 /* ARBConfigLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B630C166C090F004DEDA4 /* ARBConfigLevel.cpp */; };
-		E19B636C166C090F004DEDA4 /* ARBConfigLifetimePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B630E166C090F004DEDA4 /* ARBConfigLifetimePoints.cpp */; };
-		E19B636E166C090F004DEDA4 /* ARBConfigMultiQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6310166C090F004DEDA4 /* ARBConfigMultiQ.cpp */; };
-		E19B6370166C090F004DEDA4 /* ARBConfigOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6312166C090F004DEDA4 /* ARBConfigOtherPoints.cpp */; };
-		E19B6372166C090F004DEDA4 /* ARBConfigPlaceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6314166C090F004DEDA4 /* ARBConfigPlaceInfo.cpp */; };
-		E19B6374166C090F004DEDA4 /* ARBConfigScoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6316166C090F004DEDA4 /* ARBConfigScoring.cpp */; };
-		E19B6376166C090F004DEDA4 /* ARBConfigSubLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6318166C090F004DEDA4 /* ARBConfigSubLevel.cpp */; };
-		E19B6378166C090F004DEDA4 /* ARBConfigTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B631A166C090F004DEDA4 /* ARBConfigTitle.cpp */; };
-		E19B637A166C090F004DEDA4 /* ARBConfigTitlePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B631C166C090F004DEDA4 /* ARBConfigTitlePoints.cpp */; };
-		E19B637C166C090F004DEDA4 /* ARBConfigVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B631E166C090F004DEDA4 /* ARBConfigVenue.cpp */; };
-		E19B6380166C090F004DEDA4 /* ARBDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6322166C090F004DEDA4 /* ARBDog.cpp */; };
-		E19B6382166C090F004DEDA4 /* ARBDogClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6324166C090F004DEDA4 /* ARBDogClub.cpp */; };
-		E19B6384166C090F004DEDA4 /* ARBDogExistingPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6326166C090F004DEDA4 /* ARBDogExistingPoints.cpp */; };
-		E19B6386166C090F004DEDA4 /* ARBDogNotes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6328166C090F004DEDA4 /* ARBDogNotes.cpp */; };
-		E19B6388166C090F004DEDA4 /* ARBDogReferenceRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B632A166C090F004DEDA4 /* ARBDogReferenceRun.cpp */; };
-		E19B638A166C090F004DEDA4 /* ARBDogRegNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B632C166C090F004DEDA4 /* ARBDogRegNum.cpp */; };
-		E19B638C166C090F004DEDA4 /* ARBDogRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B632E166C090F004DEDA4 /* ARBDogRun.cpp */; };
-		E19B638E166C090F004DEDA4 /* ARBDogRunOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6330166C090F004DEDA4 /* ARBDogRunOtherPoints.cpp */; };
-		E19B6390166C090F004DEDA4 /* ARBDogRunPartner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6332166C090F004DEDA4 /* ARBDogRunPartner.cpp */; };
-		E19B6392166C090F004DEDA4 /* ARBDogRunScoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6334166C090F004DEDA4 /* ARBDogRunScoring.cpp */; };
-		E19B6394166C090F004DEDA4 /* ARBDogTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6336166C090F004DEDA4 /* ARBDogTitle.cpp */; };
-		E19B6396166C090F004DEDA4 /* ARBDogTrial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6338166C090F004DEDA4 /* ARBDogTrial.cpp */; };
-		E19B6398166C090F004DEDA4 /* ARBInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B633A166C090F004DEDA4 /* ARBInfo.cpp */; };
-		E19B639A166C090F004DEDA4 /* ARBInfoItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B633C166C090F004DEDA4 /* ARBInfoItem.cpp */; };
-		E19B639C166C090F004DEDA4 /* ARBLocalization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B633E166C090F004DEDA4 /* ARBLocalization.cpp */; };
-		E19B63A1166C090F004DEDA4 /* ARBTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6343166C090F004DEDA4 /* ARBTraining.cpp */; };
 		E19B65D5166C1054004DEDA4 /* ICalendarSite.h in Headers */ = {isa = PBXBuildFile; fileRef = E19B65D1166C1054004DEDA4 /* ICalendarSite.h */; };
 		E19B65D6166C1054004DEDA4 /* IProgressMeter.h in Headers */ = {isa = PBXBuildFile; fileRef = E19B65D2166C1054004DEDA4 /* IProgressMeter.h */; };
 		E19B65D7166C1054004DEDA4 /* VersionNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = E19B65D4166C1054004DEDA4 /* VersionNumber.h */; };
 		E19E1A0E1C62D15C001F7FF1 /* ARBConfigLifetimeName.h in Headers */ = {isa = PBXBuildFile; fileRef = E19E1A0D1C62D15C001F7FF1 /* ARBConfigLifetimeName.h */; };
-		E19E1A101C62D174001F7FF1 /* ARBConfigLifetimeName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19E1A0F1C62D174001F7FF1 /* ARBConfigLifetimeName.cpp */; };
-		E1CAE55F16B5BF3800B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE55D16B5BF3800B33FE5 /* stdafx.cpp */; };
-		E1CAE56016B5BF3800B33FE5 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE55E16B5BF3800B33FE5 /* stdafx.h */; };
+		E1BED404237F8FEB0091278E /* ARBDogRegNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3DC237F8FE50091278E /* ARBDogRegNum.cpp */; };
+		E1BED405237F8FEB0091278E /* ARBBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3DD237F8FE50091278E /* ARBBase.cpp */; };
+		E1BED406237F8FEB0091278E /* ARBConfigTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3DE237F8FE60091278E /* ARBConfigTitle.cpp */; };
+		E1BED407237F8FEB0091278E /* ARBDogNotes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3DF237F8FE60091278E /* ARBDogNotes.cpp */; };
+		E1BED408237F8FEB0091278E /* ARBConfigOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3E0237F8FE60091278E /* ARBConfigOtherPoints.cpp */; };
+		E1BED409237F8FEB0091278E /* ARBCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3E1237F8FE60091278E /* ARBCalendar.cpp */; };
+		E1BED40A237F8FEB0091278E /* ARBTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3E2237F8FE60091278E /* ARBTraining.cpp */; };
+		E1BED40B237F8FEB0091278E /* ARBDogReferenceRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3E3237F8FE60091278E /* ARBDogReferenceRun.cpp */; };
+		E1BED40C237F8FEB0091278E /* ARBConfigMultiQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3E4237F8FE60091278E /* ARBConfigMultiQ.cpp */; };
+		E1BED40D237F8FEB0091278E /* ARBConfigDivision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3E5237F8FE60091278E /* ARBConfigDivision.cpp */; };
+		E1BED40E237F8FEB0091278E /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E1BED3E6237F8FE60091278E /* stdafx.h */; };
+		E1BED40F237F8FEB0091278E /* ARB_Q.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3E7237F8FE60091278E /* ARB_Q.cpp */; };
+		E1BED410237F8FEB0091278E /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3E8237F8FE70091278E /* ARBCalcPoints.cpp */; };
+		E1BED411237F8FEB0091278E /* ARBAgilityRecordBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3E9237F8FE70091278E /* ARBAgilityRecordBook.cpp */; };
+		E1BED412237F8FEB0091278E /* ARBDogRunPartner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3EA237F8FE70091278E /* ARBDogRunPartner.cpp */; };
+		E1BED413237F8FEB0091278E /* ARBConfigVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3EB237F8FE70091278E /* ARBConfigVenue.cpp */; };
+		E1BED414237F8FEB0091278E /* ARBConfigFault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3EC237F8FE70091278E /* ARBConfigFault.cpp */; };
+		E1BED415237F8FEB0091278E /* ARBConfigLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3ED237F8FE70091278E /* ARBConfigLevel.cpp */; };
+		E1BED416237F8FEB0091278E /* ARBConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3EE237F8FE70091278E /* ARBConfig.cpp */; };
+		E1BED417237F8FEB0091278E /* ARBConfigAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3EF237F8FE70091278E /* ARBConfigAction.cpp */; };
+		E1BED418237F8FEB0091278E /* ARBDogRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F0237F8FE80091278E /* ARBDogRun.cpp */; };
+		E1BED419237F8FEB0091278E /* ARBDogRunScoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F1237F8FE80091278E /* ARBDogRunScoring.cpp */; };
+		E1BED41A237F8FEB0091278E /* ARBConfigTitlePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F2237F8FE80091278E /* ARBConfigTitlePoints.cpp */; };
+		E1BED41B237F8FEB0091278E /* ARBConfigLifetimeName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F3237F8FE80091278E /* ARBConfigLifetimeName.cpp */; };
+		E1BED41C237F8FEB0091278E /* ARBDogClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F4237F8FE80091278E /* ARBDogClub.cpp */; };
+		E1BED41D237F8FEB0091278E /* ARBConfigPlaceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F5237F8FE80091278E /* ARBConfigPlaceInfo.cpp */; };
+		E1BED41E237F8FEB0091278E /* ARBConfigCalSite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F6237F8FE90091278E /* ARBConfigCalSite.cpp */; };
+		E1BED41F237F8FEB0091278E /* ARBConfigLifetimePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F7237F8FE90091278E /* ARBConfigLifetimePoints.cpp */; };
+		E1BED420237F8FEB0091278E /* ARBDogRunOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F8237F8FE90091278E /* ARBDogRunOtherPoints.cpp */; };
+		E1BED421237F8FEB0091278E /* ARBConfigEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F9237F8FE90091278E /* ARBConfigEvent.cpp */; };
+		E1BED422237F8FEB0091278E /* ARBDogTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3FA237F8FE90091278E /* ARBDogTitle.cpp */; };
+		E1BED423237F8FEB0091278E /* ARBLocalization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3FB237F8FE90091278E /* ARBLocalization.cpp */; };
+		E1BED424237F8FEB0091278E /* ARBInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3FC237F8FE90091278E /* ARBInfo.cpp */; };
+		E1BED425237F8FEB0091278E /* ARBDogExistingPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3FD237F8FEA0091278E /* ARBDogExistingPoints.cpp */; };
+		E1BED426237F8FEB0091278E /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3FE237F8FEA0091278E /* stdafx.cpp */; };
+		E1BED427237F8FEB0091278E /* ARBConfigSubLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3FF237F8FEA0091278E /* ARBConfigSubLevel.cpp */; };
+		E1BED428237F8FEB0091278E /* ARBDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED400237F8FEA0091278E /* ARBDog.cpp */; };
+		E1BED429237F8FEB0091278E /* ARBDogTrial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED401237F8FEA0091278E /* ARBDogTrial.cpp */; };
+		E1BED42A237F8FEB0091278E /* ARBConfigScoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED402237F8FEA0091278E /* ARBConfigScoring.cpp */; };
+		E1BED42B237F8FEB0091278E /* ARBInfoItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED403237F8FEA0091278E /* ARBInfoItem.cpp */; };
 		E1CAE56816B5BF4900B33FE5 /* arbWarningPop.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56216B5BF4900B33FE5 /* arbWarningPop.h */; };
 		E1CAE56916B5BF4900B33FE5 /* arbWarningPush.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56316B5BF4900B33FE5 /* arbWarningPush.h */; };
 		E1CAE56A16B5BF4900B33FE5 /* SetupARBPost.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CAE56416B5BF4900B33FE5 /* SetupARBPost.h */; };
@@ -140,50 +140,50 @@
 		E110B4CE177FCFCC004071B5 /* ARBTypes2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBTypes2.h; sourceTree = "<group>"; };
 		E161B7C9201E78FE000CCF24 /* ARBDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBDebug.h; sourceTree = "<group>"; };
 		E19B62EB166C08B9004DEDA4 /* libARB.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libARB.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E19B62F4166C090F004DEDA4 /* ARB_Q.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARB_Q.cpp; sourceTree = "<group>"; };
-		E19B62F6166C090F004DEDA4 /* ARBAgilityRecordBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBAgilityRecordBook.cpp; sourceTree = "<group>"; };
-		E19B62F8166C090F004DEDA4 /* ARBBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBBase.cpp; sourceTree = "<group>"; };
-		E19B62FC166C090F004DEDA4 /* ARBCalcPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBCalcPoints.cpp; sourceTree = "<group>"; };
-		E19B62FE166C090F004DEDA4 /* ARBCalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBCalendar.cpp; sourceTree = "<group>"; };
-		E19B6300166C090F004DEDA4 /* ARBConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfig.cpp; sourceTree = "<group>"; };
-		E19B6302166C090F004DEDA4 /* ARBConfigAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigAction.cpp; sourceTree = "<group>"; };
-		E19B6304166C090F004DEDA4 /* ARBConfigCalSite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigCalSite.cpp; sourceTree = "<group>"; };
-		E19B6306166C090F004DEDA4 /* ARBConfigDivision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigDivision.cpp; sourceTree = "<group>"; };
-		E19B6308166C090F004DEDA4 /* ARBConfigEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigEvent.cpp; sourceTree = "<group>"; };
-		E19B630A166C090F004DEDA4 /* ARBConfigFault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigFault.cpp; sourceTree = "<group>"; };
-		E19B630C166C090F004DEDA4 /* ARBConfigLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigLevel.cpp; sourceTree = "<group>"; };
-		E19B630E166C090F004DEDA4 /* ARBConfigLifetimePoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigLifetimePoints.cpp; sourceTree = "<group>"; };
-		E19B6310166C090F004DEDA4 /* ARBConfigMultiQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigMultiQ.cpp; sourceTree = "<group>"; };
-		E19B6312166C090F004DEDA4 /* ARBConfigOtherPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigOtherPoints.cpp; sourceTree = "<group>"; };
-		E19B6314166C090F004DEDA4 /* ARBConfigPlaceInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigPlaceInfo.cpp; sourceTree = "<group>"; };
-		E19B6316166C090F004DEDA4 /* ARBConfigScoring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigScoring.cpp; sourceTree = "<group>"; };
-		E19B6318166C090F004DEDA4 /* ARBConfigSubLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigSubLevel.cpp; sourceTree = "<group>"; };
-		E19B631A166C090F004DEDA4 /* ARBConfigTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigTitle.cpp; sourceTree = "<group>"; };
-		E19B631C166C090F004DEDA4 /* ARBConfigTitlePoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigTitlePoints.cpp; sourceTree = "<group>"; };
-		E19B631E166C090F004DEDA4 /* ARBConfigVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigVenue.cpp; sourceTree = "<group>"; };
-		E19B6322166C090F004DEDA4 /* ARBDog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDog.cpp; sourceTree = "<group>"; };
-		E19B6324166C090F004DEDA4 /* ARBDogClub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogClub.cpp; sourceTree = "<group>"; };
-		E19B6326166C090F004DEDA4 /* ARBDogExistingPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogExistingPoints.cpp; sourceTree = "<group>"; };
-		E19B6328166C090F004DEDA4 /* ARBDogNotes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogNotes.cpp; sourceTree = "<group>"; };
-		E19B632A166C090F004DEDA4 /* ARBDogReferenceRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogReferenceRun.cpp; sourceTree = "<group>"; };
-		E19B632C166C090F004DEDA4 /* ARBDogRegNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogRegNum.cpp; sourceTree = "<group>"; };
-		E19B632E166C090F004DEDA4 /* ARBDogRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogRun.cpp; sourceTree = "<group>"; };
-		E19B6330166C090F004DEDA4 /* ARBDogRunOtherPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogRunOtherPoints.cpp; sourceTree = "<group>"; };
-		E19B6332166C090F004DEDA4 /* ARBDogRunPartner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogRunPartner.cpp; sourceTree = "<group>"; };
-		E19B6334166C090F004DEDA4 /* ARBDogRunScoring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogRunScoring.cpp; sourceTree = "<group>"; };
-		E19B6336166C090F004DEDA4 /* ARBDogTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogTitle.cpp; sourceTree = "<group>"; };
-		E19B6338166C090F004DEDA4 /* ARBDogTrial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDogTrial.cpp; sourceTree = "<group>"; };
-		E19B633A166C090F004DEDA4 /* ARBInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBInfo.cpp; sourceTree = "<group>"; };
-		E19B633C166C090F004DEDA4 /* ARBInfoItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBInfoItem.cpp; sourceTree = "<group>"; };
-		E19B633E166C090F004DEDA4 /* ARBLocalization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBLocalization.cpp; sourceTree = "<group>"; };
-		E19B6343166C090F004DEDA4 /* ARBTraining.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBTraining.cpp; sourceTree = "<group>"; };
 		E19B65D1166C1054004DEDA4 /* ICalendarSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICalendarSite.h; sourceTree = "<group>"; };
 		E19B65D2166C1054004DEDA4 /* IProgressMeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IProgressMeter.h; sourceTree = "<group>"; };
 		E19B65D4166C1054004DEDA4 /* VersionNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNumber.h; sourceTree = "<group>"; };
 		E19E1A0D1C62D15C001F7FF1 /* ARBConfigLifetimeName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBConfigLifetimeName.h; sourceTree = "<group>"; };
-		E19E1A0F1C62D174001F7FF1 /* ARBConfigLifetimeName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBConfigLifetimeName.cpp; sourceTree = "<group>"; };
-		E1CAE55D16B5BF3800B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
-		E1CAE55E16B5BF3800B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		E1BED3DC237F8FE50091278E /* ARBDogRegNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogRegNum.cpp; path = ../Libraries/ARB/ARBDogRegNum.cpp; sourceTree = "<group>"; };
+		E1BED3DD237F8FE50091278E /* ARBBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBBase.cpp; path = ../Libraries/ARB/ARBBase.cpp; sourceTree = "<group>"; };
+		E1BED3DE237F8FE60091278E /* ARBConfigTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigTitle.cpp; path = ../Libraries/ARB/ARBConfigTitle.cpp; sourceTree = "<group>"; };
+		E1BED3DF237F8FE60091278E /* ARBDogNotes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogNotes.cpp; path = ../Libraries/ARB/ARBDogNotes.cpp; sourceTree = "<group>"; };
+		E1BED3E0237F8FE60091278E /* ARBConfigOtherPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigOtherPoints.cpp; path = ../Libraries/ARB/ARBConfigOtherPoints.cpp; sourceTree = "<group>"; };
+		E1BED3E1237F8FE60091278E /* ARBCalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBCalendar.cpp; path = ../Libraries/ARB/ARBCalendar.cpp; sourceTree = "<group>"; };
+		E1BED3E2237F8FE60091278E /* ARBTraining.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBTraining.cpp; path = ../Libraries/ARB/ARBTraining.cpp; sourceTree = "<group>"; };
+		E1BED3E3237F8FE60091278E /* ARBDogReferenceRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogReferenceRun.cpp; path = ../Libraries/ARB/ARBDogReferenceRun.cpp; sourceTree = "<group>"; };
+		E1BED3E4237F8FE60091278E /* ARBConfigMultiQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigMultiQ.cpp; path = ../Libraries/ARB/ARBConfigMultiQ.cpp; sourceTree = "<group>"; };
+		E1BED3E5237F8FE60091278E /* ARBConfigDivision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigDivision.cpp; path = ../Libraries/ARB/ARBConfigDivision.cpp; sourceTree = "<group>"; };
+		E1BED3E6237F8FE60091278E /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../Libraries/ARB/stdafx.h; sourceTree = "<group>"; };
+		E1BED3E7237F8FE60091278E /* ARB_Q.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARB_Q.cpp; path = ../Libraries/ARB/ARB_Q.cpp; sourceTree = "<group>"; };
+		E1BED3E8237F8FE70091278E /* ARBCalcPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBCalcPoints.cpp; path = ../Libraries/ARB/ARBCalcPoints.cpp; sourceTree = "<group>"; };
+		E1BED3E9237F8FE70091278E /* ARBAgilityRecordBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBAgilityRecordBook.cpp; path = ../Libraries/ARB/ARBAgilityRecordBook.cpp; sourceTree = "<group>"; };
+		E1BED3EA237F8FE70091278E /* ARBDogRunPartner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogRunPartner.cpp; path = ../Libraries/ARB/ARBDogRunPartner.cpp; sourceTree = "<group>"; };
+		E1BED3EB237F8FE70091278E /* ARBConfigVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigVenue.cpp; path = ../Libraries/ARB/ARBConfigVenue.cpp; sourceTree = "<group>"; };
+		E1BED3EC237F8FE70091278E /* ARBConfigFault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigFault.cpp; path = ../Libraries/ARB/ARBConfigFault.cpp; sourceTree = "<group>"; };
+		E1BED3ED237F8FE70091278E /* ARBConfigLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigLevel.cpp; path = ../Libraries/ARB/ARBConfigLevel.cpp; sourceTree = "<group>"; };
+		E1BED3EE237F8FE70091278E /* ARBConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfig.cpp; path = ../Libraries/ARB/ARBConfig.cpp; sourceTree = "<group>"; };
+		E1BED3EF237F8FE70091278E /* ARBConfigAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigAction.cpp; path = ../Libraries/ARB/ARBConfigAction.cpp; sourceTree = "<group>"; };
+		E1BED3F0237F8FE80091278E /* ARBDogRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogRun.cpp; path = ../Libraries/ARB/ARBDogRun.cpp; sourceTree = "<group>"; };
+		E1BED3F1237F8FE80091278E /* ARBDogRunScoring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogRunScoring.cpp; path = ../Libraries/ARB/ARBDogRunScoring.cpp; sourceTree = "<group>"; };
+		E1BED3F2237F8FE80091278E /* ARBConfigTitlePoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigTitlePoints.cpp; path = ../Libraries/ARB/ARBConfigTitlePoints.cpp; sourceTree = "<group>"; };
+		E1BED3F3237F8FE80091278E /* ARBConfigLifetimeName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigLifetimeName.cpp; path = ../Libraries/ARB/ARBConfigLifetimeName.cpp; sourceTree = "<group>"; };
+		E1BED3F4237F8FE80091278E /* ARBDogClub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogClub.cpp; path = ../Libraries/ARB/ARBDogClub.cpp; sourceTree = "<group>"; };
+		E1BED3F5237F8FE80091278E /* ARBConfigPlaceInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigPlaceInfo.cpp; path = ../Libraries/ARB/ARBConfigPlaceInfo.cpp; sourceTree = "<group>"; };
+		E1BED3F6237F8FE90091278E /* ARBConfigCalSite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigCalSite.cpp; path = ../Libraries/ARB/ARBConfigCalSite.cpp; sourceTree = "<group>"; };
+		E1BED3F7237F8FE90091278E /* ARBConfigLifetimePoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigLifetimePoints.cpp; path = ../Libraries/ARB/ARBConfigLifetimePoints.cpp; sourceTree = "<group>"; };
+		E1BED3F8237F8FE90091278E /* ARBDogRunOtherPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogRunOtherPoints.cpp; path = ../Libraries/ARB/ARBDogRunOtherPoints.cpp; sourceTree = "<group>"; };
+		E1BED3F9237F8FE90091278E /* ARBConfigEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigEvent.cpp; path = ../Libraries/ARB/ARBConfigEvent.cpp; sourceTree = "<group>"; };
+		E1BED3FA237F8FE90091278E /* ARBDogTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogTitle.cpp; path = ../Libraries/ARB/ARBDogTitle.cpp; sourceTree = "<group>"; };
+		E1BED3FB237F8FE90091278E /* ARBLocalization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBLocalization.cpp; path = ../Libraries/ARB/ARBLocalization.cpp; sourceTree = "<group>"; };
+		E1BED3FC237F8FE90091278E /* ARBInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBInfo.cpp; path = ../Libraries/ARB/ARBInfo.cpp; sourceTree = "<group>"; };
+		E1BED3FD237F8FEA0091278E /* ARBDogExistingPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogExistingPoints.cpp; path = ../Libraries/ARB/ARBDogExistingPoints.cpp; sourceTree = "<group>"; };
+		E1BED3FE237F8FEA0091278E /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../Libraries/ARB/stdafx.cpp; sourceTree = "<group>"; };
+		E1BED3FF237F8FEA0091278E /* ARBConfigSubLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigSubLevel.cpp; path = ../Libraries/ARB/ARBConfigSubLevel.cpp; sourceTree = "<group>"; };
+		E1BED400237F8FEA0091278E /* ARBDog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDog.cpp; path = ../Libraries/ARB/ARBDog.cpp; sourceTree = "<group>"; };
+		E1BED401237F8FEA0091278E /* ARBDogTrial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogTrial.cpp; path = ../Libraries/ARB/ARBDogTrial.cpp; sourceTree = "<group>"; };
+		E1BED402237F8FEA0091278E /* ARBConfigScoring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigScoring.cpp; path = ../Libraries/ARB/ARBConfigScoring.cpp; sourceTree = "<group>"; };
+		E1BED403237F8FEA0091278E /* ARBInfoItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBInfoItem.cpp; path = ../Libraries/ARB/ARBInfoItem.cpp; sourceTree = "<group>"; };
 		E1CAE56216B5BF4900B33FE5 /* arbWarningPop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPop.h; sourceTree = "<group>"; };
 		E1CAE56316B5BF4900B33FE5 /* arbWarningPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arbWarningPush.h; sourceTree = "<group>"; };
 		E1CAE56416B5BF4900B33FE5 /* SetupARBPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupARBPost.h; sourceTree = "<group>"; };
@@ -278,46 +278,46 @@
 		E19B62F3166C090F004DEDA4 /* ARB */ = {
 			isa = PBXGroup;
 			children = (
-				E1CAE55D16B5BF3800B33FE5 /* stdafx.cpp */,
-				E1CAE55E16B5BF3800B33FE5 /* stdafx.h */,
-				E19B62F4166C090F004DEDA4 /* ARB_Q.cpp */,
-				E19B62F6166C090F004DEDA4 /* ARBAgilityRecordBook.cpp */,
-				E19B62F8166C090F004DEDA4 /* ARBBase.cpp */,
-				E19B62FC166C090F004DEDA4 /* ARBCalcPoints.cpp */,
-				E19B62FE166C090F004DEDA4 /* ARBCalendar.cpp */,
-				E19B6300166C090F004DEDA4 /* ARBConfig.cpp */,
-				E19B6302166C090F004DEDA4 /* ARBConfigAction.cpp */,
-				E19B6304166C090F004DEDA4 /* ARBConfigCalSite.cpp */,
-				E19B6306166C090F004DEDA4 /* ARBConfigDivision.cpp */,
-				E19B6308166C090F004DEDA4 /* ARBConfigEvent.cpp */,
-				E19B630A166C090F004DEDA4 /* ARBConfigFault.cpp */,
-				E19B630C166C090F004DEDA4 /* ARBConfigLevel.cpp */,
-				E19E1A0F1C62D174001F7FF1 /* ARBConfigLifetimeName.cpp */,
-				E19B630E166C090F004DEDA4 /* ARBConfigLifetimePoints.cpp */,
-				E19B6310166C090F004DEDA4 /* ARBConfigMultiQ.cpp */,
-				E19B6312166C090F004DEDA4 /* ARBConfigOtherPoints.cpp */,
-				E19B6314166C090F004DEDA4 /* ARBConfigPlaceInfo.cpp */,
-				E19B6316166C090F004DEDA4 /* ARBConfigScoring.cpp */,
-				E19B6318166C090F004DEDA4 /* ARBConfigSubLevel.cpp */,
-				E19B631A166C090F004DEDA4 /* ARBConfigTitle.cpp */,
-				E19B631C166C090F004DEDA4 /* ARBConfigTitlePoints.cpp */,
-				E19B631E166C090F004DEDA4 /* ARBConfigVenue.cpp */,
-				E19B6322166C090F004DEDA4 /* ARBDog.cpp */,
-				E19B6324166C090F004DEDA4 /* ARBDogClub.cpp */,
-				E19B6326166C090F004DEDA4 /* ARBDogExistingPoints.cpp */,
-				E19B6328166C090F004DEDA4 /* ARBDogNotes.cpp */,
-				E19B632A166C090F004DEDA4 /* ARBDogReferenceRun.cpp */,
-				E19B632C166C090F004DEDA4 /* ARBDogRegNum.cpp */,
-				E19B632E166C090F004DEDA4 /* ARBDogRun.cpp */,
-				E19B6330166C090F004DEDA4 /* ARBDogRunOtherPoints.cpp */,
-				E19B6332166C090F004DEDA4 /* ARBDogRunPartner.cpp */,
-				E19B6334166C090F004DEDA4 /* ARBDogRunScoring.cpp */,
-				E19B6336166C090F004DEDA4 /* ARBDogTitle.cpp */,
-				E19B6338166C090F004DEDA4 /* ARBDogTrial.cpp */,
-				E19B633A166C090F004DEDA4 /* ARBInfo.cpp */,
-				E19B633C166C090F004DEDA4 /* ARBInfoItem.cpp */,
-				E19B633E166C090F004DEDA4 /* ARBLocalization.cpp */,
-				E19B6343166C090F004DEDA4 /* ARBTraining.cpp */,
+				E1BED3E7237F8FE60091278E /* ARB_Q.cpp */,
+				E1BED3E9237F8FE70091278E /* ARBAgilityRecordBook.cpp */,
+				E1BED3DD237F8FE50091278E /* ARBBase.cpp */,
+				E1BED3E8237F8FE70091278E /* ARBCalcPoints.cpp */,
+				E1BED3E1237F8FE60091278E /* ARBCalendar.cpp */,
+				E1BED3EE237F8FE70091278E /* ARBConfig.cpp */,
+				E1BED3EF237F8FE70091278E /* ARBConfigAction.cpp */,
+				E1BED3F6237F8FE90091278E /* ARBConfigCalSite.cpp */,
+				E1BED3E5237F8FE60091278E /* ARBConfigDivision.cpp */,
+				E1BED3F9237F8FE90091278E /* ARBConfigEvent.cpp */,
+				E1BED3EC237F8FE70091278E /* ARBConfigFault.cpp */,
+				E1BED3ED237F8FE70091278E /* ARBConfigLevel.cpp */,
+				E1BED3F3237F8FE80091278E /* ARBConfigLifetimeName.cpp */,
+				E1BED3F7237F8FE90091278E /* ARBConfigLifetimePoints.cpp */,
+				E1BED3E4237F8FE60091278E /* ARBConfigMultiQ.cpp */,
+				E1BED3E0237F8FE60091278E /* ARBConfigOtherPoints.cpp */,
+				E1BED3F5237F8FE80091278E /* ARBConfigPlaceInfo.cpp */,
+				E1BED402237F8FEA0091278E /* ARBConfigScoring.cpp */,
+				E1BED3FF237F8FEA0091278E /* ARBConfigSubLevel.cpp */,
+				E1BED3DE237F8FE60091278E /* ARBConfigTitle.cpp */,
+				E1BED3F2237F8FE80091278E /* ARBConfigTitlePoints.cpp */,
+				E1BED3EB237F8FE70091278E /* ARBConfigVenue.cpp */,
+				E1BED400237F8FEA0091278E /* ARBDog.cpp */,
+				E1BED3F4237F8FE80091278E /* ARBDogClub.cpp */,
+				E1BED3FD237F8FEA0091278E /* ARBDogExistingPoints.cpp */,
+				E1BED3DF237F8FE60091278E /* ARBDogNotes.cpp */,
+				E1BED3E3237F8FE60091278E /* ARBDogReferenceRun.cpp */,
+				E1BED3DC237F8FE50091278E /* ARBDogRegNum.cpp */,
+				E1BED3F0237F8FE80091278E /* ARBDogRun.cpp */,
+				E1BED3F8237F8FE90091278E /* ARBDogRunOtherPoints.cpp */,
+				E1BED3EA237F8FE70091278E /* ARBDogRunPartner.cpp */,
+				E1BED3F1237F8FE80091278E /* ARBDogRunScoring.cpp */,
+				E1BED3FA237F8FE90091278E /* ARBDogTitle.cpp */,
+				E1BED401237F8FEA0091278E /* ARBDogTrial.cpp */,
+				E1BED3FC237F8FE90091278E /* ARBInfo.cpp */,
+				E1BED403237F8FEA0091278E /* ARBInfoItem.cpp */,
+				E1BED3FB237F8FE90091278E /* ARBLocalization.cpp */,
+				E1BED3E2237F8FE60091278E /* ARBTraining.cpp */,
+				E1BED3FE237F8FEA0091278E /* stdafx.cpp */,
+				E1BED3E6237F8FE60091278E /* stdafx.h */,
 			);
 			name = ARB;
 			path = ../../../ARB;
@@ -358,7 +358,6 @@
 				E19B65D5166C1054004DEDA4 /* ICalendarSite.h in Headers */,
 				E19B65D6166C1054004DEDA4 /* IProgressMeter.h in Headers */,
 				E19B65D7166C1054004DEDA4 /* VersionNumber.h in Headers */,
-				E1CAE56016B5BF3800B33FE5 /* stdafx.h in Headers */,
 				E1CAE56816B5BF4900B33FE5 /* arbWarningPop.h in Headers */,
 				E1CAE56916B5BF4900B33FE5 /* arbWarningPush.h in Headers */,
 				E1CAE56A16B5BF4900B33FE5 /* SetupARBPost.h in Headers */,
@@ -378,6 +377,7 @@
 				E110B4DA177FCFCC004071B5 /* ARBConfigLevel.h in Headers */,
 				E110B4DB177FCFCC004071B5 /* ARBConfigLifetimePoints.h in Headers */,
 				E110B4DC177FCFCC004071B5 /* ARBConfigMultiQ.h in Headers */,
+				E1BED40E237F8FEB0091278E /* stdafx.h in Headers */,
 				E110B4DD177FCFCC004071B5 /* ARBConfigOtherPoints.h in Headers */,
 				E110B4DE177FCFCC004071B5 /* ARBConfigPlaceInfo.h in Headers */,
 				E110B4DF177FCFCC004071B5 /* ARBConfigScoring.h in Headers */,
@@ -460,45 +460,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E19B6352166C090F004DEDA4 /* ARB_Q.cpp in Sources */,
-				E19B6354166C090F004DEDA4 /* ARBAgilityRecordBook.cpp in Sources */,
-				E19E1A101C62D174001F7FF1 /* ARBConfigLifetimeName.cpp in Sources */,
-				E19B6356166C090F004DEDA4 /* ARBBase.cpp in Sources */,
-				E19B635A166C090F004DEDA4 /* ARBCalcPoints.cpp in Sources */,
-				E19B635C166C090F004DEDA4 /* ARBCalendar.cpp in Sources */,
-				E19B635E166C090F004DEDA4 /* ARBConfig.cpp in Sources */,
-				E19B6360166C090F004DEDA4 /* ARBConfigAction.cpp in Sources */,
-				E19B6362166C090F004DEDA4 /* ARBConfigCalSite.cpp in Sources */,
-				E19B6364166C090F004DEDA4 /* ARBConfigDivision.cpp in Sources */,
-				E19B6366166C090F004DEDA4 /* ARBConfigEvent.cpp in Sources */,
-				E19B6368166C090F004DEDA4 /* ARBConfigFault.cpp in Sources */,
-				E19B636A166C090F004DEDA4 /* ARBConfigLevel.cpp in Sources */,
-				E19B636C166C090F004DEDA4 /* ARBConfigLifetimePoints.cpp in Sources */,
-				E19B636E166C090F004DEDA4 /* ARBConfigMultiQ.cpp in Sources */,
-				E19B6370166C090F004DEDA4 /* ARBConfigOtherPoints.cpp in Sources */,
-				E19B6372166C090F004DEDA4 /* ARBConfigPlaceInfo.cpp in Sources */,
-				E19B6374166C090F004DEDA4 /* ARBConfigScoring.cpp in Sources */,
-				E19B6376166C090F004DEDA4 /* ARBConfigSubLevel.cpp in Sources */,
-				E19B6378166C090F004DEDA4 /* ARBConfigTitle.cpp in Sources */,
-				E19B637A166C090F004DEDA4 /* ARBConfigTitlePoints.cpp in Sources */,
-				E19B637C166C090F004DEDA4 /* ARBConfigVenue.cpp in Sources */,
-				E19B6380166C090F004DEDA4 /* ARBDog.cpp in Sources */,
-				E19B6382166C090F004DEDA4 /* ARBDogClub.cpp in Sources */,
-				E19B6384166C090F004DEDA4 /* ARBDogExistingPoints.cpp in Sources */,
-				E19B6386166C090F004DEDA4 /* ARBDogNotes.cpp in Sources */,
-				E19B6388166C090F004DEDA4 /* ARBDogReferenceRun.cpp in Sources */,
-				E19B638A166C090F004DEDA4 /* ARBDogRegNum.cpp in Sources */,
-				E19B638C166C090F004DEDA4 /* ARBDogRun.cpp in Sources */,
-				E19B638E166C090F004DEDA4 /* ARBDogRunOtherPoints.cpp in Sources */,
-				E19B6390166C090F004DEDA4 /* ARBDogRunPartner.cpp in Sources */,
-				E19B6392166C090F004DEDA4 /* ARBDogRunScoring.cpp in Sources */,
-				E19B6394166C090F004DEDA4 /* ARBDogTitle.cpp in Sources */,
-				E19B6396166C090F004DEDA4 /* ARBDogTrial.cpp in Sources */,
-				E19B6398166C090F004DEDA4 /* ARBInfo.cpp in Sources */,
-				E19B639A166C090F004DEDA4 /* ARBInfoItem.cpp in Sources */,
-				E19B639C166C090F004DEDA4 /* ARBLocalization.cpp in Sources */,
-				E19B63A1166C090F004DEDA4 /* ARBTraining.cpp in Sources */,
-				E1CAE55F16B5BF3800B33FE5 /* stdafx.cpp in Sources */,
+				E1BED40C237F8FEB0091278E /* ARBConfigMultiQ.cpp in Sources */,
+				E1BED41D237F8FEB0091278E /* ARBConfigPlaceInfo.cpp in Sources */,
+				E1BED428237F8FEB0091278E /* ARBDog.cpp in Sources */,
+				E1BED421237F8FEB0091278E /* ARBConfigEvent.cpp in Sources */,
+				E1BED416237F8FEB0091278E /* ARBConfig.cpp in Sources */,
+				E1BED41F237F8FEB0091278E /* ARBConfigLifetimePoints.cpp in Sources */,
+				E1BED413237F8FEB0091278E /* ARBConfigVenue.cpp in Sources */,
+				E1BED407237F8FEB0091278E /* ARBDogNotes.cpp in Sources */,
+				E1BED405237F8FEB0091278E /* ARBBase.cpp in Sources */,
+				E1BED41A237F8FEB0091278E /* ARBConfigTitlePoints.cpp in Sources */,
+				E1BED420237F8FEB0091278E /* ARBDogRunOtherPoints.cpp in Sources */,
+				E1BED40B237F8FEB0091278E /* ARBDogReferenceRun.cpp in Sources */,
+				E1BED415237F8FEB0091278E /* ARBConfigLevel.cpp in Sources */,
+				E1BED427237F8FEB0091278E /* ARBConfigSubLevel.cpp in Sources */,
+				E1BED419237F8FEB0091278E /* ARBDogRunScoring.cpp in Sources */,
+				E1BED42A237F8FEB0091278E /* ARBConfigScoring.cpp in Sources */,
+				E1BED40D237F8FEB0091278E /* ARBConfigDivision.cpp in Sources */,
+				E1BED40F237F8FEB0091278E /* ARB_Q.cpp in Sources */,
+				E1BED40A237F8FEB0091278E /* ARBTraining.cpp in Sources */,
+				E1BED423237F8FEB0091278E /* ARBLocalization.cpp in Sources */,
+				E1BED406237F8FEB0091278E /* ARBConfigTitle.cpp in Sources */,
+				E1BED409237F8FEB0091278E /* ARBCalendar.cpp in Sources */,
+				E1BED414237F8FEB0091278E /* ARBConfigFault.cpp in Sources */,
+				E1BED411237F8FEB0091278E /* ARBAgilityRecordBook.cpp in Sources */,
+				E1BED418237F8FEB0091278E /* ARBDogRun.cpp in Sources */,
+				E1BED408237F8FEB0091278E /* ARBConfigOtherPoints.cpp in Sources */,
+				E1BED412237F8FEB0091278E /* ARBDogRunPartner.cpp in Sources */,
+				E1BED404237F8FEB0091278E /* ARBDogRegNum.cpp in Sources */,
+				E1BED426237F8FEB0091278E /* stdafx.cpp in Sources */,
+				E1BED42B237F8FEB0091278E /* ARBInfoItem.cpp in Sources */,
+				E1BED41C237F8FEB0091278E /* ARBDogClub.cpp in Sources */,
+				E1BED425237F8FEB0091278E /* ARBDogExistingPoints.cpp in Sources */,
+				E1BED417237F8FEB0091278E /* ARBConfigAction.cpp in Sources */,
+				E1BED41E237F8FEB0091278E /* ARBConfigCalSite.cpp in Sources */,
+				E1BED41B237F8FEB0091278E /* ARBConfigLifetimeName.cpp in Sources */,
+				E1BED424237F8FEB0091278E /* ARBInfo.cpp in Sources */,
+				E1BED410237F8FEB0091278E /* ARBCalcPoints.cpp in Sources */,
+				E1BED429237F8FEB0091278E /* ARBDogTrial.cpp in Sources */,
+				E1BED422237F8FEB0091278E /* ARBDogTitle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +545,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -600,7 +600,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;

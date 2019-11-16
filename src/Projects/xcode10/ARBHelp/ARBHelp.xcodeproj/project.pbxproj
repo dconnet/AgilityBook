@@ -16,14 +16,17 @@
 		E19B6637166C166F004DEDA4 /* DlgPageEncode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6628166C166F004DEDA4 /* DlgPageEncode.cpp */; };
 		E19B6638166C166F004DEDA4 /* DlgPageEncodeFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B662A166C166F004DEDA4 /* DlgPageEncodeFiles.cpp */; };
 		E19B6639166C166F004DEDA4 /* DlgPageEncodeFinish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */; };
+		E1BED433237F903E0091278E /* AgilityBook16@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED42C237F903E0091278E /* AgilityBook16@2.png */; };
+		E1BED434237F903E0091278E /* AgilityBook48@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED42D237F903E0091278E /* AgilityBook48@2.png */; };
+		E1BED435237F903E0091278E /* AgilityBook32.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED42E237F903E0091278E /* AgilityBook32.png */; };
+		E1BED436237F903E0091278E /* AgilityBook16.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED42F237F903E0091278E /* AgilityBook16.png */; };
+		E1BED437237F903E0091278E /* AgilityBook256.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED430237F903E0091278E /* AgilityBook256.png */; };
+		E1BED438237F903E0091278E /* AgilityBook32@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED431237F903E0091278E /* AgilityBook32@2.png */; };
+		E1BED439237F903E0091278E /* AgilityBook48.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED432237F903E0091278E /* AgilityBook48.png */; };
 		E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */; };
 		E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612617ECB2CA0026B41B /* libARB.a */; };
 		E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612717ECB2CA0026B41B /* libARBCommon.a */; };
 		E1D2AFDF1A2923D4006EA87D /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFDE1A2923D4006EA87D /* AgilityBook.icns */; };
-		E1D2AFE41A2923F0006EA87D /* AgilityBook16.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE01A2923F0006EA87D /* AgilityBook16.png */; };
-		E1D2AFE51A2923F0006EA87D /* AgilityBook32.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE11A2923F0006EA87D /* AgilityBook32.png */; };
-		E1D2AFE61A2923F0006EA87D /* AgilityBook48.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE21A2923F0006EA87D /* AgilityBook48.png */; };
-		E1D2AFE71A2923F1006EA87D /* AgilityBook256.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFE31A2923F0006EA87D /* AgilityBook256.png */; };
 		E1E2517D21CC5F05004A1D6A /* libLibFmt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E2517C21CC5F05004A1D6A /* libLibFmt.a */; };
 /* End PBXBuildFile section */
 
@@ -51,15 +54,18 @@
 		E19B662B166C166F004DEDA4 /* DlgPageEncodeFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFiles.h; sourceTree = "<group>"; };
 		E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPageEncodeFinish.cpp; sourceTree = "<group>"; };
 		E19B662D166C166F004DEDA4 /* DlgPageEncodeFinish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFinish.h; sourceTree = "<group>"; };
+		E1BED42C237F903E0091278E /* AgilityBook16@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AgilityBook16@2.png"; path = "../../../../Include/images/AgilityBook16@2.png"; sourceTree = "<group>"; };
+		E1BED42D237F903E0091278E /* AgilityBook48@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AgilityBook48@2.png"; path = "../../../../Include/images/AgilityBook48@2.png"; sourceTree = "<group>"; };
+		E1BED42E237F903E0091278E /* AgilityBook32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook32.png; path = ../../../../Include/images/AgilityBook32.png; sourceTree = "<group>"; };
+		E1BED42F237F903E0091278E /* AgilityBook16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook16.png; path = ../../../../Include/images/AgilityBook16.png; sourceTree = "<group>"; };
+		E1BED430237F903E0091278E /* AgilityBook256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook256.png; path = ../../../../Include/images/AgilityBook256.png; sourceTree = "<group>"; };
+		E1BED431237F903E0091278E /* AgilityBook32@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AgilityBook32@2.png"; path = "../../../../Include/images/AgilityBook32@2.png"; sourceTree = "<group>"; };
+		E1BED432237F903E0091278E /* AgilityBook48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook48.png; path = ../../../../Include/images/AgilityBook48.png; sourceTree = "<group>"; };
 		E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
 		E1CAE57B16B5BFA200B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
 		E1CE612617ECB2CA0026B41B /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
 		E1CE612717ECB2CA0026B41B /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E1D2AFDE1A2923D4006EA87D /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
-		E1D2AFE01A2923F0006EA87D /* AgilityBook16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook16.png; path = ../../../../Win/res/AgilityBook16.png; sourceTree = "<group>"; };
-		E1D2AFE11A2923F0006EA87D /* AgilityBook32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook32.png; path = ../../../../Win/res/AgilityBook32.png; sourceTree = "<group>"; };
-		E1D2AFE21A2923F0006EA87D /* AgilityBook48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook48.png; path = ../../../../Win/res/AgilityBook48.png; sourceTree = "<group>"; };
-		E1D2AFE31A2923F0006EA87D /* AgilityBook256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook256.png; path = ../../../../Win/res/AgilityBook256.png; sourceTree = "<group>"; };
 		E1E2517C21CC5F05004A1D6A /* libLibFmt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibFmt.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -131,10 +137,13 @@
 		E19B6609166C1640004DEDA4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E1D2AFE01A2923F0006EA87D /* AgilityBook16.png */,
-				E1D2AFE11A2923F0006EA87D /* AgilityBook32.png */,
-				E1D2AFE21A2923F0006EA87D /* AgilityBook48.png */,
-				E1D2AFE31A2923F0006EA87D /* AgilityBook256.png */,
+				E1BED42F237F903E0091278E /* AgilityBook16.png */,
+				E1BED42C237F903E0091278E /* AgilityBook16@2.png */,
+				E1BED42E237F903E0091278E /* AgilityBook32.png */,
+				E1BED431237F903E0091278E /* AgilityBook32@2.png */,
+				E1BED432237F903E0091278E /* AgilityBook48.png */,
+				E1BED42D237F903E0091278E /* AgilityBook48@2.png */,
+				E1BED430237F903E0091278E /* AgilityBook256.png */,
 				E1D2AFDE1A2923D4006EA87D /* AgilityBook.icns */,
 				E19B660A166C1640004DEDA4 /* ARBHelp-Info.plist */,
 				E19B6610166C1640004DEDA4 /* ARBHelp-Prefix.pch */,
@@ -242,11 +251,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1D2AFE51A2923F0006EA87D /* AgilityBook32.png in Resources */,
+				E1BED434237F903E0091278E /* AgilityBook48@2.png in Resources */,
 				E1D2AFDF1A2923D4006EA87D /* AgilityBook.icns in Resources */,
-				E1D2AFE61A2923F0006EA87D /* AgilityBook48.png in Resources */,
-				E1D2AFE41A2923F0006EA87D /* AgilityBook16.png in Resources */,
-				E1D2AFE71A2923F1006EA87D /* AgilityBook256.png in Resources */,
+				E1BED437237F903E0091278E /* AgilityBook256.png in Resources */,
+				E1BED433237F903E0091278E /* AgilityBook16@2.png in Resources */,
+				E1BED435237F903E0091278E /* AgilityBook32.png in Resources */,
+				E1BED438237F903E0091278E /* AgilityBook32@2.png in Resources */,
+				E1BED439237F903E0091278E /* AgilityBook48.png in Resources */,
+				E1BED436237F903E0091278E /* AgilityBook16.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +323,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -404,7 +416,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
