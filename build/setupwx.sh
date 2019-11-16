@@ -25,12 +25,15 @@ export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 trunk|3.1 [debug|release]"
+USAGE="Usage $0 trunk|3.1.2|3.1.3 [debug|release]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
 	VERSION="--disable-compat28 --disable-compat30"
-elif test "x$1" = "x3.1"; then
+elif test "x$1" = "x3.1.2"; then
+	WXWIN=~/devtools/wx/wxWidgets-3.1.2
+	VERSION="--disable-compat28 --disable-compat30"
+elif test "x$1" = "x3.1.3"; then
 	WXWIN=~/devtools/wx/wxWidgets-3.1.3
 	VERSION="--disable-compat28 --disable-compat30"
 else
