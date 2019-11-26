@@ -57,6 +57,8 @@ CBaseApp::CBaseApp(
 	, m_bStandalone(false)
 	, m_langMgr(nullptr)
 {
+	wxStandardPaths::Get().SetFileLayout(wxStandardPaths::FileLayout_XDG);
+
 	if (m_BaseRegName.empty())
 		m_BaseRegName = m_BaseAppName;
 #if USE_DBGREPORT
