@@ -6,6 +6,7 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 Revision History:
 2019-10-21 Configuration version 64.
            Fixed AKC NAC points (Premier changed to 15 for 2018)
+2019-09-21 File version 15.1, FCAT fixes.
 2019-08-31 File version 15.0, move table and subname config info.
            Configuration version 63.
            Re-add NADAC Gamblers.
