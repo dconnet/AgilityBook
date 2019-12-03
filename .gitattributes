@@ -1,15 +1,20 @@
 *      text=auto
 
-*.avery binary
 *.doc  binary
 *.docx binary
 *.dox  eol=lf
 *.dtd  eol=lf
 *.in   eol=lf
-*.lsl  binary
 *.po   eol=lf
 *.sh   eol=lf
 *.xml  eol=lf
+
+# Avery label files
+*.avery binary
+*.zdl  binary
+
+# LightScribe files (CD label)
+*.lsl  binary
 
 # Sources
 *.c    text
