@@ -13,8 +13,13 @@ indent_style = tab
 indent_size = 4
 tab_width = 4
 
-# We can target different files with different options
-# [*.{c,h,cpp,hpp}]
+[*.{dox,dtd,in,po,sh}]
+end_of_line = lf
+
+[*.xml]
+end_of_line = lf
+indent_style = space
+indent_size = 2
 
 # indent_style: tab / space
 # end_of_line: lf / cr / crlf
