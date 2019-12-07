@@ -10,7 +10,7 @@
     <wxWin3_1_3>$(WXBASE)\wxWidgets-3.1.3</wxWin3_1_3>
     <wxWinTrunk>$(WXBASE)\trunk</wxWinTrunk>
     <wxWinEnv>$(WXWIN)</wxWinEnv>
-    <wxWin>$(wxWin3_1_3)</wxWin>
+    <wxWin>$(wxWinEnv)</wxWin>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
