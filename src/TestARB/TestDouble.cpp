@@ -66,6 +66,22 @@ static void RunDblTests(bool bUseLocale)
 	s = ARBDouble::ToString(p, 2, bUseLocale);
 	REQUIRE(L"2" == s);
 
+	p = 42;
+	s = ARBDouble::ToString(p, 0, bUseLocale);
+	REQUIRE(std::wstring(L"42") == s);
+	s = ARBDouble::ToString(p, 1, bUseLocale);
+	REQUIRE(std::wstring(L"42") == s);
+	s = ARBDouble::ToString(p, 2, bUseLocale);
+	REQUIRE(std::wstring(L"42") == s);
+
+	p = 2002; // ARB alpha 1 release year!
+	s = ARBDouble::ToString(p, 0, bUseLocale);
+	REQUIRE(std::wstring(L"2002") == s);
+	s = ARBDouble::ToString(p, 1, bUseLocale);
+	REQUIRE(std::wstring(L"2002") == s);
+	s = ARBDouble::ToString(p, 2, bUseLocale);
+	REQUIRE(std::wstring(L"2002") == s);
+
 	// eStrip
 
 	p = 2.1;
