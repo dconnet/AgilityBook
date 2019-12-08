@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-12-08 Add fmt number formatting tests.
  * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-12-22 Added tests for changed ARBDouble parameter.
@@ -122,6 +123,49 @@ static void RunDblTests(bool bUseLocale)
 
 TEST_CASE("Double")
 {
+	SECTION("fmtCheck")
+	{
+		static const struct
+		{
+			double val;
+			int prec;
+			wchar_t const* expected;
+			wchar_t const* format;
+			wchar_t const* formatv6;
+		} tests[] = {
+			{42.34, 0, L"42.34", L"{:g}",    L"{:n}"},
+			{42.0,  0, L"42",    L"{:g}",    L"{:n}"},
+			{42.34, 1, L"42.3",  L"{:.{}f}", L"{:.{}n}"},
+			{42.0,  1, L"42.0",  L"{:.{}f}", L"{:.{}n}"},
+		};
+
+		for (auto& test : tests)
+		{
+			std::wstring s;
+			if (test.prec > 0)
+				s = fmt::format(test.format, test.val, test.prec);
+			else
+				s = fmt::format(test.format, test.val);
+			REQUIRE(s == test.expected);
+		}
+
+		if (FMT_VERSION >= 60000)
+		{
+			// FMT v6: Formatting changed to locale-independent.
+			// New 'n' option is required for locale-specific formatting.
+			for (auto& test : tests)
+			{
+				std::wstring s;
+				if (test.prec > 0)
+					s = fmt::format(test.formatv6, test.val, test.prec);
+				else
+					s = fmt::format(test.formatv6, test.val);
+				REQUIRE(s == test.expected);
+			}
+		}
+	}
+
+
 	SECTION("strPrecUS")
 	{
 		if (!g_bMicroTest)
