@@ -135,8 +135,9 @@ TEST_CASE("Double")
 		} tests[] = {
 			{42.34, 0, L"42.34", L"{:g}",    L"{:n}"},
 			{42.0,  0, L"42",    L"{:g}",    L"{:n}"},
-			{42.34, 1, L"42.3",  L"{:.{}f}", L"{:.{}n}"},
-			{42.0,  1, L"42.0",  L"{:.{}f}", L"{:.{}n}"},
+			// https://github.com/fmtlib/fmt/issues/1381
+			//{42.34, 1, L"42.3",  L"{:.{}f}", L"{:.{}n}"},
+			//{42.0,  1, L"42.0",  L"{:.{}f}", L"{:.{}n}"},
 		};
 
 		for (auto& test : tests)
@@ -186,6 +187,7 @@ TEST_CASE("Double")
 		if (!g_bMicroTest)
 		{
 			// Using French since the default decimal separator is a comma.
+			std::locale::global(std::locale("fr_FR"));
 #if defined(__WXWINDOWS__) && !USE_CRT
 			wxLocale locale(wxLANGUAGE_FRENCH);
 #else
@@ -193,6 +195,7 @@ TEST_CASE("Double")
 #endif
 			RunDblTests(true);
 			RunDblTests(false);
+			std::locale::global(std::locale("C"));
 		}
 	}
 
