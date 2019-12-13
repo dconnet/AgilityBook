@@ -187,7 +187,6 @@ TEST_CASE("Double")
 		if (!g_bMicroTest)
 		{
 			// Using French since the default decimal separator is a comma.
-			std::locale::global(std::locale("fr_FR"));
 #if defined(__WXWINDOWS__) && !USE_CRT
 			wxLocale locale(wxLANGUAGE_FRENCH);
 #else
@@ -195,7 +194,6 @@ TEST_CASE("Double")
 #endif
 			RunDblTests(true);
 			RunDblTests(false);
-			std::locale::global(std::locale("C"));
 		}
 	}
 
