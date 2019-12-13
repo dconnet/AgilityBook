@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-12-13 Fix issue when loading non-existing .mo file.
  * 2019-09-13 Fix initialization issue.
  * 2018-10-11 Moved to Win LibARBWin
  * 2018-04-20 Use wxTranslations instead of wxLocale.
@@ -242,6 +243,14 @@ bool CLanguageManager::SetLang(wxLanguage langId)
 #else
 		rc = wxTranslations::Get()->AddCatalog(m_pCallback->OnGetCatalogName(), m_CurLang);
 #endif
+		if (rc)
+		{
+			// In wxTranslations::LoadCatalog(const wxString& domain, const wxString& lang, const wxString& msgIdLang),
+			// wx assumes that if lang == msgIdLang, everything is fine. Um. No.
+			// So ask if there are any available translations and fail if not.
+			if (0 == wxTranslations::Get()->GetAvailableTranslations(m_pCallback->OnGetCatalogName()).size())
+				rc = false;
+		}
 	}
 	if (rc)
 	{
