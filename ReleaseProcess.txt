@@ -1,5 +1,8 @@
 Notes for releasing a new version.
 
+Note: To test changes before publishing, set ARB_WWW_ROOT to your local webpage
+root. (Mine is "d:\dcon\www\agilityrecordbook\")
+
 On new year, update copyright year in:
 - License.txt
 - configure.in
