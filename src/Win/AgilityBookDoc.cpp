@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2019-12-26 Fixed file size in properties for new file.
  * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
  * 2015-12-31 Add wx version to file-written-on section in File Properties.
@@ -2301,14 +2302,19 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 	wxString filename = GetFilename();
 	if (!filename.empty())
 	{
-		if (wxFileName::IsFileWritable(filename))
-			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_NAME").wx_str(), filename));
-		else
-			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_READONLY").wx_str(), filename));
-
 		wxFileName file(filename);
-		if (file.IsOk())
+		if (file.Exists())
 		{
+			fmt::format_to(str, _("IDS_FILEPROP_NAME").wx_str(), filename.wx_str());
+
+			if (!wxFileName::IsFileWritable(filename))
+				fmt::format_to(str, _("IDS_FILEPROP_NAME_READONLY").wx_str());
+
+			if (IsModified())
+				fmt::format_to(str, _("IDS_FILEPROP_NAME_MODIFIED").wx_str());
+
+			fmt::format_to(str, L"\n");
+
 			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_SIZE").wx_str(), file.GetSize().GetValue()));
 
 			wxDateTime timeCreate, timeMod;
@@ -2317,6 +2323,13 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 				fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_CREATED").wx_str(), timeCreate.FormatISOCombined().wx_str()));
 				fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_MODIFIED").wx_str(), timeMod.FormatISOCombined().wx_str()));
 			}
+		}
+		else
+		{
+			fmt::format_to(str, filename.wx_str());
+			if (IsModified())
+				fmt::format_to(str, _("IDS_FILEPROP_NAME_MODIFIED").wx_str());
+			fmt::format_to(str, L"\n");
 		}
 	}
 
