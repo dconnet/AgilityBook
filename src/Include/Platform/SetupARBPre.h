@@ -60,6 +60,11 @@
 // 1913: VC14.13 Visual Studio 2017 version 15.6
 // 1914: VC14.14 Visual Studio 2017 version 15.7
 // 1915: VC14.15 Visual Studio 2017 version 15.8
+// 1920: VC14.2 Visual Studio 2019 version 16.0
+// 1921: VC14.2 Visual Studio 2019 version 16.1
+// 1922: VC14.2 Visual Studio 2019 version 16.2
+// 1923: VC14.2 Visual Studio 2019 version 16.3
+// 1924: VC14.2 Visual Studio 2019 version 16.4
 //
 // _M_IX86: Defined for x86 (value specifies processor)
 // _M_X64: Defined for x64 processors
