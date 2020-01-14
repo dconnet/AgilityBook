@@ -18,6 +18,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * 2020-01-14 Fix initialization of HasTable
  * 2018-12-16 Convert to fmt.
  * 2016-06-19 Add support for named/speedpt lifetime points.
  * 2016-01-16 Cleaned up new/edit/delete buttons.
@@ -635,6 +636,7 @@ void CDlgConfigEvent::FillControls()
 		{
 			bEnable = true;
 			ARBConfigScoringPtr pScoring = pScoringData->GetData();
+			m_ctrlTable->SetValue(pScoring->HasTable());
 			m_ctrlHasSubnames->SetValue(pScoring->HasSubNames());
 			if (pScoring->HasSubNames())
 			{
