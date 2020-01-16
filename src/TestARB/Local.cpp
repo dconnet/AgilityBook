@@ -576,6 +576,18 @@ std::wstring CLocalization::UpdateTableRuns(int nRuns) const
 }
 
 
+std::wstring CLocalization::UpdateTableRuns(int nRuns, std::wstring const& inRunsMsg) const
+{
+	return fmt::format(L"{}\n{}", fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_TABLE_RUNS2")), nRuns), inRunsMsg);
+}
+
+
+std::wstring CLocalization::UpdateSubnameRuns(int nRuns, std::wstring const& inRunsMsg) const
+{
+	return fmt::format(L"{}\n{}", fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_SUBNAME_RUNS")), nRuns), inRunsMsg);
+}
+
+
 std::wstring CLocalization::ErrorInvalidDocStructure(wchar_t const* const inMsg) const
 {
 	if (inMsg)

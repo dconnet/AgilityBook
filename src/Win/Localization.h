@@ -87,6 +87,8 @@ public:
 	std::wstring WarnDeletedRuns(int nRuns, std::wstring const& inRunsMsg) const override;
 	std::wstring UpdateTeamRuns(int nRuns, std::wstring const& inRunsMsg) const override;
 	std::wstring UpdateTableRuns(int nRuns) const override;
+	std::wstring UpdateTableRuns(int nRuns, std::wstring const& inRunsMsg) const override;
+	std::wstring UpdateSubnameRuns(int nRuns, std::wstring const& inRunsMsg) const override;
 
 	std::wstring ActionDeleteCalPlugin(std::wstring const& name) const override;
 	std::wstring ActionRenameOtherPoints(

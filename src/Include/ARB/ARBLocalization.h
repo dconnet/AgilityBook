@@ -103,6 +103,8 @@ public:
 	virtual std::wstring WarnDeletedRuns(int nRuns, std::wstring const& inRunsMsg) const = 0;
 	virtual std::wstring UpdateTeamRuns(int nRuns, std::wstring const& inRunsMsg) const = 0;
 	virtual std::wstring UpdateTableRuns(int nRuns) const = 0;
+	virtual std::wstring UpdateTableRuns(int nRuns, std::wstring const& inRunsMsg) const = 0;
+	virtual std::wstring UpdateSubnameRuns(int nRuns, std::wstring const& inRunsMsg) const = 0;
 
 	// Used in ARBConfigAction.cpp
 	virtual std::wstring ActionDeleteCalPlugin(std::wstring const& name) const = 0;

@@ -16,6 +16,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2020-01-16 Fix runs when table/subnames are changed in config.
  * 2019-09-17 File version 15.1
  * 2019-08-31 File version 15.0
  * 2019-08-18 File version 14.6
@@ -449,6 +450,7 @@ bool ARBAgilityRecordBook::Update(
 	{
 		bChanges = m_Config.Update(indent, inConfigNew, ioInfo);
 	}
+	// m_Config is now updated.
 
 	// In configuration 24, we added 'Team'. Originally, 'Pairs/Tournament' was
 	// used to track Team Qs. Starting in v24, we're using it specifically for
@@ -486,9 +488,11 @@ bool ARBAgilityRecordBook::Update(
 		// This actually just synchronizes multiQs.
 		m_Dogs.DeleteMultiQs(m_Config, (*iterVenue)->GetName());
 	}
-	fmt::wmemory_buffer msgPairsRuns, msgDelRuns;
+	fmt::wmemory_buffer msgPairsRuns, msgDelRuns, msgTable, msgSubname;
 	int nUpdatedPairsRuns = 0;
 	int nDeletedRuns = 0;
+	int nUpdatedTable = 0;
+	int nUpdatedSubname = 0;
 	for (ARBDogList::iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)
@@ -556,6 +560,28 @@ bool ARBAgilityRecordBook::Update(
 							// Titling points were removed. Reset the Q/NQ to NA.
 							pRun->SetQ(Q::NA);
 						}
+					}	
+					if (!pScoring->HasTable() && pRun->GetScoring().HasTable())
+					{
+						pRun->GetScoring().SetHasTable(false);
+						fmt::format_to(msgTable, L"   {} {} {} {}/{}\n",
+							pRun->GetDate().GetString(ARBDateFormat::ISO),
+							venue,
+							pRun->GetEvent(),
+							pRun->GetDivision(),
+							pRun->GetLevel());
+						++nUpdatedTable;
+					}
+					if (!pScoring->HasSubNames() && !pRun->GetSubName().empty())
+					{
+						pRun->SetSubName(std::wstring());
+						fmt::format_to(msgSubname, L"   {} {} {} {}/{}\n",
+							pRun->GetDate().GetString(ARBDateFormat::ISO),
+							venue,
+							pRun->GetEvent(),
+							pRun->GetDivision(),
+							pRun->GetLevel());
+						++nUpdatedSubname;
 					}
 					++iterRun;
 				}
@@ -584,6 +610,18 @@ bool ARBAgilityRecordBook::Update(
 		nChanges += nDeletedRuns;
 		std::wstring msg = Localization()->WarnDeletedRuns(nDeletedRuns, fmt::to_string(msgDelRuns));
 		ioCallBack.PostDelete(msg);
+		fmt::format_to(ioInfo, L"\n{}\n", msg);
+	}
+	if (0 < nUpdatedTable)
+	{
+		nChanges += nUpdatedTable;
+		std::wstring msg = Localization()->UpdateTableRuns(nUpdatedTable, fmt::to_string(msgTable));
+		fmt::format_to(ioInfo, L"\n{}\n", msg);
+	}
+	if (0 < nUpdatedSubname)
+	{
+		nChanges += nUpdatedSubname;
+		std::wstring msg = Localization()->UpdateSubnameRuns(nUpdatedSubname, fmt::to_string(msgSubname));
 		fmt::format_to(ioInfo, L"\n{}\n", msg);
 	}
 

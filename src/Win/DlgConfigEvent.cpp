@@ -500,6 +500,7 @@ void CDlgConfigEvent::ShowSubNames(bool bShow)
 		m_ctrlSubNamesNew->Show(true);
 		m_ctrlSubNamesEdit->Show(true);
 		m_ctrlSubNamesDelete->Show(true);
+		EnableSubnameControls();
 	}
 	else
 	{
