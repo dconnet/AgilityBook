@@ -94,7 +94,6 @@
 #include "DlgTraining.h"
 #include "DlgTrial.h"
 #include "FilterOptions.h"
-#include "Globals.h"
 #include "MainFrm.h"
 #include "RegItems.h"
 #include "TabView.h"

@@ -23,7 +23,6 @@
 #include "DlgEventSelect.h"
 
 #include "AgilityBook.h"
-#include "Globals.h"
 
 #include "ARB/ARBConfigDivision.h"
 #include "ARB/ARBConfigEvent.h"
@@ -31,6 +30,7 @@
 #include "ARB/ARBConfigSubLevel.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include <wx/valgen.h>
 
 #ifdef __WXMSW__

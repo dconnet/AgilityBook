@@ -43,12 +43,12 @@
 #include "DlgMessageBox.h"
 #include "DlgName.h"
 #include "ImageHelper.h"
-#include "Globals.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__

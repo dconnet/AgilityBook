@@ -25,9 +25,9 @@
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "VersionNumber.h"
 
-#include "../Win/Globals.h"
 #include "../Win/ImageHelper.h"
 #include <wx/filedlg.h>
 #include <wx/valgen.h>

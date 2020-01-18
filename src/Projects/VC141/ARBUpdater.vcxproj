@@ -321,7 +321,6 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">false</MultiProcessorCompilation>
     </ClCompile>
-    <ClCompile Include="..\..\Win\Globals.cpp" />
     <ClCompile Include="..\..\Win\ImageHelper.cpp" />
     <ClCompile Include="..\..\Win\Localization.cpp" />
   </ItemGroup>
@@ -342,7 +341,6 @@
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
-    <ClInclude Include="..\..\Win\Globals.h" />
     <ClInclude Include="..\..\ARBUpdater\DlgDigest.h" />
     <ClInclude Include="..\..\ARBUpdater\stdafx.h" />
     <ClInclude Include="..\..\Win\ImageHelper.h" />

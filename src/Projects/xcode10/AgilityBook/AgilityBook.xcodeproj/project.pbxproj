@@ -76,7 +76,6 @@
 		E19B6535166C09B9004DEDA4 /* DlgTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B646A166C09B9004DEDA4 /* DlgTraining.cpp */; };
 		E19B6536166C09B9004DEDA4 /* DlgTrial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B646C166C09B9004DEDA4 /* DlgTrial.cpp */; };
 		E19B6537166C09B9004DEDA4 /* FilterOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B646E166C09B9004DEDA4 /* FilterOptions.cpp */; };
-		E19B6538166C09B9004DEDA4 /* Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6470166C09B9004DEDA4 /* Globals.cpp */; };
 		E19B6539166C09B9004DEDA4 /* IconList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6472166C09B9004DEDA4 /* IconList.cpp */; };
 		E19B653E166C09B9004DEDA4 /* Localization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B647B166C09B9004DEDA4 /* Localization.cpp */; };
 		E19B653F166C09B9004DEDA4 /* MainFrm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B647D166C09B9004DEDA4 /* MainFrm.cpp */; };
@@ -383,8 +382,6 @@
 		E19B646D166C09B9004DEDA4 /* DlgTrial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgTrial.h; sourceTree = "<group>"; };
 		E19B646E166C09B9004DEDA4 /* FilterOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterOptions.cpp; sourceTree = "<group>"; };
 		E19B646F166C09B9004DEDA4 /* FilterOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterOptions.h; sourceTree = "<group>"; };
-		E19B6470166C09B9004DEDA4 /* Globals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Globals.cpp; sourceTree = "<group>"; };
-		E19B6471166C09B9004DEDA4 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 		E19B6472166C09B9004DEDA4 /* IconList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IconList.cpp; sourceTree = "<group>"; };
 		E19B6473166C09B9004DEDA4 /* IconList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconList.h; sourceTree = "<group>"; };
 		E19B647B166C09B9004DEDA4 /* Localization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Localization.cpp; sourceTree = "<group>"; };
@@ -935,8 +932,6 @@
 				E19B646D166C09B9004DEDA4 /* DlgTrial.h */,
 				E19B646E166C09B9004DEDA4 /* FilterOptions.cpp */,
 				E19B646F166C09B9004DEDA4 /* FilterOptions.h */,
-				E19B6470166C09B9004DEDA4 /* Globals.cpp */,
-				E19B6471166C09B9004DEDA4 /* Globals.h */,
 				E19B6472166C09B9004DEDA4 /* IconList.cpp */,
 				E19B6473166C09B9004DEDA4 /* IconList.h */,
 				E1D2AFE81A292424006EA87D /* ImageHelper.cpp */,
@@ -1289,7 +1284,6 @@
 				E19B6535166C09B9004DEDA4 /* DlgTraining.cpp in Sources */,
 				E19B6536166C09B9004DEDA4 /* DlgTrial.cpp in Sources */,
 				E19B6537166C09B9004DEDA4 /* FilterOptions.cpp in Sources */,
-				E19B6538166C09B9004DEDA4 /* Globals.cpp in Sources */,
 				E19B6539166C09B9004DEDA4 /* IconList.cpp in Sources */,
 				E19B653E166C09B9004DEDA4 /* Localization.cpp in Sources */,
 				E19B653F166C09B9004DEDA4 /* MainFrm.cpp in Sources */,

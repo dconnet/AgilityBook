@@ -35,7 +35,6 @@
 #include "AgilityBookMenu.h"
 #include "CommonView.h"
 #include "DlgMessage.h"
-#include "Globals.h"
 #include "ImageHelper.h"
 #include "PointsData.h"
 #include "Print.h"

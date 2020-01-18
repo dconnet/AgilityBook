@@ -46,10 +46,10 @@
 #include "AgilityBookOptions.h"
 #include "DlgAssignColumns.h"
 #include "DlgMessage.h"
-#include "Globals.h"
 #include "Wizard.h"
 
 #include "ARBCommon/BreakLine.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListCtrl.h"
 #include <wx/spinctrl.h>

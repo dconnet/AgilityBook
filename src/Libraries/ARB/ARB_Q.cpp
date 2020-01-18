@@ -42,6 +42,7 @@ static struct Q2Enum
 	{ATTRIB_QTYPE_Q,   Q::Q,      arbT("IDS_QTYPE_Q")},
 	{ATTRIB_QTYPE_NQ,  Q::NQ,     arbT("IDS_QTYPE_NQ")},
 	{ATTRIB_QTYPE_E,   Q::E,      arbT("IDS_QTYPE_E")},
+	{ATTRIB_QTYPE_FEO, Q::FEO,    arbT("IDS_QTYPE_FEO")},
 	{ATTRIB_QTYPE_DNR, Q::DNR,    arbT("IDS_QTYPE_DNR")},
 	{ATTRIB_QTYPE_NA,  Q::NA,     arbT("IDS_QTYPE_NA")},
 }; ///< This is a list of the various types of "Q"s we support.

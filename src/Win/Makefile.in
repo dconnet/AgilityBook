@@ -101,7 +101,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgTraining.cpp \
 	DlgTrial.cpp \
 	FilterOptions.cpp \
-	Globals.cpp \
 	IconList.cpp \
 	ImageHelper.cpp \
 	Localization.cpp \

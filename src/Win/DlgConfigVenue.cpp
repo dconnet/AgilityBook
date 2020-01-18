@@ -46,7 +46,6 @@
 #include "DlgConfigTitle.h"
 #include "DlgConfigureData.h"
 #include "DlgName.h"
-#include "Globals.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfigVenue.h"

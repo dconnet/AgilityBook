@@ -54,19 +54,20 @@ TEST_CASE("ARBQ")
 		{
 			// FYI: None of the code assumes any order. This is just to make
 			// sure I didn't add/remove something and forget.
-			REQUIRE(7 == ARB_Q::GetNumValidTypes());
-			REQUIRE(L"SQ, Q, NQ, E, DNR, NA" == ARB_Q::GetValidTypes());
+			REQUIRE(8 == ARB_Q::GetNumValidTypes());
+			REQUIRE(L"SQ, Q, NQ, E, FEO, DNR, NA" == ARB_Q::GetValidTypes());
 			REQUIRE(ARB_Q(Q::UNK) == ARB_Q::GetValidType(0));
-			REQUIRE(ARB_Q(Q::NA) == ARB_Q::GetValidType(6));
+			REQUIRE(ARB_Q(Q::SuperQ) == ARB_Q::GetValidType(1));
 			REQUIRE(ARB_Q(Q::Q) == ARB_Q::GetValidType(2));
 			REQUIRE(ARB_Q(Q::NQ) == ARB_Q::GetValidType(3));
 			REQUIRE(ARB_Q(Q::E) == ARB_Q::GetValidType(4));
-			REQUIRE(ARB_Q(Q::DNR) == ARB_Q::GetValidType(5));
-			REQUIRE(ARB_Q(Q::SuperQ) == ARB_Q::GetValidType(1));
+			REQUIRE(ARB_Q(Q::FEO) == ARB_Q::GetValidType(5));
+			REQUIRE(ARB_Q(Q::DNR) == ARB_Q::GetValidType(6));
+			REQUIRE(ARB_Q(Q::NA) == ARB_Q::GetValidType(7));
 
 			std::vector<std::wstring> types;
 			ARB_Q::GetValidTypes(types);
-			REQUIRE(7u == types.size());
+			REQUIRE(8u == types.size());
 		}
 	}
 

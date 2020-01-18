@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-01-17 Moved ShouldComputeScore here.
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown state.
  * 2013-08-14 Moved out of ARBTypes.h
@@ -30,6 +31,7 @@ enum class Q
 	NQ,		///< Not qualified.
 	Q,		///< Qualified.
 	SuperQ,	///< Super Qualifier (USDAA Snooker top 15%).
+	FEO,    ///< For Exhibition Only.
 };
 
 
@@ -138,12 +140,25 @@ public:
 	}
 
 	/**
+	 * Should we compute a score for this?
+	 */
+	bool ShouldComputeScore()
+	{
+		return Qualified()
+			|| Q::NQ == m_Q
+			|| Q::FEO == m_Q
+			|| Q::NA == m_Q;
+	}
+
+	/**
 	 * Do we want to tally statistics about this?
 	 * (It makes no sense to list faults for either of these)
 	 */
 	bool AllowTally() const
 	{
-		return Q::UNK != m_Q && Q::NA != m_Q && Q::DNR != m_Q;
+		return Q::UNK != m_Q
+			&& Q::NA != m_Q
+			&& Q::DNR != m_Q;
 	}
 
 	/**
@@ -152,7 +167,11 @@ public:
 	 */
 	bool AllowForNonTitling() const
 	{
-		return Q::UNK == m_Q || Q::NA == m_Q || Q::DNR == m_Q || Q::E == m_Q;
+		return Q::UNK == m_Q
+			|| Q::NA == m_Q
+			|| Q::DNR == m_Q
+			|| Q::E == m_Q
+			|| Q::FEO == m_Q;
 	}
 
 	operator Q() const

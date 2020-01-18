@@ -495,7 +495,6 @@
     <ClCompile Include="..\..\Win\DlgTraining.cpp" />
     <ClCompile Include="..\..\Win\DlgTrial.cpp" />
     <ClCompile Include="..\..\Win\FilterOptions.cpp" />
-    <ClCompile Include="..\..\Win\Globals.cpp" />
     <ClCompile Include="..\..\Win\IconList.cpp" />
     <ClCompile Include="..\..\Win\ImageHelper.cpp" />
     <ClCompile Include="..\..\Win\Localization.cpp" />
@@ -618,7 +617,6 @@
     <ClInclude Include="..\..\Win\DlgTraining.h" />
     <ClInclude Include="..\..\Win\DlgTrial.h" />
     <ClInclude Include="..\..\Win\FilterOptions.h" />
-    <ClInclude Include="..\..\Win\Globals.h" />
     <ClInclude Include="..\..\Win\IconList.h" />
     <ClInclude Include="..\..\Win\ImageHelper.h" />
     <ClInclude Include="..\..\Win\Localization.h" />

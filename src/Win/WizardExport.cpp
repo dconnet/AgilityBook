@@ -41,7 +41,6 @@
 #include "AgilityBookOptions.h"
 #include "AgilityBookTrainingView.h"
 #include "DlgAssignColumns.h"
-#include "Globals.h"
 #include "Wizard.h"
 
 #include "ARB/ARBConfigScoring.h"
@@ -50,6 +49,7 @@
 #include "ARB/ARBDogTrial.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/BreakLine.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListCtrl.h"
 #include <wx/valgen.h>

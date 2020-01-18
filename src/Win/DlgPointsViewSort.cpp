@@ -21,7 +21,8 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
-#include "Globals.h"
+
+#include "LibARBWin/ARBWinUtilities.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

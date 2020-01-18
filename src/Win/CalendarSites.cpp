@@ -32,7 +32,6 @@
 #include "DlgAssignColumns.h"
 #include "DlgCalendarQueryDetail.h"
 #include "DlgPluginDetails.h"
-#include "Globals.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
 
@@ -40,6 +39,7 @@
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/CheckTreeCtrl.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListData.h"

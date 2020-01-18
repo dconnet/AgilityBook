@@ -8,7 +8,7 @@
 
 /**
  * @file
- * @brief Globals
+ * @brief Utilities
  * @author David Connet
  *
  * Revision History
@@ -36,7 +36,6 @@ class wxTreeCtrl;
  * Find a window id within a sizer.
  * @param sizer The sizer to recursively search.
  * @param id Id of window to return.
- * @note In Globals.cpp
  */
 ARBWIN_API wxWindow* FindWindowInSizer(
 		wxSizer* sizer,

@@ -240,9 +240,6 @@
     <ClCompile Include="..\..\Win\FilterOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\Globals.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\IconList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -498,9 +495,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\FilterOptions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Win\Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\IconList.h">

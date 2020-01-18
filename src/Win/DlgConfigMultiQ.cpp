@@ -24,7 +24,6 @@
 
 #include "AgilityBook.h"
 #include "DlgEventSelect.h"
-#include "Globals.h"
 
 #include "ARB/ARBConfigDivision.h"
 #include "ARB/ARBConfigEvent.h"
@@ -32,6 +31,7 @@
 #include "ARB/ARBConfigSubLevel.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/ListCtrl.h"
 #include "LibARBWin/Validators.h"
 #include <wx/datectrl.h>

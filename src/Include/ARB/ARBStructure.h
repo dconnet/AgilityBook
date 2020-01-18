@@ -260,6 +260,7 @@
 #define ATTRIB_QTYPE_Q							L"Q"
 #define ATTRIB_QTYPE_NQ							L"NQ"
 #define ATTRIB_QTYPE_E							L"E"
+#define ATTRIB_QTYPE_FEO						L"FEO"
 #define ATTRIB_QTYPE_DNR						L"DNR"
 #define ATTRIB_QTYPE_SQ							L"SQ"
 #define ATTRIB_PLACEMENT_PLACE				L"Place"

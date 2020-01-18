@@ -32,7 +32,6 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
-#include "Globals.h"
 #include "PointsData.h"
 
 #include "ARB/ARBConfig.h"
@@ -40,6 +39,7 @@
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogRunOtherPoints.h"
 #include "ARB/ARBDogTrial.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/ListCtrl.h"
 
 #ifdef __WXMSW__

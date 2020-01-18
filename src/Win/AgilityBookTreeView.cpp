@@ -56,7 +56,6 @@
 #include "DlgFind.h"
 #include "DlgReorder.h"
 #include "FilterOptions.h"
-#include "Globals.h"
 #include "ImageHelper.h"
 #include "MainFrm.h"
 #include "Print.h"
@@ -67,6 +66,7 @@
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DPI.h"
 #include <wx/config.h>
 

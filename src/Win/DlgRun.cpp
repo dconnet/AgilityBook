@@ -118,7 +118,6 @@
 #include "DlgListCtrl.h"
 #include "DlgReferenceRun.h"
 #include "DlgSelectURL.h"
-#include "Globals.h"
 #include "ImageHelper.h"
 #include "NoteButton.h"
 
@@ -129,6 +128,7 @@
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/CheckLink.h"
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/ListCtrl.h"
@@ -2251,7 +2251,7 @@ void CDlgRun::SetTitlePoints()
 			}
 			strTitle = fmt::format(L"{}", m_Run->GetTitlePoints(pScoring));
 		}
-		if (ShouldComputeScore(q))
+		if (q.ShouldComputeScore())
 			strScore = ARBDouble::ToString(m_Run->GetScore(pScoring));
 	}
 	// Doesn't matter if they're hidden,..

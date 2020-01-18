@@ -65,7 +65,6 @@
 #include "DlgFind.h"
 #include "DlgReorder.h"
 #include "FilterOptions.h"
-#include "Globals.h"
 #include "ImageHelper.h"
 #include "MainFrm.h"
 #include "PointsData.h"
@@ -344,7 +343,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			}
 			break;
 		case IO_RUNS_SCORE:
-			if (ShouldComputeScore(m_pRun->GetQ()))
+			if (m_pRun->GetQ().ShouldComputeScore())
 			{
 				ARBConfigScoringPtr pScoring;
 				if (m_pRun->GetClub())

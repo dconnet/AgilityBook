@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-16 15:51-0800\n"
-"PO-Revision-Date: 2020-01-16 15:52-0800\n"
+"POT-Creation-Date: 2020-01-17 15:27-0800\n"
+"PO-Revision-Date: 2020-01-17 15:27-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -56,10 +56,14 @@ msgid "IDS_QTYPE_E"
 msgstr "E"
 
 #: Libraries/ARB/ARB_Q.cpp:45
+msgid "IDS_QTYPE_FEO"
+msgstr "FEO"
+
+#: Libraries/ARB/ARB_Q.cpp:46
 msgid "IDS_QTYPE_DNR"
 msgstr "DNR"
 
-#: Libraries/ARB/ARB_Q.cpp:46
+#: Libraries/ARB/ARB_Q.cpp:47
 msgid "IDS_QTYPE_NA"
 msgstr "NA"
 

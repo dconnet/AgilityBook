@@ -30,11 +30,11 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "Globals.h"
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogExistingPoints.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/datectrl.h>

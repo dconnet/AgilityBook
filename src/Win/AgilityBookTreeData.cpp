@@ -61,7 +61,6 @@
 #include "DlgAssignColumns.h"
 #include "DlgOptions.h"
 #include "FilterOptions.h"
-#include "Globals.h"
 #include "PointsData.h"
 #include "Print.h"
 #include "TabView.h"
