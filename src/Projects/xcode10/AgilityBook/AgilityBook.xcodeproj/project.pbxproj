@@ -1360,8 +1360,8 @@
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
 					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
-					"-I$WXBASE/wxWidgets-3.1.3/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
-					"-I$WXBASE/wxWidgets-3.1.3/include",
+					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
 					"-D__WXOSX__",
@@ -1373,7 +1373,7 @@
 					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXBASE/wxWidgets-3.1.3/build-debug/lib",
+					"-L$WXWIN/build-debug/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1453,8 +1453,8 @@
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
 					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
-					"-I$WXBASE/wxWidgets-3.1.3/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
-					"-I$WXBASE/wxWidgets-3.1.3/include",
+					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
 					"-D__WXMAC__",
@@ -1467,7 +1467,7 @@
 					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXBASE/wxWidgets-3.1.3/build-release/lib",
+					"-L$WXWIN/build-release/lib",
 					"-framework",
 					IOKit,
 					"-framework",
