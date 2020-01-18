@@ -1,6 +1,7 @@
 1/17/2020: v3.5.0.<develop>
-- Bumped Configuration v65:
+- Bumped file version to 15.1:
   - New FEO style.
+- Bumped Configuration v65:
   - (TODO) Updated standard runs for no table
   - (TODO) Updated USDAA for new rules
 - New features / Enhancements:

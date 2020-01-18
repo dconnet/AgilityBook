@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2020-01-16 File version 15.2
+           Added FEO to Q.
 2019-09-21 File version 15.1
 2019-09-02 File version 15.0
            Move table and subname info from 'Event' to 'Scoring'
@@ -720,7 +722,7 @@ These 3 elements define the major scoring mechanisms.
 -->
 <!ELEMENT Placement (OtherPoints*) >
 	<!ATTLIST Placement
-		Q (NA|SQ|Q|NQ|E|DNR) 'NA'
+		Q (NA|SQ|Q|NQ|E|FEO|DNR) 'NA'
 		Place CDATA #REQUIRED
 		InClass CDATA #IMPLIED
 		DogsQd CDATA #IMPLIED
@@ -757,7 +759,7 @@ entries are just for reference, hence the data is not interpreted.
 -->
 <!ELEMENT ReferenceRun (Name, Breed?, ScoreOrFaults?, Note?) >
 	<!ATTLIST ReferenceRun
-		Q (NA|SQ|Q|NQ|E|DNR) 'NA'
+		Q (NA|SQ|Q|NQ|E|FEO|DNR) 'NA'
 		Place CDATA #REQUIRED
 		Time CDATA #IMPLIED
 		Height CDATA #IMPLIED
