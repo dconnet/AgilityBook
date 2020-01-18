@@ -380,6 +380,12 @@
     <Xml Include="..\..\TestARB\res\Config63_v15_0.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <Xml Include="..\..\TestARB\res\Config64_v15_1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\..\TestARB\res\Config65_v15_2.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\TestARB\res\CompileDatListTest.txt">

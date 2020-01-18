@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-01-18 USDAA Top10 changed.
  * 2018-06-23 Added USDAA Top10.
  * 2011-07-31 Created
  */
@@ -63,16 +64,9 @@ ARBCalcPoints::~ARBCalcPoints()
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBCalcPointsNormal_concrete : public ARBCalcPointsNormal
-{
-public:
-	ARBCalcPointsNormal_concrete() {}
-};
-
-
 ARBCalcPointsNormalPtr ARBCalcPointsNormal::New()
 {
-	return std::make_shared<ARBCalcPointsNormal_concrete>();
+	return std::make_shared<ARBCalcPointsNormal>();
 }
 
 
@@ -92,7 +86,9 @@ double ARBCalcPointsNormal::GetPoints(
 		double inTime,
 		double inSCT,
 		short inPlace,
-		short inClass) const
+		short inClass,
+		ARBDate date,
+		bool isTourney) const
 {
 	// Pass through.
 	return inPoints;
@@ -100,16 +96,9 @@ double ARBCalcPointsNormal::GetPoints(
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBCalcPointsT2B_concrete : public ARBCalcPointsT2B
-{
-public:
-	ARBCalcPointsT2B_concrete() {}
-};
-
-
 ARBCalcPointsT2BPtr ARBCalcPointsT2B::New()
 {
-	return std::make_shared<ARBCalcPointsT2B_concrete>();
+	return std::make_shared<ARBCalcPointsT2B>();
 }
 
 
@@ -129,7 +118,9 @@ double ARBCalcPointsT2B::GetPoints(
 		double inTime,
 		double inSCT,
 		short inPlace,
-		short inClass) const
+		short inClass,
+		ARBDate date,
+		bool isTourney) const
 {
 	if (inTime == inSCT && inPlace == 1)
 		return 10.0;
@@ -156,16 +147,9 @@ double ARBCalcPointsT2B::GetPoints(
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBCalcPointsUKI_concrete : public ARBCalcPointsUKI
-{
-public:
-	ARBCalcPointsUKI_concrete() {}
-};
-
-
 ARBCalcPointsUKIPtr ARBCalcPointsUKI::New()
 {
-	return std::make_shared<ARBCalcPointsUKI_concrete>();
+	return std::make_shared<ARBCalcPointsUKI>();
 }
 
 
@@ -185,7 +169,9 @@ double ARBCalcPointsUKI::GetPoints(
 		double inTime,
 		double inSCT,
 		short inPlace,
-		short inClass) const
+		short inClass,
+		ARBDate date,
+		bool isTourney) const
 {
 	double pts = 4.0;
 	if (inClass <= 10)
@@ -228,16 +214,9 @@ double ARBCalcPointsUKI::GetPoints(
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARBCalcPointsTop10USDAA_concrete : public ARBCalcPointsTop10USDAA
-{
-public:
-	ARBCalcPointsTop10USDAA_concrete() {}
-};
-
-
 ARBCalcPointsTop10USDAAPtr ARBCalcPointsTop10USDAA::New()
 {
-	return std::make_shared<ARBCalcPointsTop10USDAA_concrete>();
+	return std::make_shared<ARBCalcPointsTop10USDAA>();
 }
 
 
@@ -257,8 +236,13 @@ double ARBCalcPointsTop10USDAA::GetPoints(
 		double inTime,
 		double inSCT,
 		short inPlace,
-		short inClass) const
+		short inClass,
+		ARBDate date,
+		bool isTourney) const
 {
+	static const ARBDate ruleChange(2020, 1, 1);
+
+	// Compute number of places to rank.
 	int numPlaces = 0;
 	if (2 <= inClass && inClass <= 3)
 		numPlaces = 1;
@@ -269,7 +253,28 @@ double ARBCalcPointsTop10USDAA::GetPoints(
 	else if (10 < inClass)
 		numPlaces = ((inClass - 1) / 10) + 3;
 
-	if (numPlaces < 1 || inPlace < 1 || inPlace > numPlaces)
+	// If none or no placement specified, outa here!
+	if (numPlaces < 1 || inPlace < 1)
 		return 0.0;
-	return (numPlaces - inPlace) * 2 + 1;
+	if (date < ruleChange)
+	{
+		// In old style, only the top N places get points.
+		if (inPlace > numPlaces)
+			return 0.0;
+	}
+	else
+	{
+		// In new style, only the top 5 get extra points.
+		if (numPlaces > 5)
+			numPlaces = 5;
+	}
+
+	double pts = (numPlaces - inPlace) * 2 + 1;
+	if (pts < 0.0) // Only happens in new style, we already returned in old.
+		pts = 0.0;
+
+	if (date < ruleChange)
+		return pts;
+	else
+		return (isTourney ? 5.0 : 10.0) + pts;
 }

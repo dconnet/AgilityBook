@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DefaultConfig Book="15.2">
+<DefaultConfig Book="15.1">
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2020-01-18 Configuration version 65.
-           Updated AKC standard runs for no table (premium/nationals)
-           Updated USDAA rules.
 2019-12-25 Configuration version 64.
            Fixed AKC NAC points (Premier changed to 15 for 2018)
 2019-09-21 File version 15.1, FCAT fixes.
@@ -209,7 +206,7 @@ Revision History:
            Added new Config/Action: DeleteTitle
 -->
 
-  <Configuration version="65">
+  <Configuration version="64">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -753,20 +750,20 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <Note>No more than 2R, 1W, 2T (before 9/1/2006, 2Ws were allowed)</Note>
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Nationals" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
-        <Scoring Division="*" Level="Premier" ValidFrom="2017-12-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Nationals" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
+        <Scoring Division="*" Level="Premier" ValidFrom="2017-12-1" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" Points="15" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="*" Level="Premier" ValidFrom="2016-12-1" ValidTo="2017-11-30" dropFractions="y" superQ="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Premier" ValidFrom="2016-12-1" ValidTo="2017-11-30" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" Points="25" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="*" Level="Premier" ValidFrom="2015-10-1" ValidTo="2016-11-30" dropFractions="y" superQ="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Premier" ValidFrom="2015-10-1" ValidTo="2016-11-30" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" Points="5" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="*" Level="Premier" ValidTo="2015-9-30" dropFractions="y" superQ="y" type="Faults100ThenTime">
+        <Scoring Division="*" Level="Premier" ValidTo="2015-9-30" dropFractions="y" hasTable="y" superQ="y" type="Faults100ThenTime">
           <Note>Not official yet.</Note>
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
@@ -4474,7 +4471,6 @@ TG3 + 10 Qs in at least 5 games
       </Event>
     </Venue>
     <Venue LongName="United States Dog Agility Association" Name="USDAA" URL="http://www.usdaa.com/" icon="13">
-      <Desc>Note: As of 1/1/2020, titling for Pf is now aggregated across Ch/Pf.</Desc>
       <LifetimeNames/>
       <Titles LongName="Agility Dog®" Name="AD">Starters Standard Agility title plus 1 qualifying score in each of the 4 Starters nonstandard classes.
 [Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
@@ -4503,63 +4499,54 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Agility Dog Champion® - Silver" Name="ADCH-Silver" Prefix="y">All Silver titles</Titles>
       <Titles LongName="Agility Dog Champion® - Gold" Name="ADCH-Gold" Prefix="y">All Gold titles</Titles>
       <Titles LongName="Agility Dog Champion® - Platinum" Name="ADCH-Platinum" Prefix="y">All Platinum titles</Titles>
-      <Titles LongName="Agility Dog Champion® - Titanium" Name="ADCH-Titanium" Prefix="y">All Titanium titles</Titles>
       <Titles LongName="Agility Dog Champion® - Diamond" Name="ADCH-Diamond" Prefix="y">All Diamond titles</Titles>
       <Titles LongName="Tournament Master" Name="TM">10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.</Titles>
       <Titles LongName="Tournament Master - Bronze" Name="TM-Bronze">15 qualifying scores in tournament competition with at least 3 qualifying scores in each tournament.</Titles>
       <Titles LongName="Tournament Master - Silver" Name="TM-Silver">25 qualifying scores in tournament competition with at least 5 qualifying scores in each tournament.</Titles>
       <Titles LongName="Tournament Master - Gold" Name="TM-Gold">35 qualifying scores in tournament competition with at least 7 qualifying scores in each tournament.</Titles>
       <Titles LongName="Tournament Master - Platinum" Name="TM-Platinum">50 qualifying scores in tournament competition with at least 10 qualifying scores in each tournament.</Titles>
-      <Titles LongName="Tournament Master - Titanium" Name="TM-Titanium">75 qualifying scores in tournament competition with at least ? qualifying scores in each tournament.</Titles>
       <Titles LongName="Tournament Master - Diamond" Name="TM-Diamond">100 qualifying scores in tournament competition with at least 20 qualifying scores in each tournament.</Titles>
       <Titles LongName="Standard Agility Champion" Name="SACH">Masters Standard Agility title plus 5 additional qualifying scores in Masters Standard or a clean round in MC Standard classes</Titles>
       <Titles LongName="Standard Agility Champion - Bronze" Name="SACH-Bronze">15 qualifying scores in Masters Standard or a clean round in MC Standard classes</Titles>
       <Titles LongName="Standard Agility Champion - Silver" Name="SACH-Silver">25 qualifying scores in Masters Standard or a clean round in MC Standard classes</Titles>
       <Titles LongName="Standard Agility Champion - Gold" Name="SACH-Gold">35 qualifying scores in Masters Standard or a clean round in MC Standard classes</Titles>
       <Titles LongName="Standard Agility Champion - Platinum" Name="SACH-Platinum">50 qualifying scores in Masters Standard or a clean round in MC Standard classes</Titles>
-      <Titles LongName="Standard Agility Champion - Titanium" Name="SACH-Titanium">75 qualifying scores in Masters Standard or a clean round in MC Standard classes</Titles>
       <Titles LongName="Standard Agility Champion - Diamond" Name="SACH-Diamond">100 qualifying scores in Masters Standard or a clean round in MC Standard classes</Titles>
       <Titles LongName="Jumpers Champion" Name="JCH">JM plus 5 additional qualifying scores in Masters Jumpers or a clean round in MC Jumpers classes</Titles>
       <Titles LongName="Jumpers Champion - Bronze" Name="JCH-Bronze">15 qualifying scores in Masters Jumpers or a clean round in MC Jumpers classes</Titles>
       <Titles LongName="Jumpers Champion - Silver" Name="JCH-Silver">25 qualifying scores in Masters Jumpers or a clean round in MC Jumpers classes</Titles>
       <Titles LongName="Jumpers Champion - Gold" Name="JCH-Gold">35 qualifying scores in Masters Jumpers or a clean round in MC Jumpers classes</Titles>
       <Titles LongName="Jumpers Champion - Platinum" Name="JCH-Platinum">50 qualifying scores in Masters Jumpers or a clean round in MC Jumpers classes</Titles>
-      <Titles LongName="Jumpers Champion - Titanium" Name="JCH-Titanium">75 qualifying scores in Masters Jumpers or a clean round in MC Jumpers classes</Titles>
       <Titles LongName="Jumpers Champion - Diamond" Name="JCH-Diamond">100 qualifying scores in Masters Jumpers or a clean round in MC Jumpers classes</Titles>
       <Titles LongName="Gamblers Champion" Name="GCH">GM plus 5 additional qualifying scores in Masters Gamblers class</Titles>
       <Titles LongName="Gamblers Champion - Bronze" Name="GCH-Bronze">15 qualifying scores in Masters Gamblers class</Titles>
       <Titles LongName="Gamblers Champion - Silver" Name="GCH-Silver">25 qualifying scores in Masters Gamblers class</Titles>
       <Titles LongName="Gamblers Champion - Gold" Name="GCH-Gold">35 qualifying scores in Masters Gamblers class</Titles>
       <Titles LongName="Gamblers Champion - Platinum" Name="GCH-Platinum">50 qualifying scores in Masters Gamblers class</Titles>
-      <Titles LongName="Gamblers Champion - Titanium" Name="GCH-Titanium">75 qualifying scores in Masters Gamblers class</Titles>
       <Titles LongName="Gamblers Champion - Diamond" Name="GCH-Diamond">100 qualifying scores in Masters Gamblers class</Titles>
       <Titles LongName="Snooker Champion" Name="SCH">SM plus 5 additional qualifying scores in Masters Snooker class</Titles>
       <Titles LongName="Snooker Champion - Bronze" Name="SCh-Bronze">15 qualifying scores in Masters Snooker class</Titles>
       <Titles LongName="Snooker Champion - Silver" Name="SCh-Silver">25 qualifying scores in Masters Snooker class</Titles>
       <Titles LongName="Snooker Champion - Gold" Name="SCh-Gold">35 qualifying scores in Masters Snooker class</Titles>
       <Titles LongName="Snooker Champion - Platinum" Name="SCh-Platinum">50 qualifying scores in Masters Snooker class</Titles>
-      <Titles LongName="Snooker Champion - Titanium" Name="SCh-Titanium">75 qualifying scores in Masters Snooker class</Titles>
       <Titles LongName="Snooker Champion - Diamond" Name="SCh-Diamond">100 qualifying scores in Masters Snooker class</Titles>
       <Titles LongName="Relay Champion" Name="RCH">RM plus 5 additional qualifying scores in Masters Relay class</Titles>
       <Titles LongName="Relay Champion - Bronze" Name="RCH-Bronze">15 qualifying scores in Masters Relay class</Titles>
       <Titles LongName="Relay Champion - Silver" Name="RCH-Silver">25 qualifying scores in Masters Relay class</Titles>
       <Titles LongName="Relay Champion - Gold" Name="RCH-Gold">35 qualifying scores in Masters Relay class</Titles>
       <Titles LongName="Relay Champion - Platinum" Name="RCH-Platinum">50 qualifying scores in Masters Relay class</Titles>
-      <Titles LongName="Relay Champion - Titanium" Name="RCH-Titanium">75 qualifying scores in Masters Relay class</Titles>
       <Titles LongName="Relay Champion - Diamond" Name="RCH-Diamond">100 qualifying scores in Masters Relay class</Titles>
       <Titles LongName="MC Standard Agility Champion" Name="MCSACH">10 titling points in MC Masters Standard class</Titles>
       <Titles LongName="MC Standard Agility Champion - Bronze" Name="MCSACH-Bronze">15 titling points in MC Standard class</Titles>
       <Titles LongName="MC Standard Agility Champion - Silver" Name="MCSACH-Silver">25 titling points in MC Standard class</Titles>
       <Titles LongName="MC Standard Agility Champion - Gold" Name="MCSACH-Gold">35 titling points in MC Standard class</Titles>
       <Titles LongName="MC Standard Agility Champion - Platinum" Name="MCSACH-Platinum">50 titling points in MC Standard class</Titles>
-      <Titles LongName="MC Standard Agility Champion - Titanium" Name="MCSACH-Titanium">75 titling points in MC Standard class</Titles>
       <Titles LongName="MC Standard Agility Champion - Diamond" Name="MCSACH-Diamond">100 titling points in MC Standard class</Titles>
       <Titles LongName="MC Jumpers Champion" Name="MCJCH">10 titling points in MC Jumpers class</Titles>
       <Titles LongName="MC Jumpers Champion - Bronze" Name="MCJCH-Bronze">15 titling points in MC Jumpers class</Titles>
       <Titles LongName="MC Jumpers Champion - Silver" Name="MCJCH-Silver">25 titling points in MC Jumpers class</Titles>
       <Titles LongName="MC Jumpers Champion - Gold" Name="MCJCH-Gold">35 titling points in MC Jumpers class</Titles>
       <Titles LongName="MC Jumpers Champion - Platinum" Name="MCJCH-Platinum">50 titling points in MC Jumpers class</Titles>
-      <Titles LongName="MC Jumpers Champion - Titanium" Name="MCJCH-Titanium">75 titling points in MC Jumpers class</Titles>
       <Titles LongName="MC Jumpers Champion - Diamond" Name="MCJCH-Diamond">100 titling points in MC Jumpers class</Titles>
       <Titles LongName="Lifetime Achievement Award Bronze" Name="LAA Bronze">150 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 15 qualifying scores in each standard and nonstandard classes.
 [Before 1/1/2007, minimums had to come from Ch]</Titles>
@@ -4568,7 +4555,6 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Lifetime Achievement Award Gold" Name="LAA Gold">350 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 35 qualifying scores in each standard and nonstandard classes.
 [Before 1/1/2007, minimums had to come from Ch]</Titles>
       <Titles LongName="Lifetime Achievement Award Platinum" Name="LAA Platinum">500 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 50 qualifying scores in each standard and nonstandard classes.</Titles>
-      <Titles LongName="Lifetime Achievement Award Titanium" Name="LAA Titanium">750 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 75 qualifying scores in each standard and nonstandard classes.</Titles>
       <Titles LongName="Lifetime Achievement Award Diamond" Name="LAA Diamond">1000 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 100 qualifying scores in each standard and nonstandard classes.</Titles>
       <Titles LongName="Performance Dog" Name="PD">SPS title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.
 [Name change 1/1/2011] From PD1
@@ -4618,56 +4604,48 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Performance Champion Dog - Silver" Name="PDCHS" Prefix="y">All Silver titles</Titles>
       <Titles LongName="Performance Champion Dog - Gold" Name="PDCHG" Prefix="y">All Gold titles</Titles>
       <Titles LongName="Performance Champion Dog - Platinum" Name="PDCHP" Prefix="y">All Platinum titles</Titles>
-      <Titles LongName="Performance Champion Dog - Titanium" Name="PDCHD" Prefix="y">All Titanium titles</Titles>
       <Titles LongName="Performance Champion Dog - Diamond" Name="PDCHD" Prefix="y">All Diamond titles</Titles>
       <Titles LongName="Performance Standard Champion" Name="PSCH">PSM plus 5 additional qualifying scores in PSM or a clean round in MC Performance Standard</Titles>
       <Titles LongName="Performance Standard Champion - Bronze" Name="PSCHB">15 qualifying scores in PSM or a clean round in MC Performance Standard</Titles>
       <Titles LongName="Performance Standard Champion - Silver" Name="PSCHS">25 qualifying scores in PSM or a clean round in MC Performance Standard</Titles>
       <Titles LongName="Performance Standard Champion - Gold" Name="PSCHG">35 qualifying scores in PSM or a clean round in MC Performance Standard</Titles>
       <Titles LongName="Performance Standard Champion - Platinum" Name="PSCHP">50 qualifying scores in PSM or a clean round in MC Performance Standard</Titles>
-      <Titles LongName="Performance Standard Champion - Titanium" Name="PSCHT">75 qualifying scores in PSM or a clean round in MC Performance Standard</Titles>
       <Titles LongName="Performance Standard Champion - Diamond" Name="PSCHD">100 qualifying scores in PSM or a clean round in MC Performance Standard</Titles>
       <Titles LongName="Performance Jumpers Champion" Name="PJCH">PJM plus 5 additional qualifying scores in PJM or a clean round in MC Performance Jumpers</Titles>
       <Titles LongName="Performance Jumpers Champion - Bronze" Name="PJCHB">15 qualifying scores in PJM or a clean round in MC Performance Jumpers</Titles>
       <Titles LongName="Performance Jumpers Champion - Silver" Name="PJCHS">25 qualifying scores in PJM or a clean round in MC Performance Jumpers</Titles>
       <Titles LongName="Performance Jumpers Champion - Gold" Name="PJCHG">35 qualifying scores in PJM or a clean round in MC Performance Jumpers</Titles>
       <Titles LongName="Performance Jumpers Champion - Platinum" Name="PJCHP">50 qualifying scores in PJM or a clean round in MC Performance Jumpers</Titles>
-      <Titles LongName="Performance Jumpers Champion - Titanium" Name="PJCHT">75 qualifying scores in PJM or a clean round in MC Performance Jumpers</Titles>
       <Titles LongName="Performance Jumpers Champion - Diamond" Name="PJCHD">100 qualifying scores in PJM or a clean round in MC Performance Jumpers</Titles>
       <Titles LongName="Performance Gamblers Champion" Name="PGCH">PGM plus 5 additional qualifying scores in PGM</Titles>
       <Titles LongName="Performance Gamblers Champion - Bronze" Name="PGCHB">15 qualifying scores in PGM</Titles>
       <Titles LongName="Performance Gamblers Champion - Silver" Name="PGCHS">25 qualifying scores in PGM</Titles>
       <Titles LongName="Performance Gamblers Champion - Gold" Name="PGCHG">35 qualifying scores in PGM</Titles>
       <Titles LongName="Performance Gamblers Champion - Platinum" Name="PGCHP">50 qualifying scores in PGM</Titles>
-      <Titles LongName="Performance Gamblers Champion - Titanium" Name="PGCHT">75 qualifying scores in PGM</Titles>
       <Titles LongName="Performance Gamblers Champion - Diamond" Name="PGCHD">100 qualifying scores in PGM</Titles>
       <Titles LongName="Performance Snooker Champion" Name="PKCH">PKM plus 5 additional qualifying scores in PKM</Titles>
       <Titles LongName="Performance Snooker Champion - Bronze" Name="PKCHB">15 qualifying scores in PKM</Titles>
       <Titles LongName="Performance Snooker Champion - Silver" Name="PKCHS">25 qualifying scores in PKM</Titles>
       <Titles LongName="Performance Snooker Champion - Gold" Name="PKCHG">35 qualifying scores in PKM</Titles>
       <Titles LongName="Performance Snooker Champion - Platinum" Name="PKCHP">50 qualifying scores in PKM</Titles>
-      <Titles LongName="Performance Snooker Champion - Titanium" Name="PKCHT">75 qualifying scores in PKM</Titles>
       <Titles LongName="Performance Snooker Champion - Diamond" Name="PKCHD">100 qualifying scores in PKM</Titles>
       <Titles LongName="Performance Relay Champion" Name="PRCH">10 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Bronze" Name="PRCHB">15 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Silver" Name="PRCHS">25 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Gold" Name="PRCHG">35 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Platinum" Name="PRCHP">50 qualifying scores in PRM</Titles>
-      <Titles LongName="Performance Relay Champion - Titanium" Name="PRCHT">75 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Relay Champion - Diamond" Name="PRCHD">100 qualifying scores in PRM</Titles>
       <Titles LongName="MC Performance Standard Champion" Name="MCPSCH">10 qualifying scores in MC Performance Standard</Titles>
       <Titles LongName="MC Performance Standard Champion - Bronze" Name="MCPSCHB">15 qualifying scores in MC Performance Standard</Titles>
       <Titles LongName="MC Performance Standard Champion - Silver" Name="MCPSCHS">25 qualifying scores in MC Performance Standard</Titles>
       <Titles LongName="MC Performance Standard Champion - Gold" Name="MCPSCHG">35 qualifying scores in MC Performance Standard</Titles>
       <Titles LongName="MC Performance Standard Champion - Platinum" Name="MCPSCHP">50 qualifying scores in MC Performance Standard</Titles>
-      <Titles LongName="MC Performance Standard Champion - Titanium" Name="MCPSCHT">75 qualifying scores in MC Performance Standard</Titles>
       <Titles LongName="MC Performance Standard Champion - Diamond" Name="MCPSCHD">100 qualifying scores in MC Performance Standard</Titles>
       <Titles LongName="MC Performance Jumpers Champion" Name="MCPJCH">10 qualifying scores in MC Performance Jumpers</Titles>
       <Titles LongName="MC Performance Jumpers Champion - Bronze" Name="MCPJCHB">15 qualifying scores in MC Performance Jumpers</Titles>
       <Titles LongName="MC Performance Jumpers Champion - Silver" Name="MCPJCHS">25 qualifying scores in MC Performance Jumpers</Titles>
       <Titles LongName="MC Performance Jumpers Champion - Gold" Name="MCPJCHG">35 qualifying scores in MC Performance Jumpers</Titles>
       <Titles LongName="MC Performance Jumpers Champion - Platinum" Name="MCPJCHP">50 qualifying scores in MC Performance Jumpers</Titles>
-      <Titles LongName="MC Performance Jumpers Champion - Titanium" Name="MCPJCHT">75 qualifying scores in MC Performance Jumpers</Titles>
       <Titles LongName="MC Performance Jumpers Champion - Diamond" Name="MCPJCHD">100 qualifying scores in MC Performance Jumpers</Titles>
       <Titles LongName="Performance Tournament Master" Name="PTM">10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.
 [Before 9/22/2006] 10 qualifying scores in Performance Grand Prix of Dog Agility® tournament.</Titles>
@@ -4679,7 +4657,6 @@ TG3 + 10 Qs in at least 5 games
 [Before 9/22/2006] 35 qualifying scores in Performance Grand Prix</Titles>
       <Titles LongName="Performance Tournament Master - Platinum" Name="PTMP">50 qualifying scores in tournament competition with at least 10 qualifying scores in each tournament.
 [Before 9/22/2006] 50 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Performance Tournament Master - Titanium" Name="PTMT">75 qualifying scores in tournament competition with at least ? qualifying scores in each tournament.</Titles>
       <Titles LongName="Performance Tournament Master - Diamond" Name="PTMD">100 qualifying scores in tournament competition with at least 20 qualifying scores in each tournament.
 [Before 9/22/2006] 100 qualifying scores in Performance Grand Prix</Titles>
       <Titles LongName="JH - Beginners Agility" Name="Beginners Agility"/>
@@ -4715,11 +4692,6 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Veteran Gambler Dog - Platinum" Name="VGD-Platinum">50 qualifying scores.</Titles>
       <Titles LongName="Veteran Snooker Dog - Platinum" Name="VKD-Platinum">50 qualifying scores.</Titles>
       <Titles LongName="Veteran Versatility Dog - Platinum" Name="VVD-Platinum">All Platinum titles</Titles>
-      <Titles LongName="Veteran Standard Dog - Titanium" Name="VSD-Titanium">75 qualifying scores.</Titles>
-      <Titles LongName="Veteran Jumper Dog - Titanium" Name="VJD-Titanium">75 qualifying scores.</Titles>
-      <Titles LongName="Veteran Gambler Dog - Titanium" Name="VGD-Titanium">75 qualifying scores.</Titles>
-      <Titles LongName="Veteran Snooker Dog - Titanium" Name="VKD-Titanium">75 qualifying scores.</Titles>
-      <Titles LongName="Veteran Versatility Dog - Titanium" Name="VVD-Titanium">All Titanium titles</Titles>
       <Titles LongName="Veteran Standard Dog - Diamond" Name="VSD-Diamond">100 qualifying scores.</Titles>
       <Titles LongName="Veteran Jumper Dog - Diamond" Name="VJD-Diamond">100 qualifying scores.</Titles>
       <Titles LongName="Veteran Gambler Dog - Diamond" Name="VGD-Diamond">100 qualifying scores.</Titles>
@@ -4777,29 +4749,25 @@ TG3 + 10 Qs in at least 5 games
       </Division>
       <Event Name="Standard">
         <Scoring Division="Championship" Level="International" hasTable="y" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
+        <Scoring Division="Championship" Level="Nationals" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" hasTable="y" type="TimePlusFaults">
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+        <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
+        <Scoring Division="Championship" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" hasTable="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-1-2" type="FaultsThenTime">
+        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-1-2" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="2"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Masters" ValidFrom="2020-1-31" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
-        </Scoring>
-        <Scoring Division="Championship" Level="Masters" ValidTo="2020-1-30" hasTable="y" type="FaultsThenTime">
+        <Scoring Division="Championship" Level="Masters" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
@@ -4810,29 +4778,25 @@ TG3 + 10 Qs in at least 5 games
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Performance" Level="International" hasTable="y" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Nationals" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" hasTable="y" type="TimePlusFaults">
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
-        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" type="FaultsThenTime">
+        <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" hasTable="y" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2019-1-1" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Masters Challenge" TFfaults="y" ValidFrom="2018-1-3" ValidTo="2018-12-31" hasTable="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="2"/>
           <TitlePoints Faults="999" Points="1"/>
           <LifetimePoints Faults="999" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-1-2" type="FaultsThenTime">
+        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" ValidTo="2018-1-2" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="2"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Performance" Level="PIII" ValidFrom="2020-1-31" type="FaultsThenTime">
-          <TitlePoints Faults="0" Points="1"/>
-          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
-        </Scoring>
-        <Scoring Division="Performance" Level="PIII" ValidTo="2020-1-30" hasTable="y" type="FaultsThenTime">
+        <Scoring Division="Performance" Level="PIII" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
@@ -4964,7 +4928,6 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
       </Event>
       <Event Name="Snooker">
-        <Desc>[1/1/2020] SuperQ changed from every 7 dogs to 5 dogs.</Desc>
         <Scoring Division="Championship" Level="Nationals" type="ScoreThenTime"/>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="ScoreThenTime">
           <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
@@ -5318,7 +5281,6 @@ Dogs/Placements/Points
 6-10/3/5,3,1
 11-20/4/7,5,3,1
 21-30/5/9,7,5,3,1
-Each additional 10, +1place, +2 pts.
-As of 1/1/2020, 10pt (or 5 in tournament) + pts, 9 is the max extra points you can earn.</OtherPts>
+Each additional 10, +1place, +2 pts.</OtherPts>
   </Configuration>
 </DefaultConfig>

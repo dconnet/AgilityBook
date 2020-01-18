@@ -630,6 +630,8 @@
     <Xml Include="..\..\TestARB\res\Config61_v14_5.xml" />
     <Xml Include="..\..\TestARB\res\Config62_v14_6.xml" />
     <Xml Include="..\..\TestARB\res\Config63_v15_0.xml" />
+    <Xml Include="..\..\TestARB\res\Config64_v15_1.xml" />
+    <Xml Include="..\..\TestARB\res\Config65_v15_2.xml" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\TestARB\res\CompileDatListTest.txt">

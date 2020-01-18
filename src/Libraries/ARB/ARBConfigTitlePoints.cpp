@@ -340,7 +340,9 @@ double ARBConfigTitlePointsList::GetTitlePoints(
 		double inTime,
 		double inSCT,
 		short inPlace,
-		short inClass) const
+		short inClass,
+		ARBDate inDate,
+		bool isTourney) const
 {
 	double pts = 0.0;
 	// This is why we keep the list sorted!
@@ -354,7 +356,7 @@ double ARBConfigTitlePointsList::GetTitlePoints(
 	}
 	ARBCalcPointsPtr calc = GetCalc();
 	if (calc)
-		pts = calc->GetPoints(pts, inTime, inSCT, inPlace, inClass);
+		pts = calc->GetPoints(pts, inTime, inSCT, inPlace, inClass, inDate, isTourney);
 	return pts;
 }
 

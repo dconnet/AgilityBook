@@ -95,6 +95,8 @@ const wchar_t* const gc_Configs[] =
 	L"Config61_v14_5.xml",
 	L"Config62_v14_6.xml",
 	L"Config63_v15_0.xml",
+	L"Config64_v15_1.xml",
+	L"Config65_v15_2.xml",
 };
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 

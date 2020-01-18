@@ -176,6 +176,8 @@ public:
 	 * @param inSCT SCT of run.
 	 * @param inPlace Place of dog.
 	 * @param inClass Number of dogs in the event.
+	 * @param inDate Date of run.
+	 * @param isTourney Is this a USDAA tournament event?
 	 * @return Number of titling points.
 	 */
 	double GetTitlePoints(
@@ -183,7 +185,9 @@ public:
 			double inTime,
 			double inSCT,
 			short inPlace,
-			short inClass) const;
+			short inClass,
+			ARBDate inDate,
+			bool isTourney) const;
 
 	/**
 	 * Find a title points object.

@@ -715,6 +715,9 @@ double ARBDogRun::GetTitlePoints(
 	if (outClean)
 		*outClean = false;
 	double bonusTitlePts = inScoring->HasBonusTitlePts() ? m_Scoring.GetBonusTitlePts() : 0.0;
+	bool isTourney = false;
+	if (GetClub())
+		isTourney = (GetClub()->GetVenue() == L"USDAA" && GetLevel() == L"Tournament");
 	switch (m_Scoring.GetType())
 	{
 	case ARBScoringType::Unknown:
@@ -754,12 +757,12 @@ double ARBDogRun::GetTitlePoints(
 							bCompute = false;
 					}
 					if (bCompute)
-						pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
+						pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass(), GetDate(), isTourney) + bonusTitlePts;
 				}
 			}
 			else
 			{
-				pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
+				pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass(), GetDate(), isTourney) + bonusTitlePts;
 			}
 		}
 		break;
@@ -786,7 +789,7 @@ double ARBDogRun::GetTitlePoints(
 			}
 			if (outClean)
 				*outClean = true;
-			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
+			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass(), GetDate(), isTourney) + bonusTitlePts;
 		}
 		break;
 	case ARBScoringType::ByPoints:
@@ -808,7 +811,7 @@ double ARBDogRun::GetTitlePoints(
 			}
 			if (outClean)
 				*outClean = true;
-			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass()) + bonusTitlePts;
+			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass(), GetDate(), isTourney) + bonusTitlePts;
 		}
 		break;
 	}
