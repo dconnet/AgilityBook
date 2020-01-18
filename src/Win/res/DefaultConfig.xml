@@ -4805,9 +4805,11 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="International" hasTable="y" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
@@ -4838,9 +4840,11 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Performance" Level="PII" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PI" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Junior" Level="*" hasTable="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
@@ -4879,11 +4883,13 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="FaultsThenTime"/>
         <Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="FaultsThenTime"/>
         <Scoring Division="Performance" Level="International" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
@@ -4909,9 +4915,11 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Performance" Level="PII" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="FaultsThenTime"/>
         <Scoring Division="Veterans" Level="*" ValidFrom="2011-3-1" type="FaultsThenTime">
@@ -4934,9 +4942,11 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="OCScoreThenTime"/>
         <Scoring Division="Performance" Level="Nationals" type="OCScoreThenTime"/>
@@ -4950,9 +4960,11 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Performance" Level="PII" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="OCScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="OCScoreThenTime"/>
         <Scoring Division="Veterans" Level="*" ValidFrom="2011-3-1" type="OCScoreThenTime">
@@ -4976,9 +4988,11 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" OpeningPts="37" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidFrom="2004-1-1" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
         <Scoring Division="Performance" Level="Nationals" type="ScoreThenTime"/>
@@ -4992,9 +5006,11 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Performance" Level="PII" OpeningPts="37" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PI" OpeningPts="37" ValidFrom="2004-1-1" type="ScoreThenTime">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PI" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
         <Scoring Division="Veterans" Level="*" OpeningPts="37" ValidFrom="2011-3-1" superQ="y" type="ScoreThenTime">
@@ -5041,9 +5057,11 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Championship" Level="Advanced" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults">
@@ -5061,12 +5079,14 @@ TG3 + 10 Qs in at least 5 games
         </Scoring>
         <Scoring Division="Performance" Level="PII" ValidFrom="2007-1-1" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PII" ValidTo="2006-12-31" type="TimePlusFaults">
           <Note>Non-titling event - known as Babar's, Oscar's, etc.</Note>
         </Scoring>
         <Scoring Division="Performance" Level="PI" ValidFrom="2007-1-1" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Points="1" SpeedPts="n"/>
         </Scoring>
         <Scoring Division="Performance" Level="PI" ValidTo="2006-12-31" type="TimePlusFaults">
           <Note>Non-titling event - known as Babar's, Oscar's, etc.</Note>

@@ -788,7 +788,7 @@ void CDlgConfigEvent::FillControls()
 	}
 	m_ctrlTable->Enable(bEnable);
 	m_ctrlHasSubnames->Enable(bEnable);
-	ShowSubNames(bEnable);
+	ShowSubNames(bEnable && m_ctrlHasSubnames->IsChecked());
 	m_ctrlEdit->Enable(bEnable);
 	m_ctrlDelete->Enable(bEnable);
 	m_ctrlCopy->Enable(bEnable);
