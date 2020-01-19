@@ -13,7 +13,7 @@ AC_CONFIG_SRCDIR(src/Win/stdafx.cpp)
 AC_SUBST(PACKAGE_ARB_SHORTNAME, "AgilityBook")
 AC_SUBST(PACKAGE_HLP_SHORTNAME, "ARBHelp")
 AC_SUBST(PACKAGE_TEST_SHORTNAME, "testarb")
-AC_SUBST(PACKAGE_COPYRIGHT, "Copyright (c) 2002-2019 David Connet. All Rights Reserved.")
+AC_SUBST(PACKAGE_COPYRIGHT, "Copyright (c) 2002-2020 David Connet. All Rights Reserved.")
 ################################################################################
 # Check for programs used to build my_prg                                      #
 ################################################################################

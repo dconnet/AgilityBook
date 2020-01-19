@@ -11,9 +11,6 @@
  * @brief EXE/DLL version number
  * @author David Connet
  *
- * IMPORTANT: When updating the version, also update ../../configure.in
- * (The actual version number is auto-updated, but the copyright is not)
- *
  * Revision History
  * 2019-02-13 Created VersionInfoARB.h
  * 2008-01-10 Added note

@@ -22,6 +22,9 @@
  * Since this file is only used in the rc2 file, just include it there.
  * This keeps all editors/compilers happy.
  *
+ * IMPORTANT: When updating the copyright, also update ../../configure.in
+ * (the version number is auto-updated)
+ *
  * Revision History
  * 2019-02-13 Created
  */
@@ -42,5 +45,5 @@
 
 #define ARB_VERSION_CompanyName			"dcon Software"
 #define ARB_VERSION_FileDescription		"Agility Record Book"
-#define ARB_VERSION_LegalCopyright		"Copyright (c) 2002-2019 David Connet. All Rights Reserved."
+#define ARB_VERSION_LegalCopyright		"Copyright (c) 2002-2020 David Connet. All Rights Reserved."
 #define ARB_VERSION_ProductName			"Agility Record Book"
