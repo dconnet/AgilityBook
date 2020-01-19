@@ -2,7 +2,7 @@
 
 *.doc  binary
 *.docx binary
-*.dox  eol=lf
+*.dox  text
 *.dtd  eol=lf
 *.in   eol=lf
 *.po   eol=lf
