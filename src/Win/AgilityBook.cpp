@@ -83,7 +83,7 @@ IMPLEMENT_APP(CAgilityBookApp)
 
 class CAgilityBookDocManager : public wxDocManager
 {
-	CAgilityBookDocManager(); // not implemented
+	CAgilityBookDocManager() = delete;
 public:
 	CAgilityBookDocManager(size_t historySize);
 	wxFileHistory* OnCreateFileHistory() override;
@@ -165,6 +165,19 @@ void CAgilityBookDocManager::OnPreview(wxCommandEvent& evt)
 		frame->Show(true);
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CAgilityBookDocTemplate : public wxDocTemplate
+{
+public:
+	using wxDocTemplate::wxDocTemplate;
+
+	bool FileMatchesTemplate(const wxString& path) override
+	{
+		return wxDocTemplate::FileMatchesTemplate(path);
+	}
+};
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -331,7 +344,7 @@ bool CAgilityBookApp::OnInit()
 		m_manager->FileHistoryLoad(*wxConfig::Get());
 	}
 
-	(void)new wxDocTemplate(m_manager.get(), L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
+	(void)new CAgilityBookDocTemplate(m_manager.get(), L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
 #ifdef __WXMAC__
 #ifndef __WXOSX_COCOA__
