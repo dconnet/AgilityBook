@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2020-01-18 Configuration version 65.
+2020-01-21 Configuration version 65.
            Updated AKC standard runs for no table (premium/nationals)
+           Updated BHA Crazy8s to have bonus points.
            Updated USDAA rules.
 2019-12-25 Configuration version 64.
            Fixed AKC NAC points (Premier changed to 15 for 2018)
@@ -1322,8 +1323,8 @@ Repeat titles are RATCHX + 10 Qs</Titles>
       </Event>
       <Event Name="Crazy8s">
         <Desc>Crazy 8s</Desc>
-        <Scoring Division="Regular" Level="Crazy8s" timeFault="0" type="ScoreThenTime">
-          <TitlePoints Faults="0" Points="1"/>
+        <Scoring Division="Regular" Level="Crazy8s" bonusPts="y" timeFault="0" type="ScoreThenTime">
+          <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
     </Venue>

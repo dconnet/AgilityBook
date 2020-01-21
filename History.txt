@@ -1,12 +1,13 @@
-1/18/2020: v3.5.0.<develop>
+1/21/2020: v3.5.0.<develop>
 - Bumped file version to 15.2:
   - New FEO style.
 - Bumped Configuration v65:
   - Updated AKC standard runs for no table (premium/nationals)
+  - Updated BHA Crazy8s to have bonus points.
   - Updated USDAA for new rules
 - New features / Enhancements:
   - Added an FEO Q-type.
-  - Update to wx3.1.3 (Win uses %WXWIN% now)
+  - Support wx3.1.3 (Win uses %WXWIN% now)
   - Changed source directory structure
 - Bug fixes:
   - Fixed file size in properties for new file.
