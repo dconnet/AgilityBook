@@ -1,7 +1,8 @@
-1/21/2020: v3.5.0.<develop>
+1/25/2020: v3.5.0.<develop>
 - Bumped file version to 15.2:
   - New FEO style.
 - Bumped Configuration v65:
+  - Updated AAC titles
   - Updated AKC standard runs for no table (premium/nationals)
   - Updated BHA Crazy8s to have bonus points.
   - Updated USDAA for new rules
