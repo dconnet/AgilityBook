@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2020-01-26 Change default compiler to vc142, default wx to WXWIN
 # 2019-10-28 wx default is 3.1.3
 # 2019-02-28 Add vc142 support
 # 2018-12-24 wx default is 3.1.2
@@ -26,11 +27,11 @@
 # 2010-06-11 Support building on x64 OS
 # 2010-05-30 Converted .bat to .py (keeps environment clean!)
 """BuildAll.py -w wxwin [-b type] compiler*
-   -w wxwin: Root of wx tree (default: %WXBASE%\\wxWidgets-3.1.3)'
+   -w wxwin: Root of wx tree (default: %WXWIN%)'
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config: 'release' or 'debug' (default, release)
    -t:       Testing, just print commands to run
-   compiler: vc141 (default: vc141)
+   compiler: vc141, vc142 (default: vc142)
 """
 
 import getopt
@@ -43,9 +44,6 @@ import subprocess
 import sys
 import win32api
 import win32con
-
-# ARB is officially released using this branch. This is located under $WXBASE.
-wxBranch = r'\wxWidgets-3.1.3'
 
 testing = False
 
@@ -233,8 +231,8 @@ def main():
 		bit64on64 = True
 
 	wxwin = ''
-	if 'WXBASE' in os.environ:
-		wxwin= os.environ['WXBASE'] + wxBranch
+	if 'WXWIN' in os.environ:
+		wxwin= os.environ['WXWIN']
 
 	compilers = set()
 	updateBuildNumber = False
@@ -279,7 +277,7 @@ def main():
 			return 1
 
 	if 0 == len(compilers):
-		AddCompilers(compilers, 'vc141')
+		AddCompilers(compilers, 'vc142')
 
 	if 0 == len(compilers) or len(wxwin) == 0:
 		print('Usage:', __doc__)

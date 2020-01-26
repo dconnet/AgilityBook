@@ -20,4 +20,4 @@
 #define ARB_VER_MAJOR					3
 #define ARB_VER_MINOR					5
 #define ARB_VER_DOT						0
-#define ARB_VER_BUILD					112
+#define ARB_VER_BUILD					113

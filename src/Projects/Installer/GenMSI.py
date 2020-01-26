@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2020-01-26 Change default compiler to vc142
 # 2019-09-21 Change to getopt
 # 2019-09-20 Create distribution files automagically.
 # 2017-05-10 Fix vcver/platformTools issues.
@@ -62,7 +63,7 @@
 	    all: Create all of them (default)
 	-x: Do not clean up generated files
 	-e: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
-	-t target: Generate msi using specified vc version (Default: vc141)
+	-t target: Generate msi using specified vc version (Default: vc142)
 	-d distrib: Directory to write distribution files to (Default: ./distrib)
 """
 
@@ -390,8 +391,8 @@ def main():
 	b64 = 0
 	tidy = 1
 	testing = 0
-	vcver = '141'
-	platformTools = '141'
+	vcver = '142'
+	platformTools = '142'
 	distrib = DistribDir
 
 	if 1 == len(sys.argv):
