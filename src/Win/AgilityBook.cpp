@@ -51,6 +51,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBDebug.h"
 #include "LibARBWin/DPI.h"
+#include "LibARBWin/ListCtrl.h"
 #include "LibARBWin/SetupApp.h"
 #include <stdexcept>
 #include <vector>
@@ -336,6 +337,8 @@ bool CAgilityBookApp::OnInit()
 		fName.Normalize(wxPATH_NORM_LONG | wxPATH_NORM_DOTS | wxPATH_NORM_TILDE | wxPATH_NORM_ABSOLUTE);
 		filename = fName.GetFullPath();
 	}
+
+    CReportListCtrl::EnableRowColors(CAgilityBookOptions::UseAlternateRowColor());
 
 	m_manager = std::make_unique<CAgilityBookDocManager>(CAgilityBookOptions::GetMRUFileCount());
 	m_manager->SetMaxDocsOpen(1);

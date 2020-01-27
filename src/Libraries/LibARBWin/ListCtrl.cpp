@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-01-27 Add option for row coloring.
  * 2019-05-17 Enable alternate row coloring.
  * 2018-12-16 Convert to fmt.
  * 2018-10-11 Moved to Win LibARBWin
@@ -48,6 +49,14 @@
 wxIMPLEMENT_CLASS(CReportListCtrl, CListCtrl)
 
 
+bool CReportListCtrl::m_enableRowColors = true;
+
+void CReportListCtrl::EnableRowColors(bool bEnable)
+{
+    m_enableRowColors = bEnable;
+}
+
+
 CReportListCtrl::CReportListCtrl(
 		wxWindow *parent,
 		bool bSingleSel,
@@ -60,7 +69,7 @@ CReportListCtrl::CReportListCtrl(
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
 {
-	Create(parent, wxDefaultPosition, wxDefaultSize, bSingleSel, sortHeader, bHasBorder, bHasImageList);
+	Create(parent, wxDefaultPosition, wxDefaultSize, bSingleSel, sortHeader, bHasBorder, bHasImageList, m_enableRowColors);
 }
 
 
@@ -78,7 +87,7 @@ CReportListCtrl::CReportListCtrl(
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
 {
-	Create(parent, pos, size, bSingleSel, sortHeader, bHasBorder, bHasImageList);
+	Create(parent, pos, size, bSingleSel, sortHeader, bHasBorder, bHasImageList, m_enableRowColors);
 }
 
 
@@ -89,7 +98,8 @@ bool CReportListCtrl::Create(
 		bool bSingleSel,
 		SortHeader sortHeader,
 		bool bHasBorder,
-		bool bHasImageList)
+		bool bHasImageList,
+		bool bEnableRowColors)
 {
 	long style = wxLC_REPORT | wxLC_VIRTUAL
 		| (bSingleSel ? wxLC_SINGLE_SEL : 0)
@@ -100,7 +110,7 @@ bool CReportListCtrl::Create(
 	{
 		return false;
 	}
-	EnableAlternateRowColours(true);
+	EnableAlternateRowColours(bEnableRowColors);
 
 	Bind(wxEVT_COMMAND_LIST_DELETE_ALL_ITEMS, &CReportListCtrl::OnDeleteAllItems, this);
 	Bind(wxEVT_COMMAND_LIST_DELETE_ITEM, &CReportListCtrl::OnDeleteItem, this);

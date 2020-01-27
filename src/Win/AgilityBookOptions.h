@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-01-27 Add alternate row color setting.
  * 2013-05-19 Make last div/level/height/handler context aware.
  * 2010-03-28 Added ability to import/export program settings.
  * 2009-07-19 Implement proxy support. 
@@ -262,6 +263,8 @@ public:
 	static void SetNumBackupFiles(long nFiles);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
+	static bool UseAlternateRowColor();
+	static void SetUseAlternateRowColor(bool bUse);
 	// Internet things
 	// -username/pw for accessing URLs thru ReadHTTP.cpp
 	static std::wstring GetUserName(std::wstring const& hint);

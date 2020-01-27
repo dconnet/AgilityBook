@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-01-27 Add option for row coloring.
  * 2019-09-15 Quiet a wx debug message (see comment below)
  * 2018-10-11 Moved to Win LibARBWin
  * 2010-03-28 Moved SetColumnWidth override to CListCtrl.
@@ -58,7 +59,10 @@ typedef int (wxCALLBACK *CListCtrlCompare)(CListDataPtr const& item1, CListDataP
 class ARBWIN_API CReportListCtrl : public CListCtrl
 {
 	DECLARE_CLASS(CReportListCtrl)
+	static bool m_enableRowColors;
 public:
+	static void EnableRowColors(bool bEnable);
+
 	enum class SortHeader
 	{
 		None,   ///< No header
@@ -183,7 +187,8 @@ protected:
 			bool bSingleSel,
 			SortHeader sortHeader,
 			bool bHasBorder,
-			bool bHasImageList);
+			bool bHasImageList,
+			bool bEnableRowColors);
 	wxItemAttr* OnGetItemAttr(long item) const override;
 #if defined(__WXMSW__)
 	// Only defined in the MSW and QT ports

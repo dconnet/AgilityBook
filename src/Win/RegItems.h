@@ -314,6 +314,8 @@ inline wxString CFG_SELECTION_DOG(int n)
 #define CFG_SETTINGS_AUTOCHECK			CFG_KEY_SETTINGS L"/autoCheck"
 //	DW autoShowTitle
 #define CFG_SETTINGS_AUTOSHOWTITLE		CFG_KEY_SETTINGS L"/autoShowTitle"
+//	DW useAltRowColor
+#define CFG_SETTINGS_USEALTROWCOLOR		CFG_KEY_SETTINGS L"/useAltRowColor"
 //	DW BackupFiles
 #define CFG_SETTINGS_BACKUPFILES		CFG_KEY_SETTINGS L"/BackupFiles"
 //	DW isLocal (defined in SetupApp.cpp)

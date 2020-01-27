@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-01-27 Add alternate row color setting.
  * 2018-12-16 Convert to fmt.
  * 2013-06-15 Make default for GetNewestDatesFirst true.
  * 2013-05-19 Make last div/level/height/handler context aware.
@@ -137,6 +138,7 @@ namespace
 	static const long sc_NumBackup = 3;
 	static const bool sc_ShowPropOnNewTitle = false;
 	static const bool sc_UseProxy = false;
+	static const bool sc_UseAltRowColor = true;
 };
 
 
@@ -1845,6 +1847,20 @@ bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 {
 	wxConfig::Get()->Write(CFG_SETTINGS_AUTOSHOWTITLE, bShow);
+}
+
+
+bool CAgilityBookOptions::UseAlternateRowColor()
+{
+	bool val = sc_UseAltRowColor;
+	wxConfig::Get()->Read(CFG_SETTINGS_USEALTROWCOLOR, &val);
+	return val;
+}
+
+
+void CAgilityBookOptions::SetUseAlternateRowColor(bool bUse)
+{
+	wxConfig::Get()->Write(CFG_SETTINGS_USEALTROWCOLOR, bUse);
 }
 
 /////////////////////////////////////////////////////////////////////////////
