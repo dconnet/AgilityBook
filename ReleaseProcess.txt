@@ -70,6 +70,9 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 - cd build-rel
 - ../configure
 - make dist
+- On machine (Mac) where pfx has been imported:
+  - codesign -s "David Connet" ARBHelp.app
+  - codesign -s "David Connet" AgilityBook.app
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
   - Name it AgilityBook-n_n_n_n-mac.dmg
   - After dragging in image, rename the mount point. (AgilityBook x.y.z)
