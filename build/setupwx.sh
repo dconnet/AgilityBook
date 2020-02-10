@@ -46,7 +46,8 @@ CONFIG_PARAMS=" --disable-mediactrl --disable-shared --enable-unicode"
 
 case `uname` in
 Darwin*)
-	CONFIG_PARAMS+=" --with-osx"
+	# There are known bugs with the native wxDVC under Cocoa, use generic
+	CONFIG_PARAMS+=" --with-osx --disable-nativedvc"
 	;;
 Linux)
 	CONFIG_PARAMS+=" --with-gtk=3"
