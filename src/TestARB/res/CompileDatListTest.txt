@@ -1,3 +1,4 @@
+tidytest.xml
 Config08_v10_2.xml
 Config09_v11_0.xml
 Config12_v12_1.xml

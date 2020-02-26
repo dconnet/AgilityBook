@@ -36,6 +36,7 @@
 #include "attrs.h"
 #include "sprtf.h"
 #if SUPPORT_LOCALIZATIONS
+#  include "stdlib.h"
 #  include "locale.h"
 #endif
 
@@ -119,7 +120,17 @@ TidyDocImpl* tidyDocCreate( TidyAllocator *allocator )
 #if SUPPORT_LOCALIZATIONS
     if ( TY_(tidyGetLanguageSetByUser)() == no )
     {
-        TY_(tidySetLanguage)( setlocale( LC_ALL, "") );
+        if( ! TY_(tidySetLanguage)( getenv( "LC_MESSAGES" ) ) )
+        {
+            if( ! TY_(tidySetLanguage)( getenv( "LANG" ) ) )
+            {
+                /*\
+                *  Is. #770 #783 #780 #790 and maybe others -
+                *  TY_(tidySetLanguage)( setlocale( LC_ALL, "" ) );
+                *  this seems a 'bad' choice!
+               \*/
+            }
+        }
     }
 #endif
 
@@ -1135,14 +1146,16 @@ int   tidyDocParseFile( TidyDocImpl* doc, ctmbstr filnam )
     fin = fopen( filnam, "rb" );
 
 #if PRESERVE_FILE_TIMES
-    struct stat sbuf = {0};
-    /* get last modified time */
-    TidyClearMemory( &doc->filetimes, sizeof(doc->filetimes) );
-    if ( fin && cfgBool(doc,TidyKeepFileTimes) &&
-         fstat(fileno(fin), &sbuf) != -1 )
     {
-          doc->filetimes.actime  = sbuf.st_atime;
-          doc->filetimes.modtime = sbuf.st_mtime;
+        struct stat sbuf = { 0 };
+        /* get last modified time */
+        TidyClearMemory(&doc->filetimes, sizeof(doc->filetimes));
+        if (fin && cfgBool(doc, TidyKeepFileTimes) &&
+            fstat(fileno(fin), &sbuf) != -1)
+        {
+            doc->filetimes.actime = sbuf.st_atime;
+            doc->filetimes.modtime = sbuf.st_mtime;
+        }
     }
 #endif
 
@@ -1433,10 +1446,10 @@ static ctmbstr integrity = "\nPanic - tree has lost its integrity\n";
 
 int         TY_(DocParseStream)( TidyDocImpl* doc, StreamIn* in )
 {
-    int bomEnc;
     Bool xmlIn = cfgBool( doc, TidyXmlTags );
     TidyConfigChangeCallback callback = doc->pConfigChangeCallback;
     
+    int bomEnc;
     doc->pConfigChangeCallback = NULL;
 
     assert( doc != NULL && in != NULL );
@@ -1445,7 +1458,6 @@ int         TY_(DocParseStream)( TidyDocImpl* doc, StreamIn* in )
 
     TY_(ResetTags)(doc);    /* reset table to html5 mode */
     TY_(TakeConfigSnapshot)( doc );    /* Save config state */
-    TY_(AdjustConfig)( doc ); /* ensure config consistency */
     TY_(FreeAnchors)( doc );
 
     TY_(FreeNode)(doc, &doc->root);
@@ -2643,13 +2655,13 @@ const tidyLocaleMapItem* TIDY_CALL getNextWindowsLanguage( TidyIterator* iter )
 }
 
 
-const ctmbstr TIDY_CALL TidyLangWindowsName( const tidyLocaleMapItem *item )
+ctmbstr TIDY_CALL TidyLangWindowsName( const tidyLocaleMapItem *item )
 {
     return TY_(TidyLangWindowsName)( (tidyLocaleMapItemImpl*)(item) );
 }
 
 
-const ctmbstr TIDY_CALL TidyLangPosixName( const tidyLocaleMapItem *item )
+ctmbstr TIDY_CALL TidyLangPosixName( const tidyLocaleMapItem *item )
 {
     return TY_(TidyLangPosixName)( (tidyLocaleMapItemImpl*)(item) );
 }

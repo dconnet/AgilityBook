@@ -1,0 +1,2086 @@
+
+
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+
+	
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+	
+	
+
+	
+	
+
+
+
+
+
+ 
+
+				
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+			
+			
+			
+		
+		
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+	<title>Something - News & Events: Event Calendar</title>
+	
+	<link rel="stylesheet" type="text/css" href="/stylesheet/site.css">
+	
+	<script language="javascript" src="/scripts/rollover.js"></script>
+	<script language="javascript" src="/scripts/generalForm.js"></script>
+
+	<script language="javascript" src="/scripts/NewWindow.js"></script>
+	
+
+<link rel="stylesheet"  type="text/css" media="screen"  href="/css/jquery-ui-1.7.custom.css" />
+		<script type="text/javascript" src="/scripts/jquery/jquery-1.3.2.min.js"></script>
+		<script type="text/javascript" src="/scripts/jquery/jquery-ui-1.7.2.custom.min.js"></script>
+		<link rel="stylesheet"  type="text/css" media="screen"  href="/css/uni-form.css" />
+		<script type="text/javascript" src="/scripts/jquery/jquery.form.js"></script>
+		<script src="/scripts/jquery/uni-form.jquery.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/scripts/groupservices/groupservices.js"></script>
+		<link rel="stylesheet"  type="text/css" media="screen"  href="/css/something.css" />
+<script>
+	$(document).ready(function(){
+		$("#eventcal tr:nth-child(even)").addClass("alt");
+	})
+</script>
+<style>tbody tr.alt td{background:#e0e0e0;}</style>
+</head>
+<body bgcolor="ffffff" onLoad="MM_preloadImages('/images/secondPage_r02_c07_f2.jpg','/images/secondPage_r04_c01_f2.jpg','/images/secondPage_r06_c01_f2.jpg','/images/secondPage_r08_c01_f2.jpg','/images/secondPage_r09_c01_f2.jpg','/images/secondPage_r10_c01_f2.jpg','/images/secondPage_r11_c01_f2.jpg','/images/secondPage_r12_c01_f2.jpg','/images/secondPage_r13_c01_f2.jpg','/images/secondPage_r14_c01_f2.jpg','/images/secondPage_r15_c01_f2.jpg','/images/home_r02_c10_f2.gif');" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td>
+	  <!-- Head -->
+      <table border="0" cellpadding="0" cellspacing="0" width="750">
+        <tr valign="top">
+          <td rowspan="3"><img name="secondPage_r01_c01" src="/images/secondPage_r01_c01.jpg" width="156" height="165" border="0" usemap="#secondPage_r01_c01Map"><map name="secondPage_r01_c01Map"><area shape="rect" coords="4,0,127,125" href="/index.cfm"></map></td>
+          <td rowspan="3"><img name="secondPage_r01_c02" src="/images/secondPage_r01_c02.jpg" width="124" height="165" border="0"></td>
+          <td rowspan="3"><img name="secondPage_r01_c04" src="/images/secondPage_r01_c04.jpg" width="119" height="165" border="0"></td>
+          <td rowspan="3"><img name="secondPage_r01_c05" src="/images/secondPage_r01_c05.jpg" width="93" height="165" border="0"></td>
+          <td colspan="3"><img name="secondPage_r01_c06" src="/images/secondPage_r01_c06.jpg" width="258" height="11" border="0"></td>
+        </tr>
+        <tr valign="top">
+          <td><img name="secondPage_r02_c06" src="/images/secondPage_r02_c06.jpg" width="43" height="19" border="0"></td>
+          <td><a href="/someservice" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r02_c071','','/images/secondPage_r02_c07_f2.jpg',1)" ><img name="secondPage_r02_c071" src="/images/secondPage_r02_c07.jpg" width="157" height="19" border="0"></a></td>
+          <td><img name="secondPage_r02_c09" src="/images/secondPage_r02_c09.jpg" width="58" height="19" border="0"></td>
+        </tr>
+        <tr valign="top">
+          <td colspan="3">
+		  	
+		  	<table width="258" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+            	<td><img src="/images/secondPage_r030_c01.jpg" width="64" height="25"></td>
+                <td><a href="legalnotices.cfm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('secondPage_r030_c02','','/images/secondPage_r030_c02_f2.jpg',1)" ><img name="secondPage_r030_c02" src="/images/secondPage_r030_c02.jpg" width="115" height="25" border="0"></a></td>
+                <td><img src="/images/secondPage_r030_c03.jpg" width="79" height="25"></td>
+            </tr>
+
+            <tr>
+				<td colspan="3"><img src="/images/secondPage_r030_c06.jpg" width="258" height="110"></td>
+			</tr>
+			</table>
+		  </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <table width="750" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="156" valign="top">
+			<!-- Left Nav ------------------------------------------------------------------ -->
+            <table border="0" cellpadding="0" cellspacing="0" width="156">
+              
+			  <tr valign="top">
+                <td><a href="aboutUs.cfm" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r04_c011','','/images/secondPage_r04_c01_f2.jpg',1)" ><img name="secondPage_r04_c011" 
+	
+	src="/images/secondPage_r04_c01.jpg"
+ 
+width="156" height="24" border="0"></a></td>
+              </tr>
+              
+			  
+              <tr valign="top">
+                <td><a href="faq.cfm" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r06_c011','','/images/secondPage_r06_c01_f2.jpg',1)" ><img name="secondPage_r06_c011" 
+	
+	src="/images/secondPage_r06_c01.jpg" 
+ 
+width="156" height="23" border="0"></a></td>
+              </tr>
+			  
+
+			  
+              <tr valign="top">
+                <td><a href="news.cfm" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r12_c011','','/images/secondPage_r12_c01_f2.jpg',1)" ><img name="secondPage_r12_c011"
+
+	src="/images/secondPage_r12_c01_f2.jpg"
+ 
+width="156" height="24" border="0"></a></td>
+              </tr>
+
+              <tr valign="top">
+                <td> 
+                  <table width="156" border="0" cellspacing="0" cellpadding="3">
+				    <tr bgcolor="636D94"> 
+                      <td bgcolor="636D94" width="12"> 
+                        <div align="right"></div>
+                      </td>
+                      <td><a class="subNav" href="news.cfm">News</a></td>
+                    </tr>
+                    <tr bgcolor="636D94"> 
+                      <td bgcolor="636D94" width="12"> 
+                        <div align="right"></div>
+                      </td>
+
+                      <td><a class="subNav" href="events.cfm">Event Calendar</a></td>
+                    </tr>
+
+					<tr bgcolor="636D94"> 
+                      <td bgcolor="636D94" width="12"> 
+                        <div align="right"></div>
+                      </td>
+                      <td><a class="subNav" href="specialevents.cfm" >Special Events</a></td>
+                    </tr>
+                  </table>
+			    </td>
+			  </tr>				  
+
+			  
+			  
+			  <tr valign="top">
+                <td><a href="awards_topten.cfm" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r10_c011','','/images/secondPage_r10_c01_f2.jpg',1)" ><img name="secondPage_r10_c011" 
+	
+	src="/images/secondPage_r10_c01.jpg" 
+
+width="156" height="23" border="0"></a></td>
+              </tr>
+
+			  
+			  
+              <tr valign="top">
+                <td><a href="rulesReg.cfm" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r08_c011','','/images/secondPage_r08_c01_f2.jpg',1)" ><img name="secondPage_r08_c011" 
+	
+	src="/images/secondPage_r08_c01.jpg" 
+ 
+width="156" height="21" border="0"></a></td>
+              </tr>
+			  
+
+			  
+			  
+              <tr valign="top">
+                <td><a href="general.cfm" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r11_c011','','/images/secondPage_r11_c01_f2.jpg',1)" ><img name="secondPage_r11_c011" 
+	
+	src="/images/secondPage_r11_c01.jpg" 
+
+width="156" height="24" border="0"></a></td>
+              </tr>
+
+			  
+			  
+              <tr valign="top">
+                <td><a href="/somethingstore" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r09_c011','','/images/secondPage_r09_c01_f2.jpg',1)" ><img name="secondPage_r09_c011" 
+	
+	src="/images/secondPage_r09_c01.jpg" 
+ 
+width="156" height="25" border="0"></a></td>
+              </tr>
+			  
+			  
+              <tr valign="top" bgcolor="636D94">
+                <td bgcolor="636D94"><a href="/someservice" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r13_c011','','/images/secondPage_r13_c01_f2.jpg',1)" ><img name="secondPage_r13_c011" 
+	
+	src="/images/secondPage_r13_c01.jpg" 
+ 
+width="156" height="21" border="0"></a>
+ 			    </td>
+			  </tr>			  
+
+			  
+			  
+              <tr valign="top">
+
+                <td><a href="/groupservices" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r14_c011','','/images/secondPage_r14_c01_f2.jpg',1)" ><img name="secondPage_r14_c011" 
+
+	
+	src="/images/secondPage_r14_c01.jpg" 
+ 
+width="156" height="23" border="0"></a></td>
+              </tr>
+
+
+			  
+
+			  
+			  
+              <tr valign="top">
+                <td><a href="contactpage.cfm" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r15_c011','','/images/secondPage_r15_c01_f2.jpg',1)" ><img name="secondPage_r15_c011" 
+	
+	src="/images/secondPage_r15_c01.jpg" 
+ 
+width="156" height="25" border="0"></a></td>
+              </tr>
+			  
+			  
+              <tr valign="top">
+                <td><a href="legalnotices.cfm" onMouseOut="MM_swapImgRestore()"  onMouseOver="MM_swapImage('secondPage_r150_c011','','/images/secondPage_r150_c01_f2.jpg',1)" ><img name="secondPage_r150_c011" 
+	
+	src="/images/secondPage_r150_c01.jpg" 
+ 
+width="156" height="25" border="0"></a></td>
+              </tr>
+			  
+
+
+
+
+
+              <tr valign="top">
+                <td><img name="secondPage_r16_c01" src="/images/secondPage_r16_c01.jpg" width="156" height="100" border="0"></td>
+              </tr>
+              <tr valign="top">
+                <td><img name="secondPage_r17_c01" src="/images/secondPage_r17_c01.jpg" width="156" height="166" border="0"></td>
+
+              </tr>
+              <tr valign="top">
+                <td><img name="secondPage_r18_c01" src="/images/secondPage_r18_c01.jpg" width="156" height="19" border="0"></td>
+              </tr>
+             <tr valign="top">
+                <td><img src="/images/shim.gif" width="1" height="1"></td>
+              </tr>
+            </table>
+          </td>
+          <td width="594" valign="top"> 
+            <table width="594" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td>
+				  <!-- Heading & Location Status ---------------------------------------------- --> 
+                  <table border="0" cellpadding="0" cellspacing="0" width="594">
+                    <tr valign="top">
+                      <td rowspan="2"><img name="secondPage_r04_c02" src="/images/secondPage_r04_c02.gif" width="19" height="29" border="0"></td>
+                      <td height="20" valign="bottom"> 
+                        <div class="locText" align="right">
+						<a class='locText' href='http://www.something.com/index.cfm'>Home</a> &gt; <a class='locText' href='news.cfm'>News & Events</a> > <a class='locText' href='events.cfm'>Event Calendar</a> > General Event Info
+						  </div>
+                      </td>
+                      <td rowspan="2"><img name="secondPage_r04_c08" src="/images/secondPage_r04_c08.gif" width="78" height="29" border="0"></td>
+                    </tr>
+                    <tr valign="top">
+                      <td><img name="secondPage_r05_c03" src="/images/secondPage_r05_c03.gif" width="497" height="9" border="0"></td>
+                    </tr>
+					
+                   	<tr valign="top">
+                      <td colspan="3">
+
+												<a href="/groupservices"><img name="secondPage_r07_c02" src="/images/header_Events.jpg" width="594" height="39" border="0"></a>
+
+											</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr> 
+                <td align="left">
+				  <!-- Content -->
+                  <table width="594" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="15"><!-- 15 pixel gap from the Nav -->&nbsp;</td>
+                      <td valign="top" align="left"> 
+					  
+					  
+		  
+
+
+
+
+<script language="JavaScript1.2" src="scripts/main.js"type="text/javascript"></script>
+<div id="TipLayer" style="visibility:hidden;position:absolute;z-index:1000;top:-100"></div>
+
+
+<script language="javascript" type="text/javascript">
+	<!--
+	
+	/*
+	Please refer to readme.html for full Instructions
+	
+	Text[...]=[title,text]
+	
+	Style[...]=[TitleColor,TextColor,TitleBgColor,TextBgColor,TitleBgImag,TextBgImag,TitleTextAlign,TextTextAlign, TitleFontFace, TextFontFace, TipPosition, StickyStyle, TitleFontSize, TextFontSize, Width, Height, BorderSize, PadTextArea, CoordinateX , CoordinateY, TransitionNumber, TransitionDuration, TransparencyLevel ,ShadowType, ShadowColor]
+	*/
+	
+	var FiltersEnabled = 1 // if your not going to use transitions or filters in any of the tips set this to 0
+	
+	Style[0]=["white","black","7782B0","E8E8FF","","","","","","","","","","",350,"",2,4,15,10,5,0.5,100,"complex","gray"];
+	applyCssFilter();
+	Text[0]=["Event Type","1 - Event Type 1<br>2 - Event Type 2<br>3 - Event Type 3<br>4 - Event Type 4<br>5 - Event Type 5<br>6 - Event Type 6<br>7 - Event Type 7<br>8 - Type 8<br>9 - Seminar 9<br>0 - Match 0"];
+	//-->
+</script>
+
+
+
+
+
+<table width=590px cellspacing="0" cellpadding="0" border="0" bordercolor="666699">
+	<tr height=240px >
+		<td valign='middle' width=470px>
+			&nbsp;&nbsp;
+
+	<table width=590px cellspacing="0" cellpadding="0" border="1" bordercolor="666699">
+	<tr height=240px >
+		<td width=470px height="240" valign='middle'>
+
+
+&nbsp;&nbsp;<strong><font size="3"><i>Important Dates to Remember</i></font><br/>
+<br/>
+&nbsp;&nbsp;2010 Stuff:</strong><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;June 4-6 - Southeastern US, Perry, GA<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;June 18-20 - Rocky Mountain US, Farmington, UT<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;July 9-11 - Northwestern US, Auburn, WA<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;August 13-15 - South Central US, Fort Worth, TX<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;August 26-29 - Northeastern US, Logan Township, NJ<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;September 4-6 - Southwestern US, Prunedale, CA<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;September 10-12 - North Central US, Rochester Hills, MI<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;TBA - Spain National Championships<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;TBA - Japan National Championships<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;TBA - Latin America Regional Championships, Mexico<br/>
+
+		<td width=120px valign="middle" align="right" border="1" bordercolor="666699">
+
+
+<a href="http://www.somevent.com"><img src="/path/images/image-120x240.JPG" width="120" height="240" />	</a>	
+</td>	</tr>
+<tr><td colspan="2">
+<p>&nbsp;&nbsp;<strong>2010 something somevent<sup>&reg;</sup> Agility Championships:</strong><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;October 12 - October 17 - Louisville, Kentucky<br /><br />
+<i>&nbsp;&nbsp;&nbsp;&nbsp;Qualifying events for the 2010 season began September 14, 2009 and<br />
+&nbsp;&nbsp;&nbsp;&nbsp;continue through September 12, 2010. Entries and fees for somevent must be received <br />
+&nbsp;&nbsp;&nbsp;&nbsp;no later than Tuesday,                                                                                                                                                                                                        Tuesday, September 14. </i><br/></td>	
+
+</tr>    
+	
+
+</table>
+
+
+<h4>Event Calendar</h4>
+<p>Click on a column heading in the table below to <strong>sort by Date, Host Group or Event Location.</strong></p>
+
+
+
+
+
+
+<form action="events.cfm" method="post">
+<ol><ol><ol>Search Event Type: 
+<select name="type" size="1">
+	<option value="1" SELECTED>All Events</option>
+	<option value="2">Type 2 Events</option>
+	<option value="3">Type 3 Events</option>
+	<option value="4">Type 4 Events</option>
+	<option value="5">Type 5 Events</option>
+	<option value="6">Type 6 Events</option>
+</select>
+<input type="submit" value="Find">
+</ol></ol></ol>
+</form>
+
+
+		
+	
+	
+	
+	
+	
+ 
+	
+
+
+
+<table cellspacing="0" cellpadding="2" id="eventcal" style="border:1px solid #ccc; width:590px">
+	<thead   class="ui-widget-header">
+	<tr align="center">
+		<th><strong><a href="events.cfm?sort=date&type=1">Dates</a></strong></td>
+		<th><strong><a href="events.cfm?sort=group&type=1">Host Group</a></strong></td>
+		<th><strong><a href="events.cfm?sort=state&type=1">Event Location</a></strong></td>
+		<th><strong>Type</strong></td>
+	</tr>
+	</thead>
+
+
+	
+	 <tr>
+		<td style="width:135px" >10/17/2010 - 12/26/2010</td>
+		<td><a href="events_detail.cfm?event_no=104696">Bloomington Obedience Training Club</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Some Play</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/06/2010 - 11/07/2010</td>
+		<td><a href="events_detail.cfm?event_no=104197">Center for Canine Sports, Inc.</a></td>
+		<td>Garland  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/06/2010 - 11/07/2010</td>
+		<td><a href="events_detail.cfm?event_no=104476">Magic City Canine Club</a></td>
+		<td>Cullman  , AL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/06/2010 - 11/07/2010</td>
+		<td><a href="events_detail.cfm?event_no=104494">Good Dog Agility Club</a></td>
+		<td>Tempe  , AZ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/12/2010 - 11/14/2010</td>
+		<td><a href="events_detail.cfm?event_no=104416">Happy Hounds Agility Team</a></td>
+		<td>Prosper  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/12/2010 - 11/14/2010</td>
+		<td><a href="events_detail.cfm?event_no=104509">Southwest Agility Team</a></td>
+		<td>Albuquerque  , NM </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/13/2010 - 11/14/2010</td>
+		<td><a href="events_detail.cfm?event_no=104379">Hog Dog Productions</a></td>
+		<td>Millersville  , MD </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/13/2010 - 11/14/2010</td>
+		<td><a href="events_detail.cfm?event_no=104516">4 PAWS Agility</a></td>
+		<td>Holly Springs  , MS </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/13/2010 - 11/14/2010</td>
+		<td><a href="events_detail.cfm?event_no=104553">Dog Agility Racing Team (DART)</a></td>
+		<td>Irwindale  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/13/2010 - 11/14/2010</td>
+		<td><a href="events_detail.cfm?event_no=104555">Nunes Agility Field</a></td>
+		<td>Turlock  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/13/2010 - 11/14/2010</td>
+		<td><a href="events_detail.cfm?event_no=104684">Club Agility Chiluca</a></td>
+		<td>Sta. Ana Jilotzingo  , MEX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/19/2010 - 11/21/2010</td>
+		<td><a href="events_detail.cfm?event_no=104404">Knight Flyer Agility</a></td>
+		<td>Frankston  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/19/2010 - 11/21/2010</td>
+		<td><a href="events_detail.cfm?event_no=104434">KineticDog, LLC</a></td>
+		<td>Barto  , PA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/19/2010 - 11/21/2010</td>
+		<td><a href="events_detail.cfm?event_no=104556">Dog-On-It Agility Club of Cent. Florida</a></td>
+		<td>Winter Park  , FL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/19/2010 - 11/21/2010</td>
+		<td><a href="events_detail.cfm?event_no=104612">Casa de Canine of Greater Kansas City, LLC</a></td>
+		<td>Lawrence  , KS </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/20/2010 - 11/21/2010</td>
+		<td><a href="events_detail.cfm?event_no=104183">Y Agility</a></td>
+		<td>South Glastonbury  , CT </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/20/2010 - 11/21/2010</td>
+		<td><a href="events_detail.cfm?event_no=104324">PBH Agility</a></td>
+		<td>Chapel Hill  , NC </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/20/2010 - 11/21/2010</td>
+		<td><a href="events_detail.cfm?event_no=104495">RACE Agility</a></td>
+		<td>Crystal Lake  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/20/2010 - 11/21/2010</td>
+		<td><a href="events_detail.cfm?event_no=104599">Canine Capers</a></td>
+		<td>Gainesville  , GA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/26/2010 - 11/28/2010</td>
+		<td><a href="events_detail.cfm?event_no=104397">Canine Sports Agility</a></td>
+		<td>Dexter  , MI </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/26/2010 - 11/28/2010</td>
+		<td><a href="events_detail.cfm?event_no=104510">Virginia Ruff Riders, LLC</a></td>
+		<td>Herndon  , VA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/26/2010 - 11/28/2010</td>
+		<td><a href="events_detail.cfm?event_no=104521">Happy Dog Agility</a></td>
+		<td>Moorpark  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/26/2010 - 11/28/2010</td>
+		<td><a href="events_detail.cfm?event_no=104543">All Dogs Gym Agility</a></td>
+		<td>Manchester  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/27/2010 - 11/28/2010</td>
+		<td><a href="events_detail.cfm?event_no=104532">Bexar Regional Agility Team</a></td>
+		<td>San Marcos  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/03/2010 - 12/05/2010</td>
+		<td><a href="events_detail.cfm?event_no=104635">United States Dog Agility Association, Inc.</a></td>
+		<td>Toluca  , MEX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Seminar w/ Match</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/04/2010 - 12/05/2010</td>
+		<td><a href="events_detail.cfm?event_no=104340">DASH - Dog Agility Sports of Houston</a></td>
+		<td>La Marque  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/04/2010 - 12/05/2010</td>
+		<td><a href="events_detail.cfm?event_no=104386">Low Country Dog Agility</a></td>
+		<td>Charleston  , SC </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/04/2010 - 12/05/2010</td>
+		<td><a href="events_detail.cfm?event_no=104530">Wasatch Agility</a></td>
+		<td>Farmington  , UT </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/04/2010 - 12/05/2010</td>
+		<td><a href="events_detail.cfm?event_no=104583">Contact Zonies</a></td>
+		<td>Phoenix  , AZ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/04/2010 - 12/05/2010</td>
+		<td><a href="events_detail.cfm?event_no=104622">Pet's Paradise Costa Rica</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/04/2010 - 12/05/2010</td>
+		<td><a href="events_detail.cfm?event_no=104660">All 4 Fun Agility Club</a></td>
+		<td>Gray Summit  , MO </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/09/2010 - 12/09/2010</td>
+		<td><a href="events_detail.cfm?event_no=104570">Federacion Espanola de Agility y Educacion Canina</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/10/2010 - 12/12/2010</td>
+		<td><a href="events_detail.cfm?event_no=104394">Pals & Paws, Inc.</a></td>
+		<td>Jacksonville  , FL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/10/2010 - 12/12/2010</td>
+		<td><a href="events_detail.cfm?event_no=104481">Hill Country Agility</a></td>
+		<td>Kerrville  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/11/2010 - 12/12/2010</td>
+		<td><a href="events_detail.cfm?event_no=104457">Contact Point Agility Club</a></td>
+		<td>Fillmore  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/11/2010 - 12/12/2010</td>
+		<td><a href="events_detail.cfm?event_no=104512">Sirius Dog Agility Training Center</a></td>
+		<td>Buckhead  , GA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/11/2010 - 12/12/2010</td>
+		<td><a href="events_detail.cfm?event_no=104656">The Bay Team</a></td>
+		<td>Santa Rosa  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/17/2010 - 12/19/2010</td>
+		<td><a href="events_detail.cfm?event_no=104531">Blue Ridge Agility Club</a></td>
+		<td>Fletcher  , NC </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/18/2010 - 12/18/2010</td>
+		<td><a href="events_detail.cfm?event_no=104680">Top Notch Canines LLC</a></td>
+		<td>Phoenix  , AZ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Match Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/18/2010 - 12/19/2010</td>
+		<td><a href="events_detail.cfm?event_no=104643">Pawsitive Partners Dog Training Center</a></td>
+		<td>Indianapolis  , IN </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/29/2010 - 01/02/2011</td>
+		<td><a href="events_detail.cfm?event_no=104607">Dog Gone Fun TX</a></td>
+		<td>Belton  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/31/2010 - 01/02/2011</td>
+		<td><a href="events_detail.cfm?event_no=104500">Greater St. Louis Agility Club</a></td>
+		<td>Glen Carbon  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/31/2010 - 01/02/2011</td>
+		<td><a href="events_detail.cfm?event_no=104683">International K9 Stars</a></td>
+		<td>Ridgeland  , SC </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/01/2011 - 01/02/2011</td>
+		<td><a href="events_detail.cfm?event_no=104460">RACE Agility</a></td>
+		<td>Crystal Lake  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/01/2011 - 01/02/2011</td>
+		<td><a href="events_detail.cfm?event_no=104529">Saguaro Scramblers</a></td>
+		<td>Marana  , AZ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/01/2011 - 01/02/2011</td>
+		<td><a href="events_detail.cfm?event_no=104576">Mid-Atlantic MADness</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/07/2011 - 01/09/2011</td>
+		<td><a href="events_detail.cfm?event_no=104316">BARK-NH!</a></td>
+		<td>Manchester  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/07/2011 - 01/09/2011</td>
+		<td><a href="events_detail.cfm?event_no=104608">FRAC</a></td>
+		<td>Longmont  , CO </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/07/2011 - 01/09/2011</td>
+		<td><a href="events_detail.cfm?event_no=104617">Palm Bay Agility Club</a></td>
+		<td>Vero Beach  , FL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/08/2011 - 01/09/2011</td>
+		<td><a href="events_detail.cfm?event_no=104520">Good Dog Agility Club</a></td>
+		<td>Tempe  , AZ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/08/2011 - 01/09/2011</td>
+		<td><a href="events_detail.cfm?event_no=104551">Mountain Freaks Agility</a></td>
+		<td>Logan Township  , NJ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/08/2011 - 01/09/2011</td>
+		<td><a href="events_detail.cfm?event_no=104652">Arrowhead Agility Club</a></td>
+		<td>Ham Lake  , MN </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/14/2011 - 01/16/2011</td>
+		<td><a href="events_detail.cfm?event_no=104557">Dog-On-It Agility Club of Cent. Florida</a></td>
+		<td>Winter Park  , FL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/15/2011 - 01/16/2011</td>
+		<td><a href="events_detail.cfm?event_no=104506">Happy Hounds Agility Team</a></td>
+		<td>McKinney  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/15/2011 - 01/16/2011</td>
+		<td><a href="events_detail.cfm?event_no=104508">Agility Club of San Diego</a></td>
+		<td>Bonita  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/15/2011 - 01/16/2011</td>
+		<td><a href="events_detail.cfm?event_no=104575">North Alabama Canine Cruisers</a></td>
+		<td>Huntsville  , AL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/15/2011 - 01/16/2011</td>
+		<td><a href="events_detail.cfm?event_no=104614">Buckeye Region Agility Group Inc.</a></td>
+		<td>Columbus  , OH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/15/2011 - 01/17/2011</td>
+		<td><a href="events_detail.cfm?event_no=104405">Carolina Piedmont Agility</a></td>
+		<td>Raleigh  , NC </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/17/2011 - 01/17/2011</td>
+		<td><a href="events_detail.cfm?event_no=104571">Federacion Espanola de Agility y Educacion Canina</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/22/2011 - 01/23/2011</td>
+		<td><a href="events_detail.cfm?event_no=104387">Low Country Dog Agility</a></td>
+		<td>Charleston  , SC </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/22/2011 - 01/23/2011</td>
+		<td><a href="events_detail.cfm?event_no=104468">Boone County Dog Sport</a></td>
+		<td>Bartlett  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/22/2011 - 01/23/2011</td>
+		<td><a href="events_detail.cfm?event_no=104546">The Bay Team</a></td>
+		<td>Santa Rosa  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/22/2011 - 01/23/2011</td>
+		<td><a href="events_detail.cfm?event_no=104611">United States Dog Agility Association, Inc.</a></td>
+		<td>Garland  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Seminar</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/22/2011 - 01/23/2011</td>
+		<td><a href="events_detail.cfm?event_no=104714">On Target Agility, LLC</a></td>
+		<td>Logan Township  , NJ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/28/2011 - 01/30/2011</td>
+		<td><a href="events_detail.cfm?event_no=104541">DrivenDogs Agility</a></td>
+		<td>Fillmore  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/28/2011 - 01/30/2011</td>
+		<td><a href="events_detail.cfm?event_no=104706">Knight Flyer Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/29/2011 - 01/30/2011</td>
+		<td><a href="events_detail.cfm?event_no=104527">Feel the Rush Agility</a></td>
+		<td>Amherst  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >01/29/2011 - 01/30/2011</td>
+		<td><a href="events_detail.cfm?event_no=104589">Redhot Rovers</a></td>
+		<td>Auburn  , WA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/04/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104535">Bexar Regional Agility Team</a></td>
+		<td>San Marcos  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/04/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104620">Casa de Canine of Greater Kansas City, LLC</a></td>
+		<td>Lawrence  , KS </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/05/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104471">KETCH Agility</a></td>
+		<td>Tampa  , FL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/05/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104491">Teamworks Dog Training, LLC</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/05/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104545">Hog Dog Productions</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/05/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104552">4 PAWS Agility</a></td>
+		<td>Holly Springs  , MS </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/05/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104584">Contact Zonies</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/05/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104591">All Dogs Gym Agility</a></td>
+		<td>Manchester  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/05/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104633">Contact Sports Agility</a></td>
+		<td>Bartlett  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->An Event w/More Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/05/2011 - 02/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104692">Club Canofilo de Agilidad y Trabajo de Aguascalientes</a></td>
+		<td>Aguascalientes  , AGU </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ & JHP Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/12/2011 - 02/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104534">Saguaro Scramblers</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/12/2011 - 02/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104628">Sirius Dog Agility Training Center</a></td>
+		<td>Buckhead  , GA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/12/2011 - 02/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104645">Pawsitive Partners Dog Training Center</a></td>
+		<td>Indianapolis  , IN </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/12/2011 - 02/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104646">Four Seasons K9 Athlete Center, LLC</a></td>
+		<td>Washingtonville  , OH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/12/2011 - 02/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104675">Valley Agility Sports Team</a></td>
+		<td>Turlock  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/12/2011 - 02/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104713">West Valley Dog Sports</a></td>
+		<td>Pomona  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/18/2011 - 02/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104627">Penn-Ohio Agility</a></td>
+		<td>Edinboro  , PA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/19/2011 - 02/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104463">Minnesota Agility Club</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/19/2011 - 02/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104477">Boone County Dog Sport</a></td>
+		<td>Bartlett  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/19/2011 - 02/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104613">Pet's Paradise Costa Rica</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/19/2011 - 02/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104618">Tyler Obedience Training Club</a></td>
+		<td>Tyler  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/19/2011 - 02/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104687">PBH Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/19/2011 - 02/21/2011</td>
+		<td><a href="events_detail.cfm?event_no=104517">Keystone Agility Club</a></td>
+		<td>Barto  , PA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/25/2011 - 02/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104489">Low Country Dog Agility</a></td>
+		<td>Charleston  , SC </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/25/2011 - 02/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104605">Free Spirit Training Center</a></td>
+		<td>Miami  , FL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/25/2011 - 02/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104702">Contact Point Agility Club</a></td>
+		<td>Fillmore  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/26/2011 - 02/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104539">Good Dog Agility Club</a></td>
+		<td>Tempe  , AZ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/26/2011 - 02/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104659">OverCome Agility Club</a></td>
+		<td>Baton Rouge  , LA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >02/28/2011 - 02/28/2011</td>
+		<td><a href="events_detail.cfm?event_no=104572">Federacion Espanola de Agility y Educacion Canina</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/05/2011 - 03/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104278">Dallas Dog Sports</a></td>
+		<td>McKinney  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/05/2011 - 03/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104578">RACE Agility</a></td>
+		<td>Davenport  , IA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/05/2011 - 03/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104695">Happy Tails Agility Club</a></td>
+		<td>Farmington  , NY </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/11/2011 - 03/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104549">Front Range Agility Team</a></td>
+		<td>Castle Rock  , CO </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/11/2011 - 03/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104601">Pals & Paws, Inc.</a></td>
+		<td>Jacksonville  , FL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/12/2011 - 03/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104496">RACE Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/12/2011 - 03/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104528">Feel the Rush Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/12/2011 - 03/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104653">Puppy to Utility Practical Solutions (PUPS)</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/12/2011 - 03/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104658">Willamette Agility Group</a></td>
+		<td>Corvallis  , OR </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ & JHP Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/17/2011 - 03/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104717">Dog Gone Fun TX</a></td>
+		<td>College Station  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/18/2011 - 03/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104558">Dog-On-It Agility Club of Cent. Florida</a></td>
+		<td>Winter Park  , FL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/18/2011 - 03/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104634">Contact Sports Agility</a></td>
+		<td>Bartlett  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/19/2011 - 03/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104320">Paws In Motion</a></td>
+		<td>Logan Township  , NJ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/19/2011 - 03/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104522">Happy Dog Agility</a></td>
+		<td>Moorpark  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/19/2011 - 03/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104594">All Dogs Gym Agility</a></td>
+		<td>Manchester  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/19/2011 - 03/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104665">Buckeye Region Agility Group Inc.</a></td>
+		<td>Sunbury  , OH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/19/2011 - 03/20/2011</td>
+		<td><a href="events_detail.cfm?event_no=104701">Club Agility Chiluca</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ & JHP Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/25/2011 - 03/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104507">Happy Hounds Agility Team</a></td>
+		<td>Burleson  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/26/2011 - 03/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104686">Windsor Agility Group</a></td>
+		<td>Ilderton  , ON </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/26/2011 - 03/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104716">On Target Agility, LLC</a></td>
+		<td>Barto  , PA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/01/2011 - 04/03/2011</td>
+		<td><a href="events_detail.cfm?event_no=104711">Hill Country Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/02/2011 - 04/03/2011</td>
+		<td><a href="events_detail.cfm?event_no=104600">FRAC</a></td>
+		<td>Loveland  , CO </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/02/2011 - 04/03/2011</td>
+		<td><a href="events_detail.cfm?event_no=104672">Pet's Paradise Costa Rica</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/07/2011 - 04/08/2011</td>
+		<td><a href="events_detail.cfm?event_no=104676">Two Rivers Agility Club of Sacramento</a></td>
+		<td>Dixon  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/08/2011 - 04/10/2011</td>
+		<td><a href="events_detail.cfm?event_no=104492">Teamworks Dog Training, LLC</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/08/2011 - 04/10/2011</td>
+		<td><a href="events_detail.cfm?event_no=104587">Virginia Ruff Riders, LLC</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/09/2011 - 04/10/2011</td>
+		<td><a href="events_detail.cfm?event_no=104586">Dog Agility Sport Handlers</a></td>
+		<td>Costa Mesa  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/09/2011 - 04/10/2011</td>
+		<td><a href="events_detail.cfm?event_no=104644">Pawsitive Partners Dog Training Center</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/09/2011 - 04/10/2011</td>
+		<td><a href="events_detail.cfm?event_no=104657">Haute Dawgs</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/09/2011 - 04/10/2011</td>
+		<td><a href="events_detail.cfm?event_no=104677">Rainier Agility Team</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/09/2011 - 04/10/2011</td>
+		<td><a href="events_detail.cfm?event_no=104723">Dallas Agility Working Group</a></td>
+		<td>McKinney  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/11/2011 - 04/11/2011</td>
+		<td><a href="events_detail.cfm?event_no=104573">Federacion Espanola de Agility y Educacion Canina</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/15/2011 - 04/17/2011</td>
+		<td><a href="events_detail.cfm?event_no=104540">BARK-NH!</a></td>
+		<td>N. Smithfield  , RI </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/15/2011 - 04/17/2011</td>
+		<td><a href="events_detail.cfm?event_no=104664">Tailwaggers Learning Center</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/16/2011 - 04/17/2011</td>
+		<td><a href="events_detail.cfm?event_no=104490">Low Country Dog Agility</a></td>
+		<td>Charleston  , SC </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/16/2011 - 04/17/2011</td>
+		<td><a href="events_detail.cfm?event_no=104679">Pawprints Agility Club</a></td>
+		<td>Haughton  , LA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/16/2011 - 04/17/2011</td>
+		<td><a href="events_detail.cfm?event_no=104705">Club Agility Chiluca</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ & JHP Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/22/2011 - 04/24/2011</td>
+		<td><a href="events_detail.cfm?event_no=104631">Contact Sports Agility</a></td>
+		<td>Lake Barrington  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/22/2011 - 04/24/2011</td>
+		<td><a href="events_detail.cfm?event_no=104690">Wasatch Agility</a></td>
+		<td>Farmington  , UT </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/23/2011 - 04/24/2011</td>
+		<td><a href="events_detail.cfm?event_no=104431">Center for Canine Sports, Inc.</a></td>
+		<td>Garland  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/23/2011 - 04/24/2011</td>
+		<td><a href="events_detail.cfm?event_no=104703">Contact Point Agility Club</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/23/2011 - 04/24/2011</td>
+		<td><a href="events_detail.cfm?event_no=104710">Blue Ridge Agility Club</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/29/2011 - 05/01/2011</td>
+		<td><a href="events_detail.cfm?event_no=104505">MAD CO, LLC</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/30/2011 - 05/01/2011</td>
+		<td><a href="events_detail.cfm?event_no=104693">Ace Agility Club</a></td>
+		<td>Greenfield  , MA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/01/2011 - 05/01/2011</td>
+		<td><a href="events_detail.cfm?event_no=104574">Federacion Espanola de Agility y Educacion Canina</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/06/2011 - 05/08/2011</td>
+		<td><a href="events_detail.cfm?event_no=104629">Touch & Go Agility Club</a></td>
+		<td>Sterling  , VA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/07/2011 - 05/08/2011</td>
+		<td><a href="events_detail.cfm?event_no=104595">All Dogs Gym Agility</a></td>
+		<td>Manchester  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/13/2011 - 05/15/2011</td>
+		<td><a href="events_detail.cfm?event_no=104666">4 Paw Performance</a></td>
+		<td>Marietta  , GA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/14/2011 - 05/15/2011</td>
+		<td><a href="events_detail.cfm?event_no=104313">Boise Agility Runners & Climbers</a></td>
+		<td>Boise  , ID </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/14/2011 - 05/15/2011</td>
+		<td><a href="events_detail.cfm?event_no=104619">Tyler Obedience Training Club</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/14/2011 - 05/15/2011</td>
+		<td><a href="events_detail.cfm?event_no=104671">Fleet Feet Dog Agility</a></td>
+		<td>Turner  , OR </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/20/2011 - 05/21/2011</td>
+		<td><a href="events_detail.cfm?event_no=104606">Low Country Dog Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/20/2011 - 05/22/2011</td>
+		<td><a href="events_detail.cfm?event_no=104523">Happy Dog Agility</a></td>
+		<td>Moorpark  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/20/2011 - 05/22/2011</td>
+		<td><a href="events_detail.cfm?event_no=104688">PBH Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/20/2011 - 05/22/2011</td>
+		<td><a href="events_detail.cfm?event_no=104724">Dallas Agility Working Group</a></td>
+		<td>Ft. Worth  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Regional Championship</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/27/2011 - 05/29/2011</td>
+		<td><a href="events_detail.cfm?event_no=104590">Redhot Rovers</a></td>
+		<td>Auburn  , WA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ & JHP Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/28/2011 - 05/29/2011</td>
+		<td><a href="events_detail.cfm?event_no=104479">Dallas Dog Sports</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >05/28/2011 - 05/30/2011</td>
+		<td><a href="events_detail.cfm?event_no=104542">DrivenDogs Agility</a></td>
+		<td>Fillmore  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/03/2011 - 06/04/2011</td>
+		<td><a href="events_detail.cfm?event_no=104432">Center for Canine Sports, Inc.</a></td>
+		<td>Garland  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/03/2011 - 06/05/2011</td>
+		<td><a href="events_detail.cfm?event_no=104707">Minnesota Agility Club</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ & JHP Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/03/2011 - 06/05/2011</td>
+		<td><a href="events_detail.cfm?event_no=104718">Canine Capers</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Regional Championship</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/03/2011 - 06/05/2011</td>
+		<td><a href="events_detail.cfm?event_no=104722">Nunes Agility Field</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/04/2011 - 06/05/2011</td>
+		<td><a href="events_detail.cfm?event_no=104513">Lehigh Valley Dream Weaver Agility Club</a></td>
+		<td>Barto  , PA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/04/2011 - 06/05/2011</td>
+		<td><a href="events_detail.cfm?event_no=104708">Greater St. Louis Agility Club</a></td>
+		<td>Glen Carbon  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/10/2011 - 06/12/2011</td>
+		<td><a href="events_detail.cfm?event_no=104649">NOMAD</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/10/2011 - 06/12/2011</td>
+		<td><a href="events_detail.cfm?event_no=104719">Keystone Agility Club</a></td>
+		<td>Bethlehem  , PA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Regional Championship</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/11/2011 - 06/12/2011</td>
+		<td><a href="events_detail.cfm?event_no=104704">Contact Point Agility Club</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/17/2011 - 06/19/2011</td>
+		<td><a href="events_detail.cfm?event_no=104691">Wasatch Agility</a></td>
+		<td>Farmington  , UT </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/18/2011 - 06/19/2011</td>
+		<td><a href="events_detail.cfm?event_no=104685">Agile Canines Training, Inc.</a></td>
+		<td>Lake Elmo  , MN </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/24/2011 - 06/26/2011</td>
+		<td><a href="events_detail.cfm?event_no=104673">Boone County Dog Sport</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/25/2011 - 06/26/2011</td>
+		<td><a href="events_detail.cfm?event_no=104596">All Dogs Gym Agility</a></td>
+		<td>Manchester  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >06/25/2011 - 06/26/2011</td>
+		<td><a href="events_detail.cfm?event_no=104661">First Dog Sports</a></td>
+		<td>Lakeside  , AZ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >07/01/2011 - 07/03/2011</td>
+		<td><a href="events_detail.cfm?event_no=104651">K-9 Athletes</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >07/02/2011 - 07/04/2011</td>
+		<td><a href="events_detail.cfm?event_no=104245">Carolina Piedmont Agility</a></td>
+		<td>Charlotte  , NC </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >07/02/2011 - 07/04/2011</td>
+		<td><a href="events_detail.cfm?event_no=104524">Happy Dog Agility</a></td>
+		<td>Moorpark  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >07/08/2011 - 07/10/2011</td>
+		<td><a href="events_detail.cfm?event_no=104559">Riverside Canine Center</a></td>
+		<td>Westford  , MA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >07/09/2011 - 07/10/2011</td>
+		<td><a href="events_detail.cfm?event_no=104654">Puppy to Utility Practical Solutions (PUPS)</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >07/15/2011 - 07/17/2011</td>
+		<td><a href="events_detail.cfm?event_no=104588">BARK-NH!</a></td>
+		<td>N. Smithfield  , RI </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >07/22/2011 - 07/24/2011</td>
+		<td><a href="events_detail.cfm?event_no=104669">Four Seasons K9 Athlete Center, LLC</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >08/05/2011 - 08/07/2011</td>
+		<td><a href="events_detail.cfm?event_no=104560">Riverside Canine Center</a></td>
+		<td>Nashua  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >08/06/2011 - 08/07/2011</td>
+		<td><a href="events_detail.cfm?event_no=104632">Contact Sports Agility</a></td>
+		<td>Lake Barrington  , IL </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Regional Championship</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >08/13/2011 - 08/14/2011</td>
+		<td><a href="events_detail.cfm?event_no=104630">Touch & Go Agility Club</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >08/20/2011 - 08/21/2011</td>
+		<td><a href="events_detail.cfm?event_no=104663">Pawsitive Partners Dog Training Center</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >08/20/2011 - 08/21/2011</td>
+		<td><a href="events_detail.cfm?event_no=104715">On Target Agility, LLC</a></td>
+		<td>Hatfield  , PA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >08/26/2011 - 08/28/2011</td>
+		<td><a href="events_detail.cfm?event_no=104544">Paws In Motion</a></td>
+		<td>Logan Township  , NJ </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >08/26/2011 - 08/28/2011</td>
+		<td><a href="events_detail.cfm?event_no=104674">Boone County Dog Sport</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >08/27/2011 - 08/28/2011</td>
+		<td><a href="events_detail.cfm?event_no=104694">Ace Agility Club</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Handler Program Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >09/03/2011 - 09/04/2011</td>
+		<td><a href="events_detail.cfm?event_no=104351">ARFF Agility Club, Inc.</a></td>
+		<td>Westford  , MA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >09/03/2011 - 09/05/2011</td>
+		<td><a href="events_detail.cfm?event_no=104689">PBH Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >09/09/2011 - 09/11/2011</td>
+		<td><a href="events_detail.cfm?event_no=104493">Teamworks Dog Training, LLC</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >09/09/2011 - 09/11/2011</td>
+		<td><a href="events_detail.cfm?event_no=104561">Riverside Canine Center</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >09/10/2011 - 09/11/2011</td>
+		<td><a href="events_detail.cfm?event_no=104314">Boise Agility Runners & Climbers</a></td>
+		<td>Boise  , ID </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >09/10/2011 - 09/11/2011</td>
+		<td><a href="events_detail.cfm?event_no=104662">First Dog Sports</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >09/17/2011 - 09/18/2011</td>
+		<td><a href="events_detail.cfm?event_no=104525">Happy Dog Agility</a></td>
+		<td>Moorpark  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >09/30/2011 - 10/02/2011</td>
+		<td><a href="events_detail.cfm?event_no=104698">Low Country Dog Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >10/01/2011 - 10/02/2011</td>
+		<td><a href="events_detail.cfm?event_no=104597">All Dogs Gym Agility</a></td>
+		<td>Manchester  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->OneClass Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >10/08/2011 - 10/09/2011</td>
+		<td><a href="events_detail.cfm?event_no=104670">Four Seasons K9 Athlete Center, LLC</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >10/22/2011 - 10/23/2011</td>
+		<td><a href="events_detail.cfm?event_no=104511">Lehigh Valley Dream Weaver Agility Club</a></td>
+		<td>Barto  , PA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >10/28/2011 - 10/30/2011</td>
+		<td><a href="events_detail.cfm?event_no=104678">BARK-NH!</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >10/29/2011 - 10/30/2011</td>
+		<td><a href="events_detail.cfm?event_no=104655">Dallas Dog Sports</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/05/2011 - 11/06/2011</td>
+		<td><a href="events_detail.cfm?event_no=104433">Center for Canine Sports, Inc.</a></td>
+		<td>Garland  , TX </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/12/2011 - 11/13/2011</td>
+		<td><a href="events_detail.cfm?event_no=104699">Low Country Dog Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/25/2011 - 11/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104526">Happy Dog Agility</a></td>
+		<td>Moorpark  , CA </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >11/26/2011 - 11/27/2011</td>
+		<td><a href="events_detail.cfm?event_no=104598">All Dogs Gym Agility</a></td>
+		<td>Manchester  , NH </td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Something Only</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/03/2011 - 12/04/2011</td>
+		<td><a href="events_detail.cfm?event_no=104700">Low Country Dog Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >12/09/2011 - 12/11/2011</td>
+		<td><a href="events_detail.cfm?event_no=104712">Hill Country Agility</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >03/17/2012 - 03/18/2012</td>
+		<td><a href="events_detail.cfm?event_no=104321">Paws In Motion</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >09/01/2012 - 09/02/2012</td>
+		<td><a href="events_detail.cfm?event_no=104682">ARFF Agility Club, Inc.</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+	 <tr>
+		<td style="width:135px" >04/16/2015 - 04/17/2015</td>
+		<td><a href="events_detail.cfm?event_no=104720">Generic, Inc.</a></td>
+		<td>TBA</td>
+		<td align="center"><!--<a href="#" onMouseOut="htm();" onMouseOver="return false; stm(Text[0],Style[0]);" onclick="return false;">-->Lots o/ Classes</a>&nbsp;</td>
+	 </tr>
+	 
+
+
+</table>
+
+
+
+	  
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+<br><br>
+
+<script language="javascript" type="text/javascript">
+<!--
+
+	placeFocus();
+
+//-->
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td>
+
+	  <!-- Footer Nav -->
+      <table border="0" cellpadding="0" cellspacing="0" width="594">
+        <tr valign="top"> 
+          <td bgcolor="#636C97" valign="middle"> 
+            <div class="footerText2" align="center">
+							<a class="footerText2" href="index.cfm">Home</a>
+							| <a class="footerText2" href="about.cfm">About Us</a>
+							| <a class="footerText2" href="faq.cfm">FAQ</a>
+							| <a class="footerText2" href="news.cfm">News & Events</a>
+							| <a class="footerText2" href="awards.cfm">Awards</a>
+							| <a class="footerText2" href="rules.cfm">Rules & Regulations</a>
+							| <a class="footerText2" href="general.cfm">General Information</a>
+							| <a class="footerText2" href="specialstuff.cfm">Special Events</a>
+							<br>
+              				<a class="footerText2" href="/somethingstore">Something Store</a>
+							| <a class="footerText2" href="/someservice">Competitor Services</a>
+							| <a class="footerText2" href="groupservice.cfm">Group Services</a>
+							| <a class="footerText2" href="contactpage.cfm">Contact Us</a>
+							| <a class="footerText2" href="legalnotices.cfm">Legal Notices</a>
+            </div>
+          </td>
+        </tr>
+        <tr valign="top"> 
+					<td align="center">Copyright &copy; 2004-2010. Generic, Inc. All rights reserved.</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;
+			<!-- Banner Space -->
+			<!--img src="images/secondPage_r21_c01.gif" width="750" height="105"-->
+		</td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+
+						

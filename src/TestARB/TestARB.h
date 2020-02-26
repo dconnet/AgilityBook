@@ -24,6 +24,7 @@ extern const wchar_t* const gc_Configs[];
 extern size_t gc_NumConfigs;
 
 
+extern std::wstring GetDataFile();
 extern ElementNodePtr LoadXMLData(size_t id = 0); // 0 is default config
 
 extern bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config);

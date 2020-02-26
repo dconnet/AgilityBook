@@ -74,6 +74,7 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestMisc.cpp \
 	TestQ.cpp \
 	TestString.cpp \
+	TestTidy.cpp \
 	TestTraining.cpp \
 	TestUtils.cpp \
 	TestVersion.cpp

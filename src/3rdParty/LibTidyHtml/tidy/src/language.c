@@ -22,12 +22,13 @@
 
 /**
  *  This structure type provides universal access to all of Tidy's strings.
+ *  Note limit of 8, to be changed as more added...
  */
 typedef struct {
     Bool manually_set;
     languageDefinition *currentLanguage;
     languageDefinition *fallbackLanguage;
-    languageDefinition *languages[];
+    languageDefinition *languages[8];
 } tidyLanguagesType;
 
 
@@ -590,18 +591,18 @@ const tidyLocaleMapItemImpl *TY_(getNextWindowsLanguage)( TidyIterator *iter )
 
 
 /**
- *  Given a `tidyLocalMapItemImpl, return the Windows name.
+ *  Given a `tidyLocaleMapItemImpl, return the Windows name.
  */
-const ctmbstr TY_(TidyLangWindowsName)( const tidyLocaleMapItemImpl *item )
+ctmbstr TY_(TidyLangWindowsName)( const tidyLocaleMapItemImpl *item )
 {
     return item->winName;
 }
 
 
 /**
- *  Given a `tidyLocalMapItemImpl, return the POSIX name.
+ *  Given a `tidyLocaleMapItemImpl, return the POSIX name.
  */
-const ctmbstr TY_(TidyLangPosixName)( const tidyLocaleMapItemImpl *item )
+ctmbstr TY_(TidyLangPosixName)( const tidyLocaleMapItemImpl *item )
 {
     return item->POSIXName;
 }

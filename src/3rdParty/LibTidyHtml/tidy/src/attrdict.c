@@ -1955,6 +1955,7 @@ const AttrVersion TY_(W3CAttrsFor_LINK)[] =
   { TidyAttr_AS,                    xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|HT50|XH50 },
   { TidyAttr_CHARSET,               xxxx|xxxx|H40T|H41T|X10T|H40F|H41F|X10F|H40S|H41S|X10S|XH11|XB10|xxxx|xxxx },
   { TidyAttr_CLASS,                 xxxx|xxxx|H40T|H41T|X10T|H40F|H41F|X10F|H40S|H41S|X10S|XH11|XB10|HT50|XH50 }, /* CORE override */
+  { TidyAttr_COLOR,                 xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|HT50|XH50 }, /* Is #686 */
   { TidyAttr_CROSSORIGIN,           xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|HT50|XH50 },
   { TidyAttr_DIR,                   xxxx|xxxx|H40T|H41T|X10T|H40F|H41F|X10F|H40S|H41S|X10S|XH11|xxxx|HT50|XH50 }, /* CORE override */
   { TidyAttr_HREF,                  HT20|HT32|H40T|H41T|X10T|H40F|H41F|X10F|H40S|H41S|X10S|XH11|XB10|HT50|XH50 },
@@ -3388,6 +3389,17 @@ const AttrVersion TY_(W3CAttrsFor_TIME)[] =
   INCLUDE_MICRODATA
   { TidyAttr_DATETIME,              xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|HT50|XH50 },
   { TidyAttr_PUBDATE,               xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|HT50|XH50 },
+  INCLUDE_CORE_ATTRIBS
+  INCLUDE_CORE_EVENTS
+  INCLUDE_RDFA
+  { TidyAttr_UNKNOWN,               0                                                                          },
+};
+
+const AttrVersion TY_(W3CAttrsFor_DATA)[] = 
+{
+  INCLUDE_ARIA
+  INCLUDE_MICRODATA
+  { TidyAttr_VALUE,              xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|HT50|XH50 },
   INCLUDE_CORE_ATTRIBS
   INCLUDE_CORE_EVENTS
   INCLUDE_RDFA

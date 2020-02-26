@@ -22,6 +22,7 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBStructure.h"
 #include "ARBCommon/ARBUtils.h"
+#include "ARBCommon/Element.h"
 #include "fmt/printf.h"
 
 #if defined(__WXWINDOWS__)
@@ -53,12 +54,8 @@ TEST_CASE("ARB")
 }
 
 
-ElementNodePtr LoadXMLData(size_t id)
+std::wstring GetDataFile()
 {
-	fmt::wmemory_buffer errMsg;
-	ARBErrorCallback err(errMsg);
-	ElementNodePtr tree(ElementNode::New());
-	assert(tree);
 #if defined(__WXWINDOWS__)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	std::wstring datafile = wxString(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
@@ -75,6 +72,17 @@ ElementNodePtr LoadXMLData(size_t id)
 	std::wstring datafile = L"./testarb.dat";
 #endif
 #endif
+	return datafile;
+}
+
+
+ElementNodePtr LoadXMLData(size_t id)
+{
+	fmt::wmemory_buffer errMsg;
+	ARBErrorCallback err(errMsg);
+	ElementNodePtr tree(ElementNode::New());
+	assert(tree);
+	std::wstring datafile = GetDataFile();
 	assert(id < gc_NumConfigs);
 	std::stringstream data;
 	bool bOk = CConfigHandler::LoadWxFile(datafile, gc_Configs[id], data);
