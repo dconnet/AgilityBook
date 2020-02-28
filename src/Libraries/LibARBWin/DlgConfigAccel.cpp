@@ -37,7 +37,7 @@ static wxString GetKeyCode(std::unordered_map<int, KeyCodeMapping> const& keyMap
 	if (key != keyMap.end())
 		text = wxGetTranslation(key->second.special);
 	else if (isascii(code))
-		text << (wxChar)code;
+		text << static_cast<wxChar>(code);
 
 	return text;
 }

@@ -30,6 +30,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace {
 static struct Q2Enum
 {
 	wchar_t const* pQ;		///< Actual text in file
@@ -46,7 +47,8 @@ static struct Q2Enum
 	{ATTRIB_QTYPE_DNR, Q::DNR,    arbT("IDS_QTYPE_DNR")},
 	{ATTRIB_QTYPE_NA,  Q::NA,     arbT("IDS_QTYPE_NA")},
 }; ///< This is a list of the various types of "Q"s we support.
-static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
+constexpr int sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
+}
 
 
 std::wstring ARB_Q::GetValidTypes()

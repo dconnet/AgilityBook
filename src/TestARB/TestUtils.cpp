@@ -174,7 +174,7 @@ TEST_CASE("Utils")
 	{
 		if (!g_bMicroTest)
 		{
-			const int nBackups = 0;
+			constexpr int nBackups = 0;
 			// '0' is special - no backups are made so API returns false (no change)
 			for (int i = 0; i < 2; ++i)
 			{
@@ -193,7 +193,7 @@ TEST_CASE("Utils")
 	{
 		if (!g_bMicroTest)
 		{
-			const int nBackups = 1;
+			constexpr int nBackups = 1;
 			REQUIRE(files.Clear());
 			REQUIRE(!CreateBackupFile(files.FileName(), nBackups));
 			REQUIRE(files.Verify(nBackups, -1));
@@ -203,7 +203,7 @@ TEST_CASE("Utils")
 	{
 		if (!g_bMicroTest)
 		{
-			const int nBackups = 1;
+			constexpr int nBackups = 1;
 			REQUIRE(files.Reset(nBackups));
 			REQUIRE(CreateBackupFile(files.FileName(), nBackups));
 			REQUIRE(files.Verify(nBackups, -1));
@@ -215,7 +215,7 @@ TEST_CASE("Utils")
 	{
 		if (!g_bMicroTest)
 		{
-			const int nBackups = 2;
+			constexpr int nBackups = 2;
 			REQUIRE(files.Clear());
 			REQUIRE(!CreateBackupFile(files.FileName(), nBackups));
 			REQUIRE(files.Verify(nBackups, -1));
@@ -225,7 +225,7 @@ TEST_CASE("Utils")
 	{
 		if (!g_bMicroTest)
 		{
-			const int nBackups = 2;
+			constexpr int nBackups = 2;
 			REQUIRE(files.Reset(nBackups));
 			REQUIRE(CreateBackupFile(files.FileName(), nBackups));
 			REQUIRE(files.Verify(nBackups, -1));
@@ -237,7 +237,7 @@ TEST_CASE("Utils")
 	{
 		if (!g_bMicroTest)
 		{
-			const int nBackups = 3;
+			constexpr int nBackups = 3;
 			for (int i = 0; i <= nBackups; ++i)
 			{
 				REQUIRE(files.Hole(nBackups, i));

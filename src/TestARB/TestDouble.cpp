@@ -150,7 +150,7 @@ TEST_CASE("Double")
 			REQUIRE(s == test.expected);
 		}
 
-		if (FMT_VERSION >= 60000)
+#if (FMT_VERSION >= 60000)
 		{
 			// FMT v6: Formatting changed to locale-independent.
 			// New 'n' option is required for locale-specific formatting.
@@ -164,6 +164,7 @@ TEST_CASE("Double")
 				REQUIRE(s == test.expected);
 			}
 		}
+#endif
 	}
 
 

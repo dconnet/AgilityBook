@@ -36,6 +36,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+namespace {
 static struct PointsEnum
 {
 	wchar_t const* pPoints;	///< Actual text in file
@@ -46,7 +47,8 @@ static struct PointsEnum
 	{ATTRIB_TITLE_POINTS_TYPE_T2B, ARBPointsType::T2B},
 	{ATTRIB_TITLE_POINTS_TYPE_UKI, ARBPointsType::UKI}
 };
-static size_t const sc_nPoints = sizeof(sc_Points) / sizeof(sc_Points[0]);
+constexpr size_t sc_nPoints = sizeof(sc_Points) / sizeof(sc_Points[0]);
+}
 
 
 static ARBPointsType PointsToType(std::wstring const& str)

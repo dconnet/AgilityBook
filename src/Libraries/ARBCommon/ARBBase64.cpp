@@ -35,7 +35,9 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-static unsigned int const MaxLineLength = 76;
+namespace {
+	constexpr unsigned int MaxLineLength = 76;
+}
 
 static char const base64chars[64] =
 {
