@@ -35,7 +35,7 @@ public:
 	static std::wstring GetEndiannessName();
 
 	static std::wstring GetSystemInfo(
-			wxWindow* pWindow,
+			wxWindow const* pWindow,
 			CVersionNum const& ver);
 	static std::wstring GetRegistryInfo();
 

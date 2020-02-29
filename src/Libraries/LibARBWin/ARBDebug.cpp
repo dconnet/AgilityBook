@@ -159,7 +159,7 @@ std::wstring ARBDebug::GetEndiannessName()
 /////////////////////////////////////////////////////////////////////////////
 
 std::wstring ARBDebug::GetSystemInfo(
-		wxWindow* pWindow,
+		wxWindow const* pWindow,
 		CVersionNum const& ver)
 {
 	fmt::wmemory_buffer str;

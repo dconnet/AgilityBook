@@ -91,15 +91,8 @@ public:
 			, bShift(false)
 		{
 		}
-		ItemAccel(ItemAccel const& rhs)
-			: key(rhs.key)
-			, id(rhs.id)
-			, keyCode(rhs.keyCode)
-			, bCtrl(rhs.bCtrl)
-			, bAlt(rhs.bAlt)
-			, bShift(rhs.bShift)
-		{
-		}
+		ItemAccel(ItemAccel const& rhs) = default;
+		ItemAccel(ItemAccel&& rhs) = default;
 		ItemAccel(int _key, int _id, bool _bCtrl, bool _bAlt, bool _bShift, int _keyCode)
 			: key(_key)
 			, id(_id)
@@ -109,6 +102,8 @@ public:
 			, keyCode(_keyCode)
 		{
 		}
+		ItemAccel& operator=(ItemAccel const& rhs) = default;
+		ItemAccel& operator=(ItemAccel&& rhs) = default;
 		bool operator==(ItemAccel const& rhs) const
 		{
 			return key == rhs.key
@@ -250,7 +245,7 @@ private:
 			wxMenu* mruMenu,
 			bool& mruAdded);
 
-	void DoSubMenu(wxMenu* parent, MenuHandle const& handle);
+	void DoSubMenu(wxMenu const* parent, MenuHandle const& handle);
 
 	std::vector<CMenuHelper::ItemData> const& m_menuItems;
 	std::vector<ItemAccel> const& m_accelDataDefaults;

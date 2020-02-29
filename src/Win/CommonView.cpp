@@ -246,7 +246,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(
 
 bool CAgilityBookBaseExtraView::GetMenuPosition(
 		wxPoint& outPos,
-		wxWindow* ctrl,
+		wxWindow const* ctrl,
 		wxContextMenuEvent const& evt)
 {
 	outPos = evt.GetPosition(); // in screen

@@ -792,7 +792,7 @@ void CMenuHelper::Menu(
 }
 
 
-void CMenuHelper::DoSubMenu(wxMenu* parent, MenuHandle const& handle)
+void CMenuHelper::DoSubMenu(wxMenu const* parent, MenuHandle const& handle)
 {
 	if (parent)
 	{

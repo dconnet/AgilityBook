@@ -72,12 +72,12 @@
 namespace
 {
 	// Calendar Defaults
-	static const bool sc_AutoDeleteCalEntries = false;
-	static const bool sc_ViewAllCalEntries = true;
-	static const bool sc_ViewAllCalOpening = true;
-	static const bool sc_ViewAllCalClosing = true;
-	static const long sc_DaysTillEntryIsPast = 5;
-	static const bool sc_HideOverlapping = false;
+	constexpr bool sc_AutoDeleteCalEntries = false;
+	constexpr bool sc_ViewAllCalEntries = true;
+	constexpr bool sc_ViewAllCalOpening = true;
+	constexpr bool sc_ViewAllCalClosing = true;
+	constexpr long sc_DaysTillEntryIsPast = 5;
+	constexpr bool sc_HideOverlapping = false;
 	// xcode5 dies on any static wx objects
 	static const wxColour sc_CalColorPast() {return wxColour(128,128,128);} // gray
 	static const wxColour sc_CalColorNotEntered() {return wxColour(0,0,0);} // Black
@@ -86,59 +86,59 @@ namespace
 	static const wxColour sc_CalColorEntered() {return wxColour(0,0,255);} // Blue
 	static const wxColour sc_CalColorOpening() {return wxColour(0,128,0);} // Dk Green
 	static const wxColour sc_CalColorClosing() {return wxColour(255,0,0);} // Red
-	static const long sc_CalOpeningNear = 4;
-	static const long sc_CalClosingNear = 10;
+	constexpr long sc_CalOpeningNear = 4;
+	constexpr long sc_CalClosingNear = 10;
 	static const wxColour sc_CalColorOpeningNear() {return wxColour(0,0,255);}
 	static const wxColour sc_CalColorClosingNear() {return wxColour(255,0,0);}
 
 	// Common
-	static const ARBDayOfWeek sc_FirstDayOfWeek = ARBDayOfWeek::Sunday;
+	constexpr ARBDayOfWeek sc_FirstDayOfWeek = ARBDayOfWeek::Sunday;
 
 	// Runs/points
-	static const ARBViewRuns sc_ViewRunsStyle = ARBViewRuns::RunsByTrial;
-	static const bool sc_NewestDatesFirst = true;
-	static const ARBPointsViewSort sc_PointsViewSort1 = ARBPointsViewSort::Division;
-	static const ARBPointsViewSort sc_PointsViewSort2 = ARBPointsViewSort::Level;
-	static const ARBPointsViewSort sc_PointsViewSort3 = ARBPointsViewSort::Event;
-	static const bool sc_ViewHiddenTitles = false;
-	static const bool sc_ViewLifetimePointsByEvent = true;
-	static const bool sc_TableInYPS = false;
-	static const bool sc_RunTimeInOPS = false;
-	static const bool sc_IncludeCRCDImage = false;
-	static const bool sc_ShowCoSanctioning = false;
+	constexpr ARBViewRuns sc_ViewRunsStyle = ARBViewRuns::RunsByTrial;
+	constexpr bool sc_NewestDatesFirst = true;
+	constexpr ARBPointsViewSort sc_PointsViewSort1 = ARBPointsViewSort::Division;
+	constexpr ARBPointsViewSort sc_PointsViewSort2 = ARBPointsViewSort::Level;
+	constexpr ARBPointsViewSort sc_PointsViewSort3 = ARBPointsViewSort::Event;
+	constexpr bool sc_ViewHiddenTitles = false;
+	constexpr bool sc_ViewLifetimePointsByEvent = true;
+	constexpr bool sc_TableInYPS = false;
+	constexpr bool sc_RunTimeInOPS = false;
+	constexpr bool sc_IncludeCRCDImage = false;
+	constexpr bool sc_ShowCoSanctioning = false;
 
 	// Font
-	static const wchar_t* const sc_FontPrinterName = L"Times New Roman";
-	static const int sc_FontPrinterSize = 8;
-	static const bool sc_FontPrinterItalic = false;
-	static const bool sc_FontPrinterBold = false;
-	static const bool sc_UnitsAsMM = false;
-	static const bool sc_MarginAsMM = false;
-	static const long sc_MarginLeft = 50;
-	static const long sc_MarginRight = 50;
-	static const long sc_MarginTop = 50;
-	static const long sc_MarginBottom = 50;
-	static const bool sc_RunPageAsMM = false;
-	static const long sc_RunPageWidth = 0;
-	static const long sc_RunPageHeight = 0;
-	static const wchar_t* const sc_FontCalName = L"Times New Roman";
-	static const int sc_FontCalSize = 8;
-	static const bool sc_FontCalItalic = false;
-	static const bool sc_FontCalBold = false;
+	constexpr wchar_t sc_FontPrinterName[] = L"Times New Roman";
+	constexpr int sc_FontPrinterSize = 8;
+	constexpr bool sc_FontPrinterItalic = false;
+	constexpr bool sc_FontPrinterBold = false;
+	constexpr bool sc_UnitsAsMM = false;
+	constexpr bool sc_MarginAsMM = false;
+	constexpr long sc_MarginLeft = 50;
+	constexpr long sc_MarginRight = 50;
+	constexpr long sc_MarginTop = 50;
+	constexpr long sc_MarginBottom = 50;
+	constexpr bool sc_RunPageAsMM = false;
+	constexpr long sc_RunPageWidth = 0;
+	constexpr long sc_RunPageHeight = 0;
+	constexpr wchar_t sc_FontCalName[] = L"Times New Roman";
+	constexpr int sc_FontCalSize = 8;
+	constexpr bool sc_FontCalItalic = false;
+	constexpr bool sc_FontCalBold = false;
 
 	// Import/export
-	static const long sc_ImportStartRow = 1;
-	static const ARBImportExportDelim sc_ImportExportDelim = ARBImportExportDelim::Tab;
-	static const ARBDateFormat sc_ImportExportFormat = ARBDateFormat::ISO;
+	constexpr long sc_ImportStartRow = 1;
+	constexpr ARBImportExportDelim sc_ImportExportDelim = ARBImportExportDelim::Tab;
+	constexpr ARBDateFormat sc_ImportExportFormat = ARBDateFormat::ISO;
 	// Note: Default column order is defined in GetColumnOrder()
 
 	// Program
-	static const long sc_MRUCount = 4;
-	static const bool sc_AutoUpdateCheck = true;
-	static const long sc_NumBackup = 3;
-	static const bool sc_ShowPropOnNewTitle = false;
-	static const bool sc_UseProxy = false;
-	static const bool sc_UseAltRowColor = true;
+	constexpr long sc_MRUCount = 4;
+	constexpr bool sc_AutoUpdateCheck = true;
+	constexpr long sc_NumBackup = 3;
+	constexpr bool sc_ShowPropOnNewTitle = false;
+	constexpr bool sc_UseProxy = false;
+	constexpr bool sc_UseAltRowColor = true;
 };
 
 
@@ -1016,7 +1016,7 @@ void CAgilityBookOptions::GetPrinterMargins(
 		long& outRight,
 		long& outTop,
 		long& outBottom,
-		wxDC* pDC)
+		wxDC const* pDC)
 {
 	bool bInMM = sc_MarginAsMM;
 	wxConfig::Get()->Read(CFG_COMMON_MARGINS_MM, &bInMM);
@@ -1075,7 +1075,7 @@ void CAgilityBookOptions::GetRunPageSize(
 		bool bAsMM,
 		long& outWidth,
 		long& outHeight,
-		wxDC* pDC)
+		wxDC const* pDC)
 {
 	bool bInMM = sc_RunPageAsMM;
 	wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_MM, &bInMM);
@@ -1296,18 +1296,21 @@ void CAgilityBookOptions::SetLastEnteredHandler(
 // Note: If name changes, I don't care. Just cleanse.
 // Also, make sure this is updated if any of the 'Last' formats change.
 
-static const struct
+namespace
 {
-	wchar_t const* key;
-	wchar_t const* def;
-	bool hasVenueKey;
-} sc_Keys[] = {
-	{CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION, true},
-	{CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL, true},
-	{CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, true},
-	{CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, false},
-};
-static const size_t sc_KeysCount = _countof(sc_Keys);
+	static const struct
+	{
+		wchar_t const* key;
+		wchar_t const* def;
+		bool hasVenueKey;
+	} sc_Keys[] = {
+		{CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION, true},
+		{CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL, true},
+		{CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, true},
+		{CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, false},
+	};
+	constexpr size_t sc_KeysCount = _countof(sc_Keys);
+}
 
 
 void CAgilityBookOptions::CleanLastItems(std::wstring const& callName)

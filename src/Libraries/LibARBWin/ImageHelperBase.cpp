@@ -31,13 +31,13 @@
 namespace ImageHelper
 {
 
-wxSize GetScaledSize(wxWindow* pWindow, int logical)
+wxSize GetScaledSize(wxWindow const* pWindow, int logical)
 {
 	return GetScaledSize(pWindow, wxSize(logical, logical));
 }
 
 
-wxSize GetScaledSize(wxWindow* pWindow, wxSize const& szLogical)
+wxSize GetScaledSize(wxWindow const* pWindow, wxSize const& szLogical)
 {
 	wxSize sz(szLogical);
 #if defined(__WINDOWS__) && !wxCHECK_VERSION(3, 1, 2)
@@ -96,7 +96,7 @@ wxIcon CreateIconFromBitmap(const wxBitmap& bitmap)
 
 #if defined(__WINDOWS__)
 void LoadLocalBitmap(
-		wxWindow* pWindow,
+		wxWindow const* pWindow,
 		wchar_t const* const pImageName,
 		wxBitmap& outBmp)
 {

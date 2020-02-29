@@ -54,27 +54,23 @@ enum class ARBAccommodations
 class ARB_API ICalendar
 {
 protected:
-	ICalendar();
-	~ICalendar();
 	ICalendar(ICalendar const&) = delete;
 	ICalendar(ICalendar&&) = delete;
 	ICalendar& operator=(ICalendar const&) = delete;
 	ICalendar& operator=(ICalendar&&) = delete;
 
 public:
+	ICalendar();
+	virtual ~ICalendar();
+
 	/**
 	 * Create an iCalendar interface and generate the beginning lines.
 	 * @param ioStream Stream to write data to.
 	 * @param inVersion Either 1 (vCal) or 2 (iCal).
 	 */
-	static ICalendar* iCalendarBegin(
+	static ICalendarPtr iCalendarBegin(
 			std::ostream& ioStream,
 			int inVersion);
-
-	/**
-	 * Write the final iCal lines and delete the iCalendar object.
-	 */
-	virtual void Release() = 0;
 };
 
 
@@ -184,7 +180,7 @@ public:
 	 *                or before trial opening if planning to enter.
 	 */
 	void iCalendar(
-			ICalendar* inIoStream,
+			ICalendarPtr inIoStream,
 			int inAlarm) const;
 
 	/**

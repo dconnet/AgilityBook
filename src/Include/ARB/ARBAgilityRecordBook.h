@@ -153,7 +153,7 @@ public:
 	 * @param inHandler Interface to deal with platform specific resource issues
 	 * @post Clears all content, then creates default configuration.
 	 */
-	void Default(IARBConfigHandler* inHandler);
+	void Default(IARBConfigHandler const* inHandler);
 
 	/**
 	 * Update this configuration from inConfigNew.

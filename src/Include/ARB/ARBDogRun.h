@@ -336,9 +336,9 @@ public:
 	{
 		return m_Notes.GetCRCDMetaData();
 	}
-	void SetCRCDMetaData(unsigned char const* inCRCDMeta, size_t inBytes)
+	void SetCRCDMetaData(std::vector<unsigned char> const& inCRCDMeta)
 	{
-		m_Notes.SetCRCDMetaData(inCRCDMeta, inBytes);
+		m_Notes.SetCRCDMetaData(inCRCDMeta);
 	}
 	std::wstring const& GetNote() const
 	{

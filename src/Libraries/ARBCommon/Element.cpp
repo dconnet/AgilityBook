@@ -317,7 +317,7 @@ public:
 };
 
 
-static void ReadDoc(xmlNode* inNode, ElementNode& tree)
+static void ReadDoc(xmlNode const* inNode, ElementNode& tree)
 {
 	if (!inNode)
 		return;
@@ -462,7 +462,7 @@ static void CreateDoc(Poco::XML::Document* pDoc, Poco::XML::Element* node, Eleme
 
 #elif __USE_WX
 
-static void ReadDoc(wxXmlNode* node, ElementNode& tree)
+static void ReadDoc(wxXmlNode const* node, ElementNode& tree)
 {
 	wxXmlAttribute* attribs = node->GetAttributes();
 	while (attribs)

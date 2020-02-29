@@ -196,7 +196,7 @@ void SetScale(unsigned int scale)
 }
 */
 
-int Scale(wxWindow* pWindow, int x)
+int Scale(wxWindow const* pWindow, int x)
 {
 	return x * GetScale(pWindow) / 100;
 }
@@ -208,14 +208,14 @@ int Scale(int x)
 }
 
 
-int UnScale(wxWindow* pWindow, int x)
+int UnScale(wxWindow const* pWindow, int x)
 {
 	//return GetDPI().UnScale(x);
 	return x * 100 / GetScale(pWindow);
 }
 
 
-unsigned int GetScale(wxWindow* pWindow)
+unsigned int GetScale(wxWindow const* pWindow)
 {
 	//this is basically wxScreenDC::GetPPI()
 #pragma PRAGMA_TODO(Fix on mac)

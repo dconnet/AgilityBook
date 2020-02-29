@@ -176,8 +176,8 @@ class CDlgListCtrlDataFaults : public CDlgListCtrlData
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListCtrlDataFaults)
 public:
 	static void GetAllFaults(
-			CDlgListCtrl* pDlg,
-			CReportListCtrl* ctrl,
+			CDlgListCtrl const* pDlg,
+			CReportListCtrl const* ctrl,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr const& inRun,
 			std::set<std::wstring>& faults);
@@ -207,8 +207,8 @@ typedef std::shared_ptr<CDlgListCtrlDataFaults> CDlgListCtrlDataFaultsPtr;
 
 
 void CDlgListCtrlDataFaults::GetAllFaults(
-		CDlgListCtrl* pDlg,
-		CReportListCtrl* ctrl,
+		CDlgListCtrl const* pDlg,
+		CReportListCtrl const* ctrl,
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr const& inRun,
 		std::set<std::wstring>& faults)

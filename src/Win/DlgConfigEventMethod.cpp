@@ -288,7 +288,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		ARBScoringStyle::TimePlusFaults,
 		ARBScoringStyle::TimeNoPlaces,
 	};
-	static int const nStyles = sizeof(Styles) / sizeof(Styles[0]);
+	constexpr int nStyles = sizeof(Styles) / sizeof(Styles[0]);
 	for (index = 0; index < nStyles; ++index)
 	{
 		std::wstring str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);

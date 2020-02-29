@@ -70,7 +70,7 @@ bool CARBHelpApp::OnInit()
 		return false;
 	}
 
-	wxDialog* dlg;
+	wxDialog* dlg = nullptr;
 	if (cmdline.Found(L"decode"))
 	{
 		dlg = new CDlgPageDecode();

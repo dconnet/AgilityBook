@@ -26,6 +26,15 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// Turn off a bunch of static analysis messages.
+#ifdef _MSC_VER
+#pragma warning (disable : 6297) // Arithmetic overflow : 32 - bit value is shifted, then cast to 64 - bit value.Results might not be an expected value.
+#pragma warning (disable : 26477) // Use 'nullptr' rather than 0 or NULL(es.47).
+#pragma warning (disable : 26487) // Don't return a pointer '(892's result)' that may be invalid(lifetime.4).
+#pragma warning (disable : 26490) // Don't use reinterpret_cast (type.1).
+#pragma warning (disable : 26494) // Variable '<var>' is uninitialized.Always initialize an object(type.5).
+#endif
+
 #if !defined(__WXGTK__) && !defined(__WXX11__)
 #define SHA2_USE_MYTYPES_H
 #endif

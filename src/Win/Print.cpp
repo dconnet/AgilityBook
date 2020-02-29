@@ -252,128 +252,130 @@ void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pag
 #define CODE_REFHT4		45
 #define CODE_REF4		46
 
-// Make sure these are ordered by the aboves codes
-static const wchar_t* sc_codes[] =
+namespace
 {
-	arbT("IDS_COL_DOG"),
-	arbT("IDS_COL_DATE"),
-	arbT("IDS_COL_VENUE"),
-	arbT("IDS_COL_CLUB"),
-	arbT("IDS_COL_DIV_LVL_EVT"),
-	arbT("IDS_COL_LOCATION"),
-	arbT("IDS_COL_HEIGHT"),
-	arbT("IDS_COL_JUDGE"),
-	arbT("IDS_COL_HANDLER"),
-	arbT("IDS_COL_CONDITIONS"),
-	arbT("IDS_COL_Q"),
-	arbT("IDS_COL_SCT"),
-	arbT("IDS_COL_YARDS"),
-	arbT("IDS_COL_OPEN_CLOSE"),
-	arbT("IDS_COL_TIME"),
-	arbT("IDS_COL_OBSTACLES"),
-	arbT("IDS_COL_FAULTS"),
-	arbT("IDS_COL_SCORE"),
-	arbT("IDS_COL_PLACE"),
-	arbT("IDS_COL_IN_CLASS"),
-	arbT("IDS_COL_Q_D"),
-	arbT("IDS_COL_OTHERPOINTS"),
-	arbT("IDS_COL_COMMENTS"),
-	arbT("IDS_COL_PLACE"),
-	arbT("IDS_COL_Q"),
-	arbT("IDS_COL_TIME"),
-	arbT("IDS_COL_SCORE"),
-	arbT("IDS_COL_HEIGHT"),
-	arbT("IDS_COL_NAME_BREED_NOTE"),
-	arbT("IDS_COL_PLACE"),
-	arbT("IDS_COL_Q"),
-	arbT("IDS_COL_TIME"),
-	arbT("IDS_COL_SCORE"),
-	arbT("IDS_COL_HEIGHT"),
-	arbT("IDS_COL_NAME_BREED_NOTE"),
-	arbT("IDS_COL_PLACE"),
-	arbT("IDS_COL_Q"),
-	arbT("IDS_COL_TIME"),
-	arbT("IDS_COL_SCORE"),
-	arbT("IDS_COL_HEIGHT"),
-	arbT("IDS_COL_NAME_BREED_NOTE"),
-	arbT("IDS_COL_PLACE"),
-	arbT("IDS_COL_Q"),
-	arbT("IDS_COL_TIME"),
-	arbT("IDS_COL_SCORE"),
-	arbT("IDS_COL_HEIGHT"),
-	arbT("IDS_COL_NAME_BREED_NOTE"),
-};
+	// Make sure these are ordered by the aboves codes
+	static const wchar_t* sc_codes[] =
+	{
+		arbT("IDS_COL_DOG"),
+		arbT("IDS_COL_DATE"),
+		arbT("IDS_COL_VENUE"),
+		arbT("IDS_COL_CLUB"),
+		arbT("IDS_COL_DIV_LVL_EVT"),
+		arbT("IDS_COL_LOCATION"),
+		arbT("IDS_COL_HEIGHT"),
+		arbT("IDS_COL_JUDGE"),
+		arbT("IDS_COL_HANDLER"),
+		arbT("IDS_COL_CONDITIONS"),
+		arbT("IDS_COL_Q"),
+		arbT("IDS_COL_SCT"),
+		arbT("IDS_COL_YARDS"),
+		arbT("IDS_COL_OPEN_CLOSE"),
+		arbT("IDS_COL_TIME"),
+		arbT("IDS_COL_OBSTACLES"),
+		arbT("IDS_COL_FAULTS"),
+		arbT("IDS_COL_SCORE"),
+		arbT("IDS_COL_PLACE"),
+		arbT("IDS_COL_IN_CLASS"),
+		arbT("IDS_COL_Q_D"),
+		arbT("IDS_COL_OTHERPOINTS"),
+		arbT("IDS_COL_COMMENTS"),
+		arbT("IDS_COL_PLACE"),
+		arbT("IDS_COL_Q"),
+		arbT("IDS_COL_TIME"),
+		arbT("IDS_COL_SCORE"),
+		arbT("IDS_COL_HEIGHT"),
+		arbT("IDS_COL_NAME_BREED_NOTE"),
+		arbT("IDS_COL_PLACE"),
+		arbT("IDS_COL_Q"),
+		arbT("IDS_COL_TIME"),
+		arbT("IDS_COL_SCORE"),
+		arbT("IDS_COL_HEIGHT"),
+		arbT("IDS_COL_NAME_BREED_NOTE"),
+		arbT("IDS_COL_PLACE"),
+		arbT("IDS_COL_Q"),
+		arbT("IDS_COL_TIME"),
+		arbT("IDS_COL_SCORE"),
+		arbT("IDS_COL_HEIGHT"),
+		arbT("IDS_COL_NAME_BREED_NOTE"),
+		arbT("IDS_COL_PLACE"),
+		arbT("IDS_COL_Q"),
+		arbT("IDS_COL_TIME"),
+		arbT("IDS_COL_SCORE"),
+		arbT("IDS_COL_HEIGHT"),
+		arbT("IDS_COL_NAME_BREED_NOTE"),
+	};
 #define FOR_TIME	0x1
 #define FOR_PTS		0x2
 #define FOR_BOTH	0x3
-static const struct
-{
-	unsigned char type;
-	int line;
-	int box;
-	int colspan; // number of boxes to span
-	int rowspan;
-	bool bContinuation;
-	int code;
-	bool bWorkBreak;
-	unsigned int fmt;
-} sc_lines[] =
-{
-	{FOR_BOTH,  0, 0, 2, 1, false, CODE_DOG,        false, wxALIGN_LEFT | wxALIGN_BOTTOM},
-	{FOR_BOTH,  0, 2, 2, 1, false, CODE_DATE,       false, wxALIGN_LEFT | wxALIGN_BOTTOM},
-	{FOR_BOTH,  0, 4, 2, 1, false, CODE_VENUE,      false, wxALIGN_LEFT | wxALIGN_BOTTOM},
-	{FOR_BOTH,  0, 6, 2, 1, false, CODE_LOCATION,   false, wxALIGN_LEFT | wxALIGN_BOTTOM},
-	{FOR_BOTH,  1, 0, 3, 1, false, CODE_DIV,        false, wxALIGN_LEFT | wxALIGN_BOTTOM},
-	{FOR_BOTH,  1, 3, 1, 1, false, CODE_HEIGHT,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH,  1, 4, 4, 2, false, CODE_CLUB,       true,  wxALIGN_LEFT},
-	{FOR_BOTH,  2, 4, 4, 1, true,  CODE_CLUB, false, 0},
-	{FOR_BOTH,  2, 0, 2, 1, false, CODE_JUDGE,      false, wxALIGN_LEFT | wxALIGN_BOTTOM},
-	{FOR_BOTH,  2, 2, 2, 1, false, CODE_HANDLER,    false, wxALIGN_LEFT | wxALIGN_BOTTOM},
-	{FOR_BOTH,  3, 0, 7, 1, false, CODE_CONDITIONS, true,  wxALIGN_LEFT},
-	{FOR_BOTH,  3, 7, 1, 1, false, CODE_Q,          false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH,  4, 0, 1, 1, false, CODE_SCT,        false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_TIME,  4, 1, 1, 1, false, CODE_YARDS,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_PTS,   4, 1, 1, 1, false, CODE_OPEN,       false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH,  4, 2, 1, 1, false, CODE_OBSTACLES,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH,  4, 3, 1, 1, false, CODE_TIME,       false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_TIME,  4, 4, 1, 1, false, CODE_FAULTS,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_PTS,   4, 4, 1, 1, false, CODE_SCORE,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH,  4, 5, 1, 1, false, CODE_PLACE,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH,  4, 6, 1, 1, false, CODE_INCLASS,    false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH,  4, 7, 1, 1, false, CODE_QD,         false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH,  5, 0, 8, 5, false, CODE_COMMENTS,   true,  wxALIGN_LEFT},
-	{FOR_BOTH,  6, 0, 8, 4, true,  CODE_COMMENTS, false, 0},
-	{FOR_BOTH,  7, 0, 8, 3, true,  CODE_COMMENTS, false, 0},
-	{FOR_BOTH,  8, 0, 8, 2, true,  CODE_COMMENTS, false, 0},
-	{FOR_BOTH,  9, 0, 6, 1, true,  CODE_COMMENTS, false, 0},
-	{FOR_BOTH,  9, 6, 2, 1, false, CODE_OTHER,      true,  wxALIGN_LEFT},
-	{FOR_BOTH, 10, 0, 1, 1, false, CODE_REFPLACE1,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 10, 1, 1, 1, false, CODE_REFQ1,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 10, 2, 1, 1, false, CODE_REFTIME1,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 10, 3, 1, 1, false, CODE_REFSCORE1,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 10, 4, 1, 1, false, CODE_REFHT1,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 10, 5, 3, 1, false, CODE_REF1,       true,  wxALIGN_LEFT},
-	{FOR_BOTH, 11, 0, 1, 1, false, CODE_REFPLACE2,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 11, 1, 1, 1, false, CODE_REFQ2,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 11, 2, 1, 1, false, CODE_REFTIME2,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 11, 3, 1, 1, false, CODE_REFSCORE2,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 11, 4, 1, 1, false, CODE_REFHT2,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 11, 5, 3, 1, false, CODE_REF2,       true,  wxALIGN_LEFT},
-	{FOR_BOTH, 12, 0, 1, 1, false, CODE_REFPLACE3,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 12, 1, 1, 1, false, CODE_REFQ3,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 12, 2, 1, 1, false, CODE_REFTIME3,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 12, 3, 1, 1, false, CODE_REFSCORE3,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 12, 4, 1, 1, false, CODE_REFHT3,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 12, 5, 3, 1, false, CODE_REF3,       true,  wxALIGN_LEFT},
-	{FOR_BOTH, 13, 0, 1, 1, false, CODE_REFPLACE4,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 13, 1, 1, 1, false, CODE_REFQ4,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 13, 2, 1, 1, false, CODE_REFTIME4,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 13, 3, 1, 1, false, CODE_REFSCORE4,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 13, 4, 1, 1, false, CODE_REFHT4,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
-	{FOR_BOTH, 13, 5, 3, 1, false, CODE_REF4,       true,  wxALIGN_LEFT},
-};
-static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
-
+	static const struct
+	{
+		unsigned char type;
+		int line;
+		int box;
+		int colspan; // number of boxes to span
+		int rowspan;
+		bool bContinuation;
+		int code;
+		bool bWorkBreak;
+		unsigned int fmt;
+	} sc_lines[] =
+	{
+		{FOR_BOTH,  0, 0, 2, 1, false, CODE_DOG,        false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+		{FOR_BOTH,  0, 2, 2, 1, false, CODE_DATE,       false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+		{FOR_BOTH,  0, 4, 2, 1, false, CODE_VENUE,      false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+		{FOR_BOTH,  0, 6, 2, 1, false, CODE_LOCATION,   false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+		{FOR_BOTH,  1, 0, 3, 1, false, CODE_DIV,        false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+		{FOR_BOTH,  1, 3, 1, 1, false, CODE_HEIGHT,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH,  1, 4, 4, 2, false, CODE_CLUB,       true,  wxALIGN_LEFT},
+		{FOR_BOTH,  2, 4, 4, 1, true,  CODE_CLUB, false, 0},
+		{FOR_BOTH,  2, 0, 2, 1, false, CODE_JUDGE,      false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+		{FOR_BOTH,  2, 2, 2, 1, false, CODE_HANDLER,    false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+		{FOR_BOTH,  3, 0, 7, 1, false, CODE_CONDITIONS, true,  wxALIGN_LEFT},
+		{FOR_BOTH,  3, 7, 1, 1, false, CODE_Q,          false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH,  4, 0, 1, 1, false, CODE_SCT,        false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_TIME,  4, 1, 1, 1, false, CODE_YARDS,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_PTS,   4, 1, 1, 1, false, CODE_OPEN,       false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH,  4, 2, 1, 1, false, CODE_OBSTACLES,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH,  4, 3, 1, 1, false, CODE_TIME,       false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_TIME,  4, 4, 1, 1, false, CODE_FAULTS,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_PTS,   4, 4, 1, 1, false, CODE_SCORE,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH,  4, 5, 1, 1, false, CODE_PLACE,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH,  4, 6, 1, 1, false, CODE_INCLASS,    false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH,  4, 7, 1, 1, false, CODE_QD,         false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH,  5, 0, 8, 5, false, CODE_COMMENTS,   true,  wxALIGN_LEFT},
+		{FOR_BOTH,  6, 0, 8, 4, true,  CODE_COMMENTS, false, 0},
+		{FOR_BOTH,  7, 0, 8, 3, true,  CODE_COMMENTS, false, 0},
+		{FOR_BOTH,  8, 0, 8, 2, true,  CODE_COMMENTS, false, 0},
+		{FOR_BOTH,  9, 0, 6, 1, true,  CODE_COMMENTS, false, 0},
+		{FOR_BOTH,  9, 6, 2, 1, false, CODE_OTHER,      true,  wxALIGN_LEFT},
+		{FOR_BOTH, 10, 0, 1, 1, false, CODE_REFPLACE1,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 10, 1, 1, 1, false, CODE_REFQ1,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 10, 2, 1, 1, false, CODE_REFTIME1,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 10, 3, 1, 1, false, CODE_REFSCORE1,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 10, 4, 1, 1, false, CODE_REFHT1,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 10, 5, 3, 1, false, CODE_REF1,       true,  wxALIGN_LEFT},
+		{FOR_BOTH, 11, 0, 1, 1, false, CODE_REFPLACE2,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 11, 1, 1, 1, false, CODE_REFQ2,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 11, 2, 1, 1, false, CODE_REFTIME2,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 11, 3, 1, 1, false, CODE_REFSCORE2,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 11, 4, 1, 1, false, CODE_REFHT2,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 11, 5, 3, 1, false, CODE_REF2,       true,  wxALIGN_LEFT},
+		{FOR_BOTH, 12, 0, 1, 1, false, CODE_REFPLACE3,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 12, 1, 1, 1, false, CODE_REFQ3,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 12, 2, 1, 1, false, CODE_REFTIME3,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 12, 3, 1, 1, false, CODE_REFSCORE3,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 12, 4, 1, 1, false, CODE_REFHT3,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 12, 5, 3, 1, false, CODE_REF3,       true,  wxALIGN_LEFT},
+		{FOR_BOTH, 13, 0, 1, 1, false, CODE_REFPLACE4,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 13, 1, 1, 1, false, CODE_REFQ4,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 13, 2, 1, 1, false, CODE_REFTIME4,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 13, 3, 1, 1, false, CODE_REFSCORE4,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 13, 4, 1, 1, false, CODE_REFHT4,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+		{FOR_BOTH, 13, 5, 3, 1, false, CODE_REF4,       true,  wxALIGN_LEFT},
+	};
+	constexpr int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
+}
 
 static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef, int code)
 {

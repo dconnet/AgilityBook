@@ -130,13 +130,13 @@ public:
 	 * @param inHandler Interface to deal with platform specific resource issues
 	 * @param pVersion Version number of default config.
 	 */
-	void Default(IARBConfigHandler* inHandler, ARBVersion* pVersion = nullptr);
+	void Default(IARBConfigHandler const* inHandler, ARBVersion* pVersion = nullptr);
 
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)
 	 * @param inHandler Interface to deal with platform specific resource issues
 	 */
-	static std::string GetDTD(IARBConfigHandler* inHandler);
+	static std::string GetDTD(IARBConfigHandler const* inHandler);
 
 	/**
 	 * Convenience function to get the nice name of a title.

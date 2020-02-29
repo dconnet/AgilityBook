@@ -347,7 +347,8 @@ bool CAgilityBookApp::OnInit()
 		m_manager->FileHistoryLoad(*wxConfig::Get());
 	}
 
-	(void)new CAgilityBookDocTemplate(m_manager.get(), L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
+	// Yes. Intentional. Magic happens.
+	new CAgilityBookDocTemplate(m_manager.get(), L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
 #ifdef __WXMAC__
 #ifndef __WXOSX_COCOA__

@@ -264,7 +264,10 @@ public:
 };
 
 
-static const int baseID = 100;
+namespace
+{
+	constexpr int baseID = 100;
+}
 
 
 void CAgilityBookDoc::OnStatusDog(wxCommandEvent& evt)

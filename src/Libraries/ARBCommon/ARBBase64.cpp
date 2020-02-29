@@ -16,6 +16,7 @@
  * Note: The original code wrote lines with "\r\n". We don't.
  *
  * Revision History
+ * 2020-02-29 Removed raw pointers, use vectors.
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-12 Encoding/decoding 0 bytes should fail.
@@ -98,17 +99,16 @@ ARBBase64::ARBBase64()
 
 bool ARBBase64::Decode(
 		std::wstring const& inBase64,
-		unsigned char*& outBinData,
-		size_t& outBytes)
+		std::vector<unsigned char>& outBinData)
 {
-	outBinData = nullptr;
-	outBytes = 0;
+	outBinData.clear();
+	size_t outBytes = 0;
 	if (inBase64.empty())
 		return false;
 
 	size_t bufsize = inBase64.length();
-	outBinData = new unsigned char[bufsize];
-	unsigned char* result = outBinData;
+	outBinData = std::vector<unsigned char>(bufsize);
+	unsigned char* result = outBinData.data();
 
 	int std = 0;
 	size_t count = 1;
@@ -122,8 +122,7 @@ bool ARBBase64::Decode(
 			if (inBase64[nChar] != '\r' && inBase64[nChar] != '\n')
 			{
 				// error in the encoded data.
-				delete [] outBinData;
-				outBinData = nullptr;
+				outBinData.clear();
 				return false;
 			}
 			++nChar;
@@ -178,37 +177,31 @@ bool ARBBase64::Decode(
 		tmp &= 0xFF;
 		*(result++) = static_cast<unsigned char>(tmp);
 	}
+
+	if (outBytes < outBinData.size())
+		outBinData.resize(outBytes);
 	return true;
 }
 
 
-void ARBBase64::Release(unsigned char*& inBinData)
-{
-	delete [] inBinData;
-	inBinData = nullptr;
-}
-
-
 bool ARBBase64::Encode(
-		unsigned char const* inBinData,
-		size_t inBytes,
+		std::vector<unsigned char> const& inBinData,
 		std::wstring& outData)
 {
 	outData.clear();
-	if (0 == inBytes || !inBinData || !*inBinData)
+	if (inBinData.empty())
 		return false;
-	unsigned char* encoded = nullptr;
-	size_t alsize = (inBytes * 4) / 3;
-	encoded = new unsigned char[alsize + ((alsize / 76) * 2) + 10];
+	size_t alsize = (inBinData.size() * 4) / 3;
+	auto encoded = std::vector<unsigned char>(alsize + ((alsize / 76) * 2) + 10);
 	size_t count = 0;
 	size_t LineLen = 0;
-	unsigned char* fresult = encoded;
-	unsigned char const* s = inBinData;
+	size_t nData = 0;
+	unsigned char const* s = inBinData.data();
 	int tmp = 0;
 	//let's step through the buffer and encode it...
-	if (inBytes > 2) // A really small buffer causes problems with the logic below
+	if (inBinData.size() > 2) // A really small buffer causes problems with the logic below
 	{
-		while (count <= inBytes)
+		while (count <= inBinData.size())
 		{
 			if (count % 3 == 0 && count != 0)
 			{
@@ -218,31 +211,31 @@ bool ARBBase64::Encode(
 				int mid = tmp;
 				mid >>= 18;
 				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
+				encoded[nData++] = base64chars[mid];
 				++LineLen;
 				mid = tmp;
 				mid >>= 12;
 				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
+				encoded[nData++] = base64chars[mid];
 				++LineLen;
 				mid = tmp;
 				mid >>= 6;
 				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
+				encoded[nData++] = base64chars[mid];
 				++LineLen;
 				mid = tmp;
 				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
+				encoded[nData++] = base64chars[mid];
 				++LineLen;
 				//reset tmp
 				tmp = 0;
 				// Should we break the line?
 				if (LineLen >= MaxLineLength)
 				{
-					*(fresult++) = '\n';
+					encoded[nData++] = '\n';
 					LineLen = 0;
 				}
-				if (inBytes - count < 3)
+				if (inBinData.size() - count < 3)
 					break;
 			}
 			unsigned char mid = (256 - (0 - *s)) & 0xff;
@@ -253,7 +246,7 @@ bool ARBBase64::Encode(
 		}
 	}
 	//do we have some chars left...
-	size_t rest = (inBytes - count) % 3;
+	size_t rest = (inBinData.size() - count) % 3;
 	if (rest != 0)
 	{
 		tmp = 0;
@@ -281,38 +274,37 @@ bool ARBBase64::Encode(
 		{
 			mid >>= 18;
 			mid &= 0x3F;
-			*(fresult++) = base64chars[mid];
+			encoded[nData++] = base64chars[mid];
 			mid = tmp;
 			mid >>= 12;
 			mid &= 0x3F;
-			*(fresult++) = base64chars[mid];
+			encoded[nData++] = base64chars[mid];
 		}
 		if (rest >= 2)
 		{
 			mid = tmp;
 			mid >>= 6;
 			mid &= 0x3F;
-			*(fresult++) = base64chars[mid];
+			encoded[nData++] = base64chars[mid];
 		}
 		if (rest >= 3)
 		{
 			mid = tmp;
 			mid &= 0x3F;
-			*(fresult++) = base64chars[mid];
+			encoded[nData++] = base64chars[mid];
 		}
 		for (size_t c = 3; c > rest; --c)
 		{
-			*(fresult++) = '=';
+			encoded[nData++] = '=';
 		}
 	}
-	*(fresult++) = 0;
+	encoded[nData] = 0;
 	bool bOk = false;
-	if (encoded)
+	if (0 < nData)
 	{
 		bOk = true;
-		char const* signedChar = reinterpret_cast<char*>(encoded);
-		outData = StringUtil::stringW(signedChar, strlen(signedChar));
-		delete [] encoded;
+		std::string str(encoded.begin(), encoded.begin() + nData);
+		outData = StringUtil::stringW(str);
 	}
 	return bOk;
 }

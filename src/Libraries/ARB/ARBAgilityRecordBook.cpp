@@ -428,7 +428,7 @@ void ARBAgilityRecordBook::clear()
 }
 
 
-void ARBAgilityRecordBook::Default(IARBConfigHandler* inHandler)
+void ARBAgilityRecordBook::Default(IARBConfigHandler const* inHandler)
 {
 	clear();
 	m_Config.Default(inHandler);

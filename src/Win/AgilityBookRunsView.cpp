@@ -718,7 +718,7 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 	case IO_RUNS_OPS:
 		{
 			double ops1 = 0.0, ops2 = 0.0;
-			int prec1, prec2;
+			int prec1 = 0, prec2 = 0;
 			bool bOk1 = pRun1->GetRun()->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops1, prec1);
 			bool bOk2 = pRun2->GetRun()->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops2, prec2);
 			if (bOk1 && bOk2)

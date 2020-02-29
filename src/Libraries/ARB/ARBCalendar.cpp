@@ -64,14 +64,9 @@ public:
 	ARBiCal(
 			std::ostream& ioStream,
 			int inVersion);
-	virtual ~ARBiCal()
+	~ARBiCal()
 	{
 		Write("END:VCALENDAR\r\n");
-	}
-
-	void Release() override
-	{
-		delete this;
 	}
 
 	void BeginEvent()
@@ -138,6 +133,8 @@ private:
 	int m_Version;
 	DECLARE_NO_COPY_IMPLEMENTED(ARBiCal);
 };
+
+typedef std::shared_ptr<ARBiCal> ARBiCalPtr;
 
 
 ARBiCal::ARBiCal(
@@ -314,13 +311,13 @@ ICalendar::~ICalendar()
 }
 
 
-ICalendar* ICalendar::iCalendarBegin(
+ICalendarPtr ICalendar::iCalendarBegin(
 		std::ostream& ioStream,
 		int inVersion)
 {
-	ICalendar* pCal = nullptr;
+	ICalendarPtr pCal;
 	if (1 == inVersion || 2 == inVersion)
-		pCal = new ARBiCal(ioStream, inVersion);
+		pCal = std::make_shared<ARBiCal>(ioStream, inVersion);
 	return pCal;
 }
 
@@ -799,9 +796,9 @@ bool ARBCalendar::Save(ElementNodePtr const& ioTree) const
 }
 
 
-void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
+void ARBCalendar::iCalendar(ICalendarPtr inIoStream, int inAlarm) const
 {
-	ARBiCal* ioStream = dynamic_cast<ARBiCal*>(inIoStream);
+	ARBiCalPtr ioStream = std::dynamic_pointer_cast<ARBiCal, ICalendar>(inIoStream);
 	ioStream->BeginEvent();
 	ioStream->DoUID(GetUID(UidType::vEvent));
 	ioStream->DoDTSTAMP();

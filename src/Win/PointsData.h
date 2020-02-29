@@ -68,6 +68,11 @@ public:
 		, club(inClub)
 	{
 	}
+	MultiQdata(MultiQdata const&) = default;
+	MultiQdata(MultiQdata&&) = default;
+	~MultiQdata() {}
+	MultiQdata& operator=(MultiQdata const&) = default;
+	MultiQdata& operator=(MultiQdata&&) = default;
 
 	bool operator<(MultiQdata const& rhs) const
 	{
@@ -98,6 +103,10 @@ public:
 		, filtered(inFiltered)
 	{
 	}
+	LifeTimePointInfo(LifeTimePointInfo const&) = default;
+	LifeTimePointInfo(LifeTimePointInfo&&) = default;
+	LifeTimePointInfo& operator=(LifeTimePointInfo const&) = default;
+	LifeTimePointInfo& operator=(LifeTimePointInfo&&) = default;
 	std::wstring sort1;
 	std::wstring sort2;
 	double points;
@@ -122,6 +131,7 @@ public:
 	OtherPtInfo(ARBDogExistingPointsPtr const& inExisting);
 	OtherPtInfo(OtherPtInfo const&) = default;
 	OtherPtInfo(OtherPtInfo&&) = default;
+	~OtherPtInfo() {}
 	OtherPtInfo& operator=(OtherPtInfo const&) = default;
 	OtherPtInfo& operator=(OtherPtInfo&&) = default;
 	ARBDogTrialPtr m_pTrial;
@@ -307,6 +317,7 @@ public:
 			ARBConfigLifetimeNamePtr const& inLifetimeName,
 			ARBConfigVenuePtr const& inVenue,
 			CRefTag& id);
+	virtual ~CPointsDataLifetime() {}
 	virtual void AddLifetimeInfo(
 			std::wstring const& inDiv,
 			std::wstring const& inLevel,
@@ -450,6 +461,7 @@ public:
 			ARBConfigOtherPointsPtr pOther,
 			std::list<OtherPtInfo> const& inRunList,
 			CRefTag& id);
+	virtual ~CPointsDataOtherPoints() {}
 	virtual void GetHtml(
 			fmt::wmemory_buffer& data,
 			bool bNoInternalLinks) = 0;

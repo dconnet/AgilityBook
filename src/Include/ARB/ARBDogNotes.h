@@ -42,11 +42,10 @@ public:
 	void Clear();
 	~ARBMetaData();
 
-	size_t length() const				{return m_Bytes;}
-	unsigned char const* data() const	{return m_Data;}
+	std::vector<unsigned char> const& data() const	{return m_Data;}
+
 private:
-	size_t m_Bytes;
-	unsigned char* m_Data;
+	std::vector<unsigned char> m_Data;
 };
 
 
@@ -123,7 +122,7 @@ public:
 		return m_CRCDMeta;
 	}
 	ARBMetaDataPtr GetCRCDMetaData() const;
-	void SetCRCDMetaData(unsigned char const* inCRCDMeta, size_t inBytes);
+	void SetCRCDMetaData(std::vector<unsigned char> const& inCRCDMeta);
 	std::wstring const& GetNote() const
 	{
 		return m_Note;

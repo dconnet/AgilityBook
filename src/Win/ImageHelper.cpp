@@ -100,7 +100,7 @@
 
 
 bool CImageHelper::DoCreateBitmap(
-		wxWindow* pWindow,
+		wxWindow const* pWindow,
 		const wxArtID& id,
 		const wxArtClient& client,
 		const wxSize& size,
@@ -308,7 +308,7 @@ bool CImageHelper::DoCreateBitmap(
 
 
 bool CImageHelper::DoCreateIconBundle(
-		wxWindow* pWindow,
+		wxWindow const* pWindow,
 		const wxArtID& id,
 		const wxArtClient& client,
 		wxIconBundle& outIcon)

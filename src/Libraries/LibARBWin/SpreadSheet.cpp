@@ -63,13 +63,19 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARB_TYPEDEF(CWizardExcel)
+ARB_TYPEDEF(CWizardExcelExport)
+ARB_TYPEDEF(CWizardExcelImport)
+ARB_TYPEDEF(CWizardCalc)
+ARB_TYPEDEF(CWizardCalcExport)
+ARB_TYPEDEF(CWizardCalcImport)
+
 class CWizardExcel : public ISpreadSheet
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CWizardExcel)
-protected:
-	CWizardExcel();
 public:
-	static CWizardExcel* Create();
+	static CWizardExcelPtr Create();
+	CWizardExcel();
 	virtual ~CWizardExcel();
 
 	ISpreadSheetExporterPtr GetExporter() const override;
@@ -84,7 +90,6 @@ class CWizardExcelExport : public ISpreadSheetExporter
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CWizardExcelExport)
 protected:
-	CWizardExcelExport(wxAutomationObject& ioApp);
 	// Copied from C# code that used reflection.
 	enum XlWBATemplate
 	{
@@ -115,7 +120,8 @@ protected:
 		xlHAlignRight = -4152,
 	};
 public:
-	static CWizardExcelExport* Create(wxAutomationObject& ioApp);
+	static CWizardExcelExportPtr Create(wxAutomationObject& ioApp);
+	CWizardExcelExport(wxAutomationObject& ioApp);
 	virtual ~CWizardExcelExport();
 
 	wchar_t GetSumIfSeparator() const override;
@@ -175,10 +181,9 @@ private:
 class CWizardExcelImport : public CWizardBaseImport
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CWizardExcelImport)
-protected:
-	CWizardExcelImport(wxAutomationObject& ioApp);
 public:
-	static CWizardExcelImport* Create(wxAutomationObject& ioApp);
+	static CWizardExcelImportPtr Create(wxAutomationObject& ioApp);
+	CWizardExcelImport(wxAutomationObject& ioApp);
 	virtual ~CWizardExcelImport();
 
 	bool OpenFile(std::wstring const& inFilename) override;
@@ -196,10 +201,9 @@ private:
 class CWizardCalc : public ISpreadSheet
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CWizardCalc)
-protected:
-	CWizardCalc();
 public:
-	static CWizardCalc* Create();
+	static CWizardCalcPtr Create();
+	CWizardCalc();
 	virtual ~CWizardCalc();
 
 	ISpreadSheetExporterPtr GetExporter() const override;
@@ -214,12 +218,11 @@ private:
 class CWizardCalcExport : public ISpreadSheetExporter
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CWizardCalcExport)
-protected:
-	CWizardCalcExport(
+public:
+	static CWizardCalcExportPtr Create(
 			wxAutomationObject& ioManager,
 			wxAutomationObject& ioDesktop);
-public:
-	static CWizardCalcExport* Create(
+	CWizardCalcExport(
 			wxAutomationObject& ioManager,
 			wxAutomationObject& ioDesktop);
 	virtual ~CWizardCalcExport();
@@ -285,12 +288,10 @@ private:
 class CWizardCalcImport : public CWizardBaseImport
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CWizardCalcImport)
-protected:
-	CWizardCalcImport(
-			wxAutomationObject& ioDesktop);
 public:
-	static CWizardCalcImport* Create(
+	static CWizardCalcImportPtr Create(
 			wxAutomationObject& ioDesktop);
+	CWizardCalcImport(wxAutomationObject& ioDesktop);
 	virtual ~CWizardCalcImport();
 
 	bool OpenFile(std::wstring const& inFilename) override;
@@ -306,10 +307,10 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardExcel* CWizardExcel::Create()
+CWizardExcelPtr CWizardExcel::Create()
 {
 	wxBusyCursor wait;
-	CWizardExcel* pExcel = new CWizardExcel();
+	CWizardExcelPtr pExcel = std::make_shared<CWizardExcel>();
 	if (pExcel)
 	{
 		bool bKill = false;
@@ -321,10 +322,7 @@ CWizardExcel* CWizardExcel::Create()
 				bKill = true;
 		}
 		if (bKill)
-		{
-			delete pExcel;
-			pExcel = nullptr;
-		}
+			pExcel.reset();
 	}
 	return pExcel;
 }
@@ -359,11 +357,12 @@ ISpreadSheetImporterPtr CWizardExcel::GetImporter() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardExcelExport* CWizardExcelExport::Create(wxAutomationObject& ioApp)
+CWizardExcelExportPtr CWizardExcelExport::Create(wxAutomationObject& ioApp)
 {
+	CWizardExcelExportPtr ptr;
 	if (ioApp.GetDispatchPtr())
-		return new CWizardExcelExport(ioApp);
-	return nullptr;
+		ptr = std::make_shared<CWizardExcelExport>(ioApp);
+	return ptr;
 }
 
 
@@ -676,11 +675,12 @@ bool CWizardExcelExport::AutoFit(
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardExcelImport* CWizardExcelImport::Create(wxAutomationObject& ioApp)
+CWizardExcelImportPtr CWizardExcelImport::Create(wxAutomationObject& ioApp)
 {
+	CWizardExcelImportPtr ptr;
 	if (ioApp.GetDispatchPtr())
-		return new CWizardExcelImport(ioApp);
-	return nullptr;
+		ptr = std::make_shared<CWizardExcelImport>(ioApp);
+	return ptr;
 }
 
 CWizardExcelImport::CWizardExcelImport(wxAutomationObject& ioApp)
@@ -775,10 +775,10 @@ bool CWizardExcelImport::GetData(
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardCalc* CWizardCalc::Create()
+CWizardCalcPtr CWizardCalc::Create()
 {
 	wxBusyCursor wait;
-	CWizardCalc* pCalc = new CWizardCalc();
+	CWizardCalcPtr pCalc = std::make_shared<CWizardCalc>();
 	if (pCalc)
 	{
 		bool bKill = false;
@@ -790,10 +790,7 @@ CWizardCalc* CWizardCalc::Create()
 				bKill = true;
 		}
 		if (bKill)
-		{
-			delete pCalc;
-			pCalc = nullptr;
-		}
+			pCalc.reset();
 	}
 	return pCalc;
 }
@@ -829,11 +826,11 @@ ISpreadSheetImporterPtr CWizardCalc::GetImporter() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardCalcExport* CWizardCalcExport::Create(
+CWizardCalcExportPtr CWizardCalcExport::Create(
 		wxAutomationObject& ioManager,
 		wxAutomationObject& ioDesktop)
 {
-	return new CWizardCalcExport(ioManager, ioDesktop);
+	return std::make_shared<CWizardCalcExport>(ioManager, ioDesktop);
 }
 
 
@@ -1076,10 +1073,10 @@ bool CWizardCalcExport::AutoFit(
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardCalcImport* CWizardCalcImport::Create(
+CWizardCalcImportPtr CWizardCalcImport::Create(
 		wxAutomationObject& ioDesktop)
 {
-	return new CWizardCalcImport(ioDesktop);
+	return std::make_shared<CWizardCalcImport>(ioDesktop);
 }
 
 

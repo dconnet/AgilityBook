@@ -198,7 +198,7 @@ int CAgilityBookCalendar::GetDayHeight()
 	wxClientDC dc(this);
 
 	wxRect rHeader, rDaysOfWeek, rCalendar;
-	int width, height;
+	int width = 0, height = 0;
 	GetWorkingAreas(&dc, rHeader, rDaysOfWeek, rCalendar, width, height, false);
 
 	return height;
@@ -641,7 +641,7 @@ void CAgilityBookCalendar::OnCopy()
 		arbT("IDS_COL_CLOSES"),
 		arbT("IDS_COL_NOTES"),
 	};
-	static int const scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
+	constexpr int scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
 #define COL_START_DATE	0
 #define COL_END_DATE	1
 #define COL_VENUE		2

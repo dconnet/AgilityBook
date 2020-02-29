@@ -33,7 +33,7 @@ TEST_CASE("BinaryData")
 {
 	// This is an small gif file.
 	static const size_t RawDataSize = 84;
-	static const unsigned char RawData[RawDataSize] =
+	static const std::vector<unsigned char> RawData =
 	{
 		 71,  73,  70,  56,  57,  97,   5,   0,   5,   0,
 		179,   0,   0,   0,   0,   0, 128,   0,   0,   0,
@@ -57,13 +57,12 @@ TEST_CASE("BinaryData")
 	{
 		if (!g_bMicroTest)
 		{
-			unsigned char* outData = nullptr;
-			size_t bytes;
-			REQUIRE(BinaryData::Decode(EncodedData, outData, bytes));
-			REQUIRE(!!outData);
-			REQUIRE(RawDataSize == bytes);
-			REQUIRE(0 == memcmp(RawData, outData, bytes));
-			BinaryData::Release(outData);
+			REQUIRE(RawData.size() == RawDataSize); // Sanity check
+			std::vector<unsigned char> outData;
+			REQUIRE(BinaryData::Decode(EncodedData, outData));
+			REQUIRE(!outData.empty());
+			REQUIRE(RawDataSize == outData.size());
+			REQUIRE(0 == memcmp(RawData.data(), outData.data(), outData.size()));
 		}
 	}
 
@@ -73,7 +72,7 @@ TEST_CASE("BinaryData")
 		if (!g_bMicroTest)
 		{
 			std::wstring str;
-			REQUIRE(BinaryData::Encode(RawData, RawDataSize, str));
+			REQUIRE(BinaryData::Encode(RawData, str));
 			REQUIRE(EncodedData == str);
 		}
 	}

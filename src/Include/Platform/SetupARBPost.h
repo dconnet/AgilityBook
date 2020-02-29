@@ -100,11 +100,14 @@
 #pragma warning (disable : 26418) // Shared pointer parameter '<var>' is not copied or moved. Use T* or T& instead (r.36).
 #pragma warning (disable : 26426) // Global initializer calls a non-constexpr function '<val>' (i.22).
 #pragma warning (disable : 26429) // Symbol '<var>' is never tested for nullness, it can be marked as not_null (f.23).
+#pragma warning (disable : 26434) // Function 'ARBVector<std::shared_ptr<class> >::ARBVector<std::shared_ptr<class> >' hides a non - virtual function 'ARBVectorNoSave<std::shared_ptr<class> >::ARBVectorNoSave<std::shared_ptr<class> >' (c.128).
 #pragma warning (disable : 26439) // This kind of function may not throw. Declare it 'noexcept' (f.6).
 #pragma warning (disable : 26440) // Function '<func>' can be declared 'noexcept' (f.6).
 #pragma warning (disable : 26446) // Prefer to use gsl::at() instead of unchecked subscript operator (bounds.4).
+#pragma warning (disable : 26447) // The function is declared 'noexcept' but calls function '<func>()' which may throw exceptions(f.6).
 #pragma warning (disable : 26451) // Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).
 #pragma warning (disable : 26455) // Default constructor may not throw. Declare it 'noexcept' (f.6).
+#pragma warning (disable : 26456) // Operator '<class>::operator=' hides a non - virtual operator '<baseclass>::operator=' (c.128).
 #pragma warning (disable : 26460) // The reference argument '<var>' for function '<var>' can be marked as const (con.3).
 #pragma warning (disable : 26462) // The value pointed to by '<var>' is assigned only once, mark it as a pointer to const (con.4).
 #pragma warning (disable : 26472) // Don't use a static_cast for arithmetic conversions. Use brace initialization, gsl::narrow_cast or gsl::narrow (type.1).

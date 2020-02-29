@@ -36,30 +36,19 @@ public:
 	 * Decode a base64 string.
 	 * @param inBase64 Encoded buffer
 	 * @param outBinData Decoded buffer
-	 * @param outBytes Length of decoded data
 	 * @return Success
-	 * @note User must call Release() on outBinData
 	 */
 	static bool Decode(
 			std::wstring const& inBase64,
-			unsigned char*& outBinData,
-			size_t& outBytes);
-
-	/**
-	 * Deallocate memory allocated in Decode()
-	 * @param inBinData Binary data allocated in Decode()
-	 */
-	static void Release(unsigned char*& inBinData);
+			std::vector<unsigned char>& outBinData);
 
 	/**
 	 * Encode data
 	 * @param inBinData Buffer to encode
-	 * @param inBytes Length of inBinData
 	 * @param outData Encoded data
 	 * @return Success
 	 */
 	static bool Encode(
-			unsigned char const* inBinData,
-			size_t inBytes,
+			std::vector<unsigned char> const& inBinData,
 			std::wstring& outData);
 };

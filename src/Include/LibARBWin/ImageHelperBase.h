@@ -29,8 +29,8 @@
 
 namespace ImageHelper
 {
-	ARBWIN_API wxSize GetScaledSize(wxWindow* pWindow, int logical);
-	ARBWIN_API wxSize GetScaledSize(wxWindow* pWindow, wxSize const& szLogical);
+	ARBWIN_API wxSize GetScaledSize(wxWindow const* pWindow, int logical);
+	ARBWIN_API wxSize GetScaledSize(wxWindow const* pWindow, wxSize const& szLogical);
 
 	ARBWIN_API wxBitmap GetBitmap(
 			wxWindow* pWindow,
@@ -62,7 +62,7 @@ namespace ImageHelper
 
 #if defined(__WINDOWS__)
 	ARBWIN_API void LoadLocalBitmap(
-			wxWindow* pWindow,
+			wxWindow const* pWindow,
 			wchar_t const* const pImageName,
 			wxBitmap& outBmp);
 #endif

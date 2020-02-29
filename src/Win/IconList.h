@@ -26,7 +26,7 @@ class CIconList : public wxImageList
 {
 public:
 	CIconList();
-	bool Create(wxWindow* pWindow);
+	bool Create(wxWindow const* pWindow);
 
 	int IndexEmpty() const	{return m_idxEmpty;}
 	int IndexARB() const	{return m_idxARB;}

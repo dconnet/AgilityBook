@@ -30,14 +30,14 @@ public:
 	CImageHelper() {}
 
 	bool DoCreateBitmap(
-			wxWindow* pWindow,
+			wxWindow const* pWindow,
 			const wxArtID& id,
 			const wxArtClient& client,
 			const wxSize& size,
 			wxBitmap& outBmp);
 
 	bool DoCreateIconBundle(
-			wxWindow* pWindow,
+			wxWindow const* pWindow,
 			const wxArtID& id,
 			const wxArtClient& client,
 			wxIconBundle& outIcon);

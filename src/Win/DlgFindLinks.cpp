@@ -109,19 +109,21 @@ void CDlgFindLinksData::OnNeedListItem(long iCol, wxListItem& info) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-static struct
+namespace
 {
-	int col;
-	wchar_t const* info;
-} colLinkInfo[] =
-{
-	{COL_LINK, arbT("IDS_COL_NAME")},
-	{COL_DOG, arbT("IDS_COL_DOG")},
-	{COL_TRIAL, arbT("IDS_COL_TRIAL")},
-	{COL_RUN, arbT("IDS_COL_EVENT")},
-};
-static int const nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
-
+	static struct
+	{
+		int col;
+		wchar_t const* info;
+	} colLinkInfo[] =
+	{
+		{COL_LINK, arbT("IDS_COL_NAME")},
+		{COL_DOG, arbT("IDS_COL_DOG")},
+		{COL_TRIAL, arbT("IDS_COL_TRIAL")},
+		{COL_RUN, arbT("IDS_COL_EVENT")},
+	};
+	constexpr int nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
+}
 
 struct FindSortInfo : public SortInfo
 {

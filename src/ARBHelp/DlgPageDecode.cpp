@@ -184,9 +184,8 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				data = data.substr(posEnd + wcslen(STREAM_FILE_END));
 				data = StringUtil::TrimLeft(data);
 				// Now decode
-				unsigned char* binData = nullptr;
-				size_t nBytes = 0;
-				BinaryData::Decode(dataIn, binData, nBytes);
+				std::vector<unsigned char> binData;
+				BinaryData::Decode(dataIn, binData);
 				dataIn.clear();
 				// Generate a temp file name
 				wxString tempname = wxFileName::CreateTempFileName(L"arb");
@@ -194,16 +193,15 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				wxFFile output;
 				if (output.Open(tempname, L"wb"))
 				{
-					output.Write(binData, nBytes);
+					output.Write(binData.data(), binData.size());
 					output.Close();
 					fmt::format_to(editData, L"File written to: {}\n\n", tempname.wx_str());
 				}
 				else
 				{
-					std::string tmp(reinterpret_cast<char*>(binData), nBytes);
+					std::string tmp(binData.begin(), binData.end());
 					fmt::format_to(editData, L"{}\n{}{}\n\n", STREAM_FILE_BEGIN, StringUtil::stringW(tmp), STREAM_FILE_END);
 				}
-				BinaryData::Release(binData);
 			}
 		}
 		fmt::format_to(editData, L"{}", data);

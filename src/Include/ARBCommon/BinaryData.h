@@ -29,29 +29,19 @@ namespace BinaryData
 	 * Decode base64 and decompress data.
 	 * @param inBase64 Base64 encoded data
 	 * @param outBinData Decoded/decompressed data
-	 * @param outBytes Number of bytes in outBinData
 	 * @post outBinData must be deallocated using Release()
 	 */
 	ARBCOMMON_API bool Decode(
 			std::wstring const& inBase64,
-			unsigned char*& outBinData,
-			size_t& outBytes);
-
-	/**
-	 * Deallocate memory allocated in Decode()
-	 * @param inBinData Binary data allocated in Decode()
-	 */
-	ARBCOMMON_API void Release(unsigned char* inBinData);
+			std::vector<unsigned char>& outBinData);
 
 	/**
 	 * Compress and base64 encode a chunk of data.
 	 * @param inBinData Data to encode.
-	 * @param inBytes Number of bytes in inBinData
 	 * @param outBase64 Base64 encoded string of compressed (zlib) data.
 	 */
 	ARBCOMMON_API bool Encode(
-			unsigned char const* inBinData,
-			size_t inBytes,
+			std::vector<unsigned char> const& inBinData,
 			std::wstring& outBase64);
 	ARBCOMMON_API bool EncodeFile(
 			std::wstring const& inFileName,

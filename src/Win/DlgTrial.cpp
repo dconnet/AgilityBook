@@ -429,7 +429,7 @@ void CDlgTrial::ListLocations()
 }
 
 
-void CDlgTrial::ListClubs(ARBDogClubPtr* inClub)
+void CDlgTrial::ListClubs(ARBDogClubPtr const* inClub)
 {
 	m_ctrlClubs->DeleteAllItems();
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++iter)

@@ -136,7 +136,7 @@ CWizardImport::CWizardImport(
 		{arbT("IDS_DATEFORMAT_SLASH_DDMMYYYY"),
 			ARBDateFormat::SlashDDMMYYYY, ARBDateFormat::SlashDMY},
 	};
-	static size_t const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
+	constexpr size_t sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
 	ARBDateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(true, format);
 	for (size_t i = 0; i < sc_nDates; ++i)

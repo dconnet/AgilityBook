@@ -32,6 +32,14 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// Turn off a bunch of static analysis messages.
+#ifdef _MSC_VER
+#pragma warning (disable : 26461) // The pointer argument '<var>' for function '<func>' can be marked as a pointer to const (con.3).
+#pragma warning (disable : 26490) // Don't use reinterpret_cast (type.1).
+#pragma warning (disable : 26493) // Don't use C-style casts (type.4).
+#pragma warning (disable : 26494) // Variable '<var>' is uninitialized.Always initialize an object(type.5).
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 //See internet RFC 1321, "The MD5 Message-Digest Algorithm"

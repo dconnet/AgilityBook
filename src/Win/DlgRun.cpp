@@ -193,22 +193,25 @@ bool CLinkDropTarget::OnDropFiles(
 
 /////////////////////////////////////////////////////////////////////////////
 
-static struct
+namespace
 {
-	int fmt;
-	wchar_t const* idText;
-} const scRefRunColumns[] = {
-	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_Q")},
-	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_PLACE")},
-	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_SCORE")},
-	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_TIME")},
-	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_YPS")},
-	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
-	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_HEIGHT")},
-	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_BREED")},
-	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_NOTE")},
-};
-static int const scNumRefRunColumns = sizeof(scRefRunColumns) / sizeof(scRefRunColumns[0]);
+	static struct
+	{
+		int fmt;
+		wchar_t const* idText;
+	} const scRefRunColumns[] = {
+		{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_Q")},
+		{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_PLACE")},
+		{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_SCORE")},
+		{wxLIST_FORMAT_LEFT, arbT("IDS_COL_TIME")},
+		{wxLIST_FORMAT_LEFT, arbT("IDS_COL_YPS")},
+		{wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
+		{wxLIST_FORMAT_LEFT, arbT("IDS_COL_HEIGHT")},
+		{wxLIST_FORMAT_LEFT, arbT("IDS_COL_BREED")},
+		{wxLIST_FORMAT_LEFT, arbT("IDS_COL_NOTE")},
+	};
+	constexpr int scNumRefRunColumns = sizeof(scRefRunColumns) / sizeof(scRefRunColumns[0]);
+}
 
 struct RunSortInfo : public SortInfo
 {
@@ -487,7 +490,7 @@ CMetaDataDisplay::CMetaDataDisplay(
 	if (0 < m_Run->GetCRCDRawMetaData().length())
 	{
 		ARBMetaDataPtr metaData = m_Run->GetCRCDMetaData();
-		m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(metaData->length()), reinterpret_cast<BYTE const*>(metaData->data()));
+		m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(metaData->data().size()), metaData->data().data());
 		m_metaFileBack = m_metaFile;
 		if (m_metaFile)
 		{
@@ -522,20 +525,21 @@ void CMetaDataDisplay::DeleteMetaFile()
 
 void CMetaDataDisplay::SetCRCDData()
 {
+	std::vector<unsigned char> bits;
 #ifdef HAS_ENHMETAFILE
 	if (m_metaFile)
 	{
 		ENHMETAHEADER header;
 		GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
 		UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, nullptr);
-		std::unique_ptr<BYTE[]> bits = std::make_unique<BYTE[]>(nSize+1);
-		GetEnhMetaFileBits(m_metaFile, nSize, bits.get());
+		bits = std::vector<unsigned char>(nSize+1);
+		GetEnhMetaFileBits(m_metaFile, nSize, bits.data());
 		assert(sizeof(BYTE) == sizeof(char));
-		m_Run->SetCRCDMetaData(bits.get(), nSize);
+		m_Run->SetCRCDMetaData(bits);
 	}
 	else
 #endif
-		m_Run->SetCRCDMetaData(nullptr, 0);
+		m_Run->SetCRCDMetaData(bits);
 }
 
 
@@ -617,7 +621,7 @@ void CMetaDataDisplay::OnCopy()
 		SetLabel(L"");
 		DeleteMetaFile();
 		m_Run->SetCRCD(L"");
-		m_Run->SetCRCDMetaData(nullptr, 0);
+		m_Run->SetCRCDMetaData(std::vector<unsigned char>());
 	}
 	Enable(m_ViewText);
 	Refresh();

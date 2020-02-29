@@ -57,7 +57,8 @@ CIconList::CIconList()
 {
 }
 
-bool CIconList::Create(wxWindow* pWindow)
+
+bool CIconList::Create(wxWindow const* pWindow)
 {
 	if (!wxImageList::Create(DPI::Scale(pWindow, 16), DPI::Scale(pWindow, 16)))
 		return false;

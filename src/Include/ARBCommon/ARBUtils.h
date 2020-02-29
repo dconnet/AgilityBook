@@ -91,6 +91,9 @@ ARBCOMMON_API bool GetFileTimes(
 #endif
 
 #if USE_STACKTRACER && defined(WIN32)
+#pragma warning(push)
+#pragma warning (disable : 26447) // The function is declared 'noexcept' but calls function 'wx_str()' which may throw exceptions(f.6).
+#pragma warning (disable : 28159) // Consider using 'GetTickCount64' instead of 'GetTickCount'. Reason: GetTickCount overflows roughly every 49 days.  Code that does not take that into account can loop indefinitely.  GetTickCount64 operates on 64 bit values and does not have that problem
 class ARBCOMMON_API CStackTracer
 {
 public:
@@ -123,6 +126,7 @@ private:
 	CStackTracer& operator=(CStackTracer const&) = delete;
 	CStackTracer& operator=(CStackTracer&&) = delete;
 };
+#pragma warning(pop)
 
 #define STACK_TRACE(name, msg)	CStackTracer name(msg)
 #define STACK_TICKLE(name, msg) name.Tickle(msg)

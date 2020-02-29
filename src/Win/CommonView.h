@@ -34,7 +34,7 @@ class CAgilityBookBaseView : public wxView
 public:
 	CAgilityBookDoc* GetDocument() const
 	{
-		return (CAgilityBookDoc*)wxView::GetDocument();
+		return dynamic_cast<CAgilityBookDoc*>(wxView::GetDocument());
 	}
 	// Prevent the view from calling wxDocument::DeleteDocument
 	// (wxView override)
@@ -128,7 +128,7 @@ protected:
 			wxTreeEvent const& evt);
 	bool GetMenuPosition(
 			wxPoint& outPos,
-			wxWindow* ctrl,
+			wxWindow const* ctrl,
 			wxContextMenuEvent const& evt);
 
 	CTabView* m_pTabView;

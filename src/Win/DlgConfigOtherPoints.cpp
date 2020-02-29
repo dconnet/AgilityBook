@@ -75,18 +75,21 @@ bool CNameValidator::Validate(wxWindow* parent)
 
 /////////////////////////////////////////////////////////////////////////////
 
-static struct
+namespace
 {
-	wchar_t const* idDesc;
-	ARBOtherPointsTally tally;
-} const sc_Tally[] =
-{
-	{arbT("IDS_OTHERPTS_ALL"), ARBOtherPointsTally::All},
-	{arbT("IDS_OTHERPTS_EVENT"), ARBOtherPointsTally::AllByEvent},
-	{arbT("IDS_OTHERPTS_LEVEL"), ARBOtherPointsTally::Level},
-	{arbT("IDS_OTHERPTS_EVENT_LEVEL"), ARBOtherPointsTally::LevelByEvent}
-};
-static int const sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
+	static struct
+	{
+		wchar_t const* idDesc;
+		ARBOtherPointsTally tally;
+	} const sc_Tally[] =
+	{
+		{arbT("IDS_OTHERPTS_ALL"), ARBOtherPointsTally::All},
+		{arbT("IDS_OTHERPTS_EVENT"), ARBOtherPointsTally::AllByEvent},
+		{arbT("IDS_OTHERPTS_LEVEL"), ARBOtherPointsTally::Level},
+		{arbT("IDS_OTHERPTS_EVENT_LEVEL"), ARBOtherPointsTally::LevelByEvent}
+	};
+	constexpr int sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
+}
 
 
 class DlgConfigOtherPointData : public wxClientData 

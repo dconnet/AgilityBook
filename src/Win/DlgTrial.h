@@ -73,7 +73,7 @@ private:
 			bool bLocation,
 			bool bClub);
 	void ListLocations();
-	void ListClubs(ARBDogClubPtr* inClub = nullptr);
+	void ListClubs(ARBDogClubPtr const* inClub = nullptr);
 	void EditClub();
 
 	DECLARE_ON_INIT()

@@ -1055,7 +1055,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 
 				// Now all the data.
 				int nWarning = CAgilityBookOptions::CalendarOpeningNear();
-				ICalendar* iCalendar = ICalendar::iCalendarBegin(iCal, 2);
+				ICalendarPtr iCalendar = ICalendar::iCalendarBegin(iCal, 2);
 				for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 				{
 					CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iter);
@@ -1073,7 +1073,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 					}
 					table.EndLine();
 				}
-				iCalendar->Release();
+				iCalendar.reset();
 
 				clpData.AddData(ARBClipFormat::Calendar, tree);
 				clpData.AddData(table);

@@ -33,6 +33,15 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// Turn off a bunch of static analysis messages.
+#ifdef _MSC_VER
+#pragma warning (disable : 6386) // Buffer overrun while writing to '<var>' : the writable size is '<size>' bytes, but '<var>' bytes might be written.
+#pragma warning (disable : 26432) // If you define or delete any default operation in the type 'class SHA1', define or delete them all(c.21).
+#pragma warning (disable : 26490) // Don't use reinterpret_cast (type.1).
+#pragma warning (disable : 26493) // Don't use C-style casts (type.4).
+#pragma warning (disable : 26494) // Variable '<var>' is uninitialized.Always initialize an object(type.5).
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 // license.txt
 /////////////////////////////////////////////////////////////////////////////

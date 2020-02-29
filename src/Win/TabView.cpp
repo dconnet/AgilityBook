@@ -219,7 +219,7 @@ void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 	else
 		sel = wxConfig::Get()->Read(CFG_SETTINGS_VIEW, 0L);
 
-	CBasePanel* pages[4];
+	CBasePanel* pages[4]{ nullptr };
 	m_ctrlBook->AddPage(
 		(pages[IDX_PANE_RUNS] = new CAgilityBookPanelRuns(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_RUNS])),
 		_("IDS_RUNS"), false, IDX_PANE_RUNS);

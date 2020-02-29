@@ -227,7 +227,7 @@ bool ARBConfig::Save(ElementNodePtr const& ioTree) const
 
 
 // Add a few known configurations.
-void ARBConfig::Default(IARBConfigHandler* inHandler, ARBVersion* pVersion)
+void ARBConfig::Default(IARBConfigHandler const* inHandler, ARBVersion* pVersion)
 {
 	clear();
 	if (pVersion)
@@ -254,7 +254,7 @@ void ARBConfig::Default(IARBConfigHandler* inHandler, ARBVersion* pVersion)
 
 
 /* static */
-std::string ARBConfig::GetDTD(IARBConfigHandler* inHandler)
+std::string ARBConfig::GetDTD(IARBConfigHandler const* inHandler)
 {
 	if (inHandler)
 		return inHandler->LoadDTD();

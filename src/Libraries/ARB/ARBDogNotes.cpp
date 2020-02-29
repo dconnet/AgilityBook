@@ -53,8 +53,7 @@ ARBMetaDataPtr ARBMetaData::MetaData()
 
 
 ARBMetaData::ARBMetaData()
-	: m_Bytes(0)
-	, m_Data(nullptr)
+	: m_Data()
 {
 }
 
@@ -67,7 +66,7 @@ ARBMetaData::~ARBMetaData()
 
 void ARBMetaData::Clear()
 {
-	BinaryData::Release(m_Data);
+	m_Data.clear();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -186,14 +185,12 @@ bool ARBDogNotes::Load(
 		{
 			// Replaced by TREE_CRCD_META2, this translates.
 			std::wstring tmp = element->GetValue();
-			unsigned char* data;
-			size_t bytes;
-			if (ARBBase64::Decode(tmp, data, bytes))
+			std::vector<unsigned char> data;
+			if (ARBBase64::Decode(tmp, data))
 			{
-				if (!BinaryData::Encode(data, bytes, m_CRCDMeta))
+				if (!BinaryData::Encode(data, m_CRCDMeta))
 					m_CRCDMeta.clear();
 			}
-			ARBBase64::Release(data);
 		}
 		else if (element->GetName() == TREE_OTHER)
 		{
@@ -204,11 +201,11 @@ bool ARBDogNotes::Load(
 	if (inVersion < ARBVersion(12,9))
 	{
 		ARBMetaDataPtr data = ARBMetaData::MetaData();
-		if (!BinaryData::Decode(m_CRCDMeta, data->m_Data, data->m_Bytes))
+		if (!BinaryData::Decode(m_CRCDMeta, data->m_Data))
 			m_CRCDMeta.clear();
 		else
 		{
-			if (data->m_Bytes == 0 || !*data->m_Data)
+			if (data->m_Data.empty())
 				m_CRCDMeta.clear();
 		}
 	}
@@ -259,13 +256,13 @@ bool ARBDogNotes::Save(ElementNodePtr const& ioTree) const
 ARBMetaDataPtr ARBDogNotes::GetCRCDMetaData() const
 {
 	ARBMetaDataPtr data = ARBMetaData::MetaData();
-	if (!BinaryData::Decode(m_CRCDMeta, data->m_Data, data->m_Bytes))
+	if (!BinaryData::Decode(m_CRCDMeta, data->m_Data))
 		data->Clear();
 	return data;
 }
 
 
-void ARBDogNotes::SetCRCDMetaData(unsigned char const* inCRCDMeta, size_t inBytes)
+void ARBDogNotes::SetCRCDMetaData(std::vector<unsigned char> const& inCRCDMeta)
 {
-	BinaryData::Encode(inCRCDMeta, inBytes, m_CRCDMeta);
+	BinaryData::Encode(inCRCDMeta, m_CRCDMeta);
 }

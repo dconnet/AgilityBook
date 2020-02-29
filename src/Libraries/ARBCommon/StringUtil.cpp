@@ -121,11 +121,10 @@ std::string stringA(wxMemoryOutputStream const& inStr)
 	if (inStr.IsOk())
 	{
 		size_t len = static_cast<size_t>(inStr.GetLength());
-		char* buffer = new char[len+1];
-		inStr.CopyTo(buffer, len);
+		auto buffer = std::vector<char>(len+1);
+		inStr.CopyTo(buffer.data(), len);
 		buffer[len] = 0;
-		str = std::string(buffer, len);
-		delete [] buffer;
+		str = std::string(buffer.data(), len);
 	}
 	return str;
 }
