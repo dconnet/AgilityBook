@@ -81,6 +81,10 @@ protected:
 	// Note: If called before creating a frame, config needs to be deleted.
 	virtual void BaseAppCleanup(bool deleteConfig = false); // So dlg apps can cleanup.
 
+	// CBaseApp virtual
+	// Initialize typical wxFileSystem handlers that may be used.
+	virtual void InitFSHandlers();
+
 public:
 
 	// Language control

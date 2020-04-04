@@ -36,6 +36,8 @@
 #include <wx/dir.h>
 #include <wx/ffile.h>
 #include <wx/fileconf.h>
+#include <wx/fs_arc.h>
+#include <wx/fs_mem.h>
 #include <wx/stdpaths.h>
 
 #if defined(__WXMSW__)
@@ -227,6 +229,13 @@ void CBaseApp::BaseAppCleanup(bool deleteConfig)
 
 	CImageManager::Get()->SetCallback(nullptr);
 	Element::Terminate();
+}
+
+
+void CBaseApp::InitFSHandlers()
+{
+	wxFileSystem::AddHandler(new wxArchiveFSHandler);
+	wxFileSystem::AddHandler(new wxMemoryFSHandler);
 }
 
 
