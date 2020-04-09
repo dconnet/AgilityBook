@@ -15,6 +15,7 @@
  * framework, then include SetupARBPost.h
  *
  * Revision History
+ * 2020-04-09 Min WINVER check was wrong, should be 0x601.
  * 2019-01-27 Min C++ is now 14 (for make_unique)
  * 2018-10-06 Dropping support for pre VS2017 (and XP).
  * 2016-09-27 Increase minimum WINVER to 0x502
@@ -95,7 +96,7 @@
 #include <sdkddkver.h>
 
 // Error checking (no support for pre-Win7)
-#if WINVER < 0x0600
+#if WINVER < 0x0601
 	#error Minimum supported OS is Windows 7.
 #endif
 
