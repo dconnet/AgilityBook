@@ -23,7 +23,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\chrono.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\compile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\core.h">
@@ -33,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\format-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\locale.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\os.h">
@@ -48,15 +57,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\ranges.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\chrono.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\locale.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
