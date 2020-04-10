@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		E1B2D1E121CC597600435F76 /* format.cc in Sources */ = {isa = PBXBuildFile; fileRef = E1B2D1E021CC597600435F76 /* format.cc */; };
-		E1B2D1E321CC598500435F76 /* posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = E1B2D1E221CC598500435F76 /* posix.cc */; };
+		E19294BF2440CB8100C6D7C9 /* os.cc in Sources */ = {isa = PBXBuildFile; fileRef = E19294BE2440CB8000C6D7C9 /* os.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E1796412176927D2003AE489 /* libLibFmt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibFmt.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2D1DA21CC58DD00435F76 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; name = include; path = ../../../3rdParty/LibFmt/include; sourceTree = "<group>"; };
 		E1B2D1E021CC597600435F76 /* format.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = format.cc; path = ../../../3rdParty/LibFmt/src/format.cc; sourceTree = "<group>"; };
-		E1B2D1E221CC598500435F76 /* posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = posix.cc; path = ../../../3rdParty/LibFmt/src/posix.cc; sourceTree = "<group>"; };
+		E19294BE2440CB8000C6D7C9 /* os.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = os.cc; path = ../../../3rdParty/LibFmt/src/os.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +57,8 @@
 		E1B2D1DF21CC594B00435F76 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E1B2D1E221CC598500435F76 /* posix.cc */,
 				E1B2D1E021CC597600435F76 /* format.cc */,
+				E19294BE2440CB8000C6D7C9 /* os.cc */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -126,7 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1B2D1E121CC597600435F76 /* format.cc in Sources */,
-				E1B2D1E321CC598500435F76 /* posix.cc in Sources */,
+				E19294BF2440CB8100C6D7C9 /* os.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
