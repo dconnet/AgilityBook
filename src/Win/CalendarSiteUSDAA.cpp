@@ -56,6 +56,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+static wchar_t const* k_eventURL = L"https://usdaa.com/events/event-calendar.cfm";
+
 static std::wstring mdy2ymd(std::wstring const& inDate)
 {
 	std::wstring date;
@@ -126,7 +128,7 @@ std::wstring CCalendarSiteUSDAA::GetName() const
 
 std::wstring CCalendarSiteUSDAA::GetDescription() const
 {
-	return StringUtil::stringW(_("Get all the events from USDAA. This will parse the HTML returned from http://www.usdaa.com/events.cfm."));
+	return fmt::format(_("Get all the events from USDAA. This will parse the HTML returned from {}").wx_str(), k_eventURL);
 }
 
 
@@ -171,14 +173,11 @@ static ElementNodePtr ReadData(
 		fclose(fp);
 	}
 #else
-	CReadHttp http(inAddress, &data);
-#endif
-
-	std::wstring username, errMsg;
-#if !USE_TESTDATA
-	if (!http.ReadHttpFile(username, errMsg))
 	{
-		data.clear();
+		CReadHttp http;
+		std::wstring errMsg;
+		if (!http.ReadHttpFileSync(errMsg, inAddress, data))
+			data.clear();
 	}
 #endif
 
@@ -216,7 +215,7 @@ std::string CCalendarSiteUSDAA::Process(
 		IProgressMeter* progress) const
 {
 	if (progress)
-		progress->SetMessage(L"Reading http://www.usdaa.com/events.cfm");
+		progress->SetMessage(fmt::format(L"Reading {}", k_eventURL).c_str());
 
 #if USE_TESTDATA || GENERATE_TESTDATA
 	std::wstring testData(TESTDATANAME);
@@ -224,10 +223,10 @@ std::string CCalendarSiteUSDAA::Process(
 #if USE_TESTDATA
 	ElementNodePtr tree = ReadData(testData);
 #else
-	ElementNodePtr tree = ReadData(L"http://www.usdaa.com/events.cfm", testData);
+	ElementNodePtr tree = ReadData(k_eventURL, testData);
 #endif
 #else
-	ElementNodePtr tree = ReadData(L"http://www.usdaa.com/events.cfm");
+	ElementNodePtr tree = ReadData(k_eventURL);
 #endif
 	if (!tree)
 		return std::string();
@@ -246,6 +245,7 @@ std::string CCalendarSiteUSDAA::Process(
 	// Ok, now we get to parse the raw html from USDAA. As of Aug 2007,
 	// we want to look for a Level4 Header containing "Event Calendar"
 	// The data we want is then contained in the 'table' tag that follows.
+	// TODO: Note, the website was redesigned in early 2020. This is broken.
 	int nEntries = 0;
 	ElementNode const* parentElement = nullptr;
 	int idxEventCalH4tag = -1;

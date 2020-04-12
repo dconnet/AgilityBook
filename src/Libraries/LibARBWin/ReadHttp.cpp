@@ -28,6 +28,7 @@
 #include "LibARBWin/DlgAuthenticate.h"
 #include "LibARBWin/DlgProgress.h"
 #include <wx/sstream.h>
+#include <wx/thread.h>
 #include <wx/url.h>
 #include <wx/wfstream.h>
 
@@ -36,133 +37,285 @@
 #endif
 
 
-CReadHttp::CReadHttp(
-		std::wstring const& inURL,
-		std::string* outData)
-	: m_address(inURL)
-	, m_URL(nullptr)
-	, m_Data(outData)
-	, m_Stream(nullptr)
-	, m_pProgress(nullptr)
+namespace
 {
-	m_URL = std::make_unique<wxURL>(StringUtil::stringWX(inURL));
+	constexpr size_t k_defaultBuffer = 4096;
+}
+
+class CReadHttpThread : public wxThread
+{
+	CReadHttpThread(
+			wxEvtHandler* pParent,
+			int id,
+			CReadHttp* reader,
+			wxInputStream* urlStream,
+			wxOutputStream* outStream,
+			bool hasProgress,
+			size_t bufferSize);
+
+public:
+	// Async
+	static CReadHttpThread* Start(
+			wxEvtHandler* pParent,
+			int id,
+			CReadHttp* reader,
+			wxInputStream* urlStream,
+			wxOutputStream* outStream,
+			bool hasProgress,
+			size_t bufferSize = k_defaultBuffer);
+	// Sync
+	static bool Start(
+			CReadHttp* reader,
+			wxInputStream* urlStream,
+			wxString* outString,
+			wxOutputStream* outStream,
+			size_t bufferSize = k_defaultBuffer);
+
+	ExitCode Entry() override;
+
+	// Called before action in context of calling thread.
+	//void OnDelete() override;
+
+	// Since the calling thread knows what it's doing, we don't need to reflect status back up.
+	//void OnKill() override;
+
+	// Called when thread exits (normally or via Delete())
+	void OnExit() override;
+
+private:
+	bool ReadData(
+			wxString& outErrMsg,
+			wxString* output);
+
+	wxEvtHandler* m_pParent; // Where event is sent
+	int m_id; // ID to use when sending event
+	CReadHttp* m_reader; // wxThread* 
+	wxInputStream* m_urlStream; // The http data stream, takes possession
+	wxOutputStream* m_outStream; // Where to write data (nullptr means pass back via string)
+	bool m_hasProgress; // Are we supplying read progress (bytes read)?
+	size_t m_bufferSize;
+};
+
+
+CReadHttpThread::CReadHttpThread(
+		wxEvtHandler* pParent,
+		int id,
+		CReadHttp* reader,
+		wxInputStream* urlStream,
+		wxOutputStream* outStream,
+		bool hasProgress,
+		size_t bufferSize)
+	: m_pParent(pParent)
+	, m_id(id)
+	, m_reader(reader)
+	, m_urlStream(urlStream)
+	, m_outStream(outStream)
+	, m_hasProgress(hasProgress)
+	, m_bufferSize(bufferSize == 0 ? k_defaultBuffer : bufferSize)
+{
+	// We checked the url before creating this, so assuming it's still good!
 }
 
 
-CReadHttp::CReadHttp(
-		std::wstring const& inURL,
-		wxOutputStream& outStream,
-		IDlgProgress* pProgress)
-	: m_address(inURL)
-	, m_URL(nullptr)
-	, m_Data(nullptr)
-	, m_Stream(&outStream)
-	, m_pProgress(pProgress)
+CReadHttpThread* CReadHttpThread::Start(
+		wxEvtHandler* pParent,
+		int id,
+		CReadHttp* reader,
+		wxInputStream* httpStream,
+		wxOutputStream* outStream,
+		bool hasProgress,
+		size_t bufferSize)
 {
-	m_URL = std::make_unique<wxURL>(StringUtil::stringWX(inURL));
+	CReadHttpThread* thread = new CReadHttpThread(pParent, id, reader, httpStream, outStream, hasProgress, bufferSize);
+	if (thread->Create() != wxTHREAD_NO_ERROR || thread->Run() != wxTHREAD_NO_ERROR)
+	{
+		delete thread;
+		thread = nullptr;
+	}
+	return thread;
 }
 
 
-CReadHttp::~CReadHttp()
+bool CReadHttpThread::Start(
+		CReadHttp* reader,
+		wxInputStream* urlStream,
+		wxString* outString,
+		wxOutputStream* outStream,
+		size_t bufferSize)
 {
+	CReadHttpThread notThread(nullptr, wxID_ANY, reader, urlStream, outStream, false, bufferSize);
+	wxString outErrMsg;
+	return notThread.ReadData(outErrMsg, outString);
+}
+
+
+wxThread::ExitCode CReadHttpThread::Entry()
+{
+	// On success, use SetString to return data if a stream was not specificed.
+	auto eventDone = new wxThreadEvent(wxEVT_THREAD, m_id);
+
+	wxString outErrMsg, res;
+	if (ReadData(outErrMsg, &res))
+	{
+		eventDone->SetInt(static_cast<int>(CReadHttp::Status::Success));
+		if (!m_outStream)
+			eventDone->SetString(res);
+	}
+	else
+	{
+		eventDone->SetInt(static_cast<int>(CReadHttp::Status::Error));
+		eventDone->SetString(outErrMsg);
+	}
+	wxQueueEvent(m_pParent, eventDone);
+
+	return 0;
+}
+
+
+void CReadHttpThread::OnExit()
+{
+	{
+		wxCriticalSectionLocker locker(m_reader->m_critsect);
+		m_reader->m_thread = nullptr;
+	}
+
+	// We could sent a final event here. But not needed since we send a
+	// success/fail at the end of Entry().
+}
+
+
+bool CReadHttpThread::ReadData(wxString& outErrMsg, wxString* output)
+{
+	bool bOk = false;
+
+	assert(m_outStream || output);
+
+	if (m_urlStream)
+	{
+		bOk = true;
+		if (!m_outStream)
+		{
+			wxStringOutputStream outStream(output);
+			m_urlStream->Read(outStream);
+		}
+		else
+		{
+			if (m_hasProgress)
+			{
+				auto buffer = std::make_unique<unsigned char>(m_bufferSize);
+				while (!m_urlStream->Eof())
+				{
+					if (TestDestroy())
+					{
+						bOk = false;
+						break;
+					}
+					m_urlStream->Read(buffer.get(), m_bufferSize);
+					size_t read = m_urlStream->LastRead();
+					if (0 < read)
+					{
+						auto eventProgress = new wxThreadEvent(wxEVT_THREAD, m_id);
+						eventProgress->SetInt(static_cast<int>(CReadHttp::Status::Read));
+						eventProgress->SetExtraLong(read);
+						wxQueueEvent(m_pParent, eventProgress);
+						m_outStream->Write(buffer.get(), read);
+					}
+				}
+			}
+			else
+			{
+				m_urlStream->Read(*m_outStream);
+			}
+		}
+		if (m_urlStream->GetLastError() == wxSTREAM_READ_ERROR)
+		{
+			outErrMsg << L"Error reading stream";// << m_URL.GetURL();
+		}
+		delete m_urlStream;
+		m_urlStream = nullptr;
+	}
+
+	return bOk;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CReadHttp::CReadHttp()
+	: m_thread(nullptr)
+{
+}
+
+
+bool CReadHttp::Exit()
+{
+	CReadHttpThread* thread = nullptr;
+	{
+		wxCriticalSectionLocker locker(m_critsect);
+		thread = m_thread;
+		// CReadHttpThread::OnExit will also null it if we call Delete().
+		m_thread = nullptr;
+	}
+	if (thread)
+		thread->Delete();
+	return !!thread;
 }
 
 
 bool CReadHttp::ReadHttpFile(
-		std::wstring& userName,
 		std::wstring& outErrMsg,
-		wxWindow* pParent,
-		bool bCheckOnly)
+		wxEvtHandler* pParent,
+		int idEvent,
+		std::wstring const& inURL,
+		wxString* outString, // Only one of these 2 may be specified (except on check)
+		wxOutputStream* outStream,
+		IDlgProgress* pProgress)
 {
-	if (m_Data)
-		m_Data->clear();
-	if (!m_URL || !m_URL->IsOk())
+	wxURL url(StringUtil::stringWX(inURL));
+	if (!url.IsOk())
 	{
 		outErrMsg = _("Invalid URL");
 		outErrMsg += L": ";
-		outErrMsg += m_address;
+		outErrMsg += inURL;
 		return false;
 	}
-	outErrMsg.clear();
-	wxBusyCursor wait;
 
-	wxInputStream* stream = m_URL->GetInputStream();
-	if (!stream || !stream->IsOk())
+	wxInputStream* urlStream = url.GetInputStream();
+	if (!urlStream || !urlStream->IsOk())
 	{
 		/* this doesn't work. suggestion is to use wxCURL
 		 * for now, we just don't support authentication
 		CDlgAuthenticate dlg(userName, pParent);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			m_URL->GetProtocol().SetUser(dlg.GetUserName());
-			m_URL->GetProtocol().SetPassword(dlg.GetPassword());
-			stream = m_URL->GetInputStream();
+			url.GetProtocol().SetUser(dlg.GetUserName());
+			url.GetProtocol().SetPassword(dlg.GetPassword());
+			urlStream = url.GetInputStream();
 		}
-		if (!stream || !stream->IsOk())
+		if (!urlStream || !urlStream->IsOk())
 		*/
-		{
-			outErrMsg += L"Error reading ";
-			outErrMsg += m_address;
-			delete stream;
-			return false;
-		}
-	}
-
-	bool bOk = true;
-	wxString res;
-	if (m_Data)
-	{
-		wxStringOutputStream outStream(&res);
-		stream->Read(outStream);
-	}
-	else if (m_Stream)
-	{
-		if (m_pProgress)
-		{
-			bool bCancelEnable = m_pProgress->EnableCancel(false);
-			unsigned char buffer[4096] = { 0 };
-			while (!stream->Eof())
-			{
-				stream->Read(buffer, sizeof(buffer));
-				size_t read = stream->LastRead();
-				if (0 < read)
-				{
-					m_pProgress->OffsetPos(1, static_cast<int>(read));
-					m_Stream->Write(buffer, read);
-				}
-			}
-			m_pProgress->EnableCancel(bCancelEnable);
-		}
-		else
-		{
-			stream->Read(*m_Stream);
-		}
-	}
-	if (stream->GetLastError() == wxSTREAM_READ_ERROR)
-	{
 		outErrMsg += L"Error reading ";
-		outErrMsg += m_address;
+		outErrMsg += inURL;
+		delete urlStream;
+		return false;
 	}
-	delete stream;
-	if (m_Data)
-		*m_Data = res.mb_str(wxMBConvUTF8());
+	// In theory, this could be a check with a parent - but the wrapper functions prevent that.
+	if (!outString && !outStream && !pParent)
+	{
+		delete urlStream;
+		return true;
+	}
 
-	return bOk;
-}
+	// If sync...
+	if (!pParent)
+	{
+		return CReadHttpThread::Start(this, urlStream, outString, outStream);
+	}
 
+	wxCriticalSectionLocker locker(m_critsect);
 
-bool CReadHttp::ReadHttpFile(
-		std::wstring& outErrMsg,
-		wxWindow* pParent,
-		bool bCheckOnly)
-{
-	std::wstring username;
-	return ReadHttpFile(username, outErrMsg, pParent, bCheckOnly);
-}
+	if (m_thread)
+		return false;
 
-
-bool CReadHttp::CheckHttpFile(wxWindow* pParent)
-{
-	std::wstring userName, outErrMsg;
-	return ReadHttpFile(userName, outErrMsg, pParent, true);
+	m_thread = CReadHttpThread::Start(pParent, idEvent, this, urlStream, outStream, !!pProgress);
+	return !!m_thread;
 }

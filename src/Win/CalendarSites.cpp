@@ -497,9 +497,9 @@ std::string CPluginConfigData::Process(IProgressMeter *progress)
 	std::wstring url = m_Site->GetFormattedURL(m_LocationCodes, m_VenueCodes);
 	progress->SetMessage(url.c_str());
 	std::string data;
-	CReadHttp http(url, &data);
-	std::wstring username, errMsg;
-	if (!http.ReadHttpFile(username, errMsg, wxGetApp().GetTopWindow()))
+	CReadHttp http;
+	std::wstring errMsg;
+	if (!http.ReadHttpFileSync(errMsg, url, data))
 		data.clear();
 	return data;
 }

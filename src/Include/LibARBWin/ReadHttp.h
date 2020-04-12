@@ -22,6 +22,7 @@
 #include "LibwxARBWin.h"
 
 #include "ARBCommon/StringUtil.h"
+class CReadHttpThread;
 class IDlgProgress;
 class wxOutputStream;
 class wxURL;
@@ -33,54 +34,83 @@ inline bool GotoURL(std::wstring const& inLink)
 }
 
 
-/**
- * Read data from the internet
- */
 class ARBWIN_API CReadHttp
 {
-	DECLARE_NO_COPY_IMPLEMENTED(CReadHttp)
+	friend class CReadHttpThread;
 public:
-	/**
-	 * Construction
-	 * @param inURL URL to read data from.
-	 * @param outData Returned data, in raw ascii form, not unicode (makes XML parsing easier)
-	 * @note If outData is NULL, ReadHttpFile will only check for connectivity.
-	 */
-	CReadHttp(
-			std::wstring const& inURL,
-			std::string* outData);
-	CReadHttp(
-			std::wstring const& inURL,
-			wxOutputStream& outStream,
-			IDlgProgress* pProgress = nullptr);
+	CReadHttp();
 
-	~CReadHttp();
+	// Force exit of thread. Returns false is thread already stopped.
+	bool Exit();
 
-	/**
-	 * Read the HTTP via a 'GET'
-	 * @param userName Default username, if required. May be modified.
-	 * @param outErrMsg Generated error messages
-	 * @param pParent Owner of any dialogs that may be displayed
-	 * @param bCheckOnly Only check connection, do not read, do not prompt for password
-	 * @return Success
-	 */
-	bool ReadHttpFile(
-			std::wstring& userName,
+	// Value in wxThreadEvent's GetInt
+	enum class Status
+	{
+		// Progress
+		Read, // GetExtraLong contains bytes read
+		// Final result (unless thread is Killed)
+		Error, // GetString contains more details
+		Success // File has been read (or exists)
+	};
+
+	bool CheckHttpFile(std::wstring const& inURL)
+	{
+		std::wstring outErrMsg;
+		return ReadHttpFile(outErrMsg, nullptr, wxID_ANY, inURL, nullptr, nullptr, nullptr);
+	}
+
+	bool ReadHttpFileSync(
+		std::wstring& outErrMsg,
+		std::wstring const& inURL,
+		std::string& outString)
+	{
+		wxString data;
+		bool rc = ReadHttpFile(outErrMsg, nullptr, wxID_ANY, inURL, &data, nullptr, nullptr);
+		if (rc)
+			outString = data.mb_str(wxMBConvUTF8());
+		return rc;
+	}
+
+	bool ReadHttpFileSync(
 			std::wstring& outErrMsg,
-			wxWindow* pParent = nullptr,
-			bool bCheckOnly = false);
+			std::wstring const& inURL,
+			wxString& outString)
+	{
+		return ReadHttpFile(outErrMsg, nullptr, wxID_ANY, inURL, &outString, nullptr, nullptr);
+	}
+
+	bool ReadHttpFileSync(
+			std::wstring& outErrMsg,
+			std::wstring const& inURL,
+			wxOutputStream* outStream,
+			IDlgProgress* pProgress = nullptr)
+	{
+		if (!outStream)
+			return false;
+		return ReadHttpFile(outErrMsg, nullptr, wxID_ANY, inURL, nullptr, outStream, pProgress);
+	}
 
 	bool ReadHttpFile(
 			std::wstring& outErrMsg,
-			wxWindow* pParent = nullptr,
-			bool bCheckOnly = false);
-
-	bool CheckHttpFile(wxWindow* pParent = nullptr);
+			wxEvtHandler* pParent,
+			int idEvent,
+			std::wstring const& inURL,
+			wxOutputStream* outStream = nullptr, // If null, return via string in wxThreadEvent
+			IDlgProgress* pProgress = nullptr)
+	{
+		return ReadHttpFile(outErrMsg, pParent, idEvent, inURL, nullptr, outStream, pProgress);
+	}
 
 private:
-	std::wstring m_address;
-	std::unique_ptr<wxURL> m_URL;
-	std::string* m_Data;
-	wxOutputStream* m_Stream;
-	IDlgProgress* m_pProgress;
+	bool ReadHttpFile(
+			std::wstring& outErrMsg,
+			wxEvtHandler* pParent,
+			int idEvent,
+			std::wstring const& inURL,
+			wxString* outString = nullptr, // Only one of these 2 may be specified (except on check)
+			wxOutputStream* outStream = nullptr,
+			IDlgProgress* pProgress = nullptr);
+
+	wxCriticalSection m_critsect;
+	CReadHttpThread* m_thread;
 };

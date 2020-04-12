@@ -286,10 +286,12 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	}
 	else
 	{
-		CReadHttp file(url, &data);
-		std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-		if (file.ReadHttpFile(userName, errMsg, wxGetApp().GetTopWindow()))
-			CAgilityBookOptions::SetUserName(m_usernameHint, userName);
+		CReadHttp file;
+		//std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
+		if (file.ReadHttpFileSync(errMsg, url, data))
+		{
+			//CAgilityBookOptions::SetUserName(m_usernameHint, userName);
+		}
 		else
 		{
 			if (bVerbose)
@@ -563,9 +565,10 @@ bool CUpdateInfo::CheckProgram(
 						progress->SetMessage(StringUtil::stringW(name.GetFullName()));
 						progress->ShowProgress();
 						progress->SetForegroundWindow();
-						CReadHttp http(m_NewFile, output, progress);
+
+						CReadHttp http;
 						std::wstring err;
-						if (!http.ReadHttpFile(err))
+						if (!http.ReadHttpFileSync(err, m_NewFile, &output, progress))
 						{
 							bGotoWeb = true;
 							// If user canceled, no message is generated.
@@ -805,10 +808,12 @@ void CUpdateInfo::CheckConfig(
 			}
 			else
 			{
-				CReadHttp file(url, &strConfig);
-				std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-				if (file.ReadHttpFile(m_usernameHint, errMsg, wxGetApp().GetTopWindow()))
-					CAgilityBookOptions::SetUserName(m_usernameHint, userName);
+				CReadHttp file;
+				//std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
+				if (file.ReadHttpFileSync(errMsg, url, strConfig))
+				{
+					//CAgilityBookOptions::SetUserName(m_usernameHint, userName);
+				}
 				else
 				{
 					strConfig.clear();

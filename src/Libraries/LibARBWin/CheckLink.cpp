@@ -40,8 +40,8 @@ bool CheckLink(
 		if (!bOk)
 		{
 			// Ok, check URL
-			CReadHttp http(inLink, nullptr);
-			bOk = http.CheckHttpFile(parent);
+			CReadHttp http;
+			bOk = http.CheckHttpFile(inLink);
 		}
 	}
 	return bOk;
