@@ -171,6 +171,120 @@ before AC_MSG_CHECKING line (fixes macOS 10.13 SDK issue)
 To build for VC, see ./src/Projects/CompileWX.py
 To build for Mac/Unix, see ./build/setupwx.sh
 
+=== Changes to 3.0.4:
+  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSE_MEDIACTRL to 0 (currently 1)
+  - Set wxUSE_INKEDIT to 1 (currently 0)
+
+-- For VS2019 support
+>diff -c wxWidgets-3.0.4\include\msvc\wx\setup.h wxWidgets-3.0.4.changes\include\msvc\wx\setup.h
+*** wxWidgets-3.0.4\include\msvc\wx\setup.h     Wed Mar 07 09:55:38 2018
+--- wxWidgets-3.0.4.changes\include\msvc\wx\setup.h     Mon Apr 13 08:42:58 2020
+***************
+*** 63,70 ****
+          #define wxCOMPILER_PREFIX vc110
+      #elif _MSC_VER == 1800
+          #define wxCOMPILER_PREFIX vc120
+!     #elif _MSC_VER == 1900
+!         #define wxCOMPILER_PREFIX vc140
+      #else
+          #error "Unknown MSVC compiler version, please report to wx-dev."
+      #endif
+--- 63,78 ----
+          #define wxCOMPILER_PREFIX vc110
+      #elif _MSC_VER == 1800
+          #define wxCOMPILER_PREFIX vc120
+!     #elif _MSC_VER >= 1900 && _MSC_VER < 2000
+!         #if _MSC_VER < 1910
+!             #define wxCOMPILER_PREFIX vc140
+!         #elif _MSC_VER >= 1910 && _MSC_VER < 1920
+!             #define wxCOMPILER_PREFIX vc141
+!         #elif _MSC_VER >= 1920 && _MSC_VER < 2000
+!             #define wxCOMPILER_PREFIX vc142
+!         #else
+!             #error "Unknown MSVC 14.x compiler version, please report to wx-dev."
+!         #endif
+      #else
+          #error "Unknown MSVC compiler version, please report to wx-dev."
+      #endif
+
+=== Changes for support VC14: https://forums.wxwidgets.org/viewtopic.php?t=40491
+>diff -c wxWidgets-3.0.4\src\zlib\gzguts.h wxWidgets-3.0.4.changes\src\zlib\gzguts.h
+*** wxWidgets-3.0.4\src\zlib\gzguts.h   Wed Mar 07 09:55:38 2018
+--- wxWidgets-3.0.4.changes\src\zlib\gzguts.h   Mon Apr 13 08:22:02 2020
+***************
+*** 99,105 ****
+     Microsoft more than a decade later!), _snprintf does not guarantee null
+     termination of the result -- however this is only used in gzlib.c where
+     the result is assured to fit in the space provided */
+! #ifdef _MSC_VER
+  #  define snprintf _snprintf
+  #endif
+
+--- 99,105 ----
+     Microsoft more than a decade later!), _snprintf does not guarantee null
+     termination of the result -- however this is only used in gzlib.c where
+     the result is assured to fit in the space provided */
+! #if (defined(_MSC_VER) && (_MSC_VER < 1900))
+  #  define snprintf _snprintf
+  #endif
+
+>diff -c wxWidgets-3.0.4\include\wx\propgrid\advprops.h wxWidgets-3.0.4.changes\include\wx\propgrid\advprops.h
+*** wxWidgets-3.0.4\include\wx\propgrid\advprops.h      Wed Mar 07 09:55:38 2018
+--- wxWidgets-3.0.4.changes\include\wx\propgrid\advprops.h      Mon Apr 13 08:24:43 2020
+***************
+*** 450,456 ****
+      wxDateTime GetDateValue() const
+      {
+          //return m_valueDateTime;
+!         return m_value;
+      }
+
+      long GetDatePickerStyle() const
+--- 450,456 ----
+      wxDateTime GetDateValue() const
+      {
+          //return m_valueDateTime;
+!         return m_value.GetDateTime();
+      }
+
+      long GetDatePickerStyle() const
+
+=== Changes to support ink in richedit
+>diff -c wxWidgets-3.0.4\src\msw\textctrl.cpp wxWidgets-3.0.4.changes\src\msw\textctrl.cpp
+*** wxWidgets-3.0.4\src\msw\textctrl.cpp        Wed Mar 07 09:55:38 2018
+--- wxWidgets-3.0.4.changes\src\msw\textctrl.cpp        Mon Apr 13 08:28:05 2020
+***************
+*** 76,81 ****
+--- 76,85 ----
+
+  #endif // wxUSE_RICHEDIT
+
++ #if wxUSE_INKEDIT
++     #include <wx/dynlib.h>
++ #endif
++
+  #include "wx/msw/missing.h"
+
+  // FIXME-VC6: This seems to be only missing from VC6 headers.
+***************
+*** 339,344 ****
+--- 343,353 ----
+          m_dropTarget = NULL;
+      }
+  #endif // wxUSE_DRAG_AND_DROP && wxUSE_RICHEDIT
++
++ #if wxUSE_INKEDIT && wxUSE_RICHEDIT
++     if (m_isInkEdit)
++         DissociateHandle();
++ #endif
+
+      delete m_privateContextMenu;
+  }
+
 --------------------
 
 poedit: http://www.poedit.net

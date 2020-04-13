@@ -59,7 +59,9 @@ CBaseApp::CBaseApp(
 	, m_bStandalone(false)
 	, m_langMgr(nullptr)
 {
+#if wxCHECK_VERSION(3, 1, 0)
 	wxStandardPaths::Get().SetFileLayout(wxStandardPaths::FileLayout_XDG);
+#endif
 
 	if (m_BaseRegName.empty())
 		m_BaseRegName = m_BaseAppName;
@@ -136,7 +138,9 @@ bool CBaseApp::OnInit()
 
     // Suppress PNG loading messages.
     // Specifically: "iCCP: known incorrect sRGB profile"
+#if wxCHECK_VERSION(3, 1, 0)
 	wxImage::SetDefaultLoadFlags(wxImage::GetDefaultLoadFlags() & ~wxImage::Load_Verbose);
+#endif
 
 	std::wstring errMsg;
 	if (!Element::Initialize(errMsg))
