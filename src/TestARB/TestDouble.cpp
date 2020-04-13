@@ -160,6 +160,10 @@ TEST_CASE("Double")
 			// assumes 'g' and [v6.2] needs the std::locale passed.
 			// (precision in 'g' works differently than 'f', it's the total
 			// number of digits.
+#ifdef WIN32
+			// On Mac, de_DE has no dots.
+			// On unix, I get 'name not valid' for locale.
+			// Screw it. Only run these tests on Windows
 #if (FMT_VERSION >= 60200)
 			// Some general tests on assumptions ('L' appeared in v6.2, 'n' will be removed later)
 			REQUIRE(L"1,234,567,890" == fmt::format(std::locale("en_US"), L"{:L}", 1234567890));
@@ -169,6 +173,7 @@ TEST_CASE("Double")
 			// This causes an 'invalid type specifier' exception in v6.2
 			d = 1.2;
 			REQUIRE(L"1.2" == fmt::format(std::locale("en_US"), L"{:L}", d));
+#endif
 #endif
 #endif
 		}
