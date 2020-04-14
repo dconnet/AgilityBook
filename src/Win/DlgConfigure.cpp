@@ -138,12 +138,7 @@ CDlgConfigure::CDlgConfigure(
 	assert(m_pDoc);
 
 	m_ImageList.Create(this);
-#if wxCHECK_VERSION(3, 1, 0)
 	wxSize size = m_ImageList.GetSize();
-#else
-	wxSize size;
-	m_ImageList.GetSize(0, size.x, size.y);
-#endif
 	m_idxFaults = m_ImageList.Add(ImageHelper::GetIcon(this, wxART_WARNING, wxART_OTHER, size));
 
 	// Controls (these are done first to control tab order)

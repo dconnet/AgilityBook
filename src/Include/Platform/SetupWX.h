@@ -15,7 +15,7 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
- * 2020-04-13 Put wx3.0.4 support back since it's the most recent official build
+ * 2020-04-14 Up minimum wx to 3.1.2.
  * 2019-08-24 Up minimum wx to 3.1.
  * 2015-11-25 Created ARB_64BIT
  * 2013-01-27 Split/moved stdafx.h.
@@ -89,8 +89,9 @@
 #include <wx/version.h>
 #include "Platform/arbWarningPop.h"
 
-// While we support 3.0.4, 3.1.x is recommended.
-#if !wxCHECK_VERSION(3, 0, 4)
+// wx3.1.2 is min since I'm relying on wxStandardPaths GetResourcesDir behavior
+// on Mac.
+#if !wxCHECK_VERSION(3, 1, 2)
 #error Unsupported wxWidget version
 #endif
 

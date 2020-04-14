@@ -146,7 +146,6 @@ static std::unordered_map<int, KeyCodeMapping> const& GetKeyCodes()
 		{WXK_SPECIAL18, {WXK_SPECIAL18, L"SPECIAL18", false}},
 		{WXK_SPECIAL19, {WXK_SPECIAL19, L"SPECIAL19", false}},
 		{WXK_SPECIAL20, {WXK_SPECIAL20, L"SPECIAL20", false}},
-#if wxCHECK_VERSION(3, 1, 0) // not sure exactly which version - definitely not in 3.0
 		{WXK_BROWSER_BACK, {WXK_BROWSER_BACK, L"BrowserBack", false}}, // Not in wx po at all (not a supported menu option)
 		{WXK_BROWSER_FORWARD, {WXK_BROWSER_FORWARD, L"BrowserForward", false}},
 		{WXK_BROWSER_REFRESH, {WXK_BROWSER_REFRESH, L"BrowserRefresh", false}},
@@ -164,7 +163,6 @@ static std::unordered_map<int, KeyCodeMapping> const& GetKeyCodes()
 		{WXK_LAUNCH_MAIL, {WXK_LAUNCH_MAIL, L"LaunchMail", false}},
 		{WXK_LAUNCH_APP1, {WXK_LAUNCH_APP1, L"LaunchApp1", false}},
 		{WXK_LAUNCH_APP2, {WXK_LAUNCH_APP2, L"LaunchApp2", false}},
-#endif
 	};
 	return s_codeMapping;
 };

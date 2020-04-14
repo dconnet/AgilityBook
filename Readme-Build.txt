@@ -22,11 +22,11 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 python: https://www.python.org
-Currently using version 3.7.4
+Currently using version 3.8.2
 - Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.1.3.
+I'm currently using version 3.1.3. Min supported is 3.1.2.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
@@ -83,212 +83,13 @@ diff textctrl.old textctrl.cpp
 > #endif
 >
 
-=== Changes to 3.1.1:
--[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
-  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
-  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
-  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
-    the library is compiled one way and the users do something different.
-  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
-  - Set wxUSE_MEDIACTRL to 0 (currently 1)
-  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
-  - Set wxUSE_INKEDIT to 1 (currently 0)
-
-> src/msw/textctrl.cpp
->svn diff
-Index: textctrl.cpp
-===================================================================
---- textctrl.cpp        (revision 113)
-+++ textctrl.cpp        (working copy)
-@@ -337,6 +337,11 @@
-     }
- #endif // wxUSE_DRAG_AND_DROP && wxUSE_RICHEDIT
-
-+#if wxUSE_INKEDIT && wxUSE_RICHEDIT
-+    if (m_isInkEdit)
-+        DissociateHandle();
-+#endif
-+
-     delete m_privateContextMenu;
- }
-
-=== Changes to 3.1.0:
--[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
-  - Set WXWIN_COMPATIBILITY_3_0 to 0 (currently 1)
-  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
-    the library is compiled one way and the users do something different.
-  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
-  - Set wxUSE_MEDIACTRL to 0 (currently 1)
-  - Set wxUSE_INKEDIT to 1 (currently 0)
-
-include/msvc/wx/setup.h: line 67
-Add
-    #elif _MSC_VER >= 1910 && _MSC_VER < 2000
-        #define wxCOMPILER_PREFIX vc141
-
-include/wx/geometry.h
-include/wx/mousestate.h
-include/wx/html/htmlcell.h
-  - These files have a number of comma operator issues (found via xcode9)
-
-configure.in: line 1347 (darwin case)
-Add
-    CPPFLAGS="-D__ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES=1 $CPPFLAGS"
-before AC_MSG_CHECKING line (fixes macOS 10.13 SDK issue)
-
->diff -c datavcmn.cpp.orig datavcmn.cpp
-*** datavcmn.cpp.orig	Tue Mar 15 09:54:08 2016
---- datavcmn.cpp	Tue Mar 15 09:54:13 2016
-***************
-*** 684,689 ****
---- 684,691 ----
-      unsigned int col = GetOwner()->GetModelColumn();
-      const wxVariant& value = CheckedGetValue(dv_ctrl->GetModel(), item, col);
-  
-+     m_item = item;
-+ 
-      m_editorCtrl = CreateEditorCtrl( dv_ctrl->GetMainWindow(), labelRect, value );
-  
-      // there might be no editor control for the given item
-
->diff -c textctrl.cpp.orig textctrl.cpp
-*** textctrl.cpp.orig   Mon Feb 29 13:45:04 2016
---- textctrl.cpp        Mon Feb 29 13:25:44 2016
-***************
-*** 329,334 ****
---- 329,339 ----
-      }
-  #endif // wxUSE_DRAG_AND_DROP && wxUSE_RICHEDIT
-
-+ #if wxUSE_INKEDIT && wxUSE_RICHEDIT
-+     if (m_isInkEdit)
-+         DissociateHandle();
-+ #endif
-+
-      delete m_privateContextMenu;
-  }
-
 To build for VC, see ./src/Projects/CompileWX.py
 To build for Mac/Unix, see ./build/setupwx.sh
-
-=== Changes to 3.0.4:
-  - Set WXWIN_COMPATIBILITY_2_8 to 0 (currently 1)
-  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
-    the library is compiled one way and the users do something different.
-  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
-  - Set wxUSE_MEDIACTRL to 0 (currently 1)
-  - Set wxUSE_INKEDIT to 1 (currently 0)
-
--- For VS2019 support
->diff -c wxWidgets-3.0.4\include\msvc\wx\setup.h wxWidgets-3.0.4.changes\include\msvc\wx\setup.h
-*** wxWidgets-3.0.4\include\msvc\wx\setup.h     Wed Mar 07 09:55:38 2018
---- wxWidgets-3.0.4.changes\include\msvc\wx\setup.h     Mon Apr 13 08:42:58 2020
-***************
-*** 63,70 ****
-          #define wxCOMPILER_PREFIX vc110
-      #elif _MSC_VER == 1800
-          #define wxCOMPILER_PREFIX vc120
-!     #elif _MSC_VER == 1900
-!         #define wxCOMPILER_PREFIX vc140
-      #else
-          #error "Unknown MSVC compiler version, please report to wx-dev."
-      #endif
---- 63,78 ----
-          #define wxCOMPILER_PREFIX vc110
-      #elif _MSC_VER == 1800
-          #define wxCOMPILER_PREFIX vc120
-!     #elif _MSC_VER >= 1900 && _MSC_VER < 2000
-!         #if _MSC_VER < 1910
-!             #define wxCOMPILER_PREFIX vc140
-!         #elif _MSC_VER >= 1910 && _MSC_VER < 1920
-!             #define wxCOMPILER_PREFIX vc141
-!         #elif _MSC_VER >= 1920 && _MSC_VER < 2000
-!             #define wxCOMPILER_PREFIX vc142
-!         #else
-!             #error "Unknown MSVC 14.x compiler version, please report to wx-dev."
-!         #endif
-      #else
-          #error "Unknown MSVC compiler version, please report to wx-dev."
-      #endif
-
-=== Changes for support VC14: https://forums.wxwidgets.org/viewtopic.php?t=40491
->diff -c wxWidgets-3.0.4\src\zlib\gzguts.h wxWidgets-3.0.4.changes\src\zlib\gzguts.h
-*** wxWidgets-3.0.4\src\zlib\gzguts.h   Wed Mar 07 09:55:38 2018
---- wxWidgets-3.0.4.changes\src\zlib\gzguts.h   Mon Apr 13 08:22:02 2020
-***************
-*** 99,105 ****
-     Microsoft more than a decade later!), _snprintf does not guarantee null
-     termination of the result -- however this is only used in gzlib.c where
-     the result is assured to fit in the space provided */
-! #ifdef _MSC_VER
-  #  define snprintf _snprintf
-  #endif
-
---- 99,105 ----
-     Microsoft more than a decade later!), _snprintf does not guarantee null
-     termination of the result -- however this is only used in gzlib.c where
-     the result is assured to fit in the space provided */
-! #if (defined(_MSC_VER) && (_MSC_VER < 1900))
-  #  define snprintf _snprintf
-  #endif
-
->diff -c wxWidgets-3.0.4\include\wx\propgrid\advprops.h wxWidgets-3.0.4.changes\include\wx\propgrid\advprops.h
-*** wxWidgets-3.0.4\include\wx\propgrid\advprops.h      Wed Mar 07 09:55:38 2018
---- wxWidgets-3.0.4.changes\include\wx\propgrid\advprops.h      Mon Apr 13 08:24:43 2020
-***************
-*** 450,456 ****
-      wxDateTime GetDateValue() const
-      {
-          //return m_valueDateTime;
-!         return m_value;
-      }
-
-      long GetDatePickerStyle() const
---- 450,456 ----
-      wxDateTime GetDateValue() const
-      {
-          //return m_valueDateTime;
-!         return m_value.GetDateTime();
-      }
-
-      long GetDatePickerStyle() const
-
-=== Changes to support ink in richedit
->diff -c wxWidgets-3.0.4\src\msw\textctrl.cpp wxWidgets-3.0.4.changes\src\msw\textctrl.cpp
-*** wxWidgets-3.0.4\src\msw\textctrl.cpp        Wed Mar 07 09:55:38 2018
---- wxWidgets-3.0.4.changes\src\msw\textctrl.cpp        Mon Apr 13 08:28:05 2020
-***************
-*** 76,81 ****
---- 76,85 ----
-
-  #endif // wxUSE_RICHEDIT
-
-+ #if wxUSE_INKEDIT
-+     #include <wx/dynlib.h>
-+ #endif
-+
-  #include "wx/msw/missing.h"
-
-  // FIXME-VC6: This seems to be only missing from VC6 headers.
-***************
-*** 339,344 ****
---- 343,353 ----
-          m_dropTarget = NULL;
-      }
-  #endif // wxUSE_DRAG_AND_DROP && wxUSE_RICHEDIT
-+
-+ #if wxUSE_INKEDIT && wxUSE_RICHEDIT
-+     if (m_isInkEdit)
-+         DissociateHandle();
-+ #endif
-
-      delete m_privateContextMenu;
-  }
 
 --------------------
 
 poedit: http://www.poedit.net
-Cross platform editor for modifying .po files. Currently using 2.2.1.
+Cross platform editor for modifying .po files. Currently using 2.3.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -311,7 +112,7 @@ Useful for figuring out how a lay a dialog out.
 --------------------
 
 Windows Installer XML toolset: http://wixtoolset.org/
-Currently using Version 3.11.1 (as of ARB v3.2.4).
+Currently using Version 3.11.2
 - Install votive [optional]
 - (1), run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
@@ -321,9 +122,8 @@ Currently using Version 3.11.1 (as of ARB v3.2.4).
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.15.
+Used to create source code documentation. AgilityBook.dox uses v1.8.17.
 [Install to default location]
-[Note: 1.8.16 doesn't work.]
 
 --------------------
 
@@ -336,9 +136,11 @@ Earlier versions may work. (I used 2.14.1 with no problems for a while)
 Compiler notes
 ==============
 
+Compiler: requires C++14 support.
+
 Pre-2017
 ===================================
-   Not supported. Dropping XP support, requires C++14.
+   Not supported.
 
 Microsoft Visual Studio 2017 (VC14.1)
 ===================================
@@ -365,8 +167,8 @@ Install xcode command line tools
 Install MacPorts: http://www.macports.org
 sudo port -v selfupdate
 sudo port upgrade outdated
-initial: sudo port install autoconf gettext git python37 py37-readline
-         sudo port select --set python3 python37
+initial: sudo port install autoconf gettext git python38 py38-readline
+         sudo port select --set python3 python38
 
 The xcode projects were used as follows:
 .../xcode7: Xcode 7.x on OSX10.11 (still applies to xcode9)

@@ -29,10 +29,6 @@
 #include <vector>
 #include <wx/imaglist.h>
 
-#if !wxCHECK_VERSION(3, 1, 1)
-typedef wxListItemAttr wxItemAttr;
-#endif
-
 ARB_TYPEDEF(CListData)
 
 

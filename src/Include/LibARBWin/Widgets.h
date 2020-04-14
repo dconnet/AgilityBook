@@ -45,9 +45,7 @@ public:
 			const wxString& name = wxListCtrlNameStr)
 		: wxListView(parent, id, pos, size, style, validator, name)
 	{
-#if wxCHECK_VERSION(3, 1, 0)
 		EnableSystemTheme();
-#endif
 	}
 	bool SetColumnWidth(int col, int width) override
 	{
@@ -85,9 +83,7 @@ public:
 			const wxString& name = wxTreeCtrlNameStr)
 		: wxTreeCtrl(parent, id, pos, size, style, validator, name)
 	{
-#if wxCHECK_VERSION(3, 1, 0)
 		EnableSystemTheme();
-#endif
 	}
 
 	// Beware: We're hiding non-virtual base class functions
